@@ -68,11 +68,6 @@ bool ISLocalization::LoadTraslatorQT()
 	{
 		ErrorString = "Not found translator file: " + FilePath;
 	}
-
-	if (!Result)
-	{
-		ISLOGGER_W(__CLASS__, ErrorString);
-	}
 	return Result;
 }
 //-----------------------------------------------------------------------------

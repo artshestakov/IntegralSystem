@@ -3,7 +3,7 @@
 #include "CGDatabase.h"
 #include "ISQuery.h"
 #include "ISConfig.h"
-#include "ISLogger.h"
+#include "ISDebug.h"
 #include "ISLocalization.h"
 #include "ISConsole.h"
 //-----------------------------------------------------------------------------
@@ -254,7 +254,7 @@ bool CGConfiguratorUpdate::resources()
 							ISQuery qDeleteResource;
 							if (!qDeleteResource.Execute(QString("DELETE FROM %1 WHERE %2_uid = '%3'").arg(TableName).arg(TableAlias).arg(ResourceUID)))
 							{
-								ISLOGGER_L(QString("Error delete resource %1: %2").arg(ResourceUID).arg(qDeleteResource.GetErrorString()));
+								ISDEBUG_L(QString("Error delete resource %1: %2").arg(ResourceUID).arg(qDeleteResource.GetErrorString()));
 							}
 						}
 					}
@@ -287,7 +287,7 @@ bool CGConfiguratorUpdate::systemuser()
 		}
 		else
 		{
-			ISLOGGER_W(__CLASS__, "Error open avatar \"" + FileAvatar.fileName() + "\": " + FileAvatar.errorString());
+			ISDEBUG_W("Error open avatar \"" + FileAvatar.fileName() + "\": " + FileAvatar.errorString());
 		}
 
 		bool IsExist = qSelect.ReadColumn("count").toInt() > 0;
@@ -303,7 +303,7 @@ bool CGConfiguratorUpdate::systemuser()
 		Result = qUpsert.Execute();
 		if (Result)
 		{
-			IsExist ? ISLOGGER_L("System user updated") : ISLOGGER_L("System user created");
+			IsExist ? ISDEBUG_L("System user updated") : ISDEBUG_L("System user created");
 		}
 		else
 		{
@@ -333,7 +333,7 @@ bool CGConfiguratorUpdate::databasesettings()
 		Result = qUpsert.Execute();
 		if (Result)
 		{
-			ISLOGGER_L(IsExist ? "Database settings updated" : "Database settings created");
+			ISDEBUG_L(IsExist ? "Database settings updated" : "Database settings created");
 		}
 		else
 		{

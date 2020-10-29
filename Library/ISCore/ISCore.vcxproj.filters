@@ -141,6 +141,9 @@
     <ClCompile Include="ISVersion.cpp">
       <Filter>System</Filter>
     </ClCompile>
+    <ClCompile Include="ISDebug.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ISDatabase.h">
@@ -241,6 +244,9 @@
       <Filter>System</Filter>
     </ClInclude>
     <ClInclude Include="ISVersion.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="ISDebug.h">
       <Filter>System</Filter>
     </ClInclude>
   </ItemGroup>

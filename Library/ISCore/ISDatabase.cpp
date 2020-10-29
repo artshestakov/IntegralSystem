@@ -1,7 +1,6 @@
 #include "ISDatabase.h"
 #include "ISQuery.h"
 #include "ISConstants.h"
-#include "ISLogger.h"
 #include "ISMetaData.h"
 //-----------------------------------------------------------------------------
 static QString QS_DATABASE = PREPARE_QUERY("SELECT COUNT(*) "
@@ -140,10 +139,6 @@ void ISDatabase::Disconnect(const QString &ConnectionName)
                 SqlDatabase.setPassword(QString());
             }
         }
-		else
-		{
-			ISLOGGER_W(__CLASS__, QString("Not found connection \"%1\"").arg(ConnectionName));
-		}
     }
 
     if (Contains)

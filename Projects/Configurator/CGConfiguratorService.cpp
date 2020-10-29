@@ -1,6 +1,6 @@
 #include "CGConfiguratorService.h"
 #include "ISQuery.h"
-#include "ISLogger.h"
+#include "ISDebug.h"
 #include "ISMetaData.h"
 #include "ISConstants.h"
 #include "ISConsole.h"
@@ -27,7 +27,7 @@ CGConfiguratorService::~CGConfiguratorService()
 //-----------------------------------------------------------------------------
 bool CGConfiguratorService::reindex()
 {
-	ISLOGGER_L("Reindex...");
+	ISDEBUG_L("Reindex...");
 
 	bool Result = true;
 	for (size_t i = 0, CountTables = ISMetaData::Instance().GetTables().size(); i < CountTables; ++i)
@@ -35,41 +35,39 @@ bool CGConfiguratorService::reindex()
 		Progress("Reindex", i, CountTables);
 
 		QString TableName = ISMetaData::Instance().GetTables()[i]->Name;
-		ISLOGGER_L("Reindex table: " + TableName);
+		ISDEBUG_L("Reindex table: " + TableName);
 
 		ISQuery qReindexTable;
 		qReindexTable.SetShowLongQuery(false);
 		Result = qReindexTable.Execute(QString("REINDEX TABLE %1").arg(TableName));
 		if (Result)
 		{
-			ISLOGGER_L(QString("Reindex table %1 done").arg(TableName));
+			ISDEBUG_L(QString("Reindex table %1 done").arg(TableName));
 		}
 		else
 		{
-			ISLOGGER_L(QString("Reindex table %1 error").arg(TableName));
+			ISDEBUG_L(QString("Reindex table %1 error").arg(TableName));
 			ErrorString = qReindexTable.GetErrorString();
 		}
 	}
-
-	ISLOGGER_L("Reindex done");
-	ISLOGGER_N();
+	ISDEBUG_L("Reindex done\n");
 	return Result;
 }
 //-----------------------------------------------------------------------------
 bool CGConfiguratorService::vacuum()
 {
-	ISLOGGER_D(__CLASS__, "Vacuum...");
+	ISDEBUG_D("Vacuum...");
 
 	ISQuery qVacuum;
 	qVacuum.SetShowLongQuery(false);
 	bool Result = qVacuum.Execute(Q_VACUUM);
 	if (Result)
 	{
-		ISLOGGER_I(__CLASS__, "Vacuum done");
+		ISDEBUG_I("Vacuum done");
 	}
 	else
 	{
-		ISLOGGER_W(__CLASS__, "Vacuum error: " + qVacuum.GetErrorString());
+		ISDEBUG_W("Vacuum error: " + qVacuum.GetErrorString());
 		ErrorString = qVacuum.GetErrorString();
 	}
 	return Result;
@@ -77,18 +75,18 @@ bool CGConfiguratorService::vacuum()
 //-----------------------------------------------------------------------------
 bool CGConfiguratorService::vacuumanalyze()
 {
-	ISLOGGER_D(__CLASS__, "Vacuum analyze...");
+	ISDEBUG_D("Vacuum analyze...");
 
 	ISQuery qVacuumAnalyze;
 	qVacuumAnalyze.SetShowLongQuery(false);
 	bool Result = qVacuumAnalyze.Execute(Q_VACUUM_ANALYZE);
 	if (Result)
 	{
-		ISLOGGER_I(__CLASS__, "Vacuum analyze done");
+		ISDEBUG_I("Vacuum analyze done");
 	}
 	else
 	{
-		ISLOGGER_W(__CLASS__, "Vacuum analyze error: " + qVacuumAnalyze.GetErrorString());
+		ISDEBUG_W("Vacuum analyze error: " + qVacuumAnalyze.GetErrorString());
 		ErrorString = qVacuumAnalyze.GetErrorString();
 	}
 	return Result;
@@ -96,18 +94,18 @@ bool CGConfiguratorService::vacuumanalyze()
 //-----------------------------------------------------------------------------
 bool CGConfiguratorService::vacuumfull()
 {
-	ISLOGGER_D(__CLASS__, "Vacuum full...");
+	ISDEBUG_D("Vacuum full...");
 
 	ISQuery qVacuumFull;
 	qVacuumFull.SetShowLongQuery(false);
 	bool Result = qVacuumFull.Execute(Q_VACUUM_FULL);
 	if (Result)
 	{
-		ISLOGGER_I(__CLASS__, "Vacuum full done");
+		ISDEBUG_I("Vacuum full done");
 	}
 	else
 	{
-		ISLOGGER_W(__CLASS__, "Vacuum full error: " + qVacuumFull.GetErrorString());
+		ISDEBUG_W("Vacuum full error: " + qVacuumFull.GetErrorString());
 		ErrorString = qVacuumFull.GetErrorString();
 	}
 	return Result;
@@ -118,14 +116,14 @@ bool CGConfiguratorService::cleartable()
 	QString InputName = ISConsole::GetString("Input table name: "); //Запрос на ввод имени таблицы
 	if (InputName.isEmpty())
 	{
-		ISLOGGER_L("Table name is empty");
+		ISDEBUG_L("Table name is empty");
 		return false;
 	}
 
 	PMetaTable *MetaTable = ISMetaData::Instance().GetMetaTable(InputName);
 	if (!MetaTable) //Если таблица не найдена
 	{
-		ISLOGGER_L(QString("Table \"%1\" not found").arg(InputName));
+		ISDEBUG_L(QString("Table \"%1\" not found").arg(InputName));
 		return false;
 	}
 
@@ -144,7 +142,7 @@ bool CGConfiguratorService::cleartable()
 			Result = qDelete.Execute();
 			if (Result)
 			{
-				ISLOGGER_L(QString("Delete record %1 of %2").arg(Removed).arg(RecordCount));
+				ISDEBUG_L(QString("Delete record %1 of %2").arg(Removed).arg(RecordCount));
 				++Removed;
 			}
 			else

@@ -3,7 +3,7 @@
 #include "ISMetaData.h"
 #include "ISSystem.h"
 #include "ISConsole.h"
-#include "ISLogger.h"
+#include "ISDebug.h"
 //-----------------------------------------------------------------------------
 static QString QS_FOREIGN = PREPARE_QUERY("SELECT COUNT(*) "
 										  "FROM information_schema.constraint_table_usage "
@@ -777,7 +777,7 @@ bool CGDatabase::Table_DeleteFields(PMetaTable *MetaTable, QString &ErrorString)
 				}
 				else //Не согласен удалять поле - пропускаем и идём дальше
 				{
-					ISLOGGER_L("Skip deletion field " + FieldFullName);
+					ISDEBUG_L("Skip deletion field " + FieldFullName);
 				}
 			}
 		}

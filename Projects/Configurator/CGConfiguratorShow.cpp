@@ -1,6 +1,6 @@
 #include "CGConfiguratorShow.h"
 #include "ISConfig.h"
-#include "ISLogger.h"
+#include "ISDebug.h"
 #include "ISQuery.h"
 #include "ISMetaData.h"
 #include "ISDatabase.h"
@@ -90,7 +90,7 @@ bool CGConfiguratorShow::oldobjects()
 		Result = oldforeigns(Foreigns);
 	}
 
-	ISLOGGER_L(QString("Tables: %1 Fields: %2 Resources: %3 Sequences: %4 Indexes: %5 Foreigns: %6")
+	ISDEBUG_L(QString("Tables: %1 Fields: %2 Resources: %3 Sequences: %4 Indexes: %5 Foreigns: %6")
 		.arg(Tables).arg(Fields).arg(Resources).arg(Sequences).arg(Indexes).arg(Foreigns));
 	return Result;
 }
@@ -107,7 +107,7 @@ bool CGConfiguratorShow::config()
 			QStringList StringList = QString(FileConfig.readAll()).split("\n");
 			for (const QString &String : StringList)
 			{
-				ISLOGGER_L(String);
+				ISDEBUG_L(String);
 			}
 			FileConfig.close();
 		}
@@ -130,18 +130,18 @@ bool CGConfiguratorShow::databaseinfo()
 	bool Result = qSelectInfo.ExecuteFirst();
 	if (Result)
 	{
-		ISLOGGER_L("Size:\t\t" + qSelectInfo.ReadColumn("database_size").toString());
-		ISLOGGER_L("Owner:\t\t" + qSelectInfo.ReadColumn("database_owner").toString());
-		ISLOGGER_L("Encoding:\t" + qSelectInfo.ReadColumn("database_encoding").toString());
-		ISLOGGER_L("Uptime:\t\t" + qSelectInfo.ReadColumn("database_uptime").toString());
-		ISLOGGER_L("Backend PID:\t" + qSelectInfo.ReadColumn("database_backend_pid").toString());
-		ISLOGGER_L("Version:\t" + qSelectInfo.ReadColumn("database_version").toString());
-		ISLOGGER_L("Cluster path:\t" + qSelectInfo.ReadColumn("database_cluster_path").toString());
-		ISLOGGER_L("Count tables:\t" + qSelectInfo.ReadColumn("table_count").toString());
-		ISLOGGER_L("Count fields:\t" + qSelectInfo.ReadColumn("field_count").toString());
-		ISLOGGER_L("Count sequence:\t" + qSelectInfo.ReadColumn("sequence_count").toString());
-		ISLOGGER_L("Count foreigns:\t" + qSelectInfo.ReadColumn("foreign_count").toString());
-		ISLOGGER_L("Count users:\t" + qSelectInfo.ReadColumn("user_count").toString());
+		ISDEBUG_L("Size:\t\t" + qSelectInfo.ReadColumn("database_size").toString());
+		ISDEBUG_L("Owner:\t\t" + qSelectInfo.ReadColumn("database_owner").toString());
+		ISDEBUG_L("Encoding:\t" + qSelectInfo.ReadColumn("database_encoding").toString());
+		ISDEBUG_L("Uptime:\t\t" + qSelectInfo.ReadColumn("database_uptime").toString());
+		ISDEBUG_L("Backend PID:\t" + qSelectInfo.ReadColumn("database_backend_pid").toString());
+		ISDEBUG_L("Version:\t" + qSelectInfo.ReadColumn("database_version").toString());
+		ISDEBUG_L("Cluster path:\t" + qSelectInfo.ReadColumn("database_cluster_path").toString());
+		ISDEBUG_L("Count tables:\t" + qSelectInfo.ReadColumn("table_count").toString());
+		ISDEBUG_L("Count fields:\t" + qSelectInfo.ReadColumn("field_count").toString());
+		ISDEBUG_L("Count sequence:\t" + qSelectInfo.ReadColumn("sequence_count").toString());
+		ISDEBUG_L("Count foreigns:\t" + qSelectInfo.ReadColumn("foreign_count").toString());
+		ISDEBUG_L("Count users:\t" + qSelectInfo.ReadColumn("user_count").toString());
 		
 		//Готовим запрос для расчёта количества строк
 		QString SqlQueryCount = "WITH r AS(\n";
@@ -157,23 +157,23 @@ bool CGConfiguratorShow::databaseinfo()
 		qSelectCount.SetShowLongQuery(false);
 		if (qSelectCount.ExecuteFirst())
 		{
-			ISLOGGER_L("Count records:\t" + qSelectCount.ReadColumn("sum").toString());
+			ISDEBUG_L("Count records:\t" + qSelectCount.ReadColumn("sum").toString());
 		}
 		else
 		{
-			ISLOGGER_E(__CLASS__, "Getting count records: " + qSelectCount.GetErrorString());
+			ISDEBUG_L("Error getting count records: " + qSelectCount.GetErrorString());
 		}
 	}
 	else
 	{
-		ISLOGGER_E(__CLASS__, qSelectInfo.GetErrorString());
+		ISDEBUG_L(qSelectInfo.GetErrorString());
 	}
 	return Result;
 }
 //-----------------------------------------------------------------------------
 bool CGConfiguratorShow::oldtables(int &Count)
 {
-	ISLOGGER_L("Search tables...");
+	ISDEBUG_L("Search tables...");
 	ISQuery qSelectTables(QS_TABLES);
 	qSelectTables.SetShowLongQuery(false);
 	bool Result = qSelectTables.Execute();
@@ -185,7 +185,7 @@ bool CGConfiguratorShow::oldtables(int &Count)
 			PMetaTable *MetaTable = FoundTable(TableName);
 			if (!MetaTable)
 			{
-				ISLOGGER_L(TableName);
+				ISDEBUG_L(TableName);
 				++Count;
 			}
 		}
@@ -194,13 +194,13 @@ bool CGConfiguratorShow::oldtables(int &Count)
 	{
 		ErrorString = qSelectTables.GetErrorString();
 	}
-	ISLOGGER_N();
+	ISDEBUG();
 	return Result;
 }
 //-----------------------------------------------------------------------------
 bool CGConfiguratorShow::oldfields(int &Count)
 {
-	ISLOGGER_L("Search fields...");
+	ISDEBUG_L("Search fields...");
 	ISQuery qSelectTables(QS_TABLES);
 	qSelectTables.SetShowLongQuery(false);
 	bool Result = qSelectTables.Execute();
@@ -224,7 +224,7 @@ bool CGConfiguratorShow::oldfields(int &Count)
 						PMetaField *MetaField = FoundField(MetaTable, ColumnName);
 						if (!MetaField)
 						{
-							ISLOGGER_L(TableName + ": " + ColumnName);
+							ISDEBUG_L(TableName + ": " + ColumnName);
 							++Count;
 						}
 					}
@@ -241,13 +241,13 @@ bool CGConfiguratorShow::oldfields(int &Count)
 	{
 		ErrorString = qSelectTables.GetErrorString();
 	}
-	ISLOGGER_N();
+	ISDEBUG();
 	return Result;
 }
 //-----------------------------------------------------------------------------
 bool CGConfiguratorShow::oldresources(int &Count)
 {
-	ISLOGGER_L("Search resources...");
+	ISDEBUG_L("Search resources...");
 	std::map<QString, ISVectorString> Map, MapOutput;
 	for (PMetaResource *MetaResource : ISMetaData::Instance().GetResources())
 	{
@@ -296,17 +296,17 @@ bool CGConfiguratorShow::oldresources(int &Count)
 	{
 		for (const QString &String : OutputItem.second)
 		{
-			ISLOGGER_L(OutputItem.first + ": " + String);
+			ISDEBUG_L(OutputItem.first + ": " + String);
 			++Count;
 		}
 	}
-	ISLOGGER_N();
+	ISDEBUG();
 	return true;
 }
 //-----------------------------------------------------------------------------
 bool CGConfiguratorShow::oldsequence(int &Count)
 {
-	ISLOGGER_L("Search sequences...");
+	ISDEBUG_L("Search sequences...");
 	QString Where;
 	for (PMetaTable *MetaTable : ISMetaData::Instance().GetTables())
 	{
@@ -320,7 +320,7 @@ bool CGConfiguratorShow::oldsequence(int &Count)
 	{
 		while (qSelectSequences.Next())
 		{
-			ISLOGGER_L(qSelectSequences.ReadColumn("sequence_name").toString());
+			ISDEBUG_L(qSelectSequences.ReadColumn("sequence_name").toString());
 			++Count;
 		}
 	}
@@ -328,13 +328,13 @@ bool CGConfiguratorShow::oldsequence(int &Count)
 	{
 		ErrorString = qSelectSequences.GetErrorString();
 	}
-	ISLOGGER_N();
+	ISDEBUG();
 	return Result;
 }
 //-----------------------------------------------------------------------------
 bool CGConfiguratorShow::oldindexes(int &Count)
 {
-	ISLOGGER_L("Search indexes...");
+	ISDEBUG_L("Search indexes...");
 	ISQuery qSelectIndexes(QS_INDEX);
 	qSelectIndexes.SetShowLongQuery(false);
 	bool Result = qSelectIndexes.Execute();
@@ -351,7 +351,7 @@ bool CGConfiguratorShow::oldindexes(int &Count)
 			QString IndexName = qSelectIndexes.ReadColumn("indexname").toString();
 			if (!ISAlgorithm::VectorContains(IndexNames, IndexName))
 			{
-				ISLOGGER_L(IndexName);
+				ISDEBUG_L(IndexName);
 				++Count;
 			}
 		}
@@ -360,13 +360,13 @@ bool CGConfiguratorShow::oldindexes(int &Count)
 	{
 		ErrorString = qSelectIndexes.GetErrorString();
 	}
-	ISLOGGER_N();
+	ISDEBUG();
 	return Result;
 }
 //-----------------------------------------------------------------------------
 bool CGConfiguratorShow::oldforeigns(int &Count)
 {
-	ISLOGGER_L("Search foreigns...");
+	ISDEBUG_L("Search foreigns...");
 	ISQuery qSelectForeigns(QS_FOREIGN);
 	qSelectForeigns.SetShowLongQuery(false);
 	bool Result = qSelectForeigns.Execute();
@@ -383,7 +383,7 @@ bool CGConfiguratorShow::oldforeigns(int &Count)
 			QString ForeignName = qSelectForeigns.ReadColumn("constraint_name").toString();
 			if (!ISAlgorithm::VectorContains(Foreigns, ForeignName))
 			{
-				ISLOGGER_L(ForeignName);
+				ISDEBUG_L(ForeignName);
 				++Count;
 			}
 		}
@@ -392,7 +392,7 @@ bool CGConfiguratorShow::oldforeigns(int &Count)
 	{
 		ErrorString = qSelectForeigns.GetErrorString();
 	}
-	ISLOGGER_N();
+	ISDEBUG();
 	return Result;
 }
 //-----------------------------------------------------------------------------

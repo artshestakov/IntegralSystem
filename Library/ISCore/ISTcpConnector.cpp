@@ -38,6 +38,11 @@ bool ISTcpConnector::IsConnected() const
 //-----------------------------------------------------------------------------
 bool ISTcpConnector::Connect(const QString &Host, quint16 Port)
 {
+	if (IsConnected()) //Если подключение поднято - возвращаем true
+	{
+		return true;
+	}
+
 	TcpSocket->connectToHost(Host, Port, QIODevice::ReadWrite, QAbstractSocket::IPv4Protocol);
 	EventLoop.exec();
 	return IsConnected();

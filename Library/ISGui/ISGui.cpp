@@ -48,6 +48,7 @@
 #include "ISFieldEdits.h"
 #include "ISComboSearchWidgets.h"
 #include "ISSettingFieldWidgets.h"
+#include "ISSystem.h"
 //-----------------------------------------------------------------------------
 static QString Q_DELETE_OR_RECOVERY_OBJECT = "UPDATE %1 SET %2_isdeleted = :IsDeleted WHERE %2_id = :ObjectID";
 //-----------------------------------------------------------------------------
@@ -68,10 +69,24 @@ static QString QI_USER_PASSWORD_CHANGED = PREPARE_QUERY("INSERT INTO _userpasswo
 //-----------------------------------------------------------------------------
 bool ISGui::Startup(QString &ErrorString)
 {
-	bool Result = ISCore::Startup(true, "Client", ErrorString);
-	if (!Result)
+	//Инициализируем логгер
+	if (!ISLogger::Instance().Initialize())
 	{
-		return Result;
+		ErrorString = ISLogger::Instance().GetErrorString();
+		return false;
+	}
+
+	//Читаем конфигурационный файл
+	if (!ISConfig::Instance().Initialize("Client"))
+	{
+		ErrorString = ISConfig::Instance().GetErrorString();
+		return false;
+	}
+
+	//Создание папки для временных файлов
+	if (!ISSystem::CreateDir(QCoreApplication::applicationDirPath() + "/Temp", ErrorString))
+	{
+		return false;
 	}
 
 	ISDefines::Gui::Init();
@@ -79,23 +94,24 @@ bool ISGui::Startup(QString &ErrorString)
 	ISSplashWidget SplashWidget;
 	SplashWidget.show();
 
-	//Загрузка трансляций QT
-	ISLocalization::Instance().LoadTraslatorQT();
+	//Загрузка трансляций Qt
+	if (!ISLocalization::Instance().LoadTraslatorQT())
+	{
+		ISLOGGER_W("ISLocalization", ISLocalization::Instance().GetErrorString());
+	}
 
 	//Загрузка локализации клиента
-	Result = ISLocalization::Instance().LoadResourceFile(LOCALIZATION_FILE_INTEGRAL_SYSTEM);
-	if (!Result)
+	if (!ISLocalization::Instance().LoadResourceFile(LOCALIZATION_FILE_INTEGRAL_SYSTEM))
 	{
 		ErrorString = QString("Error init localization file \"%1\": %2").arg(LOCALIZATION_FILE_INTEGRAL_SYSTEM).arg(ISLocalization::Instance().GetErrorString());
-		return Result;
+		return false;
 	}
 
 	//Загрузка локализации объектов
-	Result = ISLocalization::Instance().LoadResourceFile(LOCALIZATION_FILE_OBJECTS);
-	if (!Result)
+	if (!ISLocalization::Instance().LoadResourceFile(LOCALIZATION_FILE_OBJECTS))
 	{
 		ErrorString = QString("Error init localization file \"%1\": %2").arg(LOCALIZATION_FILE_OBJECTS).arg(ISLocalization::Instance().GetErrorString());
-		return Result;
+		return false;
 	}
 
 	//Загрузка буфера
@@ -104,11 +120,10 @@ bool ISGui::Startup(QString &ErrorString)
 
 	//Проверка наличия прав администратора
 	SplashWidget.SetText(LANG("SplashWidget.AdminRoles"));
-	Result = CheckAdminRole();
-	if (!Result)
+	if (!CheckAdminRole())
 	{
 		ErrorString = LANG("NoAdministratorRights");
-		return Result;
+		return false;
 	}
 
 	RegisterMetaType();
@@ -118,7 +133,7 @@ bool ISGui::Startup(QString &ErrorString)
 	qApp->setApplicationVersion(ISVersionInfo::Instance().ToString());
 	qApp->setFont(ISDefines::Gui::FONT_APPLICATION);
 	QToolTip::setFont(ISDefines::Gui::FONT_APPLICATION);
-	return Result;
+	return true;
 }
 //-----------------------------------------------------------------------------
 bool ISGui::CheckAdminRole()

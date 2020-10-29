@@ -1,5 +1,5 @@
 #include "ISConsole.h"
-#include "ISLogger.h"
+#include "ISDebug.h"
 //-----------------------------------------------------------------------------
 bool ISConsole::Question(const QString &QuestionText)
 {
@@ -20,7 +20,7 @@ bool ISConsole::Question(const QString &QuestionText)
 		}
 		else
 		{
-			ISLOGGER_L("Invalid answer!");
+			ISDEBUG_L("Invalid answer!");
 		}
 	}
 	return Result;
@@ -28,7 +28,7 @@ bool ISConsole::Question(const QString &QuestionText)
 //-----------------------------------------------------------------------------
 void ISConsole::Pause()
 {
-	ISLOGGER_L("To continue, press \"Enter\" or \"Return\" buttons...");
+	ISDEBUG_L("To continue, press \"Enter\" buttons...");
 	(void)getchar();
 }
 //-----------------------------------------------------------------------------

@@ -1,6 +1,6 @@
 #include "CGConfiguratorDelete.h"
 #include "ISQuery.h"
-#include "ISLogger.h"
+#include "ISDebug.h"
 #include "ISMetaData.h"
 #include "ISConstants.h"
 #include "ISConsole.h"
@@ -80,7 +80,7 @@ bool CGConfiguratorDelete::indexes()
 			Result = qDeleteIndex.Execute(QD_INDEX.arg(qSelectIndexes.ReadColumn("indexname").toString()));
 			if (Result)
 			{
-				ISLOGGER_I(__CLASS__, QString("Deleted %1 of %2 indexes").arg(++Deleted).arg(CountIndexes));
+				ISDEBUG_I(QString("Deleted %1 of %2 indexes").arg(++Deleted).arg(CountIndexes));
 			}
 			else
 			{
@@ -98,7 +98,7 @@ bool CGConfiguratorDelete::indexes()
 //-----------------------------------------------------------------------------
 bool CGConfiguratorDelete::foreigns()
 {
-	ISLOGGER_D(__CLASS__, "Deleting foreigns...");
+	ISDEBUG_D("Deleting foreigns...");
 
 	ISQuery qSelectForeigns(QS_FOREIGNS);
 	qSelectForeigns.SetShowLongQuery(false);
@@ -127,7 +127,7 @@ bool CGConfiguratorDelete::foreigns()
 			Result = qDeleteForeign.Execute(QD_FOREIGN.arg(TableName).arg(ForeignName));
 			if (Result)
 			{
-				ISLOGGER_I(__CLASS__, QString("Deleted %1 of %2 foreigns").arg(++Deleted).arg(CountForeigns));
+				ISDEBUG_I(QString("Deleted %1 of %2 foreigns").arg(++Deleted).arg(CountForeigns));
 			}
 			else
 			{
@@ -164,7 +164,7 @@ bool CGConfiguratorDelete::oldtables()
 			{
 				if (ISConsole::Question(QString("Remove table \"%1\"?").arg(TableName)))
 				{
-					ISLOGGER_L(QString("Removing table \"%1\"...").arg(TableName));
+					ISDEBUG_L(QString("Removing table \"%1\"...").arg(TableName));
 					ISQuery qDeleteTable;
 					qDeleteTable.SetShowLongQuery(false);
 					Result = qDeleteTable.Execute("DROP TABLE public." + TableName);
@@ -213,7 +213,7 @@ bool CGConfiguratorDelete::oldfields()
 				{
 					if (ISConsole::Question(QString("Remove column \"%1\" in table \"%2\"?").arg(ColumnName).arg(TableName)))
 					{
-						ISLOGGER_L(QString("Removing column \"%1\"...").arg(ColumnName));
+						ISDEBUG_L(QString("Removing column \"%1\"...").arg(ColumnName));
 						ISQuery qDeleteField;
 						qDeleteField.SetShowLongQuery(false);
 						Result = qDeleteField.Execute("ALTER TABLE public." + TableName + " DROP COLUMN " + ColumnName);
@@ -401,8 +401,8 @@ bool CGConfiguratorDelete::oldforeigns()
 //-----------------------------------------------------------------------------
 void CGConfiguratorDelete::ShowResourceConsole(PMetaTable *MetaTable, const ISUuid &ResourceUID)
 {
-	ISLOGGER_N();
-	ISLOGGER_L("Table name: " + MetaTable->Name);
+	ISDEBUG();
+	ISDEBUG_L("Table name: " + MetaTable->Name);
 	ISQuery qSelect("SELECT * FROM " + MetaTable->Name + " WHERE " + MetaTable->Alias + "_uid = :ResourceUID");
 	qSelect.BindValue(":ResourceUID", ResourceUID);
 	if (qSelect.ExecuteFirst())
@@ -410,7 +410,7 @@ void CGConfiguratorDelete::ShowResourceConsole(PMetaTable *MetaTable, const ISUu
 		QSqlRecord SqlRecord = qSelect.GetRecord();
 		for (int i = 0; i < SqlRecord.count(); ++i)
 		{
-			ISLOGGER_L(QString("%1: %2").arg(SqlRecord.field(i).name()).arg(SqlRecord.value(i).toString()));
+			ISDEBUG_L(QString("%1: %2").arg(SqlRecord.field(i).name()).arg(SqlRecord.value(i).toString()));
 		}
 	}
 }

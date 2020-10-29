@@ -2,7 +2,6 @@
 #include "ISQuery.h"
 #include "ISMetaData.h"
 #include "ISConstants.h"
-#include "ISLogger.h"
 #include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
 ISQueryModel::ISQueryModel(PMetaTable *meta_table, ISNamespace::QueryModelType model_type, QObject *parent)

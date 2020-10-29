@@ -11,8 +11,6 @@ class ISCORE_EXPORT ISLogger
 public:
 	enum MessageType //Типы сообщений
 	{
-		MT_Null, //Пустое сообщение
-		MT_Lite, //Упрощенное сообщение (без даты, потока и источника в коде)
 		MT_Debug, //Отладка
 		MT_Info, //Информация
 		MT_Warning, //Предупреждение
@@ -73,8 +71,6 @@ private:
 	ISCriticalSection CriticalSection; //Критическая секция для синхронизации
 };
 //-----------------------------------------------------------------------------
-#define ISLOGGER_N() ISLogger::Instance().Log(ISLogger::MT_Null, QString(), QString()) //Логирование пустой строки
-#define ISLOGGER_L(MESSAGE) ISLogger::Instance().Log(ISLogger::MT_Lite, QString(), MESSAGE) //Логирование упрощенного сообщения
 #define ISLOGGER_D(COMPONENT, MESSAGE) ISLogger::Instance().Log(ISLogger::MT_Debug, COMPONENT, MESSAGE) //Логирование отладочного сообщения
 #define ISLOGGER_I(COMPONENT, MESSAGE) ISLogger::Instance().Log(ISLogger::MT_Info, COMPONENT, MESSAGE) //Логирование информационного сообщения
 #define ISLOGGER_W(COMPONENT, MESSAGE) ISLogger::Instance().Log(ISLogger::MT_Warning, COMPONENT, MESSAGE) //Логировние предупреждающего сообщения

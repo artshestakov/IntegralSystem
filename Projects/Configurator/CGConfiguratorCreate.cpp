@@ -1,5 +1,4 @@
 #include "CGConfiguratorCreate.h"
-#include "ISLogger.h"
 #include "ISAssert.h"
 #include "ISDatabase.h"
 #include "ISQuery.h"

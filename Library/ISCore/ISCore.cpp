@@ -43,43 +43,6 @@ static QString QU_RECOVERY_OBJECTS = PREPARE_QUERY2("UPDATE %1 SET "
 													"%2_isdeleted = :IsDeleted "
 													"WHERE %2_id IN(%3)");
 //-----------------------------------------------------------------------------
-bool ISCore::Startup(bool IsGui, const QString &ConfigTemplateName, QString &ErrorString)
-{
-	bool Result = ISSystem::CreateDir(QCoreApplication::applicationDirPath() + "/Temp", ErrorString); //Создание папки для временных файлов
-	if (!Result)
-	{
-		return Result;
-	}
-
-	Result = ISLogger::Instance().Initialize();
-	if (!Result)
-	{
-		ISLOGGER_L(ISLogger::Instance().GetErrorString());
-		return Result;
-	}
-
-    //Установим кодировку для консольного приложения под Windows
-#ifdef WIN32
-	if (!IsGui)
-	{
-		Result = SetConsoleOutputCP(65001) == TRUE ? true : false;
-		if (!Result)
-		{
-			ISLOGGER_W("", "Error changed console encoding");
-		}
-	}
-#endif
-
-	Result = ISConfig::Instance().Initialize(ConfigTemplateName);
-	if (!Result)
-	{
-		ErrorString = ISConfig::Instance().GetErrorString();
-		return Result;
-	}
-
-	return Result;
-}
-//-----------------------------------------------------------------------------
 void ISCore::ExitApplication()
 {
 	ISQueryPool::Instance().Shutdown();
