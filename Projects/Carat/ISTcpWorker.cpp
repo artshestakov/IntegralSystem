@@ -821,7 +821,6 @@ bool ISTcpWorker::GetLastClient(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer
 		{
 			continue;
 		}
-
 		FilePath = Dir.absolutePath() + '/' + FileName;
 		break;
 	}
