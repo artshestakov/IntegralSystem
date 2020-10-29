@@ -136,6 +136,7 @@ const char		API_AUTH[] = "Auth"; //Авторизация
 const char		API_SLEEP[] = "Sleep"; //Ожидание
 const char		API_GET_META_DATA[] = "GetMetaData"; //Получение мета-данных
 const char		API_TEST[] = "Test"; //Тестовый метод
+const char		API_GET_LAST_CLIENT[] = "GetLastClient"; //Получить последнюю версию клиента
 //CARAT_LOCAL_API--------------------------------------------------------------
 const char		CARAT_LOCAL_API_SHUTDOWN[] = "shutdown"; //Завершение работы
 //-----------------------------------------------------------------------------
@@ -260,5 +261,6 @@ const char CONST_CONFIG_TCPSERVER_PORT[] = "TCPServer/Port";
 const char CONST_CONFIG_TCPSERVER_WORKERS[] = "TCPServer/WorkerCount";
 const char CONST_CONFIG_CONTROLLER_INCLUDE[] = "Controller/Include";
 const char CONST_CONFIG_CONTROLLER_PORT[] = "Controller/Port";
+const char CONST_CONFIG_OTHER_UPDATE_CLIENT_DIR[] = "Other/UpdateClientDir";
 //-----------------------------------------------------------------------------
 #endif

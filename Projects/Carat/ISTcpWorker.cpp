@@ -9,6 +9,7 @@
 #include "ISTrace.h"
 #include "ISTcpQueue.h"
 #include "ISVersionInfo.h"
+#include "ISConfig.h"
 //-----------------------------------------------------------------------------
 static QString QS_AUTH = PREPARE_QUERY("SELECT usrs_id, usrs_issystem, usrs_isdeleted, usrs_group, usrs_fio, usrs_accessallowed, usrs_accountlifetime, usrs_accountlifetimestart, usrs_accountlifetimeend, usgp_fullaccess "
 									   "FROM _users "
@@ -215,6 +216,7 @@ void ISTcpWorker::Process()
 					case ISNamespace::AMT_Sleep: Result = Sleep(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_GetMetaData: Result = GetMetaData(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_Test: Result = Test(tcp_message, TcpAnswer); break;
+					case ISNamespace::AMT_GetLastClient: Result = GetLastClient(tcp_message, TcpAnswer); break;
 					}
 					PerfomanceMsec = ISAlgorithm::GetTickDiff(ISAlgorithm::GetTick(), TimePoint);
 				}
@@ -782,6 +784,70 @@ bool ISTcpWorker::Test(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
 	Q_UNUSED(TcpMessage);
 	Q_UNUSED(TcpAnswer);
+	return true;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::GetLastClient(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+	QString UpdateClientDir = CONFIG_STRING(CONST_CONFIG_OTHER_UPDATE_CLIENT_DIR);
+	if (UpdateClientDir.isEmpty())
+	{
+		ErrorString = LANG("Carat.Error.Query.GetLastClient.PathIsEmpty");
+		return false;
+	}
+
+	QDir Dir(UpdateClientDir);
+	if (!Dir.exists())
+	{
+		ISLOGGER_W(__CLASS__, "Folder \"" + UpdateClientDir + "\" not exist. Check config parameter \"" + CONST_CONFIG_OTHER_UPDATE_CLIENT_DIR + "\"");
+		ErrorString = LANG("Carat.Error.Query.GetLastClient.Other");
+		return false;
+	}
+
+	//Получаем отсортированный (по дате) список файлов и проверяем его на пустоту
+	QStringList StringList = Dir.entryList(QDir::Files, QDir::Time);
+	if (StringList.isEmpty()) //Если обновлений нет - выходим
+	{
+		TcpAnswer->Parameters["Found"] = false;
+		return true;
+	}
+
+	//Обходим список файлов и ищем самый последний
+	QString FilePath;
+	for (const QString &FileName : StringList)
+	{
+		QStringList FileNameList = FileName.split(SYMBOL_POINT);
+		if (FileNameList.size() != 4) //Если имя файла невалидное - пропускаем его
+		{
+			continue;
+		}
+
+		FilePath = Dir.absolutePath() + '/' + FileName;
+		break;
+	}
+
+	//Файл не найден - выходим
+	if (FilePath.isEmpty())
+	{
+		TcpAnswer->Parameters["Found"] = false;
+		return true;
+	}
+
+	//Открываем файл
+	QFile File(FilePath);
+	if (!File.open(QIODevice::ReadOnly)) //Не удалось открыть файл
+	{
+		ISLOGGER_E(__CLASS__, "Not read file \"" + FilePath + "\": " + File.errorString());
+		ErrorString = LANG("Carat.Error.Query.GetLastClient.Other");
+		return false;
+	}
+
+	//Читаем и сразу закрываем файл
+	QByteArray ByteArray = File.readAll();
+	File.close();
+
+	//Конвертируем в base64 и отдаём
+	TcpAnswer->Parameters["Data"] = ByteArray.toBase64();
 	return true;
 }
 //-----------------------------------------------------------------------------

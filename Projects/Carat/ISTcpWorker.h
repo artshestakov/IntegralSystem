@@ -36,6 +36,7 @@ private:
 	bool Sleep(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
 	bool GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
 	bool Test(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
+	bool GetLastClient(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
 
 private:
     QString ErrorString; //Текстовое описание ошибки запроса

@@ -95,10 +95,8 @@ void ISTcpSocket::ReadyRead()
 		}
 	}
 
-	//Инкрементируем количество чанков
+	//Инкрементируем количество чанков и Проверяем, не пришло ли сообщение полностью - выходим если пришло не полностью
 	++ChunkCount;
-
-	//Проверяем, не пришло ли сообщение полностью - выходим если пришло не полностью
 	if (Buffer.size() != MessageSize)
 	{
 		return;
@@ -187,6 +185,10 @@ ISNamespace::ApiMessageType ISTcpSocket::GetMessageType(const QString &TypeName)
 	else if (TypeName == API_TEST)
 	{
 		return ISNamespace::AMT_Test;
+	}
+	else if (TypeName == API_GET_LAST_CLIENT)
+	{
+		return ISNamespace::AMT_GetLastClient;
 	}
 	return ISNamespace::AMT_Unknown;
 }
