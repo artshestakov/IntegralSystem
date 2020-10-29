@@ -241,7 +241,8 @@ void ISTcpWorker::Process()
 				LogText.append("\nError string: " + ErrorString);
 			}
 
-			//Логируемся, добавляем ответ в очередь ответов и завершаем работу
+			//Удаляем сообщение, логируемся, добавляем ответ в очередь ответов и завершаем работу
+			delete tcp_message;
 			Result ? ISLOGGER_I(__CLASS__, LogText) : ISLOGGER_E(__CLASS__, LogText);
 			emit Answer(TcpAnswer);
 			Finish();

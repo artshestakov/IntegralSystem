@@ -82,7 +82,7 @@ bool ISTcpServer::Run()
 	//Запускаем балансировщик
 	if (!QtConcurrent::run(this, &ISTcpServer::QueueBalancerMessage).isStarted())
 	{
-        ISLOGGER_E(__CLASS__, "Error starting QueueBalancerMessage");
+        ISLOGGER_E(__CLASS__, "Not starting QueueBalancerMessage");
 		return false;
 	}
 	BalancerRunning = true;
@@ -131,15 +131,15 @@ void ISTcpServer::incomingConnection(qintptr SocketDescriptor)
 {
 	//Создаём сокет и подключаем все нобходимые сигналы
 	ISTcpSocket *TcpSocket = new ISTcpSocket(SocketDescriptor, this);
-	connect(TcpSocket, &ISTcpSocket::disconnected, this, &ISTcpServer::ClientDisconnected);
-	ISLOGGER_I(__CLASS__, QString("New connect from ") + TcpSocket->peerAddress().toString());
+	connect(TcpSocket, &ISTcpSocket::disconnected, this, &ISTcpServer::ClientDisconnected, Qt::QueuedConnection);
+	connect(TcpSocket, &ISTcpSocket::disconnected, TcpSocket, &ISTcpSocket::deleteLater, Qt::QueuedConnection);
+	ISLOGGER_I(__CLASS__, "Connect " + TcpSocket->peerAddress().toString());
 }
 //-----------------------------------------------------------------------------
 void ISTcpServer::ClientDisconnected()
 {
 	ISTcpSocket *TcpSocket = dynamic_cast<ISTcpSocket*>(sender());
-	ISLOGGER_I(__CLASS__, "Disconnected " + TcpSocket->peerAddress().toString());
-	QTimer::singleShot(5000, TcpSocket, &ISTcpSocket::deleteLater);
+	ISLOGGER_I(__CLASS__, "Disconnect" + TcpSocket->peerAddress().toString());
 }
 //-----------------------------------------------------------------------------
 void ISTcpServer::AcceptError(QTcpSocket::SocketError socket_error)
