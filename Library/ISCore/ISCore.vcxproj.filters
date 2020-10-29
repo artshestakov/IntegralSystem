@@ -90,9 +90,6 @@
     <ClCompile Include="ISConfig.cpp">
       <Filter>System</Filter>
     </ClCompile>
-    <ClCompile Include="ISConsole.cpp">
-      <Filter>System</Filter>
-    </ClCompile>
     <ClCompile Include="ISCore.cpp">
       <Filter>System</Filter>
     </ClCompile>
@@ -184,9 +181,6 @@
       <Filter>System</Filter>
     </ClInclude>
     <ClInclude Include="ISConfig.h">
-      <Filter>System</Filter>
-    </ClInclude>
-    <ClInclude Include="ISConsole.h">
       <Filter>System</Filter>
     </ClInclude>
     <ClInclude Include="ISConstants.h">

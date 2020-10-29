@@ -3,7 +3,7 @@
 #include "ISDebug.h"
 #include "ISMetaData.h"
 #include "ISConstants.h"
-#include "ISConsole.h"
+#include "CGConsole.h"
 //-----------------------------------------------------------------------------
 static QString Q_VACUUM = "VACUUM";
 //-----------------------------------------------------------------------------
@@ -113,7 +113,7 @@ bool CGConfiguratorService::vacuumfull()
 //-----------------------------------------------------------------------------
 bool CGConfiguratorService::cleartable()
 {
-	QString InputName = ISConsole::GetString("Input table name: "); //Запрос на ввод имени таблицы
+	QString InputName = CGConsole::GetString("Input table name: "); //Запрос на ввод имени таблицы
 	if (InputName.isEmpty())
 	{
 		ISDEBUG_L("Table name is empty");

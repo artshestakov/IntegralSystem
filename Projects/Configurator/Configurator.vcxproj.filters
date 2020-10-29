@@ -52,6 +52,9 @@
     <ClCompile Include="CGDatabase.cpp">
       <Filter>System</Filter>
     </ClCompile>
+    <ClCompile Include="CGConsole.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="CGConfiguratorBase.h">
@@ -78,6 +81,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CGDatabase.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="CGConsole.h">
       <Filter>System</Filter>
     </ClInclude>
   </ItemGroup>

@@ -2,7 +2,7 @@
 #include "ISQuery.h"
 #include "ISMetaData.h"
 #include "ISSystem.h"
-#include "ISConsole.h"
+#include "CGConsole.h"
 #include "ISDebug.h"
 //-----------------------------------------------------------------------------
 static QString QS_FOREIGN = PREPARE_QUERY("SELECT COUNT(*) "
@@ -179,7 +179,7 @@ bool CGDatabase::Function_Delete(QString &ErrorString)
 
 			if (!Founded) //Если функция не найдена - предлагаем удалить
 			{
-				if (ISConsole::Question(QString("Delete old function \"%1\"?").arg(FunctionName))) //Согласились на удаление
+				if (CGConsole::Question(QString("Delete old function \"%1\"?").arg(FunctionName))) //Согласились на удаление
 				{
 					ISQuery qDelete;
 					qDelete.SetShowLongQuery(false);
@@ -764,7 +764,7 @@ bool CGDatabase::Table_DeleteFields(PMetaTable *MetaTable, QString &ErrorString)
 			//Во второму случае такое условие можно объяснить так: было поле в базе, потом его сделали виртуальным - соответственно оно в базе на ни к чему - удаляем
 			if (!MetaTable->ContainsField(FieldName) || (MetaTable->ContainsField(FieldName) && !MetaTable->GetField(FieldName)->QueryText.isEmpty()))
 			{
-				if (ISConsole::Question(QString("The field \"%1\" in the table \"%2\" is out of date, delete?").arg(FieldFullName).arg(MetaTable->Name))) //Пользователь согласился удалить поле - удаляем
+				if (CGConsole::Question(QString("The field \"%1\" in the table \"%2\" is out of date, delete?").arg(FieldFullName).arg(MetaTable->Name))) //Пользователь согласился удалить поле - удаляем
 				{
 					ISQuery qDropColumn;
 					qDropColumn.SetShowLongQuery(false);

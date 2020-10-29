@@ -1,10 +1,10 @@
 #pragma once
-#ifndef _ISCONSOLE_H_INCLUDED
-#define _ISCONSOLE_H_INCLUDED
+#ifndef _CGCONSOLE_H_INCLUDED
+#define _CGCONSOLE_H_INCLUDED
 //-----------------------------------------------------------------------------
-#include "iscore_global.h"
+#include "StdAfx.h"
 //-----------------------------------------------------------------------------
-class ISCORE_EXPORT ISConsole
+class CGConsole
 {
 public:
 	static bool Question(const QString &QuestionText); //Задать вопрос пользователю
