@@ -34,6 +34,7 @@ SOURCES += \
     CGConfiguratorService.cpp \
     CGConfiguratorShow.cpp \
     CGConfiguratorUpdate.cpp \
+    CGConsole.cpp \
     CGDatabase.cpp \
     main.cpp
 
@@ -45,4 +46,5 @@ HEADERS += \
     CGConfiguratorService.h \
     CGConfiguratorShow.h \
     CGConfiguratorUpdate.h \
+    CGConsole.h \
     CGDatabase.h

@@ -28,9 +28,9 @@ HEADERS += \
     ISAssert.h \
     ISAuthConnector.h \
     ISConfig.h \
-    ISConsole.h \
     ISConstants.h \
     ISCore.h \
+    ISDebug.h \
     ISTcp.h \
     ISTcpConnector.h \
     ISTcpQuery.h \
@@ -69,9 +69,9 @@ SOURCES += \
     ISAssert.cpp \
     ISAuthConnector.cpp \
     ISConfig.cpp \
-    ISConsole.cpp \
     ISCore.cpp \
     ISDatabase.cpp \
+    ISDebug.cpp \
     ISLocalization.cpp \
     ISLogger.cpp \
     ISMetaData.cpp \
