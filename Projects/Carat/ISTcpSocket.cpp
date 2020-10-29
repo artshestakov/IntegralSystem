@@ -22,7 +22,7 @@ ISTcpSocket::ISTcpSocket(qintptr SocketDescriptor, QObject *parent)
 	Timer = new QTimer(this);
 	Timer->setInterval(5000);
 	Timer->setSingleShot(true);
-	connect(Timer, &QTimer::timeout, this, &ISTcpSocket::abort);
+	connect(Timer, &QTimer::timeout, this, &ISTcpSocket::Timeout);
 
 	//Эти сигналы обязательно должны подключаться в конце конструктора
 	connect(this, static_cast<void(ISTcpSocket::*)(QAbstractSocket::SocketError)>(&ISTcpSocket::error), this, &ISTcpSocket::Error);
@@ -90,14 +90,13 @@ void ISTcpSocket::ReadyRead()
 		{
 			abort();
 			ISLOGGER_E(__CLASS__, "Not get message size. Client will be disconnected. Invalid message:\n" + Buffer);
-			ClearBuffer();
 			return;
 		}
 	}
 
 	//Инкрементируем количество чанков и Проверяем, не пришло ли сообщение полностью - выходим если пришло не полностью
 	++ChunkCount;
-	if (Buffer.size() != MessageSize)
+	if ((unsigned int)Buffer.size() != MessageSize)
 	{
 		return;
 	}
@@ -198,5 +197,11 @@ void ISTcpSocket::ClearBuffer()
 	Buffer.clear();
 	MessageSize = 0;
 	ChunkCount = 0;
+}
+//-----------------------------------------------------------------------------
+void ISTcpSocket::Timeout()
+{
+	ISLOGGER_E(__CLASS__, "Message come not complete from " + peerAddress().toString());
+	abort();
 }
 //-----------------------------------------------------------------------------

@@ -789,6 +789,8 @@ bool ISTcpWorker::Test(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::GetLastClient(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
+	Q_UNUSED(TcpMessage);
+
 	QString UpdateClientDir = CONFIG_STRING(CONST_CONFIG_OTHER_UPDATE_CLIENT_DIR);
 	if (UpdateClientDir.isEmpty())
 	{

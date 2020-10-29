@@ -41,9 +41,9 @@ bool ISTcp::IsValidAnswer(const QByteArray &ByteArray, QVariantMap &VariantMap, 
 	return true;
 }
 //-----------------------------------------------------------------------------
-int ISTcp::GetQuerySizeFromBuffer(QByteArray &ByteArray, bool &Ok)
+unsigned int ISTcp::GetQuerySizeFromBuffer(QByteArray &ByteArray, bool &Ok)
 {
-	int Pos = ByteArray.indexOf(SYMBOL_POINT);
+	unsigned int Pos = ByteArray.indexOf(SYMBOL_POINT);
 	Ok = Pos != -1;
 	if (Ok)
 	{

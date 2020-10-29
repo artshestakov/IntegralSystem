@@ -20,8 +20,8 @@ public:
 	ISTcpSocket *TcpSocket; //Указатель на клиента
 
 	long long ParseMSec; //Время парсинга
-	int Size; //Размер сообщения
-	int ChunkCount; //Количество чанков
+	unsigned int Size; //Размер сообщения
+	unsigned int ChunkCount; //Количество чанков
 	qint64 MessageID; //Идентификатор сообщения
 
 private:

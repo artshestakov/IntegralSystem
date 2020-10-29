@@ -30,11 +30,12 @@ private:
 	void Error(QAbstractSocket::SocketError socket_error); //Событие ошибки сокета
 	ISNamespace::ApiMessageType GetMessageType(const QString &TypeName) const; //Получить тип сообщения по его имени
 	void ClearBuffer(); //Очистка буфера
+	void Timeout(); //Событие таймаута
 
 private:
 	QByteArray Buffer; //Буфер
-	int MessageSize; //Размер сообщения
-	int ChunkCount; //Количество частей сообщения
+	unsigned int MessageSize; //Размер сообщения
+	unsigned int ChunkCount; //Количество частей сообщения
 	QTimer *Timer;
 
 	bool IsAuthorized; //Флаг авторизации клиента
