@@ -151,6 +151,14 @@ void ISTcpWorker::Run()
 //-----------------------------------------------------------------------------
 void ISTcpWorker::Stop()
 {
+	bool is_running = true;
+	while (is_running)
+	{
+		ISSleep(1);
+		CRITICAL_SECTION_LOCK(&CriticalSection);
+		is_running = IsRunning;
+		CRITICAL_SECTION_UNLOCK(&CriticalSection);
+	}
 	CRITICAL_SECTION_LOCK(&CriticalSection);
 	IsStopped = true;
 	CRITICAL_SECTION_UNLOCK(&CriticalSection);

@@ -104,15 +104,6 @@ void ISTcpServer::Stop()
 	ISLOGGER_I(__CLASS__, "Stopping");
 	close();
 
-	//Обходим кааждый воркер и останавливаем его
-	for (unsigned int i = 0; i < WorkerCount; ++i)
-	{
-		ISTcpWorker *TcpWorker = Workers[i]; //Получаем текущий воркер
-		TcpWorker->Stop(); //Останавливаем его
-		TcpWorker->deleteLater();
-		TcpWorker->thread()->quit(); //Получаем поток воркера и тоже его останавливаем
-	}
-
 	//Останавливаем балансер и ждём пока он не остановится
 	CRITICAL_SECTION_LOCK(&CriticalSection);
 	BalancerRunning = false;
@@ -122,9 +113,17 @@ void ISTcpServer::Stop()
 		ISSleep(10);
 	}
 
+	//Обходим кааждый воркер и останавливаем его
+	for (unsigned int i = 0; i < WorkerCount; ++i)
+	{
+		ISTcpWorker *TcpWorker = Workers[i]; //Получаем текущий воркер
+		TcpWorker->Stop(); //Останавливаем его
+		TcpWorker->thread()->quit(); //Получаем поток воркера и тоже его останавливаем
+		connect(TcpWorker->thread(), &QThread::finished, TcpWorker, &ISTcpWorker::deleteLater); //После остановки потока удалится и объект воркера
+	}
+
 	//Записываем текущий идентификатор в файл
 	ISTcpQueue::Instance().WriteMessageID();
-
 	ISLOGGER_I(__CLASS__, "Stopped");
 }
 //-----------------------------------------------------------------------------

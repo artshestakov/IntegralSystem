@@ -96,7 +96,7 @@ bool ISCaratApplication::Init()
 	return true;
 }
 //-----------------------------------------------------------------------------
-bool ISCaratApplication::Run(const QStringList &Arguments)
+void ISCaratApplication::Run(const QStringList &Arguments)
 {
 	QString Argument = Arguments.front();
 	if (Argument == "--help" || Argument == "-h")
@@ -116,8 +116,6 @@ bool ISCaratApplication::Run(const QStringList &Arguments)
 		std::cout << "Invalid argument \"" << Argument.toStdString() << "\"" << std::endl;
 		Help();
 	}
-	ISCore::ExitApplication();
-	return true;
 }
 //-----------------------------------------------------------------------------
 bool ISCaratApplication::Run()
@@ -234,7 +232,9 @@ void ISCaratApplication::SendCommand(const QByteArray &ByteArray)
 
 		if (TcpSocket.bytesAvailable() > 0) //Дождались ответа - выводим в консоль и выходим из функции
 		{
-			std::cout << "Answer: " << TcpSocket.readAll().toStdString() << std::endl;
+			QString Answer = TcpSocket.readAll();
+			ISSystem::RemoveLastSymbolLoop(Answer, '\n');
+			std::cout << "Answer: " << Answer.toStdString() << std::endl;
 			break;
 		}
 	}

@@ -26,7 +26,8 @@ int main(int argc, char **argv)
 	}
     else //Если аргументы запуска есть
     {
-        ResultCode = CaratApplication.Run(Arguments) ? EXIT_SUCCESS : EXIT_FAILURE;
+		CaratApplication.Run(Arguments);
+		return EXIT_SUCCESS;
     }
 
 	//Останавливаем служебные сервисы и завершаем программу

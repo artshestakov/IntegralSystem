@@ -19,7 +19,7 @@ public:
 
 	QString GetErrorString() const; //Получить текстовое описание ошибки
 	bool Init(); //Инициализация
-	bool Run(const QStringList &Arguments); //Запуск с параметрами
+	void Run(const QStringList &Arguments); //Запуск с параметрами
 	bool Run(); //Стандартный запуск
 
 private:
