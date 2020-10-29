@@ -3,6 +3,7 @@
 #define _ISCONFIG_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "iscore_global.h"
+#include "ISTypedefs.h"
 //-----------------------------------------------------------------------------
 class ISCORE_EXPORT ISConfig
 {
@@ -32,6 +33,7 @@ private:
 	QSettings *Settings;
 	QString PathConfigTemplate;
 	QString PathConfigFile;
+	ISCriticalSection CriticalSection;
 };
 //-----------------------------------------------------------------------------
 #define CONFIG_VALUE(PARAMETER_NAME) ISConfig::Instance().GetValue(PARAMETER_NAME) //Получить значение параметра из конфигурационного файла

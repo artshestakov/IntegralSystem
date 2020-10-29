@@ -7,7 +7,7 @@ ISConfig::ISConfig()
 	: ErrorString(NO_ERROR_STRING),
 	Settings(nullptr)
 {
-	
+	CRITICAL_SECTION_INIT(&CriticalSection);
 }
 //-----------------------------------------------------------------------------
 ISConfig::~ISConfig()
@@ -16,6 +16,7 @@ ISConfig::~ISConfig()
 	{
 		delete Settings;
 	}
+	CRITICAL_SECTION_DESTROY(&CriticalSection);
 }
 //-----------------------------------------------------------------------------
 ISConfig& ISConfig::Instance()
@@ -80,11 +81,15 @@ bool ISConfig::Initialize(const QString &TemplateName)
 QVariant ISConfig::GetValue(const QString &ParameterName)
 {
 	QVariant Value;
-	if (Settings->contains(ParameterName))
+	CRITICAL_SECTION_LOCK(&CriticalSection);
+	bool Contains = Settings->contains(ParameterName);
+	if (Contains)
 	{
 		Value = Settings->value(ParameterName);
 	}
-	else
+	CRITICAL_SECTION_UNLOCK(&CriticalSection);
+
+	if (!Contains)
 	{
 		ISLOGGER_W(__CLASS__, QString("Not found key \"%1\" in file \"%2\"").arg(ParameterName).arg(Settings->fileName()));
 	}
