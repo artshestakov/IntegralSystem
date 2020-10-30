@@ -432,7 +432,7 @@ QString ISGui::ConvertDateToString(const QDate &Date, const QString &DateFormat)
 //-----------------------------------------------------------------------------
 void ISGui::ExitApplication()
 {
-	ISCore::ExitApplication();
+	ISLogger::Instance().Shutdown();
 	qApp->closeAllWindows();
 }
 //-----------------------------------------------------------------------------

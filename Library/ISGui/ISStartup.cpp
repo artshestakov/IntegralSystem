@@ -23,6 +23,7 @@
 #include "ISProperty.h"
 #include "ISConfig.h"
 #include "ISHistory.h"
+#include "ISDatabase.h"
 //-----------------------------------------------------------------------------
 bool ISStartup::Startup(ISSplashScreen *SplashScreen)
 {
@@ -172,6 +173,9 @@ void ISStartup::Shutdown(ISSplashScreen *SplashScreen)
 	{
 		ISMessageBox::ShowCritical(SplashScreen, LANG("Message.Error.SaveUserSettings"), ISSettings::Instance().GetErrorString());
 	}
+
+	ISQueryPool::Instance().Shutdown();
+	ISDatabase::Instance().DisconnectAll();
 	ISGui::ExitApplication();
 }
 //-----------------------------------------------------------------------------

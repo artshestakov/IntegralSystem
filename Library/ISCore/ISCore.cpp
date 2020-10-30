@@ -43,15 +43,6 @@ static QString QU_RECOVERY_OBJECTS = PREPARE_QUERY2("UPDATE %1 SET "
 													"%2_isdeleted = :IsDeleted "
 													"WHERE %2_id IN(%3)");
 //-----------------------------------------------------------------------------
-void ISCore::ExitApplication()
-{
-	ISQueryPool::Instance().Shutdown();
-	ISDatabase::Instance().DisconnectAll();
-	ISTcpConnector::Instance().Disconnect();
-	ISLogger::Instance().Shutdown();
-	QCoreApplication::quit();
-}
-//-----------------------------------------------------------------------------
 QString ISCore::GetObjectName(const QString &TableName, int ObjectID)
 {
 	return GetObjectName(ISMetaData::Instance().GetMetaTable(TableName), ObjectID);

@@ -31,7 +31,7 @@ int main(int argc, char **argv)
 
 	ISAuthForm AuthForm;
 	Result = AuthForm.Exec();
-	if (Result) //Форма авторизации была закрыта
+	if (Result) //Форма авторизации была закрыта при успешном входе в программу
 	{
 		ISSplashScreen SplashScreen(LANG("Banner.StartupSystem"));
 		SplashScreen.show();
@@ -47,6 +47,8 @@ int main(int argc, char **argv)
 			SplashScreen.SetMessage(LANG("Banner.ShutdownSystem"));
 			SplashScreen.show();
 			ISStartup::Shutdown(&SplashScreen);
+
+			//Если была смена пользователя - запускаем программу
 			if (PROPERTY_GET("is_change_user").toBool())
 			{
 				QProcess::startDetached(QCoreApplication::applicationFilePath());
@@ -56,6 +58,7 @@ int main(int argc, char **argv)
 	else //Если не захотели входить в систему (или что-то ещё) - завершаем работу системы
 	{
 		ISGui::ExitApplication();
+		return EXIT_SUCCESS;
 	}
 	return Result ? EXIT_SUCCESS : EXIT_FAILURE;
 }
