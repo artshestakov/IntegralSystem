@@ -15,6 +15,7 @@ public:
 		MT_Info, //Информация
 		MT_Warning, //Предупреждение
         MT_Error, //Ошибка
+		MT_Critical, //Критическая ошибка
 		MT_Trace, //Трассировка
         MT_Assert //Ассерт
 	};
@@ -75,6 +76,7 @@ private:
 #define ISLOGGER_I(COMPONENT, MESSAGE) ISLogger::Instance().Log(ISLogger::MT_Info, COMPONENT, MESSAGE) //Логирование информационного сообщения
 #define ISLOGGER_W(COMPONENT, MESSAGE) ISLogger::Instance().Log(ISLogger::MT_Warning, COMPONENT, MESSAGE) //Логировние предупреждающего сообщения
 #define ISLOGGER_E(COMPONENT, MESSAGE) ISLogger::Instance().Log(ISLogger::MT_Error, COMPONENT, MESSAGE) //Логирование сообщения об ошибке
+#define ISLOGGER_C(COMPONENT, MESSAGE) ISLogger::Instance().Log(ISLogger::MT_Critical, COMPONENT, MESSAGE) //Логирование критической ошибки
 #define ISLOGGER_T(MESSAGE) ISLogger::Instance().Log(ISLogger::MT_Trace, QString(), MESSAGE) //Трассировка
 #define ISLOGGER_A(MESSAGE) ISLogger::Instance().Log(ISLogger::MT_Assert, QString(), MESSAGE) //Логирование сообщения об ассерте
 //-----------------------------------------------------------------------------

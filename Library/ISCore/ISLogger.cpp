@@ -75,6 +75,7 @@ void ISLogger::Log(MessageType message_type, const QString &component, const QSt
 	case MessageType::MT_Info: string_complete += "[Info]"; break;
 	case MessageType::MT_Warning: string_complete += "[Warning]"; break;
 	case MessageType::MT_Error: string_complete += "[Error]"; break;
+	case MessageType::MT_Critical: string_complete += "[Critical]"; break;
 	case MessageType::MT_Trace: string_complete += "[Trace]"; break;
 	case MessageType::MT_Assert: string_complete += "[Assert]"; break;
 	}
