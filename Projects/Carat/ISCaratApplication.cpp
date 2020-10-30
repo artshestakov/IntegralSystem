@@ -126,7 +126,8 @@ bool ISCaratApplication::Run()
 		"Branch: %4 (%5)\n"
 		"Host name: %6\n"
 		"Domain name: %7\n"
-		"ProcessID: %8").
+		"Main ThreadID: %8\n"
+		"PID: %9").
 		arg(ISVersionInfo::Instance().ToString()).
 		arg(ISVersionInfo::Instance().Info.Configuration).
 		arg(ISVersionInfo::Instance().Info.Platform).
@@ -134,7 +135,8 @@ bool ISCaratApplication::Run()
 		arg(ISVersionInfo::Instance().Info.Hash).
 		arg(QHostInfo::localHostName()).
 		arg(QHostInfo::localDomainName()).
-		arg(CURRENT_THREAD_ID()));
+		arg(CURRENT_THREAD_ID()).
+		arg(GET_PID()));
 
 	//Если контроллер включен - запускаем его
 	if (CONFIG_BOOL(CONST_CONFIG_CONTROLLER_INCLUDE))
