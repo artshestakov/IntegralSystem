@@ -33,7 +33,8 @@ bool ISCaratApplication::Init()
 		return false;
 	}
 
-#ifdef WIN32 //Установим кодировку для консольного приложения под Windows
+	//Установим кодировку для консольного приложения под Debug-Win32
+#if defined(WIN32) && defined(DEBUG)
 	if (SetConsoleOutputCP(65001) == FALSE)
 	{
 		ISLOGGER_W("Startup", "Error changed console encoding");
