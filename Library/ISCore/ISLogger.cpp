@@ -74,6 +74,7 @@ void ISLogger::Log(bool is_format, MessageType message_type, const QString &comp
 		string_complete = QDateTime::currentDateTime().toString(FORMAT_DATE_TIME_V9) + '\t' + QString::number(CURRENT_THREAD_ID()) + '\t';
 		switch (message_type)
 		{
+        case MessageType::MT_Unknown: break;
 		case MessageType::MT_Debug: string_complete += "[Debug]"; break;
 		case MessageType::MT_Info: string_complete += "[Info]"; break;
 		case MessageType::MT_Warning: string_complete += "[Warning]"; break;
