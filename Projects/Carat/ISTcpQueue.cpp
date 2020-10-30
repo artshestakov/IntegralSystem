@@ -6,7 +6,8 @@
 ISTcpQueue::ISTcpQueue()
 	: FilePath(QCoreApplication::applicationDirPath() + "/Temp/MessageID"),
 	File(FilePath),
-	MessageID(0)
+	MessageID(0),
+	IsActive(true)
 {
 	CRITICAL_SECTION_INIT(&CriticalSection);
 }
@@ -68,12 +69,31 @@ void ISTcpQueue::WriteMessageID()
 	}
 }
 //-----------------------------------------------------------------------------
+void ISTcpQueue::Shutdown()
+{
+	CRITICAL_SECTION_LOCK(&CriticalSection);
+	IsActive = false;
+	while (!Queue.empty())
+	{
+		ISTcpMessage *TcpMessage = Queue.front();
+		Queue.pop();
+		delete TcpMessage;
+	}
+	CRITICAL_SECTION_UNLOCK(&CriticalSection);
+}
+//-----------------------------------------------------------------------------
 void ISTcpQueue::AddMessage(ISTcpMessage *TcpMessage)
 {
-	//Блокируем критическую секцию, добавляем сообщение в очередь и разблокируем секцию
 	CRITICAL_SECTION_LOCK(&CriticalSection);
-	TcpMessage->MessageID = ++MessageID;
-	Queue.push(TcpMessage);
+	if (IsActive) //Если очередь активна - добавляем сообщение в неё
+	{
+		TcpMessage->MessageID = ++MessageID;
+		Queue.push(TcpMessage);
+	}
+	else //Иначе удаляем
+	{
+		delete TcpMessage;
+	}
 	CRITICAL_SECTION_UNLOCK(&CriticalSection);
 }
 //-----------------------------------------------------------------------------
@@ -82,10 +102,13 @@ ISTcpMessage* ISTcpQueue::GetMessage()
 	ISTcpMessage *TcpMessage = nullptr;
 	//Блокируем критическую секцию, забираем очередное сообщение и разблокируем секцию
 	CRITICAL_SECTION_LOCK(&CriticalSection);
-	if (!Queue.empty())
+	if (IsActive) //Если очередь активна - возвращем очередное сообщение
 	{
-		TcpMessage = Queue.front();
-		Queue.pop();
+		if (!Queue.empty())
+		{
+			TcpMessage = Queue.front();
+			Queue.pop();
+		}
 	}
 	CRITICAL_SECTION_UNLOCK(&CriticalSection);
 	return TcpMessage;

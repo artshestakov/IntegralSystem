@@ -15,6 +15,7 @@ public:
 	void ReadMessageID(); //Чтение идентификатора
 	void WriteMessageID(); //Сохранение идентификатора в файл
 
+	void Shutdown(); //Остановка работы с очередью
 	void AddMessage(ISTcpMessage *TcpMessage); //Добавить сообщение в очередь
 	ISTcpMessage* GetMessage(); //Получить очередное сообщение
 
@@ -29,6 +30,7 @@ private:
 	QFile File;
 	std::queue<ISTcpMessage *> Queue;
 	qint64 MessageID;
+	bool IsActive; //Флаг активности очереди
 
 	ISCriticalSection CriticalSection; //Критическая секция для синхронизации
 };

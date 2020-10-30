@@ -104,6 +104,9 @@ void ISTcpServer::Stop()
 	ISLOGGER_I(__CLASS__, "Stopping");
 	close();
 
+	//Останавливаем очередь
+	ISTcpQueue::Instance().Shutdown();
+
 	//Останавливаем балансер и ждём пока он не остановится
 	CRITICAL_SECTION_LOCK(&CriticalSection);
 	BalancerRunning = false;
