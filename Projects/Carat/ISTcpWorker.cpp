@@ -169,7 +169,7 @@ void ISTcpWorker::Process()
 {
 	while (true)
 	{
-		ISSleep(1); //Засыпаем на одну милисекунду и даём поработать потоку
+		ISSleep(1); //Засыпаем на милисекунду и даём поработать другим потокам
 
 		//Проверяем, не остановлен ли воркер
 		CRITICAL_SECTION_LOCK(&CriticalSection);

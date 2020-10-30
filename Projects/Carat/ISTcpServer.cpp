@@ -132,14 +132,14 @@ void ISTcpServer::incomingConnection(qintptr SocketDescriptor)
 	//Создаём сокет и подключаем все нобходимые сигналы
 	ISTcpSocket *TcpSocket = new ISTcpSocket(SocketDescriptor, this);
 	connect(TcpSocket, &ISTcpSocket::disconnected, this, &ISTcpServer::ClientDisconnected, Qt::QueuedConnection);
-	connect(TcpSocket, &ISTcpSocket::disconnected, TcpSocket, &ISTcpSocket::deleteLater, Qt::QueuedConnection);
 	ISLOGGER_I(__CLASS__, "Connect " + TcpSocket->peerAddress().toString());
 }
 //-----------------------------------------------------------------------------
 void ISTcpServer::ClientDisconnected()
 {
 	ISTcpSocket *TcpSocket = dynamic_cast<ISTcpSocket*>(sender());
-	ISLOGGER_I(__CLASS__, "Disconnect" + TcpSocket->peerAddress().toString());
+	ISLOGGER_I(__CLASS__, "Disconnect " + TcpSocket->peerAddress().toString());
+	QTimer::singleShot(1000, TcpSocket, &ISTcpSocket::deleteLater); //Запускаем удаление сокета через секунду
 }
 //-----------------------------------------------------------------------------
 void ISTcpServer::AcceptError(QTcpSocket::SocketError socket_error)

@@ -3,7 +3,8 @@
 #include "ISSystem.h"
 //-----------------------------------------------------------------------------
 ISTcpAnswer::ISTcpAnswer(ISTcpSocket *tcp_socket)
-	: Error(false),
+	: ErrorString(NO_ERROR_STRING),
+	Error(false),
 	TcpSocket(tcp_socket)
 {
 	
