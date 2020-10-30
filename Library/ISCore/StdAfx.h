@@ -117,10 +117,8 @@
 #include <QtNetwork/QNetworkRequest>
 #include <QtNetwork/QTcpServer>
 #include <QtNetwork/QTcpSocket>
-#include <QtNetwork/QSslSocket>
 #include <QtNetwork/QHostAddress>
-#include <QtNetwork/QLocalServer>
-#include <QtNetwork/QLocalSocket>
+#include <QtNetwork/QHostInfo>
 //-----------------------------------------------------------------------------
 #include <QtConcurrent/QtConcurrent>
 //-----------------------------------------------------------------------------

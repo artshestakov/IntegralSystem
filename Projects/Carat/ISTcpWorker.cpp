@@ -131,7 +131,7 @@ void ISTcpWorker::Run()
 	connect(thread(), &QThread::finished, thread(), &QThread::deleteLater);
 
 	//Формируем имя подключения к БД
-	DBConnectionName = QString::number((unsigned long)QThread::currentThreadId());
+	DBConnectionName = QString::number(CURRENT_THREAD_ID());
 	
 	//Пытаемся подключиться к БД
 	IsStarted = ISDatabase::Instance().Connect(DBConnectionName, DBHost, DBPort, DBName, DBUser, DBPassword);

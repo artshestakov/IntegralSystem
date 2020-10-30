@@ -11,6 +11,7 @@ class ISCORE_EXPORT ISLogger
 public:
 	enum MessageType //Типы сообщений
 	{
+		MT_Unknown, //Неизвестное сообщение
 		MT_Debug, //Отладка
 		MT_Info, //Информация
 		MT_Warning, //Предупреждение
@@ -35,7 +36,7 @@ public:
 	void Shutdown();
 
 	//Добавить сообщение в лог-файл
-	void Log(MessageType message_type, const QString &component, const QString &string);
+	void Log(bool is_format, MessageType message_type, const QString &component, const QString &string);
 
 private:
 
@@ -65,19 +66,20 @@ private:
 	bool IsFinished; //Флаг остановки
 	std::ofstream File; //Текущий лог-файл
 	QString PathLogsDir; //Текущий путь к конечной папке с логами
-    int CurrentDay; //Текущий день
-    int CurrentMonth; //Текущий месяц
-    int CurrentYear; //Текущий год
+	int CurrentDay; //Текущий день
+	int CurrentMonth; //Текущий месяц
+	int CurrentYear; //Текущий год
 
 	ISCriticalSection CriticalSection; //Критическая секция для синхронизации
 };
 //-----------------------------------------------------------------------------
-#define ISLOGGER_D(COMPONENT, MESSAGE) ISLogger::Instance().Log(ISLogger::MT_Debug, COMPONENT, MESSAGE) //Логирование отладочного сообщения
-#define ISLOGGER_I(COMPONENT, MESSAGE) ISLogger::Instance().Log(ISLogger::MT_Info, COMPONENT, MESSAGE) //Логирование информационного сообщения
-#define ISLOGGER_W(COMPONENT, MESSAGE) ISLogger::Instance().Log(ISLogger::MT_Warning, COMPONENT, MESSAGE) //Логировние предупреждающего сообщения
-#define ISLOGGER_E(COMPONENT, MESSAGE) ISLogger::Instance().Log(ISLogger::MT_Error, COMPONENT, MESSAGE) //Логирование сообщения об ошибке
-#define ISLOGGER_C(COMPONENT, MESSAGE) ISLogger::Instance().Log(ISLogger::MT_Critical, COMPONENT, MESSAGE) //Логирование критической ошибки
-#define ISLOGGER_T(MESSAGE) ISLogger::Instance().Log(ISLogger::MT_Trace, QString(), MESSAGE) //Трассировка
-#define ISLOGGER_A(MESSAGE) ISLogger::Instance().Log(ISLogger::MT_Assert, QString(), MESSAGE) //Логирование сообщения об ассерте
+#define ISLOGGER(MESSAGE) ISLogger::Instance().Log(false, ISLogger::MT_Unknown, QString(), MESSAGE) //Логирование сообщения без форматирования
+#define ISLOGGER_D(COMPONENT, MESSAGE) ISLogger::Instance().Log(true, ISLogger::MT_Debug, COMPONENT, MESSAGE) //Логирование отладочного сообщения
+#define ISLOGGER_I(COMPONENT, MESSAGE) ISLogger::Instance().Log(true, ISLogger::MT_Info, COMPONENT, MESSAGE) //Логирование информационного сообщения
+#define ISLOGGER_W(COMPONENT, MESSAGE) ISLogger::Instance().Log(true, ISLogger::MT_Warning, COMPONENT, MESSAGE) //Логировние предупреждающего сообщения
+#define ISLOGGER_E(COMPONENT, MESSAGE) ISLogger::Instance().Log(true, ISLogger::MT_Error, COMPONENT, MESSAGE) //Логирование сообщения об ошибке
+#define ISLOGGER_C(COMPONENT, MESSAGE) ISLogger::Instance().Log(true, ISLogger::MT_Critical, COMPONENT, MESSAGE) //Логирование критической ошибки
+#define ISLOGGER_T(MESSAGE) ISLogger::Instance().Log(true, ISLogger::MT_Trace, QString(), MESSAGE) //Трассировка
+#define ISLOGGER_A(MESSAGE) ISLogger::Instance().Log(true, ISLogger::MT_Assert, QString(), MESSAGE) //Логирование сообщения об ассерте
 //-----------------------------------------------------------------------------
 #endif

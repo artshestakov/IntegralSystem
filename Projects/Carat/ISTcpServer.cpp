@@ -173,14 +173,14 @@ void ISTcpServer::QueueBalancerMessage()
 			while (Index < WorkerCount)
 			{
 				ISTcpWorker *TcpWorker = Workers[Index]; //ѕолучаем текущий воркер
-				if (!TcpWorker->GetRunning()) //≈сли он не зан€т - пердаЄм ему очередное сообщение и выходим из цикла
+				if (!TcpWorker->GetRunning()) //≈сли он не зан€т - передаЄм ему очередное сообщение и выходим из цикла
 				{
 					TcpWorker->SetMessage(TcpMessage);
 					TcpMessage = nullptr;
 					break;
 				}
 				++Index; //»нкрементируем индекс
-				if (Index == WorkerCount) //≈сли текущий индекс сравн€елс€ с количеством воркером - обнул€ем его
+				if (Index == WorkerCount) //≈сли текущий индекс сравн€лс€ с количеством воркером - обнул€ем его
 				{
 					Index = 0;
 				}

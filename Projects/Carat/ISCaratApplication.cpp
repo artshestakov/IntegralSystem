@@ -120,7 +120,20 @@ void ISCaratApplication::Run(const QStringList &Arguments)
 //-----------------------------------------------------------------------------
 bool ISCaratApplication::Run()
 {
-    ISLOGGER_I(__CLASS__, QString("Starting. [Version %1] %2 %3").arg(ISVersionInfo::Instance().ToString()).arg(ISVersionInfo::Instance().Info.Configuration).arg(ISVersionInfo::Instance().Info.Platform));
+    ISLOGGER(QString("Starting service...\n"
+		"Version: %1 (%2 %3)\n"
+		"Branch: %4 (%5)\n"
+		"Host name: %6\n"
+		"Domain name: %7\n"
+		"ProcessID: %8").
+		arg(ISVersionInfo::Instance().ToString()).
+		arg(ISVersionInfo::Instance().Info.Configuration).
+		arg(ISVersionInfo::Instance().Info.Platform).
+		arg(ISVersionInfo::Instance().Info.Branch).
+		arg(ISVersionInfo::Instance().Info.Hash).
+		arg(QHostInfo::localHostName()).
+		arg(QHostInfo::localDomainName()).
+		arg(CURRENT_THREAD_ID()));
 
 	//Если контроллер включен - запускаем его
 	if (CONFIG_BOOL(CONST_CONFIG_CONTROLLER_INCLUDE))

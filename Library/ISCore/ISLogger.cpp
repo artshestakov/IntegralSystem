@@ -66,25 +66,33 @@ void ISLogger::Shutdown()
 	File.close();
 }
 //-----------------------------------------------------------------------------
-void ISLogger::Log(MessageType message_type, const QString &component, const QString &string)
+void ISLogger::Log(bool is_format, MessageType message_type, const QString &component, const QString &string)
 {
-	QString string_complete = QDateTime::currentDateTime().toString(FORMAT_DATE_TIME_V9) + '\t' + QString::number(GET_CURRENT_THREAD_ID()) + '\t';
-	switch (message_type)
+	QString string_complete;
+	if (is_format) //≈сли сообщение нужно форматировать
 	{
-	case MessageType::MT_Debug: string_complete += "[Debug]"; break;
-	case MessageType::MT_Info: string_complete += "[Info]"; break;
-	case MessageType::MT_Warning: string_complete += "[Warning]"; break;
-	case MessageType::MT_Error: string_complete += "[Error]"; break;
-	case MessageType::MT_Critical: string_complete += "[Critical]"; break;
-	case MessageType::MT_Trace: string_complete += "[Trace]"; break;
-	case MessageType::MT_Assert: string_complete += "[Assert]"; break;
-	}
+		string_complete = QDateTime::currentDateTime().toString(FORMAT_DATE_TIME_V9) + '\t' + QString::number(CURRENT_THREAD_ID()) + '\t';
+		switch (message_type)
+		{
+		case MessageType::MT_Debug: string_complete += "[Debug]"; break;
+		case MessageType::MT_Info: string_complete += "[Info]"; break;
+		case MessageType::MT_Warning: string_complete += "[Warning]"; break;
+		case MessageType::MT_Error: string_complete += "[Error]"; break;
+		case MessageType::MT_Critical: string_complete += "[Critical]"; break;
+		case MessageType::MT_Trace: string_complete += "[Trace]"; break;
+		case MessageType::MT_Assert: string_complete += "[Assert]"; break;
+		}
 
-	if (!component.isEmpty())
-	{
-		string_complete += '[' + component + ']';
+		if (!component.isEmpty())
+		{
+			string_complete += '[' + component + ']';
+		}
+		string_complete += ' ' + string;
 	}
-	string_complete += ' ' + string;
+	else //‘орматирование не нужно - записываем сообщение "как есть"
+	{
+		string_complete = string;
+	}
 
 #ifdef DEBUG //¬ отладочной версии выводим строку в консоль
 	OutputToConsole(string_complete);
