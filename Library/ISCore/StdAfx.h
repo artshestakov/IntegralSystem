@@ -98,6 +98,7 @@
 #include <QtCore/QTranslator>
 #include <QtCore/QAbstractItemModel>
 #include <QtCore/QItemSelectionModel>
+#include <QtCore/QSysInfo>
 //-----------------------------------------------------------------------------
 #include <QtSql/QSqlDatabase>
 #include <QtSql/QSqlQueryModel>

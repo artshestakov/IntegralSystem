@@ -126,15 +126,17 @@ bool ISCaratApplication::Run()
 		"Branch: %4 (%5)\n"
 		"Host name: %6\n"
 		"Domain name: %7\n"
-		"Main ThreadID: %8\n"
-		"PID: %9").
+		"OS: %8\n"
+		"Main ThreadID: %9\n"
+		"PID: %10").
 		arg(ISVersionInfo::Instance().ToString()).
 		arg(ISVersionInfo::Instance().Info.Configuration).
 		arg(ISVersionInfo::Instance().Info.Platform).
 		arg(ISVersionInfo::Instance().Info.Branch).
 		arg(ISVersionInfo::Instance().Info.Hash).
-		arg(QHostInfo::localHostName()).
+		arg(QSysInfo::machineHostName()).
 		arg(QHostInfo::localDomainName()).
+		arg(QSysInfo::prettyProductName()).
 		arg(CURRENT_THREAD_ID()).
 		arg(GET_PID()));
 
