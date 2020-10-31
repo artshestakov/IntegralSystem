@@ -210,6 +210,7 @@ void ISAuthForm::ShowAboutForm()
 //-----------------------------------------------------------------------------
 void ISAuthForm::Input()
 {
+	//Проверяем наличие обновлений
 	if (CheckUpdate())
 	{
 		close();
@@ -218,42 +219,42 @@ void ISAuthForm::Input()
 
 	if (Check())
 	{
-		SetConnecting(true);
-		if (CONFIG_BOOL("Protocol/Use")) //Используем протокол
-		{
-			if (!ISTcpConnector::Instance().Connect(CONFIG_STRING(CONST_CONFIG_CONNECTION_SERVER), CONFIG_INT("Protocol/Port"))) //Ошибка подключения к карату
-			{
-				SetConnecting(false);
-				ISMessageBox::ShowCritical(this, LANG("Message.Error.ConnectToServer"), ISTcpConnector::Instance().GetErrorString());
-				return;
-			}
+		//Если выбран вход по протоколу - используем новую функцию, иначе - старую (через БД)
+		CONFIG_BOOL("Protocol/Use") ? InputNew() : InputOld();
+	}
+}
+//-----------------------------------------------------------------------------
+void ISAuthForm::InputOld()
+{
+	SetConnecting(true);
+	AuthConnector->Connect();
+}
+//-----------------------------------------------------------------------------
+void ISAuthForm::InputNew()
+{
+	SetConnecting(true);
+	if (!ISTcpConnector::Instance().Connect(CONFIG_STRING(CONST_CONFIG_CONNECTION_SERVER), CONFIG_INT("Protocol/Port"))) //Ошибка подключения к карату
+	{
+		SetConnecting(false);
+		ISMessageBox::ShowCritical(this, LANG("Message.Error.ConnectToServer"), ISTcpConnector::Instance().GetErrorString());
+		return;
+	}
 
-			ISTcpQuery qAuth(API_AUTH);
-			qAuth.BindValue("Login", EditLogin->GetValue());
-			qAuth.BindValue("Password", EditPassword->GetValue());
-			if (qAuth.Execute()) //Запрос на авторизацию прошёл успешно
-			{
-				if (qAuth.Execute(API_GET_META_DATA))
-				{
-
-				}
-				else
-				{
-					SetConnecting(false);
-					ISMessageBox::ShowCritical(this, LANG("Message.Error.Auth").arg(LANG(qAuth.GetErrorString())));
-				}
-			}
-			else //Ошибка авторизации
-			{
-				SetConnecting(false);
-				ISMessageBox::ShowCritical(this, LANG("Message.Error.Auth").arg(LANG(qAuth.GetErrorString())));
-			}
-			ConnectedDone();
-		}
-		else //Стандартное подключение
-		{
-			AuthConnector->Connect();
-		}
+	ISTcpQuery qAuth(API_AUTH);
+	qAuth.BindValue("Login", EditLogin->GetValue());
+	qAuth.BindValue("Password", EditPassword->GetValue());
+	if (qAuth.Execute()) //Авторизация прошла успешно
+	{
+		SetConnecting(false);
+		SetResult(true);
+		hide();
+		ISMetaUser::Instance().UserData.Login = EditLogin->GetValue().toString();
+		close();
+	}
+	else //Ошибка авторизации
+	{
+		SetConnecting(false);
+		ISMessageBox::ShowCritical(this, LANG("Message.Error.Auth").arg(LANG(qAuth.GetErrorString())));
 	}
 }
 //-----------------------------------------------------------------------------

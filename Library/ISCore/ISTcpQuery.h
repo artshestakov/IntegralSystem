@@ -12,7 +12,8 @@ public:
 
 	QString GetErrorString() const;
 	void BindValue(const QString &ParamterName, const QVariant &ParameterValue);
-	bool Execute(const QString &query_type = QString());
+	bool Execute(const QString &query_type);
+	bool Execute();
 	QVariantMap& GetAnswer();
 
 private:

@@ -7,6 +7,8 @@ class ISGUI_EXPORT	ISStartup
 {
 public:
 	static bool Startup(ISSplashScreen *SplashScreen);
+	static bool StartupOld(ISSplashScreen *SplashScreen);
+	static bool StartupNew(ISSplashScreen *SplashScreen);
 	static void Shutdown(ISSplashScreen *SplashScreen);
 
 private:

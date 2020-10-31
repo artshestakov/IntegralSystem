@@ -26,15 +26,15 @@ bool ISTcp::IsValidAnswer(const QByteArray &ByteArray, QVariantMap &VariantMap, 
 
 	if (VariantMap["IsError"].toBool()) //Если ошибка действительно есть, только тогда проверяем наличие её описания
 	{
-		if (!VariantMap.contains("ErrorDescription")) //Если поле с описанием ошибки отсутствует
+		if (!VariantMap.contains("ErrorString")) //Если поле с описанием ошибки отсутствует
 		{
-			ErrorString = "Not found field \"ErrorDescription\"";
+			ErrorString = "Not found field \"ErrorString\"";
 			return false;
 		}
 
-		if (VariantMap["ErrorDescription"].toString().isEmpty()) //Если поле с описанием ошибки пустое
+		if (VariantMap["ErrorString"].toString().isEmpty()) //Если поле с описанием ошибки пустое
 		{
-			ErrorString = "Empty field \"ErrorDescription\"";
+			ErrorString = "Empty field \"ErrorString\"";
 			return false;
 		}
 	}

@@ -24,8 +24,47 @@
 #include "ISConfig.h"
 #include "ISHistory.h"
 #include "ISDatabase.h"
+#include "ISTcpQuery.h"
 //-----------------------------------------------------------------------------
 bool ISStartup::Startup(ISSplashScreen *SplashScreen)
+{
+	return CONFIG_BOOL("Protocol/Use") ? StartupNew(SplashScreen) : StartupOld(SplashScreen);
+}
+//-----------------------------------------------------------------------------
+void ISStartup::Shutdown(ISSplashScreen *SplashScreen)
+{
+	ISProtocol::ExitApplication();
+	if (!(SETTING_BOOL(CONST_UID_SETTING_TABLES_REMEMBERSORTING) ? ISSortingBuffer::Instance().SaveSortings() : ISSortingBuffer::Instance().Clear()))
+	{
+		ISMessageBox::ShowCritical(SplashScreen, LANG("Message.Error.SaveSortingBuffer"), ISSortingBuffer::Instance().GetErrorString());
+	}
+
+	if (!(SETTING_BOOL(CONST_UID_SETTING_TABLES_REMEMBERCOLUMNSIZE) ? ISColumnSizer::Instance().Save() : ISColumnSizer::Instance().Clear()))
+	{
+		ISMessageBox::ShowCritical(SplashScreen, LANG("Message.Error.SaveColumnSizer"), ISColumnSizer::Instance().GetErrorString());
+	}
+
+	if (!ISFavorites::Instance().Save())
+	{
+		ISMessageBox::ShowCritical(SplashScreen, LANG("Message.Error.SaveFavorites"), ISFavorites::Instance().GetErrorString());
+	}
+
+	if (!ISHistory::Instance().Save())
+	{
+		ISMessageBox::ShowCritical(SplashScreen, LANG("Message.Error.SaveHistory"), ISHistory::Instance().GetErrorString());
+	}
+
+	if (!ISSettings::Instance().Save())
+	{
+		ISMessageBox::ShowCritical(SplashScreen, LANG("Message.Error.SaveUserSettings"), ISSettings::Instance().GetErrorString());
+	}
+
+	ISQueryPool::Instance().Shutdown();
+	ISDatabase::Instance().DisconnectAll();
+	ISGui::ExitApplication();
+}
+//-----------------------------------------------------------------------------
+bool ISStartup::StartupOld(ISSplashScreen *SplashScreen)
 {
 	//Инициализация объекта конфигурации
 	if (!ISObjects::Instance().Initialize())
@@ -90,7 +129,7 @@ bool ISStartup::Startup(ISSplashScreen *SplashScreen)
 	}
 
 	ISQueryPool::Instance().Start();
-	
+
 	//Инициалищация печати
 	if (!ISPrintingEntity::Instance().Initialize())
 	{
@@ -146,37 +185,19 @@ bool ISStartup::Startup(ISSplashScreen *SplashScreen)
 	return true;
 }
 //-----------------------------------------------------------------------------
-void ISStartup::Shutdown(ISSplashScreen *SplashScreen)
+bool ISStartup::StartupNew(ISSplashScreen *SplashScreen)
 {
-	ISProtocol::ExitApplication();
-	if (!(SETTING_BOOL(CONST_UID_SETTING_TABLES_REMEMBERSORTING) ? ISSortingBuffer::Instance().SaveSortings() : ISSortingBuffer::Instance().Clear()))
+	ISTcpQuery qAuth(API_GET_META_DATA);
+	bool Result = qAuth.Execute();
+	if (Result)
 	{
-		ISMessageBox::ShowCritical(SplashScreen, LANG("Message.Error.SaveSortingBuffer"), ISSortingBuffer::Instance().GetErrorString());
-	}
 
-	if (!(SETTING_BOOL(CONST_UID_SETTING_TABLES_REMEMBERCOLUMNSIZE) ? ISColumnSizer::Instance().Save() : ISColumnSizer::Instance().Clear()))
+	}
+	else
 	{
-		ISMessageBox::ShowCritical(SplashScreen, LANG("Message.Error.SaveColumnSizer"), ISColumnSizer::Instance().GetErrorString());
+		ISMessageBox::ShowCritical(SplashScreen, qAuth.GetErrorString());
 	}
-
-	if (!ISFavorites::Instance().Save())
-	{
-		ISMessageBox::ShowCritical(SplashScreen, LANG("Message.Error.SaveFavorites"), ISFavorites::Instance().GetErrorString());
-	}
-
-	if (!ISHistory::Instance().Save())
-	{
-		ISMessageBox::ShowCritical(SplashScreen, LANG("Message.Error.SaveHistory"), ISHistory::Instance().GetErrorString());
-	}
-
-	if (!ISSettings::Instance().Save())
-	{
-		ISMessageBox::ShowCritical(SplashScreen, LANG("Message.Error.SaveUserSettings"), ISSettings::Instance().GetErrorString());
-	}
-
-	ISQueryPool::Instance().Shutdown();
-	ISDatabase::Instance().DisconnectAll();
-	ISGui::ExitApplication();
+	return Result;
 }
 //-----------------------------------------------------------------------------
 bool ISStartup::CheckAccessDatabase(ISSplashScreen *SplashScreen)

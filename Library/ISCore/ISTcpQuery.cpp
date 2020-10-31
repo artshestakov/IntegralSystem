@@ -30,16 +30,22 @@ void ISTcpQuery::BindValue(const QString &ParamterName, const QVariant &Paramete
 //-----------------------------------------------------------------------------
 bool ISTcpQuery::Execute(const QString &query_type)
 {
+	QueryType = query_type;
+	return Execute();
+}
+//-----------------------------------------------------------------------------
+bool ISTcpQuery::Execute()
+{
 	//Формируем запрос (тип запроса, его параметры и системные поля)
 	QByteArray ByteArray = ISSystem::VariantMapToJsonString(
 	{
-		{ "Type", query_type.isEmpty() ? QueryType : query_type },
+		{ "Type", QueryType },
 		{ "Parameters", Parameters },
 		{
 			"System", QVariantMap
-			{
-				{ "Version", ISVersionInfo::Instance().ToString() }
-			}
+	{
+		{ "Version", ISVersionInfo::Instance().ToString() }
+	}
 		}
 	}, QJsonDocument::Compact);
 	ByteArray.insert(0, QString("%1.").arg(ByteArray.size()));
@@ -55,7 +61,7 @@ bool ISTcpQuery::Execute(const QString &query_type)
 
 	ByteArray.clear();
 	int AnswerSize = 0;
-	
+
 	while (true) //Ждём пока не придёт ответ
 	{
 		ISSleep(1);
@@ -80,7 +86,7 @@ bool ISTcpQuery::Execute(const QString &query_type)
 			}
 		}
 	}
-	
+
 	//Проверяем валидность ответа
 	if (!ISTcp::IsValidAnswer(ByteArray, TcpAnswer, ErrorString))
 	{
@@ -90,7 +96,7 @@ bool ISTcpQuery::Execute(const QString &query_type)
 	//Проверяем запрос на ошибку
 	if (TcpAnswer["IsError"].toBool())
 	{
-		ErrorString = TcpAnswer["ErrorDescription"].toString();
+		ErrorString = TcpAnswer["ErrorString"].toString();
 		return false;
 	}
 

@@ -27,6 +27,9 @@ private:
 	void ShowAboutForm(); //Открыть форму "О программе"
 
 	void Input(); //Вход в программу
+	void InputOld(); //Старый вход в программу (через БД)
+	void InputNew(); //Новых вход в программу (через Карат)
+
 	void ConnectedDone();
 	void ConnectedFailed();
 
