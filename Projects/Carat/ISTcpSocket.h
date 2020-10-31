@@ -13,6 +13,8 @@ public:
 	ISTcpSocket(qintptr SocketDescriptor, QObject *parent = 0);
 	virtual ~ISTcpSocket();
 
+	QString GetAddress() const;
+
 	void SetAuthorized(bool authorized);
 	bool GetAuthorized() const;
 
@@ -33,6 +35,7 @@ private:
 	void Timeout(); //Событие таймаута
 
 private:
+	QString Address;
 	QByteArray Buffer; //Буфер
 	unsigned int MessageSize; //Размер сообщения
 	unsigned int ChunkCount; //Количество частей сообщения

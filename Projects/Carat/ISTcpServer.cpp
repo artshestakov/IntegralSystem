@@ -141,7 +141,7 @@ void ISTcpServer::incomingConnection(qintptr SocketDescriptor)
 void ISTcpServer::ClientDisconnected()
 {
 	ISTcpSocket *TcpSocket = dynamic_cast<ISTcpSocket*>(sender());
-	ISLOGGER_I(__CLASS__, "Disconnect " + TcpSocket->peerAddress().toString());
+	ISLOGGER_I(__CLASS__, "Disconnect " + TcpSocket->GetAddress());
 	QTimer::singleShot(1000, TcpSocket, &ISTcpSocket::deleteLater); //«апускаем удаление сокета через секунду
 }
 //-----------------------------------------------------------------------------

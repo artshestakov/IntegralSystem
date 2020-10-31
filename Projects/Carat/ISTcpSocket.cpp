@@ -18,6 +18,7 @@ ISTcpSocket::ISTcpSocket(qintptr SocketDescriptor, QObject *parent)
 	UserIsSystem(false)
 {
 	setSocketDescriptor(SocketDescriptor);
+	Address = peerAddress().toString(); //Адрес можно получить только после установки дескриптоба базовому классу
 
 	Timer = new QTimer(this);
 	Timer->setInterval(5000);
@@ -35,6 +36,11 @@ ISTcpSocket::~ISTcpSocket()
 	{
 		Timer->stop();
 	}
+}
+//-----------------------------------------------------------------------------
+QString ISTcpSocket::GetAddress() const
+{
+	return Address;
 }
 //-----------------------------------------------------------------------------
 void ISTcpSocket::SetAuthorized(bool authorized)
