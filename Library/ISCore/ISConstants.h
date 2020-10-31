@@ -30,6 +30,7 @@ const char EXTENSION_XML[] = "xml";
 const char EXTENSION_INI[] = "ini";
 const char EXTENSION_CRASH[] = "crash";
 const char EXTENSION_PID[] = "pid";
+const char EXTENSION_OLD[] = "old";
 #ifdef WIN32
 const char EXTENSION_BINARY[] = ".exe"; //Расширение исполняемого файла для текущей операционной системы
 const char EXTENSION_LIBRARY[] = ".dll"; //Расширение динамической библиотеки для текущей операционной системы

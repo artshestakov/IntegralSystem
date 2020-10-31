@@ -24,9 +24,13 @@ public:
 
 private:
 	void Shutdown();
+
 	void Help();
 	void Version();
 	void SendShutdown();
+	void ConfigReset();
+
+private:
 	void SendCommand(const QByteArray &ByteArray);
 
 private:

@@ -5,7 +5,7 @@
 #include "ISLocalization.h"
 #include "ISConfig.h"
 #include "ISVersionInfo.h"
-#include "ISLogger.h"
+#include "ISDebug.h"
 #include "ISSystem.h"
 //-----------------------------------------------------------------------------
 ISCaratApplication::ISCaratApplication(int &argc, char **argv)
@@ -112,9 +112,13 @@ void ISCaratApplication::Run(const QStringList &Arguments)
 	{
 		SendShutdown();
 	}
+	else if (Argument == "--conf-reset")
+	{
+		ConfigReset();
+	}
 	else
 	{
-		std::cout << "Invalid argument \"" << Argument.toStdString() << "\"" << std::endl;
+		std::cout << "Argument \"" << Argument.toStdString() << "\" not support" << std::endl;
 		Help();
 	}
 }
@@ -212,6 +216,49 @@ void ISCaratApplication::Version()
 void ISCaratApplication::SendShutdown()
 {
 	SendCommand(CARAT_LOCAL_API_SHUTDOWN);
+}
+//-----------------------------------------------------------------------------
+void ISCaratApplication::ConfigReset()
+{
+	//Формируем пути
+	QFileInfo FileInfo(ISConfig::Instance().GetConfigPath());
+	QString PathCurrentFile = FileInfo.filePath(),
+		PathOldFile = FileInfo.path() + "/" + FileInfo.fileName() + '.' + EXTENSION_OLD;
+
+	QFile File(PathOldFile);
+
+	//Если копия старого файла уже существует - удаляем её
+	if (File.exists())
+	{
+		if (!File.remove()) //Не получилось удалить старый файл
+		{
+			ISDEBUG_E("Error delete old file: " + File.errorString());
+			return;
+		}
+	}
+
+	//Установим имя файла как текущий
+	File.setFileName(PathCurrentFile);
+
+	//Делаем копию текущего файла
+	if (!File.copy(FileInfo.path() + "/" + FileInfo.fileName() + SYMBOL_POINT + EXTENSION_OLD)) //При создании копии возникла ошибка
+	{
+		ISDEBUG_L("Error save old file: " + File.errorString());
+		return;
+	}
+
+	//Удаляем текущий файл
+	if (!File.remove()) //Не получилось удалить его
+	{
+		ISDEBUG_L("Error remove old file: " + File.errorString());
+		return;
+	}
+
+	if (!ISConfig::Instance().ReInitialize("Server"))
+	{
+		ISDEBUG_L("Error init new file: " + ISConfig::Instance().GetErrorString());
+		return;
+	}
 }
 //-----------------------------------------------------------------------------
 void ISCaratApplication::SendCommand(const QByteArray &ByteArray)

@@ -35,6 +35,13 @@ QString ISConfig::GetConfigPath() const
 	return PathConfigFile;
 }
 //-----------------------------------------------------------------------------
+bool ISConfig::ReInitialize(const QString &TemplateName)
+{
+	//Удаляем указатель и инициализируем
+	POINTER_DELETE(Settings);
+	return Initialize(TemplateName);
+}
+//-----------------------------------------------------------------------------
 bool ISConfig::Initialize(const QString &TemplateName)
 {
 	if (Settings)

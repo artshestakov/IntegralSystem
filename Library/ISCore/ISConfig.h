@@ -12,6 +12,8 @@ public:
 
 	QString GetErrorString() const;
 	QString GetConfigPath() const;
+
+	bool ReInitialize(const QString &TemplateName); //Переинициализация
 	bool Initialize(const QString &TemplateName);
 	
 	QVariant GetValue(const QString &ParameterName); //Получить значение параметра
