@@ -2,9 +2,9 @@
 #ifndef _ISCARATAPPLICATION_H_INCLUDED
 #define _ISCARATAPPLICATION_H_INCLUDED
 //-----------------------------------------------------------------------------
-#include "StdAfx.h"
 #include "ISCaratController.h"
 #include "ISTcpServer.h"
+#include "ISAsterisk.h"
 //-----------------------------------------------------------------------------
 class ISCaratApplication : public QCoreApplication
 {
@@ -37,6 +37,7 @@ private:
 	QString ErrorString;
 	ISCaratController *Controller;
 	ISTcpServer *TcpServer;
+	ISAsterisk *Asterisk;
 };
 //-----------------------------------------------------------------------------
 #endif

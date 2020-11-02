@@ -11,6 +11,9 @@
     <Filter Include="System">
       <UniqueIdentifier>{c47e88f3-ffc2-4fe7-90e8-f10d24f2092e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Asterisk">
+      <UniqueIdentifier>{f267233e-4f66-422b-8971-9bbc11066398}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ISTcpQueue.cpp">
@@ -39,6 +42,9 @@
     </ClCompile>
     <ClCompile Include="ISCaratController.cpp">
       <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="ISAsterisk.cpp">
+      <Filter>Asterisk</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -72,6 +78,9 @@
     </QtMoc>
     <QtMoc Include="ISCaratController.h">
       <Filter>System</Filter>
+    </QtMoc>
+    <QtMoc Include="ISAsterisk.h">
+      <Filter>Asterisk</Filter>
     </QtMoc>
   </ItemGroup>
 </Project>

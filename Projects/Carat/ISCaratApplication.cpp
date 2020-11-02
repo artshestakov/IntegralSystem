@@ -144,7 +144,6 @@ bool ISCaratApplication::Run()
 		arg(CURRENT_THREAD_ID()).
 		arg(GET_PID()));
 
-	//Если контроллер включен - запускаем его
 	if (CONFIG_BOOL(CONST_CONFIG_CONTROLLER_INCLUDE))
 	{
 		Controller = new ISCaratController(this);
@@ -154,17 +153,27 @@ bool ISCaratApplication::Run()
 		}
 		else
 		{
+			ISLOGGER_E("ISCaratController", "starting failed");
 			return false;
 		}
 	}
 	
-	//Если TCP-сервер включен - запускаем его
 	if (CONFIG_BOOL(CONST_CONFIG_TCPSERVER_INCLUDE))
 	{
 		TcpServer = new ISTcpServer(this);
 		if (!TcpServer->Run())
 		{
-			ISLOGGER_W("ISTcpServer", "starting failed");
+			ISLOGGER_E("ISTcpServer", "starting failed");
+			return false;
+		}
+	}
+
+	if (CONFIG_BOOL(CONST_CONFIG_AMI_INCLUDE))
+	{
+		Asterisk = new ISAsterisk(this);
+		if (!Asterisk->Start())
+		{
+			ISLOGGER_E("ISAsterisk", "starting failed");
 			return false;
 		}
 	}
