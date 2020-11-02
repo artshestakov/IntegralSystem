@@ -75,6 +75,7 @@
   <Local Name="Message.Error.SaveHistory" Russian="Не удалось сохранить историю открытий объектов."/>
   <Local Name="Message.Error.SaveUserSettings" Russian="Не удалось сохранить пользовательские настройки."/>
   <Local Name="Message.Error.InitializeMetaSystems" Russian="Не удалось загрузить информацию о системах и подсистемах."/>
+  <Local Name="Message.Error.InitializeQueryPool" Russian="Не удалось запустить пул запросов."/>
   <Local Name="Message.Error.InitializeUserRole" Russian="Не удалось загрузить права пользователя."/>
   <Local Name="Message.Error.InitializePrinting" Russian="Не удалось загрузить отчёты."/>
   <Local Name="Message.Error.InitializeFavorites" Russian="Не удалось загрузить избранные объекты."/>

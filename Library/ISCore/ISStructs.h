@@ -37,6 +37,7 @@ struct ISMetaUserData
     int ID; //Идентификатор пользователя
 	QString FIO; //ФИО
     QString Login; //Логин
+	QString Password; //Пароль (временно) //???
 
     int GroupID; //Идентификатор группы в которой состоит пользователь
     bool GroupFullAccess; //Полный доступ

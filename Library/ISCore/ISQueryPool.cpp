@@ -3,18 +3,21 @@
 #include "ISDatabase.h"
 #include "ISQuery.h"
 #include "ISLogger.h"
+#include "ISConfig.h"
 //-----------------------------------------------------------------------------
 ISQueryPool::ISQueryPool()
-	: ErrorString(NO_ERROR_STRING),
+	: QObject(),
+	ErrorString(NO_ERROR_STRING),
+	Port(0),
 	IsRunning(false),
 	IsFinished(false)
 {
-	
+	CRITICAL_SECTION_INIT(&CriticalSection);
 }
 //-----------------------------------------------------------------------------
 ISQueryPool::~ISQueryPool()
 {
-	
+	CRITICAL_SECTION_DESTROY(&CriticalSection);
 }
 //-----------------------------------------------------------------------------
 ISQueryPool& ISQueryPool::Instance()
@@ -28,74 +31,77 @@ QString ISQueryPool::GetErrorString() const
 	return ErrorString;
 }
 //-----------------------------------------------------------------------------
-void ISQueryPool::Start()
+bool ISQueryPool::Start(const QString &host, unsigned short port, const QString &database, const QString &login, const QString &password)
 {
-	IsRunning = true;
+	Host = host;
+	Port = port;
+	Database = database;
+	Login = login;
+	Password = password;
+
+	QEventLoop EventLoop;
+	connect(this, &ISQueryPool::Runned, &EventLoop, &QEventLoop::quit);
+
 	std::thread(&ISQueryPool::StartWorker, this).detach();
+	EventLoop.exec();
+	return IsRunning;
 }
 //-----------------------------------------------------------------------------
 void ISQueryPool::Shutdown()
 {
 	if (IsRunning)
 	{
-		Mutex.lock();
+		CRITICAL_SECTION_LOCK(&CriticalSection);
 		IsRunning = false;
-		Mutex.unlock();
+		CRITICAL_SECTION_UNLOCK(&CriticalSection);
 		while (!IsFinished)
 		{
-			ISSleep(100);
+			ISSleep(1);
 		}
 	}
 }
 //-----------------------------------------------------------------------------
-void ISQueryPool::AddQuery(const QString &SqlText)
+void ISQueryPool::AddQuery(const QString &SqlText, const ISStringToVariantMap &Parameters = ISStringToVariantMap())
 {
-	Mutex.lock();
-	Queue.push(ISQueryPoolObject{ SqlText });
-	Mutex.unlock();
-}
-//-----------------------------------------------------------------------------
-void ISQueryPool::AddQuery(const QString &SqlText, const ISStringToVariantMap &Parameters)
-{
-	Mutex.lock();
+	CRITICAL_SECTION_LOCK(&CriticalSection);
 	Queue.push(ISQueryPoolObject{ SqlText, Parameters });
-	Mutex.unlock();
+	CRITICAL_SECTION_UNLOCK(&CriticalSection);
 }
 //-----------------------------------------------------------------------------
 void ISQueryPool::StartWorker()
 {
-	ISConnectOptionDB ConnectOption = ISDatabase::Instance().GetOption(CONNECTION_DEFAULT);
-	if (!ISDatabase::Instance().Connect(CONNECTION_QUERY_POOL, ConnectOption.Host, ConnectOption.Port, ConnectOption.Name, ConnectOption.Login, ConnectOption.Password))
+	IsRunning = ISDatabase::Instance().Connect(CONNECTION_QUERY_POOL, Host, Port, Database, Login, Password);
+	if (!IsRunning)
 	{
-		ISLOGGER_E(__CLASS__, QString("Error create connection \"%1\": %2").arg(CONNECTION_QUERY_POOL).arg(ISDatabase::Instance().GetErrorString()));
-		return;
+		ErrorString = ISDatabase::Instance().GetErrorString();
 	}
+	emit Runned();
 
-	while (true)
+	if (IsRunning)
 	{
-		Mutex.lock();
-		while (!Queue.empty())
+		while (true)
 		{
-			ISQueryPoolObject QueryPoolObject = Queue.front();
-			Queue.pop();
+			CRITICAL_SECTION_LOCK(&CriticalSection);
+			while (!Queue.empty())
 			{
-				ISQuery Query(ISDatabase::Instance().GetDB(CONNECTION_QUERY_POOL), QueryPoolObject.SqlText);
-				for (const auto &MapItem : QueryPoolObject.Parameters)
+				ISQueryPoolObject QueryPoolObject = Queue.front();
+				Queue.pop();
 				{
-					Query.BindValue(MapItem.first, MapItem.second);
+					ISQuery Query(ISDatabase::Instance().GetDB(CONNECTION_QUERY_POOL), QueryPoolObject.SqlText);
+					for (const auto &MapItem : QueryPoolObject.Parameters)
+					{
+						Query.BindValue(MapItem.first, MapItem.second);
+					}
+					Query.Execute();
 				}
-				Query.Execute();
 			}
-		}
-		bool is_running = IsRunning;
-		Mutex.unlock();
-		if (is_running)
-		{
-			ISSleep(1000);
-		}
-		else
-		{
-			break;
+			bool is_running = IsRunning;
+			CRITICAL_SECTION_UNLOCK(&CriticalSection);
+			if (!is_running)
+			{
+				break;
+			}
+			ISSleep(10);
 		}
 	}
 	IsFinished = true;

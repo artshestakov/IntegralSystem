@@ -274,6 +274,7 @@ void ISAuthForm::ConnectedDone()
 		hide();
 		SetResult(true);
 		ISMetaUser::Instance().UserData.Login = EditLogin->GetValue().toString();
+		ISMetaUser::Instance().UserData.Password = EditPassword->GetValue().toString();
 		close();
 	}
 	else //Ошибка подключения к базе данных

@@ -149,9 +149,6 @@
     <ClInclude Include="ISQuery.h">
       <Filter>Database</Filter>
     </ClInclude>
-    <ClInclude Include="ISQueryPool.h">
-      <Filter>Database</Filter>
-    </ClInclude>
     <ClInclude Include="ISQueryText.h">
       <Filter>Database</Filter>
     </ClInclude>
@@ -259,6 +256,9 @@
     </QtMoc>
     <QtMoc Include="ISTcpConnector.h">
       <Filter>Protocol</Filter>
+    </QtMoc>
+    <QtMoc Include="ISQueryPool.h">
+      <Filter>Database</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>

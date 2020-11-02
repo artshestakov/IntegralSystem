@@ -128,7 +128,12 @@ bool ISStartup::StartupOld(ISSplashScreen *SplashScreen)
 		return false;
 	}
 
-	ISQueryPool::Instance().Start();
+	if (!ISQueryPool::Instance().Start(CONFIG_STRING(CONST_CONFIG_CONNECTION_SERVER), CONFIG_INT(CONST_CONFIG_CONNECTION_PORT), CONFIG_STRING(CONST_CONFIG_CONNECTION_DATABASE),
+		ISMetaUser::Instance().UserData.Login, ISMetaUser::Instance().UserData.Password))
+	{
+		ISMessageBox::ShowCritical(SplashScreen, LANG("Message.Error.InitializeQueryPool"), ISQueryPool::Instance().GetErrorString());
+		return false;
+	}
 
 	//Инициалищация печати
 	if (!ISPrintingEntity::Instance().Initialize())

@@ -7,6 +7,7 @@
 #include "ISVersionInfo.h"
 #include "ISDebug.h"
 #include "ISSystem.h"
+#include "ISQueryPool.h"
 //-----------------------------------------------------------------------------
 ISCaratApplication::ISCaratApplication(int &argc, char **argv)
 	: QCoreApplication(argc, argv),
@@ -57,6 +58,12 @@ bool ISCaratApplication::Init()
 	if (!ISLocalization::Instance().LoadResourceFile(LOCALIZATION_FILE_CARAT))
 	{
 		ISLOGGER_E("ISLocalization", QString("Not init localization file \"%1\": %2").arg(LOCALIZATION_FILE_CARAT).arg(ISLocalization::Instance().GetErrorString()));
+		return false;
+	}
+
+	if (!ISQueryPool::Instance().Start())
+	{
+		ISLOGGER_E("ISQueryPool", ISQueryPool::Instance().GetErrorString());
 		return false;
 	}
 
