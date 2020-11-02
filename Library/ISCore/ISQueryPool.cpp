@@ -92,13 +92,17 @@ void ISQueryPool::StartWorker()
 					{
 						Query.BindValue(MapItem.first, MapItem.second);
 					}
-					Query.Execute();
+					if (!Query.Execute())
+					{
+						ISLOGGER_E(__CLASS__, QString("Query %1: %2").arg(QueryPoolObject.SqlText.simplified()).arg(Query.GetErrorString()));
+					}
 				}
 			}
 			bool is_running = IsRunning;
 			CRITICAL_SECTION_UNLOCK(&CriticalSection);
 			if (!is_running)
 			{
+				ISDatabase::Instance().Disconnect(CONNECTION_QUERY_POOL);
 				break;
 			}
 			ISSleep(10);
