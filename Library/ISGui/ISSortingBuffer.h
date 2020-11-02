@@ -9,6 +9,7 @@ public:
 	static ISSortingBuffer& Instance();
 
 	QString GetErrorString() const;
+	void Initialize(const QVariantList &VariantList);
 	bool Initialize(); //Инициализация (чтение из базы)
 	void AddSorting(const QString &TableName, const QString &FieldName, Qt::SortOrder Sorting); //Добавить сортировку в память
 	bool SaveSortings(); //Сохранение сортировок в базу из памяти
