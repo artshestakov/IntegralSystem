@@ -25,6 +25,7 @@
   <_SubSystems IsSystem="true" UID="{7EE2C7B8-2075-443F-A4FD-F2C6A29DDDE6}" System="{830708DC-DDA7-42D3-9E4C-FF1CCA62D28C}" OrderID="4" LocalName="Справочники" Icon="SubSystem.InternalDirectories" ClassName="ISInternalDirectoriesForm"/>
   
   <_ProtocolType IsSystem="true" UID="{2614CB96-EC54-4D4F-B1A6-06D2444962CA}" Name="Вход в программу"/>
+  <_ProtocolType IsSystem="true" UID="{3E3813AC-D843-4B60-86BF-F73461EC7E2B}" Name="Неудачный вход в программу"/>
   <_ProtocolType IsSystem="true" UID="{E9461667-E1CA-4C22-907B-FDC350A931C4}" Name="Выход из программы"/>
   <_ProtocolType IsSystem="true" UID="{D1348312-298F-4A7C-B584-9BA8C4952CD3}" Name="Добавление новой записи"/>
   <_ProtocolType IsSystem="true" UID="{EFA8FE45-1174-4D2E-BBE6-4940380961D4}" Name="Добавление копии существующей записи"/>

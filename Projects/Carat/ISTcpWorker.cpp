@@ -10,11 +10,15 @@
 #include "ISTcpQueue.h"
 #include "ISVersionInfo.h"
 #include "ISConfig.h"
+#include "ISQueryPool.h"
 //-----------------------------------------------------------------------------
 static QString QS_AUTH = PREPARE_QUERY("SELECT usrs_id, usrs_issystem, usrs_isdeleted, usrs_group, usrs_fio, usrs_accessallowed, usrs_accountlifetime, usrs_accountlifetimestart, usrs_accountlifetimeend, usgp_fullaccess "
 									   "FROM _users "
 									   "LEFT JOIN _usergroup ON usgp_id = usrs_group "
 									   "WHERE usrs_login = :Login");
+//-----------------------------------------------------------------------------
+static QString QI_PROTOCOL = PREPARE_QUERY("INSERT INTO _protocol(prtc_creationdate, prtc_creationuser, prtc_tablename, prtc_tablelocalname, prtc_type, prtc_objectid, prtc_information) "
+										   "VALUES(:CreationDate, :CreationUser, :TableName, :TableLocalName, (SELECT prtp_id FROM _protocoltype WHERE prtp_uid = :TypeUID), :ObjectID, :Information)");
 //-----------------------------------------------------------------------------
 static QString QS_SETTINGS_DATABASE = PREPARE_QUERY("SELECT sgdb_settingname, sgdb_useraccessdatabase, sgdb_numbersimbolsaftercomma, sgdb_storagefilemaxsize "
 													"FROM _settingsdatabase "
@@ -278,6 +282,20 @@ QVariant ISTcpWorker::CheckNullField(const QString &FieldName, const QVariantMap
 	return QVariant();
 }
 //-----------------------------------------------------------------------------
+void ISTcpWorker::Protocol(int UserID, const ISUuid &ActionTypeUID, const QString &TableName, const QString &TableLocalName, const QVariant &ObjectID, const QString &Information)
+{
+	ISQueryPool::Instance().AddQuery(QI_PROTOCOL, ISStringToVariantMap
+	{
+		{ ":CreationDate", QDateTime::currentDateTime() },
+		{ ":CreationUser", UserID },
+		{ ":TableName", TableName },
+		{ ":TypeUID", ActionTypeUID },
+		{ ":ObjectID", ObjectID },
+		{ ":TableLocalName", TableLocalName },
+		{ ":Information", Information }
+	});
+}
+//-----------------------------------------------------------------------------
 bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
 	Q_UNUSED(TcpAnswer);
@@ -367,6 +385,7 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	QString TestConnectionName = ISSystem::GenerateUuid();
 	if (!ISDatabase::Instance().Connect(TestConnectionName, DBHost, DBPort, DBName, LoginString, PasswordString))
 	{
+		Protocol(UserID, CONST_UID_PROTOCOL_BAD_ENTER_APPLICATION, QString(), QString(), QVariant(), ISDatabase::Instance().GetErrorString().simplified());
 		ErrorString = LANG("Carat.Error.Query.DatabaseConnection").arg(ISDatabase::Instance().GetErrorString());
 		return false;
 	}

@@ -61,7 +61,9 @@ bool ISCaratApplication::Init()
 		return false;
 	}
 
-	if (!ISQueryPool::Instance().Start())
+	//Инициализация пула запросов
+	if (!ISQueryPool::Instance().Start(CONFIG_STRING(CONST_CONFIG_CONNECTION_SERVER), CONFIG_INT(CONST_CONFIG_CONNECTION_PORT), CONFIG_STRING(CONST_CONFIG_CONNECTION_DATABASE),
+		CONFIG_STRING(CONST_CONFIG_CONNECTION_LOGIN), CONFIG_STRING(CONST_CONFIG_CONNECTION_PASSWORD)))
 	{
 		ISLOGGER_E("ISQueryPool", ISQueryPool::Instance().GetErrorString());
 		return false;

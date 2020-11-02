@@ -30,6 +30,7 @@ private:
 	void Process();
 	void Finish(); //Уведомление о завершении работы воркера
 	QVariant CheckNullField(const QString &FieldName, const QVariantMap &VariantMap); //Проверка наличия поля
+	void Protocol(int UserID, const ISUuid &ActionTypeUID, const QString &TableName, const QString &TableLocalName, const QVariant &ObjectID, const QString &Information);
 
 private:
 	bool Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
