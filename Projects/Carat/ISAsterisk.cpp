@@ -58,6 +58,7 @@ void ISAsterisk::Disconnected()
 //-----------------------------------------------------------------------------
 void ISAsterisk::Error(QAbstractSocket::SocketError socket_error)
 {
+	Q_UNUSED(socket_error);
 	ISLOGGER_E(__CLASS__, TcpSocket->errorString());
 }
 //-----------------------------------------------------------------------------
