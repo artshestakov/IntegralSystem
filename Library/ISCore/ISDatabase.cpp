@@ -84,40 +84,28 @@ bool ISDatabase::Connect(const QString &ConnectionName, const QString &Host, int
     QSqlDatabase SqlDatabase = QSqlDatabase::contains(ConnectionName) ?
                 QSqlDatabase::database(ConnectionName) :
                 QSqlDatabase::addDatabase(SQL_DRIVER_QPSQL, ConnectionName);
-    bool Result = SqlDatabase.isValid();
-    if (!Result) //Ошибка при добавлении нового подключения в память
+    if (!SqlDatabase.isValid()) //Ошибка при добавлении нового подключения в память
     {
         ErrorString = SqlDatabase.lastError().databaseText().simplified();
-        return Result;
+        return false;
     }
 
-    //Заполняем параметры подключения
+    //Заполняем параметры и подключаемся
     SqlDatabase.setHostName(Host);
     SqlDatabase.setPort(Port);
     SqlDatabase.setDatabaseName(Database);
     SqlDatabase.setUserName(Login);
     SqlDatabase.setPassword(Password);
-
-    Result = SqlDatabase.open();
-    if (!Result) //Ошибка при подключении
+    if (!SqlDatabase.open()) //Ошибка при подключении
     {
         ErrorString = SqlDatabase.lastError().databaseText().simplified();
-        return Result;
+        return false;
     }
 
 	CRITICAL_SECTION_LOCK(&CriticalSection);
     ConnectOptions.emplace(ConnectionName, ISConnectOptionDB{ Host, Port, Database, Login, Password });
 	CRITICAL_SECTION_UNLOCK(&CriticalSection);
-
-    //Изменяем имя приложения для коннекта
-    QSqlError SqlError = SqlDatabase.exec("SET application_name = '" + QCoreApplication::applicationName() + "'").lastError();
-    if (SqlError.type() != QSqlError::NoError) //Не удалось изменить имя приложенения
-    {
-        ErrorString = "Not change application_name: " + SqlError.databaseText();
-        return Result;
-    }
-
-    return Result;
+	return true;
 }
 //-----------------------------------------------------------------------------
 void ISDatabase::Disconnect(const QString &ConnectionName)
