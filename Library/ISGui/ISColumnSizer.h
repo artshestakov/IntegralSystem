@@ -11,6 +11,7 @@ public:
 	static ISColumnSizer& Instance();
 
 	QString GetErrorString() const; //Получить описание ошибки
+	void Initialize(const QVariantList &VariantList);
 	bool Initialize();
 	bool Save(); //Сохранить размеры в базу данных
 	bool Clear(); //Очистить размеры
@@ -27,6 +28,7 @@ private:
 private:
 	QString ErrorString;
 	std::map<QString, ISColumnSizeItem*> Tables;
+	std::map<QString, ISStringToIntMap> TablesNew;
 };
 //-----------------------------------------------------------------------------
 #endif

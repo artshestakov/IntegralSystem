@@ -196,7 +196,7 @@ bool ISStartup::StartupNew(ISSplashScreen *SplashScreen)
 	bool Result = qAuth.Execute();
 	if (Result)
 	{
-
+		ISColumnSizer::Instance().Initialize(qAuth.GetAnswer()["ColumnSize"].toList());
 	}
 	else
 	{
