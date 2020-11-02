@@ -30,7 +30,7 @@ bool ISCaratApplication::Init()
 {
 	if (!ISLogger::Instance().Initialize()) //Не удалось запустить логгер
 	{
-		std::cout << ISLogger::Instance().GetErrorString().toStdString() << std::endl;
+		ISDEBUG_L(ISLogger::Instance().GetErrorString());
 		return false;
 	}
 
@@ -127,7 +127,7 @@ void ISCaratApplication::Run(const QStringList &Arguments)
 	}
 	else
 	{
-		std::cout << "Argument \"" << Argument.toStdString() << "\" not support" << std::endl;
+		ISDEBUG_L("Argument \"" + Argument + "\" not support");
 		Help();
 	}
 }
@@ -208,27 +208,27 @@ void ISCaratApplication::Shutdown()
 void ISCaratApplication::Help()
 {
 #ifdef WIN32
-	std::cout << "Usage: Carat [argument]" << std::endl;
+	ISDEBUG_L("Usage: Carat [argument]");
 #else
-	std::cout << "Usage: ./Carat [argument]" << std::endl;
+	ISDEBUG_L("Usage: ./Carat [argument]");
 #endif
-	std::cout << std::endl;
-	std::cout << "Arguments:" << std::endl;
-	std::cout << "  -h, --help\t\tshow this help and exit" << std::endl;
-	std::cout << "  -v, --version\t\tshow version and exit" << std::endl;
-	std::cout << "  -s, --shutdown\tshutdown service" << std::endl;
-	std::cout << std::endl;
+	ISDEBUG();
+	ISDEBUG_L("Arguments:");
+	ISDEBUG_L("  -h, --help\t\tshow this help and exit");
+	ISDEBUG_L("  -v, --version\t\tshow version and exit");
+	ISDEBUG_L("  -s, --shutdown\tshutdown service");
+	ISDEBUG();
 #ifdef WIN32
-	std::cout << "Example: Carat.exe (service mode)" << std::endl;
+	ISDEBUG_L("Example: Carat.exe (service mode)");
 #else
-	std::cout << "Example: ./Carat (service mode)" << std::endl;
+	ISDEBUG_L("Example: ./Carat (service mode)");
 #endif
-	std::cout << "* No arguments needed to start in service mode" << std::endl;
+	ISDEBUG_L("* No arguments needed to start in service mode");
 }
 //-----------------------------------------------------------------------------
 void ISCaratApplication::Version()
 {
-	std::cout << "Carat (" << ISVersionInfo::Instance().ToStdString() << ") " << ISVersionInfo::Instance().Info.Configuration.toStdString() << " " << ISVersionInfo::Instance().Info.Platform.toStdString() << std::endl;
+	ISDEBUG_L("Carat (" + ISVersionInfo::Instance().ToString() + ") " + ISVersionInfo::Instance().Info.Configuration + " " + ISVersionInfo::Instance().Info.Platform);
 }
 //-----------------------------------------------------------------------------
 void ISCaratApplication::SendShutdown()
@@ -284,40 +284,39 @@ void ISCaratApplication::SendCommand(const QByteArray &ByteArray)
 	QTcpSocket TcpSocket;
 
 	//Подключаемся к Карату
-	std::cout << "Connecting..." << std::endl;
+	ISDEBUG_L("Connecting...");
 	TcpSocket.connectToHost(QHostAddress::LocalHost, CONFIG_INT(CONST_CONFIG_CONTROLLER_PORT));
 	if (!TcpSocket.waitForConnected(1000))
 	{
-		std::cout << "Error: " << TcpSocket.errorString().toStdString() << std::endl;
+		ISDEBUG_L("Error: " + TcpSocket.errorString());
 		return;
 	}
 
 	//Посылаем данные
-	std::cout << "Send: " << ByteArray.toStdString() << std::endl;
+	ISDEBUG_L("Send: " + ByteArray);
     if (TcpSocket.write(ByteArray) == -1) //Не удалось послать данные
     {
-        std::cout << "Error sending: " << TcpSocket.errorString().toStdString() << std::endl;
+		ISDEBUG_L("Error sending: " + TcpSocket.errorString());
         return;
     }
 
     if (!TcpSocket.flush())
     {
-        std::cout << "Error flushing: " << TcpSocket.errorString().toStdString() << std::endl;
+		ISDEBUG_L("Error flushing: " + TcpSocket.errorString());
         return;
     }
 
 	//Ждём ответа
-    std::cout << "Wait answer..." << std::endl;
+	ISDEBUG_L("Wait answer...");
 	while (true)
 	{
 		ISSleep(1);
 		ISSystem::ProcessEvents();
-
 		if (TcpSocket.bytesAvailable() > 0) //Дождались ответа - выводим в консоль и выходим из функции
 		{
 			QString Answer = TcpSocket.readAll();
 			ISSystem::RemoveLastSymbolLoop(Answer, '\n');
-			std::cout << "Answer: " << Answer.toStdString() << std::endl;
+			ISDEBUG_L("Answer: " + Answer);
 			break;
 		}
 	}

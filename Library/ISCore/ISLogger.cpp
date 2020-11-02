@@ -1,6 +1,7 @@
 #include "ISLogger.h"
 #include "ISAlgorithm.h"
 #include "ISSystem.h"
+#include "ISDebug.h"
 //-----------------------------------------------------------------------------
 ISLogger::ISLogger()
 	: ErrorString(NO_ERROR_STRING),
@@ -138,7 +139,7 @@ QString ISLogger::GetPathFile(const QDate &Date) const
 void ISLogger::OutputToConsole(const QString &String)
 {
 	CRITICAL_SECTION_LOCK(&CriticalSection);
-	std::cout << String.toStdString() << std::endl;
+	ISDEBUG_L(String);
 	CRITICAL_SECTION_UNLOCK(&CriticalSection);
 }
 //-----------------------------------------------------------------------------

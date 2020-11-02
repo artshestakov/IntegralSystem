@@ -29,8 +29,3 @@ QString ISVersionInfo::ToString() const
 	return Info.Version.ToString();
 }
 //-----------------------------------------------------------------------------
-std::string ISVersionInfo::ToStdString() const
-{
-	return ToString().toStdString();
-}
-//-----------------------------------------------------------------------------
