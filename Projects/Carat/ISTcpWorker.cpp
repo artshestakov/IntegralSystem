@@ -389,6 +389,7 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 		ErrorString = LANG("Carat.Error.Query.DatabaseConnection").arg(ISDatabase::Instance().GetErrorString());
 		return false;
 	}
+	Protocol(UserID, CONST_UID_PROTOCOL_ENTER_APPLICATION, QString(), QString(), QVariant(), QString());
 
 	//Подключились к БД - отключаемся от неё и устанавливаем флаги авторизации
 	ISDatabase::Instance().Disconnect(TestConnectionName);
