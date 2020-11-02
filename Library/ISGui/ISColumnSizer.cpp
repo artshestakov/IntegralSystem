@@ -54,8 +54,8 @@ void ISColumnSizer::Initialize(const QVariantList &VariantList)
 	for (int i = 0, c = VariantList.size(); i < c; ++i)
 	{
 		QVariantMap VariantMap = VariantList[i].toMap();
-		QString TableName = VariantMap["TableName"].toString();
-		QString FieldName = VariantMap["FieldName"].toString();
+		QString TableName = VariantMap["Table"].toString();
+		QString FieldName = VariantMap["Field"].toString();
 		unsigned int Size = VariantMap["Size"].toUInt();
 		if (TablesNew.count(TableName))
 		{

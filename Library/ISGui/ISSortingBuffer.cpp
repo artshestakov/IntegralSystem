@@ -55,7 +55,7 @@ void ISSortingBuffer::Initialize(const QVariantList &VariantList)
 	for (int i = 0, c = VariantList.size(); i < c; ++i)
 	{
 		QVariantMap VariantMap = VariantList[i].toMap();
-		Sortings.emplace_back(CreateSorting(VariantMap["TableName"].toString(), VariantMap["FieldName"].toString(), qvariant_cast<Qt::SortOrder>(VariantMap["Sorting"])));
+		Sortings.emplace_back(CreateSorting(VariantMap["Table"].toString(), VariantMap["Field"].toString(), qvariant_cast<Qt::SortOrder>(VariantMap["Sort"])));
 	}
 }
 //-----------------------------------------------------------------------------

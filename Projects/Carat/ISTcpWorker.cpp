@@ -549,10 +549,10 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 				SubSystemList.append(QVariantMap
 				{
 					{ "UID", ISUuid(qSelectSystems.ReadColumn("sbsm_uid")) },
-					{ "LocalName", qSelectSystems.ReadColumn("sbsm_localname") },
+					{ "Local", qSelectSystems.ReadColumn("sbsm_localname") },
 					{ "Icon", qSelectSystems.ReadColumn("sbsm_icon") },
-					{ "ClassName", qSelectSystems.ReadColumn("sbsm_classname") },
-					{ "TableName", qSelectSystems.ReadColumn("sbsm_tablename") },
+					{ "Class", qSelectSystems.ReadColumn("sbsm_classname") },
+					{ "Table", qSelectSystems.ReadColumn("sbsm_tablename") },
 					{ "Hint", qSelectSystems.ReadColumn("sbsm_hint") }
 				});
 				SystemMap["SubSystems"] = SubSystemList;
@@ -563,7 +563,7 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 				SystemSubSystemMap[SystemUID] = QVariantMap
 				{
 					{ "IsSystem", qSelectSystems.ReadColumn("stms_issystem") },
-					{ "LocalName", qSelectSystems.ReadColumn("stms_localname") },
+					{ "Local", qSelectSystems.ReadColumn("stms_localname") },
 					{ "Icon", qSelectSystems.ReadColumn("stms_icon") },
 					{ "Hint", qSelectSystems.ReadColumn("stms_hint") },
 					{ "SubSystems", QVariantList() },
@@ -592,8 +592,8 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 				PrintingMap[UID] = QVariantMap
 				{
 					{ "Type", qSelectPrinting.ReadColumn("rprt_type") },
-					{ "TableName", qSelectPrinting.ReadColumn("rprt_tablename") },
-					{ "LocalName", qSelectPrinting.ReadColumn("rprt_localname") },
+					{ "Table", qSelectPrinting.ReadColumn("rprt_tablename") },
+					{ "Local", qSelectPrinting.ReadColumn("rprt_localname") },
 					{ "FileTemplate", qSelectPrinting.ReadColumn("rprt_filetemplate") },
 					{ "Fields", QVariantMap() }
 				};
@@ -648,8 +648,8 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 		{
 			HistoryList.append(QVariantMap
 			{
-				{ "CreationDate", qSelectHistory.ReadColumn("htry_creationdate") },
-				{ "TableName", qSelectHistory.ReadColumn("htry_tablename") },
+				{ "Date", qSelectHistory.ReadColumn("htry_creationdate") },
+				{ "Table", qSelectHistory.ReadColumn("htry_tablename") },
 				{ "ObjectID", qSelectHistory.ReadColumn("htry_objectid") }
 			});
 		}
@@ -671,9 +671,9 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 		{
 			SortingList.append(QVariantMap
 			{
-				{ "TableName", qSelectSorting.ReadColumn("sgts_tablename") },
-				{ "FieldName", qSelectSorting.ReadColumn("sgts_fieldname") },
-				{ "Sorting", qSelectSorting.ReadColumn("sgts_sorting") }
+				{ "Table", qSelectSorting.ReadColumn("sgts_tablename") },
+				{ "Field", qSelectSorting.ReadColumn("sgts_fieldname") },
+				{ "Sort", qSelectSorting.ReadColumn("sgts_sorting") }
 			});
 		}
 		TcpAnswer->Parameters["Sorting"] = SortingList;
@@ -694,8 +694,8 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 		{
 			ColumnSizeList.append(QVariantMap
 			{
-				{ "TableName", qSelectColumnSize.ReadColumn("clsz_tablename") },
-				{ "FieldName", qSelectColumnSize.ReadColumn("clsz_fieldname") },
+				{ "Table", qSelectColumnSize.ReadColumn("clsz_tablename") },
+				{ "Field", qSelectColumnSize.ReadColumn("clsz_fieldname") },
 				{ "Size", qSelectColumnSize.ReadColumn("clsz_size") }
 			});
 		}
@@ -722,8 +722,8 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 				UserSettingsList[GroupUID] = QVariantMap
 				{
 					{ "Name", qSelectUserSetting.ReadColumn("stgp_name") },
-					{ "LocalName", qSelectUserSetting.ReadColumn("stgp_localname") },
-					{ "IconName", qSelectUserSetting.ReadColumn("stgp_iconname") },
+					{ "Local", qSelectUserSetting.ReadColumn("stgp_localname") },
+					{ "Icon", qSelectUserSetting.ReadColumn("stgp_iconname") },
 					{ "Hint", qSelectUserSetting.ReadColumn("stgp_hint") },
 					{ "Settings", QVariantList() }
 				};
@@ -737,10 +737,10 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 				{ "UID", SettingUID },
 				{ "Name", qSelectUserSetting.ReadColumn("stgs_name") },
 				{ "Type", qSelectUserSetting.ReadColumn("stgs_type") },
-				{ "WidgetEditName", qSelectUserSetting.ReadColumn("stgs_widgeteditname") },
-				{ "LocalName", qSelectUserSetting.ReadColumn("stgs_localname") },
+				{ "WidgetEdit", qSelectUserSetting.ReadColumn("stgs_widgeteditname") },
+				{ "Local", qSelectUserSetting.ReadColumn("stgs_localname") },
 				{ "Hint", qSelectUserSetting.ReadColumn("stgs_hint") },
-				{ "DefaultValue", qSelectUserSetting.ReadColumn("stgs_defaultvalue") }
+				{ "Default", qSelectUserSetting.ReadColumn("stgs_defaultvalue") }
 			};
 
 			if (qSelectUserSetting.ReadColumn("count").toInt()) //Если такая настройка у пользователя уже есть - получаем её значение
@@ -784,10 +784,10 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 			{
 				{ "UID", ISUuid(qSelectParagraph.ReadColumn("prhs_uid")) },
 				{ "Name", qSelectParagraph.ReadColumn("prhs_name") },
-				{ "LocalName", qSelectParagraph.ReadColumn("prhs_localname") },
+				{ "Local", qSelectParagraph.ReadColumn("prhs_localname") },
 				{ "ToolTip", qSelectParagraph.ReadColumn("prhs_tooltip") },
 				{ "Icon", qSelectParagraph.ReadColumn("prhs_icon") },
-				{ "ClassName", qSelectParagraph.ReadColumn("prhs_classname") }
+				{ "Class", qSelectParagraph.ReadColumn("prhs_classname") }
 			});
 		}
 		TcpAnswer->Parameters["Paragraphs"] = ParagraphList;
