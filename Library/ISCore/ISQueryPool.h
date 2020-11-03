@@ -25,7 +25,7 @@ private:
 private:
 	ISQueryPool();
 	~ISQueryPool();
-	ISQueryPool(ISQueryPool const &) {};
+    ISQueryPool(ISQueryPool const &) : QObject() {};
 	ISQueryPool& operator=(ISQueryPool const&) { return *this; };
 
 private:
