@@ -214,9 +214,9 @@ void ISCaratApplication::Help()
 	ISDEBUG_L("Arguments:");
 	ISDEBUG_L("  --help\t\tshow this help and exit");
 	ISDEBUG_L("  --version\t\tshow version and exit");
-	ISDEBUG_L("  --shutdown\tshutdown service");
-	ISDEBUG_L("  --conf-create\tcreate config file");
-	ISDEBUG_L("  --conf-reset\treset config file");
+	ISDEBUG_L("  --shutdown\t\tshutdown service");
+	ISDEBUG_L("  --conf-create\t\tcreate config file");
+	ISDEBUG_L("  --conf-reset\t\treset config file");
 	ISDEBUG();
 #ifdef WIN32
 	ISDEBUG_L("Example: Carat.exe (service mode)");
