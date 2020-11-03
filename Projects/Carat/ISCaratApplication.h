@@ -28,6 +28,7 @@ private:
 	void Help();
 	void Version();
 	void SendShutdown();
+	void ConfigCreate();
 	void ConfigReset();
 
 private:

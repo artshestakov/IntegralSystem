@@ -61,48 +61,6 @@ bool ISCaratApplication::Init()
 		return false;
 	}
 
-	//Инициализация пула запросов
-	if (!ISQueryPool::Instance().Start(CONFIG_STRING(CONST_CONFIG_CONNECTION_SERVER), CONFIG_INT(CONST_CONFIG_CONNECTION_PORT), CONFIG_STRING(CONST_CONFIG_CONNECTION_DATABASE),
-		CONFIG_STRING(CONST_CONFIG_CONNECTION_LOGIN), CONFIG_STRING(CONST_CONFIG_CONNECTION_PASSWORD)))
-	{
-		ISLOGGER_E("ISQueryPool", ISQueryPool::Instance().GetErrorString());
-		return false;
-	}
-
-	//Проверяем наличие сервера в конфигурационном файле
-	if (CONFIG_STRING(CONST_CONFIG_CONNECTION_SERVER).isEmpty())
-	{
-		ISLOGGER_E("ISConfig", "server not specified");
-		return false;
-	}
-
-	//Проверяем наличие порта в конфигурационном файле
-	if (CONFIG_INT(CONST_CONFIG_CONNECTION_PORT) == 0)
-	{
-		ISLOGGER_E("ISConfig", "port not specified");
-		return false;
-	}
-
-	//Проверяем наличие имени базы данных в конфигурационном файле
-	if (CONFIG_STRING(CONST_CONFIG_CONNECTION_DATABASE).isEmpty())
-	{
-		ISLOGGER_E("ISConfig", "database name not specified");
-		return false;
-	}
-
-	//Проверяем наличие логина в конфигурационном файле
-	if (CONFIG_STRING(CONST_CONFIG_CONNECTION_LOGIN).isEmpty())
-	{
-		ISLOGGER_E("ISConfig", "login not specified");
-		return false;
-	}
-
-	//Проверяем наличие пароля в конфигурационном файле
-	if (CONFIG_STRING(CONST_CONFIG_CONNECTION_PASSWORD).isEmpty())
-	{
-		ISLOGGER_E("ISConfig", "password not specified");
-		return false;
-	}
 	return true;
 }
 //-----------------------------------------------------------------------------
@@ -120,6 +78,11 @@ void ISCaratApplication::Run(const QStringList &Arguments)
 	else if (Argument == "--shutdown" || Argument == "-s")
 	{
 		SendShutdown();
+	}
+	else if (Argument == "--conf-create")
+	{
+		//Выходим из функции, т.к. конфиг был проинициализирован выше в функции Init()
+		return;
 	}
 	else if (Argument == "--conf-reset")
 	{
@@ -152,6 +115,41 @@ bool ISCaratApplication::Run()
 		arg(QSysInfo::prettyProductName()).
 		arg(CURRENT_THREAD_ID()).
 		arg(GET_PID()));
+
+	//Выполняем проверки заполнения секции Connection в конфигурационном файле
+	if (CONFIG_STRING(CONST_CONFIG_CONNECTION_SERVER).isEmpty())
+	{
+		ISLOGGER_E("ISConfig", "server not specified");
+		return false;
+	}
+	if (CONFIG_INT(CONST_CONFIG_CONNECTION_PORT) == 0)
+	{
+		ISLOGGER_E("ISConfig", "port not specified");
+		return false;
+	}
+	if (CONFIG_STRING(CONST_CONFIG_CONNECTION_DATABASE).isEmpty())
+	{
+		ISLOGGER_E("ISConfig", "database name not specified");
+		return false;
+	}
+	if (CONFIG_STRING(CONST_CONFIG_CONNECTION_LOGIN).isEmpty())
+	{
+		ISLOGGER_E("ISConfig", "login not specified");
+		return false;
+	}
+	if (CONFIG_STRING(CONST_CONFIG_CONNECTION_PASSWORD).isEmpty())
+	{
+		ISLOGGER_E("ISConfig", "password not specified");
+		return false;
+	}
+
+	//Инициализация пула запросов
+	if (!ISQueryPool::Instance().Start(CONFIG_STRING(CONST_CONFIG_CONNECTION_SERVER), CONFIG_INT(CONST_CONFIG_CONNECTION_PORT), CONFIG_STRING(CONST_CONFIG_CONNECTION_DATABASE),
+		CONFIG_STRING(CONST_CONFIG_CONNECTION_LOGIN), CONFIG_STRING(CONST_CONFIG_CONNECTION_PASSWORD)))
+	{
+		ISLOGGER_E("ISQueryPool", ISQueryPool::Instance().GetErrorString());
+		return false;
+	}
 
 	if (CONFIG_BOOL(CONST_CONFIG_CONTROLLER_INCLUDE))
 	{
@@ -214,9 +212,11 @@ void ISCaratApplication::Help()
 #endif
 	ISDEBUG();
 	ISDEBUG_L("Arguments:");
-	ISDEBUG_L("  -h, --help\t\tshow this help and exit");
-	ISDEBUG_L("  -v, --version\t\tshow version and exit");
-	ISDEBUG_L("  -s, --shutdown\tshutdown service");
+	ISDEBUG_L("  --help\t\tshow this help and exit");
+	ISDEBUG_L("  --version\t\tshow version and exit");
+	ISDEBUG_L("  --shutdown\tshutdown service");
+	ISDEBUG_L("  --conf-create\tcreate config file");
+	ISDEBUG_L("  --conf-reset\treset config file");
 	ISDEBUG();
 #ifdef WIN32
 	ISDEBUG_L("Example: Carat.exe (service mode)");
@@ -234,6 +234,11 @@ void ISCaratApplication::Version()
 void ISCaratApplication::SendShutdown()
 {
 	SendCommand(CARAT_LOCAL_API_SHUTDOWN);
+}
+//-----------------------------------------------------------------------------
+void ISCaratApplication::ConfigCreate()
+{
+
 }
 //-----------------------------------------------------------------------------
 void ISCaratApplication::ConfigReset()
