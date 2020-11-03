@@ -29,7 +29,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CSS", "CSS", "{33F902D5-EB7
 		Resources\CSS\ISBaseTableView.css = Resources\CSS\ISBaseTableView.css
 		Resources\CSS\ISCalendarWidget.ButtonMonth.css = Resources\CSS\ISCalendarWidget.ButtonMonth.css
 		Resources\CSS\ISCalendarWidget.ButtonYear.css = Resources\CSS\ISCalendarWidget.ButtonYear.css
-		Resources\CSS\ISIntegerEdit.css = Resources\CSS\ISIntegerEdit.css
 		Resources\CSS\ISLabelImage.css = Resources\CSS\ISLabelImage.css
 		Resources\CSS\ISLabelLink.css = Resources\CSS\ISLabelLink.css
 		Resources\CSS\ISLineEdit.css = Resources\CSS\ISLineEdit.css
@@ -215,7 +214,7 @@ Global
 		{F4FDE33B-0BC9-4013-B58E-7A600293D608} = {1D4E78EC-DA89-4071-9067-891CA95C2481}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		Qt5Version = 58_msvc2015
 		SolutionGuid = {FE207297-F8FD-441B-A6FE-4D476762D8CA}
+		Qt5Version = 58_msvc2015
 	EndGlobalSection
 EndGlobal

@@ -287,12 +287,12 @@
     <QtMoc Include="ISQueryModel.h" />
   </ItemGroup>
   <ItemGroup>
-    <QtRcc Include="..\..\Resources\Resources.qrc" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="..\..\Resources\_OilSphere\OilSphere.xsf" />
     <None Include="..\..\Resources\_OilSphere\OilSphere.xsn" />
     <None Include="..\..\Resources\_OilSphere\OilSphere.xsr" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtRcc Include="..\..\Resources\ISCore.qrc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

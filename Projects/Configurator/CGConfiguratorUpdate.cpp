@@ -281,7 +281,7 @@ bool CGConfiguratorUpdate::systemuser()
 	if (Result)
 	{
 		QByteArray ByteArray;
-		QFile FileAvatar(":/Images/PostgresAvatar.png");
+		QFile FileAvatar(":/Other/PostgresAvatar.png");
 		if (FileAvatar.open(QIODevice::ReadOnly))
 		{
 			ByteArray = FileAvatar.readAll();

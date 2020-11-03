@@ -99,4 +99,4 @@ SOURCES += \
     ISVersionInfo.cpp \
     StdAfx.cpp
 
-RESOURCES += $$PWD/../../Resources/Resources.qrc
+RESOURCES += $$PWD/../../Resources/ISCore.qrc

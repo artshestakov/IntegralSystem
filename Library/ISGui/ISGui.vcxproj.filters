@@ -813,4 +813,7 @@
       <Filter>Model</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <QtRcc Include="..\..\Resources\ISGui.qrc" />
+  </ItemGroup>
 </Project>

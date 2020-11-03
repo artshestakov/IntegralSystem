@@ -6,11 +6,6 @@
       <Extensions>qrc;*</Extensions>
       <ParseFiles>false</ParseFiles>
     </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{D9D6E242-F8AF-46E4-B9FD-80ECBC20BA3E}</UniqueIdentifier>
-      <Extensions>qrc;*</Extensions>
-      <ParseFiles>false</ParseFiles>
-    </Filter>
     <Filter Include="Database">
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
@@ -262,11 +257,6 @@
     </QtMoc>
   </ItemGroup>
   <ItemGroup>
-    <QtRcc Include="..\..\Resources\Resources.qrc">
-      <Filter>Resource Files</Filter>
-    </QtRcc>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="..\..\Resources\_OilSphere\OilSphere.xsn">
       <Filter>Resources\_OilSphere</Filter>
     </None>
@@ -276,5 +266,8 @@
     <None Include="..\..\Resources\_OilSphere\OilSphere.xsf">
       <Filter>Resources\_OilSphere</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <QtRcc Include="..\..\Resources\ISCore.qrc" />
   </ItemGroup>
 </Project>

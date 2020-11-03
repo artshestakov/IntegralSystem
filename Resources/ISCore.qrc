@@ -1,0 +1,13 @@
+<RCC>
+  <qresource>
+
+    <file>_OilSphere/</file>
+
+    <file>Build/</file>
+    <file>ConfigTemplate/</file>
+    <file>Localization/</file>
+    <file>Other/</file>
+    <file>Scheme/</file>
+
+  </qresource>
+</RCC>
