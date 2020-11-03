@@ -38,6 +38,7 @@ public:
     static QVariantMap JsonStringToVariantMap(const QString &JsonString, QJsonParseError &JsonParseError); //Конвертация JSON-строки в список ключ-значение
 	static QByteArray VariantMapToJsonString(const QVariantMap &VariantMap, QJsonDocument::JsonFormat Format = QJsonDocument::Indented); //Конвертация списка ключ-значение в JSON-строку
 	static QString StringToMD5(const QString &String); //Получить MD5 строки
+	static QString StringToSha256(const QString &String); //Получить sha256 строки
 
 //ФАЙЛЫ
 	static QString FileSizeFromString(qint64 FileSize); //Получить размер файла

@@ -6,6 +6,7 @@
 #include "ISDebug.h"
 #include "ISLocalization.h"
 #include "CGConsole.h"
+#include "ISSystem.h"
 //-----------------------------------------------------------------------------
 static QString QS_SYSTEM_USER = PREPARE_QUERY("SELECT COUNT(*) "
 											  "FROM _users "
@@ -16,12 +17,13 @@ static QString QU_SYSTEM_USER = PREPARE_QUERY("UPDATE _users SET "
 											  "usrs_fio = :FIO, "
 											  "usrs_sex = (SELECT sexs_id FROM _sex WHERE sexs_uid = :SexUID),"
 											  "usrs_login = :Login, "
+											  "usrs_hash = :Hash, "
 											  "usrs_accessallowed = :AccessAllowed, "
 											  "usrs_photo = :Photo "
 											  "WHERE usrs_uid = :UID");
 //-----------------------------------------------------------------------------
-static QString QI_SYSTEM_USER = PREPARE_QUERY("INSERT INTO _users(usrs_uid, usrs_issystem, usrs_fio, usrs_sex, usrs_login, usrs_accessallowed, usrs_photo) "
-											  "VALUES(:UID, :IsSystem, :FIO, (SELECT sexs_id FROM _sex WHERE sexs_uid = :SexUID), :Login, :AccessAllowed, :Photo)");
+static QString QI_SYSTEM_USER = PREPARE_QUERY("INSERT INTO _users(usrs_uid, usrs_issystem, usrs_fio, usrs_sex, usrs_login, usrs_hash, usrs_accessallowed, usrs_photo) "
+											  "VALUES(:UID, :IsSystem, :FIO, (SELECT sexs_id FROM _sex WHERE sexs_uid = :SexUID), :Login, :Hash, :AccessAllowed, :Photo)");
 //-----------------------------------------------------------------------------
 static QString QS_SETTINGS_DATABASE = PREPARE_QUERY("SELECT COUNT(*) "
 													"FROM _settingsdatabase "
@@ -297,6 +299,7 @@ bool CGConfiguratorUpdate::systemuser()
 		qUpsert.BindValue(":FIO", LANG("SystemUser.FIO"));
 		qUpsert.BindValue(":SexUID", CONST_UID_SEX_MALE);
 		qUpsert.BindValue(":Login", CONFIG_STRING(CONST_CONFIG_CONNECTION_LOGIN));
+		qUpsert.BindValue(":Hash", ISSystem::StringToSha256(CONFIG_STRING(CONST_CONFIG_CONNECTION_LOGIN) + CONFIG_STRING(CONST_CONFIG_CONNECTION_PASSWORD)));
 		qUpsert.BindValue(":AccessAllowed", true);
 		qUpsert.BindValue(":Photo", ByteArray);
 		qUpsert.SetShowLongQuery(false);

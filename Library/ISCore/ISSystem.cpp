@@ -212,6 +212,11 @@ QString ISSystem::StringToMD5(const QString &String)
 	return QString(CryptographicHash.result().toHex());
 }
 //-----------------------------------------------------------------------------
+QString ISSystem::StringToSha256(const QString &String)
+{
+	return QCryptographicHash::hash(String.toUtf8(), QCryptographicHash::Sha256).toHex();
+}
+//-----------------------------------------------------------------------------
 QString ISSystem::FileSizeFromString(qint64 FileSize)
 {
 	qint64 Size = FileSize;
