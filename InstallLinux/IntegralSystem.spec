@@ -48,3 +48,4 @@ cp $INTEGRAL_SYSTEM_DIR/Resources/Licenses/* $RPM_BUILD_ROOT/opt/IntegralSystem/
 cp --force /opt/IntegralSystem/Carat.service /etc/systemd/system/Carat.service
 systemctl enable Carat
 systemctl daemon-reload
+/opt/IntegralSystem/Carat --conf-create
