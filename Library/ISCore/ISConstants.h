@@ -264,8 +264,10 @@ const char CONST_CONFIG_TCPSERVER_WORKERS[] = "TCPServer/WorkerCount";
 const char CONST_CONFIG_CONTROLLER_INCLUDE[] = "Controller/Include";
 const char CONST_CONFIG_CONTROLLER_PORT[] = "Controller/Port";
 const char CONST_CONFIG_AMI_INCLUDE[] = "AMI/Include";
-const char CONST_CONFIG_AMI_HOST[] = "AMI/Host";
+const char CONST_CONFIG_AMI_SERVER[] = "AMI/Server";
 const char CONST_CONFIG_AMI_PORT[] = "AMI/Port";
+const char CONST_CONFIG_AMI_LOGIN[] = "AMI/Login";
+const char CONST_CONFIG_AMI_PASSWORD[] = "AMI/Password";
 const char CONST_CONFIG_OTHER_UPDATE_CLIENT_DIR[] = "Other/UpdateClientDir";
 //-----------------------------------------------------------------------------
 #endif

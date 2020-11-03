@@ -29,6 +29,8 @@ private:
 
 	QString Host;
 	unsigned short Port;
+	QString Login;
+	QString Password;
 };
 //-----------------------------------------------------------------------------
 #endif
