@@ -7,9 +7,11 @@
   <Local Name="Carat.Error.NotAuthorized" Russian="Вы не авторизованы!"/>
   
   <Local Name="Carat.Error.Query.AlreadyAuthorized" Russian="Вы уже авторизованы!"/>
+  <Local Name="Carat.Error.Query.InvalidHashSize" Russian="Неверный размер авторизационных данных!"/>
+  <Local Name="Carat.Error.Query.InvalidHash" Russian="Невалидные авторизационные данные!"/>
   <Local Name="Carat.Error.Query.SelectLogin" Russian="Не удалось получить информацию о пользователе: %1"/>
-  <Local Name="Carat.Error.Query.NotFoundLogin" Russian="Пользователь &quot;%1&quot; не найден в системе."/>
-  <Local Name="Carat.Error.Query.LoginIsDeleted" Russian="Пользователь &quot;%1&quot; помечен на удаление."/>
+  <Local Name="Carat.Error.Query.InvalidLoginOrPassword" Russian="Неверно введен логин или пароль."/>
+  <Local Name="Carat.Error.Query.LoginIsDeleted" Russian="Ваша учётная запись помечена на удаление."/>
   <Local Name="Carat.Error.Query.LoginNoAccess" Russian="У Вас нет доступа к базе данных."/>
   <Local Name="Carat.Error.Query.LoginLinkGroup" Russian="Ваша учётная запись не привязанна к группе."/>
   <Local Name="Carat.Error.Query.LoginLifetimeNotStarted" Russian="Срок действия вашей учётной записи начнется %1."/>

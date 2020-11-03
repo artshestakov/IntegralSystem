@@ -13,6 +13,7 @@
 #include "ISMetaUser.h"
 #include "ISVersionInfo.h"
 #include "ISLogger.h"
+#include "ISSystem.h"
 //-----------------------------------------------------------------------------
 #include "ISTcpConnector.h"
 #include "ISTcpQuery.h"
@@ -241,8 +242,7 @@ void ISAuthForm::InputNew()
 	}
 
 	ISTcpQuery qAuth(API_AUTH);
-	qAuth.BindValue("Login", EditLogin->GetValue());
-	qAuth.BindValue("Password", EditPassword->GetValue());
+	qAuth.BindValue("Hash", ISSystem::StringToSha256(EditLogin->GetValue().toString() + EditPassword->GetValue().toString()));
 	if (qAuth.Execute()) //Авторизация прошла успешно
 	{
 		SetConnecting(false);

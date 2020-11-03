@@ -15,7 +15,7 @@
 static QString QS_AUTH = PREPARE_QUERY("SELECT usrs_id, usrs_issystem, usrs_isdeleted, usrs_group, usrs_fio, usrs_accessallowed, usrs_accountlifetime, usrs_accountlifetimestart, usrs_accountlifetimeend, usgp_fullaccess "
 									   "FROM _users "
 									   "LEFT JOIN _usergroup ON usgp_id = usrs_group "
-									   "WHERE usrs_login = :Login");
+									   "WHERE usrs_hash = :Hash");
 //-----------------------------------------------------------------------------
 static QString QI_PROTOCOL = PREPARE_QUERY("INSERT INTO _protocol(prtc_creationdate, prtc_creationuser, prtc_tablename, prtc_tablelocalname, prtc_type, prtc_objectid, prtc_information) "
 										   "VALUES(:CreationDate, :CreationUser, :TableName, :TableLocalName, (SELECT prtp_id FROM _protocoltype WHERE prtp_uid = :TypeUID), :ObjectID, :Information)");
@@ -307,19 +307,41 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 		return false;
 	}
 
-	QVariant Login = CheckNullField("Login", TcpMessage->Parameters),
-		Password = CheckNullField("Password", TcpMessage->Parameters),
+	QVariant Hash = CheckNullField("Hash", TcpMessage->Parameters),
 		Version = CheckNullField("Version", TcpMessage->Parameters);
-	if (!Login.isValid() || !Password.isValid())
+	if (!Hash.isValid())
 	{
 		return false;
 	}
-	QString LoginString = Login.toString(),
-		PasswordString = Password.toString();
+	QString HashString = Hash.toString();
+
+	//Проверяем размер хэша
+	if ((size_t)HashString.size() != CARAT_HASH_SIZE)
+	{
+		ErrorString = LANG("Carat.Error.Query.InvalidHashSize");
+		return false;
+	}
+
+	//Проверяем валидность хэша
+	for (const QChar &Char : HashString)
+	{
+		int ASCII = (int)Char.toLatin1(); //Преобразовываем текущий символ в ASCII-код
+
+		//Если текущий символ входит в диапазон [0-9] или [a-z] - все окей
+		if ((ASCII >= 48 && ASCII <= 57) || (ASCII >=97 && ASCII <= 122)) 
+		{
+			continue;
+		}
+		else //Иначе - хэш невалидный
+		{
+			ErrorString = LANG("Carat.Error.Query.InvalidHash");
+			return false;
+		}
+	}
 
 	//Проверка пользователя
 	ISQuery qSelectAuth(ISDatabase::Instance().GetDB(DBConnectionName), QS_AUTH);
-	qSelectAuth.BindValue(":Login", LoginString);
+	qSelectAuth.BindValue(":Hash", Hash);
 	if (!qSelectAuth.Execute())
 	{
 		ErrorString = LANG("Carat.Error.Query.SelectLogin").arg(qSelectAuth.GetErrorString());
@@ -328,7 +350,7 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 
 	if (!qSelectAuth.ExecuteFirst())
 	{
-		ErrorString = LANG("Carat.Error.Query.NotFoundLogin").arg(LoginString);
+		ErrorString = LANG("Carat.Error.Query.InvalidLoginOrPassword");
 		return false;
 	}
 
@@ -342,7 +364,7 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	//Если такой логин помечен на удаление
 	if (IsDeleted)
 	{
-		ErrorString = LANG("Carat.Error.Query.LoginIsDeleted").arg(LoginString);
+		ErrorString = LANG("Carat.Error.Query.LoginIsDeleted");
 		return false;
 	}
 
@@ -383,7 +405,7 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 
 	//Проверяем подключение к БД. Если не удалось подключиться - ошибка
 	QString TestConnectionName = ISSystem::GenerateUuid();
-	if (!ISDatabase::Instance().Connect(TestConnectionName, DBHost, DBPort, DBName, LoginString, PasswordString))
+	if (!ISDatabase::Instance().Connect(TestConnectionName, DBHost, DBPort, DBName, DBUser, DBPassword))
 	{
 		Protocol(UserID, CONST_UID_PROTOCOL_BAD_ENTER_APPLICATION, QString(), QString(), QVariant(), ISDatabase::Instance().GetErrorString().simplified());
 		ErrorString = LANG("Carat.Error.Query.DatabaseConnection").arg(ISDatabase::Instance().GetErrorString());

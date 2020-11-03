@@ -42,6 +42,8 @@
           <stringProp name="filename"></stringProp>
           <stringProp name="parameters"></stringProp>
           <stringProp name="script">import groovy.json.JsonBuilder;
+import java.security.MessageDigest;
+import java.nio.charset.StandardCharsets;
 
 //Конвертируем контейнер в готовый запрос
 String MapToString(def Map)
@@ -51,14 +53,27 @@ String MapToString(def Map)
 	return Integer.toString(JsonString.length()) + &apos;.&apos; + JsonString;
 };
 
+//Получаем SHA256-хэш строки
+String GetSHA256(String string)
+{
+	MessageDigest Digest = MessageDigest.getInstance(&quot;SHA-256&quot;);
+	byte[] HashBytes = Digest.digest(string.getBytes(StandardCharsets.UTF_8));
+
+	StringBuilder sb = new StringBuilder();
+	for (byte b : HashBytes)
+	{
+		sb.append(String.format(&quot;%02x&quot;, b));
+	}
+	return sb.toString();
+};
+
 //Авторизация
 def MapAuth =
 [
 	Type: &quot;Auth&quot;,
 	Parameters:
 		[
-			Login: &quot;postgres&quot;,
-			Password: &quot;adm777&quot;,
+			Hash: GetSHA256(&quot;postgresadm777&quot;),
 			Version: &quot;1.0.0&quot;
 		]
 ];
@@ -114,7 +129,7 @@ vars.put(&quot;QueryGetLastClient&quot;, MapToString(MapGetLastClient));</string
           <stringProp name="ConfigTestElement.password"></stringProp>
         </TCPSampler>
         <hashTree/>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: GetMetaData" enabled="true">
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: GetMetaData" enabled="false">
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
           <stringProp name="TCPSampler.port"></stringProp>
