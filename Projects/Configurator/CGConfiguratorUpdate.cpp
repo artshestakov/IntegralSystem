@@ -296,8 +296,8 @@ bool CGConfiguratorUpdate::systemuser()
 		ISQuery qUpsert(IsExist ? QU_SYSTEM_USER : QI_SYSTEM_USER);
 		qUpsert.BindValue(":UID", CONST_UID_USER_POSTGRES);
 		qUpsert.BindValue(":IsSystem", true);
-		qUpsert.BindValue(":FIO", LANG("SystemUser.FIO"));
-		qUpsert.BindValue(":SexUID", CONST_UID_SEX_MALE);
+		qUpsert.BindValue(":FIO", "System User");
+		qUpsert.BindValue(":SexUID", CONST_UID_SEX_UNDEFINED);
 		qUpsert.BindValue(":Login", CONFIG_STRING(CONST_CONFIG_CONNECTION_LOGIN));
 		qUpsert.BindValue(":Hash", ISSystem::StringToSha256(CONFIG_STRING(CONST_CONFIG_CONNECTION_LOGIN) + CONFIG_STRING(CONST_CONFIG_CONNECTION_PASSWORD)));
 		qUpsert.BindValue(":AccessAllowed", true);
@@ -331,7 +331,7 @@ bool CGConfiguratorUpdate::databasesettings()
 		bool IsExist = qSelect.ReadColumn("count").toInt() > 0;
 		ISQuery qUpsert(IsExist ? QU_SETTINGS_DATABASE : QI_SETTINGS_DATABASE);
 		qUpsert.BindValue(":UID", CONST_UID_SETTINGS_DATABASE);
-		qUpsert.BindValue(":SettingName", LANG("SystemProfile"));
+		qUpsert.BindValue(":SettingName", "System Profile");
 		qUpsert.SetShowLongQuery(false);
 		Result = qUpsert.Execute();
 		if (Result)

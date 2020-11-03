@@ -41,7 +41,6 @@ const char EXTENSION_LIBRARY[] = ".so"; //Расширение динамической библиотеки для
 //LOCALIZATION-----------------------------------------------------------------
 const char LOCALIZATION_FILE_INTEGRAL_SYSTEM[] = "IntegralSystem";
 const char LOCALIZATION_FILE_OBJECTS[] = "Objects";
-const char LOCALIZATION_FILE_CONFIGURATOR[] = "Configurator";
 const char LOCALIZATION_FILE_CARAT[] = "Carat";
 //REG_EXP----------------------------------------------------------------------
 const char REG_EXP_IP_ADDRESS[] = "([0-9]{1,3}\\.){3}[0-9]{1,3}(\\/([0-9]|[1-2][0-9]|3[0-2]))?"; //IP-адресс
@@ -143,7 +142,10 @@ const char		CARAT_LOCAL_API_SHUTDOWN[] = "shutdown"; //Завершение работы
 //-----------------------------------------------------------------------------
 const char CONST_UID_USER_POSTGRES[] = "{F400ECFA-185E-4587-8961-8731DEAC3B5E}"; //Идентификатор пользователя postgres
 const char CONST_UID_SETTINGS_DATABASE[] = "{1DE3449C-C700-4EFC-A455-E99E38063D9B}"; //Идентификатор настроек базы данных
+//-----------------------------------------------------------------------------
 const char CONST_UID_SEX_MALE[] = "{601C7C32-7413-45DA-AAAC-926A77C824F8}"; //Мужской
+const char CONST_UID_SEX_FEMALE[] = "{38A3AE76-2D27-4EEB-9AC7-AE4BCFC030FF}"; //Женский
+const char CONST_UID_SEX_UNDEFINED[] = "{7446B115-AED2-4D5B-89D7-16F367B0CF13}"; //Не определено
 //-----------------------------------------------------------------------------
 const char CONST_UID_PARAGRAPH_DESKTOP[] = "{9A36AD64-5A2F-4B62-9DA7-4FC545B6AB5F}"; //Рабочий стол
 const char CONST_UID_PARAGRAPH_WORKSPACE[] = "{18A90F8B-1D99-420E-BA60-C3EBF60D595E}"; //Рабочая область

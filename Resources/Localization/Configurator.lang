@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LANG Name="Configurator">
-
-  <!--System user-->
-  <Local Name="SystemUser.FIO" Russian="Главный администратор postgres"/>
-  <Local Name="SystemProfile" Russian="Системный профиль"/>
-
-</LANG>
