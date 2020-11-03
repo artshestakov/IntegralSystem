@@ -65,10 +65,24 @@ Filename: {app}\Redistributable_2013_${PLATFORM}.exe; Description: "Устано
 Filename: {app}\Redistributable_2015_${PLATFORM}.exe; Description: "Установка VC++ Redistributable 2015 ${PLATFORM}"; Parameters: "/install /quiet"; WorkingDir: {app}; StatusMsg: "Установка VC++ Redistributable 2015 ${PLATFORM}...";
 
 [Code]
+
 procedure InitializeWizard();
 begin
   WizardForm.WelcomeLabel2.Caption := WizardForm.WelcomeLabel2.Caption + #13#10#13#10 + 
   'Конфигурация: ${CONFIGURATION}' + #13#10 +
   'Платформа: ${PLATFORM}' + #13#10 +
   'Версия устанавливаемой программы: ${VERSION}';
+end;
+
+procedure CurStepChanged(CurStep: TSetupStep);
+var
+	ResultCode: Integer;
+begin
+	if CurStep = ssPostInstall then
+	begin
+		if FileExists(ExpandConstant('{app}\Server.ini')) = false then
+		begin
+			Exec(ExpandConstant('{app}\Carat.exe'), '--conf-create', ExpandConstant('{app}'), SW_SHOW, ewWaitUntilTerminated, ResultCode)
+		end;
+	end;
 end;
