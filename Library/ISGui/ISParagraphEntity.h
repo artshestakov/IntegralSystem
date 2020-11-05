@@ -9,6 +9,7 @@ public:
 	static ISParagraphEntity& Instance();
 	
 	QString GetErrorString() const;
+	void Initialize(const QVariantList &VariantList);
 	bool Initialize();
 	ISMetaParagraph* GetParagraph(const QString &ParagraphUID); //Получить параграф
 	std::vector<ISMetaParagraph*> GetParagraphs(); //Получить список параграфов

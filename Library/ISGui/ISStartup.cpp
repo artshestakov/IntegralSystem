@@ -202,6 +202,7 @@ bool ISStartup::StartupNew(ISSplashScreen *SplashScreen)
 		ISHistory::Instance().Initialize(qAuth.GetAnswer()["History"].toList());
 		ISSortingBuffer::Instance().Initialize(qAuth.GetAnswer()["Sorting"].toList());
 		ISColumnSizer::Instance().Initialize(qAuth.GetAnswer()["ColumnSize"].toList());
+		ISParagraphEntity::Instance().Initialize(qAuth.GetAnswer()["Paragraphs"].toList());
 	}
 	else
 	{

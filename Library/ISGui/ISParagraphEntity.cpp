@@ -35,6 +35,23 @@ QString ISParagraphEntity::GetErrorString() const
 	return ErrorString;
 }
 //-----------------------------------------------------------------------------
+void ISParagraphEntity::Initialize(const QVariantList &VariantList)
+{
+	for (const QVariant &Paragraph : VariantList)
+	{
+		QVariantMap ParagraphMap = Paragraph.toMap();
+		Paragraphs.emplace_back(new ISMetaParagraph
+		{
+			ParagraphMap["UID"],
+			ParagraphMap["Name"].toString(),
+			ParagraphMap["Local"].toString(),
+			ParagraphMap["ToolTip"].toString(),
+			ParagraphMap["Icon"].toString(),
+			ParagraphMap["Class"].toString()
+		});
+	}
+}
+//-----------------------------------------------------------------------------
 bool ISParagraphEntity::Initialize()
 {
 	ISQuery qSelect(QS_PARAGRAPHS);
