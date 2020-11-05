@@ -175,11 +175,22 @@ QString ISUserRoleEntity::GetErrorString() const
 	return ErrorString;
 }
 //-----------------------------------------------------------------------------
+void ISUserRoleEntity::InitializeTables(const QVariantMap &VariantMap)
+{
+	for (const auto &MapItem: VariantMap.toStdMap())
+	{
+		for (const QVariant &AccessUID : MapItem.second.toList())
+		{
+			Tables.count(MapItem.first) ? Tables[MapItem.first].emplace_back(AccessUID) : Tables[MapItem.first] = { AccessUID };
+		}
+	}
+}
+//-----------------------------------------------------------------------------
 void ISUserRoleEntity::InitializeSpecial(const QVariantList &VariantList)
 {
-	for (const QVariant &Variant : VariantList)
+	for (const QVariant &SpecialAccessUID : VariantList)
 	{
-		Specials.emplace_back(Variant);
+		Specials.emplace_back(SpecialAccessUID);
 	}
 }
 //-----------------------------------------------------------------------------

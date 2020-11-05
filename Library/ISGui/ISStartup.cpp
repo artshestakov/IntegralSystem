@@ -196,6 +196,7 @@ bool ISStartup::StartupNew(ISSplashScreen *SplashScreen)
 	bool Result = qAuth.Execute();
 	if (Result)
 	{
+		ISUserRoleEntity::Instance().InitializeTables(qAuth.GetAnswer()["AccessTables"].toMap());
 		ISUserRoleEntity::Instance().InitializeSpecial(qAuth.GetAnswer()["AccessSpecial"].toList());
 		ISMetaSystemsEntity::Instance().Initialize(qAuth.GetAnswer()["SystemSubSystem"].toList());
 		ISPrintingEntity::Instance().Initialize(qAuth.GetAnswer()["Printing"].toList());

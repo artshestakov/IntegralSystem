@@ -21,6 +21,7 @@ public:
 	static void DeleteSpecialAccess(int GroupID, int SpecialAccessID);
 
 	QString GetErrorString() const;
+	void InitializeTables(const QVariantMap &VariantMap);
 	void InitializeSpecial(const QVariantList &VariantList);
 	bool Initialize();
 
