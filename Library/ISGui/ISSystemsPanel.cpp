@@ -89,7 +89,6 @@ void ISSystemsPanel::SystemClicked()
 void ISSystemsPanel::SubSystemClicked()
 {
 	QAction *ActionClicked = dynamic_cast<QAction*>(sender());
-
 	CurrentSubSystemUID = ActionClicked->objectName();
 	emit ClickedSubSystem(CurrentSubSystemUID, ActionClicked->icon());
 }
@@ -130,15 +129,13 @@ void ISSystemsPanel::ClearSubSystemsBar()
 QString ISSystemsPanel::GetSystemToolTip(ISMetaSystem *MetaSystem) const
 {
 	QString ToolTip = MetaSystem->Hint.isEmpty() ? MetaSystem->LocalName : MetaSystem->Hint;
-	ToolTip = ISGui::PrepareLongToolTip(ToolTip);
-	return ToolTip;
+	return ISGui::PrepareLongToolTip(ToolTip);
 }
 //-----------------------------------------------------------------------------
 QString ISSystemsPanel::GetSubSystemToolTip(ISMetaSubSystem *MetaSubSystem) const
 {
 	QString ToolTip = MetaSubSystem->Hint.isEmpty() ? MetaSubSystem->LocalName : MetaSubSystem->Hint;
-	ToolTip = ISGui::PrepareLongToolTip(ToolTip);
-	return ToolTip;
+	return ISGui::PrepareLongToolTip(ToolTip);
 }
 //-----------------------------------------------------------------------------
 QIcon ISSystemsPanel::GetSystemIcon(ISMetaSystem *MetaSystem) const

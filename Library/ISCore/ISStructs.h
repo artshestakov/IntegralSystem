@@ -108,25 +108,22 @@ struct ISColumnSizeItem
 //-----------------------------------------------------------------------------
 struct ISMetaSubSystem
 {
-    ISMetaSubSystem() : ID(0), OrderID(0), SystemID(0) { }
+    ISMetaSubSystem() { }
 
-    int ID; //Идентификатор подсистемы
     ISUuid UID; //Идентификатор подсистемы
     QString LocalName; //Локальное имя подсистемы
-    int OrderID; //Порядок подсистемы
     QString IconName; //Имя иконки подсистемы
     QString TableName; //Имя таблицы подсистемы
     QString ClassName; //Имя класса подсистемы
     QString Hint; //Подсказка
 
     QString SystemUID; //Идентификатор системы к которой относится эта подсистема
-    int SystemID; //Идентификатор родительской системы
     QString SystemLocalName; //Имя родительской системы
 };
 //-----------------------------------------------------------------------------
 struct ISMetaSystem
 {
-    ISMetaSystem() : IsSystem(false), ID(0), OrderID(0) { }
+    ISMetaSystem() : IsSystem(false) { }
 
     ~ISMetaSystem()
     {
@@ -137,14 +134,10 @@ struct ISMetaSystem
     }
 
     bool IsSystem; //Движковая система (если нет - значит пользовательская)
-    int ID;
     ISUuid UID; //Идентификатор
     QString LocalName; //Имя системы
-    int OrderID; //Порядок системы
     QString IconName; //Имя иконки
-    QByteArray IconImage; //Пользовательская иконка
     QString Hint; //Всплывающая подсказка
-
     std::vector<ISMetaSubSystem*> SubSystems; //Список подсистем
 };
 //-----------------------------------------------------------------------------

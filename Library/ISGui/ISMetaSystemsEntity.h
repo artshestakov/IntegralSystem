@@ -9,6 +9,7 @@ public:
 	static ISMetaSystemsEntity& Instance();
 
 	QString GetErrorString() const;
+	void Initialize(const QVariantList &VariantList);
 	bool Initialize(); //Инициализация
 
 	std::vector<ISMetaSystem*> GetSystems(); //Получить список всех систем

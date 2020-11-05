@@ -4,8 +4,8 @@
 #include "ISUserRoleEntity.h"
 //-----------------------------------------------------------------------------
 static QString QS_SYSTEMS = PREPARE_QUERY("SELECT "
-										  "stms_issystem, stms_id, stms_uid, stms_localname, stms_orderid, stms_icon, stms_hint, "
-										  "sbsm_id, sbsm_uid, sbsm_localname, sbsm_orderid, sbsm_icon, sbsm_classname, sbsm_tablename, sbsm_hint "
+										  "stms_issystem, stms_uid, stms_localname, stms_icon, stms_hint, "
+										  "sbsm_uid, sbsm_localname, sbsm_icon, sbsm_classname, sbsm_tablename, sbsm_hint "
 										  "FROM _subsystems "
 										  "LEFT JOIN _systems ON stms_uid = sbsm_system "
 										  "WHERE NOT sbsm_isdeleted "
@@ -36,6 +36,36 @@ QString ISMetaSystemsEntity::GetErrorString() const
 	return ErrorString;
 }
 //-----------------------------------------------------------------------------
+void ISMetaSystemsEntity::Initialize(const QVariantList &VariantList)
+{
+	for (const QVariant &System : VariantList.toStdList()) //Обходим системы
+	{
+		QVariantMap SystemMap = System.toMap();
+		ISMetaSystem *MetaSystem = new ISMetaSystem();
+		MetaSystem->IsSystem = SystemMap["IsSystem"].toBool();
+		MetaSystem->UID = SystemMap["UID"];
+		MetaSystem->LocalName = SystemMap["Local"].toString();
+		MetaSystem->IconName = SystemMap["Icon"].toString();
+		MetaSystem->Hint = SystemMap["Hint"].toString();
+
+		QVariantList SubSystems = SystemMap["SubSystems"].toList();
+		for (const QVariant &SubSystem : SubSystems) //Обходим подсистемы
+		{
+			QVariantMap SubSystemMap = SubSystem.toMap();
+			ISMetaSubSystem *MetaSubSystem = new ISMetaSubSystem();
+			MetaSubSystem->UID = SubSystemMap["UID"];
+			MetaSubSystem->LocalName = SubSystemMap["Local"].toString();
+			MetaSubSystem->IconName = SubSystemMap["Icon"].toString();
+			MetaSubSystem->ClassName = SubSystemMap["Class"].toString();
+			MetaSubSystem->TableName = SubSystemMap["Table"].toString();
+			MetaSubSystem->Hint = SubSystemMap["Hint"].toString();
+			MetaSubSystem->SystemUID = MetaSystem->UID;
+			MetaSystem->SubSystems.emplace_back(MetaSubSystem);
+		}
+		Systems.emplace_back(MetaSystem);
+	}
+}
+//-----------------------------------------------------------------------------
 bool ISMetaSystemsEntity::Initialize()
 {
 	ISQuery qSelect(QS_SYSTEMS);
@@ -49,7 +79,7 @@ bool ISMetaSystemsEntity::Initialize()
 			{
 				if (!ISMetaUser::Instance().UserData.GroupFullAccess) //Если у группы пользователя нет полного доступа - проверять доступ к подсистемам
 				{
-					if (!ISUserRoleEntity::Instance().CheckAccessSubSystem(SubSystemUID)) //Если доступа к подсистеме нет - перезодить на следующую итерацию цикла
+					if (!ISUserRoleEntity::Instance().CheckAccessSubSystem(SubSystemUID)) //Если доступа к подсистеме нет - переходить на следующую итерацию цикла
 					{
 						continue;
 					}
@@ -61,25 +91,21 @@ bool ISMetaSystemsEntity::Initialize()
 			{
 				MetaSystem = new ISMetaSystem();
 				MetaSystem->IsSystem = qSelect.ReadColumn("stms_issystem").toBool();
-				MetaSystem->ID = qSelect.ReadColumn("stms_id").toInt();
 				MetaSystem->UID = SystemUID;
 				MetaSystem->LocalName = qSelect.ReadColumn("stms_localname").toString();
-				MetaSystem->OrderID = qSelect.ReadColumn("stms_orderid").toInt();
 				MetaSystem->IconName = qSelect.ReadColumn("stms_icon").toString();
 				MetaSystem->Hint = qSelect.ReadColumn("stms_hint").toString();
 				Systems.emplace_back(MetaSystem);
 			}
 
 			ISMetaSubSystem *MetaSubSystem = new ISMetaSubSystem();
-			MetaSubSystem->ID = qSelect.ReadColumn("sbsm_id").toInt();
 			MetaSubSystem->UID = SubSystemUID;
 			MetaSubSystem->LocalName = qSelect.ReadColumn("sbsm_localname").toString();
-			MetaSubSystem->OrderID = qSelect.ReadColumn("sbsm_orderid").toInt();
 			MetaSubSystem->IconName = qSelect.ReadColumn("sbsm_icon").toString();
 			MetaSubSystem->ClassName = qSelect.ReadColumn("sbsm_classname").toString();
 			MetaSubSystem->TableName = qSelect.ReadColumn("sbsm_tablename").toString();
 			MetaSubSystem->Hint = qSelect.ReadColumn("sbsm_hint").toString();
-			MetaSubSystem->SystemUID = SystemUID;
+			//MetaSubSystem->SystemUID = SystemUID;
 			MetaSystem->SubSystems.emplace_back(MetaSubSystem);
 		}
 	}
