@@ -35,14 +35,17 @@ static QString QS_GROUP_ACCESS_SPECIAL = PREPARE_QUERY("SELECT gast_uid "
 													   "LEFT JOIN _groupaccessspecialtype ON gast_id = gasp_specialaccess "
 													   "WHERE gasp_group = :GroupID");
 //-----------------------------------------------------------------------------
-static QString QS_SYSTEM_SUBSYSTEM = PREPARE_QUERY("SELECT "
-												   "stms_issystem, stms_uid, stms_localname, stms_icon, stms_hint, "
-												   "sbsm_uid, sbsm_localname, sbsm_icon, sbsm_classname, sbsm_tablename, sbsm_hint "
-												   "FROM _subsystems "
-												   "LEFT JOIN _systems ON stms_uid = sbsm_system "
-												   "WHERE NOT sbsm_isdeleted "
-												   "AND check_access_user_subsystem(:UserID, :UserIsSystem, sbsm_uid) " //Проверка доступности этой подсистемы пользователю
-												   "ORDER BY stms_orderid, sbsm_orderid");
+static QString QS_SYSTEM = PREPARE_QUERY("SELECT stms_issystem, stms_uid, stms_localname, stms_icon, stms_hint "
+										 "FROM _systems "
+										 "WHERE NOT stms_isdeleted "
+										 "ORDER BY stms_orderid");
+//-----------------------------------------------------------------------------
+static QString QS_SUBSYSTEM = PREPARE_QUERY("SELECT sbsm_uid, sbsm_localname, sbsm_icon, sbsm_classname, sbsm_tablename, sbsm_hint "
+											"FROM _subsystems "
+											"WHERE NOT sbsm_isdeleted "
+											"AND sbsm_system = :SystemUID "
+											"AND check_access_user_subsystem(:UserID, :UserIsSystem, sbsm_uid) "
+											"ORDER BY sbsm_orderid");
 //-----------------------------------------------------------------------------
 static QString QS_PRINTING = PREPARE_QUERY("SELECT rprt_uid, rprt_type, rprt_tablename, rprt_localname, rprt_filetemplate, "
 										   "rprt_parent, rprt_replacevalue, rprt_sqlquery "
@@ -555,48 +558,52 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	}
 
 	//Получаем системы и подсистемы
-	QVariantMap SystemSubSystemMap;
-	ISQuery qSelectSystems(ISDatabase::Instance().GetDB(DBConnectionName), QS_SYSTEM_SUBSYSTEM);
-	qSelectSystems.BindValue(":UserID", TcpMessage->TcpSocket->GetUserID());
-	qSelectSystems.BindValue(":UserIsSystem", TcpMessage->TcpSocket->GetUserIsSystem());
-	if (qSelectSystems.Execute())
+	QVariantList SystemSubSystemList;
+	ISQuery qSelectSystem(ISDatabase::Instance().GetDB(DBConnectionName), QS_SYSTEM),
+		qSelectSubSystem(ISDatabase::Instance().GetDB(DBConnectionName), QS_SUBSYSTEM);
+	if (qSelectSystem.Execute()) //Запрашиваем системы
 	{
-		while (qSelectSystems.Next())
+		while (qSelectSystem.Next())
 		{
-			ISUuid SystemUID = qSelectSystems.ReadColumn("stms_uid");
-			if (SystemSubSystemMap.contains(SystemUID)) //Если такая система уже была добавлена в Map - добавляем подсистему
+			QVariantList SubSystemsList;
+			qSelectSubSystem.BindValue(":SystemUID", qSelectSystem.ReadColumn("stms_uid"));
+			qSelectSubSystem.BindValue(":UserID", TcpMessage->TcpSocket->GetUserID());
+			qSelectSubSystem.BindValue(":UserIsSystem", TcpMessage->TcpSocket->GetUserIsSystem());
+			if (qSelectSubSystem.Execute()) //Запрашиваем подсистемы текущей системы
 			{
-				QVariantMap SystemMap = SystemSubSystemMap[SystemUID].toMap();
-				QVariantList SubSystemList = SystemMap["SubSystems"].toList();
-				SubSystemList.append(QVariantMap
+				while (qSelectSubSystem.Next())
 				{
-					{ "UID", ISUuid(qSelectSystems.ReadColumn("sbsm_uid")) },
-					{ "Local", qSelectSystems.ReadColumn("sbsm_localname") },
-					{ "Icon", qSelectSystems.ReadColumn("sbsm_icon") },
-					{ "Class", qSelectSystems.ReadColumn("sbsm_classname") },
-					{ "Table", qSelectSystems.ReadColumn("sbsm_tablename") },
-					{ "Hint", qSelectSystems.ReadColumn("sbsm_hint") }
-				});
-				SystemMap["SubSystems"] = SubSystemList;
-				SystemSubSystemMap[SystemUID] = SystemMap;
+					SubSystemsList.append(QVariantMap
+					{
+						{ "UID", ISUuid(qSelectSubSystem.ReadColumn("sbsm_uid")) },
+						{ "Local", qSelectSubSystem.ReadColumn("sbsm_localname") },
+						{ "Icon", qSelectSubSystem.ReadColumn("sbsm_icon") },
+						{ "Class", qSelectSubSystem.ReadColumn("sbsm_classname") },
+						{ "Table", qSelectSubSystem.ReadColumn("sbsm_tablename") },
+						{ "Hint", qSelectSubSystem.ReadColumn("sbsm_hint") }
+					});
+				}
 			}
-			else //Такой систему в Map'е ещё нет - добавляем её
+			else
 			{
-				SystemSubSystemMap[SystemUID] = QVariantMap
-				{
-					{ "IsSystem", qSelectSystems.ReadColumn("stms_issystem") },
-					{ "Local", qSelectSystems.ReadColumn("stms_localname") },
-					{ "Icon", qSelectSystems.ReadColumn("stms_icon") },
-					{ "Hint", qSelectSystems.ReadColumn("stms_hint") },
-					{ "SubSystems", QVariantList() },
-				};
+				ErrorString = LANG("Carat.Error.Query.GetMetaData.SubSystems").arg(qSelectSubSystem.GetErrorString());
+				return false;
 			}
+			SystemSubSystemList.append(QVariantMap
+			{
+				{ "UID", qSelectSystem.ReadColumn("stms_uid") },
+				{ "IsSystem", qSelectSystem.ReadColumn("stms_issystem") },
+				{ "Local", qSelectSystem.ReadColumn("stms_localname") },
+				{ "Icon", qSelectSystem.ReadColumn("stms_icon") },
+				{ "Hint", qSelectSystem.ReadColumn("stms_hint") },
+				{ "SubSystems", SubSystemsList }
+			});
 		}
-		TcpAnswer->Parameters["SystemSubSystem"] = SystemSubSystemMap;
+		TcpAnswer->Parameters["SystemSubSystem"] = SystemSubSystemList;
 	}
 	else
 	{
-		ErrorString = LANG("Carat.Error.Query.GetMetaData.MetaSystems").arg(qSelectSystems.GetErrorString());
+		ErrorString = LANG("Carat.Error.Query.GetMetaData.Systems").arg(qSelectSystem.GetErrorString());
 		return false;
 	}
 
