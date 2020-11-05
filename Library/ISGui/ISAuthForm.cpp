@@ -256,7 +256,7 @@ void ISAuthForm::InputNew()
 		ISMetaUser::Instance().UserData.Password = EditPassword->GetValue().toString();
 		ISMetaUser::Instance().UserData.GroupID = qAuth.GetAnswer()["UserGroupID"].toBool();
 		ISMetaUser::Instance().UserData.GroupFullAccess = qAuth.GetAnswer()["UserGroupFullAccess"].toBool();
-		PROPERTY_SET("Configuration", qAuth.GetAnswer()["Configuration"]);
+		PROPERTY_SET("Configuration", qAuth.GetAnswer()["Configuration"].toMap()["Name"]);
 		close();
 	}
 	else //Ошибка авторизации

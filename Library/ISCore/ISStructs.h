@@ -190,7 +190,7 @@ struct PMetaUserPermission
     bool TableNavigation;
 };
 //-----------------------------------------------------------------------------
-struct ISCORE_EXPORT ISConfigurationItem
+struct ISCORE_EXPORT ISConfigurationInfo
 {
     ISUuid UID; //Идентификатор
     QString Name; //Наименование

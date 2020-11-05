@@ -8,11 +8,12 @@ class ISGUI_EXPORT ISObjects
 {
 public:
 	static ISObjects& Instance();
-	ISConfigurationItem Info; //Информация о конфигурации
+	ISConfigurationInfo Info; //Информация о конфигурации
 
 public:
 	QString GetErrorString() const;
 	bool IsInitialized() const;
+	void Initialize(const QString &ConfigurationName);
 	bool Initialize(); //Инициализация
 	ISObjectInterface* GetInterface(); //Получить указатель на ядро конфигурации
 

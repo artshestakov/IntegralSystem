@@ -193,21 +193,6 @@ bool ISStartup::StartupOld(ISSplashScreen *SplashScreen)
 //-----------------------------------------------------------------------------
 bool ISStartup::StartupNew(ISSplashScreen *SplashScreen)
 {
-	//Инициализация объекта конфигурации
-	if (!ISObjects::Instance().Initialize())
-	{
-		ISMessageBox::ShowCritical(SplashScreen, LANG("Message.Error.InitializeObjects"), ISObjects::Instance().GetErrorString());
-		return false;
-	}
-
-	//Если дата запрета меньше чем текущая - не даём зайти в программу
-	QDate DateExpired = ISObjects::Instance().Info.DateExpired;
-	if (DateExpired.isValid() && QDate::currentDate() > DateExpired)
-	{
-		ISMessageBox::ShowCritical(SplashScreen, LANG("Message.Error.ObjectDateExpired"));
-		return false;
-	}
-
 	//Инициализация мета-данных
 	if (!ISMetaData::Instance().Initialize(PROPERTY_GET("Configuration").toString(), false, false))
 	{
@@ -221,6 +206,7 @@ bool ISStartup::StartupNew(ISSplashScreen *SplashScreen)
 		ISMessageBox::ShowCritical(SplashScreen, qAuth.GetErrorString());
 		return false;
 	}
+	ISObjects::Instance().Initialize(PROPERTY_GET("Configuration").toString());
 	ISSettingsDatabase::Instance().Initialize(qAuth.GetAnswer()["SettingsDB"].toMap());
 	ISUserRoleEntity::Instance().InitializeTables(qAuth.GetAnswer()["AccessTables"].toMap());
 	ISUserRoleEntity::Instance().InitializeSpecial(qAuth.GetAnswer()["AccessSpecial"].toList());

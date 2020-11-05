@@ -99,7 +99,7 @@ static QString QS_PARAGRAPH = PREPARE_QUERY("SELECT prhs_uid, prhs_name, prhs_lo
 											"WHERE NOT prhs_isdeleted "
 											"ORDER BY prhs_orderid");
 //-----------------------------------------------------------------------------
-ISTcpWorker::ISTcpWorker(const QString &db_host, int db_port, const QString &db_name, const QString &db_user, const QString &db_password, const QString &configuration_name)
+ISTcpWorker::ISTcpWorker(const QString &db_host, int db_port, const QString &db_name, const QString &db_user, const QString &db_password, const ISConfigurationInfo &configuration_info)
 	: QObject(),
 	ErrorString(NO_ERROR_STRING),
 	DBHost(db_host),
@@ -107,7 +107,7 @@ ISTcpWorker::ISTcpWorker(const QString &db_host, int db_port, const QString &db_
 	DBName(db_name),
 	DBUser(db_user),
 	DBPassword(db_password),
-	ConfigurationName(configuration_name),
+	ConfigurationInfo(configuration_info),
 	IsStarted(false),
 	IsRunning(false),
 	CurrentMessage(nullptr),
@@ -319,6 +319,13 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 		return false;
 	}
 
+	//Если дата запрета меньше чем текущая - не даём зайти в программу
+	if (ConfigurationInfo.DateExpired.isValid() && QDate::currentDate() > ConfigurationInfo.DateExpired)
+	{
+		ErrorString = LANG("Carat.Error.Query.AuthDenied");
+		return false;
+	}
+
 	QVariant Hash = CheckNullField("Hash", TcpMessage->Parameters),
 		Version = CheckNullField("Version", TcpMessage->Parameters);
 	if (!Hash.isValid())
@@ -463,7 +470,14 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	TcpAnswer->Parameters["UserGroupID"] = GroupID;
 	TcpAnswer->Parameters["UserGroupFullAccess"] = GroupFullAccess;
 	TcpAnswer->Parameters["IsNeedUpdate"] = IsNeedUpdate;
-	TcpAnswer->Parameters["Configuration"] = ConfigurationName;
+	TcpAnswer->Parameters["Configuration"] = QVariantMap
+	{
+		{ "UID", ConfigurationInfo.UID },
+		{ "Name", ConfigurationInfo.Name },
+		{ "Local", ConfigurationInfo.LocalName },
+		{ "Desktop", ConfigurationInfo.DesktopForm },
+		{ "Logo", ConfigurationInfo.LogoName }
+	};
 	return true;
 }
 //-----------------------------------------------------------------------------

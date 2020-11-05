@@ -42,6 +42,13 @@ bool ISObjects::IsInitialized() const
 	return Valid;
 }
 //-----------------------------------------------------------------------------
+void ISObjects::Initialize(const QString &ConfigurationName)
+{
+	ObjectInterface = ISAlgorithm::CreatePointer<ISObjectInterface *>("IS" + ConfigurationName + "::Object");
+	ObjectInterface->SetConfigurationName(ConfigurationName);
+	ObjectInterface->RegisterMetaTypes();
+}
+//-----------------------------------------------------------------------------
 bool ISObjects::Initialize()
 {
 	ConfigurationName = ISMetaDataHelper::GetConfigurationName(ErrorString);
