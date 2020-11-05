@@ -35,6 +35,21 @@ QString ISHistory::GetErrorString() const
 	return ErrorString;
 }
 //-----------------------------------------------------------------------------
+void ISHistory::Initialize(const QVariantList &VariantList)
+{
+	for (const QVariant &History : VariantList)
+	{
+		QVariantMap HistoryMap = History.toMap();
+		Stories.emplace_back(ISHistoryObject
+		{
+			HistoryMap["Date"].toDateTime(),
+			HistoryMap["Table"].toString(),
+			HistoryMap["ID"].toInt(),
+			false
+		});
+	}
+}
+//-----------------------------------------------------------------------------
 bool ISHistory::Initialize()
 {
 	ISQuery qSelect(QS_HISTORY);

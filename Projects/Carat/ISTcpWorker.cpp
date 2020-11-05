@@ -685,7 +685,7 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 			{
 				{ "Date", qSelectHistory.ReadColumn("htry_creationdate") },
 				{ "Table", qSelectHistory.ReadColumn("htry_tablename") },
-				{ "ObjectID", qSelectHistory.ReadColumn("htry_objectid") }
+				{ "ID", qSelectHistory.ReadColumn("htry_objectid") }
 			});
 		}
 		TcpAnswer->Parameters["History"] = HistoryList;
