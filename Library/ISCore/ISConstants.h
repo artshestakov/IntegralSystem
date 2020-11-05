@@ -272,5 +272,6 @@ const char CONST_CONFIG_AMI_PORT[] = "AMI/Port";
 const char CONST_CONFIG_AMI_LOGIN[] = "AMI/Login";
 const char CONST_CONFIG_AMI_PASSWORD[] = "AMI/Password";
 const char CONST_CONFIG_OTHER_UPDATE_CLIENT_DIR[] = "Other/UpdateClientDir";
+const char CONST_CONFIG_OTHER_CONFIGURATION[] = "Other/Configuration";
 //-----------------------------------------------------------------------------
 #endif

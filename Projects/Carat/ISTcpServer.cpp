@@ -48,13 +48,14 @@ bool ISTcpServer::Run()
 	QString DBName = CONFIG_STRING(CONST_CONFIG_CONNECTION_DATABASE);
 	QString DBUser = CONFIG_STRING(CONST_CONFIG_CONNECTION_LOGIN);
 	QString DBPassword = CONFIG_STRING(CONST_CONFIG_CONNECTION_PASSWORD);
+	QString ConfigurationName = CONFIG_STRING(CONST_CONFIG_OTHER_CONFIGURATION);
 	
 	//Запуск потоков
 	QEventLoop EventLoop;
 	for (unsigned int i = 0; i < WorkerCount; ++i)
 	{
 		QThread *Thread = new QThread();
-		ISTcpWorker *TcpWorker = new ISTcpWorker(DBHost, DBPort, DBName, DBUser, DBPassword);
+		ISTcpWorker *TcpWorker = new ISTcpWorker(DBHost, DBPort, DBName, DBUser, DBPassword, ConfigurationName);
 		connect(TcpWorker, &ISTcpWorker::Answer, this, &ISTcpServer::SendAnswer, Qt::QueuedConnection);
 		connect(TcpWorker, &ISTcpWorker::StartedDone, &EventLoop, &QEventLoop::quit);
 		connect(TcpWorker, &ISTcpWorker::StartedFailed, &EventLoop, &QEventLoop::quit);

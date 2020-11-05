@@ -142,6 +142,11 @@ bool ISCaratApplication::Run()
 		ISLOGGER_E("ISConfig", "password not specified");
 		return false;
 	}
+	if (CONFIG_STRING(CONST_CONFIG_OTHER_CONFIGURATION).isEmpty())
+	{
+		ISLOGGER_E("ISConfig", "configuration name not specified");
+		return false;
+	}
 
 	//Инициализация пула запросов
 	if (!ISQueryPool::Instance().Start(CONFIG_STRING(CONST_CONFIG_CONNECTION_SERVER), CONFIG_INT(CONST_CONFIG_CONNECTION_PORT), CONFIG_STRING(CONST_CONFIG_CONNECTION_DATABASE),

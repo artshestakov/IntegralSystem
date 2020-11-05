@@ -99,7 +99,7 @@ static QString QS_PARAGRAPH = PREPARE_QUERY("SELECT prhs_uid, prhs_name, prhs_lo
 											"WHERE NOT prhs_isdeleted "
 											"ORDER BY prhs_orderid");
 //-----------------------------------------------------------------------------
-ISTcpWorker::ISTcpWorker(const QString &db_host, int db_port, const QString &db_name, const QString &db_user, const QString &db_password)
+ISTcpWorker::ISTcpWorker(const QString &db_host, int db_port, const QString &db_name, const QString &db_user, const QString &db_password, const QString &configuration_name)
 	: QObject(),
 	ErrorString(NO_ERROR_STRING),
 	DBHost(db_host),
@@ -107,6 +107,7 @@ ISTcpWorker::ISTcpWorker(const QString &db_host, int db_port, const QString &db_
 	DBName(db_name),
 	DBUser(db_user),
 	DBPassword(db_password),
+	ConfigurationName(configuration_name),
 	IsStarted(false),
 	IsRunning(false),
 	CurrentMessage(nullptr),
@@ -457,11 +458,12 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 
 	//Отдаём информацию о пользователе и выходим из функции
 	TcpAnswer->Parameters["UserID"] = UserID;
-	TcpAnswer->Parameters["IsSystem"] = IsSystem;
-	TcpAnswer->Parameters["FIO"] = UserFIO;
-	TcpAnswer->Parameters["GroupID"] = GroupID;
-	TcpAnswer->Parameters["GroupFullAccess"] = GroupFullAccess;
+	TcpAnswer->Parameters["UserIsSystem"] = IsSystem;
+	TcpAnswer->Parameters["UserFIO"] = UserFIO;
+	TcpAnswer->Parameters["UserGroupID"] = GroupID;
+	TcpAnswer->Parameters["UserGroupFullAccess"] = GroupFullAccess;
 	TcpAnswer->Parameters["IsNeedUpdate"] = IsNeedUpdate;
+	TcpAnswer->Parameters["Configuration"] = ConfigurationName;
 	return true;
 }
 //-----------------------------------------------------------------------------

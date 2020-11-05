@@ -17,7 +17,7 @@ signals:
 	void Answer(ISTcpAnswer *);
 
 public:
-	ISTcpWorker(const QString &db_host, int db_port, const QString &db_name, const QString &db_user, const QString &db_password);
+	ISTcpWorker(const QString &db_host, int db_port, const QString &db_name, const QString &db_user, const QString &db_password, const QString &configuration_name);
 	virtual ~ISTcpWorker();
 
 	bool GetStarted() const; //Получить флаг успешного запуска воркера
@@ -47,6 +47,7 @@ private:
 	QString DBName;
 	QString DBUser;
 	QString DBPassword;
+	QString ConfigurationName;
 	bool IsStarted; //Флаг успешного запуска воркера
 	bool IsRunning; //Флаг занятости воркера
 	ISTcpMessage *CurrentMessage; //Указатель на текущее сообщение
