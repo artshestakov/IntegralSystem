@@ -105,7 +105,7 @@ bool ISMetaSystemsEntity::Initialize()
 			MetaSubSystem->ClassName = qSelect.ReadColumn("sbsm_classname").toString();
 			MetaSubSystem->TableName = qSelect.ReadColumn("sbsm_tablename").toString();
 			MetaSubSystem->Hint = qSelect.ReadColumn("sbsm_hint").toString();
-			//MetaSubSystem->SystemUID = SystemUID;
+			MetaSubSystem->SystemUID = SystemUID;
 			MetaSystem->SubSystems.emplace_back(MetaSubSystem);
 		}
 	}
