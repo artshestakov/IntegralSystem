@@ -292,7 +292,7 @@ void ISStorageFilesListForm::FilterChanged(QAbstractButton *AbstractButton)
 //-----------------------------------------------------------------------------
 bool ISStorageFilesListForm::IsMyFile()
 {
-	return GetCurrentRecordValueDB("CreationUser").toInt() == CURRENT_USER_ID;
+	return GetCurrentRecordValueDB("CreationUser").toUInt() == CURRENT_USER_ID;
 }
 //-----------------------------------------------------------------------------
 bool ISStorageFilesListForm::CheckPassword()

@@ -68,7 +68,7 @@ private:
 
 private:
 	void CommentLoadList();
-	QWidget* CommentCreateWidget(bool IsParent, int CommentID, int UserID, const QPixmap &UserPhoto, const QString &UserFIO, const QString &Comment, const QDateTime &CreationDate, const QDateTime &UpdationDate);
+	QWidget* CommentCreateWidget(bool IsParent, int CommentID, unsigned int UserID, const QPixmap &UserPhoto, const QString &UserFIO, const QString &Comment, const QDateTime &CreationDate, const QDateTime &UpdationDate);
 	void CommentAdd();
 	void CommentEdit();
 	void CommentDelete();
@@ -111,7 +111,7 @@ private:
 	QDate TaskDeadline;
 	QString TaskExecutorName;
 	QPixmap TaskExecutroPhoto;
-	int TaskExecutorID;
+	unsigned int TaskExecutorID;
 	QString TaskType;
 	ISUuid TaskStatusUID;
 	QString TaskStatusName;
@@ -120,7 +120,7 @@ private:
 	QString TaskPriorityName;
 	QPixmap TaskOwnerPhoto;
 	QString TaskOwner;
-	int TaskOwnerID;
+	unsigned int TaskOwnerID;
 	bool TaskImportant;
 	QString TaskCreationDate;
 	QString TaskCreationDateToolTip;

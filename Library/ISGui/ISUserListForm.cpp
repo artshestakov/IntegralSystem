@@ -63,6 +63,6 @@ void ISUserListForm::DeletePassword()
 //-----------------------------------------------------------------------------
 bool ISUserListForm::CheckThisUser()
 {
-	return GetObjectID() == CURRENT_USER_ID;
+	return (unsigned int)GetObjectID() == CURRENT_USER_ID;
 }
 //-----------------------------------------------------------------------------

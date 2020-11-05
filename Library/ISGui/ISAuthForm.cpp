@@ -14,6 +14,7 @@
 #include "ISVersionInfo.h"
 #include "ISLogger.h"
 #include "ISSystem.h"
+#include "ISProperty.h"
 //-----------------------------------------------------------------------------
 #include "ISTcpConnector.h"
 #include "ISTcpQuery.h"
@@ -248,7 +249,14 @@ void ISAuthForm::InputNew()
 		SetConnecting(false);
 		SetResult(true);
 		hide();
+		ISMetaUser::Instance().UserData.System = qAuth.GetAnswer()["UserIsSystem"].toBool();
+		ISMetaUser::Instance().UserData.ID = qAuth.GetAnswer()["UserID"].toBool();
+		ISMetaUser::Instance().UserData.FIO = qAuth.GetAnswer()["UserFIO"].toBool();
 		ISMetaUser::Instance().UserData.Login = EditLogin->GetValue().toString();
+		ISMetaUser::Instance().UserData.Password = EditPassword->GetValue().toString();
+		ISMetaUser::Instance().UserData.GroupID = qAuth.GetAnswer()["UserGroupID"].toBool();
+		ISMetaUser::Instance().UserData.GroupFullAccess = qAuth.GetAnswer()["UserGroupFullAccess"].toBool();
+		PROPERTY_SET("Configuration", qAuth.GetAnswer()["Configuration"]);
 		close();
 	}
 	else //Ошибка авторизации

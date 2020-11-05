@@ -34,12 +34,12 @@ struct ISMetaUserData
     ISMetaUserData() : System(false), ID(0), GroupID(0), GroupFullAccess(false) { }
 
     bool System; //Системный
-    int ID; //Идентификатор пользователя
+    unsigned int ID; //Идентификатор пользователя
 	QString FIO; //ФИО
     QString Login; //Логин
-	QString Password; //Пароль (временно) //???
+	QString Password; //Пароль (временно) //??? Пока не перейдём на Карат
 
-    int GroupID; //Идентификатор группы в которой состоит пользователь
+	unsigned int GroupID; //Идентификатор группы в которой состоит пользователь
     bool GroupFullAccess; //Полный доступ
 };
 //-----------------------------------------------------------------------------

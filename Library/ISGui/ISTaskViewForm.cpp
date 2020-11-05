@@ -190,7 +190,7 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	TaskDeadline = qSelect.ReadColumn("task_deadline").toDate();
 	TaskExecutorName = qSelect.ReadColumn("task_executor_name").toString();
 	TaskExecutroPhoto = ISGui::ByteArrayToPixmap(qSelect.ReadColumn("task_executor_photo").toByteArray()).scaled(40, 40);
-	TaskExecutorID = qSelect.ReadColumn("task_executor_id").toInt();
+	TaskExecutorID = qSelect.ReadColumn("task_executor_id").toUInt();
 	TaskType = qSelect.ReadColumn("task_type").toString();
 	TaskStatusUID = qSelect.ReadColumn("task_status_uid");
 	TaskStatusName = qSelect.ReadColumn("task_status_name").toString();
@@ -199,7 +199,7 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	TaskPriorityName = qSelect.ReadColumn("task_priority_name").toString();
 	TaskOwnerPhoto = ISGui::ByteArrayToPixmap(qSelect.ReadColumn("task_owner_photo").toByteArray()).scaled(40, 40);
 	TaskOwner = qSelect.ReadColumn("task_owner_name").toString();
-	TaskOwnerID = qSelect.ReadColumn("task_owner_id").toInt();
+	TaskOwnerID = qSelect.ReadColumn("task_owner_id").toUInt();
 	TaskImportant = qSelect.ReadColumn("task_important").toBool();
 	TaskCreationDate = ISGui::ConvertDateTimeToString(qSelect.ReadColumn("task_creationdate").toDateTime(), FORMAT_DATE_V2, FORMAT_TIME_V1);
 	TaskCreationDateToolTip = qSelect.ReadColumn("task_creationdate").toDateTime().toString(FORMAT_DATE_TIME_V10);
@@ -1314,7 +1314,7 @@ void ISTaskViewForm::CommentLoadList()
 	}
 }
 //-----------------------------------------------------------------------------
-QWidget* ISTaskViewForm::CommentCreateWidget(bool IsParent, int CommentID, int UserID, const QPixmap &UserPhoto, const QString &UserFIO, const QString &Comment, const QDateTime &CreationDate, const QDateTime &UpdationDate)
+QWidget* ISTaskViewForm::CommentCreateWidget(bool IsParent, int CommentID, unsigned int UserID, const QPixmap &UserPhoto, const QString &UserFIO, const QString &Comment, const QDateTime &CreationDate, const QDateTime &UpdationDate)
 {
 	QVBoxLayout *LayoutWidget = new QVBoxLayout();
 	LayoutWidget->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_4_PX);

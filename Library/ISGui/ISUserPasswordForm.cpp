@@ -25,7 +25,7 @@ static QString QA_PASSWORD = "ALTER ROLE %1 WITH ENCRYPTED PASSWORD '%2'";
 static QString QI_USER_PASSWORD_CHANGED = PREPARE_QUERY("INSERT INTO _userpasswordchanged(upcg_user, upcg_type) "
 														"VALUES(:User, (SELECT upct_id FROM _userpasswordchangedtype WHERE upct_uid = :ChangeTypeUID))");
 //-----------------------------------------------------------------------------
-ISUserPasswordForm::ISUserPasswordForm(int user_id)
+ISUserPasswordForm::ISUserPasswordForm(unsigned int user_id)
 	: ISInterfaceDialogForm(),
 	UserID(user_id)
 {

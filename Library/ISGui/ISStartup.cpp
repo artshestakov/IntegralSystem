@@ -25,6 +25,7 @@
 #include "ISHistory.h"
 #include "ISDatabase.h"
 #include "ISTcpQuery.h"
+#include "ISProperty.h"
 //-----------------------------------------------------------------------------
 bool ISStartup::Startup(ISSplashScreen *SplashScreen)
 {
@@ -192,27 +193,46 @@ bool ISStartup::StartupOld(ISSplashScreen *SplashScreen)
 //-----------------------------------------------------------------------------
 bool ISStartup::StartupNew(ISSplashScreen *SplashScreen)
 {
-	ISTcpQuery qAuth(API_GET_META_DATA);
-	bool Result = qAuth.Execute();
-	if (Result)
+	//Инициализация объекта конфигурации
+	if (!ISObjects::Instance().Initialize())
 	{
-		ISSettingsDatabase::Instance().Initialize(qAuth.GetAnswer()["SettingsDB"].toMap());
-		ISUserRoleEntity::Instance().InitializeTables(qAuth.GetAnswer()["AccessTables"].toMap());
-		ISUserRoleEntity::Instance().InitializeSpecial(qAuth.GetAnswer()["AccessSpecial"].toList());
-		ISMetaSystemsEntity::Instance().Initialize(qAuth.GetAnswer()["SystemSubSystem"].toList());
-		ISPrintingEntity::Instance().Initialize(qAuth.GetAnswer()["Printing"].toList());
-		ISFavorites::Instance().Initialize(qAuth.GetAnswer()["Favorite"].toMap());
-		ISHistory::Instance().Initialize(qAuth.GetAnswer()["History"].toList());
-		ISSortingBuffer::Instance().Initialize(qAuth.GetAnswer()["Sorting"].toList());
-		ISColumnSizer::Instance().Initialize(qAuth.GetAnswer()["ColumnSize"].toList());
-		ISSettings::Instance().Initialize(qAuth.GetAnswer()["Settings"].toList());
-		ISParagraphEntity::Instance().Initialize(qAuth.GetAnswer()["Paragraphs"].toList());
+		ISMessageBox::ShowCritical(SplashScreen, LANG("Message.Error.InitializeObjects"), ISObjects::Instance().GetErrorString());
+		return false;
 	}
-	else
+
+	//Если дата запрета меньше чем текущая - не даём зайти в программу
+	QDate DateExpired = ISObjects::Instance().Info.DateExpired;
+	if (DateExpired.isValid() && QDate::currentDate() > DateExpired)
+	{
+		ISMessageBox::ShowCritical(SplashScreen, LANG("Message.Error.ObjectDateExpired"));
+		return false;
+	}
+
+	//Инициализация мета-данных
+	if (!ISMetaData::Instance().Initialize(PROPERTY_GET("Configuration").toString(), false, false))
+	{
+		ISMessageBox::ShowCritical(SplashScreen, LANG("Message.Error.InitializeMetaData"), ISMetaData::Instance().GetErrorString());
+		return false;
+	}
+
+	ISTcpQuery qAuth(API_GET_META_DATA);
+	if (!qAuth.Execute())
 	{
 		ISMessageBox::ShowCritical(SplashScreen, qAuth.GetErrorString());
+		return false;
 	}
-	return Result;
+	ISSettingsDatabase::Instance().Initialize(qAuth.GetAnswer()["SettingsDB"].toMap());
+	ISUserRoleEntity::Instance().InitializeTables(qAuth.GetAnswer()["AccessTables"].toMap());
+	ISUserRoleEntity::Instance().InitializeSpecial(qAuth.GetAnswer()["AccessSpecial"].toList());
+	ISMetaSystemsEntity::Instance().Initialize(qAuth.GetAnswer()["SystemSubSystem"].toList());
+	ISPrintingEntity::Instance().Initialize(qAuth.GetAnswer()["Printing"].toList());
+	ISFavorites::Instance().Initialize(qAuth.GetAnswer()["Favorite"].toMap());
+	ISHistory::Instance().Initialize(qAuth.GetAnswer()["History"].toList());
+	ISSortingBuffer::Instance().Initialize(qAuth.GetAnswer()["Sorting"].toList());
+	ISColumnSizer::Instance().Initialize(qAuth.GetAnswer()["ColumnSize"].toList());
+	ISSettings::Instance().Initialize(qAuth.GetAnswer()["Settings"].toList());
+	ISParagraphEntity::Instance().Initialize(qAuth.GetAnswer()["Paragraphs"].toList());
+	return true;
 }
 //-----------------------------------------------------------------------------
 bool ISStartup::CheckAccessDatabase(ISSplashScreen *SplashScreen)

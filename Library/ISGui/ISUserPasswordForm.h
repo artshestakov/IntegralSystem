@@ -9,7 +9,7 @@ class ISUserPasswordForm : public ISInterfaceDialogForm
 	Q_OBJECT
 
 public:
-	ISUserPasswordForm(int user_id);
+	ISUserPasswordForm(unsigned int user_id);
 	virtual ~ISUserPasswordForm();
 
 protected:
@@ -28,7 +28,7 @@ private:
 	ISLineEdit *EditPasswordCheck;
 	ISButtonDialog *ButtonDialog;
 
-	int UserID;
+	unsigned int UserID;
 	QString Login;
 	QString UserFullName;
 	bool ExistPassword;
