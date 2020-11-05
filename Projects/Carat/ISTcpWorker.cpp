@@ -661,9 +661,7 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 		{
 			QString TableName = qSelectFavorite.ReadColumn("fvts_tablename").toString();
 			QString ObjectsID = qSelectFavorite.ReadColumn("fvts_objectsid").toString();
-			ObjectsID.remove(0, 1);
-			ObjectsID.chop(1);
-			FavoriteMap[TableName] = ObjectsID.split(SYMBOL_COMMA);
+			FavoriteMap[TableName] = ObjectsID.mid(1, ObjectsID.size() - 2).split(SYMBOL_COMMA);
 		}
 		TcpAnswer->Parameters["Favorite"] = FavoriteMap;
 	}

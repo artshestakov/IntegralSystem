@@ -45,6 +45,21 @@ QString ISFavorites::GetErrorString() const
 	return ErrorString;
 }
 //-----------------------------------------------------------------------------
+void ISFavorites::Initialize(const QVariantMap &VariantMap)
+{
+	for (const auto &MapItem : VariantMap.toStdMap())
+	{
+		QStringList StringList = MapItem.second.toStringList();
+		size_t Size = (size_t)StringList.size();
+		ISVectorInt VectorInt(Size);
+		for (size_t i = 0; i < Size; ++i)
+		{
+			VectorInt[i] = StringList[i].toInt();
+		}
+		Favorites[MapItem.first] = VectorInt;
+	}
+}
+//-----------------------------------------------------------------------------
 bool ISFavorites::Initialize()
 {
 	ISQuery qSelectFavorites(QS_FAVORITES);

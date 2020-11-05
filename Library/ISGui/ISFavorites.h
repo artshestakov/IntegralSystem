@@ -9,6 +9,7 @@ public:
 	static ISFavorites& Instance();
 
 	QString GetErrorString() const;
+	void Initialize(const QVariantMap &VariantMap);
 	bool Initialize();
 	void AddFavorite(const QString &TableName, int ObjectID); //Добавить объект в избранное
 	void DeleteFavorite(const QString &TableName, int ObjectID); //Удалить избранный объект
