@@ -33,25 +33,23 @@ ISConnectionForm::ISConnectionForm() : ISInterfaceDialogForm()
 
 	EditProtocolUse = new ISCheckEdit(this);
 	EditProtocolUse->SetValue(CONFIG_BOOL("Protocol/Use"));
-	FormLayout->addRow("Use", EditProtocolUse);
-
-	EditProtocolAuth = new ISCheckEdit(this);
-	EditProtocolAuth->SetValue(CONFIG_BOOL("Protocol/Auth"));
-	FormLayout->addRow("Auth", EditProtocolAuth);
-
-	EditProtocolHost = new ISLineEdit(this);
-	EditProtocolHost->SetValue(CONFIG_STRING("Protocol/Host"));
-	FormLayout->addRow("Host", EditProtocolHost);
+	FormLayout->addRow(LANG("Protocol.Use"), EditProtocolUse);
 
 	EditProtocolPort = new ISIntegerEdit(this);
 	EditProtocolPort->SetValue(CONFIG_INT("Protocol/Port"));
-	FormLayout->addRow("Port", EditProtocolPort);
+	FormLayout->addRow(LANG("Protocol.Port"), EditProtocolPort);
 
-	ISPushButton *ButtonSave = new ISPushButton(this);
-	ButtonSave->setText(LANG("Save"));
-	ButtonSave->setIcon(BUFFER_ICONS("Save"));
+	QHBoxLayout *LayoutButtons = new QHBoxLayout();
+	LayoutButtons->addStretch();
+	GetMainLayout()->addLayout(LayoutButtons);
+
+	ISPushButton *ButtonSave = new ISPushButton(BUFFER_ICONS("Save"), LANG("Save"), this);
 	connect(ButtonSave, &ISPushButton::clicked, this, &ISConnectionForm::SaveSettings);
-	GetMainLayout()->addWidget(ButtonSave, 0, Qt::AlignRight);
+	LayoutButtons->addWidget(ButtonSave, 0, Qt::AlignRight);
+
+	ISPushButton *ButtonClose = new ISPushButton(BUFFER_ICONS("Close"), LANG("Close"), this);
+	connect(ButtonClose, &ISPushButton::clicked, this, &ISConnectionForm::close);
+	LayoutButtons->addWidget(ButtonClose);
 }
 //-----------------------------------------------------------------------------
 ISConnectionForm::~ISConnectionForm()
@@ -78,8 +76,6 @@ void ISConnectionForm::SaveSettings()
 		ISConfig::Instance().SetValue(CONST_CONFIG_CONNECTION_DATABASE, EditDatabase->GetValue());
 		ISConfig::Instance().SetValue(CONST_CONFIG_CONNECTION_UPDATE_DIR, EditUpdateDir->GetValue());
 		ISConfig::Instance().SetValue("Protocol/Use", EditProtocolUse->GetValue());
-		ISConfig::Instance().SetValue("Protocol/Auth", EditProtocolAuth->GetValue());
-		ISConfig::Instance().SetValue("Protocol/Host", EditProtocolHost->GetValue());
 		ISConfig::Instance().SetValue("Protocol/Port", EditProtocolPort->GetValue());
 		close();
 	}

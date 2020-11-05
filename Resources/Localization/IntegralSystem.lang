@@ -392,6 +392,8 @@
   <Local Name="FileNotSelected" Russian="Файл не выбран"/>
   <Local Name="SaveToDisk" Russian="Сохранить на диск"/>
   <Local Name="You" Russian="Вы"/>
+  <Local Name="Protocol.Use" Russian="Использовать протокол"/>
+  <Local Name="Protocol.Port" Russian="Порт"/>
 
   <!--MonitorActivity-->
   <Local Name="MonitorActivity.HideOffline" Russian="Скрыть пользователей не в сети"/>
