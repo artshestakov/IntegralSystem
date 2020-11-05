@@ -12,7 +12,8 @@
 #include "ISConfig.h"
 #include "ISQueryPool.h"
 //-----------------------------------------------------------------------------
-static QString QS_AUTH = PREPARE_QUERY("SELECT usrs_id, usrs_issystem, usrs_isdeleted, usrs_group, usrs_fio, usrs_accessallowed, usrs_accountlifetime, usrs_accountlifetimestart, usrs_accountlifetimeend, usgp_fullaccess "
+static QString QS_AUTH = PREPARE_QUERY("SELECT usrs_id, usrs_issystem, usrs_isdeleted, usrs_group, usrs_fio, usrs_accessallowed, usrs_accountlifetime, usrs_accountlifetimestart, usrs_accountlifetimeend, usgp_fullaccess, "
+									   "(SELECT sgdb_useraccessdatabase FROM _settingsdatabase WHERE sgdb_active) "
 									   "FROM _users "
 									   "LEFT JOIN _usergroup ON usgp_id = usrs_group "
 									   "WHERE usrs_hash = :Hash");
@@ -352,13 +353,13 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	//Проверка пользователя
 	ISQuery qSelectAuth(ISDatabase::Instance().GetDB(DBConnectionName), QS_AUTH);
 	qSelectAuth.BindValue(":Hash", Hash);
-	if (!qSelectAuth.Execute())
+	if (!qSelectAuth.Execute()) //Запрос выполнен с ошибкой
 	{
 		ErrorString = LANG("Carat.Error.Query.SelectLogin").arg(qSelectAuth.GetErrorString());
 		return false;
 	}
 
-	if (!qSelectAuth.ExecuteFirst())
+	if (!qSelectAuth.ExecuteFirst()) //Не нашли пользователя с таким хешем
 	{
 		ErrorString = LANG("Carat.Error.Query.InvalidLoginOrPassword");
 		return false;
@@ -370,6 +371,13 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	QString UserFIO = qSelectAuth.ReadColumn("usrs_fio").toString();
 	int GroupID = qSelectAuth.ReadColumn("usrs_group").toInt();
 	bool GroupFullAccess = qSelectAuth.ReadColumn("usgp_fullaccess").toBool();
+
+	//Доступ к БД запрещен
+	if (!qSelectAuth.ReadColumn("sgdb_useraccessdatabase").toBool() && !IsSystem)
+	{
+		ErrorString = LANG("Carat.Error.Query.ConnectionBan");
+		return false;
+	}
 
 	//Если такой логин помечен на удаление
 	if (IsDeleted)
