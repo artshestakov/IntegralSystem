@@ -52,9 +52,9 @@ QString ISSortingBuffer::GetErrorString() const
 //-----------------------------------------------------------------------------
 void ISSortingBuffer::Initialize(const QVariantList &VariantList)
 {
-	for (int i = 0, c = VariantList.size(); i < c; ++i)
+	for (const QVariant &Variant : VariantList)
 	{
-		QVariantMap VariantMap = VariantList[i].toMap();
+		QVariantMap VariantMap = Variant.toMap();
 		Sortings.emplace_back(CreateSorting(VariantMap["Table"].toString(), VariantMap["Field"].toString(), qvariant_cast<Qt::SortOrder>(VariantMap["Sort"])));
 	}
 }

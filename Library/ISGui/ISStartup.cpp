@@ -197,6 +197,7 @@ bool ISStartup::StartupNew(ISSplashScreen *SplashScreen)
 	if (Result)
 	{
 		ISMetaSystemsEntity::Instance().Initialize(qAuth.GetAnswer()["SystemSubSystem"].toList());
+		ISPrintingEntity::Instance().Initialize(qAuth.GetAnswer()["Printing"].toList());
 		ISSortingBuffer::Instance().Initialize(qAuth.GetAnswer()["Sorting"].toList());
 		ISColumnSizer::Instance().Initialize(qAuth.GetAnswer()["ColumnSize"].toList());
 	}

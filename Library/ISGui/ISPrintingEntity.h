@@ -9,6 +9,7 @@ public:
 	static ISPrintingEntity& Instance();
 
 	QString GetErrorString() const;
+	void Initialize(const QVariantList &VariantList);
 	bool Initialize();
 	std::vector<ISPrintMetaReport*> GetReports(const QString &TableName);
 	size_t GetCountReports(const QString &TableName);
@@ -21,6 +22,6 @@ private:
 	
 private:
 	QString ErrrorString;
-	std::map<ISUuid, ISPrintMetaReport*> Reports;
+	std::vector<ISPrintMetaReport *> Reports;
 };
 //-----------------------------------------------------------------------------

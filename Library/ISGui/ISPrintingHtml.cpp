@@ -45,9 +45,9 @@ bool ISPrintingHtml::PrepareTempate()
 //-----------------------------------------------------------------------------
 bool ISPrintingHtml::FillTemplate()
 {
-	for (ISPrintMetaReportField *MetaReportField : GetMetaReport()->Fields)
+	for (const auto &MapItem : GetMetaReport()->Fields)
 	{
-		ISQuery qSelectValue(MetaReportField->SqlQuery);
+		ISQuery qSelectValue(MapItem.second);
 		if (qSelectValue.ExistParameter(":SourceID"))
 		{
 			IS_ASSERT(qSelectValue.BindValue(":SourceID", GetObjectID()), "Not BindValue");
@@ -57,7 +57,7 @@ bool ISPrintingHtml::FillTemplate()
 		{
 			QVariant Value = qSelectValue.ReadColumn(0);
 			ISDatabaseHelper::CheckValue(Value);
-			Html.replace(MetaReportField->ReplaceValue, Value.toString());
+			Html.replace(MapItem.first, Value.toString());
 		}
 	}
 	return true;

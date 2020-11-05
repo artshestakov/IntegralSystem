@@ -141,23 +141,9 @@ struct ISMetaSystem
     std::vector<ISMetaSubSystem*> SubSystems; //Список подсистем
 };
 //-----------------------------------------------------------------------------
-struct ISPrintMetaReportField
-{
-    QString ReplaceValue;
-    QString SqlQuery;
-};
-//-----------------------------------------------------------------------------
 struct ISPrintMetaReport
 {
     ISPrintMetaReport() : Type(ISNamespace::RT_Unknown) { }
-
-    ~ISPrintMetaReport()
-    {
-        while (!Fields.empty())
-        {
-			delete ISAlgorithm::VectorTakeBack(Fields);
-        }
-    }
 
     void SetType(const QString &type)
     {
@@ -176,7 +162,7 @@ struct ISPrintMetaReport
     QString TableName;
     QString LocalName;
     QString FileTemplate;
-    std::vector<ISPrintMetaReportField*> Fields;
+    ISStringMap Fields;
 };
 //-----------------------------------------------------------------------------
 struct PMetaUserPermission

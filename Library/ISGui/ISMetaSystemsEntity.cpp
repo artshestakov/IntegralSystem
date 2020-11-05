@@ -38,7 +38,7 @@ QString ISMetaSystemsEntity::GetErrorString() const
 //-----------------------------------------------------------------------------
 void ISMetaSystemsEntity::Initialize(const QVariantList &VariantList)
 {
-	for (const QVariant &System : VariantList.toStdList()) //Обходим системы
+	for (const QVariant &System : VariantList) //Обходим системы
 	{
 		QVariantMap SystemMap = System.toMap();
 		ISMetaSystem *MetaSystem = new ISMetaSystem();

@@ -29,9 +29,30 @@ QString ISPrintingEntity::GetErrorString() const
 	return ErrrorString;
 }
 //-----------------------------------------------------------------------------
+void ISPrintingEntity::Initialize(const QVariantList &VariantList)
+{
+	for (const QVariant &Report : VariantList)
+	{
+		QVariantMap ReportMap = Report.toMap();
+		ISPrintMetaReport *PrintMetaReport = new ISPrintMetaReport();
+		PrintMetaReport->SetType(ReportMap["Type"].toString());
+		PrintMetaReport->TableName = ReportMap["Table"].toString();
+		PrintMetaReport->LocalName = ReportMap["Local"].toString();
+		PrintMetaReport->FileTemplate = ReportMap["File"].toString();
+
+		QVariantMap ReportFieldMap = ReportMap["Fields"].toMap();
+		for (const auto &MapItem : ReportFieldMap.toStdMap())
+		{
+			PrintMetaReport->Fields.emplace(MapItem.first, MapItem.second.toString());
+		}
+		Reports.emplace_back(PrintMetaReport);
+	}
+}
+//-----------------------------------------------------------------------------
 bool ISPrintingEntity::Initialize()
 {
-	ISQuery qSelectReport(QS_REPORT);
+	return true;
+	/*ISQuery qSelectReport(QS_REPORT);
 	bool Result = qSelectReport.Execute();
 	if (Result)
 	{
@@ -46,7 +67,7 @@ bool ISPrintingEntity::Initialize()
 				PrintMetaReport->TableName = qSelectReport.ReadColumn("rprt_tablename").toString();
 				PrintMetaReport->LocalName = qSelectReport.ReadColumn("rprt_localname").toString();
 				PrintMetaReport->FileTemplate = qSelectReport.ReadColumn("rprt_filetemplate").toString();
-				Reports[UID] = PrintMetaReport;
+				Reports.emplace_back(PrintMetaReport);
 			}
 			else
 			{
@@ -62,14 +83,13 @@ bool ISPrintingEntity::Initialize()
 	{
 		ErrrorString = qSelectReport.GetErrorString();
 	}
-	return Result;
+	return Result;*/
 }
 //-----------------------------------------------------------------------------
 std::vector<ISPrintMetaReport*> ISPrintingEntity::GetReports(const QString &TableName)
 {
-	std::vector<ISPrintMetaReport*> Vector,
-		Temp = ISAlgorithm::ConvertMapToValues(Reports);
-	for (ISPrintMetaReport *PrintMetaReport : Temp)
+	std::vector<ISPrintMetaReport*> Vector;
+	for (ISPrintMetaReport *PrintMetaReport : Reports)
 	{
 		if (PrintMetaReport->TableName == TableName)
 		{

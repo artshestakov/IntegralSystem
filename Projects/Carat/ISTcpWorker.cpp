@@ -53,7 +53,7 @@ static QString QS_REPORT = PREPARE_QUERY("SELECT rprt_uid, rprt_type, rprt_table
 										 "AND rprt_parent IS NULL "
 										 "ORDER BY rprt_id");
 //-----------------------------------------------------------------------------
-static QString QS_REPORT_FIELD = PREPARE_QUERY("SELECT rprt_parent, rprt_replacevalue, rprt_sqlquery "
+static QString QS_REPORT_FIELD = PREPARE_QUERY("SELECT rprt_replacevalue, rprt_sqlquery "
 											   "FROM _report "
 											   "WHERE NOT rprt_isdeleted "
 											   "AND rprt_parent = :ParentUID");
@@ -636,7 +636,6 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 			}
 			PrintingList.append(QVariantMap
 			{
-				{ "UID", qSelectReport.ReadColumn("rprt_uid") },
 				{ "Type", qSelectReport.ReadColumn("rprt_type") },
 				{ "Table", qSelectReport.ReadColumn("rprt_tablename") },
 				{ "Local", qSelectReport.ReadColumn("rprt_localname") },
