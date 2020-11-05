@@ -9,6 +9,7 @@ public:
 	static ISSettingsDatabase& Instance();
 
 	QString GetErrorString() const;
+	void Initialize(const QVariantMap &VariantMap);
 	bool Initialize(); //Инициализация настроек базы данных
 	QVariant GetValue(const QString &SettingName); //Получить значение настройки
 

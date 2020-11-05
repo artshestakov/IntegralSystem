@@ -29,6 +29,14 @@ QString ISSettingsDatabase::GetErrorString() const
 	return ErrorString;
 }
 //-----------------------------------------------------------------------------
+void ISSettingsDatabase::Initialize(const QVariantMap &VariantMap)
+{
+	for (const auto &MapItem : VariantMap.toStdMap())
+	{
+		Settings[MapItem.first] = MapItem.second;
+	}
+}
+//-----------------------------------------------------------------------------
 bool ISSettingsDatabase::Initialize()
 {
 	ISQueryModel QueryModel(ISMetaData::Instance().GetMetaTable("_SettingsDatabase"), ISNamespace::QMT_Object);
