@@ -49,6 +49,36 @@ QString ISSettings::GetErrorString() const
 	return ErrorString;
 }
 //-----------------------------------------------------------------------------
+void ISSettings::Initialize(const QVariantList &VariantList)
+{
+	for (const QVariant &SettingGroup : VariantList)
+	{
+		QVariantMap GroupMap = SettingGroup.toMap();
+		ISMetaSettingsGroup *MetaGroup = new ISMetaSettingsGroup();
+		MetaGroup->UID = GroupMap["UID"];
+		MetaGroup->Name = GroupMap["Name"].toString();
+		MetaGroup->LocalName = GroupMap["Local"].toString();
+		MetaGroup->IconName = GroupMap["Icon"].toString();
+		MetaGroup->Hint = GroupMap["Hint"].toString();
+
+		QVariantList SettingsList = GroupMap["Settings"].toList();
+		for (const QVariant &Setting : SettingsList)
+		{
+			QVariantMap SettingMap = Setting.toMap();
+			ISMetaSetting *MetaSetting = new ISMetaSetting();
+			MetaSetting->UID = SettingMap["UID"];
+			MetaSetting->Name = SettingMap["Name"].toString();
+			MetaSetting->Type = ISMetaData::Instance().GetTypeField(SettingMap["Type"].toString());
+			MetaSetting->WidgetEditName = SettingMap["WidgetEditName"].toString();
+			MetaSetting->LocalName = SettingMap["Local"].toString();
+			MetaSetting->Hint = SettingMap["Hint"].toString();
+			MetaSetting->Default = SettingMap["Default"];
+			MetaGroup->Settings.emplace_back(MetaSetting);
+		}
+		SettingGroups.emplace_back(MetaGroup);
+	}
+}
+//-----------------------------------------------------------------------------
 bool ISSettings::Initialize()
 {
 	ISQuery qSelectSettings(QS_SETTINGS);
@@ -75,11 +105,11 @@ bool ISSettings::Initialize()
 			ISMetaSetting *Setting = new ISMetaSetting();
 			Setting->UID = SettingUID;
 			Setting->Name = qSelectSettings.ReadColumn("stgs_name").toString();
-			Setting->SettingType = ISMetaData::Instance().GetTypeField(qSelectSettings.ReadColumn("stgs_type").toString());
+			Setting->Type = ISMetaData::Instance().GetTypeField(qSelectSettings.ReadColumn("stgs_type").toString());
 			Setting->WidgetEditName = qSelectSettings.ReadColumn("stgs_widgeteditname").toString();
 			Setting->LocalName = qSelectSettings.ReadColumn("stgs_localname").toString();
 			Setting->Hint = qSelectSettings.ReadColumn("stgs_hint").toString();
-			Setting->DefaultValue = qSelectSettings.ReadColumn("stgs_defaultvalue");
+			Setting->Default = qSelectSettings.ReadColumn("stgs_defaultvalue");
 			MetaGroup->Settings.emplace_back(Setting);
 
 			if (qSelectSettings.ReadColumn("count").toInt())

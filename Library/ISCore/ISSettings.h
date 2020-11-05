@@ -11,6 +11,7 @@ public:
 	static ISSettings& Instance();
 	
 	QString GetErrorString() const;
+	void Initialize(const QVariantList &VariantList);
 	bool Initialize(); //Инициализация
 
 	QVariant GetValue(const QString &SettingUID); //Получить значение мета-настройки
@@ -22,7 +23,7 @@ public:
 	bool Save();
 
 private:
-	ISMetaSettingsGroup* CheckExistGroup(const ISUuid &GroupUID);
+	ISMetaSettingsGroup* CheckExistGroup(const ISUuid &GroupUID); //??? После перехода на Карат этот метод не понадобится
 	bool InsertSetting(const ISUuid &SettingUID, const QVariant &Value);
 
 private:

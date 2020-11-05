@@ -126,8 +126,7 @@ void ISSettingsForm::CreateSettings()
 				LabelRow->setCursor(CURSOR_WHATS_THIS);
 			}
 
-			ISFieldEditBase *FieldEditBase = ISGui::CreateColumnForField(ScrollArea, MetaSetting->SettingType, MetaSetting->WidgetEditName);
-
+			ISFieldEditBase *FieldEditBase = ISGui::CreateColumnForField(ScrollArea, MetaSetting->Type, MetaSetting->WidgetEditName);
 			FieldEditBase->SetValue(SETTING_VALUE(MetaSetting->UID));
 			FieldEditBase->SetModificationFlag(false);
 			connect(FieldEditBase, &ISFieldEditBase::ValueChange, this, &ISSettingsForm::DataChanged);

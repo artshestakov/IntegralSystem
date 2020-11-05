@@ -45,15 +45,15 @@ struct ISMetaUserData
 //-----------------------------------------------------------------------------
 struct ISCORE_EXPORT ISMetaSetting
 {
-    ISMetaSetting() : SettingType(ISNamespace::FT_Unknown) { }
+    ISMetaSetting() : Type(ISNamespace::FT_Unknown) { }
 
     ISUuid UID;
     QString Name;
-    ISNamespace::FieldType SettingType;
+    ISNamespace::FieldType Type;
     QString WidgetEditName;
     QString LocalName;
     QString Hint;
-    QVariant DefaultValue;
+    QVariant Default;
     QVariant Value;
 };
 //-----------------------------------------------------------------------------
@@ -69,7 +69,7 @@ struct ISCORE_EXPORT ISMetaSettingsGroup
     }
 
     QString Name;
-    ISUuid UID;
+    ISUuid UID; //??? После перехода на Карат это поле не понадобится
     QString LocalName;
     QString IconName;
     bool System;
