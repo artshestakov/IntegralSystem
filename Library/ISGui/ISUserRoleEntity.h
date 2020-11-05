@@ -21,6 +21,7 @@ public:
 	static void DeleteSpecialAccess(int GroupID, int SpecialAccessID);
 
 	QString GetErrorString() const;
+	void InitializeSpecial(const QVariantList &VariantList);
 	bool Initialize();
 
 	bool CheckAccessSubSystem(const ISUuid &SubSystemUID);

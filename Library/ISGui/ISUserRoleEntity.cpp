@@ -175,6 +175,14 @@ QString ISUserRoleEntity::GetErrorString() const
 	return ErrorString;
 }
 //-----------------------------------------------------------------------------
+void ISUserRoleEntity::InitializeSpecial(const QVariantList &VariantList)
+{
+	for (const QVariant &Variant : VariantList)
+	{
+		Specials.emplace_back(Variant);
+	}
+}
+//-----------------------------------------------------------------------------
 bool ISUserRoleEntity::Initialize()
 {
 	if (!ISMetaUser::Instance().UserData.System) //Если текущий пользователь не является системным - инициализируем
