@@ -47,11 +47,16 @@ static QString QS_SUBSYSTEM = PREPARE_QUERY("SELECT sbsm_uid, sbsm_localname, sb
 											"AND check_access_user_subsystem(:UserID, :UserIsSystem, sbsm_uid) "
 											"ORDER BY sbsm_orderid");
 //-----------------------------------------------------------------------------
-static QString QS_PRINTING = PREPARE_QUERY("SELECT rprt_uid, rprt_type, rprt_tablename, rprt_localname, rprt_filetemplate, "
-										   "rprt_parent, rprt_replacevalue, rprt_sqlquery "
-										   "FROM _report "
-										   "WHERE NOT rprt_isdeleted "
-										   "ORDER BY rprt_id");
+static QString QS_REPORT = PREPARE_QUERY("SELECT rprt_uid, rprt_type, rprt_tablename, rprt_localname, rprt_filetemplate "
+										 "FROM _report "
+										 "WHERE NOT rprt_isdeleted "
+										 "AND rprt_parent IS NULL "
+										 "ORDER BY rprt_id");
+//-----------------------------------------------------------------------------
+static QString QS_REPORT_FIELD = PREPARE_QUERY("SELECT rprt_parent, rprt_replacevalue, rprt_sqlquery "
+											   "FROM _report "
+											   "WHERE NOT rprt_isdeleted "
+											   "AND rprt_parent = :ParentUID");
 //-----------------------------------------------------------------------------
 static QString QS_FAVORITE = PREPARE_QUERY("SELECT fvts_tablename, fvts_objectsid "
 										   "FROM _favorites "
@@ -547,7 +552,7 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	{
 		while (qSelectAccessSpecial.Next())
 		{
-			AccessSpecialList.append(ISUuid(qSelectAccessSpecial.ReadColumn("gast_uid")));
+			AccessSpecialList.append(qSelectAccessSpecial.ReadColumn("gast_uid"));
 		}
 		TcpAnswer->Parameters["AccessSpecial"] = AccessSpecialList;
 	}
@@ -575,7 +580,7 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 				{
 					SubSystemsList.append(QVariantMap
 					{
-						{ "UID", ISUuid(qSelectSubSystem.ReadColumn("sbsm_uid")) },
+						{ "UID", qSelectSubSystem.ReadColumn("sbsm_uid") },
 						{ "Local", qSelectSubSystem.ReadColumn("sbsm_localname") },
 						{ "Icon", qSelectSubSystem.ReadColumn("sbsm_icon") },
 						{ "Class", qSelectSubSystem.ReadColumn("sbsm_classname") },
@@ -608,40 +613,42 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	}
 
 	//Получаем печать
-	QVariantMap PrintingMap;
-	ISQuery qSelectPrinting(ISDatabase::Instance().GetDB(DBConnectionName), QS_PRINTING);
-	if (qSelectPrinting.Execute())
+	QVariantList PrintingList;
+	ISQuery qSelectReport(ISDatabase::Instance().GetDB(DBConnectionName), QS_REPORT),
+		qSelectReportField(ISDatabase::Instance().GetDB(DBConnectionName), QS_REPORT_FIELD);
+	if (qSelectReport.Execute())
 	{
-		while (qSelectPrinting.Next())
+		while (qSelectReport.Next())
 		{
-			ISUuid UID = qSelectPrinting.ReadColumn("rprt_uid"),
-				Parent = qSelectPrinting.ReadColumn("rprt_parent");
-			if (Parent.isEmpty())
+			QVariantMap ReportFieldMap;
+			qSelectReportField.BindValue(":ParentUID", qSelectReport.ReadColumn("rprt_uid"));
+			if (qSelectReportField.Execute())
 			{
-				PrintingMap[UID] = QVariantMap
+				while (qSelectReportField.Next())
 				{
-					{ "Type", qSelectPrinting.ReadColumn("rprt_type") },
-					{ "Table", qSelectPrinting.ReadColumn("rprt_tablename") },
-					{ "Local", qSelectPrinting.ReadColumn("rprt_localname") },
-					{ "FileTemplate", qSelectPrinting.ReadColumn("rprt_filetemplate") },
-					{ "Fields", QVariantMap() }
-				};
+					ReportFieldMap.insert(qSelectReportField.ReadColumn("rprt_replacevalue").toString(), qSelectReportField.ReadColumn("rprt_sqlquery"));
+				}
 			}
 			else
 			{
-				QVariantMap ReportMap = PrintingMap[Parent].toMap();
-				QVariantMap FieldsMap = ReportMap["Fields"].toMap();
-				FieldsMap["ReplaceValue"] = qSelectPrinting.ReadColumn("rprt_replacevalue");
-				FieldsMap["SqlQuery"] = qSelectPrinting.ReadColumn("rprt_sqlquery");
-				ReportMap["Fields"] = FieldsMap;
-				PrintingMap[Parent] = ReportMap;
+				ErrorString = LANG("Carat.Error.Query.GetMetaData.ReportField").arg(qSelectReportField.GetErrorString());
+				return false;
 			}
+			PrintingList.append(QVariantMap
+			{
+				{ "UID", qSelectReport.ReadColumn("rprt_uid") },
+				{ "Type", qSelectReport.ReadColumn("rprt_type") },
+				{ "Table", qSelectReport.ReadColumn("rprt_tablename") },
+				{ "Local", qSelectReport.ReadColumn("rprt_localname") },
+				{ "File", qSelectReport.ReadColumn("rprt_filetemplate") },
+				{ "Fields", ReportFieldMap }
+			});
 		}
-		TcpAnswer->Parameters["Printing"] = PrintingMap;
+		TcpAnswer->Parameters["Printing"] = PrintingList;
 	}
 	else
 	{
-		ErrorString = LANG("Carat.Error.Query.GetMetaData.Printing").arg(qSelectPrinting.GetErrorString());
+		ErrorString = LANG("Carat.Error.Query.GetMetaData.Report").arg(qSelectReport.GetErrorString());
 		return false;
 	}
 
@@ -811,7 +818,7 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 		{
 			ParagraphList.append(QVariantMap
 			{
-				{ "UID", ISUuid(qSelectParagraph.ReadColumn("prhs_uid")) },
+				{ "UID", qSelectParagraph.ReadColumn("prhs_uid") },
 				{ "Name", qSelectParagraph.ReadColumn("prhs_name") },
 				{ "Local", qSelectParagraph.ReadColumn("prhs_localname") },
 				{ "ToolTip", qSelectParagraph.ReadColumn("prhs_tooltip") },
