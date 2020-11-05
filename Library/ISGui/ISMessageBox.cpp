@@ -14,7 +14,7 @@ ISMessageBox::ISMessageBox(ISMessageBox::Icon Icon, const QString &Title, const 
 	AddButtons(Buttons);
 	if (!DetailedText.isEmpty())
 	{
-		setDetailedText(DetailedText);
+		setInformativeText(DetailedText);
 	}
 }
 //-----------------------------------------------------------------------------
