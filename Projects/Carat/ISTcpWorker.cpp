@@ -76,17 +76,19 @@ static QString QS_COLUMN_SIZE = PREPARE_QUERY("SELECT clsz_tablename, clsz_field
 											  "FROM _columnsize "
 											  "WHERE clsz_creationuser = :UserID");
 //-----------------------------------------------------------------------------
-static QString QS_USER_SETTINGS = PREPARE_QUERY("SELECT "
-												"stgp_uid, stgp_name, stgp_localname, stgp_iconname, stgp_hint, "
-												"stgs_uid, stgs_name, stgs_type, stgs_widgeteditname, stgs_localname, stgs_hint, stgs_defaultvalue, "
-												"usst_value, "
-												"(SELECT COUNT(*) FROM _usersettings WHERE usst_creationuser = :UserID AND usst_setting = stgs_id) "
-												"FROM _settings "
-												"LEFT JOIN _settingsgroup ON stgp_uid = stgs_group "
-												"LEFT JOIN _usersettings ON usst_setting = stgs_id AND usst_creationuser = :UserID "
-												"WHERE NOT stgs_isdeleted "
-												"AND NOT stgp_isdeleted "
-												"ORDER BY stgp_order, stgs_order");
+static QString QS_SETTING_GROUP = PREPARE_QUERY("SELECT stgp_uid, stgp_name, stgp_localname, stgp_iconname, stgp_hint "
+												"FROM _settingsgroup "
+												"WHERE NOT stgp_isdeleted "
+												"ORDER BY stgp_order");
+//-----------------------------------------------------------------------------
+static QString QS_SETTING = PREPARE_QUERY("SELECT stgs_uid, stgs_name, stgs_type, stgs_widgeteditname, stgs_localname, stgs_hint, stgs_defaultvalue, "
+										  "usst_value, "
+										  "(SELECT COUNT(*) FROM _usersettings WHERE usst_creationuser = :UserID AND usst_setting = stgs_id) "
+										  "FROM _settings "
+										  "LEFT JOIN _usersettings ON usst_setting = stgs_id AND usst_creationuser = :UserID "
+										  "WHERE NOT stgs_isdeleted "
+										  "AND stgs_group = :GroupUID "
+										  "ORDER BY stgs_order");
 //-----------------------------------------------------------------------------
 static QString QI_USER_SETTING = PREPARE_QUERY("INSERT INTO _usersettings(usst_setting, usst_value) "
 											   "VALUES((SELECT stgs_id FROM _settings WHERE stgs_uid = :SettingUID), :Value)");
@@ -741,68 +743,73 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	}
 
 	//Получаем пользовательские настройки
-	QVariantMap UserSettingsList;
-	ISQuery qSelectUserSetting(ISDatabase::Instance().GetDB(DBConnectionName), QS_USER_SETTINGS);
-	qSelectUserSetting.BindValue(":UserID", TcpMessage->TcpSocket->GetUserID());
-	if (qSelectUserSetting.Execute())
+	QVariantList Settings;
+	ISQuery qSelectSettingGroup(ISDatabase::Instance().GetDB(DBConnectionName), QS_SETTING_GROUP),
+		qSelectSettingUser(ISDatabase::Instance().GetDB(DBConnectionName), QS_SETTING);
+	if (qSelectSettingGroup.Execute())
 	{
-		while (qSelectUserSetting.Next())
+		while (qSelectSettingGroup.Next())
 		{
-			ISUuid GroupUID = qSelectUserSetting.ReadColumn("stgp_uid"),
-				SettingUID = qSelectUserSetting.ReadColumn("stgs_uid");
-			if (!UserSettingsList.contains(GroupUID)) //Если такой группы нет - вставляем
+			ISUuid GroupUID = qSelectSettingGroup.ReadColumn("stgp_uid");
+			QVariantList SettingsList;
+			qSelectSettingUser.BindValue(":UserID", TcpMessage->TcpSocket->GetUserID());
+			qSelectSettingUser.BindValue(":GroupUID", GroupUID);
+			if (qSelectSettingUser.Execute())
 			{
-				UserSettingsList[GroupUID] = QVariantMap
+				while (qSelectSettingUser.Next())
 				{
-					{ "Name", qSelectUserSetting.ReadColumn("stgp_name") },
-					{ "Local", qSelectUserSetting.ReadColumn("stgp_localname") },
-					{ "Icon", qSelectUserSetting.ReadColumn("stgp_iconname") },
-					{ "Hint", qSelectUserSetting.ReadColumn("stgp_hint") },
-					{ "Settings", QVariantList() }
-				};
-			}
-			QVariantMap GroupMap = UserSettingsList[GroupUID].toMap(); //Забираем группу по идентификатору
-			QVariantList SettingsList = GroupMap["Settings"].toList(); //Забираем список настроек группы
+					ISUuid SettingUID = qSelectSettingUser.ReadColumn("stgs_uid");
+					QVariant SettingDefault = qSelectSettingUser.ReadColumn("stgs_defaultvalue");
+					QVariantMap SettingMap =
+					{
+						{ "UID", SettingUID },
+						{ "Name", qSelectSettingUser.ReadColumn("stgs_name") },
+						{ "Type", qSelectSettingUser.ReadColumn("stgs_type") },
+						{ "WidgetEdit", qSelectSettingUser.ReadColumn("stgs_widgeteditname") },
+						{ "Local", qSelectSettingUser.ReadColumn("stgs_localname") },
+						{ "Hint", qSelectSettingUser.ReadColumn("stgs_hint") },
+						{ "Default", SettingDefault }
+					};
 
-			//Формируем объект с данными по настройке
-			QVariantMap Setting =
-			{
-				{ "UID", SettingUID },
-				{ "Name", qSelectUserSetting.ReadColumn("stgs_name") },
-				{ "Type", qSelectUserSetting.ReadColumn("stgs_type") },
-				{ "WidgetEdit", qSelectUserSetting.ReadColumn("stgs_widgeteditname") },
-				{ "Local", qSelectUserSetting.ReadColumn("stgs_localname") },
-				{ "Hint", qSelectUserSetting.ReadColumn("stgs_hint") },
-				{ "Default", qSelectUserSetting.ReadColumn("stgs_defaultvalue") }
-			};
-
-			if (qSelectUserSetting.ReadColumn("count").toInt()) //Если такая настройка у пользователя уже есть - получаем её значение
-			{
-				Setting["Value"] = qSelectUserSetting.ReadColumn("usst_value");
-			}
-			else //Такой настройки у пользователя нет - добавляем
-			{
-				QVariant SettingDefaultValue = qSelectUserSetting.ReadColumn("stgs_defaultvalue");
-				ISQuery qInsertSetting(ISDatabase::Instance().GetDB(DBConnectionName), QI_USER_SETTING);
-				qInsertSetting.BindValue(":SettingUID", SettingUID);
-				qInsertSetting.BindValue(":Value", SettingDefaultValue);
-				if (!qInsertSetting.Execute())
-				{
-					ErrorString = "Error inserting new user setting: " + qInsertSetting.GetErrorString();
-					return false;
+					if (qSelectSettingUser.ReadColumn("count").toInt())  //Если такая настройка у пользователя уже есть - получаем её значение
+					{
+						SettingMap["Value"] = qSelectSettingUser.ReadColumn("usst_value");
+					}
+					else //Такой настройки у пользователя нет - добавляем со значением по умолчанию
+					{
+						ISQuery qInsertSetting(ISDatabase::Instance().GetDB(DBConnectionName), QI_USER_SETTING);
+						qInsertSetting.BindValue(":SettingUID", SettingUID);
+						qInsertSetting.BindValue(":Value", SettingDefault);
+						if (!qInsertSetting.Execute())
+						{
+							ErrorString = "Error inserting new user setting: " + qInsertSetting.GetErrorString();
+							return false;
+						}
+						SettingMap["Value"] = SettingDefault;
+					}
+					SettingsList.append(SettingMap);
 				}
-				Setting["Value"] = SettingDefaultValue;
 			}
-
-			SettingsList.append(Setting);
-			GroupMap["Settings"] = SettingsList;
-			UserSettingsList[GroupUID] = GroupMap;
+			else
+			{
+				ErrorString = LANG("Carat.Error.Query.GetMetaData.SettingsUser").arg(qSelectSettingUser.GetErrorString());
+				return false;
+			}
+			Settings.append(QVariantMap
+			{
+				{ "UID", GroupUID },
+				{ "Name", qSelectSettingGroup.ReadColumn("stgp_name").toString() },
+				{ "Local", qSelectSettingGroup.ReadColumn("stgp_localname").toString() },
+				{ "Icon", qSelectSettingGroup.ReadColumn("stgp_iconname").toString() },
+				{ "Hint", qSelectSettingGroup.ReadColumn("stgp_hint").toString() },
+				{ "Settings", SettingsList }
+			});
 		}
-		TcpAnswer->Parameters["UserSettings"] = UserSettingsList;
+		TcpAnswer->Parameters["Settings"] = Settings;
 	}
 	else
 	{
-		ErrorString = LANG("Carat.Error.Query.GetMetaData.UserSettings").arg(qSelectUserSetting.GetErrorString());
+		ErrorString = LANG("Carat.Error.Query.GetMetaData.SettingsGroup").arg(qSelectSettingGroup.GetErrorString());
 		return false;
 	}
 
