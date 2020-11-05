@@ -73,7 +73,8 @@ def MapAuth =
 	Type: &quot;Auth&quot;,
 	Parameters:
 		[
-			Hash: GetSHA256(&quot;postgresadm777&quot;),
+			//Hash: GetSHA256(&quot;postgresadm777&quot;),
+			Hash: GetSHA256(&quot;shestakovadm777&quot;),
 			Version: &quot;1.0.0&quot;
 		]
 ];
@@ -82,11 +83,7 @@ vars.put(&quot;QueryAuth&quot;, MapToString(MapAuth));
 //Получение мета-данных
 def MapGetMetaData =
 [
-	Type: &quot;GetMetaData&quot;,
-	Parameters:
-		[
-			Login: &quot;postgres&quot;
-		]
+	Type: &quot;GetMetaData&quot;
 ];
 vars.put(&quot;QueryGetMetaData&quot;, MapToString(MapGetMetaData));
 
@@ -129,7 +126,7 @@ vars.put(&quot;QueryGetLastClient&quot;, MapToString(MapGetLastClient));</string
           <stringProp name="ConfigTestElement.password"></stringProp>
         </TCPSampler>
         <hashTree/>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: GetMetaData" enabled="false">
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: GetMetaData" enabled="true">
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
           <stringProp name="TCPSampler.port"></stringProp>

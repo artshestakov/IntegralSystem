@@ -254,7 +254,7 @@ void ISAuthForm::InputNew()
 	else //Ошибка авторизации
 	{
 		SetConnecting(false);
-		ISMessageBox::ShowCritical(this, LANG("Message.Error.Auth").arg(LANG(qAuth.GetErrorString())));
+		ISMessageBox::ShowCritical(this, LANG("Message.Error.Auth"), qAuth.GetErrorString());
 	}
 }
 //-----------------------------------------------------------------------------

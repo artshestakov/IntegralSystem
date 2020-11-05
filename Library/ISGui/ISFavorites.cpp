@@ -54,7 +54,7 @@ void ISFavorites::Initialize(const QVariantMap &VariantMap)
 		ISVectorInt VectorInt(Size);
 		for (size_t i = 0; i < Size; ++i)
 		{
-			VectorInt[i] = StringList[i].toInt();
+			VectorInt[i] = StringList[(int)i].toInt();
 		}
 		Favorites[MapItem.first] = VectorInt;
 	}
