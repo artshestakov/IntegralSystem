@@ -11,7 +11,10 @@
 //-----------------------------------------------------------------------------
 ISCaratApplication::ISCaratApplication(int &argc, char **argv)
 	: QCoreApplication(argc, argv),
-	ErrorString(NO_ERROR_STRING)
+	ErrorString(NO_ERROR_STRING),
+	Controller(nullptr),
+	TcpServer(nullptr),
+	Asterisk(nullptr)
 {
 	
 }
@@ -196,14 +199,19 @@ void ISCaratApplication::Shutdown()
 {
 	ISLOGGER_I(__CLASS__, "Shutdown...");
 
-	if (CONFIG_BOOL(CONST_CONFIG_CONTROLLER_INCLUDE))
+	if (CONFIG_BOOL(CONST_CONFIG_CONTROLLER_INCLUDE) && Controller)
 	{
 		Controller->Stop();
 	}
 
-	if (CONFIG_BOOL(CONST_CONFIG_TCPSERVER_INCLUDE))
+	if (CONFIG_BOOL(CONST_CONFIG_TCPSERVER_INCLUDE) && TcpServer)
 	{
 		TcpServer->Stop();
+	}
+
+	if (CONFIG_BOOL(CONST_CONFIG_AMI_INCLUDE) && Asterisk)
+	{
+		//Останавливать службу астериска
 	}
 	emit Quit();
 }

@@ -2,6 +2,7 @@
 #include "ISQueryPool.h"
 #include "ISDatabase.h"
 #include "ISLogger.h"
+#include "ISConsole.h"
 //-----------------------------------------------------------------------------
 int main(int argc, char **argv)
 {
@@ -24,6 +25,10 @@ int main(int argc, char **argv)
             ISLOGGER_I("", "Started application");
             ResultCode = CaratApplication.exec();
         }
+		else
+		{
+			CaratApplication.Shutdown();
+		}
 	}
     else //≈сли аргументы запуска есть
     {
@@ -36,6 +41,10 @@ int main(int argc, char **argv)
 	ISDatabase::Instance().DisconnectAll();
 	ISLOGGER_I("", "Stopped application");
 	ISLogger::Instance().Shutdown();
+
+#ifdef DEBUG //¬ случае с отладочной версией ставим на паузу дл€ чтени€ ошибок и заключительного вывода
+	ISConsole::Pause();
+#endif
 	return ResultCode;
 }
 //-----------------------------------------------------------------------------

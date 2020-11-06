@@ -7,7 +7,7 @@
 #include "ISConstants.h"
 #include "ISMetaData.h"
 #include "ISMetaDataHelper.h"
-#include "CGConsole.h"
+#include "ISConsole.h"
 #include "CGDatabase.h"
 //-----------------------------------------------------------------------------
 CGConfiguratorCreate::CGConfiguratorCreate() : CGConfiguratorBase()

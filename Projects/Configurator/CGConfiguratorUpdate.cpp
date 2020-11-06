@@ -5,7 +5,7 @@
 #include "ISConfig.h"
 #include "ISDebug.h"
 #include "ISLocalization.h"
-#include "CGConsole.h"
+#include "ISConsole.h"
 #include "ISSystem.h"
 //-----------------------------------------------------------------------------
 static QString QS_SYSTEM_USER = PREPARE_QUERY("SELECT COUNT(*) "
@@ -251,7 +251,7 @@ bool CGConfiguratorUpdate::resources()
 					ISUuid ResourceUID = qSelectResources.ReadColumn("uid");
 					if (!ISMetaData::Instance().CheckExistResource(ResourceUID)) //Если ресурс не существует в мета-данных - предлагаем удалить его из БД
 					{
-						if (CGConsole::Question(QString("Delete old resource %1 in table %2?").arg(ResourceUID).arg(TableName))) //Пользователь согласился удалить ресурс из БД
+						if (ISConsole::Question(QString("Delete old resource %1 in table %2?").arg(ResourceUID).arg(TableName))) //Пользователь согласился удалить ресурс из БД
 						{
 							ISQuery qDeleteResource;
 							if (!qDeleteResource.Execute(QString("DELETE FROM %1 WHERE %2_uid = '%3'").arg(TableName).arg(TableAlias).arg(ResourceUID)))

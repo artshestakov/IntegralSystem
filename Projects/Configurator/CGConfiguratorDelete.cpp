@@ -3,7 +3,7 @@
 #include "ISDebug.h"
 #include "ISMetaData.h"
 #include "ISConstants.h"
-#include "CGConsole.h"
+#include "ISConsole.h"
 #include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
 static QString QS_INDEXES = PREPARE_QUERY("SELECT indexname "
@@ -162,7 +162,7 @@ bool CGConfiguratorDelete::oldtables()
 			QString TableName = qSelectTables.ReadColumn("table_name").toString();
 			if (!ISAlgorithm::VectorContains(VectorString, TableName))
 			{
-				if (CGConsole::Question(QString("Remove table \"%1\"?").arg(TableName)))
+				if (ISConsole::Question(QString("Remove table \"%1\"?").arg(TableName)))
 				{
 					ISDEBUG_L(QString("Removing table \"%1\"...").arg(TableName));
 					ISQuery qDeleteTable;
@@ -211,7 +211,7 @@ bool CGConfiguratorDelete::oldfields()
 			{
 				if (!ISAlgorithm::VectorContains(Map.value(TableName), ColumnName))
 				{
-					if (CGConsole::Question(QString("Remove column \"%1\" in table \"%2\"?").arg(ColumnName).arg(TableName)))
+					if (ISConsole::Question(QString("Remove column \"%1\" in table \"%2\"?").arg(ColumnName).arg(TableName)))
 					{
 						ISDEBUG_L(QString("Removing column \"%1\"...").arg(ColumnName));
 						ISQuery qDeleteField;
@@ -264,7 +264,7 @@ bool CGConfiguratorDelete::oldresources()
 				if (!ISAlgorithm::VectorContains<QString>(UIDs, ResourceUID))
 				{
 					ShowResourceConsole(MetaTable, ResourceUID);
-					if (CGConsole::Question(QString("Remove resource \"%1\" in table \"%2\"?").arg(ResourceUID).arg(TableName)))
+					if (ISConsole::Question(QString("Remove resource \"%1\" in table \"%2\"?").arg(ResourceUID).arg(TableName)))
 					{
 						ISQuery qDeleteResources("DELETE FROM " + TableName + " WHERE " + MetaTable->Alias + "_uid = :ResourceUID");
 						qDeleteResources.SetShowLongQuery(false);
@@ -302,7 +302,7 @@ bool CGConfiguratorDelete::oldsequence()
 		while (qSelect.Next())
 		{
 			QString SequenceName = qSelect.ReadColumn("sequence_name").toString();
-			if (CGConsole::Question(QString("Delete sequence \"%1\"?").arg(SequenceName)))
+			if (ISConsole::Question(QString("Delete sequence \"%1\"?").arg(SequenceName)))
 			{
 				ISQuery qDelete;
 				qDelete.SetShowLongQuery(false);
@@ -339,7 +339,7 @@ bool CGConfiguratorDelete::oldindexes()
 			QString IndexName = qSelectIndexes.ReadColumn("indexname").toString();
 			if (!ISAlgorithm::VectorContains(IndexNames, IndexName))
 			{
-				if (CGConsole::Question(QString("Delete index %1?").arg(IndexName)))
+				if (ISConsole::Question(QString("Delete index %1?").arg(IndexName)))
 				{
 					ISQuery qDeleteIndex;
 					Result = qDeleteIndex.Execute(QD_INDEX.arg(IndexName));
@@ -378,7 +378,7 @@ bool CGConfiguratorDelete::oldforeigns()
 			QString ForeignName = qSelectForeigns.ReadColumn("constraint_name").toString();
 			if (!ISAlgorithm::VectorContains(ForeignNames, ForeignName))
 			{
-				if (CGConsole::Question(QString("Delete foreign %1?").arg(ForeignName)))
+				if (ISConsole::Question(QString("Delete foreign %1?").arg(ForeignName)))
 				{
 					ISQuery qDeleteForeign;
 					qDeleteForeign.SetShowLongQuery(false);

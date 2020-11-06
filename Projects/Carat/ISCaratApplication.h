@@ -21,10 +21,9 @@ public:
 	bool Init(); //Инициализация
 	void Run(const QStringList &Arguments); //Запуск с параметрами
 	bool Run(); //Стандартный запуск
+	void Shutdown(); //Остановка приложения
 
 private:
-	void Shutdown();
-
 	void Help();
 	void Version();
 	void SendShutdown();

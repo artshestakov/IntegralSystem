@@ -30,7 +30,6 @@
     <ClCompile Include="CGConfiguratorShow.cpp" />
     <ClCompile Include="CGConfiguratorUpdate.cpp" />
     <ClCompile Include="CGDatabase.cpp" />
-    <ClCompile Include="CGConsole.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -56,7 +55,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CGDatabase.h" />
-    <ClInclude Include="CGConsole.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{641EC90D-70E1-42F5-9F2F-22C5238F1D02}</ProjectGuid>

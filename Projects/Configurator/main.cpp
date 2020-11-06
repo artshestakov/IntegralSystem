@@ -1,7 +1,7 @@
 #include "ISNamespace.h"
 #include "ISConfig.h"
 #include "ISMetaData.h"
-#include "CGConsole.h"
+#include "ISConsole.h"
 #include "ISDatabase.h"
 #include "ISCore.h"
 #include "ISSystem.h"
@@ -190,7 +190,7 @@ bool CreateDatabase()
 	else //БД не существует - создаём её
 	{
 		//Спрашиваем у пользоваеля, создавать БД?
-		Result = CGConsole::Question("Database \"" + DBName + "\" not exist! Create?");
+		Result = ISConsole::Question("Database \"" + DBName + "\" not exist! Create?");
 		if (Result) //Создаем БД
 		{
 			QSqlError SqlError = ISDatabase::Instance().GetDB(CONNECTION_SYSTEM).exec(QC_DATABASE.arg(DBName).arg(DBLogin)).lastError(); //Исполнение запроса на создание базы данных
@@ -233,7 +233,7 @@ bool CreateDatabase()
 		while (true)
 		{
 			//Запрашиваем название конфигурации
-			ConfigurationName = CGConsole::GetString("Input configuration name (from file Configuration.xml): ");
+			ConfigurationName = ISConsole::GetString("Input configuration name (from file Configuration.xml): ");
 			Result = !ConfigurationName.isEmpty();
 			if (!Result) //Если название не ввели - выходим с ошибкой
 			{
@@ -277,7 +277,7 @@ bool CreateDatabase()
 void InterpreterMode(bool &IsRunning)
 {
 	ISDEBUG();
-	QString Command = CGConsole::GetString("Enter command (press Enter or Return to exit): ");
+	QString Command = ISConsole::GetString("Enter command (press Enter or Return to exit): ");
 	IsRunning = !Command.isEmpty();
 	if (IsRunning)
 	{
@@ -408,7 +408,7 @@ void FillConfig()
 	DBHost = CONFIG_STRING(CONST_CONFIG_CONNECTION_SERVER);
 	while (DBHost.isEmpty())
 	{
-		DBHost = CGConsole::GetString("Enter the host: ");
+		DBHost = ISConsole::GetString("Enter the host: ");
 		if (DBHost.isEmpty())
 		{
 			ISDEBUG_L("Host is empty!");
@@ -419,7 +419,7 @@ void FillConfig()
 	DBPort = CONFIG_INT(CONST_CONFIG_CONNECTION_PORT);
 	while (!DBPort)
 	{
-		DBPort = CGConsole::GetInt("Enter the port: ");
+		DBPort = ISConsole::GetInt("Enter the port: ");
 		if (!DBPort)
 		{
 			ISDEBUG_L("Port is empty or null!");
@@ -430,7 +430,7 @@ void FillConfig()
 	DBLogin = CONFIG_STRING(CONST_CONFIG_CONNECTION_LOGIN);
 	while (DBLogin.isEmpty())
 	{
-		DBLogin = CGConsole::GetString("Enter the login: ");
+		DBLogin = ISConsole::GetString("Enter the login: ");
 		if (DBLogin.isEmpty())
 		{
 			ISDEBUG_L("Login is empty!");
@@ -441,7 +441,7 @@ void FillConfig()
 	DBPassword = CONFIG_STRING(CONST_CONFIG_CONNECTION_PASSWORD);
 	while (DBPassword.isEmpty())
 	{
-		DBPassword = CGConsole::GetString("Enter the password: ");
+		DBPassword = ISConsole::GetString("Enter the password: ");
 		if (DBPassword.isEmpty())
 		{
 			ISDEBUG_L("Password is empty!");
@@ -452,7 +452,7 @@ void FillConfig()
 	DBName = CONFIG_STRING(CONST_CONFIG_CONNECTION_DATABASE);
 	if (DBName.isEmpty()) //Если база данных не указана
 	{
-		if (CGConsole::Question("Show database list?")) //Предлагаем показать список всех баз на сервере
+		if (ISConsole::Question("Show database list?")) //Предлагаем показать список всех баз на сервере
 		{
 			QStringList StringList;
 			if (GetDatabaseList(StringList)) //Если удалось запросить список баз - выводим его в консоль
@@ -466,7 +466,7 @@ void FillConfig()
 
 		while (DBName.isEmpty())
 		{
-			DBName = CGConsole::GetString("Enter the database name: ");
+			DBName = ISConsole::GetString("Enter the database name: ");
 			if (DBName.isEmpty())
 			{
 				ISDEBUG_L("Database name is empty!");

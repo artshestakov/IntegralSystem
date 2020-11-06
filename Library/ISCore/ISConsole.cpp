@@ -1,7 +1,7 @@
-#include "CGConsole.h"
+#include "ISConsole.h"
 #include "ISDebug.h"
 //-----------------------------------------------------------------------------
-bool CGConsole::Question(const QString &QuestionText)
+bool ISConsole::Question(const QString &QuestionText)
 {
 	bool Result = false;
 	QString Answer;
@@ -26,13 +26,13 @@ bool CGConsole::Question(const QString &QuestionText)
 	return Result;
 }
 //-----------------------------------------------------------------------------
-void CGConsole::Pause()
+void ISConsole::Pause()
 {
 	ISDEBUG_L("To continue, press \"Enter\" buttons...");
 	(void)getchar();
 }
 //-----------------------------------------------------------------------------
-QString CGConsole::GetString(const QString &OutputString)
+QString ISConsole::GetString(const QString &OutputString)
 {
 	if (!OutputString.isEmpty())
 	{
@@ -44,7 +44,7 @@ QString CGConsole::GetString(const QString &OutputString)
 	return QString::fromStdString(String);
 }
 //-----------------------------------------------------------------------------
-int CGConsole::GetInt(const QString &OutputString)
+int ISConsole::GetInt(const QString &OutputString)
 {
 	if (!OutputString.isEmpty())
 	{
