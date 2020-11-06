@@ -8,6 +8,9 @@ class ISCORE_EXPORT ISTcpConnector : public QObject
 {
 	Q_OBJECT
 
+signals:
+	void RemoteHostClose(); //Сигнал закрытия соединения сервером
+
 public:
 	static ISTcpConnector& Instance();
 	
@@ -30,7 +33,6 @@ private:
 private:
 	QString ErrorString;
 	QTcpSocket *TcpSocket;
-	QEventLoop EventLoop;
 };
 //-----------------------------------------------------------------------------
 #endif

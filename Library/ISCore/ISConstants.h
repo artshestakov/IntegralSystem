@@ -132,6 +132,8 @@ const size_t	LOGGER_TIMEOUT = 50; //Таймаут логгера
 const unsigned short	CARAT_TCP_PORT = 50000; //Стандартный порт TCP-сервера
 const unsigned short	CARAT_CONTROLLER_PORT = 50001; //Стандартный порт контроллера
 const size_t			CARAT_HASH_SIZE = 64; //Фиксированный размер хэша SHA256 для авторизации
+const size_t			CARAT_CONNECT_TIMEOUT = 3000; //Время ожидания подключения к Карату
+const size_t			CARAT_CONNECT_SLEEP = 10; //Время паузы для ожидания подключения
 //CARAT_API--------------------------------------------------------------------
 const char		API_AUTH[] = "Auth"; //Авторизация
 const char		API_SLEEP[] = "Sleep"; //Ожидание

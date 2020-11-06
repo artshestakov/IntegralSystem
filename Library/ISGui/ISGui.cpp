@@ -49,6 +49,7 @@
 #include "ISComboSearchWidgets.h"
 #include "ISSettingFieldWidgets.h"
 #include "ISSystem.h"
+#include "ISTcpConnector.h"
 //-----------------------------------------------------------------------------
 static QString Q_DELETE_OR_RECOVERY_OBJECT = "UPDATE %1 SET %2_isdeleted = :IsDeleted WHERE %2_id = :ObjectID";
 //-----------------------------------------------------------------------------
@@ -432,6 +433,8 @@ QString ISGui::ConvertDateToString(const QDate &Date, const QString &DateFormat)
 //-----------------------------------------------------------------------------
 void ISGui::ExitApplication()
 {
+	ISTcpConnector::Instance().Disconnect();
+	ISQueryPool::Instance().Shutdown();
 	ISLogger::Instance().Shutdown();
 	qApp->closeAllWindows();
 }

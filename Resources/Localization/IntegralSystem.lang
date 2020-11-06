@@ -394,6 +394,7 @@
   <Local Name="You" Russian="Вы"/>
   <Local Name="Protocol.Use" Russian="Использовать протокол"/>
   <Local Name="Protocol.Port" Russian="Порт"/>
+  <Local Name="TcpConnector.Timeout" Russian="Время на ожидание подключения истекло."/>
 
   <!--MonitorActivity-->
   <Local Name="MonitorActivity.HideOffline" Russian="Скрыть пользователей не в сети"/>
