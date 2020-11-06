@@ -17,6 +17,9 @@ public:
 	QVariantMap& GetAnswer();
 
 private:
+	bool IsValidAnswer(const QByteArray &ByteArray, QVariantMap &VariantMap);
+
+private:
 	QString ErrorString;
 	QString QueryType;
 	QVariantMap Parameters;

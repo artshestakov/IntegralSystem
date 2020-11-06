@@ -88,25 +88,69 @@ bool ISTcpQuery::Execute()
 	}
 
 	//Проверяем валидность ответа
-	if (!ISTcp::IsValidAnswer(ByteArray, TcpAnswer, ErrorString))
+	bool Result = IsValidAnswer(ByteArray, TcpAnswer);
+	if (Result) //Ответ валиден
 	{
-		return false;
+		//Проверяем запрос на ошибку
+		Result = !TcpAnswer["IsError"].toBool();
+		if (Result)
+		{
+			TcpAnswer = TcpAnswer["Parameters"].toMap();
+		}
+		else
+		{
+			ErrorString = TcpAnswer["ErrorString"].toString();
+		}
 	}
-
-	//Проверяем запрос на ошибку
-	if (TcpAnswer["IsError"].toBool())
+	else //Ответ невалидный - очищаем структуру ответа (вдруг там что-то есть)
 	{
-		ErrorString = TcpAnswer["ErrorString"].toString();
-		return false;
+		TcpAnswer.clear();
 	}
-
-	TcpAnswer = TcpAnswer["Parameters"].toMap();
 	Parameters.clear(); //Очищаем список параметров запроса
-	return true;
+	ByteArray.clear(); //Очищаем временный буфер
+	return Result;
 }
 //-----------------------------------------------------------------------------
 QVariantMap& ISTcpQuery::GetAnswer()
 {
 	return TcpAnswer;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpQuery::IsValidAnswer(const QByteArray &ByteArray, QVariantMap &VariantMap)
+{
+	QJsonParseError JsonParseError;
+	VariantMap = ISSystem::JsonStringToVariantMap(ByteArray, JsonParseError);
+	if (VariantMap.isEmpty() && JsonParseError.error != QJsonParseError::NoError)
+	{
+		return false;
+	}
+
+	if (!VariantMap.contains("IsError")) //Если поле с флагом ошибки отсутствует
+	{
+		ErrorString = "Not found field \"IsError\"";
+		return false;
+	}
+
+	if (!VariantMap["IsError"].isValid()) //Если поле с флагом ошибки невалидное
+	{
+		ErrorString = "Empty field \"IsError\"";
+		return false;
+	}
+
+	if (VariantMap["IsError"].toBool()) //Если ошибка действительно есть, только тогда проверяем наличие её описания
+	{
+		if (!VariantMap.contains("ErrorString")) //Если поле с описанием ошибки отсутствует
+		{
+			ErrorString = "Not found field \"ErrorString\"";
+			return false;
+		}
+
+		if (VariantMap["ErrorString"].toString().isEmpty()) //Если поле с описанием ошибки пустое
+		{
+			ErrorString = "Empty field \"ErrorString\"";
+			return false;
+		}
+	}
+	return true;
 }
 //-----------------------------------------------------------------------------

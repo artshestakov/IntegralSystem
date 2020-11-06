@@ -7,7 +7,6 @@
 class ISCORE_EXPORT ISTcp
 {
 public:
-	static bool IsValidAnswer(const QByteArray &ByteArray, QVariantMap &VariantMap, QString &ErrorString); //ѕроверить валидность ответа на запрос
 	static unsigned int GetQuerySizeFromBuffer(QByteArray &ByteArray, bool &Ok); //ѕолучить размер запроса из его содержимого
 	static void WaitForBytesWritten(QTcpSocket *TcpSocket); //ќжидание записи данных в сокет
 };
