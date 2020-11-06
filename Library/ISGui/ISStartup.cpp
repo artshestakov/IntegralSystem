@@ -194,7 +194,7 @@ bool ISStartup::StartupOld(ISSplashScreen *SplashScreen)
 bool ISStartup::StartupNew(ISSplashScreen *SplashScreen)
 {
 	//Инициализация мета-данных
-	if (!ISMetaData::Instance().Initialize(PROPERTY_GET("Configuration").toString(), false, false))
+	if (!ISMetaData::Instance().Initialize(ISObjects::Instance().Info.Name, false, false))
 	{
 		ISMessageBox::ShowCritical(SplashScreen, LANG("Message.Error.InitializeMetaData"), ISMetaData::Instance().GetErrorString());
 		return false;
@@ -206,7 +206,7 @@ bool ISStartup::StartupNew(ISSplashScreen *SplashScreen)
 		ISMessageBox::ShowCritical(SplashScreen, qAuth.GetErrorString());
 		return false;
 	}
-	ISObjects::Instance().Initialize(PROPERTY_GET("Configuration").toString());
+	ISObjects::Instance().Initialize(ISObjects::Instance().Info.Name);
 	ISSettingsDatabase::Instance().Initialize(qAuth.GetAnswer()["SettingsDB"].toMap());
 	ISUserRoleEntity::Instance().InitializeTables(qAuth.GetAnswer()["AccessTables"].toMap());
 	ISUserRoleEntity::Instance().InitializeSpecial(qAuth.GetAnswer()["AccessSpecial"].toList());

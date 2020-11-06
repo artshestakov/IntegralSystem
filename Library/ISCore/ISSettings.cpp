@@ -73,6 +73,7 @@ void ISSettings::Initialize(const QVariantList &VariantList)
 			MetaSetting->LocalName = SettingMap["Local"].toString();
 			MetaSetting->Hint = SettingMap["Hint"].toString();
 			MetaSetting->Default = SettingMap["Default"];
+			MetaSetting->Value = SettingMap["Value"];
 			MetaGroup->Settings.emplace_back(MetaSetting);
 		}
 		SettingGroups.emplace_back(MetaGroup);

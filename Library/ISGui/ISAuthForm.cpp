@@ -14,7 +14,7 @@
 #include "ISVersionInfo.h"
 #include "ISLogger.h"
 #include "ISSystem.h"
-#include "ISProperty.h"
+#include "ISObjects.h"
 //-----------------------------------------------------------------------------
 #include "ISTcpConnector.h"
 #include "ISTcpQuery.h"
@@ -235,6 +235,17 @@ void ISAuthForm::InputOld()
 void ISAuthForm::InputNew()
 {
 	SetConnecting(true);
+	if (!ISDatabase::Instance().GetDB(CONNECTION_DEFAULT).isOpen()) //Если подключения ещё нет - подключаемся
+	{
+		if (!ISDatabase::Instance().Connect(CONNECTION_DEFAULT,
+			CONFIG_STRING(CONST_CONFIG_CONNECTION_SERVER), CONFIG_INT(CONST_CONFIG_CONNECTION_PORT), CONFIG_STRING(CONST_CONFIG_CONNECTION_DATABASE),
+			EditLogin->GetValue().toString(), EditPassword->GetValue().toString())) //Если подключение к базе данных установлено
+		{
+			SetConnecting(false);
+			return;
+		}
+	}
+
 	if (!ISTcpConnector::Instance().Connect(CONFIG_STRING(CONST_CONFIG_CONNECTION_SERVER), CONFIG_INT("Protocol/Port"))) //Ошибка подключения к карату
 	{
 		SetConnecting(false);
@@ -250,13 +261,17 @@ void ISAuthForm::InputNew()
 		SetResult(true);
 		hide();
 		ISMetaUser::Instance().UserData.System = qAuth.GetAnswer()["UserIsSystem"].toBool();
-		ISMetaUser::Instance().UserData.ID = qAuth.GetAnswer()["UserID"].toBool();
-		ISMetaUser::Instance().UserData.FIO = qAuth.GetAnswer()["UserFIO"].toBool();
+		ISMetaUser::Instance().UserData.ID = qAuth.GetAnswer()["UserID"].toUInt();
+		ISMetaUser::Instance().UserData.FIO = qAuth.GetAnswer()["UserFIO"].toString();
 		ISMetaUser::Instance().UserData.Login = EditLogin->GetValue().toString();
 		ISMetaUser::Instance().UserData.Password = EditPassword->GetValue().toString();
-		ISMetaUser::Instance().UserData.GroupID = qAuth.GetAnswer()["UserGroupID"].toBool();
+		ISMetaUser::Instance().UserData.GroupID = qAuth.GetAnswer()["UserGroupID"].toUInt();
 		ISMetaUser::Instance().UserData.GroupFullAccess = qAuth.GetAnswer()["UserGroupFullAccess"].toBool();
-		PROPERTY_SET("Configuration", qAuth.GetAnswer()["Configuration"].toMap()["Name"]);
+		ISObjects::Instance().Info.UID = qAuth.GetAnswer()["Configuration"].toMap()["UID"];
+		ISObjects::Instance().Info.Name = qAuth.GetAnswer()["Configuration"].toMap()["Name"].toString();
+		ISObjects::Instance().Info.LocalName = qAuth.GetAnswer()["Configuration"].toMap()["Local"].toString();
+		ISObjects::Instance().Info.DesktopForm = qAuth.GetAnswer()["Configuration"].toMap()["Desktop"].toString();
+		ISObjects::Instance().Info.LogoName = qAuth.GetAnswer()["Configuration"].toMap()["Logo"].toString();
 		close();
 	}
 	else //Ошибка авторизации
