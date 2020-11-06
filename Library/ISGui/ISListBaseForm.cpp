@@ -813,6 +813,7 @@ void ISListBaseForm::ResizeColumnsToContents()
 			TableView->setColumnWidth(i, ColumnSize);
 		}
 	}
+	TableView->resizeColumnToContents(SqlModel->GetFieldIndex("ID"));
 	FieldResized(true);
 }
 //-----------------------------------------------------------------------------
