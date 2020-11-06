@@ -140,6 +140,7 @@ const char		API_SLEEP[] = "Sleep"; //Ожидание
 const char		API_GET_META_DATA[] = "GetMetaData"; //Получение мета-данных
 const char		API_TEST[] = "Test"; //Тестовый метод
 const char		API_GET_LAST_CLIENT[] = "GetLastClient"; //Получить последнюю версию клиента
+const char		API_REGISTER_LOGIN[] = "RegisterLogin"; //Регистрация логина
 //CARAT_LOCAL_API--------------------------------------------------------------
 const char		CARAT_LOCAL_API_SHUTDOWN[] = "shutdown"; //Завершение работы
 //-----------------------------------------------------------------------------
@@ -202,7 +203,6 @@ const char CONST_UID_GROUP_ACCESS_SPECIAL_TASK_APPOINT[] = "{14B3E83D-56D4-4527-
 //-----------------------------------------------------------------------------
 const char CONST_UID_USER_PASSWORD_CHANGE_TYPE_CREATE[] = "{6DD00B13-2A69-45FD-B565-3142C2D2BA97}";
 const char CONST_UID_USER_PASSWORD_CHANGE_TYPE_UPDATE[] = "{0EEE6D67-A0F3-4558-B7AD-173678A8C9DC}";
-const char CONST_UID_USER_PASSWORD_CHANGE_TYPE_DELETE[] = "{62892860-8644-419A-BE6A-6783EA685424}";
 //-----------------------------------------------------------------------------
 const char CONST_UID_TASK_PRIORITY_LOW[] = "{CD620874-5069-48E4-BDEA-2D5AEBF8ABA7}"; //Низкий
 const char CONST_UID_TASK_PRIORITY_AVERAGE[] = "{87AC0B68-9348-4A39-8466-B84DC641FE8B}"; //Средний

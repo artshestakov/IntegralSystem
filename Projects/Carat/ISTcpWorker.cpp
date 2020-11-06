@@ -99,6 +99,14 @@ static QString QS_PARAGRAPH = PREPARE_QUERY("SELECT prhs_uid, prhs_name, prhs_lo
 											"WHERE NOT prhs_isdeleted "
 											"ORDER BY prhs_orderid");
 //-----------------------------------------------------------------------------
+static QString QS_CHECK_USER_HASH = PREPARE_QUERY("SELECT (COUNT(*) > 0)::BOOLEAN AS exist "
+												  "FROM _users "
+												  "WHERE usrs_hash = :Hash");
+//-----------------------------------------------------------------------------
+static QString QU_USER_HASH = PREPARE_QUERY("UPDATE _users SET "
+											"usrs_hash = :Hash "
+											"WHERE usrs_id = :UserID");
+//-----------------------------------------------------------------------------
 ISTcpWorker::ISTcpWorker(const QString &db_host, int db_port, const QString &db_name, const QString &db_user, const QString &db_password, const ISConfigurationInfo &configuration_info)
 	: QObject(),
 	ErrorString(NO_ERROR_STRING),
@@ -233,6 +241,7 @@ void ISTcpWorker::Process()
 					case ISNamespace::AMT_GetMetaData: Result = GetMetaData(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_Test: Result = Test(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_GetLastClient: Result = GetLastClient(tcp_message, TcpAnswer); break;
+					case ISNamespace::AMT_RegisterLogin: Result = RegisterLogin(tcp_message, TcpAnswer); break;
 					}
 					PerfomanceMsec = ISAlgorithm::GetTickDiff(ISAlgorithm::GetTick(), TimePoint);
 				}
@@ -934,6 +943,56 @@ bool ISTcpWorker::GetLastClient(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer
 
 	//Конвертируем в base64 и отдаём
 	TcpAnswer->Parameters["Data"] = ByteArray.toBase64();
+	return true;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::RegisterLogin(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+	QVariant Hash = CheckNullField("Hash", TcpMessage->Parameters),
+		UserID = CheckNullField("UserID", TcpMessage->Parameters);
+	if (!Hash.isValid() || !UserID.isValid())
+	{
+		return false;
+	}
+
+	//Проверяем наличие такого хэша
+	ISQuery qSelect(ISDatabase::Instance().GetDB(DBConnectionName), QS_CHECK_USER_HASH);
+	qSelect.BindValue(":Hash", Hash);
+	if (!qSelect.Execute()) //Ошибка запроса
+	{
+		ErrorString = LANG("Carat.Error.Query.RegisterUser.CheckExistHash").arg(qSelect.GetErrorString());
+		return false;
+	}
+
+	if (!qSelect.First()) //Ошибка получения количества
+	{
+		ErrorString = qSelect.GetErrorString();
+		return false;
+	}
+
+	bool Exist = qSelect.ReadColumn("exist").toBool();
+	if (Exist) //Если такой хэш уже есть в БД - отказываем в регистрации
+	{
+		ErrorString = LANG("Carat.Error.Query.RegisterUser.HashAlreadyExist");
+		return false;
+	}
+
+	ISQuery qUpdateHash(ISDatabase::Instance().GetDB(DBConnectionName), QU_USER_HASH);
+	qUpdateHash.BindValue(":Hash", Hash);
+	qUpdateHash.BindValue(":UserID", UserID);
+	if (qUpdateHash.Execute())
+	{
+		if (!qUpdateHash.GetCountAffected()) //Если при обновлении ни одна строка не была затронута - значит пользователя с таким идентификатором нет
+		{
+			ErrorString = LANG("Carat.Error.Query.RegisterUser.UserNotExist").arg(UserID.toInt());
+			return false;
+		}
+	}
+	else
+	{
+		ErrorString = LANG("Carat.Error.Query.RegisterUser.UpdateHash").arg(qUpdateHash.GetErrorString());
+		return false;
+	}
 	return true;
 }
 //-----------------------------------------------------------------------------
