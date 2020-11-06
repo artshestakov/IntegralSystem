@@ -2,9 +2,9 @@
 #ifndef _ISTCPQUERY_H_INCLUDED
 #define _ISTCPQUERY_H_INCLUDED
 //-----------------------------------------------------------------------------
-#include "iscore_global.h"
+#include "isgui_global.h"
 //-----------------------------------------------------------------------------
-class ISCORE_EXPORT ISTcpQuery
+class ISTcpQuery
 {
 public:
 	ISTcpQuery(const QString &query_type);

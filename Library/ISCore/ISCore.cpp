@@ -12,7 +12,6 @@
 #include "ISMetaUser.h"
 #include "ISSettingsDatabase.h"
 #include "ISDatabase.h"
-#include "ISTcpConnector.h"
 #include "ISMetaDataHelper.h"
 //-----------------------------------------------------------------------------
 static QString QI_CALENDAR = PREPARE_QUERY("INSERT INTO _calendar(cldr_date, cldr_timealert, cldr_name, cldr_text, cldr_tablename, cldr_objectid) "

@@ -2,9 +2,9 @@
 #ifndef _ISTCPCONNECTOR_H_INCLUDED
 #define _ISTCPCONNECTOR_H_INCLUDED
 //-----------------------------------------------------------------------------
-#include "iscore_global.h"
+#include "isgui_global.h"
 //-----------------------------------------------------------------------------
-class ISCORE_EXPORT ISTcpConnector : public QObject
+class ISTcpConnector : public QObject
 {
 	Q_OBJECT
 

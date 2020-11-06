@@ -286,6 +286,8 @@
     <ClCompile Include="ISTaskObjectForm.cpp" />
     <ClCompile Include="ISTaskSearchByTextForm.cpp" />
     <ClCompile Include="ISTaskViewForm.cpp" />
+    <ClCompile Include="ISTcpConnector.cpp" />
+    <ClCompile Include="ISTcpQuery.cpp" />
     <ClCompile Include="ISUserGroupListForm.cpp" />
     <ClCompile Include="ISUserGroupForm.cpp" />
     <ClCompile Include="ISUserListForm.cpp" />
@@ -427,6 +429,8 @@
     <QtMoc Include="ISTaskObjectForm.h" />
     <QtMoc Include="ISListViewForm.h" />
     <ClInclude Include="ISSearchModel.h" />
+    <QtMoc Include="ISTcpConnector.h" />
+    <ClInclude Include="ISTcpQuery.h" />
     <ClInclude Include="ISUserPhotoCreator.h" />
     <ClInclude Include="ISUserRoleEntity.h" />
     <QtMoc Include="ISWaitWidget.h" />

@@ -73,6 +73,9 @@
     <Filter Include="Objects\Empty">
       <UniqueIdentifier>{e0648b57-1356-4d69-a3e9-00354d175eed}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Protocol">
+      <UniqueIdentifier>{524b6c72-333a-41c1-8cec-44dba96b37b5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ISExportForm.cpp">
@@ -441,6 +444,12 @@
     <ClCompile Include="ISListViewForm.cpp">
       <Filter>Common Forms</Filter>
     </ClCompile>
+    <ClCompile Include="ISTcpConnector.cpp">
+      <Filter>Protocol</Filter>
+    </ClCompile>
+    <ClCompile Include="ISTcpQuery.cpp">
+      <Filter>Protocol</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ISExportForm.h">
@@ -743,6 +752,9 @@
     <QtMoc Include="ISListViewForm.h">
       <Filter>Common Forms</Filter>
     </QtMoc>
+    <QtMoc Include="ISTcpConnector.h">
+      <Filter>Protocol</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ISSqlModelHelper.h">
@@ -811,6 +823,9 @@
     </ClInclude>
     <ClInclude Include="ISSearchModel.h">
       <Filter>Model</Filter>
+    </ClInclude>
+    <ClInclude Include="ISTcpQuery.h">
+      <Filter>Protocol</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

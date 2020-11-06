@@ -110,12 +110,6 @@
     <ClCompile Include="ISProtocol.cpp">
       <Filter>System</Filter>
     </ClCompile>
-    <ClCompile Include="ISTcpQuery.cpp">
-      <Filter>Protocol</Filter>
-    </ClCompile>
-    <ClCompile Include="ISTcpConnector.cpp">
-      <Filter>Protocol</Filter>
-    </ClCompile>
     <ClCompile Include="ISTcp.cpp">
       <Filter>Protocol</Filter>
     </ClCompile>
@@ -212,9 +206,6 @@
     <ClInclude Include="ISProtocol.h">
       <Filter>System</Filter>
     </ClInclude>
-    <ClInclude Include="ISTcpQuery.h">
-      <Filter>Protocol</Filter>
-    </ClInclude>
     <ClInclude Include="ISTcp.h">
       <Filter>Protocol</Filter>
     </ClInclude>
@@ -243,9 +234,6 @@
     </QtMoc>
     <QtMoc Include="ISRestWorker.h">
       <Filter>Network</Filter>
-    </QtMoc>
-    <QtMoc Include="ISTcpConnector.h">
-      <Filter>Protocol</Filter>
     </QtMoc>
     <QtMoc Include="ISQueryPool.h">
       <Filter>Database</Filter>
