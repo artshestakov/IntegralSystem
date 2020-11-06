@@ -15,20 +15,15 @@ public:
 protected:
 	void AfterShowEvent() override;
 	bool Save() override;
-	void SavedEvent() override;
 
 private:
-	void PasswordChange();
-	void PasswordDelete();
+	void PasswordManagement();
 	void AccountLifeTimeChanged();
 
 private:
-	ISFieldEditBase *EditLogin;
 	ISFieldEditBase *EditAccountLifeTime;
 	ISFieldEditBase *EditAccountLifeTimeStart;
 	ISFieldEditBase *EditAccountLifeTimeEnd;
-
-	QString CurrentLogin;
 };
 //-----------------------------------------------------------------------------
 #endif

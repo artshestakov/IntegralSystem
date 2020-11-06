@@ -250,7 +250,6 @@
     <ClCompile Include="ISParagraphBaseForm.cpp" />
     <ClCompile Include="ISParagraphEntity.cpp" />
     <ClCompile Include="ISPassword.cpp" />
-    <ClCompile Include="ISPasswordWidthWidget.cpp" />
     <ClCompile Include="ISPeriodForm.cpp" />
     <ClCompile Include="ISPopupMessage.cpp" />
     <ClCompile Include="ISPrintForm.cpp" />
@@ -292,7 +291,7 @@
     <ClCompile Include="ISUserGroupForm.cpp" />
     <ClCompile Include="ISUserListForm.cpp" />
     <ClCompile Include="ISUserObjectForm.cpp" />
-    <ClCompile Include="ISUserPasswordForm.cpp" />
+    <ClCompile Include="ISUserHashForm.cpp" />
     <ClCompile Include="ISUserPhotoCreator.cpp" />
     <ClCompile Include="ISUserRoleEntity.cpp" />
     <ClCompile Include="ISValidators.cpp" />
@@ -396,7 +395,7 @@
     <QtMoc Include="ISUserGroupListForm.h" />
     <QtMoc Include="ISUserListForm.h" />
     <QtMoc Include="ISUserObjectForm.h" />
-    <QtMoc Include="ISUserPasswordForm.h" />
+    <QtMoc Include="ISUserHashForm.h" />
     <QtMoc Include="ISListIndicatorWidget.h" />
     <QtMoc Include="ISCalendarEventItem.h" />
     <QtMoc Include="ISCalendarEventsWidget.h" />
@@ -436,7 +435,6 @@
     <QtMoc Include="ISWaitWidget.h" />
     <QtMoc Include="ISScrollArea.h" />
     <QtMoc Include="ISPrintPreviewDialog.h" />
-    <QtMoc Include="ISPasswordWidthWidget.h" />
     <QtMoc Include="ISPagesTextEdit.h" />
     <QtMoc Include="ISBaseTableView.h" />
     <QtMoc Include="ISFieldEditBase.h" />

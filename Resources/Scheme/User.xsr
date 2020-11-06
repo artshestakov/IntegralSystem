@@ -27,6 +27,5 @@
 
   <_UserPasswordChangedType IsSystem="true" UID="{6DD00B13-2A69-45FD-B565-3142C2D2BA97}" Name="Создание пароля"/>
   <_UserPasswordChangedType IsSystem="true" UID="{0EEE6D67-A0F3-4558-B7AD-173678A8C9DC}" Name="Изменение пароля"/>
-  <_UserPasswordChangedType IsSystem="true" UID="{62892860-8644-419A-BE6A-6783EA685424}" Name="Удаление пароля"/>
 
 </XSR>

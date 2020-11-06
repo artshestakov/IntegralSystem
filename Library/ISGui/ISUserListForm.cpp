@@ -10,13 +10,9 @@
 //-----------------------------------------------------------------------------
 ISUserListForm::ISUserListForm(QWidget *parent) : ISListBaseForm("_Users", parent)
 {
-	QAction *ActionChangePassword = ISControls::CreateActionPasswordChange(this);
-	connect(ActionChangePassword, &QAction::triggered, this, &ISUserListForm::ChangePassword);
-	AddAction(ActionChangePassword, true, true);
-
-	QAction *ActionDeletePassword = ISControls::CreateActionPasswordDelete(this);
-	connect(ActionDeletePassword, &QAction::triggered, this, &ISUserListForm::DeletePassword);
-	AddAction(ActionDeletePassword, true, true);
+	QAction *ActionPassword = ISControls::CreateActionUserPassword(this);
+	connect(ActionPassword, &QAction::triggered, this, &ISUserListForm::PasswordManagement);
+	AddAction(ActionPassword, true, true);
 }
 //-----------------------------------------------------------------------------
 ISUserListForm::~ISUserListForm()
@@ -34,7 +30,7 @@ void ISUserListForm::Edit()
 	CheckThisUser() ? ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotEditThisUser")) : ISListBaseForm::Edit();
 }
 //-----------------------------------------------------------------------------
-void ISUserListForm::ChangePassword()
+void ISUserListForm::PasswordManagement()
 {
 	if (CheckThisUser())
 	{
@@ -47,18 +43,7 @@ void ISUserListForm::ChangePassword()
 		ISMessageBox::ShowWarning(this, LANG("Message.User.ChangePassword.Postgres"));
 		return;
 	}
-
-	if (ISGui::ShowUserPasswordForm(GetCurrentRecordValue("ID").toInt()))
-	{
-		ISMessageBox::ShowInformation(this, LANG("Message.Information.ChangePasswordUser").arg(GetCurrentRecordValue("FIO").toString()));
-	}
-}
-//-----------------------------------------------------------------------------
-void ISUserListForm::DeletePassword()
-{
-	ISDatabase::Instance().GetValue("_Users", "IsSystem", GetObjectID()).toBool() ?
-		ISMessageBox::ShowWarning(this, LANG("Message.User.ChangePassword.Postgres")) :
-		ISGui::ShowUserPasswordDelete(GetObjectID(), GetCurrentRecordValue("Login").toString());
+	ISGui::ShowUserPasswordForm(GetCurrentRecordValue("ID").toUInt(), GetCurrentRecordValue("FIO").toString());
 }
 //-----------------------------------------------------------------------------
 bool ISUserListForm::CheckThisUser()

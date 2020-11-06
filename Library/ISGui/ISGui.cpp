@@ -4,7 +4,7 @@
 #include "ISAssert.h"
 #include "ISLocalization.h"
 #include "ISSettingsForm.h"
-#include "ISUserPasswordForm.h"
+#include "ISUserHashForm.h"
 #include "ISMetaData.h"
 #include "ISMessageBox.h"
 #include "ISPopupMessage.h"
@@ -58,15 +58,6 @@ static QString QS_NOTE_OBJECT = PREPARE_QUERY("SELECT nobj_note FROM _noteobject
 static QString QU_NOTE_OBJECT = PREPARE_QUERY("UPDATE _noteobject SET nobj_note = :Note WHERE nobj_tablename = :TableName AND nobj_objectid = :ObjectID");
 //-----------------------------------------------------------------------------
 static QString QI_NOTE_OBJECT = PREPARE_QUERY("INSERT INTO _noteobject(nobj_tablename, nobj_objectid, nobj_note) VALUES(:TableName, :ObjectID, :Note)");
-//-----------------------------------------------------------------------------
-static QString QS_PASSWORD_IS_NULL = PREPARE_QUERY("SELECT passwd IS NULL AS is_null "
-												   "FROM pg_shadow "
-												   "WHERE usename = :Login");
-//-----------------------------------------------------------------------------
-static QString QD_USER_PASSWORD = PREPARE_QUERY2("ALTER ROLE %1 PASSWORD NULL");
-//-----------------------------------------------------------------------------
-static QString QI_USER_PASSWORD_CHANGED = PREPARE_QUERY("INSERT INTO _userpasswordchanged(upcg_user, upcg_type) "
-														"VALUES(:User, (SELECT upct_id FROM _userpasswordchangedtype WHERE upct_uid = :ChangeTypeUID))");
 //-----------------------------------------------------------------------------
 bool ISGui::Startup(QString &ErrorString)
 {
@@ -516,57 +507,14 @@ void ISGui::ShowSettingsForm(const QString &SettingGroupUID)
 	SettingsForm.Exec();
 }
 //-----------------------------------------------------------------------------
-bool ISGui::ShowUserPasswordForm(int UserID)
+void ISGui::ShowUserPasswordForm(unsigned int UserID, const QString &UserFIO)
 {
 	SetWaitGlobalCursor(true);
-	ISUserPasswordForm UserPasswordForm(UserID);
+	ISUserHashForm UserPasswordForm(UserID, UserFIO);
 	SetWaitGlobalCursor(false);
-	return UserPasswordForm.Exec();
-}
-//-----------------------------------------------------------------------------
-void ISGui::ShowUserPasswordDelete(int UserID, const QString &UserLogin)
-{
-	if (ISMessageBox::ShowQuestion(nullptr, LANG("Message.Question.DeleteUserPassword")))
+	if (UserPasswordForm.Exec())
 	{
-		//Проверка наличия пароля
-		ISQuery qSelectPasswordIsNull(QS_PASSWORD_IS_NULL);
-		qSelectPasswordIsNull.BindValue(":Login", UserLogin);
-		if (qSelectPasswordIsNull.Execute()) //Проверка прошла успешно
-		{
-			if (qSelectPasswordIsNull.First()) //Такой пользователь есть
-			{
-				if (!qSelectPasswordIsNull.ReadColumn("is_null").toBool()) //Если пароль есть - удаляем
-				{
-					ISQuery qDeletePassword;
-					if (qDeletePassword.Execute(QD_USER_PASSWORD.arg(UserLogin)))
-					{
-						ISQuery qInsertPasswordChange(QI_USER_PASSWORD_CHANGED);
-						qInsertPasswordChange.BindValue(":User", UserID);
-						qInsertPasswordChange.BindValue(":ChangeTypeUID", CONST_UID_USER_PASSWORD_CHANGE_TYPE_DELETE);
-						if (!qInsertPasswordChange.Execute())
-						{
-							ISMessageBox::ShowCritical(nullptr, LANG("Message.Error.ChangePasswordUserHistory"), qInsertPasswordChange.GetErrorString());
-						}
-					}
-					else
-					{
-						ISMessageBox::ShowCritical(nullptr, LANG("Message.Error.DeleteUserPassword"), qDeletePassword.GetErrorString());
-					}
-				}
-				else //Пароля нет - сообщаем об этом
-				{
-					ISMessageBox::ShowWarning(nullptr, LANG("Message.Error.UserPasswordIsNull"));
-				}
-			}
-			else //Пользователя нет
-			{
-				ISMessageBox::ShowCritical(nullptr, LANG("Message.Error.ThisUserNotFound"));
-			}
-		}
-		else
-		{
-			ISMessageBox::ShowCritical(nullptr, LANG("Message.Error.SelectUserPasswordIsNull"), qSelectPasswordIsNull.GetErrorString());
-		}
+		ISPopupMessage::ShowNotification(LANG("YouPasswordChangedDone"));
 	}
 }
 //-----------------------------------------------------------------------------

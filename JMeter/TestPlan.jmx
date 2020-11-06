@@ -73,8 +73,7 @@ def MapAuth =
 	Type: &quot;Auth&quot;,
 	Parameters:
 		[
-			//Hash: GetSHA256(&quot;postgresadm777&quot;),
-			Hash: GetSHA256(&quot;shestakovadm777&quot;),
+			Hash: GetSHA256(&quot;postgresadm777&quot;),
 			Version: &quot;1.0.0&quot;
 		]
 ];
@@ -105,12 +104,36 @@ def MapTest =
 ];
 vars.put(&quot;QueryTest&quot;, MapToString(MapTest));
 
-//Послучить последнюю версию клиента
+//Получить последнюю версию клиента
 def MapGetLastClient =
 [
 	Type: &quot;GetLastClient&quot;
 ];
-vars.put(&quot;QueryGetLastClient&quot;, MapToString(MapGetLastClient));</stringProp>
+vars.put(&quot;QueryGetLastClient&quot;, MapToString(MapGetLastClient));
+
+//Проверка наличия логина
+def MapLoginExist =
+[
+	Type: &quot;LoginExist&quot;,
+	Parameters:
+		[
+			UserID: 5
+		]
+];
+vars.put(&quot;QueryLoginExist&quot;, MapToString(MapLoginExist));
+
+//Регистрация логина
+def MapLoginRegister =
+[
+	Type: &quot;LoginRegister&quot;,
+	Parameters:
+		[
+			HashOld: GetSHA256(&quot;ivanov78357835&quot;),
+			Hash: GetSHA256(&quot;ivanovadm777&quot;),
+			UserID: 5
+		]
+];
+vars.put(&quot;QueryLoginRegister&quot;, MapToString(MapLoginRegister));</stringProp>
           <stringProp name="scriptLanguage">groovy</stringProp>
         </JSR223Sampler>
         <hashTree/>
@@ -126,7 +149,31 @@ vars.put(&quot;QueryGetLastClient&quot;, MapToString(MapGetLastClient));</string
           <stringProp name="ConfigTestElement.password"></stringProp>
         </TCPSampler>
         <hashTree/>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: GetMetaData" enabled="true">
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: LoginExist" enabled="false">
+          <stringProp name="TCPSampler.server"></stringProp>
+          <boolProp name="TCPSampler.reUseConnection">true</boolProp>
+          <stringProp name="TCPSampler.port"></stringProp>
+          <boolProp name="TCPSampler.nodelay">false</boolProp>
+          <stringProp name="TCPSampler.timeout"></stringProp>
+          <stringProp name="TCPSampler.request">${QueryLoginExist}</stringProp>
+          <boolProp name="TCPSampler.closeConnection">true</boolProp>
+          <stringProp name="ConfigTestElement.username"></stringProp>
+          <stringProp name="ConfigTestElement.password"></stringProp>
+        </TCPSampler>
+        <hashTree/>
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: LoginRegister" enabled="true">
+          <stringProp name="TCPSampler.server"></stringProp>
+          <boolProp name="TCPSampler.reUseConnection">true</boolProp>
+          <stringProp name="TCPSampler.port"></stringProp>
+          <boolProp name="TCPSampler.nodelay">false</boolProp>
+          <stringProp name="TCPSampler.timeout"></stringProp>
+          <stringProp name="TCPSampler.request">${QueryLoginRegister}</stringProp>
+          <boolProp name="TCPSampler.closeConnection">true</boolProp>
+          <stringProp name="ConfigTestElement.username"></stringProp>
+          <stringProp name="ConfigTestElement.password"></stringProp>
+        </TCPSampler>
+        <hashTree/>
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: GetMetaData" enabled="false">
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
           <stringProp name="TCPSampler.port"></stringProp>

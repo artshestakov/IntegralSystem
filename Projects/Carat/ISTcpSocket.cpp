@@ -195,9 +195,13 @@ ISNamespace::ApiMessageType ISTcpSocket::GetMessageType(const QString &TypeName)
 	{
 		return ISNamespace::AMT_GetLastClient;
 	}
-	else if (TypeName == API_REGISTER_LOGIN)
+	else if (TypeName == API_LOGIN_REGISTER)
 	{
-		return ISNamespace::AMT_RegisterLogin;
+		return ISNamespace::AMT_LoginRegister;
+	}
+	else if (TypeName == API_LOGIN_EXIST)
+	{
+		return ISNamespace::AMT_LoginExist;
 	}
 	return ISNamespace::AMT_Unknown;
 }

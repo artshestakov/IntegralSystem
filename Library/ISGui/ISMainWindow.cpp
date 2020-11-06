@@ -163,12 +163,13 @@ void ISMainWindow::ShowHistoryForm()
 //-----------------------------------------------------------------------------
 void ISMainWindow::ShowChangePasswordForm()
 {
-	if (ISMetaUser::Instance().UserData.System)
+	if (ISMetaUser::Instance().UserData.System) //Если пользователь системный - не разрешаем менять пароль
 	{
 		ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotChangeSystemUserPassword"));
 		return;
 	}
 
+	//Если права на смену пароля нет - рапортуем об этом и выходим из функции
 	if (!ISUserRoleEntity::Instance().CheckAccessSpecial(CONST_UID_GROUP_ACCESS_SPECIAL_CHANGE_PASSWORD))
 	{
 		ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.Special.UserPasswordChange"));
@@ -176,10 +177,7 @@ void ISMainWindow::ShowChangePasswordForm()
 	}
 
 	SetVisibleShadow(true);
-	if (ISGui::ShowUserPasswordForm(CURRENT_USER_ID))
-	{
-		ISMessageBox::ShowInformation(this, LANG("Message.Information.YouPasswordDoneChanged"));
-	}
+	ISGui::ShowUserPasswordForm(CURRENT_USER_ID, ISMetaUser::Instance().UserData.FIO);
 	SetVisibleShadow(false);
 }
 //-----------------------------------------------------------------------------

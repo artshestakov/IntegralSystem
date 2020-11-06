@@ -159,9 +159,6 @@
     <ClCompile Include="ISPagesTextEdit.cpp">
       <Filter>Widgets</Filter>
     </ClCompile>
-    <ClCompile Include="ISPasswordWidthWidget.cpp">
-      <Filter>Widgets</Filter>
-    </ClCompile>
     <ClCompile Include="ISPrintPreviewDialog.cpp">
       <Filter>Widgets</Filter>
     </ClCompile>
@@ -330,9 +327,6 @@
     <ClCompile Include="ISUserObjectForm.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
-    <ClCompile Include="ISUserPasswordForm.cpp">
-      <Filter>Forms</Filter>
-    </ClCompile>
     <ClCompile Include="ISWorkspaceForm.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
@@ -450,6 +444,9 @@
     <ClCompile Include="ISTcpQuery.cpp">
       <Filter>Protocol</Filter>
     </ClCompile>
+    <ClCompile Include="ISUserHashForm.cpp">
+      <Filter>Forms</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ISExportForm.h">
@@ -528,9 +525,6 @@
       <Filter>Widgets</Filter>
     </QtMoc>
     <QtMoc Include="ISPagesTextEdit.h">
-      <Filter>Widgets</Filter>
-    </QtMoc>
-    <QtMoc Include="ISPasswordWidthWidget.h">
       <Filter>Widgets</Filter>
     </QtMoc>
     <QtMoc Include="ISPrintPreviewDialog.h">
@@ -650,9 +644,6 @@
     <QtMoc Include="ISUserObjectForm.h">
       <Filter>Forms</Filter>
     </QtMoc>
-    <QtMoc Include="ISUserPasswordForm.h">
-      <Filter>Forms</Filter>
-    </QtMoc>
     <QtMoc Include="ISWorkspaceForm.h">
       <Filter>Forms</Filter>
     </QtMoc>
@@ -754,6 +745,9 @@
     </QtMoc>
     <QtMoc Include="ISTcpConnector.h">
       <Filter>Protocol</Filter>
+    </QtMoc>
+    <QtMoc Include="ISUserHashForm.h">
+      <Filter>Forms</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>

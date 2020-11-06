@@ -47,10 +47,7 @@
   <Local Name="AboutForm.Tab.Other.ApplicationDir" Russian="Папка программы"/>
 
   <!--Messages-->
-  <Local Name="Message.Information.CreatedPasswordUser" Russian="Пароль пользователя успешно изменен!"/>
-  <Local Name="Message.Information.ChangePasswordUser" Russian="Пароль пользователя %1 успешно изменен!"/>
   <Local Name="Message.Information.NotSavedObjects" Russian="Есть несохранённые (%1 шт.) записи, сохраните или закройте их для выхода из программы."/>
-  <Local Name="Message.Information.YouPasswordDoneChanged" Russian="Ваш пароль был успешно изменен."/>
   <Local Name="Message.Information.AppliocationWillBeRestart" Russian="Настройки успешно сброшены, рекомендуется перезапустить программу."/>
   <Local Name="Message.Information.FoundNewAppVersion" Russian="Обнаружена новая версия программы. Нажмите ОК, чтобы начать её установку. После успешной установки новой версии программа автоматически запустится."/>
   <Local Name="Message.Error.ConnectionSetting.Input.ServerEmpty" Russian="В настройках подключения к базе данных не указан сервер."/>
@@ -116,7 +113,6 @@
   <Local Name="Message.Error.SelectTaskStatuses" Russian="Не удалось получить статусы задачи!"/>
   <Local Name="Message.Error.UpdateTaskStatus" Russian="Не удалось изменить статус задачи!"/>
   <Local Name="Message.Error.InsertTaskStatusHistory" Russian="Не удалось зафиксировать изменение статуса задачи!"/>
-  <Local Name="Message.Error.CheckExistLogin" Russian="Не удалось проверить наличие логина &quot;%1&quot;."/>
   <Local Name="Message.Error.SetIsDeletedObject" Russian="Не удалось пометить запись на удаление!"/>
   <Local Name="Message.Error.SetNotIsDeletedObject" Russian="Не удалось восстановить запись!"/>
   <Local Name="Message.Error.CascadeDeleteObject" Russian="Не удалось удалить запись!"/>
@@ -125,28 +121,19 @@
   <Local Name="Message.Error.ConvertToTask" Russian="Не удалось преобразовать подзадачу в задачу!"/>
   <Local Name="Message.Error.SelectTask" Russian="Не удалось загрузить информацию о задаче %1!"/>
   <Local Name="Message.Error.PasteImageToTask" Russian="Не удалось прикрепить изображение к задаче!"/>
-  <Local Name="Message.Error.CreateUserRole" Russian="Не удалось создать пользователя!"/>
-  <Local Name="Message.Error.AlterUserRole" Russian="Не удалось переименовать логин пользователя пользователя!"/>
-  <Local Name="Message.Error.SelectCurrentPasswordUser" Russian="Не удалось проверить текущий пароль!"/>
-  <Local Name="Message.Error.ChangePasswordUser" Russian="Не удалось изменить пароль!"/>
-  <Local Name="Message.Error.SelectUserPasswordIsNull" Russian="Не удалось проверить наличие пароля пользователя!"/>
-  <Local Name="Message.Error.ChangePasswordUserHistory" Russian="Не удалось зафиксировать изменение пароля в истории!"/>
-  <Local Name="Message.Error.DeleteUserPassword" Russian="Не удалось удалить пароль пользователя!"/>
   <Local Name="Message.Error.InsertTaskCheckList" Russian="Не удалось добавить элемент чек-листа!"/>
   <Local Name="Message.Error.UpdateTaskCheckList" Russian="Не удалось переименовать элемент чек-листа!"/>
   <Local Name="Message.Error.UpdateDoneTaskCheckList" Russian="Не удалось изменить состояние пункта!"/>
   <Local Name="Message.Error.DeleteTaskCheckList" Russian="Не удалось удалить пункт!"/>
   <Local Name="Message.Error.TaskVote" Russian="Не удалось произвести операцию с голосованием!"/>
   <Local Name="Message.Error.MetaUserSelect" Russian="Не удалось загрузить данные пользователя: %1"/>
-  <Local Name="Message.Error.ThisUserNotFound" Russian="Такого пользователя в базе данных нет!"/>
-  <Local Name="Message.Error.UserPasswordIsNull" Russian="Пароль у пользователя отсутствует."/>
   <Local Name="Message.Error.NotFoundUserWithLogin" Russian="Пользователь с логином &quot;%1&quot; не найден. Убедитесь, что Вы правильно ввели свой логин или обратитесь к системному администратору."/>
+  <Local Name="Message.Error.PasswordsNotEqual" Russian="Пароли не совпадают!"/>
   <Local Name="Message.Object.Delete.Cascade" Russian="Вы действительно хотите удалить выбранный объект каскадом?"/>
   <Local Name="Message.Object.Delete.Cascade.Help" Russian="ВНИМАНИЕ! При каскадном удалении, запись удаляется навсегда без возможности восстановления! Если есть свяанные записи с той, что Вы удаляете, они так же будут удалены из базы навсегда."/>
   <Local Name="Message.Objects.Delete" Russian="Вы действительно хотите пометить на удаление выбранные (%1 шт.) записи?"/>
   <Local Name="Message.Objects.Delete.Cascade" Russian="Вы действительно удалить выбранные (%1 шт.) записи каскадом?"/>
   <Local Name="Message.Objects.Recovery" Russian="Вы действительно хотите восстановить выбранные (%1 шт.) записи?"/>
-  <Local Name="Message.User.ChangePassword.Postgres" Russian="Менять пароль системному пользователю запрещено."/>
   <Local Name="Message.Warning.SystemObject.NotEdit" Russian="Запрещено редактировать системные записи."/>
   <Local Name="Message.Warning.SystemObject.Copy" Russian="Запрещено создавать копии системных записей."/>
   <Local Name="Message.Warning.SystemObject.NotDelete" Russian="Запрещено удалять системные записи."/>
@@ -159,8 +146,6 @@
   <Local Name="Message.Warning.AccountLifetimeEnded" Russian="ВНИМАНИЕ! Срок действия Вашей учётной записи закончился. Обратитесь к администратору системы за подробностями для восстановления доступа."/>
   <Local Name="Message.Warning.NotDeleteCascadeRecord" Russian="Не удалось удалить запись с кодом &quot;%1&quot;."/>
   <Local Name="Message.Warning.NotChangeSystemUserPassword" Russian="Менять пароль для системного пользователя запрещено!"/>
-  <Local Name="Message.Warning.NotValidInputPasswordForChange" Russian="Вы ввели неверный текущий пароль!"/>
-  <Local Name="Message.Warning.PasswordLenghtSmall" Russian="Пароль должен быть не короче %1 символов."/>
   <Local Name="Message.Warning.SearchFieldNotValid" Russian="Поисковое поле &quot;%1&quot; не заполнено."/>
   <Local Name="Message.Warning.NotCreateCalendarEventPast" Russian="Создавать события в прошлом запрещено."/>
   <Local Name="Message.Warning.FailedConnectionToPostgreSQL" Russian="Ошибка подключения к серверу базы данных: %1"/>
@@ -187,17 +172,17 @@
   <Local Name="Message.Warning.NotCopyAlienStorageFiles" Russian="Создавать копии чужих файлов запрещено."/>
   <Local Name="Message.Warning.UserNotLinkedToGroup" Russian="ВНИМАНИЕ! Вы не заполнили поле &quot;Группа&quot;. Пользователи не привязанные к группе не смогут авторизоваться в программе."/>
   <Local Name="Message.Warning.InvalidAccountLifeTimeDatesUser" Russian="ВНИМАНИЕ! Установлен некорректный диапазон даты начала и окончания срока действия учётной записи."/>
-  <Local Name="Message.Warning.NotCreatedUserPassword" Russian="ВНИМАНИЕ! Пользователь без пароля не сможет авторизоваться в программе!"/>
   <Local Name="Message.Warning.TaskWithNumberNotFound" Russian="Задача с номером #%1 не найдена!"/>
   <Local Name="Message.Warning.TaskLinkToByMyself" Russian="Связывание задачи с самой собой запрещено!"/>
   <Local Name="Message.Warning.TaskLinkAlreadyExist" Russian="Связь с выбранной задачей уже существует!"/>
-  <Local Name="Message.Warning.LoginAlreadyExist" Russian="Логин &quot;%1&quot; уже существует в системе, введите другой."/>
   <Local Name="Message.Warning.CurrentTaskHaveSubTasks" Russian="Вы не можете преобразовать эту задачу в подзадачу, т.к. она имеет подзадачи."/>
   <Local Name="Message.Warning.SelectedTaskIsSubTasks" Russian="Выбранная задача является подзадачей!"/>
   <Local Name="Message.Warning.SaveObjectFromContinue" Russian="Сохраните запись для продолжения."/>
   <Local Name="Message.Warning.StartInstallUpdate" Russian="ВНИМАНИЕ! Программа обнаружила обновление, но запустить его установку в автоматическом режиме не удалось. Вы можете установить обновление программы самостоятельно. Путь к установочному файлу:&#10;%1"/>
   <Local Name="Message.Warning.ActiveSettingDatabase" Russian="Не удалось установить активный профиль настроек базы данных."/>
   <Local Name="Message.Warning.NotGettingMetaReport" Russian="Не удалось получить мета-отчёт."/>
+  <Local Name="Message.Warning.OneFieldNotFill" Russian="Одно из полей не заполнено"/>
+  <Local Name="Message.Warning.PasswordMinimumSize" Russian="Минимальная длина пароля должна быть %1 символов."/>
   <Local Name="Message.Question.ChangeUser" Russian="Сменить пользователя?"/>
   <Local Name="Message.Question.ExitApplication" Russian="Вы действительно хотите выйти из программы?"/>
   <Local Name="Message.Question.File.SavedToPath" Russian="Файл успешно сохранен по пути:&#10;%1&#10;Открыть его?"/>
@@ -211,7 +196,6 @@
   <Local Name="Message.Question.ConnectionError.Reconnect" Russian="Не удалось подключиться к базе данных.&#10;Ошибка: %1&#10;&#10;Повторить попытку подключения?"/>
   <Local Name="Message.Question.CancelChanged" Russian="Отменить изменения?"/>
   <Local Name="Message.Question.DeleteCalendarEvent" Russian="Удалить это событие?"/>
-  <Local Name="Message.Question.CreatePasswordUser" Russian="Вы хотите присвоить пароль пользователю %1?"/>
   <Local Name="Message.Question.DeleteSelectedRecord" Russian="Пометить выбранную запись на удаление?"/>
   <Local Name="Message.Question.RecoveryObjectSelected" Russian="Восстановить выбранную запись?"/>
   <Local Name="Message.Question.DeleteThisRecord" Russian="Удалить эту запись?"/>
@@ -236,7 +220,6 @@
   <Local Name="Message.Question.PasteImageToTask" Russian="В буфере обмена обнаружено изображение, прикрепить его к задаче?"/>
   <Local Name="Message.Question.CloseInsetingTaskFile" Russian="Остановить прикрепление файлов к задаче?"/>
   <Local Name="Message.Question.CloseInsetingTaskFile.DetailedText" Russian="Добавлено: %1&#10;Осталось добавить: %2&#10;Всего: %3"/>
-  <Local Name="Message.Question.DeleteUserPassword" Russian="Удалить пароль пользователя?"/>
   <Local Name="Message.Question.TaskCheckListDelete" Russian="Удалить пункт?"/>
 
   <!--DaData-->
@@ -344,16 +327,17 @@
   <Local Name="CalendarCloseEvent" Russian="Завершить событие"/>
   <Local Name="Defer" Russian="Отложить"/>
   <Local Name="SelectDate" Russian="Выберите дату"/>
-  <Local Name="ChangePassword" Russian="Смена пароля"/>
-  <Local Name="DeletePassword" Russian="Удалить пароль"/>
-  <Local Name="CreatingPassword" Russian="Создание пароля"/>
-  <Local Name="ChangingPassword" Russian="Изменение пароля"/>
-  <Local Name="PasswordCheck" Russian="Проверка пароля"/>
-  <Local Name="CurrentPassword" Russian="Текущий пароль"/>
+  <Local Name="PasswordManagement" Russian="Управление паролем"/>
+  <Local Name="UserHashForm.Title.Creating" Russian="Создание логина и пароля"/>
+  <Local Name="UserHashForm.Title.Change" Russian="Изменение логина и пароля"/>
+  <Local Name="UserHashForm.CurrentLogin" Russian="Текущий логин:"/>
+  <Local Name="UserHashForm.CurrentPassword" Russian="Текущий пароль:"/>
+  <Local Name="UserHashForm.Login" Russian="Логин:"/>
+  <Local Name="UserHashForm.Login.Hint" Russian="Логин должен быть на английском языке и в нижнем регистре."/>
+  <Local Name="UserHashForm.Password" Russian="Пароль:"/>
+  <Local Name="UserHashForm.PasswordCheck" Russian="Повторите пароль:"/>
+  <Local Name="UserHashForm.LabelInfo" Russian="ВНИМАНИЕ! Пользователь, которому Вы присваиваете логин и пароль должен хранить его в надежном месте и не забывать."/>
   <Local Name="EnterThePassword" Russian="Введите пароль"/>
-  <Local Name="PasswordsMatch" Russian="Пароли совпадают"/>
-  <Local Name="PasswordsNotMatch" Russian="Пароли не совпадают"/>
-  <Local Name="OneFieldPasswordIsEmpty" Russian="Одно из полей не заполнено"/>
   <Local Name="InputInSystem" Russian="Вход в систему"/>
   <Local Name="InputLoginAndPassword" Russian="Введите логин и пароль"/>
   <Local Name="Add" Russian="Добавить"/>
@@ -395,6 +379,7 @@
   <Local Name="Protocol.Use" Russian="Использовать протокол"/>
   <Local Name="Protocol.Port" Russian="Порт"/>
   <Local Name="TcpConnector.Timeout" Russian="Время на ожидание подключения истекло."/>
+  <Local Name="YouPasswordChangedDone" Russian="Ваш пароль был успешно изменён."/>
 
   <!--MonitorActivity-->
   <Local Name="MonitorActivity.HideOffline" Russian="Скрыть пользователей не в сети"/>
@@ -641,14 +626,6 @@
   <Local Name="File.Filter.Html" Russian="Веб-страница (*.html)"/>
   <Local Name="File.Filter.Xml" Russian="Веб-страница (*.xml)"/>
   <Local Name="File.Filter.File" Russian="Файл (*.%1)"/>
-
-  <!--Password Width-->
-  <Local Name="PasswordWidth" Russian="Сложность пароля"/>
-  <Local Name="PasswordWidth.VeryLow" Russian="очень низкая"/>
-  <Local Name="PasswordWidth.Low" Russian="низкая"/>
-  <Local Name="PasswordWidth.Mean" Russian="средняя"/>
-  <Local Name="PasswordWidth.High" Russian="высокая"/>
-  <Local Name="PasswordWidth.VeryHigh" Russian="очень высокая"/>
 
   <!--Calendar-->
   <Local Name="Date" Russian="Дата"/>

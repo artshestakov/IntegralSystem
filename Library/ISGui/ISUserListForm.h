@@ -17,9 +17,7 @@ protected:
 	void Edit() override;
 
 private:
-	void ChangePassword();
-	void DeletePassword();
-
+	void PasswordManagement();
 	bool CheckThisUser(); //ѕроверка редактировани€ текущего пользовател€
 };
 //-----------------------------------------------------------------------------
