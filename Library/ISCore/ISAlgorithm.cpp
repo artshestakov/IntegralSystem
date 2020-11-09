@@ -64,3 +64,25 @@ QString ISAlgorithm::GetClassName(const char *FunctionName)
 	return Result;
 }
 //-----------------------------------------------------------------------------
+void ISAlgorithm::RemoveBeginSymbolLoop(QString &String, char Char)
+{
+	if (!String.isEmpty())
+	{
+		while (String[0] == Char)
+		{
+			String.remove(0, 1);
+		}
+	}
+}
+//-----------------------------------------------------------------------------
+void ISAlgorithm::RemoveLastSymbolLoop(QString &String, char Char)
+{
+	if (!String.isEmpty())
+	{
+		while (String.back() == Char)
+		{
+			String.chop(1);
+		}
+	}
+}
+//-----------------------------------------------------------------------------

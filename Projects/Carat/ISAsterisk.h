@@ -3,6 +3,7 @@
 #define _ISASTERISK_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "iscore_global.h"
+#include "ISTypedefs.h"
 //-----------------------------------------------------------------------------
 class ISAsterisk : public QThread
 {
@@ -22,10 +23,15 @@ private:
 	void Disconnected(); //Событие отключения от AMI
 	void Error(QAbstractSocket::SocketError socket_error); //Событие ошибки
 	void ReadyRead(); //Событие чтения входящих данных
+	void SendAction(const QString &ActionType, const ISStringMap &StringMap);
+
+	void ActionLogin(); //Авторизация
+
+	void EventSuccessfulAuth(const ISAmiPackage &AMIPackage); //Событие успешной авторизации
 
 private:
+	QString Buffer;
 	QTcpSocket *TcpSocket;
-	QByteArray Buffer;
 
 	QString Host;
 	unsigned short Port;

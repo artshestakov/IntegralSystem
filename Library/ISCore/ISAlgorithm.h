@@ -77,6 +77,18 @@ namespace ISAlgorithm
 	//! \return возвращает имя класса в случае успеха, иначе пустую строку
     ISCORE_EXPORT QString GetClassName(const char *FunctionName);
 
+	//! \Удалить первый символ из строки
+	//! \param String строка, из которой будет происходить удаление символа
+	//! \param Char символ, который будет удаляться из строки
+	//! \return функция ничего не возвращает
+	ISCORE_EXPORT void RemoveBeginSymbolLoop(QString &String, char Char);
+
+	//! \Удалить последний символ из строки
+	//! \param String строка, из которой будет происходить удаление символа
+	//! \param Char символ, который будет удаляться из строки
+	//! \return функция ничего не возвращает
+	ISCORE_EXPORT void RemoveLastSymbolLoop(QString &String, char Char);
+
 	//Поиск значения в векторе
     template <typename T> bool VectorContains(const std::vector<T> &Vector, T Value)
     {

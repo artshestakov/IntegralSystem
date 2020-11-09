@@ -1,7 +1,7 @@
 #include "ISUserPhotoCreator.h"
 #include "ISDefinesGui.h"
 #include "ISRandom.h"
-#include "ISSystem.h"
+#include "ISAlgorithm.h"
 #include "ISConstants.h"
 //-----------------------------------------------------------------------------
 ISUserPhotoCreator::ISUserPhotoCreator()
@@ -37,14 +37,14 @@ QPixmap ISUserPhotoCreator::Create(const QString &FIO)
 	QString Fio = FIO;
 	if (!Fio.isEmpty())
 	{
-		ISSystem::RemoveBeginSymbolLoop(Fio, SYMBOL_SPACE);
-		ISSystem::RemoveLastSymbolLoop(Fio, SYMBOL_SPACE);
+		ISAlgorithm::RemoveBeginSymbolLoop(Fio, SYMBOL_SPACE);
+		ISAlgorithm::RemoveLastSymbolLoop(Fio, SYMBOL_SPACE);
 		QStringList StringList = Fio.split(SYMBOL_SPACE);
 		for (int i = 0, c = StringList.size(); i < c; ++i)
 		{
 			QString String = StringList[i];
-			ISSystem::RemoveBeginSymbolLoop(String, SYMBOL_SPACE);
-			ISSystem::RemoveLastSymbolLoop(String, SYMBOL_SPACE);
+			ISAlgorithm::RemoveBeginSymbolLoop(String, SYMBOL_SPACE);
+			ISAlgorithm::RemoveLastSymbolLoop(String, SYMBOL_SPACE);
 			StringList[i] = String;
 		}
 		StringList.removeAll(QString());

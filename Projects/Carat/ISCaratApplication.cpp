@@ -333,7 +333,7 @@ void ISCaratApplication::SendCommand(const QByteArray &ByteArray)
 		if (TcpSocket.bytesAvailable() > 0) //Дождались ответа - выводим в консоль и выходим из функции
 		{
 			QString Answer = TcpSocket.readAll();
-			ISSystem::RemoveLastSymbolLoop(Answer, '\n');
+			ISAlgorithm::RemoveLastSymbolLoop(Answer, '\n');
 			ISDEBUG_L("Answer: " + Answer);
 			break;
 		}

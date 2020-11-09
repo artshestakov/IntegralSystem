@@ -97,7 +97,7 @@ QString ISCore::GetObjectName(PMetaTable *MetaTable, int ObjectID)
 	}
 
 	//Удаляем возможные пробелы в конце имени объекта
-	ISSystem::RemoveLastSymbolLoop(ObjectName, SYMBOL_SPACE);
+	ISAlgorithm::RemoveLastSymbolLoop(ObjectName, SYMBOL_SPACE);
 	return ObjectName;
 }
 //-----------------------------------------------------------------------------

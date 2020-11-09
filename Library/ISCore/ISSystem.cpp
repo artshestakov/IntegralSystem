@@ -63,28 +63,6 @@ void ISSystem::ClearDirRecursive(const QString &DirPath)
 	Dir.rmdir(DirPath);
 }
 //-----------------------------------------------------------------------------
-void ISSystem::RemoveBeginSymbolLoop(QString &String, char Char)
-{
-	if (!String.isEmpty())
-	{
-		while (String.front() == Char)
-		{
-			String.remove(0, 1);
-		}
-	}
-}
-//-----------------------------------------------------------------------------
-void ISSystem::RemoveLastSymbolLoop(QString &String, char Char)
-{
-	if (!String.isEmpty())
-	{
-		while (String.back() == Char)
-		{
-			String.chop(1);
-		}
-	}
-}
-//-----------------------------------------------------------------------------
 ISUuid ISSystem::GenerateUuid()
 {
 	return QUuid::createUuid();
