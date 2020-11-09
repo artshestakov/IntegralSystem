@@ -84,7 +84,6 @@ void ISAsterisk::ReadyRead()
 	//Читаем данные из сокета
 	Buffer.push_back(TcpSocket->readAll());
 
-	//Разделяем данные на отдельные пакеты
 	int Pos = 0;
 	while ((Pos = Buffer.indexOf(ASTERISK_AMI_SEPARATOR, 0)) != -1)
 	{
@@ -95,7 +94,7 @@ void ISAsterisk::ReadyRead()
 		//Обрабатываем пакет
 		ISAmiPackage AMIPackage;
 		QString PackageType, //Тип пакета
-			PackageTypeValue; //Значение типа пакета
+			PackageName; //Значение типа пакета
 		QStringList PackageList = PackageString.split("\r\n");
 		for (int i = 0, c = PackageList.size(); i < c; ++i)
 		{
@@ -116,13 +115,13 @@ void ISAsterisk::ReadyRead()
 			if (!i)
 			{
 				PackageType = StringLeft;
-				PackageTypeValue = StringRight;
+				PackageName = StringRight;
 			}
 		}
 
 		if (PackageType == "Event")
 		{
-			if (PackageTypeValue == "SuccessfulAuth")
+			if (PackageName == "SuccessfulAuth")
 			{
 				EventSuccessfulAuth(AMIPackage);
 			}
