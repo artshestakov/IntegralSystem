@@ -512,10 +512,7 @@ void ISGui::ShowUserPasswordForm(unsigned int UserID, const QString &UserFIO)
 	SetWaitGlobalCursor(true);
 	ISUserHashForm UserPasswordForm(UserID, UserFIO);
 	SetWaitGlobalCursor(false);
-	if (UserPasswordForm.Exec())
-	{
-		ISPopupMessage::ShowNotification(LANG("YouPasswordChangedDone"));
-	}
+	UserPasswordForm.Exec();
 }
 //-----------------------------------------------------------------------------
 void ISGui::ShowSystemInfoRecord(PMetaTable *MetaTable, int ObjectID)

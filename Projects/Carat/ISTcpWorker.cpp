@@ -995,6 +995,12 @@ bool ISTcpWorker::LoginRegister(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer
 	//Если старый хэш указан - проверяем его наличие
 	if (HashOld.isValid())
 	{
+		if (HashOld.toString() == Hash.toString()) //Если старый и новый хэши равны - значит пользователь меняет старый логин и пароль на такие же - считаем ошибкой
+		{
+			ErrorString = LANG("Carat.Error.Query.LoginRegister.OldHashAndNewHashEqual");
+			return false;
+		}
+
 		qSelectHash.BindValue(":Hash", HashOld);
 		if (!qSelectHash.Execute()) //Ошибка запроса
 		{
@@ -1006,9 +1012,9 @@ bool ISTcpWorker::LoginRegister(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer
 			ErrorString = qSelectHash.GetErrorString();
 			return false;
 		}
-		if (!qSelectHash.ReadColumn("exist").toBool()) //Если такого логина не существует - значит пользователь ввел текущие логин или пароль неправильно
+		if (!qSelectHash.ReadColumn("exist").toBool()) //Не нашли хэш по текущему логину и паролю - значит пользователь ввел неправильные логин и пароль
 		{
-			ErrorString = LANG("Carat.Error.Query.LoginRegister.InvalidHash");
+			ErrorString = LANG("Carat.Error.Query.LoginRegister.InvalidCurrentHash");
 			return false;
 		}
 	}
@@ -1032,6 +1038,7 @@ bool ISTcpWorker::LoginRegister(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer
 		return false;
 	}
 
+	//Обновляем хэш
 	ISQuery qUpdateHash(ISDatabase::Instance().GetDB(DBConnectionName), QU_USER_HASH);
 	qUpdateHash.BindValue(":Hash", Hash);
 	qUpdateHash.BindValue(":UserID", UserID);

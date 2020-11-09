@@ -8,6 +8,7 @@
 #include "ISGui.h"
 #include "ISControls.h"
 #include "ISTcpQuery.h"
+#include "ISPopupMessage.h"
 //-----------------------------------------------------------------------------
 ISUserHashForm::ISUserHashForm(unsigned int user_id, const QString &user_fio)
 	: ISInterfaceDialogForm(),
@@ -130,6 +131,7 @@ void ISUserHashForm::Apply()
 	qRegister.BindValue("UserID", UserID);
 	if (qRegister.Execute())
 	{
+		ISPopupMessage::ShowNotification(LANG("PasswordChangedDone"));
 		SetResult(true);
 		close();
 	}

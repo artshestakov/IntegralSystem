@@ -379,7 +379,7 @@
   <Local Name="Protocol.Use" Russian="Использовать протокол"/>
   <Local Name="Protocol.Port" Russian="Порт"/>
   <Local Name="TcpConnector.Timeout" Russian="Время на ожидание подключения истекло."/>
-  <Local Name="YouPasswordChangedDone" Russian="Ваш пароль был успешно изменён."/>
+  <Local Name="PasswordChangedDone" Russian="Пароль был успешно изменён."/>
 
   <!--MonitorActivity-->
   <Local Name="MonitorActivity.HideOffline" Russian="Скрыть пользователей не в сети"/>

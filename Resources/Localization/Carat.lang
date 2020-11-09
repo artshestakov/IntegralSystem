@@ -45,8 +45,9 @@
 
   <Local Name="Carat.Error.Query.LoginExist.Exist" Russian="Не удалось проверить наличие логина: %1"/>
 
+  <Local Name="Carat.Error.Query.LoginRegister.OldHashAndNewHashEqual" Russian="Новый пароль должен отличаться от текущего."/>
   <Local Name="Carat.Error.Query.LoginRegister.CheckExistHash" Russian="Не удалось проверить наличие такого логина в системе: %1"/>
-  <Local Name="Carat.Error.Query.LoginRegister.InvalidHash" Russian="Неверные логин или пароль."/>
+  <Local Name="Carat.Error.Query.LoginRegister.InvalidCurrentHash" Russian="Текущие логин и пароль указаны неверно."/>
   <Local Name="Carat.Error.Query.LoginRegister.HashAlreadyExist" Russian="Такой логин уже существует в системе."/>
   <Local Name="Carat.Error.Query.LoginRegister.UserNotExist" Russian="Пользователя с идентификатором &quot;%1&quot; не существует."/>
   <Local Name="Carat.Error.Query.LoginRegister.UpdateHash" Russian="Не удалось установить логин и пароль: %1"/>
