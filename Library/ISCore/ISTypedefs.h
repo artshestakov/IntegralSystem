@@ -19,7 +19,6 @@ typedef std::vector<ISUuid> ISVectorUID;
 typedef std::vector<QVariant> ISVectorVariant;
 typedef std::vector<QByteArray> ISVectorByteArray;
 typedef std::vector<QVariantMap> ISVectorMap;
-typedef std::vector<std::pair<QString, QString>> ISAmiPackage;
 typedef std::chrono::time_point<std::chrono::steady_clock> ISTimePoint;
 //-----------------------------------------------------------------------------
 #endif

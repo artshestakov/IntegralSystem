@@ -71,11 +71,11 @@ bool ISQuery::Execute()
 	ISTimePoint TimePoint = ISAlgorithm::GetTick();
     bool Result = SqlQuery.exec();
 	long long Msec = ISAlgorithm::GetTickDiff(ISAlgorithm::GetTick(), TimePoint);
-    if (ShowLongQuery)
+	if (ShowLongQuery)
     {
-        if (Msec > MAX_QUERY_TIME)
+		if (Msec > MAX_QUERY_TIME)
         {
-            ISLOGGER_W(__CLASS__, QString("Long query msec: %1. %2").arg(Msec).arg(SqlQuery.lastQuery().simplified()));
+			ISLOGGER_W(__CLASS__, QString("Long query msec: %1. %2").arg(Msec).arg(SqlQuery.lastQuery().simplified()));
         }
     }
 
@@ -155,7 +155,9 @@ bool ISQuery::ExecuteFirst(QSqlDatabase &sql_database, const QString &sql_text)
 //-----------------------------------------------------------------------------
 bool ISQuery::BindValue(const QString &ParameterName, const QVariant &ParameterValue)
 {
+#ifdef DEBUG
     IS_ASSERT(SqlQuery.boundValues().contains(ParameterName), QString("Parameter \"%1\" not found in sql-query: %2").arg(ParameterName).arg(SqlText));
+#endif
     SqlQuery.bindValue(ParameterName, ParameterValue);
     return true;
 }
@@ -168,7 +170,9 @@ QVariant ISQuery::ReadColumn(const QString &name)
     }
 
     ISStringToIntMap::const_iterator Iterator = ColumnIndices.find(name.toLower());
+#ifdef DEBUG
     IS_ASSERT(Iterator != ColumnIndices.end(), QString("Column \"%1\" not found in sql-query: %2").arg(name).arg(SqlText));
+#endif
     return ReadColumn(Iterator->second);
 }
 //-----------------------------------------------------------------------------
@@ -255,7 +259,9 @@ int ISQuery::GetErrorNumber() const
 //-----------------------------------------------------------------------------
 int ISQuery::GetCountResultRows() const
 {
+#ifdef DEBUG
     IS_ASSERT(SqlQuery.isSelect(), "Query not select");
+#endif
     return SqlQuery.size();
 }
 //-----------------------------------------------------------------------------

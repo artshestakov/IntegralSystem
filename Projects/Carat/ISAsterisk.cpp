@@ -4,10 +4,53 @@
 #include "ISAlgorithm.h"
 #include "ISDebug.h"
 #include "ISTcp.h"
+#include "ISConstants.h"
+#include "ISDatabase.h"
+#include "ISTrace.h"
+//-----------------------------------------------------------------------------
+static QString QI_ASTERISK_CALLS = PREPARE_QUERY("INSERT INTO _asteriskcalls("
+	"ascl_accountcode, "
+	"ascl_source, "
+	"ascl_destination, "
+	"ascl_destinationcontext, "
+	"ascl_callerid, "
+	"ascl_channel, "
+	"ascl_destinationchannel, "
+	"ascl_lastapplication, "
+	"ascl_lastdata, "
+	"ascl_starttime, "
+	"ascl_answertime, "
+	"ascl_endtime, "
+	"ascl_duration, "
+	"ascl_billableseconds, "
+	"ascl_disposition, "
+	"ascl_amaflag, "
+	"ascl_uniqueid, "
+	"ascl_userfield) "
+	"VALUES("
+	":AccountCode, "
+	":Source, "
+	":Destination, "
+	":DestinationContext, "
+	":CallerID, "
+	":Channel, "
+	":DestinationChannel, "
+	":LastApplication, "
+	":LastData, "
+	"to_timestamp(:StartTime, 'YYYY-MM-DD HH24:MI-SS'), "
+	"to_timestamp(:AnswerTime, 'YYYY-MM-DD HH24:MI-SS'), "
+	"to_timestamp(:EndTime, 'YYYY-MM-DD HH24:MI-SS'), "
+	"COALESCE(:Duration, 0), "
+	"COALESCE(:BillableSeconds, 0), "
+	"(SELECT dstp_id FROM _dispositiontype WHERE dstp_name = :Disposition), "
+	"COALESCE(:AMAFlag, (SELECT amaf_id FROM _amaflagtype WHERE amaf_name = :AMAFlag)), "
+	":UniqueID, "
+	":UserField)");
 //-----------------------------------------------------------------------------
 ISAsterisk::ISAsterisk(QObject *parent)
 	: QThread(parent),
-	Port(0)
+	Port(0),
+	qInsert(nullptr)
 {
 
 }
@@ -53,6 +96,16 @@ bool ISAsterisk::Start()
 //-----------------------------------------------------------------------------
 void ISAsterisk::run()
 {
+	if (ISDatabase::Instance().Connect(CONNECTION_ASTERISK, CONFIG_STRING(CONST_CONFIG_CONNECTION_SERVER), CONFIG_INT(CONST_CONFIG_CONNECTION_PORT), CONFIG_STRING(CONST_CONFIG_CONNECTION_DATABASE),
+		CONFIG_STRING(CONST_CONFIG_CONNECTION_LOGIN), CONFIG_STRING(CONST_CONFIG_CONNECTION_PASSWORD)))
+	{
+		qInsert = new ISQuery(ISDatabase::Instance().GetDB(CONNECTION_ASTERISK), QI_ASTERISK_CALLS);
+	}
+	else
+	{
+		ISLOGGER_E(__CLASS__, "Not connected to database: " + ISDatabase::Instance().GetErrorString());
+	}
+
 	TcpSocket = new QTcpSocket();
 	connect(TcpSocket, &QTcpSocket::connected, this, &ISAsterisk::Connected, Qt::DirectConnection);
 	connect(TcpSocket, &QTcpSocket::disconnected, this, &ISAsterisk::Disconnected, Qt::DirectConnection);
@@ -92,7 +145,7 @@ void ISAsterisk::ReadyRead()
 		Buffer.remove(0, Pos + 4);
 
 		//Обрабатываем пакет
-		ISAmiPackage AMIPackage;
+		ISStringMap AMIPackage;
 		QString PackageType, //Тип пакета
 			PackageName; //Значение типа пакета
 		QStringList PackageList = PackageString.split("\r\n");
@@ -105,11 +158,11 @@ void ISAsterisk::ReadyRead()
 			}
 
 			//Разделяем строку и добавляем её в вектор пакета
-			QStringList LineList = Line.split(':');
-			QString StringLeft = LineList.front(),
-				StringRight = LineList.back();
+			Pos = Line.indexOf(':', 0);
+			QString StringLeft = Line.mid(0, Pos),
+				StringRight = Line.mid(Pos + 1, Line.size() - Pos - 1);
 			ISAlgorithm::RemoveBeginSymbolLoop(StringRight, SYMBOL_SPACE);
-			AMIPackage.emplace_back(std::make_pair(StringLeft, StringRight));
+			AMIPackage.emplace(StringLeft, StringRight);
 
 			//Если сейчас первая строка - вытаскиваем тип пакета
 			if (!i)
@@ -121,9 +174,9 @@ void ISAsterisk::ReadyRead()
 
 		if (PackageType == "Event")
 		{
-			if (PackageName == "SuccessfulAuth")
+			if (PackageName == "Cdr")
 			{
-				EventSuccessfulAuth(AMIPackage);
+				EventCDR(AMIPackage);
 			}
 		}
 	}
@@ -147,6 +200,16 @@ void ISAsterisk::SendAction(const QString &ActionType, const ISStringMap &String
 	ISLOGGER_I(__CLASS__, "Sended");
 }
 //-----------------------------------------------------------------------------
+const QString ISAsterisk::ExtractOfPackage(const ISStringMap &AMIPackage, const QString &Key) const
+{
+	ISStringMap::const_iterator It = AMIPackage.find(Key);
+	if (It == AMIPackage.end())
+	{
+		return QString();
+	}
+	return It->second;
+}
+//-----------------------------------------------------------------------------
 void ISAsterisk::ActionLogin()
 {
 	SendAction("Login", ISStringMap
@@ -156,8 +219,53 @@ void ISAsterisk::ActionLogin()
 	});
 }
 //-----------------------------------------------------------------------------
-void ISAsterisk::EventSuccessfulAuth(const ISAmiPackage &AMIPackage)
+void ISAsterisk::EventCDR(const ISStringMap &AMIPackage)
 {
-	ISLOGGER_I(__CLASS__, "Successful auth");
+	ISTRACE();
+	QString AccountCode = ExtractOfPackage(AMIPackage, "AccountCode");
+	QString Source = ExtractOfPackage(AMIPackage, "Source");
+	QString Destination = ExtractOfPackage(AMIPackage, "Destination");
+	QString DestinationContext = ExtractOfPackage(AMIPackage, "DestinationContext");
+	QString CallerID = ExtractOfPackage(AMIPackage, "CallerID");
+	QString Channel = ExtractOfPackage(AMIPackage, "Channel");
+	QString DestinationChannel = ExtractOfPackage(AMIPackage, "DestinationChannel");
+	QString LastApplication = ExtractOfPackage(AMIPackage, "LastApplication");
+	QString LastData = ExtractOfPackage(AMIPackage, "LastData");
+	QString StartTime = ExtractOfPackage(AMIPackage, "StartTime");
+	QString AnswerTime = ExtractOfPackage(AMIPackage, "AnswerTime");
+	QString EndTime = ExtractOfPackage(AMIPackage, "EndTime");
+	QString Duration = ExtractOfPackage(AMIPackage, "Duration");
+	QString BillableSeconds = ExtractOfPackage(AMIPackage, "BillableSeconds");
+	QString Disposition = ExtractOfPackage(AMIPackage, "Disposition");
+	QString AMAFlag = ExtractOfPackage(AMIPackage, "AMAFlag");
+	QString UniqueID = ExtractOfPackage(AMIPackage, "UniqueID");
+	QString UserField = ExtractOfPackage(AMIPackage, "UserField");
+
+	qInsert->BindValue(":AccountCode", AccountCode.isEmpty() ? QVariant() : AccountCode);
+	qInsert->BindValue(":Source", Source);
+	qInsert->BindValue(":Destination", Destination);
+	qInsert->BindValue(":DestinationContext", DestinationContext);
+	qInsert->BindValue(":CallerID", CallerID);
+	qInsert->BindValue(":Channel", Channel);
+	qInsert->BindValue(":DestinationChannel", DestinationChannel);
+	qInsert->BindValue(":LastApplication", LastApplication);
+	qInsert->BindValue(":LastData", LastData);
+	qInsert->BindValue(":StartTime", StartTime);
+	qInsert->BindValue(":AnswerTime", AnswerTime.isEmpty() ? QVariant() : AnswerTime);
+	qInsert->BindValue(":EndTime", EndTime);
+	qInsert->BindValue(":Duration", Duration);
+	qInsert->BindValue(":BillableSeconds", BillableSeconds);
+	qInsert->BindValue(":Disposition", Disposition);
+	qInsert->BindValue(":AMAFlag", AMAFlag);
+	qInsert->BindValue(":UniqueID", UniqueID);
+	qInsert->BindValue(":UserField", UserField.isEmpty() ? QVariant() : UserField);
+	if (qInsert->Execute())
+	{
+		ISLOGGER_I(__CLASS__, "New call " + UniqueID);
+	}
+	else
+	{
+		ISLOGGER_E(__CLASS__, "Not inserted call: " + qInsert->GetErrorString());
+	}
 }
 //-----------------------------------------------------------------------------

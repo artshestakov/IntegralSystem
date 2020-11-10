@@ -4,6 +4,7 @@
 //-----------------------------------------------------------------------------
 #include "iscore_global.h"
 #include "ISTypedefs.h"
+#include "ISQuery.h"
 //-----------------------------------------------------------------------------
 class ISAsterisk : public QThread
 {
@@ -24,10 +25,11 @@ private:
 	void Error(QAbstractSocket::SocketError socket_error); //Событие ошибки
 	void ReadyRead(); //Событие чтения входящих данных
 	void SendAction(const QString &ActionType, const ISStringMap &StringMap);
+	const QString ExtractOfPackage(const ISStringMap &AMIPackage, const QString &Key) const;
 
 	void ActionLogin(); //Авторизация
 
-	void EventSuccessfulAuth(const ISAmiPackage &AMIPackage); //Событие успешной авторизации
+	void EventCDR(const ISStringMap &AMIPackage); //Событие статистики
 
 private:
 	QString Buffer;
@@ -37,6 +39,8 @@ private:
 	unsigned short Port;
 	QString Login;
 	QString Password;
+
+	ISQuery *qInsert;
 };
 //-----------------------------------------------------------------------------
 #endif
