@@ -656,30 +656,6 @@ void ISMetaData::InitializeXSNTableSystemFields(PMetaTable *MetaTable)
 
 	PMetaField *FieldUID = MetaTable->GetField("UID");
 	FieldUID->Index = new PMetaIndex(true, MetaTable->Alias, MetaTable->Name, FieldUID->Name);
-
-	PMetaField *FieldIsDeleted = MetaTable->GetField("IsDeleted");
-	FieldIsDeleted->Index = new PMetaIndex(false, MetaTable->Alias, MetaTable->Name, FieldIsDeleted->Name);
-
-	PMetaField *FieldIsSystem = MetaTable->GetField("IsSystem");
-	FieldIsSystem->Index = new PMetaIndex(false, MetaTable->Alias, MetaTable->Name, FieldIsSystem->Name);
-
-	PMetaField *FieldCreationDate = MetaTable->GetField("CreationDate");
-	FieldCreationDate->Index = new PMetaIndex(false, MetaTable->Alias, MetaTable->Name, FieldCreationDate->Name);
-
-	PMetaField *FieldUpdationDate = MetaTable->GetField("UpdationDate");
-	FieldUpdationDate->Index = new PMetaIndex(false, MetaTable->Alias, MetaTable->Name, FieldUpdationDate->Name);
-
-	PMetaField *FieldDeletionDate = MetaTable->GetField("DeletionDate");
-	FieldDeletionDate->Index = new PMetaIndex(false, MetaTable->Alias, MetaTable->Name, FieldDeletionDate->Name);
-
-	PMetaField *FieldCreationUser = MetaTable->GetField("CreationUser");
-	FieldCreationUser->Index = new PMetaIndex(false, MetaTable->Alias, MetaTable->Name, FieldCreationUser->Name);
-
-	PMetaField *FieldUpdationUser = MetaTable->GetField("UpdationUser");
-	FieldUpdationUser->Index = new PMetaIndex(false, MetaTable->Alias, MetaTable->Name, FieldUpdationUser->Name);
-
-	PMetaField *FieldDeletionUser = MetaTable->GetField("DeletionUser");
-	FieldDeletionUser->Index = new PMetaIndex(false, MetaTable->Alias, MetaTable->Name, FieldDeletionUser->Name);
 }
 //-----------------------------------------------------------------------------
 bool ISMetaData::InitializeXSNTableSystemFieldsVisible(PMetaTable *MetaTable, const QDomNode &DomNode)
