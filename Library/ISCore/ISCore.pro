@@ -28,12 +28,11 @@ HEADERS += \
     ISAssert.h \
     ISAuthConnector.h \
     ISConfig.h \
+    ISConsole.h \
     ISConstants.h \
     ISCore.h \
     ISDebug.h \
     ISTcp.h \
-    ISTcpConnector.h \
-    ISTcpQuery.h \
     iscore_global.h \
     ISDatabase.h \
     ISLocalization.h \
@@ -69,6 +68,7 @@ SOURCES += \
     ISAssert.cpp \
     ISAuthConnector.cpp \
     ISConfig.cpp \
+    ISConsole.cpp \
     ISCore.cpp \
     ISDatabase.cpp \
     ISDebug.cpp \
@@ -91,8 +91,6 @@ SOURCES += \
     ISSettingsDatabase.cpp \
     ISSystem.cpp \
     ISTcp.cpp \
-    ISTcpConnector.cpp \
-    ISTcpQuery.cpp \
     ISTrace.cpp \
     ISUuid.cpp \
     ISVersion.cpp \
