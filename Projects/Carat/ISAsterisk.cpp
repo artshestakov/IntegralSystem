@@ -49,6 +49,8 @@ static QString QI_ASTERISK_CALLS = PREPARE_QUERY("INSERT INTO _asteriskcalls("
 //-----------------------------------------------------------------------------
 ISAsterisk::ISAsterisk(QObject *parent)
 	: QThread(parent),
+	Pos(0),
+	IsFirstPackage(true),
 	Port(0),
 	qInsert(nullptr)
 {
@@ -108,28 +110,42 @@ void ISAsterisk::run()
 
 	TcpSocket = new QTcpSocket();
 	connect(TcpSocket, &QTcpSocket::connected, this, &ISAsterisk::Connected, Qt::DirectConnection);
-	connect(TcpSocket, &QTcpSocket::disconnected, this, &ISAsterisk::Disconnected, Qt::DirectConnection);
+	connect(TcpSocket, &QTcpSocket::disconnected, this, &ISAsterisk::Connect, Qt::DirectConnection);
 	connect(TcpSocket, static_cast<void(QTcpSocket::*)(QAbstractSocket::SocketError)>(&QTcpSocket::error), this, &ISAsterisk::Error, Qt::DirectConnection);
 	connect(TcpSocket, &QTcpSocket::readyRead, this, &ISAsterisk::ReadyRead, Qt::DirectConnection);
-	TcpSocket->connectToHost(Host, Port);
+	Connect();
 	exec();
+}
+//-----------------------------------------------------------------------------
+void ISAsterisk::Connect()
+{
+	ISLOGGER_I(__CLASS__, "Connecting...");
+	TcpSocket->connectToHost(Host, Port, QIODevice::ReadWrite, QAbstractSocket::IPv4Protocol);
 }
 //-----------------------------------------------------------------------------
 void ISAsterisk::Connected()
 {
 	ISLOGGER_I(__CLASS__, "Connected");
+	//ISSleep(1000);
 	ActionLogin();
 }
 //-----------------------------------------------------------------------------
 void ISAsterisk::Disconnected()
 {
-
+	
 }
 //-----------------------------------------------------------------------------
 void ISAsterisk::Error(QAbstractSocket::SocketError socket_error)
 {
-	Q_UNUSED(socket_error);
 	ISLOGGER_E(__CLASS__, TcpSocket->errorString());
+	if (socket_error == QAbstractSocket::ConnectionRefusedError) //Изначально не смогли подключиться, поэтому пытаемся подключиться ещё раз
+	{
+		Connect();
+	}
+	else if (socket_error == QAbstractSocket::RemoteHostClosedError) //Обрыв соединения не по нашей вине - ждёт пять секунд (дальше Connect сам вызовется по событию disconnected)
+	{
+		ISSleep(5000);
+	}
 }
 //-----------------------------------------------------------------------------
 void ISAsterisk::ReadyRead()
@@ -137,7 +153,17 @@ void ISAsterisk::ReadyRead()
 	//Читаем данные из сокета
 	Buffer.push_back(TcpSocket->readAll());
 
-	int Pos = 0;
+	//Если это первый пакет - удаляем приветственное сообщение от AMI
+	if (IsFirstPackage)
+	{
+		Pos = Buffer.indexOf("\r\n");
+		if (Pos != -1)
+		{
+			Buffer.remove(0, Pos + 2);
+		}
+		IsFirstPackage = false;
+	}
+
 	while ((Pos = Buffer.indexOf(ASTERISK_AMI_SEPARATOR, 0)) != -1)
 	{
 		//Вытаскиваем пакет из буфера
@@ -149,7 +175,7 @@ void ISAsterisk::ReadyRead()
 		QString PackageType, //Тип пакета
 			PackageName; //Значение типа пакета
 		QStringList PackageList = PackageString.split("\r\n");
-		for (int i = 0, c = PackageList.size(); i < c; ++i)
+		for (int i = 0, c = PackageList.size(); i < c; ++i) //Обходим все строки пакета
 		{
 			QString Line = PackageList[i]; //Получаем текущую строку пакета
 			if (!Line.contains(':')) //Если в строке нет разделителя - идём дальше
@@ -164,19 +190,26 @@ void ISAsterisk::ReadyRead()
 			ISAlgorithm::RemoveBeginSymbolLoop(StringRight, SYMBOL_SPACE);
 			AMIPackage.emplace(StringLeft, StringRight);
 
-			//Если сейчас первая строка - вытаскиваем тип пакета
-			if (!i)
+			if (!i) //Если сейчас первая строка - вытаскиваем тип пакета
 			{
 				PackageType = StringLeft;
 				PackageName = StringRight;
 			}
 		}
 
-		if (PackageType == "Event")
+		if (PackageType == "Event") //Если пакет является событием
 		{
-			if (PackageName == "Cdr")
+			if (PackageName == "Cdr") //Событие статистики
 			{
 				EventCDR(AMIPackage);
+			}
+		}
+		else if (PackageType == "Response") //Пакет является ответом на запрос
+		{
+			QString ActionID = ExtractOfPackage(AMIPackage, "ActionID");
+			if (ActionID == "Login") //Ответ на авторизацию
+			{
+				ResponseLogin(AMIPackage);
 			}
 		}
 	}
@@ -197,7 +230,6 @@ void ISAsterisk::SendAction(const QString &ActionType, const ISStringMap &String
 	ISLOGGER_I(__CLASS__, "Sending action \"" + ActionType + "\"");
 	TcpSocket->write(Content);
 	ISTcp::WaitForBytesWritten(TcpSocket);
-	ISLOGGER_I(__CLASS__, "Sended");
 }
 //-----------------------------------------------------------------------------
 const QString ISAsterisk::ExtractOfPackage(const ISStringMap &AMIPackage, const QString &Key) const
@@ -214,14 +246,20 @@ void ISAsterisk::ActionLogin()
 {
 	SendAction("Login", ISStringMap
 	{
+		{ "ActionID", "Login" },
 		{ "Username", Login },
 		{ "Secret", Password }
 	});
 }
 //-----------------------------------------------------------------------------
+void ISAsterisk::ResponseLogin(const ISStringMap &AMIPackage)
+{
+	QString Message = "Response action \"Login\": " + ExtractOfPackage(AMIPackage, "Message");
+	ExtractOfPackage(AMIPackage, "Response") == "Success" ? ISLOGGER_I(__CLASS__, Message) : ISLOGGER_E(__CLASS__, Message);
+}
+//-----------------------------------------------------------------------------
 void ISAsterisk::EventCDR(const ISStringMap &AMIPackage)
 {
-	ISTRACE();
 	QString AccountCode = ExtractOfPackage(AMIPackage, "AccountCode");
 	QString Source = ExtractOfPackage(AMIPackage, "Source");
 	QString Destination = ExtractOfPackage(AMIPackage, "Destination");

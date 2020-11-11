@@ -20,6 +20,7 @@ protected:
 	void run() override;
 
 private:
+	void Connect();
 	void Connected(); //Событие подключения к AMI
 	void Disconnected(); //Событие отключения от AMI
 	void Error(QAbstractSocket::SocketError socket_error); //Событие ошибки
@@ -29,10 +30,14 @@ private:
 
 	void ActionLogin(); //Авторизация
 
+	void ResponseLogin(const ISStringMap &AMIPackage);
+
 	void EventCDR(const ISStringMap &AMIPackage); //Событие статистики
 
 private:
 	QString Buffer;
+	int Pos;
+	bool IsFirstPackage;
 	QTcpSocket *TcpSocket;
 
 	QString Host;
