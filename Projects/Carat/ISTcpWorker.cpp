@@ -111,6 +111,10 @@ static QString QU_USER_HASH = PREPARE_QUERY("UPDATE _users SET "
 											"usrs_hash = :Hash "
 											"WHERE usrs_id = :UserID");
 //-----------------------------------------------------------------------------
+static QString QS_ASTERISK_RECORD = PREPARE_QUERY("SELECT ascl_uniqueid "
+												  "FROM _asteriskcalls "
+												  "WHERE ascl_id = :RecordID");
+//-----------------------------------------------------------------------------
 ISTcpWorker::ISTcpWorker(const QString &db_host, int db_port, const QString &db_name, const QString &db_user, const QString &db_password, const ISConfigurationInfo &configuration_info)
 	: QObject(),
 	ErrorString(NO_ERROR_STRING),
@@ -247,6 +251,7 @@ void ISTcpWorker::Process()
 					case ISNamespace::AMT_GetLastClient: Result = GetLastClient(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_LoginExist: Result = LoginExist(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_LoginRegister: Result = LoginRegister(tcp_message, TcpAnswer); break;
+					case ISNamespace::AMI_GetRecordCall: Result = GetRecordCall(tcp_message, TcpAnswer); break;
 					}
 					PerfomanceMsec = ISAlgorithm::GetTickDiff(ISAlgorithm::GetTick(), TimePoint);
 				}
@@ -890,6 +895,7 @@ bool ISTcpWorker::GetLastClient(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer
 {
 	Q_UNUSED(TcpMessage);
 
+	//Получаем директорию с дистрибутивами
 	QString UpdateClientDir = CONFIG_STRING(CONST_CONFIG_OTHER_UPDATE_CLIENT_DIR);
 	if (UpdateClientDir.isEmpty())
 	{
@@ -1055,6 +1061,56 @@ bool ISTcpWorker::LoginRegister(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer
 		ErrorString = LANG("Carat.Error.Query.LoginRegister.UpdateHash").arg(qUpdateHash.GetErrorString());
 		return false;
 	}
+	return true;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::GetRecordCall(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+	//Получаем директорию с записями разговоров
+	QString RecordDir = CONFIG_STRING(CONST_CONFIG_AMI_RECORD_DIR);
+	if (RecordDir.isEmpty()) //Директория не настроена - ошибка
+	{
+		ErrorString = LANG("Carat.Error.Query.GetRecordCall.RecordDirIsEmpty");
+		return false;
+	}
+
+	QVariant RecordID = CheckNullField("RecordID", TcpMessage->Parameters);
+	if (!RecordID.isValid())
+	{
+		return false;
+	}
+
+	//Получаем идентификатор записи по её коду
+	ISQuery qSelectRecord(ISDatabase::Instance().GetDB(DBConnectionName), QS_ASTERISK_RECORD);
+	qSelectRecord.BindValue(":RecordID", RecordID);
+	if (!qSelectRecord.Execute())
+	{
+		ErrorString = LANG("Carat.Error.Query.GetRecordCall.SelectUniqueID").arg(qSelectRecord.GetErrorString());
+		return false;
+	}
+	if (!qSelectRecord.First())
+	{
+		ErrorString = LANG("Carat.Error.Query.GetRecordCall.NotFoundUniqueID").arg(RecordID.toInt());
+		return false;
+	}
+	QString UniqueID = qSelectRecord.ReadColumn("ascl_uniqueid").toString();
+	
+	QFile FileRecord(RecordDir + UniqueID + SYMBOL_POINT + EXTENSION_WAV);
+	if (!FileRecord.exists()) //Файл не существует
+	{
+		ErrorString = LANG("Carat.Error.Query.GetRecordCall.NotFoundRecordCall");
+		return false;
+	}
+
+	if (!FileRecord.open(QIODevice::ReadOnly)) //Не удалось открыть файл
+	{
+		ErrorString = LANG("Carat.Error.Query.GetRecordCall.OpenRecordCall").arg(FileRecord.errorString());
+		return false;
+	}
+
+	//Читаем файл, закрываем и выходим
+	TcpAnswer->Parameters["Data"] = FileRecord.readAll().toBase64();
+	FileRecord.close();
 	return true;
 }
 //-----------------------------------------------------------------------------

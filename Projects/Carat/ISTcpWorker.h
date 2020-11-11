@@ -41,6 +41,7 @@ private:
 	bool GetLastClient(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
 	bool LoginExist(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
 	bool LoginRegister(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
+	bool GetRecordCall(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
 
 private:
     QString ErrorString; //Текстовое описание ошибки запроса

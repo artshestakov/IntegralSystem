@@ -203,6 +203,10 @@ ISNamespace::ApiMessageType ISTcpSocket::GetMessageType(const QString &TypeName)
 	{
 		return ISNamespace::AMT_LoginExist;
 	}
+	else if (TypeName == API_GET_RECORD_CALL)
+	{
+		return ISNamespace::AMI_GetRecordCall;
+	}
 	return ISNamespace::AMT_Unknown;
 }
 //-----------------------------------------------------------------------------

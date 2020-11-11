@@ -31,6 +31,7 @@ const char EXTENSION_INI[] = "ini";
 const char EXTENSION_CRASH[] = "crash";
 const char EXTENSION_PID[] = "pid";
 const char EXTENSION_OLD[] = "old";
+const char EXTENSION_WAV[] = "wav";
 #ifdef WIN32
 const char EXTENSION_BINARY[] = ".exe"; //Расширение исполняемого файла для текущей операционной системы
 const char EXTENSION_LIBRARY[] = ".dll"; //Расширение динамической библиотеки для текущей операционной системы
@@ -143,8 +144,9 @@ const char		API_SLEEP[] = "Sleep"; //Ожидание
 const char		API_GET_META_DATA[] = "GetMetaData"; //Получение мета-данных
 const char		API_TEST[] = "Test"; //Тестовый метод
 const char		API_GET_LAST_CLIENT[] = "GetLastClient"; //Получить последнюю версию клиента
-const char		API_LOGIN_EXIST[] = "LoginExist"; //Проверка наличия логина у пользователя
 const char		API_LOGIN_REGISTER[] = "LoginRegister"; //Регистрация логина
+const char		API_LOGIN_EXIST[] = "LoginExist"; //Проверка наличия логина у пользователя
+const char		API_GET_RECORD_CALL[] = "GetRecordCall"; //Получить запись разговора
 //CARAT_LOCAL_API--------------------------------------------------------------
 const char		CARAT_LOCAL_API_SHUTDOWN[] = "shutdown"; //Завершение работы
 //-----------------------------------------------------------------------------
@@ -277,6 +279,7 @@ const char CONST_CONFIG_AMI_SERVER[] = "AMI/Server";
 const char CONST_CONFIG_AMI_PORT[] = "AMI/Port";
 const char CONST_CONFIG_AMI_LOGIN[] = "AMI/Login";
 const char CONST_CONFIG_AMI_PASSWORD[] = "AMI/Password";
+const char CONST_CONFIG_AMI_RECORD_DIR[] = "AMI/RecordDir";
 const char CONST_CONFIG_OTHER_UPDATE_CLIENT_DIR[] = "Other/UpdateClientDir";
 const char CONST_CONFIG_OTHER_CONFIGURATION[] = "Other/Configuration";
 //-----------------------------------------------------------------------------

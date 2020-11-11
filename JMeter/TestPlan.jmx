@@ -129,11 +129,22 @@ def MapLoginRegister =
 	Parameters:
 		[
 			HashOld: GetSHA256(&quot;ivanov78357835&quot;),
-			Hash: GetSHA256(&quot;ivanovadm777&quot;),
+			Hash: GetSHA256(&quot;ivanov78357835&quot;),
 			UserID: 5
 		]
 ];
-vars.put(&quot;QueryLoginRegister&quot;, MapToString(MapLoginRegister));</stringProp>
+vars.put(&quot;QueryLoginRegister&quot;, MapToString(MapLoginRegister));
+
+//Получение записи разговора
+def MapGetRecordCall =
+[
+	Type: &quot;GetRecordCall&quot;,
+	Parameters:
+		[
+			RecordID: 1028
+		]
+];
+vars.put(&quot;QueryGetRecordCall&quot;, MapToString(MapGetRecordCall));</stringProp>
           <stringProp name="scriptLanguage">groovy</stringProp>
         </JSR223Sampler>
         <hashTree/>
@@ -144,6 +155,18 @@ vars.put(&quot;QueryLoginRegister&quot;, MapToString(MapLoginRegister));</string
           <boolProp name="TCPSampler.nodelay">false</boolProp>
           <stringProp name="TCPSampler.timeout"></stringProp>
           <stringProp name="TCPSampler.request">${QueryAuth}</stringProp>
+          <boolProp name="TCPSampler.closeConnection">false</boolProp>
+          <stringProp name="ConfigTestElement.username"></stringProp>
+          <stringProp name="ConfigTestElement.password"></stringProp>
+        </TCPSampler>
+        <hashTree/>
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: GetRecordCall" enabled="true">
+          <stringProp name="TCPSampler.server"></stringProp>
+          <boolProp name="TCPSampler.reUseConnection">true</boolProp>
+          <stringProp name="TCPSampler.port"></stringProp>
+          <boolProp name="TCPSampler.nodelay">false</boolProp>
+          <stringProp name="TCPSampler.timeout"></stringProp>
+          <stringProp name="TCPSampler.request">${QueryGetRecordCall}</stringProp>
           <boolProp name="TCPSampler.closeConnection">false</boolProp>
           <stringProp name="ConfigTestElement.username"></stringProp>
           <stringProp name="ConfigTestElement.password"></stringProp>
@@ -161,7 +184,7 @@ vars.put(&quot;QueryLoginRegister&quot;, MapToString(MapLoginRegister));</string
           <stringProp name="ConfigTestElement.password"></stringProp>
         </TCPSampler>
         <hashTree/>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: LoginRegister" enabled="true">
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: LoginRegister" enabled="false">
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
           <stringProp name="TCPSampler.port"></stringProp>
