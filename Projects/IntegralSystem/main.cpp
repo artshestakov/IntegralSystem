@@ -7,6 +7,7 @@
 #include "ISMainWindow.h"
 #include "ISSettings.h"
 #include "ISProperty.h"
+#include "ISAudioPlayerForm.h"
 //-----------------------------------------------------------------------------
 int main(int argc, char **argv)
 {
@@ -28,6 +29,10 @@ int main(int argc, char **argv)
 		QMessageBox::critical(nullptr, "Error", ErrorString, QMessageBox::Ok, QMessageBox::Ok);
 		return EXIT_FAILURE;
 	}
+
+	ISAudioPlayerForm a("C:/Users/artem/Downloads/The Flaming Lips - Vein Of Stars.mp3");
+	a.show();
+	Applicaton.exec();
 
 	ISAuthForm AuthForm;
 	Result = AuthForm.Exec();

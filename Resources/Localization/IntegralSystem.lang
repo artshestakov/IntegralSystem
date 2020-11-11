@@ -694,6 +694,11 @@
   <Local Name="ContextMenu.Image.Paste" Russian="Вставить"/>
   <Local Name="ContextMenu.Image.Paste.ToolTip" Russian="Вставить изображение из буфера обмена"/>
   <Local Name="ContextMenu.Image.PasteFromLink" Russian="Вставить по ссылке"/>
+  
+  <!--AudioPlayer-->
+  <Local Name="AudioPlayer.Play" Russian="Проиграть"/>
+  <Local Name="AudioPlayer.Pause" Russian="Пауза"/>
+  <Local Name="AudioPlayer.Stop" Russian="Остановить"/>
 
   <!--Reduction (сокращения)-->
   <Local Name="Reduction.SerialNumber" Russian="п/п"/>
