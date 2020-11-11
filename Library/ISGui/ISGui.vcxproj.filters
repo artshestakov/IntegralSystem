@@ -447,6 +447,9 @@
     <ClCompile Include="ISUserHashForm.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
+    <ClCompile Include="ISAsteriskCallsListForm.cpp">
+      <Filter>Forms</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ISExportForm.h">
@@ -747,6 +750,9 @@
       <Filter>Protocol</Filter>
     </QtMoc>
     <QtMoc Include="ISUserHashForm.h">
+      <Filter>Forms</Filter>
+    </QtMoc>
+    <QtMoc Include="ISAsteriskCallsListForm.h">
       <Filter>Forms</Filter>
     </QtMoc>
   </ItemGroup>

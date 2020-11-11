@@ -175,6 +175,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ISAboutForm.cpp" />
+    <ClCompile Include="ISAsteriskCallsListForm.cpp" />
     <ClCompile Include="ISAuthForm.cpp" />
     <ClCompile Include="ISBaseTableView.cpp" />
     <ClCompile Include="ISBuffer.cpp" />
@@ -419,6 +420,7 @@
     <QtMoc Include="ISSystemsPanel.h" />
     <QtMoc Include="ISUserGroupForm.h" />
     <QtMoc Include="ISEmpty.h" />
+    <QtMoc Include="ISAsteriskCallsListForm.h" />
     <ClInclude Include="isgui_global.h" />
     <QtMoc Include="ISProgressForm.h" />
     <QtMoc Include="ISTaskListForm.h" />
