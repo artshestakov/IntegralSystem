@@ -260,6 +260,7 @@ void ISAsterisk::ResponseLogin(const ISStringMap &AMIPackage)
 //-----------------------------------------------------------------------------
 void ISAsterisk::EventCDR(const ISStringMap &AMIPackage)
 {
+    ISTRACE();
 	QString AccountCode = ExtractOfPackage(AMIPackage, "AccountCode");
 	QString Source = ExtractOfPackage(AMIPackage, "Source");
 	QString Destination = ExtractOfPackage(AMIPackage, "Destination");
