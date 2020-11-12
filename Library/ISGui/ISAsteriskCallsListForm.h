@@ -11,6 +11,9 @@ class ISAsteriskCallsListForm : public ISListBaseForm
 public:
 	Q_INVOKABLE ISAsteriskCallsListForm(QWidget *parent = 0);
 	virtual ~ISAsteriskCallsListForm();
+
+private:
+	void PlayRecordCall();
 };
 //-----------------------------------------------------------------------------
 #endif

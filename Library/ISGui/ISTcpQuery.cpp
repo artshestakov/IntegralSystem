@@ -5,6 +5,7 @@
 #include "ISConstants.h"
 #include "ISAlgorithm.h"
 #include "ISVersionInfo.h"
+#include "ISLocalization.h"
 //-----------------------------------------------------------------------------
 ISTcpQuery::ISTcpQuery(const QString &query_type)
 	: ErrorString(NO_ERROR_STRING),
@@ -49,6 +50,13 @@ bool ISTcpQuery::Execute()
 		}
 	}, QJsonDocument::Compact);
 	ByteArray.insert(0, QString("%1.").arg(ByteArray.size()));
+
+	//Проверяем наличие соединения
+	if (!ISTcpConnector::Instance().IsConnected())
+	{
+		ErrorString = LANG("NotConnectToServer");
+		return false;
+	}
 
 	//Получаем сокет и отправляем на него запрос
 	QTcpSocket *TcpSocket = ISTcpConnector::Instance().GetSocket();

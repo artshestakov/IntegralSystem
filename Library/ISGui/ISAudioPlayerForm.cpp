@@ -2,10 +2,16 @@
 #include "ISBuffer.h"
 #include "ISDefinesGui.h"
 #include "ISLocalization.h"
+#include "ISMessageBox.h"
+#include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
-ISAudioPlayerForm::ISAudioPlayerForm(const QString &FilePath, QWidget *parent) : ISInterfaceForm(parent)
+ISAudioPlayerForm::ISAudioPlayerForm(QWidget *parent)
+	: ISInterfaceForm(parent),
+	BytePointer(nullptr),
+	Buffer(nullptr)
 {
 	setWindowIcon(BUFFER_ICONS("AudioPlayer"));
+	setWindowTitle(LANG("AudioPlayer.Title"));
 	GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);
 
 	QHBoxLayout *LayoutTitle = new QHBoxLayout();
@@ -54,12 +60,51 @@ ISAudioPlayerForm::ISAudioPlayerForm(const QString &FilePath, QWidget *parent) :
 	connect(MediaPlayer, &QMediaPlayer::mutedChanged, this, &ISAudioPlayerForm::MutedChanged);
 	connect(MediaPlayer, &QMediaPlayer::positionChanged, this, &ISAudioPlayerForm::PositionChanged);
 	connect(MediaPlayer, &QMediaPlayer::stateChanged, this, &ISAudioPlayerForm::StateChanged);
-	MediaPlayer->setMedia(QUrl::fromLocalFile(FilePath));
 }
 //-----------------------------------------------------------------------------
 ISAudioPlayerForm::~ISAudioPlayerForm()
 {
+	
+}
+//-----------------------------------------------------------------------------
+void ISAudioPlayerForm::SetMedia(const QString &FilePath)
+{
+	QFile File(FilePath);
+	if (File.open(QIODevice::ReadWrite))
+	{
+		QByteArray ByteArray = File.readAll();
+		File.close();
+		SetMedia(ByteArray);
+	}
+	else
+	{
+		ISMessageBox::ShowWarning(this, File.errorString());
+	}
+}
+//-----------------------------------------------------------------------------
+void ISAudioPlayerForm::SetMedia(const QByteArray &ByteArray)
+{
+	POINTER_DELETE(BytePointer);
+	BytePointer = new QByteArray(ByteArray);
 
+	Buffer = new QBuffer(BytePointer, this);
+	if (Buffer->open(QIODevice::ReadWrite))
+	{
+		Buffer->reset();
+		MediaPlayer->setMedia(QMediaContent(), Buffer);
+		MediaPlayer->play();
+	}
+}
+//-----------------------------------------------------------------------------
+void ISAudioPlayerForm::closeEvent(QCloseEvent *CloseEvent)
+{
+	if (MediaPlayer->state() == QMediaPlayer::PlayingState)
+	{
+		MediaPlayer->stop();
+	}
+	MediaPlayer->setMedia(QMediaContent());
+	POINTER_DELETE(Buffer);
+	POINTER_DELETE(BytePointer);
 }
 //-----------------------------------------------------------------------------
 void ISAudioPlayerForm::PlayClicked()

@@ -696,6 +696,7 @@
   <Local Name="ContextMenu.Image.PasteFromLink" Russian="Вставить по ссылке"/>
   
   <!--AudioPlayer-->
+  <Local Name="AudioPlayer.Title" Russian="Проигрыватель"/>
   <Local Name="AudioPlayer.Play" Russian="Проиграть"/>
   <Local Name="AudioPlayer.Pause" Russian="Пауза"/>
   <Local Name="AudioPlayer.Stop" Russian="Остановить"/>
@@ -793,5 +794,7 @@
   <Local Name="RollUpApplication" Russian="Свернуть программу"/>
   <Local Name="SettingsUser" Russian="Настройки пользователя"/>
   <Local Name="ActiveProfile" Russian="Активный профиль"/>
+  <Local Name="PlayRecordCall" Russian="Воспроизвести запись разговора"/>
+  <Local Name="NotConnectToServer" Russian="Подключение к серверу отсутствует."/>
 
 </LANG>
