@@ -796,5 +796,6 @@
   <Local Name="ActiveProfile" Russian="Активный профиль"/>
   <Local Name="PlayRecordCall" Russian="Воспроизвести запись разговора"/>
   <Local Name="NotConnectToServer" Russian="Подключение к серверу отсутствует."/>
+  <Local Name="RecordCallLoading" Russian="Запись разговора загружается..."/>
 
 </LANG>

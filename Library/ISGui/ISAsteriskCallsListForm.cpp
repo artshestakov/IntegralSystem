@@ -4,6 +4,7 @@
 #include "ISTcpQuery.h"
 #include "ISAudioPlayerForm.h"
 #include "ISMessageBox.h"
+#include "ISProcessForm.h"
 //-----------------------------------------------------------------------------
 ISAsteriskCallsListForm::ISAsteriskCallsListForm(QWidget *parent) : ISListBaseForm("_AsteriskCalls", parent)
 {
@@ -21,14 +22,19 @@ void ISAsteriskCallsListForm::PlayRecordCall()
 {
 	ISTcpQuery qGetRecordCall(API_GET_RECORD_CALL);
 	qGetRecordCall.BindValue("RecordID", GetObjectID());
+
+	ISProcessForm ProcessForm(LANG("RecordCallLoading"));
+	ProcessForm.show();
 	if (qGetRecordCall.Execute())
 	{
 		ISAudioPlayerForm *AudioPlayerForm = new ISAudioPlayerForm();
 		AudioPlayerForm->SetMedia(QByteArray::fromBase64(qGetRecordCall.GetAnswer()["Data"].toByteArray()));
+		ProcessForm.hide();
 		AudioPlayerForm->show();
 	}
 	else
 	{
+		ProcessForm.hide();
 		ISMessageBox::ShowWarning(this, qGetRecordCall.GetErrorString());
 	}
 }
