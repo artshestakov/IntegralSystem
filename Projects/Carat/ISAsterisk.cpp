@@ -12,38 +12,30 @@ static QString QI_ASTERISK_CALLS = PREPARE_QUERY("INSERT INTO _asteriskcalls("
 	"ascl_accountcode, "
 	"ascl_source, "
 	"ascl_destination, "
-	"ascl_destinationcontext, "
 	"ascl_callerid, "
 	"ascl_channel, "
 	"ascl_destinationchannel, "
-	"ascl_lastapplication, "
-	"ascl_lastdata, "
 	"ascl_starttime, "
 	"ascl_answertime, "
 	"ascl_endtime, "
 	"ascl_duration, "
 	"ascl_billableseconds, "
 	"ascl_disposition, "
-	"ascl_amaflag, "
 	"ascl_uniqueid, "
 	"ascl_userfield) "
 	"VALUES("
 	":AccountCode, "
 	":Source, "
 	":Destination, "
-	":DestinationContext, "
 	":CallerID, "
 	":Channel, "
 	":DestinationChannel, "
-	":LastApplication, "
-	":LastData, "
 	"to_timestamp(:StartTime, 'YYYY-MM-DD HH24:MI-SS'), "
 	"to_timestamp(:AnswerTime, 'YYYY-MM-DD HH24:MI-SS'), "
 	"to_timestamp(:EndTime, 'YYYY-MM-DD HH24:MI-SS'), "
 	"COALESCE(:Duration, 0), "
 	"COALESCE(:BillableSeconds, 0), "
 	"(SELECT dstp_id FROM _dispositiontype WHERE dstp_name = :Disposition), "
-	"COALESCE(:AMAFlag, (SELECT amaf_id FROM _amaflagtype WHERE amaf_name = :AMAFlag)), "
 	":UniqueID, "
 	":UserField)");
 //-----------------------------------------------------------------------------
@@ -264,38 +256,30 @@ void ISAsterisk::EventCDR(const ISStringMap &AMIPackage)
 	QString AccountCode = ExtractOfPackage(AMIPackage, "AccountCode");
 	QString Source = ExtractOfPackage(AMIPackage, "Source");
 	QString Destination = ExtractOfPackage(AMIPackage, "Destination");
-	QString DestinationContext = ExtractOfPackage(AMIPackage, "DestinationContext");
 	QString CallerID = ExtractOfPackage(AMIPackage, "CallerID");
 	QString Channel = ExtractOfPackage(AMIPackage, "Channel");
 	QString DestinationChannel = ExtractOfPackage(AMIPackage, "DestinationChannel");
-	QString LastApplication = ExtractOfPackage(AMIPackage, "LastApplication");
-	QString LastData = ExtractOfPackage(AMIPackage, "LastData");
 	QString StartTime = ExtractOfPackage(AMIPackage, "StartTime");
 	QString AnswerTime = ExtractOfPackage(AMIPackage, "AnswerTime");
 	QString EndTime = ExtractOfPackage(AMIPackage, "EndTime");
 	QString Duration = ExtractOfPackage(AMIPackage, "Duration");
 	QString BillableSeconds = ExtractOfPackage(AMIPackage, "BillableSeconds");
 	QString Disposition = ExtractOfPackage(AMIPackage, "Disposition");
-	QString AMAFlag = ExtractOfPackage(AMIPackage, "AMAFlag");
 	QString UniqueID = ExtractOfPackage(AMIPackage, "UniqueID");
 	QString UserField = ExtractOfPackage(AMIPackage, "UserField");
 
 	qInsert->BindValue(":AccountCode", AccountCode.isEmpty() ? QVariant() : AccountCode);
 	qInsert->BindValue(":Source", Source);
 	qInsert->BindValue(":Destination", Destination);
-	qInsert->BindValue(":DestinationContext", DestinationContext);
 	qInsert->BindValue(":CallerID", CallerID);
 	qInsert->BindValue(":Channel", Channel);
 	qInsert->BindValue(":DestinationChannel", DestinationChannel);
-	qInsert->BindValue(":LastApplication", LastApplication);
-	qInsert->BindValue(":LastData", LastData);
 	qInsert->BindValue(":StartTime", StartTime);
 	qInsert->BindValue(":AnswerTime", AnswerTime.isEmpty() ? QVariant() : AnswerTime);
 	qInsert->BindValue(":EndTime", EndTime);
 	qInsert->BindValue(":Duration", Duration);
 	qInsert->BindValue(":BillableSeconds", BillableSeconds);
 	qInsert->BindValue(":Disposition", Disposition);
-	qInsert->BindValue(":AMAFlag", AMAFlag);
 	qInsert->BindValue(":UniqueID", UniqueID);
 	qInsert->BindValue(":UserField", UserField.isEmpty() ? QVariant() : UserField);
 	if (qInsert->Execute())
