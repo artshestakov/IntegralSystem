@@ -269,11 +269,11 @@ void ISAsterisk::EventCDR(const ISStringMap &AMIPackage)
 	QString UserField = ExtractOfPackage(AMIPackage, "UserField");
 
 	qInsert->BindValue(":AccountCode", AccountCode.isEmpty() ? QVariant() : AccountCode);
-	qInsert->BindValue(":Source", Source);
+	qInsert->BindValue(":Source", Source.isEmpty() ? QVariant() : Source);
 	qInsert->BindValue(":Destination", Destination);
 	qInsert->BindValue(":CallerID", CallerID);
 	qInsert->BindValue(":Channel", Channel);
-	qInsert->BindValue(":DestinationChannel", DestinationChannel);
+	qInsert->BindValue(":DestinationChannel", DestinationChannel.isEmpty() ? QVariant() : DestinationChannel);
 	qInsert->BindValue(":StartTime", StartTime);
 	qInsert->BindValue(":AnswerTime", AnswerTime.isEmpty() ? QVariant() : AnswerTime);
 	qInsert->BindValue(":EndTime", EndTime);
