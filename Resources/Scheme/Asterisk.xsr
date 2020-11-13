@@ -7,8 +7,4 @@
   <_DispositionType UID="{A5E6CBE9-F002-436F-85C9-1F341C91DEF9}" Name="ANSWERED" LocalName="Не отвечено"/>
   <_DispositionType UID="{D00B6710-9E6E-4D8F-872A-901D3EAE335E}" Name="CONGESTION" LocalName="Попытка дозвона"/>
 
-  <_AMAFlagType UID="{C911EA4D-757F-42FE-AEBA-302C4317568E}" Name="OMIT" LocalName="Игнорирование"/>
-  <_AMAFlagType UID="{A0083883-284A-4615-9918-9100057FBB19}" Name="BILLING" LocalName="Биллинг"/>
-  <_AMAFlagType UID="{A66D796D-45CB-45A9-AAB5-E2D7A00D4FE8}" Name="DOCUMENTATION" LocalName="Документация"/>
-
 </XSR>
