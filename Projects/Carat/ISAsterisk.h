@@ -22,7 +22,6 @@ protected:
 private:
 	void Connect();
 	void Connected(); //Событие подключения к AMI
-	void Disconnected(); //Событие отключения от AMI
 	void Error(QAbstractSocket::SocketError socket_error); //Событие ошибки
 	void ReadyRead(); //Событие чтения входящих данных
 	void SendAction(const QString &ActionType, const ISStringMap &StringMap);

@@ -211,7 +211,7 @@ void ISCaratApplication::Shutdown()
 
 	if (CONFIG_BOOL(CONST_CONFIG_AMI_INCLUDE) && Asterisk)
 	{
-		//Останавливать службу астериска
+		Asterisk->quit();
 	}
 	emit Quit();
 }

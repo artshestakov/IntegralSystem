@@ -83,13 +83,13 @@ bool ISAsterisk::Start()
 		ISLOGGER_E(__CLASS__, QString("Not specified config parameter: %1").arg(CONST_CONFIG_AMI_PASSWORD));
 		return false;
 	}
-
 	start();
 	return true;
 }
 //-----------------------------------------------------------------------------
 void ISAsterisk::run()
 {
+	//При успешном подключении создаём указатель на объект запроса, чтобы использовать его всегда
 	if (ISDatabase::Instance().Connect(CONNECTION_ASTERISK, CONFIG_STRING(CONST_CONFIG_CONNECTION_SERVER), CONFIG_INT(CONST_CONFIG_CONNECTION_PORT), CONFIG_STRING(CONST_CONFIG_CONNECTION_DATABASE),
 		CONFIG_STRING(CONST_CONFIG_CONNECTION_LOGIN), CONFIG_STRING(CONST_CONFIG_CONNECTION_PASSWORD)))
 	{
@@ -98,6 +98,7 @@ void ISAsterisk::run()
 	else
 	{
 		ISLOGGER_E(__CLASS__, "Not connected to database: " + ISDatabase::Instance().GetErrorString());
+		return;
 	}
 
 	TcpSocket = new QTcpSocket();
@@ -107,6 +108,13 @@ void ISAsterisk::run()
 	connect(TcpSocket, &QTcpSocket::readyRead, this, &ISAsterisk::ReadyRead, Qt::DirectConnection);
 	Connect();
 	exec();
+
+	//Отключаемся от AMI, удаляем указатель на сокет и объект запроса
+	disconnect(TcpSocket, &QTcpSocket::disconnected, this, &ISAsterisk::Connect); //Нужно чтобы не срабатывало переподключение
+	TcpSocket->disconnectFromHost();
+	ISTcp::WaitForDisconnected(TcpSocket); //Ждём отключения
+	delete TcpSocket;
+	delete qInsert;
 }
 //-----------------------------------------------------------------------------
 void ISAsterisk::Connect()
@@ -118,13 +126,7 @@ void ISAsterisk::Connect()
 void ISAsterisk::Connected()
 {
 	ISLOGGER_I(__CLASS__, "Connected");
-	//ISSleep(1000);
 	ActionLogin();
-}
-//-----------------------------------------------------------------------------
-void ISAsterisk::Disconnected()
-{
-	
 }
 //-----------------------------------------------------------------------------
 void ISAsterisk::Error(QAbstractSocket::SocketError socket_error)
