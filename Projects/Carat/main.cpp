@@ -41,10 +41,6 @@ int main(int argc, char **argv)
 	ISDatabase::Instance().DisconnectAll();
 	ISLOGGER_I("", "Stopped application");
 	ISLogger::Instance().Shutdown();
-
-#ifdef DEBUG //¬ случае с отладочной версией ставим на паузу дл€ чтени€ ошибок и заключительного вывода
-	ISConsole::Pause();
-#endif
 	return ResultCode;
 }
 //-----------------------------------------------------------------------------
