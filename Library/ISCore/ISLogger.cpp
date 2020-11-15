@@ -96,15 +96,10 @@ void ISLogger::Log(bool is_format, MessageType message_type, const QString &comp
 		string_complete = string;
 	}
 
-#ifdef DEBUG //¬ отладочной версии выводим строку в консоль
-	OutputToConsole(string_complete);
-#else //¬ релизной версии выводим в консоль только в случае если запущен конфигуратор
-	if (ISSystem::IsConfigurator())
-	{
-		OutputToConsole(string_complete);
-	}
-#endif
 	CRITICAL_SECTION_LOCK(&CriticalSection);
+#ifdef DEBUG //¬ отладочной версии выводим строку в консоль
+	ISDEBUG_L(string_complete);
+#endif
 	Array[LastIndex] = string_complete;
 	++LastIndex;
 	CRITICAL_SECTION_UNLOCK(&CriticalSection);
@@ -134,13 +129,6 @@ bool ISLogger::CreateLogDirectory(const QDate &Date)
 QString ISLogger::GetPathFile(const QDate &Date) const
 {
 	return PathLogsDir + QCoreApplication::applicationName() + '_' + Date.toString(FORMAT_DATE_V2) + SYMBOL_POINT + EXTENSION_LOG;
-}
-//-----------------------------------------------------------------------------
-void ISLogger::OutputToConsole(const QString &String)
-{
-	CRITICAL_SECTION_LOCK(&CriticalSection);
-	ISDEBUG_L(String);
-	CRITICAL_SECTION_UNLOCK(&CriticalSection);
 }
 //-----------------------------------------------------------------------------
 void ISLogger::Worker()
