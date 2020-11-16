@@ -105,6 +105,7 @@ void ISAudioPlayerForm::closeEvent(QCloseEvent *CloseEvent)
 	MediaPlayer->setMedia(QMediaContent());
 	POINTER_DELETE(Buffer);
 	POINTER_DELETE(BytePointer);
+	ISInterfaceForm::closeEvent(CloseEvent);
 }
 //-----------------------------------------------------------------------------
 void ISAudioPlayerForm::PlayClicked()
@@ -134,17 +135,18 @@ void ISAudioPlayerForm::DurationChanged(qint64 Duration)
 //-----------------------------------------------------------------------------
 void ISAudioPlayerForm::Error(QMediaPlayer::Error Error)
 {
-
+	Q_UNUSED(Error);
+	ISMessageBox::ShowWarning(this, MediaPlayer->errorString());
 }
 //-----------------------------------------------------------------------------
 void ISAudioPlayerForm::MediaStatusChanged(QMediaPlayer::MediaStatus MediaStatus)
 {
-
+	Q_UNUSED(MediaStatus);
 }
 //-----------------------------------------------------------------------------
 void ISAudioPlayerForm::MutedChanged(bool Muted)
 {
-
+	Q_UNUSED(Muted);
 }
 //-----------------------------------------------------------------------------
 void ISAudioPlayerForm::PositionChanged(qint64 Position)
