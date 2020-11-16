@@ -246,10 +246,21 @@ void ISAsterisk::ActionLogin()
 	});
 }
 //-----------------------------------------------------------------------------
+void ISAsterisk::ActionFilter(const QString &EventName)
+{
+	SendAction("Filter", ISStringMap
+	{
+		{ "ActionID", "Filter" },
+		{ "Operation", "Add" },
+		{ "Filter", "Event: " + EventName }
+	});
+}
+//-----------------------------------------------------------------------------
 void ISAsterisk::ResponseLogin(const ISStringMap &AMIPackage)
 {
 	QString Message = "Response action \"Login\": " + ExtractOfPackage(AMIPackage, "Message");
 	ExtractOfPackage(AMIPackage, "Response") == "Success" ? ISLOGGER_I(__CLASS__, Message) : ISLOGGER_E(__CLASS__, Message);
+	ActionFilter("Cdr");
 }
 //-----------------------------------------------------------------------------
 void ISAsterisk::EventCDR(const ISStringMap &AMIPackage)

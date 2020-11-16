@@ -28,6 +28,7 @@ private:
 	const QString ExtractOfPackage(const ISStringMap &AMIPackage, const QString &Key) const;
 
 	void ActionLogin(); //Авторизация
+	void ActionFilter(const QString &EventName);
 
 	void ResponseLogin(const ISStringMap &AMIPackage);
 
