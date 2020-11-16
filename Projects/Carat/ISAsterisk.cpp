@@ -136,7 +136,7 @@ void ISAsterisk::Error(QAbstractSocket::SocketError socket_error)
 	{
 		Connect();
 	}
-	else if (socket_error == QAbstractSocket::RemoteHostClosedError) //Обрыв соединения не по нашей вине - ждёт пять секунд (дальше Connect сам вызовется по событию disconnected)
+	else if (socket_error == QAbstractSocket::RemoteHostClosedError) //Обрыв соединения не по нашей вине - ждём пять секунд (дальше Connect сам вызовется по событию disconnected)
 	{
 		ISSleep(5000);
 	}
@@ -183,7 +183,6 @@ void ISAsterisk::ReadyRead()
 				StringRight = Line.mid(Pos + 1, Line.size() - Pos - 1);
 			ISAlgorithm::RemoveBeginSymbolLoop(StringRight, SYMBOL_SPACE);
 			AMIPackage.emplace(StringLeft, StringRight);
-
 			if (!i) //Если сейчас первая строка - вытаскиваем тип пакета
 			{
 				PackageType = StringLeft;

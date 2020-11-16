@@ -251,7 +251,7 @@ void ISCaratApplication::SendShutdown()
 //-----------------------------------------------------------------------------
 void ISCaratApplication::ConfigCreate()
 {
-
+	//Метод должен быть пустым
 }
 //-----------------------------------------------------------------------------
 void ISCaratApplication::ConfigReset()
