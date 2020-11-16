@@ -22,6 +22,9 @@ if (POINTER) \
 //Заснуть на Msec миллисекунд
 #define ISSleep(MSec) std::this_thread::sleep_for(std::chrono::milliseconds(MSec))
 
+//Обработать события из очереди событий
+#define PROCESS_EVENTS qApp->processEvents
+
 #ifdef WIN32
 #define __CLASS__ ISAlgorithm::GetClassName(__FUNCTION__)
 #else

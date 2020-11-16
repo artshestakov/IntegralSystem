@@ -73,7 +73,7 @@ bool ISTcpQuery::Execute()
 	while (true) //∆дЄм пока не придЄт ответ
 	{
 		ISSleep(1);
-		ISSystem::ProcessEvents();
+		PROCESS_EVENTS();
 		if (TcpSocket->bytesAvailable() > 0)
 		{
 			ByteArray.append(TcpSocket->readAll());

@@ -208,7 +208,7 @@ void ISTcpServer::SendAnswer(ISTcpAnswer *TcpAnswer)
 		{
 			if (TcpSocket->bytesToWrite() > 0) //Если есть баты доступные для записи - пишем
 			{
-				ISSystem::ProcessEvents();
+				PROCESS_EVENTS();
 				ISSleep(1);
 			}
 			else //Записали все - выходим из цикла

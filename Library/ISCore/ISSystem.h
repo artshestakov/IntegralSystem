@@ -23,7 +23,6 @@ public:
 	static void ExecLoop(unsigned long Milliseconds); //Остановка потока событий
 	static bool CreateDir(const QString &DirPath);
 	static bool CreateDir(const QString &DirPath, QString &ErrorString);
-	static void ProcessEvents();
 
 //ДАТА И ВРЕМЯ
 	static int TimeFromMinutes(const QTime &Time); //Перевести время в минуты

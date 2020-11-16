@@ -54,7 +54,7 @@ bool ISTcpConnector::Connect(const QString &Host, quint16 Port)
 	{
 		Timeout -= SleepTime;
 		ISSleep(SleepTime);
-		ISSystem::ProcessEvents();
+		PROCESS_EVENTS();
 		if (!Timeout) //Таймаут истёк
 		{
 			TcpSocket->disconnectFromHost();

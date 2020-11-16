@@ -329,7 +329,7 @@ void ISCaratApplication::SendCommand(const QByteArray &ByteArray)
 	while (true)
 	{
 		ISSleep(1);
-		ISSystem::ProcessEvents();
+		PROCESS_EVENTS();
 		if (TcpSocket.bytesAvailable() > 0) //Дождались ответа - выводим в консоль и выходим из функции
 		{
 			QString Answer = TcpSocket.readAll();

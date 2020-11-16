@@ -24,7 +24,7 @@ void ISTcp::WaitForBytesWritten(QTcpSocket *TcpSocket)
 {
 	while (TcpSocket->bytesToWrite() > 0)
 	{
-		ISSystem::ProcessEvents();
+		PROCESS_EVENTS();
 		ISSleep(1);
 	}
 }
@@ -33,7 +33,7 @@ void ISTcp::WaitForDisconnected(QTcpSocket *TcpSocket)
 {
 	while (TcpSocket->state() == QAbstractSocket::ConnectedState)
 	{
-		ISSystem::ProcessEvents();
+		PROCESS_EVENTS();
 		ISSleep(1);
 	}
 }

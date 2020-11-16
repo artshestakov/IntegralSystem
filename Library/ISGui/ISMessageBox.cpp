@@ -55,7 +55,7 @@ int ISMessageBox::ShowQuestion(QWidget *parent, const QString &Message, const st
 int ISMessageBox::Exec()
 {
 	QApplication::beep();
-	ISSystem::ProcessEvents();
+	PROCESS_EVENTS();
 	for (QAbstractButton *AbstractButton : buttons())
 	{
 		AbstractButton->setStyleSheet(BUFFER_STYLE_SHEET("ISPushButton"));

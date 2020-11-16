@@ -32,7 +32,7 @@ void ISSplashWidget::SetText(const QString &Text)
 {
 	LabelText->setText(Text);
 	ISGui::RepaintWidget(LabelText);
-	ISSystem::ProcessEvents();
+	PROCESS_EVENTS();
 }
 //-----------------------------------------------------------------------------
 void ISSplashWidget::showEvent(QShowEvent *e)
@@ -44,6 +44,6 @@ void ISSplashWidget::showEvent(QShowEvent *e)
 	update();
 	adjustSize();
 	ISGui::RepaintWidget(this);
-	ISSystem::ProcessEvents();
+	PROCESS_EVENTS();
 }
 //-----------------------------------------------------------------------------

@@ -43,7 +43,7 @@ void ISProcessForm::SetText(const QString &LabelText)
 	ISGui::RepaintWidget(Label);
 	adjustSize();
 	ISGui::RepaintWidget(this);
-	ISSystem::ProcessEvents();
+	PROCESS_EVENTS();
 	ISGui::MoveWidgetToDesktop(this, ISNamespace::MWD_Center);
 }
 //-----------------------------------------------------------------------------
@@ -51,7 +51,7 @@ void ISProcessForm::showEvent(QShowEvent *ShowEvent)
 {
 	adjustSize();
 	ISGui::RepaintWidget(this);
-	ISSystem::ProcessEvents();
+	PROCESS_EVENTS();
 	ISGui::MoveWidgetToDesktop(this, ISNamespace::MWD_Center);
 	ISInterfaceForm::showEvent(ShowEvent);
 }

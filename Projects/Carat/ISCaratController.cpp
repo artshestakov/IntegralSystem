@@ -139,6 +139,6 @@ void ISCaratController::Send(QTcpSocket *TcpSocket, const QByteArray &Responce)
 void ISCaratController::Wait()
 {
 	ISSleep(10);
-	ISSystem::ProcessEvents();
+	PROCESS_EVENTS();
 }
 //-----------------------------------------------------------------------------
