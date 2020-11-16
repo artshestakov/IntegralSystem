@@ -258,6 +258,7 @@
     <ClInclude Include="ISNamespace.h" />
     <ClInclude Include="ISProperty.h" />
     <ClInclude Include="ISRandom.h" />
+    <ClInclude Include="ISSingleton.h" />
     <ClInclude Include="ISStructs.h" />
     <ClInclude Include="ISSystem.h" />
     <ClInclude Include="ISTcp.h" />
