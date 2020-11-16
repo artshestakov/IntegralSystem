@@ -102,12 +102,12 @@ void ISQueryPool::StartWorker()
 			CRITICAL_SECTION_UNLOCK(&CriticalSection);
 			if (!is_running)
 			{
-				ISDatabase::Instance().Disconnect(CONNECTION_QUERY_POOL);
 				break;
 			}
 			ISSleep(10);
 		}
 	}
+	ISDatabase::Instance().Disconnect(CONNECTION_QUERY_POOL);
 	IsFinished = true;
 }
 //-----------------------------------------------------------------------------
