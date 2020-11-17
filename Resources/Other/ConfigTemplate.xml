@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Config>
+
+  <Template Type="Server">
+    <Section Name="Connection">
+      <Parameter Name="Host" DefaultValue="127.0.0.1" NotNull="true"/>
+      <Parameter Name="Port" DefaultValue="5432" NotNull="true"/>
+      <Parameter Name="Database" DefaultValue="" NotNull="true"/>
+      <Parameter Name="Login" DefaultValue="" NotNull="true"/>
+      <Parameter Name="Password" DefaultValue="" NotNull="true"/>
+    </Section>
+
+    <Section Name="Controller">
+      <Parameter Name="Include" DefaultValue="true" NotNull="true"/>
+    </Section>
+  </Template>
+
+  <Template Type="Client">
+
+  </Template>
+
+</Config>
