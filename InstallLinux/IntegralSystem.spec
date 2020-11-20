@@ -49,3 +49,10 @@ cp --force /opt/IntegralSystem/Carat.service /etc/systemd/system/Carat.service
 systemctl enable Carat
 systemctl daemon-reload
 /opt/IntegralSystem/Carat --conf-create
+
+%postun
+service Carat stop
+systemctl disable Carat
+rm -f /etc/systemd/system/Carat.service
+systemctl daemon-reload
+systemctl reset-failed
