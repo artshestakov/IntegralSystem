@@ -132,7 +132,7 @@ void ISAsterisk::Connected()
 void ISAsterisk::Error(QAbstractSocket::SocketError socket_error)
 {
 	ISLOGGER_E(__CLASS__, TcpSocket->errorString());
-	if (socket_error == QAbstractSocket::ConnectionRefusedError) //Изначально не смогли подключиться, поэтому пытаемся подключиться ещё раз
+	if (socket_error == QAbstractSocket::ConnectionRefusedError || socket_error == QAbstractSocket::NetworkError) //Изначально не смогли подключиться, поэтому пытаемся подключиться ещё раз
 	{
 		Connect();
 	}
