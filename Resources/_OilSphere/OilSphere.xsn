@@ -425,6 +425,34 @@
     </Foreigns>
   </Table>
 
+  <Table Name="Debet5" UID="{DD9552E0-BC52-40E6-A222-063F0A921515}" Alias="deb5" LocalName="Дебет 5" LocalListName="Дебет 5" TitleName="DateComing" ObjectForm="ISOilSphere::Debet5ObjectForm">
+    <Fields>
+      <Field UID="{DB318393-4904-4F85-869D-3DC87F3CF358}" Name="DateComing" Type="Date" LabelName="Дата прихода" LocalListName="Дата прихода" LayoutName="Date"/>
+      <Field UID="{4488EC31-B1D3-4202-9475-3AFB23A1B41D}" Name="Counterparty" Type="BigInt" LabelName="Контрагент" LocalListName="Контрагент" LayoutName="Date"/>
+      <Field UID="{260757FC-0F98-484B-9C5D-F9577C0C9A03}" Name="Coming" Type="Money" LabelName="Приход" LocalListName="Приход" LayoutName="Coming"/>
+      <Field UID="{15AFCF0D-2F74-495B-8D2D-8EBF39ACB2D1}" Name="Percent" Type="Double" LabelName="Процент" LocalListName="Процент" LayoutName="Coming"/>
+      <Field UID="{90BF9079-B1BA-49E7-8AA0-29FCBD60BD4A}" Name="Total" Type="Money" LabelName="Итого" LocalListName="Итого" LayoutName="Coming"/>
+      <Field UID="{89E9F989-520F-496C-BF12-520CCD09941D}" Name="DateReturn" Type="Date" LabelName="Дата возврата" LocalListName="Дата возврата" LayoutName="DateReturn"/>
+      <Field UID="{BA31BCA1-8674-474D-BCE7-A3D50C43EB35}" Name="Calculation" Type="Money" LabelName="Расчёт" LocalListName="Расчёт" LayoutName="DateReturn"/>
+      <Field UID="{68CAB74C-8079-4FD5-9542-BB53C581F2F8}" Name="Remainder" Type="Money" LabelName="Остаток" LocalListName="Остаток" LayoutName="DateReturn"/>
+      <Field UID="{5DD474F0-576B-4245-894B-F03E2E8DE547}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
+    </Fields>
+    <Indexes>
+      <Index Field="DateComing"/>
+      <Index Field="Counterparty"/>
+      <Index Field="Coming"/>
+      <Index Field="Percent"/>
+      <Index Field="Total"/>
+      <Index Field="DateReturn"/>
+      <Index Field="Calculation"/>
+      <Index Field="Remainder"/>
+      <Index Field="Note"/>
+    </Indexes>
+    <Foreigns>
+      <Foreign Field="Counterparty" ForeignClass="Counterparty" ForeignField="ID" ForeignViewNameField="Name"/>
+    </Foreigns>
+  </Table>
+
   <Table Name="Stock" UID="{49AA23FB-4679-4349-95FA-DB1933ED65BE}" Alias="stck" LocalName="Склад" LocalListName="Склады" TitleName="Name">
     <Fields>
       <Field UID="{E256950B-F90C-4643-9493-ADFEB2349918}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>

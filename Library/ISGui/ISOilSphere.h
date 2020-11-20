@@ -242,6 +242,20 @@ namespace ISOilSphere
 		void CalculateRemainder(); //Расчёт "Остаток долга"
 	};
 
+	//Форма объекта дебета 5
+	class Debet5ObjectForm : public ISObjectFormBase
+	{
+		Q_OBJECT
+
+	public:
+		Q_INVOKABLE Debet5ObjectForm(ISNamespace::ObjectFormType form_type, PMetaTable *meta_table, QWidget *parent, int object_id = 0);
+		virtual ~Debet5ObjectForm();
+
+	private:
+		void CalculateTotal(); //Расчёт "Итого"
+		void CalculateRemainder(); //Расчёт "Остаток долга"
+	};
+
 	//Форма списка дебета 1
 	class Debet1ListForm : public ISListBaseForm
 	{
@@ -298,6 +312,22 @@ namespace ISOilSphere
 	public:
 		Q_INVOKABLE Debet4ListForm(QWidget *parent = 0);
 		virtual ~Debet4ListForm();
+
+	protected:
+		void LoadDataAfterEvent() override;
+
+	private:
+		QLabel *Label;
+	};
+
+	//Форма списка дебета 5
+	class Debet5ListForm : public ISListBaseForm
+	{
+		Q_OBJECT
+
+	public:
+		Q_INVOKABLE Debet5ListForm(QWidget *parent = 0);
+		virtual ~Debet5ListForm();
 
 	protected:
 		void LoadDataAfterEvent() override;
