@@ -27,10 +27,9 @@ void ISAsteriskCallsListForm::PlayRecordCall()
 	ProcessForm.show();
 	if (qGetRecordCall.Execute())
 	{
-		ISAudioPlayerForm *AudioPlayerForm = new ISAudioPlayerForm();
-		AudioPlayerForm->SetMedia(QByteArray::fromBase64(qGetRecordCall.GetAnswer()["Data"].toByteArray()));
+		ISAudioPlayerForm::Instance().SetMedia(QByteArray::fromBase64(qGetRecordCall.GetAnswer()["Data"].toByteArray()));
+		ISAudioPlayerForm::Instance().show();
 		ProcessForm.hide();
-		AudioPlayerForm->show();
 	}
 	else
 	{

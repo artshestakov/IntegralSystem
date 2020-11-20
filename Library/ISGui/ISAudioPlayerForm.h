@@ -5,13 +5,12 @@
 #include "ISInterfaceForm.h"
 #include "ISButtons.h"
 //-----------------------------------------------------------------------------
-class ISAudioPlayerForm : public ISInterfaceForm
+class ISGUI_EXPORT ISAudioPlayerForm : public ISInterfaceForm
 {
 	Q_OBJECT
 
 public:
-	ISAudioPlayerForm(QWidget *parent = 0);
-	virtual ~ISAudioPlayerForm();
+	static ISAudioPlayerForm& Instance();
 
 	void SetMedia(const QString &FilePath);
 	void SetMedia(const QByteArray &ByteArray);
@@ -20,9 +19,18 @@ protected:
 	void closeEvent(QCloseEvent *CloseEvent);
 
 private:
+	ISAudioPlayerForm();
+	virtual ~ISAudioPlayerForm();
+	ISAudioPlayerForm(ISAudioPlayerForm const &) {};
+	ISAudioPlayerForm& operator=(ISAudioPlayerForm const&) { return *this; };
+
+private:
 	void PlayClicked();
 	void PauseClicked();
 	void StopClicked();
+	void PosBackClicked();
+	void PosForwardClicked();
+	void MuteClicked();
 	void SliderVolumeChanged(int Volume);
 
 private:
@@ -37,12 +45,17 @@ private:
 	ISServiceButton *ButtonPlay;
 	ISServiceButton *ButtonPause;
 	ISServiceButton *ButtonStop;
+	ISServiceButton *ButtonPosBack;
+	ISServiceButton *ButtonPosForward;
+	ISServiceButton *ButtonMute;
+	QLabel *LabelPosition;
 	QSlider *SliderPosition;
 	QSlider *SliderVolume;
 
 	QMediaPlayer *MediaPlayer;
 	QByteArray *BytePointer;
 	QBuffer *Buffer;
+	QString TimeDuration;
 };
 //-----------------------------------------------------------------------------
 #endif

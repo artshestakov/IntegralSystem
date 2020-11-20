@@ -700,6 +700,11 @@
   <Local Name="AudioPlayer.Play" Russian="Проиграть"/>
   <Local Name="AudioPlayer.Pause" Russian="Пауза"/>
   <Local Name="AudioPlayer.Stop" Russian="Остановить"/>
+  <Local Name="AudioPlayer.Position.Back" Russian="Промотать назад"/>
+  <Local Name="AudioPlayer.Position.Forward" Russian="Промотать вперед"/>
+  <Local Name="AudioPlayer.Volume" Russian="Громкость: %1%"/>
+  <Local Name="AudioPlayer.Mute.Enabled" Russian="Звук"/>
+  <Local Name="AudioPlayer.Mute.Disabled" Russian="Без звука"/>
 
   <!--Reduction (сокращения)-->
   <Local Name="Reduction.SerialNumber" Russian="п/п"/>
