@@ -12,6 +12,7 @@ ISProcessForm::ISProcessForm(const QString &LabelText, QWidget *parent)
 	setCursor(CURSOR_WAIT);
 	setWindowTitle(LANG("PleaseWait"));
 	setSizePolicy(QSizePolicy::Maximum, sizePolicy().verticalPolicy());
+	setWindowModality(Qt::WindowModality::WindowModal);
 	GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);
 
 	QHBoxLayout *Layout = new QHBoxLayout();
@@ -44,7 +45,6 @@ void ISProcessForm::SetText(const QString &LabelText)
 	adjustSize();
 	ISGui::RepaintWidget(this);
 	PROCESS_EVENTS();
-	ISGui::MoveWidgetToDesktop(this, ISNamespace::MWD_Center);
 }
 //-----------------------------------------------------------------------------
 void ISProcessForm::showEvent(QShowEvent *ShowEvent)

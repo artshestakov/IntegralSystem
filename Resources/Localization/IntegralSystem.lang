@@ -50,6 +50,7 @@
   <Local Name="Message.Information.NotSavedObjects" Russian="Есть несохранённые (%1 шт.) записи, сохраните или закройте их для выхода из программы."/>
   <Local Name="Message.Information.AppliocationWillBeRestart" Russian="Настройки успешно сброшены, рекомендуется перезапустить программу."/>
   <Local Name="Message.Information.FoundNewAppVersion" Russian="Обнаружена новая версия программы. Нажмите ОК, чтобы начать её установку. После успешной установки новой версии программа автоматически запустится."/>
+  <Local Name="Message.Information.InstallUpdate" Russian="Обновление было успешно загружено! Нажмите ОК, чтобы начать установку. После успешной установки новой версии программа автоматически запустится."/>
   <Local Name="Message.Error.ConnectionSetting.Input.ServerEmpty" Russian="В настройках подключения к базе данных не указан сервер."/>
   <Local Name="Message.Error.ConnectionSetting.Input.PortEmpty" Russian="В настройках подключения к базе данных не указан порт."/>
   <Local Name="Message.Error.ConnectionSetting.Input.DatabaseNameEmpty" Russian="В настройках подключения к базе данных не указано имя базы данных."/>
@@ -129,6 +130,8 @@
   <Local Name="Message.Error.MetaUserSelect" Russian="Не удалось загрузить данные пользователя: %1"/>
   <Local Name="Message.Error.NotFoundUserWithLogin" Russian="Пользователь с логином &quot;%1&quot; не найден. Убедитесь, что Вы правильно ввели свой логин или обратитесь к системному администратору."/>
   <Local Name="Message.Error.PasswordsNotEqual" Russian="Пароли не совпадают!"/>
+  <Local Name="Message.Error.DownloadUpdate" Russian="Не удалось загрузить обновление!"/>
+  <Local Name="Message.Error.SaveUpdate" Russian="Не удалось сохранить файл обновления!"/>
   <Local Name="Message.Object.Delete.Cascade" Russian="Вы действительно хотите удалить выбранный объект каскадом?"/>
   <Local Name="Message.Object.Delete.Cascade.Help" Russian="ВНИМАНИЕ! При каскадном удалении, запись удаляется навсегда без возможности восстановления! Если есть свяанные записи с той, что Вы удаляете, они так же будут удалены из базы навсегда."/>
   <Local Name="Message.Objects.Delete" Russian="Вы действительно хотите пометить на удаление выбранные (%1 шт.) записи?"/>
@@ -178,7 +181,7 @@
   <Local Name="Message.Warning.CurrentTaskHaveSubTasks" Russian="Вы не можете преобразовать эту задачу в подзадачу, т.к. она имеет подзадачи."/>
   <Local Name="Message.Warning.SelectedTaskIsSubTasks" Russian="Выбранная задача является подзадачей!"/>
   <Local Name="Message.Warning.SaveObjectFromContinue" Russian="Сохраните запись для продолжения."/>
-  <Local Name="Message.Warning.StartInstallUpdate" Russian="ВНИМАНИЕ! Программа обнаружила обновление, но запустить его установку в автоматическом режиме не удалось. Вы можете установить обновление программы самостоятельно. Путь к установочному файлу:&#10;%1"/>
+  <Local Name="Message.Warning.StartInstallUpdate" Russian="Не удалось запустить установку обновление в автоматическом режиме. Вы можете установить обновление программы самостоятельно. Путь к установочному файлу:&#10;%1"/>
   <Local Name="Message.Warning.ActiveSettingDatabase" Russian="Не удалось установить активный профиль настроек базы данных."/>
   <Local Name="Message.Warning.NotGettingMetaReport" Russian="Не удалось получить мета-отчёт."/>
   <Local Name="Message.Warning.OneFieldNotFill" Russian="Одно из полей не заполнено"/>
@@ -221,6 +224,7 @@
   <Local Name="Message.Question.CloseInsetingTaskFile" Russian="Остановить прикрепление файлов к задаче?"/>
   <Local Name="Message.Question.CloseInsetingTaskFile.DetailedText" Russian="Добавлено: %1&#10;Осталось добавить: %2&#10;Всего: %3"/>
   <Local Name="Message.Question.TaskCheckListDelete" Russian="Удалить пункт?"/>
+  <Local Name="Message.Question.UpdateAvailable" Russian="Доступно обновление программы. Загрузить его?"/>
 
   <!--DaData-->
   <Local Name="DaData.NotFound.Organization" Russian="Организация по таком ИНН не найдена"/>
@@ -288,6 +292,8 @@
   <Local Name="ProtocolCard" Russian="Протокол карточки"/>
   <Local Name="ProtocolUser" Russian="Протокол пользователя"/>
   <Local Name="ConnectingToServer" Russian="Подключение к серверу..."/>
+  <Local Name="UploadingUpdate" Russian="Загрузка обновления..."/>
+  <Local Name="SavingUpdate" Russian="Сохранение обновления..."/>
   <Local Name="CloseTab" Russian="Закрыть вкладку"/>
   <Local Name="CloseOtherTabs" Russian="Закрыть другие вкладки"/>
   <Local Name="CloseAllTabs" Russian="Закрыть все вкладки"/>
@@ -365,8 +371,6 @@
   <Local Name="SelectDialog.Title.Single" Russian="Выберите одну запись из списка ниже"/>
   <Local Name="SelectDialog.Title.Multi" Russian="Выберите несколько записей из списка ниже"/>
   <Local Name="ImageSize" Russian="Размер изображения"/>
-  <Local Name="CapsLookActivate" Russian="CapsLook включен"/>
-  <Local Name="CurrentLayout" Russian="Текущая раскладка"/>
   <Local Name="BuildingListResult" Russian="Построение списка..."/>
   <Local Name="RememberMe" Russian="Запомнить меня"/>
   <Local Name="RememberMe.ToolTip" Russian="Программа не запоминает пароль в целях безопастности."/>

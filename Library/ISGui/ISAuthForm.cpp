@@ -15,7 +15,7 @@
 #include "ISLogger.h"
 #include "ISSystem.h"
 #include "ISObjects.h"
-//-----------------------------------------------------------------------------
+#include "ISProcessForm.h"
 #include "ISTcpConnector.h"
 #include "ISTcpQuery.h"
 //-----------------------------------------------------------------------------
@@ -32,64 +32,36 @@ ISAuthForm::ISAuthForm()
 	LableImage->setPixmap(BUFFER_PIXMAPS("BannerLogoAuth"));
 	GetMainLayout()->addWidget(LableImage);
 
-	QVBoxLayout *Layout = new QVBoxLayout();
-	Layout->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);
-	GetMainLayout()->addLayout(Layout);
+	QVBoxLayout *LayoutFields = new QVBoxLayout();
+	LayoutFields->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);
+	GetMainLayout()->addLayout(LayoutFields);
 
-	Layout->addWidget(new QLabel(LANG("InputLoginAndPassword") + ':', this));
+	LayoutFields->addWidget(new QLabel(LANG("InputLoginAndPassword") + ':', this));
 
 	EditLogin = new ISLineEdit(this);
 	EditLogin->SetPlaceholderText(LANG("Login"));
 	EditLogin->SetIcon(BUFFER_ICONS("Auth.Login"));
 	EditLogin->SetRegExp(REG_EXP_LOGIN);
-	Layout->addWidget(EditLogin);
+	LayoutFields->addWidget(EditLogin);
 
 	EditPassword = new ISPasswordEdit(this);
 	EditPassword->SetPlaceholderText(LANG("Password"));
 	EditPassword->SetVisibleGenerate(false);
 	EditPassword->SetIcon(BUFFER_ICONS("Auth.Password"));
 	EditPassword->SetVisibleCheckBox(false);
-	Layout->addWidget(EditPassword);
-
-	QHBoxLayout *LayoutLabels = new QHBoxLayout();
-	LayoutLabels->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_NULL);
-	Layout->addLayout(LayoutLabels);
+	LayoutFields->addWidget(EditPassword);
 
 	CheckRememberUser = new ISCheckEdit(this);
 	CheckRememberUser->SetText(LANG("RememberMe"));
 	CheckRememberUser->SetToolTip(LANG("RememberMe.ToolTip"));
 	CheckRememberUser->SetValue(CONFIG_BOOL(CONST_CONFIG_REMEMBER_USER_INCLUDE));
-	LayoutLabels->addWidget(CheckRememberUser);
+	LayoutFields->addWidget(CheckRememberUser);
 
-	LabelCapsLook = new QLabel(this);
-	LabelCapsLook->setFont(ISDefines::Gui::FONT_TAHOMA_8_BOLD);
-	LayoutLabels->addWidget(LabelCapsLook);
+	LayoutFields->addSpacerItem(new QSpacerItem(0, 55));
 
-	LayoutLabels->addStretch();
-
-	LabelLang = new QLabel(this);
-	LabelLang->setToolTip(LANG("CurrentLayout"));
-	LabelLang->setCursor(CURSOR_WHATS_THIS);
-	ISGui::SetFontWidgetBold(LabelLang, true);
-	ISGui::SetFontWidgetUnderline(LabelLang, true);
-	LayoutLabels->addWidget(LabelLang);
-
-	Layout->addSpacerItem(new QSpacerItem(0, 55));
-
-	LabelConnectToDatabase = new QLabel(this);
-	Layout->addWidget(LabelConnectToDatabase, 0, Qt::AlignRight);
-
-	QHBoxLayout *LayoutBottom = new QHBoxLayout();
-	Layout->addLayout(LayoutBottom);
-
-	ButtonMenu = new ISServiceButton(BUFFER_ICONS("Auth.Additionally"), LANG("Additionally"), this);
-	ButtonMenu->setMenu(new QMenu(ButtonMenu));
-	LayoutBottom->addWidget(ButtonMenu);
-
-	ButtonMenu->menu()->addAction(BUFFER_ICONS("DatabaseConnection"), LANG("Form.Authorization.ConnectionSettings"), this, &ISAuthForm::ShowConnectionForm, Qt::Key_F9);
-	ButtonMenu->menu()->addAction(BUFFER_ICONS("About"), LANG("Form.Authorization.About"), this, &ISAuthForm::ShowAboutForm, Qt::Key_F1);
-
-	LayoutBottom->addStretch();
+	QHBoxLayout *LayoutIndicator = new QHBoxLayout();
+	LayoutIndicator->addStretch();
+	LayoutFields->addLayout(LayoutIndicator);
 
 	WaitWidget = new ISWaitWidget(this, false, false);
 	WaitWidget->SetRoundness(70);
@@ -100,7 +72,22 @@ ISAuthForm::ISAuthForm()
 	WaitWidget->SetLineWidth(2);
 	WaitWidget->SetInnerRadius(4);
 	WaitWidget->SetRevolutionsPerSecond(2);
-	LayoutBottom->addWidget(WaitWidget);
+	LayoutIndicator->addWidget(WaitWidget);
+
+	LabelIndicator = new QLabel(this);
+	LayoutIndicator->addWidget(LabelIndicator);
+
+	QHBoxLayout *LayoutBottom = new QHBoxLayout();
+	LayoutFields->addLayout(LayoutBottom);
+
+	ButtonMenu = new ISServiceButton(BUFFER_ICONS("Auth.Additionally"), LANG("Additionally"), this);
+	ButtonMenu->setMenu(new QMenu(ButtonMenu));
+	LayoutBottom->addWidget(ButtonMenu);
+
+	ButtonMenu->menu()->addAction(BUFFER_ICONS("DatabaseConnection"), LANG("Form.Authorization.ConnectionSettings"), this, &ISAuthForm::ShowConnectionForm, Qt::Key_F9);
+	ButtonMenu->menu()->addAction(BUFFER_ICONS("About"), LANG("Form.Authorization.About"), this, &ISAuthForm::ShowAboutForm, Qt::Key_F1);
+
+	LayoutBottom->addStretch();
 
 	ButtonInput = new ISPushButton(BUFFER_ICONS("Apply.Blue"), LANG("Input"), this);
 	ButtonInput->setToolTip(LANG("Input.ToolTip"));
@@ -148,56 +135,13 @@ void ISAuthForm::closeEvent(QCloseEvent *CloseEvent)
 	}
 	else
 	{
-		TimerCapsLook->stop();
-		TimerLang->stop();
 		ISInterfaceDialogForm::closeEvent(CloseEvent);
 	}
-}
-//-----------------------------------------------------------------------------
-void ISAuthForm::AfterShowEvent()
-{
-	ISInterfaceDialogForm::AfterShowEvent();
-
-	TimerCapsLook = new QTimer(this);
-	connect(TimerCapsLook, &QTimer::timeout, this, &ISAuthForm::TimeoutCapsLook);
-	TimerCapsLook->start(200);
-
-	TimerLang = new QTimer(this);
-	connect(TimerLang, &QTimer::timeout, this, &ISAuthForm::TimeoutLang);
-	TimerLang->start(200);
 }
 //-----------------------------------------------------------------------------
 void ISAuthForm::EnterClicked()
 {
 	Input();
-}
-//-----------------------------------------------------------------------------
-void ISAuthForm::TimeoutCapsLook()
-{
-	if (ISGui::CheckPressCapsLook())
-	{
-		if (LabelCapsLook->text().isEmpty())
-		{
-			LabelCapsLook->setText(LANG("CapsLookActivate"));
-		}
-	}
-	else
-	{
-		LabelCapsLook->setText(QString());
-	}
-}
-//-----------------------------------------------------------------------------
-void ISAuthForm::TimeoutLang()
-{
-	QString LayoutName = ISGui::GetCurrentLayoutName();
-	if (LayoutName == "ENG")
-	{
-		LabelLang->setText("EN");
-	}
-	else if (LayoutName == "RUS")
-	{
-		LabelLang->setText("RU");
-	}
 }
 //-----------------------------------------------------------------------------
 void ISAuthForm::ShowConnectionForm()
@@ -234,49 +178,82 @@ void ISAuthForm::InputOld()
 //-----------------------------------------------------------------------------
 void ISAuthForm::InputNew()
 {
-	SetConnecting(true);
 	if (!ISDatabase::Instance().GetDB(CONNECTION_DEFAULT).isOpen()) //Если подключения ещё нет - подключаемся
 	{
 		if (!ISDatabase::Instance().Connect(CONNECTION_DEFAULT,
 			CONFIG_STRING(CONST_CONFIG_CONNECTION_SERVER), CONFIG_INT(CONST_CONFIG_CONNECTION_PORT), CONFIG_STRING(CONST_CONFIG_CONNECTION_DATABASE),
 			EditLogin->GetValue().toString(), EditPassword->GetValue().toString())) //Если подключение к базе данных установлено
 		{
-			SetConnecting(false);
+			ISMessageBox::ShowCritical(this, ISDatabase::Instance().GetErrorString());
 			return;
 		}
 	}
 
 	if (!ISTcpConnector::Instance().Connect(CONFIG_STRING(CONST_CONFIG_CONNECTION_SERVER), CONFIG_INT("Protocol/Port"))) //Ошибка подключения к карату
 	{
-		SetConnecting(false);
 		ISMessageBox::ShowCritical(this, LANG("Message.Error.ConnectToServer"), ISTcpConnector::Instance().GetErrorString());
 		return;
 	}
 
 	ISTcpQuery qAuth(API_AUTH);
 	qAuth.BindValue("Hash", ISSystem::StringToSha256(EditLogin->GetValue().toString() + EditPassword->GetValue().toString()));
+	qAuth.BindValue("Version", ISVersionInfo::Instance().ToString());
 	if (qAuth.Execute()) //Авторизация прошла успешно
 	{
-		SetConnecting(false);
-		SetResult(true);
-		hide();
-		ISMetaUser::Instance().UserData.System = qAuth.GetAnswer()["UserIsSystem"].toBool();
-		ISMetaUser::Instance().UserData.ID = qAuth.GetAnswer()["UserID"].toUInt();
-		ISMetaUser::Instance().UserData.FIO = qAuth.GetAnswer()["UserFIO"].toString();
+		QVariantMap AnswerMap = qAuth.GetAnswer();
+		if (AnswerMap["IsNeedUpdate"].toBool()) //Если требуется обновление - предлагаем скачать и установить
+		{
+			if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.UpdateAvailable"))) //Пользователь согласился
+			{
+				ISProcessForm ProcessForm(LANG("UploadingUpdate"), this);
+				ProcessForm.show();
+				if (qAuth.Execute(API_GET_LAST_CLIENT)) //Запрос на обновление прошёл успешно
+				{
+					ProcessForm.SetText(LANG("SavingUpdate"));
+					AnswerMap = qAuth.GetAnswer();
+					QFile File(QCoreApplication::applicationDirPath() + "/Temp/" + AnswerMap["FileName"].toString());
+					if (File.open(QIODevice::WriteOnly))
+					{
+						File.write(QByteArray::fromBase64(AnswerMap["Data"].toByteArray()));
+						File.close();
+						ProcessForm.hide();
+						ISMessageBox::ShowInformation(this, LANG("Message.Information.InstallUpdate"));
+						if (!QProcess::startDetached(File.fileName(), QStringList() << "/SILENT" << "/NOCANCEL" << "/NORESTART")) //Не удалось запустить установку
+						{
+							ISMessageBox::ShowWarning(this, LANG("Message.Warning.StartInstallUpdate").arg(File.fileName()));
+						}
+						close();
+						return;
+					}
+					else //Не удалось сохранить обновление
+					{
+						ISMessageBox::ShowCritical(&ProcessForm, LANG("Message.Error.SaveUpdate"), File.errorString());
+					}
+				}
+				else //Ошибка запроса на обновление
+				{
+					ISMessageBox::ShowCritical(&ProcessForm, LANG("Message.Error.DownloadUpdate"), qAuth.GetErrorString());
+				}
+			}
+		}
+		ISMetaUser::Instance().UserData.System = AnswerMap["UserIsSystem"].toBool();
+		ISMetaUser::Instance().UserData.ID = AnswerMap["UserID"].toUInt();
+		ISMetaUser::Instance().UserData.FIO = AnswerMap["UserFIO"].toString();
 		ISMetaUser::Instance().UserData.Login = EditLogin->GetValue().toString();
 		ISMetaUser::Instance().UserData.Password = EditPassword->GetValue().toString();
-		ISMetaUser::Instance().UserData.GroupID = qAuth.GetAnswer()["UserGroupID"].toUInt();
-		ISMetaUser::Instance().UserData.GroupFullAccess = qAuth.GetAnswer()["UserGroupFullAccess"].toBool();
-		ISObjects::Instance().Info.UID = qAuth.GetAnswer()["Configuration"].toMap()["UID"];
-		ISObjects::Instance().Info.Name = qAuth.GetAnswer()["Configuration"].toMap()["Name"].toString();
-		ISObjects::Instance().Info.LocalName = qAuth.GetAnswer()["Configuration"].toMap()["Local"].toString();
-		ISObjects::Instance().Info.DesktopForm = qAuth.GetAnswer()["Configuration"].toMap()["Desktop"].toString();
-		ISObjects::Instance().Info.LogoName = qAuth.GetAnswer()["Configuration"].toMap()["Logo"].toString();
+		ISMetaUser::Instance().UserData.GroupID = AnswerMap["UserGroupID"].toUInt();
+		ISMetaUser::Instance().UserData.GroupFullAccess = AnswerMap["UserGroupFullAccess"].toBool();
+		ISObjects::Instance().Info.UID = AnswerMap["Configuration"].toMap()["UID"];
+		ISObjects::Instance().Info.Name = AnswerMap["Configuration"].toMap()["Name"].toString();
+		ISObjects::Instance().Info.LocalName = AnswerMap["Configuration"].toMap()["Local"].toString();
+		ISObjects::Instance().Info.DesktopForm = AnswerMap["Configuration"].toMap()["Desktop"].toString();
+		ISObjects::Instance().Info.LogoName = AnswerMap["Configuration"].toMap()["Logo"].toString();
+		SetResult(true);
+		hide();
 		close();
 	}
 	else //Ошибка авторизации
 	{
-		SetConnecting(false);
 		ISMessageBox::ShowCritical(this, LANG("Message.Error.Auth"), qAuth.GetErrorString());
 	}
 }
@@ -327,7 +304,7 @@ void ISAuthForm::SetConnecting(bool Connecting)
 {
 	ConnectingState = Connecting;
 	ConnectingState ? WaitWidget->Start() : WaitWidget->Stop();
-	ConnectingState ? LabelConnectToDatabase->setText(LANG("ConnectingToServer")) : LabelConnectToDatabase->clear();
+	ConnectingState ? LabelIndicator->setText(LANG("ConnectingToServer")) : LabelIndicator->clear();
 	ISGui::SetWaitGlobalCursor(ConnectingState);
 	EditLogin->setEnabled(!ConnectingState);
 	EditPassword->setEnabled(!ConnectingState);

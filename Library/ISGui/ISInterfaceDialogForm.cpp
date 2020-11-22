@@ -1,11 +1,11 @@
 #include "ISInterfaceDialogForm.h"
 #include "ISGui.h"
 //-----------------------------------------------------------------------------
-ISInterfaceDialogForm::ISInterfaceDialogForm()
-	: ISInterfaceForm(nullptr, Qt::Dialog | Qt::WindowCloseButtonHint),
+ISInterfaceDialogForm::ISInterfaceDialogForm(QWidget *parent)
+	: ISInterfaceForm(parent, Qt::Dialog | Qt::WindowCloseButtonHint),
 	Result(false)
 {
-	
+	connect(this, &ISInterfaceDialogForm::Accept, &EventLoop, &QEventLoop::quit);
 }
 //-----------------------------------------------------------------------------
 ISInterfaceDialogForm::~ISInterfaceDialogForm()
@@ -17,17 +17,12 @@ bool ISInterfaceDialogForm::Exec()
 {
 	setAttribute(Qt::WA_DeleteOnClose, false);
 	setAttribute(Qt::WA_ShowModal, true);
-
 	if (!IsShowed())
 	{
 		ISGui::MoveWidgetToDesktop(this, ISNamespace::MWD_Center);
 		show();
 	}
-	
-	QEventLoop EventLoop;
-	connect(this, &ISInterfaceDialogForm::Accept, &EventLoop, &QEventLoop::quit);
 	EventLoop.exec(QEventLoop::DialogExec);
-
 	setAttribute(Qt::WA_ShowModal, false);
 	return Result;
 }

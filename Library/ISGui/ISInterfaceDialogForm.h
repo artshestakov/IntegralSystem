@@ -12,7 +12,7 @@ signals:
 	void Accept();
 
 public:
-	ISInterfaceDialogForm();
+	ISInterfaceDialogForm(QWidget *parent = 0);
 	virtual ~ISInterfaceDialogForm();
 	
 	virtual bool Exec();
@@ -26,6 +26,7 @@ protected:
 
 private:
 	bool Result;
+	QEventLoop EventLoop;
 };
 //-----------------------------------------------------------------------------
 #endif

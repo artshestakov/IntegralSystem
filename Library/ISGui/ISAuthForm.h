@@ -18,10 +18,8 @@ protected:
 	void closeEvent(QCloseEvent *CloseEvent);
 
 private:
-	void AfterShowEvent() override;
 	void EnterClicked() override;
 	void TimeoutCapsLook();
-	void TimeoutLang();
 
 	void ShowConnectionForm(); //Открытие формы настроек подключения
 	void ShowAboutForm(); //Открыть форму "О программе"
@@ -42,16 +40,12 @@ private:
 	ISLineEdit *EditLogin;
 	ISPasswordEdit *EditPassword;
 	ISCheckEdit *CheckRememberUser;
-	QLabel *LabelCapsLook;
-	QLabel *LabelLang;
-	QLabel *LabelConnectToDatabase;
+	QLabel *LabelIndicator;
 	ISServiceButton *ButtonMenu;
 	ISWaitWidget *WaitWidget;
 	ISPushButton *ButtonInput;
 	ISPushButton *ButtonExit;
 	ISAuthConnector *AuthConnector;
 	bool ConnectingState;
-	QTimer *TimerCapsLook;
-	QTimer *TimerLang;
 };
 //-----------------------------------------------------------------------------

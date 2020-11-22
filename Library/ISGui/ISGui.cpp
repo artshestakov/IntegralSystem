@@ -148,34 +148,6 @@ bool ISGui::CheckAdminRole()
 	return Result;
 }
 //-----------------------------------------------------------------------------
-bool ISGui::CheckPressCapsLook()
-{
-#ifdef WIN32
-	return GetKeyState(VK_CAPITAL) == 1 ? true : false;
-#endif
-}
-//-----------------------------------------------------------------------------
-QString ISGui::GetCurrentLayoutName()
-{
-	QString Result;
-
-#ifdef WIN32
-	char LayoutName[KL_NAMELENGTH];
-	BOOL Ok = GetKeyboardLayoutName(LayoutName);
-	if (Ok == TRUE)
-	{
-		switch (std::atoi(LayoutName))
-		{
-		case 409: Result = "ENG"; break;
-		case 419: Result = "RUS"; break;
-		default: Result = "UNKNOWN"; break;
-		}
-	}
-#endif
-
-	return Result;
-}
-//-----------------------------------------------------------------------------
 void ISGui::RepaintWidget(QWidget *Widget, bool AdjustSize)
 {
 	if (Widget)
