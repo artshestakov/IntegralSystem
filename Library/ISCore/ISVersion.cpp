@@ -103,15 +103,15 @@ bool operator<=(const ISVersion &v1, const ISVersion &v2)
 //-----------------------------------------------------------------------------
 bool operator>(const ISVersion &v1, const ISVersion &v2)
 {
-	return v1.Major > v2.Major &&
-		v1.Minor > v2.Minor &&
+	return v1.Major > v2.Major ||
+		v1.Minor > v2.Minor ||
 		v1.Revision > v2.Revision;
 }
 //-----------------------------------------------------------------------------
 bool operator<(const ISVersion &v1, const ISVersion &v2)
 {
-	return v1.Major < v2.Major &&
-		v1.Minor < v2.Minor &&
+	return v1.Major < v2.Major ||
+		v1.Minor < v2.Minor ||
 		v1.Revision < v2.Revision;
 }
 //-----------------------------------------------------------------------------
