@@ -6,6 +6,7 @@
 #include "ISAlgorithm.h"
 #include "ISVersionInfo.h"
 #include "ISLocalization.h"
+#include "ISLogger.h"
 //-----------------------------------------------------------------------------
 ISTcpQuery::ISTcpQuery(const QString &query_type)
 	: ErrorString(NO_ERROR_STRING),
@@ -38,15 +39,16 @@ bool ISTcpQuery::Execute(const QString &query_type)
 bool ISTcpQuery::Execute()
 {
 	//Формируем запрос (тип запроса, его параметры и системные поля)
+	ISLOGGER_I(__CLASS__, QString("Build \"%1\"").arg(QueryType));
 	QByteArray ByteArray = ISSystem::VariantMapToJsonString(
 	{
 		{ "Type", QueryType },
 		{ "Parameters", Parameters },
 		{
 			"System", QVariantMap
-	{
-		{ "Version", ISVersionInfo::Instance().ToString() }
-	}
+			{
+				{ "Version", ISVersionInfo::Instance().ToString() }
+			}
 		}
 	}, QJsonDocument::Compact);
 	ByteArray.insert(0, QString("%1.").arg(ByteArray.size()));
@@ -54,22 +56,27 @@ bool ISTcpQuery::Execute()
 	//Проверяем наличие соединения
 	if (!ISTcpConnector::Instance().IsConnected())
 	{
+		ISLOGGER_E(__CLASS__, "Not connected to host");
 		ErrorString = LANG("NotConnectToServer");
 		return false;
 	}
 
 	//Получаем сокет и отправляем на него запрос
+	ISLOGGER_I(__CLASS__, "Sending query...");
 	QTcpSocket *TcpSocket = ISTcpConnector::Instance().GetSocket();
 	if (TcpSocket->write(ByteArray) != ByteArray.size())
 	{
 		ErrorString = TcpSocket->errorString();
+		ISLOGGER_E(__CLASS__, "Error sending: " + ErrorString);
 		return false;
 	}
 	ISTcp::WaitForBytesWritten(TcpSocket); //Ждём пока данные уйдут
+	ISLOGGER_I(__CLASS__, "Sended");
 
 	ByteArray.clear();
 	int AnswerSize = 0;
 
+	ISLOGGER_I(__CLASS__, "Wait answer...");
 	while (true) //Ждём пока не придёт ответ
 	{
 		ISSleep(1);
@@ -84,12 +91,14 @@ bool ISTcpQuery::Execute()
 				if (!Ok) //Не удалось вытащить размер ответа
 				{
 					ErrorString = "Error getting answer size";
+					ISLOGGER_E(__CLASS__, ErrorString);
 					return false;
 				}
 			}
 
 			if (ByteArray.size() == AnswerSize) //Запрос пришёл полностью - выходим из цикла
 			{
+				ISLOGGER_I(__CLASS__, "Waited");
 				break;
 			}
 		}
