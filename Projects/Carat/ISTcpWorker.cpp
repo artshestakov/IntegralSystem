@@ -953,6 +953,7 @@ bool ISTcpWorker::GetLastClient(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer
 	File.close();
 
 	//Конвертируем в base64 и отдаём
+	TcpAnswer->Parameters["FileName"] = QFileInfo(FilePath).fileName();
 	TcpAnswer->Parameters["Data"] = ByteArray.toBase64();
 	return true;
 }
