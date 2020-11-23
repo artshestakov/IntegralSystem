@@ -107,9 +107,9 @@ static QString QU_USER_HASH = PREPARE_QUERY("UPDATE _users SET "
 											"usrs_hash = :Hash "
 											"WHERE usrs_id = :UserID");
 //-----------------------------------------------------------------------------
-static QString QS_USER_HASH_IS_EQUAL = PREPARE_QUERY("SELECT usrs_hash = :Hash AS is_equal "
-													 "FROM _users "
-													 "WHERE usrs_id = :UserID");
+static QString QS_USER_HASH_CHECK = PREPARE_QUERY("SELECT usrs_hash = :HashOld AS current_hash_is_valid, usrs_hash = :Hash AS hash_old_and_new_is_equal "
+												  "FROM _users "
+												  "WHERE usrs_id = :UserID");
 //-----------------------------------------------------------------------------
 static QString QS_ASTERISK_RECORD = PREPARE_QUERY("SELECT ascl_uniqueid "
 												  "FROM _asteriskcalls "
@@ -1027,30 +1027,39 @@ bool ISTcpWorker::UserPasswordEdit(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAns
 	Q_UNUSED(TcpAnswer);
 
 	QVariant UserID = CheckNullField("UserID", TcpMessage->Parameters),
+		HashOld = CheckNullField("HashOld", TcpMessage->Parameters),
 		Hash = CheckNullField("Hash", TcpMessage->Parameters);
-	if (!Hash.isValid() || !UserID.isValid())
+	if (!UserID.isValid() || !HashOld.isValid() || !Hash.isValid())
 	{
 		return false;
 	}
 
-	//Проверяем, не равны ли старый и новый хэши
-	ISQuery qSelectHashEqual(ISDatabase::Instance().GetDB(DBConnectionName), QS_USER_HASH_IS_EQUAL);
-	qSelectHashEqual.BindValue(":Hash", Hash);
-	qSelectHashEqual.BindValue(":UserID", UserID);
-	if (!qSelectHashEqual.Execute()) //Ошибка запроса
+	//Проверяем правильность старого хэша и не равен ли новый хэш старому
+	ISQuery qSelectHashCheck(ISDatabase::Instance().GetDB(DBConnectionName), QS_USER_HASH_CHECK);
+	qSelectHashCheck.BindValue(":HashOld", HashOld);
+	qSelectHashCheck.BindValue(":Hash", Hash);
+	qSelectHashCheck.BindValue(":UserID", UserID);
+	if (!qSelectHashCheck.Execute()) //Ошибка запроса
 	{
-		ErrorString = LANG("Carat.Error.Query.UserLoginEdit.Equal").arg(qSelectHashEqual.GetErrorString());
+		ErrorString = LANG("Carat.Error.Query.UserLoginEdit.Equal").arg(qSelectHashCheck.GetErrorString());
 		return false;
 	}
 
-	if (!qSelectHashEqual.First()) //Пользователя с таким UserID нет в БД
+	if (!qSelectHashCheck.First()) //Пользователя с таким UserID нет в БД
 	{
 		ErrorString = LANG("Carat.Error.Query.UserLoginEdit.UserNotExist").arg(UserID.toInt());
 		return false;
 	}
 
-	bool IsEqual = qSelectHashEqual.ReadColumn("is_equal").toBool();
-	if (IsEqual) //Если хэши равны - считаем это ошибкой
+	bool CurrentHashIsValid = qSelectHashCheck.ReadColumn("current_hash_is_valid").toBool(),
+		HashOldAndNewIsEqual = qSelectHashCheck.ReadColumn("hash_old_and_new_is_equal").toBool();
+	if (!CurrentHashIsValid) //Текущий пароль неправильный
+	{
+		ErrorString = LANG("Carat.Error.Query.UserLoginEdit.InvalidCurrentPassword");
+		return false;
+	}
+
+	if (HashOldAndNewIsEqual) //Если хэши равны - считаем это ошибкой
 	{
 		ErrorString = LANG("Carat.Error.Query.UserLoginEdit.OldAndNewPasswordsEqual");
 		return false;

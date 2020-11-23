@@ -53,6 +53,7 @@
 
   <Local Name="Carat.Error.Query.UserLoginEdit.Equal" Russian="Не удалось проверить старый пароль: %1"/>
   <Local Name="Carat.Error.Query.UserLoginEdit.UserNotExist" Russian="Пользователь с идентификатором &quot;%1&quot; не существует."/>
+  <Local Name="Carat.Error.Query.UserLoginEdit.InvalidCurrentPassword" Russian="Текущий пароль неправильный."/>
   <Local Name="Carat.Error.Query.UserLoginEdit.OldAndNewPasswordsEqual" Russian="Старый и новый пароли совпадают."/>
 
   <Local Name="Carat.Error.Query.GetRecordCall.RecordDirIsEmpty" Russian="На сервере не настроена директория хранения записей разговоров."/>
