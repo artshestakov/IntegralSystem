@@ -495,6 +495,7 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 		{ "Name", ConfigurationInfo.Name },
 		{ "Local", ConfigurationInfo.LocalName },
 		{ "Desktop", ConfigurationInfo.DesktopForm },
+		{ "DateExpired", ConfigurationInfo.DateExpired },
 		{ "Logo", ConfigurationInfo.LogoName }
 	};
 	return true;
