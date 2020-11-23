@@ -43,8 +43,8 @@
   <Local Name="Carat.Error.Query.GetLastClient.PathIsEmpty" Russian="На сервере не настроена директория хранения обновлений."/>
   <Local Name="Carat.Error.Query.GetLastClient.Other" Russian="Не удалось проверить наличие обновлений."/>
 
-  <Local Name="Carat.Error.Query.LoginExist.Exist" Russian="Не удалось проверить наличие логина: %1"/>
-  <Local Name="Carat.Error.Query.LoginExist.UserNotExist" Russian="Пользователь с идентификатором &quot;%1&quot; не существует."/>
+  <Local Name="Carat.Error.Query.UserLoginExist.CheckExistHash" Russian="Не удалось проверить наличие пароля: %1"/>
+  <Local Name="Carat.Error.Query.UserLoginExist.UserNotExist" Russian="Пользователь с идентификатором &quot;%1&quot; не существует."/>
 
   <Local Name="Carat.Error.Query.UserLoginCreate.CheckExistHash" Russian="Не удалось проверить наличие пароля: %1"/>
   <Local Name="Carat.Error.Query.UserLoginCreate.UserNotExist" Russian="Пользователь с идентификатором &quot;%1&quot; не существует."/>

@@ -187,10 +187,6 @@ ISNamespace::ApiMessageType ISTcpSocket::GetMessageType(const QString &TypeName)
 	{
 		return ISNamespace::AMT_GetMetaData;
 	}
-	else if (TypeName == API_TEST)
-	{
-		return ISNamespace::AMT_Test;
-	}
 	else if (TypeName == API_GET_LAST_CLIENT)
 	{
 		return ISNamespace::AMT_GetLastClient;

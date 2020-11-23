@@ -247,7 +247,6 @@ void ISTcpWorker::Process()
 					case ISNamespace::AMT_Auth: Result = Auth(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_Sleep: Result = Sleep(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_GetMetaData: Result = GetMetaData(tcp_message, TcpAnswer); break;
-					case ISNamespace::AMT_Test: Result = Test(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_GetLastClient: Result = GetLastClient(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_UserPasswordExist: Result = UserPasswordExist(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_UserPasswordCreate: Result = UserPasswordCreate(tcp_message, TcpAnswer); break;
@@ -886,13 +885,6 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	return true;
 }
 //-----------------------------------------------------------------------------
-bool ISTcpWorker::Test(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
-{
-	Q_UNUSED(TcpMessage);
-	Q_UNUSED(TcpAnswer);
-	return true;
-}
-//-----------------------------------------------------------------------------
 bool ISTcpWorker::GetLastClient(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
 	Q_UNUSED(TcpMessage);
@@ -970,18 +962,17 @@ bool ISTcpWorker::UserPasswordExist(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAn
 
 	ISQuery qSelectHashIsNull(ISDatabase::Instance().GetDB(DBConnectionName), QS_USER_HASH_IS_NULL);
 	qSelectHashIsNull.BindValue(":UserID", UserID);
-	if (!qSelectHashIsNull.Execute())
+	if (!qSelectHashIsNull.Execute()) //Не удалось проверить хэш
 	{
-		ErrorString = LANG("Carat.Error.Query.LoginExist.Exist").arg(qSelectHashIsNull.GetErrorString());
+		ErrorString = LANG("Carat.Error.Query.UserLoginExist.CheckExistHash").arg(qSelectHashIsNull.GetErrorString());
 		return false;
 	}
 
-	if (!qSelectHashIsNull.First())
+	if (!qSelectHashIsNull.First()) //Не удалось перейти на первую строку, т.к. пользователя с таким UserID не существует
 	{
-		ErrorString = LANG("Carat.Error.Query.LoginExist.UserNotExist").arg(UserID.toInt());
+		ErrorString = LANG("Carat.Error.Query.UserLoginExist.UserNotExist").arg(UserID.toInt());
 		return false;
 	}
-
 	TcpAnswer->Parameters["IsExist"] = !qSelectHashIsNull.ReadColumn("is_null").toBool();
 	return true;
 }

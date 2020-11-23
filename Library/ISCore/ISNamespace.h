@@ -167,9 +167,8 @@ namespace ISNamespace
 		AMT_Auth, //Авторизация
 		AMT_Sleep, //Ожидание
 		AMT_GetMetaData, //Получить мета-данные
-		AMT_Test, //Тестовый метод
 		AMT_GetLastClient, //Получить последнюю версию клиента
-		AMT_UserPasswordExist, //Проверка наличия логина
+		AMT_UserPasswordExist, //Проверить существование пароля
 		AMT_UserPasswordCreate, //Создание пароля пользователю
 		AMT_UserPasswordEdit, //Изменение пароля пользователя
 		AMI_GetRecordCall, //Получить запись разговора
