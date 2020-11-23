@@ -4,7 +4,7 @@
 #include "ISAssert.h"
 #include "ISLocalization.h"
 #include "ISSettingsForm.h"
-#include "ISUserHashForm.h"
+#include "ISUserPasswordForm.h"
 #include "ISMetaData.h"
 #include "ISMessageBox.h"
 #include "ISPopupMessage.h"
@@ -480,10 +480,10 @@ void ISGui::ShowSettingsForm(const QString &SettingGroupUID)
 	SettingsForm.Exec();
 }
 //-----------------------------------------------------------------------------
-void ISGui::ShowUserPasswordForm(unsigned int UserID, const QString &UserFIO)
+void ISGui::ShowUserPasswordForm(unsigned int UserID, const QString &UserFIO, const QString &UserLogin)
 {
 	SetWaitGlobalCursor(true);
-	ISUserHashForm UserPasswordForm(UserID, UserFIO);
+	ISUserPasswordForm UserPasswordForm(UserID, UserFIO, UserLogin);
 	SetWaitGlobalCursor(false);
 	UserPasswordForm.Exec();
 }

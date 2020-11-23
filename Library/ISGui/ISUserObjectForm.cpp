@@ -75,7 +75,7 @@ bool ISUserObjectForm::Save()
 		Result = ISObjectFormBase::Save();
 		if (Result)
 		{
-			ISGui::ShowUserPasswordForm(GetObjectID(), GetFieldValue("FIO").toString());
+			ISGui::ShowUserPasswordForm(GetObjectID(), GetFieldValue("FIO").toString(), GetFieldValue("Login").toString());
 		}
 	}
 	else
@@ -87,7 +87,7 @@ bool ISUserObjectForm::Save()
 //-----------------------------------------------------------------------------
 void ISUserObjectForm::PasswordManagement()
 {
-	ISGui::ShowUserPasswordForm(GetObjectID(), GetFieldValue("FIO").toString());
+	ISGui::ShowUserPasswordForm(GetObjectID(), GetFieldValue("FIO").toString(), GetFieldValue("Login").toString());
 }
 //-----------------------------------------------------------------------------
 void ISUserObjectForm::AccountLifeTimeChanged()

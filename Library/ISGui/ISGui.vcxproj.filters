@@ -444,13 +444,13 @@
     <ClCompile Include="ISTcpQuery.cpp">
       <Filter>Protocol</Filter>
     </ClCompile>
-    <ClCompile Include="ISUserHashForm.cpp">
-      <Filter>Forms</Filter>
-    </ClCompile>
     <ClCompile Include="ISAsteriskCallsListForm.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
     <ClCompile Include="ISAudioPlayerForm.cpp">
+      <Filter>Forms</Filter>
+    </ClCompile>
+    <ClCompile Include="ISUserPasswordForm.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
   </ItemGroup>
@@ -752,13 +752,13 @@
     <QtMoc Include="ISTcpConnector.h">
       <Filter>Protocol</Filter>
     </QtMoc>
-    <QtMoc Include="ISUserHashForm.h">
-      <Filter>Forms</Filter>
-    </QtMoc>
     <QtMoc Include="ISAsteriskCallsListForm.h">
       <Filter>Forms</Filter>
     </QtMoc>
     <QtMoc Include="ISAudioPlayerForm.h">
+      <Filter>Forms</Filter>
+    </QtMoc>
+    <QtMoc Include="ISUserPasswordForm.h">
       <Filter>Forms</Filter>
     </QtMoc>
   </ItemGroup>

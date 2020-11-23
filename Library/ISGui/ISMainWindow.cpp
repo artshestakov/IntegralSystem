@@ -177,7 +177,7 @@ void ISMainWindow::ShowChangePasswordForm()
 	}
 
 	SetVisibleShadow(true);
-	ISGui::ShowUserPasswordForm(CURRENT_USER_ID, ISMetaUser::Instance().UserData.FIO);
+	ISGui::ShowUserPasswordForm(CURRENT_USER_ID, ISMetaUser::Instance().UserData.FIO, ISMetaUser::Instance().UserData.Login);
 	SetVisibleShadow(false);
 }
 //-----------------------------------------------------------------------------

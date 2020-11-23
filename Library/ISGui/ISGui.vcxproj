@@ -293,7 +293,7 @@
     <ClCompile Include="ISUserGroupForm.cpp" />
     <ClCompile Include="ISUserListForm.cpp" />
     <ClCompile Include="ISUserObjectForm.cpp" />
-    <ClCompile Include="ISUserHashForm.cpp" />
+    <ClCompile Include="ISUserPasswordForm.cpp" />
     <ClCompile Include="ISUserPhotoCreator.cpp" />
     <ClCompile Include="ISUserRoleEntity.cpp" />
     <ClCompile Include="ISValidators.cpp" />
@@ -397,7 +397,7 @@
     <QtMoc Include="ISUserGroupListForm.h" />
     <QtMoc Include="ISUserListForm.h" />
     <QtMoc Include="ISUserObjectForm.h" />
-    <QtMoc Include="ISUserHashForm.h" />
+    <QtMoc Include="ISUserPasswordForm.h" />
     <QtMoc Include="ISListIndicatorWidget.h" />
     <QtMoc Include="ISCalendarEventItem.h" />
     <QtMoc Include="ISCalendarEventsWidget.h" />

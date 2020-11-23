@@ -43,7 +43,7 @@ void ISUserListForm::PasswordManagement()
 		ISMessageBox::ShowWarning(this, LANG("Message.User.ChangePassword.Postgres"));
 		return;
 	}
-	ISGui::ShowUserPasswordForm(GetCurrentRecordValue("ID").toUInt(), GetCurrentRecordValue("FIO").toString());
+	ISGui::ShowUserPasswordForm(GetCurrentRecordValue("ID").toUInt(), GetCurrentRecordValue("FIO").toString(), GetCurrentRecordValue("Login").toString());
 }
 //-----------------------------------------------------------------------------
 bool ISUserListForm::CheckThisUser()

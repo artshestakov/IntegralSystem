@@ -184,7 +184,7 @@
   <Local Name="Message.Warning.StartInstallUpdate" Russian="Не удалось запустить установку обновление в автоматическом режиме. Вы можете установить обновление программы самостоятельно. Путь к установочному файлу:&#10;%1"/>
   <Local Name="Message.Warning.ActiveSettingDatabase" Russian="Не удалось установить активный профиль настроек базы данных."/>
   <Local Name="Message.Warning.NotGettingMetaReport" Russian="Не удалось получить мета-отчёт."/>
-  <Local Name="Message.Warning.OneFieldNotFill" Russian="Одно из полей не заполнено"/>
+  <Local Name="Message.Warning.OneFieldNotFill" Russian="Одно из полей не заполнено!"/>
   <Local Name="Message.Warning.PasswordMinimumSize" Russian="Минимальная длина пароля должна быть %1 символов."/>
   <Local Name="Message.Question.ChangeUser" Russian="Сменить пользователя?"/>
   <Local Name="Message.Question.ExitApplication" Russian="Вы действительно хотите выйти из программы?"/>
@@ -334,15 +334,11 @@
   <Local Name="Defer" Russian="Отложить"/>
   <Local Name="SelectDate" Russian="Выберите дату"/>
   <Local Name="PasswordManagement" Russian="Управление паролем"/>
-  <Local Name="UserHashForm.Title.Creating" Russian="Создание логина и пароля"/>
-  <Local Name="UserHashForm.Title.Change" Russian="Изменение логина и пароля"/>
-  <Local Name="UserHashForm.CurrentLogin" Russian="Текущий логин:"/>
-  <Local Name="UserHashForm.CurrentPassword" Russian="Текущий пароль:"/>
-  <Local Name="UserHashForm.Login" Russian="Логин:"/>
-  <Local Name="UserHashForm.Login.Hint" Russian="Логин должен быть на английском языке и в нижнем регистре."/>
-  <Local Name="UserHashForm.Password" Russian="Пароль:"/>
-  <Local Name="UserHashForm.PasswordCheck" Russian="Повторите пароль:"/>
-  <Local Name="UserHashForm.LabelInfo" Russian="ВНИМАНИЕ! Пользователь, которому Вы присваиваете логин и пароль должен хранить его в надежном месте и не забывать."/>
+  <Local Name="UserPasswordForm.Title.Creating" Russian="Создание логина и пароля"/>
+  <Local Name="UserPasswordForm.Title.Change" Russian="Изменение логина и пароля"/>
+  <Local Name="UserPasswordForm.CurrentPassword" Russian="Текущий пароль:"/>
+  <Local Name="UserPasswordForm.Password" Russian="Пароль:"/>
+  <Local Name="UserPasswordForm.PasswordCheck" Russian="Повторите пароль:"/>
   <Local Name="EnterThePassword" Russian="Введите пароль"/>
   <Local Name="InputInSystem" Russian="Вход в систему"/>
   <Local Name="InputLoginAndPassword" Russian="Введите логин и пароль"/>

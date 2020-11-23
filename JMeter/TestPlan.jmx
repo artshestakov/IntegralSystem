@@ -140,8 +140,9 @@ def MapUserPasswordEdit =
 	Type: &quot;UserPasswordEdit&quot;,
 	Parameters:
 		[
-			UserID: 4,
-			Hash: GetSHA256(&quot;testov78357835&quot;)
+			UserID: 10,
+			HashOld: GetSHA256(&quot;petrov78357835&quot;),
+			Hash: GetSHA256(&quot;petrov12345678&quot;)
 		]
 ];
 vars.put(&quot;QueryUserPasswordEdit&quot;, MapToString(MapUserPasswordEdit));
