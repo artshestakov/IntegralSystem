@@ -39,8 +39,9 @@ private:
 	bool GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
 	bool Test(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
 	bool GetLastClient(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
-	bool LoginExist(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
-	bool LoginRegister(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
+	bool UserPasswordExist(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
+	bool UserPasswordCreate(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
+	bool UserPasswordEdit(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
 	bool GetRecordCall(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
 
 private:

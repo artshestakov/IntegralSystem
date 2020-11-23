@@ -195,13 +195,17 @@ ISNamespace::ApiMessageType ISTcpSocket::GetMessageType(const QString &TypeName)
 	{
 		return ISNamespace::AMT_GetLastClient;
 	}
-	else if (TypeName == API_LOGIN_REGISTER)
+	else if (TypeName == API_USER_PASSWORD_EXIST)
 	{
-		return ISNamespace::AMT_LoginRegister;
+		return ISNamespace::AMT_UserPasswordExist;
 	}
-	else if (TypeName == API_LOGIN_EXIST)
+	else if (TypeName == API_USER_PASSWORD_CREATE)
 	{
-		return ISNamespace::AMT_LoginExist;
+		return ISNamespace::AMT_UserPasswordCreate;
+	}
+	else if (TypeName == API_USER_PASSWORD_EDIT)
+	{
+		return ISNamespace::AMT_UserPasswordEdit;
 	}
 	else if (TypeName == API_GET_RECORD_CALL)
 	{

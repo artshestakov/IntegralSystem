@@ -44,13 +44,16 @@
   <Local Name="Carat.Error.Query.GetLastClient.Other" Russian="Не удалось проверить наличие обновлений."/>
 
   <Local Name="Carat.Error.Query.LoginExist.Exist" Russian="Не удалось проверить наличие логина: %1"/>
+  <Local Name="Carat.Error.Query.LoginExist.UserNotExist" Russian="Пользователь с идентификатором &quot;%1&quot; не существует."/>
 
-  <Local Name="Carat.Error.Query.LoginRegister.OldHashAndNewHashEqual" Russian="Новый пароль должен отличаться от текущего."/>
-  <Local Name="Carat.Error.Query.LoginRegister.CheckExistHash" Russian="Не удалось проверить наличие такого логина в системе: %1"/>
-  <Local Name="Carat.Error.Query.LoginRegister.InvalidCurrentHash" Russian="Текущие логин и пароль указаны неверно."/>
-  <Local Name="Carat.Error.Query.LoginRegister.HashAlreadyExist" Russian="Такой логин уже существует в системе."/>
-  <Local Name="Carat.Error.Query.LoginRegister.UserNotExist" Russian="Пользователя с идентификатором &quot;%1&quot; не существует."/>
-  <Local Name="Carat.Error.Query.LoginRegister.UpdateHash" Russian="Не удалось установить логин и пароль: %1"/>
+  <Local Name="Carat.Error.Query.UserLoginCreate.CheckExistHash" Russian="Не удалось проверить наличие пароля: %1"/>
+  <Local Name="Carat.Error.Query.UserLoginCreate.UserNotExist" Russian="Пользователь с идентификатором &quot;%1&quot; не существует."/>
+  <Local Name="Carat.Error.Query.UserLoginCreate.AlreadyExist" Russian="Пароль уже установлен."/>
+  <Local Name="Carat.Error.Query.UserLoginCreate.UpdateHash" Russian="Не удалось добавить пароль пользователю: %1"/>
+
+  <Local Name="Carat.Error.Query.UserLoginEdit.Equal" Russian="Не удалось проверить старый пароль: %1"/>
+  <Local Name="Carat.Error.Query.UserLoginEdit.UserNotExist" Russian="Пользователь с идентификатором &quot;%1&quot; не существует."/>
+  <Local Name="Carat.Error.Query.UserLoginEdit.OldAndNewPasswordsEqual" Russian="Старый и новый пароли совпадают."/>
 
   <Local Name="Carat.Error.Query.GetRecordCall.RecordDirIsEmpty" Russian="На сервере не настроена директория хранения записей разговоров."/>
   <Local Name="Carat.Error.Query.GetRecordCall.SelectUniqueID" Russian="Не удалось получить уникальный идентификатор записи разговора: %1"/>

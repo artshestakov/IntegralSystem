@@ -99,17 +99,17 @@ static QString QS_PARAGRAPH = PREPARE_QUERY("SELECT prhs_uid, prhs_name, prhs_lo
 											"WHERE NOT prhs_isdeleted "
 											"ORDER BY prhs_orderid");
 //-----------------------------------------------------------------------------
-static QString QS_USER_HASH = PREPARE_QUERY("SELECT length(usrs_hash) > 0 AS is_exist "
-											"FROM _users "
-											"WHERE usrs_id = :UserID");
-//-----------------------------------------------------------------------------
-static QString QS_CHECK_USER_HASH = PREPARE_QUERY("SELECT (COUNT(*) > 0)::BOOLEAN AS exist "
-												  "FROM _users "
-												  "WHERE usrs_hash = :Hash");
+static QString QS_USER_HASH_IS_NULL = PREPARE_QUERY("SELECT usrs_hash IS NULL AS is_null "
+													"FROM _users "
+													"WHERE usrs_id = :UserID");
 //-----------------------------------------------------------------------------
 static QString QU_USER_HASH = PREPARE_QUERY("UPDATE _users SET "
 											"usrs_hash = :Hash "
 											"WHERE usrs_id = :UserID");
+//-----------------------------------------------------------------------------
+static QString QS_USER_HASH_IS_EQUAL = PREPARE_QUERY("SELECT usrs_hash = :Hash AS is_equal "
+													 "FROM _users "
+													 "WHERE usrs_id = :UserID");
 //-----------------------------------------------------------------------------
 static QString QS_ASTERISK_RECORD = PREPARE_QUERY("SELECT ascl_uniqueid "
 												  "FROM _asteriskcalls "
@@ -249,8 +249,9 @@ void ISTcpWorker::Process()
 					case ISNamespace::AMT_GetMetaData: Result = GetMetaData(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_Test: Result = Test(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_GetLastClient: Result = GetLastClient(tcp_message, TcpAnswer); break;
-					case ISNamespace::AMT_LoginExist: Result = LoginExist(tcp_message, TcpAnswer); break;
-					case ISNamespace::AMT_LoginRegister: Result = LoginRegister(tcp_message, TcpAnswer); break;
+					case ISNamespace::AMT_UserPasswordExist: Result = UserPasswordExist(tcp_message, TcpAnswer); break;
+					case ISNamespace::AMT_UserPasswordCreate: Result = UserPasswordCreate(tcp_message, TcpAnswer); break;
+					case ISNamespace::AMT_UserPasswordEdit: Result = UserPasswordEdit(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMI_GetRecordCall: Result = GetRecordCall(tcp_message, TcpAnswer); break;
 					}
 					PerfomanceMsec = ISAlgorithm::GetTickDiff(ISAlgorithm::GetTick(), TimePoint);
@@ -386,7 +387,7 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 		return false;
 	}
 
-	if (!qSelectAuth.ExecuteFirst()) //Не нашли пользователя с таким хешем
+	if (!qSelectAuth.First()) //Не нашли пользователя с таким хешем
 	{
 		ErrorString = LANG("Carat.Error.Query.InvalidLoginOrPassword");
 		return false;
@@ -959,7 +960,7 @@ bool ISTcpWorker::GetLastClient(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer
 	return true;
 }
 //-----------------------------------------------------------------------------
-bool ISTcpWorker::LoginExist(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+bool ISTcpWorker::UserPasswordExist(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
 	QVariant UserID = CheckNullField("UserID", TcpMessage->Parameters);
 	if (!UserID.isValid())
@@ -967,100 +968,110 @@ bool ISTcpWorker::LoginExist(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 		return false;
 	}
 
-	ISQuery qSelectHash(ISDatabase::Instance().GetDB(DBConnectionName), QS_USER_HASH);
-	qSelectHash.BindValue(":UserID", UserID);
-	if (!qSelectHash.Execute())
+	ISQuery qSelectHashIsNull(ISDatabase::Instance().GetDB(DBConnectionName), QS_USER_HASH_IS_NULL);
+	qSelectHashIsNull.BindValue(":UserID", UserID);
+	if (!qSelectHashIsNull.Execute())
 	{
-		ErrorString = LANG("Carat.Error.Query.LoginExist.Exist").arg(qSelectHash.GetErrorString());
+		ErrorString = LANG("Carat.Error.Query.LoginExist.Exist").arg(qSelectHashIsNull.GetErrorString());
 		return false;
 	}
 
-	if (!qSelectHash.First())
+	if (!qSelectHashIsNull.First())
 	{
-		ErrorString = qSelectHash.GetErrorString();
+		ErrorString = LANG("Carat.Error.Query.LoginExist.UserNotExist").arg(UserID.toInt());
 		return false;
 	}
 
-	TcpAnswer->Parameters["IsExist"] = qSelectHash.ReadColumn("is_exist").toBool();
+	TcpAnswer->Parameters["IsExist"] = !qSelectHashIsNull.ReadColumn("is_null").toBool();
 	return true;
 }
 //-----------------------------------------------------------------------------
-bool ISTcpWorker::LoginRegister(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+bool ISTcpWorker::UserPasswordCreate(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
 	Q_UNUSED(TcpAnswer);
 
-	QVariant HashOld = CheckNullField("HashOld", TcpMessage->Parameters),
-		Hash = CheckNullField("Hash", TcpMessage->Parameters),
-		UserID = CheckNullField("UserID", TcpMessage->Parameters);
+	QVariant UserID = CheckNullField("UserID", TcpMessage->Parameters),
+		Hash = CheckNullField("Hash", TcpMessage->Parameters);
 	if (!Hash.isValid() || !UserID.isValid())
 	{
 		return false;
 	}
 
-	//Подготовим запрос для проверки наличия хэша заранее
-	ISQuery qSelectHash(ISDatabase::Instance().GetDB(DBConnectionName), QS_CHECK_USER_HASH);
-
-	//Если старый хэш указан - проверяем его наличие
-	if (HashOld.isValid())
+	//Проверяем не существует ли уже хэш
+	ISQuery qSelectHashIsNull(ISDatabase::Instance().GetDB(DBConnectionName), QS_USER_HASH_IS_NULL);
+	qSelectHashIsNull.BindValue(":UserID", UserID);
+	if (!qSelectHashIsNull.Execute()) //Не удалось проверить хэш
 	{
-		if (HashOld.toString() == Hash.toString()) //Если старый и новый хэши равны - значит пользователь меняет старый логин и пароль на такие же - считаем ошибкой
-		{
-			ErrorString = LANG("Carat.Error.Query.LoginRegister.OldHashAndNewHashEqual");
-			return false;
-		}
-
-		qSelectHash.BindValue(":Hash", HashOld);
-		if (!qSelectHash.Execute()) //Ошибка запроса
-		{
-			ErrorString = LANG("Carat.Error.Query.LoginRegister.CheckExistHash").arg(qSelectHash.GetErrorString());
-			return false;
-		}
-		if (!qSelectHash.First())
-		{
-			ErrorString = qSelectHash.GetErrorString();
-			return false;
-		}
-		if (!qSelectHash.ReadColumn("exist").toBool()) //Не нашли хэш по текущему логину и паролю - значит пользователь ввел неправильные логин и пароль
-		{
-			ErrorString = LANG("Carat.Error.Query.LoginRegister.InvalidCurrentHash");
-			return false;
-		}
-	}
-
-	//Проверяем наличие хэша (нового, в случае если пользователь меняет логин или пароль)
-	qSelectHash.BindValue(":Hash", Hash);
-	if (!qSelectHash.Execute()) //Ошибка запроса
-	{
-		ErrorString = LANG("Carat.Error.Query.LoginRegister.CheckExistHash").arg(qSelectHash.GetErrorString());
-		return false;
-	}
-	if (!qSelectHash.First())
-	{
-		ErrorString = qSelectHash.GetErrorString();
-		return false;
-	}
-	bool Exist = qSelectHash.ReadColumn("exist").toBool();
-	if (Exist) //Если такой хэш уже есть в БД - отказываем в регистрации
-	{
-		ErrorString = LANG("Carat.Error.Query.LoginRegister.HashAlreadyExist");
+		ErrorString = LANG("Carat.Error.Query.UserLoginCreate.CheckExistHash").arg(qSelectHashIsNull.GetErrorString());
 		return false;
 	}
 
-	//Обновляем хэш
+	if (!qSelectHashIsNull.First()) //Не удалось перейти на первую строку, т.к. пользователя с таким UserID не существует
+	{
+		ErrorString = LANG("Carat.Error.Query.UserLoginCreate.UserNotExist").arg(UserID.toInt());
+		return false;
+	}
+
+	bool IsNullHash = qSelectHashIsNull.ReadColumn("is_null").toBool();
+	if (!IsNullHash) //Хэш уже есть - считаем ошибкой
+	{
+		ErrorString = LANG("Carat.Error.Query.UserLoginCreate.AlreadyExist");
+		return false;
+	}
+
+	//Устанавливаем пароль
 	ISQuery qUpdateHash(ISDatabase::Instance().GetDB(DBConnectionName), QU_USER_HASH);
 	qUpdateHash.BindValue(":Hash", Hash);
 	qUpdateHash.BindValue(":UserID", UserID);
-	if (qUpdateHash.Execute())
+	if (!qUpdateHash.Execute())
 	{
-		if (!qUpdateHash.GetCountAffected()) //Если при обновлении ни одна строка не была затронута - значит пользователя с таким идентификатором нет
-		{
-			ErrorString = LANG("Carat.Error.Query.LoginRegister.UserNotExist").arg(UserID.toInt());
-			return false;
-		}
+		ErrorString = LANG("Carat.Error.Query.UserLoginCreate.UpdateHash").arg(qUpdateHash.GetErrorString());
+		return false;
 	}
-	else
+	return true;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::UserPasswordEdit(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+	Q_UNUSED(TcpAnswer);
+
+	QVariant UserID = CheckNullField("UserID", TcpMessage->Parameters),
+		Hash = CheckNullField("Hash", TcpMessage->Parameters);
+	if (!Hash.isValid() || !UserID.isValid())
 	{
-		ErrorString = LANG("Carat.Error.Query.LoginRegister.UpdateHash").arg(qUpdateHash.GetErrorString());
+		return false;
+	}
+
+	//Проверяем, не равны ли старый и новый хэши
+	ISQuery qSelectHashEqual(ISDatabase::Instance().GetDB(DBConnectionName), QS_USER_HASH_IS_EQUAL);
+	qSelectHashEqual.BindValue(":Hash", Hash);
+	qSelectHashEqual.BindValue(":UserID", UserID);
+	if (!qSelectHashEqual.Execute()) //Ошибка запроса
+	{
+		ErrorString = LANG("Carat.Error.Query.UserLoginEdit.Equal").arg(qSelectHashEqual.GetErrorString());
+		return false;
+	}
+
+	if (!qSelectHashEqual.First()) //Пользователя с таким UserID нет в БД
+	{
+		ErrorString = LANG("Carat.Error.Query.UserLoginEdit.UserNotExist").arg(UserID.toInt());
+		return false;
+	}
+
+	bool IsEqual = qSelectHashEqual.ReadColumn("is_equal").toBool();
+	if (IsEqual) //Если хэши равны - считаем это ошибкой
+	{
+		ErrorString = LANG("Carat.Error.Query.UserLoginEdit.OldAndNewPasswordsEqual");
+		return false;
+	}
+
+	//Обновляем пароль
+	ISQuery qUpdateHash(ISDatabase::Instance().GetDB(DBConnectionName), QU_USER_HASH);
+	qUpdateHash.BindValue(":Hash", Hash);
+	qUpdateHash.BindValue(":UserID", UserID);
+	if (!qUpdateHash.Execute())
+	{
+		ErrorString = LANG("Carat.Error.Query.UserLoginCreate.UpdateHash").arg(qUpdateHash.GetErrorString());
 		return false;
 	}
 	return true;

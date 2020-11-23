@@ -111,29 +111,40 @@ def MapGetLastClient =
 ];
 vars.put(&quot;QueryGetLastClient&quot;, MapToString(MapGetLastClient));
 
-//Проверка наличия логина
-def MapLoginExist =
+//Проверка наличия пароля
+def MapUserPasswordExist =
 [
-	Type: &quot;LoginExist&quot;,
+	Type: &quot;UserPasswordExist&quot;,
 	Parameters:
 		[
-			UserID: 5
+			UserID: 4
 		]
 ];
-vars.put(&quot;QueryLoginExist&quot;, MapToString(MapLoginExist));
+vars.put(&quot;QueryUserPasswordExist&quot;, MapToString(MapUserPasswordExist));
 
-//Регистрация логина
-def MapLoginRegister =
+//Создание пароля пользователя
+def MapUserPasswordCreate =
 [
-	Type: &quot;LoginRegister&quot;,
+	Type: &quot;UserPasswordCreate&quot;,
 	Parameters:
 		[
-			HashOld: GetSHA256(&quot;ivanov78357835&quot;),
-			Hash: GetSHA256(&quot;ivanov78357835&quot;),
-			UserID: 5
+			UserID: 4,
+			Hash: GetSHA256(&quot;testov78357835&quot;)
 		]
 ];
-vars.put(&quot;QueryLoginRegister&quot;, MapToString(MapLoginRegister));
+vars.put(&quot;QueryUserPasswordCreate&quot;, MapToString(MapUserPasswordCreate));
+
+//Изменение пароля пользователя
+def MapUserPasswordEdit =
+[
+	Type: &quot;UserPasswordEdit&quot;,
+	Parameters:
+		[
+			UserID: 4,
+			Hash: GetSHA256(&quot;testov78357835&quot;)
+		]
+];
+vars.put(&quot;QueryUserPasswordEdit&quot;, MapToString(MapUserPasswordEdit));
 
 //Получение записи разговора
 def MapGetRecordCall =
@@ -160,7 +171,7 @@ vars.put(&quot;QueryGetRecordCall&quot;, MapToString(MapGetRecordCall));</string
           <stringProp name="ConfigTestElement.password"></stringProp>
         </TCPSampler>
         <hashTree/>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: GetRecordCall" enabled="true">
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: GetRecordCall" enabled="false">
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
           <stringProp name="TCPSampler.port"></stringProp>
@@ -172,25 +183,37 @@ vars.put(&quot;QueryGetRecordCall&quot;, MapToString(MapGetRecordCall));</string
           <stringProp name="ConfigTestElement.password"></stringProp>
         </TCPSampler>
         <hashTree/>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: LoginExist" enabled="false">
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: UserPasswordExist" enabled="false">
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
           <stringProp name="TCPSampler.port"></stringProp>
           <boolProp name="TCPSampler.nodelay">false</boolProp>
           <stringProp name="TCPSampler.timeout"></stringProp>
-          <stringProp name="TCPSampler.request">${QueryLoginExist}</stringProp>
+          <stringProp name="TCPSampler.request">${QueryUserPasswordExist}</stringProp>
           <boolProp name="TCPSampler.closeConnection">true</boolProp>
           <stringProp name="ConfigTestElement.username"></stringProp>
           <stringProp name="ConfigTestElement.password"></stringProp>
         </TCPSampler>
         <hashTree/>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: LoginRegister" enabled="false">
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: UserPasswordCreate" enabled="false">
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
           <stringProp name="TCPSampler.port"></stringProp>
           <boolProp name="TCPSampler.nodelay">false</boolProp>
           <stringProp name="TCPSampler.timeout"></stringProp>
-          <stringProp name="TCPSampler.request">${QueryLoginRegister}</stringProp>
+          <stringProp name="TCPSampler.request">${QueryUserPasswordCreate}</stringProp>
+          <boolProp name="TCPSampler.closeConnection">true</boolProp>
+          <stringProp name="ConfigTestElement.username"></stringProp>
+          <stringProp name="ConfigTestElement.password"></stringProp>
+        </TCPSampler>
+        <hashTree/>
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: UserPasswordEdit" enabled="true">
+          <stringProp name="TCPSampler.server"></stringProp>
+          <boolProp name="TCPSampler.reUseConnection">true</boolProp>
+          <stringProp name="TCPSampler.port"></stringProp>
+          <boolProp name="TCPSampler.nodelay">false</boolProp>
+          <stringProp name="TCPSampler.timeout"></stringProp>
+          <stringProp name="TCPSampler.request">${QueryUserPasswordEdit}</stringProp>
           <boolProp name="TCPSampler.closeConnection">true</boolProp>
           <stringProp name="ConfigTestElement.username"></stringProp>
           <stringProp name="ConfigTestElement.password"></stringProp>
@@ -247,7 +270,7 @@ vars.put(&quot;QueryGetRecordCall&quot;, MapToString(MapGetRecordCall));</string
           <stringProp name="ConfigTestElement.password"></stringProp>
         </TCPSampler>
         <hashTree/>
-        <DebugSampler guiclass="TestBeanGUI" testclass="DebugSampler" testname="Debug Sampler" enabled="true">
+        <DebugSampler guiclass="TestBeanGUI" testclass="DebugSampler" testname="Debug Sampler" enabled="false">
           <boolProp name="displayJMeterProperties">false</boolProp>
           <boolProp name="displayJMeterVariables">true</boolProp>
           <boolProp name="displaySystemProperties">false</boolProp>
