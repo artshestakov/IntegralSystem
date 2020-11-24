@@ -75,7 +75,12 @@ bool ISUserObjectForm::Save()
 		Result = ISObjectFormBase::Save();
 		if (Result)
 		{
-			ISGui::ShowUserPasswordForm(GetObjectID(), GetFieldValue("FIO").toString(), GetFieldValue("Login").toString());
+			bool PasswordCreated = false;
+			ISGui::ShowUserPasswordForm(GetObjectID(), GetFieldValue("FIO").toString(), GetFieldValue("Login").toString(), PasswordCreated);
+			if (!PasswordCreated)
+			{
+				ISMessageBox::ShowWarning(this, LANG("Message.Warning.UserPasswordNotCreated"));
+			}
 		}
 	}
 	else

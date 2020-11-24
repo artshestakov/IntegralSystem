@@ -482,10 +482,16 @@ void ISGui::ShowSettingsForm(const QString &SettingGroupUID)
 //-----------------------------------------------------------------------------
 void ISGui::ShowUserPasswordForm(unsigned int UserID, const QString &UserFIO, const QString &UserLogin)
 {
+	bool Result = true;
+	ShowUserPasswordForm(UserID, UserFIO, UserLogin, Result);
+}
+//-----------------------------------------------------------------------------
+void ISGui::ShowUserPasswordForm(unsigned int UserID, const QString &UserFIO, const QString &UserLogin, bool &Result)
+{
 	SetWaitGlobalCursor(true);
 	ISUserPasswordForm UserPasswordForm(UserID, UserFIO, UserLogin);
 	SetWaitGlobalCursor(false);
-	UserPasswordForm.Exec();
+	Result = UserPasswordForm.Exec();
 }
 //-----------------------------------------------------------------------------
 void ISGui::ShowSystemInfoRecord(PMetaTable *MetaTable, int ObjectID)

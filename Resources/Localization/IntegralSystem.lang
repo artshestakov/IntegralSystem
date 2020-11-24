@@ -186,6 +186,7 @@
   <Local Name="Message.Warning.NotGettingMetaReport" Russian="Не удалось получить мета-отчёт."/>
   <Local Name="Message.Warning.OneFieldNotFill" Russian="Одно из полей не заполнено!"/>
   <Local Name="Message.Warning.PasswordMinimumSize" Russian="Минимальная длина пароля должна быть %1 символов."/>
+  <Local Name="Message.Warning.UserPasswordNotCreated" Russian="ВНИМАНИЕ! Пользователь без пароля не сможет зайти в программу!"/>
   <Local Name="Message.Question.ChangeUser" Russian="Сменить пользователя?"/>
   <Local Name="Message.Question.ExitApplication" Russian="Вы действительно хотите выйти из программы?"/>
   <Local Name="Message.Question.File.SavedToPath" Russian="Файл успешно сохранен по пути:&#10;%1&#10;Открыть его?"/>
@@ -339,6 +340,8 @@
   <Local Name="UserPasswordForm.CurrentPassword" Russian="Текущий пароль:"/>
   <Local Name="UserPasswordForm.Password" Russian="Пароль:"/>
   <Local Name="UserPasswordForm.PasswordCheck" Russian="Повторите пароль:"/>
+  <Local Name="UserPasswordForm.CreatedPassword" Russian="Пароль был успешно создан"/>
+  <Local Name="UserPasswordForm.EditedPassword" Russian="Пароль был успешно изменён"/>
   <Local Name="EnterThePassword" Russian="Введите пароль"/>
   <Local Name="InputInSystem" Russian="Вход в систему"/>
   <Local Name="InputLoginAndPassword" Russian="Введите логин и пароль"/>
@@ -379,7 +382,6 @@
   <Local Name="Protocol.Use" Russian="Использовать протокол"/>
   <Local Name="Protocol.Port" Russian="Порт"/>
   <Local Name="TcpConnector.Timeout" Russian="Время на ожидание подключения истекло."/>
-  <Local Name="PasswordChangedDone" Russian="Пароль был успешно изменён."/>
 
   <!--MonitorActivity-->
   <Local Name="MonitorActivity.HideOffline" Russian="Скрыть пользователей не в сети"/>

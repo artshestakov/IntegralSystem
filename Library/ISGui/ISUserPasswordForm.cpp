@@ -125,7 +125,7 @@ void ISUserPasswordForm::Apply()
 	qUserPassword.BindValue("Hash", ISSystem::StringToSha256(UserLogin + Password));
 	if (qUserPassword.Execute())
 	{
-		ISPopupMessage::ShowNotification(LANG("PasswordChangedDone"));
+		ISPopupMessage::ShowNotification(PasswordExist ? LANG("UserPasswordForm.EditedPassword") : LANG("UserPasswordForm.CreatedPassword"));
 		SetResult(true);
 		close();
 	}
