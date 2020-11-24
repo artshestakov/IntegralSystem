@@ -44,23 +44,23 @@ long long ISAlgorithm::GetTickDiff(const ISTimePoint &T1, const ISTimePoint &T2)
 	return std::chrono::duration_cast<std::chrono::milliseconds>(T1 - T2).count();
 }
 //-----------------------------------------------------------------------------
-QString ISAlgorithm::GetClassName(const char *FunctionName)
+std::string ISAlgorithm::GetClassName(const std::string &FunctionName)
 {
-    QString Result(FunctionName);
-    int Index = 0;
+	std::string Result(FunctionName);
+    size_t Index = 0;
 
 #ifndef WIN32 //Если работаем сейчас под Linux - исключаем имя типа
-    Index = Result.indexOf(SYMBOL_SPACE);
-    if (Index != -1)
+    Index = Result.find(SYMBOL_SPACE);
+    if (Index != NPOS)
     {
-        Result.remove(0, ++Index);
+        Result.erase(0, ++Index);
     }
 #endif
 
-    Index = Result.indexOf(':');
-    if (Index != -1)
+    Index = Result.find(':');
+    if (Index != NPOS)
     {
-        Result.chop(Result.size() - Index);
+        Result.erase(Index, Result.size() - Index);
     }
 	return Result;
 }

@@ -78,7 +78,7 @@ namespace ISAlgorithm
 	//! \ѕолучить им€ класса
 	//! \param FunctionName в качестве этого параметра необходимо передавать макрос __FUNCTION__
 	//! \return возвращает им€ класса в случае успеха, иначе пустую строку
-    ISCORE_EXPORT QString GetClassName(const char *FunctionName);
+    ISCORE_EXPORT std::string GetClassName(const std::string &FunctionName);
 
 	//! \”далить первый символ из строки
 	//! \param String строка, из которой будет происходить удаление символа

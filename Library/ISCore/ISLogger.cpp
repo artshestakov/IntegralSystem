@@ -67,41 +67,54 @@ void ISLogger::Shutdown()
 	File.close();
 }
 //-----------------------------------------------------------------------------
-void ISLogger::Log(bool is_format, MessageType message_type, const QString &component, const QString &string)
+void ISLogger::Log(bool is_format, MessageType message_type, const std::string &component, const QString &string)
 {
-	QString string_complete;
+	std::string string_complete;
 	if (is_format) //Если сообщение нужно форматировать
 	{
-		string_complete = QDateTime::currentDateTime().toString(FORMAT_DATE_TIME_V9) + '\t' + QString::number(CURRENT_THREAD_ID()) + '\t';
+		//Получаем строковый тип сообщения
+		std::string message_type_string;
 		switch (message_type)
 		{
-        case MessageType::MT_Unknown: break;
-		case MessageType::MT_Debug: string_complete += "[Debug]"; break;
-		case MessageType::MT_Info: string_complete += "[Info]"; break;
-		case MessageType::MT_Warning: string_complete += "[Warning]"; break;
-		case MessageType::MT_Error: string_complete += "[Error]"; break;
-		case MessageType::MT_Critical: string_complete += "[Critical]"; break;
-		case MessageType::MT_Trace: string_complete += "[Trace]"; break;
-		case MessageType::MT_Assert: string_complete += "[Assert]"; break;
+		case MessageType::MT_Unknown: break;
+		case MessageType::MT_Debug: message_type_string = "Debug"; break;
+		case MessageType::MT_Info: message_type_string = "Info"; break;
+		case MessageType::MT_Warning: message_type_string = "Warning"; break;
+		case MessageType::MT_Error: message_type_string = "Error"; break;
+		case MessageType::MT_Critical: message_type_string = "Critical"; break;
+		case MessageType::MT_Trace: message_type_string = "Trace"; break;
+		case MessageType::MT_Assert: message_type_string = "Assert"; break;
 		}
 
-		if (!component.isEmpty())
+		//Получаем текущую дату и время и формируем заголовок сообщения
+		SYSTEMTIME SystemTime;
+		GetLocalTime(&SystemTime);
+
+		char buf[512];
+		if (component.empty()) //Если компонент указан
 		{
-			string_complete += '[' + component + ']';
+			sprintf(buf, "%02d.%02d.%02d %02d:%02d:%02d:%03d\t%lu\t[%s] %s",
+				SystemTime.wDay, SystemTime.wMonth, SystemTime.wYear, SystemTime.wHour, SystemTime.wMinute, SystemTime.wSecond, SystemTime.wMilliseconds,
+				CURRENT_THREAD_ID(), message_type_string.c_str(), string.toStdString().c_str());
 		}
-		string_complete += ' ' + string;
+		else //Компонент не указан
+		{
+			sprintf(buf, "%02d.%02d.%02d %02d:%02d:%02d:%03d\t%lu\t[%s][%s] %s",
+				SystemTime.wDay, SystemTime.wMonth, SystemTime.wYear, SystemTime.wHour, SystemTime.wMinute, SystemTime.wSecond, SystemTime.wMilliseconds,
+				CURRENT_THREAD_ID(), message_type_string.c_str(), component.c_str(), string.toStdString().c_str());
+		}
+		string_complete = buf;
 	}
 	else //Форматирование не нужно - записываем сообщение "как есть"
 	{
-		string_complete = string;
+		string_complete = string.toStdString();
 	}
 
 	CRITICAL_SECTION_LOCK(&CriticalSection);
 #ifdef DEBUG //В отладочной версии выводим строку в консоль
-	ISDEBUG_L(string_complete);
+	//ISDEBUG_L(string_complete);
 #endif
-	Array[LastIndex] = string_complete;
-	++LastIndex;
+	Array[LastIndex++] = string_complete;
 	CRITICAL_SECTION_UNLOCK(&CriticalSection);
 }
 //-----------------------------------------------------------------------------
@@ -141,7 +154,7 @@ void ISLogger::Worker()
 		{
 			for (size_t i = 0; i < LastIndex; ++i)
 			{
-				File << Array[i].toStdString() << std::endl;
+				File << Array[i] << std::endl;
 				Array[i].clear();
 			}
 			LastIndex = 0;
