@@ -12,7 +12,7 @@ void ShowDebugString(const char *Severity, const QString &String)
     Month = SystemTime.wMonth;
     Year = SystemTime.wYear;
     Hour = SystemTime.wHour;
-    Minute = SystemTime.wMonute;
+    Minute = SystemTime.wMinute;
     Second = SystemTime.wSecond;
     Millisecond = SystemTime.wMilliseconds;
 #else
@@ -28,7 +28,6 @@ void ShowDebugString(const char *Severity, const QString &String)
     Second = SystemTime->tm_sec;
     Millisecond = (unsigned int)(TimeValue.tv_usec / 1000);
 #endif
-
 	//Формируем сообщение
 	char Buffer[LOGGER_MESSAGE_SIZE];
 	sprintf(Buffer, "%02d.%02d.%02d %02d:%02d:%02d:%03d [%s]\t%s",

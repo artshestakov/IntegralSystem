@@ -95,7 +95,7 @@ void ISLogger::Log(bool is_format, MessageType message_type, const std::string &
         Month = SystemTime.wMonth;
         Year = SystemTime.wYear;
         Hour = SystemTime.wHour;
-        Minute = SystemTime.wMonute;
+        Minute = SystemTime.wMinute;
         Second = SystemTime.wSecond;
         Millisecond = SystemTime.wMilliseconds;
 #else
@@ -111,7 +111,6 @@ void ISLogger::Log(bool is_format, MessageType message_type, const std::string &
         Second = SystemTime->tm_sec;
         Millisecond = (unsigned int)(TimeValue.tv_usec / 1000);
 #endif
-
         //Формируем заголовок сообщения
 		char buffer[LOGGER_MESSAGE_SIZE];
 		if (component.empty()) //Если компонент указан
