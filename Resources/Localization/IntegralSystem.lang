@@ -186,6 +186,8 @@
   <Local Name="Message.Warning.OneFieldNotFill" Russian="Одно из полей не заполнено!"/>
   <Local Name="Message.Warning.PasswordMinimumSize" Russian="Минимальная длина пароля должна быть %1 символов."/>
   <Local Name="Message.Warning.UserPasswordNotCreated" Russian="ВНИМАНИЕ! Пользователь без пароля не сможет зайти в программу!"/>
+  <Local Name="Message.Warning.ManagementPasswordSystemUser" Russian="Запрещено управлять паролем системного пользователя!"/>
+  <Local Name="Message.Warning.ResetPasswordSystemUser" Russian="Запрещено сбрасывать пароль системного пользователя!"/>
   <Local Name="Message.Question.ChangeUser" Russian="Сменить пользователя?"/>
   <Local Name="Message.Question.ExitApplication" Russian="Вы действительно хотите выйти из программы?"/>
   <Local Name="Message.Question.File.SavedToPath" Russian="Файл успешно сохранен по пути:&#10;%1&#10;Открыть его?"/>

@@ -29,11 +29,22 @@ ISUserListForm::~ISUserListForm()
 //-----------------------------------------------------------------------------
 void ISUserListForm::PasswordManagement()
 {
+	if (GetCurrentRecordValue("Login").toString() == SYSTEM_USER_LOGIN)
+	{
+		ISMessageBox::ShowWarning(this, LANG("Message.Warning.ManagementPasswordSystemUser"));
+		return;
+	}
 	ISGui::ShowUserPasswordForm(GetCurrentRecordValue("ID").toUInt(), GetCurrentRecordValue("FIO").toString(), GetCurrentRecordValue("Login").toString());
 }
 //-----------------------------------------------------------------------------
 void ISUserListForm::PasswordReset()
 {
+	if (GetCurrentRecordValue("Login").toString() == SYSTEM_USER_LOGIN)
+	{
+		ISMessageBox::ShowWarning(this, LANG("Message.Warning.ResetPasswordSystemUser"));
+		return;
+	}
+
 	if (!ISUserRoleEntity::Instance().CheckAccessSpecial(CONST_UID_GROUP_ACCESS_SPECIAL_USER_PASSWORD_RESET))
 	{
 		ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.Special.PasswordReset"));

@@ -105,6 +105,7 @@ const char CONNECTION_QUERY_POOL[] = "QueryPoolDB";
 const char CONNECTION_ASTERISK[] = "AsteriskDB";
 //-----------------------------------------------------------------------------
 const char		SYSTEM_DATABASE_NAME[] = "postgres"; //Имя системной БД
+const char		SYSTEM_USER_LOGIN[] = "postgres"; //Логин системного пользователя
 const char		FIGURES_STRING[] = "0123456789";
 const char		SQL_DRIVER_QPSQL[] = "QPSQL";
 const int		MAX_QUERY_TIME = 50; //Передельное время выполнения SQL-запроса (в миллисекундах)
