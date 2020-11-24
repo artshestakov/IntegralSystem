@@ -38,3 +38,44 @@ void ISTcp::WaitForDisconnected(QTcpSocket *TcpSocket)
 	}
 }
 //-----------------------------------------------------------------------------
+ISNamespace::ApiMessageType ISTcp::GetMessageTypeByName(const QString &Name)
+{
+	if (Name == API_AUTH)
+	{
+		return ISNamespace::AMT_Auth;
+	}
+	else if (Name == API_SLEEP)
+	{
+		return ISNamespace::AMT_Sleep;
+	}
+	else if (Name == API_GET_META_DATA)
+	{
+		return ISNamespace::AMT_GetMetaData;
+	}
+	else if (Name == API_GET_LAST_CLIENT)
+	{
+		return ISNamespace::AMT_GetLastClient;
+	}
+	else if (Name == API_USER_PASSWORD_EXIST)
+	{
+		return ISNamespace::AMT_UserPasswordExist;
+	}
+	else if (Name == API_USER_PASSWORD_CREATE)
+	{
+		return ISNamespace::AMT_UserPasswordCreate;
+	}
+	else if (Name == API_USER_PASSWORD_EDIT)
+	{
+		return ISNamespace::AMT_UserPasswordEdit;
+	}
+	else if (Name == API_USER_PASSWORD_RESET)
+	{
+		return ISNamespace::AMT_UserPasswordReset;
+	}
+	else if (Name == API_GET_RECORD_CALL)
+	{
+		return ISNamespace::AMI_GetRecordCall;
+	}
+	return ISNamespace::AMT_Unknown;
+}
+//-----------------------------------------------------------------------------

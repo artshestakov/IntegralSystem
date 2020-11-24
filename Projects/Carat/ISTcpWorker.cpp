@@ -111,6 +111,10 @@ static QString QS_USER_HASH_CHECK = PREPARE_QUERY("SELECT usrs_hash = :HashOld A
 												  "FROM _users "
 												  "WHERE usrs_id = :UserID");
 //-----------------------------------------------------------------------------
+static QString QU_USER_HASH_RESET = PREPARE_QUERY("UPDATE _users SET "
+												  "usrs_hash = NULL "
+												  "WHERE usrs_id = :UserID");
+//-----------------------------------------------------------------------------
 static QString QS_ASTERISK_RECORD = PREPARE_QUERY("SELECT ascl_uniqueid "
 												  "FROM _asteriskcalls "
 												  "WHERE ascl_id = :RecordID");
@@ -251,6 +255,7 @@ void ISTcpWorker::Process()
 					case ISNamespace::AMT_UserPasswordExist: Result = UserPasswordExist(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_UserPasswordCreate: Result = UserPasswordCreate(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_UserPasswordEdit: Result = UserPasswordEdit(tcp_message, TcpAnswer); break;
+					case ISNamespace::AMT_UserPasswordReset: Result = UserPasswordReset(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMI_GetRecordCall: Result = GetRecordCall(tcp_message, TcpAnswer); break;
 					}
 					PerfomanceMsec = ISAlgorithm::GetTickDiff(ISAlgorithm::GetTick(), TimePoint);
@@ -960,6 +965,7 @@ bool ISTcpWorker::UserPasswordExist(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAn
 		return false;
 	}
 
+	//Проверяем наличие пароля
 	ISQuery qSelectHashIsNull(ISDatabase::Instance().GetDB(DBConnectionName), QS_USER_HASH_IS_NULL);
 	qSelectHashIsNull.BindValue(":UserID", UserID);
 	if (!qSelectHashIsNull.Execute()) //Не удалось проверить хэш
@@ -1072,6 +1078,48 @@ bool ISTcpWorker::UserPasswordEdit(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAns
 	if (!qUpdateHash.Execute())
 	{
 		ErrorString = LANG("Carat.Error.Query.UserLoginCreate.UpdateHash").arg(qUpdateHash.GetErrorString());
+		return false;
+	}
+	return true;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::UserPasswordReset(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+	Q_UNUSED(TcpAnswer);
+
+	QVariant UserID = CheckNullField("UserID", TcpMessage->Parameters);
+	if (!UserID.isValid())
+	{
+		return false;
+	}
+
+	//Проверяем наличие пароля
+	ISQuery qSelectHashIsNull(ISDatabase::Instance().GetDB(DBConnectionName), QS_USER_HASH_IS_NULL);
+	qSelectHashIsNull.BindValue(":UserID", UserID);
+	if (!qSelectHashIsNull.Execute()) //Не удалось проверить хэш
+	{
+		ErrorString = LANG("Carat.Error.Query.UserLoginReset.CheckExistHash").arg(qSelectHashIsNull.GetErrorString());
+		return false;
+	}
+
+	if (!qSelectHashIsNull.First()) //Не удалось перейти на первую строку, т.к. пользователя с таким UserID не существует
+	{
+		ErrorString = LANG("Carat.Error.Query.UserLoginReset.UserNotExist").arg(UserID.toInt());
+		return false;
+	}
+	
+	if (qSelectHashIsNull.ReadColumn("is_null").toBool()) //Если пароля нет - считаем ошибкой
+	{
+		ErrorString = LANG("Carat.Error.Query.UserLoginReset.PasswordIsNull");
+		return false;
+	}
+
+	//Сбрасываем пароль
+	ISQuery qUpdateHashReset(ISDatabase::Instance().GetDB(DBConnectionName), QU_USER_HASH_RESET);
+	qUpdateHashReset.BindValue(":UserID", UserID);
+	if (!qUpdateHashReset.Execute()) //Не удалось сбросить пароль
+	{
+		ErrorString = LANG("Carat.Error.Query.UserLoginReset.Reset");
 		return false;
 	}
 	return true;

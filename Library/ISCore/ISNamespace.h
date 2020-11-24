@@ -171,6 +171,7 @@ namespace ISNamespace
 		AMT_UserPasswordExist, //Проверить существование пароля
 		AMT_UserPasswordCreate, //Создание пароля пользователю
 		AMT_UserPasswordEdit, //Изменение пароля пользователя
+		AMT_UserPasswordReset, //Сброс пароля парользователя
 		AMI_GetRecordCall, //Получить запись разговора
 	};
 };

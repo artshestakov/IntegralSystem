@@ -3,6 +3,7 @@
 #define _ISTCPMESSAGE_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "ISTcpSocket.h"
+#include "ISNamespace.h"
 //-----------------------------------------------------------------------------
 class ISTcpMessage
 {

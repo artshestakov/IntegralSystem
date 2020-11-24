@@ -133,7 +133,7 @@ void ISTcpSocket::ReadyRead()
 			if (Result) //Если поле "Type" не пустое
 			{
 				//Получаем тип сообщения по его имени и если оно неизвестное - ошибка
-				ISNamespace::ApiMessageType MessageType = GetMessageType(TcpMessage->TypeName);
+				ISNamespace::ApiMessageType MessageType = ISTcp::GetMessageTypeByName(TcpMessage->TypeName);
 				Result = MessageType != ISNamespace::AMT_Unknown;
 				if (Result) //Сообщение валидное
 				{
@@ -171,43 +171,6 @@ void ISTcpSocket::Error(QAbstractSocket::SocketError socket_error)
 	{
 		ISLOGGER_E(__CLASS__, errorString());
 	}
-}
-//-----------------------------------------------------------------------------
-ISNamespace::ApiMessageType ISTcpSocket::GetMessageType(const QString &TypeName) const
-{
-	if (TypeName == API_AUTH)
-	{
-		return ISNamespace::AMT_Auth;
-	}
-	else if (TypeName == API_SLEEP)
-	{
-		return ISNamespace::AMT_Sleep;
-	}
-	else if (TypeName == API_GET_META_DATA)
-	{
-		return ISNamespace::AMT_GetMetaData;
-	}
-	else if (TypeName == API_GET_LAST_CLIENT)
-	{
-		return ISNamespace::AMT_GetLastClient;
-	}
-	else if (TypeName == API_USER_PASSWORD_EXIST)
-	{
-		return ISNamespace::AMT_UserPasswordExist;
-	}
-	else if (TypeName == API_USER_PASSWORD_CREATE)
-	{
-		return ISNamespace::AMT_UserPasswordCreate;
-	}
-	else if (TypeName == API_USER_PASSWORD_EDIT)
-	{
-		return ISNamespace::AMT_UserPasswordEdit;
-	}
-	else if (TypeName == API_GET_RECORD_CALL)
-	{
-		return ISNamespace::AMI_GetRecordCall;
-	}
-	return ISNamespace::AMT_Unknown;
 }
 //-----------------------------------------------------------------------------
 void ISTcpSocket::ClearBuffer()
