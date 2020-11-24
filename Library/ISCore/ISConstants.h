@@ -202,9 +202,7 @@ const char CONST_UID_GROUP_ACCESS_TYPE_IS_DELETED[] = "{312BA9A1-E3FF-4C5D-B7A2-
 const char CONST_UID_GROUP_ACCESS_TYPE_EXPORT[] = "{E3DB5851-69A2-4D32-B4F4-0EB98C331B22}"; //Экспорт данных
 //-----------------------------------------------------------------------------
 const char CONST_UID_GROUP_ACCESS_SPECIAL_DESKTOP[] = "{6948884F-5F69-4F74-A230-A2D892A44A52}"; //Рабочий стол
-const char CONST_UID_GROUP_ACCESS_SPECIAL_CHANGE_PASSWORD[] = "{AE04B08B-8BF8-43C2-973A-8343EBE2F7D6}"; //Смена пароля учётной записи
 const char CONST_UID_GROUP_ACCESS_SPECIAL_REPORT_FORM_EDIT[] = "{2C6AA9DB-0804-46A6-8095-D2A0D6011C03}"; //Редактирование печатных форм
-const char CONST_UID_GROUP_ACCESS_SPECIAL_USER_PASSWORD_RESET[] = "{B3122A2F-DD81-4451-BA14-ED3B3D8E1A40}"; //Сброс пароля пользователя
 //-----------------------------------------------------------------------------
 const char CONST_UID_GROUP_ACCESS_SPECIAL_TASK_CLOSE[] = "{4FA7688B-E0B8-4018-B6EC-FD4BE898C90B}"; //Закрытие задач
 const char CONST_UID_GROUP_ACCESS_SPECIAL_TASK_REOPEN[] = "{D0A6AA06-FF19-4945-9441-AEA245AE32DF}"; //Переоткрытие задач
@@ -212,8 +210,9 @@ const char CONST_UID_GROUP_ACCESS_SPECIAL_TASK_EDIT[] = "{988106BE-292A-428A-A10
 const char CONST_UID_GROUP_ACCESS_SPECIAL_TASK_TRANSFORMATION[] = "{D7837403-15BA-4B50-8B9A-660602C24B98}"; //Преобразование задач в подзадач и наоборот
 const char CONST_UID_GROUP_ACCESS_SPECIAL_TASK_APPOINT[] = "{14B3E83D-56D4-4527-9C33-0770D38B78D5}"; //Назначение исполнителя
 //-----------------------------------------------------------------------------
-const char CONST_UID_USER_PASSWORD_CHANGE_TYPE_CREATE[] = "{6DD00B13-2A69-45FD-B565-3142C2D2BA97}";
-const char CONST_UID_USER_PASSWORD_CHANGE_TYPE_UPDATE[] = "{0EEE6D67-A0F3-4558-B7AD-173678A8C9DC}";
+const char CONST_UID_USER_PASSWORD_CREATE[] = "{6DD00B13-2A69-45FD-B565-3142C2D2BA97}"; //Создание пароля
+const char CONST_UID_USER_PASSWORD_UPDATE[] = "{0EEE6D67-A0F3-4558-B7AD-173678A8C9DC}"; //Изменение пароля
+const char CONST_UID_USER_PASSWORD_RESET[] = "{3B005C51-B44E-48C6-95F8-3AC6BD913BB3}"; //Сброс пароля
 //-----------------------------------------------------------------------------
 const char CONST_UID_TASK_PRIORITY_LOW[] = "{CD620874-5069-48E4-BDEA-2D5AEBF8ABA7}"; //Низкий
 const char CONST_UID_TASK_PRIORITY_AVERAGE[] = "{87AC0B68-9348-4A39-8466-B84DC641FE8B}"; //Средний

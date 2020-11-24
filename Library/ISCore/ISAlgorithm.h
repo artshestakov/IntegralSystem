@@ -95,7 +95,7 @@ namespace ISAlgorithm
 	//Поиск значения в векторе
     template <typename T> bool VectorContains(const std::vector<T> &Vector, T Value)
     {
-        return std::find(Vector.begin(), Vector.end(), Value) != Vector.end();
+		return Vector.empty() ? false : std::find(Vector.begin(), Vector.end(), Value) != Vector.end();
     }
 
 	//Извлечь значение из вектора

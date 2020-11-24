@@ -45,12 +45,6 @@ void ISUserListForm::PasswordReset()
 		return;
 	}
 
-	if (!ISUserRoleEntity::Instance().CheckAccessSpecial(CONST_UID_GROUP_ACCESS_SPECIAL_USER_PASSWORD_RESET))
-	{
-		ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.Special.PasswordReset"));
-		return;
-	}
-
 	if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.PasswordReset"), LANG("ThisActionIsNotReversible")))
 	{
 		ISTcpQuery qPasswordReset(API_USER_PASSWORD_RESET);

@@ -168,14 +168,6 @@ void ISMainWindow::ShowChangePasswordForm()
 		ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotChangeSystemUserPassword"));
 		return;
 	}
-
-	//Если права на смену пароля нет - рапортуем об этом и выходим из функции
-	if (!ISUserRoleEntity::Instance().CheckAccessSpecial(CONST_UID_GROUP_ACCESS_SPECIAL_CHANGE_PASSWORD))
-	{
-		ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.Special.UserPasswordChange"));
-		return;
-	}
-
 	SetVisibleShadow(true);
 	ISGui::ShowUserPasswordForm(CURRENT_USER_ID, ISMetaUser::Instance().UserData.FIO, ISMetaUser::Instance().UserData.Login);
 	SetVisibleShadow(false);
