@@ -52,7 +52,6 @@ bool ISQuery::Prepare(const QString &sql_text)
     if (!Prepared)
     {
         ErrorString = SqlQuery.lastError().databaseText();
-		ISLOGGER_E(__CLASS__, ErrorString);
     }
     return Prepared;
 }
@@ -82,7 +81,6 @@ bool ISQuery::Execute()
     if (!Result)
     {
 		ErrorString = SqlQuery.lastError().databaseText();
-		ISLOGGER_E(__CLASS__, ErrorString);
     }
     return Result;
 }
@@ -105,7 +103,6 @@ bool ISQuery::Execute(const QString &sql_text)
     if (!Result)
     {
 		ErrorString = SqlQuery.lastError().databaseText();
-		ISLOGGER_E(__CLASS__, ErrorString);
     }
     return Result;
 }
@@ -128,7 +125,6 @@ bool ISQuery::Execute(QSqlDatabase &sql_database, const QString &sql_text)
 	if (!Result)
 	{
 		ErrorString = SqlQuery.lastError().databaseText();
-		ISLOGGER_E(__CLASS__, ErrorString);
 	}
     return Result;
 }
@@ -187,7 +183,6 @@ bool ISQuery::Next()
     if (!Result && SqlQuery.lastError().type() != QSqlError::NoError)
     {
 		ErrorString = SqlQuery.lastError().databaseText();
-		ISLOGGER_E(__CLASS__, ErrorString);
     }
     return Result;
 }
@@ -198,7 +193,6 @@ bool ISQuery::First()
     if (!Result && SqlQuery.lastError().type() != QSqlError::NoError)
     {
 		ErrorString = SqlQuery.lastError().databaseText();
-		ISLOGGER_E(__CLASS__, ErrorString);
     }
     return Result;
 }
@@ -212,7 +206,6 @@ QSqlRecord ISQuery::GetRecord()
 	else
 	{
 		ErrorString = SqlQuery.lastError().databaseText();
-		ISLOGGER_E(__CLASS__, ErrorString);
 	}
     return QSqlRecord();
 }
