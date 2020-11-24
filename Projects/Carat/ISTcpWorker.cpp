@@ -119,6 +119,9 @@ static QString QS_ASTERISK_RECORD = PREPARE_QUERY("SELECT ascl_uniqueid "
 												  "FROM _asteriskcalls "
 												  "WHERE ascl_id = :RecordID");
 //-----------------------------------------------------------------------------
+static QString QI_USER_PASSWORD_CHANGE = PREPARE_QUERY("INSERT INTO _userpasswordchanged(upcg_user, upcg_type) "
+													   "VALUES(:UserID, (SELECT upct_id FROM _userpasswordchangedtype WHERE upct_uid = :TypeUID))");
+//-----------------------------------------------------------------------------
 ISTcpWorker::ISTcpWorker(const QString &db_host, int db_port, const QString &db_name, const QString &db_user, const QString &db_password, const ISConfigurationInfo &configuration_info)
 	: QObject(),
 	ErrorString(NO_ERROR_STRING),
@@ -330,6 +333,17 @@ void ISTcpWorker::Protocol(int UserID, const ISUuid &ActionTypeUID, const QStrin
 		{ ":TableLocalName", TableLocalName },
 		{ ":Information", Information }
 	});
+}
+//-----------------------------------------------------------------------------
+void ISTcpWorker::UserPasswordChange(const QVariant &UserID, const ISUuid &ChangeTypeUID)
+{
+	ISQuery qInsertPasswordChanged(ISDatabase::Instance().GetDB(DBConnectionName), QI_USER_PASSWORD_CHANGE);
+	qInsertPasswordChanged.BindValue(":UserID", UserID);
+	qInsertPasswordChanged.BindValue(":TypeUID", ChangeTypeUID);
+	if (!qInsertPasswordChanged.Execute()) //Не удалось зафиксировать изменение пароля
+	{
+		ISLOGGER_E(__CLASS__, "Not fixed user password change: " + qInsertPasswordChanged.GetErrorString());
+	}
 }
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
@@ -1025,6 +1039,9 @@ bool ISTcpWorker::UserPasswordCreate(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpA
 		ErrorString = LANG("Carat.Error.Query.UserLoginCreate.UpdateHash").arg(qUpdateHash.GetErrorString());
 		return false;
 	}
+
+	//Фиксируем изменение пароля в истории
+	UserPasswordChange(UserID, CONST_UID_USER_PASSWORD_CREATE);
 	return true;
 }
 //-----------------------------------------------------------------------------
@@ -1080,6 +1097,9 @@ bool ISTcpWorker::UserPasswordEdit(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAns
 		ErrorString = LANG("Carat.Error.Query.UserLoginCreate.UpdateHash").arg(qUpdateHash.GetErrorString());
 		return false;
 	}
+
+	//Фиксируем изменение пароля в истории
+	UserPasswordChange(UserID, CONST_UID_USER_PASSWORD_UPDATE);
 	return true;
 }
 //-----------------------------------------------------------------------------
@@ -1122,6 +1142,9 @@ bool ISTcpWorker::UserPasswordReset(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAn
 		ErrorString = LANG("Carat.Error.Query.UserLoginReset.Reset");
 		return false;
 	}
+
+	//Фиксируем изменение пароля в истории
+	UserPasswordChange(UserID, CONST_UID_USER_PASSWORD_RESET);
 	return true;
 }
 //-----------------------------------------------------------------------------
