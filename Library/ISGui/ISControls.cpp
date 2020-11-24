@@ -77,16 +77,6 @@ QAction* ISControls::CreateActionExit(QObject *ParentObject)
 	return new QAction(BUFFER_ICONS("Exit"), LANG("Exit"), ParentObject);
 }
 //-----------------------------------------------------------------------------
-QAction* ISControls::CreateActionUserPassword(QObject *ParentObject)
-{
-	return new QAction(BUFFER_ICONS("User.Password"), LANG("PasswordManagement"), ParentObject);
-}
-//-----------------------------------------------------------------------------
-QAction* ISControls::CreateActionUserPasswordReset(QObject *ParentObject)
-{
-	return new QAction(BUFFER_ICONS("User.Password.Reset"), LANG("PasswordReset"), ParentObject);
-}
-//-----------------------------------------------------------------------------
 QAction* ISControls::CreateSeparator(QObject *ParentObject)
 {
 	QAction *ActionSeparator = new QAction(ParentObject);

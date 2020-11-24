@@ -17,7 +17,6 @@ protected:
 	bool Save() override;
 
 private:
-	void PasswordManagement();
 	void AccountLifeTimeChanged();
 
 private:

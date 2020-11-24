@@ -140,8 +140,6 @@
   <Local Name="Message.Warning.SystemObject.NotEdit" Russian="Запрещено редактировать системные записи."/>
   <Local Name="Message.Warning.SystemObject.Copy" Russian="Запрещено создавать копии системных записей."/>
   <Local Name="Message.Warning.SystemObject.NotDelete" Russian="Запрещено удалять системные записи."/>
-  <Local Name="Message.Warning.NotCreateCopyThisUser" Russian="Запрещено создавать копию пользователя под которым Вы авторизованы."/>
-  <Local Name="Message.Warning.NotEditThisUser" Russian="Запрещено редактировать пользователя под которым Вы авторизованы."/>
   <Local Name="Message.Warning.FileNameIsNull" Russian="Вы не ввели имя файла."/>
   <Local Name="Message.Warning.NotifyNotInserted" Russian="Не удалось добавить напоминание!"/>
   <Local Name="Message.Warning.ValueFieldEditInvalid" Russian="Значение в поле &quot;%1&quot; введено некорректно!"/>
@@ -166,6 +164,7 @@
   <Local Name="Message.Warning.NotAccess.Special.TaskEdit" Russian="У Вас нет прав на редактирование задачи."/>
   <Local Name="Message.Warning.NotAccess.Special.TaskTransformation" Russian="У Вас нет прав на преобразование задачи в подзадачу и наоборот."/>
   <Local Name="Message.Warning.NotAccess.Special.Appoint" Russian="У Вас нет прав на назначение исполнителя. Вы можете назначить исполнителем только себя."/>
+  <Local Name="Message.Warning.NotAccess.Special.PasswordReset" Russian="У Вас нет права на сброс пароля!"/>
   <Local Name="Message.Warning.NotAccessToDatabase" Russian="На подключение пользователей к базе данных наложен запрет. Программа будет закрыта. Обратитесь к системному администратору за дополнительной информацией."/>
   <Local Name="Message.Warning.NotOpenedImage" Russian="Не удалось открыть изображение."/>
   <Local Name="Message.Warning.NotDownloadedImage" Russian="Не удалось скачать изображение."/>
@@ -187,7 +186,6 @@
   <Local Name="Message.Warning.OneFieldNotFill" Russian="Одно из полей не заполнено!"/>
   <Local Name="Message.Warning.PasswordMinimumSize" Russian="Минимальная длина пароля должна быть %1 символов."/>
   <Local Name="Message.Warning.UserPasswordNotCreated" Russian="ВНИМАНИЕ! Пользователь без пароля не сможет зайти в программу!"/>
-  <Local Name="Message.Warning.NotAccessPasswordReset" Russian="У Вас нет права на сброс пароля!"/>
   <Local Name="Message.Question.ChangeUser" Russian="Сменить пользователя?"/>
   <Local Name="Message.Question.ExitApplication" Russian="Вы действительно хотите выйти из программы?"/>
   <Local Name="Message.Question.File.SavedToPath" Russian="Файл успешно сохранен по пути:&#10;%1&#10;Открыть его?"/>
@@ -457,6 +455,7 @@
   <Local Name="EnterImageName" Russian="Введите имя изображения"/>
   <Local Name="EnableHistoryTracking" Russian="Включить ведение истории"/>
   <Local Name="PasswordResetDone" Russian="Пароль был успешно сброшен"/>
+  <Local Name="ThisActionIsNotReversible" Russian="Это действие не обратимо."/>
 
   <!--CalendarForm-->
   <Local Name="CalendarForm.CreateEvent" Russian="Создать событие"/>

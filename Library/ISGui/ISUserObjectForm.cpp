@@ -12,10 +12,6 @@
 //-----------------------------------------------------------------------------
 ISUserObjectForm::ISUserObjectForm(ISNamespace::ObjectFormType form_type, PMetaTable *meta_table, QWidget *parent, int object_id) : ISObjectFormBase(form_type, meta_table, parent, object_id)
 {
-	QAction *ActionPassword = ISControls::CreateActionUserPassword(this);
-	connect(ActionPassword, &QAction::triggered, this, &ISUserObjectForm::PasswordManagement);
-	AddActionToolBar(ActionPassword, true);
-
 	EditAccountLifeTime = GetFieldWidget("AccountLifeTime");
 	connect(EditAccountLifeTime, &ISFieldEditBase::DataChanged, this, &ISUserObjectForm::AccountLifeTimeChanged);
 
@@ -88,11 +84,6 @@ bool ISUserObjectForm::Save()
 		Result = ISObjectFormBase::Save();
 	}
 	return Result;
-}
-//-----------------------------------------------------------------------------
-void ISUserObjectForm::PasswordManagement()
-{
-	ISGui::ShowUserPasswordForm(GetObjectID(), GetFieldValue("FIO").toString(), GetFieldValue("Login").toString());
 }
 //-----------------------------------------------------------------------------
 void ISUserObjectForm::AccountLifeTimeChanged()
