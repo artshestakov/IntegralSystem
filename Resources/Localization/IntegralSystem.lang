@@ -187,6 +187,7 @@
   <Local Name="Message.Warning.OneFieldNotFill" Russian="Одно из полей не заполнено!"/>
   <Local Name="Message.Warning.PasswordMinimumSize" Russian="Минимальная длина пароля должна быть %1 символов."/>
   <Local Name="Message.Warning.UserPasswordNotCreated" Russian="ВНИМАНИЕ! Пользователь без пароля не сможет зайти в программу!"/>
+  <Local Name="Message.Warning.NotAccessPasswordReset" Russian="У Вас нет права на сброс пароля!"/>
   <Local Name="Message.Question.ChangeUser" Russian="Сменить пользователя?"/>
   <Local Name="Message.Question.ExitApplication" Russian="Вы действительно хотите выйти из программы?"/>
   <Local Name="Message.Question.File.SavedToPath" Russian="Файл успешно сохранен по пути:&#10;%1&#10;Открыть его?"/>
@@ -226,6 +227,7 @@
   <Local Name="Message.Question.CloseInsetingTaskFile.DetailedText" Russian="Добавлено: %1&#10;Осталось добавить: %2&#10;Всего: %3"/>
   <Local Name="Message.Question.TaskCheckListDelete" Russian="Удалить пункт?"/>
   <Local Name="Message.Question.UpdateAvailable" Russian="Доступно обновление программы. Загрузить его?"/>
+  <Local Name="Message.Question.PasswordReset" Russian="Вы уверены что хотите сбросить пароль?"/>
 
   <!--DaData-->
   <Local Name="DaData.NotFound.Organization" Russian="Организация по таком ИНН не найдена"/>
@@ -335,6 +337,7 @@
   <Local Name="Defer" Russian="Отложить"/>
   <Local Name="SelectDate" Russian="Выберите дату"/>
   <Local Name="PasswordManagement" Russian="Управление паролем"/>
+  <Local Name="PasswordReset" Russian="Сброс пароля"/>
   <Local Name="UserPasswordForm.Title.Creating" Russian="Создание логина и пароля"/>
   <Local Name="UserPasswordForm.Title.Change" Russian="Изменение логина и пароля"/>
   <Local Name="UserPasswordForm.CurrentPassword" Russian="Текущий пароль:"/>
@@ -453,6 +456,7 @@
   <Local Name="EnterFileName" Russian="Введите имя файла"/>
   <Local Name="EnterImageName" Russian="Введите имя изображения"/>
   <Local Name="EnableHistoryTracking" Russian="Включить ведение истории"/>
+  <Local Name="PasswordResetDone" Russian="Пароль был успешно сброшен"/>
 
   <!--CalendarForm-->
   <Local Name="CalendarForm.CreateEvent" Russian="Создать событие"/>

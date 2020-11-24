@@ -17,6 +17,7 @@ protected:
 
 private:
 	void PasswordManagement();
+	void PasswordReset();
 	bool CheckThisUser(); //ѕроверка редактировани€ текущего пользовател€
 };
 //-----------------------------------------------------------------------------
