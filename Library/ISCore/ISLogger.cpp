@@ -86,21 +86,44 @@ void ISLogger::Log(bool is_format, MessageType message_type, const std::string &
 		case MessageType::MT_Assert: message_type_string = "Assert"; break;
 		}
 
-		//Получаем текущую дату и время и формируем заголовок сообщения
+        //Получаем текущую дату и время
+        unsigned int Day = 0, Month = 0, Year = 0, Hour = 0, Minute = 0, Second = 0, Millisecond = 0;
+#ifdef WIN32
 		SYSTEMTIME SystemTime;
 		GetLocalTime(&SystemTime);
+        Day = SystemTime.wDay;
+        Month = SystemTime.wMonth;
+        Year = SystemTime.wYear;
+        Hour = SystemTime.wHour;
+        Minute = SystemTime.wMonute;
+        Second = SystemTime.wSecond;
+        Millisecond = SystemTime.wMilliseconds;
+#else
+        struct timeval TimeValue;
+        gettimeofday(&TimeValue, NULL);
 
+        struct tm *SystemTime = localtime(&TimeValue.tv_sec);
+        Day = SystemTime->tm_mday;
+        Month = SystemTime->tm_mon + 1;
+        Year = SystemTime->tm_year + 1900;
+        Hour = SystemTime->tm_hour;
+        Minute = SystemTime->tm_min;
+        Second = SystemTime->tm_sec;
+        Millisecond = (unsigned int)(TimeValue.tv_usec / 1000);
+#endif
+
+        //Формируем заголовок сообщения
 		char buffer[LOGGER_MESSAGE_SIZE];
 		if (component.empty()) //Если компонент указан
 		{
 			sprintf(buffer, "%02d.%02d.%02d %02d:%02d:%02d:%03d\t%lu\t[%s] %s",
-				SystemTime.wDay, SystemTime.wMonth, SystemTime.wYear, SystemTime.wHour, SystemTime.wMinute, SystemTime.wSecond, SystemTime.wMilliseconds,
+                Day, Month, Year % 100, Hour, Minute, Second, Millisecond,
 				CURRENT_THREAD_ID(), message_type_string.c_str(), string.toStdString().c_str());
 		}
 		else //Компонент не указан
 		{
 			sprintf(buffer, "%02d.%02d.%02d %02d:%02d:%02d:%03d\t%lu\t[%s][%s] %s",
-				SystemTime.wDay, SystemTime.wMonth, SystemTime.wYear, SystemTime.wHour, SystemTime.wMinute, SystemTime.wSecond, SystemTime.wMilliseconds,
+                Day, Month, Year % 100, Hour, Minute, Second, Millisecond,
 				CURRENT_THREAD_ID(), message_type_string.c_str(), component.c_str(), string.toStdString().c_str());
 		}
 		string_complete = buffer;
