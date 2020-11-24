@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 #include "iscore_global.h"
 //-----------------------------------------------------------------------------
-ISCORE_EXPORT void ShowDebugString(const QString &Severity, const QString &String);
+ISCORE_EXPORT void ShowDebugString(const char *Severity, const QString &String);
 ISCORE_EXPORT void ShowDebugString(const QString &String);
 //-----------------------------------------------------------------------------
 #define ISDEBUG() std::cout << std::endl;

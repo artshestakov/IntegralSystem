@@ -90,20 +90,20 @@ void ISLogger::Log(bool is_format, MessageType message_type, const std::string &
 		SYSTEMTIME SystemTime;
 		GetLocalTime(&SystemTime);
 
-		char buf[512];
+		char buffer[LOGGER_MESSAGE_SIZE];
 		if (component.empty()) //Если компонент указан
 		{
-			sprintf(buf, "%02d.%02d.%02d %02d:%02d:%02d:%03d\t%lu\t[%s] %s",
+			sprintf(buffer, "%02d.%02d.%02d %02d:%02d:%02d:%03d\t%lu\t[%s] %s",
 				SystemTime.wDay, SystemTime.wMonth, SystemTime.wYear, SystemTime.wHour, SystemTime.wMinute, SystemTime.wSecond, SystemTime.wMilliseconds,
 				CURRENT_THREAD_ID(), message_type_string.c_str(), string.toStdString().c_str());
 		}
 		else //Компонент не указан
 		{
-			sprintf(buf, "%02d.%02d.%02d %02d:%02d:%02d:%03d\t%lu\t[%s][%s] %s",
+			sprintf(buffer, "%02d.%02d.%02d %02d:%02d:%02d:%03d\t%lu\t[%s][%s] %s",
 				SystemTime.wDay, SystemTime.wMonth, SystemTime.wYear, SystemTime.wHour, SystemTime.wMinute, SystemTime.wSecond, SystemTime.wMilliseconds,
 				CURRENT_THREAD_ID(), message_type_string.c_str(), component.c_str(), string.toStdString().c_str());
 		}
-		string_complete = buf;
+		string_complete = buffer;
 	}
 	else //Форматирование не нужно - записываем сообщение "как есть"
 	{
@@ -112,7 +112,7 @@ void ISLogger::Log(bool is_format, MessageType message_type, const std::string &
 
 	CRITICAL_SECTION_LOCK(&CriticalSection);
 #ifdef DEBUG //В отладочной версии выводим строку в консоль
-	//ISDEBUG_L(string_complete);
+	ISDEBUG_L(QString::fromStdString(string_complete));
 #endif
 	Array[LastIndex++] = string_complete;
 	CRITICAL_SECTION_UNLOCK(&CriticalSection);

@@ -132,6 +132,7 @@ const size_t	AUDIO_PLAYER_POS = 5000; //Перемотка в аудио-плеере
 //LOGGER-----------------------------------------------------------------------
 const size_t	LOGGER_ARRAY_SIZE = 20000; //Максимальный размер массива
 const size_t	LOGGER_TIMEOUT = 50; //Таймаут логгера
+const size_t	LOGGER_MESSAGE_SIZE = 512; //Максимальный размер строки логгера
 //CARAT------------------------------------------------------------------------
 const unsigned short	CARAT_TCP_PORT = 50000; //Стандартный порт TCP-сервера
 const unsigned short	CARAT_CONTROLLER_PORT = 50001; //Стандартный порт контроллера

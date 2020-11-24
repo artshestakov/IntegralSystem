@@ -2,7 +2,6 @@
 #include "ISQueryPool.h"
 #include "ISDatabase.h"
 #include "ISLogger.h"
-#include "ISConsole.h"
 //-----------------------------------------------------------------------------
 int main(int argc, char **argv)
 {
