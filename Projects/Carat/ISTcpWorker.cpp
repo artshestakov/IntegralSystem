@@ -2,7 +2,6 @@
 #include "ISAlgorithm.h"
 #include "ISDatabase.h"
 #include "ISLogger.h"
-#include "ISQueryText.h"
 #include "ISQuery.h"
 #include "ISLocalization.h"
 #include "ISSystem.h"
@@ -181,7 +180,6 @@ void ISTcpWorker::Run()
 
 	//Сигналим об успехе или ошибке
 	emit IsStarted ? StartedDone() : StartedFailed();
-
 	if (IsStarted)
 	{
 		ISLOGGER_I(__CLASS__, "Started");
@@ -467,24 +465,13 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 		}
 	}
 
-	//Проверяем подключение к БД. Если не удалось подключиться - ошибка
-	QString TestConnectionName = ISSystem::GenerateUuid();
-	if (!ISDatabase::Instance().Connect(TestConnectionName, DBHost, DBPort, DBName, DBUser, DBPassword))
-	{
-		Protocol(UserID, CONST_UID_PROTOCOL_BAD_ENTER_APPLICATION, QString(), QString(), QVariant(), ISDatabase::Instance().GetErrorString().simplified());
-		ErrorString = LANG("Carat.Error.Query.DatabaseConnection").arg(ISDatabase::Instance().GetErrorString());
-		return false;
-	}
-	Protocol(UserID, CONST_UID_PROTOCOL_ENTER_APPLICATION, QString(), QString(), QVariant(), QString());
-
-	//Подключились к БД - отключаемся от неё и устанавливаем флаги авторизации
-	ISDatabase::Instance().Disconnect(TestConnectionName);
+	//Устанавливаем флаги сокету
 	TcpMessage->TcpSocket->SetAuthorized(true);
 	TcpMessage->TcpSocket->SetUserID(UserID);
 	TcpMessage->TcpSocket->SetUserGroupID(GroupID);
 	TcpMessage->TcpSocket->SetUserIsSystem(IsSystem);
 
-	//Проверяем версию клиента.
+	//Проверяем версию клиента
 	bool IsNeedUpdate = false; //По умолчанию флаг обновления должен быть false (вдруг клиент отправил невалидную версию)
 	if (Version.isValid()) //Если клиент отправил версию
 	{
