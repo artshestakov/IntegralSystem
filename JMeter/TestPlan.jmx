@@ -23,6 +23,91 @@
         <stringProp name="TCPSampler.EolByte">10</stringProp>
       </ConfigTestElement>
       <hashTree/>
+      <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+        <collectionProp name="Arguments.arguments">
+          <elementProp name="Auth_Login" elementType="Argument">
+            <stringProp name="Argument.name">Auth_Login</stringProp>
+            <stringProp name="Argument.value">postgres</stringProp>
+            <stringProp name="Argument.desc">Логин пользователя для авторизации</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="Auth_Password" elementType="Argument">
+            <stringProp name="Argument.name">Auth_Password</stringProp>
+            <stringProp name="Argument.value">adm777</stringProp>
+            <stringProp name="Argument.desc">Пароль пользователя для авторизации</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="Auth_Version" elementType="Argument">
+            <stringProp name="Argument.name">Auth_Version</stringProp>
+            <stringProp name="Argument.value">1.0.0</stringProp>
+            <stringProp name="Argument.desc">Версия клиента</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="Sleep_Timeout" elementType="Argument">
+            <stringProp name="Argument.name">Sleep_Timeout</stringProp>
+            <stringProp name="Argument.value">5000</stringProp>
+            <stringProp name="Argument.desc">Таймаут сна</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="UserPasswordExist_UserID" elementType="Argument">
+            <stringProp name="Argument.name">UserPasswordExist_UserID</stringProp>
+            <stringProp name="Argument.value">4</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="UserPasswordCreate_UserID" elementType="Argument">
+            <stringProp name="Argument.name">UserPasswordCreate_UserID</stringProp>
+            <stringProp name="Argument.value">12</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="UserPasswordCreate_Login" elementType="Argument">
+            <stringProp name="Argument.name">UserPasswordCreate_Login</stringProp>
+            <stringProp name="Argument.value">cherkov</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="UserPasswordCreate_Password" elementType="Argument">
+            <stringProp name="Argument.name">UserPasswordCreate_Password</stringProp>
+            <stringProp name="Argument.value">78357835</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="UserPasswordEdit_UserID" elementType="Argument">
+            <stringProp name="Argument.name">UserPasswordEdit_UserID</stringProp>
+            <stringProp name="Argument.value">12</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="UserPasswordEdit_OldLogin" elementType="Argument">
+            <stringProp name="Argument.name">UserPasswordEdit_OldLogin</stringProp>
+            <stringProp name="Argument.value">cherkov</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="UserPasswordEdit_OldPassword" elementType="Argument">
+            <stringProp name="Argument.name">UserPasswordEdit_OldPassword</stringProp>
+            <stringProp name="Argument.value">78357835</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="UserPasswordEdit_NewLogin" elementType="Argument">
+            <stringProp name="Argument.name">UserPasswordEdit_NewLogin</stringProp>
+            <stringProp name="Argument.value">cherkov</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="UserPasswordEdit_NewPassword" elementType="Argument">
+            <stringProp name="Argument.name">UserPasswordEdit_NewPassword</stringProp>
+            <stringProp name="Argument.value">454Trendy</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="UserPasswordReset_UserID" elementType="Argument">
+            <stringProp name="Argument.name">UserPasswordReset_UserID</stringProp>
+            <stringProp name="Argument.value">12</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="GetRecordCall_RecordID" elementType="Argument">
+            <stringProp name="Argument.name">GetRecordCall_RecordID</stringProp>
+            <stringProp name="Argument.value">1028</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+            <stringProp name="Argument.desc">Код записи разговора из статистики</stringProp>
+          </elementProp>
+        </collectionProp>
+      </Arguments>
+      <hashTree/>
       <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Thread Group" enabled="true">
         <stringProp name="ThreadGroup.on_sample_error">stoptest</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
@@ -59,12 +144,12 @@ String GetSHA256(String string)
 	MessageDigest Digest = MessageDigest.getInstance(&quot;SHA-256&quot;);
 	byte[] HashBytes = Digest.digest(string.getBytes(StandardCharsets.UTF_8));
 
-	StringBuilder sb = new StringBuilder();
+	StringBuilder string_builder = new StringBuilder();
 	for (byte b : HashBytes)
 	{
-		sb.append(String.format(&quot;%02x&quot;, b));
+		string_builder.append(String.format(&quot;%02x&quot;, b));
 	}
-	return sb.toString();
+	return string_builder.toString();
 };
 
 //Авторизация
@@ -73,8 +158,8 @@ def MapAuth =
 	Type: &quot;Auth&quot;,
 	Parameters:
 		[
-			Hash: GetSHA256(&quot;postgresadm777&quot;),
-			Version: &quot;1.0.0&quot;
+			Hash: GetSHA256(vars.get(&quot;Auth_Login&quot;) + vars.get(&quot;Auth_Password&quot;)),
+			Version: vars.get(&quot;Auth_Version&quot;)
 		]
 ];
 vars.put(&quot;QueryAuth&quot;, MapToString(MapAuth));
@@ -92,17 +177,10 @@ def MapSleep =
 	Type: &quot;Sleep&quot;,
 	Parameters:
 		[
-			Timeout: 5000
+			Timeout: vars.get(&quot;Sleep_Timeout&quot;)
 		]
 ];
 vars.put(&quot;QuerySleep&quot;, MapToString(MapSleep));
-
-//Тест
-def MapTest =
-[
-	Type: &quot;Test&quot;
-];
-vars.put(&quot;QueryTest&quot;, MapToString(MapTest));
 
 //Получить последнюю версию клиента
 def MapGetLastClient =
@@ -117,7 +195,7 @@ def MapUserPasswordExist =
 	Type: &quot;UserPasswordExist&quot;,
 	Parameters:
 		[
-			UserID: 4
+			UserID: vars.get(&quot;UserPasswordExist_UserID&quot;)
 		]
 ];
 vars.put(&quot;QueryUserPasswordExist&quot;, MapToString(MapUserPasswordExist));
@@ -128,8 +206,8 @@ def MapUserPasswordCreate =
 	Type: &quot;UserPasswordCreate&quot;,
 	Parameters:
 		[
-			UserID: 4,
-			Hash: GetSHA256(&quot;testov78357835&quot;)
+			UserID: vars.get(&quot;UserPasswordCreate_UserID&quot;),
+			Hash: GetSHA256(vars.get(&quot;UserPasswordCreate_Login&quot;) + vars.get(&quot;UserPasswordCreate_Password&quot;))
 		]
 ];
 vars.put(&quot;QueryUserPasswordCreate&quot;, MapToString(MapUserPasswordCreate));
@@ -140,9 +218,9 @@ def MapUserPasswordEdit =
 	Type: &quot;UserPasswordEdit&quot;,
 	Parameters:
 		[
-			UserID: 10,
-			HashOld: GetSHA256(&quot;petrov78357835&quot;),
-			Hash: GetSHA256(&quot;petrov12345678&quot;)
+			UserID: vars.get(&quot;UserPasswordEdit_UserID&quot;),
+			HashOld: GetSHA256(vars.get(&quot;UserPasswordEdit_OldLogin&quot;) + vars.get(&quot;UserPasswordEdit_OldPassword&quot;)),
+			Hash: GetSHA256(vars.get(&quot;UserPasswordEdit_NewLogin&quot;) + vars.get(&quot;UserPasswordEdit_NewPassword&quot;))
 		]
 ];
 vars.put(&quot;QueryUserPasswordEdit&quot;, MapToString(MapUserPasswordEdit));
@@ -153,7 +231,7 @@ def MapUserPasswordReset =
 	Type: &quot;UserPasswordReset&quot;,
 	Parameters:
 		[
-			UserID: 15
+			UserID: vars.get(&quot;UserPasswordReset_UserID&quot;)
 		]
 ];
 vars.put(&quot;QueryUserPasswordReset&quot;, MapToString(MapUserPasswordReset));
@@ -164,14 +242,14 @@ def MapGetRecordCall =
 	Type: &quot;GetRecordCall&quot;,
 	Parameters:
 		[
-			RecordID: 1028
+			RecordID: vars.get(&quot;GetRecordCall_RecordID&quot;)
 		]
 ];
 vars.put(&quot;QueryGetRecordCall&quot;, MapToString(MapGetRecordCall));</stringProp>
           <stringProp name="scriptLanguage">groovy</stringProp>
         </JSR223Sampler>
         <hashTree/>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: Auth" enabled="true">
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: Auth" enabled="false">
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
           <stringProp name="TCPSampler.port"></stringProp>
@@ -214,7 +292,7 @@ vars.put(&quot;QueryGetRecordCall&quot;, MapToString(MapGetRecordCall));</string
           <boolProp name="TCPSampler.nodelay">false</boolProp>
           <stringProp name="TCPSampler.timeout"></stringProp>
           <stringProp name="TCPSampler.request">${QueryUserPasswordCreate}</stringProp>
-          <boolProp name="TCPSampler.closeConnection">true</boolProp>
+          <boolProp name="TCPSampler.closeConnection">false</boolProp>
           <stringProp name="ConfigTestElement.username"></stringProp>
           <stringProp name="ConfigTestElement.password"></stringProp>
         </TCPSampler>
@@ -226,12 +304,12 @@ vars.put(&quot;QueryGetRecordCall&quot;, MapToString(MapGetRecordCall));</string
           <boolProp name="TCPSampler.nodelay">false</boolProp>
           <stringProp name="TCPSampler.timeout"></stringProp>
           <stringProp name="TCPSampler.request">${QueryUserPasswordEdit}</stringProp>
-          <boolProp name="TCPSampler.closeConnection">true</boolProp>
+          <boolProp name="TCPSampler.closeConnection">false</boolProp>
           <stringProp name="ConfigTestElement.username"></stringProp>
           <stringProp name="ConfigTestElement.password"></stringProp>
         </TCPSampler>
         <hashTree/>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: UserPasswordReset" enabled="true">
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: UserPasswordReset" enabled="false">
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
           <stringProp name="TCPSampler.port"></stringProp>
@@ -268,19 +346,6 @@ vars.put(&quot;QueryGetRecordCall&quot;, MapToString(MapGetRecordCall));</string
           <stringProp name="ConfigTestElement.password"></stringProp>
         </TCPSampler>
         <hashTree/>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: Test" enabled="false">
-          <stringProp name="TCPSampler.server">127.0.0.1</stringProp>
-          <boolProp name="TCPSampler.reUseConnection">true</boolProp>
-          <stringProp name="TCPSampler.port">50000</stringProp>
-          <boolProp name="TCPSampler.nodelay">false</boolProp>
-          <stringProp name="TCPSampler.timeout"></stringProp>
-          <stringProp name="TCPSampler.request">${QueryTest}</stringProp>
-          <boolProp name="TCPSampler.closeConnection">false</boolProp>
-          <stringProp name="TCPSampler.EolByte">10</stringProp>
-          <stringProp name="ConfigTestElement.username"></stringProp>
-          <stringProp name="ConfigTestElement.password"></stringProp>
-        </TCPSampler>
-        <hashTree/>
         <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: Sleep" enabled="false">
           <stringProp name="TCPSampler.server">127.0.0.1</stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
@@ -294,7 +359,7 @@ vars.put(&quot;QueryGetRecordCall&quot;, MapToString(MapGetRecordCall));</string
           <stringProp name="ConfigTestElement.password"></stringProp>
         </TCPSampler>
         <hashTree/>
-        <DebugSampler guiclass="TestBeanGUI" testclass="DebugSampler" testname="Debug Sampler" enabled="false">
+        <DebugSampler guiclass="TestBeanGUI" testclass="DebugSampler" testname="Debug Sampler" enabled="true">
           <boolProp name="displayJMeterProperties">false</boolProp>
           <boolProp name="displayJMeterVariables">true</boolProp>
           <boolProp name="displaySystemProperties">false</boolProp>
