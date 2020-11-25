@@ -381,9 +381,7 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	for (const QChar &Char : HashString)
 	{
 		int ASCII = (int)Char.toLatin1(); //Преобразовываем текущий символ в ASCII-код
-
-		//Если текущий символ входит в диапазон [0-9] или [a-z] - все окей
-		if ((ASCII >= 48 && ASCII <= 57) || (ASCII >=97 && ASCII <= 122)) 
+		if ((ASCII >= 48 && ASCII <= 57) || (ASCII >=97 && ASCII <= 122)) //Если текущий символ входит в диапазон [0-9] или [a-z] - все окей
 		{
 			continue;
 		}
