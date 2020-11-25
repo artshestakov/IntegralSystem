@@ -1,22 +1,56 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Config>
 
-  <Template Type="Server">
-    <Section Name="Connection">
-      <Parameter Name="Host" DefaultValue="127.0.0.1" NotNull="true"/>
-      <Parameter Name="Port" DefaultValue="5432" NotNull="true"/>
-      <Parameter Name="Database" DefaultValue="" NotNull="true"/>
-      <Parameter Name="Login" DefaultValue="" NotNull="true"/>
-      <Parameter Name="Password" DefaultValue="" NotNull="true"/>
+  <Template Name="Server">
+    <Section Name="Connection" Description="">
+      <Parameter Name="Host" DefaultValue="" NotNull="true" Description=""/>
+      <Parameter Name="Port" DefaultValue="" NotNull="true" Description=""/>
+      <Parameter Name="Database" DefaultValue="" NotNull="true" Description=""/>
+      <Parameter Name="Login" DefaultValue="" NotNull="true" Description=""/>
+      <Parameter Name="Password" DefaultValue="" NotNull="true" Description=""/>
     </Section>
 
-    <Section Name="Controller">
-      <Parameter Name="Include" DefaultValue="true" NotNull="true"/>
+    <Section Name="Controller" Description="">
+      <Parameter Name="Include" DefaultValue="true" NotNull="true" Description=""/>
+    </Section>
+
+    <Section Name="TCPServer" Description="">
+      <Parameter Name="Include" DefaultValue="false" NotNull="true" Description=""/>
+      <Parameter Name="Port" DefaultValue="" NotNull="true" Description=""/>
+      <Parameter Name="WorkerCount" DefaultValue="" NotNull="true" Description=""/>
+    </Section>
+
+    <Section Name="AMI" Description="">
+      <Parameter Name="Include" DefaultValue="false" NotNull="true" Description=""/>
+      <Parameter Name="Server" DefaultValue="" NotNull="true" Description=""/>
+      <Parameter Name="Port" DefaultValue="" NotNull="true" Description=""/>
+      <Parameter Name="Login" DefaultValue="" NotNull="true" Description=""/>
+      <Parameter Name="Password" DefaultValue="" NotNull="true" Description=""/>
+      <Parameter Name="RecordDir" DefaultValue="" NotNull="false" Description=""/>
+    </Section>
+
+    <Section Name="Other" Description="">
+      <Parameter Name="UpdateClientDir" DefaultValue="" NotNull="false" Description=""/>
+      <Parameter Name="Configuration" DefaultValue="" NotNull="true" Description=""/>
     </Section>
   </Template>
 
-  <Template Type="Client">
+  <Template Name="Client">
+    <Section Name="Connection" Description="">
+      <Parameter Name="Host" DefaultValue="" NotNull="true" Description=""/>
+      <Parameter Name="Port" DefaultValue="" NotNull="true" Description=""/>
+      <Parameter Name="Database" DefaultValue="" NotNull="true" Description=""/>
+    </Section>
+    
+    <Section Name="RememberUser" Description="">
+      <Parameter Name="Include" DefaultValue="false" NotNull="true" Description=""/>
+      <Parameter Name="Login" DefaultValue="" NotNull="false" Description=""/>
+    </Section>
 
+    <Section Name="Protocol" Description="">
+      <Parameter Name="Include" DefaultValue="false" NotNull="true" Description=""/>
+      <Parameter Name="Port" DefaultValue="" NotNull="false" Description=""/>
+    </Section>
   </Template>
 
 </Config>
