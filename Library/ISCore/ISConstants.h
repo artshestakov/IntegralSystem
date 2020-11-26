@@ -104,6 +104,9 @@ const char CONNECTION_FULL_TEXT_SEARCH[] = "FullTextSearchDB";
 const char CONNECTION_QUERY_POOL[] = "QueryPoolDB";
 const char CONNECTION_ASTERISK[] = "AsteriskDB";
 //-----------------------------------------------------------------------------
+const char CONFIG_TEMPLATE_SERVER[] = "Server"; //Щаблон конфигурационного файла для сервера
+const char CONFIG_TEMPLATE_CLIENT[] = "Client"; //Щаблон конфигурационного файла для клиента
+//-----------------------------------------------------------------------------
 const char		SYSTEM_DATABASE_NAME[] = "postgres"; //Имя системной БД
 const char		SYSTEM_USER_LOGIN[] = "postgres"; //Логин системного пользователя
 const char		FIGURES_STRING[] = "0123456789";

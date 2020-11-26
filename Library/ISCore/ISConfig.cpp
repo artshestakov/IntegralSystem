@@ -8,9 +8,40 @@ ISConfig::ISConfig()
 	: ErrorString(NO_ERROR_STRING),
 	ErrorLine(0),
 	ErrorColumn(0),
-	Settings(nullptr),
-	PathConfigTemplate(":Other/ConfigTemplate.xml")
+	Settings(nullptr)
 {
+	//Структура шаблонов для конфигурационных файлов
+	VectorTemplate = std::vector<ISConfigParameter>
+	{
+		//Серверный шаблон
+		{ CONFIG_TEMPLATE_SERVER, "Connection/Host",		QVariant::String,	true,	QVariant(),				0, 0 },
+		{ CONFIG_TEMPLATE_SERVER, "Connection/Port",		QVariant::Int,		true,	QVariant(),				1, MAXUINT16 },
+		{ CONFIG_TEMPLATE_SERVER, "Connection/Database",	QVariant::String,	true,	QVariant(),				0, 0 },
+		{ CONFIG_TEMPLATE_SERVER, "Connection/Login",		QVariant::String,	true,	QVariant(),				0, 0 },
+		{ CONFIG_TEMPLATE_SERVER, "Connection/Password",	QVariant::String,	true,	QVariant(),				0, 0 },
+		{ CONFIG_TEMPLATE_SERVER, "Controller/Include",		QVariant::Bool,		true,	true,					0, 0 },
+		{ CONFIG_TEMPLATE_SERVER, "Controller/Port",		QVariant::Int,		true,	CARAT_CONTROLLER_PORT,	1, MAXUINT16 },
+		{ CONFIG_TEMPLATE_SERVER, "TCPServer/Include",		QVariant::Bool,		true,	false,					0, 0 },
+		{ CONFIG_TEMPLATE_SERVER, "TCPServer/Port",			QVariant::Int,		true,	CARAT_TCP_PORT,			1, MAXUINT16 },
+		{ CONFIG_TEMPLATE_SERVER, "TCPServer/WorkerCount",	QVariant::Int,		true,	QVariant(),				0, 0 },
+		{ CONFIG_TEMPLATE_SERVER, "AMI/Include",			QVariant::Bool,		true,	false,					0, 0 },
+		{ CONFIG_TEMPLATE_SERVER, "AMI/Host",				QVariant::String,	true,	QVariant(),				0, 0 },
+		{ CONFIG_TEMPLATE_SERVER, "AMI/Port",				QVariant::Int,		true,	QVariant(),				1, MAXUINT16 },
+		{ CONFIG_TEMPLATE_SERVER, "AMI/Login",				QVariant::String,	true,	QVariant(),				0, 0 },
+		{ CONFIG_TEMPLATE_SERVER, "AMI/Password",			QVariant::String,	true,	QVariant(),				0, 0 },
+		{ CONFIG_TEMPLATE_SERVER, "AMI/RecordDir",			QVariant::String,	true,	QVariant(),				0, 0 },
+		{ CONFIG_TEMPLATE_SERVER, "Other/UpdateClientDir",	QVariant::String,	true,	QVariant(),				0, 0 },
+		{ CONFIG_TEMPLATE_SERVER, "Other/Configuration",	QVariant::String,	true,	QVariant(),				0, 0 },
+
+		//Клиентский шаблон
+		{ CONFIG_TEMPLATE_CLIENT, "Connection/Host",		QVariant::String,	true,	QVariant(),				0, 0 },
+		{ CONFIG_TEMPLATE_CLIENT, "Connection/Port",		QVariant::Int,		true,	QVariant(),				1, MAXUINT16 },
+		{ CONFIG_TEMPLATE_CLIENT, "Connection/Database",	QVariant::String,	true,	QVariant(),				0, 0 },
+		{ CONFIG_TEMPLATE_CLIENT, "RememberUser/Include",	QVariant::Bool,		true,	QVariant(),				0, 0 },
+		{ CONFIG_TEMPLATE_CLIENT, "RememberUser/Login",		QVariant::String,	true,	QVariant(),				0, 0 },
+		{ CONFIG_TEMPLATE_CLIENT, "Protocol/Include",		QVariant::Bool,		true,	false,					0, 0 },
+		{ CONFIG_TEMPLATE_CLIENT, "Protocol/Port",			QVariant::Int,		true,	CARAT_TCP_PORT,			1, MAXUINT16 }
+	};
 	CRITICAL_SECTION_INIT(&CriticalSection);
 }
 //-----------------------------------------------------------------------------
@@ -55,58 +86,6 @@ bool ISConfig::Initialize(const QString &template_name)
 	}
 	TemplateName = template_name;
 
-	//Проверяем наличие файла-шаблона
-	if (!QFile::exists(PathConfigTemplate))
-	{
-		ErrorString = "not found file template for config with path '" + PathConfigTemplate + "'";
-		return false;
-	}
-
-	//Читаем файл-шаблон
-	QFile FileTemplate(PathConfigTemplate);
-	if (!FileTemplate.open(QIODevice::ReadOnly))
-	{
-		ErrorString = "not open file template config: " + FileTemplate.errorString();
-		return false;
-	}
-	QString Content = FileTemplate.readAll();
-	FileTemplate.close();
-
-	//Парсим XML-шаблон
-	QDomDocument XmlDocument;
-	if (!XmlDocument.setContent(Content, &ErrorString, &ErrorLine, &ErrorColumn))
-	{
-		ErrorString += QString(" Line: %1. Column: %2").arg(ErrorLine).arg(ErrorColumn);
-		return false;
-	}
-	QDomElement DomElement = XmlDocument.documentElement();
-	DomNodeTemplate = DomElement.firstChildElement();
-
-	//Ищем нужную секцию шаблона
-	while (!DomNodeTemplate.isNull())
-	{
-		if (DomNodeTemplate.attributes().namedItem("Name").nodeValue() == TemplateName) //Нашли
-		{
-			//Спускаемся на уровень секций и выходим из цикла
-			DomNodeTemplate = DomNodeTemplate.firstChild();
-			break;
-		}
-		DomNodeTemplate = DomNodeTemplate.nextSibling(); //Не нашли - ищем дальше
-	}
-
-	//Проверяем, нашли ли нужный шаблон
-	if (DomNodeTemplate.isNull())
-	{
-		ErrorString = "not found template section '" + TemplateName + "'";
-		return false;
-	}
-
-	ISStringMap StringMap;
-	if (!ReadXML(StringMap)) //При разборе XML-шаблона произошла ошибка
-	{
-		return false;
-	}
-
 	PathConfigFile = QCoreApplication::applicationDirPath() + '/' + TemplateName + SYMBOL_POINT + EXTENSION_INI;
 	Settings = new QSettings(PathConfigFile, QSettings::IniFormat);
 	QSettings::Status SettingsStatus = Settings->status();
@@ -114,7 +93,7 @@ bool ISConfig::Initialize(const QString &template_name)
 	if (Result)
 	{
 		//Если конфигурационный файл существует - читаем его в память и проверяем необходимость обновления, иначе создаём файл по шаблону
-		Result = QFile::exists(PathConfigFile) ? Update(StringMap) : Create(StringMap);
+		Result = QFile::exists(PathConfigFile) ? Update() : Create();
 	}
 	else
 	{
@@ -166,52 +145,12 @@ void ISConfig::SaveForce()
 	}
 }
 //-----------------------------------------------------------------------------
-bool ISConfig::ReadXML(ISStringMap &StringMap)
-{
-	while (!DomNodeTemplate.isNull())
-	{
-		QString SectionName = DomNodeTemplate.attributes().namedItem("Name").nodeValue();
-		if (SectionName.isEmpty()) //Если имя секции пустое - считаем за ошибку
-		{
-			ErrorString = QString("empty section name. Line: %1").arg(DomNodeTemplate.lineNumber());
-			return false;
-		}
-
-		//Спускаемся к параметрам
-		QDomNode DomNode = DomNodeTemplate.firstChild();
-		while (!DomNode.isNull())
-		{
-			if (DomNode.isComment()) //Если параметр закоментирован - переходим к следующему
-			{
-				continue;
-			}
-
-			//Получаем имя параметра
-			QString ParameterName = DomNode.attributes().namedItem("Name").nodeValue();
-			if (ParameterName.isEmpty()) //Имя параметра пустое - считаем за ошибку
-			{
-				ErrorString = QString("empty parameter name. Line: %1").arg(DomNode.lineNumber());
-				return false;
-			}
-			QString DefaultValue = DomNode.attributes().namedItem("DefaultValue").nodeValue();
-			StringMap[SectionName + '/' + ParameterName] = DefaultValue;
-			DomNode = DomNode.nextSibling(); //Переходим к следующему параметру
-		}
-		DomNodeTemplate = DomNodeTemplate.nextSibling(); //Переходим к следующей секции
-	}
-	return true;
-}
-//-----------------------------------------------------------------------------
-bool ISConfig::Update(const ISStringMap &StringMap)
+bool ISConfig::Update()
 {
 	bool FlagChanged = false; //Флаг изменения
-
-	//Получаем текущие ключи и проверяем их наличие в шаблоне
-	QStringList CurrentKeysList = Settings->allKeys();
-	ISVectorString TemplateKeys = ISAlgorithm::ConvertMapToKeys(StringMap);
-	for (const QString &Key : CurrentKeysList) //Обходим ключи
+	for (const QString &Key : Settings->allKeys()) //Проверяем каждый ключ на наличие в шаблоне
 	{
-		if (!ISAlgorithm::VectorContains(TemplateKeys, Key)) //Если такого ключа в шаблоне нет - удаляем его из текущео файла
+		if (!ContainsKey(Key)) //Если такого ключа в шаблоне нет - удаляем его из текущео файла
 		{
 			Settings->remove(Key);
 			FlagChanged = true;
@@ -219,11 +158,11 @@ bool ISConfig::Update(const ISStringMap &StringMap)
 	}
 
 	//Теперь проверяем, не появилось ли новых параметров в шаблоне
-	for (const auto &MapItem : StringMap) //Обходим параметры из шаблона
+	for (const ISConfigParameter &ConfigParameter : VectorTemplate) //Обходим параметры из шаблона
 	{
-		if (!Settings->contains(MapItem.first)) //Такого ключа в текущем конфигурационном файле нет - добавляем
+		if (ConfigParameter.TemplateName == TemplateName && !Settings->contains(ConfigParameter.Name)) //Такого ключа в текущем конфигурационном файле нет - добавляем
 		{
-			Settings->setValue(MapItem.first, MapItem.second);
+			Settings->setValue(ConfigParameter.Name, ConfigParameter.DefaultValue.toString());
 			FlagChanged = true;
 		}
 	}
@@ -240,19 +179,28 @@ bool ISConfig::Update(const ISStringMap &StringMap)
 	return true;
 }
 //-----------------------------------------------------------------------------
-bool ISConfig::Create(const ISStringMap &StringMap)
+bool ISConfig::Create()
 {
-	for (const auto &MapItem : StringMap)
+	//Обходим все параметры текущего шаблона и добавляем их в конфигурационный файл
+	for (const ISConfigParameter &ConfigParameter : VectorTemplate)
 	{
-		Settings->setValue(MapItem.first, MapItem.second);
-	}
-	SaveForce(); //Принудительно сохраняем
-
-	if (Settings->status() != QSettings::NoError)
-	{
-		ErrorString = "error with create config file";
-		return false;
+		if (ConfigParameter.TemplateName == TemplateName)
+		{
+			Settings->setValue(ConfigParameter.Name, ConfigParameter.DefaultValue.toString());
+		}
 	}
 	return true;
+}
+//-----------------------------------------------------------------------------
+bool ISConfig::ContainsKey(const QString &Key)
+{
+	for (const ISConfigParameter &ConfigParameter : VectorTemplate)
+	{
+		if (ConfigParameter.TemplateName == TemplateName && ConfigParameter.Name == Key)
+		{
+			return true;
+		}
+	}
+	return false;
 }
 //-----------------------------------------------------------------------------

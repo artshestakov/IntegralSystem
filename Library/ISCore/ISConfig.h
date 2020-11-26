@@ -3,7 +3,7 @@
 #define _ISCONFIG_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "iscore_global.h"
-#include "ISTypedefs.h"
+#include "ISStructs.h"
 //-----------------------------------------------------------------------------
 class ISCORE_EXPORT ISConfig
 {
@@ -22,8 +22,11 @@ public:
 
 private:
 	bool ReadXML(ISStringMap &StringMap); //Чтение XML-шаблона
-	bool Update(const ISStringMap &StringMap); //Обновление файла
-	bool Create(const ISStringMap &StringMap); //Генерация файла из шаблона
+	bool Update(); //Обновление файла
+	bool Create(); //Генерация файла из шаблона
+
+private:
+	bool ContainsKey(const QString &Key); //Проверить наличие ключа в шаблоне
 
 private:
 	ISConfig();
@@ -32,12 +35,12 @@ private:
 	ISConfig& operator=(ISConfig const&) { return *this; };
 
 private:
+	std::vector<ISConfigParameter> VectorTemplate;
 	QString ErrorString;
 	int ErrorLine;
 	int ErrorColumn;
 	QSettings *Settings;
 	QString TemplateName;
-	QString PathConfigTemplate;
 	QDomNode DomNodeTemplate;
 	QString PathConfigFile;
 	ISCriticalSection CriticalSection;
