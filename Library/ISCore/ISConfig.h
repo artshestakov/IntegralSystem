@@ -21,7 +21,6 @@ public:
 	void SaveForce(); //Принудительное сохранение
 
 private:
-	bool ReadXML(ISStringMap &StringMap); //Чтение XML-шаблона
 	bool Update(); //Обновление файла
 	bool Create(); //Генерация файла из шаблона
 
