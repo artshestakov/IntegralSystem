@@ -12,11 +12,12 @@
 
     <Section Name="Controller" Description="">
       <Parameter Name="Include" DefaultValue="true" NotNull="true" Description=""/>
+      <Parameter Name="Port" DefaultValue="50001" NotNull="true" Description=""/>
     </Section>
 
     <Section Name="TCPServer" Description="">
       <Parameter Name="Include" DefaultValue="false" NotNull="true" Description=""/>
-      <Parameter Name="Port" DefaultValue="" NotNull="true" Description=""/>
+      <Parameter Name="Port" DefaultValue="50000" NotNull="true" Description=""/>
       <Parameter Name="WorkerCount" DefaultValue="" NotNull="true" Description=""/>
     </Section>
 

@@ -2,10 +2,14 @@
 #include "ISConstants.h"
 #include "ISLogger.h"
 #include "ISAlgorithm.h"
+#include "ISSystem.h"
 //-----------------------------------------------------------------------------
 ISConfig::ISConfig()
 	: ErrorString(NO_ERROR_STRING),
-	Settings(nullptr)
+	ErrorLine(0),
+	ErrorColumn(0),
+	Settings(nullptr),
+	PathConfigTemplate(":Other/ConfigTemplate.xml")
 {
 	CRITICAL_SECTION_INIT(&CriticalSection);
 }
@@ -35,52 +39,91 @@ QString ISConfig::GetConfigPath() const
 	return PathConfigFile;
 }
 //-----------------------------------------------------------------------------
-bool ISConfig::ReInitialize(const QString &TemplateName)
+bool ISConfig::ReInitialize(const QString &template_name)
 {
 	//Удаляем указатель и инициализируем
 	POINTER_DELETE(Settings);
-	return Initialize(TemplateName);
+	return Initialize(template_name);
 }
 //-----------------------------------------------------------------------------
-bool ISConfig::Initialize(const QString &TemplateName)
+bool ISConfig::Initialize(const QString &template_name)
 {
-	if (Settings)
+	if (Settings) //Если указатель существует - значит файл был проинициализирован
 	{
+		ISLOGGER_W(__CLASS__, "Already initialized");
 		return true;
 	}
+	TemplateName = template_name;
 
-	PathConfigTemplate = ":ConfigTemplate/" + TemplateName + SYMBOL_POINT + EXTENSION_INI;
-	bool Result = QFile::exists(PathConfigTemplate);
+	//Проверяем наличие файла-шаблона
+	if (!QFile::exists(PathConfigTemplate))
+	{
+		ErrorString = "not found file template for config with path '" + PathConfigTemplate + "'";
+		return false;
+	}
+
+	//Читаем файл-шаблон
+	QFile FileTemplate(PathConfigTemplate);
+	if (!FileTemplate.open(QIODevice::ReadOnly))
+	{
+		ErrorString = "not open file template config: " + FileTemplate.errorString();
+		return false;
+	}
+	QString Content = FileTemplate.readAll();
+	FileTemplate.close();
+
+	//Парсим XML-шаблон
+	QDomDocument XmlDocument;
+	if (!XmlDocument.setContent(Content, &ErrorString, &ErrorLine, &ErrorColumn))
+	{
+		ErrorString += QString(" Line: %1. Column: %2").arg(ErrorLine).arg(ErrorColumn);
+		return false;
+	}
+	QDomElement DomElement = XmlDocument.documentElement();
+	DomNodeTemplate = DomElement.firstChildElement();
+
+	//Ищем нужную секцию шаблона
+	while (!DomNodeTemplate.isNull())
+	{
+		if (DomNodeTemplate.attributes().namedItem("Name").nodeValue() == TemplateName) //Нашли
+		{
+			//Спускаемся на уровень секций и выходим из цикла
+			DomNodeTemplate = DomNodeTemplate.firstChild();
+			break;
+		}
+		DomNodeTemplate = DomNodeTemplate.nextSibling(); //Не нашли - ищем дальше
+	}
+
+	//Проверяем, нашли ли нужный шаблон
+	if (DomNodeTemplate.isNull())
+	{
+		ErrorString = "not found template section '" + TemplateName + "'";
+		return false;
+	}
+
+	ISStringMap StringMap;
+	if (!ReadXML(StringMap)) //При разборе XML-шаблона произошла ошибка
+	{
+		return false;
+	}
+
+	PathConfigFile = QCoreApplication::applicationDirPath() + '/' + TemplateName + SYMBOL_POINT + EXTENSION_INI;
+	Settings = new QSettings(PathConfigFile, QSettings::IniFormat);
+	QSettings::Status SettingsStatus = Settings->status();
+	bool Result = SettingsStatus == QSettings::NoError;
 	if (Result)
 	{
-		PathConfigFile = QCoreApplication::applicationDirPath() + '/' + TemplateName + SYMBOL_POINT + EXTENSION_INI;
-		Settings = new QSettings(PathConfigFile, QSettings::IniFormat);
-		QSettings::Status SettingsStatus = Settings->status();
-		Result = SettingsStatus == QSettings::NoError;
-		if (Result)
-		{
-			if (QFile::exists(PathConfigFile)) //Если конфигурационный файл существует - читаем его в память и проверяем необходимость обновления
-			{
-				Result = Update();
-			}
-			else //Конфигурационный файл не существует - создаём его из шаблона
-			{
-				Result = Create();
-			}
-		}
-		else
-		{
-			switch (SettingsStatus)
-			{
-            case QSettings::NoError: break;
-			case QSettings::AccessError: ErrorString = "access error with path " + PathConfigFile; break;
-			case QSettings::FormatError: ErrorString = "format error"; break;
-			}
-		}
+		//Если конфигурационный файл существует - читаем его в память и проверяем необходимость обновления, иначе создаём файл по шаблону
+		Result = QFile::exists(PathConfigFile) ? Update(StringMap) : Create(StringMap);
 	}
 	else
 	{
-		ErrorString = "not found file template for config with path '" + PathConfigTemplate + "'";
+		switch (SettingsStatus)
+		{
+		case QSettings::NoError: break;
+		case QSettings::AccessError: ErrorString = "access error with path " + PathConfigFile; break;
+		case QSettings::FormatError: ErrorString = "format error"; break;
+		}
 	}
 	return Result;
 }
@@ -123,57 +166,93 @@ void ISConfig::SaveForce()
 	}
 }
 //-----------------------------------------------------------------------------
-bool ISConfig::Update()
+bool ISConfig::ReadXML(ISStringMap &StringMap)
 {
-	QSettings settings_template(PathConfigTemplate, QSettings::IniFormat); //Читаем шаблон конфигурационного файла
-	QStringList Keys = settings_template.allKeys(); //Запоминаем параметры шаблона
-	bool FlagChanged = false; //Флаг изменения
-	
-	for (const QString &Key : Keys) //Обходим параметры шаблона
+	while (!DomNodeTemplate.isNull())
 	{
-		if (!Settings->contains(Key)) //Если такого параметра не существует в текущем конфигурационном файле - добавляем его
+		QString SectionName = DomNodeTemplate.attributes().namedItem("Name").nodeValue();
+		if (SectionName.isEmpty()) //Если имя секции пустое - считаем за ошибку
 		{
-			Settings->setValue(Key, settings_template.value(Key));
-			FlagChanged = true;
+			ErrorString = QString("empty section name. Line: %1").arg(DomNodeTemplate.lineNumber());
+			return false;
 		}
-	}
 
-	Keys = Settings->allKeys(); //Запоминаем параметры текущего конфигурационного файла
-	for (const QString &Key : Keys) //Обходим параметры текущего конфигурационного файла
+		//Спускаемся к параметрам
+		QDomNode DomNode = DomNodeTemplate.firstChild();
+		while (!DomNode.isNull())
+		{
+			if (DomNode.isComment()) //Если параметр закоментирован - переходим к следующему
+			{
+				continue;
+			}
+
+			//Получаем имя параметра
+			QString ParameterName = DomNode.attributes().namedItem("Name").nodeValue();
+			if (ParameterName.isEmpty()) //Имя параметра пустое - считаем за ошибку
+			{
+				ErrorString = QString("empty parameter name. Line: %1").arg(DomNode.lineNumber());
+				return false;
+			}
+			QString DefaultValue = DomNode.attributes().namedItem("DefaultValue").nodeValue();
+			StringMap[SectionName + '/' + ParameterName] = DefaultValue;
+			DomNode = DomNode.nextSibling(); //Переходим к следующему параметру
+		}
+		DomNodeTemplate = DomNodeTemplate.nextSibling(); //Переходим к следующей секции
+	}
+	return true;
+}
+//-----------------------------------------------------------------------------
+bool ISConfig::Update(const ISStringMap &StringMap)
+{
+	bool FlagChanged = false; //Флаг изменения
+
+	//Получаем текущие ключи и проверяем их наличие в шаблоне
+	QStringList CurrentKeysList = Settings->allKeys();
+	ISVectorString TemplateKeys = ISAlgorithm::ConvertMapToKeys(StringMap);
+	for (const QString &Key : CurrentKeysList) //Обходим ключи
 	{
-		if (!settings_template.contains(Key)) //Если в шаблоне такого параметра нет - удаляем его из текущего конфигурационного файла
+		if (!ISAlgorithm::VectorContains(TemplateKeys, Key)) //Если такого ключа в шаблоне нет - удаляем его из текущео файла
 		{
 			Settings->remove(Key);
 			FlagChanged = true;
 		}
 	}
 
-	bool Result = true;
-	if (FlagChanged) //Если параметры были изменены - синхронизируем
+	//Теперь проверяем, не появилось ли новых параметров в шаблоне
+	for (const auto &MapItem : StringMap) //Обходим параметры из шаблона
 	{
-		Settings->sync();
-		Result = Settings->status() == QSettings::NoError;
-		if (!Result)
+		if (!Settings->contains(MapItem.first)) //Такого ключа в текущем конфигурационном файле нет - добавляем
 		{
-			ErrorString = "error with update config file";
+			Settings->setValue(MapItem.first, MapItem.second);
+			FlagChanged = true;
 		}
 	}
-	return Result;
+
+	if (FlagChanged) //Если параметры были изменены - синхронизируем
+	{
+		SaveForce();
+		if (Settings->status() != QSettings::NoError)
+		{
+			ErrorString = "error with update config file";
+			return false;
+		}
+	}
+	return true;
 }
 //-----------------------------------------------------------------------------
-bool ISConfig::Create()
+bool ISConfig::Create(const ISStringMap &StringMap)
 {
-	QSettings settings_local(PathConfigTemplate, QSettings::IniFormat);
-	for (const QString &Key : settings_local.allKeys())
+	for (const auto &MapItem : StringMap)
 	{
-		Settings->setValue(Key, settings_local.value(Key));
+		Settings->setValue(MapItem.first, MapItem.second);
 	}
-	Settings->sync();
-	bool Result = Settings->status() == QSettings::NoError;
-	if (!Result)
+	SaveForce(); //Принудительно сохраняем
+
+	if (Settings->status() != QSettings::NoError)
 	{
 		ErrorString = "error with create config file";
+		return false;
 	}
-	return Result;
+	return true;
 }
 //-----------------------------------------------------------------------------

@@ -13,16 +13,17 @@ public:
 	QString GetErrorString() const;
 	QString GetConfigPath() const;
 
-	bool ReInitialize(const QString &TemplateName); //Переинициализация
-	bool Initialize(const QString &TemplateName);
+	bool ReInitialize(const QString &template_name); //Переинициализация
+	bool Initialize(const QString &template_name);
 	
 	QVariant GetValue(const QString &ParameterName); //Получить значение параметра
 	void SetValue(const QString &ParameterName, const QVariant &Value); //Изменить значение параметра
 	void SaveForce(); //Принудительное сохранение
 
 private:
-	bool Update(); //Обновление файла
-	bool Create(); //Генерация файла из шаблона
+	bool ReadXML(ISStringMap &StringMap); //Чтение XML-шаблона
+	bool Update(const ISStringMap &StringMap); //Обновление файла
+	bool Create(const ISStringMap &StringMap); //Генерация файла из шаблона
 
 private:
 	ISConfig();
@@ -32,8 +33,12 @@ private:
 
 private:
 	QString ErrorString;
+	int ErrorLine;
+	int ErrorColumn;
 	QSettings *Settings;
+	QString TemplateName;
 	QString PathConfigTemplate;
+	QDomNode DomNodeTemplate;
 	QString PathConfigFile;
 	ISCriticalSection CriticalSection;
 };
