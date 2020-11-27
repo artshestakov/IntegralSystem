@@ -112,7 +112,7 @@ void ISLogger::Log(bool is_format, MessageType message_type, const std::string &
         Millisecond = (unsigned int)(TimeValue.tv_usec / 1000);
 #endif
         //Формируем заголовок сообщения
-		char buffer[LOGGER_MESSAGE_SIZE];
+		char buffer[LOGGER_MESSAGE_SIZE] = { 0 };
 		if (component.empty()) //Если компонент указан
 		{
 			sprintf(buffer, "%02d.%02d.%02d %02d:%02d:%02d:%03d\t%lu\t[%s] %s",

@@ -357,7 +357,7 @@ void ISQTimeEdit::SetTime(const QTime &Time)
 {
 	if (Time.isValid() && !Time.isNull())
 	{
-		char Char[3];
+		char Char[3] = { 0 };
 		sprintf(Char, "%02d", Time.hour());
 		EditHour->setText(Char);
 

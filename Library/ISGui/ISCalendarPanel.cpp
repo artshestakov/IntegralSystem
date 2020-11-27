@@ -80,9 +80,8 @@ void ISCalendarPanel::paintCell(QPainter *Painter, const QRect &Rect, const QDat
 		Painter->drawPixmap(PointIndicator, PixmapIndicator);
 	}
 
-	char Buffer[3];
+	char Buffer[3] = { 0 };
 	_itoa(Date.day(), &Buffer[0], 10);
-	
 
 	//Рисование текста с датой
 	Painter->drawText(RectText, Buffer);
