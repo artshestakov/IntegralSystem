@@ -7,33 +7,30 @@ int main(int argc, char **argv)
 {
 	ISCaratApplication CaratApplication(argc, argv);
 	QObject::connect(&CaratApplication, &ISCaratApplication::Quit, &CaratApplication, &ISCaratApplication::quit, Qt::QueuedConnection);
-	if (!CaratApplication.Initialize()) //При инициализации сервера произошла ошибка - выходим
+	int ResultCode = CaratApplication.Initialize() ? EXIT_SUCCESS : EXIT_FAILURE;
+	if (ResultCode == EXIT_SUCCESS) //Инициализация прошла успешно
 	{
-		return EXIT_FAILURE;
-	}
-
-	//Получаем аргументы запуска и удаляем первый (путь к исполняемому файлу)
-	QStringList Arguments = CaratApplication.arguments();
-    Arguments.removeFirst();
-
-    int ResultCode = -1;
-    if (Arguments.isEmpty()) //Аргуменов запуска не было, запускаемся в режиме сервера
-	{
-        if (CaratApplication.Run())
-        {
-            ISLOGGER_I("", "Started application");
-            ResultCode = CaratApplication.exec();
-        }
-		else
+		//Получаем аргументы запуска и удаляем первый (путь к исполняемому файлу)
+		QStringList Arguments = CaratApplication.arguments();
+		Arguments.removeFirst();
+		if (Arguments.isEmpty()) //Аргуменов запуска не было, запускаемся в режиме сервера
 		{
-			CaratApplication.Shutdown();
+			if (CaratApplication.Run())
+			{
+				ISLOGGER_I("", "Started application");
+				ResultCode = CaratApplication.exec();
+			}
+			else
+			{
+				CaratApplication.Shutdown();
+			}
+		}
+		else //Если аргументы запуска есть
+		{
+			CaratApplication.Run(Arguments);
+			return EXIT_SUCCESS;
 		}
 	}
-    else //Если аргументы запуска есть
-    {
-		CaratApplication.Run(Arguments);
-		return EXIT_SUCCESS;
-    }
 
 	//Останавливаем служебные сервисы и завершаем программу
 	ISQueryPool::Instance().Shutdown();
