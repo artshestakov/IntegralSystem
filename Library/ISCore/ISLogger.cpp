@@ -40,13 +40,12 @@ bool ISLogger::Initialize()
 	}
 
 	QString path_file = GetPathFile(CurrentDate);
-	File.open(path_file.toStdString().c_str(), std::ios::app);
-	if (!File.is_open()) //Не удалось открыть файл
+	File.setFileName(path_file);
+	if (!File.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Append)) //Не удалось открыть файл
 	{
 		ErrorString = QString("Error open file \"%1\": %2").arg(path_file).arg(strerror(errno));
 		return false;
 	}
-
 	IsRunning = true;
 	std::thread(&ISLogger::Worker, this).detach();
 	return true;
@@ -182,22 +181,31 @@ void ISLogger::Worker()
 		{
 			for (size_t i = 0; i < LastIndex; ++i)
 			{
-				File << Array[i] << std::endl;
-				Array[i].clear();
+				std::string message_string = Array[i] + "\n";
+				size_t message_size = message_string.size();
+				if (File.write(message_string.c_str(), message_size) == -1) //Не удалось произвести запись в файл
+				{
+					ISDEBUG_E("Logger: not write to file. Error: " + File.errorString());
+				}
+				Array[i].clear(); //Очищаем текущую строку
 			}
 			LastIndex = 0;
+
+			if (!File.flush()) //Не удалось сбросить информацию в файл принудительно
+			{
+				ISDEBUG_E("Logger: not flushing. Error: " + File.errorString());
+			}
 		}
         CRITICAL_SECTION_UNLOCK(&CriticalSection);
 
-		QDate CurrentDate = QDate::currentDate();
-
 		//Если сменился месяц или год - создаём недостающие папки
+		QDate CurrentDate = QDate::currentDate();
 		if (CurrentMonth != CurrentDate.month() || CurrentYear != CurrentDate.year())
 		{
 			//Пытаемся создать недосающие директории пока не получится
 			while (!CreateLogDirectory(CurrentDate))
 			{
-				std::cerr << ErrorString.toStdString() << std::endl;
+				ISDEBUG_E(ErrorString);
 				ISSleep(LOGGER_TIMEOUT);
 			}
 		}
@@ -208,19 +216,19 @@ void ISLogger::Worker()
 			File.close();
 
 			bool is_opened = false;
-			while (!is_opened)
+			while (!is_opened) //Пытаемся открыть файл
 			{
 				QString path_file = GetPathFile(CurrentDate);
-				File.open(path_file.toStdString().c_str(), std::ios::app);
-				is_opened = File.is_open();
+				File.setFileName(path_file);
+				is_opened = File.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Append);
 				if (is_opened) //Файл был успешно открыт - запоминаем текущий день
 				{
 					CurrentDay = CurrentDate.day();
 				}
-				else //Файл не удалось открыть пытаемся сделать это ещё раз через секунду
+				else //Файл не удалось открыть, пытаемся сделать это ещё раз через секунду
 				{
-					std::cerr << "Error open file \"" + path_file.toStdString() + "\": " + strerror(errno) << std::endl;
-					ISSleep(LOGGER_TIMEOUT);
+					ISDEBUG_E("Logger: not open file \"" + path_file + "\". Error: " + File.errorString());
+					ISSleep(1000);
 				}
 			}
 		}

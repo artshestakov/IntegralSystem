@@ -61,7 +61,7 @@ private:
 	size_t LastIndex; //Последняя позиция в очереди
 	bool IsRunning; //Флаг работы
 	bool IsFinished; //Флаг остановки
-	std::ofstream File; //Текущий лог-файл
+	QFile File; //Текущий лог-файл
 	QString PathLogsDir; //Текущий путь к конечной папке с логами
 	int CurrentDay; //Текущий день
 	int CurrentMonth; //Текущий месяц
