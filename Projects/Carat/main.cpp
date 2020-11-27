@@ -7,7 +7,7 @@ int main(int argc, char **argv)
 {
 	ISCaratApplication CaratApplication(argc, argv);
 	QObject::connect(&CaratApplication, &ISCaratApplication::Quit, &CaratApplication, &ISCaratApplication::quit, Qt::QueuedConnection);
-	if (!CaratApplication.Init()) //При инициализации сервера произошла ошибка - выходим
+	if (!CaratApplication.Initialize()) //При инициализации сервера произошла ошибка - выходим
 	{
 		return EXIT_FAILURE;
 	}

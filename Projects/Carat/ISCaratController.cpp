@@ -29,13 +29,8 @@ bool ISCaratController::Start()
 {
 	ISLOGGER_I(__CLASS__, "Starting...");
 
-	//Проверяем указанный в настройках порт
+	//Получаем порт из настроек
 	ControllerPort = CONFIG_INT(CONST_CONFIG_CONTROLLER_PORT);
-	if (ControllerPort < 1 || ControllerPort >= USHRT_MAX) //Если значение не входит в диапазон портов - используем порт по умолчанию
-	{
-		ISLOGGER_W(__CLASS__, QString("Invalid config value %1: %2. The default port will be used - %3.").arg(CONST_CONFIG_CONTROLLER_PORT).arg(ControllerPort).arg(CARAT_CONTROLLER_PORT));
-		ControllerPort = CARAT_CONTROLLER_PORT;
-	}
 
 	QEventLoop EventLoop;
 	connect(this, &ISCaratController::Started, &EventLoop, &QEventLoop::quit);
@@ -43,7 +38,7 @@ bool ISCaratController::Start()
 	EventLoop.exec();
 
 	IsRunning ?
-		ISLOGGER_I(__CLASS__, QString("Started with port %1").arg(ControllerPort)) :
+		ISLOGGER_I(__CLASS__, QString("Started. Port %1").arg(ControllerPort)) :
 		ISLOGGER_E(__CLASS__, QString("Not started with port %1: %2").arg(ControllerPort).arg(ErrorString));
 	return IsRunning;
 }

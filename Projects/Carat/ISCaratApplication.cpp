@@ -29,9 +29,10 @@ QString ISCaratApplication::GetErrorString() const
 	return ErrorString;
 }
 //-----------------------------------------------------------------------------
-bool ISCaratApplication::Init()
+bool ISCaratApplication::Initialize()
 {
-	if (!ISLogger::Instance().Initialize()) //Не удалось запустить логгер
+	//Запускаем логгер
+	if (!ISLogger::Instance().Initialize())
 	{
 		ISDEBUG_L(ISLogger::Instance().GetErrorString());
 		return false;
@@ -45,15 +46,24 @@ bool ISCaratApplication::Init()
 	}
 #endif
 
-	if (!ISSystem::CreateDir(QCoreApplication::applicationDirPath() + "/Temp", ErrorString)) //Не удалось создать папку для временных файлов
+	//Создаём папку для временных файлов
+	if (!ISSystem::CreateDir(QCoreApplication::applicationDirPath() + "/Temp", ErrorString))
 	{
 		ISLOGGER_E("Startup", "Not create temp dir: " + ErrorString);
 		return false;
 	}
 
-	if (!ISConfig::Instance().Initialize("Server"))
+	//Инициализируем конфигурационный файл
+	if (!ISConfig::Instance().Initialize(CONFIG_TEMPLATE_SERVER))
 	{
 		ISLOGGER_E("ISConfig", "Not initialize: " + ISConfig::Instance().GetErrorString());
+		return false;
+	}
+
+	//Проверяем валидность конфигурационного файла
+	if (!ISConfig::Instance().IsValid())
+	{
+		ISLOGGER_E("ISConfig", "File is not valid: " + ISConfig::Instance().GetErrorString());
 		return false;
 	}
 
@@ -63,7 +73,6 @@ bool ISCaratApplication::Init()
 		ISLOGGER_E("ISLocalization", QString("Not init localization file \"%1\": %2").arg(LOCALIZATION_FILE_CARAT).arg(ISLocalization::Instance().GetErrorString()));
 		return false;
 	}
-
 	return true;
 }
 //-----------------------------------------------------------------------------
@@ -107,7 +116,8 @@ bool ISCaratApplication::Run()
 		"Domain name: %7\n"
 		"OS: %8\n"
 		"Main ThreadID: %9\n"
-		"PID: %10").
+		"PID: %10\n"
+		"Configuration: %11").
 		arg(ISVersionInfo::Instance().ToString()).
 		arg(ISVersionInfo::Instance().Info.Configuration).
 		arg(ISVersionInfo::Instance().Info.Platform).
@@ -117,48 +127,21 @@ bool ISCaratApplication::Run()
 		arg(QHostInfo::localDomainName()).
 		arg(QSysInfo::prettyProductName()).
 		arg(CURRENT_THREAD_ID()).
-		arg(GET_PID()));
-
-	//Выполняем проверки заполнения секции Connection в конфигурационном файле
-	if (CONFIG_STRING(CONST_CONFIG_CONNECTION_SERVER).isEmpty())
-	{
-		ISLOGGER_E("ISConfig", "server not specified");
-		return false;
-	}
-	if (CONFIG_INT(CONST_CONFIG_CONNECTION_PORT) == 0)
-	{
-		ISLOGGER_E("ISConfig", "port not specified");
-		return false;
-	}
-	if (CONFIG_STRING(CONST_CONFIG_CONNECTION_DATABASE).isEmpty())
-	{
-		ISLOGGER_E("ISConfig", "database name not specified");
-		return false;
-	}
-	if (CONFIG_STRING(CONST_CONFIG_CONNECTION_LOGIN).isEmpty())
-	{
-		ISLOGGER_E("ISConfig", "login not specified");
-		return false;
-	}
-	if (CONFIG_STRING(CONST_CONFIG_CONNECTION_PASSWORD).isEmpty())
-	{
-		ISLOGGER_E("ISConfig", "password not specified");
-		return false;
-	}
-	if (CONFIG_STRING(CONST_CONFIG_OTHER_CONFIGURATION).isEmpty())
-	{
-		ISLOGGER_E("ISConfig", "configuration name not specified");
-		return false;
-	}
+		arg(GET_PID()).
+		arg(CONFIG_STRING(CONST_CONFIG_OTHER_CONFIGURATION)));
 
 	//Инициализация пула запросов
-	if (!ISQueryPool::Instance().Start(CONFIG_STRING(CONST_CONFIG_CONNECTION_SERVER), CONFIG_INT(CONST_CONFIG_CONNECTION_PORT), CONFIG_STRING(CONST_CONFIG_CONNECTION_DATABASE),
-		CONFIG_STRING(CONST_CONFIG_CONNECTION_LOGIN), CONFIG_STRING(CONST_CONFIG_CONNECTION_PASSWORD)))
+	if (!ISQueryPool::Instance().Start(CONFIG_STRING(CONST_CONFIG_CONNECTION_SERVER),
+		CONFIG_INT(CONST_CONFIG_CONNECTION_PORT),
+		CONFIG_STRING(CONST_CONFIG_CONNECTION_DATABASE),
+		CONFIG_STRING(CONST_CONFIG_CONNECTION_LOGIN),
+		CONFIG_STRING(CONST_CONFIG_CONNECTION_PASSWORD)))
 	{
 		ISLOGGER_E("ISQueryPool", ISQueryPool::Instance().GetErrorString());
 		return false;
 	}
 
+	//Если контроллер включен - запускаем его
 	if (CONFIG_BOOL(CONST_CONFIG_CONTROLLER_INCLUDE))
 	{
 		Controller = new ISCaratController(this);
@@ -173,6 +156,7 @@ bool ISCaratApplication::Run()
 		}
 	}
 	
+	//Если TCP-сервер включен - запускаем его
 	if (CONFIG_BOOL(CONST_CONFIG_TCPSERVER_INCLUDE))
 	{
 		TcpServer = new ISTcpServer(this);
@@ -183,6 +167,7 @@ bool ISCaratApplication::Run()
 		}
 	}
 
+	//Если модуль работы с AMI включен - запускаем его
 	if (CONFIG_BOOL(CONST_CONFIG_AMI_INCLUDE))
 	{
 		Asterisk = new ISAsterisk(this);
@@ -290,7 +275,7 @@ void ISCaratApplication::ConfigReset()
 		return;
 	}
 
-	if (!ISConfig::Instance().ReInitialize("Server"))
+	if (!ISConfig::Instance().ReInitialize(CONFIG_TEMPLATE_SERVER))
 	{
 		ISDEBUG_L("Error init new file: " + ISConfig::Instance().GetErrorString());
 		return;

@@ -132,6 +132,7 @@ const size_t    MAX_DECIMAL_LEN = 17; //Максимальное количество чесел после запя
 const size_t	MAX_INTEGER_LEN = 19; //Максимальная "длина" целого числа
 const char		SYMBOL_OBJECT_CHANGED[] = " {*}";
 const size_t	AUDIO_PLAYER_POS = 5000; //Перемотка в аудио-плеере
+const char		LOCAL_HOST_ADDRESS[] = "127.0.0.1";
 //LOGGER-----------------------------------------------------------------------
 const size_t	LOGGER_ARRAY_SIZE = 20000; //Максимальный размер массива
 const size_t	LOGGER_TIMEOUT = 50; //Таймаут логгера
@@ -143,7 +144,8 @@ const size_t			CARAT_HASH_SIZE = 64; //Фиксированный размер хэша SHA256 для авто
 const size_t			CARAT_CONNECT_TIMEOUT = 3000; //Время ожидания подключения к Карату
 const size_t			CARAT_CONNECT_SLEEP = 10; //Время паузы для ожидания подключения
 //ASTERISK---------------------------------------------------------------------
-const char ASTERISK_AMI_SEPARATOR[] = "\r\n\r\n"; //Разделитель пакетов AMI
+const char		ASTERISK_AMI_SEPARATOR[] = "\r\n\r\n"; //Разделитель пакетов AMI
+const size_t	ASTERISK_AMI_PORT = 5038; //Порт AMI по умолчанию
 //CARAT_API--------------------------------------------------------------------
 const char	API_AUTH[] = "Auth"; //Авторизация
 const char	API_SLEEP[] = "Sleep"; //Ожидание
@@ -267,7 +269,7 @@ const char CONST_UID_SETTING_OTHER_ENABLE_HISTORY_TRACKING[] = "{97D72002-CEF4-4
 const char CONST_UID_SETTING_OTHER_SELECTED_MENU[] = "{3AD4888F-EDC7-4D69-A97F-F9678B6AAC44}";
 const char CONST_UID_SETTING_OTHER_HIDE_OFFLINE_MONITOR_ACTIVITY[] = "{3E366971-6521-47EC-A250-95F51370EC72}";
 //-----------------------------------------------------------------------------
-const char CONST_CONFIG_CONNECTION_SERVER[] = "Connection/Server";
+const char CONST_CONFIG_CONNECTION_SERVER[] = "Connection/Host";
 const char CONST_CONFIG_CONNECTION_PORT[] = "Connection/Port";
 const char CONST_CONFIG_CONNECTION_DATABASE[] = "Connection/Database";
 const char CONST_CONFIG_CONNECTION_UPDATE_DIR[] = "Connection/UpdateDir";
@@ -281,7 +283,7 @@ const char CONST_CONFIG_TCPSERVER_WORKERS[] = "TCPServer/WorkerCount";
 const char CONST_CONFIG_CONTROLLER_INCLUDE[] = "Controller/Include";
 const char CONST_CONFIG_CONTROLLER_PORT[] = "Controller/Port";
 const char CONST_CONFIG_AMI_INCLUDE[] = "AMI/Include";
-const char CONST_CONFIG_AMI_SERVER[] = "AMI/Server";
+const char CONST_CONFIG_AMI_SERVER[] = "AMI/Host";
 const char CONST_CONFIG_AMI_PORT[] = "AMI/Port";
 const char CONST_CONFIG_AMI_LOGIN[] = "AMI/Login";
 const char CONST_CONFIG_AMI_PASSWORD[] = "AMI/Password";

@@ -56,33 +56,11 @@ ISAsterisk::~ISAsterisk()
 //-----------------------------------------------------------------------------
 bool ISAsterisk::Start()
 {
+	//Получаем необходимые настройки
 	Host = CONFIG_STRING(CONST_CONFIG_AMI_SERVER);
-	if (Host.isEmpty())
-	{
-		ISLOGGER_E(__CLASS__, QString("Not specified config parameter: %1").arg(CONST_CONFIG_AMI_SERVER));
-		return false;
-	}
-
 	Port = CONFIG_INT(CONST_CONFIG_AMI_PORT);
-	if (Port < 1 || Port >= USHRT_MAX) //Если значение не входит в диапазон портов - использует порт по умолчанию
-	{
-		ISLOGGER_E(__CLASS__, QString("Invalid config value %1: %2.").arg(CONST_CONFIG_AMI_PORT).arg(Port));
-		return false;
-	}
-
 	Login = CONFIG_STRING(CONST_CONFIG_AMI_LOGIN);
-	if (Login.isEmpty())
-	{
-		ISLOGGER_E(__CLASS__, QString("Not specified config parameter: %1").arg(CONST_CONFIG_AMI_LOGIN));
-		return false;
-	}
-
 	Password = CONFIG_STRING(CONST_CONFIG_AMI_PASSWORD);
-	if (Password.isEmpty())
-	{
-		ISLOGGER_E(__CLASS__, QString("Not specified config parameter: %1").arg(CONST_CONFIG_AMI_PASSWORD));
-		return false;
-	}
 	start();
 	return true;
 }
@@ -119,7 +97,7 @@ void ISAsterisk::run()
 //-----------------------------------------------------------------------------
 void ISAsterisk::Connect()
 {
-	ISLOGGER_I(__CLASS__, "Connecting...");
+	ISLOGGER_I(__CLASS__, QString("Connecting to %1:%2").arg(Host).arg(Port));
 	TcpSocket->connectToHost(Host, Port, QIODevice::ReadWrite, QAbstractSocket::IPv4Protocol);
 }
 //-----------------------------------------------------------------------------

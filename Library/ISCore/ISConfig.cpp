@@ -1,6 +1,5 @@
 #include "ISConfig.h"
 #include "ISConstants.h"
-#include "ISLogger.h"
 #include "ISAlgorithm.h"
 #include "ISSystem.h"
 //-----------------------------------------------------------------------------
@@ -23,14 +22,14 @@ ISConfig::ISConfig()
 		{ CONFIG_TEMPLATE_SERVER, "Controller/Port",		QVariant::Int,		true,	CARAT_CONTROLLER_PORT,	1, MAXUINT16 },
 		{ CONFIG_TEMPLATE_SERVER, "TCPServer/Include",		QVariant::Bool,		true,	false,					0, 0 },
 		{ CONFIG_TEMPLATE_SERVER, "TCPServer/Port",			QVariant::Int,		true,	CARAT_TCP_PORT,			1, MAXUINT16 },
-		{ CONFIG_TEMPLATE_SERVER, "TCPServer/WorkerCount",	QVariant::Int,		true,	QVariant(),				0, 0 },
+		{ CONFIG_TEMPLATE_SERVER, "TCPServer/WorkerCount",	QVariant::Int,		true,	1,						1, (int)std::thread::hardware_concurrency() * 2 },
 		{ CONFIG_TEMPLATE_SERVER, "AMI/Include",			QVariant::Bool,		true,	false,					0, 0 },
-		{ CONFIG_TEMPLATE_SERVER, "AMI/Host",				QVariant::String,	true,	QVariant(),				0, 0 },
-		{ CONFIG_TEMPLATE_SERVER, "AMI/Port",				QVariant::Int,		true,	QVariant(),				1, MAXUINT16 },
-		{ CONFIG_TEMPLATE_SERVER, "AMI/Login",				QVariant::String,	true,	QVariant(),				0, 0 },
-		{ CONFIG_TEMPLATE_SERVER, "AMI/Password",			QVariant::String,	true,	QVariant(),				0, 0 },
-		{ CONFIG_TEMPLATE_SERVER, "AMI/RecordDir",			QVariant::String,	true,	QVariant(),				0, 0 },
-		{ CONFIG_TEMPLATE_SERVER, "Other/UpdateClientDir",	QVariant::String,	true,	QVariant(),				0, 0 },
+		{ CONFIG_TEMPLATE_SERVER, "AMI/Host",				QVariant::String,	true,	LOCAL_HOST_ADDRESS,		0, 0 },
+		{ CONFIG_TEMPLATE_SERVER, "AMI/Port",				QVariant::Int,		true,	ASTERISK_AMI_PORT,		1, MAXUINT16 },
+		{ CONFIG_TEMPLATE_SERVER, "AMI/Login",				QVariant::String,	true,	"admin",				0, 0 },
+		{ CONFIG_TEMPLATE_SERVER, "AMI/Password",			QVariant::String,	true,	"admin",				0, 0 },
+		{ CONFIG_TEMPLATE_SERVER, "AMI/RecordDir",			QVariant::String,	false,	QVariant(),				0, 0 },
+		{ CONFIG_TEMPLATE_SERVER, "Other/UpdateClientDir",	QVariant::String,	false,	QVariant(),				0, 0 },
 		{ CONFIG_TEMPLATE_SERVER, "Other/Configuration",	QVariant::String,	true,	QVariant(),				0, 0 },
 
 		//Клиентский шаблон
@@ -70,6 +69,72 @@ QString ISConfig::GetConfigPath() const
 	return PathConfigFile;
 }
 //-----------------------------------------------------------------------------
+bool ISConfig::IsValid()
+{
+	//Проверяем на наличие инициализации
+	if (!Settings)
+	{
+		ErrorString = "Not initialized";
+		return false;
+	}
+
+	//Проверяем параметры на заполняемость
+	for (const ISConfigParameter &ConfigParameter : VectorTemplate)
+	{
+		if (ConfigParameter.TemplateName != TemplateName)
+		{
+			continue;
+		}
+		QVariant Value = GetValue(ConfigParameter.Name);
+
+		//Если параметр обязателен для заполнения, у него нет значения по умолчанию и он пустой - ошибка
+		if (ConfigParameter.NotNull && !ConfigParameter.DefaultValue.isValid() && Value.toString().isEmpty())
+		{
+			ErrorString = "Parameter \"" + ConfigParameter.Name + "\" is empty";
+			return false;
+		}
+	}
+
+	//Проверяем корректность параметров
+	for (const ISConfigParameter &ConfigParameter : VectorTemplate)
+	{
+		if (ConfigParameter.TemplateName != TemplateName)
+		{
+			continue;
+		}
+
+		if (ConfigParameter.Type == QVariant::Int) //Если текущий параметр - число
+		{
+			bool Ok = true;
+			QVariant Value = GetValue(ConfigParameter.Name);
+			int IntValue = Value.toInt(&Ok);
+			if (!Ok) //Не удалось привести значение к числу
+			{
+				ErrorString = QString("Invalid paramter value %1=%2").arg(ConfigParameter.Name).arg(Value.toString());
+				return false;
+			}
+
+			//Проверяем вхождение значения в диапазон
+			if (IntValue < ConfigParameter.Minimum || IntValue > ConfigParameter.Maximum)
+			{
+				ErrorString = QString("Parameter %1=%2 out of range [%3;%4]").arg(ConfigParameter.Name).arg(IntValue).arg(ConfigParameter.Minimum).arg(ConfigParameter.Maximum);
+				return false;
+			}
+		}
+		else if (ConfigParameter.Type == QVariant::Bool) //Если текущий параметр - логический
+		{
+			//Проверяем корректность значений
+			QString StringValue = GetValue(ConfigParameter.Name).toString();
+			if (!(StringValue.toLower() == "true" || StringValue.toLower() == "false"))
+			{
+				ErrorString = QString("Invalid paramter value %1=%2 (allowed \"true\" or \"false\")").arg(ConfigParameter.Name).arg(StringValue);
+				return false;
+			}
+		}
+	}
+	return true;
+}
+//-----------------------------------------------------------------------------
 bool ISConfig::ReInitialize(const QString &template_name)
 {
 	//Удаляем указатель и инициализируем
@@ -81,8 +146,8 @@ bool ISConfig::Initialize(const QString &template_name)
 {
 	if (Settings) //Если указатель существует - значит файл был проинициализирован
 	{
-		ISLOGGER_W(__CLASS__, "Already initialized");
-		return true;
+		ErrorString = "Already initialized";
+		return false;
 	}
 	TemplateName = template_name;
 
@@ -100,8 +165,8 @@ bool ISConfig::Initialize(const QString &template_name)
 		switch (SettingsStatus)
 		{
 		case QSettings::NoError: break;
-		case QSettings::AccessError: ErrorString = "access error with path " + PathConfigFile; break;
-		case QSettings::FormatError: ErrorString = "format error"; break;
+		case QSettings::AccessError: ErrorString = "Access error with path " + PathConfigFile; break;
+		case QSettings::FormatError: ErrorString = "Invalid format"; break;
 		}
 	}
 	return Result;
@@ -115,26 +180,20 @@ QVariant ISConfig::GetValue(const QString &ParameterName)
 	if (Contains)
 	{
 		Value = Settings->value(ParameterName);
+		if (Value.toString().isEmpty())
+		{
+			Value = GetDefaultValue(ParameterName);
+		}
 	}
 	CRITICAL_SECTION_UNLOCK(&CriticalSection);
-
-	if (!Contains)
-	{
-		ISLOGGER_W(__CLASS__, QString("Not found key \"%1\" in file \"%2\"").arg(ParameterName).arg(Settings->fileName()));
-	}
+	IS_ASSERT(Contains, QString("Not found key \"%1\" in file \"%2\"").arg(ParameterName).arg(Settings->fileName()));
 	return Value;
 }
 //-----------------------------------------------------------------------------
 void ISConfig::SetValue(const QString &ParameterName, const QVariant &Value)
 {
-	if (Settings->contains(ParameterName))
-	{
-		Settings->setValue(ParameterName, Value);
-	}
-	else
-	{
-		ISLOGGER_W(__CLASS__, QString("Not found key \"%1\" in file \"%2\"").arg(ParameterName).arg(Settings->fileName()));
-	}
+	IS_ASSERT(Settings->contains(ParameterName), QString("Not found key \"%1\" in file \"%2\"").arg(ParameterName).arg(Settings->fileName()));
+	Settings->setValue(ParameterName, Value);
 }
 //-----------------------------------------------------------------------------
 void ISConfig::SaveForce()
@@ -172,7 +231,7 @@ bool ISConfig::Update()
 		SaveForce();
 		if (Settings->status() != QSettings::NoError)
 		{
-			ErrorString = "error with update config file";
+			ErrorString = "Not update config file. Error code: " + QString::number(Settings->status());
 			return false;
 		}
 	}
@@ -202,5 +261,17 @@ bool ISConfig::ContainsKey(const QString &Key)
 		}
 	}
 	return false;
+}
+//-----------------------------------------------------------------------------
+QVariant ISConfig::GetDefaultValue(const QString &Key) const
+{
+	for (const ISConfigParameter &ConfigParameter : VectorTemplate)
+	{
+		if (ConfigParameter.TemplateName == TemplateName && ConfigParameter.Name == Key)
+		{
+			return ConfigParameter.DefaultValue;
+		}
+	}
+	return QVariant();
 }
 //-----------------------------------------------------------------------------

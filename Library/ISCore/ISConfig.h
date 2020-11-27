@@ -12,6 +12,7 @@ public:
 
 	QString GetErrorString() const;
 	QString GetConfigPath() const;
+	bool IsValid(); //Проверить корректность заполнения конфигурационного файла
 
 	bool ReInitialize(const QString &template_name); //Переинициализация
 	bool Initialize(const QString &template_name);
@@ -26,6 +27,7 @@ private:
 
 private:
 	bool ContainsKey(const QString &Key); //Проверить наличие ключа в шаблоне
+	QVariant GetDefaultValue(const QString &Key) const; //Получить значение по умолчанию для параметра
 
 private:
 	ISConfig();
@@ -39,6 +41,7 @@ private:
 	int ErrorLine;
 	int ErrorColumn;
 	QSettings *Settings;
+	ISStringToVariantMap SettingsMap;
 	QString TemplateName;
 	QDomNode DomNodeTemplate;
 	QString PathConfigFile;

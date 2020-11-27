@@ -18,7 +18,7 @@ public:
 	virtual ~ISCaratApplication();
 
 	QString GetErrorString() const; //Получить текстовое описание ошибки
-	bool Init(); //Инициализация
+	bool Initialize(); //Инициализация
 	void Run(const QStringList &Arguments); //Запуск с параметрами
 	bool Run(); //Стандартный запуск
 	void Shutdown(); //Остановка приложения

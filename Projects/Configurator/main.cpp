@@ -56,10 +56,17 @@ int main(int argc, char **argv)
 	QCoreApplication CoreArralication(argc, argv);
 
 	//Чтение конфигурационного файла
-	if (!ISConfig::Instance().Initialize("Server"))
+	if (!ISConfig::Instance().Initialize(CONFIG_TEMPLATE_SERVER))
 	{
 		ISDEBUG_E("Error init config file: " + ISConfig::Instance().GetErrorString());
 		return EXIT_FAILURE;
+	}
+
+	//Проверяем валидность конфигурационного файла
+	if (!ISConfig::Instance().IsValid())
+	{
+		ISDEBUG_E("Config file is not valid: " + ISConfig::Instance().GetErrorString());
+		return false;
 	}
 
 	//Загрузка трансляций QT

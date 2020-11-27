@@ -37,7 +37,7 @@ struct ISMetaUserData
     unsigned int ID; //Идентификатор пользователя
 	QString FIO; //ФИО
     QString Login; //Логин
-	QString Password; //Пароль (временно) //??? Пока не перейдём на Карат
+	QString Password; //Пароль (временно)
 
 	unsigned int GroupID; //Идентификатор группы в которой состоит пользователь
     bool GroupFullAccess; //Полный доступ
