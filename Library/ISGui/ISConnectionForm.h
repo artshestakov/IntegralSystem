@@ -24,7 +24,7 @@ private:
 	ISLineEdit *EditDatabase;
 	ISPathEditDir *EditUpdateDir;
 
-	ISCheckEdit *EditProtocolUse;
+	ISCheckEdit *EditProtocolInclude;
 	ISIntegerEdit *EditProtocolPort;
 };
 //-----------------------------------------------------------------------------

@@ -166,7 +166,7 @@ void ISAuthForm::Input()
 	if (Check())
 	{
 		//Если выбран вход по протоколу - используем новую функцию, иначе - старую (через БД)
-		CONFIG_BOOL("Protocol/Use") ? InputNew() : InputOld();
+		CONFIG_BOOL("Protocol/Include") ? InputNew() : InputOld();
 	}
 }
 //-----------------------------------------------------------------------------

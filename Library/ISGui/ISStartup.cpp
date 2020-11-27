@@ -29,7 +29,7 @@
 //-----------------------------------------------------------------------------
 bool ISStartup::Startup(ISSplashScreen *SplashScreen)
 {
-	return CONFIG_BOOL("Protocol/Use") ? StartupNew(SplashScreen) : StartupOld(SplashScreen);
+	return CONFIG_BOOL("Protocol/Include") ? StartupNew(SplashScreen) : StartupOld(SplashScreen);
 }
 //-----------------------------------------------------------------------------
 void ISStartup::Shutdown(ISSplashScreen *SplashScreen)

@@ -31,9 +31,9 @@ ISConnectionForm::ISConnectionForm() : ISInterfaceDialogForm()
 	EditUpdateDir->SetValue(CONFIG_STRING(CONST_CONFIG_CONNECTION_UPDATE_DIR));
 	FormLayout->addRow(LANG("UpdateDir") + ':', EditUpdateDir);
 
-	EditProtocolUse = new ISCheckEdit(this);
-	EditProtocolUse->SetValue(CONFIG_BOOL("Protocol/Use"));
-	FormLayout->addRow(LANG("Protocol.Use"), EditProtocolUse);
+	EditProtocolInclude = new ISCheckEdit(this);
+	EditProtocolInclude->SetValue(CONFIG_BOOL("Protocol/Include"));
+	FormLayout->addRow(LANG("Protocol.Use"), EditProtocolInclude);
 
 	EditProtocolPort = new ISIntegerEdit(this);
 	EditProtocolPort->SetValue(CONFIG_INT("Protocol/Port"));
@@ -75,7 +75,7 @@ void ISConnectionForm::SaveSettings()
 		ISConfig::Instance().SetValue(CONST_CONFIG_CONNECTION_PORT, EditPort->GetValue());
 		ISConfig::Instance().SetValue(CONST_CONFIG_CONNECTION_DATABASE, EditDatabase->GetValue());
 		ISConfig::Instance().SetValue(CONST_CONFIG_CONNECTION_UPDATE_DIR, EditUpdateDir->GetValue());
-		ISConfig::Instance().SetValue("Protocol/Use", EditProtocolUse->GetValue());
+		ISConfig::Instance().SetValue("Protocol/Include", EditProtocolInclude->GetValue());
 		ISConfig::Instance().SetValue("Protocol/Port", EditProtocolPort->GetValue());
 		close();
 	}
