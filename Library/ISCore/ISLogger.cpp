@@ -69,6 +69,12 @@ void ISLogger::Shutdown()
 //-----------------------------------------------------------------------------
 void ISLogger::Log(bool is_format, MessageType message_type, const std::string &component, const QString &string)
 {
+	if (!IsRunning)
+	{
+		ISDEBUG_E("Logger is not initialized");
+		return;
+	}
+
 	std::string string_complete;
 	if (is_format) //≈сли сообщение нужно форматировать
 	{
