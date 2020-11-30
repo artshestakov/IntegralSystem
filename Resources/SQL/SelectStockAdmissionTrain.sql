@@ -2,7 +2,7 @@ SELECT
 mwag_dateshipping AS "Дата отгрузки", 
 cnpr_name AS "Поставщик", 
 mwag_datearrival AS "Прибыло", 
-(SELECT COALESCE(sum(mwdt_kilogram), 0) FROM movewagondetail WHERE NOT mwdt_isdeleted AND mwdt_movewagon = mwag_id) AS "Масса", 
+-((get_sum_weight_move_wagon_detail(mwag_id) * mwag_technicallosses / 100) - get_sum_weight_move_wagon_detail(mwag_id)) AS "Масса", 
 (SELECT COUNT(*) FROM movewagondetail WHERE NOT mwdt_isdeleted AND mwdt_movewagon = mwag_id) AS "Количество вагонов" 
 FROM movewagon 
 LEFT JOIN counterparty ON cnpr_id = mwag_provider 

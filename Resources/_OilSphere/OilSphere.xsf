@@ -82,7 +82,7 @@
     BEGIN
     RETURN
     (
-    SELECT COALESCE(sum(mwdt_kilogram), 0)
+    SELECT COALESCE(sum(-((get_sum_weight_move_wagon_detail(mwag_id) * mwag_technicallosses / 100) - get_sum_weight_move_wagon_detail(mwag_id))), 0)
     FROM movewagon
     LEFT JOIN movewagondetail ON mwdt_movewagon = mwag_id AND NOT mwdt_isdeleted
     WHERE NOT mwag_isdeleted
