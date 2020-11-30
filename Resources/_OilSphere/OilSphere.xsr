@@ -21,8 +21,11 @@
   <_Systems IsSystem="false" UID="{A7C2E19B-FA7B-4333-B003-BEF49012116B}" OrderID="5" LocalName="Логистика" Icon="Lists"/>
   <_SubSystems UID="{6858929B-F34A-4AFF-A95B-A5436E8FECA5}" System="{A7C2E19B-FA7B-4333-B003-BEF49012116B}" OrderID="1" LocalName="Движения вагонов" Icon="Lists" ClassName="ISOilSphere::MoveWagonListForm"/>
   <_SubSystems UID="{8807444E-EBDE-4DB6-A261-D9430C48D448}" System="{A7C2E19B-FA7B-4333-B003-BEF49012116B}" OrderID="2" LocalName="Расходы водителей" Icon="Lists" ClassName="ISOilSphere::DriverCostListForm"/>
+
+  <_Systems IsSystem="false" UID="{6BA94FDF-8469-4731-8498-5A7481400406}" OrderID="6" LocalName="Расходы" Icon="Lists"/>
+  <_SubSystems UID="{FD49B3A7-3B5B-4FE0-A25D-2B4D2D088AE6}" System="{6BA94FDF-8469-4731-8498-5A7481400406}" OrderID="1" LocalName="Приходы" Icon="Lists" TableName="Coming"/>
   
-  <_Systems IsSystem="false" UID="{A6420088-C2C2-4671-9F86-003CAC0F601C}" OrderID="6" LocalName="Прочее" Icon="Lists"/>
+  <_Systems IsSystem="false" UID="{A6420088-C2C2-4671-9F86-003CAC0F601C}" OrderID="7" LocalName="Прочее" Icon="Lists"/>
   <_SubSystems UID="{6CC832E2-2EE4-4388-9AF5-E49CBE1C6DE7}" System="{A6420088-C2C2-4671-9F86-003CAC0F601C}" OrderID="1" LocalName="Дебет 1" Icon="Lists" ClassName="ISOilSphere::Debet1ListForm"/>
   <_SubSystems UID="{9A3446F9-EC80-43B5-AFC9-51BA993FD436}" System="{A6420088-C2C2-4671-9F86-003CAC0F601C}" OrderID="2" LocalName="Дебет 2" Icon="Lists" ClassName="ISOilSphere::Debet2ListForm"/>
   <_SubSystems UID="{F5E54371-7753-4FDD-8CC1-A7772F378C7B}" System="{A6420088-C2C2-4671-9F86-003CAC0F601C}" OrderID="3" LocalName="Дебет 3" Icon="Lists" ClassName="ISOilSphere::Debet3ListForm"/>
