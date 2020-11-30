@@ -49,8 +49,6 @@ static QString QS_TASK = PREPARE_QUERY("SELECT "
 									   "LEFT JOIN _task p ON p.task_id = t.task_parent "
 									   "WHERE t.task_id = :TaskID");
 //-----------------------------------------------------------------------------
-static QString QS_VOTE = PREPARE_QUERY("SELECT task_vote(:TaskID)");
-//-----------------------------------------------------------------------------
 static QString QS_SUBTASK = PREPARE_QUERY("SELECT task_id, task_name, task_description, tsst_uid AS task_status_uid "
 										  "FROM _task "
 										  "LEFT JOIN _taskstatus ON tsst_id = task_status "
@@ -285,15 +283,6 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	LayoutButtonStatus->addWidget(ButtonActions);
 
 	LayoutButtonStatus->addStretch();
-
-	CheckVote = new ISCheckEdit(this);
-	CheckVote->SetText(QString::number(VoteCount));
-	CheckVote->SetToolTip(IsVoted ? LANG("Task.Vote.Disable") : LANG("Task.Vote.Enable"));
-	CheckVote->SetIcon(BUFFER_ICONS("Task.Vote"));
-	CheckVote->SetIconSize(ISDefines::Gui::SIZE_22_22);
-	CheckVote->SetValue(IsVoted);
-	connect(CheckVote, &ISFieldEditBase::DataChanged, this, &ISTaskViewForm::Vote);
-	LayoutButtonStatus->addWidget(CheckVote);
 
 	QGroupBox *GroupBoxDescription = new QGroupBox(LANG("Task.Description"), this);
 	GroupBoxDescription->setLayout(new QVBoxLayout());
@@ -851,23 +840,6 @@ void ISTaskViewForm::ShowStatusHistory()
 void ISTaskViewForm::UpdateVisibleButtonReOpen()
 {
 	ButtonReopen->setVisible(TaskStatusUID == CONST_UID_TASK_STATUS_CLOSE || TaskStatusUID == CONST_UID_TASK_STATUS_NOT_DONE); //»змен€ем видимость кнопки переоткрыти€: если текущий статус "закрыта" или "не будет выполнена"
-}
-//-----------------------------------------------------------------------------
-void ISTaskViewForm::Vote()
-{
-	ISQuery qVote(QS_VOTE);
-	qVote.BindValue(":TaskID", TaskID);
-	if (qVote.ExecuteFirst())
-	{
-		VoteCount = qVote.ReadColumn("task_vote").toInt();
-		IsVoted = CheckVote->GetValue().toBool();
-		CheckVote->SetText(QString::number(VoteCount));
-		CheckVote->SetToolTip(IsVoted ? LANG("Task.Vote.Disable") : LANG("Task.Vote.Enable"));
-	}
-	else
-	{
-		ISMessageBox::ShowCritical(this, LANG("Message.Error.TaskVote"));
-	}
 }
 //-----------------------------------------------------------------------------
 void ISTaskViewForm::SubTaskLoadList()

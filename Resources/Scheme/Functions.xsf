@@ -110,29 +110,6 @@
     COST 100;
   </Function>
 
-  <Function Name="task_vote(task_id bigint)" Comment="Проголосовать за задачу">
-    CREATE OR REPLACE FUNCTION public.task_vote(task_id bigint)
-    RETURNS bigint AS
-    $body$
-    DECLARE
-    cnt INTEGER;
-    BEGIN
-    SELECT INTO cnt COUNT(*) FROM _taskvote WHERE tvot_creationuser = currentuserid() AND tvot_task = task_id;
-    CASE WHEN cnt > 0 THEN
-    DELETE FROM _taskvote WHERE tvot_creationuser = currentuserid() AND tvot_task = task_id;
-    ELSE
-    INSERT INTO _taskvote(tvot_task) VALUES(task_id);
-    END CASE;
-    RETURN COUNT(*) FROM _taskvote WHERE tvot_task = task_id;
-    END;
-    $body$
-    LANGUAGE 'plpgsql'
-    VOLATILE
-    CALLED ON NULL INPUT
-    SECURITY INVOKER
-    COST 100;
-  </Function>
-
   <Function Name="get_user_setting_value(user_id bigint, setting_uid uuid)" Comment="Получить настройку пользователя">
     CREATE OR REPLACE FUNCTION public.get_user_setting_value(user_id bigint, setting_uid uuid)
     RETURNS varchar AS

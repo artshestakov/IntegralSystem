@@ -41,7 +41,6 @@ private:
 	void SetStatus(const ISUuid &StatusUID); //Сменить статус задачи
 	void ShowStatusHistory(); //Показать историю изменения статуса задачи
 	void UpdateVisibleButtonReOpen();
-	void Vote();
 
 private:
 	void SubTaskLoadList(); //Загрузка списка подзадач
@@ -90,7 +89,6 @@ private:
 	QButtonGroup *ButtonGroupStatus;
 	ISPushButton *ButtonReopen;
 	ISPushButton *ButtonActions;
-	ISCheckEdit *CheckVote;
 	ISTextEdit *TextEdit;
 	ISListWidget *ListWidgetSubTask;
 	QTabWidget *TabWidget;
