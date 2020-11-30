@@ -3,11 +3,6 @@
 #include "ISQuery.h"
 #include "ISSystem.h"
 //-----------------------------------------------------------------------------
-static QString QS_DATABASE_DESCRIPTION = PREPARE_QUERY("SELECT description "
-													   "FROM pg_shdescription "
-													   "JOIN pg_database ON objoid = pg_database.oid "
-													   "WHERE datname = current_database()");
-//-----------------------------------------------------------------------------
 QString ISMetaDataHelper::GenerateSqlQueryFromForeign(PMetaForeign *MetaForeign, const QString &SqlFilter, const QVariant &ObjectID)
 {
 	PMetaTable *MetaTableForeign = ISMetaData::Instance().GetMetaTable(MetaForeign->ForeignClass); //Таблица на которую ссылается внешний ключ
@@ -54,24 +49,5 @@ QString ISMetaDataHelper::GenerateSqlQueryFromTitleName(PMetaForeign *MetaForeig
 		"FROM " + MetaTableForeign->Name + " \n" +
 		"WHERE " + MetaTableForeign->Alias + "_id = " + Alias + '_' + FieldName;
 	return SqlQuery;
-}
-//-----------------------------------------------------------------------------
-QString ISMetaDataHelper::GetConfigurationName(QString &ErrorString)
-{
-	ISQuery qSelect(QS_DATABASE_DESCRIPTION);
-	if (qSelect.ExecuteFirst())
-	{
-		QJsonParseError JsonParseError;
-		QVariantMap VariantMap = ISSystem::JsonStringToVariantMap(qSelect.ReadColumn("description").toString(), JsonParseError);
-		if (JsonParseError.error == QJsonParseError::NoError)
-		{
-			return VariantMap["ConfigurationName"].toString();
-		}
-	}
-	else
-	{
-		ErrorString = qSelect.GetErrorString();
-	}
-	return QString();
 }
 //-----------------------------------------------------------------------------
