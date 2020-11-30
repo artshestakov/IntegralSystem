@@ -46,6 +46,9 @@
     <ClCompile Include="ISAsterisk.cpp">
       <Filter>Asterisk</Filter>
     </ClCompile>
+    <ClCompile Include="ISTcpClients.cpp">
+      <Filter>TcpServer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Carat.rc">
@@ -60,6 +63,9 @@
       <Filter>TcpServer</Filter>
     </ClInclude>
     <ClInclude Include="ISTcpMessage.h">
+      <Filter>TcpServer</Filter>
+    </ClInclude>
+    <ClInclude Include="ISTcpClients.h">
       <Filter>TcpServer</Filter>
     </ClInclude>
   </ItemGroup>

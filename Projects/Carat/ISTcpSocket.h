@@ -9,9 +9,10 @@ class ISTcpSocket : public QTcpSocket
 	Q_OBJECT
 
 public:
-	ISTcpSocket(qintptr SocketDescriptor, QObject *parent = 0);
+	ISTcpSocket(qintptr socket_descriptor, QObject *parent = 0);
 	virtual ~ISTcpSocket();
 
+	qintptr GetSocketDescriptor() const;
 	QString GetAddress() const;
 
 	void SetAuthorized(bool authorized);
@@ -33,6 +34,7 @@ private:
 	void Timeout(); //Событие таймаута
 
 private:
+	qintptr SocketDescriptor;
 	QString Address;
 	QByteArray Buffer; //Буфер
 	unsigned int MessageSize; //Размер сообщения

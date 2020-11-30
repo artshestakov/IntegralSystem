@@ -5,6 +5,7 @@
 #include "ISTcpQueue.h"
 #include "ISTcp.h"
 #include "ISSystem.h"
+#include "ISTcpClients.h"
 //-----------------------------------------------------------------------------
 ISTcpServer::ISTcpServer(QObject *parent)
 	: QTcpServer(parent),
@@ -137,6 +138,7 @@ void ISTcpServer::ClientDisconnected()
 {
 	ISTcpSocket *TcpSocket = dynamic_cast<ISTcpSocket*>(sender());
 	ISLOGGER_I(__CLASS__, "Disconnect " + TcpSocket->GetAddress());
+	ISTcpClients::Instance().Remove(TcpSocket->GetSocketDescriptor());
 	QTimer::singleShot(1000, TcpSocket, &ISTcpSocket::deleteLater); //«апускаем удаление сокета через секунду
 }
 //-----------------------------------------------------------------------------

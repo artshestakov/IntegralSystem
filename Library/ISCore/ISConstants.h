@@ -147,15 +147,16 @@ const size_t			CARAT_CONNECT_SLEEP = 10; //Время паузы для ожидания подключения
 const char		ASTERISK_AMI_SEPARATOR[] = "\r\n\r\n"; //Разделитель пакетов AMI
 const size_t	ASTERISK_AMI_PORT = 5038; //Порт AMI по умолчанию
 //CARAT_API--------------------------------------------------------------------
-const char	API_AUTH[] = "Auth"; //Авторизация
-const char	API_SLEEP[] = "Sleep"; //Ожидание
-const char	API_GET_META_DATA[] = "GetMetaData"; //Получение мета-данных
-const char	API_GET_LAST_CLIENT[] = "GetLastClient"; //Получить последнюю версию клиента
-const char	API_USER_PASSWORD_EXIST[] = "UserPasswordExist"; //Проверить существование пароля
-const char	API_USER_PASSWORD_CREATE[] = "UserPasswordCreate"; //Создание пароля пользователю
-const char	API_USER_PASSWORD_EDIT[] = "UserPasswordEdit"; //Изменение пароля пользователя
-const char	API_USER_PASSWORD_RESET[] = "UserPasswordReset"; //Сброс пароля пользователя
-const char	API_GET_RECORD_CALL[] = "GetRecordCall"; //Получить запись разговора
+const char API_AUTH[] = "Auth"; //Авторизация
+const char API_SLEEP[] = "Sleep"; //Ожидание
+const char API_GET_META_DATA[] = "GetMetaData"; //Получение мета-данных
+const char API_GET_LAST_CLIENT[] = "GetLastClient"; //Получить последнюю версию клиента
+const char API_USER_PASSWORD_EXIST[] = "UserPasswordExist"; //Проверить существование пароля
+const char API_USER_PASSWORD_CREATE[] = "UserPasswordCreate"; //Создание пароля пользователю
+const char API_USER_PASSWORD_EDIT[] = "UserPasswordEdit"; //Изменение пароля пользователя
+const char API_USER_PASSWORD_RESET[] = "UserPasswordReset"; //Сброс пароля пользователя
+const char API_GET_RECORD_CALL[] = "GetRecordCall"; //Получить запись разговора
+const char API_GET_CLIENTS[] = "GetClients"; //Получить список подключенных клиентов
 //CARAT_LOCAL_API--------------------------------------------------------------
 const char		CARAT_LOCAL_API_SHUTDOWN[] = "shutdown"; //Завершение работы
 //-----------------------------------------------------------------------------

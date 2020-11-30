@@ -74,7 +74,11 @@ ISNamespace::ApiMessageType ISTcp::GetMessageTypeByName(const QString &Name)
 	}
 	else if (Name == API_GET_RECORD_CALL)
 	{
-		return ISNamespace::AMI_GetRecordCall;
+		return ISNamespace::AMT_GetRecordCall;
+	}
+	else if (Name == API_GET_CLIENTS)
+	{
+		return ISNamespace::AMT_GetClients;
 	}
 	return ISNamespace::AMT_Unknown;
 }

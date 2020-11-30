@@ -10,6 +10,7 @@
 #include "ISVersionInfo.h"
 #include "ISConfig.h"
 #include "ISQueryPool.h"
+#include "ISTcpClients.h"
 //-----------------------------------------------------------------------------
 static QString QS_AUTH = PREPARE_QUERY("SELECT usrs_id, usrs_issystem, usrs_isdeleted, usrs_group, usrs_fio, usrs_accessallowed, usrs_accountlifetime, usrs_accountlifetimestart, usrs_accountlifetimeend, usgp_fullaccess, "
 									   "(SELECT sgdb_useraccessdatabase FROM _settingsdatabase WHERE sgdb_active) "
@@ -120,6 +121,10 @@ static QString QS_ASTERISK_RECORD = PREPARE_QUERY("SELECT ascl_uniqueid "
 //-----------------------------------------------------------------------------
 static QString QI_USER_PASSWORD_CHANGE = PREPARE_QUERY("INSERT INTO _userpasswordchanged(upcg_user, upcg_type) "
 													   "VALUES(:UserID, (SELECT upct_id FROM _userpasswordchangedtype WHERE upct_uid = :TypeUID))");
+//-----------------------------------------------------------------------------
+static QString QS_CLIENT = PREPARE_QUERY("SELECT usrs_fio "
+										 "FROM _users "
+										 "WHERE usrs_id = :UserID");
 //-----------------------------------------------------------------------------
 ISTcpWorker::ISTcpWorker(const QString &db_host, int db_port, const QString &db_name, const QString &db_user, const QString &db_password, const ISConfigurationInfo &configuration_info)
 	: QObject(),
@@ -257,7 +262,8 @@ void ISTcpWorker::Process()
 					case ISNamespace::AMT_UserPasswordCreate: Result = UserPasswordCreate(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_UserPasswordEdit: Result = UserPasswordEdit(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_UserPasswordReset: Result = UserPasswordReset(tcp_message, TcpAnswer); break;
-					case ISNamespace::AMI_GetRecordCall: Result = GetRecordCall(tcp_message, TcpAnswer); break;
+					case ISNamespace::AMT_GetRecordCall: Result = GetRecordCall(tcp_message, TcpAnswer); break;
+					case ISNamespace::AMT_GetClients: Result = GetClients(tcp_message, TcpAnswer); break;
 					}
 					PerfomanceMsec = ISAlgorithm::GetTickDiff(ISAlgorithm::GetTick(), TimePoint);
 				}
@@ -502,6 +508,13 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 		{ "DateExpired", ConfigurationInfo.DateExpired },
 		{ "Logo", ConfigurationInfo.LogoName }
 	};
+
+	//Регистрируем пользователя в "онлайн"
+	ISTcpClients::Instance().Add(
+		TcpMessage->TcpSocket->socketDescriptor(),
+		UserID,
+		TcpMessage->TcpSocket->peerAddress().toString(),
+		TcpMessage->TcpSocket->peerPort());
 	return true;
 }
 //-----------------------------------------------------------------------------
@@ -1180,6 +1193,50 @@ bool ISTcpWorker::GetRecordCall(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer
 	//Читаем файл, закрываем и выходим
 	TcpAnswer->Parameters["Data"] = FileRecord.readAll().toBase64();
 	FileRecord.close();
+	return true;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::GetClients(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+	Q_UNUSED(TcpMessage);
+
+	//Получаем список подключенных клиентов, объявляем контейнер для них и запрос
+	std::vector<ISClientInfo> VectorClients = ISTcpClients::Instance().GetClients();
+	QVariantList VariantList;
+	ISQuery qSelectClient(ISDatabase::Instance().GetDB(DBConnectionName), QS_CLIENT);
+
+	//Обходим всех клиентов и получаем по каждому информацию
+	for (const ISClientInfo &ClientInfo : VectorClients)
+	{
+		qSelectClient.BindValue(":UserID", ClientInfo.ID);
+		if (!qSelectClient.Execute()) //Ошибка в запросе
+		{
+			ErrorString = LANG("Carat.Error.Query.GetClients.Select").arg(ClientInfo.ID);
+			break;
+		}
+
+		if (!qSelectClient.First()) //Пользователь не найден
+		{
+			ErrorString = LANG("Carat.Error.Query.GetClients.UserNotExist").arg(ClientInfo.ID);
+			break;
+		}
+
+		//Добавляем информацию о пользователе в список
+		VariantList.push_back(QVariantMap
+		{
+			{ "Address", ClientInfo.Address },
+			{ "Port", ClientInfo.Port },
+			{ "FIO", qSelectClient.ReadColumn("usrs_fio") }
+		});
+	}
+	
+	//Если была ошибка - очищаем потенциально не пустой список и выходим
+	if (qSelectClient.GetErrorType() != QSqlError::NoError)
+	{
+		VariantList.clear();
+		return false;
+	}
+	TcpAnswer->Parameters["Clients"] = VariantList;
 	return true;
 }
 //-----------------------------------------------------------------------------

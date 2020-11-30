@@ -44,20 +44,20 @@
   <Local Name="Carat.Error.Query.GetLastClient.Other" Russian="Не удалось проверить наличие обновлений."/>
 
   <Local Name="Carat.Error.Query.UserLoginExist.CheckExistHash" Russian="Не удалось проверить наличие пароля: %1"/>
-  <Local Name="Carat.Error.Query.UserLoginExist.UserNotExist" Russian="Пользователь с идентификатором &quot;%1&quot; не существует."/>
+  <Local Name="Carat.Error.Query.UserLoginExist.UserNotExist" Russian="Пользователь с идентификатором %1 не существует."/>
 
   <Local Name="Carat.Error.Query.UserLoginCreate.CheckExistHash" Russian="Не удалось проверить наличие пароля: %1"/>
-  <Local Name="Carat.Error.Query.UserLoginCreate.UserNotExist" Russian="Пользователь с идентификатором &quot;%1&quot; не существует."/>
+  <Local Name="Carat.Error.Query.UserLoginCreate.UserNotExist" Russian="Пользователь с идентификатором %1 не существует."/>
   <Local Name="Carat.Error.Query.UserLoginCreate.AlreadyExist" Russian="Пароль уже установлен."/>
   <Local Name="Carat.Error.Query.UserLoginCreate.UpdateHash" Russian="Не удалось добавить пароль пользователю: %1"/>
 
   <Local Name="Carat.Error.Query.UserLoginEdit.Equal" Russian="Не удалось проверить старый пароль: %1"/>
-  <Local Name="Carat.Error.Query.UserLoginEdit.UserNotExist" Russian="Пользователь с идентификатором &quot;%1&quot; не существует."/>
+  <Local Name="Carat.Error.Query.UserLoginEdit.UserNotExist" Russian="Пользователь с идентификатором %1 не существует."/>
   <Local Name="Carat.Error.Query.UserLoginEdit.InvalidCurrentPassword" Russian="Текущий пароль неправильный."/>
   <Local Name="Carat.Error.Query.UserLoginEdit.OldAndNewPasswordsEqual" Russian="Старый и новый пароли совпадают."/>
 
   <Local Name="Carat.Error.Query.UserLoginReset.CheckExistHash" Russian="Не удалось проверить наличие пароля: %1"/>
-  <Local Name="Carat.Error.Query.UserLoginReset.UserNotExist" Russian="Пользователь с идентификатором &quot;%1&quot; не существует."/>
+  <Local Name="Carat.Error.Query.UserLoginReset.UserNotExist" Russian="Пользователь с идентификатором %1 не существует."/>
   <Local Name="Carat.Error.Query.UserLoginReset.PasswordIsNull" Russian="Пароль у пользователя не установлен, сброс невозможен."/>
   <Local Name="Carat.Error.Query.UserLoginReset.Reset" Russian="Не удалось сбросить пароль пользователя."/>
   
@@ -66,5 +66,8 @@
   <Local Name="Carat.Error.Query.GetRecordCall.NotFoundUniqueID" Russian="Запись с кодом %1 не найдена."/>
   <Local Name="Carat.Error.Query.GetRecordCall.NotFoundRecordCall" Russian="Запись разговора не найдена на сервере."/>
   <Local Name="Carat.Error.Query.GetRecordCall.OpenRecordCall" Russian="Не удалось прочитать файл с записью разговора: %1"/>
+
+  <Local Name="Carat.Error.Query.GetClients.Select" Russian="Не удалось получить информацию по пользователю с кодом %1."/>
+  <Local Name="Carat.Error.Query.GetClients.UserNotExist" Russian="Пользователь с идентификатором %1 не существует."/>
 
 </LANG>

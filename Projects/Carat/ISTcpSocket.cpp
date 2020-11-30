@@ -8,8 +8,9 @@
 #include "ISTcpQueue.h"
 #include "ISTcpMessage.h"
 //-----------------------------------------------------------------------------
-ISTcpSocket::ISTcpSocket(qintptr SocketDescriptor, QObject *parent)
+ISTcpSocket::ISTcpSocket(qintptr socket_descriptor, QObject *parent)
 	: QTcpSocket(parent),
+	SocketDescriptor(socket_descriptor),
 	MessageSize(0),
 	ChunkCount(0),
 	IsAuthorized(false),
@@ -36,6 +37,11 @@ ISTcpSocket::~ISTcpSocket()
 	{
 		Timer->stop();
 	}
+}
+//-----------------------------------------------------------------------------
+qintptr ISTcpSocket::GetSocketDescriptor() const
+{
+	return SocketDescriptor;
 }
 //-----------------------------------------------------------------------------
 QString ISTcpSocket::GetAddress() const

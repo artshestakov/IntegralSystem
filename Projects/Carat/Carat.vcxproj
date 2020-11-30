@@ -23,6 +23,7 @@
     <ClCompile Include="ISCaratApplication.cpp" />
     <ClCompile Include="ISCaratController.cpp" />
     <ClCompile Include="ISTcpAnswer.cpp" />
+    <ClCompile Include="ISTcpClients.cpp" />
     <ClCompile Include="ISTcpMessage.cpp" />
     <ClCompile Include="ISTcpQueue.cpp" />
     <ClCompile Include="ISTcpServer.cpp" />
@@ -38,6 +39,7 @@
     <QtMoc Include="ISCaratController.h" />
     <QtMoc Include="ISAsterisk.h" />
     <ClInclude Include="ISTcpAnswer.h" />
+    <ClInclude Include="ISTcpClients.h" />
     <ClInclude Include="ISTcpMessage.h" />
     <ClInclude Include="ISTcpQueue.h" />
     <QtMoc Include="ISTcpWorker.h" />
