@@ -120,13 +120,13 @@ void ISLogger::Log(bool is_format, MessageType message_type, const std::string &
 		char buffer[LOGGER_MESSAGE_SIZE] = { 0 };
 		if (component.empty()) //Если компонент указан
 		{
-			sprintf(buffer, "%02d.%02d.%02d %02d:%02d:%02d:%03d\t%lu\t[%s] %s",
+			snprintf(buffer, LOGGER_MESSAGE_SIZE, "%02d.%02d.%02d %02d:%02d:%02d:%03d\t%lu\t[%s] %s",
                 Day, Month, Year % 100, Hour, Minute, Second, Millisecond,
 				CURRENT_THREAD_ID(), message_type_string.c_str(), string.toStdString().c_str());
 		}
 		else //Компонент не указан
 		{
-			sprintf(buffer, "%02d.%02d.%02d %02d:%02d:%02d:%03d\t%lu\t[%s][%s] %s",
+			snprintf(buffer, LOGGER_MESSAGE_SIZE, "%02d.%02d.%02d %02d:%02d:%02d:%03d\t%lu\t[%s][%s] %s",
                 Day, Month, Year % 100, Hour, Minute, Second, Millisecond,
 				CURRENT_THREAD_ID(), message_type_string.c_str(), component.c_str(), string.toStdString().c_str());
 		}

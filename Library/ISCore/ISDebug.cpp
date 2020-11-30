@@ -30,7 +30,7 @@ void ShowDebugString(const char *Severity, const QString &String)
 #endif
 	//Формируем сообщение
 	char Buffer[LOGGER_MESSAGE_SIZE] = { 0 };
-	sprintf(Buffer, "%02d.%02d.%02d %02d:%02d:%02d:%03d [%s]\t%s",
+	snprintf(Buffer, LOGGER_MESSAGE_SIZE, "%02d.%02d.%02d %02d:%02d:%02d:%03d [%s]\t%s",
         Day, Month, Year % 100, Hour, Minute, Second, Millisecond,
 		Severity, String.toStdString().c_str());
 	std::cout << Buffer << std::endl;
