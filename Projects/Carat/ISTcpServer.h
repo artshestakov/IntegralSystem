@@ -24,7 +24,6 @@ private:
 	void AcceptError(QTcpSocket::SocketError socket_error); //Ошибка принятия подключения
 	void QueueBalancerMessage(); //Балансер очереди сообщений
 	void SendAnswer(ISTcpAnswer *TcpAnswer);
-	bool GetConfigurationInfo(const QString &ConfigurationName, ISConfigurationInfo &ConfigurationInfo); //Получить описание конфигурации
 
 private:
 	QString ErrorString;

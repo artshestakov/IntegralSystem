@@ -64,7 +64,7 @@ void ISAboutForm::CreateCommonTab()
 	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.ProductName"), QCoreApplication::applicationName());
 	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.Cofiguration"), ISVersionInfo::Instance().Info.Configuration);
 	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.Platform"), ISVersionInfo::Instance().Info.Platform);
-	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.ProductVersion"), ISVersionInfo::Instance().ToString());
+	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.ProductVersion"), ISVersionInfo::Instance().ToStringVersion());
 	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.ProductVersionRevision"), QString::number(ISVersionInfo::Instance().Info.Version.GetRevision()));
 	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.ReleaseDate"), ISVersionInfo::Instance().Info.Date);
 	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.ReleaseTime"), ISVersionInfo::Instance().Info.Time);
@@ -97,7 +97,7 @@ void ISAboutForm::CreateContactsTab()
 //-----------------------------------------------------------------------------
 void ISAboutForm::CreateModuleTab()
 {
-	if (!ISObjects::Instance().IsInitialized())
+	if (ISVersionInfo::Instance().ConfigurationInfo.Name.isEmpty())
 	{
 		return;
 	}
@@ -108,9 +108,9 @@ void ISAboutForm::CreateModuleTab()
 	TabModule->setLayout(LayoutModule);
 	TabWidget->addTab(TabModule, LANG("AboutForm.Tab.Configuration"));
 
-	AddLabel(TabModule, LANG("AboutForm.Tab.Configuration.Name"), ISObjects::Instance().Info.Name);
-	AddLabel(TabModule, LANG("AboutForm.Tab.Configuration.LocalName"), ISObjects::Instance().Info.LocalName);
-	AddLabel(TabModule, LANG("AboutForm.Tab.Configuration.UID"), ISObjects::Instance().Info.UID);
+	AddLabel(TabModule, LANG("AboutForm.Tab.Configuration.Name"), ISVersionInfo::Instance().ConfigurationInfo.Name);
+	AddLabel(TabModule, LANG("AboutForm.Tab.Configuration.LocalName"), ISVersionInfo::Instance().ConfigurationInfo.LocalName);
+	AddLabel(TabModule, LANG("AboutForm.Tab.Configuration.UID"), ISVersionInfo::Instance().ConfigurationInfo.UID);
 
 	LayoutModule->addStretch();
 }

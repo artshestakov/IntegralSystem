@@ -77,7 +77,6 @@ const char PROPERTY_LINE_EDIT_SELECTED_MENU[] = "LineEditSelectedMenu";
 //-----------------------------------------------------------------------------
 const char PATH_SCHEMA_TEMPLATE_FIELDS[] = ":Other/ClassTemplateFields.xml";
 const char PATH_CONFIGURATOR_SCHEME[] = ":Other/Configurator.xml";
-const char PATH_CONFIGURATIONS_SCHEME[] = ":Other/Configurations.xml";
 const char PATH_BUILD_INFO[] = ":Build/Build.ini.tmp";
 //REPORT_TYPE------------------------------------------------------------------
 const char REPORT_TYPE_HTML[] = "Html";

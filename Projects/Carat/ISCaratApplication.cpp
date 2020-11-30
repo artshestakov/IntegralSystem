@@ -73,6 +73,9 @@ bool ISCaratApplication::Initialize()
 		ISLOGGER_E("ISLocalization", QString("Not init localization file \"%1\": %2").arg(LOCALIZATION_FILE_CARAT).arg(ISLocalization::Instance().GetErrorString()));
 		return false;
 	}
+
+	//Выбираем активную конфигурацию
+	ISVersionInfo::Instance().SelectConfiguration(CONFIG_STRING(CONST_CONFIG_OTHER_CONFIGURATION));
 	return true;
 }
 //-----------------------------------------------------------------------------
@@ -118,7 +121,7 @@ bool ISCaratApplication::Run()
 		"Main ThreadID: %9\n"
 		"PID: %10\n"
 		"Configuration: %11").
-		arg(ISVersionInfo::Instance().ToString()).
+		arg(ISVersionInfo::Instance().ToStringVersion()).
 		arg(ISVersionInfo::Instance().Info.Configuration).
 		arg(ISVersionInfo::Instance().Info.Platform).
 		arg(ISVersionInfo::Instance().Info.Branch).
@@ -226,7 +229,7 @@ void ISCaratApplication::Help()
 //-----------------------------------------------------------------------------
 void ISCaratApplication::Version()
 {
-	ISDEBUG_L("Carat (" + ISVersionInfo::Instance().ToString() + ") " + ISVersionInfo::Instance().Info.Configuration + " " + ISVersionInfo::Instance().Info.Platform);
+	ISDEBUG_L("Carat (" + ISVersionInfo::Instance().ToStringVersion() + ") " + ISVersionInfo::Instance().Info.Configuration + " " + ISVersionInfo::Instance().Info.Platform);
 }
 //-----------------------------------------------------------------------------
 void ISCaratApplication::SendShutdown()

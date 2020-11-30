@@ -26,6 +26,7 @@
 #include "ISDatabase.h"
 #include "ISTcpQuery.h"
 #include "ISProperty.h"
+#include "ISVersionInfo.h"
 //-----------------------------------------------------------------------------
 bool ISStartup::Startup(ISSplashScreen *SplashScreen)
 {
@@ -68,14 +69,11 @@ void ISStartup::Shutdown(ISSplashScreen *SplashScreen)
 bool ISStartup::StartupOld(ISSplashScreen *SplashScreen)
 {
 	//Инициализация объекта конфигурации
-	if (!ISObjects::Instance().Initialize())
-	{
-		ISMessageBox::ShowCritical(SplashScreen, LANG("Message.Error.InitializeObjects"), ISObjects::Instance().GetErrorString());
-		return false;
-	}
+	ISVersionInfo::Instance().SelectConfiguration("OilSphere");
+	ISObjects::Instance().Initialize(ISVersionInfo::Instance().ConfigurationInfo.Name);
 
 	//Если дата запрета меньше чем текущая - не даём зайти в программу
-	QDate DateExpired = ISObjects::Instance().Info.DateExpired;
+	QDate DateExpired = ISVersionInfo::Instance().ConfigurationInfo.DateExpired;
 	if (DateExpired.isValid() && QDate::currentDate() > DateExpired)
 	{
 		ISMessageBox::ShowCritical(SplashScreen, LANG("Message.Error.ObjectDateExpired"));
@@ -83,7 +81,7 @@ bool ISStartup::StartupOld(ISSplashScreen *SplashScreen)
 	}
 
 	//Инициализация мета-данных
-	if (!ISMetaData::Instance().Initialize(ISObjects::Instance().Info.Name, false, false))
+	if (!ISMetaData::Instance().Initialize(ISVersionInfo::Instance().ConfigurationInfo.Name, false, false))
 	{
 		ISMessageBox::ShowCritical(SplashScreen, LANG("Message.Error.InitializeMetaData"), ISMetaData::Instance().GetErrorString());
 		return false;
@@ -194,19 +192,19 @@ bool ISStartup::StartupOld(ISSplashScreen *SplashScreen)
 bool ISStartup::StartupNew(ISSplashScreen *SplashScreen)
 {
 	//Инициализация мета-данных
-	if (!ISMetaData::Instance().Initialize(ISObjects::Instance().Info.Name, false, false))
+	if (!ISMetaData::Instance().Initialize(ISVersionInfo::Instance().ConfigurationInfo.Name, false, false))
 	{
 		ISMessageBox::ShowCritical(SplashScreen, LANG("Message.Error.InitializeMetaData"), ISMetaData::Instance().GetErrorString());
 		return false;
 	}
 
 	ISTcpQuery qAuth(API_GET_META_DATA);
-	if (!qAuth.Execute())
+	if (!qAuth.Execute()) //Не удалось получить мета-данные - выходим с ошибкой
 	{
 		ISMessageBox::ShowCritical(SplashScreen, qAuth.GetErrorString());
 		return false;
 	}
-	ISObjects::Instance().Initialize(ISObjects::Instance().Info.Name);
+	ISObjects::Instance().Initialize(ISVersionInfo::Instance().ConfigurationInfo.Name);
 	ISSettingsDatabase::Instance().Initialize(qAuth.GetAnswer()["SettingsDB"].toMap());
 	ISUserRoleEntity::Instance().InitializeTables(qAuth.GetAnswer()["AccessTables"].toMap());
 	ISUserRoleEntity::Instance().InitializeSpecial(qAuth.GetAnswer()["AccessSpecial"].toList());
@@ -218,6 +216,8 @@ bool ISStartup::StartupNew(ISSplashScreen *SplashScreen)
 	ISColumnSizer::Instance().Initialize(qAuth.GetAnswer()["ColumnSize"].toList());
 	ISSettings::Instance().Initialize(qAuth.GetAnswer()["Settings"].toList());
 	ISParagraphEntity::Instance().Initialize(qAuth.GetAnswer()["Paragraphs"].toList());
+	ISObjects::Instance().GetInterface()->BeforeShowMainWindow();
+	PROPERTY_SET(PROPERTY_LINE_EDIT_SELECTED_MENU, SETTING_BOOL(CONST_UID_SETTING_OTHER_SELECTED_MENU)); //Устанавливаем свойство для настройки {3AD4888F-EDC7-4D69-A97F-F9678B6AAC44}
 	return true;
 }
 //-----------------------------------------------------------------------------

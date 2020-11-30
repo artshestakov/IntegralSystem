@@ -20,6 +20,7 @@
 #include "ISObjects.h"
 #include "ISAlgorithm.h"
 #include "ISProperty.h"
+#include "ISVersionInfo.h"
 //-----------------------------------------------------------------------------
 ISMainWindow::ISMainWindow(QWidget *parent)
 	: ISInterfaceForm(parent),
@@ -28,9 +29,9 @@ ISMainWindow::ISMainWindow(QWidget *parent)
 {
 	connect(&ISCreatedObjectsEntity::Instance(), &ISCreatedObjectsEntity::Existed, this, &ISMainWindow::ActivateWorkspace);
 
-	ISObjects::Instance().Info.LocalName.isEmpty() ?
+	ISVersionInfo::Instance().ConfigurationInfo.LocalName.isEmpty() ?
 		setWindowTitle("IntegralSystem: " + ISMetaUser::Instance().UserData.FIO) :
-		setWindowTitle("IntegralSystem - " + ISObjects::Instance().Info.LocalName + " : " + ISMetaUser::Instance().UserData.FIO);
+		setWindowTitle("IntegralSystem - " + ISVersionInfo::Instance().ConfigurationInfo.LocalName + " : " + ISMetaUser::Instance().UserData.FIO);
 	setAttribute(Qt::WA_DeleteOnClose, false);
 	setWindowIcon(BUFFER_ICONS("Logo"));
 	resize(ISDefines::Gui::SIZE_MAIN_WINDOW);

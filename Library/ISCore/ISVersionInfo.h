@@ -8,15 +8,22 @@
 class ISCORE_EXPORT ISVersionInfo
 {
 public:
+	ISVersionStruct Info; //Информация о версии
+	ISConfigurationInfo ConfigurationInfo; //Инфромации о конфигурации
+
+public:
 	static ISVersionInfo& Instance();
-	QString ToString() const;
-	ISVersionStruct Info;
+	QString ToStringVersion() const; //Получить версию строкой
+	void SelectConfiguration(const QString &ConfigurationName); //Выбрать конфигурацию по имени
 
 private:
 	ISVersionInfo();
 	~ISVersionInfo();
 	ISVersionInfo(ISVersionInfo const &) {};
 	ISVersionInfo& operator=(ISVersionInfo const&) { return *this; };
+
+private:
+	std::map<QString, ISConfigurationInfo> Configurations;
 };
 //-----------------------------------------------------------------------------
 #endif

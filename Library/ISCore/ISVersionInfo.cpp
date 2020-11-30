@@ -3,6 +3,7 @@
 //-----------------------------------------------------------------------------
 ISVersionInfo::ISVersionInfo()
 {
+	//Читаем информацию о версии
 	QSettings Settings(QFile::exists(PATH_BUILD_INFO) ? PATH_BUILD_INFO : ":Build/Build.ini", QSettings::IniFormat);
 	Info.Version = ISVersion(Settings.value("Version/Major").toUInt(), Settings.value("Version/Minor").toUInt(), Settings.value("Version/Revision").toUInt());
 	Info.Date = Settings.value("Build/Date").toString();
@@ -11,6 +12,13 @@ ISVersionInfo::ISVersionInfo()
 	Info.Branch = Settings.value("Build/Branch").toString();
 	Info.Configuration = Settings.value("Build/Configuration").toString();
 	Info.Platform = Settings.value("Build/Platform").toString();
+
+	//Описание всех конфигураций
+	Configurations = std::map<QString, ISConfigurationInfo>
+	{
+		{ "Empty", { "{20DA4E7C-5843-49E1-9D87-2FF279EEF0FF}", QString(), QString(), QString(), QDate(), QString() } },
+		{ "OilSphere", { "{B2003F73-0DD2-4359-AC96-FA7CABB53049}", QString(), QString::fromLocal8Bit("ООО «Нефтесфера»"), QString(), QDate(2020, 12, 31), "Logo.png" } }
+	};
 }
 //-----------------------------------------------------------------------------
 ISVersionInfo::~ISVersionInfo()
@@ -24,8 +32,16 @@ ISVersionInfo& ISVersionInfo::Instance()
 	return Version;
 }
 //-----------------------------------------------------------------------------
-QString ISVersionInfo::ToString() const
+QString ISVersionInfo::ToStringVersion() const
 {
 	return Info.Version.ToString();
+}
+//-----------------------------------------------------------------------------
+void ISVersionInfo::SelectConfiguration(const QString &ConfigurationName)
+{
+	std::map<QString, ISConfigurationInfo>::const_iterator It = Configurations.find(ConfigurationName);
+	IS_ASSERT(It != Configurations.end(), "Not found configuration \"" + ConfigurationName + "\"");
+	ConfigurationInfo = It->second;
+	ConfigurationInfo.Name = ConfigurationName;
 }
 //-----------------------------------------------------------------------------

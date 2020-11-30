@@ -4,8 +4,8 @@
 #include "ISAlgorithm.h"
 #include "ISTcpQueue.h"
 #include "ISTcp.h"
-#include "ISSystem.h"
 #include "ISTcpClients.h"
+#include "ISVersionInfo.h"
 //-----------------------------------------------------------------------------
 ISTcpServer::ISTcpServer(QObject *parent)
 	: QTcpServer(parent),
@@ -38,19 +38,12 @@ bool ISTcpServer::Run()
 	//Устанавливаем размер вектору воркеров
 	Workers.resize(WorkerCount);
 
-	ISConfigurationInfo ConfigurationInfo;
-	if (!GetConfigurationInfo(CONFIG_STRING(CONST_CONFIG_OTHER_CONFIGURATION), ConfigurationInfo))
-	{
-		ISLOGGER_E(__CLASS__, "Not read configuration: " + ErrorString);
-		return false;
-	}
-
 	//Запуск потоков
 	QEventLoop EventLoop;
 	for (unsigned int i = 0; i < WorkerCount; ++i)
 	{
 		QThread *Thread = new QThread();
-		ISTcpWorker *TcpWorker = new ISTcpWorker(DBHost, DBPort, DBName, DBUser, DBPassword, ConfigurationInfo);
+		ISTcpWorker *TcpWorker = new ISTcpWorker(DBHost, DBPort, DBName, DBUser, DBPassword);
 		connect(TcpWorker, &ISTcpWorker::Answer, this, &ISTcpServer::SendAnswer, Qt::QueuedConnection);
 		connect(TcpWorker, &ISTcpWorker::StartedDone, &EventLoop, &QEventLoop::quit);
 		connect(TcpWorker, &ISTcpWorker::StartedFailed, &EventLoop, &QEventLoop::quit);
@@ -208,41 +201,5 @@ void ISTcpServer::SendAnswer(ISTcpAnswer *TcpAnswer)
 		}
 	}
 	delete TcpAnswer; //Удаляем указатель на объект ответа
-}
-//-----------------------------------------------------------------------------
-bool ISTcpServer::GetConfigurationInfo(const QString &ConfigurationName, ISConfigurationInfo &ConfigurationInfo)
-{
-	QFile File(PATH_CONFIGURATIONS_SCHEME);
-	bool Result = File.open(QIODevice::ReadOnly);
-	if (Result)
-	{
-		QString Content = File.readAll();
-		File.close();
-
-		QDomElement DomElement = ISSystem::GetDomElement(Content);
-		QDomNode DomNode = DomElement.firstChild();
-		while (!DomNode.isNull())
-		{
-			QDomNamedNodeMap DomNamedNodeMap = DomNode.attributes();
-			QString configuration_name = DomNamedNodeMap.namedItem("Name").nodeValue();
-			if (configuration_name == ConfigurationName)
-			{
-				ConfigurationInfo.UID = DomNamedNodeMap.namedItem("UID").nodeValue();
-				ConfigurationInfo.Name = configuration_name;
-				ConfigurationInfo.LocalName = DomNamedNodeMap.namedItem("LocalName").nodeValue();
-				ConfigurationInfo.DesktopForm = DomNamedNodeMap.namedItem("DesktopForm").nodeValue();
-				ConfigurationInfo.DateExpired = QDate::fromString(DomNamedNodeMap.namedItem("DateExpired").nodeValue(), FORMAT_DATE_V2);
-				ConfigurationInfo.LogoName = DomNamedNodeMap.namedItem("LogoName").nodeValue();
-				return true;
-			}
-			DomNode = DomNode.nextSibling();
-		}
-		ErrorString = "Not found configuration";
-	}
-	else
-	{
-		ErrorString = QString("Error read file \"%1\": %2").arg(File.fileName()).arg(File.errorString());
-	}
-	return false;
 }
 //-----------------------------------------------------------------------------

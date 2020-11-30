@@ -47,7 +47,7 @@ bool ISTcpQuery::Execute()
 		{
 			"System", QVariantMap
 			{
-				{ "Version", ISVersionInfo::Instance().ToString() }
+				{ "Version", ISVersionInfo::Instance().ToStringVersion() }
 			}
 		}
 	}, QJsonDocument::Compact);

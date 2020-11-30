@@ -197,7 +197,7 @@ void ISAuthForm::InputNew()
 
 	ISTcpQuery qAuth(API_AUTH);
 	qAuth.BindValue("Hash", ISSystem::StringToSha256(EditLogin->GetValue().toString() + EditPassword->GetValue().toString()));
-	qAuth.BindValue("Version", ISVersionInfo::Instance().ToString());
+	qAuth.BindValue("Version", ISVersionInfo::Instance().ToStringVersion());
 	if (qAuth.Execute()) //Авторизация прошла успешно
 	{
 		QVariantMap AnswerMap = qAuth.GetAnswer();
@@ -243,11 +243,11 @@ void ISAuthForm::InputNew()
 		ISMetaUser::Instance().UserData.Password = EditPassword->GetValue().toString();
 		ISMetaUser::Instance().UserData.GroupID = AnswerMap["UserGroupID"].toUInt();
 		ISMetaUser::Instance().UserData.GroupFullAccess = AnswerMap["UserGroupFullAccess"].toBool();
-		ISObjects::Instance().Info.UID = AnswerMap["Configuration"].toMap()["UID"];
-		ISObjects::Instance().Info.Name = AnswerMap["Configuration"].toMap()["Name"].toString();
-		ISObjects::Instance().Info.LocalName = AnswerMap["Configuration"].toMap()["Local"].toString();
-		ISObjects::Instance().Info.DesktopForm = AnswerMap["Configuration"].toMap()["Desktop"].toString();
-		ISObjects::Instance().Info.LogoName = AnswerMap["Configuration"].toMap()["Logo"].toString();
+		ISVersionInfo::Instance().ConfigurationInfo.UID = AnswerMap["Configuration"].toMap()["UID"];
+		ISVersionInfo::Instance().ConfigurationInfo.Name = AnswerMap["Configuration"].toMap()["Name"].toString();
+		ISVersionInfo::Instance().ConfigurationInfo.LocalName = AnswerMap["Configuration"].toMap()["Local"].toString();
+		ISVersionInfo::Instance().ConfigurationInfo.DesktopForm = AnswerMap["Configuration"].toMap()["Desktop"].toString();
+		ISVersionInfo::Instance().ConfigurationInfo.LogoName = AnswerMap["Configuration"].toMap()["Logo"].toString();
 		SetResult(true);
 		hide();
 		close();
@@ -382,7 +382,7 @@ bool ISAuthForm::CheckUpdate()
 				result = StringList[2].toUInt() > ISVersionInfo::Instance().Info.Version.GetRevision();
 				if (result)
 				{
-					ISLOGGER_I(__CLASS__, QString("Founded update. This version: %1. Update file: %2").arg(ISVersionInfo::Instance().ToString()).arg(FileInfo.fileName()));
+					ISLOGGER_I(__CLASS__, QString("Founded update. This version: %1. Update file: %2").arg(ISVersionInfo::Instance().ToStringVersion()).arg(FileInfo.fileName()));
 					ISMessageBox::ShowInformation(this, LANG("Message.Information.FoundNewAppVersion"));
 					QString FilePath = UpdateDir + '/' + FileInfo.fileName();
 					result = QProcess::startDetached(FilePath, QStringList() << "/SILENT" << "/NOCANCEL" << "/NORESTART");

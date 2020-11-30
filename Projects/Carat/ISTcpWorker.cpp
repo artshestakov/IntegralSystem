@@ -126,7 +126,7 @@ static QString QS_CLIENT = PREPARE_QUERY("SELECT usrs_fio "
 										 "FROM _users "
 										 "WHERE usrs_id = :UserID");
 //-----------------------------------------------------------------------------
-ISTcpWorker::ISTcpWorker(const QString &db_host, int db_port, const QString &db_name, const QString &db_user, const QString &db_password, const ISConfigurationInfo &configuration_info)
+ISTcpWorker::ISTcpWorker(const QString &db_host, int db_port, const QString &db_name, const QString &db_user, const QString &db_password)
 	: QObject(),
 	ErrorString(NO_ERROR_STRING),
 	DBHost(db_host),
@@ -134,7 +134,6 @@ ISTcpWorker::ISTcpWorker(const QString &db_host, int db_port, const QString &db_
 	DBName(db_name),
 	DBUser(db_user),
 	DBPassword(db_password),
-	ConfigurationInfo(configuration_info),
 	IsStarted(false),
 	IsRunning(false),
 	CurrentMessage(nullptr),
@@ -362,7 +361,8 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	}
 
 	//Если дата запрета меньше чем текущая - не даём зайти в программу
-	if (ConfigurationInfo.DateExpired.isValid() && QDate::currentDate() > ConfigurationInfo.DateExpired)
+	if (ISVersionInfo::Instance().ConfigurationInfo.DateExpired.isValid() &&
+		QDate::currentDate() > ISVersionInfo::Instance().ConfigurationInfo.DateExpired)
 	{
 		ErrorString = LANG("Carat.Error.Query.AuthDenied");
 		return false;
@@ -501,12 +501,12 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	TcpAnswer->Parameters["IsNeedUpdate"] = IsNeedUpdate;
 	TcpAnswer->Parameters["Configuration"] = QVariantMap
 	{
-		{ "UID", ConfigurationInfo.UID },
-		{ "Name", ConfigurationInfo.Name },
-		{ "Local", ConfigurationInfo.LocalName },
-		{ "Desktop", ConfigurationInfo.DesktopForm },
-		{ "DateExpired", ConfigurationInfo.DateExpired },
-		{ "Logo", ConfigurationInfo.LogoName }
+		{ "UID", ISVersionInfo::Instance().ConfigurationInfo.UID },
+		{ "Name", ISVersionInfo::Instance().ConfigurationInfo.Name },
+		{ "Local", ISVersionInfo::Instance().ConfigurationInfo.LocalName },
+		{ "Desktop", ISVersionInfo::Instance().ConfigurationInfo.DesktopForm },
+		{ "DateExpired", ISVersionInfo::Instance().ConfigurationInfo.DateExpired },
+		{ "Logo", ISVersionInfo::Instance().ConfigurationInfo.LogoName }
 	};
 
 	//Регистрируем пользователя в "онлайн"

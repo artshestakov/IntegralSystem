@@ -87,7 +87,6 @@
   <Local Name="Message.Error.CheckAllQuery" Russian="Ошибка в SQL-запросе!"/>
   <Local Name="Message.Error.SelectSettingsDatabase" Russian="Не удалось загрузить настройки базы данных."/>
   <Local Name="Message.Error.InitializeMetaData" Russian="Не удалось иницилизировать мета-данные."/>
-  <Local Name="Message.Error.InitializeObjects" Russian="Не удалось иницилизировать объект конфигурации."/>
   <Local Name="Message.Error.ObjectDateExpired" Russian="Программа не может быть запущена."/>
   <Local Name="Message.Error.InitializeUserSettings" Russian="Не удалось загрузить пользовательские настройки."/>
   <Local Name="Message.Error.InitializeParagraphs" Russian="Не удалось загрузить параграфы."/>
