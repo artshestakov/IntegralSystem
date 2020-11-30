@@ -624,4 +624,17 @@
     </Foreigns>
   </Table>
 
+  <Table Name="Retail" UID="{E7BC37C2-038D-4A66-8C2F-7EC5FE681B70}" Alias="rtil" LocalName="Розница" LocalListName="Розница" TitleName="Date">
+    <Fields>
+      <Field UID="{73BB80D5-D05F-40C6-A007-F08C056E04E7}" Name="Date" Type="Date" LabelName="Дата" LocalListName="Дата" NotNull="true"/>
+      <Field UID="{B402A617-288F-4E54-88A7-51A527602A67}" Name="Sum" Type="Money" LabelName="Сумма" LocalListName="Сумма" NotNull="true"/>
+      <Field UID="{19FA7B04-E9B2-48CD-B899-E6907C78FD09}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
+    </Fields>
+    <Indexes>
+      <Index Field="Date"/>
+      <Index Field="Sum"/>
+      <Index Field="Note"/>
+    </Indexes>
+  </Table>
+
 </XSN>
