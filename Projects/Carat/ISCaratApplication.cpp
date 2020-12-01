@@ -8,6 +8,7 @@
 #include "ISDebug.h"
 #include "ISSystem.h"
 #include "ISQueryPool.h"
+#include "ISMetaData.h"
 //-----------------------------------------------------------------------------
 ISCaratApplication::ISCaratApplication(int &argc, char **argv)
 	: QCoreApplication(argc, argv),
@@ -46,6 +47,13 @@ bool ISCaratApplication::Initialize()
 	}
 #endif
 
+	//Загрузка локализации ядра
+	if (!ISLocalization::Instance().LoadResourceFile(LOCALIZATION_FILE_CARAT))
+	{
+		ISLOGGER_E("ISLocalization", QString("Not init localization file \"%1\": %2").arg(LOCALIZATION_FILE_CARAT).arg(ISLocalization::Instance().GetErrorString()));
+		return false;
+	}
+
 	//Создаём папку для временных файлов
 	if (!ISSystem::CreateDir(QCoreApplication::applicationDirPath() + "/Temp", ErrorString))
 	{
@@ -67,15 +75,15 @@ bool ISCaratApplication::Initialize()
 		return false;
 	}
 
-	//Загрузка локализации ядра
-	if (!ISLocalization::Instance().LoadResourceFile(LOCALIZATION_FILE_CARAT))
-	{
-		ISLOGGER_E("ISLocalization", QString("Not init localization file \"%1\": %2").arg(LOCALIZATION_FILE_CARAT).arg(ISLocalization::Instance().GetErrorString()));
-		return false;
-	}
-
 	//Выбираем активную конфигурацию
 	ISVersionInfo::Instance().SelectConfiguration(CONFIG_STRING(CONST_CONFIG_OTHER_CONFIGURATION));
+
+	//Инициализируем мета-данные
+	if (!ISMetaData::Instance().Initialize(ISVersionInfo::Instance().ConfigurationInfo.Name, false, false))
+	{
+		ISLOGGER_E("ISMetaData", "Not init meta data: " + ISMetaData::Instance().GetErrorString());
+		return false;
+	}
 	return true;
 }
 //-----------------------------------------------------------------------------

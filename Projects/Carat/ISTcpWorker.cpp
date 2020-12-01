@@ -11,6 +11,7 @@
 #include "ISConfig.h"
 #include "ISQueryPool.h"
 #include "ISTcpClients.h"
+#include "ISMetaData.h"
 //-----------------------------------------------------------------------------
 static QString QS_AUTH = PREPARE_QUERY("SELECT usrs_id, usrs_issystem, usrs_isdeleted, usrs_group, usrs_fio, usrs_accessallowed, usrs_accountlifetime, usrs_accountlifetimestart, usrs_accountlifetimeend, usgp_fullaccess, "
 									   "(SELECT sgdb_useraccessdatabase FROM _settingsdatabase WHERE sgdb_active) "
@@ -1263,10 +1264,17 @@ bool ISTcpWorker::RecordDelete(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
 	Q_UNUSED(TcpAnswer);
 
-	QVariant TableName = CheckNullField("TableName", TcpMessage->Parameters),
-		Alias = CheckNullField("Alias", TcpMessage->Parameters);
+	QVariant TableName = CheckNullField("TableName", TcpMessage->Parameters);
 	if (!TableName.isValid())
 	{
+		return false;
+	}
+	QString TableNameString = TableName.toString();
+
+	PMetaTable *MetaTable = ISMetaData::Instance().GetMetaTable(TableNameString);
+	if (!MetaTable)
+	{
+		ErrorString = LANG("Carat.Error.Query.RecordDelete.TableNotExist").arg(TableNameString);
 		return false;
 	}
 
@@ -1293,7 +1301,7 @@ bool ISTcpWorker::RecordDelete(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	SqlIN.chop(1);
 
 	//Удаляем
-	ISQuery qDelete(ISDatabase::Instance().GetDB(DBConnectionName), "DELETE FROM " + TableName.toString() + " WHERE " + Alias.toString() + "_id IN(" + SqlIN + ")");
+	ISQuery qDelete(ISDatabase::Instance().GetDB(DBConnectionName), "DELETE FROM " + TableNameString + " WHERE " + MetaTable->Alias + "_id IN(" + SqlIN + ")");
 	if (!qDelete.Execute()) //Не удалось удалить
 	{
 		ErrorString = LANG("Carat.Error.Query.RecordDelete.Delete").arg(qDelete.GetErrorString());

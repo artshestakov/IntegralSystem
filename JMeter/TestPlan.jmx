@@ -119,7 +119,7 @@
           </elementProp>
           <elementProp name="RecordDelete_Objects" elementType="Argument">
             <stringProp name="Argument.name">RecordDelete_Objects</stringProp>
-            <stringProp name="Argument.value">1</stringProp>
+            <stringProp name="Argument.value">1,2</stringProp>
             <stringProp name="Argument.desc">Идентификаторы удаляемых записей</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
@@ -282,7 +282,9 @@ def MapRecordDelete =
 			Alias: vars.get(&quot;RecordDelete_Alias&quot;),
 			Objects:
 				[
-					1
+					1,//vars.get(&quot;RecordDelete_Objects&quot;)
+					2,
+					3
 				]
 		]
 ];
