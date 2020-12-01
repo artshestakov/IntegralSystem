@@ -84,6 +84,18 @@ ISNamespace::ApiMessageType ISTcp::GetMessageTypeByName(const QString &Name)
 	{
 		return ISNamespace::AMT_RecordDelete;
 	}
+	else if (Name == API_DISCUSSION_ADD)
+	{
+		return ISNamespace::AMT_DiscussionAdd;
+	}
+	else if (Name == API_DISCUSSION_EDIT)
+	{
+		return ISNamespace::AMT_DiscussionEdit;
+	}
+	else if (Name == API_DISCUSSION_COPY)
+	{
+		return ISNamespace::AMT_DiscussionCopy;
+	}
 	return ISNamespace::AMT_Unknown;
 }
 //-----------------------------------------------------------------------------

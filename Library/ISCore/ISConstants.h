@@ -157,6 +157,9 @@ const char API_USER_PASSWORD_RESET[] = "UserPasswordReset"; //Сброс пароля польз
 const char API_GET_RECORD_CALL[] = "GetRecordCall"; //Получить запись разговора
 const char API_GET_CLIENTS[] = "GetClients"; //Получить список подключенных клиентов
 const char API_RECORD_DELETE[] = "RecordDelete"; //Удалить запись
+const char API_DISCUSSION_ADD[] = "DiscussionAdd"; //Добавить обсуждение
+const char API_DISCUSSION_EDIT[] = "DiscussionEdit"; //Изменить обсуждение
+const char API_DISCUSSION_COPY[] = "DiscussionCopy"; //Скопировать обсуждение
 //CARAT_LOCAL_API--------------------------------------------------------------
 const char		CARAT_LOCAL_API_SHUTDOWN[] = "shutdown"; //Завершение работы
 //-----------------------------------------------------------------------------

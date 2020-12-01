@@ -117,10 +117,34 @@
             <stringProp name="Argument.desc">Алиас таблицы из которой будет происходить удаление</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
-          <elementProp name="RecordDelete_Objects" elementType="Argument">
-            <stringProp name="Argument.name">RecordDelete_Objects</stringProp>
-            <stringProp name="Argument.value">1,2</stringProp>
-            <stringProp name="Argument.desc">Идентификаторы удаляемых записей</stringProp>
+          <elementProp name="DiscussionAdd_TableName" elementType="Argument">
+            <stringProp name="Argument.name">DiscussionAdd_TableName</stringProp>
+            <stringProp name="Argument.value">_Users</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="DiscussionAdd_ObjectID" elementType="Argument">
+            <stringProp name="Argument.name">DiscussionAdd_ObjectID</stringProp>
+            <stringProp name="Argument.value">2</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="DiscussionAdd_Message" elementType="Argument">
+            <stringProp name="Argument.name">DiscussionAdd_Message</stringProp>
+            <stringProp name="Argument.value">Hello world!</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="DiscussionEdit_ID" elementType="Argument">
+            <stringProp name="Argument.name">DiscussionEdit_ID</stringProp>
+            <stringProp name="Argument.value">1</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="DiscussionEdit_Message" elementType="Argument">
+            <stringProp name="Argument.name">DiscussionEdit_Message</stringProp>
+            <stringProp name="Argument.value">123</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="DiscussionCopy_ID" elementType="Argument">
+            <stringProp name="Argument.name">DiscussionCopy_ID</stringProp>
+            <stringProp name="Argument.value">1</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
         </collectionProp>
@@ -280,15 +304,46 @@ def MapRecordDelete =
 		[
 			TableName: vars.get(&quot;RecordDelete_TableName&quot;),
 			Alias: vars.get(&quot;RecordDelete_Alias&quot;),
-			Objects:
-				[
-					1,//vars.get(&quot;RecordDelete_Objects&quot;)
-					2,
-					3
-				]
+			Objects: [1, 2, 3]
 		]
 ];
-vars.put(&quot;QueryRecordDelete&quot;, MapToString(MapRecordDelete));</stringProp>
+vars.put(&quot;QueryRecordDelete&quot;, MapToString(MapRecordDelete));
+
+//Добавить обсуждение
+def MapDiscussionAdd =
+[
+	Type: &quot;DiscussionAdd&quot;,
+	Parameters:
+		[
+			TableName: vars.get(&quot;DiscussionAdd_TableName&quot;),
+			ObjectID: vars.get(&quot;DiscussionAdd_ObjectID&quot;),
+			Message: vars.get(&quot;DiscussionAdd_Message&quot;)
+		]
+];
+vars.put(&quot;QueryDiscussionAdd&quot;, MapToString(MapDiscussionAdd));
+
+//Изменить обсуждение
+def MapDiscussionEdit =
+[
+	Type: &quot;DiscussionEdit&quot;,
+	Parameters:
+		[
+			ID: vars.get(&quot;DiscussionEdit_ID&quot;),
+			Message: vars.get(&quot;DiscussionEdit_Message&quot;)
+		]
+];
+vars.put(&quot;QueryDiscussionEdit&quot;, MapToString(MapDiscussionEdit));
+
+//Скопировать обсуждение
+def MapDiscussionCopy =
+[
+	Type: &quot;DiscussionCopy&quot;,
+	Parameters:
+		[
+			ID: vars.get(&quot;DiscussionCopy_ID&quot;)
+		]
+];
+vars.put(&quot;QueryDiscussionCopy&quot;, MapToString(MapDiscussionCopy));</stringProp>
           <stringProp name="scriptLanguage">groovy</stringProp>
         </JSR223Sampler>
         <hashTree/>
@@ -316,13 +371,49 @@ vars.put(&quot;QueryRecordDelete&quot;, MapToString(MapRecordDelete));</stringPr
           <stringProp name="ConfigTestElement.password"></stringProp>
         </TCPSampler>
         <hashTree/>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: RecordDelete" enabled="true">
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: RecordDelete" enabled="false">
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
           <stringProp name="TCPSampler.port"></stringProp>
           <boolProp name="TCPSampler.nodelay">false</boolProp>
           <stringProp name="TCPSampler.timeout"></stringProp>
           <stringProp name="TCPSampler.request">${QueryRecordDelete}</stringProp>
+          <boolProp name="TCPSampler.closeConnection">true</boolProp>
+          <stringProp name="ConfigTestElement.username"></stringProp>
+          <stringProp name="ConfigTestElement.password"></stringProp>
+        </TCPSampler>
+        <hashTree/>
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: DiscussionAdd" enabled="false">
+          <stringProp name="TCPSampler.server"></stringProp>
+          <boolProp name="TCPSampler.reUseConnection">true</boolProp>
+          <stringProp name="TCPSampler.port"></stringProp>
+          <boolProp name="TCPSampler.nodelay">false</boolProp>
+          <stringProp name="TCPSampler.timeout"></stringProp>
+          <stringProp name="TCPSampler.request">${QueryDiscussionAdd}</stringProp>
+          <boolProp name="TCPSampler.closeConnection">true</boolProp>
+          <stringProp name="ConfigTestElement.username"></stringProp>
+          <stringProp name="ConfigTestElement.password"></stringProp>
+        </TCPSampler>
+        <hashTree/>
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: DiscussionEdit" enabled="false">
+          <stringProp name="TCPSampler.server"></stringProp>
+          <boolProp name="TCPSampler.reUseConnection">true</boolProp>
+          <stringProp name="TCPSampler.port"></stringProp>
+          <boolProp name="TCPSampler.nodelay">false</boolProp>
+          <stringProp name="TCPSampler.timeout"></stringProp>
+          <stringProp name="TCPSampler.request">${QueryDiscussionEdit}</stringProp>
+          <boolProp name="TCPSampler.closeConnection">true</boolProp>
+          <stringProp name="ConfigTestElement.username"></stringProp>
+          <stringProp name="ConfigTestElement.password"></stringProp>
+        </TCPSampler>
+        <hashTree/>
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: DiscussionCopy" enabled="true">
+          <stringProp name="TCPSampler.server"></stringProp>
+          <boolProp name="TCPSampler.reUseConnection">true</boolProp>
+          <stringProp name="TCPSampler.port"></stringProp>
+          <boolProp name="TCPSampler.nodelay">false</boolProp>
+          <stringProp name="TCPSampler.timeout"></stringProp>
+          <stringProp name="TCPSampler.request">${QueryDiscussionCopy}</stringProp>
           <boolProp name="TCPSampler.closeConnection">true</boolProp>
           <stringProp name="ConfigTestElement.username"></stringProp>
           <stringProp name="ConfigTestElement.password"></stringProp>

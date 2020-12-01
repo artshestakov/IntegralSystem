@@ -125,6 +125,20 @@ static QString QS_CLIENT = PREPARE_QUERY("SELECT usrs_fio "
 										 "FROM _users "
 										 "WHERE usrs_id = :UserID");
 //-----------------------------------------------------------------------------
+static QString QI_DISCUSSION = PREPARE_QUERY("INSERT INTO _discussion(dson_tablename, dson_objectid, dson_message) "
+											 "VALUES(:TableName, :ObjectID, :Message) "
+											 "RETURNING dson_id");
+//-----------------------------------------------------------------------------
+static QString QU_DISCUSSION = PREPARE_QUERY("UPDATE _discussion SET "
+											 "dson_message = :Message "
+											 "WHERE dson_id = :DiscussionID");
+//-----------------------------------------------------------------------------
+static QString QI_DISCUSSION_COPY = PREPARE_QUERY("INSERT INTO _discussion(dson_tablename, dson_objectid, dson_message) "
+												  "SELECT dson_tablename, dson_objectid, dson_message "
+												  "FROM _discussion "
+												  "WHERE dson_id = :DiscussionID "
+												  "RETURNING dson_id");
+//-----------------------------------------------------------------------------
 ISTcpWorker::ISTcpWorker(const QString &db_host, int db_port, const QString &db_name, const QString &db_user, const QString &db_password)
 	: QObject(),
 	ErrorString(NO_ERROR_STRING),
@@ -266,6 +280,9 @@ void ISTcpWorker::Process()
 					case ISNamespace::AMT_GetRecordCall: Result = GetRecordCall(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_GetClients: Result = GetClients(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_RecordDelete: Result = RecordDelete(tcp_message, TcpAnswer); break;
+					case ISNamespace::AMT_DiscussionAdd: Result = DiscussionAdd(tcp_message, TcpAnswer); break;
+					case ISNamespace::AMT_DiscussionEdit: Result = DiscussionEdit(tcp_message, TcpAnswer); break;
+					case ISNamespace::AMT_DiscussionCopy: Result = DiscussionCopy(tcp_message, TcpAnswer); break;
 					}
 					PerfomanceMsec = ISAlgorithm::GetTickDiff(ISAlgorithm::GetTick(), TimePoint);
 				}
@@ -1319,6 +1336,83 @@ bool ISTcpWorker::RecordDelete(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	{
 		Protocol(UseriD, CONST_UID_PROTOCOL_DELETE_CASCADE_OBJECT, MetaTable->Name, MetaTable->LocalListName, ObjectID, QVariant());
 	}
+	return true;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::DiscussionAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+	QVariant TableName = CheckNullField("TableName", TcpMessage->Parameters),
+		ObjectID = CheckNullField("ObjectID", TcpMessage->Parameters),
+		Message = CheckNullField("Message", TcpMessage->Parameters);
+	if (!TableName.isValid() || !ObjectID.isValid() || !Message.isValid())
+	{
+		return false;
+	}
+
+	ISQuery qInsert(ISDatabase::Instance().GetDB(DBConnectionName), QI_DISCUSSION);
+	qInsert.BindValue(":TableName", TableName);
+	qInsert.BindValue(":ObjectID", ObjectID);
+	qInsert.BindValue(":Message", Message);
+	if (!qInsert.Execute()) //Ошибка вставки
+	{
+		ErrorString = LANG("Carat.Error.Query.DiscussionAdd.Insert").arg(qInsert.GetErrorString());
+		return false;
+	}
+
+	if (!qInsert.First()) //Ошибка перехода к возвращаемому значению
+	{
+		ErrorString = qInsert.GetErrorString();
+		return false;
+	}
+
+	TcpAnswer->Parameters["ID"] = qInsert.ReadColumn("dson_id");
+	return true;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::DiscussionEdit(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+	Q_UNUSED(TcpAnswer);
+
+	QVariant DiscussionID = CheckNullField("ID", TcpMessage->Parameters),
+		Message = CheckNullField("Message", TcpMessage->Parameters);
+	if (!DiscussionID.isValid() || !Message.isValid())
+	{
+		return false;
+	}
+
+	ISQuery qUpdate(ISDatabase::Instance().GetDB(DBConnectionName), QU_DISCUSSION);
+	qUpdate.BindValue(":Message", Message);
+	qUpdate.BindValue(":DiscussionID", DiscussionID);
+	if (!qUpdate.Execute()) //Не удалось обновить запись
+	{
+		ErrorString = LANG("Carat.Error.Query.DiscussionEdit.Update").arg(qUpdate.GetErrorString());
+		return false;
+	}
+	return true;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::DiscussionCopy(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+	QVariant DiscussionID = CheckNullField("ID", TcpMessage->Parameters);
+	if (!DiscussionID.isValid())
+	{
+		return false;
+	}
+
+	ISQuery qCopy(ISDatabase::Instance().GetDB(DBConnectionName), QI_DISCUSSION_COPY);
+	qCopy.BindValue(":DiscussionID", DiscussionID);
+	if (!qCopy.Execute()) //Не удалось создать копию
+	{
+		ErrorString = LANG("Carat.Error.Query.DiscussionCopy.Insert").arg(qCopy.GetErrorString());
+		return false;
+	}
+
+	if (!qCopy.First()) //Ошибка перехода к возвращаемому значению
+	{
+		ErrorString = qCopy.GetErrorString();
+		return false;
+	}
+	TcpAnswer->Parameters["ID"] = qCopy.ReadColumn("dson_id");
 	return true;
 }
 //-----------------------------------------------------------------------------

@@ -76,4 +76,10 @@
   <Local Name="Carat.Error.Query.RecordDelete.ToInt" Russian="Не удалось привести к целому числу один из идентификаторов."/>
   <Local Name="Carat.Error.Query.RecordDelete.Delete" Russian="Не удалось произвести удаление записей: %1"/>
 
+  <Local Name="Carat.Error.Query.DiscussionAdd.Insert" Russian="Не удалось добавить обсуждение: %1"/>
+
+  <Local Name="Carat.Error.Query.DiscussionEdit.Update" Russian="Не удалось изменить сообщение: %1"/>
+
+  <Local Name="Carat.Error.Query.DiscussionCopy.Insert" Russian="Не удалось скопировать сообщение: %1"/>
+
 </LANG>
