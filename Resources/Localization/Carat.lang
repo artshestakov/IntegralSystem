@@ -39,6 +39,7 @@
   <Local Name="Carat.Error.Query.GetMetaData.SettingsGroup" Russian="Не удалось получить группы настроек: %1"/>
   <Local Name="Carat.Error.Query.GetMetaData.SettingsUser" Russian="Не удалось получить настроки пользователя: %1"/>
   <Local Name="Carat.Error.Query.GetMetaData.Paragraph" Russian="Не удалось получить параграфы: %1"/>
+  <Local Name="Carat.Error.Query.GetMetaData.FileXSN" Russian="Не удалось открыть файл мета-данных &quot;%1&quot;: %2"/>
 
   <Local Name="Carat.Error.Query.GetLastClient.PathIsEmpty" Russian="На сервере не настроена директория хранения обновлений."/>
   <Local Name="Carat.Error.Query.GetLastClient.Other" Russian="Не удалось проверить наличие обновлений."/>

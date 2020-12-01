@@ -281,10 +281,11 @@ void ISTcpWorker::Process()
 				arg(tcp_message->ChunkCount).
 				arg(tcp_message->ParseMSec).
 				arg(PerfomanceMsec);
-			if (!Result) //Запрос выполнен с ошибкой - устанавливаем текст ошибки в ответе и лог-сообщении
+			if (!Result) //Запрос выполнен с ошибкой - устанавливаем текст ошибки в ответе и лог-сообщении, а так же очищаем потенциально не пустые параметры ответа
 			{
 				TcpAnswer->SetError(ErrorString);
 				LogText.append("\nError string: " + ErrorString);
+				TcpAnswer->Parameters.clear();
 			}
 
 			//Удаляем сообщение, логируемся, добавляем ответ в очередь ответов и завершаем работу
@@ -899,6 +900,23 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 		return false;
 	}
 
+	//Читаем мета-данные
+	QVariantList MetaDataList;
+	QStringList Filter("*.xsn"); //Фильтр
+	QFileInfoList FileInfoList = QDir(":Scheme").entryInfoList(Filter, QDir::NoFilter, QDir::Name); //Загрузка мета-данных движка
+	FileInfoList.append(QDir(":_" + ISVersionInfo::Instance().ConfigurationInfo.Name).entryInfoList(Filter, QDir::NoFilter, QDir::Name)); //Загрузка мета-данных конфигурации
+	for (const QFileInfo &FileInfo : FileInfoList) //Обход всех XSN файлов
+	{
+		QFile FileXSN(FileInfo.filePath());
+		if (!FileXSN.open(QIODevice::ReadOnly)) //Не удалось открыть файл на чтение - выходим с ошибкой
+		{
+			ErrorString = LANG("Carat.Error.Query.GetMetaData.FileXSN").arg(FileInfo.fileName()).arg(FileXSN.errorString());
+			return false;
+		}
+		MetaDataList.append(FileXSN.readAll());
+		FileXSN.close();
+	}
+	TcpAnswer->Parameters["MetaData"] = MetaDataList;
 	return true;
 }
 //-----------------------------------------------------------------------------
