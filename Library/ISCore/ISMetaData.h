@@ -82,6 +82,8 @@ private:
     QString CurrentXSF; //Текущий обрабатываемый XSF
     bool Initialized; //Флаг инициализации
     std::vector<ISMetaDataType> VectorTypes; //Перечисление типов системы
+
+	ISCriticalSection CriticalSection;
 };
 //-----------------------------------------------------------------------------
 #endif

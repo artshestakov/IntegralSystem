@@ -45,6 +45,7 @@ ISMetaData::ISMetaData()
 		{ "Sex", ISNamespace::FT_Sex, "BIGINT", "ISSexEdit", "ISComboSearchNumber", true },
 		{ "TaskImportant", ISNamespace::FT_TaskImportant, "BOOLEAN", "ISTaskImportantEdit", "ISComboSearchBase", true }
 	};
+	CRITICAL_SECTION_INIT(&CriticalSection);
 }
 //-----------------------------------------------------------------------------
 ISMetaData::~ISMetaData()
@@ -53,6 +54,7 @@ ISMetaData::~ISMetaData()
 	{
 		delete ISAlgorithm::VectorTakeBack(Resources);
 	}
+	CRITICAL_SECTION_DESTROY(&CriticalSection);
 }
 //-----------------------------------------------------------------------------
 ISMetaData& ISMetaData::Instance()
@@ -129,12 +131,15 @@ bool ISMetaData::Initialize(const QVariantList &VariantList)
 //-----------------------------------------------------------------------------
 PMetaTable* ISMetaData::GetMetaTable(const QString &TableName)
 {
-	if (TablesMap.count(TableName))
+	PMetaTable *MetaTable = nullptr;
+	CRITICAL_SECTION_LOCK(&CriticalSection);
+	std::map<QString, PMetaTable *>::const_iterator It = TablesMap.find(TableName);
+	if (It != TablesMap.end())
 	{
-		return TablesMap[TableName];
+		MetaTable = It->second;
 	}
-	IS_ASSERT(false, QString("Not found meta table \"" + TableName + "\""));
-	return nullptr;
+	CRITICAL_SECTION_UNLOCK(&CriticalSection);
+	return MetaTable;
 }
 //-----------------------------------------------------------------------------
 PMetaField* ISMetaData::GetMetaField(PMetaTable *MetaTable, const QString &FieldName)
