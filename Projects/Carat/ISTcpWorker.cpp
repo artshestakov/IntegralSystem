@@ -335,12 +335,12 @@ QVariant ISTcpWorker::CheckNullField(const QString &FieldName, const QVariantMap
 		}
 		else
 		{
-			ErrorString = "field \"" + FieldName + "\" is empty";
+			ErrorString = LANG("Carat.Error.FieldIsEmpty").arg(FieldName);
 		}
 	}
 	else
 	{
-		ErrorString = "field \"" + FieldName + "\" not exist";
+		ErrorString = LANG("Carat.Error.FieldNotExist").arg(FieldName);
 	}
 	return QVariant();
 }
