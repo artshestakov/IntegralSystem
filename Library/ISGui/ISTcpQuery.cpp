@@ -62,21 +62,19 @@ bool ISTcpQuery::Execute()
 	}
 
 	//Получаем сокет и отправляем на него запрос
-	ISLOGGER_I(__CLASS__, "Sending query...");
+	ISLOGGER_I(__CLASS__, "Sending...");
 	QTcpSocket *TcpSocket = ISTcpConnector::Instance().GetSocket();
 	if (TcpSocket->write(ByteArray) != ByteArray.size())
 	{
 		ErrorString = TcpSocket->errorString();
-		ISLOGGER_E(__CLASS__, "Error sending: " + ErrorString);
+		ISLOGGER_E(__CLASS__, ErrorString);
 		return false;
 	}
 	ISTcp::WaitForBytesWritten(TcpSocket); //Ждём пока данные уйдут
-	ISLOGGER_I(__CLASS__, "Sended");
+	ISLOGGER_I(__CLASS__, "Sended. Wait answer...");
 
 	ByteArray.clear();
 	int AnswerSize = 0;
-
-	ISLOGGER_I(__CLASS__, "Wait answer...");
 	while (true) //Ждём пока не придёт ответ
 	{
 		ISSleep(1);
@@ -108,19 +106,24 @@ bool ISTcpQuery::Execute()
 	bool Result = IsValidAnswer(ByteArray, TcpAnswer);
 	if (Result) //Ответ валиден
 	{
+		ISLOGGER_I(__CLASS__, "Validated answer");
+
 		//Проверяем запрос на ошибку
 		Result = !TcpAnswer["IsError"].toBool();
 		if (Result)
 		{
 			TcpAnswer = TcpAnswer["Parameters"].toMap();
+			ISLOGGER_I(__CLASS__, "Query success");
 		}
 		else
 		{
 			ErrorString = TcpAnswer["ErrorString"].toString();
+			ISLOGGER_E(__CLASS__, "Query failed: " + ErrorString);
 		}
 	}
 	else //Ответ невалидный - очищаем структуру ответа (вдруг там что-то есть)
 	{
+		ISLOGGER_E(__CLASS__, "Not validated answer: " + ErrorString);
 		TcpAnswer.clear();
 	}
 	Parameters.clear(); //Очищаем список параметров запроса
