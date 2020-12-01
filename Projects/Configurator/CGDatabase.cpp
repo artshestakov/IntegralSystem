@@ -91,7 +91,7 @@ bool CGDatabase::Foreign_Create(PMetaForeign *MetaForeign, QString &ErrorString)
 	SqlText += "ALTER TABLE public." + MetaTable->Name.toLower() + " \n";
 	SqlText += "ADD CONSTRAINT " + MetaForeign->GetName() + " FOREIGN KEY (" + MetaTable->Alias + '_' + MetaForeign->Field.toLower() + ") \n";
 	SqlText += "REFERENCES public." + MetaTableForeign->Name.toLower() + '(' + MetaTableForeign->Alias.toLower() + '_' + MetaForeign->ForeignField.toLower() + ") \n";
-	SqlText += "ON DELETE CASCADE \n";
+	SqlText += "ON DELETE SET NULL \n";
 	SqlText += "ON UPDATE NO ACTION \n";
 	SqlText += "NOT DEFERRABLE;";
 
