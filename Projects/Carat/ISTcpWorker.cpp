@@ -337,7 +337,7 @@ void ISTcpWorker::Protocol(int UserID, const ISUuid &ActionTypeUID, const QVaria
 	qProtocol->BindValue(":ObjectID", ObjectID);
 	qProtocol->BindValue(":TableLocalName", TableLocalName);
 	qProtocol->BindValue(":Information", Information);
-	if (!qProtocol->Execute())
+	if (!qProtocol->Execute()) //Не удалось добавить запись в протокол
 	{
 		ISLOGGER_E(__CLASS__, "Not insert protocol: " + qProtocol->GetErrorString());
 	}
@@ -1311,6 +1311,13 @@ bool ISTcpWorker::RecordDelete(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	{
 		ErrorString = LANG("Carat.Error.Query.RecordDelete.Delete").arg(qDelete.GetErrorString());
 		return false;
+	}
+
+	//Протоколируем
+	int UseriD = TcpMessage->TcpSocket->GetUserID();
+	for (const QVariant &ObjectID : Objects)
+	{
+		Protocol(UseriD, CONST_UID_PROTOCOL_DELETE_CASCADE_OBJECT, MetaTable->Name, MetaTable->LocalListName, ObjectID, QVariant());
 	}
 	return true;
 }
