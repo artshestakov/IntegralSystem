@@ -19,6 +19,7 @@ public:
 
     QString GetErrorString() const;
     bool Initialize(const QString &configuration_name, bool InitXSR, bool InitXSF); //Инициализация
+	bool Initialize(const QVariantList &VariantList); //Инициализация
 
     PMetaTable* GetMetaTable(const QString &TableName); //Получить мета-таблицу по имени
     PMetaField* GetMetaField(PMetaTable *MetaTable, const QString &FieldName); //Получить мета-поле из указанной таблицы

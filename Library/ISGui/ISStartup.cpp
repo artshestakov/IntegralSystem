@@ -191,13 +191,6 @@ bool ISStartup::StartupOld(ISSplashScreen *SplashScreen)
 //-----------------------------------------------------------------------------
 bool ISStartup::StartupNew(ISSplashScreen *SplashScreen)
 {
-	//Инициализация мета-данных
-	if (!ISMetaData::Instance().Initialize(ISVersionInfo::Instance().ConfigurationInfo.Name, false, false))
-	{
-		ISMessageBox::ShowCritical(SplashScreen, LANG("Message.Error.InitializeMetaData"), ISMetaData::Instance().GetErrorString());
-		return false;
-	}
-
 	ISTcpQuery qAuth(API_GET_META_DATA);
 	if (!qAuth.Execute()) //Не удалось получить мета-данные - выходим с ошибкой
 	{
@@ -218,6 +211,11 @@ bool ISStartup::StartupNew(ISSplashScreen *SplashScreen)
 	ISParagraphEntity::Instance().Initialize(qAuth.GetAnswer()["Paragraphs"].toList());
 	ISObjects::Instance().GetInterface()->BeforeShowMainWindow();
 	PROPERTY_SET(PROPERTY_LINE_EDIT_SELECTED_MENU, SETTING_BOOL(CONST_UID_SETTING_OTHER_SELECTED_MENU)); //Устанавливаем свойство для настройки {3AD4888F-EDC7-4D69-A97F-F9678B6AAC44}
+	if (!ISMetaData::Instance().Initialize(qAuth.GetAnswer()["MetaData"].toList())) //Не удалось проинициализировать мета-данные
+	{
+		ISMessageBox::ShowCritical(SplashScreen, LANG("Message.Error.InitializeMetaData"), ISMetaData::Instance().GetErrorString());
+		return false;
+	}
 	return true;
 }
 //-----------------------------------------------------------------------------

@@ -115,6 +115,18 @@ bool ISMetaData::Initialize(const QString &configuration_name, bool InitXSR, boo
 	return Result;
 }
 //-----------------------------------------------------------------------------
+bool ISMetaData::Initialize(const QVariantList &VariantList)
+{
+	for (const QVariant &Content : VariantList)
+	{
+		if (!InitializeXSN(Content.toString()))
+		{
+			return false;
+		}
+	}
+	return true;
+}
+//-----------------------------------------------------------------------------
 PMetaTable* ISMetaData::GetMetaTable(const QString &TableName)
 {
 	if (TablesMap.count(TableName))
