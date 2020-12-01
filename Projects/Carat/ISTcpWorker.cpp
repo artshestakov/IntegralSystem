@@ -263,6 +263,7 @@ void ISTcpWorker::Process()
 					case ISNamespace::AMT_UserPasswordReset: Result = UserPasswordReset(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_GetRecordCall: Result = GetRecordCall(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_GetClients: Result = GetClients(tcp_message, TcpAnswer); break;
+					case ISNamespace::AMT_RecordDelete: Result = RecordDelete(tcp_message, TcpAnswer); break;
 					}
 					PerfomanceMsec = ISAlgorithm::GetTickDiff(ISAlgorithm::GetTick(), TimePoint);
 				}
@@ -1255,6 +1256,49 @@ bool ISTcpWorker::GetClients(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 		return false;
 	}
 	TcpAnswer->Parameters["Clients"] = VariantList;
+	return true;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::RecordDelete(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+	Q_UNUSED(TcpAnswer);
+
+	QVariant TableName = CheckNullField("TableName", TcpMessage->Parameters),
+		Alias = CheckNullField("Alias", TcpMessage->Parameters);
+	if (!TableName.isValid())
+	{
+		return false;
+	}
+
+	//Проверяем наличие идентификаторов
+	QVariantList Objects = TcpMessage->Parameters["Objects"].toList();
+	if (Objects.isEmpty())
+	{
+		ErrorString = LANG("Carat.Error.Query.RecordDelete.NotSpecifiedID");
+		return false;
+	}
+
+	//Формируем конструкцию IN для условия WHERE
+	bool Ok = true;
+	QString SqlIN;
+	for (const QVariant &ID : Objects)
+	{
+		SqlIN += QString::number(ID.toInt(&Ok)) + SYMBOL_COMMA;
+		if (!Ok) //Не удалось привести к числу
+		{
+			ErrorString = LANG("Carat.Error.Query.RecordDelete.ToInt");
+			return false;
+		}
+	}
+	SqlIN.chop(1);
+
+	//Удаляем
+	ISQuery qDelete(ISDatabase::Instance().GetDB(DBConnectionName), "DELETE FROM " + TableName.toString() + " WHERE " + Alias.toString() + "_id IN(" + SqlIN + ")");
+	if (!qDelete.Execute()) //Не удалось удалить
+	{
+		ErrorString = LANG("Carat.Error.Query.RecordDelete.Delete").arg(qDelete.GetErrorString());
+		return false;
+	}
 	return true;
 }
 //-----------------------------------------------------------------------------

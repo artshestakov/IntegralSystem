@@ -156,6 +156,7 @@ const char API_USER_PASSWORD_EDIT[] = "UserPasswordEdit"; //Изменение пароля пол
 const char API_USER_PASSWORD_RESET[] = "UserPasswordReset"; //Сброс пароля пользователя
 const char API_GET_RECORD_CALL[] = "GetRecordCall"; //Получить запись разговора
 const char API_GET_CLIENTS[] = "GetClients"; //Получить список подключенных клиентов
+const char API_RECORD_DELETE[] = "RecordDelete"; //Удалить запись
 //CARAT_LOCAL_API--------------------------------------------------------------
 const char		CARAT_LOCAL_API_SHUTDOWN[] = "shutdown"; //Завершение работы
 //-----------------------------------------------------------------------------

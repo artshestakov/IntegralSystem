@@ -71,4 +71,8 @@
   <Local Name="Carat.Error.Query.GetClients.Select" Russian="Не удалось получить информацию по пользователю с кодом %1."/>
   <Local Name="Carat.Error.Query.GetClients.UserNotExist" Russian="Пользователь с идентификатором %1 не существует."/>
 
+  <Local Name="Carat.Error.Query.RecordDelete.NotSpecifiedID" Russian="Вы не указали список идентификаторов записей."/>
+  <Local Name="Carat.Error.Query.RecordDelete.ToInt" Russian="Не удалось привести к целому числу один из идентификаторов."/>
+  <Local Name="Carat.Error.Query.RecordDelete.Delete" Russian="Не удалось произвести удаление записей: %1"/>
+
 </LANG>

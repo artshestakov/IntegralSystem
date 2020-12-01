@@ -105,6 +105,24 @@
             <stringProp name="Argument.metadata">=</stringProp>
             <stringProp name="Argument.desc">Код записи разговора из статистики</stringProp>
           </elementProp>
+          <elementProp name="RecordDelete_TableName" elementType="Argument">
+            <stringProp name="Argument.name">RecordDelete_TableName</stringProp>
+            <stringProp name="Argument.value">_Protocol</stringProp>
+            <stringProp name="Argument.desc">Имя таблицы из которой будет происходить удаление</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="RecordDelete_Alias" elementType="Argument">
+            <stringProp name="Argument.name">RecordDelete_Alias</stringProp>
+            <stringProp name="Argument.value">prtc</stringProp>
+            <stringProp name="Argument.desc">Алиас таблицы из которой будет происходить удаление</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="RecordDelete_Objects" elementType="Argument">
+            <stringProp name="Argument.name">RecordDelete_Objects</stringProp>
+            <stringProp name="Argument.value">1</stringProp>
+            <stringProp name="Argument.desc">Идентификаторы удаляемых записей</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
         </collectionProp>
       </Arguments>
       <hashTree/>
@@ -252,7 +270,23 @@ def MapGetClients =
 [
 	Type: &quot;GetClients&quot;
 ];
-vars.put(&quot;QueryGetClients&quot;, MapToString(MapGetClients));</stringProp>
+vars.put(&quot;QueryGetClients&quot;, MapToString(MapGetClients));
+
+//Удаление записей
+def MapRecordDelete =
+[
+	Type: &quot;RecordDelete&quot;,
+	Parameters:
+		[
+			TableName: vars.get(&quot;RecordDelete_TableName&quot;),
+			Alias: vars.get(&quot;RecordDelete_Alias&quot;),
+			Objects:
+				[
+					1
+				]
+		]
+];
+vars.put(&quot;QueryRecordDelete&quot;, MapToString(MapRecordDelete));</stringProp>
           <stringProp name="scriptLanguage">groovy</stringProp>
         </JSR223Sampler>
         <hashTree/>
@@ -268,13 +302,25 @@ vars.put(&quot;QueryGetClients&quot;, MapToString(MapGetClients));</stringProp>
           <stringProp name="ConfigTestElement.password"></stringProp>
         </TCPSampler>
         <hashTree/>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: GetClients" enabled="true">
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: GetClients" enabled="false">
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
           <stringProp name="TCPSampler.port"></stringProp>
           <boolProp name="TCPSampler.nodelay">false</boolProp>
           <stringProp name="TCPSampler.timeout"></stringProp>
           <stringProp name="TCPSampler.request">${QueryGetClients}</stringProp>
+          <boolProp name="TCPSampler.closeConnection">true</boolProp>
+          <stringProp name="ConfigTestElement.username"></stringProp>
+          <stringProp name="ConfigTestElement.password"></stringProp>
+        </TCPSampler>
+        <hashTree/>
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: RecordDelete" enabled="true">
+          <stringProp name="TCPSampler.server"></stringProp>
+          <boolProp name="TCPSampler.reUseConnection">true</boolProp>
+          <stringProp name="TCPSampler.port"></stringProp>
+          <boolProp name="TCPSampler.nodelay">false</boolProp>
+          <stringProp name="TCPSampler.timeout"></stringProp>
+          <stringProp name="TCPSampler.request">${QueryRecordDelete}</stringProp>
           <boolProp name="TCPSampler.closeConnection">true</boolProp>
           <stringProp name="ConfigTestElement.username"></stringProp>
           <stringProp name="ConfigTestElement.password"></stringProp>
