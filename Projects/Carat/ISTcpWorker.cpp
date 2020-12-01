@@ -2,14 +2,12 @@
 #include "ISAlgorithm.h"
 #include "ISDatabase.h"
 #include "ISLogger.h"
-#include "ISQuery.h"
 #include "ISLocalization.h"
 #include "ISSystem.h"
 #include "ISTrace.h"
 #include "ISTcpQueue.h"
 #include "ISVersionInfo.h"
 #include "ISConfig.h"
-#include "ISQueryPool.h"
 #include "ISTcpClients.h"
 #include "ISMetaData.h"
 //-----------------------------------------------------------------------------
@@ -183,6 +181,8 @@ void ISTcpWorker::Run()
 		ISLOGGER_E(__CLASS__, "Not connected to database: " + ISDatabase::Instance().GetErrorString());
 	}
 
+	qProtocol = new ISQuery(ISDatabase::Instance().GetDB(DBConnectionName), QI_PROTOCOL);
+
 	//Сигналим об успехе или ошибке
 	emit IsStarted ? StartedDone() : StartedFailed();
 	if (IsStarted)
@@ -220,6 +220,7 @@ void ISTcpWorker::Process()
 		if (is_stopped) //Если флаг остановки установлен - выходим из цикла
 		{
 			ISLOGGER_I(__CLASS__, QString("Stopping %1...").arg(DBConnectionName));
+			delete qProtocol;
 			ISDatabase::Instance().Disconnect(DBConnectionName);
 			break;
 		}
@@ -327,18 +328,19 @@ QVariant ISTcpWorker::CheckNullField(const QString &FieldName, const QVariantMap
 	return QVariant();
 }
 //-----------------------------------------------------------------------------
-void ISTcpWorker::Protocol(int UserID, const ISUuid &ActionTypeUID, const QString &TableName, const QString &TableLocalName, const QVariant &ObjectID, const QString &Information)
+void ISTcpWorker::Protocol(int UserID, const ISUuid &ActionTypeUID, const QVariant &TableName, const QVariant &TableLocalName, const QVariant &ObjectID, const QVariant &Information)
 {
-	ISQueryPool::Instance().AddQuery(QI_PROTOCOL, ISStringToVariantMap
+	qProtocol->BindValue(":CreationDate", QDateTime::currentDateTime());
+	qProtocol->BindValue(":CreationUser", UserID);
+	qProtocol->BindValue(":TableName", TableName);
+	qProtocol->BindValue(":TypeUID", ActionTypeUID);
+	qProtocol->BindValue(":ObjectID", ObjectID);
+	qProtocol->BindValue(":TableLocalName", TableLocalName);
+	qProtocol->BindValue(":Information", Information);
+	if (!qProtocol->Execute())
 	{
-		{ ":CreationDate", QDateTime::currentDateTime() },
-		{ ":CreationUser", UserID },
-		{ ":TableName", TableName },
-		{ ":TypeUID", ActionTypeUID },
-		{ ":ObjectID", ObjectID },
-		{ ":TableLocalName", TableLocalName },
-		{ ":Information", Information }
-	});
+		ISLOGGER_E(__CLASS__, "Not insert protocol: " + qProtocol->GetErrorString());
+	}
 }
 //-----------------------------------------------------------------------------
 void ISTcpWorker::UserPasswordChange(const QVariant &UserID, const ISUuid &ChangeTypeUID)
@@ -495,7 +497,7 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 		}
 	}
 
-	//Отдаём информацию о пользователе и выходим из функции
+	//Отдаём информацию о пользователе и конфигурации
 	TcpAnswer->Parameters["UserID"] = UserID;
 	TcpAnswer->Parameters["UserIsSystem"] = IsSystem;
 	TcpAnswer->Parameters["UserFIO"] = UserFIO;
@@ -518,6 +520,9 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 		UserID,
 		TcpMessage->TcpSocket->peerAddress().toString(),
 		TcpMessage->TcpSocket->peerPort());
+
+	//Протоколируем и выходим
+	Protocol(UserID, CONST_UID_PROTOCOL_ENTER_APPLICATION, QVariant(), QVariant(), QVariant(), QVariant());
 	return true;
 }
 //-----------------------------------------------------------------------------

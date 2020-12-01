@@ -7,6 +7,7 @@
 #include "ISTcpAnswer.h"
 #include "ISTypedefs.h"
 #include "ISStructs.h"
+#include "ISQuery.h"
 //-----------------------------------------------------------------------------
 class ISTcpWorker : public QObject
 {
@@ -31,7 +32,7 @@ private:
 	void Process();
 	void Finish(); //Уведомление о завершении работы воркера
 	QVariant CheckNullField(const QString &FieldName, const QVariantMap &VariantMap); //Проверка наличия поля
-	void Protocol(int UserID, const ISUuid &ActionTypeUID, const QString &TableName, const QString &TableLocalName, const QVariant &ObjectID, const QString &Information); //Протоколирование действия
+	void Protocol(int UserID, const ISUuid &ActionTypeUID, const QVariant &TableName, const QVariant &TableLocalName, const QVariant &ObjectID, const QVariant &Information); //Протоколирование действия
 	void UserPasswordChange(const QVariant &UserID, const ISUuid &ChangeTypeUID); //Фиксирование изменения пароля пользователя
 
 private:
@@ -56,6 +57,7 @@ private:
 	QString DBUser;
 	QString DBPassword;
 	bool IsStarted; //Флаг успешного запуска воркера
+	ISQuery *qProtocol;
 	bool IsRunning; //Флаг занятости воркера
 	ISTcpMessage *CurrentMessage; //Указатель на текущее сообщение
 	bool IsStopped; //Флаг остановки работы воркера
