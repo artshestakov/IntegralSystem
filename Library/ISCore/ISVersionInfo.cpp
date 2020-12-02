@@ -17,7 +17,7 @@ ISVersionInfo::ISVersionInfo()
 	Configurations = std::map<QString, ISConfigurationInfo>
 	{
 		{ "Empty", { "{20DA4E7C-5843-49E1-9D87-2FF279EEF0FF}", QString(), QString(), QString(), QDate(), QString() } },
-		{ "OilSphere", { "{B2003F73-0DD2-4359-AC96-FA7CABB53049}", QString(), QString::fromLocal8Bit("ООО «Нефтесфера»"), QString(), QDate(2020, 12, 31), "Logo.png" } }
+		{ "OilSphere", { "{B2003F73-0DD2-4359-AC96-FA7CABB53049}", QString(), "Configuration.OilSphere", QString(), QDate(2020, 12, 31), "Logo.png" } }
 	};
 }
 //-----------------------------------------------------------------------------

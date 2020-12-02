@@ -244,7 +244,7 @@ void ISAuthForm::InputNew()
 		ISMetaUser::Instance().UserData.GroupFullAccess = AnswerMap["UserGroupFullAccess"].toBool();
 		ISVersionInfo::Instance().ConfigurationInfo.UID = AnswerMap["Configuration"].toMap()["UID"];
 		ISVersionInfo::Instance().ConfigurationInfo.Name = AnswerMap["Configuration"].toMap()["Name"].toString();
-		ISVersionInfo::Instance().ConfigurationInfo.LocalName = AnswerMap["Configuration"].toMap()["Local"].toString();
+		ISVersionInfo::Instance().ConfigurationInfo.LocalName = LANG(AnswerMap["Configuration"].toMap()["Local"].toString());
 		ISVersionInfo::Instance().ConfigurationInfo.DesktopForm = AnswerMap["Configuration"].toMap()["Desktop"].toString();
 		ISVersionInfo::Instance().ConfigurationInfo.LogoName = AnswerMap["Configuration"].toMap()["Logo"].toString();
 		SetResult(true);

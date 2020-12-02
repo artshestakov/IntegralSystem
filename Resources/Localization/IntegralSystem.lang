@@ -8,6 +8,9 @@
 
   <Local Name="AboutFrameworkDeveloped" Russian="О фреймворке разработки"/>
 
+  <Local Name="Configuration.OilSphere" Russian="ООО «Нефтесфера»"/>
+  <Local Name="Configuration.Empty" Russian="Пустая конфигурация"/>
+
   <Local Name="SplashWidget.Buffer" Russian="Загрузка буфера..."/>
   <Local Name="SplashWidget.AdminRoles" Russian="Проверка прав..."/>
 
