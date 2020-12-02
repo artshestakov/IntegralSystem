@@ -50,8 +50,7 @@ std::string ISAlgorithm::GetClassName(const std::string &FunctionName)
     size_t Index = 0;
 
 #ifndef WIN32 //Если работаем сейчас под Linux - исключаем имя типа
-    Index = Result.find(SYMBOL_SPACE);
-    if (Index != NPOS)
+    while ((Index = Result.find(SYMBOL_SPACE)) != NPOS)
     {
         Result.erase(0, ++Index);
     }
