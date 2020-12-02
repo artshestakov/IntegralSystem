@@ -1,8 +1,8 @@
 #include "ISInterfaceDialogForm.h"
 #include "ISGui.h"
 //-----------------------------------------------------------------------------
-ISInterfaceDialogForm::ISInterfaceDialogForm(QWidget *parent)
-	: ISInterfaceForm(parent, Qt::Dialog | Qt::WindowCloseButtonHint),
+ISInterfaceDialogForm::ISInterfaceDialogForm(bool HideCloseWindow, QWidget *parent)
+	: ISInterfaceForm(parent, HideCloseWindow ? Qt::Dialog | Qt::WindowTitleHint : Qt::Dialog | Qt::WindowCloseButtonHint),
 	Result(false)
 {
 	connect(this, &ISInterfaceDialogForm::Accept, &EventLoop, &QEventLoop::quit);

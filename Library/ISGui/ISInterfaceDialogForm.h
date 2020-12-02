@@ -12,7 +12,7 @@ signals:
 	void Accept();
 
 public:
-	ISInterfaceDialogForm(QWidget *parent = 0);
+	ISInterfaceDialogForm(bool HideCloseWindow = false, QWidget *parent = 0);
 	virtual ~ISInterfaceDialogForm();
 	
 	virtual bool Exec();
