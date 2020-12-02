@@ -147,7 +147,7 @@ bool CGConfiguratorShow::databaseinfo()
 		QString SqlQueryCount = "WITH r AS(\n";
 		for (PMetaTable *MetaTable : ISMetaData::Instance().GetTables())
 		{
-			SqlQueryCount += QString("SELECT COUNT(*), '%1' FROM %1\nUNION\n").arg(MetaTable->Name);
+			SqlQueryCount += QString("SELECT COUNT(*) FROM %1\nUNION\n").arg(MetaTable->Name);
 		}
 		SqlQueryCount.chop(6);
 		SqlQueryCount += ") SELECT sum(count) FROM r";
