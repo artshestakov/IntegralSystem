@@ -25,6 +25,8 @@
 #include "ISTcpConnector.h"
 #include "ISReconnectForm.h"
 #include "ISPopupMessage.h"
+#include "ISTcpQuery.h"
+#include "ISSystem.h"
 //-----------------------------------------------------------------------------
 ISMainWindow::ISMainWindow(QWidget *parent)
 	: ISInterfaceForm(parent),
@@ -212,16 +214,27 @@ void ISMainWindow::Reconnect()
 	SetVisibleShadow(true);
 	ISReconnectForm ReconnectForm;
 	bool Result = ReconnectForm.Exec();
-	SetVisibleShadow(false);
-	if (Result)
+	if (Result) //Переподключение прошло успешно - посылаем запрос на авторизацию
 	{
-		ISPopupMessage::ShowNotification(LANG("ReconnectingDone"));
+		ISTcpQuery qReAuth(API_AUTH);
+		qReAuth.BindValue("Hash", ISSystem::StringToSha256(ISMetaUser::Instance().UserData.Login + ISMetaUser::Instance().UserData.Password + " "));
+		Result = qReAuth.Execute();
+		if (Result)
+		{
+			ISPopupMessage::ShowNotification(LANG("ReconnectingDone"));
+		}
+		else
+		{
+			ISMessageBox::ShowCritical(this, qReAuth.GetErrorString());
+		}
 	}
-	else
+	
+	if (!Result) //Переподключения не произошло - выходим из программы
 	{
 		ExitConfirm = false;
 		ExistCheckModifie = false;
 		close();
 	}
+	SetVisibleShadow(false);
 }
 //-----------------------------------------------------------------------------
