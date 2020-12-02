@@ -45,12 +45,13 @@ bool ISTcpConnector::Connect(const QString &Host, quint16 Port)
 		return true;
 	}
 
-	//ѕытаемс€ подключитьс€
-	TcpSocket->connectToHost(Host, Port, QIODevice::ReadWrite, QAbstractSocket::IPv4Protocol);
-
+	//ќбъ€вл€ем таумауты
 	size_t Timeout = CARAT_CONNECT_TIMEOUT,
 		SleepTime = CARAT_CONNECT_SLEEP;
-	while (!IsConnected()) //∆дЄм пока не подключимс€
+
+	//ѕытаемс€ подключитьс€ и ждЄм пока не подключимс€
+	TcpSocket->connectToHost(Host, Port, QIODevice::ReadWrite, QAbstractSocket::IPv4Protocol);
+	while (!IsConnected())
 	{
 		Timeout -= SleepTime;
 		ISSleep(SleepTime);
@@ -84,6 +85,7 @@ void ISTcpConnector::StateChanged(QAbstractSocket::SocketState socket_state)
 {
 	if (socket_state == QAbstractSocket::UnconnectedState) //—оединение отвалилось - предлагаем переподключитьс€
 	{
+		disconnect(TcpSocket, &QTcpSocket::stateChanged, this, &ISTcpConnector::StateChanged);
 		ErrorString = TcpSocket->errorString();
 		emit RemoteHostClose();
 	}

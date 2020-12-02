@@ -21,10 +21,15 @@
 #include "ISAlgorithm.h"
 #include "ISProperty.h"
 #include "ISVersionInfo.h"
+#include "ISConfig.h"
+#include "ISTcpConnector.h"
+#include "ISReconnectForm.h"
+#include "ISPopupMessage.h"
 //-----------------------------------------------------------------------------
 ISMainWindow::ISMainWindow(QWidget *parent)
 	: ISInterfaceForm(parent),
 	ExitConfirm(true),
+	ExistCheckModifie(true),
 	PropertyAnimation(nullptr)
 {
 	connect(&ISCreatedObjectsEntity::Instance(), &ISCreatedObjectsEntity::Existed, this, &ISMainWindow::ActivateWorkspace);
@@ -57,6 +62,11 @@ ISMainWindow::ISMainWindow(QWidget *parent)
 	{
 		Paragraphs[MetaParagraph->UID] = StackedWidget->addWidget(ISAlgorithm::CreatePointer<ISParagraphBaseForm *>(MetaParagraph->ClassName, Q_ARG(QWidget *, this)));
 	}
+
+	if (CONFIG_BOOL("Protocol/Include"))
+	{
+		connect(&ISTcpConnector::Instance(), &ISTcpConnector::RemoteHostClose, this, &ISMainWindow::Reconnect);
+	}
 }
 //-----------------------------------------------------------------------------
 ISMainWindow::~ISMainWindow()
@@ -66,22 +76,23 @@ ISMainWindow::~ISMainWindow()
 //-----------------------------------------------------------------------------
 void ISMainWindow::closeEvent(QCloseEvent *CloseEvent)
 {
-	if (ISCreatedObjectsEntity::Instance().CheckExistForms())
+	if (ExistCheckModifie) //ѕровер€ть наличие несохраненных записей
 	{
-		bool Answer = true;
-		if (ExitConfirm)
+		if (!ISCreatedObjectsEntity::Instance().CheckExistForms())
 		{
-			SetVisibleShadow(true);
-			Answer = ISMessageBox::ShowQuestion(this, LANG("Message.Question.ExitApplication"));
-			SetVisibleShadow(false);
+			CloseEvent->ignore();
 		}
-		//ѕри подтверждении выхода об€зательно вызывать quit(), иначе основной поток событий будет висеть и программа не закроетс€
-		Answer ? qApp->quit() : CloseEvent->ignore();
 	}
-	else
+	
+	bool Answer = true;
+	if (ExitConfirm) //“ребуетс€ подтверждение выхода
 	{
-		CloseEvent->ignore();
+		SetVisibleShadow(true);
+		Answer = ISMessageBox::ShowQuestion(this, LANG("Message.Question.ExitApplication"));
+		SetVisibleShadow(false);
 	}
+	//ѕри подтверждении выхода об€зательно вызывать quit(), иначе основной поток событий будет висеть и программа не закроетс€
+	Answer ? qApp->quit() : CloseEvent->ignore();
 }
 //-----------------------------------------------------------------------------
 void ISMainWindow::AfterShowEvent()
@@ -194,5 +205,23 @@ void ISMainWindow::ShowAboutQt()
 	SetVisibleShadow(true);
 	QApplication::aboutQt();
 	SetVisibleShadow(false);
+}
+//-----------------------------------------------------------------------------
+void ISMainWindow::Reconnect()
+{
+	SetVisibleShadow(true);
+	ISReconnectForm ReconnectForm;
+	bool Result = ReconnectForm.Exec();
+	SetVisibleShadow(false);
+	if (Result)
+	{
+		ISPopupMessage::ShowNotification(LANG("ReconnectingDone"));
+	}
+	else
+	{
+		ExitConfirm = false;
+		ExistCheckModifie = false;
+		close();
+	}
 }
 //-----------------------------------------------------------------------------

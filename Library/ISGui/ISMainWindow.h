@@ -33,6 +33,7 @@ private:
 	void ShowSettingsForm(); //Открыть форму "Настройки"
 	void ShowAboutForm(); //Открыть форму "О программе"
 	void ShowAboutQt(); //Открыть форму "О Qt"
+	void Reconnect(); //Вызов формы переподключения
 
 private:
 	ISMenuBar *MenuBar;
@@ -44,7 +45,8 @@ private:
 	ISCalendarForm *CalendarForm; //Виджет календаря
 	
 	QString CurrentParagraphUID;
-	bool ExitConfirm;
+	bool ExitConfirm; //Флаг подтверждения выхода
+	bool ExistCheckModifie; //Флаг проверки несохраненных объектов
 	QPropertyAnimation *PropertyAnimation;
 };
 //-----------------------------------------------------------------------------

@@ -454,6 +454,7 @@
   <Local Name="EnableHistoryTracking" Russian="Включить ведение истории"/>
   <Local Name="PasswordResetDone" Russian="Пароль был успешно сброшен"/>
   <Local Name="ThisActionIsNotReversible" Russian="Это действие не обратимо."/>
+  <Local Name="ReconnectingDone" Russian="Связь с сервером восстановлена!"/>
 
   <!--CalendarForm-->
   <Local Name="CalendarForm.CreateEvent" Russian="Создать событие"/>
@@ -464,6 +465,11 @@
   <Local Name="CalendarForm.Events" Russian="События"/>
   <Local Name="CalendarForm.EnteringSearchQuery" Russian="Введите поисковый запрос (F8)"/>
   <Local Name="CalendarForm.SearchResults" Russian="Результаты поиска"/>
+
+  <!--ReconnectForm-->
+  <Local Name="ReconnectForm.Title" Russian="Восстановление связи"/>
+  <Local Name="ReconnectForm.Info" Russian="Подключение прервано. Повторное соединение с сервером..."/>
+  <Local Name="ReconnectForm.Attempts" Russian="Попыток: %1"/>
 
   <!--Search-->
   <Local Name="Search" Russian="Поиск"/>

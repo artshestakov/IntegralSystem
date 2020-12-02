@@ -20,7 +20,7 @@
 #include "ISTcpQuery.h"
 //-----------------------------------------------------------------------------
 ISAuthForm::ISAuthForm()
-	: ISInterfaceDialogForm(),
+	: ISInterfaceDialogForm(true),
 	ConnectingState(false)
 {
 	setWindowTitle(LANG("InputInSystem"));

@@ -263,6 +263,7 @@
     <ClCompile Include="ISProgressForm.cpp" />
     <ClCompile Include="ISProtocolListForm.cpp" />
     <ClCompile Include="ISProtocolObjectListForm.cpp" />
+    <ClCompile Include="ISReconnectForm.cpp" />
     <ClCompile Include="ISRecordInfoForm.cpp" />
     <ClCompile Include="ISScrollArea.cpp" />
     <ClCompile Include="ISSearchForm.cpp" />
@@ -431,6 +432,7 @@
     <QtMoc Include="ISSettingsDatabaseListForm.h" />
     <QtMoc Include="ISTaskObjectForm.h" />
     <QtMoc Include="ISListViewForm.h" />
+    <QtMoc Include="ISReconnectForm.h" />
     <ClInclude Include="ISSearchModel.h" />
     <QtMoc Include="ISTcpConnector.h" />
     <ClInclude Include="ISTcpQuery.h" />
