@@ -11,11 +11,10 @@ ISMessageBox::ISMessageBox(ISMessageBox::Icon Icon, const QString &Title, const 
 	ClickedID(-1)
 {
 	setWindowIcon(BUFFER_ICONS("Logo"));
+	setTextFormat(Qt::PlainText);
+	setTextInteractionFlags(Qt::TextSelectableByMouse);
 	AddButtons(Buttons);
-	if (!DetailedText.isEmpty())
-	{
-		setInformativeText(DetailedText);
-	}
+	setText(DetailedText.isEmpty() ? Message : Message + "\n\n" + DetailedText);
 }
 //-----------------------------------------------------------------------------
 ISMessageBox::~ISMessageBox()
