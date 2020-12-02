@@ -97,6 +97,7 @@ const char SYMBOL_MINUS = '-'; //Символ "Минус"
 const char SYMBOL_COMMA = ','; //Символ "Запятая"
 const char SYMBOL_POINT = '.'; //Символ "Точка"
 const char SYMBOL_STAR = '*'; //Символ звездочка
+const char SYMBOL_NULL_TERM = '\0'; //Символ конца строки
 //DATABASE_CONNECTIONS---------------------------------------------------------
 const char CONNECTION_DEFAULT[] = "DefaultDB";
 const char CONNECTION_SYSTEM[] = "SystemDB";

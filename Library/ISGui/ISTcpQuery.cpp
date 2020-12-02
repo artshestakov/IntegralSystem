@@ -50,7 +50,7 @@ bool ISTcpQuery::Execute()
 				{ "Version", ISVersionInfo::Instance().ToStringVersion() }
 			}
 		}
-	}, QJsonDocument::Compact);
+	}, QJsonDocument::Compact) + SYMBOL_NULL_TERM;
 	ByteArray.insert(0, QString("%1.").arg(ByteArray.size()));
 
 	//Проверяем наличие соединения
@@ -94,10 +94,19 @@ bool ISTcpQuery::Execute()
 				}
 			}
 
-			if (ByteArray.size() == AnswerSize) //Запрос пришёл полностью - выходим из цикла
+			if (ByteArray[ByteArray.size() - 1] == SYMBOL_NULL_TERM) //Запрос пришёл полностью
 			{
-				ISLOGGER_I(__CLASS__, "Waited");
-				break;
+				//Сверяем размеры
+				if (ByteArray.size() == AnswerSize)
+				{
+					ISLOGGER_I(__CLASS__, "Waited");
+					break;
+				}
+				else
+				{
+					ISLOGGER_E(__CLASS__, QString("Invalid size. Declared size %1, read size %2").arg(AnswerSize).arg(ByteArray.size()));
+					return false;
+				}
 			}
 		}
 	}

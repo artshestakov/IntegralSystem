@@ -106,11 +106,20 @@ void ISTcpSocket::ReadyRead()
 		}
 	}
 
-	//»нкрементируем количество чанков и провер€ем, не пришло ли сообщение полностью - выходим если пришло не полностью
+	//»нкрементируем количество чанков и провер€ем, не пришло ли сообщение полностью
 	++ChunkCount;
-	if ((unsigned int)Buffer.size() != MessageSize)
+	if (Buffer[Buffer.size() - 1] != SYMBOL_NULL_TERM)
 	{
 		return;
+	}
+
+	//—ообщение пришло полностью, теперь свер€ем размер
+	//≈сли размеры отличаютс€, значит что-то не так и отключаем клиента принудительно
+	if ((unsigned int)Buffer.size() != MessageSize)
+	{
+		ISLOGGER_E(__CLASS__, QString("Invalid size. Declared size %1, read size %2").arg(MessageSize).arg(Buffer.size()));
+		abort();
+		ClearBuffer();
 	}
 
 	//ќстанавливаем таймер
