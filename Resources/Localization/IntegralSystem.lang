@@ -296,13 +296,6 @@
   <Local Name="ResetWidthColumn" Russian="Сброс ширины колонок"/>
   <Local Name="Creating" Russian="Создание"/>
   <Local Name="Coping" Russian="Создание копии"/>
-  <Local Name="Period" Russian="Период"/>
-  <Local Name="PeriodSelect" Russian="Выбрать"/>
-  <Local Name="PeriodCreate" Russian="Созданию"/>
-  <Local Name="PeriodUpdate" Russian="Изменению"/>
-  <Local Name="PeriodClear" Russian="Очистить"/>
-  <Local Name="PeriodLabelCreate" Russian="Созданные записи за период с %1 по %2"/>
-  <Local Name="PeriodLabelUpdate" Russian="Измененные записи за период с %1 по %2"/>
   <Local Name="Additionally" Russian="Дополнительно"/>
   <Local Name="SelectAllFields" Russian="Выбрать все поля"/>
   <Local Name="DeselectAllFields" Russian="Снять выбор со всех полей"/>
@@ -340,7 +333,6 @@
   <Local Name="InputNumberPage" Russian="Введите номер страницы"/>
   <Local Name="Send" Russian="Отправить"/>
   <Local Name="SelectedRecords" Russian="Выбрано записей"/>
-  <Local Name="SelectFrom" Russian="Выборка по"/>
   <Local Name="Age" Russian="Возраст"/>
   <Local Name="AgeNotSelected" Russian="Не указан"/>
   <Local Name="TimeAlert" Russian="Время уведомления"/>
@@ -618,13 +610,6 @@
   <Local Name="Date" Russian="Дата"/>
   <Local Name="Time" Russian="Время"/>
   <Local Name="Everyday" Russian="Каждый день"/>
-  <Local Name="Range.Date.Select" Russian="Выберите период..."/>
-  <Local Name="Range.Date.Today" Russian="Сегодня"/>
-  <Local Name="Range.Date.Yesterday" Russian="Вчера"/>
-  <Local Name="Range.Date.CurrentMonth" Russian="Текущий месяц"/>
-  <Local Name="Range.Date.PreviousMonth" Russian="Предыдущий месяц"/>
-  <Local Name="Range.Date.CurrentYear" Russian="Текущий год"/>
-  <Local Name="Range.Date.PreviousYear" Russian="Предыдущий год"/>
   <Local Name="Month.January" Russian="Январь"/>
   <Local Name="Month.February" Russian="Февраль"/>
   <Local Name="Month.March" Russian="Март"/>
@@ -649,10 +634,6 @@
   <Local Name="Minute_240" Russian="4 часа"/>
   <Local Name="Minute_300" Russian="5 часа"/>
   <Local Name="Minute_360" Russian="6 часа"/>
-
-  <!--FieldsRange-->
-  <Local Name="FieldRange.DateTime.Begin" Russian="с"/>
-  <Local Name="FieldRange.DateTime.End" Russian="до "/>
 
   <!--Context Menu-->
   <Local Name="ContextMenu.Undo" Russian="Отменить действие"/>

@@ -73,9 +73,6 @@ public:
 	void HideField(const QString &FieldName); //Скрытие поля по его имени
 	void ShowField(const QString &FieldName); //Отображение поля по его имени
 
-	void Period(); //Задание периода
-	void PeriodClear(); //Очистка периода
-
 protected:
 	void paintEvent(QPaintEvent *e) override;
 	void EscapeClicked() override;
@@ -123,7 +120,6 @@ private:
 	PMetaTable *MetaTable;
 	ISSqlModelCore *SqlModel;
 	QLabel *LabelRowCount;
-	QLabel *LabelPeriod;
 	QLabel *LabelSelectedRow;
 	ISPageNavigation *PageNavigation;
 	ISSearchEdit *EditSearch;
@@ -139,7 +135,6 @@ private:
 	bool SearchFlag;
 	
 	QToolBar *ToolBar;
-	QAction *ActionPeriodClear;
 	std::map<ISNamespace::ActionType, QAction*> Actions;
 	std::map<ISNamespace::ActionSpecialType, QAction *> ActionsSpecial;
 	QActionGroup *ActionObjectGroup; //Группа действий для одного объекта

@@ -19,12 +19,6 @@ public:
 	QString GetQueryText(); //Получить текст всего запроса
 
 	void SetParentFilter(int ParentObjectID, const QString &FieldName); //Изменить условие (идентификатор) фильтра для эскортной таблицы
-	
-	ISNamespace::PeriodType GetPeriodType() const;
-	QDate GetPeriodBegin() const;
-	QDate GetPeriodEnd() const;
-	void SetPeriod(ISNamespace::PeriodType period_type, const QDate &period_begin, const QDate &period_end); //Установить период
-	void ClearPeriod(); //Очистить период
 
 	void SetClassFilter(const QString &class_filter); //Изменить фильтр
 	QString GetClassFilter() const; //Получить фильтр
@@ -58,10 +52,6 @@ private:
 	Qt::SortOrder OrderSort; //Тип сортировки
 	int Limit; //Вывод записей на странице
 	int Offset; //Страница
-
-	ISNamespace::PeriodType PeriodType;
-	QDate PeriodBegin;
-	QDate PeriodEnd;
 
 	QString ClassFilter;
 	QString SearchFilter;

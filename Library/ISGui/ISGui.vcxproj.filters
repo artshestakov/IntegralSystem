@@ -84,9 +84,6 @@
     <ClCompile Include="ISInputDialog.cpp">
       <Filter>AdditionalForms</Filter>
     </ClCompile>
-    <ClCompile Include="ISPeriodForm.cpp">
-      <Filter>AdditionalForms</Filter>
-    </ClCompile>
     <ClCompile Include="ISProcessForm.cpp">
       <Filter>AdditionalForms</Filter>
     </ClCompile>
@@ -462,9 +459,6 @@
       <Filter>AdditionalForms</Filter>
     </QtMoc>
     <QtMoc Include="ISInputDialog.h">
-      <Filter>AdditionalForms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISPeriodForm.h">
       <Filter>AdditionalForms</Filter>
     </QtMoc>
     <QtMoc Include="ISProcessForm.h">

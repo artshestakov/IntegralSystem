@@ -252,7 +252,6 @@
     <ClCompile Include="ISParagraphBaseForm.cpp" />
     <ClCompile Include="ISParagraphEntity.cpp" />
     <ClCompile Include="ISPassword.cpp" />
-    <ClCompile Include="ISPeriodForm.cpp" />
     <ClCompile Include="ISPopupMessage.cpp" />
     <ClCompile Include="ISPrintForm.cpp" />
     <ClCompile Include="ISPrintingBase.cpp" />
@@ -306,9 +305,6 @@
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ISInputDialog.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <QtMoc Include="ISPeriodForm.h" />
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ISProcessForm.h" />

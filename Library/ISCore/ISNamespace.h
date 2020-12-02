@@ -123,13 +123,6 @@ namespace ISNamespace
         QMT_List,
     };
 
-    enum PeriodType //Тип фильтрации по периоду
-    {
-        PT_UnknownDate,
-        PT_CreationDate,
-        PT_UpdationDate,
-    };
-
     enum MoveWidgetDesktop //Тип перемещения виджета
     {
         MWD_LeftUp, //Левый верхний угол
@@ -146,16 +139,6 @@ namespace ISNamespace
         DMT_Info, //Информационное
         DMT_Warning, //Предупреждение
         DMT_Error, //Ошибка
-    };
-
-    enum RangeDatePeriod //Тип периода дат
-    {
-        RDP_Today, //Сегодня
-        RDP_Yesterday, //Вчера
-        RDP_CurrentMonth, //Текущий месяц
-        RDP_PreviousMonth, //Прошлый месяц
-        RDP_CurrentYear, //Текущий год
-        RDP_PreviousYear, //Прошлый год
     };
 
 	enum ApiMessageType //Тип API-сообщения
@@ -186,10 +169,8 @@ Q_DECLARE_METATYPE(ISNamespace::ActionType);
 Q_DECLARE_METATYPE(ISNamespace::ActionSpecialType);
 Q_DECLARE_METATYPE(ISNamespace::ReportType);
 Q_DECLARE_METATYPE(ISNamespace::QueryModelType);
-Q_DECLARE_METATYPE(ISNamespace::PeriodType);
 Q_DECLARE_METATYPE(ISNamespace::MoveWidgetDesktop);
 Q_DECLARE_METATYPE(ISNamespace::DebugMessageType);
-Q_DECLARE_METATYPE(ISNamespace::RangeDatePeriod);
 Q_DECLARE_METATYPE(ISNamespace::ApiMessageType);
 //-----------------------------------------------------------------------------
 #endif

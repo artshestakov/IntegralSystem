@@ -33,7 +33,6 @@
 #include "ISExportHTML.h"
 #include "ISExportDBF.h"
 #include "ISExportXML.h"
-#include "ISPeriodForm.h"
 #include "ISQueryPool.h"
 #include "ISGui.h"
 #include "ISAlgorithm.h"
@@ -181,13 +180,6 @@ ISListBaseForm::ISListBaseForm(const QString &TableName, QWidget *parent)
 		ToolBar->addAction(GetAction(ISNamespace::AT_SearchClear));
 		ToolBar->addAction(GetAction(ISNamespace::AT_Print));
 
-		QAction *ActionPeriod = ToolBar->addAction(BUFFER_ICONS("Period"), LANG("PeriodSelect"), this, &ISListBaseForm::Period);
-		dynamic_cast<QToolButton*>(ToolBar->widgetForAction(ActionPeriod))->setPopupMode(QToolButton::MenuButtonPopup);
-		ActionPeriod->setMenu(new QMenu(ToolBar));
-
-		ActionPeriodClear = ActionPeriod->menu()->addAction(LANG("PeriodClear"), this, &ISListBaseForm::PeriodClear);
-		ActionPeriodClear->setEnabled(false);
-
 		QAction *ActionAdditionally = ToolBar->addAction(BUFFER_ICONS("AdditionallyActions"), LANG("Additionally"));
 		dynamic_cast<QToolButton*>(ToolBar->widgetForAction(ActionAdditionally))->setPopupMode(QToolButton::InstantPopup);
 		dynamic_cast<QToolButton*>(ToolBar->widgetForAction(ActionAdditionally))->setStyleSheet(BUFFER_STYLE_SHEET("QToolButtonMenu"));
@@ -298,11 +290,6 @@ ISListBaseForm::ISListBaseForm(const QString &TableName, QWidget *parent)
 			connect(PageNavigation, &ISPageNavigation::Update, this, &ISListBaseForm::Update);
 			StatusBar->addWidget(PageNavigation);
 		}
-
-		LabelPeriod = new QLabel(StatusBar);
-		LabelPeriod->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
-		LabelPeriod->setVisible(false);
-		StatusBar->addWidget(LabelPeriod);
 
 		LabelSelectedRow = new QLabel(StatusBar);
 		LabelSelectedRow->setVisible(false);
@@ -742,35 +729,6 @@ void ISListBaseForm::ShowField(const QString &FieldName)
 	FieldResized(false);
 	TableView->showColumn(SqlModel->GetFieldIndex(FieldName));
 	FieldResized(true);
-}
-//-----------------------------------------------------------------------------
-void ISListBaseForm::Period()
-{
-	ISPeriodForm PeriodForm;
-	PeriodForm.SetRange(QueryModel->GetPeriodType(), QueryModel->GetPeriodBegin(), QueryModel->GetPeriodEnd());
-	if (PeriodForm.Exec())
-	{
-		QDate StartDate = PeriodForm.GetBegin();
-		QDate EndDate = PeriodForm.GetEnd();
-		switch (PeriodForm.GetPeriodType())
-		{
-		case ISNamespace::PT_CreationDate: LabelPeriod->setText(LANG("PeriodLabelCreate").arg(StartDate.toString(FORMAT_DATE_V2)).arg(EndDate.toString(FORMAT_DATE_V2))); break;
-		case ISNamespace::PT_UpdationDate: LabelPeriod->setText(LANG("PeriodLabelUpdate").arg(StartDate.toString(FORMAT_DATE_V2)).arg(EndDate.toString(FORMAT_DATE_V2))); break;
-		}
-		LabelPeriod->setVisible(true);
-		QueryModel->SetPeriod(PeriodForm.GetPeriodType(), StartDate, EndDate);
-		ActionPeriodClear->setEnabled(true);
-		Update();
-	}
-}
-//-----------------------------------------------------------------------------
-void ISListBaseForm::PeriodClear()
-{
-	LabelPeriod->setVisible(false);
-	LabelPeriod->clear();
-	ActionPeriodClear->setEnabled(false);
-	QueryModel->ClearPeriod();
-	Update();
 }
 //-----------------------------------------------------------------------------
 void ISListBaseForm::ResizeColumnsToContents()

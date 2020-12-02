@@ -14,7 +14,6 @@ ISQueryModel::ISQueryModel(PMetaTable *meta_table, ISNamespace::QueryModelType m
 	OrderSort(Qt::AscendingOrder),
     Limit(0),
     Offset(0),
-    PeriodType(ISNamespace::PT_CreationDate),
     ClassFilter(meta_table->ClassFilter)
 {
 	for (size_t i = 0, c = MetaTable->Fields.size(); i < c; ++i)
@@ -103,19 +102,6 @@ QString ISQueryModel::GetQueryText()
 	SqlText += QuerySelectLeftJoin;
 	SqlText += QueryWhereText;
 
-	//Если задан период отображения
-	/*if (PeriodBegin.isValid() && PeriodEnd.isValid())
-	{
-		QString PeriodString = QString("AND " + ClassAlias + SYMBOL_POINT + ClassAlias + "_%1 BETWEEN '%2' AND '%3' \n");
-		switch (PeriodType)
-		{
-		case ISNamespace::PT_CreationDate: PeriodString = PeriodString.arg("creationdate"); break;
-		case ISNamespace::PT_UpdationDate: PeriodString = PeriodString.arg("updationdate"); break;
-        default: break;
-		}
-		SqlText += PeriodString.arg(QDateTime(PeriodBegin, QTime(0, 0)).toString(FORMAT_DATE_TIME_V7)).arg(QDateTime(PeriodEnd, QTime(23, 59, 59)).toString(FORMAT_DATE_TIME_V7));
-	}*/
-
 	//Если для таблицы существует фильтр
 	if (!ClassFilter.isEmpty())
 	{
@@ -146,35 +132,6 @@ void ISQueryModel::SetParentFilter(int ParentObjectID, const QString &FieldName)
 	{
 		ClassFilter = QString("%1_%2 = %3").arg(MetaTable->Alias).arg(FieldName).arg(ParentObjectID);
 	}
-}
-//-----------------------------------------------------------------------------
-ISNamespace::PeriodType ISQueryModel::GetPeriodType() const
-{
-	return PeriodType;
-}
-//-----------------------------------------------------------------------------
-QDate ISQueryModel::GetPeriodBegin() const
-{
-	return PeriodBegin;
-}
-//-----------------------------------------------------------------------------
-QDate ISQueryModel::GetPeriodEnd() const
-{
-	return PeriodEnd;
-}
-//-----------------------------------------------------------------------------
-void ISQueryModel::SetPeriod(ISNamespace::PeriodType period_type, const QDate &period_begin, const QDate &period_end)
-{
-	PeriodType = period_type;
-	PeriodBegin = period_begin;
-	PeriodEnd = period_end;
-}
-//-----------------------------------------------------------------------------
-void ISQueryModel::ClearPeriod()
-{
-	PeriodType = ISNamespace::PT_UnknownDate;
-	PeriodBegin = QDate();
-	PeriodEnd = QDate();
 }
 //-----------------------------------------------------------------------------
 void ISQueryModel::SetClassFilter(const QString &class_filter)
