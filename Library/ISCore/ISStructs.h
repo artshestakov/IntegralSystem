@@ -167,7 +167,7 @@ struct ISPrintMetaReport
 //-----------------------------------------------------------------------------
 struct PMetaUserPermission
 {
-    PMetaUserPermission() : Show(false), CreateCopy(false), Edit(false), Delete(false), DeleteCascade(false), UpdateList(false), ShowDeleted(false),
+    PMetaUserPermission() : Show(false), CreateCopy(false), Edit(false), Delete(false), UpdateList(false), ShowDeleted(false),
         ShowAll(false), Search(false), Export(false), Print(false), SystemInformation(false), AttachTask(false), TableNavigation(false) { }
 
     QString SubSystemUID;
@@ -178,7 +178,6 @@ struct PMetaUserPermission
     bool CreateCopy;
     bool Edit;
     bool Delete;
-    bool DeleteCascade;
     bool UpdateList;
     bool ShowDeleted;
     bool ShowAll;

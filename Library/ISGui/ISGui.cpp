@@ -52,8 +52,6 @@
 #include "ISSystem.h"
 #include "ISTcpConnector.h"
 //-----------------------------------------------------------------------------
-static QString Q_DELETE_OR_RECOVERY_OBJECT = "UPDATE %1 SET %2_isdeleted = :IsDeleted WHERE %2_id = :ObjectID";
-//-----------------------------------------------------------------------------
 static QString QS_NOTE_OBJECT = PREPARE_QUERY("SELECT nobj_note FROM _noteobject WHERE nobj_tablename = :TableName AND nobj_objectid = :ObjectID");
 //-----------------------------------------------------------------------------
 static QString QU_NOTE_OBJECT = PREPARE_QUERY("UPDATE _noteobject SET nobj_note = :Note WHERE nobj_tablename = :TableName AND nobj_objectid = :ObjectID");

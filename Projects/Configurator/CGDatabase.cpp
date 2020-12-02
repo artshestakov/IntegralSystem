@@ -91,7 +91,7 @@ bool CGDatabase::Foreign_Create(PMetaForeign *MetaForeign, QString &ErrorString)
 	SqlText += "ALTER TABLE public." + MetaTable->Name.toLower() + " \n";
 	SqlText += "ADD CONSTRAINT " + MetaForeign->GetName() + " FOREIGN KEY (" + MetaTable->Alias + '_' + MetaForeign->Field.toLower() + ") \n";
 	SqlText += "REFERENCES public." + MetaTableForeign->Name.toLower() + '(' + MetaTableForeign->Alias.toLower() + '_' + MetaForeign->ForeignField.toLower() + ") \n";
-	SqlText += "ON DELETE SET NULL \n";
+	SqlText += "ON DELETE CASCADE \n";
 	SqlText += "ON UPDATE NO ACTION \n";
 	SqlText += "NOT DEFERRABLE;";
 
@@ -362,10 +362,7 @@ bool CGDatabase::Resource_Update(PMetaResource *MetaResource, QString &ErrorStri
 	QString TableAlias = ISMetaData::Instance().GetMetaTable(TableName)->Alias;
 	QString ResourceUID = MetaResource->UID;
 
-	bool Result = Resource_UpdateField(TableName, TableAlias, TableAlias + "_isdeleted", false, ResourceUID, ErrorString);
-	IS_ASSERT(Result, QString("Error update resource field. TableName: %1 FieldName: %2 UID: %3 Error: %4").arg(TableName).arg(TableAlias + "_isdeleted").arg(ResourceUID).arg(ErrorString));
-
-	Result = Resource_UpdateField(TableName, TableAlias, TableAlias + "_issystem", false, ResourceUID, ErrorString);
+	bool Result = Resource_UpdateField(TableName, TableAlias, TableAlias + "_issystem", false, ResourceUID, ErrorString);
 	IS_ASSERT(Result, QString("Error update resource field. TableName: %1 FieldName: %2 UID: %3 Error: %4").arg(TableName).arg(TableAlias + "_issystem").arg(ResourceUID).arg(ErrorString));
 
 	for (const auto &Resource : MetaResource->Parameters) //Обход параметров ресурса

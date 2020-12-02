@@ -17,9 +17,7 @@ public:
 	static bool TaskCheckExist(int TaskID); //Проверить существование задачи по её номеру
 
 	//Объекты
-	static bool SetIsDeletedObject(bool IsDeleted, PMetaTable *MetaTable, int ObjectID, QString &ErrorString); //Удалить/восстановить объект
-	static bool SetIsDeletedObjects(bool IsDeleted, PMetaTable *MetaTable, const ISVectorInt &Objects, QString &ErrorString); //Удалить/восстановить объекты
-	static bool DeleteCascadeObject(PMetaTable *MetaTable, int ObjectID, QString &ErrorString); //Удалить объект каскадом
+	static bool DeleteObject(PMetaTable *MetaTable, int ObjectID, QString &ErrorString); //Удалить объект каскадом
 
 	//Номера телефонов
 	static void PhoneNumberPrepare(QString &PhoneNumber); //Подготовить номер телефона (удалить все кроме цифр)

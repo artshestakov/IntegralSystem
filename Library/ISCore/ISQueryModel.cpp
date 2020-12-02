@@ -10,13 +10,10 @@ ISQueryModel::ISQueryModel(PMetaTable *meta_table, ISNamespace::QueryModelType m
 	ModelType(model_type),
 	ClassAlias(meta_table->Alias),
 	QuerySelectFrom("FROM " + MetaTable->Name.toLower() + SYMBOL_SPACE + ClassAlias + " \n"),
-	QuerySelectIsDeleted(ClassAlias + SYMBOL_POINT + ClassAlias + "_isdeleted"),
-	QueryWhereText("WHERE \n" + QuerySelectIsDeleted + " = "),
 	OrderFieldDefault(ClassAlias + SYMBOL_POINT + ClassAlias + "_id"),
 	OrderSort(Qt::AscendingOrder),
     Limit(0),
     Offset(0),
-    VisibleIsDeleted(false),
     PeriodType(ISNamespace::PT_CreationDate),
     ClassFilter(meta_table->ClassFilter)
 {
@@ -105,10 +102,9 @@ QString ISQueryModel::GetQueryText()
 	SqlText += QuerySelectFrom;
 	SqlText += QuerySelectLeftJoin;
 	SqlText += QueryWhereText;
-	SqlText += (VisibleIsDeleted ? "true \n" : "false \n");
 
 	//Если задан период отображения
-	if (PeriodBegin.isValid() && PeriodEnd.isValid())
+	/*if (PeriodBegin.isValid() && PeriodEnd.isValid())
 	{
 		QString PeriodString = QString("AND " + ClassAlias + SYMBOL_POINT + ClassAlias + "_%1 BETWEEN '%2' AND '%3' \n");
 		switch (PeriodType)
@@ -118,18 +114,12 @@ QString ISQueryModel::GetQueryText()
         default: break;
 		}
 		SqlText += PeriodString.arg(QDateTime(PeriodBegin, QTime(0, 0)).toString(FORMAT_DATE_TIME_V7)).arg(QDateTime(PeriodEnd, QTime(23, 59, 59)).toString(FORMAT_DATE_TIME_V7));
-	}
-
-	//Если таблица является эскортной
-	if (!ParentFilter.isEmpty())
-	{
-		SqlText += "AND " + ParentFilter + " \n";
-	}
+	}*/
 
 	//Если для таблицы существует фильтр
 	if (!ClassFilter.isEmpty())
 	{
-		SqlText += "AND " + ClassFilter + " \n";
+		SqlText += "WHERE " + ClassFilter + " \n";
 	}
 
 	//Фильтр поиска
@@ -150,21 +140,11 @@ QString ISQueryModel::GetQueryText()
 	return SqlText;
 }
 //-----------------------------------------------------------------------------
-bool ISQueryModel::GetVisibleIsDeleted() const
-{
-	return VisibleIsDeleted;
-}
-//-----------------------------------------------------------------------------
-void ISQueryModel::SetVisibleIsDeleted(bool Visible)
-{
-	VisibleIsDeleted = Visible;
-}
-//-----------------------------------------------------------------------------
 void ISQueryModel::SetParentFilter(int ParentObjectID, const QString &FieldName)
 {
 	if (ParentObjectID && !FieldName.isEmpty())
 	{
-		ParentFilter = QString("%1_%2 = %3").arg(MetaTable->Alias).arg(FieldName).arg(ParentObjectID);
+		ClassFilter = QString("%1_%2 = %3").arg(MetaTable->Alias).arg(FieldName).arg(ParentObjectID);
 	}
 }
 //-----------------------------------------------------------------------------

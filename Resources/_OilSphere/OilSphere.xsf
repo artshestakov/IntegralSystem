@@ -8,8 +8,7 @@
     BEGIN
     RETURN COALESCE(sum(cpen_sum), 0)
     FROM counterpartyenrollment e
-    WHERE NOT e.cpen_isdeleted
-    AND e.cpen_counterparty = counterparty_id;
+    WHERE NOT e.cpen_counterparty = counterparty_id;
     END;
     $body$
     LANGUAGE 'plpgsql'
@@ -26,9 +25,7 @@
     BEGIN
     RETURN COALESCE(sum(iunl_cost), 0)
     FROM implementationunload
-    WHERE NOT iunl_isdeleted
-    AND iunl_counterparty = counterparty_id
-    AND NOT (SELECT impl_isdeleted FROM implementation WHERE iunl_implementation = impl_id);
+    WHERE iunl_counterparty = counterparty_id;
     END;
     $body$
     LANGUAGE 'plpgsql'
@@ -45,9 +42,7 @@
     BEGIN
     RETURN COALESCE(sum(ilod_cost), 0)
     FROM implementationload
-    WHERE NOT ilod_isdeleted
-    AND ilod_counterparty = counterparty_id
-    AND NOT (SELECT impl_isdeleted FROM implementation WHERE ilod_implementation = impl_id);
+    WHERE ilod_counterparty = counterparty_id;
     END;
     $body$
     LANGUAGE 'plpgsql'
@@ -64,8 +59,7 @@
     BEGIN
     RETURN COALESCE(sum(mwag_price * (get_sum_weight_move_wagon_detail(mwag_id) / 1000)), 0)
     FROM movewagon
-    WHERE NOT mwag_isdeleted
-    AND mwag_provider = counterparty_id;
+    WHERE mwag_provider = counterparty_id;
     END;
     $body$
     LANGUAGE 'plpgsql'
@@ -84,25 +78,21 @@
     (
     SELECT COALESCE(sum(-((get_sum_weight_move_wagon_detail(mwag_id) * mwag_technicallosses / 100) - get_sum_weight_move_wagon_detail(mwag_id))), 0)
     FROM movewagon
-    LEFT JOIN movewagondetail ON mwdt_movewagon = mwag_id AND NOT mwdt_isdeleted
-    WHERE NOT mwag_isdeleted
-    AND mwag_datearrival IS NOT NULL
+    LEFT JOIN movewagondetail ON mwdt_movewagon = mwag_id
+    WHERE mwag_datearrival IS NOT NULL
     AND mwag_stock = stock_id
     )
     +
     (
     SELECT COALESCE(sum(iunl_weightnet), 0)
     FROM implementationunload
-    WHERE NOT iunl_isdeleted
-    AND NOT (SELECT impl_isdeleted FROM implementation WHERE impl_id = iunl_implementation)
-    AND iunl_stock = stock_id
+    WHERE iunl_stock = stock_id
     )
     -
     (
     SELECT COALESCE(sum(ilod_weightnet), 0)
     FROM implementation
-    LEFT JOIN implementationload ON ilod_implementation = impl_id AND NOT ilod_isdeleted AND ilod_stock = stock_id
-    WHERE NOT impl_isdeleted
+    LEFT JOIN implementationload ON ilod_implementation = impl_id AND ilod_stock = stock_id
     );
     END;
     $body$
@@ -120,8 +110,7 @@
     BEGIN
     RETURN COALESCE(driver_cost_coming, 0) + COALESCE(driver_cost_previous_remainder, 0) - COALESCE(sum(dcdt_price), 0)
     FROM drivercostdetail
-    WHERE NOT dcdt_isdeleted
-    AND dcdt_drivercost = driver_cost_id;
+    WHERE dcdt_drivercost = driver_cost_id;
     END;
     $body$
     LANGUAGE 'plpgsql'
@@ -138,8 +127,7 @@
     BEGIN
     RETURN COALESCE(sum(mwdt_kilogram), 0)
     FROM movewagondetail
-    WHERE NOT mwdt_isdeleted
-    AND mwdt_movewagon = movewagon_id;
+    WHERE mwdt_movewagon = movewagon_id;
     END;
     $body$
     LANGUAGE 'plpgsql'

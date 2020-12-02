@@ -12,8 +12,6 @@ static QString QS_SETTINGS = PREPARE_QUERY("SELECT "
 										   "FROM _settings "
 										   "LEFT JOIN _settingsgroup ON stgp_uid = stgs_group "
 										   "LEFT JOIN _usersettings ON usst_setting = stgs_id AND usst_creationuser = currentuserid() "
-										   "WHERE NOT stgs_isdeleted "
-										   "AND NOT stgp_isdeleted "
 										   "ORDER BY stgp_order, stgs_order");
 //-----------------------------------------------------------------------------
 static QString QI_USER_SETTING = PREPARE_QUERY("INSERT INTO _usersettings(usst_setting, usst_value) "

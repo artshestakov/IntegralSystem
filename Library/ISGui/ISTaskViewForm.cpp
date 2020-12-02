@@ -53,19 +53,19 @@ static QString QS_SUBTASK = PREPARE_QUERY("SELECT task_id, task_name, task_descr
 										  "FROM _task "
 										  "LEFT JOIN _taskstatus ON tsst_id = task_status "
 										  "WHERE task_parent = :TaskID "
-										  "AND NOT task_isdeleted "
 										  "ORDER BY task_id");
 //-----------------------------------------------------------------------------
 static QString QS_STATUSES = PREPARE_QUERY("SELECT tsst_uid, tsst_buttontext, tsst_stylesheet, tsst_icon "
 										   "FROM _taskstatus "
-										   "WHERE NOT tsst_isdeleted "
 										   "ORDER BY tsst_order");
 //-----------------------------------------------------------------------------
 static QString QU_CONVERT_TO_TASK = PREPARE_QUERY("UPDATE _task SET "
 												  "task_parent = NULL "
 												  "WHERE task_id = :TaskID");
 //-----------------------------------------------------------------------------
-static QString QS_SUBTASK_COUNT = PREPARE_QUERY("SELECT COUNT(*) FROM _task WHERE task_parent = :TaskID AND NOT task_isdeleted");
+static QString QS_SUBTASK_COUNT = PREPARE_QUERY("SELECT COUNT(*) "
+												"FROM _task "
+												"WHERE task_parent = :TaskID");
 //-----------------------------------------------------------------------------
 static QString QU_CONVERT_TO_SUBTASK = PREPARE_QUERY("UPDATE _task SET "
 													 "task_parent = :TaskParentID "
@@ -85,8 +85,7 @@ static QString QI_STATUS_HISTORY = PREPARE_QUERY("INSERT INTO _taskstatushistory
 static QString QS_FILE = PREPARE_QUERY("SELECT tfls_id, tfls_creationdate, tfls_isimage, tfls_name, tfls_extension, tfls_size, tfls_icon, usrs_fio "
 									   "FROM _taskfile "
 									   "LEFT JOIN _users u ON u.usrs_id = tfls_creationuser "
-									   "WHERE NOT tfls_isdeleted "
-									   "AND tfls_task = :TaskID "
+									   "WHERE tfls_task = :TaskID "
 									   "ORDER BY tfls_id");
 //-----------------------------------------------------------------------------
 static QString QI_FILE = PREPARE_QUERY("INSERT INTO _taskfile(tfls_task, tfls_isimage, tfls_name, tfls_extension, tfls_data, tfls_size, tfls_icon) "
@@ -110,8 +109,7 @@ static QString QS_LINK = PREPARE_QUERY("SELECT tlnk_id, "
 									   "LEFT JOIN _task ON tlnk_link = task_id "
 									   "LEFT JOIN _users ON usrs_id = tlnk_creationuser "
 									   "LEFT JOIN _taskstatus ON task_status = tsst_id "
-									   "WHERE NOT tlnk_isdeleted "
-									   "AND tlnk_task = :TaskID "
+									   "WHERE tlnk_task = :TaskID "
 									   "ORDER BY tlnk_id");
 //-----------------------------------------------------------------------------
 static QString QI_LINK = PREPARE_QUERY("INSERT INTO _tasklink(tlnk_task, tlnk_link) "
@@ -131,8 +129,7 @@ static QString QS_COMMENT = PREPARE_QUERY("SELECT "
 										  "userphotobyid(tcom_creationuser) "
 										  "FROM _taskcomment "
 										  "LEFT JOIN _users ON usrs_id = tcom_creationuser "
-										  "WHERE NOT tcom_isdeleted "
-										  "AND tcom_task = :TaskID "
+										  "WHERE tcom_task = :TaskID "
 										  "ORDER BY tcom_id");
 //-----------------------------------------------------------------------------
 static QString QI_COMMENT = PREPARE_QUERY("INSERT INTO _taskcomment(tcom_task, tcom_parent, tcom_comment) "

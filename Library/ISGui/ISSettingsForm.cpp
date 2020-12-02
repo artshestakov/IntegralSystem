@@ -13,9 +13,13 @@
 #include "ISGui.h"
 #include "ISConstants.h"
 //-----------------------------------------------------------------------------
-static QString QS_SETTINGS = PREPARE_QUERY("SELECT stgs_uid, stgs_defaultvalue FROM _settings WHERE NOT stgs_isdeleted ORDER BY stgs_id");
+static QString QS_SETTINGS = PREPARE_QUERY("SELECT stgs_uid, stgs_defaultvalue "
+										   "FROM _settings "
+										   "ORDER BY stgs_id");
 //-----------------------------------------------------------------------------
-static QString QU_SETTINGS_DEFAULT = PREPARE_QUERY("UPDATE _usersettings SET usst_value = :SettingValue WHERE usst_setting = :SettingUID");
+static QString QU_SETTINGS_DEFAULT = PREPARE_QUERY("UPDATE _usersettings SET "
+												   "usst_value = :SettingValue "
+												   "WHERE usst_setting = :SettingUID");
 //-----------------------------------------------------------------------------
 ISSettingsForm::ISSettingsForm(const QString &SettingGroupUID) : ISInterfaceDialogForm()
 {

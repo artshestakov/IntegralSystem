@@ -18,9 +18,6 @@ public:
 
 	QString GetQueryText(); //Получить текст всего запроса
 
-	bool GetVisibleIsDeleted() const; //Показываются ли записи помеченные на удаление
-	void SetVisibleIsDeleted(bool Visible); //Показывать/скрывать удаленные записи помеченные на удаление
-
 	void SetParentFilter(int ParentObjectID, const QString &FieldName); //Изменить условие (идентификатор) фильтра для эскортной таблицы
 	
 	ISNamespace::PeriodType GetPeriodType() const;
@@ -53,7 +50,6 @@ private:
 	QString QuerySelectFields;
 	QString QuerySelectFrom; //Отношение к таблице
 	QString QuerySelectLeftJoin;
-	QString QuerySelectIsDeleted;
 	QString QueryWhereText; //Текст условия запроса
 	
 	QString QueryOrderText; //Сортировка
@@ -63,13 +59,10 @@ private:
 	int Limit; //Вывод записей на странице
 	int Offset; //Страница
 
-	bool VisibleIsDeleted;
-
 	ISNamespace::PeriodType PeriodType;
 	QDate PeriodBegin;
 	QDate PeriodEnd;
 
-	QString ParentFilter;
 	QString ClassFilter;
 	QString SearchFilter;
 

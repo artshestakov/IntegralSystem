@@ -24,24 +24,22 @@
   <_Settings IsSystem="true" UID="{A07AA634-F553-4C05-8EEC-CC8A5AE7DC18}" Group="{12B776E9-CE2E-44A8-855D-67EDB4E58CD2}" Order="14" Name="SearchFastView" Type="Int" LocalName="Показывать количество последних запросов быстрого поиска" Hint="Сколько последних запросов быстрого поиска будет отображаться." DefaultValue="10"/>
   <_Settings IsSystem="true" UID="{2876F177-B30F-41A0-8643-F2BCA583726F}" Group="{12B776E9-CE2E-44A8-855D-67EDB4E58CD2}" Order="15" Name="VisibleFieldID" Type="Bool" LocalName="Показывать поле &quot;Код&quot;" DefaultValue="true"/>
   <_Settings IsSystem="true" UID="{A7EE38D5-AC04-4FAF-8C0F-ECED895039DB}" Group="{12B776E9-CE2E-44A8-855D-67EDB4E58CD2}" Order="16" Name="ScrollSelection" Type="Bool" LocalName="Выделение записей с помощью колеса мыши" DefaultValue="false"/>
-
-  <_SettingsGroup IsDeleted="true" IsSystem="true" UID="{B523692A-F837-46CC-B278-0862280917D0}" Name="Desktop" LocalName="Рабочий стол" IconName="Settings.Desktop" Order="4" System="true"/>
   
-  <_SettingsGroup IsSystem="true" UID="{C42701D0-3404-42C6-82D9-41EC50F2E556}" Name="Tabs" LocalName="Вкладки" IconName="Settings.Tabs" Order="5" System="true"/>
+  <_SettingsGroup IsSystem="true" UID="{C42701D0-3404-42C6-82D9-41EC50F2E556}" Name="Tabs" LocalName="Вкладки" IconName="Settings.Tabs" Order="4" System="true"/>
   <_Settings IsSystem="true" UID="{3398D347-6B46-465E-BB58-2B93B92C85EF}" Group="{C42701D0-3404-42C6-82D9-41EC50F2E556}" Order="1" Name="WheelScrollingTabs" Type="Bool" LocalName="Навигация по вкладкам с использованием колеса мыши" DefaultValue="true"/>
   <_Settings IsSystem="true" UID="{8C96BF79-A7FB-4562-ABAB-A9C520B4B68D}" Group="{C42701D0-3404-42C6-82D9-41EC50F2E556}" Order="2" Name="SelectionBehavior" Type="String" WidgetEditName="ISComboTabBarSelectionBehavior" LocalName="Поведение при закрытии вкладки" DefaultValue="SelectLeftTab"/>
 
-  <_SettingsGroup IsSystem="true" UID="{8460DB7A-90FB-459E-8343-7A67529414C0}" Name="Sound" LocalName="Звуки" IconName="Settings.Sound" Hint="Использование звуков может повлиять на производительность программы." Order="6" System="true"/>
+  <_SettingsGroup IsSystem="true" UID="{8460DB7A-90FB-459E-8343-7A67529414C0}" Name="Sound" LocalName="Звуки" IconName="Settings.Sound" Hint="Использование звуков может повлиять на производительность программы." Order="5" System="true"/>
   <_Settings IsSystem="true" UID="{203F8364-B041-4C20-A7EF-E1FBA8CDB68B}" Group="{8460DB7A-90FB-459E-8343-7A67529414C0}" Order="1" Name="Volume" Type="Volume" LocalName="Громкость" DefaultValue="50"/>
   <_Settings IsSystem="true" UID="{70680EED-160D-45E9-8F79-D6CBDE8AA875}" Group="{8460DB7A-90FB-459E-8343-7A67529414C0}" Order="3" Name="CalendarEvent" Type="Bool" LocalName="Напоминание календаря" DefaultValue="true"/>
 
-  <_SettingsGroup IsSystem="true" UID="{65F8B333-5C21-48A2-8F30-D947C36EF51B}" Name="Calendar" LocalName="Календарь" IconName="Settings.Calendar" Order="7" System="true"/>
+  <_SettingsGroup IsSystem="true" UID="{65F8B333-5C21-48A2-8F30-D947C36EF51B}" Name="Calendar" LocalName="Календарь" IconName="Settings.Calendar" Order="6" System="true"/>
   <_Settings IsSystem="true" UID="{B03FBAC5-F793-4565-92A3-821C87AE3B56}" Group="{65F8B333-5C21-48A2-8F30-D947C36EF51B}" Order="1" Name="NoteViewType" Type="String" WidgetEditName="ISComboCalendarNoteType" LocalName="Отображение примечаний" DefaultValue="ToolTip"/>
   
-  <_SettingsGroup IsSystem="true" UID="{4443097F-5390-4CC1-8E8E-D591E81B3D2F}" Name="TaskTracker" LocalName="Трекер задач" IconName="Settings.TaskTracker" Order="8" System="true"/>
+  <_SettingsGroup IsSystem="true" UID="{4443097F-5390-4CC1-8E8E-D591E81B3D2F}" Name="TaskTracker" LocalName="Трекер задач" IconName="Settings.TaskTracker" Order="7" System="true"/>
   <_Settings IsSystem="true" UID="{094CB33E-13B9-4E5C-87DC-79AE69CBE533}" Group="{4443097F-5390-4CC1-8E8E-D591E81B3D2F}" Order="1" Name="ShowTaskAfterCreate" Type="Bool" LocalName="Открыть задачу после создания" DefaultValue="false"/>
   
-  <_SettingsGroup IsSystem="true" UID="{0BAEF651-D749-4566-B682-F11D03C6D849}" Name="Other" LocalName="Прочее" IconName="Settings.Other" Order="10" System="true"/>
+  <_SettingsGroup IsSystem="true" UID="{0BAEF651-D749-4566-B682-F11D03C6D849}" Name="Other" LocalName="Прочее" IconName="Settings.Other" Order="8" System="true"/>
   <_Settings IsSystem="true" UID="{97D72002-CEF4-4D2A-B00F-7A3E9F1B8DA2}" Group="{0BAEF651-D749-4566-B682-F11D03C6D849}" Order="1" Name="EnableHistoryTracking" Type="Bool" LocalName="Включить ведение истории открытых записей" DefaultValue="true"/>
   <_Settings IsSystem="true" UID="{3AD4888F-EDC7-4D69-A97F-F9678B6AAC44}" Group="{0BAEF651-D749-4566-B682-F11D03C6D849}" Order="2" Name="SelectedMenu" Type="Bool" LocalName="Включить всплывающее меню при выборе текста" Hint="При выделении текста в полях редактирования текста будет всплывать меню, через которое Вы сможете вырезать или скопировать выбранный текст." DefaultValue="false"/>
   <_Settings IsSystem="true" UID="{3E366971-6521-47EC-A250-95F51370EC72}" Group="{0BAEF651-D749-4566-B682-F11D03C6D849}" Order="3" Name="HideOfflineMonitorActivity" Type="Bool" LocalName="Скрывать не активных пользователей в мониторе активности" DefaultValue="false"/>

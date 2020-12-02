@@ -4,7 +4,6 @@
 static QString QS_REPORT = PREPARE_QUERY("SELECT rprt_uid, rprt_type, rprt_tablename, rprt_localname, rprt_filetemplate, "
 										 "rprt_parent, rprt_replacevalue, rprt_sqlquery "
 										 "FROM _report "
-										 "WHERE NOT rprt_isdeleted "
 										 "ORDER BY rprt_id");
 //-----------------------------------------------------------------------------
 ISPrintingEntity::ISPrintingEntity()

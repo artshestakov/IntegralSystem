@@ -49,11 +49,8 @@ public:
 	virtual void Create(); //Создание объекта
 	virtual void CreateCopy(); //Создание копии объекта
 	virtual void Edit(); //Изменение объекта
-	virtual void Delete(); //Удаление объекта
-	virtual bool DeleteCascade(); //Удаление объекта каскадно
+	virtual bool Delete(); //Удаление объекта
 	virtual void Update(); //Обновление данных
-	virtual void ShowActual(); //Показывать актуальные записи
-	virtual void ShowDeleted(); //Показывать удаленные записи
 	virtual void Search(); //Поиск
 	virtual void SearchClear(); //Очистить результаты поиска
 	virtual void Export(); //Выгрузить таблицу

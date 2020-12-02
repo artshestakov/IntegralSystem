@@ -22,22 +22,6 @@ static QString QU_CALENDAR_CLOSE = PREPARE_QUERY("UPDATE _calendar SET cldr_clos
 //-----------------------------------------------------------------------------
 static QString QS_TASK_COUNT = PREPARE_QUERY("SELECT COUNT(*) FROM _task WHERE task_id = :TaskID");
 //-----------------------------------------------------------------------------
-static QString QU_DELETE_OBJECT = PREPARE_QUERY2("UPDATE %1 SET "
-												 "%2_isdeleted = :IsDeleted "
-												 "WHERE %2_id = :ObjectID");
-//-----------------------------------------------------------------------------
-static QString QU_RECOVERY_OBJECT = PREPARE_QUERY2("UPDATE %1 SET "
-												   "%2_isdeleted = :IsDeleted "
-												   "WHERE %2_id = :ObjectID");
-//-----------------------------------------------------------------------------
-static QString QU_DELETE_OBJECTS = PREPARE_QUERY2("UPDATE %1 SET "
-												  "%2_isdeleted = :IsDeleted "
-												  "WHERE %2_id IN(%3)");
-//-----------------------------------------------------------------------------
-static QString QU_RECOVERY_OBJECTS = PREPARE_QUERY2("UPDATE %1 SET "
-													"%2_isdeleted = :IsDeleted "
-													"WHERE %2_id IN(%3)");
-//-----------------------------------------------------------------------------
 QString ISCore::GetObjectName(const QString &TableName, int ObjectID)
 {
 	return GetObjectName(ISMetaData::Instance().GetMetaTable(TableName), ObjectID);
@@ -146,56 +130,14 @@ bool ISCore::TaskCheckExist(int TaskID)
 	return Result;
 }
 //-----------------------------------------------------------------------------
-bool ISCore::SetIsDeletedObject(bool IsDeleted, PMetaTable *MetaTable, int ObjectID, QString &ErrorString)
+bool ISCore::DeleteObject(PMetaTable *MetaTable, int ObjectID, QString &ErrorString)
 {
-	ISQuery qQuery((IsDeleted ? QU_DELETE_OBJECT : QU_RECOVERY_OBJECT).arg(MetaTable->Name).arg(MetaTable->Alias));
-	qQuery.BindValue(":IsDeleted", IsDeleted);
-	qQuery.BindValue(":ObjectID", ObjectID);
-	bool Result = qQuery.Execute();
-	if (Result)
-	{
-		ISProtocol::DeleteObject(MetaTable->Name, MetaTable->LocalListName, ObjectID);
-	}
-	else
-	{
-		ErrorString = qQuery.GetErrorString();
-	}
-	return Result;
-}
-//-----------------------------------------------------------------------------
-bool ISCore::SetIsDeletedObjects(bool IsDeleted, PMetaTable *MetaTable, const ISVectorInt &Objects, QString &ErrorString)
-{
-	QStringList StringList;
-	for (int ObjectID : Objects)
-	{
-		StringList.push_back(QString::number(ObjectID));
-	}
-
-	ISQuery qQuery((IsDeleted ? QU_DELETE_OBJECTS : QU_RECOVERY_OBJECTS).arg(MetaTable->Name).arg(MetaTable->Alias).arg(StringList.join(',')));
-	qQuery.BindValue(":IsDeleted", IsDeleted);
-	bool Result = qQuery.Execute();
-	if (Result)
-	{
-		for (int ObjectID : Objects)
-		{
-			ISProtocol::DeleteObject(MetaTable->Name, MetaTable->LocalListName, ObjectID);
-		}
-	}
-	else
-	{
-		ErrorString = qQuery.GetErrorString();
-	}
-	return Result;
-}
-//-----------------------------------------------------------------------------
-bool ISCore::DeleteCascadeObject(PMetaTable *MetaTable, int ObjectID, QString &ErrorString)
-{
-	ISQuery qDeleteCascade(QString("DELETE FROM %1 WHERE %2_id = :ObjectID").arg(MetaTable->Name).arg(MetaTable->Alias));
-	qDeleteCascade.BindValue(":ObjectID", ObjectID);
-	bool Result = qDeleteCascade.Execute();
+	ISQuery qDelete(QString("DELETE FROM %1 WHERE %2_id = :ObjectID").arg(MetaTable->Name).arg(MetaTable->Alias));
+	qDelete.BindValue(":ObjectID", ObjectID);
+	bool Result = qDelete.Execute();
 	if (!Result)
 	{
-		ErrorString = qDeleteCascade.GetErrorString();
+		ErrorString = qDelete.GetErrorString();
 	}
 	return Result;
 }

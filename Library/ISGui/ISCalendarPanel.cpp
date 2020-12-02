@@ -6,8 +6,7 @@
 //-----------------------------------------------------------------------------
 static QString QS_CALENDAR = PREPARE_QUERY("SELECT COUNT(*) "
 										   "FROM _calendar "
-										   "WHERE NOT cldr_isdeleted "
-										   "AND cldr_creationuser = currentuserid() "
+										   "WHERE cldr_creationuser = currentuserid() "
 										   "AND cldr_date = :Date");
 //-----------------------------------------------------------------------------
 ISCalendarPanel::ISCalendarPanel(QWidget *parent) : ISCalendarWidget(parent)

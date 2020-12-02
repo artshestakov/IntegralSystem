@@ -58,8 +58,6 @@ private:
 
 	int SortingColumn;
 	Qt::SortOrder SortingOrder;
-
-	int IsDeletedIndex;
 	int IsSystemIndex;
 
 	QIcon IconSortingUp;

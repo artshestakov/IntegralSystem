@@ -26,7 +26,6 @@
       <Index Field="AccountLifetime"/>
       <Index Field="AccountLifetimeStart"/>
       <Index Field="AccountLifetimeEnd"/>
-      <Index Field="IsDeleted;Login"/>
     </Indexes>
     <Foreigns>
       <Foreign Field="Group" ForeignClass="_UserGroup" ForeignField="ID" ForeignViewNameField="Name"/>

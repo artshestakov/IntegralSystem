@@ -13,7 +13,6 @@ ISSqlModelCore::ISSqlModelCore(PMetaTable *meta_table, QObject *parent)
 	SortingColumn(0),
 	SortingOrder(Qt::AscendingOrder),
 	IsSystemIndex(-1),
-	IsDeletedIndex(-1),
 	ShowToolTip(false),
 	IconSortingUp(BUFFER_ICONS("Table.Sorting.Up")),
 	IconSortingDown(BUFFER_ICONS("Table.Sorting.Down"))
@@ -139,10 +138,6 @@ QVariant ISSqlModelCore::data(const QModelIndex &ModelIndex, int Role) const
 		if (Records[ModelIndex.row()].value("IsSystem").toBool()) //Если запись системная
 		{
 			return qVariantFromValue(ISDefines::Gui::COLOR_BLUE); //Пометить её синим цветом
-		}
-		else if (Records[ModelIndex.row()].value("IsDeleted").toBool()) //Если запись удаленная
-		{
-			return qVariantFromValue(ISDefines::Gui::COLOR_RED); //Пометить её красным цветом
 		}
 	}
 	else if (Role == Qt::ToolTipRole && ShowToolTip) //Роль отображения подсказки для ячейки (ToolTip)

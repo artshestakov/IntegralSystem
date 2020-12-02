@@ -13,7 +13,6 @@
   <_SubSystems IsSystem="true" UID="{A437C2ED-7885-4FAD-860B-8F04B6D2F1C4}" System="{893B111E-88AC-4C85-A7D5-E8157FCD1066}" OrderID="4" LocalName="Монитор активности" Icon="SubSystem.MonitorActivity" ClassName="ISMonitorActivityForm" Hint="Мониторинг активности пользователей в системе"/>
   <_SubSystems IsSystem="true" UID="{9146E6DE-DE7D-40E8-A88A-0460A0C1D84E}" System="{893B111E-88AC-4C85-A7D5-E8157FCD1066}" OrderID="5" LocalName="Настройки базы данных" Icon="SubSystem.DatabaseSettings" ClassName="ISSettingsDatabaseListForm" Hint="Управление профилями настроек базы данных"/>
   <_SubSystems IsSystem="true" UID="{189BC968-2A53-4193-A959-6F0C787AE453}" System="{893B111E-88AC-4C85-A7D5-E8157FCD1066}" OrderID="6" LocalName="Статистика звонков" Icon="SubSystem.AsteriskCalls" ClassName="ISAsteriskCallsListForm" Hint="Просмотр и прослушивание всех звонков внутри компании"/>
-  <_SubSystems IsSystem="true" IsDeleted="true" UID="{BF03E395-A77F-40F5-9CC0-2C0A5FDA78CD}" System="{893B111E-88AC-4C85-A7D5-E8157FCD1066}" OrderID="7" LocalName="Тест" Icon="Lists" TableName="_Test"/>
 
   <_Systems IsSystem="true" UID="{830708DC-DDA7-42D3-9E4C-FF1CCA62D28C}" OrderID="2" LocalName="Внутреннее" Icon="System.Internal" Hint="Управление системными справочниками и внутренними функциями программы."/>
   <_SubSystems IsSystem="true" UID="{D55AE0AD-D609-48FF-BDAF-02279CBE146E}" System="{830708DC-DDA7-42D3-9E4C-FF1CCA62D28C}" OrderID="1" LocalName="Файловое хранилище" Icon="SubSystem.StorageFiles" ClassName="ISStorageFilesListForm" Hint="Предметно-ориентированная информационная база данных файлов. Данные, поступающие в хранилище, доступны только для чтения."/>
@@ -31,9 +30,7 @@
   <_ProtocolType IsSystem="true" UID="{C9C18C76-AC52-4B3E-B89D-5040F06AE3CE}" Name="Открытие параграфа"/>
   <_ProtocolType IsSystem="true" UID="{66E93262-02C6-49E3-B47E-FF20ED8DDDC5}" Name="Открытие системы"/>
   <_ProtocolType IsSystem="true" UID="{5F3EBAED-0970-4E0E-883C-535E6F084133}" Name="Открытие подсистемы"/>
-  <_ProtocolType IsSystem="true" UID="{275EDA32-F757-4EAA-BBD4-6C48AFD5DA9B}" Name="Установка пометки удаления записи"/>
-  <_ProtocolType IsSystem="true" UID="{B6EEFB63-8197-4F3A-8373-5C3B2FC409F3}" Name="Каскадное удаление записи"/>
-  <_ProtocolType IsSystem="true" UID="{C0000A7D-EDA1-4C06-9D7C-1DC942EE438E}" Name="Восстановление записи"/>
+  <_ProtocolType IsSystem="true" UID="{B6EEFB63-8197-4F3A-8373-5C3B2FC409F3}" Name="Удаление записи"/>
   <_ProtocolType IsSystem="true" UID="{1C50A667-B1C4-4F2C-8F39-90106ABB6774}" Name="Выгрузка таблицы"/>
   <_ProtocolType IsSystem="true" UID="{916A2119-5D8D-41C9-8358-AE587F365898}" Name="Печать"/>
   <_ProtocolType IsSystem="true" UID="{179F73BF-8983-4B52-B505-AF0EF4BF8093}" Name="Расширенный поиск"/>

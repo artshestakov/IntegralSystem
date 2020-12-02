@@ -50,16 +50,6 @@ void ISProtocol::DeleteObject(const QString &TableName, const QString &LocalList
 	Insert(true, CONST_UID_PROTOCOL_DELETE_OBJECT, TableName, LocalListName, ObjectID);
 }
 //-----------------------------------------------------------------------------
-void ISProtocol::RecoveryObject(const QString &TableName, const QString &LocalListName, const QVariant &ObjectID)
-{
-	Insert(true, CONST_UID_PROTOCOL_RECOVERY_OBJECT, TableName, LocalListName, ObjectID);
-}
-//-----------------------------------------------------------------------------
-void ISProtocol::DeleteCascadeObject(const QString &TableName, const QString &LocalListName, const QVariant &ObjectID)
-{
-	Insert(true, CONST_UID_PROTOCOL_DELETE_CASCADE_OBJECT, TableName, LocalListName, ObjectID);
-}
-//-----------------------------------------------------------------------------
 void ISProtocol::Insert(bool Thread, const QString &TypeUID, const QString &TableName, const QString &LocalListName, const QVariant &ObjectID, const QString &Information)
 {
 	if (Thread)

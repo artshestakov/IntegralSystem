@@ -8,7 +8,6 @@ static QString QS_SYSTEMS = PREPARE_QUERY("SELECT "
 										  "sbsm_uid, sbsm_localname, sbsm_icon, sbsm_classname, sbsm_tablename, sbsm_hint "
 										  "FROM _subsystems "
 										  "LEFT JOIN _systems ON stms_uid = sbsm_system "
-										  "WHERE NOT sbsm_isdeleted "
 										  "ORDER BY stms_orderid, sbsm_orderid");
 //-----------------------------------------------------------------------------
 ISMetaSystemsEntity::ISMetaSystemsEntity()

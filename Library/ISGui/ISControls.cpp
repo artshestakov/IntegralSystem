@@ -177,14 +177,6 @@ QAction* ISControls::CreateActionDelete(QObject *ParentObject)
 	return ActionDelete;
 }
 //-----------------------------------------------------------------------------
-QAction* ISControls::CreateActionDeleteCascade(QObject *ParentObject)
-{
-	QAction *ActionDeleteCascade = new QAction(BUFFER_ICONS("DeleteCascade"), LANG("ListForm.DeleteCascade"), ParentObject);
-	ActionDeleteCascade->setToolTip(LANG("ListForm.DeleteCascade.ToolTip"));
-	ActionDeleteCascade->setShortcut(QKeySequence(Qt::SHIFT + Qt::Key_Delete));
-	return ActionDeleteCascade;
-}
-//-----------------------------------------------------------------------------
 QAction* ISControls::CreateActionUpdate(QObject *ParentObject)
 {
 	QAction *ActionUpdate = new QAction(BUFFER_ICONS("Update"), LANG("ListForm.Update"), ParentObject);
@@ -205,6 +197,7 @@ QAction* ISControls::CreateActionSearchClearResults(QObject *ParentObject)
 {
 	QAction *ActionSearchFullTextClear = new QAction(BUFFER_ICONS("SearchClearResult"), LANG("Search.Cancel"), ParentObject);
 	ActionSearchFullTextClear->setToolTip(LANG("Search.Cancel"));
+	ActionSearchFullTextClear->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_F7));
 	return ActionSearchFullTextClear;
 }
 //-----------------------------------------------------------------------------

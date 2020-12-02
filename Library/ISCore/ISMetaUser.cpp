@@ -5,7 +5,6 @@
 #include "ISLocalization.h"
 //-----------------------------------------------------------------------------
 static QString QS_USER = PREPARE_QUERY("SELECT "
-									   "usrs_isdeleted, "
 									   "usrs_issystem, "
 									   "usrs_id, "
 									   "usrs_group, "
@@ -61,13 +60,6 @@ bool ISMetaUser::Initialize()
 		return false;
 	}
 	
-	//Учётная запись помечена на удаление
-	if (qSelectUser.ReadColumn("usrs_isdeleted").toBool())
-	{
-		ErrorString = LANG("Message.Error.CurrentUserIsDeleted");
-		return false;
-	}
-
 	//Заполняем структуру данными
 	UserData.System = qSelectUser.ReadColumn("usrs_issystem").toBool();
 	UserData.ID = qSelectUser.ReadColumn("usrs_id").toInt();

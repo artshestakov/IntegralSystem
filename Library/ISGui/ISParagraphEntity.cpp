@@ -7,7 +7,6 @@
 //-----------------------------------------------------------------------------
 static QString QS_PARAGRAPHS = PREPARE_QUERY("SELECT prhs_uid, prhs_name, prhs_localname, prhs_tooltip, prhs_icon, prhs_classname "
 											 "FROM _paragraphs "
-											 "WHERE NOT prhs_isdeleted "
 											 "ORDER BY prhs_orderid");
 //-----------------------------------------------------------------------------
 ISParagraphEntity::ISParagraphEntity()

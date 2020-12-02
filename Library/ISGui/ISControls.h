@@ -39,7 +39,6 @@ public:
 	static QAction* CreateActionCreateCopy(QObject *ParentObject);
 	static QAction* CreateActionEdit(QObject *ParentObject);
 	static QAction* CreateActionDelete(QObject *ParentObject);
-	static QAction* CreateActionDeleteCascade(QObject *ParentObject);
 	static QAction* CreateActionUpdate(QObject *ParentObject);
 	static QAction* CreateActionSearch(QObject *ParentObject);
 	static QAction* CreateActionSearchClearResults(QObject *ParentObject);

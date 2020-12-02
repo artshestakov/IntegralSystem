@@ -76,30 +76,10 @@ ISListBaseForm::ISListBaseForm(const QString &TableName, QWidget *parent)
 		connect(ActionDelete, &QAction::triggered, this, &ISListBaseForm::Delete);
 		Actions[ISNamespace::AT_Delete] = ActionDelete;
 
-		//Удалить каскадом
-		QAction *ActionDeleteCascade = ISControls::CreateActionDeleteCascade(this);
-		connect(ActionDeleteCascade, &QAction::triggered, this, &ISListBaseForm::DeleteCascade);
-		Actions[ISNamespace::AT_DeleteCascade] = ActionDeleteCascade;
-
 		//Обновить
 		QAction *ActionUpdate = ISControls::CreateActionUpdate(this);
 		connect(ActionUpdate, &QAction::triggered, this, &ISListBaseForm::Update);
 		Actions[ISNamespace::AT_Update] = ActionUpdate;
-
-		//Показывать актуальные записи
-		QAction *ActionShowActual = new QAction(BUFFER_ICONS("ShowActual"), LANG("ListForm.ShowActual"), this);
-		ActionShowActual->setCheckable(true);
-		ActionShowActual->setChecked(true);
-		ActionShowActual->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_F1));
-		connect(ActionShowActual, &QAction::triggered, this, &ISListBaseForm::ShowActual);
-		Actions[ISNamespace::AT_ShowActual] = ActionShowActual;
-
-		//Показывать удаленные записи
-		QAction *ActionShowDeleted = new QAction(BUFFER_ICONS("ShowDeleted"), LANG("ListForm.ShowDeleted"), this);
-		ActionShowDeleted->setCheckable(true);
-		ActionShowDeleted->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_F2));
-		connect(ActionShowDeleted, &QAction::triggered, this, &ISListBaseForm::ShowDeleted);
-		Actions[ISNamespace::AT_ShowDeleted] = ActionShowDeleted;
 
 		//Поиск
 		QAction *ActionSearch = ISControls::CreateActionSearch(this);
@@ -196,7 +176,6 @@ ISListBaseForm::ISListBaseForm(const QString &TableName, QWidget *parent)
 		ToolBar->addAction(GetAction(ISNamespace::AT_CreateCopy));
 		ToolBar->addAction(GetAction(ISNamespace::AT_Edit));
 		ToolBar->addAction(GetAction(ISNamespace::AT_Delete));
-		ToolBar->addAction(GetAction(ISNamespace::AT_DeleteCascade));
 		ToolBar->addAction(GetAction(ISNamespace::AT_Update));
 		ToolBar->addAction(GetAction(ISNamespace::AT_Search));
 		ToolBar->addAction(GetAction(ISNamespace::AT_SearchClear));
@@ -213,9 +192,6 @@ ISListBaseForm::ISListBaseForm(const QString &TableName, QWidget *parent)
 		dynamic_cast<QToolButton*>(ToolBar->widgetForAction(ActionAdditionally))->setPopupMode(QToolButton::InstantPopup);
 		dynamic_cast<QToolButton*>(ToolBar->widgetForAction(ActionAdditionally))->setStyleSheet(BUFFER_STYLE_SHEET("QToolButtonMenu"));
 		ActionAdditionally->setMenu(new QMenu(ToolBar));
-		ActionAdditionally->menu()->addAction(GetAction(ISNamespace::AT_ShowActual));
-		ActionAdditionally->menu()->addAction(GetAction(ISNamespace::AT_ShowDeleted));
-		ActionAdditionally->menu()->addSeparator();
 		ActionAdditionally->menu()->addAction(GetAction(ISNamespace::AT_Favorites));
 		ActionAdditionally->menu()->addAction(GetAction(ISNamespace::AT_Export));
 		ActionAdditionally->menu()->addAction(GetSpecialAction(ISNamespace::AST_SortDefault));
@@ -234,7 +210,6 @@ ISListBaseForm::ISListBaseForm(const QString &TableName, QWidget *parent)
 		if (GetAction(ISNamespace::AT_CreateCopy)) ActionObjectGroup->addAction(GetAction(ISNamespace::AT_CreateCopy));
 		if (GetAction(ISNamespace::AT_Edit)) ActionObjectGroup->addAction(GetAction(ISNamespace::AT_Edit));
 		if (GetAction(ISNamespace::AT_Delete)) ActionObjectGroup->addAction(GetAction(ISNamespace::AT_Delete));
-		if (GetAction(ISNamespace::AT_DeleteCascade)) ActionObjectGroup->addAction(GetAction(ISNamespace::AT_DeleteCascade));
 		if (GetAction(ISNamespace::AT_SystemInfo)) ActionObjectGroup->addAction(GetAction(ISNamespace::AT_SystemInfo));
 		if (GetAction(ISNamespace::AT_Print)) ActionObjectGroup->addAction(GetAction(ISNamespace::AT_Print));
 	}
@@ -272,7 +247,6 @@ ISListBaseForm::ISListBaseForm(const QString &TableName, QWidget *parent)
 		if (GetAction(ISNamespace::AT_CreateCopy)) ContextMenu->addAction(GetAction(ISNamespace::AT_CreateCopy));
 		if (GetAction(ISNamespace::AT_Edit)) ContextMenu->addAction(GetAction(ISNamespace::AT_Edit));
 		if (GetAction(ISNamespace::AT_Delete)) ContextMenu->addAction(GetAction(ISNamespace::AT_Delete));
-		if (GetAction(ISNamespace::AT_DeleteCascade)) ContextMenu->addAction(GetAction(ISNamespace::AT_DeleteCascade));
 		if (GetAction(ISNamespace::AT_Update)) ContextMenu->addAction(GetAction(ISNamespace::AT_Update));
 		if (GetAction(ISNamespace::AT_SystemInfo)) ContextMenu->addAction(GetAction(ISNamespace::AT_SystemInfo));
 		ContextMenu->addAction(GetSpecialAction(ISNamespace::AST_Note));
@@ -605,7 +579,6 @@ void ISListBaseForm::SelectedRowEvent(const QItemSelection &ItemSelected, const 
 	}
 
 	GetAction(ISNamespace::AT_Delete)->setEnabled(SelectedRows);
-	GetAction(ISNamespace::AT_DeleteCascade)->setEnabled(SelectedRows);
 	emit SelectedRowSignal();
 }
 //-----------------------------------------------------------------------------
@@ -650,7 +623,6 @@ void ISListBaseForm::AfterShowEvent()
 	GetAction(ISNamespace::AT_CreateCopy)->setVisible(!MetaTable->ShowOnly);
 	GetAction(ISNamespace::AT_Edit)->setVisible(!MetaTable->ShowOnly);
 	GetAction(ISNamespace::AT_Delete)->setVisible(!MetaTable->ShowOnly);
-	GetAction(ISNamespace::AT_DeleteCascade)->setVisible(!MetaTable->ShowOnly);
 }
 //-----------------------------------------------------------------------------
 void ISListBaseForm::AddAction(QAction *Action, bool AddingToActionGroup, bool AddingToContextMenu)
@@ -969,7 +941,6 @@ void ISListBaseForm::ModelThreadFinished()
 	{
 		HideField("ID");
 	}
-	HideField("IsDeleted");
 	HideField("IsSystem");
 
 	ISSortingMetaTable *MetaSorting = ISSortingBuffer::Instance().GetSorting(MetaTable->Name);
@@ -1081,67 +1052,11 @@ void ISListBaseForm::Update()
 
 	if (SETTING_BOOL(CONST_UID_SETTING_TABLES_PAGE_NAVIGATION))
 	{
-		PageNavigation->SetRowCount(ISDatabaseHelper::GetCountRows(MetaTable->Name, MetaTable->Alias));
+		PageNavigation->SetRowCount(ISDatabaseHelper::GetCountRows(MetaTable->Name));
 	}
 }
 //-----------------------------------------------------------------------------
-void ISListBaseForm::Delete()
-{
-	if (!ISUserRoleEntity::Instance().CheckAccessTable(MetaTable->Name, CONST_UID_GROUP_ACCESS_TYPE_EDIT))
-	{
-		ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.Edit").arg(MetaTable->LocalListName));
-		return;
-	}
-
-	bool show_is_deleted = QueryModel->GetVisibleIsDeleted();
-	QString ErrorString;
-	ISVectorInt VectorInt = GetSelectedIDs();
-	if (VectorInt.size() == 1) //Выбрана одна запись
-	{
-		if (CheckIsSystemObject()) //Если запись системная - выдаём предупреждение и выходим из функции
-		{
-			ISMessageBox::ShowWarning(this, LANG("Message.Warning.SystemObject.NotDelete"));
-			return;
-		}
-
-		if (ISMessageBox::ShowQuestion(this, show_is_deleted ? LANG("Message.Question.RecoveryObjectSelected") : LANG("Message.Question.DeleteSelectedRecord")))
-		{
-			if (ISCore::SetIsDeletedObject(!show_is_deleted, MetaTable, VectorInt.front(), ErrorString)) //Если восстановление прошло успешно, обновить таблицу
-			{
-				SqlModel->RemoveRecord(GetCurrentRowIndex());
-				if (SETTING_BOOL(CONST_UID_SETTING_GENERAL_SHOWNOTIFICATIONFORM))
-				{
-					ISPopupMessage::ShowNotification(show_is_deleted ? LANG("NotificationForm.Title.Recovery") : LANG("NotificationForm.Title.Deleted"));
-				}
-			}
-			else
-			{
-				ISMessageBox::ShowCritical(this, show_is_deleted ? LANG("Message.Error.SetNotIsDeletedObject") : LANG("Message.Error.SetIsDeletedObject"), ErrorString);
-			}
-		}
-	}
-	else //Выбрано несколько записей
-	{
-		if (ISMessageBox::ShowQuestion(this, show_is_deleted ? LANG("Message.Objects.Recovery") : LANG("Message.Objects.Delete").arg(VectorInt.size())))
-		{
-			if (ISCore::SetIsDeletedObjects(!show_is_deleted, MetaTable, VectorInt, ErrorString))
-			{
-				Update();
-				if (SETTING_BOOL(CONST_UID_SETTING_GENERAL_SHOWNOTIFICATIONFORM))
-				{
-					ISPopupMessage::ShowNotification(show_is_deleted ? LANG("NotificationForm.Title.Recoverys") : LANG("NotificationForm.Title.Deleteds"));
-				}
-			}
-			else
-			{
-				ISMessageBox::ShowCritical(this, LANG("Message.Error.SetIsDeletedObject"), ErrorString);
-			}
-		}
-	}
-	VisibleIndicatorWidget();
-}
-//-----------------------------------------------------------------------------
-bool ISListBaseForm::DeleteCascade()
+bool ISListBaseForm::Delete()
 {
 	if (!ISUserRoleEntity::Instance().CheckAccessTable(MetaTable->Name, CONST_UID_GROUP_ACCESS_TYPE_EDIT))
 	{
@@ -1159,44 +1074,45 @@ bool ISListBaseForm::DeleteCascade()
 			ISMessageBox::ShowWarning(this, LANG("Message.Warning.SystemObject.NotDelete"));
 			return false;
 		}
-		if (ISMessageBox::ShowQuestion(this, LANG("Message.Object.Delete.Cascade"), LANG("Message.Object.Delete.Cascade.Help")))
+
+		if (ISMessageBox::ShowQuestion(this, LANG("Message.Object.Delete")))
 		{
 			int ObjectID = VectorInt.front();
-			Result = ISCore::DeleteCascadeObject(MetaTable, ObjectID, ErrorString);
+			Result = ISCore::DeleteObject(MetaTable, ObjectID, ErrorString);
 			if (Result)
 			{
 				if (SETTING_BOOL(CONST_UID_SETTING_GENERAL_SHOWNOTIFICATIONFORM))
 				{
-					ISPopupMessage::ShowNotification(LANG("NotificationForm.Title.Deleted.Cascade").arg(ObjectID));
+					ISPopupMessage::ShowNotification(LANG("NotificationForm.Title.Deleted").arg(ObjectID));
 				}
-				ISProtocol::DeleteCascadeObject(MetaTable->Name, MetaTable->LocalListName, GetObjectID());
+				ISProtocol::DeleteObject(MetaTable->Name, MetaTable->LocalListName, GetObjectID());
 				Update();
 			}
 			else
 			{
-				ISMessageBox::ShowCritical(this, LANG("Message.Error.CascadeDeleteObject"), ErrorString);
+				ISMessageBox::ShowCritical(this, LANG("Message.Error.DeleteObject"), ErrorString);
 			}
 			return Result;
 		}
 	}
 	else //Удаляется несколько записей
 	{
-		if (ISMessageBox::ShowQuestion(this, LANG("Message.Objects.Delete.Cascade").arg(VectorInt.size()), LANG("Message.Object.Delete.Cascade.Help")))
+		if (ISMessageBox::ShowQuestion(this, LANG("Message.Objects.Delete").arg(VectorInt.size())))
 		{
-			ISProgressForm ProgressForm((int)VectorInt.size(), LANG("DeletingCascadeObjects"), this);
+			ISProgressForm ProgressForm((int)VectorInt.size(), LANG("DeletingObjects"), this);
 			ProgressForm.show();
 
 			for (int ObjectID : VectorInt)
 			{
 				ProgressForm.IncrementValue();
-				Result = ISCore::DeleteCascadeObject(MetaTable, ObjectID, ErrorString);
+				Result = ISCore::DeleteObject(MetaTable, ObjectID, ErrorString);
 				if (Result) //Если запись удалена - протоколируем
 				{
-					ISProtocol::DeleteCascadeObject(MetaTable->Name, MetaTable->LocalListName, GetObjectID());
+					ISProtocol::DeleteObject(MetaTable->Name, MetaTable->LocalListName, GetObjectID());
 				}
 				else //Не удалось удалить запись - выходим из цикла
 				{
-					ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotDeleteCascadeRecord").arg(ObjectID), ErrorString);
+					ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotDeleteRecord").arg(ObjectID), ErrorString);
 					break;
 				}
 
@@ -1209,30 +1125,6 @@ bool ISListBaseForm::DeleteCascade()
 		}
 	}
 	return Result;
-}
-//-----------------------------------------------------------------------------
-void ISListBaseForm::ShowActual()
-{
-	GetAction(ISNamespace::AT_ShowActual)->setChecked(true);
-	GetAction(ISNamespace::AT_ShowDeleted)->setChecked(false);
-	QueryModel->SetVisibleIsDeleted(false);
-	Update();
-}
-//-----------------------------------------------------------------------------
-void ISListBaseForm::ShowDeleted()
-{
-	if (!ISUserRoleEntity::Instance().CheckAccessTable(MetaTable->Name, CONST_UID_GROUP_ACCESS_TYPE_IS_DELETED))
-	{
-		GetAction(ISNamespace::AT_ShowActual)->setChecked(true);
-		GetAction(ISNamespace::AT_ShowDeleted)->setChecked(false);
-		ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.IsDeleted").arg(MetaTable->LocalListName));
-		return;
-	}
-
-	GetAction(ISNamespace::AT_ShowActual)->setChecked(false);
-	GetAction(ISNamespace::AT_ShowDeleted)->setChecked(true);
-	QueryModel->SetVisibleIsDeleted(!QueryModel->GetVisibleIsDeleted());
-	Update();
 }
 //-----------------------------------------------------------------------------
 void ISListBaseForm::Search()
@@ -1264,7 +1156,7 @@ void ISListBaseForm::SearchClear()
 //-----------------------------------------------------------------------------
 void ISListBaseForm::Export()
 {
-	if (!ISUserRoleEntity::Instance().CheckAccessTable(MetaTable->Name, CONST_UID_GROUP_ACCESS_TYPE_IS_DELETED))
+	if (!ISUserRoleEntity::Instance().CheckAccessTable(MetaTable->Name, CONST_UID_GROUP_ACCESS_TYPE_EXPORT))
 	{
 		ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.Export").arg(MetaTable->LocalListName));
 		return;

@@ -29,12 +29,10 @@ static QString QS_SEARCH_FAST = PREPARE_QUERY("SELECT srfs_value "
 //-----------------------------------------------------------------------------
 static QString QS_SEX = PREPARE_QUERY("SELECT sexs_id, sexs_name "
 									  "FROM _sex "
-									  "WHERE NOT sexs_isdeleted "
 									  "ORDER BY sexs_name");
 //-----------------------------------------------------------------------------
 static QString QS_TASK_PRIORITY = PREPARE_QUERY("SELECT tspr_id, tspr_name, tspr_tooltip, tspr_stylesheet, tspr_icon "
 												"FROM _taskpriority "
-												"WHERE NOT tspr_isdeleted "
 												"ORDER BY tspr_order");
 //-----------------------------------------------------------------------------
 ISCheckEdit::ISCheckEdit(QWidget *parent) : ISFieldEditBase(parent)
@@ -2216,7 +2214,7 @@ void ISListEditPopup::Add()
 void ISListEditPopup::LoadDataFromQuery()
 {
 	QString QueryText = MetaForeign->SqlQuery;
-	if (!SqlFilter.isEmpty())
+	if (SqlFilter.isEmpty())
 	{
 		QueryText = ISMetaDataHelper::GenerateSqlQueryFromForeign(MetaForeign, SqlFilter);
 	}

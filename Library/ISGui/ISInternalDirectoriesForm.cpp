@@ -9,7 +9,6 @@
 //-----------------------------------------------------------------------------
 static QString QS_INTERNAL_DIRECTORIES = PREPARE_QUERY("SELECT intd_tablename "
 													   "FROM _internaldirectories "
-													   "WHERE NOT intd_isdeleted "
 													   "ORDER BY intd_order");
 //-----------------------------------------------------------------------------
 ISInternalDirectoriesForm::ISInternalDirectoriesForm(QWidget *parent)

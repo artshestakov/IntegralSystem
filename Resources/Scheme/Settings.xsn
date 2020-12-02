@@ -48,13 +48,13 @@
     </Fields>
     <Indexes>
       <Index Field="Group"/>
+      <Index Field="Order"/>
       <Index Field="Name"/>
       <Index Field="Type"/>
       <Index Field="WidgetEditName"/>
       <Index Field="LocalName"/>
       <Index Field="Hint"/>
       <Index Field="DefaultValue"/>
-      <Index Field="IsDeleted;Order"/>
     </Indexes>
     <Foreigns>
       <Foreign Field="Group" ForeignClass="_SettingsGroup" ForeignField="UID" ForeignViewNameField="LocalName"/>

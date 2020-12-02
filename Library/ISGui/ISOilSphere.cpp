@@ -23,13 +23,11 @@ static QString QI_STATEMENT = PREPARE_QUERY2("INSERT INTO gasstationstatement(gs
 //-----------------------------------------------------------------------------
 static QString QS_STOCK = PREPARE_QUERY2("SELECT stck_id, stck_name "
 										 "FROM stock "
-										 "WHERE NOT stck_isdeleted "
 										 "ORDER BY stck_name");
 //-----------------------------------------------------------------------------
 static QString QS_CONSTANT = PREPARE_QUERY2("SELECT prod_constant "
 											"FROM period "
-											"WHERE NOT prod_isdeleted "
-											"AND CURRENT_DATE BETWEEN prod_datestart AND prod_dateend");
+											"WHERE CURRENT_DATE BETWEEN prod_datestart AND prod_dateend");
 //-----------------------------------------------------------------------------
 static QString QS_FILL_IN_BASED = PREPARE_QUERY2("SELECT "
 												 "COALESCE(gsts_balanceendchange, 0) AS gsts_balanceendchange, "
@@ -47,18 +45,14 @@ static QString QS_CASHBOX_TOTAL_PAYMENT = PREPARE_QUERY2("SELECT gsts_cashboxtot
 static QString QS_IMPLEMENTATION_UNLOAD = PREPARE_QUERY2("SELECT true AS is_load, ilod_implementation AS implementation_id, ilod_id AS id, impl_date AS date, ilod_cost AS cost "
 														 "FROM implementationload "
 														 "LEFT JOIN implementation ON ilod_implementation = impl_id "
-														 "WHERE NOT ilod_isdeleted "
-														 "AND NOT (SELECT impl_isdeleted FROM implementation WHERE ilod_implementation = impl_id) "
-														 "AND ilod_counterparty = :CounterpartyID "
+														 "WHERE ilod_counterparty = :CounterpartyID "
 														 ""
 														 "UNION "
 														 ""
 														 "SELECT false AS is_load, iunl_implementation AS implementation_id, iunl_id AS id, impl_date AS date, iunl_cost AS cost "
 														 "FROM implementationunload "
 														 "LEFT JOIN implementation ON iunl_implementation = impl_id "
-														 "WHERE NOT iunl_isdeleted "
-														 "AND NOT (SELECT impl_isdeleted FROM implementation WHERE iunl_implementation = impl_id) "
-														 "AND iunl_counterparty = :CounterpartyID "
+														 "WHERE iunl_counterparty = :CounterpartyID "
 														 "ORDER BY is_load, date DESC");
 //-----------------------------------------------------------------------------
 static QString QS_COUNTERPARTY_DEBT = PREPARE_QUERY2("SELECT get_counterparty_unload(:CounterpartyID), get_counterparty_load(:CounterpartyID), get_counterparty_entrollment(:CounterpartyID), get_counterparty_move_wagon(:CounterpartyID)");

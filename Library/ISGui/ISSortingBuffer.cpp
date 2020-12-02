@@ -4,13 +4,11 @@
 //-----------------------------------------------------------------------------
 static QString QS_SORTINGS = PREPARE_QUERY("SELECT sgts_tablename, sgts_fieldname, sgts_sorting "
 										   "FROM _sortingtables "
-										   "WHERE NOT sgts_isdeleted "
-										   "AND sgts_creationuser = currentuserid()");
+										   "WHERE sgts_creationuser = currentuserid()");
 //-----------------------------------------------------------------------------
 static QString QS_SORTING_EXIST = PREPARE_QUERY("SELECT COUNT(*) "
 												"FROM _sortingtables "
-												"WHERE NOT sgts_isdeleted "
-												"AND sgts_creationuser = currentuserid() "
+												"WHERE sgts_creationuser = currentuserid() "
 												"AND sgts_tablename = :TableName");
 //-----------------------------------------------------------------------------
 static QString QU_SORTING = PREPARE_QUERY("UPDATE _sortingtables SET "

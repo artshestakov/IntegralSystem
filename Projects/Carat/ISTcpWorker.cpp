@@ -11,7 +11,7 @@
 #include "ISTcpClients.h"
 #include "ISMetaData.h"
 //-----------------------------------------------------------------------------
-static QString QS_AUTH = PREPARE_QUERY("SELECT usrs_id, usrs_issystem, usrs_isdeleted, usrs_group, usrs_fio, usrs_accessallowed, usrs_accountlifetime, usrs_accountlifetimestart, usrs_accountlifetimeend, usgp_fullaccess, "
+static QString QS_AUTH = PREPARE_QUERY("SELECT usrs_id, usrs_issystem, usrs_group, usrs_fio, usrs_accessallowed, usrs_accountlifetime, usrs_accountlifetimestart, usrs_accountlifetimeend, usgp_fullaccess, "
 									   "(SELECT sgdb_useraccessdatabase FROM _settingsdatabase WHERE sgdb_active) "
 									   "FROM _users "
 									   "LEFT JOIN _usergroup ON usgp_id = usrs_group "
@@ -22,8 +22,7 @@ static QString QI_PROTOCOL = PREPARE_QUERY("INSERT INTO _protocol(prtc_creationd
 //-----------------------------------------------------------------------------
 static QString QS_SETTINGS_DATABASE = PREPARE_QUERY("SELECT sgdb_settingname, sgdb_useraccessdatabase, sgdb_numbersimbolsaftercomma, sgdb_storagefilemaxsize "
 													"FROM _settingsdatabase "
-													"WHERE NOT sgdb_isdeleted "
-													"AND sgdb_active");
+													"WHERE sgdb_active");
 //-----------------------------------------------------------------------------
 static QString QS_GROUP_ACCESS_TABLE = PREPARE_QUERY("SELECT gatb_table, gatt_uid "
 													 "FROM _groupaccesstable "
@@ -37,26 +36,22 @@ static QString QS_GROUP_ACCESS_SPECIAL = PREPARE_QUERY("SELECT gast_uid "
 //-----------------------------------------------------------------------------
 static QString QS_SYSTEM = PREPARE_QUERY("SELECT stms_issystem, stms_uid, stms_localname, stms_icon, stms_hint "
 										 "FROM _systems "
-										 "WHERE NOT stms_isdeleted "
 										 "ORDER BY stms_orderid");
 //-----------------------------------------------------------------------------
 static QString QS_SUBSYSTEM = PREPARE_QUERY("SELECT sbsm_uid, sbsm_localname, sbsm_icon, sbsm_classname, sbsm_tablename, sbsm_hint "
 											"FROM _subsystems "
-											"WHERE NOT sbsm_isdeleted "
-											"AND sbsm_system = :SystemUID "
+											"WHERE sbsm_system = :SystemUID "
 											"AND check_access_user_subsystem(:UserID, :UserIsSystem, sbsm_uid) "
 											"ORDER BY sbsm_orderid");
 //-----------------------------------------------------------------------------
 static QString QS_REPORT = PREPARE_QUERY("SELECT rprt_uid, rprt_type, rprt_tablename, rprt_localname, rprt_filetemplate "
 										 "FROM _report "
-										 "WHERE NOT rprt_isdeleted "
-										 "AND rprt_parent IS NULL "
+										 "WHERE rprt_parent IS NULL "
 										 "ORDER BY rprt_id");
 //-----------------------------------------------------------------------------
 static QString QS_REPORT_FIELD = PREPARE_QUERY("SELECT rprt_replacevalue, rprt_sqlquery "
 											   "FROM _report "
-											   "WHERE NOT rprt_isdeleted "
-											   "AND rprt_parent = :ParentUID");
+											   "WHERE rprt_parent = :ParentUID");
 //-----------------------------------------------------------------------------
 static QString QS_FAVORITE = PREPARE_QUERY("SELECT fvts_tablename, fvts_objectsid "
 										   "FROM _favorites "
@@ -69,8 +64,7 @@ static QString QS_HISTORY = PREPARE_QUERY("SELECT htry_creationdate, htry_tablen
 //-----------------------------------------------------------------------------
 static QString QS_SORTING = PREPARE_QUERY("SELECT sgts_tablename, sgts_fieldname, sgts_sorting "
 										  "FROM _sortingtables "
-										  "WHERE NOT sgts_isdeleted "
-										  "AND sgts_creationuser = :UserID");
+										  "WHERE sgts_creationuser = :UserID");
 //-----------------------------------------------------------------------------
 static QString QS_COLUMN_SIZE = PREPARE_QUERY("SELECT clsz_tablename, clsz_fieldname, clsz_size "
 											  "FROM _columnsize "
@@ -78,7 +72,6 @@ static QString QS_COLUMN_SIZE = PREPARE_QUERY("SELECT clsz_tablename, clsz_field
 //-----------------------------------------------------------------------------
 static QString QS_SETTING_GROUP = PREPARE_QUERY("SELECT stgp_uid, stgp_name, stgp_localname, stgp_iconname, stgp_hint "
 												"FROM _settingsgroup "
-												"WHERE NOT stgp_isdeleted "
 												"ORDER BY stgp_order");
 //-----------------------------------------------------------------------------
 static QString QS_SETTING = PREPARE_QUERY("SELECT stgs_uid, stgs_name, stgs_type, stgs_widgeteditname, stgs_localname, stgs_hint, stgs_defaultvalue, "
@@ -86,8 +79,7 @@ static QString QS_SETTING = PREPARE_QUERY("SELECT stgs_uid, stgs_name, stgs_type
 										  "(SELECT COUNT(*) FROM _usersettings WHERE usst_creationuser = :UserID AND usst_setting = stgs_id) "
 										  "FROM _settings "
 										  "LEFT JOIN _usersettings ON usst_setting = stgs_id AND usst_creationuser = :UserID "
-										  "WHERE NOT stgs_isdeleted "
-										  "AND stgs_group = :GroupUID "
+										  "WHERE stgs_group = :GroupUID "
 										  "ORDER BY stgs_order");
 //-----------------------------------------------------------------------------
 static QString QI_USER_SETTING = PREPARE_QUERY("INSERT INTO _usersettings(usst_setting, usst_value) "
@@ -95,7 +87,6 @@ static QString QI_USER_SETTING = PREPARE_QUERY("INSERT INTO _usersettings(usst_s
 //-----------------------------------------------------------------------------
 static QString QS_PARAGRAPH = PREPARE_QUERY("SELECT prhs_uid, prhs_name, prhs_localname, prhs_tooltip, prhs_icon, prhs_classname "
 											"FROM _paragraphs "
-											"WHERE NOT prhs_isdeleted "
 											"ORDER BY prhs_orderid");
 //-----------------------------------------------------------------------------
 static QString QS_USER_HASH_IS_NULL = PREPARE_QUERY("SELECT usrs_hash IS NULL AS is_null "
@@ -437,7 +428,6 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 
 	int UserID = qSelectAuth.ReadColumn("usrs_id").toInt();
 	bool IsSystem = qSelectAuth.ReadColumn("usrs_issystem").toBool();
-	bool IsDeleted = qSelectAuth.ReadColumn("usrs_isdeleted").toBool();
 	QString UserFIO = qSelectAuth.ReadColumn("usrs_fio").toString();
 	int GroupID = qSelectAuth.ReadColumn("usrs_group").toInt();
 	bool GroupFullAccess = qSelectAuth.ReadColumn("usgp_fullaccess").toBool();
@@ -446,13 +436,6 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	if (!qSelectAuth.ReadColumn("sgdb_useraccessdatabase").toBool() && !IsSystem)
 	{
 		ErrorString = LANG("Carat.Error.Query.ConnectionBan");
-		return false;
-	}
-
-	//≈сли такой логин помечен на удаление
-	if (IsDeleted)
-	{
-		ErrorString = LANG("Carat.Error.Query.LoginIsDeleted");
 		return false;
 	}
 
@@ -1334,7 +1317,7 @@ bool ISTcpWorker::RecordDelete(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	int UseriD = TcpMessage->TcpSocket->GetUserID();
 	for (const QVariant &ObjectID : Objects)
 	{
-		Protocol(UseriD, CONST_UID_PROTOCOL_DELETE_CASCADE_OBJECT, MetaTable->Name, MetaTable->LocalListName, ObjectID, QVariant());
+		Protocol(UseriD, CONST_UID_PROTOCOL_DELETE_OBJECT, MetaTable->Name, MetaTable->LocalListName, ObjectID, QVariant());
 	}
 	return true;
 }

@@ -14,7 +14,6 @@
 //-----------------------------------------------------------------------------
 static QString QS_GROUP_ACCESS_TABLE_TYPE = PREPARE_QUERY("SELECT gatt_id, gatt_name, gatt_icon "
 														  "FROM _groupaccesstabletype "
-														  "WHERE NOT gatt_isdeleted "
 														  "ORDER BY gatt_order");
 //-----------------------------------------------------------------------------
 static QString QS_GROUP_ACCESS_SPECIAL_GROUP = PREPARE_QUERY("SELECT gast_uid, gast_name "

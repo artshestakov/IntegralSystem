@@ -17,18 +17,19 @@ QString ISMetaDataHelper::GenerateSqlQueryFromForeign(PMetaForeign *MetaForeign,
 	SqlQuery += ") ";
 	SqlQuery += "AS Value \n";
 	SqlQuery += "FROM " + MetaTableForeign->Name + " \n";
-	SqlQuery += "WHERE NOT " + MetaTableForeign->Alias + "_isdeleted \n";
 
-	if (!SqlFilter.isEmpty())
+	if (!SqlFilter.isEmpty() || ObjectID.isValid())
 	{
-		SqlQuery += "AND " + SqlFilter + " \n";
+		SqlQuery += "WHERE ";
+		if (!SqlFilter.isEmpty())
+		{
+			SqlQuery += "AND " + SqlFilter + " \n";
+		}
+		if (ObjectID.isValid())
+		{
+			SqlQuery += "AND " + MetaTableForeign->Alias + '_' + MetaForeign->ForeignField + " = :ObjectID \n";
+		}
 	}
-
-	if (ObjectID.isValid())
-	{
-		SqlQuery += "AND " + MetaTableForeign->Alias + '_' + MetaForeign->ForeignField + " = :ObjectID \n";
-	}
-
 	SqlQuery += "ORDER BY ";
 
 	if (!MetaForeign->OrderField.isEmpty()) //Если указано поле для сортировки

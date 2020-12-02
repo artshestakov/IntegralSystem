@@ -31,8 +31,6 @@ ISObjectFormBase::ISObjectFormBase(ISNamespace::ObjectFormType form_type, PMetaT
 	EditObjectID(nullptr),
 	BeginFieldEdit(nullptr),
 	ModificationFlag(false),
-	RecordIsDeleted(false),
-	ActionDelete(nullptr),
 	CentralWidget(nullptr),
 	ActionGroup(new QActionGroup(this))
 {
@@ -118,14 +116,6 @@ void ISObjectFormBase::SetVisibleDelete(bool Visible)
 	if (ActionDelete)
 	{
 		ActionDelete->setVisible(Visible);
-	}
-}
-//-----------------------------------------------------------------------------
-void ISObjectFormBase::SetVisibleDeleteCascade(bool Visible)
-{
-	if (ActionDeleteCascade)
-	{
-		ActionDeleteCascade->setVisible(Visible);
 	}
 }
 //-----------------------------------------------------------------------------
@@ -299,17 +289,11 @@ void ISObjectFormBase::CreateToolBar()
 	connect(ActionFavorites, &QAction::triggered, this, &ISObjectFormBase::AddFavoite);
 	AddActionToolBar(ActionFavorites);
 
-	//Удалить/восстановить карточку
+	//Удалить карточку
 	ActionDelete = ISControls::CreateActionDelete(ToolBar);
 	ActionDelete->setPriority(QAction::LowPriority);
 	connect(ActionDelete, &QAction::triggered, this, &ISObjectFormBase::Delete);
 	AddActionMenu(ActionDelete);
-
-	//Удалить каскадом
-	ActionDeleteCascade = ISControls::CreateActionDeleteCascade(ToolBar);
-	ActionDeleteCascade->setPriority(QAction::LowPriority);
-	connect(ActionDeleteCascade, &QAction::triggered, this, &ISObjectFormBase::DeleteCascade);
-	AddActionMenu(ActionDeleteCascade);
 
 	//Отменить изменения
 	ActionCancelChange = new QAction(BUFFER_ICONS("CancelChangedObject"), LANG("CancelChanged"), ToolBar);
@@ -340,16 +324,6 @@ void ISObjectFormBase::CreateWidgetObject()
 	CentralWidget->setLayout(LayoutObject);
 	CentralWidget->setSizePolicy(CentralWidget->sizePolicy().horizontalPolicy(), QSizePolicy::Minimum);
 	GetMainLayout()->addWidget(CentralWidget);
-
-	//Надпись указывающая на то, что объект помечен на удаление
-	QLabel *LabelIsDeleted = new QLabel(CentralWidget);
-	LabelIsDeleted->setVisible(false);
-	LabelIsDeleted->setStyleSheet(BUFFER_STYLE_SHEET("QLabel.Color.Red"));
-	LabelIsDeleted->setText(LANG("RecordMarkerIsDeleted"));
-	LabelIsDeleted->setFont(ISDefines::Gui::FONT_TAHOMA_12_BOLD);
-	LabelIsDeleted->setMargin(10);
-	ISGui::SetFontWidgetUnderline(LabelIsDeleted, true);
-	LayoutObject->addWidget(LabelIsDeleted);
 
 	QFormLayout *FormLayout = new QFormLayout();
 
@@ -432,8 +406,6 @@ void ISObjectFormBase::CreateWidgetObject()
 		if (qSelect.ExecuteFirst())
 		{
 			QSqlRecord SqlRecord = qSelect.GetRecord();
-			RecordIsDeleted = SqlRecord.value("IsDeleted").toBool();
-			LabelIsDeleted->setVisible(RecordIsDeleted);
 
 			if (FormType == ISNamespace::OFT_Edit)
 			{
@@ -449,7 +421,7 @@ void ISObjectFormBase::CreateWidgetObject()
 					continue;
 				}
 
-				if (!FieldsMap.count(FieldName)) //Если такого поля нет (возможно это поле ID, IsDeleted и т.д.) - переходим к следующему
+				if (!FieldsMap.count(FieldName)) //Если такого поля нет (возможно это поле ID и т.д.) - переходим к следующему
 				{
 					continue;
 				}
@@ -938,63 +910,22 @@ void ISObjectFormBase::Delete()
 		return;
 	}
 
-	QString ErrorString;
-	if (RecordIsDeleted)
-	{
-		if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.RecoveryThisRecord")))
-		{
-			if (ISCore::SetIsDeletedObject(false, MetaTable, GetObjectID(), ErrorString))
-			{
-				emit UpdateList();
-				close();
-			}
-			else
-			{
-				ISMessageBox::ShowCritical(this, LANG("Message.Error.SetNotIsDeletedObject"), ErrorString);
-			}
-		}
-	}
-	else
-	{
-		if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.DeleteThisRecord")))
-		{
-			if (ISCore::SetIsDeletedObject(true, MetaTable, GetObjectID(), ErrorString))
-			{
-				emit UpdateList();
-				close();
-			}
-			else
-			{
-				ISMessageBox::ShowCritical(this, LANG("Message.Error.SetIsDeletedObject"), ErrorString);
-			}
-		}
-	}
-}
-//-----------------------------------------------------------------------------
-void ISObjectFormBase::DeleteCascade()
-{
-	if (!ISUserRoleEntity::Instance().CheckAccessTable(MetaTable->Name, CONST_UID_GROUP_ACCESS_TYPE_EDIT))
-	{
-		ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.Edit").arg(MetaTable->LocalListName));
-		return;
-	}
-
-	if (ISMessageBox::ShowQuestion(this, LANG("Message.Object.Delete.Cascade"), LANG("Message.Object.Delete.Cascade.Help")))
+	if (ISMessageBox::ShowQuestion(this, LANG("Message.Object.Delete")))
 	{
 		QString ErrorString;
-		if (ISCore::DeleteCascadeObject(MetaTable, GetObjectID(), ErrorString))
+		if (ISCore::DeleteObject(MetaTable, GetObjectID(), ErrorString))
 		{
 			if (SETTING_BOOL(CONST_UID_SETTING_GENERAL_SHOWNOTIFICATIONFORM))
 			{
-				ISPopupMessage::ShowNotification(LANG("NotificationForm.Title.Deleted.Cascade").arg(GetObjectID()));
+				ISPopupMessage::ShowNotification(LANG("NotificationForm.Title.Deleted").arg(GetObjectID()));
 			}
-			ISProtocol::DeleteCascadeObject(MetaTable->Name, MetaTable->LocalListName, GetObjectID());
+			ISProtocol::DeleteObject(MetaTable->Name, MetaTable->LocalListName, GetObjectID());
 			emit UpdateList();
 			close();
 		}
 		else
 		{
-			ISMessageBox::ShowCritical(this, LANG("Message.Error.CascadeDeleteObject"), ErrorString);
+			ISMessageBox::ShowCritical(this, LANG("Message.Error.DeleteObject"), ErrorString);
 		}
 	}
 }

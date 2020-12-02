@@ -41,8 +41,7 @@ public:
 	void SetVisibleNavigationBar(bool Visible); //Изменить видимость у талбара эскортов
 	void SetVisibleField(const QString &FieldName, bool Visible); //Изменить видимость у поля
 	void SetVisibleFavorites(bool Visible); //Изменить видимость кнопки "Избранное"
-	void SetVisibleDelete(bool Visible); //Изменить видимость кнопки "Удалить"
-	void SetVisibleDeleteCascade(bool Visible); //Изменить видимость кнопки "Удалить каскадом"
+	void SetVisibleDelete(bool Visible); //Изменить видимость кнопки "Удалить каскадом"
 
 protected:
 	virtual void closeEvent(QCloseEvent *e);
@@ -76,7 +75,6 @@ protected:
 	void ShowSystemInfo(); //Показать системную информацию
 	void AddFavoite(); //Добавить в избранное
 	void Delete();
-	void DeleteCascade();
 	void CancelChanged(); //Отмена изменений
 	void NoteObject(); //Примечание записи
 
@@ -108,7 +106,6 @@ private:
 	QAction *ActionSystemInfo;
 	QAction *ActionFavorites;
 	QAction *ActionDelete;
-	QAction *ActionDeleteCascade;
 	QAction *ActionCancelChange;
 
 	ISLineEdit *EditObjectID; //Виджет отображения идентификатора объекта
@@ -119,7 +116,6 @@ private:
 	std::map<QString, QVariant> VirtualFields; //Виртуальные поля
 
 	bool ModificationFlag;
-	bool RecordIsDeleted;
 	QString ObjectName;
 };
 //-----------------------------------------------------------------------------

@@ -252,8 +252,7 @@
       <Index Field="TableName"/>
       <Index Field="FieldName"/>
       <Index Field="Sorting"/>
-      <Index Field="IsDeleted;CreationUser"/>
-      <Index Field="IsDeleted;CreationUser;TableName"/>
+      <Index Field="CreationUser"/>
       <Index Field="CreationUser;TableName"/>
     </Indexes>
   </Table>

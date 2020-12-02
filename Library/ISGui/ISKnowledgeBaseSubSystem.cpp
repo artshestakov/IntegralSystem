@@ -8,14 +8,12 @@
 //-----------------------------------------------------------------------------
 static QString QS_GROUP_TOP = PREPARE_QUERY("SELECT qagr_id, qagr_name "
 											"FROM _questionanswergroup "
-											"WHERE NOT qagr_isdeleted "
-											"AND qagr_parent IS NULL "
+											"WHERE qagr_parent IS NULL "
 											"ORDER BY qagr_name");
 //-----------------------------------------------------------------------------
 static QString QS_SUB_GROUP = PREPARE_QUERY("SELECT qagr_id, qagr_name "
 											"FROM _questionanswergroup "
-											"WHERE NOT qagr_isdeleted "
-											"AND qagr_parent = :ParentID "
+											"WHERE qagr_parent = :ParentID "
 											"ORDER BY qagr_name");
 //-----------------------------------------------------------------------------
 static QString QD_GROUP = PREPARE_QUERY("DELETE FROM _questionanswergroup "
