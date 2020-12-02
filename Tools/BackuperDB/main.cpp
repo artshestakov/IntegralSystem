@@ -32,7 +32,7 @@ int main(int argc, char **argv)
     StringStream.str(std::string());
 #endif
 
-	//Формируем имя файла бекапа и скрипта для ролей
+	//Формируем имя файла бекапа
 	StringStream << argv[1] << argv[2] << '_' << GetDate() << '_' << GetTime() << ".";
 	std::string FileName = StringStream.str();
 	StringStream.str(std::string());
@@ -58,29 +58,6 @@ int main(int argc, char **argv)
 	
 	//Вызываем команду создания бекапа
 	int Result = system(StringStream.str().c_str());
-    std::cout << std::endl;
-	if (Result) //Если команда выполнилась с ошибкой - выходим
-	{
-		return Result;
-	}
-
-	//Очищаем буфер и формируем команду бекапа ролей
-	StringStream.str(std::string());
-#ifdef WIN32
-    StringStream << "pg_dumpall.exe ";
-#else //В случае с Linux передаём в командную строку переменную PGPASSWORD
-    StringStream << "PGPASSWORD=" << argv[3] << " pg_dumpall ";
-#endif
-    StringStream << "-h 127.0.0.1 ";
-	StringStream << "-p 5432 ";
-	StringStream << "-U postgres ";
-	StringStream << "-r ";
-	StringStream << "--role=postgres ";
-	StringStream << "-v ";
-	StringStream << "-f " << FileName << "sql";
-
-	//Вызываем команду бекапа ролей
-	Result = system(StringStream.str().c_str());
     std::cout << std::endl;
 	return Result;
 }
