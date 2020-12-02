@@ -381,8 +381,7 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 		return false;
 	}
 
-	QVariant Hash = CheckNullField("Hash", TcpMessage->Parameters),
-		Version = CheckNullField("Version", TcpMessage->Parameters);
+	QVariant Hash = CheckNullField("Hash", TcpMessage->Parameters);
 	if (!Hash.isValid())
 	{
 		return false;
@@ -482,7 +481,8 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 
 	//Проверяем версию клиента
 	bool IsNeedUpdate = false; //По умолчанию флаг обновления должен быть false (вдруг клиент отправил невалидную версию)
-	if (Version.isValid()) //Если клиент отправил версию
+	QVariant Version = TcpMessage->SystemParameters["Version"];
+	if (Version.isValid()) //Если версия указана
 	{
 		//Проверяем его версию на валидность
 		QString VersionClientString = Version.toString();

@@ -133,17 +133,17 @@ void ISTcpSocket::ReadyRead()
 	//Засекаем время и парсим сообщение
 	QJsonParseError JsonParseError;
 	ISTimePoint TimePoint = ISAlgorithm::GetTick();
-	TcpMessage->Parameters = ISSystem::JsonStringToVariantMap(Buffer, JsonParseError);
+	QVariantMap VariantMap = ISSystem::JsonStringToVariantMap(Buffer, JsonParseError);
 	TcpMessage->ParseMSec = ISAlgorithm::GetTickDiff(ISAlgorithm::GetTick(), TimePoint);
 
-	bool Result = !TcpMessage->Parameters.isEmpty() && JsonParseError.error == QJsonParseError::NoError;
+	bool Result = !VariantMap.isEmpty() && JsonParseError.error == QJsonParseError::NoError;
 	if (Result) //Конвертация прошла успешно
 	{
-		Result = TcpMessage->Parameters.contains("Type");
+		Result = VariantMap.contains("Type");
 		if (Result) //Если поле "Type" есть
 		{
 			//Получаем значение поля "Type"
-			TcpMessage->TypeName = TcpMessage->Parameters["Type"].toString();
+			TcpMessage->TypeName = VariantMap["Type"].toString();
 			Result = !TcpMessage->TypeName.isEmpty();
 			if (Result) //Если поле "Type" не пустое
 			{
@@ -153,7 +153,8 @@ void ISTcpSocket::ReadyRead()
 				if (Result) //Сообщение валидное
 				{
 					TcpMessage->Type = MessageType;
-					TcpMessage->Parameters = TcpMessage->Parameters["Parameters"].toMap();
+					TcpMessage->Parameters = VariantMap["Parameters"].toMap();
+					TcpMessage->SystemParameters = VariantMap["System"].toMap();
 				}
 				else //Тип сообщения не известный
 				{
