@@ -9,7 +9,7 @@ class ISTcpConnector : public QObject
 	Q_OBJECT
 
 signals:
-	void RemoteHostClose(); //Сигнал закрытия соединения сервером
+	void Reconnect(); //Сигнал о необходимости переподключения
 
 public:
 	static ISTcpConnector& Instance();
@@ -21,8 +21,7 @@ public:
 	void Disconnect(); //Отключение
 
 private:
-	void StateChanged(QAbstractSocket::SocketState socket_state);
-	void Error(QTcpSocket::SocketError socket_error);
+	void Error(QTcpSocket::SocketError socket_error); //Событие ошибки сокета
 
 private:
 	ISTcpConnector();
@@ -33,6 +32,7 @@ private:
 private:
 	QString ErrorString;
 	QTcpSocket *TcpSocket;
+	bool HandlingError;
 };
 //-----------------------------------------------------------------------------
 #endif

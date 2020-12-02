@@ -7,9 +7,10 @@
 ISTcpConnector::ISTcpConnector()
 	: QObject(),
 	ErrorString(NO_ERROR_STRING),
-	TcpSocket(new QTcpSocket(this))
+	TcpSocket(new QTcpSocket(this)),
+	HandlingError(true)
 {
-	
+	connect(TcpSocket, static_cast<void(QTcpSocket::*)(QTcpSocket::SocketError)>(&QTcpSocket::error), this, &ISTcpConnector::Error);
 }
 //-----------------------------------------------------------------------------
 ISTcpConnector::~ISTcpConnector()
@@ -64,36 +65,34 @@ bool ISTcpConnector::Connect(const QString &Host, quint16 Port)
 		}
 	}
 
-	bool Result = IsConnected();
-	if (Result)
+	if (!IsConnected())
 	{
-		connect(TcpSocket, &QTcpSocket::stateChanged, this, &ISTcpConnector::StateChanged);
+		ErrorString = TcpSocket->errorString();
+		return false;
 	}
-	return Result;
+	ErrorString = NO_ERROR_STRING;
+	HandlingError = true; //Устанавливаем разрешение на обработку ошибок
+	return true;
 }
 //-----------------------------------------------------------------------------
 void ISTcpConnector::Disconnect()
 {
-	if (IsConnected())
+	if (IsConnected()) //Если подключение активно - отключаемся
 	{
-		disconnect(TcpSocket, &QTcpSocket::stateChanged, this, &ISTcpConnector::StateChanged);
 		TcpSocket->disconnectFromHost();
-	}
-}
-//-----------------------------------------------------------------------------
-void ISTcpConnector::StateChanged(QAbstractSocket::SocketState socket_state)
-{
-	if (socket_state == QAbstractSocket::UnconnectedState) //Соединение отвалилось - предлагаем переподключиться
-	{
-		disconnect(TcpSocket, &QTcpSocket::stateChanged, this, &ISTcpConnector::StateChanged);
-		ErrorString = TcpSocket->errorString();
-		emit RemoteHostClose();
 	}
 }
 //-----------------------------------------------------------------------------
 void ISTcpConnector::Error(QTcpSocket::SocketError socket_error)
 {
-	Q_UNUSED(socket_error);
-	ErrorString = TcpSocket->errorString();
+	if (HandlingError) //Если обработка ошибок включена - обрабатываем
+	{
+		ErrorString = TcpSocket->errorString();
+		if (socket_error == QAbstractSocket::SocketError::RemoteHostClosedError) //Удалённый хост оборвал соединение - рапортуем о необходимости переподключения
+		{
+			QTimer::singleShot(100, this, &ISTcpConnector::Reconnect);
+			HandlingError = false;
+		}
+	}
 }
 //-----------------------------------------------------------------------------

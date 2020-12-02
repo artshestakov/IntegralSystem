@@ -65,7 +65,7 @@ ISMainWindow::ISMainWindow(QWidget *parent)
 
 	if (CONFIG_BOOL("Protocol/Include"))
 	{
-		connect(&ISTcpConnector::Instance(), &ISTcpConnector::RemoteHostClose, this, &ISMainWindow::Reconnect);
+		connect(&ISTcpConnector::Instance(), &ISTcpConnector::Reconnect, this, &ISMainWindow::Reconnect);
 	}
 }
 //-----------------------------------------------------------------------------
