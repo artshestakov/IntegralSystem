@@ -3,6 +3,7 @@
 #include "ISAlgorithm.h"
 #include "ISSystem.h"
 #include "ISLocalization.h"
+#include "ISLogger.h"
 //-----------------------------------------------------------------------------
 ISTcpConnector::ISTcpConnector()
 	: QObject(),
@@ -51,6 +52,7 @@ bool ISTcpConnector::Connect(const QString &Host, quint16 Port)
 		SleepTime = CARAT_CONNECT_SLEEP;
 
 	//Пытаемся подключиться и ждём пока не подключимся
+	ISLOGGER_I(__CLASS__, QString("Connecting to %1:%2...").arg(Host).arg(Port));
 	TcpSocket->connectToHost(Host, Port, QIODevice::ReadWrite, QAbstractSocket::IPv4Protocol);
 	while (!IsConnected())
 	{
@@ -67,9 +69,10 @@ bool ISTcpConnector::Connect(const QString &Host, quint16 Port)
 
 	if (!IsConnected())
 	{
-		ErrorString = TcpSocket->errorString();
+		ISLOGGER_E(__CLASS__, "Not connected with timeout");
 		return false;
 	}
+	ISLOGGER_I(__CLASS__, "Connected");
 	ErrorString = NO_ERROR_STRING;
 	HandlingError = true; //Устанавливаем разрешение на обработку ошибок
 	return true;
@@ -79,6 +82,7 @@ void ISTcpConnector::Disconnect()
 {
 	if (IsConnected()) //Если подключение активно - отключаемся
 	{
+		ISLOGGER_I(__CLASS__, "Disconnecting...");
 		TcpSocket->disconnectFromHost();
 	}
 }
@@ -88,9 +92,11 @@ void ISTcpConnector::Error(QTcpSocket::SocketError socket_error)
 	if (HandlingError) //Если обработка ошибок включена - обрабатываем
 	{
 		ErrorString = TcpSocket->errorString();
+		ISLOGGER_E(__CLASS__, ErrorString);
 		if (socket_error == QAbstractSocket::SocketError::RemoteHostClosedError) //Удалённый хост оборвал соединение - рапортуем о необходимости переподключения
 		{
 			QTimer::singleShot(100, this, &ISTcpConnector::Reconnect);
+			ISLOGGER_I(__CLASS__, "Emited reconnect");
 			HandlingError = false;
 		}
 	}
