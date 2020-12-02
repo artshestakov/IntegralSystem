@@ -197,7 +197,6 @@ void ISAuthForm::InputNew()
 
 	ISTcpQuery qAuth(API_AUTH);
 	qAuth.BindValue("Hash", ISSystem::StringToSha256(EditLogin->GetValue().toString() + EditPassword->GetValue().toString()));
-	qAuth.BindValue("Version", ISVersionInfo::Instance().ToStringVersion());
 	if (qAuth.Execute()) //Авторизация прошла успешно
 	{
 		QVariantMap AnswerMap = qAuth.GetAnswer();
