@@ -20,7 +20,6 @@ DESTDIR = $$PWD/../../Bin/$${CONFIGURATION}-$${PLATFORM}
 MOC_DIR = $$PWD/$${CONFIGURATION}-$${PLATFORM}/$${TARGET}
 OBJECTS_DIR = $$PWD/$${CONFIGURATION}-$${PLATFORM}/$${TARGET}
 
-INCLUDEPATH += $$PWD/../../Library/ISCarat
 INCLUDEPATH += $$PWD/../../Library/ISCore
 INCLUDEPATH += .
 
@@ -32,6 +31,7 @@ HEADERS += \
     ISCaratApplication.h \
     ISCaratController.h \
     ISTcpAnswer.h \
+    ISTcpClients.h \
     ISTcpMessage.h \
     ISTcpQueue.h \
     ISTcpServer.h \
@@ -43,6 +43,7 @@ SOURCES += \
     ISCaratApplication.cpp \
     ISCaratController.cpp \
     ISTcpAnswer.cpp \
+    ISTcpClients.cpp \
     ISTcpMessage.cpp \
     ISTcpQueue.cpp \
     ISTcpServer.cpp \

@@ -14,18 +14,18 @@ ISConfig::ISConfig()
 	{
 		//Серверный шаблон
 		{ CONFIG_TEMPLATE_SERVER, "Connection/Host",		QVariant::String,	true,	QVariant(),				0, 0 },
-		{ CONFIG_TEMPLATE_SERVER, "Connection/Port",		QVariant::Int,		true,	QVariant(),				1, MAXUINT16 },
+        { CONFIG_TEMPLATE_SERVER, "Connection/Port",		QVariant::Int,		true,	QVariant(),				1, UINT16_MAX },
 		{ CONFIG_TEMPLATE_SERVER, "Connection/Database",	QVariant::String,	true,	QVariant(),				0, 0 },
 		{ CONFIG_TEMPLATE_SERVER, "Connection/Login",		QVariant::String,	true,	QVariant(),				0, 0 },
 		{ CONFIG_TEMPLATE_SERVER, "Connection/Password",	QVariant::String,	true,	QVariant(),				0, 0 },
 		{ CONFIG_TEMPLATE_SERVER, "Controller/Include",		QVariant::Bool,		true,	true,					0, 0 },
-		{ CONFIG_TEMPLATE_SERVER, "Controller/Port",		QVariant::Int,		true,	CARAT_CONTROLLER_PORT,	1, MAXUINT16 },
+        { CONFIG_TEMPLATE_SERVER, "Controller/Port",		QVariant::Int,		true,	CARAT_CONTROLLER_PORT,	1, UINT16_MAX },
 		{ CONFIG_TEMPLATE_SERVER, "TCPServer/Include",		QVariant::Bool,		true,	false,					0, 0 },
-		{ CONFIG_TEMPLATE_SERVER, "TCPServer/Port",			QVariant::Int,		true,	CARAT_TCP_PORT,			1, MAXUINT16 },
+        { CONFIG_TEMPLATE_SERVER, "TCPServer/Port",			QVariant::Int,		true,	CARAT_TCP_PORT,			1, UINT16_MAX },
 		{ CONFIG_TEMPLATE_SERVER, "TCPServer/WorkerCount",	QVariant::Int,		true,	1,						1, (int)std::thread::hardware_concurrency() * 2 },
 		{ CONFIG_TEMPLATE_SERVER, "AMI/Include",			QVariant::Bool,		true,	false,					0, 0 },
 		{ CONFIG_TEMPLATE_SERVER, "AMI/Host",				QVariant::String,	true,	LOCAL_HOST_ADDRESS,		0, 0 },
-		{ CONFIG_TEMPLATE_SERVER, "AMI/Port",				QVariant::Int,		true,	ASTERISK_AMI_PORT,		1, MAXUINT16 },
+        { CONFIG_TEMPLATE_SERVER, "AMI/Port",				QVariant::Int,		true,	ASTERISK_AMI_PORT,		1, UINT16_MAX },
 		{ CONFIG_TEMPLATE_SERVER, "AMI/Login",				QVariant::String,	true,	"admin",				0, 0 },
 		{ CONFIG_TEMPLATE_SERVER, "AMI/Password",			QVariant::String,	true,	"admin",				0, 0 },
 		{ CONFIG_TEMPLATE_SERVER, "AMI/RecordDir",			QVariant::String,	false,	QVariant(),				0, 0 },
@@ -34,13 +34,13 @@ ISConfig::ISConfig()
 
 		//Клиентский шаблон
 		{ CONFIG_TEMPLATE_CLIENT, "Connection/Host",		QVariant::String,	true,	QVariant(),				0, 0 },
-		{ CONFIG_TEMPLATE_CLIENT, "Connection/Port",		QVariant::Int,		true,	QVariant(),				1, MAXUINT16 },
+        { CONFIG_TEMPLATE_CLIENT, "Connection/Port",		QVariant::Int,		true,	QVariant(),				1, UINT16_MAX },
 		{ CONFIG_TEMPLATE_CLIENT, "Connection/Database",	QVariant::String,	true,	QVariant(),				0, 0 },
 		{ CONFIG_TEMPLATE_CLIENT, "Connection/UpdateDir",	QVariant::String,	true,	QVariant(),				0, 0 },
 		{ CONFIG_TEMPLATE_CLIENT, "RememberUser/Include",	QVariant::Bool,		true,	QVariant(),				0, 0 },
 		{ CONFIG_TEMPLATE_CLIENT, "RememberUser/Login",		QVariant::String,	true,	QVariant(),				0, 0 },
 		{ CONFIG_TEMPLATE_CLIENT, "Protocol/Include",		QVariant::Bool,		true,	false,					0, 0 },
-		{ CONFIG_TEMPLATE_CLIENT, "Protocol/Port",			QVariant::Int,		true,	CARAT_TCP_PORT,			1, MAXUINT16 }
+        { CONFIG_TEMPLATE_CLIENT, "Protocol/Port",			QVariant::Int,		true,	CARAT_TCP_PORT,			1, UINT16_MAX }
 	};
 	CRITICAL_SECTION_INIT(&CriticalSection);
 }

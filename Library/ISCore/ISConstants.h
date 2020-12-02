@@ -146,8 +146,8 @@ const size_t			CARAT_CONNECT_TIMEOUT = 3000; //Время ожидания подключения к Кара
 const size_t			CARAT_CONNECT_SLEEP = 10; //Время паузы для ожидания подключения
 const size_t			CARAT_RECONNECT_TIMEOUT = 5000; //Время паузы для попытки подключиться к серверу
 //ASTERISK---------------------------------------------------------------------
-const char		ASTERISK_AMI_SEPARATOR[] = "\r\n\r\n"; //Разделитель пакетов AMI
-const size_t	ASTERISK_AMI_PORT = 5038; //Порт AMI по умолчанию
+const char              ASTERISK_AMI_SEPARATOR[] = "\r\n\r\n"; //Разделитель пакетов AMI
+const unsigned short    ASTERISK_AMI_PORT = 5038; //Порт AMI по умолчанию
 //CARAT_API--------------------------------------------------------------------
 const char API_AUTH[] = "Auth"; //Авторизация
 const char API_SLEEP[] = "Sleep"; //Ожидание
