@@ -13,12 +13,13 @@ ISReconnectForm::ISReconnectForm()
 {
 	setWindowTitle(LANG("ReconnectForm.Title"));
 	setWindowIcon(BUFFER_ICONS("Update"));
+	setCursor(CURSOR_BUSY);
 	GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);
 	resize(300, 165);
 
-	QLabel *l = new QLabel(LANG("ReconnectForm.Info"), this);
-	l->setWordWrap(true);
-	GetMainLayout()->addWidget(l);
+	QLabel *LabelInfo = new QLabel(LANG("ReconnectForm.Info"), this);
+	LabelInfo->setWordWrap(true);
+	GetMainLayout()->addWidget(LabelInfo);
 
 	LabelAttempts = new QLabel(LANG("ReconnectForm.Attempts").arg(Attempts), this);
 	GetMainLayout()->addWidget(LabelAttempts);
@@ -41,7 +42,7 @@ ISReconnectForm::ISReconnectForm()
 	LayoutBottom->addStretch();
 	GetMainLayout()->addLayout(LayoutBottom);
 
-	ISPushButton *ButtonExit = new ISPushButton(BUFFER_ICONS("Exit"), LANG("Exit"), this);
+	ISPushButton *ButtonExit = new ISPushButton(BUFFER_ICONS("Exit"), LANG("ExitApplication"), this);
 	connect(ButtonExit, &ISPushButton::clicked, this, &ISReconnectForm::close);
 	LayoutBottom->addWidget(ButtonExit);
 }

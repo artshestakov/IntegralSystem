@@ -85,6 +85,7 @@ const Qt::CursorShape CURSOR_ARROW = Qt::ArrowCursor;
 const Qt::CursorShape CURSOR_POINTING_HAND = Qt::PointingHandCursor;
 const Qt::CursorShape CURSOR_WHATS_THIS = Qt::WhatsThisCursor;
 const Qt::CursorShape CURSOR_WAIT = Qt::WaitCursor;
+const Qt::CursorShape CURSOR_BUSY = Qt::BusyCursor;
 //INTERFACE--------------------------------------------------------------------
 const int EDIT_FIELD_SPACING = 4;
 const int ISPUSHBUTTON_MINIMUM_WIDTH = 98; //Минимальная ширина базовых кнопок
