@@ -9,7 +9,6 @@
 #include "ISTrace.h"
 //-----------------------------------------------------------------------------
 static QString QI_ASTERISK_CALLS = PREPARE_QUERY("INSERT INTO _asteriskcalls("
-	"ascl_accountcode, "
 	"ascl_source, "
 	"ascl_destination, "
 	"ascl_callerid, "
@@ -24,7 +23,6 @@ static QString QI_ASTERISK_CALLS = PREPARE_QUERY("INSERT INTO _asteriskcalls("
 	"ascl_uniqueid, "
 	"ascl_userfield) "
 	"VALUES("
-	":AccountCode, "
 	":Source, "
 	":Destination, "
 	":CallerID, "
@@ -243,7 +241,6 @@ void ISAsterisk::ResponseLogin(const ISStringMap &AMIPackage)
 void ISAsterisk::EventCDR(const ISStringMap &AMIPackage)
 {
     ISTRACE();
-	QString AccountCode = ExtractOfPackage(AMIPackage, "AccountCode");
 	QString Source = ExtractOfPackage(AMIPackage, "Source");
 	QString Destination = ExtractOfPackage(AMIPackage, "Destination");
 	QString CallerID = ExtractOfPackage(AMIPackage, "CallerID");
@@ -258,7 +255,6 @@ void ISAsterisk::EventCDR(const ISStringMap &AMIPackage)
 	QString UniqueID = ExtractOfPackage(AMIPackage, "UniqueID");
 	QString UserField = ExtractOfPackage(AMIPackage, "UserField");
 
-	qInsert->BindValue(":AccountCode", AccountCode.isEmpty() ? QVariant() : AccountCode);
 	qInsert->BindValue(":Source", Source.isEmpty() ? QVariant() : Source);
 	qInsert->BindValue(":Destination", Destination);
 	qInsert->BindValue(":CallerID", CallerID);

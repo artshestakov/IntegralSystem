@@ -3,20 +3,19 @@
 
   <Table Name="_AsteriskCalls" UID="{D7F7E074-5E66-441D-9C0C-DB9ACCB7C4B2}" Alias="ascl" LocalName="Звонок" LocalListName="Звонки" TitleName="UniqueID">
     <Fields>
-      <Field UID="{B10853A8-17C9-4EF5-94FB-EF0109829F58}" Name="AccountCode" Type="String" LabelName="AccountCode" LocalListName="AccountCode"/>
-      <Field UID="{8A0E4977-6513-42C3-A8E5-36894EDB735B}" Name="Source" Type="String" LabelName="Source" LocalListName="Source"/>
-      <Field UID="{031C924C-47D6-4256-8D20-C0E6C0407D74}" Name="Destination" Type="String" LabelName="Destination" LocalListName="Destination"/>
-      <Field UID="{28D5A031-482B-4E74-B305-7688F03711F2}" Name="CallerID" Type="String" LabelName="CallerID" LocalListName="CallerID"/>
-      <Field UID="{595865EF-CB89-488C-A619-9E2506CDFAAA}" Name="Channel" Type="String" LabelName="Channel" LocalListName="Channel"/>
-      <Field UID="{0239C82C-64EF-4A4F-833C-76B7376981A9}" Name="DestinationChannel" Type="String" LabelName="DestinationChannel" LocalListName="DestinationChannel"/>
+      <Field UID="{8A0E4977-6513-42C3-A8E5-36894EDB735B}" Name="Source" Type="String" LabelName="Кто звонил" LocalListName="Кто звонил"/>
+      <Field UID="{031C924C-47D6-4256-8D20-C0E6C0407D74}" Name="Destination" Type="String" LabelName="Куда звонили" LocalListName="Куда звонили"/>
+      <Field UID="{28D5A031-482B-4E74-B305-7688F03711F2}" Name="CallerID" Type="String" LabelName="Идентификатор абонента" LocalListName="Идентификатор абонента"/>
+      <Field UID="{595865EF-CB89-488C-A619-9E2506CDFAAA}" Name="Channel" Type="String" LabelName="Входящий канал" LocalListName="Входящий канал"/>
+      <Field UID="{0239C82C-64EF-4A4F-833C-76B7376981A9}" Name="DestinationChannel" Type="String" LabelName="Исходящий канал" LocalListName="Исходящий канал"/>
       <Field UID="{673C1D2A-22AE-4ED3-B441-31B1B09ADC2B}" Name="StartTime" Type="DateTime" LabelName="Дата и время звонка" LocalListName="Дата и время звонка"/>
       <Field UID="{582A4259-FF22-4420-972A-456ACF38BCD0}" Name="AnswerTime" Type="DateTime" LabelName="Дата и время ответа" LocalListName="Дата и время ответа"/>
       <Field UID="{3E375466-17C7-449A-A76B-A4F08555CD75}" Name="EndTime" Type="DateTime" LabelName="Дата и время завершения звонка" LocalListName="Дата и время завершения звонка"/>
-      <Field UID="{C3D7C7F4-2993-47D5-8EB4-8E4CD4226495}" Name="Duration" Type="BigInt" LabelName="Длительность" LocalListName="Длительность"/>
-      <Field UID="{46FC78D6-D0F0-4C96-9157-2FC785EE1CE8}" Name="BillableSeconds" Type="BigInt" LabelName="BillableSeconds" LocalListName="BillableSeconds"/>
-      <Field UID="{CFDB8EA5-0E83-4B36-B520-FCD0ABE5C9E5}" Name="Disposition" Type="BigInt" LabelName="Disposition" LocalListName="Disposition"/>
-      <Field UID="{70FB0880-4662-47AA-BB2A-9B9143B6F4F5}" Name="UniqueID" Type="String" LabelName="UniqueID" LocalListName="UniqueID"/>
-      <Field UID="{D793D1EC-0EC5-460D-B982-5EB46A5BBCB6}" Name="UserField" Type="String" LabelName="UserField" LocalListName="UserField"/>
+      <Field UID="{C3D7C7F4-2993-47D5-8EB4-8E4CD4226495}" Name="Duration" Type="BigInt" LabelName="Общая длительность" LocalListName="Общая длительность"/>
+      <Field UID="{46FC78D6-D0F0-4C96-9157-2FC785EE1CE8}" Name="BillableSeconds" Type="BigInt" LabelName="Длительность разговора" LocalListName="Длительность разговора"/>
+      <Field UID="{CFDB8EA5-0E83-4B36-B520-FCD0ABE5C9E5}" Name="Disposition" Type="BigInt" LabelName="Статус" LocalListName="Статус"/>
+      <Field UID="{70FB0880-4662-47AA-BB2A-9B9143B6F4F5}" Name="UniqueID" Type="String" LabelName="UniqueID" LocalListName="UniqueID" HideFromList="true"/>
+      <Field UID="{D793D1EC-0EC5-460D-B982-5EB46A5BBCB6}" Name="UserField" Type="String" LabelName="UserField" LocalListName="UserField" HideFromList="true"/>
     </Fields>
     <Foreigns>
       <Foreign Field="Disposition" ForeignClass="_DispositionType" ForeignField="ID" ForeignViewNameField="LocalName"/>
