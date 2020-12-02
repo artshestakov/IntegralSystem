@@ -140,6 +140,9 @@ void ISLogger::Log(bool is_format, MessageType message_type, const std::string &
 	CRITICAL_SECTION_LOCK(&CriticalSection);
 #ifdef DEBUG //¬ отладочной версии выводим строку в консоль
 	ISDEBUG_L(QString::fromStdString(string_complete));
+#ifdef WIN32 //ƒл€ Windows выводим строку в консоль Visual Studio
+	OutputDebugString((string_complete + '\n').c_str());
+#endif
 #endif
 	Array[LastIndex++] = string_complete;
 	CRITICAL_SECTION_UNLOCK(&CriticalSection);
