@@ -23,9 +23,7 @@ static QString QU_CALENDAR_CLOSE = PREPARE_QUERY("UPDATE _calendar SET cldr_clos
 static QString QS_TASK_COUNT = PREPARE_QUERY("SELECT COUNT(*) FROM _task WHERE task_id = :TaskID");
 //-----------------------------------------------------------------------------
 static QString QU_DELETE_OBJECT = PREPARE_QUERY2("UPDATE %1 SET "
-												 "%2_isdeleted = :IsDeleted, "
-												 "%2_deletiondate = now(), "
-												 "%2_deletionuser = currentuserid() "
+												 "%2_isdeleted = :IsDeleted "
 												 "WHERE %2_id = :ObjectID");
 //-----------------------------------------------------------------------------
 static QString QU_RECOVERY_OBJECT = PREPARE_QUERY2("UPDATE %1 SET "
@@ -33,9 +31,7 @@ static QString QU_RECOVERY_OBJECT = PREPARE_QUERY2("UPDATE %1 SET "
 												   "WHERE %2_id = :ObjectID");
 //-----------------------------------------------------------------------------
 static QString QU_DELETE_OBJECTS = PREPARE_QUERY2("UPDATE %1 SET "
-												  "%2_isdeleted = :IsDeleted, "
-												  "%2_deletiondate = now(), "
-												  "%2_deletionuser = currentuserid() "
+												  "%2_isdeleted = :IsDeleted "
 												  "WHERE %2_id IN(%3)");
 //-----------------------------------------------------------------------------
 static QString QU_RECOVERY_OBJECTS = PREPARE_QUERY2("UPDATE %1 SET "
