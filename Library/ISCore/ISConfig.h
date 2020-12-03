@@ -11,7 +11,6 @@ public:
 	static ISConfig& Instance();
 
 	QString GetErrorString() const;
-	QString GetConfigPath() const;
 	bool IsValid(); //Проверить корректность заполнения конфигурационного файла
 
 	bool ReInitialize(const QString &template_name); //Переинициализация

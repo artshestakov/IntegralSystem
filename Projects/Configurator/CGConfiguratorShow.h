@@ -15,7 +15,6 @@ public:
 
 public slots:
 	bool oldobjects();
-	bool config();
 	bool databaseinfo();
 
 private:

@@ -38,7 +38,6 @@
 
   <Section Name="Show" ClassName="CGConfiguratorShow">
     <Function FunctionName="OldObjects" Description="Вывести список устаревших объектов базы данных"/>
-    <Function FunctionName="Config" Description="Вывести содержимое конфигурационного файла"/>
     <Function FunctionName="DatabaseInfo" Description="Показать информацию о базе данных"/>
   </Section>
 
