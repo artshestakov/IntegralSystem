@@ -65,11 +65,6 @@ QString ISConfig::GetErrorString() const
 	return ErrorString;
 }
 //-----------------------------------------------------------------------------
-QString ISConfig::GetConfigPath() const
-{
-	return PathConfigFile;
-}
-//-----------------------------------------------------------------------------
 bool ISConfig::IsValid()
 {
 	//Проверяем на наличие инициализации

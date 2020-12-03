@@ -95,34 +95,6 @@ bool CGConfiguratorShow::oldobjects()
 	return Result;
 }
 //-----------------------------------------------------------------------------
-bool CGConfiguratorShow::config()
-{
-	QFile FileConfig(ISConfig::Instance().GetConfigPath());
-	bool Result = FileConfig.exists();
-	if (Result)
-	{
-		Result = FileConfig.open(QIODevice::ReadOnly);
-		if (Result)
-		{
-			QStringList StringList = QString(FileConfig.readAll()).split("\n");
-			for (const QString &String : StringList)
-			{
-				ISDEBUG_L(String);
-			}
-			FileConfig.close();
-		}
-		else
-		{
-			ErrorString = QString("Not open file config: %1").arg(FileConfig.errorString());
-		}
-	}
-	else
-	{
-		ErrorString = QString("Not exist file config: %1").arg(FileConfig.fileName());
-	}
-	return Result;
-}
-//-----------------------------------------------------------------------------
 bool CGConfiguratorShow::databaseinfo()
 {
 	ISQuery qSelectInfo(QS_INFO);

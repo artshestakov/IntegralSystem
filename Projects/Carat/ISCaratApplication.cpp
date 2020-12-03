@@ -118,6 +118,11 @@ bool ISCaratApplication::Run(const QStringList &Arguments)
 //-----------------------------------------------------------------------------
 bool ISCaratApplication::Run()
 {
+	if (!Initialize())
+	{
+		return false;
+	}
+
     ISLOGGER(QString("Starting service...\n"
 		"Version: %1 (%2 %3)\n"
 		"Branch: %4 (%5)\n"
