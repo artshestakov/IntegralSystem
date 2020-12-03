@@ -56,3 +56,14 @@ int ISConsole::GetInt(const QString &OutputString)
 	return atoi(Integer.c_str());
 }
 //-----------------------------------------------------------------------------
+bool ISConsole::InstallEncoding(unsigned int CodePage)
+{
+#if defined(WIN32) && defined(DEBUG)
+	if (SetConsoleOutputCP(CodePage) == FALSE)
+	{
+		return false;
+	}
+#endif
+	return true;
+}
+//-----------------------------------------------------------------------------

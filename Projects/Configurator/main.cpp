@@ -45,6 +45,11 @@ int main(int argc, char **argv)
 
 	QCoreApplication CoreArralication(argc, argv);
 
+	if (!ISConsole::InstallEncoding(65001))
+	{
+		ISDEBUG_E("Error changed console encoding");
+	}
+
 	//Чтение конфигурационного файла
 	if (!ISConfig::Instance().Initialize(CONFIG_TEMPLATE_SERVER))
 	{

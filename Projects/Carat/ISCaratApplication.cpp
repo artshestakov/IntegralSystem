@@ -9,6 +9,7 @@
 #include "ISSystem.h"
 #include "ISQueryPool.h"
 #include "ISMetaData.h"
+#include "ISConsole.h"
 //-----------------------------------------------------------------------------
 ISCaratApplication::ISCaratApplication(int &argc, char **argv)
 	: QCoreApplication(argc, argv),
@@ -40,12 +41,10 @@ bool ISCaratApplication::Initialize()
 	}
 
 	//”становим кодировку дл€ консольного приложени€ под Debug-Win32
-#if defined(WIN32) && defined(DEBUG)
-	if (SetConsoleOutputCP(65001) == FALSE)
+	if (!ISConsole::InstallEncoding(65001))
 	{
 		ISLOGGER_W("Startup", "Error changed console encoding");
 	}
-#endif
 
 	//«агрузка локализации €дра
 	if (!ISLocalization::Instance().LoadResourceFile(LOCALIZATION_FILE_CARAT))

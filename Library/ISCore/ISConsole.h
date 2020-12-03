@@ -11,6 +11,7 @@ public:
 	static void Pause(); //Вызов паузы
 	static QString GetString(const QString &OutputString = QString()); //Запрос на ввод текста
 	static int GetInt(const QString &OutputString = QString()); //Запрос на ввод целого числа
+	static bool InstallEncoding(unsigned int CodePage); //Установить кодовую страницу
 };
 //-----------------------------------------------------------------------------
 #endif
