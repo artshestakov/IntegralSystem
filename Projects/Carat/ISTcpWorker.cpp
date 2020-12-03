@@ -663,15 +663,20 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 				ErrorString = LANG("Carat.Error.Query.GetMetaData.SubSystems").arg(qSelectSubSystem.GetErrorString());
 				return false;
 			}
-			SystemSubSystemList.append(QVariantMap
+			
+			//Добавляем систему только если по ней разрешены какие-нибудь подсистемы
+			if (qSelectSubSystem.GetCountResultRows() > 0)
 			{
-				{ "UID", qSelectSystem.ReadColumn("stms_uid") },
-				{ "IsSystem", qSelectSystem.ReadColumn("stms_issystem") },
-				{ "Local", qSelectSystem.ReadColumn("stms_localname") },
-				{ "Icon", qSelectSystem.ReadColumn("stms_icon") },
-				{ "Hint", qSelectSystem.ReadColumn("stms_hint") },
-				{ "SubSystems", SubSystemsList }
-			});
+				SystemSubSystemList.append(QVariantMap
+				{
+					{ "UID", qSelectSystem.ReadColumn("stms_uid") },
+					{ "IsSystem", qSelectSystem.ReadColumn("stms_issystem") },
+					{ "Local", qSelectSystem.ReadColumn("stms_localname") },
+					{ "Icon", qSelectSystem.ReadColumn("stms_icon") },
+					{ "Hint", qSelectSystem.ReadColumn("stms_hint") },
+					{ "SubSystems", SubSystemsList }
+				});
+			}
 		}
 		TcpAnswer->Parameters["SystemSubSystem"] = SystemSubSystemList;
 	}
