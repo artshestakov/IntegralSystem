@@ -18,7 +18,7 @@ ISCaratApplication::ISCaratApplication(int &argc, char **argv)
 	TcpServer(nullptr),
 	Asterisk(nullptr)
 {
-	
+    connect(this, &ISCaratApplication::Quit, this, &ISCaratApplication::quit, Qt::QueuedConnection);
 }
 //-----------------------------------------------------------------------------
 ISCaratApplication::~ISCaratApplication()
@@ -86,35 +86,35 @@ bool ISCaratApplication::Initialize()
 	return true;
 }
 //-----------------------------------------------------------------------------
-void ISCaratApplication::Run(const QStringList &Arguments)
+bool ISCaratApplication::Run(const QStringList &Arguments)
 {
 	QString Argument = Arguments.front();
 	if (Argument == "--help" || Argument == "-h")
 	{
-		Help();
+        return Help();
 	}
 	else if (Argument == "--version" || Argument == "-v")
 	{
-		Version();
+        return Version();
 	}
 	else if (Argument == "--shutdown" || Argument == "-s")
 	{
-		SendShutdown();
+        return SendShutdown();
 	}
-	else if (Argument == "--conf-create")
+    else if (Argument == "--conf-create" || Argument == "-cc")
 	{
-		//Выходим из функции, т.к. конфиг был проинициализирован выше в функции Init()
-		return;
+        return ConfigCreate();
 	}
-	else if (Argument == "--conf-reset")
+    else if (Argument == "--conf-reset" || Argument == "-cr")
 	{
-		ConfigReset();
+        return ConfigReset();
 	}
 	else
 	{
 		ISDEBUG_L("Argument \"" + Argument + "\" not support");
-		Help();
+        (void)Help();
 	}
+    return false;
 }
 //-----------------------------------------------------------------------------
 bool ISCaratApplication::Run()
@@ -211,20 +211,20 @@ void ISCaratApplication::Shutdown()
 	emit Quit();
 }
 //-----------------------------------------------------------------------------
-void ISCaratApplication::Help()
+bool ISCaratApplication::Help()
 {
 #ifdef WIN32
-	ISDEBUG_L("Usage: Carat [argument]");
+    ISDEBUG_L("Usage: Carat.exe [argument]");
 #else
 	ISDEBUG_L("Usage: ./Carat [argument]");
 #endif
 	ISDEBUG();
 	ISDEBUG_L("Arguments:");
-	ISDEBUG_L("  --help\t\tshow this help and exit");
-	ISDEBUG_L("  --version\t\tshow version and exit");
-	ISDEBUG_L("  --shutdown\t\tshutdown service");
-	ISDEBUG_L("  --conf-create\t\tcreate config file");
-	ISDEBUG_L("  --conf-reset\t\treset config file");
+    ISDEBUG_L("  -h,\t--help\t\tshow this help and exit");
+    ISDEBUG_L("  -v,\t--version\t\tshow version and exit");
+    ISDEBUG_L("  -s,\t--shutdown\t\tshutdown service");
+    ISDEBUG_L("  -cc,\t--conf-create\t\tcreate config file");
+    ISDEBUG_L("  -cr,\t--conf-reset\t\treset config file");
 	ISDEBUG();
 #ifdef WIN32
 	ISDEBUG_L("Example: Carat.exe (service mode)");
@@ -232,29 +232,48 @@ void ISCaratApplication::Help()
 	ISDEBUG_L("Example: ./Carat (service mode)");
 #endif
 	ISDEBUG_L("* No arguments needed to start in service mode");
+    return true;
 }
 //-----------------------------------------------------------------------------
-void ISCaratApplication::Version()
+bool ISCaratApplication::Version()
 {
 	ISDEBUG_L("Carat (" + ISVersionInfo::Instance().ToStringVersion() + ") " + ISVersionInfo::Instance().Info.Configuration + " " + ISVersionInfo::Instance().Info.Platform);
+    return true;
 }
 //-----------------------------------------------------------------------------
-void ISCaratApplication::SendShutdown()
+bool ISCaratApplication::SendShutdown()
 {
-	SendCommand(CARAT_LOCAL_API_SHUTDOWN);
+    if(!ISConfig::Instance().Initialize(CONFIG_TEMPLATE_SERVER))
+    {
+        ISDEBUG_E("Not created config: " + ISConfig::Instance().GetErrorString());
+        return false;
+    }
+    return SendCommand(CARAT_LOCAL_API_SHUTDOWN);
 }
 //-----------------------------------------------------------------------------
-void ISCaratApplication::ConfigCreate()
+bool ISCaratApplication::ConfigCreate()
 {
-	//Метод должен быть пустым
+    if (!ISConfig::Instance().Initialize(CONFIG_TEMPLATE_SERVER))
+    {
+        ISDEBUG_E("Not created config: " + ISConfig::Instance().GetErrorString());
+        return false;
+    }
+    return true;
 }
 //-----------------------------------------------------------------------------
-void ISCaratApplication::ConfigReset()
+bool ISCaratApplication::ConfigReset()
 {
+    //Если конфигурационный файл не существует - выходим
+    QString PathCurrentFile = QCoreApplication::applicationDirPath() + '/' + CONFIG_TEMPLATE_SERVER + SYMBOL_POINT + EXTENSION_INI;
+    if (!QFile::exists(PathCurrentFile))
+    {
+        ISDEBUG_E("Config file \"" + PathCurrentFile + "\" not exist, reset impossible.");
+        return false;
+    }
+
 	//Формируем пути
-	QFileInfo FileInfo(ISConfig::Instance().GetConfigPath());
-	QString PathCurrentFile = FileInfo.filePath(),
-		PathOldFile = FileInfo.path() + "/" + FileInfo.fileName() + '.' + EXTENSION_OLD;
+    QFileInfo FileInfo(PathCurrentFile);
+    QString PathOldFile = FileInfo.path() + "/" + FileInfo.fileName() + '.' + EXTENSION_OLD;
 
 	QFile File(PathOldFile);
 
@@ -264,7 +283,7 @@ void ISCaratApplication::ConfigReset()
 		if (!File.remove()) //Не получилось удалить старый файл
 		{
 			ISDEBUG_E("Error delete old file: " + File.errorString());
-			return;
+            return false;
 		}
 	}
 
@@ -275,24 +294,25 @@ void ISCaratApplication::ConfigReset()
 	if (!File.copy(FileInfo.path() + "/" + FileInfo.fileName() + SYMBOL_POINT + EXTENSION_OLD)) //При создании копии возникла ошибка
 	{
 		ISDEBUG_L("Error save old file: " + File.errorString());
-		return;
+        return false;
 	}
 
 	//Удаляем текущий файл
 	if (!File.remove()) //Не получилось удалить его
 	{
 		ISDEBUG_L("Error remove old file: " + File.errorString());
-		return;
+        return false;
 	}
 
 	if (!ISConfig::Instance().ReInitialize(CONFIG_TEMPLATE_SERVER))
 	{
 		ISDEBUG_L("Error init new file: " + ISConfig::Instance().GetErrorString());
-		return;
+        return false;
 	}
+    return true;
 }
 //-----------------------------------------------------------------------------
-void ISCaratApplication::SendCommand(const QByteArray &ByteArray)
+bool ISCaratApplication::SendCommand(const QByteArray &ByteArray)
 {
 	QTcpSocket TcpSocket;
 
@@ -302,7 +322,7 @@ void ISCaratApplication::SendCommand(const QByteArray &ByteArray)
 	if (!TcpSocket.waitForConnected(1000))
 	{
 		ISDEBUG_L("Error: " + TcpSocket.errorString());
-		return;
+        return false;
 	}
 
 	//Посылаем данные
@@ -310,13 +330,13 @@ void ISCaratApplication::SendCommand(const QByteArray &ByteArray)
     if (TcpSocket.write(ByteArray) == -1) //Не удалось послать данные
     {
 		ISDEBUG_L("Error sending: " + TcpSocket.errorString());
-        return;
+        return false;
     }
 
     if (!TcpSocket.flush())
     {
 		ISDEBUG_L("Error flushing: " + TcpSocket.errorString());
-        return;
+        return false;
     }
 
 	//Ждём ответа
@@ -333,5 +353,6 @@ void ISCaratApplication::SendCommand(const QByteArray &ByteArray)
 			break;
 		}
 	}
+    return true;
 }
 //-----------------------------------------------------------------------------

@@ -28,6 +28,14 @@ QString ISLogger::GetErrorString() const
 	return ErrorString;
 }
 //-----------------------------------------------------------------------------
+bool ISLogger::GetRunning()
+{
+    CRITICAL_SECTION_LOCK(&CriticalSection);
+    bool is_running = IsRunning;
+    CRITICAL_SECTION_UNLOCK(&CriticalSection);
+    return is_running;
+}
+//-----------------------------------------------------------------------------
 bool ISLogger::Initialize()
 {
 	//Получаем текущую дату и время и запоминаем текущий день
@@ -53,17 +61,20 @@ bool ISLogger::Initialize()
 //-----------------------------------------------------------------------------
 void ISLogger::Shutdown()
 {
-	//Останавливаем логгер
-    CRITICAL_SECTION_LOCK(&CriticalSection);
-	IsRunning = false;
-    CRITICAL_SECTION_UNLOCK(&CriticalSection);
+    if (IsRunning)
+    {
+        //Останавливаем логгер
+        CRITICAL_SECTION_LOCK(&CriticalSection);
+        IsRunning = false;
+        CRITICAL_SECTION_UNLOCK(&CriticalSection);
 
-	//Ждём когда он остановится и закрываем файл
-	while (!IsFinished)
-	{
-        ISSleep(LOGGER_TIMEOUT);
-	}
-	File.close();
+        //Ждём когда он остановится и закрываем файл
+        while (!IsFinished)
+        {
+            ISSleep(1);
+        }
+        File.close();
+    }
 }
 //-----------------------------------------------------------------------------
 void ISLogger::Log(bool is_format, MessageType message_type, const std::string &component, const QString &string)

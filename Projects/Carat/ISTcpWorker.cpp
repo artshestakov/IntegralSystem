@@ -514,14 +514,12 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 		{ "Logo", ISVersionInfo::Instance().ConfigurationInfo.LogoName }
 	};
 
-	//Регистрируем пользователя в "онлайн"
+    //Регистрируем пользователя в "онлайн", протоколируем и выходим
 	ISTcpClients::Instance().Add(
 		TcpMessage->TcpSocket->socketDescriptor(),
 		UserID,
 		TcpMessage->TcpSocket->peerAddress().toString(),
-		TcpMessage->TcpSocket->peerPort());
-
-	//Протоколируем и выходим
+        TcpMessage->TcpSocket->peerPort());
 	Protocol(UserID, CONST_UID_PROTOCOL_ENTER_APPLICATION, QVariant(), QVariant(), QVariant(), QVariant());
 	return true;
 }

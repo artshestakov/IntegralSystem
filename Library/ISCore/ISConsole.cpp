@@ -64,6 +64,7 @@ bool ISConsole::InstallEncoding(unsigned int CodePage)
 		return false;
 	}
 #endif
+    Q_UNUSED(CodePage);
 	return true;
 }
 //-----------------------------------------------------------------------------
