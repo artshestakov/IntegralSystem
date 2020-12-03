@@ -8,7 +8,8 @@
   <_GroupAccessTableType IsSystem="true" UID="{41743776-D7CE-414F-ACF3-71C42A607742}" Name="Просмотр" Icon="Access.Show" Order="1"/>
   <_GroupAccessTableType IsSystem="true" UID="{1CFA961D-08A2-4AA3-978E-FF23FC88CA08}" Name="Создание" Icon="Access.Create" Order="2"/>
   <_GroupAccessTableType IsSystem="true" UID="{259AC6D5-63F8-4C44-B8A6-0108DA542BA6}" Name="Изменение" Icon="Access.Edit" Order="3"/>
-  <_GroupAccessTableType IsSystem="true" UID="{E3DB5851-69A2-4D32-B4F4-0EB98C331B22}" Name="Экспорт" Icon="Access.Export" Order="4"/>
+  <_GroupAccessTableType IsSystem="true" UID="{48E0575C-31A0-4AE1-87D7-6450B69A41A5}" Name="Удаление" Icon="Access.Delete" Order="4"/>
+  <_GroupAccessTableType IsSystem="true" UID="{E3DB5851-69A2-4D32-B4F4-0EB98C331B22}" Name="Экспорт" Icon="Access.Export" Order="5"/>
 
   <_GroupAccessSpecialType IsSystem="true" UID="{1469B06A-9155-40A0-BED9-8CCFDBA89989}" Name="Основные" Order="1"/>
   <_GroupAccessSpecialType IsSystem="true" UID="{6948884F-5F69-4F74-A230-A2D892A44A52}" Parent="{1469B06A-9155-40A0-BED9-8CCFDBA89989}" Name="Рабочий стол" Hint="Доступ к рабочему столу программы" Order="1"/>

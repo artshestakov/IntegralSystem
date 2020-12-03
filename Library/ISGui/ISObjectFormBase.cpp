@@ -904,7 +904,7 @@ void ISObjectFormBase::AddFavoite()
 //-----------------------------------------------------------------------------
 void ISObjectFormBase::Delete()
 {
-	if (!ISUserRoleEntity::Instance().CheckAccessTable(MetaTable->Name, CONST_UID_GROUP_ACCESS_TYPE_EDIT))
+	if (!ISUserRoleEntity::Instance().CheckAccessTable(MetaTable->Name, CONST_UID_GROUP_ACCESS_TYPE_DELETE))
 	{
 		ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.Edit").arg(MetaTable->LocalListName));
 		return;
