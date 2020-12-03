@@ -36,6 +36,7 @@
 #include "ISQueryPool.h"
 #include "ISGui.h"
 #include "ISAlgorithm.h"
+#include "ISConfig.h"
 //-----------------------------------------------------------------------------
 static QString QI_SEARCH_FAST = PREPARE_QUERY("INSERT INTO _searchfast(srfs_value) "
 											  "VALUES(:Value)");
@@ -1025,61 +1026,89 @@ bool ISListBaseForm::Delete()
 	QString ErrorString;
 	bool Result = true;
 	ISVectorInt VectorInt = GetSelectedIDs();
-	if (VectorInt.size() == 1) //Если удаляется одна запись
-	{
-		if (CheckIsSystemObject()) //Если запись является системной - выходим из функции
-		{
-			ISMessageBox::ShowWarning(this, LANG("Message.Warning.SystemObject.NotDelete"));
-			return false;
-		}
 
-		if (ISMessageBox::ShowQuestion(this, LANG("Message.Object.Delete")))
+	if (CONFIG_BOOL("Protocol/Include"))
+	{
+		Result = VectorInt.size() == 1 ?
+			ISMessageBox::ShowQuestion(this, LANG("Message.Object.Delete")) :
+			ISMessageBox::ShowQuestion(this, LANG("Message.Objects.Delete").arg(VectorInt.size()));
+		if (Result) //Получили подтверждение от пользователя
 		{
-			int ObjectID = VectorInt.front();
-			Result = ISCore::DeleteObject(MetaTable, ObjectID, ErrorString);
+			Result = ISGui::RecordsDelete(MetaTable->Name, VectorInt, ErrorString);
 			if (Result)
 			{
 				if (SETTING_BOOL(CONST_UID_SETTING_GENERAL_SHOWNOTIFICATIONFORM))
 				{
-					ISPopupMessage::ShowNotification(LANG("NotificationForm.Title.Deleted").arg(ObjectID));
+					ISPopupMessage::ShowNotification(VectorInt.size() == 1 ?
+						LANG("NotificationForm.Title.Deleted").arg(VectorInt.front()) :
+						LANG("NotificationForm.Title.Deleteds"));
 				}
-				ISProtocol::DeleteObject(MetaTable->Name, MetaTable->LocalListName, GetObjectID());
 				Update();
 			}
 			else
 			{
-				ISMessageBox::ShowCritical(this, LANG("Message.Error.DeleteObject"), ErrorString);
+				ISMessageBox::ShowCritical(this, ErrorString);
 			}
-			return Result;
 		}
 	}
-	else //Удаляется несколько записей
+	else
 	{
-		if (ISMessageBox::ShowQuestion(this, LANG("Message.Objects.Delete").arg(VectorInt.size())))
+		if (VectorInt.size() == 1) //Если удаляется одна запись
 		{
-			ISProgressForm ProgressForm((int)VectorInt.size(), LANG("DeletingObjects"), this);
-			ProgressForm.show();
-
-			for (int ObjectID : VectorInt)
+			if (CheckIsSystemObject()) //Если запись является системной - выходим из функции
 			{
-				ProgressForm.IncrementValue();
-				Result = ISCore::DeleteObject(MetaTable, ObjectID, ErrorString);
-				if (Result) //Если запись удалена - протоколируем
-				{
-					ISProtocol::DeleteObject(MetaTable->Name, MetaTable->LocalListName, GetObjectID());
-				}
-				else //Не удалось удалить запись - выходим из цикла
-				{
-					ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotDeleteRecord").arg(ObjectID), ErrorString);
-					break;
-				}
-
-				if (ProgressForm.wasCanceled())
-				{
-					break;
-				}
+				ISMessageBox::ShowWarning(this, LANG("Message.Warning.SystemObject.NotDelete"));
+				return false;
 			}
-			Update();
+
+			if (ISMessageBox::ShowQuestion(this, LANG("Message.Object.Delete")))
+			{
+				int ObjectID = VectorInt.front();
+				Result = ISCore::DeleteObject(MetaTable, ObjectID, ErrorString);
+				if (Result)
+				{
+					if (SETTING_BOOL(CONST_UID_SETTING_GENERAL_SHOWNOTIFICATIONFORM))
+					{
+						ISPopupMessage::ShowNotification(LANG("NotificationForm.Title.Deleted").arg(ObjectID));
+					}
+					ISProtocol::DeleteObject(MetaTable->Name, MetaTable->LocalListName, GetObjectID());
+					Update();
+				}
+				else
+				{
+					ISMessageBox::ShowCritical(this, LANG("Message.Error.DeleteObject"), ErrorString);
+				}
+				return Result;
+			}
+		}
+		else //Удаляется несколько записей
+		{
+			if (ISMessageBox::ShowQuestion(this, LANG("Message.Objects.Delete").arg(VectorInt.size())))
+			{
+				ISProgressForm ProgressForm((int)VectorInt.size(), LANG("DeletingObjects"), this);
+				ProgressForm.show();
+
+				for (int ObjectID : VectorInt)
+				{
+					ProgressForm.IncrementValue();
+					Result = ISCore::DeleteObject(MetaTable, ObjectID, ErrorString);
+					if (Result) //Если запись удалена - протоколируем
+					{
+						ISProtocol::DeleteObject(MetaTable->Name, MetaTable->LocalListName, GetObjectID());
+					}
+					else //Не удалось удалить запись - выходим из цикла
+					{
+						ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotDeleteRecord").arg(ObjectID), ErrorString);
+						break;
+					}
+
+					if (ProgressForm.wasCanceled())
+					{
+						break;
+					}
+				}
+				Update();
+			}
 		}
 	}
 	return Result;

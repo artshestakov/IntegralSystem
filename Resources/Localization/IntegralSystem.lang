@@ -131,7 +131,7 @@
   <Local Name="Message.Error.DownloadUpdate" Russian="Не удалось загрузить обновление!"/>
   <Local Name="Message.Error.SaveUpdate" Russian="Не удалось сохранить файл обновления!"/>
   <Local Name="Message.Object.Delete" Russian="Вы действительно хотите удалить выбранную запись?"/>
-  <Local Name="Message.Objects.Delete" Russian="Вы действительно удалить выбранные (%1 шт.) записи?"/>
+  <Local Name="Message.Objects.Delete" Russian="Вы действительно удалить выбранные записи (%1 шт.)?"/>
   <Local Name="Message.Warning.SystemObject.NotEdit" Russian="Запрещено редактировать системные записи."/>
   <Local Name="Message.Warning.SystemObject.Copy" Russian="Запрещено создавать копии системных записей."/>
   <Local Name="Message.Warning.SystemObject.NotDelete" Russian="Запрещено удалять системные записи."/>
@@ -493,7 +493,8 @@
   <Local Name="NotificationForm.Title.Created" Russian="Создана запись"/>
   <Local Name="NotificationForm.Title.CreatedCopy" Russian="Создана копия записи"/>
   <Local Name="NotificationForm.Title.Edited" Russian="Запись изменена"/>
-  <Local Name="NotificationForm.Title.Deleted" Russian="Запись с кодом %1 удалена из базы данных"/>
+  <Local Name="NotificationForm.Title.Deleted" Russian="Запись с кодом %1 успешно удалена"/>
+  <Local Name="NotificationForm.Title.Deleteds" Russian="Выбраннеые записи успешно удалены"/>
 
   <!--Settings-->
   <Local Name="Settings.Table.DoubleClickEvent.Window" Russian="Открывать запись в отдельном окне"/>

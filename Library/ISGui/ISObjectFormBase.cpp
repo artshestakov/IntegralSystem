@@ -21,6 +21,7 @@
 #include "ISUserRoleEntity.h"
 #include "ISAlgorithm.h"
 #include "ISHistory.h"
+#include "ISConfig.h"
 //-----------------------------------------------------------------------------
 ISObjectFormBase::ISObjectFormBase(ISNamespace::ObjectFormType form_type, PMetaTable *meta_table, QWidget *parent, int object_id)
 	: ISInterfaceForm(parent),
@@ -906,26 +907,48 @@ void ISObjectFormBase::Delete()
 {
 	if (!ISUserRoleEntity::Instance().CheckAccessTable(MetaTable->Name, CONST_UID_GROUP_ACCESS_TYPE_DELETE))
 	{
-		ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.Edit").arg(MetaTable->LocalListName));
+		ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.Delete").arg(MetaTable->LocalListName));
 		return;
 	}
 
-	if (ISMessageBox::ShowQuestion(this, LANG("Message.Object.Delete")))
+	QString ErrorString;
+	if (CONFIG_BOOL("Protocol/Include"))
 	{
-		QString ErrorString;
-		if (ISCore::DeleteObject(MetaTable, GetObjectID(), ErrorString))
+		if (ISMessageBox::ShowQuestion(this, LANG("Message.Object.Delete")))
 		{
-			if (SETTING_BOOL(CONST_UID_SETTING_GENERAL_SHOWNOTIFICATIONFORM))
+			if (ISGui::RecordsDelete(MetaTable->Name, { GetObjectID() }, ErrorString))
 			{
-				ISPopupMessage::ShowNotification(LANG("NotificationForm.Title.Deleted").arg(GetObjectID()));
+				if (SETTING_BOOL(CONST_UID_SETTING_GENERAL_SHOWNOTIFICATIONFORM))
+				{
+					ISPopupMessage::ShowNotification(LANG("NotificationForm.Title.Deleted").arg(GetObjectID()));
+				}
+				emit UpdateList();
+				close();
 			}
-			ISProtocol::DeleteObject(MetaTable->Name, MetaTable->LocalListName, GetObjectID());
-			emit UpdateList();
-			close();
+			else
+			{
+				ISMessageBox::ShowCritical(this, LANG("Message.Error.DeleteObject"), ErrorString);
+			}
 		}
-		else
+	}
+	else
+	{
+		if (ISMessageBox::ShowQuestion(this, LANG("Message.Object.Delete")))
 		{
-			ISMessageBox::ShowCritical(this, LANG("Message.Error.DeleteObject"), ErrorString);
+			if (ISCore::DeleteObject(MetaTable, GetObjectID(), ErrorString))
+			{
+				if (SETTING_BOOL(CONST_UID_SETTING_GENERAL_SHOWNOTIFICATIONFORM))
+				{
+					ISPopupMessage::ShowNotification(LANG("NotificationForm.Title.Deleted").arg(GetObjectID()));
+				}
+				ISProtocol::DeleteObject(MetaTable->Name, MetaTable->LocalListName, GetObjectID());
+				emit UpdateList();
+				close();
+			}
+			else
+			{
+				ISMessageBox::ShowCritical(this, LANG("Message.Error.DeleteObject"), ErrorString);
+			}
 		}
 	}
 }

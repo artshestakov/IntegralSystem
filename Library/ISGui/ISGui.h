@@ -37,6 +37,7 @@ public:
 	static bool OpenFolder(const QString &FolderPath); //Открыть дикекторию
 	static QString ConvertDateTimeToString(const QDateTime &DateTime, const QString &DateFormat, const QString &TimeFormat); //Конвертировать дату и время в строку
 	static QString ConvertDateToString(const QDate &Date, const QString &DateFormat); //Конвертировать дату в строку
+	static bool RecordsDelete(const QString &TableName, const ISVectorInt &ObjectsID, QString &ErrorString); //Удалить записи
 
 	static void ExitApplication(); //Выход из программы
 

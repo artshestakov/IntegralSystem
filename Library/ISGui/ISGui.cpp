@@ -51,6 +51,7 @@
 #include "ISSettingFieldWidgets.h"
 #include "ISSystem.h"
 #include "ISTcpConnector.h"
+#include "ISTcpQuery.h"
 //-----------------------------------------------------------------------------
 static QString QS_NOTE_OBJECT = PREPARE_QUERY("SELECT nobj_note FROM _noteobject WHERE nobj_tablename = :TableName AND nobj_objectid = :ObjectID");
 //-----------------------------------------------------------------------------
@@ -391,6 +392,25 @@ QString ISGui::ConvertDateToString(const QDate &Date, const QString &DateFormat)
 		Result = Date.toString(DateFormat);
 	}
 	return Result;
+}
+//-----------------------------------------------------------------------------
+bool ISGui::RecordsDelete(const QString &TableName, const ISVectorInt &ObjectsID, QString &ErrorString)
+{
+	ISTcpQuery qDelete(API_RECORD_DELETE);
+	qDelete.BindValue("TableName", TableName);
+
+	QVariantList Objects;
+	for (const int &ObjectID : ObjectsID)
+	{
+		Objects.push_back(ObjectID);
+	}
+	qDelete.BindValue("Objects", Objects);
+	if (!qDelete.Execute())
+	{
+		ErrorString = qDelete.GetErrorString();
+		return false;
+	}
+	return true;
 }
 //-----------------------------------------------------------------------------
 void ISGui::ExitApplication()
