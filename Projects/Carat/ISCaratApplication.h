@@ -19,19 +19,19 @@ public:
 
 	QString GetErrorString() const; //Получить текстовое описание ошибки
 	bool Initialize(); //Инициализация
-	void Run(const QStringList &Arguments); //Запуск с параметрами
+    bool Run(const QStringList &Arguments); //Запуск с параметрами
 	bool Run(); //Стандартный запуск
 	void Shutdown(); //Остановка приложения
 
 private:
-	void Help();
-	void Version();
-	void SendShutdown();
-	void ConfigCreate();
-	void ConfigReset();
+    bool Help();
+    bool Version();
+    bool SendShutdown();
+    bool ConfigCreate();
+    bool ConfigReset();
 
 private:
-	void SendCommand(const QByteArray &ByteArray);
+    bool SendCommand(const QByteArray &ByteArray);
 
 private:
 	QString ErrorString;

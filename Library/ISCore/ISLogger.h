@@ -29,6 +29,9 @@ public:
 	//Получить описание ошибки
 	QString GetErrorString() const;
 
+    //Получить флаг запуска
+    bool GetRunning();
+
 	//Инициализировать логгер
 	bool Initialize();
 

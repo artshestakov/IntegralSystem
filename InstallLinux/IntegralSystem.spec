@@ -5,7 +5,7 @@ Group: Utilities/System
 Group: Applications/Communications
 Vendor: Shestakov Artem
 License: GPL
-Summary(ru): Система управления данными IntegralSystem
+Summary(ru): Сервер системы управления данными IntegralSystem
 
 %description
 Not specified
@@ -45,14 +45,20 @@ cp $INTEGRAL_SYSTEM_DIR/Resources/Licenses/* $RPM_BUILD_ROOT/opt/IntegralSystem/
 /opt/IntegralSystem/*
 
 %post
-cp --force /opt/IntegralSystem/Carat.service /etc/systemd/system/Carat.service
-systemctl enable Carat
+if [[ ! -f /etc/systemd/system/Carat.service ]]
+then
+	cp --force /opt/IntegralSystem/Carat.service /etc/systemd/system/Carat.service
+	systemctl enable Carat
+fi
 systemctl daemon-reload
 /opt/IntegralSystem/Carat --conf-create
 
 %postun
-service Carat stop
-systemctl disable Carat
-rm -f /etc/systemd/system/Carat.service
+if [[ -f /etc/systemd/system/Carat.service ]]
+then
+	service Carat stop
+	systemctl disable Carat
+	rm -f /etc/systemd/system/Carat.service
+fi
 systemctl daemon-reload
 systemctl reset-failed
