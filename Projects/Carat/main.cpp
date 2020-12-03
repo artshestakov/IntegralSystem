@@ -1,5 +1,4 @@
 #include "ISCaratApplication.h"
-#include "ISQueryPool.h"
 #include "ISDatabase.h"
 #include "ISLogger.h"
 //-----------------------------------------------------------------------------
@@ -29,7 +28,6 @@ int main(int argc, char **argv)
     }
 
 	//Останавливаем служебные сервисы и завершаем программу
-	ISQueryPool::Instance().Shutdown();
 	ISDatabase::Instance().DisconnectAll();
     if (ISLogger::Instance().GetRunning())
     {

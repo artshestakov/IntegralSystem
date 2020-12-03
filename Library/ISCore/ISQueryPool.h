@@ -1,4 +1,6 @@
 #pragma once
+#ifndef _ISQUERYPOOL_H_INCLUDED
+#define _ISQUERYPOOL_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "iscore_global.h"
 #include "ISStructs.h"
@@ -41,3 +43,4 @@ private:
 	std::queue<ISQueryPoolObject> Queue;
 };
 //-----------------------------------------------------------------------------
+#endif

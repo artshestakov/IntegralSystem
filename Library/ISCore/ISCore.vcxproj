@@ -257,6 +257,7 @@
     <ClInclude Include="ISLogger.h" />
     <ClInclude Include="ISNamespace.h" />
     <ClInclude Include="ISProperty.h" />
+    <QtMoc Include="ISQueryPool.h" />
     <ClInclude Include="ISRandom.h" />
     <ClInclude Include="ISSingleton.h" />
     <ClInclude Include="ISStructs.h" />
@@ -280,7 +281,6 @@
     <ClInclude Include="ISMetaUser.h" />
     <ClInclude Include="ISMetaUuidCheckeder.h" />
     <ClInclude Include="ISQuery.h" />
-    <QtMoc Include="ISQueryPool.h" />
     <ClInclude Include="ISQueryText.h" />
     <ClInclude Include="PMetaClass.h" />
     <QtMoc Include="ISQueryModel.h" />

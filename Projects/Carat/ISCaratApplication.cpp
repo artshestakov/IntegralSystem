@@ -7,7 +7,6 @@
 #include "ISVersionInfo.h"
 #include "ISDebug.h"
 #include "ISSystem.h"
-#include "ISQueryPool.h"
 #include "ISMetaData.h"
 #include "ISConsole.h"
 //-----------------------------------------------------------------------------
@@ -139,17 +138,6 @@ bool ISCaratApplication::Run()
 		arg(CURRENT_THREAD_ID()).
 		arg(GET_PID()).
 		arg(CONFIG_STRING(CONST_CONFIG_OTHER_CONFIGURATION)));
-
-	//Инициализация пула запросов
-	if (!ISQueryPool::Instance().Start(CONFIG_STRING(CONST_CONFIG_CONNECTION_SERVER),
-		CONFIG_INT(CONST_CONFIG_CONNECTION_PORT),
-		CONFIG_STRING(CONST_CONFIG_CONNECTION_DATABASE),
-		CONFIG_STRING(CONST_CONFIG_CONNECTION_LOGIN),
-		CONFIG_STRING(CONST_CONFIG_CONNECTION_PASSWORD)))
-	{
-		ISLOGGER_E("ISQueryPool", ISQueryPool::Instance().GetErrorString());
-		return false;
-	}
 
 	//Если контроллер включен - запускаем его
 	if (CONFIG_BOOL(CONST_CONFIG_CONTROLLER_INCLUDE))

@@ -41,9 +41,6 @@
     <ClCompile Include="ISQueryModel.cpp">
       <Filter>Database</Filter>
     </ClCompile>
-    <ClCompile Include="ISQueryPool.cpp">
-      <Filter>Database</Filter>
-    </ClCompile>
     <ClCompile Include="ISQueryText.cpp">
       <Filter>Database</Filter>
     </ClCompile>
@@ -126,6 +123,9 @@
       <Filter>System</Filter>
     </ClCompile>
     <ClCompile Include="ISConsole.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="ISQueryPool.cpp">
       <Filter>System</Filter>
     </ClCompile>
   </ItemGroup>
@@ -245,7 +245,7 @@
       <Filter>Network</Filter>
     </QtMoc>
     <QtMoc Include="ISQueryPool.h">
-      <Filter>Database</Filter>
+      <Filter>System</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>
