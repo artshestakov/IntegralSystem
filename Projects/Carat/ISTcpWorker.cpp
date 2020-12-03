@@ -1305,9 +1305,31 @@ bool ISTcpWorker::RecordDelete(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	}
 	SqlIN.chop(1);
 
+	//Проверяем, нет ли системных записей
+	ISQuery qSqlQuery(ISDatabase::Instance().GetDB(DBConnectionName), "SELECT (COUNT(*) > 0)::BOOLEAN AS is_exist FROM " + TableNameString + " WHERE " + MetaTable->Alias + "_issystem AND " + MetaTable->Alias + "_id IN(" + SqlIN + ")");
+	if (!qSqlQuery.Execute()) //Ошибка запроса
+	{
+		ErrorString = LANG("Carat.Error.Query.RecordDelete.Select").arg(qSqlQuery.GetErrorString());
+		return false;
+	}
+
+	if (!qSqlQuery.First())
+	{
+		ErrorString = qSqlQuery.GetErrorString();
+		return false;
+	}
+
+	if (qSqlQuery.ReadColumn("is_exist").toBool())
+	{
+		ErrorString = Objects.size() == 1 ?
+			LANG("Carat.Error.Query.RecordDelete.RecordIsSystem") :
+			LANG("Carat.Error.Query.RecordDelete.RecordsIsSystem");
+		return false;
+	}
+
 	//Удаляем
 	ISQuery qDelete(ISDatabase::Instance().GetDB(DBConnectionName), "DELETE FROM " + TableNameString + " WHERE " + MetaTable->Alias + "_id IN(" + SqlIN + ")");
-	if (!qDelete.Execute()) //Не удалось удалить
+	if (!qDelete.Execute()) //Ошибка запроса
 	{
 		ErrorString = LANG("Carat.Error.Query.RecordDelete.Delete").arg(qDelete.GetErrorString());
 		return false;
