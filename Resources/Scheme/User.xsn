@@ -5,7 +5,7 @@
     <Fields>
       <Field UID="{DBE02AFE-2215-471F-825C-9670CEAAC908}" Name="Group" Type="BigInt" LabelName="Группа" LocalListName="Группа" LayoutName="Group"/>
       <Field UID="{79E27A03-6412-4236-B9A2-761DA41E80E6}" Name="FIO" Type="String" LabelName="ФИО" LocalListName="ФИО" NotNull="true" LayoutName="Group"/>
-      <Field UID="{EE458F07-C0F1-4B2C-970E-DA5575AB614C}" Name="Login" Type="String" Size="16" Lower="true" RegExp="^([0-9A-Za-z._]+)$" LabelName="Логин" LocalListName="Логин" LayoutName="Group" NotNull="true"/>
+      <Field UID="{EE458F07-C0F1-4B2C-970E-DA5575AB614C}" Name="Login" Type="String" Lower="true" RegExp="^([0-9A-Za-z._]+)$" LabelName="Логин" LocalListName="Логин" LayoutName="Group" NotNull="true"/>
       <Field UID="{61FDECB6-B023-4D3E-9558-56851ACCC2FF}" Name="Hash" Type="String" Size="64" LabelName="Хэш" LocalListName="Хэш" HideFromList="true" HideFromObject="true"/>
       <Field UID="{194CC7C5-E4FB-46AA-B6BE-EE8420A5BB9D}" Name="Sex" Type="Sex" ControlWidget="ISSexEdit" LabelName="Пол" LocalListName="Пол" NotNull="true" LayoutName="Sex"/>
       <Field UID="{43326619-3524-4E36-AE33-957220A98E04}" Name="Birthday" Type="Birthday" LabelName="Дата рождения" LocalListName="Дата рождения" HideFromList="true" LayoutName="Sex"/>

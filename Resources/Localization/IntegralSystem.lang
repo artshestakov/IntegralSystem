@@ -151,6 +151,7 @@
   <Local Name="Message.Warning.NotAccess.Create" Russian="У Вас нет прав на добавление данных в таблицу &quot;%1&quot;."/>
   <Local Name="Message.Warning.NotAccess.CreateCopy" Russian="У Вас нет прав на создание копий записей в таблице &quot;%1&quot;."/>
   <Local Name="Message.Warning.NotAccess.Edit" Russian="У Вас нет прав на изменение данных в таблице &quot;%1&quot;."/>
+  <Local Name="Message.Warning.NotAccess.Delete" Russian="У Вас нет прав на удаление данных в таблице &quot;%1&quot;."/>
   <Local Name="Message.Warning.NotAccess.Export" Russian="У Вас нет прав на экспорт данных из таблицы &quot;%1&quot;."/>
   <Local Name="Message.Warning.NotAccess.Special.TaskClose" Russian="У Вас нет прав на закрытие задачи."/>
   <Local Name="Message.Warning.NotAccess.Special.TaskReopen" Russian="У Вас нет прав на переоткрытие задачи."/>
