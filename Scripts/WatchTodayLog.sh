@@ -1,3 +1,4 @@
+echo ======================================================
 CURRENT_DAY=$(date +"%d")
 CURRENT_MONTH=$(date +"%m")
 CURRENT_YEAR=$(date +"%Y")
