@@ -27,7 +27,7 @@ QString ISMetaDataHelper::GenerateSqlQueryFromForeign(PMetaForeign *MetaForeign,
 		}
 		if (ObjectID.isValid())
 		{
-			SqlQuery += "AND " + MetaTableForeign->Alias + '_' + MetaForeign->ForeignField + " = :ObjectID \n";
+			SqlQuery += MetaTableForeign->Alias + '_' + MetaForeign->ForeignField + " = :ObjectID \n";
 		}
 	}
 	SqlQuery += "ORDER BY ";
