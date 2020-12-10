@@ -4,103 +4,103 @@
 //-----------------------------------------------------------------------------
 QDomElement ISSystem::GetDomElement(QFile &File)
 {
-	QDomDocument XmlDocument;
+    QDomDocument XmlDocument;
     XmlDocument.setContent(&File);
-	QDomElement DomElement = XmlDocument.documentElement();
-	return DomElement;
+    QDomElement DomElement = XmlDocument.documentElement();
+    return DomElement;
 }
 //-----------------------------------------------------------------------------
 QDomElement ISSystem::GetDomElement(const QString &Content)
 {
-	QDomDocument XmlDocument;
-	XmlDocument.setContent(Content);
-	QDomElement DomElement = XmlDocument.documentElement();
-	return DomElement;
+    QDomDocument XmlDocument;
+    XmlDocument.setContent(Content);
+    QDomElement DomElement = XmlDocument.documentElement();
+    return DomElement;
 }
 //-----------------------------------------------------------------------------
 QString ISSystem::GetSizeDir(const QString &DirPath)
 {
-	qint64 Size = 0;
-	QFileInfoList FileInfoList = QDir(DirPath).entryInfoList(QDir::Files);
-	for (const QFileInfo &FileInfo : FileInfoList)
-	{
-		Size += ISAlgorithm::GetFileSize(FileInfo.absoluteFilePath().toStdString());
-	}
-	return FileSizeFromString(Size);
+    qint64 Size = 0;
+    QFileInfoList FileInfoList = QDir(DirPath).entryInfoList(QDir::Files);
+    for (const QFileInfo &FileInfo : FileInfoList)
+    {
+        Size += ISAlgorithm::GetFileSize(FileInfo.absoluteFilePath().toStdString());
+    }
+    return FileSizeFromString(Size);
 }
 //-----------------------------------------------------------------------------
 QString ISSystem::GetDayOfWeekName(Qt::DayOfWeek Day)
 {
-	QString DayOfWeekName = QDate::longDayName(Day);
-	BeginSymbolToUpper(DayOfWeekName);
-	return DayOfWeekName;
+    QString DayOfWeekName = QDate::longDayName(Day);
+    BeginSymbolToUpper(DayOfWeekName);
+    return DayOfWeekName;
 }
 //-----------------------------------------------------------------------------
 void ISSystem::ClearDirRecursive(const QString &DirPath)
 {
-	QDir Dir(DirPath);
-	QStringList Files = Dir.entryList(QDir::Files);
+    QDir Dir(DirPath);
+    QStringList Files = Dir.entryList(QDir::Files);
 
-	QStringList::Iterator FileIterator = Files.begin();
-	while (FileIterator != Files.end())
-	{
-		QFile File(DirPath + '/' + *FileIterator);
-		File.remove();
-		++FileIterator;
-	}
+    QStringList::Iterator FileIterator = Files.begin();
+    while (FileIterator != Files.end())
+    {
+        QFile File(DirPath + '/' + *FileIterator);
+        File.remove();
+        ++FileIterator;
+    }
 
-	QStringList Dirs = Dir.entryList(QDir::Dirs);
-	QStringList::Iterator DirIterator = Dirs.begin();
-	while (DirIterator != Dirs.end())
-	{
-		if (*DirIterator != SYMBOL_POINT && *DirIterator != "..")
-		{
-			ClearDirRecursive(DirPath + '/' + *DirIterator);
-		}
-		++DirIterator;
-	}
+    QStringList Dirs = Dir.entryList(QDir::Dirs);
+    QStringList::Iterator DirIterator = Dirs.begin();
+    while (DirIterator != Dirs.end())
+    {
+        if (*DirIterator != SYMBOL_POINT && *DirIterator != "..")
+        {
+            ClearDirRecursive(DirPath + '/' + *DirIterator);
+        }
+        ++DirIterator;
+    }
 
-	Dir.rmdir(DirPath);
+    Dir.rmdir(DirPath);
 }
 //-----------------------------------------------------------------------------
 ISUuid ISSystem::GenerateUuid()
 {
-	return QUuid::createUuid();
+    return QUuid::createUuid();
 }
 //-----------------------------------------------------------------------------
 QString ISSystem::GenerateSalt()
 {
-    //РћР±СЉСЏРІР»СЏРµРј СЂРµР·СѓР»СЊС‚РёСЂСѓСЋС‰СѓСЋ СЃС‚СЂРѕРєСѓ Рё Р±СѓС„РµСЂ
+    //Объявляем результирующую строку и буфер
     QString StringSalt;
     unsigned char Buffer[CARAT_SALT_SIZE] = { 0 };
 #ifdef WIN32
-	HCRYPTPROV CryptoProvider = 0;
-	if (CryptAcquireContext(&CryptoProvider, 0, 0, PROV_RSA_FULL, CRYPT_VERIFYCONTEXT | CRYPT_SILENT))
-	{
-		const DWORD Length = 128;
-		BYTE Buffer[Length] = { 0 };
-		if (CryptGenRandom(CryptoProvider, Length, Buffer))
-		{
-			for (int i = 0; i < Length; ++i)
-			{
-				QString Char = QString::number(Buffer[i], 16);
-				Result.append(Char.size() == 1 ? '0' + Char : Char);
-			}
-		}
-	}
-	CryptReleaseContext(CryptoProvider, 0);
+    HCRYPTPROV CryptoProvider = 0;
+    if (CryptAcquireContext(&CryptoProvider, 0, 0, PROV_RSA_FULL, CRYPT_VERIFYCONTEXT | CRYPT_SILENT))
+    {
+        const DWORD Length = 128;
+        BYTE Buffer[Length] = { 0 };
+        if (CryptGenRandom(CryptoProvider, Length, Buffer))
+        {
+            for (int i = 0; i < Length; ++i)
+            {
+                QString Char = QString::number(Buffer[i], 16);
+                Result.append(Char.size() == 1 ? '0' + Char : Char);
+            }
+        }
+    }
+    CryptReleaseContext(CryptoProvider, 0);
 #else
     FILE *FileDevice = fopen("/dev/random", "r");
     bool Result = FileDevice ? true : false;
-    if (Result) //РЈСЃС‚СЂРѕР№СЃС‚РІРѕ СѓРґР°Р»РѕСЃСЊ РѕС‚РєСЂС‹С‚СЊ - С‡РёС‚Р°РµРј Рё Р·Р°РєСЂС‹РІР°РµРј СѓСЃС‚СЂРѕР№СЃС‚РІРѕ
+    if (Result) //Устройство удалось открыть - читаем и закрываем устройство
     {
         Result = fread(&Buffer[0], sizeof(char), CARAT_SALT_SIZE, FileDevice) == CARAT_SALT_SIZE;
         fclose(FileDevice);
     }
 #endif
-    if (Result) //Р•СЃР»Рё РІСЃРµ С…РѕСЂРѕС€Рѕ - С„РѕСЂРјРёСЂСѓРµРј СЃРѕР»СЊ РІ HEX
+    if (Result) //Если все хорошо - формируем соль в HEX
     {
-        for (unsigned long i = 0; i < CARAT_SALT_SIZE; ++i) //РћР±С…РѕРґРёРј Р±СѓС„РµСЂ СЃ СЃРѕР»СЊСЋ
+        for (unsigned long i = 0; i < CARAT_SALT_SIZE; ++i) //Обходим буфер с солью
         {
             StringSalt.append(QByteArray(1, Buffer[i]).toHex());
         }
@@ -110,149 +110,149 @@ QString ISSystem::GenerateSalt()
 //-----------------------------------------------------------------------------
 void ISSystem::BeginSymbolToUpper(QString &String)
 {
-	if (!String.isEmpty())
-	{
-		String[0] = String[0].toUpper();
-	}
+    if (!String.isEmpty())
+    {
+        String[0] = String[0].toUpper();
+    }
 }
 //-----------------------------------------------------------------------------
 bool ISSystem::CheckExistSlot(QObject *Object, const QString &SlotName)
 {
-	bool Result = false;
-	for (int i = 0; i < Object->metaObject()->methodCount(); ++i)
-	{
-		Result = Object->metaObject()->method(i).name() == SlotName;
-		if (Result)
-		{
-			break;
-		}
-	}
-	return Result;
+    bool Result = false;
+    for (int i = 0; i < Object->metaObject()->methodCount(); ++i)
+    {
+        Result = Object->metaObject()->method(i).name() == SlotName;
+        if (Result)
+        {
+            break;
+        }
+    }
+    return Result;
 }
 //-----------------------------------------------------------------------------
 void ISSystem::ExecLoop(unsigned long Milliseconds)
 {
-	QEventLoop EventLoop;
-	QTimer::singleShot(Milliseconds, &EventLoop, &QEventLoop::quit);
-	EventLoop.exec();
+    QEventLoop EventLoop;
+    QTimer::singleShot(Milliseconds, &EventLoop, &QEventLoop::quit);
+    EventLoop.exec();
 }
 //-----------------------------------------------------------------------------
 bool ISSystem::CreateDir(const QString &DirPath)
 {
-	QString ErrorString;
-	return CreateDir(DirPath, ErrorString);
+    QString ErrorString;
+    return CreateDir(DirPath, ErrorString);
 }
 //-----------------------------------------------------------------------------
 bool ISSystem::CreateDir(const QString &DirPath, QString &ErrorString)
 {
-	QDir Dir(DirPath);
-	bool Result = Dir.exists();
-	if (!Result)
-	{
-		Result = Dir.mkdir(DirPath);
-		if (!Result)
-		{
-			ErrorString = "Error creting dir with path: " + DirPath;
-		}
-	}
-	return Result;
+    QDir Dir(DirPath);
+    bool Result = Dir.exists();
+    if (!Result)
+    {
+        Result = Dir.mkdir(DirPath);
+        if (!Result)
+        {
+            ErrorString = "Error creting dir with path: " + DirPath;
+        }
+    }
+    return Result;
 }
 //-----------------------------------------------------------------------------
 int ISSystem::TimeFromMinutes(const QTime &Time)
 {
-	int Minute = 0;
-	if (Time.hour())
-	{
-		Minute += Time.hour() * 60;
-	}
-	if (Time.minute())
-	{
-		Minute += Time.minute();
-	}
-	return Minute;
+    int Minute = 0;
+    if (Time.hour())
+    {
+        Minute += Time.hour() * 60;
+    }
+    if (Time.minute())
+    {
+        Minute += Time.minute();
+    }
+    return Minute;
 }
 //-----------------------------------------------------------------------------
 QString ISSystem::MillisecondsToString(int Milliseconds)
 {
-	int hours = Milliseconds / (1000 * 60 * 60);
-	int minutes = (Milliseconds - (hours * 1000 * 60 * 60)) / (1000 * 60);
-	int seconds = (Milliseconds - (minutes * 1000 * 60) - (hours * 1000 * 60 * 60)) / 1000;
-	int milliseconds = Milliseconds - (seconds * 1000) - (minutes * 1000 * 60) - (hours * 1000 * 60 * 60);
-	return QString().append(QString("%1").arg(hours, 2, 10, QLatin1Char('0')) + ':' + QString("%1").arg(minutes, 2, 10, QLatin1Char('0')) + ':' + QString("%1").arg(seconds, 2, 10, QLatin1Char('0')) + ':' + QString("%1").arg(milliseconds, 3, 10, QLatin1Char('0')));
+    int hours = Milliseconds / (1000 * 60 * 60);
+    int minutes = (Milliseconds - (hours * 1000 * 60 * 60)) / (1000 * 60);
+    int seconds = (Milliseconds - (minutes * 1000 * 60) - (hours * 1000 * 60 * 60)) / 1000;
+    int milliseconds = Milliseconds - (seconds * 1000) - (minutes * 1000 * 60) - (hours * 1000 * 60 * 60);
+    return QString().append(QString("%1").arg(hours, 2, 10, QLatin1Char('0')) + ':' + QString("%1").arg(minutes, 2, 10, QLatin1Char('0')) + ':' + QString("%1").arg(seconds, 2, 10, QLatin1Char('0')) + ':' + QString("%1").arg(milliseconds, 3, 10, QLatin1Char('0')));
 }
 //-----------------------------------------------------------------------------
 QString ISSystem::StringToBase64(const QString &String)
 {
-	QByteArray ByteArray = String.toUtf8();
-	QByteArray StringBase64 = ByteArray.toBase64();
-	return QString(StringBase64);
+    QByteArray ByteArray = String.toUtf8();
+    QByteArray StringBase64 = ByteArray.toBase64();
+    return QString(StringBase64);
 }
 //-----------------------------------------------------------------------------
 QString ISSystem::Base64ToString(const QString &Base64)
 {
-	QString String = QByteArray::fromBase64(Base64.toUtf8());
-	return String;
+    QString String = QByteArray::fromBase64(Base64.toUtf8());
+    return String;
 }
 //-----------------------------------------------------------------------------
 QVariantMap ISSystem::JsonStringToVariantMap(const QString &JsonString, QJsonParseError &JsonParseError)
 {
-	QVariantMap VariantMap;
-	if (!JsonString.isEmpty())
-	{
-		QJsonDocument JsonDocument = QJsonDocument::fromJson(JsonString.toUtf8(), &JsonParseError);
-		if (JsonParseError.error == QJsonParseError::NoError)
-		{
-			VariantMap = JsonDocument.object().toVariantMap();
-		}
-	}
-	return VariantMap;
+    QVariantMap VariantMap;
+    if (!JsonString.isEmpty())
+    {
+        QJsonDocument JsonDocument = QJsonDocument::fromJson(JsonString.toUtf8(), &JsonParseError);
+        if (JsonParseError.error == QJsonParseError::NoError)
+        {
+            VariantMap = JsonDocument.object().toVariantMap();
+        }
+    }
+    return VariantMap;
 }
 //-----------------------------------------------------------------------------
 QByteArray ISSystem::VariantMapToJsonString(const QVariantMap &VariantMap, QJsonDocument::JsonFormat Format)
 {
-	return QJsonDocument(QJsonObject::fromVariantMap(VariantMap)).toJson(Format);
+    return QJsonDocument(QJsonObject::fromVariantMap(VariantMap)).toJson(Format);
 }
 //-----------------------------------------------------------------------------
 QString ISSystem::StringToMD5(const QString &String)
 {
-	QCryptographicHash CryptographicHash(QCryptographicHash::Md5);
-	CryptographicHash.addData(String.toUtf8());
-	return QString(CryptographicHash.result().toHex());
+    QCryptographicHash CryptographicHash(QCryptographicHash::Md5);
+    CryptographicHash.addData(String.toUtf8());
+    return QString(CryptographicHash.result().toHex());
 }
 //-----------------------------------------------------------------------------
 QString ISSystem::StringToSha256(const QString &String)
 {
-	return QCryptographicHash::hash(String.toUtf8(), QCryptographicHash::Sha256).toHex();
+    return QCryptographicHash::hash(String.toUtf8(), QCryptographicHash::Sha256).toHex();
 }
 //-----------------------------------------------------------------------------
 QString ISSystem::FileSizeFromString(qint64 FileSize)
 {
-	qint64 Size = FileSize;
+    qint64 Size = FileSize;
     int i = 0;
-	for (; Size > 1023; Size /= 1024, ++i) { }
-	QString String = QString().setNum(Size) + "BKMGT"[i];
+    for (; Size > 1023; Size /= 1024, ++i) { }
+    QString String = QString().setNum(Size) + "BKMGT"[i];
 
-	if (String.contains("B"))
-	{
-		String.replace("B", " B");
-	}
-	else if (String.contains("K"))
-	{
-		String.replace("K", " Kb");
-	}
-	else if (String.contains("M"))
-	{
-		String.replace("M", " Mb");
-	}
-	else if (String.contains("G"))
-	{
-		String.replace("G", " Gb");
-	}
-	else if (String.contains("T"))
-	{
-		String.replace("T", " Tb");
-	}
+    if (String.contains("B"))
+    {
+        String.replace("B", " B");
+    }
+    else if (String.contains("K"))
+    {
+        String.replace("K", " Kb");
+    }
+    else if (String.contains("M"))
+    {
+        String.replace("M", " Mb");
+    }
+    else if (String.contains("G"))
+    {
+        String.replace("G", " Gb");
+    }
+    else if (String.contains("T"))
+    {
+        String.replace("T", " Tb");
+    }
 
-	return String;
+    return String;
 }
 //-----------------------------------------------------------------------------
