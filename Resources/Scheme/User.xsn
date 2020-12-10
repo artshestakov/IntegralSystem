@@ -8,8 +8,7 @@
       <Field UID="{EE458F07-C0F1-4B2C-970E-DA5575AB614C}" Name="Login" Type="String" Lower="true" RegExp="^([0-9A-Za-z._]+)$" LabelName="Логин" LocalListName="Логин" LayoutName="Group" NotNull="true" Hint="Допускаются буквенные символы на английском языке, цифры, точка и нижний пробел."/>
       <Field UID="{61FDECB6-B023-4D3E-9558-56851ACCC2FF}" Name="Hash" Type="String" Size="128" LabelName="Хэш" LocalListName="Хэш" HideFromList="true" HideFromObject="true"/>
       <Field UID="{B7548396-6540-40F1-9254-B70FF0EB324F}" Name="Salt" Type="String" Size="64" LabelName="Соль" LocalListName="Соль" HideFromList="true" HideFromObject="true"/>
-      <Field UID="{194CC7C5-E4FB-46AA-B6BE-EE8420A5BB9D}" Name="Sex" Type="Sex" ControlWidget="ISSexEdit" LabelName="Пол" LocalListName="Пол" NotNull="true" LayoutName="Sex"/>
-      <Field UID="{43326619-3524-4E36-AE33-957220A98E04}" Name="Birthday" Type="Birthday" LabelName="Дата рождения" LocalListName="Дата рождения" HideFromList="true" LayoutName="Sex"/>
+      <Field UID="{43326619-3524-4E36-AE33-957220A98E04}" Name="Birthday" Type="Birthday" LabelName="Дата рождения" LocalListName="Дата рождения" HideFromList="true"/>
       <Field UID="{FEB51D6E-1395-4799-9049-3C9A9CE68370}" Name="AccessAllowed" Type="Bool" DefaultValueWidget="true" LabelName="Доступ разрешен" LocalListName="Доступ разрешен" Hint="Если эта опция отключена, пользователь не сможет войти в программу." SeparatorName="Учётная запись"/>
       <Field UID="{7BBCE6E1-F154-49ED-B494-10FF96C0B140}" Name="AccountLifeTime" Type="Bool" DefaultValue="false" LabelName="Срок действия учётной записи" LocalListName="Срок действия учётной записи" HideFromList="true" Hint="Вы можете ограничить действие учётной записи пользователя указав дату начала и окончания действия учётной записи. Пользовать сможет авторизоваться в программе согласно выбронному Вами диапазону действия."/>
       <Field UID="{07CB8028-4695-4F7C-A676-8D89E38932F8}" Name="AccountLifeTimeStart" Type="Date" LabelName="Дата начала действия" LocalListName="Дата начала действия" HideFromList="true"/>
@@ -22,7 +21,6 @@
       <Index Field="Login" Unique="true"/>
       <Index Field="Hash" Unique="true"/>
       <Index Field="Salt" Unique="true"/>
-      <Index Field="Sex"/>
       <Index Field="Birthday"/>
       <Index Field="AccessAllowed"/>
       <Index Field="AccountLifetime"/>
@@ -31,7 +29,6 @@
     </Indexes>
     <Foreigns>
       <Foreign Field="Group" ForeignClass="_UserGroup" ForeignField="ID" ForeignViewNameField="Name"/>
-      <Foreign Field="Sex" ForeignClass="_Sex" ForeignField="ID" ForeignViewNameField="Name"/>
     </Foreigns>
     <Escorts>
       <Escort LocalName="Изменения пароля" TableName="_UserPasswordChanged" FilterField="User"/>
@@ -128,15 +125,6 @@
     <Foreigns>
       <Foreign Field="Parent" ForeignClass="_GroupAccessSpecialType" ForeignField="UID" ForeignViewNameField="Name"/>
     </Foreigns>
-  </Table>
-  
-  <Table Name="_Sex" UID="{E95FFC22-30A7-4316-AE6D-D88898D1C5AC}" Alias="sexs" ShowOnly="true" LocalName="Пол" LocalListName="Пол" TitleName="Name">
-    <Fields>
-      <Field UID="{AC29AAB1-B799-4C81-A93D-461C10DBC161}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
-    </Fields>
-    <Indexes>
-      <Index Field="Name" Unique="true"/>
-    </Indexes>
   </Table>
 
   <Table Name="_UserPasswordChanged" UID="{621BC43F-01FF-43D3-9046-ADB0B229CDD2}" Alias="upcg" ShowOnly="true" LocalName="Изменение пароля" LocalListName="Изменения паролей" TitleName="User">

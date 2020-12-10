@@ -724,7 +724,6 @@ void ISGui::RegisterMetaType()
 	qRegisterMetaType<ISTaskExecutorEdit*>("ISTaskExecutorEdit");
 	qRegisterMetaType<ISUrlEdit*>("ISUrlEdit");
 	qRegisterMetaType<ISFileEdit*>("ISFileEdit");
-	qRegisterMetaType<ISSexEdit*>("ISSexEdit");
 
 	qRegisterMetaType<ISComboSearchBase*>("ISComboSearchBase");
 	qRegisterMetaType<ISComboSearchString*>("ISComboSearchString");

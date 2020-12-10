@@ -42,7 +42,6 @@ ISMetaData::ISMetaData()
 		{ "Month", ISNamespace::FT_Month, "INTEGER", "ISMonthEdit", "ISComboSearchNumber", false },
 		{ "Url", ISNamespace::FT_Url, "CHARACTER VARYING", "ISUrlEdit", "ISComboSearchString", true },
 		{ "File", ISNamespace::FT_File, "CHARACTER VARYING", "ISFileEdit", QString(), false },
-		{ "Sex", ISNamespace::FT_Sex, "BIGINT", "ISSexEdit", "ISComboSearchNumber", true },
 		{ "TaskImportant", ISNamespace::FT_TaskImportant, "BOOLEAN", "ISTaskImportantEdit", "ISComboSearchBase", true }
 	};
 	CRITICAL_SECTION_INIT(&CriticalSection);

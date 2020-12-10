@@ -1,10 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <XSR Name="User.xsr">
 
-  <_Sex IsSystem="true" UID="{601C7C32-7413-45DA-AAAC-926A77C824F8}" Name="Мужской"/>
-  <_Sex IsSystem="true" UID="{38A3AE76-2D27-4EEB-9AC7-AE4BCFC030FF}" Name="Женский"/>
-  <_Sex IsSystem="true" UID="{7446B115-AED2-4D5B-89D7-16F367B0CF13}" Name="Не определено"/>
-  
   <_GroupAccessTableType IsSystem="true" UID="{41743776-D7CE-414F-ACF3-71C42A607742}" Name="Просмотр" Icon="Access.Show" Order="1"/>
   <_GroupAccessTableType IsSystem="true" UID="{1CFA961D-08A2-4AA3-978E-FF23FC88CA08}" Name="Создание" Icon="Access.Create" Order="2"/>
   <_GroupAccessTableType IsSystem="true" UID="{259AC6D5-63F8-4C44-B8A6-0108DA542BA6}" Name="Изменение" Icon="Access.Edit" Order="3"/>

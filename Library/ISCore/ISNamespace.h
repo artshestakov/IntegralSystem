@@ -40,7 +40,6 @@ namespace ISNamespace
         FT_Month, //Месяц
         FT_Url, //Ссылка
         FT_File, //Файл
-		FT_Sex, //Пол
 		FT_TaskImportant, //Важность задачи
     };
 
@@ -144,6 +143,7 @@ namespace ISNamespace
 	enum ApiMessageType //Тип API-сообщения
 	{
 		AMT_Unknown, //Неизвестное
+		AMT_RegisterAdmin, //Регистрация администратора
 		AMT_Auth, //Авторизация
 		AMT_Sleep, //Ожидание
 		AMT_GetMetaData, //Получить мета-данные
