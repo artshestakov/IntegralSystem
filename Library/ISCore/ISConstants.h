@@ -142,6 +142,7 @@ const size_t	LOGGER_MESSAGE_SIZE = 4098; //Максимальный размер строки логгера
 const unsigned short	CARAT_TCP_PORT = 50000; //Стандартный порт TCP-сервера
 const unsigned short	CARAT_CONTROLLER_PORT = 50001; //Стандартный порт контроллера
 const size_t			CARAT_HASH_SIZE = 64; //Фиксированный размер хэша SHA256 для авторизации
+const unsigned long     CARAT_SALT_SIZE = 32; //фиксированный размер соли
 const size_t			CARAT_CONNECT_TIMEOUT = 3000; //Время ожидания подключения к Карату
 const size_t			CARAT_CONNECT_SLEEP = 10; //Время паузы для ожидания подключения
 const size_t			CARAT_RECONNECT_TIMEOUT = 5000; //Время паузы для попытки подключиться к серверу

@@ -70,7 +70,9 @@ ISUuid ISSystem::GenerateUuid()
 //-----------------------------------------------------------------------------
 QString ISSystem::GenerateSalt()
 {
-	QString Result;
+    //Объявляем результирующую строку и буфер
+    QString StringSalt;
+    unsigned char Buffer[CARAT_SALT_SIZE] = { 0 };
 #ifdef WIN32
 	HCRYPTPROV CryptoProvider = 0;
 	if (CryptAcquireContext(&CryptoProvider, 0, 0, PROV_RSA_FULL, CRYPT_VERIFYCONTEXT | CRYPT_SILENT))
@@ -88,8 +90,22 @@ QString ISSystem::GenerateSalt()
 	}
 	CryptReleaseContext(CryptoProvider, 0);
 #else
+    FILE *FileDevice = fopen("/dev/random", "r");
+    bool Result = FileDevice ? true : false;
+    if (Result) //Устройство удалось открыть - читаем и закрываем устройство
+    {
+        Result = fread(&Buffer[0], sizeof(char), CARAT_SALT_SIZE, FileDevice) == CARAT_SALT_SIZE;
+        fclose(FileDevice);
+    }
 #endif
-	return Result;
+    if (Result) //Если все хорошо - формируем соль в HEX
+    {
+        for (unsigned long i = 0; i < CARAT_SALT_SIZE; ++i) //Обходим буфер с солью
+        {
+            StringSalt.append(QByteArray(1, Buffer[i]).toHex());
+        }
+    }
+    return StringSalt.toUpper();
 }
 //-----------------------------------------------------------------------------
 void ISSystem::BeginSymbolToUpper(QString &String)
