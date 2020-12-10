@@ -33,7 +33,8 @@ private:
 	void Finish(); //Уведомление о завершении работы воркера
 	QVariant CheckNullField(const QString &FieldName, const QVariantMap &VariantMap); //Проверка наличия поля
 	void Protocol(int UserID, const ISUuid &ActionTypeUID, const QVariant &TableName, const QVariant &TableLocalName, const QVariant &ObjectID, const QVariant &Information); //Протоколирование действия
-	void UserPasswordChange(const QVariant &UserID, const ISUuid &ChangeTypeUID); //Фиксирование изменения пароля пользователя
+	void UserPasswordChangeEvent(const QVariant &UserID, const ISUuid &ChangeTypeUID); //Фиксирование изменения пароля пользователя
+	bool UserPasswordExist(const QVariant &UserID, bool &Exist); //Проверка наличия пароля у пользователя
 	bool GenerateSalt(QString &Salt); //Генерация соли
 
 private:

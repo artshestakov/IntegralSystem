@@ -89,11 +89,16 @@ static QString QS_PARAGRAPH = PREPARE_QUERY("SELECT prhs_uid, prhs_name, prhs_lo
 											"FROM _paragraphs "
 											"ORDER BY prhs_orderid");
 //-----------------------------------------------------------------------------
-static QString QS_USER_HASH_IS_NULL = PREPARE_QUERY("SELECT (COUNT(*) > 0)::BOOLEAN AS is_exist "
+static QString QS_USER_HASH_IS_NULL = PREPARE_QUERY("SELECT "
+													"( "
+													"SELECT (COUNT(*) > 0)::BOOLEAN is_exist "
 													"FROM _users "
 													"WHERE usrs_id = :UserID "
 													"AND usrs_hash IS NOT NULL "
-													"AND usrs_salt IS NOT NULL");
+													"AND usrs_salt IS NOT NULL "
+													") "
+													"FROM _users "
+													"WHERE usrs_id = :UserID");
 //-----------------------------------------------------------------------------
 static QString QU_USER_HASH = PREPARE_QUERY("UPDATE _users SET "
 											"usrs_hash = :Hash, "
@@ -105,7 +110,8 @@ static QString QS_USER_HASH_CHECK = PREPARE_QUERY("SELECT usrs_hash = :HashOld A
 												  "WHERE usrs_id = :UserID");
 //-----------------------------------------------------------------------------
 static QString QU_USER_HASH_RESET = PREPARE_QUERY("UPDATE _users SET "
-												  "usrs_hash = NULL "
+												  "usrs_hash = NULL, "
+												  "usrs_salt = NULL "
 												  "WHERE usrs_id = :UserID");
 //-----------------------------------------------------------------------------
 static QString QS_ASTERISK_RECORD = PREPARE_QUERY("SELECT ascl_uniqueid "
@@ -354,7 +360,7 @@ void ISTcpWorker::Protocol(int UserID, const ISUuid &ActionTypeUID, const QVaria
 	}
 }
 //-----------------------------------------------------------------------------
-void ISTcpWorker::UserPasswordChange(const QVariant &UserID, const ISUuid &ChangeTypeUID)
+void ISTcpWorker::UserPasswordChangeEvent(const QVariant &UserID, const ISUuid &ChangeTypeUID)
 {
 	ISQuery qInsertPasswordChanged(ISDatabase::Instance().GetDB(DBConnectionName), QI_USER_PASSWORD_CHANGE);
 	qInsertPasswordChanged.BindValue(":UserID", UserID);
@@ -363,6 +369,25 @@ void ISTcpWorker::UserPasswordChange(const QVariant &UserID, const ISUuid &Chang
 	{
 		ISLOGGER_E(__CLASS__, "Not fixed user password change: " + qInsertPasswordChanged.GetErrorString());
 	}
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::UserPasswordExist(const QVariant &UserID, bool &Exist)
+{
+	ISQuery qSelectHashIsNull(ISDatabase::Instance().GetDB(DBConnectionName), QS_USER_HASH_IS_NULL);
+	qSelectHashIsNull.BindValue(":UserID", UserID);
+	if (!qSelectHashIsNull.Execute()) //Ошибка запроса
+	{
+		ErrorString = LANG("Carat.Error.CheckExistUserPassword").arg(qSelectHashIsNull.GetErrorString());
+		return false;
+	}
+
+	if (!qSelectHashIsNull.First()) //Не удалось перейти на первую строку, т.к. пользователя с таким UserID не существует
+	{
+		ErrorString = LANG("Carat.Error.UserNotExist").arg(UserID.toInt());
+		return false;
+	}
+	Exist = qSelectHashIsNull.ReadColumn("is_exist").toBool();
+	return true;
 }
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::GenerateSalt(QString &Salt)
@@ -1055,20 +1080,12 @@ bool ISTcpWorker::UserPasswordExist(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAn
 	}
 
 	//Проверяем наличие пароля
-	ISQuery qSelectHashIsNull(ISDatabase::Instance().GetDB(DBConnectionName), QS_USER_HASH_IS_NULL);
-	qSelectHashIsNull.BindValue(":UserID", UserID);
-	if (!qSelectHashIsNull.Execute()) //Не удалось проверить хэш
+	bool Exist = true;
+	if (!UserPasswordExist(UserID, Exist)) //Не удалось проверить наличие пароля
 	{
-		ErrorString = LANG("Carat.Error.Query.UserLoginExist.CheckExistHash").arg(qSelectHashIsNull.GetErrorString());
 		return false;
 	}
-
-	if (!qSelectHashIsNull.First()) //Не удалось перейти на первую строку, т.к. пользователя с таким UserID не существует
-	{
-		ErrorString = LANG("Carat.Error.Query.UserLoginExist.UserNotExist").arg(UserID.toInt());
-		return false;
-	}
-	TcpAnswer->Parameters["IsExist"] = !qSelectHashIsNull.ReadColumn("is_null").toBool();
+	TcpAnswer->Parameters["IsExist"] = Exist;
 	return true;
 }
 //-----------------------------------------------------------------------------
@@ -1083,22 +1100,14 @@ bool ISTcpWorker::UserPasswordCreate(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpA
 		return false;
 	}
 
-	//Проверяем не существует ли уже хэш
-	ISQuery qSelectHashIsNull(ISDatabase::Instance().GetDB(DBConnectionName), QS_USER_HASH_IS_NULL);
-	qSelectHashIsNull.BindValue(":UserID", UserID);
-	if (!qSelectHashIsNull.Execute()) //Ошибка запроса
+	//Проверяем наличие пароля
+	bool Exist = true;
+	if (!UserPasswordExist(UserID, Exist)) //Не удалось проверить наличие пароля
 	{
-		ErrorString = LANG("Carat.Error.Query.UserPasswordCreate.CheckExistHash").arg(qSelectHashIsNull.GetErrorString());
 		return false;
 	}
 
-	if (!qSelectHashIsNull.First()) //Не удалось перейти на первую строку - ошибка
-	{
-		ErrorString = qSelectHashIsNull.GetErrorString();
-		return false;
-	}
-
-	if (qSelectHashIsNull.ReadColumn("is_exist").toBool()) //Хэш уже есть - считаем ошибкой
+	if (Exist) //Пароль уже существует - считаем за ошибку
 	{
 		ErrorString = LANG("Carat.Error.Query.UserPasswordCreate.AlreadyExist");
 		return false;
@@ -1132,7 +1141,7 @@ bool ISTcpWorker::UserPasswordCreate(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpA
 	}
 
 	//Фиксируем изменение пароля в истории
-	UserPasswordChange(UserID, CONST_UID_USER_PASSWORD_CREATE);
+	UserPasswordChangeEvent(UserID, CONST_UID_USER_PASSWORD_CREATE);
 	return true;
 }
 //-----------------------------------------------------------------------------
@@ -1190,7 +1199,7 @@ bool ISTcpWorker::UserPasswordEdit(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAns
 	}
 
 	//Фиксируем изменение пароля в истории
-	UserPasswordChange(UserID, CONST_UID_USER_PASSWORD_UPDATE);
+	UserPasswordChangeEvent(UserID, CONST_UID_USER_PASSWORD_UPDATE);
 	return true;
 }
 //-----------------------------------------------------------------------------
@@ -1205,21 +1214,13 @@ bool ISTcpWorker::UserPasswordReset(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAn
 	}
 
 	//Проверяем наличие пароля
-	ISQuery qSelectHashIsNull(ISDatabase::Instance().GetDB(DBConnectionName), QS_USER_HASH_IS_NULL);
-	qSelectHashIsNull.BindValue(":UserID", UserID);
-	if (!qSelectHashIsNull.Execute()) //Не удалось проверить хэш
+	bool Exist = true;
+	if (!UserPasswordExist(UserID, Exist))
 	{
-		ErrorString = LANG("Carat.Error.Query.UserLoginReset.CheckExistHash").arg(qSelectHashIsNull.GetErrorString());
-		return false;
-	}
-
-	if (!qSelectHashIsNull.First()) //Не удалось перейти на первую строку, т.к. пользователя с таким UserID не существует
-	{
-		ErrorString = LANG("Carat.Error.Query.UserLoginReset.UserNotExist").arg(UserID.toInt());
 		return false;
 	}
 	
-	if (qSelectHashIsNull.ReadColumn("is_null").toBool()) //Если пароля нет - считаем ошибкой
+	if (!Exist) //Если пароля нет - считаем ошибкой
 	{
 		ErrorString = LANG("Carat.Error.Query.UserLoginReset.PasswordIsNull");
 		return false;
@@ -1235,7 +1236,7 @@ bool ISTcpWorker::UserPasswordReset(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAn
 	}
 
 	//Фиксируем изменение пароля в истории
-	UserPasswordChange(UserID, CONST_UID_USER_PASSWORD_RESET);
+	UserPasswordChangeEvent(UserID, CONST_UID_USER_PASSWORD_RESET);
 	return true;
 }
 //-----------------------------------------------------------------------------
