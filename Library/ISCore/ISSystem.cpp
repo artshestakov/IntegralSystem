@@ -68,38 +68,6 @@ ISUuid ISSystem::GenerateUuid()
     return QUuid::createUuid();
 }
 //-----------------------------------------------------------------------------
-QString ISSystem::GenerateSalt()
-{
-    //Объявляем результирующую строку и буфер
-    QString StringSalt;
-    unsigned char Buffer[CARAT_SALT_SIZE] = { 0 };
-#ifdef WIN32 //Формирование соли под Windows
-    HCRYPTPROV CryptoProvider = 0;
-    bool Result = CryptAcquireContext(&CryptoProvider, 0, 0, PROV_RSA_FULL, CRYPT_VERIFYCONTEXT | CRYPT_SILENT) == TRUE;
-    if (Result) //Контекст создан успешно - формируем соль
-    {
-		Result = CryptGenRandom(CryptoProvider, CARAT_SALT_SIZE, Buffer) == TRUE;
-    }
-    CryptReleaseContext(CryptoProvider, 0);
-#else //Формирование соли под Linux
-    FILE *FileDevice = fopen("/dev/random", "r");
-    bool Result = FileDevice ? true : false;
-    if (Result) //Устройство удалось открыть - читаем и закрываем устройство
-    {
-        Result = fread(&Buffer[0], sizeof(char), CARAT_SALT_SIZE, FileDevice) == CARAT_SALT_SIZE;
-        fclose(FileDevice);
-    }
-#endif
-    if (Result) //Если все хорошо - формируем соль в HEX
-    {
-        for (unsigned long i = 0; i < CARAT_SALT_SIZE; ++i) //Обходим буфер с солью
-        {
-            StringSalt.append(QByteArray(1, Buffer[i]).toHex());
-        }
-    }
-    return StringSalt.toUpper();
-}
-//-----------------------------------------------------------------------------
 void ISSystem::BeginSymbolToUpper(QString &String)
 {
     if (!String.isEmpty())
@@ -214,7 +182,7 @@ QString ISSystem::StringToMD5(const QString &String)
 //-----------------------------------------------------------------------------
 QString ISSystem::StringToSha256(const QString &String)
 {
-    return QCryptographicHash::hash(String.toUtf8(), QCryptographicHash::Sha256).toHex();
+    return QCryptographicHash::hash(String.toUtf8(), QCryptographicHash::Sha256).toHex().toUpper();
 }
 //-----------------------------------------------------------------------------
 QString ISSystem::FileSizeFromString(qint64 FileSize)

@@ -89,12 +89,15 @@ static QString QS_PARAGRAPH = PREPARE_QUERY("SELECT prhs_uid, prhs_name, prhs_lo
 											"FROM _paragraphs "
 											"ORDER BY prhs_orderid");
 //-----------------------------------------------------------------------------
-static QString QS_USER_HASH_IS_NULL = PREPARE_QUERY("SELECT usrs_hash IS NULL AS is_null "
+static QString QS_USER_HASH_IS_NULL = PREPARE_QUERY("SELECT (COUNT(*) > 0)::BOOLEAN AS is_exist "
 													"FROM _users "
-													"WHERE usrs_id = :UserID");
+													"WHERE usrs_id = :UserID "
+													"AND usrs_hash IS NOT NULL "
+													"AND usrs_salt IS NOT NULL");
 //-----------------------------------------------------------------------------
 static QString QU_USER_HASH = PREPARE_QUERY("UPDATE _users SET "
-											"usrs_hash = :Hash "
+											"usrs_hash = :Hash, "
+											"usrs_salt = :Salt "
 											"WHERE usrs_id = :UserID");
 //-----------------------------------------------------------------------------
 static QString QS_USER_HASH_CHECK = PREPARE_QUERY("SELECT usrs_hash = :HashOld AS current_hash_is_valid, usrs_hash = :Hash AS hash_old_and_new_is_equal "
@@ -362,6 +365,37 @@ void ISTcpWorker::UserPasswordChange(const QVariant &UserID, const ISUuid &Chang
 	}
 }
 //-----------------------------------------------------------------------------
+bool ISTcpWorker::GenerateSalt(QString &Salt)
+{
+	//Объявляем результирующую строку и буфер
+	unsigned char Buffer[CARAT_SALT_SIZE] = { 0 };
+#ifdef WIN32 //Формирование соли под Windows
+	HCRYPTPROV CryptoProvider = 0;
+	bool Result = CryptAcquireContext(&CryptoProvider, 0, 0, PROV_RSA_FULL, CRYPT_VERIFYCONTEXT | CRYPT_SILENT) == TRUE;
+	if (Result) //Контекст создан успешно - формируем соль
+	{
+		Result = CryptGenRandom(CryptoProvider, CARAT_SALT_SIZE, Buffer) == TRUE;
+	}
+	CryptReleaseContext(CryptoProvider, 0);
+#else //Формирование соли под Linux
+	FILE *FileDevice = fopen("/dev/random", "r");
+	bool Result = FileDevice ? true : false;
+	if (Result) //Устройство удалось открыть - читаем и закрываем устройство
+	{
+		Result = fread(&Buffer[0], sizeof(char), CARAT_SALT_SIZE, FileDevice) == CARAT_SALT_SIZE;
+		fclose(FileDevice);
+	}
+#endif
+	if (Result) //Если все хорошо - формируем соль в HEX
+	{
+		for (unsigned long i = 0; i < CARAT_SALT_SIZE; ++i) //Обходим буфер с солью
+		{
+			Salt.append(QByteArray(1, Buffer[i]).toHex().toUpper());
+		}
+	}
+	return true;
+}
+//-----------------------------------------------------------------------------
 bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
 	Q_UNUSED(TcpAnswer);
@@ -399,7 +433,7 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	for (const QChar &Char : HashString)
 	{
 		int ASCII = (int)Char.toLatin1(); //Преобразовываем текущий символ в ASCII-код
-		if ((ASCII >= 48 && ASCII <= 57) || (ASCII >=97 && ASCII <= 122)) //Если текущий символ входит в диапазон [0-9] или [a-z] - все окей
+		if ((ASCII >= 48 && ASCII <= 57) || (ASCII >= 65 && ASCII <= 70)) //Если текущий символ входит в диапазон [0-9] или [a-z] - все окей
 		{
 			continue;
 		}
@@ -1037,32 +1071,48 @@ bool ISTcpWorker::UserPasswordCreate(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpA
 	//Проверяем не существует ли уже хэш
 	ISQuery qSelectHashIsNull(ISDatabase::Instance().GetDB(DBConnectionName), QS_USER_HASH_IS_NULL);
 	qSelectHashIsNull.BindValue(":UserID", UserID);
-	if (!qSelectHashIsNull.Execute()) //Не удалось проверить хэш
+	if (!qSelectHashIsNull.Execute()) //Ошибка запроса
 	{
-		ErrorString = LANG("Carat.Error.Query.UserLoginCreate.CheckExistHash").arg(qSelectHashIsNull.GetErrorString());
+		ErrorString = LANG("Carat.Error.Query.UserPasswordCreate.CheckExistHash").arg(qSelectHashIsNull.GetErrorString());
 		return false;
 	}
 
-	if (!qSelectHashIsNull.First()) //Не удалось перейти на первую строку, т.к. пользователя с таким UserID не существует
+	if (!qSelectHashIsNull.First()) //Не удалось перейти на первую строку - ошибка
 	{
-		ErrorString = LANG("Carat.Error.Query.UserLoginCreate.UserNotExist").arg(UserID.toInt());
+		ErrorString = qSelectHashIsNull.GetErrorString();
 		return false;
 	}
 
-	bool IsNullHash = qSelectHashIsNull.ReadColumn("is_null").toBool();
-	if (!IsNullHash) //Хэш уже есть - считаем ошибкой
+	if (qSelectHashIsNull.ReadColumn("is_exist").toBool()) //Хэш уже есть - считаем ошибкой
 	{
-		ErrorString = LANG("Carat.Error.Query.UserLoginCreate.AlreadyExist");
+		ErrorString = LANG("Carat.Error.Query.UserPasswordCreate.AlreadyExist");
 		return false;
 	}
+
+	//Генерируем соль
+	QString Salt;
+	if (!GenerateSalt(Salt))
+	{
+		return false;
+	}
+
+	//Солим хэш
+	QString HashResult, HashPassword = Hash.toString();
+	for (int i = 0; i < (int)CARAT_HASH_SIZE; ++i)
+	{
+		HashResult.push_back(HashPassword[i]);
+		HashResult.push_back(Salt[i]);
+	}
+	std::reverse(HashResult.begin(), HashResult.end());
 
 	//Устанавливаем пароль
 	ISQuery qUpdateHash(ISDatabase::Instance().GetDB(DBConnectionName), QU_USER_HASH);
-	qUpdateHash.BindValue(":Hash", Hash);
+	qUpdateHash.BindValue(":Hash", HashResult);
+	qUpdateHash.BindValue(":Salt", Salt);
 	qUpdateHash.BindValue(":UserID", UserID);
 	if (!qUpdateHash.Execute())
 	{
-		ErrorString = LANG("Carat.Error.Query.UserLoginCreate.UpdateHash").arg(qUpdateHash.GetErrorString());
+		ErrorString = LANG("Carat.Error.Query.UserPasswordCreate.UpdateHash").arg(qUpdateHash.GetErrorString());
 		return false;
 	}
 

@@ -34,6 +34,7 @@ private:
 	QVariant CheckNullField(const QString &FieldName, const QVariantMap &VariantMap); //Проверка наличия поля
 	void Protocol(int UserID, const ISUuid &ActionTypeUID, const QVariant &TableName, const QVariant &TableLocalName, const QVariant &ObjectID, const QVariant &Information); //Протоколирование действия
 	void UserPasswordChange(const QVariant &UserID, const ISUuid &ChangeTypeUID); //Фиксирование изменения пароля пользователя
+	bool GenerateSalt(QString &Salt); //Генерация соли
 
 private:
 	bool Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);

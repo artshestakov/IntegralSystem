@@ -18,7 +18,6 @@ public:
 	static QString GetDayOfWeekName(Qt::DayOfWeek Day); //Получить название дня
 	static void ClearDirRecursive(const QString &DirPath); //Очистить папку рекурсивно (с подпапками)
 	static ISUuid GenerateUuid(); //Сгенерировать новый UID
-	static QString GenerateSalt(); //Сгенерировать соль
 	static void BeginSymbolToUpper(QString &String); //Преобразование первого символа строки в верхний регистр
 	static bool CheckExistSlot(QObject *Object, const QString &SlotName); //Проверить наличие слота в объекте
 	static void ExecLoop(unsigned long Milliseconds); //Остановка потока событий
