@@ -275,7 +275,7 @@ bool CGConfiguratorUpdate::resources()
 bool CGConfiguratorUpdate::systemuser()
 {
 	ISQuery qSelect(QS_SYSTEM_USER);
-	qSelect.BindValue(":UID", CONST_UID_USER_POSTGRES);
+	qSelect.BindValue(":UID", CONST_UID_USER_ADMIN);
 	qSelect.SetShowLongQuery(false);
 	bool Result = qSelect.ExecuteFirst();
 	if (Result)
@@ -294,11 +294,11 @@ bool CGConfiguratorUpdate::systemuser()
 
 		bool IsExist = qSelect.ReadColumn("count").toInt() > 0;
 		ISQuery qUpsert(IsExist ? QU_SYSTEM_USER : QI_SYSTEM_USER);
-		qUpsert.BindValue(":UID", CONST_UID_USER_POSTGRES);
+		qUpsert.BindValue(":UID", CONST_UID_USER_ADMIN);
 		qUpsert.BindValue(":IsSystem", true);
-		qUpsert.BindValue(":FIO", "System User");
+		qUpsert.BindValue(":FIO", QString::fromLocal8Bit("Главный администратор системы"));
 		qUpsert.BindValue(":SexUID", CONST_UID_SEX_UNDEFINED);
-		qUpsert.BindValue(":Login", CONFIG_STRING(CONST_CONFIG_CONNECTION_LOGIN));
+		qUpsert.BindValue(":Login", SYSTEM_USER_LOGIN);
 		qUpsert.BindValue(":Hash", ISSystem::StringToSha256(CONFIG_STRING(CONST_CONFIG_CONNECTION_LOGIN) + CONFIG_STRING(CONST_CONFIG_CONNECTION_PASSWORD)));
 		qUpsert.BindValue(":AccessAllowed", true);
 		qUpsert.BindValue(":Photo", ByteArray);

@@ -11,11 +11,14 @@
 #include "ISTcpClients.h"
 #include "ISMetaData.h"
 //-----------------------------------------------------------------------------
-static QString QS_AUTH = PREPARE_QUERY("SELECT usrs_id, usrs_issystem, usrs_group, usrs_fio, usrs_accessallowed, usrs_accountlifetime, usrs_accountlifetimestart, usrs_accountlifetimeend, usgp_fullaccess, "
-									   "(SELECT sgdb_useraccessdatabase FROM _settingsdatabase WHERE sgdb_active) "
-									   "FROM _users "
-									   "LEFT JOIN _usergroup ON usgp_id = usrs_group "
-									   "WHERE usrs_hash = :Hash");
+static QString QS_USER_HASH = PREPARE_QUERY("SELECT usrs_id, usrs_hash, usrs_salt "
+											"FROM _users");
+//-----------------------------------------------------------------------------
+static QString QS_USER_AUTH = PREPARE_QUERY("SELECT usrs_id, usrs_issystem, usrs_group, usrs_fio, usrs_accessallowed, usrs_accountlifetime, usrs_accountlifetimestart, usrs_accountlifetimeend, usgp_fullaccess, "
+											"(SELECT sgdb_useraccessdatabase FROM _settingsdatabase WHERE sgdb_active) "
+											"FROM _users "
+											"LEFT JOIN _usergroup ON usgp_id = usrs_group "
+											"WHERE usrs_hash = :Hash");
 //-----------------------------------------------------------------------------
 static QString QI_PROTOCOL = PREPARE_QUERY("INSERT INTO _protocol(prtc_creationdate, prtc_creationuser, prtc_tablename, prtc_tablelocalname, prtc_type, prtc_objectid, prtc_information) "
 										   "VALUES(:CreationDate, :CreationUser, :TableName, :TableLocalName, (SELECT prtp_id FROM _protocoltype WHERE prtp_uid = :TypeUID), :ObjectID, :Information)");
@@ -460,6 +463,18 @@ bool ISTcpWorker::GenerateSalt(QString &Salt)
 	return true;
 }
 //-----------------------------------------------------------------------------
+QString ISTcpWorker::SaltPassword(const QString &HashPassword, const QString &Salt)
+{
+	QString HashResult;
+	for (int i = 0; i < (int)CARAT_HASH_SIZE; ++i)
+	{
+		HashResult.push_back(HashPassword[i]);
+		HashResult.push_back(Salt[i]);
+	}
+	std::reverse(HashResult.begin(), HashResult.end());
+	return HashResult;
+}
+//-----------------------------------------------------------------------------
 bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
 	Q_UNUSED(TcpAnswer);
@@ -467,7 +482,7 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	//Проверяем, не авторизаван ли уже клиент. Если авторизован - выходим с ошибкой
 	if (TcpMessage->TcpSocket->GetAuthorized())
 	{
-		ErrorString = LANG("Carat.Error.Query.AlreadyAuthorized");
+		ErrorString = LANG("Carat.Error.Query.Auth.AlreadyAuthorized");
 		return false;
 	}
 
@@ -475,7 +490,7 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	if (ISVersionInfo::Instance().ConfigurationInfo.DateExpired.isValid() &&
 		QDate::currentDate() > ISVersionInfo::Instance().ConfigurationInfo.DateExpired)
 	{
-		ErrorString = LANG("Carat.Error.Query.AuthDenied");
+		ErrorString = LANG("Carat.Error.Query.Auth.AuthDenied");
 		return false;
 	}
 
@@ -489,7 +504,7 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	//Проверяем размер хэша
 	if ((size_t)HashString.size() != CARAT_HASH_SIZE)
 	{
-		ErrorString = LANG("Carat.Error.Query.InvalidHashSize");
+		ErrorString = LANG("Carat.Error.Query.Auth.InvalidHashSize");
 		return false;
 	}
 
@@ -503,23 +518,37 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 		}
 		else //Иначе - хэш невалидный
 		{
-			ErrorString = LANG("Carat.Error.Query.InvalidHash");
+			ErrorString = LANG("Carat.Error.Query.Auth.InvalidHash");
 			return false;
 		}
 	}
 
+	//Ищем пользователя с таким же хэшэм
+	ISQuery qSelectHash(ISDatabase::Instance().GetDB(DBConnectionName), QS_USER_HASH);
+	if (!qSelectHash.Execute()) //Ошибка запроса
+	{
+		ErrorString = LANG("Carat.Error.Query.Auth.SelectHash").arg(qSelectHash.GetErrorString());
+		return false;
+	}
+	
+	while (qSelectHash.Next())
+	{
+		QString Hash = qSelectHash.ReadColumn("usrs_hash").toString(),
+			Salt = qSelectHash.ReadColumn("usrs_salt").toString();
+	}
+
 	//Проверка пользователя
-	ISQuery qSelectAuth(ISDatabase::Instance().GetDB(DBConnectionName), QS_AUTH);
+	ISQuery qSelectAuth(ISDatabase::Instance().GetDB(DBConnectionName), QS_USER_AUTH);
 	qSelectAuth.BindValue(":Hash", Hash);
 	if (!qSelectAuth.Execute()) //Запрос выполнен с ошибкой
 	{
-		ErrorString = LANG("Carat.Error.Query.SelectLogin").arg(qSelectAuth.GetErrorString());
+		ErrorString = LANG("Carat.Error.Query.Auth.SelectLogin").arg(qSelectAuth.GetErrorString());
 		return false;
 	}
 
 	if (!qSelectAuth.First()) //Не нашли пользователя с таким хешем
 	{
-		ErrorString = LANG("Carat.Error.Query.InvalidLoginOrPassword");
+		ErrorString = LANG("Carat.Error.Query.Auth.InvalidLoginOrPassword");
 		return false;
 	}
 
@@ -532,21 +561,21 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	//Доступ к БД запрещен
 	if (!qSelectAuth.ReadColumn("sgdb_useraccessdatabase").toBool() && !IsSystem)
 	{
-		ErrorString = LANG("Carat.Error.Query.ConnectionBan");
+		ErrorString = LANG("Carat.Error.Query.Auth.ConnectionBan");
 		return false;
 	}
 
 	//Если у пользователя нет права доступа
 	if (!qSelectAuth.ReadColumn("usrs_accessallowed").toBool())
 	{
-		ErrorString = LANG("Carat.Error.Query.LoginNoAccess");
+		ErrorString = LANG("Carat.Error.Query.Auth.LoginNoAccess");
 		return false;
 	}
 
 	//Проверка наличия привязки не системного пользователя к группе
 	if (!IsSystem && GroupID == 0)
 	{
-		ErrorString = LANG("Carat.Error.Query.LoginLinkGroup");
+		ErrorString = LANG("Carat.Error.Query.Auth.LoginLinkGroup");
 		return false;
 	}
 
@@ -560,12 +589,12 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 			QDate CurrentDate = QDate::currentDate();
 			if (CurrentDate < DateStart)
 			{
-				ErrorString = LANG("Carat.Error.Query.LoginLifetimeNotStarted").arg(DateStart.toString(FORMAT_DATE_V1));
+				ErrorString = LANG("Carat.Error.Query.Auth.LoginLifetimeNotStarted").arg(DateStart.toString(FORMAT_DATE_V1));
 				return false;
 			}
 			else if (CurrentDate > DateEnd)
 			{
-				ErrorString = LANG("Carat.Error.Query.LoginLifetimeEnded");
+				ErrorString = LANG("Carat.Error.Query.Auth.LoginLifetimeEnded");
 				return false;
 			}
 		}
@@ -1157,14 +1186,8 @@ bool ISTcpWorker::UserPasswordCreate(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpA
 		return false;
 	}
 
-	//Солим хэш
-	QString HashResult, HashPassword = Hash.toString();
-	for (int i = 0; i < (int)CARAT_HASH_SIZE; ++i)
-	{
-		HashResult.push_back(HashPassword[i]);
-		HashResult.push_back(Salt[i]);
-	}
-	std::reverse(HashResult.begin(), HashResult.end());
+	//Солим пароль
+	QString HashResult = SaltPassword(Hash.toString(), Salt);
 
 	//Устанавливаем пароль
 	ISQuery qUpdateHash(ISDatabase::Instance().GetDB(DBConnectionName), QU_USER_HASH);
@@ -1188,8 +1211,8 @@ bool ISTcpWorker::UserPasswordEdit(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAns
 
 	QVariant UserID = CheckNullField("UserID", TcpMessage->Parameters),
 		HashOld = CheckNullField("HashOld", TcpMessage->Parameters),
-		Hash = CheckNullField("Hash", TcpMessage->Parameters);
-	if (!UserID.isValid() || !HashOld.isValid() || !Hash.isValid())
+		HashNew = CheckNullField("HashNew", TcpMessage->Parameters);
+	if (!UserID.isValid() || !HashOld.isValid() || !HashNew.isValid())
 	{
 		return false;
 	}
@@ -1197,7 +1220,7 @@ bool ISTcpWorker::UserPasswordEdit(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAns
 	//Проверяем правильность старого хэша и не равен ли новый хэш старому
 	ISQuery qSelectHashCheck(ISDatabase::Instance().GetDB(DBConnectionName), QS_USER_HASH_CHECK);
 	qSelectHashCheck.BindValue(":HashOld", HashOld);
-	qSelectHashCheck.BindValue(":Hash", Hash);
+	qSelectHashCheck.BindValue(":Hash", HashNew);
 	qSelectHashCheck.BindValue(":UserID", UserID);
 	if (!qSelectHashCheck.Execute()) //Ошибка запроса
 	{
@@ -1227,7 +1250,7 @@ bool ISTcpWorker::UserPasswordEdit(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAns
 
 	//Обновляем пароль
 	ISQuery qUpdateHash(ISDatabase::Instance().GetDB(DBConnectionName), QU_USER_HASH);
-	qUpdateHash.BindValue(":Hash", Hash);
+	qUpdateHash.BindValue(":Hash", HashNew);
 	qUpdateHash.BindValue(":UserID", UserID);
 	if (!qUpdateHash.Execute())
 	{

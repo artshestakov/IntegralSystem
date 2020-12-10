@@ -37,6 +37,7 @@ private:
 	bool UserPasswordExist(const QVariant &UserID, bool &Exist); //Проверка наличия пароля у пользователя
 	bool UserIsSystem(const QVariant &UserID, bool &IsSystem); //Проверка пользователя на системность
 	bool GenerateSalt(QString &Salt); //Генерация соли
+	QString SaltPassword(const QString &HashPassword, const QString &Salt); //Посолить пароль
 
 private:
 	bool Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);

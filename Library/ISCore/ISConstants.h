@@ -109,7 +109,7 @@ const char CONFIG_TEMPLATE_SERVER[] = "Server"; //Щаблон конфигурационного файла
 const char CONFIG_TEMPLATE_CLIENT[] = "Client"; //Щаблон конфигурационного файла для клиента
 //-----------------------------------------------------------------------------
 const char		SYSTEM_DATABASE_NAME[] = "postgres"; //Имя системной БД
-const char		SYSTEM_USER_LOGIN[] = "postgres"; //Логин системного пользователя
+const char		SYSTEM_USER_LOGIN[] = "admin"; //Логин системного пользователя
 const char		FIGURES_STRING[] = "0123456789";
 const char		SQL_DRIVER_QPSQL[] = "QPSQL";
 const int		MAX_QUERY_TIME = 50; //Передельное время выполнения SQL-запроса (в миллисекундах)
@@ -167,7 +167,7 @@ const char API_DISCUSSION_COPY[] = "DiscussionCopy"; //Скопировать обсуждение
 //CARAT_LOCAL_API--------------------------------------------------------------
 const char		CARAT_LOCAL_API_SHUTDOWN[] = "shutdown"; //Завершение работы
 //-----------------------------------------------------------------------------
-const char CONST_UID_USER_POSTGRES[] = "{F400ECFA-185E-4587-8961-8731DEAC3B5E}"; //Идентификатор пользователя postgres
+const char CONST_UID_USER_ADMIN[] = "{F400ECFA-185E-4587-8961-8731DEAC3B5E}"; //Идентификатор главного пользователя
 const char CONST_UID_SETTINGS_DATABASE[] = "{1DE3449C-C700-4EFC-A455-E99E38063D9B}"; //Идентификатор настроек базы данных
 //-----------------------------------------------------------------------------
 const char CONST_UID_SEX_MALE[] = "{601C7C32-7413-45DA-AAAC-926A77C824F8}"; //Мужской

@@ -13,17 +13,18 @@
   <Local Name="Carat.Error.CheckUserIsSystem" Russian="Не удалось проверить пользователя на системность: %1"/>
   
   <!--Ошибки протокола-->
-  <Local Name="Carat.Error.Query.AlreadyAuthorized" Russian="Вы уже авторизованы!"/>
-  <Local Name="Carat.Error.Query.AuthDenied" Russian="Авторизация запрещена."/>
-  <Local Name="Carat.Error.Query.InvalidHashSize" Russian="Неверный размер авторизационных данных!"/>
-  <Local Name="Carat.Error.Query.InvalidHash" Russian="Невалидные авторизационные данные!"/>
-  <Local Name="Carat.Error.Query.SelectLogin" Russian="Не удалось получить информацию о пользователе: %1"/>
-  <Local Name="Carat.Error.Query.InvalidLoginOrPassword" Russian="Неверный логин или пароль."/>
-  <Local Name="Carat.Error.Query.ConnectionBan" Russian="На подключение пользователей к базе данных наложен запрет."/>
-  <Local Name="Carat.Error.Query.LoginNoAccess" Russian="У Вас нет доступа к базе данных."/>
-  <Local Name="Carat.Error.Query.LoginLinkGroup" Russian="Ваша учётная запись не привязанна к группе."/>
-  <Local Name="Carat.Error.Query.LoginLifetimeNotStarted" Russian="Срок действия вашей учётной записи начнется %1."/>
-  <Local Name="Carat.Error.Query.LoginLifetimeEnded" Russian="Срок действия вашей учётной записи закончился."/>
+  <Local Name="Carat.Error.Query.Auth.AlreadyAuthorized" Russian="Вы уже авторизованы!"/>
+  <Local Name="Carat.Error.Query.Auth.AuthDenied" Russian="Авторизация запрещена."/>
+  <Local Name="Carat.Error.Query.Auth.InvalidHashSize" Russian="Неверный размер авторизационных данных!"/>
+  <Local Name="Carat.Error.Query.Auth.InvalidHash" Russian="Невалидные авторизационные данные!"/>
+  <Local Name="Carat.Error.Query.Auth.SelectHash" Russian="Не удалось получить информацию о пользователе: %1"/>
+  <Local Name="Carat.Error.Query.Auth.SelectLogin" Russian="Не удалось получить информацию о пользователе: %1"/>
+  <Local Name="Carat.Error.Query.Auth.InvalidLoginOrPassword" Russian="Неверный логин или пароль."/>
+  <Local Name="Carat.Error.Query.Auth.ConnectionBan" Russian="На подключение пользователей к базе данных наложен запрет."/>
+  <Local Name="Carat.Error.Query.Auth.LoginNoAccess" Russian="У Вас нет доступа к базе данных."/>
+  <Local Name="Carat.Error.Query.Auth.LoginLinkGroup" Russian="Ваша учётная запись не привязанна к группе."/>
+  <Local Name="Carat.Error.Query.Auth.LoginLifetimeNotStarted" Russian="Срок действия вашей учётной записи начнется %1."/>
+  <Local Name="Carat.Error.Query.Auth.LoginLifetimeEnded" Russian="Срок действия вашей учётной записи закончился."/>
 
   <Local Name="Carat.Error.Query.Sleep.TimeoutValueInvalid" Russian="Неправильное значение"/>
   <Local Name="Carat.Error.Query.Sleep.TimeoutValueIsNull" Russian="Значение не должно быть нулевым"/>
