@@ -10,6 +10,7 @@
 #ifdef WIN32
 #include <windows.h>
 #include <ShlObj.h>
+#include <wincrypt.h>
 #else
 #include <pthread.h>
 #include <float.h>

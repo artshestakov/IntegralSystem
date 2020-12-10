@@ -68,6 +68,30 @@ ISUuid ISSystem::GenerateUuid()
 	return QUuid::createUuid();
 }
 //-----------------------------------------------------------------------------
+QString ISSystem::GenerateSalt()
+{
+	QString Result;
+#ifdef WIN32
+	HCRYPTPROV CryptoProvider = 0;
+	if (CryptAcquireContext(&CryptoProvider, 0, 0, PROV_RSA_FULL, CRYPT_VERIFYCONTEXT | CRYPT_SILENT))
+	{
+		const DWORD Length = 128;
+		BYTE Buffer[Length] = { 0 };
+		if (CryptGenRandom(CryptoProvider, Length, Buffer))
+		{
+			for (int i = 0; i < Length; ++i)
+			{
+				QString Char = QString::number(Buffer[i], 16);
+				Result.append(Char.size() == 1 ? '0' + Char : Char);
+			}
+		}
+	}
+	CryptReleaseContext(CryptoProvider, 0);
+#else
+#endif
+	return Result;
+}
+//-----------------------------------------------------------------------------
 void ISSystem::BeginSymbolToUpper(QString &String)
 {
 	if (!String.isEmpty())
