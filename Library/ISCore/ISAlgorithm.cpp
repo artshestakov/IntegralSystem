@@ -89,10 +89,10 @@ void ISAlgorithm::RemoveLastSymbolLoop(QString &String, char Char)
 QString ISAlgorithm::GetLastErrorString()
 {
 	QString ErrorString;
-	char Buffer[OS_ERROR_STRING_SIZE] = { 0 };
 #ifdef WIN32
+    char Buffer[1024] = { 0 };
 	DWORD Result = FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM, NULL, GetLastError(),
-		MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), Buffer, OS_ERROR_STRING_SIZE, NULL);
+        MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), Buffer, 1024, NULL);
 	if (Result != 0) //Получение описания ошибки прошло успешно
 	{
 		ErrorString = QString::fromLocal8Bit(Buffer, (int)Result);
@@ -102,6 +102,8 @@ QString ISAlgorithm::GetLastErrorString()
 		ErrorString = "FormatMessage API failed";
 	}
 #else
+    char *Buffer = strerror(errno);
+    ErrorString = QString::fromLocal8Bit(Buffer, strlen(Buffer));
 #endif
 	return ErrorString;
 }

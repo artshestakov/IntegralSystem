@@ -389,13 +389,17 @@ bool ISTcpWorker::GenerateSalt(QString &Salt)
 		ErrorString = ISAlgorithm::GetLastErrorString();
 	}
 #else //‘ормирование соли под Linux
-	FILE *FileDevice = fopen("/dev/random", "r");
+    FILE *FileDevice = fopen("/dev/random", "r");
 	bool Result = FileDevice ? true : false;
 	if (Result) //”стройство удалось открыть - читаем и закрываем устройство
 	{
 		Result = fread(&Buffer[0], sizeof(char), CARAT_SALT_SIZE, FileDevice) == CARAT_SALT_SIZE;
 		fclose(FileDevice);
 	}
+    else
+    {
+        ErrorString = ISAlgorithm::GetLastErrorString();
+    }
 #endif
 	if (Result) //≈сли все хорошо - формируем соль в HEX
 	{
