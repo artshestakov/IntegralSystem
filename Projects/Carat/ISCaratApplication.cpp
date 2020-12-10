@@ -127,22 +127,22 @@ bool ISCaratApplication::Run()
 		"Version: %1 (%2 %3)\n"
 		"Branch: %4 (%5)\n"
 		"Host name: %6\n"
-		"Domain name: %7\n"
-		"OS: %8\n"
-		"Main ThreadID: %9\n"
-		"PID: %10\n"
-		"Configuration: %11").
+		"OS: %7\n"
+		"Main ThreadID: %8\n"
+		"PID: %9\n"
+		"Configuration: %10\n"
+		"Database: %11").
 		arg(ISVersionInfo::Instance().ToStringVersion()).
 		arg(ISVersionInfo::Instance().Info.Configuration).
 		arg(ISVersionInfo::Instance().Info.Platform).
 		arg(ISVersionInfo::Instance().Info.Branch).
 		arg(ISVersionInfo::Instance().Info.Hash).
 		arg(QSysInfo::machineHostName()).
-		arg(QHostInfo::localDomainName()).
 		arg(QSysInfo::prettyProductName()).
 		arg(CURRENT_THREAD_ID()).
 		arg(GET_PID()).
-		arg(CONFIG_STRING(CONST_CONFIG_OTHER_CONFIGURATION)));
+		arg(CONFIG_STRING(CONST_CONFIG_OTHER_CONFIGURATION)).
+		arg(CONFIG_STRING(CONST_CONFIG_CONNECTION_DATABASE)));
 
 	//Если контроллер включен - запускаем его
 	if (CONFIG_BOOL(CONST_CONFIG_CONTROLLER_INCLUDE))
