@@ -375,8 +375,19 @@ bool ISTcpWorker::GenerateSalt(QString &Salt)
 	if (Result) //Контекст создан успешно - формируем соль
 	{
 		Result = CryptGenRandom(CryptoProvider, CARAT_SALT_SIZE, Buffer) == TRUE;
+		if (Result) //Генерация прошла успешно - освобождаем контекст
+		{
+			CryptReleaseContext(CryptoProvider, 0);
+		}
+		else //Ошибка генерации
+		{
+			ErrorString = ISAlgorithm::GetLastErrorString();
+		}
 	}
-	CryptReleaseContext(CryptoProvider, 0);
+	else //Не удалось создать контекст
+	{
+		ErrorString = ISAlgorithm::GetLastErrorString();
+	}
 #else //Формирование соли под Linux
 	FILE *FileDevice = fopen("/dev/random", "r");
 	bool Result = FileDevice ? true : false;

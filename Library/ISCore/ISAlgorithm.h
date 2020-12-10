@@ -92,6 +92,10 @@ namespace ISAlgorithm
 	//! \return функция ничего не возвращает
 	ISCORE_EXPORT void RemoveLastSymbolLoop(QString &String, char Char);
 
+	//! \Получить последнюю ошибку на текущей системе
+	//! \return возвращает строку с ошибкой
+	ISCORE_EXPORT QString GetLastErrorString();
+
 	//Поиск значения в векторе
     template <typename T> bool VectorContains(const std::vector<T> &Vector, T Value)
     {

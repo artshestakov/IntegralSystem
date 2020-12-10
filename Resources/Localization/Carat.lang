@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LANG Name="Carat">
 
+  <!--Общие ошибки-->
   <Local Name="Carat.Error.ParseMessage" Russian="Ошибка парсинга сообщения: %1"/>
   <Local Name="Carat.Error.InvalidMessage" Russian="Сообщение невалидное: %1"/>
   <Local Name="Carat.Error.InvalidMessageType" Russian="Тип сообщения &quot;%1&quot; не поддерживается."/>
   <Local Name="Carat.Error.NotAuthorized" Russian="Вы не авторизованы!"/>
   <Local Name="Carat.Error.FieldNotExist" Russian="Поле &quot;%1&quot; не указано."/>
   <Local Name="Carat.Error.FieldIsEmpty" Russian="Поле &quot;%1&quot; не заполнено."/>
-  
+
+  <!--Ошибки протокола-->
   <Local Name="Carat.Error.Query.AlreadyAuthorized" Russian="Вы уже авторизованы!"/>
   <Local Name="Carat.Error.Query.AuthDenied" Russian="Авторизация запрещена."/>
   <Local Name="Carat.Error.Query.InvalidHashSize" Russian="Неверный размер авторизационных данных!"/>
