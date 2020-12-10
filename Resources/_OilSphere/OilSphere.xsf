@@ -7,8 +7,8 @@
     $body$
     BEGIN
     RETURN COALESCE(sum(cpen_sum), 0)
-    FROM counterpartyenrollment e
-    WHERE NOT e.cpen_counterparty = counterparty_id;
+    FROM counterpartyenrollment 
+    WHERE cpen_counterparty = counterparty_id;
     END;
     $body$
     LANGUAGE 'plpgsql'
