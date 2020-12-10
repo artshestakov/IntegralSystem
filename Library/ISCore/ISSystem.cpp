@@ -73,10 +73,9 @@ QString ISSystem::GenerateSalt()
     //Объявляем результирующую строку и буфер
     QString StringSalt;
     unsigned char Buffer[CARAT_SALT_SIZE] = { 0 };
-	bool Result = true;
 #ifdef WIN32 //Формирование соли под Windows
     HCRYPTPROV CryptoProvider = 0;
-	Result = CryptAcquireContext(&CryptoProvider, 0, 0, PROV_RSA_FULL, CRYPT_VERIFYCONTEXT | CRYPT_SILENT) == TRUE;
+    bool Result = CryptAcquireContext(&CryptoProvider, 0, 0, PROV_RSA_FULL, CRYPT_VERIFYCONTEXT | CRYPT_SILENT) == TRUE;
     if (Result) //Контекст создан успешно - формируем соль
     {
 		Result = CryptGenRandom(CryptoProvider, CARAT_SALT_SIZE, Buffer) == TRUE;
