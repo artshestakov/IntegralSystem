@@ -10,6 +10,7 @@
   <Local Name="Carat.Error.FieldIsEmpty" Russian="Поле &quot;%1&quot; не заполнено."/>
   <Local Name="Carat.Error.CheckExistUserPassword" Russian="Не удалось проверить наличие пароля у пользователя: %1"/>
   <Local Name="Carat.Error.UserNotExist" Russian="Пользователь с идентификатором %1 не существует."/>
+  <Local Name="Carat.Error.CheckUserIsSystem" Russian="Не удалось проверить пользователя на системность: %1"/>
   
   <!--Ошибки протокола-->
   <Local Name="Carat.Error.Query.AlreadyAuthorized" Russian="Вы уже авторизованы!"/>
@@ -48,6 +49,7 @@
   <Local Name="Carat.Error.Query.GetLastClient.PathIsEmpty" Russian="На сервере не настроена директория хранения обновлений."/>
   <Local Name="Carat.Error.Query.GetLastClient.Other" Russian="Не удалось проверить наличие обновлений."/>
 
+  <Local Name="Carat.Error.Query.UserPasswordCreate.UserIsSystem" Russian="Пользователь является системным, создание пароля невозможно."/>
   <Local Name="Carat.Error.Query.UserPasswordCreate.AlreadyExist" Russian="Пароль уже установлен."/>
   <Local Name="Carat.Error.Query.UserPasswordCreate.UpdateHash" Russian="Не удалось добавить пароль пользователю: %1"/>
 
@@ -56,7 +58,8 @@
   <Local Name="Carat.Error.Query.UserLoginEdit.InvalidCurrentPassword" Russian="Текущий пароль неправильный."/>
   <Local Name="Carat.Error.Query.UserLoginEdit.OldAndNewPasswordsEqual" Russian="Старый и новый пароли совпадают."/>
 
-  <Local Name="Carat.Error.Query.UserLoginReset.PasswordIsNull" Russian="Пароль у пользователя не установлен, сброс невозможен."/>
+  <Local Name="Carat.Error.Query.UserLoginReset.UserIsSystem" Russian="Пользователь является системным, сброс пароля невозможен."/>
+  <Local Name="Carat.Error.Query.UserLoginReset.PasswordIsNull" Russian="Пароль у пользователя не установлен, сброс пароля невозможен."/>
   <Local Name="Carat.Error.Query.UserLoginReset.Reset" Russian="Не удалось сбросить пароль пользователя."/>
   
   <Local Name="Carat.Error.Query.GetRecordCall.RecordDirIsEmpty" Russian="На сервере не настроена директория хранения записей разговоров."/>

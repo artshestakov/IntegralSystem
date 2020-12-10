@@ -89,17 +89,6 @@ static QString QS_PARAGRAPH = PREPARE_QUERY("SELECT prhs_uid, prhs_name, prhs_lo
 											"FROM _paragraphs "
 											"ORDER BY prhs_orderid");
 //-----------------------------------------------------------------------------
-static QString QS_USER_HASH_IS_NULL = PREPARE_QUERY("SELECT "
-													"( "
-													"SELECT (COUNT(*) > 0)::BOOLEAN is_exist "
-													"FROM _users "
-													"WHERE usrs_id = :UserID "
-													"AND usrs_hash IS NOT NULL "
-													"AND usrs_salt IS NOT NULL "
-													") "
-													"FROM _users "
-													"WHERE usrs_id = :UserID");
-//-----------------------------------------------------------------------------
 static QString QU_USER_HASH = PREPARE_QUERY("UPDATE _users SET "
 											"usrs_hash = :Hash, "
 											"usrs_salt = :Salt "
@@ -120,6 +109,21 @@ static QString QS_ASTERISK_RECORD = PREPARE_QUERY("SELECT ascl_uniqueid "
 //-----------------------------------------------------------------------------
 static QString QI_USER_PASSWORD_CHANGE = PREPARE_QUERY("INSERT INTO _userpasswordchanged(upcg_user, upcg_type) "
 													   "VALUES(:UserID, (SELECT upct_id FROM _userpasswordchangedtype WHERE upct_uid = :TypeUID))");
+//-----------------------------------------------------------------------------
+static QString QS_USER_PASSWORD_IS_NULL = PREPARE_QUERY("SELECT "
+														"( "
+														"SELECT (COUNT(*) > 0)::BOOLEAN is_exist "
+														"FROM _users "
+														"WHERE usrs_id = :UserID "
+														"AND usrs_hash IS NOT NULL "
+														"AND usrs_salt IS NOT NULL "
+														") "
+														"FROM _users "
+														"WHERE usrs_id = :UserID");
+//-----------------------------------------------------------------------------
+static QString QS_USER_IS_SYSTEM = PREPARE_QUERY("SELECT usrs_issystem "
+												 "FROM _users "
+												 "WHERE usrs_id = :UserID");
 //-----------------------------------------------------------------------------
 static QString QS_CLIENT = PREPARE_QUERY("SELECT usrs_fio "
 										 "FROM _users "
@@ -305,6 +309,7 @@ void ISTcpWorker::Process()
 			{
 				TcpAnswer->SetError(ErrorString);
 				LogText.append("\nError string: " + ErrorString);
+				ErrorString.clear();
 				TcpAnswer->Parameters.clear();
 			}
 
@@ -373,7 +378,7 @@ void ISTcpWorker::UserPasswordChangeEvent(const QVariant &UserID, const ISUuid &
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::UserPasswordExist(const QVariant &UserID, bool &Exist)
 {
-	ISQuery qSelectHashIsNull(ISDatabase::Instance().GetDB(DBConnectionName), QS_USER_HASH_IS_NULL);
+	ISQuery qSelectHashIsNull(ISDatabase::Instance().GetDB(DBConnectionName), QS_USER_PASSWORD_IS_NULL);
 	qSelectHashIsNull.BindValue(":UserID", UserID);
 	if (!qSelectHashIsNull.Execute()) //Ошибка запроса
 	{
@@ -387,6 +392,25 @@ bool ISTcpWorker::UserPasswordExist(const QVariant &UserID, bool &Exist)
 		return false;
 	}
 	Exist = qSelectHashIsNull.ReadColumn("is_exist").toBool();
+	return true;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::UserIsSystem(const QVariant &UserID, bool &IsSystem)
+{
+	ISQuery qSelectIsSystem(ISDatabase::Instance().GetDB(DBConnectionName), QS_USER_IS_SYSTEM);
+	qSelectIsSystem.BindValue(":UserID", UserID);
+	if (!qSelectIsSystem.Execute()) //Ошибка запроса
+	{
+		ErrorString = LANG("Carat.Error.CheckUserIsSystem").arg(qSelectIsSystem.GetErrorString());
+		return false;
+	}
+
+	if (!qSelectIsSystem.First())
+	{
+		ErrorString = LANG("Carat.Error.UserNotExist").arg(UserID.toInt());
+		return false;
+	}
+	IsSystem = qSelectIsSystem.ReadColumn("usrs_issystem").toBool();
 	return true;
 }
 //-----------------------------------------------------------------------------
@@ -1100,6 +1124,19 @@ bool ISTcpWorker::UserPasswordCreate(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpA
 		return false;
 	}
 
+	//Проверяем пользователя на системность
+	bool IsSystem = true;
+	if (!UserIsSystem(UserID, IsSystem))
+	{
+		return false;
+	}
+
+	if (IsSystem) //Пользователь системный - отказываем в сбросе пароля
+	{
+		ErrorString = LANG("Carat.Error.Query.UserPasswordCreate.UserIsSystem");
+		return false;
+	}
+
 	//Проверяем наличие пароля
 	bool Exist = true;
 	if (!UserPasswordExist(UserID, Exist)) //Не удалось проверить наличие пароля
@@ -1210,6 +1247,19 @@ bool ISTcpWorker::UserPasswordReset(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAn
 	QVariant UserID = CheckNullField("UserID", TcpMessage->Parameters);
 	if (!UserID.isValid())
 	{
+		return false;
+	}
+
+	//Проверяем пользователя на системность
+	bool IsSystem = true;
+	if (!UserIsSystem(UserID, IsSystem))
+	{
+		return false;
+	}
+
+	if (IsSystem) //Пользователь системный - отказываем в сбросе пароля
+	{
+		ErrorString = LANG("Carat.Error.Query.UserLoginReset.UserIsSystem");
 		return false;
 	}
 
