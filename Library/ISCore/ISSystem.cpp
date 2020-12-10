@@ -73,23 +73,16 @@ QString ISSystem::GenerateSalt()
     //Объявляем результирующую строку и буфер
     QString StringSalt;
     unsigned char Buffer[CARAT_SALT_SIZE] = { 0 };
-#ifdef WIN32
+	bool Result = true;
+#ifdef WIN32 //Формирование соли под Windows
     HCRYPTPROV CryptoProvider = 0;
-    if (CryptAcquireContext(&CryptoProvider, 0, 0, PROV_RSA_FULL, CRYPT_VERIFYCONTEXT | CRYPT_SILENT))
+	Result = CryptAcquireContext(&CryptoProvider, 0, 0, PROV_RSA_FULL, CRYPT_VERIFYCONTEXT | CRYPT_SILENT) == TRUE;
+    if (Result) //Контекст создан успешно - формируем соль
     {
-        const DWORD Length = 128;
-        BYTE Buffer[Length] = { 0 };
-        if (CryptGenRandom(CryptoProvider, Length, Buffer))
-        {
-            for (int i = 0; i < Length; ++i)
-            {
-                QString Char = QString::number(Buffer[i], 16);
-                Result.append(Char.size() == 1 ? '0' + Char : Char);
-            }
-        }
+		Result = CryptGenRandom(CryptoProvider, CARAT_SALT_SIZE, Buffer) == TRUE;
     }
     CryptReleaseContext(CryptoProvider, 0);
-#else
+#else //Формирование соли под Linux
     FILE *FileDevice = fopen("/dev/random", "r");
     bool Result = FileDevice ? true : false;
     if (Result) //Устройство удалось открыть - читаем и закрываем устройство
