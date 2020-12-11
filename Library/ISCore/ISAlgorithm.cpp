@@ -146,6 +146,7 @@ bool ISAlgorithm::GenerateSalt(QString &Salt, QString &ErrorString)
 #endif
 	if (Result) //Если все хорошо - формируем соль в HEX
 	{
+		Salt.clear();
 		for (unsigned long i = 0; i < CARAT_SALT_SIZE; ++i) //Обходим буфер с солью
 		{
 			Salt.append(QByteArray(1, Buffer[i]).toHex().toUpper());

@@ -11,8 +11,8 @@
 #include "ISTcpClients.h"
 #include "ISMetaData.h"
 //-----------------------------------------------------------------------------
-static QString QS_USER_HASH = PREPARE_QUERY("SELECT usrs_hash, usrs_salt "
-											"FROM _users");
+static QString QS_USERS_HASH = PREPARE_QUERY("SELECT usrs_hash, usrs_salt "
+											 "FROM _users");
 //-----------------------------------------------------------------------------
 static QString QS_USER_AUTH = PREPARE_QUERY("SELECT usrs_id, usrs_issystem, usrs_group, usrs_fio, usrs_accessallowed, usrs_accountlifetime, usrs_accountlifetimestart, usrs_accountlifetimeend, usgp_fullaccess, "
 											"(SELECT sgdb_useraccessdatabase FROM _settingsdatabase WHERE sgdb_active) "
@@ -97,9 +97,9 @@ static QString QU_USER_HASH = PREPARE_QUERY("UPDATE _users SET "
 											"usrs_salt = :Salt "
 											"WHERE usrs_id = :UserID");
 //-----------------------------------------------------------------------------
-static QString QS_USER_HASH_CHECK = PREPARE_QUERY("SELECT usrs_hash = :HashOld AS current_hash_is_valid, usrs_hash = :Hash AS hash_old_and_new_is_equal "
-												  "FROM _users "
-												  "WHERE usrs_id = :UserID");
+static QString QS_USER_PASSWORD = PREPARE_QUERY("SELECT usrs_hash, usrs_salt "
+												"FROM _users "
+												"WHERE usrs_id = :UserID");
 //-----------------------------------------------------------------------------
 static QString QU_USER_HASH_RESET = PREPARE_QUERY("UPDATE _users SET "
 												  "usrs_hash = NULL, "
@@ -467,7 +467,7 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 
 	{
 		//Запрашиваем все хэши из БД
-		ISQuery qSelectHash(ISDatabase::Instance().GetDB(DBConnectionName), QS_USER_HASH);
+		ISQuery qSelectHash(ISDatabase::Instance().GetDB(DBConnectionName), QS_USERS_HASH);
 		if (!qSelectHash.Execute()) //Ошибка запроса
 		{
 			ErrorString = LANG("Carat.Error.Query.Auth.SelectHash").arg(qSelectHash.GetErrorString());
@@ -1144,7 +1144,7 @@ bool ISTcpWorker::UserPasswordCreate(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpA
 
 	//Генерируем соль и солим пароль
 	QString Salt;
-	if (!ISAlgorithm::GenerateSalt(Salt, ErrorString))
+	if (!ISAlgorithm::GenerateSalt(Salt, ErrorString)) //Ошибка генерации
 	{
 		return false;
 	}
@@ -1171,51 +1171,54 @@ bool ISTcpWorker::UserPasswordEdit(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAns
 	Q_UNUSED(TcpAnswer);
 
 	QVariant UserID = CheckNullField("UserID", TcpMessage->Parameters),
-		HashOld = CheckNullField("HashOld", TcpMessage->Parameters),
-		HashNew = CheckNullField("HashNew", TcpMessage->Parameters);
-	if (!UserID.isValid() || !HashOld.isValid() || !HashNew.isValid())
+		HashOld = CheckNullField("HashOld", TcpMessage->Parameters), //Старый пароль
+		Hash = CheckNullField("Hash", TcpMessage->Parameters); //Новый пароль
+	if (!UserID.isValid() || !HashOld.isValid() || !Hash.isValid())
 	{
 		return false;
 	}
 
-	//Проверяем правильность старого хэша и не равен ли новый хэш старому
-	ISQuery qSelectHashCheck(ISDatabase::Instance().GetDB(DBConnectionName), QS_USER_HASH_CHECK);
-	qSelectHashCheck.BindValue(":HashOld", HashOld);
-	qSelectHashCheck.BindValue(":Hash", HashNew);
-	qSelectHashCheck.BindValue(":UserID", UserID);
-	if (!qSelectHashCheck.Execute()) //Ошибка запроса
+	//Получаем текущий хэш и соль пользователя
+	ISQuery qSelectHash(ISDatabase::Instance().GetDB(DBConnectionName), QS_USER_PASSWORD);
+	qSelectHash.BindValue(":UserID", UserID);
+	if (!qSelectHash.Execute()) //Ошибка запроса
 	{
-		ErrorString = LANG("Carat.Error.Query.UserLoginEdit.Equal").arg(qSelectHashCheck.GetErrorString());
+		ErrorString = LANG("Carat.Error.Query.UserLoginEdit.SelectHash").arg(qSelectHash.GetErrorString());
 		return false;
 	}
 
-	if (!qSelectHashCheck.First()) //Пользователя с таким UserID нет в БД
+	if (!qSelectHash.First()) //Пользователя с таким UserID нет в БД
 	{
 		ErrorString = LANG("Carat.Error.Query.UserLoginEdit.UserNotExist").arg(UserID.toInt());
 		return false;
 	}
 
-	bool CurrentHashIsValid = qSelectHashCheck.ReadColumn("current_hash_is_valid").toBool(),
-		HashOldAndNewIsEqual = qSelectHashCheck.ReadColumn("hash_old_and_new_is_equal").toBool();
-	if (!CurrentHashIsValid) //Текущий пароль неправильный
+	//Текущие хэш и соль
+	QString CurrentHash = qSelectHash.ReadColumn("usrs_hash").toString(),
+		CurrentSalt = qSelectHash.ReadColumn("usrs_salt").toString();
+
+	//Солим присланный хэш и проверяем. Если подсоленый хэш не соответствует тому что в БД - значит вводили неправильный текущий пароль (или логин) - ошибка
+	if (ISAlgorithm::SaltPassword(HashOld.toString(), CurrentSalt) != CurrentHash)
 	{
-		ErrorString = LANG("Carat.Error.Query.UserLoginEdit.InvalidCurrentPassword");
+		ErrorString = LANG("Carat.Error.Query.UserLoginEdit.InvalidCurrentLoginOrPassword");
 		return false;
 	}
 
-	if (HashOldAndNewIsEqual) //Если хэши равны - считаем это ошибкой
+	//Генерируем новую соль и солим новый пароль
+	if (!ISAlgorithm::GenerateSalt(CurrentSalt, ErrorString)) //Ошибка генерации
 	{
-		ErrorString = LANG("Carat.Error.Query.UserLoginEdit.OldAndNewPasswordsEqual");
 		return false;
 	}
+	QString HashResult = ISAlgorithm::SaltPassword(Hash.toString(), CurrentSalt);
 
 	//Обновляем пароль
 	ISQuery qUpdateHash(ISDatabase::Instance().GetDB(DBConnectionName), QU_USER_HASH);
-	qUpdateHash.BindValue(":Hash", HashNew);
+	qUpdateHash.BindValue(":Hash", HashResult);
+	qUpdateHash.BindValue(":Salt", CurrentSalt);
 	qUpdateHash.BindValue(":UserID", UserID);
 	if (!qUpdateHash.Execute())
 	{
-		ErrorString = LANG("Carat.Error.Query.UserLoginCreate.UpdateHash").arg(qUpdateHash.GetErrorString());
+		ErrorString = LANG("Carat.Error.Query.UserLoginEdit.UpdateHash").arg(qUpdateHash.GetErrorString());
 		return false;
 	}
 
