@@ -13,6 +13,8 @@ public:
 	virtual ~CGConfiguratorCreate();
 
 public slots:
+	bool adminaccount();
+	bool adminpassword();
 	bool resources();
 };
 //-----------------------------------------------------------------------------

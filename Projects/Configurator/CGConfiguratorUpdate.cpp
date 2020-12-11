@@ -8,21 +8,6 @@
 #include "ISConsole.h"
 #include "ISSystem.h"
 //-----------------------------------------------------------------------------
-static QString QS_SYSTEM_USER = PREPARE_QUERY("SELECT COUNT(*) "
-											  "FROM _users "
-											  "WHERE usrs_uid = :UID");
-//-----------------------------------------------------------------------------
-static QString QU_SYSTEM_USER = PREPARE_QUERY("UPDATE _users SET "
-											  "usrs_issystem = true, "
-											  "usrs_fio = :FIO, "
-											  "usrs_login = :Login, "
-											  "usrs_accessallowed = true, "
-											  "usrs_photo = :Photo "
-											  "WHERE usrs_uid = :UID");
-//-----------------------------------------------------------------------------
-static QString QI_SYSTEM_USER = PREPARE_QUERY("INSERT INTO _users(usrs_uid, usrs_issystem, usrs_fio, usrs_login, usrs_hash, usrs_salt, usrs_accessallowed, usrs_photo) "
-											  "VALUES(:UID, true, :FIO, :Login, :Hash, :Salt, true, :Photo)");
-//-----------------------------------------------------------------------------
 static QString QS_SETTINGS_DATABASE = PREPARE_QUERY("SELECT COUNT(*) "
 													"FROM _settingsdatabase "
 													"WHERE sgdb_uid = :UID");
@@ -266,98 +251,6 @@ bool CGConfiguratorUpdate::resources()
 				break;
 			}
 		}
-	}
-	return Result;
-}
-//-----------------------------------------------------------------------------
-bool CGConfiguratorUpdate::systemuser()
-{
-	ISQuery qSelect(QS_SYSTEM_USER);
-	qSelect.BindValue(":UID", SYSTEM_USER_UID);
-	qSelect.SetShowLongQuery(false);
-	bool Result = qSelect.ExecuteFirst();
-	if (Result)
-	{
-		//Читаем файл с аватаркой
-		QByteArray ByteArray;
-		QFile FileAvatar(":/Other/AdminAvatar.png");
-		if (FileAvatar.open(QIODevice::ReadOnly))
-		{
-			ByteArray = FileAvatar.readAll();
-			FileAvatar.close();
-		}
-		else
-		{
-			ISDEBUG_W("Error open avatar \"" + FileAvatar.fileName() + "\": " + FileAvatar.errorString());
-		}
-
-		if (qSelect.ReadColumn("count").toInt() == 0) //Пользователь ещё не существует - создаём
-		{
-			//Просим ввести пароль
-			QString Password;
-			while (true)
-			{
-				Password = ISConsole::GetString("Create password for system administrator: ");
-				if (ISAlgorithm::PasswordVerification(Password))
-				{
-					ISDEBUG_L("WARNING! Keep password in a safe place.");
-					break;
-				}
-				else
-				{
-					ISDEBUG_L("Invalid password!");
-				}
-			}
-
-			//Формируем хэш, генерируем соль и солим пароль
-			QString Hash = ISSystem::StringToSha256(SYSTEM_USER_LOGIN + Password), Salt;
-			if (!ISAlgorithm::GenerateSalt(Salt, ErrorString))
-			{
-				return false;
-			}
-			QString HashResult = ISAlgorithm::SaltPassword(Hash, Salt);
-
-			//Добавляем в БД
-			ISQuery qInsert(QI_SYSTEM_USER);
-			qInsert.BindValue(":UID", SYSTEM_USER_UID);
-			qInsert.BindValue(":FIO", QString::fromLocal8Bit("Главный администратор системы"));
-			qInsert.BindValue(":Login", SYSTEM_USER_LOGIN);
-			qInsert.BindValue(":Hash", HashResult);
-			qInsert.BindValue(":Salt", Salt);
-			qInsert.BindValue(":Photo", ByteArray);
-			qInsert.SetShowLongQuery(false);
-			Result = qInsert.Execute();
-			if (Result)
-			{
-				ISDEBUG_L("System user created!");
-			}
-			else
-			{
-				ErrorString = qInsert.GetErrorString();
-			}
-		}
-		else //Пользователь уже существует - обновляем
-		{
-			ISQuery qUpdate(QU_SYSTEM_USER);
-			qUpdate.BindValue(":FIO", QString::fromLocal8Bit("Главный администратор системы"));
-			qUpdate.BindValue(":Login", SYSTEM_USER_LOGIN);
-			qUpdate.BindValue(":Photo", ByteArray);
-			qUpdate.BindValue(":UID", SYSTEM_USER_UID);
-			qUpdate.SetShowLongQuery(false);
-			Result = qUpdate.Execute();
-			if (Result)
-			{
-				ISDEBUG_L("System user updated!");
-			}
-			else
-			{
-				ErrorString = qUpdate.GetErrorString();
-			}
-		}
-	}
-	else
-	{
-		ErrorString = qSelect.GetErrorString();
 	}
 	return Result;
 }

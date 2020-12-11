@@ -2,6 +2,8 @@
 <Scheme>
 
   <Section Name="Create" ClassName="CGConfiguratorCreate">
+    <Function Name="AdminAccount" Description="Создать учётную запись администратора"/>
+    <Function Name="AdminPassword" Description="Создать пароль для учётной записи администратора"/>
     <Function Name="Resources" Description="Добавление новых ресурсов и заполнение существующих справочников"/>
   </Section>
 
@@ -13,12 +15,11 @@
     <Function Name="Indexes" Description="Обновление индексов базы данных"/>
     <Function Name="Foreigns" Description="Обновление внешних ключей базы данных"/>
     <Function Name="Resources" Description="Обновление ресурсов и справочников базы данных"/>
-    <Function Name="SystemUser" Description="Обновление информации о системном пользователе"/>
     <Function Name="DatabaseSettings" Description="Обновление системного профиля настроек базы данных"/>
   </Section>
 
   <Section Name="Delete" ClassName="CGConfiguratorDelete">
-    <Function Name="PasswordAdmin" Description="Удаление пароля администратора"/>
+    <Function Name="AdminPassword" Description="Удаление пароля администратора"/>
     <Function Name="Indexes" Description="Удаление всех индексов из базы данных"/>
     <Function Name="Foreigns" Description="Удаление всех внешних ключей из базы данных"/>
     <Function Name="OldTables" Description="Удаление всех устаревших таблиц"/>

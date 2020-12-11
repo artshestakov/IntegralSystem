@@ -1,14 +1,20 @@
 #include "CGConfiguratorCreate.h"
-#include "ISAssert.h"
-#include "ISDatabase.h"
 #include "ISQuery.h"
 #include "ISMetaData.h"
-#include "ISConfig.h"
 #include "ISConstants.h"
+#include "ISDebug.h"
 #include "ISMetaData.h"
-#include "ISMetaDataHelper.h"
 #include "ISConsole.h"
+#include "ISSystem.h"
 #include "CGDatabase.h"
+//-----------------------------------------------------------------------------
+static QString QI_SYSTEM_USER = PREPARE_QUERY("INSERT INTO _users(usrs_uid, usrs_issystem, usrs_fio, usrs_login, usrs_accessallowed, usrs_photo) "
+											  "VALUES(:UID, true, :FIO, :Login, true, :Photo)");
+//-----------------------------------------------------------------------------
+static QString QU_SYSTEM_USER_PASSWORD = PREPARE_QUERY("UPDATE _users SET "
+													   "usrs_hash = :Hash, "
+													   "usrs_salt = :Salt "
+													   "WHERE usrs_uid = :UID");
 //-----------------------------------------------------------------------------
 CGConfiguratorCreate::CGConfiguratorCreate() : CGConfiguratorBase()
 {
@@ -18,6 +24,101 @@ CGConfiguratorCreate::CGConfiguratorCreate() : CGConfiguratorBase()
 CGConfiguratorCreate::~CGConfiguratorCreate()
 {
 
+}
+//-----------------------------------------------------------------------------
+bool CGConfiguratorCreate::adminaccount()
+{
+	//Читаем файл с аватаркой
+	QByteArray ByteArray;
+	QFile FileAvatar(":/Other/AdminAvatar.png");
+	if (FileAvatar.open(QIODevice::ReadOnly))
+	{
+		ByteArray = FileAvatar.readAll();
+		FileAvatar.close();
+	}
+	else
+	{
+		ISDEBUG_W("Error open avatar \"" + FileAvatar.fileName() + "\": " + FileAvatar.errorString());
+	}
+
+	ISQuery qInsertAccount(QI_SYSTEM_USER);
+	qInsertAccount.BindValue(":UID", SYSTEM_USER_UID);
+	qInsertAccount.BindValue(":FIO", QString::fromLocal8Bit("Главный администратор системы"));
+	qInsertAccount.BindValue(":Login", SYSTEM_USER_LOGIN);
+	qInsertAccount.BindValue(":Photo", ByteArray);
+	qInsertAccount.SetShowLongQuery(false);
+	bool Result = qInsertAccount.Execute();
+	if (Result)
+	{
+		ISDEBUG_L("Admin account created successfully!");
+	}
+	else //Ошибка запроса
+	{
+		if (qInsertAccount.GetErrorNumber() == 23505) //Если нарушение уникальности - значит учётная запись уже создана
+		{
+			ErrorString = "Admin account already exist";
+		}
+		else
+		{
+			ErrorString = qInsertAccount.GetErrorString();
+		}
+	}
+	return Result;
+}
+//-----------------------------------------------------------------------------
+bool CGConfiguratorCreate::adminpassword()
+{
+	//Просим ввести пароль
+	QString Password;
+	while (true)
+	{
+		Password = ISConsole::GetString("Create password for system administrator: ");
+		if (ISAlgorithm::PasswordVerification(Password))
+		{
+			ISDEBUG_L("WARNING! Keep password in a safe place.");
+			break;
+		}
+		else
+		{
+			ISDEBUG_L("Invalid password!");
+		}
+	}
+
+	//Формируем хэш, генерируем соль и солим пароль
+	QString Hash = ISSystem::StringToSha256(SYSTEM_USER_LOGIN + Password), Salt;
+	if (!ISAlgorithm::GenerateSalt(Salt, ErrorString))
+	{
+		return false;
+	}
+	QString HashResult = ISAlgorithm::SaltPassword(Hash, Salt);
+
+	ISQuery qUpdatePassword(QU_SYSTEM_USER_PASSWORD);
+	qUpdatePassword.BindValue(":Hash", HashResult);
+	qUpdatePassword.BindValue(":Salt", Salt);
+	qUpdatePassword.BindValue(":UID", SYSTEM_USER_UID);
+	qUpdatePassword.SetShowLongQuery(false);
+	if (qUpdatePassword.Execute())
+	{
+		if (qUpdatePassword.GetCountAffected() == 1) //Пароль успешно установлен
+		{
+			ISDEBUG_L("Password created successfully");
+		}
+		else if (qUpdatePassword.GetCountAffected() == 0) //Учётная запись администратора не существует
+		{
+			ErrorString = "The administrator account does not exist";
+			return false;
+		}
+		else //Неизвестная ошибка
+		{
+			ErrorString = "Unknown error";
+			return false;
+		}
+	}
+	else //Ошибка запроса
+	{
+		ErrorString = qUpdatePassword.GetErrorString();
+	}
+	return true;
 }
 //-----------------------------------------------------------------------------
 bool CGConfiguratorCreate::resources()

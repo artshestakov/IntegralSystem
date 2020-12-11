@@ -70,7 +70,7 @@ CGConfiguratorDelete::~CGConfiguratorDelete()
 
 }
 //-----------------------------------------------------------------------------
-bool CGConfiguratorDelete::passwordadmin()
+bool CGConfiguratorDelete::adminpassword()
 {
 	if (ISConsole::Question("Are you sure?"))
 	{
