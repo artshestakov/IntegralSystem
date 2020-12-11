@@ -27,7 +27,7 @@
         <collectionProp name="Arguments.arguments">
           <elementProp name="Auth_Login" elementType="Argument">
             <stringProp name="Argument.name">Auth_Login</stringProp>
-            <stringProp name="Argument.value">postgres</stringProp>
+            <stringProp name="Argument.value">admin</stringProp>
             <stringProp name="Argument.desc">Логин пользователя для авторизации</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
@@ -51,17 +51,17 @@
           </elementProp>
           <elementProp name="UserPasswordExist_UserID" elementType="Argument">
             <stringProp name="Argument.name">UserPasswordExist_UserID</stringProp>
-            <stringProp name="Argument.value">4</stringProp>
+            <stringProp name="Argument.value">11</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="UserPasswordCreate_UserID" elementType="Argument">
             <stringProp name="Argument.name">UserPasswordCreate_UserID</stringProp>
-            <stringProp name="Argument.value">12</stringProp>
+            <stringProp name="Argument.value">11</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="UserPasswordCreate_Login" elementType="Argument">
             <stringProp name="Argument.name">UserPasswordCreate_Login</stringProp>
-            <stringProp name="Argument.value">cherkov</stringProp>
+            <stringProp name="Argument.value">sidorov</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="UserPasswordCreate_Password" elementType="Argument">
@@ -71,32 +71,27 @@
           </elementProp>
           <elementProp name="UserPasswordEdit_UserID" elementType="Argument">
             <stringProp name="Argument.name">UserPasswordEdit_UserID</stringProp>
-            <stringProp name="Argument.value">12</stringProp>
+            <stringProp name="Argument.value">3</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
-          <elementProp name="UserPasswordEdit_OldLogin" elementType="Argument">
-            <stringProp name="Argument.name">UserPasswordEdit_OldLogin</stringProp>
-            <stringProp name="Argument.value">cherkov</stringProp>
+          <elementProp name="UserPasswordEdit_Login" elementType="Argument">
+            <stringProp name="Argument.name">UserPasswordEdit_Login</stringProp>
+            <stringProp name="Argument.value">shestakov</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="UserPasswordEdit_OldPassword" elementType="Argument">
             <stringProp name="Argument.name">UserPasswordEdit_OldPassword</stringProp>
-            <stringProp name="Argument.value">78357835</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
-          <elementProp name="UserPasswordEdit_NewLogin" elementType="Argument">
-            <stringProp name="Argument.name">UserPasswordEdit_NewLogin</stringProp>
-            <stringProp name="Argument.value">cherkov</stringProp>
+            <stringProp name="Argument.value">~qwPLH34JA961_</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="UserPasswordEdit_NewPassword" elementType="Argument">
             <stringProp name="Argument.name">UserPasswordEdit_NewPassword</stringProp>
-            <stringProp name="Argument.value">454Trendy</stringProp>
+            <stringProp name="Argument.value">454Trendy!</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="UserPasswordReset_UserID" elementType="Argument">
             <stringProp name="Argument.name">UserPasswordReset_UserID</stringProp>
-            <stringProp name="Argument.value">12</stringProp>
+            <stringProp name="Argument.value">11</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="GetRecordCall_RecordID" elementType="Argument">
@@ -107,14 +102,8 @@
           </elementProp>
           <elementProp name="RecordDelete_TableName" elementType="Argument">
             <stringProp name="Argument.name">RecordDelete_TableName</stringProp>
-            <stringProp name="Argument.value">_Protocol</stringProp>
+            <stringProp name="Argument.value">_UserGroup</stringProp>
             <stringProp name="Argument.desc">Имя таблицы из которой будет происходить удаление</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
-          <elementProp name="RecordDelete_Alias" elementType="Argument">
-            <stringProp name="Argument.name">RecordDelete_Alias</stringProp>
-            <stringProp name="Argument.value">prtc</stringProp>
-            <stringProp name="Argument.desc">Алиас таблицы из которой будет происходить удаление</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="DiscussionAdd_TableName" elementType="Argument">
@@ -191,7 +180,7 @@ String GetSHA256(String string)
 	{
 		string_builder.append(String.format(&quot;%02x&quot;, b));
 	}
-	return string_builder.toString();
+	return string_builder.toString().toUpperCase();
 };
 
 //Авторизация
@@ -261,8 +250,8 @@ def MapUserPasswordEdit =
 	Parameters:
 		[
 			UserID: vars.get(&quot;UserPasswordEdit_UserID&quot;),
-			HashOld: GetSHA256(vars.get(&quot;UserPasswordEdit_OldLogin&quot;) + vars.get(&quot;UserPasswordEdit_OldPassword&quot;)),
-			Hash: GetSHA256(vars.get(&quot;UserPasswordEdit_NewLogin&quot;) + vars.get(&quot;UserPasswordEdit_NewPassword&quot;))
+			HashOld: GetSHA256(vars.get(&quot;UserPasswordEdit_Login&quot;) + vars.get(&quot;UserPasswordEdit_OldPassword&quot;)),
+			HashNew: GetSHA256(vars.get(&quot;UserPasswordEdit_Login&quot;) + vars.get(&quot;UserPasswordEdit_NewPassword&quot;))
 		]
 ];
 vars.put(&quot;QueryUserPasswordEdit&quot;, MapToString(MapUserPasswordEdit));
@@ -303,8 +292,7 @@ def MapRecordDelete =
 	Parameters:
 		[
 			TableName: vars.get(&quot;RecordDelete_TableName&quot;),
-			Alias: vars.get(&quot;RecordDelete_Alias&quot;),
-			Objects: [1, 2, 3]
+			Objects: [25]
 		]
 ];
 vars.put(&quot;QueryRecordDelete&quot;, MapToString(MapRecordDelete));
@@ -354,7 +342,7 @@ vars.put(&quot;QueryDiscussionCopy&quot;, MapToString(MapDiscussionCopy));</stri
           <boolProp name="TCPSampler.nodelay">false</boolProp>
           <stringProp name="TCPSampler.timeout"></stringProp>
           <stringProp name="TCPSampler.request">${QueryAuth}</stringProp>
-          <boolProp name="TCPSampler.closeConnection">true</boolProp>
+          <boolProp name="TCPSampler.closeConnection">false</boolProp>
           <stringProp name="ConfigTestElement.username"></stringProp>
           <stringProp name="ConfigTestElement.password"></stringProp>
         </TCPSampler>
@@ -450,19 +438,19 @@ vars.put(&quot;QueryDiscussionCopy&quot;, MapToString(MapDiscussionCopy));</stri
           <boolProp name="TCPSampler.nodelay">false</boolProp>
           <stringProp name="TCPSampler.timeout"></stringProp>
           <stringProp name="TCPSampler.request">${QueryUserPasswordCreate}</stringProp>
-          <boolProp name="TCPSampler.closeConnection">false</boolProp>
+          <boolProp name="TCPSampler.closeConnection">true</boolProp>
           <stringProp name="ConfigTestElement.username"></stringProp>
           <stringProp name="ConfigTestElement.password"></stringProp>
         </TCPSampler>
         <hashTree/>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: UserPasswordEdit" enabled="false">
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: UserPasswordEdit" enabled="true">
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
           <stringProp name="TCPSampler.port"></stringProp>
           <boolProp name="TCPSampler.nodelay">false</boolProp>
           <stringProp name="TCPSampler.timeout"></stringProp>
           <stringProp name="TCPSampler.request">${QueryUserPasswordEdit}</stringProp>
-          <boolProp name="TCPSampler.closeConnection">false</boolProp>
+          <boolProp name="TCPSampler.closeConnection">true</boolProp>
           <stringProp name="ConfigTestElement.username"></stringProp>
           <stringProp name="ConfigTestElement.password"></stringProp>
         </TCPSampler>

@@ -321,7 +321,7 @@
   <Local Name="UserPasswordForm.Password" Russian="Пароль:"/>
   <Local Name="UserPasswordForm.PasswordCheck" Russian="Повторите пароль:"/>
   <Local Name="UserPasswordForm.CreatedPassword" Russian="Пароль был успешно установлен."/>
-  <Local Name="UserPasswordForm.EditedPassword" Russian="Пароль был успешно изменён"/>
+  <Local Name="UserPasswordForm.EditedPassword" Russian="Пароль был успешно изменён."/>
   <Local Name="EnterThePassword" Russian="Введите пароль"/>
   <Local Name="InputInSystem" Russian="Вход в систему"/>
   <Local Name="InputLoginAndPassword" Russian="Введите логин и пароль"/>
