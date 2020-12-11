@@ -280,9 +280,6 @@
       <Field UID="{47A1B622-4EA9-4681-A987-47FD03F6915F}" Name="Information" Type="String" LabelName="Дополнительная информация" LocalListName="Дополнительная информация"/>
     </Fields>
     <Indexes>
-      <Index Field="TableName"/>
-      <Index Field="Type"/>
-      <Index Field="ObjectID"/>
       <Index Field="TableName;ObjectID"/>
     </Indexes>
     <Foreigns>
