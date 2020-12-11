@@ -417,64 +417,6 @@ bool ISTcpWorker::UserIsSystem(const QVariant &UserID, bool &IsSystem)
 	return true;
 }
 //-----------------------------------------------------------------------------
-bool ISTcpWorker::GenerateSalt(QString &Salt)
-{
-	//Объявляем результирующую строку и буфер
-	unsigned char Buffer[CARAT_SALT_SIZE] = { 0 };
-#ifdef WIN32 //Формирование соли под Windows
-	HCRYPTPROV CryptoProvider = 0;
-	bool Result = CryptAcquireContext(&CryptoProvider, 0, 0, PROV_RSA_FULL, CRYPT_VERIFYCONTEXT | CRYPT_SILENT) == TRUE;
-	if (Result) //Контекст создан успешно - формируем соль
-	{
-		Result = CryptGenRandom(CryptoProvider, CARAT_SALT_SIZE, Buffer) == TRUE;
-		if (Result) //Генерация прошла успешно - освобождаем контекст
-		{
-			CryptReleaseContext(CryptoProvider, 0);
-		}
-		else //Ошибка генерации
-		{
-			ErrorString = ISAlgorithm::GetLastErrorString();
-		}
-	}
-	else //Не удалось создать контекст
-	{
-		ErrorString = ISAlgorithm::GetLastErrorString();
-	}
-#else //Формирование соли под Linux
-    FILE *FileDevice = fopen("/dev/random", "r");
-	bool Result = FileDevice ? true : false;
-	if (Result) //Устройство удалось открыть - читаем и закрываем устройство
-	{
-		Result = fread(&Buffer[0], sizeof(char), CARAT_SALT_SIZE, FileDevice) == CARAT_SALT_SIZE;
-		fclose(FileDevice);
-	}
-    else
-    {
-        ErrorString = ISAlgorithm::GetLastErrorString();
-    }
-#endif
-	if (Result) //Если все хорошо - формируем соль в HEX
-	{
-		for (unsigned long i = 0; i < CARAT_SALT_SIZE; ++i) //Обходим буфер с солью
-		{
-			Salt.append(QByteArray(1, Buffer[i]).toHex().toUpper());
-		}
-	}
-	return true;
-}
-//-----------------------------------------------------------------------------
-QString ISTcpWorker::SaltPassword(const QString &HashPassword, const QString &Salt)
-{
-	QString HashResult;
-	for (int i = 0; i < (int)CARAT_HASH_SIZE; ++i)
-	{
-		HashResult.push_back(HashPassword[i]);
-		HashResult.push_back(Salt[i]);
-	}
-	std::reverse(HashResult.begin(), HashResult.end());
-	return HashResult;
-}
-//-----------------------------------------------------------------------------
 bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
 	Q_UNUSED(TcpAnswer);
@@ -1181,13 +1123,13 @@ bool ISTcpWorker::UserPasswordCreate(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpA
 
 	//Генерируем соль
 	QString Salt;
-	if (!GenerateSalt(Salt))
+	if (!ISAlgorithm::GenerateSalt(Salt, ErrorString))
 	{
 		return false;
 	}
 
 	//Солим пароль
-	QString HashResult = SaltPassword(Hash.toString(), Salt);
+	QString HashResult = ISAlgorithm::SaltPassword(Hash.toString(), Salt);
 
 	//Устанавливаем пароль
 	ISQuery qUpdateHash(ISDatabase::Instance().GetDB(DBConnectionName), QU_USER_HASH);

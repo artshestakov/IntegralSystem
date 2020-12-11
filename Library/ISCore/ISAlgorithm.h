@@ -96,6 +96,18 @@ namespace ISAlgorithm
 	//! \return возвращает строку с ошибкой
 	ISCORE_EXPORT QString GetLastErrorString();
 
+	//! \Сгенерировать соль
+	//! \param Salt строка, в которую будет помещена сгенерированная соль
+	//! \param ErrorString строка, в которую будет помещено описание ошибки
+	//! \return возвращает true в случае успешное генерации, в противном случае - false
+	ISCORE_EXPORT bool GenerateSalt(QString &Salt, QString &ErrorString);
+
+	//! \Соление пароля
+	//! \param HashPassword строка, которая должна содержать хэш логина и пароля (sha256(Login + Password))
+	//! \param Salt строка, которая должна содержать соль (sha256(Login + Password))
+	//! \return возвращает солёный пароль
+	ISCORE_EXPORT QString SaltPassword(const QString &HashPassword, const QString &Salt); //Посолить пароль
+
 	//Поиск значения в векторе
     template <typename T> bool VectorContains(const std::vector<T> &Vector, T Value)
     {
