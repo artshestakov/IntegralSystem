@@ -280,7 +280,7 @@ bool CGConfiguratorUpdate::systemuser()
 	{
 		//Читаем файл с аватаркой
 		QByteArray ByteArray;
-		QFile FileAvatar(":/Other/PostgresAvatar.png");
+		QFile FileAvatar(":/Other/AdminAvatar.png");
 		if (FileAvatar.open(QIODevice::ReadOnly))
 		{
 			ByteArray = FileAvatar.readAll();
