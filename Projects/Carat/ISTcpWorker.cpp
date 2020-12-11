@@ -11,7 +11,7 @@
 #include "ISTcpClients.h"
 #include "ISMetaData.h"
 //-----------------------------------------------------------------------------
-static QString QS_USER_HASH = PREPARE_QUERY("SELECT usrs_id, usrs_hash, usrs_salt "
+static QString QS_USER_HASH = PREPARE_QUERY("SELECT usrs_hash, usrs_salt "
 											"FROM _users");
 //-----------------------------------------------------------------------------
 static QString QS_USER_AUTH = PREPARE_QUERY("SELECT usrs_id, usrs_issystem, usrs_group, usrs_fio, usrs_accessallowed, usrs_accountlifetime, usrs_accountlifetimestart, usrs_accountlifetimeend, usgp_fullaccess, "
@@ -465,32 +465,46 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 		}
 	}
 
-	//Ищем пользователя с таким же хэшэм
-	ISQuery qSelectHash(ISDatabase::Instance().GetDB(DBConnectionName), QS_USER_HASH);
-	if (!qSelectHash.Execute()) //Ошибка запроса
 	{
-		ErrorString = LANG("Carat.Error.Query.Auth.SelectHash").arg(qSelectHash.GetErrorString());
-		return false;
-	}
-	
-	while (qSelectHash.Next())
-	{
-		QString Hash = qSelectHash.ReadColumn("usrs_hash").toString(),
-			Salt = qSelectHash.ReadColumn("usrs_salt").toString();
+		//Запрашиваем все хэши из БД
+		ISQuery qSelectHash(ISDatabase::Instance().GetDB(DBConnectionName), QS_USER_HASH);
+		if (!qSelectHash.Execute()) //Ошибка запроса
+		{
+			ErrorString = LANG("Carat.Error.Query.Auth.SelectHash").arg(qSelectHash.GetErrorString());
+			return false;
+		}
+
+		//Ищем пользователя
+		bool IsFound = false;
+		while (qSelectHash.Next())
+		{
+			//Получаем хэш и соль
+			QString CurrentHash = qSelectHash.ReadColumn("usrs_hash").toString(),
+				CurrentSalt = qSelectHash.ReadColumn("usrs_salt").toString();
+
+			//Солим присланный хэш текущей солью
+			QString HashResult = ISAlgorithm::SaltPassword(HashString, CurrentSalt);
+			IsFound = HashResult == CurrentHash;
+			if (IsFound) //Нашли
+			{
+				Hash = HashResult;
+				break;
+			}
+		}
+
+		if (!IsFound) //Не нашли пользователя
+		{
+			ErrorString = LANG("Carat.Error.Query.Auth.InvalidLoginOrPassword");
+			return false;
+		}
 	}
 
 	//Проверка пользователя
 	ISQuery qSelectAuth(ISDatabase::Instance().GetDB(DBConnectionName), QS_USER_AUTH);
 	qSelectAuth.BindValue(":Hash", Hash);
-	if (!qSelectAuth.Execute()) //Запрос выполнен с ошибкой
+	if (!qSelectAuth.ExecuteFirst()) //Запрос выполнен с ошибкой
 	{
 		ErrorString = LANG("Carat.Error.Query.Auth.SelectLogin").arg(qSelectAuth.GetErrorString());
-		return false;
-	}
-
-	if (!qSelectAuth.First()) //Не нашли пользователя с таким хешем
-	{
-		ErrorString = LANG("Carat.Error.Query.Auth.InvalidLoginOrPassword");
 		return false;
 	}
 
@@ -1121,14 +1135,12 @@ bool ISTcpWorker::UserPasswordCreate(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpA
 		return false;
 	}
 
-	//Генерируем соль
+	//Генерируем соль и солим пароль
 	QString Salt;
 	if (!ISAlgorithm::GenerateSalt(Salt, ErrorString))
 	{
 		return false;
 	}
-
-	//Солим пароль
 	QString HashResult = ISAlgorithm::SaltPassword(Hash.toString(), Salt);
 
 	//Устанавливаем пароль

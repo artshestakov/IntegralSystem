@@ -18,8 +18,8 @@
   <Local Name="Carat.Error.Query.Auth.InvalidHashSize" Russian="Неверный размер авторизационных данных!"/>
   <Local Name="Carat.Error.Query.Auth.InvalidHash" Russian="Невалидные авторизационные данные!"/>
   <Local Name="Carat.Error.Query.Auth.SelectHash" Russian="Не удалось получить информацию о пользователе: %1"/>
-  <Local Name="Carat.Error.Query.Auth.SelectLogin" Russian="Не удалось получить информацию о пользователе: %1"/>
   <Local Name="Carat.Error.Query.Auth.InvalidLoginOrPassword" Russian="Неверный логин или пароль."/>
+  <Local Name="Carat.Error.Query.Auth.SelectLogin" Russian="Не удалось получить информацию о пользователе: %1"/>
   <Local Name="Carat.Error.Query.Auth.ConnectionBan" Russian="На подключение пользователей к базе данных наложен запрет."/>
   <Local Name="Carat.Error.Query.Auth.LoginNoAccess" Russian="У Вас нет доступа к базе данных."/>
   <Local Name="Carat.Error.Query.Auth.LoginLinkGroup" Russian="Ваша учётная запись не привязанна к группе."/>
