@@ -166,3 +166,26 @@ QString ISAlgorithm::SaltPassword(const QString &HashPassword, const QString &Sa
 	return HashResult;
 }
 //-----------------------------------------------------------------------------
+bool ISAlgorithm::PasswordVerification(const QString &Password)
+{
+	//Если длинна пароля маленькая - ошибка
+	if (Password.size() < MINIMUM_PASSWORD_LENGHT)
+	{
+		return false;
+	}
+
+	//Обходим строку
+	for (const char &Char : Password.toStdString())
+	{
+		if (Char >= 33 && Char <= 126) //Если текущий символ входит в диапазон согласно ACII-таблице - все окей
+		{
+			continue;
+		}
+		return false; //Иначе - ошибка
+	}
+	return true;
+	/*int Pos = 0;
+	QString Temp = Password;
+	return QRegExpValidator(QRegExp("^([0-9A-Za-z!\"#$%&'()*+,-.\/:;<=>?@[\\\]^_`{|}~]{8,})$")).validate(Temp, Pos) == QRegExpValidator::Acceptable;*/
+}
+//-----------------------------------------------------------------------------

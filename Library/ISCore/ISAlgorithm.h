@@ -108,6 +108,11 @@ namespace ISAlgorithm
 	//! \return возвращает солЄный пароль
 	ISCORE_EXPORT QString SaltPassword(const QString &HashPassword, const QString &Salt); //ѕосолить пароль
 
+	//! \ѕроверка парол€ на соответствие требовани€м сложности
+	//! \param Password строка, содержаща€ пароль
+	//! \return возвращает true в случае если пароль прошЄл проверка, в противном случае - false
+	ISCORE_EXPORT bool PasswordVerification(const QString &Password);
+
 	//ѕоиск значени€ в векторе
     template <typename T> bool VectorContains(const std::vector<T> &Vector, T Value)
     {
