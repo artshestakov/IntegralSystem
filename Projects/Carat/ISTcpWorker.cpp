@@ -474,6 +474,13 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 			return false;
 		}
 
+		//Если запрос ничего не вернул, значит в БД нет ни одного пользователя
+		if (qSelectHash.GetCountResultRows() == 0)
+		{
+			ErrorString = LANG("Carat.Error.Query.Auth.NoUsers");
+			return false;
+		}
+
 		//Ищем пользователя
 		bool IsFound = false;
 		while (qSelectHash.Next())
