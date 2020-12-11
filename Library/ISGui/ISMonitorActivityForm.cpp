@@ -77,7 +77,7 @@ void ISMonitorActivityForm::LoadData()
 
 	QSize SizeWidget;
 	ISQuery qSelect(QS_USERS);
-	qSelect.BindValue(":PostgresUID", CONST_UID_USER_ADMIN);
+	qSelect.BindValue(":PostgresUID", SYSTEM_USER_UID);
 	if (qSelect.Execute())
 	{
 		while (qSelect.Next())

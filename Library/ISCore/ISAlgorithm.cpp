@@ -168,24 +168,71 @@ QString ISAlgorithm::SaltPassword(const QString &HashPassword, const QString &Sa
 //-----------------------------------------------------------------------------
 bool ISAlgorithm::PasswordVerification(const QString &Password)
 {
-	//Если длинна пароля маленькая - ошибка
+	//Проверяем размер пароля
 	if (Password.size() < MINIMUM_PASSWORD_LENGHT)
 	{
 		return false;
 	}
 
-	//Обходим строку
-	for (const char &Char : Password.toStdString())
+	//Ищём цифры
+	bool FoundDigit = false;
+	for (const QChar &Char : Password)
 	{
-		if (Char >= 33 && Char <= 126) //Если текущий символ входит в диапазон согласно ACII-таблице - все окей
+		if (Char.isDigit()) //Нашли
 		{
-			continue;
+			FoundDigit = true;
+			break;
 		}
-		return false; //Иначе - ошибка
+	}
+	if (!FoundDigit) //Не нашли
+	{
+		return false;
+	}
+
+	//Ищём буквы в верхнем регистре
+	bool FoundUpper = false;
+	for (const QChar &Char : Password)
+	{
+		if (Char.isUpper()) //Нашли
+		{
+			FoundUpper = true;
+			break;
+		}
+	}
+	if (!FoundUpper) //Не нашли
+	{
+		return false;
+	}
+
+	//Ищём буквы в нижнем регистре
+	bool FoundLower = false;
+	for (const QChar &Char : Password)
+	{
+		if (Char.isLower()) //Нашли
+		{
+			FoundLower = true;
+			break;
+		}
+	}
+	if (!FoundLower) //Не нашли
+	{
+		return false;
+	}
+
+	//Ищём спец. символы
+	bool FoundSpecial = false;
+	for (const QChar &Symbol : QString(SYMBOL_SPECIAL_ARRAY))
+	{
+		if (Password.contains(Symbol))
+		{
+			FoundSpecial = true;
+			break;
+		}
+	}
+	if (!FoundSpecial)
+	{
+		return false;
 	}
 	return true;
-	/*int Pos = 0;
-	QString Temp = Password;
-	return QRegExpValidator(QRegExp("^([0-9A-Za-z!\"#$%&'()*+,-.\/:;<=>?@[\\\]^_`{|}~]{8,})$")).validate(Temp, Pos) == QRegExpValidator::Acceptable;*/
 }
 //-----------------------------------------------------------------------------

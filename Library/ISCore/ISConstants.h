@@ -44,7 +44,6 @@ const char LOCALIZATION_FILE_INTEGRAL_SYSTEM[] = "IntegralSystem";
 const char LOCALIZATION_FILE_OBJECTS[] = "Objects";
 const char LOCALIZATION_FILE_CARAT[] = "Carat";
 //REG_EXP----------------------------------------------------------------------
-const char REG_EXP_IP_ADDRESS[] = "([0-9]{1,3}\\.){3}[0-9]{1,3}(\\/([0-9]|[1-2][0-9]|3[0-2]))?"; //IP-адресс
 const char REG_EXP_UID[] = "UID=\"\\{\\w{8}-\\w{4}-\\w{4}-\\w{4}-\\w{12}\\}\""; //Уникальный идентфикатор из мета-данных
 const char REG_EXP_LOGIN[] = "^([0-9A-Za-z._]+)$";
 const char REG_EXP_PASSWORD_ALT_SYMBOL[] = "^[^а-яА-ЯёЁa-zA-Z0-9_]+$";
@@ -98,6 +97,7 @@ const char SYMBOL_COMMA = ','; //Символ "Запятая"
 const char SYMBOL_POINT = '.'; //Символ "Точка"
 const char SYMBOL_STAR = '*'; //Символ звездочка
 const char SYMBOL_NULL_TERM = '\0'; //Символ конца строки
+const char SYMBOL_SPECIAL_ARRAY[] = "!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~";
 //DATABASE_CONNECTIONS---------------------------------------------------------
 const char CONNECTION_DEFAULT[] = "DefaultDB";
 const char CONNECTION_SYSTEM[] = "SystemDB";
@@ -110,6 +110,8 @@ const char CONFIG_TEMPLATE_CLIENT[] = "Client"; //Щаблон конфигурационного файла
 //-----------------------------------------------------------------------------
 const char		SYSTEM_DATABASE_NAME[] = "postgres"; //Имя системной БД
 const char		SYSTEM_USER_LOGIN[] = "admin"; //Логин системного пользователя
+const char		SYSTEM_USER_PASSWORD[] = "admin"; //Пароль системного пользователя
+const char		SYSTEM_USER_UID[] = "{F400ECFA-185E-4587-8961-8731DEAC3B5E}"; //Идентификатор главного пользователя
 const char		FIGURES_STRING[] = "0123456789";
 const char		SQL_DRIVER_QPSQL[] = "QPSQL";
 const int		MAX_QUERY_TIME = 50; //Передельное время выполнения SQL-запроса (в миллисекундах)
@@ -150,7 +152,6 @@ const size_t			CARAT_RECONNECT_TIMEOUT = 5000; //Время паузы для попытки подключ
 const char              ASTERISK_AMI_SEPARATOR[] = "\r\n\r\n"; //Разделитель пакетов AMI
 const unsigned short    ASTERISK_AMI_PORT = 5038; //Порт AMI по умолчанию
 //CARAT_API--------------------------------------------------------------------
-const char API_REGISTER_ADMIN[] = "RegisterAdmin"; //Регистрация администратора
 const char API_AUTH[] = "Auth"; //Авторизация
 const char API_SLEEP[] = "Sleep"; //Ожидание
 const char API_GET_META_DATA[] = "GetMetaData"; //Получение мета-данных
@@ -168,7 +169,6 @@ const char API_DISCUSSION_COPY[] = "DiscussionCopy"; //Скопировать обсуждение
 //CARAT_LOCAL_API--------------------------------------------------------------
 const char		CARAT_LOCAL_API_SHUTDOWN[] = "shutdown"; //Завершение работы
 //-----------------------------------------------------------------------------
-const char CONST_UID_USER_ADMIN[] = "{F400ECFA-185E-4587-8961-8731DEAC3B5E}"; //Идентификатор главного пользователя
 const char CONST_UID_SETTINGS_DATABASE[] = "{1DE3449C-C700-4EFC-A455-E99E38063D9B}"; //Идентификатор настроек базы данных
 //-----------------------------------------------------------------------------
 const char CONST_UID_PARAGRAPH_DESKTOP[] = "{9A36AD64-5A2F-4B62-9DA7-4FC545B6AB5F}"; //Рабочий стол

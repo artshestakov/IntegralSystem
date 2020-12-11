@@ -110,7 +110,7 @@ namespace ISAlgorithm
 
 	//! \Проверка пароля на соответствие требованиям сложности
 	//! \param Password строка, содержащая пароль
-	//! \return возвращает true в случае если пароль прошёл проверка, в противном случае - false
+	//! \return возвращает true в случае если пароль прошёл проверку, в противном случае - false
 	ISCORE_EXPORT bool PasswordVerification(const QString &Password);
 
 	//Поиск значения в векторе

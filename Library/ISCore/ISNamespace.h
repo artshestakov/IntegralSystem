@@ -143,7 +143,6 @@ namespace ISNamespace
 	enum ApiMessageType //Тип API-сообщения
 	{
 		AMT_Unknown, //Неизвестное
-		AMT_RegisterAdmin, //Регистрация администратора
 		AMT_Auth, //Авторизация
 		AMT_Sleep, //Ожидание
 		AMT_GetMetaData, //Получить мета-данные
