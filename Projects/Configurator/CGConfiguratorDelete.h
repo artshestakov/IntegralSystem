@@ -14,6 +14,7 @@ public:
 	virtual ~CGConfiguratorDelete();
 
 public slots:
+	bool passwordadmin();
 	bool indexes();
 	bool foreigns();
 	bool oldtables();

@@ -18,6 +18,7 @@
   </Section>
 
   <Section Name="Delete" ClassName="CGConfiguratorDelete">
+    <Function Name="PasswordAdmin" Description="Удаление пароля администратора"/>
     <Function Name="Indexes" Description="Удаление всех индексов из базы данных"/>
     <Function Name="Foreigns" Description="Удаление всех внешних ключей из базы данных"/>
     <Function Name="OldTables" Description="Удаление всех устаревших таблиц"/>

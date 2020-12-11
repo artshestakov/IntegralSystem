@@ -6,6 +6,11 @@
 #include "ISConsole.h"
 #include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
+static QString QU_ADMIN_PASSWORD = PREPARE_QUERY("UPDATE _users SET "
+												 "usrs_hash = NULL, "
+												 "usrs_salt = NULL "
+												 "WHERE usrs_uid = :UID");
+//-----------------------------------------------------------------------------
 static QString QS_INDEXES = PREPARE_QUERY("SELECT indexname "
 										  "FROM pg_indexes "
 										  "WHERE schemaname = current_schema() "
@@ -63,6 +68,36 @@ CGConfiguratorDelete::CGConfiguratorDelete() : CGConfiguratorBase()
 CGConfiguratorDelete::~CGConfiguratorDelete()
 {
 
+}
+//-----------------------------------------------------------------------------
+bool CGConfiguratorDelete::passwordadmin()
+{
+	if (ISConsole::Question("Are you sure?"))
+	{
+		ISQuery qUpdatePassword(QU_ADMIN_PASSWORD);
+		qUpdatePassword.BindValue(":UID", SYSTEM_USER_UID);
+		qUpdatePassword.SetShowLongQuery(false);
+		bool Result = qUpdatePassword.Execute();
+		if (Result) //Запрос прошёл успешно
+		{
+			Result = qUpdatePassword.GetCountAffected() > 0;
+			if (Result) //Пароль был удалён
+			{
+				ISDEBUG_I("Password deleted successfully");
+			}
+			else //Админ в БД не существует - ошибка
+			{
+				ErrorString = "The administrator account does not exist";
+			}
+		}
+		else //Ошибка запроса
+		{
+			ErrorString = qUpdatePassword.GetErrorString();
+		}
+		return Result;
+	}
+	ErrorString = "You refused";
+	return false;
 }
 //-----------------------------------------------------------------------------
 bool CGConfiguratorDelete::indexes()
