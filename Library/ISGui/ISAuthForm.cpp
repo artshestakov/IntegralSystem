@@ -111,7 +111,7 @@ ISAuthForm::ISAuthForm()
 	connect(AuthConnector, &ISAuthConnector::ConnectedFailed, this, &ISAuthForm::ConnectedFailed);
 
 #ifdef DEBUG
-	EditLogin->SetValue("postgres");
+	EditLogin->SetValue(SYSTEM_USER_LOGIN);
 	EditPassword->SetValue("adm777");
 #else
 	if (CONFIG_BOOL(CONST_CONFIG_REMEMBER_USER_INCLUDE))

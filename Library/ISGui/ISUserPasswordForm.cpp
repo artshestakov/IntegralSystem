@@ -103,9 +103,10 @@ void ISUserPasswordForm::Apply()
 		}
 	}
 
-	if (Password.size() < MINIMUM_PASSWORD_LENGHT)
+	//Проверка сложности пароля
+	if (!ISAlgorithm::PasswordVerification(Password))
 	{
-		ISMessageBox::ShowWarning(this, LANG("Message.Warning.PasswordMinimumSize").arg(MINIMUM_PASSWORD_LENGHT));
+		ISMessageBox::ShowWarning(this, LANG("Message.Warning.PasswordVerification"), LANG("Message.Warning.PasswordVerification.Detailed"));
 		EditPassword->BlinkRed();
 		return;
 	}

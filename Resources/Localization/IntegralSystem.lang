@@ -177,7 +177,8 @@
   <Local Name="Message.Warning.ActiveSettingDatabase" Russian="Не удалось установить активный профиль настроек базы данных."/>
   <Local Name="Message.Warning.NotGettingMetaReport" Russian="Не удалось получить мета-отчёт."/>
   <Local Name="Message.Warning.OneFieldNotFill" Russian="Одно из полей не заполнено!"/>
-  <Local Name="Message.Warning.PasswordMinimumSize" Russian="Минимальная длина пароля должна быть %1 символов."/>
+  <Local Name="Message.Warning.PasswordVerification" Russian="Пароль слишком слабый."/>
+  <Local Name="Message.Warning.PasswordVerification.Detailed" Russian="Обязательные требования к надёжному паролю:&#10;&#8226; Пароль должен содержать не менее 8 символов.&#10;&#8226; Пароль должен содержать заглавные и строчные буквы, цифры, и специальные символы. Например: oNQZnz$Hx2.&#10;&#10;Пароль не должен содержать:&#10;&#8226; Личную информацию, которую легко узнать. Например: имя, фамилию или дату рождения.&#10;&#8226; Очевидные и простые слова, фразы, устойчивые выражения и наборы символов, которые легко подобрать. Например: password, parol, abcd, qwerty asdfg, или 1234567."/>
   <Local Name="Message.Warning.UserPasswordNotCreated" Russian="ВНИМАНИЕ! Пользователь без пароля не сможет зайти в программу!"/>
   <Local Name="Message.Question.ChangeUser" Russian="Сменить пользователя?"/>
   <Local Name="Message.Question.ExitApplication" Russian="Вы действительно хотите выйти из программы?"/>
@@ -319,7 +320,7 @@
   <Local Name="UserPasswordForm.CurrentPassword" Russian="Текущий пароль:"/>
   <Local Name="UserPasswordForm.Password" Russian="Пароль:"/>
   <Local Name="UserPasswordForm.PasswordCheck" Russian="Повторите пароль:"/>
-  <Local Name="UserPasswordForm.CreatedPassword" Russian="Пароль был успешно создан"/>
+  <Local Name="UserPasswordForm.CreatedPassword" Russian="Пароль был успешно установлен."/>
   <Local Name="UserPasswordForm.EditedPassword" Russian="Пароль был успешно изменён"/>
   <Local Name="EnterThePassword" Russian="Введите пароль"/>
   <Local Name="InputInSystem" Russian="Вход в систему"/>
