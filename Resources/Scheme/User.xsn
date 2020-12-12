@@ -3,12 +3,11 @@
   
   <Table Name="_Users" UID="{6027E727-3704-43FA-BA13-CF7A209ACDA8}" Alias="usrs" LocalName="Пользователь" LocalListName="Пользователи" TitleName="FIO" ObjectForm="ISUserObjectForm">
     <Fields>
-      <Field UID="{DBE02AFE-2215-471F-825C-9670CEAAC908}" Name="Group" Type="BigInt" LabelName="Группа" LocalListName="Группа" LayoutName="Group"/>
-      <Field UID="{79E27A03-6412-4236-B9A2-761DA41E80E6}" Name="FIO" Type="String" LabelName="ФИО" LocalListName="ФИО" NotNull="true" LayoutName="Group"/>
-      <Field UID="{EE458F07-C0F1-4B2C-970E-DA5575AB614C}" Name="Login" Type="String" Lower="true" RegExp="^([0-9A-Za-z._]+)$" LabelName="Логин" LocalListName="Логин" LayoutName="Group" NotNull="true" Hint="Допускаются буквенные символы на английском языке, цифры, точка и нижний пробел."/>
+      <Field UID="{DBE02AFE-2215-471F-825C-9670CEAAC908}" Name="Group" Type="BigInt" LabelName="Группа" LocalListName="Группа"/>
+      <Field UID="{79E27A03-6412-4236-B9A2-761DA41E80E6}" Name="FIO" Type="String" LabelName="ФИО" LocalListName="ФИО" NotNull="true"/>
+      <Field UID="{EE458F07-C0F1-4B2C-970E-DA5575AB614C}" Name="Login" Type="String" Lower="true" RegExp="^([0-9A-Za-z._]+)$" LabelName="Логин" LocalListName="Логин" NotNull="true" Hint="Допускаются буквенные символы на английском языке, цифры, точка и нижний пробел."/>
       <Field UID="{61FDECB6-B023-4D3E-9558-56851ACCC2FF}" Name="Hash" Type="String" Size="128" LabelName="Хэш" LocalListName="Хэш" HideFromList="true" HideFromObject="true"/>
       <Field UID="{B7548396-6540-40F1-9254-B70FF0EB324F}" Name="Salt" Type="String" Size="64" LabelName="Соль" LocalListName="Соль" HideFromList="true" HideFromObject="true"/>
-      <Field UID="{43326619-3524-4E36-AE33-957220A98E04}" Name="Birthday" Type="Birthday" LabelName="Дата рождения" LocalListName="Дата рождения" HideFromList="true"/>
       <Field UID="{FEB51D6E-1395-4799-9049-3C9A9CE68370}" Name="AccessAllowed" Type="Bool" DefaultValueWidget="true" LabelName="Доступ разрешен" LocalListName="Доступ разрешен" Hint="Если эта опция отключена, пользователь не сможет войти в программу." SeparatorName="Учётная запись"/>
       <Field UID="{7BBCE6E1-F154-49ED-B494-10FF96C0B140}" Name="AccountLifeTime" Type="Bool" DefaultValue="false" LabelName="Срок действия учётной записи" LocalListName="Срок действия учётной записи" HideFromList="true" Hint="Вы можете ограничить действие учётной записи пользователя указав дату начала и окончания действия учётной записи. Пользовать сможет авторизоваться в программе согласно выбронному Вами диапазону действия."/>
       <Field UID="{07CB8028-4695-4F7C-A676-8D89E38932F8}" Name="AccountLifeTimeStart" Type="Date" LabelName="Дата начала действия" LocalListName="Дата начала действия" HideFromList="true"/>
@@ -21,7 +20,6 @@
       <Index Field="Login" Unique="true"/>
       <Index Field="Hash" Unique="true"/>
       <Index Field="Salt" Unique="true"/>
-      <Index Field="Birthday"/>
       <Index Field="AccessAllowed"/>
       <Index Field="AccountLifetime"/>
       <Index Field="AccountLifetimeStart"/>
