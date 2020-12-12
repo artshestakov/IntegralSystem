@@ -7,7 +7,6 @@
 #include "ISFileDialog.h"
 #include "ISCore.h"
 #include "ISGui.h"
-#include "ISPassword.h"
 #include "ISPopupMessage.h"
 #include "ISDefinesGui.h"
 #include "ISQuery.h"

@@ -46,8 +46,6 @@ const char LOCALIZATION_FILE_CARAT[] = "Carat";
 //REG_EXP----------------------------------------------------------------------
 const char REG_EXP_UID[] = "UID=\"\\{\\w{8}-\\w{4}-\\w{4}-\\w{4}-\\w{12}\\}\""; //Уникальный идентфикатор из мета-данных
 const char REG_EXP_LOGIN[] = "^([0-9A-Za-z._]+)$";
-const char REG_EXP_PASSWORD_ALT_SYMBOL[] = "^[^а-яА-ЯёЁa-zA-Z0-9_]+$";
-const char REG_EXP_PASSWORD_UPPER[] = "^[А-ЯA-Z]+$";
 const char REG_EXP_URL[] = "^(http:\\/\\/www\\.|https:\\/\\/www\\.|http:\\/\\/|https:\\/\\/)?[a-z0-9]+([\\-\\.]{1}[a-z0-9]+)*\\.[a-z]{2,5}(:[0-9]{1,5})?(\\/.*)?$"; //Ссылка на сайт или страницу в интернете
 //DATE_TIME_FORMATS------------------------------------------------------------
 const char FORMAT_DATE_V1[] =		"d MMMM yyyy";					//30 Июль 2020
@@ -112,7 +110,6 @@ const char		SYSTEM_DATABASE_NAME[] = "postgres"; //Имя системной БД
 const char		SYSTEM_USER_LOGIN[] = "admin"; //Логин системного пользователя
 const char		SYSTEM_USER_PASSWORD[] = "admin"; //Пароль системного пользователя
 const char		SYSTEM_USER_UID[] = "{F400ECFA-185E-4587-8961-8731DEAC3B5E}"; //Идентификатор главного пользователя
-const char		FIGURES_STRING[] = "0123456789";
 const char		SQL_DRIVER_QPSQL[] = "QPSQL";
 const int		MAX_QUERY_TIME = 50; //Передельное время выполнения SQL-запроса (в миллисекундах)
 const int		CALENDAR_AUDIO_TIMEOUT = 20000;
