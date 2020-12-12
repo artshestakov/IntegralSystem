@@ -159,9 +159,6 @@
   <Local Name="Message.Warning.NotAccess.Special.TaskTransformation" Russian="У Вас нет прав на преобразование задачи в подзадачу и наоборот."/>
   <Local Name="Message.Warning.NotAccess.Special.Appoint" Russian="У Вас нет прав на назначение исполнителя. Вы можете назначить исполнителем только себя."/>
   <Local Name="Message.Warning.NotAccessToDatabase" Russian="На подключение пользователей к базе данных наложен запрет. Программа будет закрыта. Обратитесь к системному администратору за дополнительной информацией."/>
-  <Local Name="Message.Warning.NotOpenedImage" Russian="Не удалось открыть изображение."/>
-  <Local Name="Message.Warning.NotDownloadedImage" Russian="Не удалось скачать изображение."/>
-  <Local Name="Message.Warning.NotExistLinkInBuffer" Russian="Ссылка в буфере обмена отсутствует."/>
   <Local Name="Message.Warning.InsertingFileSizeVeryBig" Russian="Размер файла &quot;%1&quot; превышает ограничение в %2 MB. Файл не будет добавлен."/>
   <Local Name="Message.Warning.NotEditAlienStorageFiles" Russian="Редактировать чужие файлы запрещено."/>
   <Local Name="Message.Warning.NotCopyAlienStorageFiles" Russian="Создавать копии чужих файлов запрещено."/>
@@ -421,8 +418,6 @@
   <Local Name="ClickFromSelectCurrentDay" Russian="Нажмите, чтобы выбрать сегодняшний день"/>
   <Local Name="ClickFromGenerateNewUID" Russian="Нажмите, чтобы сгенерировать новый UID"/>
   <Local Name="ClickFromAddNewrecordInList" Russian="Нажмите, чтобы добавить новую запись в справочник"/>
-  <Local Name="DownloadingImage" Russian="Пожалуйста подождите, изображение скачивается..."/>
-  <Local Name="ImageOpening" Russian="Пожалуйста подождите, изображение открывается..."/>
   <Local Name="InputThisSearchQuery" Russian="Введите поисковый запрос"/>
   <Local Name="OpeningUrl" Russian="Открытие ссылки..."/>
   <Local Name="NoAdministratorRights" Russian="Недостаточно прав, запустите программу от имени администратора."/>
@@ -665,7 +660,6 @@
   <Local Name="ContextMenu.Image.Copy.ToolTip" Russian="Копировать изображение в буфер обмена"/>
   <Local Name="ContextMenu.Image.Paste" Russian="Вставить"/>
   <Local Name="ContextMenu.Image.Paste.ToolTip" Russian="Вставить изображение из буфера обмена"/>
-  <Local Name="ContextMenu.Image.PasteFromLink" Russian="Вставить по ссылке"/>
   
   <!--AudioPlayer-->
   <Local Name="AudioPlayer.Title" Russian="Проигрыватель"/>

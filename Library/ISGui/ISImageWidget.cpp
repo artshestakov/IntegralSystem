@@ -33,7 +33,6 @@ void ISImageWidget::contextMenuEvent(QContextMenuEvent *e)
 	connect(&ContextMenu, &ISContextMenuImage::Cut, this, &ISImageWidget::Cut);
 	connect(&ContextMenu, &ISContextMenuImage::Copy, this, &ISImageWidget::Copy);
 	connect(&ContextMenu, &ISContextMenuImage::Paste, this, &ISImageWidget::Paste);
-	connect(&ContextMenu, &ISContextMenuImage::PasteFromLink, this, &ISImageWidget::PasteFromLink);
 	connect(&ContextMenu, &ISContextMenuImage::Save, this, &ISImageWidget::Save);
 	connect(&ContextMenu, &ISContextMenuImage::OpenView, this, &ISImageWidget::OpenView);
 	ISGui::SetWaitGlobalCursor(false);
@@ -158,42 +157,6 @@ void ISImageWidget::Paste()
 	{
 		ByteArray = ISGui::PixmapToByteArray(Pixmap);
 		SetPixmap(Pixmap);
-	}
-}
-//-----------------------------------------------------------------------------
-void ISImageWidget::PasteFromLink()
-{
-	QString Url = QApplication::clipboard()->text();
-	if (!Url.isEmpty())
-	{
-		ISProcessForm ProcessForm(LANG("DownloadingImage"));
-		ProcessForm.show();
-
-		ISNetwork Network;
-		if (Network.DownloadFile(Url, ByteArray))
-		{
-			ProcessForm.SetText(LANG("ImageOpening"));
-
-			QPixmap Pixmap;
-			if (Pixmap.loadFromData(ByteArray))
-			{
-				SetPixmap(Pixmap);
-			}
-			else
-			{
-				ProcessForm.hide();
-				ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotOpenedImage"));
-			}
-		}
-		else
-		{
-			ProcessForm.hide();
-			ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotDownloadedImage"), Network.GetErrorString());
-		}
-	}
-	else
-	{
-		ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotExistLinkInBuffer"));
 	}
 }
 //-----------------------------------------------------------------------------

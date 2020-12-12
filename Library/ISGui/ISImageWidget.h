@@ -31,7 +31,6 @@ protected:
 	void Cut();
 	void Copy();
 	void Paste();
-	void PasteFromLink();
 	void Save();
 	void OpenView();
 

@@ -150,13 +150,6 @@ ISContextMenuImage::ISContextMenuImage(QWidget *parent, bool PixmapIsNull) : QMe
 	connect(ActionPaste, &QAction::triggered, this, &ISContextMenuImage::Paste);
 	addAction(ActionPaste);
 
-	//Вставить по ссылке
-	QAction *ActionPasteFromLink = new QAction(this);
-	ActionPasteFromLink->setText(LANG("ContextMenu.Image.PasteFromLink"));
-	ActionPasteFromLink->setIcon(BUFFER_ICONS("PasteFromLink"));
-	connect(ActionPasteFromLink, &QAction::triggered, this, &ISContextMenuImage::PasteFromLink);
-	addAction(ActionPasteFromLink);
-
 	addAction(ISControls::CreateSeparator(this));
 
 	//Сохранить
