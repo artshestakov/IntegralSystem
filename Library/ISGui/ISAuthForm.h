@@ -38,7 +38,7 @@ private:
 
 private:
 	ISLineEdit *EditLogin;
-	ISPasswordEdit *EditPassword;
+	ISLineEdit *EditPassword;
 	ISCheckEdit *CheckRememberUser;
 	QLabel *LabelIndicator;
 	ISServiceButton *ButtonMenu;

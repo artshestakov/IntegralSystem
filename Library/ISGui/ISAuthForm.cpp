@@ -44,11 +44,10 @@ ISAuthForm::ISAuthForm()
 	EditLogin->SetRegExp(REG_EXP_LOGIN);
 	LayoutFields->addWidget(EditLogin);
 
-	EditPassword = new ISPasswordEdit(this);
+	EditPassword = new ISLineEdit(this);
 	EditPassword->SetPlaceholderText(LANG("Password"));
-	EditPassword->SetVisibleGenerate(false);
 	EditPassword->SetIcon(BUFFER_ICONS("Auth.Password"));
-	EditPassword->SetVisibleCheckBox(false);
+	EditPassword->SetEchoMode(QLineEdit::Password);
 	LayoutFields->addWidget(EditPassword);
 
 	CheckRememberUser = new ISCheckEdit(this);

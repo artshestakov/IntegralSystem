@@ -1103,58 +1103,6 @@ void ISPathEditFile::SelectFile()
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-ISPasswordEdit::ISPasswordEdit(QWidget *parent) : ISLineEdit(parent)
-{
-	SetEchoMode(QLineEdit::Password);
-	SetPlaceholderText(LANG("Field.Password.PlaceholderText"));
-
-	CheckPasswordVisible = new QCheckBox(this);
-	CheckPasswordVisible->setFocusPolicy(Qt::NoFocus);
-	CheckPasswordVisible->setCursor(CURSOR_POINTING_HAND);
-	CheckPasswordVisible->setToolTip(LANG("ShowHidePassword"));
-	connect(CheckPasswordVisible, &QCheckBox::stateChanged, this, &ISPasswordEdit::PasswordVisibleChanged);
-	AddWidgetToLeft(CheckPasswordVisible);
-
-	ButtonGeneratePassword = new ISServiceButton(BUFFER_ICONS("PasswordGenerate"), LANG("GeneratePassword"), this);
-	ButtonGeneratePassword->setVisible(true);
-	connect(ButtonGeneratePassword, &ISPushButton::clicked, this, &ISPasswordEdit::GeneratePassword);
-	AddWidgetToRight(ButtonGeneratePassword);
-
-	SetVisibleGenerate(false);
-}
-//-----------------------------------------------------------------------------
-ISPasswordEdit::~ISPasswordEdit()
-{
-
-}
-//-----------------------------------------------------------------------------
-void ISPasswordEdit::SetVisibleGenerate(bool Visible)
-{
-	ButtonGeneratePassword->setVisible(Visible);
-}
-//-----------------------------------------------------------------------------
-void ISPasswordEdit::SetVisibleCheckBox(bool Visible)
-{
-	CheckPasswordVisible->setVisible(Visible);
-}
-//-----------------------------------------------------------------------------
-void ISPasswordEdit::PasswordVisibleChanged(int State)
-{
-	switch (State)
-	{
-	case Qt::Checked: SetEchoMode(QLineEdit::Normal); break;
-	case Qt::Unchecked: SetEchoMode(QLineEdit::Password); break;
-	}
-	SetFocus();
-}
-//-----------------------------------------------------------------------------
-void ISPasswordEdit::GeneratePassword()
-{
-	SetValue(ISPassword::GeneratePassword());
-}
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
 ISUrlEdit::ISUrlEdit(QWidget *parent) : ISLineEdit(parent)
 {
 	SetValidator(new QRegExpValidator(QRegExp(REG_EXP_URL), this));

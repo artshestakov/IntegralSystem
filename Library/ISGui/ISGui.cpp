@@ -700,7 +700,6 @@ void ISGui::RegisterMetaType()
 	qRegisterMetaType<ISListEdit*>("ISListEdit");
 	qRegisterMetaType<ISPathEditFile*>("ISPathEditFile");
 	qRegisterMetaType<ISPathEditDir*>("ISPathEditDir");
-	qRegisterMetaType<ISPasswordEdit*>("ISPasswordEdit");
 	qRegisterMetaType<ISColorEdit*>("ISColorEdit");
 	qRegisterMetaType<ISPathEditDir*>("ISPathEditDir");
 	qRegisterMetaType<ISWeekDayEdit*>("ISWeekDayEdit");

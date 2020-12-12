@@ -688,7 +688,6 @@
   <Local Name="Field.Vin.PlaceholderText" Russian="17 цифр"/>
   <Local Name="Field.Ogrn.PlaceholderText" Russian="13 цифр"/>
   <Local Name="Field.Okpo.PlaceholderText" Russian="8 цифр"/>
-  <Local Name="Field.Password.PlaceholderText" Russian="Введите пароль"/>
   <Local Name="Field.EMail.PlaceholderText" Russian="Введите адрес электронной почты"/>
 
   <!--Other-->
@@ -708,7 +707,6 @@
   <Local Name="Login" Russian="Логин"/>
   <Local Name="Password" Russian="Пароль"/>
   <Local Name="Error" Russian="Ошибка"/>
-  <Local Name="ShowHidePassword" Russian="Нажмите, чтобы показать или скрыть пароль"/>
   <Local Name="Server" Russian="Сервер"/>
   <Local Name="Port" Russian="Порт"/>
   <Local Name="DatabaseName" Russian="Имя базы данных"/>
@@ -731,7 +729,6 @@
   <Local Name="SettingsList" Russian="Настройки списка"/>
   <Local Name="SettingsDefault" Russian="Настройки по умолчанию"/>
   <Local Name="SavingProcess" Russian="Сохранение"/>
-  <Local Name="GeneratePassword" Russian="Сгенерировать пароль"/>
   <Local Name="Open" Russian="Открыть"/>
   <Local Name="Export" Russian="Экспорт"/>
   <Local Name="OtherActions" Russian="Другие действия"/>

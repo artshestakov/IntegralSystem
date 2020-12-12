@@ -438,28 +438,6 @@ private:
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-class ISPasswordEdit : public ISLineEdit
-{
-	Q_OBJECT
-
-public:
-	Q_INVOKABLE ISPasswordEdit(QWidget *parent = 0);
-	virtual ~ISPasswordEdit();
-
-	void SetVisibleGenerate(bool Visible); //Показывать/непоказывать кнопку генерации пароля
-	void SetVisibleCheckBox(bool Visible);
-
-private:
-	void PasswordVisibleChanged(int State);
-	void GeneratePassword(); //Генерация пароля
-
-private:
-	QCheckBox *CheckPasswordVisible;
-	ISServiceButton *ButtonGeneratePassword;
-};
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
 class ISUrlEdit : public ISLineEdit
 {
 	Q_OBJECT
