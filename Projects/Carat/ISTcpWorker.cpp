@@ -12,7 +12,9 @@
 #include "ISMetaData.h"
 //-----------------------------------------------------------------------------
 static QString QS_USERS_HASH = PREPARE_QUERY("SELECT usrs_hash, usrs_salt "
-											 "FROM _users");
+											 "FROM _users "
+											 "WHERE usrs_hash IS NOT NULL "
+											 "AND usrs_salt IS NOT NULL");
 //-----------------------------------------------------------------------------
 static QString QS_USER_AUTH = PREPARE_QUERY("SELECT usrs_id, usrs_issystem, usrs_group, usrs_fio, usrs_accessallowed, usrs_accountlifetime, usrs_accountlifetimestart, usrs_accountlifetimeend, usgp_fullaccess, "
 											"(SELECT sgdb_useraccessdatabase FROM _settingsdatabase WHERE sgdb_active) "
@@ -109,9 +111,6 @@ static QString QU_USER_HASH_RESET = PREPARE_QUERY("UPDATE _users SET "
 static QString QS_ASTERISK_RECORD = PREPARE_QUERY("SELECT ascl_uniqueid "
 												  "FROM _asteriskcalls "
 												  "WHERE ascl_id = :RecordID");
-//-----------------------------------------------------------------------------
-static QString QI_USER_PASSWORD_CHANGE = PREPARE_QUERY("INSERT INTO _userpasswordchanged(upcg_user, upcg_type) "
-													   "VALUES(:UserID, (SELECT upct_id FROM _userpasswordchangedtype WHERE upct_uid = :TypeUID))");
 //-----------------------------------------------------------------------------
 static QString QS_USER_PASSWORD_IS_NULL = PREPARE_QUERY("SELECT "
 														"( "
@@ -365,17 +364,6 @@ void ISTcpWorker::Protocol(int UserID, const ISUuid &ActionTypeUID, const QVaria
 	if (!qProtocol->Execute()) //Не удалось добавить запись в протокол
 	{
 		ISLOGGER_E(__CLASS__, "Not insert protocol: " + qProtocol->GetErrorString());
-	}
-}
-//-----------------------------------------------------------------------------
-void ISTcpWorker::UserPasswordChangeEvent(const QVariant &UserID, const ISUuid &ChangeTypeUID)
-{
-	ISQuery qInsertPasswordChanged(ISDatabase::Instance().GetDB(DBConnectionName), QI_USER_PASSWORD_CHANGE);
-	qInsertPasswordChanged.BindValue(":UserID", UserID);
-	qInsertPasswordChanged.BindValue(":TypeUID", ChangeTypeUID);
-	if (!qInsertPasswordChanged.Execute()) //Не удалось зафиксировать изменение пароля
-	{
-		ISLOGGER_E(__CLASS__, "Not fixed user password change: " + qInsertPasswordChanged.GetErrorString());
 	}
 }
 //-----------------------------------------------------------------------------
@@ -1161,8 +1149,8 @@ bool ISTcpWorker::UserPasswordCreate(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpA
 		return false;
 	}
 
-	//Фиксируем изменение пароля в истории
-	UserPasswordChangeEvent(UserID, CONST_UID_USER_PASSWORD_CREATE);
+	//Фиксируем изменение пароля
+	Protocol(UserID.toInt(), CONST_UID_PROTOCOL_USER_PASSWORD_CREATE, "_Users", ISMetaData::Instance().GetMetaTable("_Users")->LocalListName, UserID);
 	return true;
 }
 //-----------------------------------------------------------------------------
@@ -1222,8 +1210,8 @@ bool ISTcpWorker::UserPasswordEdit(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAns
 		return false;
 	}
 
-	//Фиксируем изменение пароля в истории
-	UserPasswordChangeEvent(UserID, CONST_UID_USER_PASSWORD_UPDATE);
+	//Фиксируем изменение пароля
+	Protocol(UserID.toInt(), CONST_UID_PROTOCOL_USER_PASSWORD_UPDATE, "_Users", ISMetaData::Instance().GetMetaTable("_Users")->LocalListName, UserID);
 	return true;
 }
 //-----------------------------------------------------------------------------
@@ -1272,8 +1260,8 @@ bool ISTcpWorker::UserPasswordReset(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAn
 		return false;
 	}
 
-	//Фиксируем изменение пароля в истории
-	UserPasswordChangeEvent(UserID, CONST_UID_USER_PASSWORD_RESET);
+	//Фиксируем изменение пароля
+	Protocol(UserID.toInt(), CONST_UID_PROTOCOL_USER_PASSWORD_RESET, "_Users", ISMetaData::Instance().GetMetaTable("_Users")->LocalListName, UserID);
 	return true;
 }
 //-----------------------------------------------------------------------------

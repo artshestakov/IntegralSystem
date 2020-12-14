@@ -28,9 +28,6 @@
     <Foreigns>
       <Foreign Field="Group" ForeignClass="_UserGroup" ForeignField="ID" ForeignViewNameField="Name"/>
     </Foreigns>
-    <Escorts>
-      <Escort LocalName="Изменения пароля" TableName="_UserPasswordChanged" FilterField="User"/>
-    </Escorts>
   </Table>
 
   <Table Name="_UserGroup" UID="{5E25B938-7938-402D-A60B-6D8AAB1DF513}" Alias="usgp" LocalName="Группа пользователей" LocalListName="Группы пользователей" TitleName="Name">
@@ -123,33 +120,6 @@
     <Foreigns>
       <Foreign Field="Parent" ForeignClass="_GroupAccessSpecialType" ForeignField="UID" ForeignViewNameField="Name"/>
     </Foreigns>
-  </Table>
-
-  <Table Name="_UserPasswordChanged" UID="{621BC43F-01FF-43D3-9046-ADB0B229CDD2}" Alias="upcg" ShowOnly="true" LocalName="Изменение пароля" LocalListName="Изменения паролей" TitleName="User">
-    <Fields>
-      <Field UID="{B33AA18E-3C37-4D9F-8F98-C8DF6999F0E0}" Name="User" Type="BigInt" LabelName="Пользователь" LocalListName="Пользователь" NotNull="true" HideFromList="true" HideFromObject="true"/>
-      <Field UID="{08D7A891-9410-4EBB-A774-2A72ED2E7591}" Name="Type" Type="BigInt" LabelName="Тип события" LocalListName="Тип события" NotNull="true"/>
-    </Fields>
-    <Indexes>
-      <Index Field="User"/>
-      <Index Field="Type"/>
-    </Indexes>
-    <Foreigns>
-      <Foreign Field="User" ForeignClass="_Users" ForeignField="ID" ForeignViewNameField="FIO"/>
-      <Foreign Field="Type" ForeignClass="_UserPasswordChangedType" ForeignField="ID" ForeignViewNameField="Name"/>
-    </Foreigns>
-    <SystemFields>
-      <Field Name="CreationUser" LocalName="Автор события"/>
-    </SystemFields>
-  </Table>
-
-  <Table Name="_UserPasswordChangedType" UID="{66ADFC95-5A86-4246-9F27-8C993496D166}" Alias="upct" LocalName="Тип изменения пароля" LocalListName="Тип изменения пароля" TitleName="Name">
-    <Fields>
-      <Field UID="{DFBA562D-4563-43D7-8B87-28D7F849C277}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
-    </Fields>
-    <Indexes>
-      <Index Field="Name" Unique="true"/>
-    </Indexes>
   </Table>
          
 </XSN>
