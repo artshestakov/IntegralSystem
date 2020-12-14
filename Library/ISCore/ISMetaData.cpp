@@ -666,9 +666,6 @@ void ISMetaData::InitializeXSNTableSystemFields(PMetaTable *MetaTable)
 	QDomNode DomNode = DomElement.firstChild();
 	InitializeXSNTableFields(MetaTable, DomNode);
 
-	PMetaField *FieldID = MetaTable->GetField("ID");
-	FieldID->Index = new PMetaIndex(true, MetaTable->Alias, MetaTable->Name, FieldID->Name);
-
 	PMetaField *FieldUID = MetaTable->GetField("UID");
 	FieldUID->Index = new PMetaIndex(true, MetaTable->Alias, MetaTable->Name, FieldUID->Name);
 }
