@@ -107,8 +107,7 @@ const char CONFIG_TEMPLATE_SERVER[] = "Server"; //Щаблон конфигурационного файла
 const char CONFIG_TEMPLATE_CLIENT[] = "Client"; //Щаблон конфигурационного файла для клиента
 //-----------------------------------------------------------------------------
 const char		SYSTEM_DATABASE_NAME[] = "postgres"; //Имя системной БД
-const char		SYSTEM_USER_LOGIN[] = "admin"; //Логин системного пользователя
-const char		SYSTEM_USER_PASSWORD[] = "admin"; //Пароль системного пользователя
+const char		SYSTEM_USER_LOGIN[] = "postgres"; //Логин системного пользователя
 const char		SYSTEM_USER_UID[] = "{F400ECFA-185E-4587-8961-8731DEAC3B5E}"; //Идентификатор главного пользователя
 const char		SQL_DRIVER_QPSQL[] = "QPSQL";
 const int		MAX_QUERY_TIME = 50; //Передельное время выполнения SQL-запроса (в миллисекундах)
