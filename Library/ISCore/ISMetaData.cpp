@@ -550,7 +550,6 @@ bool ISMetaData::InitializeXSNTable(QDomNode &DomNode)
 					InitializeXSNTableSystemFields(MetaTable); //Инициализация системных полей
 				}
 
-				Result = InitializeXSNTableSystemFieldsVisible(MetaTable, GetChildDomNode(DomNode, "SystemFields").firstChild()); //Инициализация видимости системных полей
 				if (Result)
 				{
 					Result = InitializeXSNTableFields(MetaTable, GetChildDomNode(DomNode, "Fields").firstChild()); //Инициализация пользовательских полей
@@ -672,53 +671,6 @@ void ISMetaData::InitializeXSNTableSystemFields(PMetaTable *MetaTable)
 
 	PMetaField *FieldUID = MetaTable->GetField("UID");
 	FieldUID->Index = new PMetaIndex(true, MetaTable->Alias, MetaTable->Name, FieldUID->Name);
-}
-//-----------------------------------------------------------------------------
-bool ISMetaData::InitializeXSNTableSystemFieldsVisible(PMetaTable *MetaTable, const QDomNode &DomNode)
-{
-	bool Result = true;
-	QDomNode Temp = DomNode;
-	while (!Temp.isNull()) //Обход полей
-	{
-		Result = !Temp.attributes().isEmpty();
-		if (!Result)
-		{
-			ErrorString = QString("Empty attributes system field. File: %1. Line: %2").arg(CurrentXSN).arg(Temp.lineNumber());
-			break;
-		}
-
-		QString FieldName = Temp.attributes().namedItem("Name").nodeValue();
-		Result = !FieldName.isEmpty();
-		if (!Result)
-		{
-			ErrorString = QString("Empty system field name. File: %1. Line: %2").arg(CurrentXSN).arg(Temp.lineNumber());
-			break;
-		}
-
-		PMetaField *MetaField = MetaTable->GetField(FieldName);
-		Result = MetaField ? true : false;
-		if (!Result)
-		{
-			ErrorString = QString("Not found visible system field %1. File: %2. Line: %3").arg(FieldName).arg(CurrentXSN).arg(Temp.lineNumber());
-			break;
-		}
-
-		QString LocalName = Temp.attributes().namedItem("LocalName").nodeValue();
-		if (!LocalName.isEmpty()) //Если локальное имя переопределено
-		{
-			MetaField->LabelName = LocalName;
-			MetaField->LocalListName = LocalName;
-		}
-
-		QString AsType = Temp.attributes().namedItem("AsType").nodeValue();
-		if (!AsType.isEmpty()) //Переопределен тип
-		{
-			MetaField->Type = GetTypeField(AsType);
-		}
-		MetaTable->SystemFieldsVisible.emplace_back(MetaField);
-		Temp = Temp.nextSibling();
-	}
-	return Result;
 }
 //-----------------------------------------------------------------------------
 bool ISMetaData::InitializeXSNTableFields(PMetaTable *MetaTable, const QDomNode &DomNode)

@@ -52,7 +52,6 @@ protected:
 
     bool InitializeXSNTable(QDomNode &DomNode); //Инициализация таблицы
     void InitializeXSNTableSystemFields(PMetaTable *MetaTable); //Инициализация системных полей для таблицы
-    bool InitializeXSNTableSystemFieldsVisible(PMetaTable *MetaTable, const QDomNode &DomNode); //Инициализация видимости системных полей
     bool InitializeXSNTableFields(PMetaTable *MetaTable, const QDomNode &DomNode); //Инициализация полей таблицы
     bool InitializeXSNTableIndexes(PMetaTable *MetaTable, const QDomNode &DomNode); //Инициализация индексов полей таблицы
     bool InitializeXSNTableForeigns(PMetaTable *MetaTable, const QDomNode &DomNode); //Инициализация внешних ключей полей таблицы

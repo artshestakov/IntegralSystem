@@ -28,13 +28,9 @@ ISQueryModel::ISQueryModel(PMetaTable *meta_table, ISNamespace::QueryModelType m
 		}
 		else if (ModelType == ISNamespace::QMT_List) //“ип модели - листовый
 		{
-			//ѕровер€ем, если текущее поле не включено в отображение системных полей - провер€ем нужно ли его вообще отображать
-			if (!ISAlgorithm::VectorContains(MetaTable->SystemFieldsVisible, MetaField))
+			if (MetaField->HideFromList)
 			{
-				if (MetaField->HideFromList)
-				{
-					continue;
-				}
+				continue;
 			}
 		}
 

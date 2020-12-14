@@ -207,7 +207,6 @@ struct PMetaTable : public PMetaBase
 
 	std::vector<PMetaEscort*> Escorts; //Эскортные таблицы
 	std::vector<PMetaField*> Fields; //Поля
-	std::vector<PMetaField*> SystemFieldsVisible; //Отображаемые системные поля
 	std::vector<PMetaIndex*> IndexesCompound; //Составные индексы таблицы
 };
 //-----------------------------------------------------------------------------
