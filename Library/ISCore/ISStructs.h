@@ -472,4 +472,12 @@ struct ISClientInfo
 	unsigned short Port; //Порт
 };
 //-----------------------------------------------------------------------------
+struct ISFailAuthInfo
+{
+	QString IPAddress; //IP-адрес
+	bool IsLock; //Флаг блокировки
+	std::vector<QDateTime> DTPoints; //Временные точки
+	QDateTime DTUnlock; //Дата и время разблокировки
+};
+//-----------------------------------------------------------------------------
 #endif

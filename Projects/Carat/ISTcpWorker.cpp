@@ -10,6 +10,7 @@
 #include "ISConfig.h"
 #include "ISTcpClients.h"
 #include "ISMetaData.h"
+#include "ISFail2Ban.h"
 //-----------------------------------------------------------------------------
 static QString QS_USERS_HASH = PREPARE_QUERY("SELECT usrs_hash, usrs_salt "
 											 "FROM _users "
@@ -487,9 +488,19 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 			}
 		}
 
-		if (!IsFound) //Ќе нашли пользовател€
+		QString IPAddress = TcpMessage->TcpSocket->GetAddress();
+		if (IsFound) //Ќашли пользовател€ - удал€ем адрес из Fail2Ban
 		{
-			ErrorString = LANG("Carat.Error.Query.Auth.InvalidLoginOrPassword");
+			ISFail2Ban::Instance().Remove(IPAddress);
+		}
+		else //Ќе нашли пользовател€ - добавл€ем адрес в Fail2Ban
+		{
+			ISFail2Ban::Instance().Add(IPAddress);
+
+			//≈сли адрес заблокирован - сообщаем об этом, иначе - предупреждаем о неправильном вводе логина или парол€
+			ErrorString = ISFail2Ban::Instance().IsLock(IPAddress)
+				? LANG("Carat.Error.Query.Auth.Fail2Ban").arg(ISFail2Ban::Instance().GetUnlockDateTime(IPAddress).toString(FORMAT_DATE_TIME_V2))
+				: LANG("Carat.Error.Query.Auth.InvalidLoginOrPassword");
 			return false;
 		}
 	}

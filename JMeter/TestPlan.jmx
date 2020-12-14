@@ -27,13 +27,13 @@
         <collectionProp name="Arguments.arguments">
           <elementProp name="Auth_Login" elementType="Argument">
             <stringProp name="Argument.name">Auth_Login</stringProp>
-            <stringProp name="Argument.value">admin</stringProp>
+            <stringProp name="Argument.value">postgres</stringProp>
             <stringProp name="Argument.desc">Логин пользователя для авторизации</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="Auth_Password" elementType="Argument">
             <stringProp name="Argument.name">Auth_Password</stringProp>
-            <stringProp name="Argument.value">adm777</stringProp>
+            <stringProp name="Argument.value">adm7771</stringProp>
             <stringProp name="Argument.desc">Пароль пользователя для авторизации</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
@@ -443,7 +443,7 @@ vars.put(&quot;QueryDiscussionCopy&quot;, MapToString(MapDiscussionCopy));</stri
           <stringProp name="ConfigTestElement.password"></stringProp>
         </TCPSampler>
         <hashTree/>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: UserPasswordEdit" enabled="true">
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: UserPasswordEdit" enabled="false">
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
           <stringProp name="TCPSampler.port"></stringProp>
@@ -467,7 +467,7 @@ vars.put(&quot;QueryDiscussionCopy&quot;, MapToString(MapDiscussionCopy));</stri
           <stringProp name="ConfigTestElement.password"></stringProp>
         </TCPSampler>
         <hashTree/>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: GetMetaData" enabled="false">
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: GetMetaData" enabled="true">
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
           <stringProp name="TCPSampler.port"></stringProp>

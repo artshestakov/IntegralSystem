@@ -49,6 +49,9 @@
     <ClCompile Include="ISTcpClients.cpp">
       <Filter>TcpServer</Filter>
     </ClCompile>
+    <ClCompile Include="ISFail2Ban.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Carat.rc">
@@ -67,6 +70,9 @@
     </ClInclude>
     <ClInclude Include="ISTcpClients.h">
       <Filter>TcpServer</Filter>
+    </ClInclude>
+    <ClInclude Include="ISFail2Ban.h">
+      <Filter>System</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

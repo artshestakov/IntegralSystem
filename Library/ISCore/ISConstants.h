@@ -144,6 +144,7 @@ const unsigned long     CARAT_SALT_SIZE = 32; //фиксированный размер соли
 const size_t			CARAT_CONNECT_TIMEOUT = 3000; //Время ожидания подключения к Карату
 const size_t			CARAT_CONNECT_SLEEP = 10; //Время паузы для ожидания подключения
 const size_t			CARAT_RECONNECT_TIMEOUT = 5000; //Время паузы для попытки подключиться к серверу
+const size_t			CARAT_BAN_ATTEMPT_COUNT = 5; //Количество попыток подключения
 //ASTERISK---------------------------------------------------------------------
 const char              ASTERISK_AMI_SEPARATOR[] = "\r\n\r\n"; //Разделитель пакетов AMI
 const unsigned short    ASTERISK_AMI_PORT = 5038; //Порт AMI по умолчанию

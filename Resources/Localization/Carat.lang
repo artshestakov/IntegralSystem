@@ -19,6 +19,7 @@
   <Local Name="Carat.Error.Query.Auth.InvalidHash" Russian="Невалидные авторизационные данные!"/>
   <Local Name="Carat.Error.Query.Auth.SelectHash" Russian="Не удалось получить информацию о пользователе: %1"/>
   <Local Name="Carat.Error.Query.Auth.NoUsers" Russian="Нет зарегистрированных пользователей."/>
+  <Local Name="Carat.Error.Query.Auth.Fail2Ban" Russian="ВНИМАНИЕ! Ваш IP-адрес заблокирован до %1, для разблокировки обратитесь к системному администратору."/>
   <Local Name="Carat.Error.Query.Auth.InvalidLoginOrPassword" Russian="Неверный логин или пароль."/>
   <Local Name="Carat.Error.Query.Auth.SelectLogin" Russian="Не удалось получить информацию о пользователе: %1"/>
   <Local Name="Carat.Error.Query.Auth.ConnectionBan" Russian="На подключение пользователей к базе данных наложен запрет."/>

@@ -6,6 +6,7 @@
 #include "ISTcp.h"
 #include "ISTcpClients.h"
 #include "ISVersionInfo.h"
+#include "ISFail2Ban.h"
 //-----------------------------------------------------------------------------
 ISTcpServer::ISTcpServer(QObject *parent)
 	: QTcpServer(parent),
@@ -124,7 +125,16 @@ void ISTcpServer::incomingConnection(qintptr SocketDescriptor)
 	//Создаём сокет и подключаем все нобходимые сигналы
 	ISTcpSocket *TcpSocket = new ISTcpSocket(SocketDescriptor, this);
 	connect(TcpSocket, &ISTcpSocket::disconnected, this, &ISTcpServer::ClientDisconnected, Qt::QueuedConnection);
-	ISLOGGER_I(__CLASS__, "Connect " + TcpSocket->peerAddress().toString());
+
+	QString IPAddress = TcpSocket->GetAddress();
+	ISLOGGER_I(__CLASS__, "Connect " + IPAddress);
+
+	//Проверяем, не заблокирован ли адрес
+	if (ISFail2Ban::Instance().IsLock(IPAddress))
+	{
+		ISLOGGER_I(__CLASS__, "Address " + IPAddress + " blocked");
+		TcpSocket->abort();
+	}
 }
 //-----------------------------------------------------------------------------
 void ISTcpServer::ClientDisconnected()
