@@ -26,7 +26,6 @@
   <_ProtocolType IsSystem="true" UID="{EFA8FE45-1174-4D2E-BBE6-4940380961D4}" Name="Добавление копии существующей записи"/>
   <_ProtocolType IsSystem="true" UID="{0361643D-0A62-4F51-84BD-313F53115EFD}" Name="Изменение записи"/>
   <_ProtocolType IsSystem="true" UID="{117E8972-97DC-4E72-93AC-DC3BB50D11CF}" Name="Просмотр записи"/>
-  <_ProtocolType IsSystem="true" UID="{2937C918-2E34-431A-86EF-52AEE9BF83AA}" Name="Просмотр системной информации записи"/>
   <_ProtocolType IsSystem="true" UID="{C9C18C76-AC52-4B3E-B89D-5040F06AE3CE}" Name="Открытие параграфа"/>
   <_ProtocolType IsSystem="true" UID="{66E93262-02C6-49E3-B47E-FF20ED8DDDC5}" Name="Открытие системы"/>
   <_ProtocolType IsSystem="true" UID="{5F3EBAED-0970-4E0E-883C-535E6F084133}" Name="Открытие подсистемы"/>

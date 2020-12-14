@@ -206,13 +206,6 @@ QAction* ISControls::CreateActionPrint(QObject *ParentObject)
 	return new QAction(BUFFER_ICONS("Print"), LANG("PrintForms"), ParentObject);
 }
 //-----------------------------------------------------------------------------
-QAction* ISControls::CreateActionRecordInformartion(QObject *ParentObject)
-{
-	QAction *ActionSystemInformation = new QAction(BUFFER_ICONS("RecordInformation"), LANG("RecordInformation"), ParentObject);
-	ActionSystemInformation->setShortcut(QKeySequence(Qt::Key_F9));
-	return ActionSystemInformation;
-}
-//-----------------------------------------------------------------------------
 QAction* ISControls::CreateActionNoteObject(QObject *ParentObject)
 {
 	return new QAction(BUFFER_ICONS("NoteObject"), LANG("NoteObject"), ParentObject);

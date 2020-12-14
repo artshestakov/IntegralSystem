@@ -277,12 +277,6 @@ void ISObjectFormBase::CreateToolBar()
 	ButtonAdditionally->setCursor(CURSOR_POINTING_HAND);
 	ButtonAdditionally->setStyleSheet(BUFFER_STYLE_SHEET("QToolButtonMenu"));
 
-	//Системная информация
-	ActionSystemInfo = ISControls::CreateActionRecordInformartion(this);
-	ActionSystemInfo->setPriority(QAction::LowPriority);
-	connect(ActionSystemInfo, &QAction::triggered, this, &ISObjectFormBase::ShowSystemInfo);
-	AddActionMenu(ActionSystemInfo);
-
 	//Избранное
 	ActionFavorites = new QAction(BUFFER_ICONS("Favorites"), LANG("AddToFavorites"), ToolBar);
 	ActionFavorites->setPriority(QAction::LowPriority);
@@ -879,11 +873,6 @@ void ISObjectFormBase::UpdateObjectActions()
 		ActionSave->setEnabled(false);
 		ActionFavorites->setChecked(ISFavorites::Instance().CheckExistFavoriteObject(MetaTable->Name, ObjectID));
 	}
-}
-//-----------------------------------------------------------------------------
-void ISObjectFormBase::ShowSystemInfo()
-{
-	ISGui::ShowSystemInfoRecord(MetaTable, ObjectID);
 }
 //-----------------------------------------------------------------------------
 void ISObjectFormBase::AddFavoite()

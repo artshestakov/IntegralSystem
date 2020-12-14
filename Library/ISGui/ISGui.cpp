@@ -9,7 +9,6 @@
 #include "ISMessageBox.h"
 #include "ISPopupMessage.h"
 #include "ISCore.h"
-#include "ISRecordInfoForm.h"
 #include "ISProtocol.h"
 #include "ISSelectDialogForm.h"
 #include "ISTaskViewForm.h"
@@ -510,15 +509,6 @@ void ISGui::ShowUserPasswordForm(unsigned int UserID, const QString &UserFIO, co
 	ISUserPasswordForm UserPasswordForm(UserID, UserFIO, UserLogin);
 	SetWaitGlobalCursor(false);
 	Result = UserPasswordForm.Exec();
-}
-//-----------------------------------------------------------------------------
-void ISGui::ShowSystemInfoRecord(PMetaTable *MetaTable, int ObjectID)
-{
-	SetWaitGlobalCursor(true);
-	ISProtocol::Insert(true, CONST_UID_PROTOCOL_SHOW_SYSTEM_INFO_OBJECT, MetaTable->Name, MetaTable->LocalListName, ObjectID);
-	ISRecordInfoForm RecordInfoForm(MetaTable, ObjectID);
-	SetWaitGlobalCursor(false);
-	RecordInfoForm.Exec();
 }
 //-----------------------------------------------------------------------------
 void ISGui::ShowObjectForm(QWidget *ObjectForm)

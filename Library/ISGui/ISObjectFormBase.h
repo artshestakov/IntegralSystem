@@ -72,7 +72,6 @@ protected:
 	void DataChanged(); //Собыие при изменении значения одного из полей
 	void SetModificationFlag(bool modification); //Изменить флаг модицикации данных
 	void UpdateObjectActions(); //Обновление видимости действий объекта
-	void ShowSystemInfo(); //Показать системную информацию
 	void AddFavoite(); //Добавить в избранное
 	void Delete();
 	void CancelChanged(); //Отмена изменений

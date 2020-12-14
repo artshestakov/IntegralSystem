@@ -294,9 +294,6 @@
     <ClCompile Include="ISProtocolObjectListForm.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
-    <ClCompile Include="ISRecordInfoForm.cpp">
-      <Filter>Forms</Filter>
-    </ClCompile>
     <ClCompile Include="ISSearchForm.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
@@ -615,9 +612,6 @@
       <Filter>Forms</Filter>
     </QtMoc>
     <QtMoc Include="ISProtocolObjectListForm.h">
-      <Filter>Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISRecordInfoForm.h">
       <Filter>Forms</Filter>
     </QtMoc>
     <QtMoc Include="ISSearchForm.h">

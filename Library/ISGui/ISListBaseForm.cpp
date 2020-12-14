@@ -109,11 +109,6 @@ ISListBaseForm::ISListBaseForm(const QString &TableName, QWidget *parent)
 		connect(ActionFavorites, &QAction::triggered, this, &ISListBaseForm::ShowFavorites);
 		Actions[ISNamespace::AT_Favorites] = ActionFavorites;
 
-		//Системная информация
-		QAction *ActionSystemInformation = ISControls::CreateActionRecordInformartion(this);
-		connect(ActionSystemInformation, &QAction::triggered, this, &ISListBaseForm::ShowSystemInfo);
-		Actions[ISNamespace::AT_SystemInfo] = ActionSystemInformation;
-
 		//Первая запись
 		QAction *ActionNavigationBegin = new QAction(BUFFER_ICONS("TableNavigationBegin"), LANG("TableNavigationSelectBegin"), this);
 		ActionNavigationBegin->setShortcut(QKeySequence(Qt::Key_Home));
@@ -203,7 +198,6 @@ ISListBaseForm::ISListBaseForm(const QString &TableName, QWidget *parent)
 		if (GetAction(ISNamespace::AT_CreateCopy)) ActionObjectGroup->addAction(GetAction(ISNamespace::AT_CreateCopy));
 		if (GetAction(ISNamespace::AT_Edit)) ActionObjectGroup->addAction(GetAction(ISNamespace::AT_Edit));
 		if (GetAction(ISNamespace::AT_Delete)) ActionObjectGroup->addAction(GetAction(ISNamespace::AT_Delete));
-		if (GetAction(ISNamespace::AT_SystemInfo)) ActionObjectGroup->addAction(GetAction(ISNamespace::AT_SystemInfo));
 		if (GetAction(ISNamespace::AT_Print)) ActionObjectGroup->addAction(GetAction(ISNamespace::AT_Print));
 	}
 
@@ -241,7 +235,6 @@ ISListBaseForm::ISListBaseForm(const QString &TableName, QWidget *parent)
 		if (GetAction(ISNamespace::AT_Edit)) ContextMenu->addAction(GetAction(ISNamespace::AT_Edit));
 		if (GetAction(ISNamespace::AT_Delete)) ContextMenu->addAction(GetAction(ISNamespace::AT_Delete));
 		if (GetAction(ISNamespace::AT_Update)) ContextMenu->addAction(GetAction(ISNamespace::AT_Update));
-		if (GetAction(ISNamespace::AT_SystemInfo)) ContextMenu->addAction(GetAction(ISNamespace::AT_SystemInfo));
 		ContextMenu->addAction(GetSpecialAction(ISNamespace::AST_Note));
 	}
 
@@ -1279,11 +1272,6 @@ void ISListBaseForm::Print()
 
 	ISGui::SetWaitGlobalCursor(false);
 	POINTER_DELETE(PrintingBase);
-}
-//-----------------------------------------------------------------------------
-void ISListBaseForm::ShowSystemInfo()
-{
-	ISGui::ShowSystemInfoRecord(MetaTable, GetObjectID());
 }
 //-----------------------------------------------------------------------------
 void ISListBaseForm::ShowFavorites()

@@ -265,8 +265,6 @@
   <Local Name="Named" Russian="Наименование"/>
   <Local Name="ConnectionSettings" Russian="Настройки подключения"/>
   <Local Name="OpenList" Russian="Открыть справочник"/>
-  <Local Name="RecordInformation" Russian="Информация о записи"/>
-  <Local Name="SystemInformation" Russian="Системная информация: %1"/>
   <Local Name="ChangeUser" Russian="Сменить пользователя"/>
   <Local Name="TableNavigationSelectBegin" Russian="Выбрать первую запись"/>
   <Local Name="TableNavigationSelectPrevious" Russian="Выбрать предыдущую запись"/>

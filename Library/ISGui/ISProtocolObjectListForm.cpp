@@ -3,7 +3,7 @@
 //-----------------------------------------------------------------------------
 ISProtocolObjectListForm::ISProtocolObjectListForm(QWidget *parent) : ISProtocolListForm(parent)
 {
-	GetAction(ISNamespace::AT_SystemInfo)->setVisible(false);
+	
 }
 //-----------------------------------------------------------------------------
 ISProtocolObjectListForm::~ISProtocolObjectListForm()

@@ -43,7 +43,6 @@ public:
 	static QAction* CreateActionSearch(QObject *ParentObject);
 	static QAction* CreateActionSearchClearResults(QObject *ParentObject);
 	static QAction* CreateActionPrint(QObject *ParentObject);
-	static QAction* CreateActionRecordInformartion(QObject *ParentObject);
 	static QAction* CreateActionNoteObject(QObject *ParentObject);
 };
 //-----------------------------------------------------------------------------
