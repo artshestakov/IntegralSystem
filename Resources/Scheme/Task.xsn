@@ -74,19 +74,18 @@
   <Table Name="_TaskStatusHistory" UID="{06649583-3042-45E8-867E-42CE90F73B06}" Alias="tshr" ShowOnly="true" LocalName="Изменение статуса" LocalListName="Изменения статуса" TitleName="Status" IsSystem="true">
     <Fields>
       <Field UID="{92F93CF7-639B-457A-82D8-38F5458E0E72}" Name="Task" Type="BigInt" LabelName="Задача" LocalListName="Задача" HideFromList="true" NotNull="true"/>
+      <Field UID="{D5BB8578-7D4F-4BDA-96B9-F77567F0B4EE}" Name="DateTime" Type="DateTime" DefaultValue="now()" LabelName="Дата и время" LocalListName="Дата и время" NotNull="true"/>
       <Field UID="{DC67347A-EA59-417C-BA01-EF5A7DF8B088}" Name="Status" Type="BigInt" LabelName="Статус" LocalListName="Статус" NotNull="true"/>
     </Fields>
     <Indexes>
       <Index Field="Task"/>
+      <Index Field="DateTime"/>
       <Index Field="Status"/>
     </Indexes>
     <Foreigns>
       <Foreign Field="Task" ForeignClass="_Task" ForeignField="ID" ForeignViewNameField="Name"/>
       <Foreign Field="Status" ForeignClass="_TaskStatus" ForeignField="ID" ForeignViewNameField="Name"/>
     </Foreigns>
-    <SystemFields>
-      <Field Name="CreationDate" LocalName="Дата и время"/>
-    </SystemFields>
   </Table>
 
   <Table Name="_TaskPriority" UID="{BD3CB96B-C467-4818-85B5-3EF73389736A}" Alias="tspr" ShowOnly="true" LocalName="Приоритет задачи" LocalListName="Приоритеты задач" TitleName="Name" IsSystem="true">
@@ -118,11 +117,13 @@
 
   <Table Name="_TaskComment" UID="{A37809AE-7889-4E2A-B314-6E86BFD7F0A7}" Alias="tcom" LocalName="Комментарий к задаче" LocalListName="Комментарии к задачам" TitleName="Comment" IsSystem="true">
     <Fields>
+      <Field UID="{FF247C5B-4FCE-4970-865D-FE36DD5E90B8}" Name="DateTime" Type="DateTime" DefaultValue="now()" LabelName="Дата и время" LocalListName="Дата и время" NotNull="true"/>
       <Field UID="{47664BE4-308A-4B69-8E8E-76E8111F0110}" Name="Task" Type="BigInt" LabelName="Задача" LocalListName="Задача" NotNull="true"/>
       <Field UID="{D19C9CB6-6901-464A-B6AE-76BB08B86E88}" Name="Parent" Type="BigInt" LabelName="Родительский комментарий" LocalListName="Родительский комментарий"/>
       <Field UID="{2B8CFE09-5BF7-4AAA-B206-CA646868E322}" Name="Comment" Type="Text" LabelName="Комментарий" LocalListName="Комментарий" NotNull="true"/>
     </Fields>
     <Indexes>
+      <Index Field="DateTime"/>
       <Index Field="Task"/>
       <Index Field="Parent"/>
       <Index Field="Comment"/>
@@ -151,10 +152,12 @@
 
   <Table Name="_TaskLink" UID="{84C4A18C-47D9-4451-9518-066B34F3EFEC}" Alias="tlnk" LocalName="Связанная задача" LocalListName="Связанные задачи" TitleName="Link" IsSystem="true">
     <Fields>
+      <Field UID="{84787AF5-09DF-44DC-8CF0-9CB815BF4900}" Name="DateTime" Type="DateTime" DefaultValue="now()" LabelName="Дата и время" LocalListName="Дата и время" NotNull="true"/>
       <Field UID="{426AE24B-9F82-478B-8AF2-CB5660D29AFA}" Name="Task" Type="BigInt" LabelName="Задача" LocalListName="Задача" NotNull="true"/>
       <Field UID="{3615E923-9B37-4E47-927B-738218705DDD}" Name="Link" Type="BigInt" LabelName="Связанная задача" LocalListName="Связанная задача" NotNull="true"/>
     </Fields>
     <Indexes>
+      <Index Field="DateTime"/>
       <Index Field="Task"/>
       <Index Field="Link"/>
       <Index Field="Task;Link" Unique="true"/>
@@ -167,6 +170,7 @@
 
   <Table Name="_TaskFile" UID="{184DFEDF-F622-4092-910F-63BA69D78029}" Alias="tfls" LocalName="Файл" LocalListName="Файлы" TitleName="Name" IsSystem="true">
     <Fields>
+      <Field UID="{5F1EE695-1438-4E2E-8B2C-2F1ED1F986B6}" Name="DateTime" Type="DateTime" DefaultValue="now()" LabelName="Дата и время" LocalListName="Дата и время" NotNull="true"/>
       <Field UID="{F783C6B9-FF78-45B4-9937-23A3790D1A45}" Name="Task" Type="BigInt" LabelName="Задача" LocalListName="Задача" NotNull="true"/>
       <Field UID="{1D1F1D0E-92E0-429B-8E5E-971D3A04099D}" Name="IsImage" Type="Bool" DefaultValue="false" LabelName="Файл является изображением" LocalListName="Файл является изображением" NotNull="true"/>
       <Field UID="{328A0009-8165-4728-9979-39E93701EC78}" Name="Name" Type="String" LabelName="Имя файла" LocalListName="Имя файла" NotNull="true"/>
@@ -176,6 +180,7 @@
       <Field UID="{3C0B727A-AF36-4A31-BB1A-AFC640F6D850}" Name="Icon" Type="ByteArray" LabelName="Иконка файла" LocalListName="Иконка файла"/>
     </Fields>
     <Indexes>
+      <Index Field="DateTime"/>
       <Index Field="Task"/>
       <Index Field="IsImage"/>
       <Index Field="Name"/>

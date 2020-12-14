@@ -122,15 +122,16 @@
     <Fields>
       <Field UID="{969E2A77-691F-4E12-9095-2C9BB933739B}" Name="TableName" Type="String" LabelName="Имя таблицы" LocalListName="Имя таблицы" NotSearch="true" NotNull="true" HideFromList="true"/>
       <Field UID="{32684211-638E-4EC7-A107-043D8DB16793}" Name="ObjectID" Type="Int" LabelName="Идентификатор объекта" LocalListName="Идентификатор объекта" NotSearch="true" NotNull="true" HideFromList="true"/>
+      <Field UID="{FBE8C2AF-4F28-4CAF-9912-5D32FFB5EB13}" Name="DateTime" Type="DateTime" DefaultValue="now()" LabelNane="Дата и время" LocalListName="Дата и время" NotNull="true"/>
       <Field UID="{04D790CB-F34A-4367-A1C8-2DFA28F01A7A}" Name="Message" Type="Text" LabelName="Сообщение" LocalListName="Сообщение" NotNull="true" PlaceholderText="Что Вы хотите сказать?"/>
     </Fields>
     <Indexes>
       <Index Field="TableName"/>
       <Index Field="ObjectID"/>
+      <Index Field="DateTime"/>
       <Index Field="Message"/>
     </Indexes>
     <SystemFields>
-      <Field Name="CreationDate" LocalName="Дата и время"/>
       <Field Name="CreationUser" LocalName="Оставил примечание"/>
     </SystemFields>
   </Table>
@@ -149,10 +150,12 @@
 
   <Table Name="_History" UID="{BF61E8B0-56A5-4EF7-A178-C22072B3F318}" Alias="htry" LocalName="История" LocalListName="История" TitleName="ObjectID" IsSystem="true">
     <Fields>
+      <Field UID="{BA3803D8-D35C-4659-809D-28F7AF62E9D0}" Name="DateTime" Type="DateTime" DefaultValue="now()" LabelName="Дата и время" LocalListName="Дата и время" NotNull="true"/>
       <Field UID="{689A53DD-3873-43CE-9265-85854AA15BB6}" Name="TableName" Type="String" LabelName="Имя таблицы" LocalListName="Имя таблицы" NotNull="true"/>
       <Field UID="{CD7B1881-AE3E-4F1B-80A2-E6C93FB00588}" Name="ObjectID" Type="Int" LabelName="Идентификатор объекта" LocalListName="Идентификатор объекта" NotNull="true"/>
     </Fields>
     <Indexes>
+      <Index Field="DateTime"/>
       <Index Field="TableName"/>
       <Index Field="ObjectID"/>
       <Index Field="ID;CreationUser"/>
@@ -273,6 +276,7 @@
 
   <Table Name="_Protocol" UID="{F7194787-0AB7-4D59-AEA4-9632FF560374}" Alias="prtc" ShowOnly="true" LocalName="Протокол работы" LocalListName="Протокол работы" TitleName="TableName" IsSystem="true">
     <Fields>
+      <Field UID="{126DB61E-A617-4AD8-80AB-DBE227E9C12B}" Name="DateTime" Type="DateTime" DefaultValue="now()" LabelName="Дата и время" LocalListName="Дата и время события" NotNull="true"/>
       <Field UID="{A0C19CBE-8426-456D-A37A-76ACA9D97231}" Name="TableName" Type="String" LabelName="Таблица / Подсистема" LocalListName="Таблица" HideFromList="true" NotSearch="true"/>
       <Field UID="{C2143C81-9045-43B5-BCFC-F2EB4E0C00EE}" Name="TableLocalName" Type="String" LabelName="Таблица" LocalListName="Таблица"/>
       <Field UID="{F8881FC1-E7E8-468E-9DEF-358C12F6F625}" Name="Type" Type="BigInt" LabelName="Действие" LocalListName="Действие" NotNull="true"/>
@@ -286,7 +290,6 @@
       <Foreign Field="Type" ForeignClass="_ProtocolType" ForeignField="ID" ForeignViewNameField="Name"/>
     </Foreigns>
     <SystemFields>
-      <Field Name="CreationDate" LocalName="Дата и время события"/>
       <Field Name="CreationUser" LocalName="Пользователь"/>
     </SystemFields>
   </Table>

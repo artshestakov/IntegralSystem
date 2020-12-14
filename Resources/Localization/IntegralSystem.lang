@@ -546,8 +546,7 @@
   <Local Name="Task.AddComment" Russian="Добавить комментарий"/>
   <Local Name="Task.InputComment" Russian="Введите комментарий"/>
   <Local Name="Task.Comment.Answer" Russian="Ответить"/>
-  <Local Name="Task.Comment.CreationDate" Russian="Добавлен: %1"/>
-  <Local Name="Task.Comment.UpdationDate" Russian="Изменен: %1"/>
+  <Local Name="Task.Comment.DateTime" Russian="Добавлен: %1"/>
   <Local Name="Task.AddCheck" Russian="Добавить пункт"/>
   <Local Name="Task.Check" Russian="Пункт"/>
   <Local Name="Task.Check.InputName" Russian="Введите название:"/>
@@ -562,9 +561,6 @@
   <Local Name="Task.Right.Type" Russian="Тип задачи"/>
   <Local Name="Task.Right.Type.Empty" Russian="Не выбран"/>
   <Local Name="Task.Right.Priority" Russian="Приоритет"/>
-  <Local Name="Task.Right.CreationDate" Russian="Задача создана"/>
-  <Local Name="Task.Right.UpdationDate" Russian="Задача изменена"/>
-  <Local Name="Task.Right.UpdationDate.Empty" Russian="Задача не менялась"/>
   <Local Name="Task.ThisIsImportantTask" Russian="Это важная задача"/>
   <Local Name="Task.ReopenTaskViewForm" Russian="Перечитать"/>
   <Local Name="Task.EditTask" Russian="Редактировать"/>

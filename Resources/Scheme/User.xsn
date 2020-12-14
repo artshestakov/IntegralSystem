@@ -139,7 +139,6 @@
       <Foreign Field="Type" ForeignClass="_UserPasswordChangedType" ForeignField="ID" ForeignViewNameField="Name"/>
     </Foreigns>
     <SystemFields>
-      <Field Name="CreationDate" LocalName="Дата и время изменения"/>
       <Field Name="CreationUser" LocalName="Автор события"/>
     </SystemFields>
   </Table>

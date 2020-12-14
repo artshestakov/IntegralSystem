@@ -726,16 +726,10 @@ bool ISObjectFormBase::Save()
 	else if (FormType == ISNamespace::OFT_Edit)
 	{
 		QueryText += "UPDATE " + MetaTable->Name + " SET \n";
-
-		//Заполнение полей информацией о опользователе и текущей дате
-		QueryText += MetaTable->Alias + "_updationdate = now(), \n";
-		QueryText += MetaTable->Alias + "_updationuser = currentuserid(), \n";
-
 		for (const QString &String : FieldsVector)
 		{
 			QueryText += MetaTable->Alias + '_' + String + " = :" + String + ", \n";
 		}
-
 		QueryText.chop(3);
 		QueryText += " \n";
 		QueryText += "WHERE " + MetaTable->Alias + "_id = " + QString::number(ObjectID);

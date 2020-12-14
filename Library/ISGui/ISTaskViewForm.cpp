@@ -34,8 +34,6 @@ static QString QS_TASK = PREPARE_QUERY("SELECT "
 									   "uo.usrs_fio AS task_owner_name, "
 									   "t.task_creationuser AS task_owner_id, "
 									   "t.task_important, "
-									   "t.task_creationdate, "
-									   "t.task_updationdate, "
 									   "t.task_parent AS task_parent_id, "
 									   "p.task_name AS task_parent_name, "
 									   "(SELECT COUNT(*) AS vote_count FROM _taskvote WHERE tvot_task = :TaskID), "
@@ -82,7 +80,7 @@ static QString QU_STATUS = PREPARE_QUERY("UPDATE _task SET "
 static QString QI_STATUS_HISTORY = PREPARE_QUERY("INSERT INTO _taskstatushistory(tshr_task, tshr_status) "
 												 "VALUES(:TaskID, :StatusID)");
 //-----------------------------------------------------------------------------
-static QString QS_FILE = PREPARE_QUERY("SELECT tfls_id, tfls_creationdate, tfls_isimage, tfls_name, tfls_extension, tfls_size, tfls_icon, usrs_fio "
+static QString QS_FILE = PREPARE_QUERY("SELECT tfls_id, tfls_datetime, tfls_isimage, tfls_name, tfls_extension, tfls_size, tfls_icon, usrs_fio "
 									   "FROM _taskfile "
 									   "LEFT JOIN _users u ON u.usrs_id = tfls_creationuser "
 									   "WHERE tfls_task = :TaskID "
@@ -102,7 +100,7 @@ static QString QS_LINK = PREPARE_QUERY("SELECT tlnk_id, "
 									   "task_name, "
 									   "task_description, "
 									   "usrs_fio, "
-									   "tlnk_creationdate, "
+									   "tlnk_datetime, "
 									   "tsst_uid AS task_status_uid, "
 									   "tsst_name AS task_status_name "
 									   "FROM _tasklink "
@@ -122,8 +120,7 @@ static QString QS_COMMENT = PREPARE_QUERY("SELECT "
 										  "tcom_id, "
 										  "tcom_parent, "
 										  "tcom_comment, "
-										  "tcom_creationdate, "
-										  "tcom_updationdate, "
+										  "tcom_datetime, "
 										  "tcom_creationuser, "
 										  "usrs_fio, "
 										  "userphotobyid(tcom_creationuser) "
@@ -136,8 +133,6 @@ static QString QI_COMMENT = PREPARE_QUERY("INSERT INTO _taskcomment(tcom_task, t
 										  "VALUES(:TaskID, :Parent, :Comment)");
 //-----------------------------------------------------------------------------
 static QString QU_COMMENT = PREPARE_QUERY("UPDATE _taskcomment SET "
-										  "tcom_updationdate = now(), "
-										  "tcom_updationuser = currentuserid(), "
 										  "tcom_comment = :Comment "
 										  "WHERE tcom_id = :CommentID");
 //-----------------------------------------------------------------------------
@@ -196,10 +191,6 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	TaskOwner = qSelect.ReadColumn("task_owner_name").toString();
 	TaskOwnerID = qSelect.ReadColumn("task_owner_id").toUInt();
 	TaskImportant = qSelect.ReadColumn("task_important").toBool();
-	TaskCreationDate = ISGui::ConvertDateTimeToString(qSelect.ReadColumn("task_creationdate").toDateTime(), FORMAT_DATE_V2, FORMAT_TIME_V1);
-	TaskCreationDateToolTip = qSelect.ReadColumn("task_creationdate").toDateTime().toString(FORMAT_DATE_TIME_V10);
-	TaskUpdationDate = ISGui::ConvertDateTimeToString(qSelect.ReadColumn("task_updationdate").toDateTime(), FORMAT_DATE_V2, FORMAT_TIME_V1);
-	TaskUpdationDateToolTip = qSelect.ReadColumn("task_updationdate").toDateTime().toString(FORMAT_DATE_TIME_V10);
 	TaskParentID = qSelect.ReadColumn("task_parent_id").toInt();
 	TaskParentName = qSelect.ReadColumn("task_parent_name").toString();
 	VoteCount = qSelect.ReadColumn("vote_count").toInt();
@@ -480,26 +471,6 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	{
 		LabelPriority->SetPixmap(BUFFER_ICONS("Task.Priority.Critical").pixmap(ISDefines::Gui::SIZE_25_25));
 	}
-
-	LayoutRight->addWidget(ISControls::CreateHorizontalLine(GroupBoxDetails));
-
-	LayoutRight->addWidget(new QLabel(LANG("Task.Right.CreationDate") + ':', GroupBoxDetails));
-
-	QLabel *LabelCreationDate = new QLabel(TaskCreationDate, GroupBoxDetails);
-	LabelCreationDate->setToolTip(TaskCreationDateToolTip);
-	LabelCreationDate->setCursor(CURSOR_WHATS_THIS);
-	ISGui::SetFontWidgetBold(LabelCreationDate, true);
-	LayoutRight->addWidget(LabelCreationDate);
-
-	LayoutRight->addWidget(ISControls::CreateHorizontalLine(GroupBoxDetails));
-
-	LayoutRight->addWidget(new QLabel(LANG("Task.Right.UpdationDate") + ':', GroupBoxDetails));
-
-	LabelUpdationDate = new QLabel(TaskUpdationDate.isEmpty() ? LANG("Task.Right.UpdationDate.Empty") : TaskUpdationDate, GroupBoxDetails);
-	LabelUpdationDate->setToolTip(TaskUpdationDate.isEmpty() ? QString() : TaskUpdationDateToolTip);
-	LabelUpdationDate->setCursor(CURSOR_WHATS_THIS);
-	ISGui::SetFontWidgetBold(LabelUpdationDate, true);
-	LayoutRight->addWidget(LabelUpdationDate);
 
 	LayoutRight->addWidget(ISControls::CreateHorizontalLine(GroupBoxDetails));
 
@@ -914,7 +885,7 @@ void ISTaskViewForm::FileLoadList()
 		while (qSelectFiles.Next())
 		{
 			int ID = qSelectFiles.ReadColumn("tfls_id").toInt();
-			QDateTime CreationDate = qSelectFiles.ReadColumn("tfls_creationdate").toDateTime();
+			QDateTime DateTime = qSelectFiles.ReadColumn("tfls_datetime").toDateTime();
 			bool IsImage = qSelectFiles.ReadColumn("tfls_isimage").toBool();
 			QString Name = qSelectFiles.ReadColumn("tfls_name").toString();
 			QString Extension = qSelectFiles.ReadColumn("tfls_extension").toString();
@@ -922,7 +893,7 @@ void ISTaskViewForm::FileLoadList()
 			QByteArray Icon = qSelectFiles.ReadColumn("tfls_icon").toByteArray();
 			QString UserFIO = qSelectFiles.ReadColumn("usrs_fio").toString();
 
-			QWidget *Widget = FileCreateWidget(ISGui::ByteArrayToPixmap(Icon).scaled(ISDefines::Gui::SIZE_45_45), IsImage, Name, ID, Extension, Size, UserFIO, CreationDate);
+			QWidget *Widget = FileCreateWidget(ISGui::ByteArrayToPixmap(Icon).scaled(ISDefines::Gui::SIZE_45_45), IsImage, Name, ID, Extension, Size, UserFIO, DateTime);
 			QListWidgetItem *ListWidgetItem = new QListWidgetItem(ListWidgetFiles);
 			ListWidgetItem->setSizeHint(Widget->sizeHint());
 			ListWidgetFiles->setItemWidget(ListWidgetItem, Widget);
@@ -932,7 +903,7 @@ void ISTaskViewForm::FileLoadList()
 	}
 }
 //-----------------------------------------------------------------------------
-QWidget* ISTaskViewForm::FileCreateWidget(const QPixmap &Pixmap, bool IsImage, const QString &Name, int FileID, const QString &Extension, qint64 Size, const QString &UserFullName, const QDateTime &CreationDate)
+QWidget* ISTaskViewForm::FileCreateWidget(const QPixmap &Pixmap, bool IsImage, const QString &Name, int FileID, const QString &Extension, qint64 Size, const QString &UserFullName, const QDateTime &DateTime)
 {
 	QHBoxLayout *LayoutWidget = new QHBoxLayout();
 	LayoutWidget->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_4_PX);
@@ -984,8 +955,8 @@ QWidget* ISTaskViewForm::FileCreateWidget(const QPixmap &Pixmap, bool IsImage, c
 	LayoutBottom->addWidget(new QLabel(LANG("Task.File.UserFullName").arg(UserFullName), Widget));
 	LayoutBottom->addWidget(ISControls::CreateVerticalLine(Widget));
 
-	QLabel *LabelDateTime = new QLabel(LANG("Task.File.CreationDate").arg(ISGui::ConvertDateTimeToString(CreationDate, FORMAT_DATE_V2, FORMAT_TIME_V1)), Widget);
-	LabelDateTime->setToolTip(CreationDate.toString(FORMAT_DATE_TIME_V10));
+	QLabel *LabelDateTime = new QLabel(LANG("Task.File.CreationDate").arg(ISGui::ConvertDateTimeToString(DateTime, FORMAT_DATE_V2, FORMAT_TIME_V1)), Widget);
+	LabelDateTime->setToolTip(DateTime.toString(FORMAT_DATE_TIME_V10));
 	LabelDateTime->setCursor(CURSOR_WHATS_THIS);
 	LayoutBottom->addWidget(LabelDateTime);
 
@@ -1152,7 +1123,7 @@ void ISTaskViewForm::LinkLoadList()
 			QString LinkTaskName = qSelectLink.ReadColumn("task_name").toString();
 			QString LinkTaskDescription = qSelectLink.ReadColumn("task_description").toString();
 			QString LinkUser = qSelectLink.ReadColumn("usrs_fio").toString();
-			QString LinkCreationDate = ISGui::ConvertDateTimeToString(qSelectLink.ReadColumn("tlnk_creationdate").toDateTime(), FORMAT_DATE_V2, FORMAT_TIME_V1);
+			QString LinkDateTime = ISGui::ConvertDateTimeToString(qSelectLink.ReadColumn("tlnk_datetime").toDateTime(), FORMAT_DATE_V2, FORMAT_TIME_V1);
 			ISUuid TaskLinkStatusUID = qSelectLink.ReadColumn("task_status_uid");
 			QString TaskLinkStatusName = qSelectLink.ReadColumn("task_status_name").toString();
 			
@@ -1160,7 +1131,7 @@ void ISTaskViewForm::LinkLoadList()
 			ListWidgetItem->setData(Qt::UserRole, LinkID);
 			ListWidgetItem->setData(Qt::UserRole * 2, LinkTaskID);
 			ListWidgetItem->setText(QString("#%1: %2").arg(LinkTaskID).arg(LinkTaskName));
-			ListWidgetItem->setToolTip(LANG("Task.LinkToolTip").arg(TaskLinkStatusName).arg(LinkTaskDescription.isEmpty() ? LANG("Task.Description.Empty") : LinkTaskDescription).arg(LinkUser).arg(LinkCreationDate));
+			ListWidgetItem->setToolTip(LANG("Task.LinkToolTip").arg(TaskLinkStatusName).arg(LinkTaskDescription.isEmpty() ? LANG("Task.Description.Empty") : LinkTaskDescription).arg(LinkUser).arg(LinkDateTime));
 			ListWidgetItem->setSizeHint(QSize(ListWidgetItem->sizeHint().width(), 35));
 			ISGui::SetFontListWidgetItemStrikeOut(ListWidgetItem, TaskLinkStatusUID == CONST_UID_TASK_STATUS_DONE || TaskLinkStatusUID == CONST_UID_TASK_STATUS_CLOSE);
 		}
@@ -1256,13 +1227,12 @@ void ISTaskViewForm::CommentLoadList()
 			int CommentID = qSelectComments.ReadColumn("tcom_id").toInt();
 			int ParentID = qSelectComments.ReadColumn("tcom_parent").toInt();
 			QString Comment = qSelectComments.ReadColumn("tcom_comment").toString();
-			QDateTime CreationDate = qSelectComments.ReadColumn("tcom_creationdate").toDateTime();
-			QDateTime UpdationDate = qSelectComments.ReadColumn("tcom_updationdate").toDateTime();
+			QDateTime DateTime = qSelectComments.ReadColumn("tcom_datetime").toDateTime();
 			int UserID = qSelectComments.ReadColumn("tcom_creationuser").toInt();
 			QString UserFIO = qSelectComments.ReadColumn("usrs_fio").toString();
 			QPixmap UserPhoto = ISGui::ByteArrayToPixmap(qSelectComments.ReadColumn("userphotobyid").toByteArray());
 
-			QWidget *Widget = CommentCreateWidget(ParentID, CommentID, UserID, UserPhoto, UserFIO, Comment, CreationDate, UpdationDate);
+			QWidget *Widget = CommentCreateWidget(ParentID, CommentID, UserID, UserPhoto, UserFIO, Comment, DateTime);
 			if (ParentID)
 			{
 				QTreeWidgetItem *TreeWidgetItem = new QTreeWidgetItem(MapComment[ParentID]);
@@ -1283,7 +1253,7 @@ void ISTaskViewForm::CommentLoadList()
 	}
 }
 //-----------------------------------------------------------------------------
-QWidget* ISTaskViewForm::CommentCreateWidget(bool IsParent, int CommentID, unsigned int UserID, const QPixmap &UserPhoto, const QString &UserFIO, const QString &Comment, const QDateTime &CreationDate, const QDateTime &UpdationDate)
+QWidget* ISTaskViewForm::CommentCreateWidget(bool IsParent, int CommentID, unsigned int UserID, const QPixmap &UserPhoto, const QString &UserFIO, const QString &Comment, const QDateTime &DateTime)
 {
 	QVBoxLayout *LayoutWidget = new QVBoxLayout();
 	LayoutWidget->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_4_PX);
@@ -1345,20 +1315,10 @@ QWidget* ISTaskViewForm::CommentCreateWidget(bool IsParent, int CommentID, unsig
 		LayoutBottom->addWidget(LabelDelete);
 	}
 
-	QLabel *LabelCreateDateTime = new QLabel(LANG("Task.Comment.CreationDate").arg(ISGui::ConvertDateTimeToString(CreationDate, FORMAT_DATE_V1, FORMAT_TIME_V1)), WidgetBottom);
-	LabelCreateDateTime->setToolTip(CreationDate.toString(FORMAT_DATE_TIME_V10));
-	LabelCreateDateTime->setCursor(CURSOR_WHATS_THIS);
-	LayoutBottom->addWidget(LabelCreateDateTime);
-
-	if (!UpdationDate.isNull())
-	{
-		LayoutBottom->addWidget(ISControls::CreateVerticalLine(WidgetBottom));
-
-		QLabel *LabelUpdateDateTime = new QLabel(LANG("Task.Comment.UpdationDate").arg(ISGui::ConvertDateTimeToString(UpdationDate, FORMAT_DATE_V1, FORMAT_TIME_V1)), WidgetBottom);
-		LabelUpdateDateTime->setToolTip(UpdationDate.toString(FORMAT_DATE_TIME_V10));
-		LabelUpdateDateTime->setCursor(CURSOR_WHATS_THIS);
-		LayoutBottom->addWidget(LabelUpdateDateTime);
-	}
+	QLabel *LabelDateTime = new QLabel(LANG("Task.Comment.DateTime").arg(ISGui::ConvertDateTimeToString(DateTime, FORMAT_DATE_V1, FORMAT_TIME_V1)), WidgetBottom);
+	LabelDateTime->setToolTip(DateTime.toString(FORMAT_DATE_TIME_V10));
+	LabelDateTime->setCursor(CURSOR_WHATS_THIS);
+	LayoutBottom->addWidget(LabelDateTime);
 
 	LayoutBottom->addStretch();
 

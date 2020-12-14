@@ -20,8 +20,8 @@ static QString QS_USER_AUTH = PREPARE_QUERY("SELECT usrs_id, usrs_issystem, usrs
 											"LEFT JOIN _usergroup ON usgp_id = usrs_group "
 											"WHERE usrs_hash = :Hash");
 //-----------------------------------------------------------------------------
-static QString QI_PROTOCOL = PREPARE_QUERY("INSERT INTO _protocol(prtc_creationdate, prtc_creationuser, prtc_tablename, prtc_tablelocalname, prtc_type, prtc_objectid, prtc_information) "
-										   "VALUES(:CreationDate, :CreationUser, :TableName, :TableLocalName, (SELECT prtp_id FROM _protocoltype WHERE prtp_uid = :TypeUID), :ObjectID, :Information)");
+static QString QI_PROTOCOL = PREPARE_QUERY("INSERT INTO _protocol(prtc_datetime, prtc_creationuser, prtc_tablename, prtc_tablelocalname, prtc_type, prtc_objectid, prtc_information) "
+										   "VALUES(:DateTime, :CreationUser, :TableName, :TableLocalName, (SELECT prtp_id FROM _protocoltype WHERE prtp_uid = :TypeUID), :ObjectID, :Information)");
 //-----------------------------------------------------------------------------
 static QString QS_SETTINGS_DATABASE = PREPARE_QUERY("SELECT sgdb_settingname, sgdb_useraccessdatabase, sgdb_numbersimbolsaftercomma, sgdb_storagefilemaxsize "
 													"FROM _settingsdatabase "
@@ -60,7 +60,7 @@ static QString QS_FAVORITE = PREPARE_QUERY("SELECT fvts_tablename, fvts_objectsi
 										   "FROM _favorites "
 										   "WHERE fvts_creationuser = :UserID");
 //-----------------------------------------------------------------------------
-static QString QS_HISTORY = PREPARE_QUERY("SELECT htry_creationdate, htry_tablename, htry_objectid "
+static QString QS_HISTORY = PREPARE_QUERY("SELECT htry_datetime, htry_tablename, htry_objectid "
 										  "FROM _history "
 										  "WHERE htry_creationuser = :UserID "
 										  "ORDER BY htry_id");
@@ -355,7 +355,7 @@ QVariant ISTcpWorker::CheckNullField(const QString &FieldName, const QVariantMap
 //-----------------------------------------------------------------------------
 void ISTcpWorker::Protocol(int UserID, const ISUuid &ActionTypeUID, const QVariant &TableName, const QVariant &TableLocalName, const QVariant &ObjectID, const QVariant &Information)
 {
-	qProtocol->BindValue(":CreationDate", QDateTime::currentDateTime());
+	qProtocol->BindValue(":DateTime", QDateTime::currentDateTime());
 	qProtocol->BindValue(":CreationUser", UserID);
 	qProtocol->BindValue(":TableName", TableName);
 	qProtocol->BindValue(":TypeUID", ActionTypeUID);
@@ -845,7 +845,7 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 		{
 			HistoryList.append(QVariantMap
 			{
-				{ "Date", qSelectHistory.ReadColumn("htry_creationdate") },
+				{ "Date", qSelectHistory.ReadColumn("htry_datetime") },
 				{ "Table", qSelectHistory.ReadColumn("htry_tablename") },
 				{ "ID", qSelectHistory.ReadColumn("htry_objectid") }
 			});

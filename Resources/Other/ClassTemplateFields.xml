@@ -3,8 +3,5 @@
   <Field UID="{6E43F4C2-EBEE-443E-84A1-B3A60A635583}" Name="ID" Type="BigInt" LabelName="Код" LocalListName="Код" NotNull="true" Sequence="true" PrimaryKey="true" IsSystem="true"/>
   <Field UID="{862F9461-19A3-428C-94E0-2E25A28E6194}" Name="UID" Type="UID" LabelName="Идентификатор" LocalListName="Идентификатор" DefaultValue="uuid_generate_v4()" HideFromList="true" HideFromObject="true" NotNull="true" IsSystem="true"/>
   <Field UID="{3945F262-C682-420A-A845-32A827B10424}" Name="IsSystem" Type="Bool" LabelName="Системный" LocalListName="Системный" DefaultValue="false" IsSystem="true"/>
-  <Field UID="{6AA2F914-7136-4318-9722-08BF16C93D25}" Name="CreationDate" Type="DateTime" LabelName="Дата и время создания записи" LocalListName="Дата и время создания записи" DefaultValue="now()" HideFromList="true" HideFromObject="true" NotNull="true" IsSystem="true"/>
-  <Field UID="{7C6D0DEE-88F4-4C5A-B3DA-8EE48E933DA1}" Name="UpdationDate" Type="DateTime" LabelName="Дата и время изменения записи" LocalListName="Дата и время изменения записи" DefaultValue="NULL" HideFromList="true" HideFromObject="true" IsSystem="true"/>
   <Field UID="{48C2ED4A-0E3F-448E-8647-034551979AC8}" Name="CreationUser" Type="BigInt" LabelName="Создал" LocalListName="Создал" DefaultValue="currentuserid()" HideFromList="true" HideFromObject="true" IsSystem="true"/>
-  <Field UID="{E5CB0772-AC6B-49B9-83E0-AE24E9375B46}" Name="UpdationUser" Type="BigInt" LabelName="Изменил" LocalListName="Изменил" DefaultValue="NULL" HideFromList="true" HideFromObject="true" IsSystem="true"/>
 </TemplateFields>

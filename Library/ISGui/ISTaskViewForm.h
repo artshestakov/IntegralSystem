@@ -53,7 +53,7 @@ private:
 
 private:
 	void FileLoadList();
-	QWidget* FileCreateWidget(const QPixmap &Pixmap, bool IsImage, const QString &Name, int FileID, const QString &Extension, qint64 Size, const QString &UserFullName, const QDateTime &CreationDate);
+	QWidget* FileCreateWidget(const QPixmap &Pixmap, bool IsImage, const QString &Name, int FileID, const QString &Extension, qint64 Size, const QString &UserFullName, const QDateTime &DateTime);
 	void FileAdd();
 	void FileShow();
 	void FileSave();
@@ -67,7 +67,7 @@ private:
 
 private:
 	void CommentLoadList();
-	QWidget* CommentCreateWidget(bool IsParent, int CommentID, unsigned int UserID, const QPixmap &UserPhoto, const QString &UserFIO, const QString &Comment, const QDateTime &CreationDate, const QDateTime &UpdationDate);
+	QWidget* CommentCreateWidget(bool IsParent, int CommentID, unsigned int UserID, const QPixmap &UserPhoto, const QString &UserFIO, const QString &Comment, const QDateTime &DateTime);
 	void CommentAdd();
 	void CommentEdit();
 	void CommentDelete();
@@ -100,7 +100,6 @@ private:
 	ISListWidget *ListWidgetFiles;
 	ISListWidget *ListWidgetLinks;
 	QVBoxLayout *LayoutRight;
-	QLabel *LabelUpdationDate;
 
 private:
 	int TaskID;
@@ -120,10 +119,6 @@ private:
 	QString TaskOwner;
 	unsigned int TaskOwnerID;
 	bool TaskImportant;
-	QString TaskCreationDate;
-	QString TaskCreationDateToolTip;
-	QString TaskUpdationDate;
-	QString TaskUpdationDateToolTip;
 	int TaskParentID;
 	QString TaskParentName;
 	int VoteCount;

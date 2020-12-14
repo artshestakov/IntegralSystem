@@ -3,15 +3,15 @@
 #include "ISQuery.h"
 #include "ISSettings.h"
 //-----------------------------------------------------------------------------
-static QString QS_HISTORY = PREPARE_QUERY("SELECT htry_creationdate, htry_tablename, htry_objectid "
+static QString QS_HISTORY = PREPARE_QUERY("SELECT htry_datetime, htry_tablename, htry_objectid "
 										  "FROM _history "
 										  "WHERE htry_creationuser = currentuserid() "
 										  "ORDER BY htry_id");
 //-----------------------------------------------------------------------------
 static QString QD_HISTORY = PREPARE_QUERY("DELETE FROM _history WHERE htry_creationuser = currentuserid()");
 //-----------------------------------------------------------------------------
-static QString QI_HISTORY = PREPARE_QUERY("INSERT INTO _history(htry_creationdate, htry_tablename, htry_objectid) "
-										  "VALUES(:CreationDate, :TableName, :ObjectID)");
+static QString QI_HISTORY = PREPARE_QUERY("INSERT INTO _history(htry_datetime, htry_tablename, htry_objectid) "
+										  "VALUES(:DateTime, :TableName, :ObjectID)");
 //-----------------------------------------------------------------------------
 ISHistory::ISHistory()
 	: ErrorString(NO_ERROR_STRING)
@@ -60,7 +60,7 @@ bool ISHistory::Initialize()
 		{
 			Stories.emplace_back(ISHistoryObject
 			{
-				qSelect.ReadColumn("htry_creationdate").toDateTime(),
+				qSelect.ReadColumn("htry_datetime").toDateTime(),
 				qSelect.ReadColumn("htry_tablename").toString(),
 				qSelect.ReadColumn("htry_objectid").toInt(),
 				false
@@ -113,7 +113,7 @@ bool ISHistory::Save()
 				continue;
 			}
 			ISQuery qInsert(QI_HISTORY);
-			qInsert.BindValue(":CreationDate", HistoryObject.DateTime);
+			qInsert.BindValue(":DateTime", HistoryObject.DateTime);
 			qInsert.BindValue(":TableName", HistoryObject.TableName);
 			qInsert.BindValue(":ObjectID", HistoryObject.ObjectID);
 			Result = qInsert.Execute();
