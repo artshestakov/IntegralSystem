@@ -30,15 +30,15 @@ static QString QS_TASK = PREPARE_QUERY("SELECT "
 									   "ts.tsst_stylesheet AS task_status_stylesheet, "
 									   "tp.tspr_uid AS task_priority_uid, "
 									   "tp.tspr_name AS task_priority_name, "
-									   "userphotobyid(uo.usrs_id) AS task_owner_photo, "
-									   "uo.usrs_fio AS task_owner_name, "
-									   "t.task_creationuser AS task_owner_id, "
+									   //"userphotobyid(uo.usrs_id) AS task_owner_photo, "
+									   //"uo.usrs_fio AS task_owner_name, "
+									   //"t.task_creationuser AS task_owner_id, "
 									   "t.task_important, "
 									   "t.task_parent AS task_parent_id, "
 									   "p.task_name AS task_parent_name "
 									   "FROM _task t "
 									   "LEFT JOIN _users ue ON ue.usrs_id = t.task_executor "
-									   "LEFT JOIN _users uo ON uo.usrs_id = t.task_creationuser "
+									   //"LEFT JOIN _users uo ON uo.usrs_id = t.task_creationuser "
 									   "LEFT JOIN _tasktype tt ON tt.tstp_id = t.task_type "
 									   "LEFT JOIN _taskstatus ts ON ts.tsst_id = t.task_status "
 									   "LEFT JOIN _taskpriority tp ON tp.tspr_id = t.task_priority "
@@ -80,7 +80,7 @@ static QString QI_STATUS_HISTORY = PREPARE_QUERY("INSERT INTO _taskstatushistory
 //-----------------------------------------------------------------------------
 static QString QS_FILE = PREPARE_QUERY("SELECT tfls_id, tfls_datetime, tfls_isimage, tfls_name, tfls_extension, tfls_size, tfls_icon, usrs_fio "
 									   "FROM _taskfile "
-									   "LEFT JOIN _users u ON u.usrs_id = tfls_creationuser "
+									   "LEFT JOIN _users u ON u.usrs_id = tfls_user "
 									   "WHERE tfls_task = :TaskID "
 									   "ORDER BY tfls_id");
 //-----------------------------------------------------------------------------
@@ -103,7 +103,7 @@ static QString QS_LINK = PREPARE_QUERY("SELECT tlnk_id, "
 									   "tsst_name AS task_status_name "
 									   "FROM _tasklink "
 									   "LEFT JOIN _task ON tlnk_link = task_id "
-									   "LEFT JOIN _users ON usrs_id = tlnk_creationuser "
+									   "LEFT JOIN _users ON usrs_id = tlnk_user "
 									   "LEFT JOIN _taskstatus ON task_status = tsst_id "
 									   "WHERE tlnk_task = :TaskID "
 									   "ORDER BY tlnk_id");
@@ -119,11 +119,11 @@ static QString QS_COMMENT = PREPARE_QUERY("SELECT "
 										  "tcom_parent, "
 										  "tcom_comment, "
 										  "tcom_datetime, "
-										  "tcom_creationuser, "
+										  "tcom_owner, "
 										  "usrs_fio, "
-										  "userphotobyid(tcom_creationuser) "
+										  "userphotobyid(tcom_owner) "
 										  "FROM _taskcomment "
-										  "LEFT JOIN _users ON usrs_id = tcom_creationuser "
+										  "LEFT JOIN _users ON usrs_id = tcom_owner "
 										  "WHERE tcom_task = :TaskID "
 										  "ORDER BY tcom_id");
 //-----------------------------------------------------------------------------
@@ -185,9 +185,9 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	TaskStatusStyleSheet = qSelect.ReadColumn("task_status_stylesheet").toString();
 	TaskPriorityUID = qSelect.ReadColumn("task_priority_uid");
 	TaskPriorityName = qSelect.ReadColumn("task_priority_name").toString();
-	TaskOwnerPhoto = ISGui::ByteArrayToPixmap(qSelect.ReadColumn("task_owner_photo").toByteArray()).scaled(40, 40);
-	TaskOwner = qSelect.ReadColumn("task_owner_name").toString();
-	TaskOwnerID = qSelect.ReadColumn("task_owner_id").toUInt();
+	//TaskOwnerPhoto = ISGui::ByteArrayToPixmap(qSelect.ReadColumn("task_owner_photo").toByteArray()).scaled(40, 40);
+	//TaskOwner = qSelect.ReadColumn("task_owner_name").toString();
+	//TaskOwnerID = qSelect.ReadColumn("task_owner_id").toUInt();
 	TaskImportant = qSelect.ReadColumn("task_important").toBool();
 	TaskParentID = qSelect.ReadColumn("task_parent_id").toInt();
 	TaskParentName = qSelect.ReadColumn("task_parent_name").toString();
@@ -426,7 +426,7 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 
 	LayoutRight->addWidget(new QLabel(LANG("Task.Right.Owner") + ':', GroupBoxDetails));
 
-	ISLabelPixmapText *LabelOwner = new ISLabelPixmapText(TaskOwnerPhoto, TaskOwnerID == CURRENT_USER_ID ? LANG("You") : TaskOwner, GroupBoxDetails);
+	ISLabelPixmapText *LabelOwner = new ISLabelPixmapText(/*TaskOwnerPhoto*/QPixmap(), TaskOwnerID == CURRENT_USER_ID ? LANG("You") : TaskOwner, GroupBoxDetails);
 	LabelOwner->SetWordWrap(true);
 	LabelOwner->SetFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
 	LayoutRight->addWidget(LabelOwner);
@@ -1224,7 +1224,7 @@ void ISTaskViewForm::CommentLoadList()
 			int ParentID = qSelectComments.ReadColumn("tcom_parent").toInt();
 			QString Comment = qSelectComments.ReadColumn("tcom_comment").toString();
 			QDateTime DateTime = qSelectComments.ReadColumn("tcom_datetime").toDateTime();
-			int UserID = qSelectComments.ReadColumn("tcom_creationuser").toInt();
+			int UserID = qSelectComments.ReadColumn("tcom_owner").toInt();
 			QString UserFIO = qSelectComments.ReadColumn("usrs_fio").toString();
 			QPixmap UserPhoto = ISGui::ByteArrayToPixmap(qSelectComments.ReadColumn("userphotobyid").toByteArray());
 

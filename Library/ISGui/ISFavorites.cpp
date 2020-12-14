@@ -1,23 +1,24 @@
 #include "ISFavorites.h"
 #include "ISQuery.h"
 #include "ISAlgorithm.h"
+#include "ISMetaUser.h"
 //-----------------------------------------------------------------------------
 static QString QS_FAVORITES = PREPARE_QUERY("SELECT fvts_tablename, fvts_objectsid "
 											"FROM _favorites "
-											"WHERE fvts_creationuser = currentuserid()");
+											"WHERE fvts_user = :UserID");
 //-----------------------------------------------------------------------------
 static QString QD_FAVORITE = PREPARE_QUERY("DELETE FROM _favorites "
-										   "WHERE fvts_creationuser = currentuserid() "
+										   "WHERE fvts_user = :UserID "
 										   "AND fvts_tablename = :TableName");
 //-----------------------------------------------------------------------------
 static QString QS_FAVORITE = PREPARE_QUERY("SELECT COUNT(*) "
 										   "FROM _favorites "
-										   "WHERE fvts_creationuser = currentuserid() "
+										   "WHERE fvts_user = :UserID "
 										   "AND fvts_tablename = :TableName");
 //-----------------------------------------------------------------------------
 static QString QU_FAVORITE = PREPARE_QUERY("UPDATE _favorites SET "
 										   "fvts_objectsid = :ObjectsID "
-										   "WHERE fvts_creationuser = currentuserid() "
+										   "WHERE fvts_user = :UserID "
 										   "AND fvts_tablename = :TableName");
 //-----------------------------------------------------------------------------
 static QString QI_FAVORITE = PREPARE_QUERY("INSERT INTO _favorites(fvts_tablename, fvts_objectsid) "
@@ -63,6 +64,7 @@ void ISFavorites::Initialize(const QVariantMap &VariantMap)
 bool ISFavorites::Initialize()
 {
 	ISQuery qSelectFavorites(QS_FAVORITES);
+	qSelectFavorites.BindValue(":UserID", CURRENT_USER_ID);
 	bool Result = qSelectFavorites.Execute();
 	if (Result)
 	{
@@ -137,6 +139,7 @@ bool ISFavorites::Save()
 		if (MapItem.second.empty()) //Если объектов в избранном по такой таблице нет - удаляем их
 		{
 			ISQuery qDelete(QD_FAVORITE);
+			qDelete.BindValue(":UserID", CURRENT_USER_ID);
 			qDelete.BindValue(":TableName", MapItem.first);
 			Result = qDelete.Execute();
 			if (!Result)
@@ -148,6 +151,7 @@ bool ISFavorites::Save()
 		else //Избранные объекты по такой таблице есть - сохраняем
 		{
 			ISQuery qSelect(QS_FAVORITE);
+			qSelect.BindValue(":UserID", CURRENT_USER_ID);
 			qSelect.BindValue(":TableName", MapItem.first);
 			Result = qSelect.ExecuteFirst();
 			if (Result)
@@ -162,6 +166,7 @@ bool ISFavorites::Save()
 				ObjectsID += "}";
 
 				ISQuery qUpsert(qSelect.ReadColumn("count").toBool() ? QU_FAVORITE : QI_FAVORITE);
+				qUpsert.BindValue(":UserID", CURRENT_USER_ID);
 				qUpsert.BindValue(":TableName", MapItem.first);
 				qUpsert.BindValue(":ObjectsID", ObjectsID);
 				Result = qUpsert.Execute();

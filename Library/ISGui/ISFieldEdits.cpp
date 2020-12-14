@@ -22,7 +22,7 @@
 //-----------------------------------------------------------------------------
 static QString QS_SEARCH_FAST = PREPARE_QUERY("SELECT srfs_value "
 											  "FROM _searchfast "
-											  "WHERE srfs_creationuser = currentuserid() "
+											  "WHERE srfs_user = :UserID "
 											  "ORDER BY srfs_id "
 											  "LIMIT :Limit");
 //-----------------------------------------------------------------------------
@@ -1515,6 +1515,7 @@ void ISSearchEdit::AboutToShow()
 	}
 
 	ISQuery qSelect(QS_SEARCH_FAST);
+	qSelect.BindValue(":UserID", CURRENT_USER_ID);
 	qSelect.BindValue(":Limit", SETTING_INT(CONST_UID_SETTING_TABLES_SEARCH_FAST_VIEW));
 	if (qSelect.Execute())
 	{

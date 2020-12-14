@@ -38,8 +38,8 @@
 #include "ISAlgorithm.h"
 #include "ISConfig.h"
 //-----------------------------------------------------------------------------
-static QString QI_SEARCH_FAST = PREPARE_QUERY("INSERT INTO _searchfast(srfs_value) "
-											  "VALUES(:Value)");
+static QString QI_SEARCH_FAST = PREPARE_QUERY("INSERT INTO _searchfast(srfs_user, srfs_value) "
+											  "VALUES(:UserID, :Value)");
 //-----------------------------------------------------------------------------
 ISListBaseForm::ISListBaseForm(const QString &TableName, QWidget *parent)
 	: ISInterfaceMetaForm(parent),
@@ -792,6 +792,7 @@ void ISListBaseForm::SearchFast(const QString &SearchValue)
 {
 	ISQueryPool::Instance().AddQuery(QI_SEARCH_FAST,
 	{
+		{ ":UserID", CURRENT_USER_ID },
 		{ ":Value", SearchValue }
 	});
 

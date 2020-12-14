@@ -22,8 +22,8 @@ static QString QS_USER_AUTH = PREPARE_QUERY("SELECT usrs_id, usrs_issystem, usrs
 											"LEFT JOIN _usergroup ON usgp_id = usrs_group "
 											"WHERE usrs_hash = :Hash");
 //-----------------------------------------------------------------------------
-static QString QI_PROTOCOL = PREPARE_QUERY("INSERT INTO _protocol(prtc_datetime, prtc_creationuser, prtc_tablename, prtc_tablelocalname, prtc_type, prtc_objectid, prtc_information) "
-										   "VALUES(:DateTime, :CreationUser, :TableName, :TableLocalName, (SELECT prtp_id FROM _protocoltype WHERE prtp_uid = :TypeUID), :ObjectID, :Information)");
+static QString QI_PROTOCOL = PREPARE_QUERY("INSERT INTO _protocol(prtc_datetime, prtc_user, prtc_tablename, prtc_tablelocalname, prtc_type, prtc_objectid, prtc_information) "
+										   "VALUES(:DateTime, :UserID, :TableName, :TableLocalName, (SELECT prtp_id FROM _protocoltype WHERE prtp_uid = :TypeUID), :ObjectID, :Information)");
 //-----------------------------------------------------------------------------
 static QString QS_SETTINGS_DATABASE = PREPARE_QUERY("SELECT sgdb_settingname, sgdb_useraccessdatabase, sgdb_numbersimbolsaftercomma, sgdb_storagefilemaxsize "
 													"FROM _settingsdatabase "
@@ -60,20 +60,20 @@ static QString QS_REPORT_FIELD = PREPARE_QUERY("SELECT rprt_replacevalue, rprt_s
 //-----------------------------------------------------------------------------
 static QString QS_FAVORITE = PREPARE_QUERY("SELECT fvts_tablename, fvts_objectsid "
 										   "FROM _favorites "
-										   "WHERE fvts_creationuser = :UserID");
+										   "WHERE fvts_user = :UserID");
 //-----------------------------------------------------------------------------
 static QString QS_HISTORY = PREPARE_QUERY("SELECT htry_datetime, htry_tablename, htry_objectid "
 										  "FROM _history "
-										  "WHERE htry_creationuser = :UserID "
+										  "WHERE htry_user = :UserID "
 										  "ORDER BY htry_id");
 //-----------------------------------------------------------------------------
 static QString QS_SORTING = PREPARE_QUERY("SELECT sgts_tablename, sgts_fieldname, sgts_sorting "
 										  "FROM _sortingtables "
-										  "WHERE sgts_creationuser = :UserID");
+										  "WHERE sgts_user = :UserID");
 //-----------------------------------------------------------------------------
 static QString QS_COLUMN_SIZE = PREPARE_QUERY("SELECT clsz_tablename, clsz_fieldname, clsz_size "
 											  "FROM _columnsize "
-											  "WHERE clsz_creationuser = :UserID");
+											  "WHERE clsz_user = :UserID");
 //-----------------------------------------------------------------------------
 static QString QS_SETTING_GROUP = PREPARE_QUERY("SELECT stgp_uid, stgp_name, stgp_localname, stgp_iconname, stgp_hint "
 												"FROM _settingsgroup "
@@ -81,9 +81,9 @@ static QString QS_SETTING_GROUP = PREPARE_QUERY("SELECT stgp_uid, stgp_name, stg
 //-----------------------------------------------------------------------------
 static QString QS_SETTING = PREPARE_QUERY("SELECT stgs_uid, stgs_name, stgs_type, stgs_widgeteditname, stgs_localname, stgs_hint, stgs_defaultvalue, "
 										  "usst_value, "
-										  "(SELECT COUNT(*) FROM _usersettings WHERE usst_creationuser = :UserID AND usst_setting = stgs_id) "
+										  "(SELECT COUNT(*) FROM _usersettings WHERE usst_user = :UserID AND usst_setting = stgs_id) "
 										  "FROM _settings "
-										  "LEFT JOIN _usersettings ON usst_setting = stgs_id AND usst_creationuser = :UserID "
+										  "LEFT JOIN _usersettings ON usst_setting = stgs_id AND usst_user = :UserID "
 										  "WHERE stgs_group = :GroupUID "
 										  "ORDER BY stgs_order");
 //-----------------------------------------------------------------------------
@@ -355,7 +355,7 @@ QVariant ISTcpWorker::CheckNullField(const QString &FieldName, const QVariantMap
 void ISTcpWorker::Protocol(int UserID, const ISUuid &ActionTypeUID, const QVariant &TableName, const QVariant &TableLocalName, const QVariant &ObjectID, const QVariant &Information)
 {
 	qProtocol->BindValue(":DateTime", QDateTime::currentDateTime());
-	qProtocol->BindValue(":CreationUser", UserID);
+	qProtocol->BindValue(":UserID", UserID);
 	qProtocol->BindValue(":TableName", TableName);
 	qProtocol->BindValue(":TypeUID", ActionTypeUID);
 	qProtocol->BindValue(":ObjectID", ObjectID);

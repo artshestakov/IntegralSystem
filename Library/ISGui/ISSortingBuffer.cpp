@@ -1,27 +1,28 @@
 #include "ISSortingBuffer.h"
 #include "ISQuery.h"
 #include "ISAlgorithm.h"
+#include "ISMetaUser.h"
 //-----------------------------------------------------------------------------
 static QString QS_SORTINGS = PREPARE_QUERY("SELECT sgts_tablename, sgts_fieldname, sgts_sorting "
 										   "FROM _sortingtables "
-										   "WHERE sgts_creationuser = currentuserid()");
+										   "WHERE sgts_user = :UserID");
 //-----------------------------------------------------------------------------
 static QString QS_SORTING_EXIST = PREPARE_QUERY("SELECT COUNT(*) "
 												"FROM _sortingtables "
-												"WHERE sgts_creationuser = currentuserid() "
+												"WHERE sgts_user = :UserID "
 												"AND sgts_tablename = :TableName");
 //-----------------------------------------------------------------------------
 static QString QU_SORTING = PREPARE_QUERY("UPDATE _sortingtables SET "
 										  "sgts_fieldname = :FieldName, "
 										  "sgts_sorting = :Sorting "
-										  "WHERE sgts_creationuser = currentuserid() "
+										  "WHERE sgts_user = :UserID "
 										  "AND sgts_tablename = :TableName");
 //-----------------------------------------------------------------------------
-static QString QI_SORTING = PREPARE_QUERY("INSERT INTO _sortingtables(sgts_tablename, sgts_fieldname, sgts_sorting) "
-										  "VALUES(:TableName, :FieldName, :Sorting)");
+static QString QI_SORTING = PREPARE_QUERY("INSERT INTO _sortingtables(sgts_user, sgts_tablename, sgts_fieldname, sgts_sorting) "
+										  "VALUES(:UserID, :TableName, :FieldName, :Sorting)");
 //-----------------------------------------------------------------------------
 static QString QD_SORTING = PREPARE_QUERY("DELETE FROM _sortingtables "
-										  "WHERE sgts_creationuser = currentuserid()");
+										  "WHERE sgts_user = :UserID");
 //-----------------------------------------------------------------------------
 ISSortingBuffer::ISSortingBuffer()
 	: ErrorString(NO_ERROR_STRING)
@@ -60,6 +61,7 @@ void ISSortingBuffer::Initialize(const QVariantList &VariantList)
 bool ISSortingBuffer::Initialize()
 {
 	ISQuery qSelect(QS_SORTINGS);
+	qSelect.BindValue(":UserID", CURRENT_USER_ID);
 	bool Result = qSelect.Execute();
 	if (Result)
 	{
@@ -120,6 +122,7 @@ bool ISSortingBuffer::SaveSortings()
 bool ISSortingBuffer::Clear()
 {
 	ISQuery qDelete(QD_SORTING);
+	qDelete.BindValue(":UserID", CURRENT_USER_ID);
 	bool Result = qDelete.Execute();
 	if (!Result)
 	{
@@ -143,11 +146,13 @@ ISSortingMetaTable* ISSortingBuffer::GetSorting(const QString &TableName)
 bool ISSortingBuffer::SaveSorting(ISSortingMetaTable *MetaSorting)
 {
 	ISQuery qSelect(QS_SORTING_EXIST);
+	qSelect.BindValue(":UserID", CURRENT_USER_ID);
 	qSelect.BindValue(":TableName", MetaSorting->TableName);
 	bool Result = qSelect.ExecuteFirst();
 	if (Result)
 	{
 		ISQuery qUpsert(qSelect.ReadColumn("count").toInt() > 0 ? QU_SORTING : QI_SORTING);
+		qUpsert.BindValue(":UserID", CURRENT_USER_ID);
 		qUpsert.BindValue(":TableName", MetaSorting->TableName);
 		qUpsert.BindValue(":FieldName", MetaSorting->FieldName);
 		qUpsert.BindValue(":Sorting", MetaSorting->Order);

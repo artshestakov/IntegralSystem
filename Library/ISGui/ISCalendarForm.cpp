@@ -11,10 +11,11 @@
 #include "ISInputDialog.h"
 #include "ISCore.h"
 #include "ISDefinesGui.h"
+#include "ISMetaUser.h"
 //-----------------------------------------------------------------------------
 static QString QS_CALENDAR = PREPARE_QUERY("SELECT cldr_id, cldr_date, cldr_timealert, cldr_name, cldr_text, cldr_closed "
 										   "FROM _calendar "
-										   "WHERE cldr_creationuser = currentuserid() "
+										   "WHERE cldr_user = :UserID "
 										   "AND cldr_date = :Date "
 										   "ORDER BY cldr_id DESC");
 //-----------------------------------------------------------------------------
@@ -23,14 +24,14 @@ static QString QD_CALENDAR = PREPARE_QUERY("DELETE FROM _calendar "
 //-----------------------------------------------------------------------------
 static QString QS_CALENDAR_OVERDUE = PREPARE_QUERY("SELECT cldr_id "
 												   "FROM _calendar "
-												   "WHERE cldr_creationuser = currentuserid() "
+												   "WHERE cldr_user = :UserID "
 												   "AND NOT cldr_closed "
 												   "AND cldr_date <= CURRENT_DATE "
 												   "AND cldr_timealert <= CURRENT_TIME");
 //-----------------------------------------------------------------------------
 static QString QS_CALENDAR_SEARCH = PREPARE_QUERY("SELECT cldr_id, cldr_date, cldr_timealert, cldr_name, cldr_text, cldr_closed "
 												  "FROM _calendar "
-												  "WHERE cldr_creationuser = currentuserid() "
+												  "WHERE cldr_user = :UserID "
 												  "ORDER BY cldr_id DESC");
 //-----------------------------------------------------------------------------
 static QString QS_CALENDAR_EVENT_DATE = PREPARE_QUERY("SELECT cldr_date FROM _calendar WHERE cldr_id = :CalendarID");
@@ -180,6 +181,7 @@ void ISCalendarForm::Invoke()
 void ISCalendarForm::ShowOverdueEvents()
 {
 	ISQuery qSelect(QS_CALENDAR_OVERDUE);
+	qSelect.BindValue(":UserID", CURRENT_USER_ID);
 	if (qSelect.Execute())
 	{
 		while (qSelect.Next())
@@ -201,6 +203,7 @@ void ISCalendarForm::SelectedDateChanged()
 	ListWidget->Clear();
 
 	ISQuery qSelect(QS_CALENDAR);
+	qSelect.BindValue(":UserID", CURRENT_USER_ID);
 	qSelect.BindValue(":Date", Date);
 	if (qSelect.Execute())
 	{
@@ -360,6 +363,7 @@ void ISCalendarForm::SearchChanged(const QVariant &value)
 		QString SearchValue = value.toString();
 
 		ISQuery qSelect(QS_CALENDAR_SEARCH);
+		qSelect.BindValue(":UserID", CURRENT_USER_ID);
 		if (qSelect.Execute())
 		{
 			while (qSelect.Next())

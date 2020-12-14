@@ -6,8 +6,8 @@
 #include "ISQueryPool.h"
 #include "ISLogger.h"
 //-----------------------------------------------------------------------------
-static QString QI_PROTOCOL = PREPARE_QUERY("INSERT INTO _protocol(prtc_datetime, prtc_creationuser, prtc_tablename, prtc_tablelocalname, prtc_type, prtc_objectid, prtc_information) "
-										   "VALUES(:DateTime, :CreationUser, :TableName, :TableLocalName, (SELECT prtp_id FROM _protocoltype WHERE prtp_uid = :TypeUID), :ObjectID, :Information) "
+static QString QI_PROTOCOL = PREPARE_QUERY("INSERT INTO _protocol(prtc_datetime, prtc_user, prtc_tablename, prtc_tablelocalname, prtc_type, prtc_objectid, prtc_information) "
+										   "VALUES(:DateTime, :UserID, :TableName, :TableLocalName, (SELECT prtp_id FROM _protocoltype WHERE prtp_uid = :TypeUID), :ObjectID, :Information) "
 										   "RETURNING prtc_id");
 //-----------------------------------------------------------------------------
 void ISProtocol::EnterApplication()
@@ -57,7 +57,7 @@ void ISProtocol::Insert(bool Thread, const QString &TypeUID, const QString &Tabl
 		ISQueryPool::Instance().AddQuery(QI_PROTOCOL,
 		{
 			{ ":DateTime", QDateTime::currentDateTime() },
-			{ ":CreationUser", CURRENT_USER_ID },
+			{ ":UserID", CURRENT_USER_ID },
 			{ ":TypeUID", TypeUID },
 			{ ":TableName", TableName },
 			{ ":ObjectID", ObjectID },
@@ -69,7 +69,7 @@ void ISProtocol::Insert(bool Thread, const QString &TypeUID, const QString &Tabl
 	{
 		ISQuery qInsertProtocol(QI_PROTOCOL);
 		qInsertProtocol.BindValue(":DateTime", QDateTime::currentDateTime());
-		qInsertProtocol.BindValue(":CreationUser", CURRENT_USER_ID);
+		qInsertProtocol.BindValue(":UserID", CURRENT_USER_ID);
 		qInsertProtocol.BindValue(":TableName", TableName);
 		qInsertProtocol.BindValue(":TypeUID", TypeUID);
 		qInsertProtocol.BindValue(":ObjectID", ObjectID);

@@ -2,16 +2,17 @@
 #include "ISConstants.h"
 #include "ISQuery.h"
 #include "ISSettings.h"
+#include "ISMetaUser.h"
 //-----------------------------------------------------------------------------
 static QString QS_HISTORY = PREPARE_QUERY("SELECT htry_datetime, htry_tablename, htry_objectid "
 										  "FROM _history "
-										  "WHERE htry_creationuser = currentuserid() "
+										  "WHERE htry_user = :UserID "
 										  "ORDER BY htry_id");
 //-----------------------------------------------------------------------------
-static QString QD_HISTORY = PREPARE_QUERY("DELETE FROM _history WHERE htry_creationuser = currentuserid()");
+static QString QD_HISTORY = PREPARE_QUERY("DELETE FROM _history WHERE htry_user = :UserID");
 //-----------------------------------------------------------------------------
-static QString QI_HISTORY = PREPARE_QUERY("INSERT INTO _history(htry_datetime, htry_tablename, htry_objectid) "
-										  "VALUES(:DateTime, :TableName, :ObjectID)");
+static QString QI_HISTORY = PREPARE_QUERY("INSERT INTO _history(htry_user, htry_datetime, htry_tablename, htry_objectid) "
+										  "VALUES(:UserID, :DateTime, :TableName, :ObjectID)");
 //-----------------------------------------------------------------------------
 ISHistory::ISHistory()
 	: ErrorString(NO_ERROR_STRING)
@@ -53,6 +54,7 @@ void ISHistory::Initialize(const QVariantList &VariantList)
 bool ISHistory::Initialize()
 {
 	ISQuery qSelect(QS_HISTORY);
+	qSelect.BindValue(":UserID", CURRENT_USER_ID);
 	bool Result = qSelect.Execute();
 	if (Result)
 	{
@@ -98,6 +100,7 @@ bool ISHistory::Save()
 	if (Stories.empty()) //Если истории открытых объектов нет (возможно удалили ранее) - удаляем всю историю из БД
 	{
 		ISQuery qDelete(QD_HISTORY);
+		qDelete.BindValue(":UserID", CURRENT_USER_ID);
 		Result = qDelete.Execute();
 		if (!Result)
 		{
@@ -113,6 +116,7 @@ bool ISHistory::Save()
 				continue;
 			}
 			ISQuery qInsert(QI_HISTORY);
+			qInsert.BindValue(":UserID", CURRENT_USER_ID);
 			qInsert.BindValue(":DateTime", HistoryObject.DateTime);
 			qInsert.BindValue(":TableName", HistoryObject.TableName);
 			qInsert.BindValue(":ObjectID", HistoryObject.ObjectID);

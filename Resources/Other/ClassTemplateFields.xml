@@ -3,5 +3,4 @@
   <Field UID="{6E43F4C2-EBEE-443E-84A1-B3A60A635583}" Name="ID" Type="BigInt" LabelName="Код" LocalListName="Код" NotNull="true" Sequence="true" PrimaryKey="true" IsSystem="true"/>
   <Field UID="{862F9461-19A3-428C-94E0-2E25A28E6194}" Name="UID" Type="UID" LabelName="Идентификатор" LocalListName="Идентификатор" DefaultValue="uuid_generate_v4()" HideFromList="true" HideFromObject="true" NotNull="true" IsSystem="true"/>
   <Field UID="{3945F262-C682-420A-A845-32A827B10424}" Name="IsSystem" Type="Bool" LabelName="Системный" LocalListName="Системный" DefaultValue="false" IsSystem="true"/>
-  <Field UID="{48C2ED4A-0E3F-448E-8647-034551979AC8}" Name="CreationUser" Type="BigInt" LabelName="Создал" LocalListName="Создал" DefaultValue="currentuserid()" HideFromList="true" HideFromObject="true" IsSystem="true"/>
 </TemplateFields>

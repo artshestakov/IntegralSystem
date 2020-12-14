@@ -3,23 +3,24 @@
 #include "ISMetaData.h"
 #include "ISAssert.h"
 #include "ISAlgorithm.h"
+#include "ISMetaUser.h"
 //-----------------------------------------------------------------------------
 static QString QS_SETTINGS = PREPARE_QUERY("SELECT "
 										   "stgp_uid, stgp_name, stgp_localname, stgp_iconname, stgp_hint, "
 										   "stgs_uid, stgs_name, stgs_type, stgs_widgeteditname, stgs_localname, stgs_hint, stgs_defaultvalue, "
 										   "usst_value, "
-										   "(SELECT COUNT(*) FROM _usersettings WHERE usst_creationuser = currentuserid() AND usst_setting = stgs_id) "
+										   "(SELECT COUNT(*) FROM _usersettings WHERE usst_user = :UserID AND usst_setting = stgs_id) "
 										   "FROM _settings "
 										   "LEFT JOIN _settingsgroup ON stgp_uid = stgs_group "
-										   "LEFT JOIN _usersettings ON usst_setting = stgs_id AND usst_creationuser = currentuserid() "
+										   "LEFT JOIN _usersettings ON usst_setting = stgs_id AND usst_user = :UserID "
 										   "ORDER BY stgp_order, stgs_order");
 //-----------------------------------------------------------------------------
-static QString QI_USER_SETTING = PREPARE_QUERY("INSERT INTO _usersettings(usst_setting, usst_value) "
-											   "VALUES((SELECT stgs_id FROM _settings WHERE stgs_uid = :SettingUID), :Value)");
+static QString QI_USER_SETTING = PREPARE_QUERY("INSERT INTO _usersettings(usst_user, usst_setting, usst_value) "
+											   "VALUES(:UserID, (SELECT stgs_id FROM _settings WHERE stgs_uid = :SettingUID), :Value)");
 //-----------------------------------------------------------------------------
 static QString QU_USER_SETTING = PREPARE_QUERY("UPDATE _usersettings SET "
 											   "usst_value = :Value "
-											   "WHERE usst_creationuser = currentuserid() "
+											   "WHERE usst_user = :UserID "
 											   "AND usst_setting = (SELECT stgs_id FROM _settings WHERE stgs_uid = :SettingUID)");
 //-----------------------------------------------------------------------------
 ISSettings::ISSettings()
@@ -81,6 +82,7 @@ void ISSettings::Initialize(const QVariantList &VariantList)
 bool ISSettings::Initialize()
 {
 	ISQuery qSelectSettings(QS_SETTINGS);
+	qSelectSettings.BindValue(":UserID", CURRENT_USER_ID);
 	bool Result = qSelectSettings.Execute();
 	if (Result)
 	{
@@ -172,6 +174,7 @@ bool ISSettings::Save()
 	for (const auto &MapItem : SettingsChanged)
 	{
 		ISQuery qUpdateValue(QU_USER_SETTING);
+		qUpdateValue.BindValue(":UserID", CURRENT_USER_ID);
 		qUpdateValue.BindValue(":Value", MapItem.second);
 		qUpdateValue.BindValue(":SettingUID", MapItem.first);
 		Result = qUpdateValue.Execute();
@@ -199,6 +202,7 @@ ISMetaSettingsGroup* ISSettings::CheckExistGroup(const ISUuid &GroupUID)
 bool ISSettings::InsertSetting(const ISUuid &SettingUID, const QVariant &Value)
 {
 	ISQuery qInsertSetting(QI_USER_SETTING);
+	qInsertSetting.BindValue(":UserID", CURRENT_USER_ID);
 	qInsertSetting.BindValue(":SettingUID", SettingUID);
 	qInsertSetting.BindValue(":Value", Value);
 	bool Result = qInsertSetting.Execute();

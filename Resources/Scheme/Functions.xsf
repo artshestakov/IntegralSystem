@@ -117,7 +117,7 @@
     BEGIN
     RETURN usst_value
     FROM _usersettings
-    WHERE usst_creationuser = user_id
+    WHERE usst_user = user_id
     AND usst_setting = (SELECT stgs_id FROM _settings WHERE stgs_uid = setting_uid);
     END;
     $body$

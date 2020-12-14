@@ -107,18 +107,21 @@
 
   <Table Name="_TaskComment" UID="{A37809AE-7889-4E2A-B314-6E86BFD7F0A7}" Alias="tcom" LocalName="Комментарий к задаче" LocalListName="Комментарии к задачам" TitleName="Comment" IsSystem="true">
     <Fields>
+      <Field UID="{5BA2ECED-CACC-49D4-ABB9-E966B401AB48}" Name="Owner" Type="BigInt" LabelName="Пользователь" LocalListName="Пользователь" NotNull="true"/>
       <Field UID="{FF247C5B-4FCE-4970-865D-FE36DD5E90B8}" Name="DateTime" Type="DateTime" DefaultValue="now()" LabelName="Дата и время" LocalListName="Дата и время" NotNull="true"/>
       <Field UID="{47664BE4-308A-4B69-8E8E-76E8111F0110}" Name="Task" Type="BigInt" LabelName="Задача" LocalListName="Задача" NotNull="true"/>
       <Field UID="{D19C9CB6-6901-464A-B6AE-76BB08B86E88}" Name="Parent" Type="BigInt" LabelName="Родительский комментарий" LocalListName="Родительский комментарий"/>
       <Field UID="{2B8CFE09-5BF7-4AAA-B206-CA646868E322}" Name="Comment" Type="Text" LabelName="Комментарий" LocalListName="Комментарий" NotNull="true"/>
     </Fields>
     <Indexes>
+      <Index Field="Owner"/>
       <Index Field="DateTime"/>
       <Index Field="Task"/>
       <Index Field="Parent"/>
       <Index Field="Comment"/>
     </Indexes>
     <Foreigns>
+      <Foreign Field="Owner" ForeignClass="_Users" ForeignField="ID"/>
       <Foreign Field="Task" ForeignClass="_Task" ForeignField="ID" ForeignViewNameField="Name"/>
       <Foreign Field="Parent" ForeignClass="_TaskComment" ForeignField="ID" ForeignViewNameField="Comment"/>
     </Foreigns>
@@ -142,17 +145,20 @@
 
   <Table Name="_TaskLink" UID="{84C4A18C-47D9-4451-9518-066B34F3EFEC}" Alias="tlnk" LocalName="Связанная задача" LocalListName="Связанные задачи" TitleName="Link" IsSystem="true">
     <Fields>
+      <Field UID="{A6F0A451-A72E-40A6-BF64-9E0BD82BCED6}" Name="User" Type="BigInt" LabelName="Пользователь" LocalListName="Пользователь" NotNull="true"/>
       <Field UID="{84787AF5-09DF-44DC-8CF0-9CB815BF4900}" Name="DateTime" Type="DateTime" DefaultValue="now()" LabelName="Дата и время" LocalListName="Дата и время" NotNull="true"/>
       <Field UID="{426AE24B-9F82-478B-8AF2-CB5660D29AFA}" Name="Task" Type="BigInt" LabelName="Задача" LocalListName="Задача" NotNull="true"/>
       <Field UID="{3615E923-9B37-4E47-927B-738218705DDD}" Name="Link" Type="BigInt" LabelName="Связанная задача" LocalListName="Связанная задача" NotNull="true"/>
     </Fields>
     <Indexes>
+      <Index Field="User"/>
       <Index Field="DateTime"/>
       <Index Field="Task"/>
       <Index Field="Link"/>
       <Index Field="Task;Link" Unique="true"/>
     </Indexes>
     <Foreigns>
+      <Foreign Field="User" ForeignClass="_Users" ForeignField="ID"/>
       <Foreign Field="Task" ForeignClass="_Task" ForeignField="ID" ForeignViewNameField="Name"/>
       <Foreign Field="Link" ForeignClass="_Task" ForeignField="ID" ForeignViewNameField="Name"/>
     </Foreigns>
@@ -160,6 +166,7 @@
 
   <Table Name="_TaskFile" UID="{184DFEDF-F622-4092-910F-63BA69D78029}" Alias="tfls" LocalName="Файл" LocalListName="Файлы" TitleName="Name" IsSystem="true">
     <Fields>
+      <Field UID="{522D9BDA-7462-4751-9D4E-E58EB2C2D8D4}" Name="User" Type="BigInt" LabelName="Пользователь" LocalListName="Пользователь" NotNull="true"/>
       <Field UID="{5F1EE695-1438-4E2E-8B2C-2F1ED1F986B6}" Name="DateTime" Type="DateTime" DefaultValue="now()" LabelName="Дата и время" LocalListName="Дата и время" NotNull="true"/>
       <Field UID="{F783C6B9-FF78-45B4-9937-23A3790D1A45}" Name="Task" Type="BigInt" LabelName="Задача" LocalListName="Задача" NotNull="true"/>
       <Field UID="{1D1F1D0E-92E0-429B-8E5E-971D3A04099D}" Name="IsImage" Type="Bool" DefaultValue="false" LabelName="Файл является изображением" LocalListName="Файл является изображением" NotNull="true"/>
@@ -170,6 +177,7 @@
       <Field UID="{3C0B727A-AF36-4A31-BB1A-AFC640F6D850}" Name="Icon" Type="ByteArray" LabelName="Иконка файла" LocalListName="Иконка файла"/>
     </Fields>
     <Indexes>
+      <Index Field="User"/>
       <Index Field="DateTime"/>
       <Index Field="Task"/>
       <Index Field="IsImage"/>
@@ -178,6 +186,7 @@
       <Index Field="Size"/>
     </Indexes>
     <Foreigns>
+      <Foreign Field="User" ForeignClass="_Users" ForeignField="ID"/>
       <Foreign Field="Task" ForeignClass="_Task" ForeignField="ID" ForeignViewNameField="Name"/>
     </Foreigns>
   </Table>

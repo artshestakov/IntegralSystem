@@ -13,13 +13,14 @@
 #include "ISMessageBox.h"
 #include "ISProtocol.h"
 #include "ISQueryPool.h"
+#include "ISMetaUser.h"
 //-----------------------------------------------------------------------------
 static QString QS_SEARCH_HISTORY = PREPARE_QUERY("SELECT fsth_value "
 												 "FROM _fullsearchtexthistory "
-												 "WHERE fsth_creationuser = currentuserid()");
+												 "WHERE fsth_user = :UserID");
 //-----------------------------------------------------------------------------
-static QString QI_HISTORY = PREPARE_QUERY("INSERT INTO _fullsearchtexthistory(fsth_value) "
-										  "VALUES (:Value)");
+static QString QI_HISTORY = PREPARE_QUERY("INSERT INTO _fullsearchtexthistory(fsth_user, fsth_value) "
+										  "VALUES (:UserID, :Value)");
 //-----------------------------------------------------------------------------
 ISFullTextSearchForm::ISFullTextSearchForm(QWidget *parent)
 	: ISInterfaceMetaForm(parent),
@@ -89,6 +90,7 @@ void ISFullTextSearchForm::LoadData()
 	LineEdit->SetFocus();
 
 	ISQuery qSelect(QS_SEARCH_HISTORY);
+	qSelect.BindValue(":UserID", CURRENT_USER_ID);
 	if (qSelect.Execute())
 	{
 		QStringList StringList;
@@ -290,6 +292,7 @@ void ISFullTextSearchForm::AddHistory(const QString &Value)
 {
 	ISQueryPool::Instance().AddQuery(QI_HISTORY,
 	{
+		{ ":UserID", CURRENT_USER_ID },
 		{ ":Value", Value }
 	});
 	LineEdit->CreateCompleter(LineEdit->GetCompleterList() << Value);

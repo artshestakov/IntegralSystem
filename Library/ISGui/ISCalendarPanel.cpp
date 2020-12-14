@@ -3,10 +3,11 @@
 #include "ISBuffer.h"
 #include "ISQuery.h"
 #include "ISGui.h"
+#include "ISMetaUser.h"
 //-----------------------------------------------------------------------------
 static QString QS_CALENDAR = PREPARE_QUERY("SELECT COUNT(*) "
 										   "FROM _calendar "
-										   "WHERE cldr_creationuser = currentuserid() "
+										   "WHERE cldr_user = :UserID "
 										   "AND cldr_date = :Date");
 //-----------------------------------------------------------------------------
 ISCalendarPanel::ISCalendarPanel(QWidget *parent) : ISCalendarWidget(parent)
@@ -98,6 +99,7 @@ void ISCalendarPanel::CurrentPageChanged(int Year, int Month)
 		QDate DateEvent(Year, Month, i + 1);
 
 		ISQuery qSelect(QS_CALENDAR);
+		qSelect.BindValue(":UserID", CURRENT_USER_ID);
 		qSelect.BindValue(":Date", DateEvent);
 		if (qSelect.ExecuteFirst())
 		{

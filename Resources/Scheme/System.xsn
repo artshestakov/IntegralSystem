@@ -122,48 +122,60 @@
     <Fields>
       <Field UID="{969E2A77-691F-4E12-9095-2C9BB933739B}" Name="TableName" Type="String" LabelName="Имя таблицы" LocalListName="Имя таблицы" NotSearch="true" NotNull="true" HideFromList="true"/>
       <Field UID="{32684211-638E-4EC7-A107-043D8DB16793}" Name="ObjectID" Type="Int" LabelName="Идентификатор объекта" LocalListName="Идентификатор объекта" NotSearch="true" NotNull="true" HideFromList="true"/>
+      <Field UID="{3B2191E4-3555-4D83-A90D-A5065EC7EB8F}" Name="User" Type="BigInt" LabelName="Оставил примечание" LocalListName="Оставил примечание" NotNull="true"/>
       <Field UID="{FBE8C2AF-4F28-4CAF-9912-5D32FFB5EB13}" Name="DateTime" Type="DateTime" DefaultValue="now()" LabelNane="Дата и время" LocalListName="Дата и время" NotNull="true"/>
       <Field UID="{04D790CB-F34A-4367-A1C8-2DFA28F01A7A}" Name="Message" Type="Text" LabelName="Сообщение" LocalListName="Сообщение" NotNull="true" PlaceholderText="Что Вы хотите сказать?"/>
     </Fields>
     <Indexes>
       <Index Field="TableName"/>
       <Index Field="ObjectID"/>
+      <Index Field="User"/>
       <Index Field="DateTime"/>
       <Index Field="Message"/>
     </Indexes>
-    <SystemFields>
-      <Field Name="CreationUser" LocalName="Оставил примечание"/>
-    </SystemFields>
+    <Foreigns>
+      <Foreign Field="User" ForeignClass="_Users" ForeignField="ID"/>
+    </Foreigns>
   </Table>
 
   <Table Name="_Favorites" UID="{38F56630-374C-4DF8-B3DB-0140CAD1A89E}" Alias="fvts" LocalName="Избранный объект" LocalListName="Избранные объекты" TitleName="TableName" IsSystem="true">
     <Fields>
+      <Field UID="{960802AE-977A-4980-AE88-54850DB9DD8A}" Name="User" Type="BigInt" LabelName="Пользователь" LocalListName="Пользователь" NotNull="true"/>
       <Field UID="{3E124016-29ED-4636-A7AE-3EEE96F07F35}" Name="TableName" Type="String" LabelName="Имя таблицы" LocalListName="Имя таблицы" NotNull="true"/>
       <Field UID="{A5E091B4-62D3-4A2D-9E9F-EBBEAA3011EF}" Name="ObjectsID" Type="IntArray" LabelName="Идентификатор объекта" LocalListName="Идентификатор объекта" NotNull="true"/>
     </Fields>
     <Indexes>
       <Index Field="TableName"/>
       <Index Field="ObjectsID"/>
-      <Index Field="CreationUser;TableName" Unique="true"/>
+      <Index Field="User;TableName" Unique="true"/>
     </Indexes>
+    <Foreigns>
+      <Foreign Field="User" ForeignClass="_Users" ForeignField="ID"/>
+    </Foreigns>
   </Table>
 
   <Table Name="_History" UID="{BF61E8B0-56A5-4EF7-A178-C22072B3F318}" Alias="htry" LocalName="История" LocalListName="История" TitleName="ObjectID" IsSystem="true">
     <Fields>
+      <Field UID="{905F9FC1-B791-4B6D-A8E2-FB24635133F1}" Name="User" Type="BigInt" LabelName="Пользователь" LocalListName="Пользователь" NotNull="true"/>
       <Field UID="{BA3803D8-D35C-4659-809D-28F7AF62E9D0}" Name="DateTime" Type="DateTime" DefaultValue="now()" LabelName="Дата и время" LocalListName="Дата и время" NotNull="true"/>
       <Field UID="{689A53DD-3873-43CE-9265-85854AA15BB6}" Name="TableName" Type="String" LabelName="Имя таблицы" LocalListName="Имя таблицы" NotNull="true"/>
       <Field UID="{CD7B1881-AE3E-4F1B-80A2-E6C93FB00588}" Name="ObjectID" Type="Int" LabelName="Идентификатор объекта" LocalListName="Идентификатор объекта" NotNull="true"/>
     </Fields>
     <Indexes>
+      <Index Field="User"/>
       <Index Field="DateTime"/>
       <Index Field="TableName"/>
       <Index Field="ObjectID"/>
-      <Index Field="ID;CreationUser"/>
+      <Index Field="ID;User"/>
     </Indexes>
+    <Foreigns>
+      <Foreign Field="User" ForeignClass="_Users" ForeignField="ID"/>
+    </Foreigns>
   </Table>
 
   <Table Name="_StorageFiles" UID="{48151E73-0ABB-4B50-9C6B-42B838F644B0}" Alias="sgfs" LocalName="Файл" LocalListName="Файлы" TitleName="Name">
     <Fields>
+      <Field UID="{E8CBCF9A-D4AE-49E9-9D98-0CB5E9DD84D8}" Name="Owner" Type="BigInt" LabelName="Добавил" LocalListName="Добавил" NotNull="true"/>
       <Field UID="{DF4FBDE0-3434-4DBC-8E1B-946E51002964}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
       <Field UID="{B3AB39BD-09B8-4AA7-A81A-08BB1E7EA727}" Name="Expansion" Type="String" LabelName="Расширение" LocalListName="Расширение" HideFromObject="true" NotNull="true"/>
       <Field UID="{91980012-F6A6-4F08-A35F-FD8335989C85}" Name="Size" Type="String" LabelName="Размер" LocalListName="Размер" HideFromObject="true" NotNull="true"/>
@@ -173,6 +185,7 @@
       <Field UID="{3A6520F0-EC9B-4405-BA2E-FDA42AE98F44}" Name="Password" Type="String" Size="32" LabelName="Пароль" LocalListName="Пароль" HideFromList="true" HideFromObject="true"/>
     </Fields>
     <Indexes>
+      <Index Field="Owner"/>
       <Index Field="Name"/>
       <Index Field="Expansion"/>
       <Index Field="Size"/>
@@ -180,13 +193,14 @@
       <Index Field="Note"/>
       <Index Field="Password"/>
     </Indexes>
-    <SystemFields>
-      <Field Name="CreationUser" LocalName="Добавил"/>
-    </SystemFields>
+    <Foreigns>
+      <Foreign Field="Owner" ForeignClass="_Users" ForeignField="ID"/>
+    </Foreigns>
   </Table>
 
   <Table Name="_Calendar" UID="{D5E4684A-569B-4567-B94A-0C94E5656AFF}" Alias="cldr" LocalName="Событие календаря" LocalListName="События календаря" ObjectForm="ISCalendarObjectForm" TitleName="Name" IsSystem="true">
     <Fields>
+      <Field UID="{33421A8E-8155-46E2-85E1-631AE802023A}" Name="User" Type="BigInt" LabelName="Пользователь" LocalListName="Пользователь" NotNull="true"/>
       <Field UID="{7A51954F-3824-46E0-BCDF-CCEB4BB9F078}" Name="Date" Type="Date" LabelName="Дата" LocalListName="Дата" NotNull="true"/>
       <Field UID="{D3C94B05-BC05-4F3F-95CE-CE8B0A420614}" Name="TimeAlert" Type="Time" LabelName="Время уведомления" LocalListName="Время уведомления" NotNull="true"/>
       <Field UID="{25B75ECE-DE5E-4952-A290-7E581576C924}" Name="Name" Type="String" LabelName="Название события" LocalListName="Название события" NotNull="true"/>
@@ -196,6 +210,7 @@
       <Field UID="{CCFFEFC9-FF08-489F-989C-ACD5BD1060E7}" Name="ObjectID" Type="Int" LabelName="Идентификатор объекта" LocalListName="Идентификатор объекта" HideFromObject="true"/>
     </Fields>
     <Indexes>
+      <Index Field="User"/>
       <Index Field="Date"/>
       <Index Field="TimeAlert"/>
       <Index Field="Name"/>
@@ -205,6 +220,9 @@
       <Index Field="ObjectID"/>
       <Index Field="Closed;Date;TimeAlert"/>
     </Indexes>
+    <Foreigns>
+      <Foreign Field="User" ForeignClass="_Users" ForeignField="ID"/>
+    </Foreigns>
   </Table>
 
   <Table Name="_QuestionAnswerGroup" UID="{72608326-C278-4B2B-90E9-7E1226E3471E}" Alias="qagr" LocalName="Группа вопросов и ответов" LocalListName="Группы вопросов и ответов" TitleName="Name">
@@ -238,49 +256,58 @@
 
   <Table Name="_SearchFast" UID="{382BA5DC-C0A2-4934-A718-70B9F6BBE6F2}" Alias="srfs" LocalName="Запрос быстрого поиска" LocalListName="Запросы быстрого поиска" TitleName="Value" IsSystem="true">
     <Fields>
+      <Field UID="{4254E1CC-7616-4635-A00C-01FFC5C91C3A}" Name="User" Type="BigInt" LabelName="Пользователь" LocalListName="Пользователь" NotNull="true"/>
       <Field UID="{57F639C8-2A73-4DBA-AA20-CB693219A408}" Name="Value" Type="String" LabelName="Поисковой запрос" LocalListName="Поисковой запрос" NotNull="true"/>
     </Fields>
     <Indexes>
       <Index Field="Value"/>
+      <Index Field="User"/>
     </Indexes>
+    <Foreigns>
+      <Foreign Field="User" ForeignClass="_Users" ForeignField="ID"/>
+    </Foreigns>
   </Table>
 
   <Table Name="_SortingTables" UID="{FDE07704-8804-4950-A4A8-8220F0C54B5F}" Alias="sgts" LocalName="Сортировка таблицы" LocalListName="Сортировки таблиц" TitleName="TableName" IsSystem="true">
     <Fields>
+      <Field UID="{F348BAEC-7027-46CA-A17E-85A09C770C1F}" Name="User" Type="BigInt" LabelName="Пользователь" LocalListName="Пользователь" NotNull="true"/>
       <Field UID="{8539EDD9-22D1-472E-B253-B6CFBF4BF74D}" Name="TableName" Type="String" LabelName="Таблица" LocalListName="Таблица" NotNull="true"/>
       <Field UID="{AB2DE55D-AA1B-4831-ACDD-9A091B69AB08}" Name="FieldName" Type="String" LabelName="Поле" LocalListName="Поле" NotNull="true"/>
       <Field UID="{D59D39AD-C4BE-451C-9BB7-6A3EE3A3DCC9}" Name="Sorting" Type="Int" LabelName="Сортировка" LocalListName="Сортировка" NotNull="true"/>
     </Fields>
     <Indexes>
       <Index Field="TableName"/>
+      <Index Field="User"/>
       <Index Field="FieldName"/>
       <Index Field="Sorting"/>
-      <Index Field="CreationUser"/>
-      <Index Field="CreationUser;TableName"/>
+      <Index Field="User;TableName"/>
     </Indexes>
   </Table>
 
   <Table Name="_ColumnSize" UID="{F2BB53FB-7B16-45F4-97FC-C32D4D05B685}" Alias="clsz" LocalName="Размер колонки" LocalListName="Размеры колонок" TitleName="TableName" IsSystem="true">
     <Fields>
+      <Field UID="{769F0755-D875-435C-BA66-93E280D5F46F}" Name="User" Type="BigInt" LabelName="Пользователь" LocalListName="Пользователь" NotNull="true"/>
       <Field UID="{D55AF498-33C3-4129-9AF5-85A7612BB110}" Name="TableName" Type="String" LabelName="Таблица" LocalListName="Таблица" NotNull="true"/>
       <Field UID="{C3340F5D-D0AA-423C-A602-E142FEFB324C}" Name="FieldName" Type="String" LabelName="Поле" LocalListName="Поле" NotNull="true"/>
       <Field UID="{DF0A0E7A-A8E5-4B44-8F11-C6B58A936486}" Name="Size" Type="Int" LabelName="Размер колонки" LocalListName="Размер колонки" NotNull="true"/>
     </Fields>
     <Indexes>
+      <Index Field="User"/>
       <Index Field="TableName"/>
       <Index Field="FieldName"/>
       <Index Field="Size"/>
-      <Index Field="CreationUser;TableName;FieldName"/>
+      <Index Field="User;TableName;FieldName"/>
     </Indexes>
   </Table>
 
   <Table Name="_Protocol" UID="{F7194787-0AB7-4D59-AEA4-9632FF560374}" Alias="prtc" ShowOnly="true" LocalName="Протокол работы" LocalListName="Протокол работы" TitleName="TableName" IsSystem="true">
     <Fields>
+      <Field UID="{D866D169-50F3-402F-BDBC-BA373F0D2815}" Name="User" Type="BigInt" LabelName="Пользователь" LocalListName="Пользователь" NotNull="true"/>
       <Field UID="{126DB61E-A617-4AD8-80AB-DBE227E9C12B}" Name="DateTime" Type="DateTime" DefaultValue="now()" LabelName="Дата и время" LocalListName="Дата и время события" NotNull="true"/>
       <Field UID="{A0C19CBE-8426-456D-A37A-76ACA9D97231}" Name="TableName" Type="String" LabelName="Таблица / Подсистема" LocalListName="Таблица" HideFromList="true" NotSearch="true"/>
       <Field UID="{C2143C81-9045-43B5-BCFC-F2EB4E0C00EE}" Name="TableLocalName" Type="String" LabelName="Таблица" LocalListName="Таблица"/>
       <Field UID="{F8881FC1-E7E8-468E-9DEF-358C12F6F625}" Name="Type" Type="BigInt" LabelName="Действие" LocalListName="Действие" NotNull="true"/>
-      <Field UID="{53D25190-AB48-455D-B87D-2BBACD32A966}" Name="ObjectID" Type="Int" LabelName="Идентификатор объекта" LocalListName="Идентификатор объекта"/>
+      <Field UID="{53D25190-AB48-455D-B87D-2BBACD32A966}" Name="ObjectID" Type="Int" LabelName="Идентификатор записи" LocalListName="Идентификатор записи"/>
       <Field UID="{47A1B622-4EA9-4681-A987-47FD03F6915F}" Name="Information" Type="String" LabelName="Дополнительная информация" LocalListName="Дополнительная информация"/>
     </Fields>
     <Indexes>
@@ -289,9 +316,9 @@
     <Foreigns>
       <Foreign Field="Type" ForeignClass="_ProtocolType" ForeignField="ID" ForeignViewNameField="Name"/>
     </Foreigns>
-    <SystemFields>
-      <Field Name="CreationUser" LocalName="Пользователь"/>
-    </SystemFields>
+    <Foreigns>
+      <Foreign Field="User" ForeignClass="_Users" ForeignField="ID"/>
+    </Foreigns>
   </Table>
 
   <Table Name="_ProtocolType" UID="{CB2C9248-710B-49D6-ABA7-EE1A008DD8AE}" Alias="prtp" ShowOnly="true" LocalName="Тип действия" LocalListName="Типы действий" TitleName="Name" IsSystem="true">
@@ -305,11 +332,16 @@
 
   <Table Name="_FullSearchTextHistory" UID="{429C3330-5CEB-4374-97B1-D876621F0624}" Alias="fsth" LocalName="История полнотекстового поиска" LocalListName="История полнотекстового поиска" TitleName="Value" IsSystem="true">
     <Fields>
+      <Field UID="{425EE1ED-CEFA-4DA4-903F-7D58542E0139}" Name="User" Type="BigInt" LabelName="Пользователь" LocalListName="Пользователь" NotNull="true"/>
       <Field UID="{921A3977-DE7E-4CB1-A251-045A89A71958}" Name="Value" Type="String" LabelName="Поисковое значение" LocalListName="Поисковое значение" NotNull="true"/>
     </Fields>
     <Indexes>
+      <Index Field="User"/>
       <Index Field="Value"/>
     </Indexes>
+    <Foreigns>
+      <Foreign Field="User" ForeignClass="_Users" ForeignField="ID"/>
+    </Foreigns>
   </Table>
 
 </XSN>
