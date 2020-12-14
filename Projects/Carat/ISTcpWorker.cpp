@@ -87,8 +87,8 @@ static QString QS_SETTING = PREPARE_QUERY("SELECT stgs_uid, stgs_name, stgs_type
 										  "WHERE stgs_group = :GroupUID "
 										  "ORDER BY stgs_order");
 //-----------------------------------------------------------------------------
-static QString QI_USER_SETTING = PREPARE_QUERY("INSERT INTO _usersettings(usst_setting, usst_value) "
-											   "VALUES((SELECT stgs_id FROM _settings WHERE stgs_uid = :SettingUID), :Value)");
+static QString QI_USER_SETTING = PREPARE_QUERY("INSERT INTO _usersettings(usst_user, usst_setting, usst_value) "
+											   "VALUES(:UserID, (SELECT stgs_id FROM _settings WHERE stgs_uid = :SettingUID), :Value)");
 //-----------------------------------------------------------------------------
 static QString QS_PARAGRAPH = PREPARE_QUERY("SELECT prhs_uid, prhs_name, prhs_localname, prhs_tooltip, prhs_icon, prhs_classname "
 											"FROM _paragraphs "
@@ -928,6 +928,7 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 					else //“акой настройки у пользовател€ нет - добавл€ем со значением по умолчанию
 					{
 						ISQuery qInsertSetting(ISDatabase::Instance().GetDB(DBConnectionName), QI_USER_SETTING);
+						qInsertSetting.BindValue(":UserID", TcpMessage->TcpSocket->GetUserID());
 						qInsertSetting.BindValue(":SettingUID", SettingUID);
 						qInsertSetting.BindValue(":Value", SettingDefault);
 						if (!qInsertSetting.Execute())
