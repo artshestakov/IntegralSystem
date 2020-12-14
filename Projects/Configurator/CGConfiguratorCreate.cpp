@@ -48,9 +48,10 @@ bool CGConfiguratorCreate::adminaccount()
 	qInsertAccount.BindValue(":Photo", ByteArray);
 	qInsertAccount.SetShowLongQuery(false);
 	bool Result = qInsertAccount.Execute();
-	if (Result)
+	if (Result) //Учётная запись была успешно добавлена - предлагаем создать пароль
 	{
 		ISDEBUG_L("Admin account created successfully!");
+		Result = adminpassword();
 	}
 	else //Ошибка запроса
 	{
