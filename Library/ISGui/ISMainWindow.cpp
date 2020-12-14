@@ -217,7 +217,7 @@ void ISMainWindow::Reconnect()
 	if (Result) //Переподключение прошло успешно - посылаем запрос на авторизацию
 	{
 		ISTcpQuery qReAuth(API_AUTH);
-		qReAuth.BindValue("Hash", ISSystem::StringToSha256(ISMetaUser::Instance().UserData.Login + ISMetaUser::Instance().UserData.Password + " "));
+		qReAuth.BindValue("Hash", ISSystem::StringToSha256(ISMetaUser::Instance().UserData.Login + ISMetaUser::Instance().UserData.Password));
 		Result = qReAuth.Execute();
 		if (Result)
 		{
