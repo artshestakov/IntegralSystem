@@ -726,7 +726,7 @@ bool CGDatabase::Table_CreateFields(PMetaTable *MetaTable, QString &ErrorString)
 				Result = qAddColumn.Execute(AddColumn);
 				if (Result)
 				{
-					//ISLOGGER_L(QString("Add field: %1_%2").arg(MetaTable->Alias).arg(MetaField->Name));
+					ISDEBUG_L(QString("Add field: %1_%2").arg(MetaTable->Alias).arg(MetaField->Name));
 				}
 				else
 				{

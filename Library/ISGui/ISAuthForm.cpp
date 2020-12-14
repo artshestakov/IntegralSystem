@@ -116,7 +116,7 @@ ISAuthForm::ISAuthForm()
 	if (CONFIG_BOOL(CONST_CONFIG_REMEMBER_USER_INCLUDE))
 	{
 		EditLogin->SetValue(CONFIG_STRING(CONST_CONFIG_REMEMBER_USER_LOGIN));
-		QTimer::singleShot(100, EditPassword, &ISPasswordEdit::SetFocus);
+		QTimer::singleShot(100, EditPassword, &ISLineEdit::SetFocus);
 	}
 #endif
 }
