@@ -13,7 +13,7 @@
       <Index Field="User;Setting"/>
     </Indexes>
     <Foreigns>
-      <Foreign Field="User" ForeignClass="_Users" ForeignField="ID"/>
+      <Foreign Field="User" ForeignClass="_Users" ForeignField="ID" ForeignViewNameField="FIO"/>
       <Foreign Field="Setting" ForeignClass="_Settings" ForeignField="ID"/>
     </Foreigns>
   </Table>

@@ -158,7 +158,7 @@
       <Index Field="Task;Link" Unique="true"/>
     </Indexes>
     <Foreigns>
-      <Foreign Field="User" ForeignClass="_Users" ForeignField="ID"/>
+      <Foreign Field="User" ForeignClass="_Users" ForeignField="ID" ForeignViewNameField="FIO"/>
       <Foreign Field="Task" ForeignClass="_Task" ForeignField="ID" ForeignViewNameField="Name"/>
       <Foreign Field="Link" ForeignClass="_Task" ForeignField="ID" ForeignViewNameField="Name"/>
     </Foreigns>
@@ -186,7 +186,7 @@
       <Index Field="Size"/>
     </Indexes>
     <Foreigns>
-      <Foreign Field="User" ForeignClass="_Users" ForeignField="ID"/>
+      <Foreign Field="User" ForeignClass="_Users" ForeignField="ID" ForeignViewNameField="FIO"/>
       <Foreign Field="Task" ForeignClass="_Task" ForeignField="ID" ForeignViewNameField="Name"/>
     </Foreigns>
   </Table>

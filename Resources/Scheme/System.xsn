@@ -134,7 +134,7 @@
       <Index Field="Message"/>
     </Indexes>
     <Foreigns>
-      <Foreign Field="User" ForeignClass="_Users" ForeignField="ID"/>
+      <Foreign Field="User" ForeignClass="_Users" ForeignField="ID" ForeignViewNameField="FIO"/>
     </Foreigns>
   </Table>
 
@@ -150,7 +150,7 @@
       <Index Field="User;TableName" Unique="true"/>
     </Indexes>
     <Foreigns>
-      <Foreign Field="User" ForeignClass="_Users" ForeignField="ID"/>
+      <Foreign Field="User" ForeignClass="_Users" ForeignField="ID" ForeignViewNameField="FIO"/>
     </Foreigns>
   </Table>
 
@@ -169,7 +169,7 @@
       <Index Field="ID;User"/>
     </Indexes>
     <Foreigns>
-      <Foreign Field="User" ForeignClass="_Users" ForeignField="ID"/>
+      <Foreign Field="User" ForeignClass="_Users" ForeignField="ID" ForeignViewNameField="FIO"/>
     </Foreigns>
   </Table>
 
@@ -221,7 +221,7 @@
       <Index Field="Closed;Date;TimeAlert"/>
     </Indexes>
     <Foreigns>
-      <Foreign Field="User" ForeignClass="_Users" ForeignField="ID"/>
+      <Foreign Field="User" ForeignClass="_Users" ForeignField="ID" ForeignViewNameField="FIO"/>
     </Foreigns>
   </Table>
 
@@ -264,7 +264,7 @@
       <Index Field="User"/>
     </Indexes>
     <Foreigns>
-      <Foreign Field="User" ForeignClass="_Users" ForeignField="ID"/>
+      <Foreign Field="User" ForeignClass="_Users" ForeignField="ID" ForeignViewNameField="FIO"/>
     </Foreigns>
   </Table>
 
@@ -314,10 +314,8 @@
       <Index Field="TableName;ObjectID"/>
     </Indexes>
     <Foreigns>
+      <Foreign Field="User" ForeignClass="_Users" ForeignField="ID" ForeignViewNameField="FIO"/>
       <Foreign Field="Type" ForeignClass="_ProtocolType" ForeignField="ID" ForeignViewNameField="Name"/>
-    </Foreigns>
-    <Foreigns>
-      <Foreign Field="User" ForeignClass="_Users" ForeignField="ID"/>
     </Foreigns>
   </Table>
 
@@ -340,7 +338,7 @@
       <Index Field="Value"/>
     </Indexes>
     <Foreigns>
-      <Foreign Field="User" ForeignClass="_Users" ForeignField="ID"/>
+      <Foreign Field="User" ForeignClass="_Users" ForeignField="ID" ForeignViewNameField="FIO"/>
     </Foreigns>
   </Table>
 
