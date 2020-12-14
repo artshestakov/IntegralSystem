@@ -35,9 +35,7 @@ static QString QS_TASK = PREPARE_QUERY("SELECT "
 									   "t.task_creationuser AS task_owner_id, "
 									   "t.task_important, "
 									   "t.task_parent AS task_parent_id, "
-									   "p.task_name AS task_parent_name, "
-									   "(SELECT COUNT(*) AS vote_count FROM _taskvote WHERE tvot_task = :TaskID), "
-									   "(SELECT (COUNT(*) > 0)::BOOLEAN AS is_voted FROM _taskvote WHERE tvot_creationuser = currentuserid()) "
+									   "p.task_name AS task_parent_name "
 									   "FROM _task t "
 									   "LEFT JOIN _users ue ON ue.usrs_id = t.task_executor "
 									   "LEFT JOIN _users uo ON uo.usrs_id = t.task_creationuser "
@@ -193,8 +191,6 @@ ISTaskViewForm::ISTaskViewForm(int task_id, QWidget *parent)
 	TaskImportant = qSelect.ReadColumn("task_important").toBool();
 	TaskParentID = qSelect.ReadColumn("task_parent_id").toInt();
 	TaskParentName = qSelect.ReadColumn("task_parent_name").toString();
-	VoteCount = qSelect.ReadColumn("vote_count").toInt();
-	IsVoted = qSelect.ReadColumn("is_voted").toBool();
 
 	setWindowTitle(TaskParentID ? LANG("Task.ViewFormTitle.SubTask").arg(TaskParentID).arg(TaskName) : LANG("Task.ViewFormTitle.Task").arg(TaskID).arg(TaskName));
 

@@ -121,8 +121,6 @@ private:
 	bool TaskImportant;
 	int TaskParentID;
 	QString TaskParentName;
-	int VoteCount;
-	bool IsVoted;
 };
 //-----------------------------------------------------------------------------
 #endif

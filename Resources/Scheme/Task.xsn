@@ -105,16 +105,6 @@
     </Indexes>
   </Table>
 
-  <Table Name="_TaskVote" UID="{8AF12609-6A0D-4063-B48B-29569F25FA15}" Alias="tvot" LocalName="Голос" LocalListName="Голоса" TitleName="Task" IsSystem="true">
-    <Fields>
-      <Field UID="{41CFD1A5-A86F-48F4-A2C6-C67FD63F89A7}" Name="Task" Type="BigInt" LabelName="Задача" LocalListName="Задача" NotNull="true"/>
-    </Fields>
-    <Indexes>
-      <Index Field="Task"/>
-      <Index Field="CreationUser;Task" Unique="true"/>
-    </Indexes>
-  </Table>
-
   <Table Name="_TaskComment" UID="{A37809AE-7889-4E2A-B314-6E86BFD7F0A7}" Alias="tcom" LocalName="Комментарий к задаче" LocalListName="Комментарии к задачам" TitleName="Comment" IsSystem="true">
     <Fields>
       <Field UID="{FF247C5B-4FCE-4970-865D-FE36DD5E90B8}" Name="DateTime" Type="DateTime" DefaultValue="now()" LabelName="Дата и время" LocalListName="Дата и время" NotNull="true"/>
