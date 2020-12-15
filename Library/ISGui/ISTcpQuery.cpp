@@ -51,7 +51,7 @@ bool ISTcpQuery::Execute()
 			}
 		}
 	}, QJsonDocument::Compact) + SYMBOL_NULL_TERM;
-	ByteArray.insert(0, QString("%1.").arg(ByteArray.size()));
+	ByteArray.insert(0, QString::number(ByteArray.size()) + '.');
 
 	//Проверяем наличие соединения
 	if (!ISTcpConnector::Instance().IsConnected())

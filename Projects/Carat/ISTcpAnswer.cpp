@@ -48,7 +48,7 @@ QByteArray ISTcpAnswer::ToByteArray() const
 		{ "ErrorString", ErrorString },
 		{ "Parameters", Parameters }
 	}, QJsonDocument::Compact) + SYMBOL_NULL_TERM;
-	ByteArray.insert(0, QString("%1.").arg(ByteArray.size()));
+	ByteArray.insert(0, QString::number(ByteArray.size()) + '.');
 	return ByteArray;
 }
 //-----------------------------------------------------------------------------
