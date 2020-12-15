@@ -447,6 +447,12 @@
     <ClCompile Include="ISReconnectForm.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
+    <ClCompile Include="ISTcpModel.cpp">
+      <Filter>Model</Filter>
+    </ClCompile>
+    <ClCompile Include="ISTestModelForm.cpp">
+      <Filter>Forms</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ISExportForm.h">
@@ -750,6 +756,12 @@
       <Filter>Forms</Filter>
     </QtMoc>
     <QtMoc Include="ISReconnectForm.h">
+      <Filter>Forms</Filter>
+    </QtMoc>
+    <QtMoc Include="ISTcpModel.h">
+      <Filter>Model</Filter>
+    </QtMoc>
+    <QtMoc Include="ISTestModelForm.h">
       <Filter>Forms</Filter>
     </QtMoc>
   </ItemGroup>

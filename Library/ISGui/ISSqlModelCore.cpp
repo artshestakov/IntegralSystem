@@ -223,7 +223,7 @@ QModelIndex ISSqlModelCore::index(int Row, int Column, const QModelIndex &Parent
 //-----------------------------------------------------------------------------
 QModelIndex ISSqlModelCore::parent(const QModelIndex &Index) const
 {
-    Q_UNUSED(Index)
+	Q_UNUSED(Index);
 	return QModelIndex();
 }
 //-----------------------------------------------------------------------------

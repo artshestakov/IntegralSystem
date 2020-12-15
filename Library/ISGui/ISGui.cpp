@@ -44,6 +44,7 @@
 #include "ISSettingsDatabaseListForm.h"
 #include "ISTaskObjectForm.h"
 #include "ISAsteriskCallsListForm.h"
+#include "ISTestModelForm.h"
 #include "ISDelegates.h"
 #include "ISFieldEdits.h"
 #include "ISComboSearchWidgets.h"
@@ -671,6 +672,7 @@ void ISGui::RegisterMetaType()
 	qRegisterMetaType<ISSettingsDatabaseListForm*>("ISSettingsDatabaseListForm");
 	qRegisterMetaType<ISTaskObjectForm*>("ISTaskObjectForm");
 	qRegisterMetaType<ISAsteriskCallsListForm*>("ISAsteriskCallsListForm");
+	qRegisterMetaType<ISTestModelForm*>("ISTestModelForm");
 
 	qRegisterMetaType<ISDelegateBoolean*>("ISDelegateBoolean");
 	qRegisterMetaType<ISDelegateImage*>("ISDelegateImage");

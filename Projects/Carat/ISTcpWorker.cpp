@@ -1585,7 +1585,8 @@ bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 			SqlRecord = qSelect.GetRecord(); //Получаем очередную запись
 			for (int i = 0; i < FieldCount; ++i) //Обходим поля и вытаскиваем значения
 			{
-				Values.push_back(SqlRecord.value(i));
+				QVariant Value = SqlRecord.value(i);
+				Values.push_back(Value.isNull() ? QVariant() : Value);
 			}
 			RecordList.push_back(Values); //Добавляем список значений в список записей
 		} while (qSelect.Next()); //Обходим выборку	
