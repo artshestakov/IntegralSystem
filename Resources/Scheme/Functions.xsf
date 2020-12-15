@@ -16,6 +16,25 @@
     COST 100;
   </Function>
 
+  <Function Name="get_record_creater(table_name character varying, object_id bigint)" Comment="Получить идентификатор создателя записи">
+    CREATE OR REPLACE FUNCTION public.get_record_creater(table_name character varying, object_id bigint)
+    RETURNS bigint AS
+    $body$
+    BEGIN
+    RETURN prtc_user
+    FROM _protocol
+    WHERE prtc_type = (SELECT prtp_id FROM _protocoltype WHERE prtp_uid = '{D1348312-298F-4A7C-B584-9BA8C4952CD3}')
+    AND prtc_tablename = table_name
+    AND prtc_objectid = object_id;
+    END;
+    $body$
+    LANGUAGE 'plpgsql'
+    VOLATILE
+    CALLED ON NULL INPUT
+    SECURITY INVOKER
+    COST 100;
+  </Function>
+
   <Function Name="userphotobyid(id bigint)" Comment="Получить аватар пользователя по его идентификатору">
     CREATE OR REPLACE FUNCTION public.userphotobyid(id bigint)
     RETURNS bytea AS
