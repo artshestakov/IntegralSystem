@@ -16,21 +16,6 @@
     COST 100;
   </Function>
 
-  <Function Name="currentuserid()" Comment="Получить идентификатор текущего пользователя">
-    CREATE OR REPLACE FUNCTION public.currentuserid()
-    RETURNS bigint AS
-    $body$
-    BEGIN
-    RETURN usrs_id FROM _users WHERE usrs_login = CURRENT_USER;
-    END;
-    $body$
-    LANGUAGE 'plpgsql'
-    VOLATILE
-    RETURNS NULL ON NULL INPUT
-    SECURITY INVOKER
-    COST 100;
-  </Function>
-  
   <Function Name="userphotobyid(id bigint)" Comment="Получить аватар пользователя по его идентификатору">
     CREATE OR REPLACE FUNCTION public.userphotobyid(id bigint)
     RETURNS bytea AS
