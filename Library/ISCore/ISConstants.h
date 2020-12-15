@@ -163,6 +163,7 @@ const char API_RECORD_DELETE[] = "RecordDelete"; //Удалить запись
 const char API_DISCUSSION_ADD[] = "DiscussionAdd"; //Добавить обсуждение
 const char API_DISCUSSION_EDIT[] = "DiscussionEdit"; //Изменить обсуждение
 const char API_DISCUSSION_COPY[] = "DiscussionCopy"; //Скопировать обсуждение
+const char API_GET_TABLE_DATA[] = "GetTableData"; //Получить данные из таблицы
 //CARAT_LOCAL_API--------------------------------------------------------------
 const char		CARAT_LOCAL_API_SHUTDOWN[] = "shutdown"; //Завершение работы
 //-----------------------------------------------------------------------------

@@ -96,6 +96,10 @@ ISNamespace::ApiMessageType ISTcp::GetMessageTypeByName(const QString &Name)
 	{
 		return ISNamespace::AMT_DiscussionCopy;
 	}
+	else if (Name == API_GET_TABLE_DATA)
+	{
+		return ISNamespace::AMT_GetTableData;
+	}
 	return ISNamespace::AMT_Unknown;
 }
 //-----------------------------------------------------------------------------

@@ -11,6 +11,7 @@
 #include "ISTcpClients.h"
 #include "ISMetaData.h"
 #include "ISFail2Ban.h"
+#include "ISQueryModel.h"
 //-----------------------------------------------------------------------------
 static QString QS_USERS_HASH = PREPARE_QUERY("SELECT usrs_hash, usrs_salt "
 											 "FROM _users "
@@ -290,6 +291,7 @@ void ISTcpWorker::Process()
 					case ISNamespace::AMT_DiscussionAdd: Result = DiscussionAdd(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_DiscussionEdit: Result = DiscussionEdit(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_DiscussionCopy: Result = DiscussionCopy(tcp_message, TcpAnswer); break;
+					case ISNamespace::AMT_GetTableData: Result = GetTableData(tcp_message, TcpAnswer); break;
 					}
 					PerfomanceMsec = ISAlgorithm::GetTickDiff(ISAlgorithm::GetTick(), TimePoint);
 				}
@@ -1524,6 +1526,72 @@ bool ISTcpWorker::DiscussionCopy(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
 		return false;
 	}
 	TcpAnswer->Parameters["ID"] = qCopy.ReadColumn("dson_id");
+	return true;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+	QVariant TableName = CheckNullField("TableName", TcpMessage->Parameters);
+	if (!TableName.isValid())
+	{
+		return false;
+	}
+
+	//Получаем необязательные параметры
+	QString OrderField = TcpMessage->Parameters["OrderField"].toString(),
+		OrderType = TcpMessage->Parameters["OrderType"].toString();
+
+	//Получаем мета-таблицу
+	PMetaTable *MetaTable = ISMetaData::Instance().GetMetaTable(TableName.toString());
+	if (!MetaTable)
+	{
+		ErrorString = LANG("Carat.Error.Query.GetTableData.TableNotExist").arg(TableName.toString());
+		return false;
+	}
+
+	ISQueryModel QueryModel(MetaTable, ISNamespace::QMT_List);
+
+	ISQuery qSelect(ISDatabase::Instance().GetDB(DBConnectionName), QueryModel.GetQueryText());
+	qSelect.SetShowLongQuery(false);
+	if (!qSelect.Execute()) //Запрос не отработал
+	{
+		ErrorString = LANG("Carat.Error.Query.GetTableData.Select").arg(qSelect.GetErrorString());
+		return false;
+	}
+
+	QSqlRecord SqlRecord = qSelect.GetRecord();
+	int FieldCount = SqlRecord.count();
+	QVariantList FieldList, RecordList;
+
+	//Заполняем описание полей
+	for (int i = 0; i < FieldCount; ++i)
+	{
+		QSqlField SqlField = SqlRecord.field(i);
+		PMetaField *MetaField = MetaTable->GetField(SqlField.name());
+
+		FieldList.append(QVariantMap
+		{
+			{ "Name", SqlField.name() },
+			{ "LocalName", MetaField->LocalListName },
+			{ "Type", MetaField->Type }
+		});
+	}
+
+	if (qSelect.First()) //Данные есть
+	{
+		do
+		{
+			QVariantList Values; //Список значений
+			SqlRecord = qSelect.GetRecord(); //Получаем очередную запись
+			for (int i = 0; i < FieldCount; ++i) //Обходим поля и вытаскиваем значения
+			{
+				Values.push_back(SqlRecord.value(i));
+			}
+			RecordList.push_back(Values); //Добавляем список значений в список записей
+		} while (qSelect.Next()); //Обходим выборку	
+	}
+	TcpAnswer->Parameters["FieldList"] = FieldList;
+	TcpAnswer->Parameters["RecordList"] = RecordList;
 	return true;
 }
 //-----------------------------------------------------------------------------
