@@ -48,8 +48,7 @@ static QString QS_INFO = PREPARE_QUERY("SELECT "
 									   "(SELECT COUNT(*) AS \"field_count\" FROM information_schema.columns WHERE table_catalog = current_database() AND table_schema = current_schema()), "
 									   "(SELECT COUNT(*) AS \"sequence_count\" FROM information_schema.sequences WHERE sequence_catalog = current_database() AND sequence_schema = current_schema()), "
 									   "(SELECT COUNT(*) AS \"index_count\" FROM pg_indexes WHERE schemaname = current_schema()), "
-									   "(SELECT COUNT(*) AS \"foreign_count\" FROM information_schema.constraint_table_usage WHERE constraint_catalog = current_database() AND constraint_schema = current_schema()), "
-									   "(SELECT COUNT(*) AS \"user_count\" FROM pg_user)");
+									   "(SELECT COUNT(*) AS \"foreign_count\" FROM information_schema.constraint_table_usage WHERE constraint_catalog = current_database() AND constraint_schema = current_schema())");
 //-----------------------------------------------------------------------------
 CGConfiguratorShow::CGConfiguratorShow() : CGConfiguratorBase()
 {
@@ -113,7 +112,6 @@ bool CGConfiguratorShow::databaseinfo()
 		ISDEBUG_L("Count fields:\t" + qSelectInfo.ReadColumn("field_count").toString());
 		ISDEBUG_L("Count sequence:\t" + qSelectInfo.ReadColumn("sequence_count").toString());
 		ISDEBUG_L("Count foreigns:\t" + qSelectInfo.ReadColumn("foreign_count").toString());
-		ISDEBUG_L("Count users:\t" + qSelectInfo.ReadColumn("user_count").toString());
 		
 		//Готовим запрос для расчёта количества строк
 		QString SqlQueryCount = "WITH r AS(\n";
