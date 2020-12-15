@@ -35,7 +35,8 @@ private:
 	void Protocol(int UserID, const ISUuid &ActionTypeUID, const QVariant &TableName, const QVariant &TableLocalName, const QVariant &ObjectID, const QVariant &Information = QString()); //Протоколирование действия
 	bool UserPasswordExist(const QVariant &UserID, bool &Exist); //Проверка наличия пароля у пользователя
 	bool UserIsSystem(const QVariant &UserID, bool &IsSystem); //Проверка пользователя на системность
-	
+	QString ConvertDateTimeToString(const QDateTime &DateTime, const QString &DateFormat, const QString &TimeFormat); //Конвертировать дату и время в строку
+	QString ConvertDateToString(const QDate &Date, const QString &DateFormat); //Конвертировать дату в строку
 
 private:
 	bool Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);

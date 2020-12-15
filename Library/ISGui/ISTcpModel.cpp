@@ -17,10 +17,12 @@ void ISTcpModel::SetData(const QVariantList &fields, const QVariantList &records
 	{
 		QVariantMap FieldMap = Field.toMap();
 
-		PMetaField MetaField;
-		MetaField.Name = FieldMap["Name"].toString();
-		MetaField.LocalListName = FieldMap["LocalName"].toString();
-		Fields.emplace_back(MetaField);
+		ISFieldModel FieldModel;
+		FieldModel.Name = FieldMap["Name"].toString();
+		FieldModel.LocalName = FieldMap["LocalName"].toString();
+		FieldModel.Type = static_cast<ISNamespace::FieldType>(FieldMap["Type"].toInt());
+		FieldModel.IsForeign = FieldMap["IsForeign"].toBool();
+		Fields.emplace_back(FieldModel);
 	}
 
 	//Заполняем строки
@@ -28,8 +30,7 @@ void ISTcpModel::SetData(const QVariantList &fields, const QVariantList &records
 	Records.resize(RecordCount);
 	for (int i = 0; i < RecordCount; ++i)
 	{
-		QVariantList Values = records[i].toList();
-		Records[i] = QVector<QVariant>::fromList(Values).toStdVector();
+		Records[i] = QVector<QVariant>::fromList(records[i].toList()).toStdVector();
 	}
 }
 //-----------------------------------------------------------------------------
@@ -45,11 +46,36 @@ QVariant ISTcpModel::data(const QModelIndex &ModelIndex, int Role) const
 	{
 		Value = Records[ModelIndex.row()][ModelIndex.column()].toString();
 	}
+	else if (Role == Qt::TextAlignmentRole)
+	{
+		ISFieldModel FieldModel = Fields[ModelIndex.column()];
+		ISNamespace::FieldType Type = FieldModel.Type;
+		if (Type == ISNamespace::FT_Date ||
+			Type == ISNamespace::FT_Time ||
+			Type == ISNamespace::FT_DateTime ||
+			Type == ISNamespace::FT_Birthday ||
+			Type == ISNamespace::FT_Seconds ||
+			Type == ISNamespace::FT_Year ||
+			Type == ISNamespace::FT_Phone) //Расположение по центру
+		{
+			Value = Qt::AlignCenter;
+		}
+		else if ((Type == ISNamespace::FT_Int ||
+			Type == ISNamespace::FT_Double ||
+			Type == ISNamespace::FT_Money) &&
+			!FieldModel.IsForeign) //Для чисел расположение по центру справа (если не внешний ключ)
+		{
+			Value = Qt::AlignRight + Qt::AlignVCenter;
+		}
+	}
 	return Value;
 }
 //-----------------------------------------------------------------------------
 bool ISTcpModel::setData(const QModelIndex &ModelIndex, const QVariant &Value, int Role)
 {
+	Q_UNUSED(ModelIndex);
+	Q_UNUSED(Value);
+	Q_UNUSED(Role);
 	return true;
 }
 //-----------------------------------------------------------------------------
@@ -60,7 +86,7 @@ QVariant ISTcpModel::headerData(int Section, Qt::Orientation Orientation, int Ro
 	{
 		if (Role == Qt::DisplayRole) //Отображение локального наименование столбца
 		{
-			Value = Fields[Section].LocalListName;
+			Value = Fields[Section].LocalName;
 		}
 		else if (Role == Qt::DecorationRole) //Отображение иконки сортируемого столбца
 		{
@@ -75,14 +101,14 @@ QVariant ISTcpModel::headerData(int Section, Qt::Orientation Orientation, int Ro
 		}
 		else if (Role == Qt::ToolTipRole) //Всплывающий текст заголовка поля
 		{
-			Value = Fields[Section].LocalListName;
+			Value = Fields[Section].LocalName;
 		}
 	}
 	else
 	{
 		if (Role == Qt::DisplayRole)
 		{
-			return Section + 1;
+			Value = Section + 1;
 		}
 	}
 	return Value;
@@ -90,16 +116,20 @@ QVariant ISTcpModel::headerData(int Section, Qt::Orientation Orientation, int Ro
 //-----------------------------------------------------------------------------
 int ISTcpModel::rowCount(const QModelIndex &Parent) const
 {
+	Q_UNUSED(Parent);
 	return (int)Records.size();
 }
 //-----------------------------------------------------------------------------
 int ISTcpModel::columnCount(const QModelIndex &Parent) const
 {
+	Q_UNUSED(Parent);
 	return (int)Fields.size();
 }
 //-----------------------------------------------------------------------------
 QModelIndex ISTcpModel::index(int Row, int Column, const QModelIndex &Parent) const
 {
+	Q_UNUSED(Row);
+	Q_UNUSED(Column);
 	Q_UNUSED(Parent);
 	return createIndex(Row, Column);
 }

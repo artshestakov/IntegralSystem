@@ -408,6 +408,35 @@ bool ISTcpWorker::UserIsSystem(const QVariant &UserID, bool &IsSystem)
 	return true;
 }
 //-----------------------------------------------------------------------------
+QString ISTcpWorker::ConvertDateTimeToString(const QDateTime &DateTime, const QString &DateFormat, const QString &TimeFormat)
+{
+	return DateTime.isValid() ?
+		ConvertDateToString(DateTime.date(), DateFormat) + SYMBOL_SPACE + LANG("Carat.In") + SYMBOL_SPACE + DateTime.time().toString(TimeFormat) :
+		QString();
+}
+//-----------------------------------------------------------------------------
+QString ISTcpWorker::ConvertDateToString(const QDate &Date, const QString &DateFormat)
+{
+	QString Result;
+	if (Date == QDate::currentDate().addDays(-1)) //Вчера
+	{
+		Result = LANG("Carat.Yesterday");
+	}
+	else if (Date == QDate::currentDate()) //Сегодня
+	{
+		Result = LANG("Carat.Today");
+	}
+	else if (Date == QDate::currentDate().addDays(1)) //Завтра
+	{
+		Result = LANG("Carat.Tomorrow");
+	}
+	else
+	{
+		Result = Date.toString(DateFormat);
+	}
+	return Result;
+}
+//-----------------------------------------------------------------------------
 bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
 	Q_UNUSED(TcpAnswer);
@@ -1551,6 +1580,13 @@ bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 
 	ISQueryModel QueryModel(MetaTable, ISNamespace::QMT_List);
 
+	//Если сортировка указана - используем её
+	if (!OrderField.isEmpty() && !OrderType.isEmpty())
+	{
+		QueryModel.SetOrderField(MetaTable->Alias + '_' + OrderField, OrderField,
+			OrderType.toLower() == "asc" ? Qt::AscendingOrder : Qt::DescendingOrder);
+	}
+
 	ISQuery qSelect(ISDatabase::Instance().GetDB(DBConnectionName), QueryModel.GetQueryText());
 	qSelect.SetShowLongQuery(false);
 	if (!qSelect.Execute()) //Запрос не отработал
@@ -1562,18 +1598,19 @@ bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	QSqlRecord SqlRecord = qSelect.GetRecord();
 	int FieldCount = SqlRecord.count();
 	QVariantList FieldList, RecordList;
+	std::vector<ISNamespace::FieldType> VectorType(FieldCount, ISNamespace::FT_Unknown);
 
 	//Заполняем описание полей
 	for (int i = 0; i < FieldCount; ++i)
 	{
-		QSqlField SqlField = SqlRecord.field(i);
-		PMetaField *MetaField = MetaTable->GetField(SqlField.name());
-
+		PMetaField *MetaField = MetaTable->GetField(SqlRecord.fieldName(i));
+		VectorType[i] = MetaField->Type; //Заполняем типы сейчас, чтобы использовать их ниже
 		FieldList.append(QVariantMap
 		{
-			{ "Name", SqlField.name() },
+			{ "Name", MetaField->Name },
 			{ "LocalName", MetaField->LocalListName },
-			{ "Type", MetaField->Type }
+			{ "Type", MetaField->Type },
+			{ "IsForeign", MetaField->Foreign ? true : false }
 		});
 	}
 
@@ -1585,8 +1622,56 @@ bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 			SqlRecord = qSelect.GetRecord(); //Получаем очередную запись
 			for (int i = 0; i < FieldCount; ++i) //Обходим поля и вытаскиваем значения
 			{
+				//Получаем тип поля
+				ISNamespace::FieldType Type = VectorType[i];
+
+				//Если значение содержит NULL - добавляем пустое и переходим к следующему
 				QVariant Value = SqlRecord.value(i);
-				Values.push_back(Value.isNull() ? QVariant() : Value);
+				if (Value.isNull())
+				{
+					Values.push_back(QVariant());
+					continue;
+				}
+				
+				//Значение не содержит NULL - анализируем
+				if (Type == ISNamespace::FT_Date)
+				{
+					Value = ConvertDateToString(Value.toDate(), FORMAT_DATE_V1);
+				}
+				else if (Type == ISNamespace::FT_Birthday)
+				{
+					Value = Value.toDate().toString(FORMAT_DATE_V1);
+				}
+				else if (Type == ISNamespace::FT_Time)
+				{
+					Value = Value.toTime().toString(FORMAT_TIME_V3);
+				}
+				else if (Type == ISNamespace::FT_DateTime)
+				{
+					Value = ConvertDateTimeToString(Value.toDateTime(), FORMAT_DATE_V1, FORMAT_TIME_V1);
+				}
+				else if (Type == ISNamespace::FT_Phone)
+				{
+					QString PhoneNumber = Value.toString();
+					Value = QString("+7 (%1) %2-%3-%4").arg(PhoneNumber.left(3)).arg(PhoneNumber.mid(3, 3)).arg(PhoneNumber.mid(6, 2)).arg(PhoneNumber.right(2));
+				}
+				else if (Type == ISNamespace::FT_Seconds)
+				{
+					Value = QTime(0, 0).addSecs(Value.toInt()).toString(FORMAT_TIME_V3);
+				}
+				else if (Type == ISNamespace::FT_Double)
+				{
+					Value = QString::number(Value.toDouble(), 'f', 3); //??? Нужно использовать настройку из БД
+				}
+				else if (Type == ISNamespace::FT_Money)
+				{
+					Value = QString::number(Value.toDouble(), 'f', 2);
+				}
+				else if (Type == ISNamespace::FT_UID)
+				{
+					Value = ISUuid(Value);
+				}
+				Values.push_back(Value);
 			}
 			RecordList.push_back(Values); //Добавляем список значений в список записей
 		} while (qSelect.Next()); //Обходим выборку	

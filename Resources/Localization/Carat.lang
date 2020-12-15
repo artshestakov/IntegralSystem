@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LANG Name="Carat">
 
+  <Local Name="Carat.Yesterday" Russian="Вчера"/>
+  <Local Name="Carat.Today" Russian="Сегодня"/>
+  <Local Name="Carat.Tomorrow" Russian="Завтра"/>
+  <Local Name="Carat.In" Russian="в"/>
+  
   <!--Общие ошибки-->
   <Local Name="Carat.Error.ParseMessage" Russian="Ошибка парсинга сообщения: %1"/>
   <Local Name="Carat.Error.InvalidMessage" Russian="Сообщение невалидное: %1"/>

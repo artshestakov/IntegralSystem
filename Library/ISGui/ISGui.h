@@ -33,7 +33,6 @@ public:
 	static QString PrepareLongToolTip(QString ToolTipText, int MaxWidth = 250); //Правка текста высплывающей подсказки (для переноса слов на новую строку)
 	static int GetStringWidth(const QString &String, const QFont &Font); //Получить размер строки в пикселях для шрифта
 	static QColor StringToColor(const QString &String); //Конвертация строки в цвет
-	static bool IsStringUrl(const QString &Url); //Проверить является ли строка ссылкой
 	static bool OpenFolder(const QString &FolderPath); //Открыть дикекторию
 	static QString ConvertDateTimeToString(const QDateTime &DateTime, const QString &DateFormat, const QString &TimeFormat); //Конвертировать дату и время в строку
 	static QString ConvertDateToString(const QDate &Date, const QString &DateFormat); //Конвертировать дату в строку

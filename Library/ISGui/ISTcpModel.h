@@ -2,8 +2,7 @@
 #ifndef _ISTCPMODEL_H_INCLUDED
 #define _ISTCPMODEL_H_INCLUDED
 //-----------------------------------------------------------------------------
-#include "StdAfx.h"
-#include "PMetaClass.h"
+#include "ISStructs.h"
 //-----------------------------------------------------------------------------
 class ISTcpModel : public QAbstractItemModel
 {
@@ -24,7 +23,7 @@ public:
 	QModelIndex parent(const QModelIndex &Index) const override;
 
 private:
-	std::vector<PMetaField> Fields;
+	std::vector<ISFieldModel> Fields;
 	std::vector<ISVectorVariant> Records;
 };
 //-----------------------------------------------------------------------------

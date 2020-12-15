@@ -138,7 +138,7 @@
           </elementProp>
           <elementProp name="GetTableData_TableName" elementType="Argument">
             <stringProp name="Argument.name">GetTableData_TableName</stringProp>
-            <stringProp name="Argument.value">_Test</stringProp>
+            <stringProp name="Argument.value">_Users</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="GetTableData_OrderField" elementType="Argument">

@@ -357,11 +357,6 @@ QColor ISGui::StringToColor(const QString &String)
 	return QColor(String);
 }
 //-----------------------------------------------------------------------------
-bool ISGui::IsStringUrl(const QString &Url)
-{
-	return Url.left(4).toLower() == "http";
-}
-//-----------------------------------------------------------------------------
 bool ISGui::OpenFolder(const QString &FolderPath)
 {
 	return QDesktopServices::openUrl(QUrl(FolderPath));
