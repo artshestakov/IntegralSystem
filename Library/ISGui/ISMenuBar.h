@@ -11,7 +11,6 @@ class ISMenuBar : public QWidget
 signals:
 	void ParagraphClicked(const ISUuid &ParagraphUID);
 	void ChangeUser();
-	void RollUp();
 	void Exit();
 	void Favorites();
 	void History();

@@ -7,7 +7,6 @@
 #include "ISBuffer.h"
 #include "ISMessageBox.h"
 #include "ISMetaUser.h"
-#include "ISSettings.h"
 #include "ISAboutForm.h"
 #include "ISSettingsDatabase.h"
 #include "ISControls.h"
@@ -48,7 +47,6 @@ ISMainWindow::ISMainWindow(QWidget *parent)
 	MenuBar = new ISMenuBar(this);
 	connect(MenuBar, static_cast<void(ISMenuBar::*)(const ISUuid &)>(&ISMenuBar::ParagraphClicked), this, &ISMainWindow::ParagraphClicked);
 	connect(MenuBar, &ISMenuBar::ChangeUser, this, &ISMainWindow::ChangeUser);
-	connect(MenuBar, &ISMenuBar::RollUp, this, &ISMainWindow::RollUp);
 	connect(MenuBar, &ISMenuBar::Exit, this, &ISMainWindow::close);
 	connect(MenuBar, &ISMenuBar::Favorites, this, &ISMainWindow::ShowFavoritesForm);
 	connect(MenuBar, &ISMenuBar::History, this, &ISMainWindow::ShowHistoryForm);
@@ -100,19 +98,6 @@ void ISMainWindow::closeEvent(QCloseEvent *CloseEvent)
 void ISMainWindow::AfterShowEvent()
 {
 	ISInterfaceForm::AfterShowEvent();
-	if (SETTING_BOOL(CONST_UID_SETTING_VIEW_FULLSCREEN))
-	{
-		PropertyAnimation = new QPropertyAnimation(this, "windowOpacity", this);
-		PropertyAnimation->setStartValue(1.0);
-		PropertyAnimation->setEndValue(0.0);
-		PropertyAnimation->setDuration(100);
-		connect(PropertyAnimation, &QPropertyAnimation::finished, [=]
-		{
-			showMinimized();
-			setWindowOpacity(1.0);
-		});
-		setWindowState(Qt::WindowFullScreen);
-	}
 	QTimer::singleShot(3000, ISObjects::Instance().GetInterface(), &ISObjectInterface::InitializePlugin);
 }
 //-----------------------------------------------------------------------------

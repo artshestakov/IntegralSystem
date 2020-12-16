@@ -759,25 +759,16 @@ bool ISObjectFormBase::Save()
 	case ISNamespace::OFT_New:
 		FormType = ISNamespace::OFT_Edit;
 		ISProtocol::CreateObject(MetaTable->Name, MetaTable->LocalListName, ObjectID, ObjectName);
-		if (SETTING_BOOL(CONST_UID_SETTING_GENERAL_SHOWNOTIFICATIONFORM))
-		{
-			ISPopupMessage::ShowNotification(LANG("NotificationForm.Title.Created") + " - " + MetaTable->LocalName.toLower() + ':', ObjectName);
-		}
+		ISPopupMessage::ShowNotification(LANG("NotificationForm.Title.Created") + " - " + MetaTable->LocalName.toLower() + ':', ObjectName);
 		break;
 	case ISNamespace::OFT_Copy:
 		FormType = ISNamespace::OFT_Edit;
 		ISProtocol::CreateCopyObject(MetaTable->Name, MetaTable->LocalListName, ObjectID, ObjectName);
-		if (SETTING_BOOL(CONST_UID_SETTING_GENERAL_SHOWNOTIFICATIONFORM))
-		{
-			ISPopupMessage::ShowNotification(LANG("NotificationForm.Title.CreatedCopy") + " - " + MetaTable->LocalName.toLower() + ':', ObjectName);
-		}
+		ISPopupMessage::ShowNotification(LANG("NotificationForm.Title.CreatedCopy") + " - " + MetaTable->LocalName.toLower() + ':', ObjectName);
 		break;
 	case ISNamespace::OFT_Edit:
 		ISProtocol::EditObject(MetaTable->Name, MetaTable->LocalListName, ObjectID, ObjectName);
-		if (SETTING_BOOL(CONST_UID_SETTING_GENERAL_SHOWNOTIFICATIONFORM))
-		{
-			ISPopupMessage::ShowNotification(LANG("NotificationForm.Title.Edited") + " - " + MetaTable->LocalName.toLower() + ':', ObjectName);
-		}
+		ISPopupMessage::ShowNotification(LANG("NotificationForm.Title.Edited") + " - " + MetaTable->LocalName.toLower() + ':', ObjectName);
 		break;
 	}
 
@@ -880,10 +871,7 @@ void ISObjectFormBase::AddFavoite()
 	bool IsExist = ISFavorites::Instance().CheckExistFavoriteObject(MetaTable->Name, ObjectID);
 	IsExist ? ISFavorites::Instance().DeleteFavorite(MetaTable->Name, ObjectID) : ISFavorites::Instance().AddFavorite(MetaTable->Name, ObjectID);
 	ActionFavorites->setCheckable(!IsExist);
-	if (SETTING_BOOL(CONST_UID_SETTING_GENERAL_SHOWNOTIFICATIONFORM))
-	{
-		IsExist ? ISPopupMessage::ShowNotification(LANG("RecordRemoveFavorites").arg(ObjectName)) : ISPopupMessage::ShowNotification(LANG("RecordAddFavorites").arg(ObjectName));
-	}
+	IsExist ? ISPopupMessage::ShowNotification(LANG("RecordRemoveFavorites").arg(ObjectName)) : ISPopupMessage::ShowNotification(LANG("RecordAddFavorites").arg(ObjectName));
 }
 //-----------------------------------------------------------------------------
 void ISObjectFormBase::Delete()
@@ -901,10 +889,7 @@ void ISObjectFormBase::Delete()
 		{
 			if (ISGui::RecordsDelete(MetaTable->Name, { GetObjectID() }, ErrorString))
 			{
-				if (SETTING_BOOL(CONST_UID_SETTING_GENERAL_SHOWNOTIFICATIONFORM))
-				{
-					ISPopupMessage::ShowNotification(LANG("NotificationForm.Title.Deleted").arg(GetObjectID()));
-				}
+				ISPopupMessage::ShowNotification(LANG("NotificationForm.Title.Deleted").arg(GetObjectID()));
 				emit UpdateList();
 				close();
 			}
@@ -920,10 +905,7 @@ void ISObjectFormBase::Delete()
 		{
 			if (ISCore::DeleteObject(MetaTable, GetObjectID(), ErrorString))
 			{
-				if (SETTING_BOOL(CONST_UID_SETTING_GENERAL_SHOWNOTIFICATIONFORM))
-				{
-					ISPopupMessage::ShowNotification(LANG("NotificationForm.Title.Deleted").arg(GetObjectID()));
-				}
+				ISPopupMessage::ShowNotification(LANG("NotificationForm.Title.Deleted").arg(GetObjectID()));
 				ISProtocol::DeleteObject(MetaTable->Name, MetaTable->LocalListName, GetObjectID());
 				emit UpdateList();
 				close();

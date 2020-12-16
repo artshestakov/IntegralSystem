@@ -16,7 +16,6 @@ public:
 	ISBaseTableView(QWidget *parent = 0);
 	virtual ~ISBaseTableView();
 
-	void SetSelectionScroll(bool selection_scroll);
 	void SetCornerText(const QString &text);
 	void SetCornerToolTip(const QString &tool_tip);
 	
@@ -26,11 +25,9 @@ public:
 protected:
 	void keyPressEvent(QKeyEvent *e);
 	void keyReleaseEvent(QKeyEvent *e);
-	void wheelEvent(QWheelEvent *WheelEvent);
 	void paintEvent(QPaintEvent *PaintEvent);
 	
 private:
-	bool SelectionScroll;
 	ISPushButton *ButtonCorner;
 	bool CtrlClicked;
 };

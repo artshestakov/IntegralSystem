@@ -5,7 +5,6 @@
 //-----------------------------------------------------------------------------
 ISBaseTableView::ISBaseTableView(QWidget *parent)
 	: QTableView(parent),
-	SelectionScroll(false),
 	CtrlClicked(false)
 {
 	setSortingEnabled(true);
@@ -16,6 +15,7 @@ ISBaseTableView::ISBaseTableView(QWidget *parent)
 	setStyleSheet(BUFFER_STYLE_SHEET("ISBaseTableView"));
 	setHorizontalScrollMode(QAbstractItemView::ScrollPerPixel);
 	setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
+	setAlternatingRowColors(true);
 
 	verticalHeader()->setMinimumWidth(40);
 	verticalScrollBar()->setContextMenuPolicy(Qt::NoContextMenu);
@@ -35,11 +35,6 @@ ISBaseTableView::ISBaseTableView(QWidget *parent)
 ISBaseTableView::~ISBaseTableView()
 {
 
-}
-//-----------------------------------------------------------------------------
-void ISBaseTableView::SetSelectionScroll(bool selection_scroll)
-{
-	SelectionScroll = selection_scroll;
 }
 //-----------------------------------------------------------------------------
 void ISBaseTableView::SetCornerText(const QString &text)
@@ -77,26 +72,6 @@ void ISBaseTableView::keyReleaseEvent(QKeyEvent *e)
 {
 	QTableView::keyReleaseEvent(e);
 	CtrlClicked = false;
-}
-//-----------------------------------------------------------------------------
-void ISBaseTableView::wheelEvent(QWheelEvent *WheelEvent)
-{
-	if (SelectionScroll) //Если включена прокрутка через выделение
-	{
-		emit WheelEvent->delta() > 0 ? WheelUp() : WheelDown();
-	}
-	else //Прокрутка через выделение отключена - используем стандартное событие
-	{
-		if (CtrlClicked) //Если сейчас нажата кнопка CTRL - игонрируем текущее событие прокрутки и прокручиваем по горизонтали
-		{
-			WheelEvent->ignore();
-			horizontalScrollBar()->triggerAction(WheelEvent->delta() > 0 ? QAbstractSlider::SliderSingleStepSub : QAbstractSlider::SliderSingleStepAdd);
-		}
-		else //Стандартная прокрутка
-		{
-			QTableView::wheelEvent(WheelEvent);
-		}
-	}
 }
 //-----------------------------------------------------------------------------
 void ISBaseTableView::paintEvent(QPaintEvent *PaintEvent)

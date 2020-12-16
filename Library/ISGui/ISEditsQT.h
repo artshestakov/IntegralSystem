@@ -43,20 +43,16 @@ public:
 	virtual ~ISQLineEdit();
 
 	void SetIcon(const QIcon &icon);
-	void SetMenuSelected(bool menu);
 	void SetVisibleClear(bool visible);
 	void AddAction(QAction *Action, QLineEdit::ActionPosition Position);
 
 protected:
-	void ContextMenuCopy();
 	virtual void contextMenuEvent(QContextMenuEvent *e);
 	virtual void mousePressEvent(QMouseEvent *e);
-	virtual void mouseReleaseEvent(QMouseEvent *e);
 	virtual void paintEvent(QPaintEvent *e);
 
 private:
 	QPixmap Pixmap;
-	QMenu *MenuCopy;
 	QAction *ActionClear;
 };
 //-----------------------------------------------------------------------------

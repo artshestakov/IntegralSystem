@@ -46,7 +46,6 @@ public:
 	virtual QModelIndex parent(const QModelIndex &Index) const override;
 
 	void SetSorting(int IndexColumn, Qt::SortOrder Order);
-	void SetShowToolTip(bool show_tool_tip);
 
 protected:
 	PMetaTable* GetMetaTable(); //Получить мета-таблицу
@@ -62,6 +61,5 @@ private:
 
 	QIcon IconSortingUp;
 	QIcon IconSortingDown;
-	bool ShowToolTip; //Индикатор показа всплывающего сообщения для ячейки (ToolTip)
 };
 //-----------------------------------------------------------------------------

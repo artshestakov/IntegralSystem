@@ -13,7 +13,6 @@ ISSqlModelCore::ISSqlModelCore(PMetaTable *meta_table, QObject *parent)
 	SortingColumn(0),
 	SortingOrder(Qt::AscendingOrder),
 	IsSystemIndex(-1),
-	ShowToolTip(false),
 	IconSortingUp(BUFFER_ICONS("Table.Sorting.Up")),
 	IconSortingDown(BUFFER_ICONS("Table.Sorting.Down"))
 {
@@ -140,10 +139,11 @@ QVariant ISSqlModelCore::data(const QModelIndex &ModelIndex, int Role) const
 			return qVariantFromValue(ISDefines::Gui::COLOR_BLUE); //Пометить её синим цветом
 		}
 	}
-	else if (Role == Qt::ToolTipRole && ShowToolTip) //Роль отображения подсказки для ячейки (ToolTip)
+	else if (Role == Qt::ToolTipRole) //Роль отображения подсказки для ячейки (ToolTip)
 	{
 		//Если тип поля булевый или набор байт - возвращаем пустую строку
-		return FieldType == ISNamespace::FT_Bool || FieldType == ISNamespace::FT_ByteArray ? QString() : ModelIndex.data().toString();
+		return (FieldType == ISNamespace::FT_Bool || FieldType == ISNamespace::FT_ByteArray) ?
+			QString() : ModelIndex.data().toString();
 	}
 	else if (Role == Qt::TextAlignmentRole) //Роль положения текста в ячейке
 	{
@@ -231,11 +231,6 @@ void ISSqlModelCore::SetSorting(int IndexColumn, Qt::SortOrder Order)
 {
 	SortingColumn = IndexColumn;
 	SortingOrder = Order;
-}
-//-----------------------------------------------------------------------------
-void ISSqlModelCore::SetShowToolTip(bool show_tool_tip)
-{
-	ShowToolTip = show_tool_tip;
 }
 //-----------------------------------------------------------------------------
 PMetaTable* ISSqlModelCore::GetMetaTable()

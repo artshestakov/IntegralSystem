@@ -185,7 +185,6 @@ bool ISStartup::StartupOld(ISSplashScreen *SplashScreen)
 
 	ISProtocol::EnterApplication();
 	ISObjects::Instance().GetInterface()->BeforeShowMainWindow();
-	PROPERTY_SET(PROPERTY_LINE_EDIT_SELECTED_MENU, SETTING_BOOL(CONST_UID_SETTING_OTHER_SELECTED_MENU));
 	return true;
 }
 //-----------------------------------------------------------------------------
@@ -210,7 +209,6 @@ bool ISStartup::StartupNew(ISSplashScreen *SplashScreen)
 	ISSettings::Instance().Initialize(qAuth.GetAnswer()["Settings"].toList());
 	ISParagraphEntity::Instance().Initialize(qAuth.GetAnswer()["Paragraphs"].toList());
 	ISObjects::Instance().GetInterface()->BeforeShowMainWindow();
-	PROPERTY_SET(PROPERTY_LINE_EDIT_SELECTED_MENU, SETTING_BOOL(CONST_UID_SETTING_OTHER_SELECTED_MENU)); //Устанавливаем свойство для настройки {3AD4888F-EDC7-4D69-A97F-F9678B6AAC44}
 	if (!ISMetaData::Instance().Initialize(qAuth.GetAnswer()["MetaData"].toList())) //Не удалось проинициализировать мета-данные
 	{
 		ISMessageBox::ShowCritical(SplashScreen, LANG("Message.Error.InitializeMetaData"), ISMetaData::Instance().GetErrorString());

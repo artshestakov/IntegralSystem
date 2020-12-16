@@ -109,14 +109,6 @@ void ISTabBarMain::mouseReleaseEvent(QMouseEvent *e)
 	PressPos.setY(0);
 }
 //-----------------------------------------------------------------------------
-void ISTabBarMain::wheelEvent(QWheelEvent *e)
-{
-	if (SETTING_BOOL(CONST_UID_SETTING_TABS_WHEELSCROLLINGTABS))
-	{
-		QTabBar::wheelEvent(e);
-	}
-}
-//-----------------------------------------------------------------------------
 void ISTabBarMain::CloseTab()
 {
 	emit MidButtonClicked(MouseRightClickTabIndex);

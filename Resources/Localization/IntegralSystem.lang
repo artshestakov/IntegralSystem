@@ -753,7 +753,6 @@
   <Local Name="InputNote" Russian="Введите примечание"/>
   <Local Name="Groups" Russian="Группы"/>
   <Local Name="ExitApplication" Russian="Выход из программы"/>
-  <Local Name="RollUpApplication" Russian="Свернуть программу"/>
   <Local Name="SettingsUser" Russian="Настройки пользователя"/>
   <Local Name="ActiveProfile" Russian="Активный профиль"/>
   <Local Name="PlayRecordCall" Russian="Воспроизвести запись разговора"/>

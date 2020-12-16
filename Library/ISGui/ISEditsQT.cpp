@@ -50,13 +50,11 @@ void ISQComboBox::wheelEvent(QWheelEvent *e)
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 ISQLineEdit::ISQLineEdit(QWidget *parent)
-	: QLineEdit(parent),
-	MenuCopy(nullptr)
+	: QLineEdit(parent)
 {
 	setStyleSheet(BUFFER_STYLE_SHEET("ISLineEdit"));
 	setMinimumHeight(SIZE_MINIMUM_HEIGHT_EDIT_FIELD);
 	setDragEnabled(true);
-	SetMenuSelected(PROPERTY_GET(PROPERTY_LINE_EDIT_SELECTED_MENU).toBool());
 
 	ActionClear = new QAction(this);
 	ActionClear->setToolTip(LANG("Clear.Field"));
@@ -76,26 +74,6 @@ void ISQLineEdit::SetIcon(const QIcon &icon)
 	setTextMargins(Pixmap.isNull() ? 0 : height() + 2, 0, 0, 0);
 }
 //-----------------------------------------------------------------------------
-void ISQLineEdit::SetMenuSelected(bool menu)
-{
-	if (menu)
-	{
-		MenuCopy = new QMenu(this);
-
-		QAction *ActionCut = ISControls::GetActionContextCut(MenuCopy);
-		connect(ActionCut, &QAction::triggered, this, &ISQLineEdit::cut);
-		MenuCopy->addAction(ActionCut);
-
-		QAction *ActionCopy = ISControls::GetActionContextCopy(MenuCopy);
-		connect(ActionCopy, &QAction::triggered, this, &ISQLineEdit::copy);
-		MenuCopy->addAction(ActionCopy);
-	}
-	else
-	{
-		POINTER_DELETE(MenuCopy);
-	}
-}
-//-----------------------------------------------------------------------------
 void ISQLineEdit::SetVisibleClear(bool visible)
 {
 	if (ActionClear)
@@ -107,12 +85,6 @@ void ISQLineEdit::SetVisibleClear(bool visible)
 void ISQLineEdit::AddAction(QAction *Action, QLineEdit::ActionPosition Position)
 {
 	addAction(Action, Position);
-}
-//-----------------------------------------------------------------------------
-void ISQLineEdit::ContextMenuCopy()
-{
-	QString SelectedText = selectedText();
-	QApplication::clipboard()->setText(SelectedText);
 }
 //-----------------------------------------------------------------------------
 void ISQLineEdit::contextMenuEvent(QContextMenuEvent *e)
@@ -154,28 +126,12 @@ void ISQLineEdit::mousePressEvent(QMouseEvent *e)
 	}
 }
 //-----------------------------------------------------------------------------
-void ISQLineEdit::mouseReleaseEvent(QMouseEvent *e)
-{
-	QLineEdit::mouseReleaseEvent(e);
-	if (MenuCopy)
-	{
-		if (e->button() == Qt::LeftButton)
-		{
-			if (selectedText().length())
-			{
-				MenuCopy->exec(e->globalPos());
-			}
-		}
-	}
-}
-//-----------------------------------------------------------------------------
 void ISQLineEdit::paintEvent(QPaintEvent *e)
 {
 	QLineEdit::paintEvent(e);
 	if (!Pixmap.isNull())
 	{
 		int x = height();
-
 		QPainter Painter(this);
 		Painter.drawPixmap(1, 1, Pixmap);
 		Painter.setPen(Qt::lightGray);

@@ -217,13 +217,6 @@ ISListBaseForm::ISListBaseForm(const QString &TableName, QWidget *parent)
 		{
 			TableView->verticalHeader()->setDefaultSectionSize(19);
 		}
-		if (SETTING_BOOL(CONST_UID_SETTING_TABLE_SCROLL_SELECTION))
-		{
-			TableView->SetSelectionScroll(true);
-			connect(TableView, &ISBaseTableView::WheelUp, this, &ISListBaseForm::NavigationSelectPreviousRecord);
-			connect(TableView, &ISBaseTableView::WheelDown, this, &ISListBaseForm::NavigationSelectNextRecord);
-		}
-		TableView->setAlternatingRowColors(SETTING_BOOL(CONST_UID_SETTING_TABLES_HIGHLIGHTINGODDROWS));
 		TableView->horizontalHeader()->setVisible(SETTING_BOOL(CONST_UID_SETTING_TABLES_SHOWHORIZONTALHEADER));
 		TableView->SetVisibleVerticalHeader(SETTING_BOOL(CONST_UID_SETTING_TABLES_SHOWVERTICALHEADER));
 	}
@@ -240,7 +233,6 @@ ISListBaseForm::ISListBaseForm(const QString &TableName, QWidget *parent)
 
 	{//Создание моделей
 		SqlModel = new ISSqlModelCore(MetaTable, TableView);
-		SqlModel->SetShowToolTip(SETTING_BOOL(CONST_UID_SETTING_TABLES_SHOWTOOLTIP));
 		TableView->setModel(SqlModel);
 
 		QueryModel = new ISQueryModel(MetaTable, ISNamespace::QMT_List, this);
@@ -1031,12 +1023,9 @@ bool ISListBaseForm::Delete()
 			Result = ISGui::RecordsDelete(MetaTable->Name, VectorInt, ErrorString);
 			if (Result)
 			{
-				if (SETTING_BOOL(CONST_UID_SETTING_GENERAL_SHOWNOTIFICATIONFORM))
-				{
-					ISPopupMessage::ShowNotification(VectorInt.size() == 1 ?
-						LANG("NotificationForm.Title.Deleted").arg(VectorInt.front()) :
-						LANG("NotificationForm.Title.Deleteds"));
-				}
+				ISPopupMessage::ShowNotification(VectorInt.size() == 1 ?
+					LANG("NotificationForm.Title.Deleted").arg(VectorInt.front()) :
+					LANG("NotificationForm.Title.Deleteds"));
 				Update();
 			}
 			else
@@ -1061,10 +1050,7 @@ bool ISListBaseForm::Delete()
 				Result = ISCore::DeleteObject(MetaTable, ObjectID, ErrorString);
 				if (Result)
 				{
-					if (SETTING_BOOL(CONST_UID_SETTING_GENERAL_SHOWNOTIFICATIONFORM))
-					{
-						ISPopupMessage::ShowNotification(LANG("NotificationForm.Title.Deleted").arg(ObjectID));
-					}
+					ISPopupMessage::ShowNotification(LANG("NotificationForm.Title.Deleted").arg(ObjectID));
 					ISProtocol::DeleteObject(MetaTable->Name, MetaTable->LocalListName, GetObjectID());
 					Update();
 				}
