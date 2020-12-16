@@ -80,7 +80,14 @@ QVariant ISTcpModel::data(const QModelIndex &ModelIndex, int Role) const
 	}
 
 	QVariant Value;
-	if (Role == Qt::DisplayRole)
+	if (Role == Qt::TextColorRole)
+	{
+		if (Records[ModelIndex.row()][GetFieldIndex("IsSystem")].toBool())
+		{
+			return qVariantFromValue(ISDefines::Gui::COLOR_BLUE);
+		}
+	}
+	else if (Role == Qt::DisplayRole)
 	{
 		Value = Records[ModelIndex.row()][ModelIndex.column()].toString();
 	}
@@ -104,13 +111,6 @@ QVariant ISTcpModel::data(const QModelIndex &ModelIndex, int Role) const
 			!FieldModel.IsForeign) //Для чисел расположение по центру справа (если не внешний ключ)
 		{
 			Value = Qt::AlignRight + Qt::AlignVCenter;
-		}
-	}
-	else if (Role == Qt::TextColorRole)
-	{
-		if (Records[ModelIndex.row()][ModelIndex.column()].toBool())
-		{
-			Value = qVariantFromValue(ISDefines::Gui::COLOR_BLUE);
 		}
 	}
 	return Value;
