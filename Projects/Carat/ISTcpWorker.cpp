@@ -69,9 +69,9 @@ static QString QS_HISTORY = PREPARE_QUERY("SELECT htry_datetime, htry_tablename,
 										  "WHERE htry_user = :UserID "
 										  "ORDER BY htry_id");
 //-----------------------------------------------------------------------------
-static QString QS_SORTING = PREPARE_QUERY("SELECT sgts_tablename, sgts_fieldname, sgts_sorting "
-										  "FROM _sortingtables "
-										  "WHERE sgts_user = :UserID");
+static QString QS_SORTINGS = PREPARE_QUERY("SELECT sgts_tablename, sgts_fieldname, sgts_sorting "
+										   "FROM _sortingtables "
+										   "WHERE sgts_user = :UserID");
 //-----------------------------------------------------------------------------
 static QString QS_COLUMN_SIZE = PREPARE_QUERY("SELECT clsz_tablename, clsz_fieldname, clsz_size "
 											  "FROM _columnsize "
@@ -146,6 +146,20 @@ static QString QI_DISCUSSION_COPY = PREPARE_QUERY("INSERT INTO _discussion(dson_
 												  "FROM _discussion "
 												  "WHERE dson_id = :DiscussionID "
 												  "RETURNING dson_id");
+//-----------------------------------------------------------------------------
+static QString QS_SORTING = PREPARE_QUERY("SELECT sgts_fieldname, sgts_sorting "
+										  "FROM _sortingtables "
+										  "WHERE sgts_user = :UserID "
+										  "AND sgts_tablename = :TableName");
+//-----------------------------------------------------------------------------
+static QString QU_SORTING = PREPARE_QUERY("UPDATE _sortingtables SET "
+										  "sgts_fieldname = :FieldName, "
+										  "sgts_sorting = :Sorting "
+										  "WHERE sgts_user = :UserID "
+										  "AND sgts_tablename = :TableName");
+//-----------------------------------------------------------------------------
+static QString QI_SORTING = PREPARE_QUERY("INSERT INTO _sortingtables(sgts_user, sgts_tablename, sgts_fieldname, sgts_sorting)"
+										  "VALUES(:UserID, :TableName, :FieldName, :Sorting)");
 //-----------------------------------------------------------------------------
 ISTcpWorker::ISTcpWorker(const QString &db_host, int db_port, const QString &db_name, const QString &db_user, const QString &db_password)
 	: QObject(),
@@ -890,7 +904,7 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 
 	//Получаем сортировки
 	QVariantList SortingList;
-	ISQuery qSelectSorting(ISDatabase::Instance().GetDB(DBConnectionName), QS_SORTING);
+	ISQuery qSelectSorting(ISDatabase::Instance().GetDB(DBConnectionName), QS_SORTINGS);
 	qSelectSorting.BindValue(":UserID", TcpMessage->TcpSocket->GetUserID());
 	if (qSelectSorting.Execute())
 	{
@@ -1560,10 +1574,8 @@ bool ISTcpWorker::DiscussionCopy(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
-	QVariant TableName = CheckNullField("TableName", TcpMessage->Parameters),
-		SortingField = CheckNullField("SortingField", TcpMessage->Parameters),
-		SortingOrder = CheckNullField("SortingOrder", TcpMessage->Parameters);
-	if (!TableName.isValid() || !SortingField.isValid() || !SortingOrder.isValid())
+	QVariant TableName = CheckNullField("TableName", TcpMessage->Parameters);
+	if (!TableName.isValid())
 	{
 		return false;
 	}
@@ -1576,9 +1588,71 @@ bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 		return false;
 	}
 
+	//Получаем сортировку для этой таблицы
+	QString SortingField;
+	Qt::SortOrder SortingOrder;
+	ISQuery qSelectSorting(ISDatabase::Instance().GetDB(DBConnectionName), QS_SORTING);
+	qSelectSorting.BindValue(":UserID", TcpMessage->TcpSocket->GetUserID());
+	qSelectSorting.BindValue(":TableName", MetaTable->Name);
+	if (!qSelectSorting.Execute()) //Ошибка запроса
+	{
+		ErrorString = LANG("Carat.Error.Query.GetTableData.SelectSorting").arg(qSelectSorting.GetErrorString());
+		return false;
+	}
+
+	if (qSelectSorting.First()) //Сортирока есть - получаем её
+	{
+		SortingField = qSelectSorting.ReadColumn("sgts_fieldname").toString();
+		SortingOrder = static_cast<Qt::SortOrder>(qSelectSorting.ReadColumn("sgts_sorting").toUInt());
+
+		//Проверяем не указана ли сортировка в запросе
+		//Если указана - проверяем - не нужно ли обновить её в БД
+		bool NeedUpdateSorting = false;
+		QVariant SortingFieldQuery = TcpMessage->Parameters["SortingField"],
+			SortingOrderQuery = TcpMessage->Parameters["SortingOrder"];
+		if (SortingFieldQuery.isValid() && SortingOrderQuery.isValid())
+		{
+			NeedUpdateSorting = SortingField != SortingFieldQuery.toString() ||
+				SortingOrder != static_cast<Qt::SortOrder>(SortingOrderQuery.toUInt());
+		}
+
+		if (NeedUpdateSorting) //Требуется обновление сортировки в БД
+		{
+			SortingField = SortingFieldQuery.toString();
+			SortingOrder = static_cast<Qt::SortOrder>(SortingOrderQuery.toUInt());
+
+			ISQuery qUpdateSorting(ISDatabase::Instance().GetDB(DBConnectionName), QU_SORTING);
+			qUpdateSorting.BindValue(":FieldName", SortingField);
+			qUpdateSorting.BindValue(":Sorting", SortingOrder);
+			qUpdateSorting.BindValue(":UserID", TcpMessage->TcpSocket->GetUserID());
+			qUpdateSorting.BindValue(":TableName", MetaTable->Name);
+			if (!qUpdateSorting.Execute())
+			{
+				ErrorString = LANG("Carat.Error.Query.GetTableData.UpdateSorting").arg(qUpdateSorting.GetErrorString());
+				return false;
+			}
+		}
+	}
+	else //Сортировки нет - добавляем дефолтную
+	{
+		SortingField = "ID";
+		SortingOrder = Qt::AscendingOrder;
+
+		ISQuery qInsertSorting(ISDatabase::Instance().GetDB(DBConnectionName), QI_SORTING);
+		qInsertSorting.BindValue(":UserID", TcpMessage->TcpSocket->GetUserID());
+		qInsertSorting.BindValue(":TableName", MetaTable->Name);
+		qInsertSorting.BindValue(":FieldName", SortingField);
+		qInsertSorting.BindValue(":Sorting", SortingOrder);
+		if (!qInsertSorting.Execute())
+		{
+			ErrorString = LANG("Carat.Error.Query.GetTableData.InsertSorting").arg(qInsertSorting.GetErrorString());
+			return false;
+		}
+	}
+
 	//Создаём объект модели
 	ISQueryModel QueryModel(MetaTable, ISNamespace::QMT_List);
-	QueryModel.SetSorting(SortingField.toString(), static_cast<Qt::SortOrder>(SortingOrder.toUInt()));
+	QueryModel.SetSorting(SortingField, SortingOrder);
 
 	ISQuery qSelect(ISDatabase::Instance().GetDB(DBConnectionName), QueryModel.GetQueryText());
 	qSelect.SetShowLongQuery(false);
@@ -1592,6 +1666,13 @@ bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	int FieldCount = SqlRecord.count();
 	QVariantList FieldList, RecordList;
 	std::vector<ISNamespace::FieldType> VectorType(FieldCount, ISNamespace::FT_Unknown);
+
+	//Заполняем служебную информацию
+	QVariantMap ServiceInfoMap = 
+	{
+		{ "SortingField", SortingField },
+		{ "SortingOrder", SortingOrder }
+	};
 
 	//Заполняем описание полей
 	for (int i = 0; i < FieldCount; ++i)
@@ -1669,6 +1750,7 @@ bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 			RecordList.push_back(Values); //Добавляем список значений в список записей
 		} while (qSelect.Next()); //Обходим выборку	
 	}
+	TcpAnswer->Parameters["ServiceInfo"] = ServiceInfoMap;
 	TcpAnswer->Parameters["FieldList"] = FieldList;
 	TcpAnswer->Parameters["RecordList"] = RecordList;
 	return true;

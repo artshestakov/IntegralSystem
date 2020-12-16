@@ -6,9 +6,7 @@
 ISTestModelForm::ISTestModelForm(QWidget *parent)
 	: ISInterfaceMetaForm(parent),
 	TcpModel(new ISTcpModel(this)),
-	qGetTableData(new ISTcpQuery(API_GET_TABLE_DATA)),
-	SortingField("ID"),
-	SortingOrder(Qt::AscendingOrder)
+	qGetTableData(new ISTcpQuery(API_GET_TABLE_DATA))
 {
 	TableView = new ISBaseTableView(this);
 	GetMainLayout()->addWidget(TableView);
@@ -22,8 +20,6 @@ ISTestModelForm::~ISTestModelForm()
 void ISTestModelForm::LoadData()
 {
 	qGetTableData->BindValue("TableName", TABLE_NAME);
-	qGetTableData->BindValue("SortingField", SortingField);
-	qGetTableData->BindValue("SortingOrder", SortingOrder);
 	if (qGetTableData->Execute())
 	{
 		SetSource(qGetTableData->TakeAnswer());
@@ -33,7 +29,12 @@ void ISTestModelForm::LoadData()
 void ISTestModelForm::SetSource(const QVariantMap &TcpAnswer)
 {
 	TcpModel->SetSource(TcpAnswer["FieldList"].toList(), TcpAnswer["RecordList"].toList());
+
+	QVariantMap ServiceInfo = TcpAnswer["ServiceInfo"].toMap();
+	QString SortingField = ServiceInfo["SortingField"].toString();
+	Qt::SortOrder SortingOrder = static_cast<Qt::SortOrder>(ServiceInfo["SortingOrder"].toUInt());
 	TcpModel->SetSorting(SortingField, SortingOrder);
+
 	if (!TableView->model())
 	{
 		TableView->setModel(TcpModel);
@@ -45,12 +46,9 @@ void ISTestModelForm::SetSource(const QVariantMap &TcpAnswer)
 //-----------------------------------------------------------------------------
 void ISTestModelForm::SortingChanged(int LogicalIndex, Qt::SortOrder Order)
 {
-	SortingField = TcpModel->headerData(LogicalIndex, Qt::Horizontal, Qt::UserRole).toString();
-	SortingOrder = Order;
-
 	qGetTableData->BindValue("TableName", TABLE_NAME);
-	qGetTableData->BindValue("SortingField", SortingField);
-	qGetTableData->BindValue("SortingOrder", SortingOrder);
+	qGetTableData->BindValue("SortingField", TcpModel->headerData(LogicalIndex, Qt::Horizontal, Qt::UserRole));
+	qGetTableData->BindValue("SortingOrder", Order);
 	if (qGetTableData->Execute())
 	{
 		SetSource(qGetTableData->TakeAnswer());

@@ -276,10 +276,6 @@
       <Field UID="{D59D39AD-C4BE-451C-9BB7-6A3EE3A3DCC9}" Name="Sorting" Type="Int" LabelName="Сортировка" LocalListName="Сортировка" NotNull="true"/>
     </Fields>
     <Indexes>
-      <Index Field="TableName"/>
-      <Index Field="User"/>
-      <Index Field="FieldName"/>
-      <Index Field="Sorting"/>
       <Index Field="User;TableName"/>
     </Indexes>
   </Table>

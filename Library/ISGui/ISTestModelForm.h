@@ -27,8 +27,8 @@ private:
 	ISBaseTableView *TableView;
 
 private:
-	QString SortingField;
-	Qt::SortOrder SortingOrder;
+	//QString SortingField;
+	//Qt::SortOrder SortingOrder;
 };
 //-----------------------------------------------------------------------------
 #endif

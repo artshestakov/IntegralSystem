@@ -94,6 +94,9 @@
   <Local Name="Carat.Error.Query.DiscussionCopy.Insert" Russian="Не удалось скопировать сообщение: %1"/>
 
   <Local Name="Carat.Error.Query.GetTableData.TableNotExist" Russian="Таблица %1 не существует."/>
+  <Local Name="Carat.Error.Query.GetTableData.SelectSorting" Russian="Не удалось получить сортировку: %1"/>
+  <Local Name="Carat.Error.Query.GetTableData.UpdateSorting" Russian="Не удалось обновить сортировку: %1"/>
+  <Local Name="Carat.Error.Query.GetTableData.InsertSorting" Russian="Не удалось добавить сортировку: %1"/>
   <Local Name="Carat.Error.Query.GetTableData.Select" Russian="Не удалось получить данные: %1"/>
 
 </LANG>
