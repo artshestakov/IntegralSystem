@@ -534,7 +534,7 @@ ISImageViewerForm* ISGui::ShowImageForm(const QByteArray &ByteArray)
 //-----------------------------------------------------------------------------
 void ISGui::ShowNoteObject(QWidget *parent, const QString &TableName, int ObjectID)
 {
-	ISTcpQuery TcpQuery(API_GET_NOTE_RECORD);
+	ISTcpQuery TcpQuery(API_NOTE_RECORD_GET);
 	TcpQuery.BindValue("TableName", TableName);
 	TcpQuery.BindValue("ObjectID", ObjectID);
 	if (!TcpQuery.Execute())
@@ -554,7 +554,7 @@ void ISGui::ShowNoteObject(QWidget *parent, const QString &TableName, int Object
 	TcpQuery.BindValue("TableName", TableName);
 	TcpQuery.BindValue("ObjectID", ObjectID);
 	TcpQuery.BindValue("Note", Note);
-	if (!TcpQuery.Execute(API_SET_NOTE_RECORD))
+	if (!TcpQuery.Execute(API_NOTE_RECORD_SET))
 	{
 		ISMessageBox::ShowCritical(parent, TcpQuery.GetErrorString());
 	}

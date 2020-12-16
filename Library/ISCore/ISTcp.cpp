@@ -100,13 +100,13 @@ ISNamespace::ApiMessageType ISTcp::GetMessageTypeByName(const QString &Name)
 	{
 		return ISNamespace::AMT_GetTableData;
 	}
-	else if (Name == API_GET_NOTE_RECORD)
+	else if (Name == API_NOTE_RECORD_GET)
 	{
-		return ISNamespace::AMT_GetNoteRecord;
+		return ISNamespace::AMT_NoteRecordGet;
 	}
-	else if (Name == API_SET_NOTE_RECORD)
+	else if (Name == API_NOTE_RECORD_SET)
 	{
-		return ISNamespace::AMT_SetNoteRecord;
+		return ISNamespace::AMT_NoteRecordSet;
 	}
 	else if (Name == API_FILE_STORAGE_ADD)
 	{
@@ -115,6 +115,10 @@ ISNamespace::ApiMessageType ISTcp::GetMessageTypeByName(const QString &Name)
 	else if (Name == API_FILE_STORAGE_COPY)
 	{
 		return ISNamespace::AMT_FileStorageCopy;
+	}
+	else if (Name == API_FILE_STORAGE_GET)
+	{
+		return ISNamespace::AMT_FileStorageGet;
 	}
 	return ISNamespace::AMT_Unknown;
 }

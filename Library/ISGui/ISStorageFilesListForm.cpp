@@ -1,7 +1,6 @@
 #include "ISStorageFilesListForm.h"
 #include "ISSystem.h"
 #include "ISLocalization.h"
-#include "ISQuery.h"
 #include "ISTcpQuery.h"
 #include "ISProgressForm.h"
 #include "ISConstants.h"
@@ -15,10 +14,6 @@
 #include "ISSettingsDatabase.h"
 #include "ISMetaUser.h"
 #include "ISDatabase.h"
-//-----------------------------------------------------------------------------
-static QString QS_FILE = PREPARE_QUERY("SELECT sgfs_data "
-									   "FROM _storagefiles "
-									   "WHERE sgfs_id = :ObjectID");
 //-----------------------------------------------------------------------------
 ISStorageFilesListForm::ISStorageFilesListForm(QWidget *parent) : ISListBaseForm("_StorageFiles", parent)
 {
@@ -125,16 +120,18 @@ void ISStorageFilesListForm::CreateCopy()
 //-----------------------------------------------------------------------------
 void ISStorageFilesListForm::SaveFile()
 {
-	QString FileExpansion = GetCurrentRecordValue("Expansion").toString();
-	QString FileName = GetCurrentRecordValue("Name").toString();
-	if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.SaveFile").arg(FileName)))
+	QString Expansion = GetCurrentRecordValue("Expansion").toString(),
+		Name = GetCurrentRecordValue("Name").toString();
+
+	if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.SaveFile").arg(Name + '.' + Expansion)))
 	{
-		QString FilePath = ISFileDialog::GetSaveFileName(this, LANG("File.Filter.File").arg(FileExpansion), FileName);
-		if (FilePath.isEmpty())
+		QString FilePath = ISFileDialog::GetSaveFileName(this, LANG("File.Filter.File").arg(Expansion), Name);
+		if (FilePath.isEmpty()) //Пользователь отказался от сохранения
 		{
 			return;
 		}
 
+		//Пытаемся открыть файл
 		QFile File(FilePath);
 		if (!File.open(QIODevice::WriteOnly))
 		{
@@ -142,23 +139,31 @@ void ISStorageFilesListForm::SaveFile()
 			return;
 		}
 
-		ISQuery qSelectFile(QS_FILE);
-		qSelectFile.BindValue(":ObjectID", GetObjectID());
-		if (qSelectFile.ExecuteFirst())
+		//Запрашиваем файл
+		ISTcpQuery qFileStorageGet(API_FILE_STORAGE_GET);
+		qFileStorageGet.BindValue("ID", GetObjectID());
+
+		ISGui::SetWaitGlobalCursor(true);
+		bool Result = qFileStorageGet.Execute();
+		ISGui::SetWaitGlobalCursor(false);
+
+		if (Result) //Успешно - пишем файл на диск
 		{
-			File.write(qSelectFile.ReadColumn("sgfs_data").toByteArray());
+			File.write(QByteArray::fromBase64(qFileStorageGet.TakeAnswer()["Data"].toByteArray()));
 			File.close();
+
+			//Предлагаем открыть файл
 			if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.File.SavedToPath").arg(FilePath)))
 			{
-				if (!ISGui::OpenFile(FilePath))
+				if (!ISGui::OpenFile(FilePath)) //Не удалось открыть файл
 				{
-					ISMessageBox::ShowWarning(this, LANG("Message.Error.NotOpenedFile").arg(FileName));
+					ISMessageBox::ShowWarning(this, LANG("Message.Error.NotOpenedFile").arg(Name));
 				}
 			}
 		}
-		else
+		else //Ошибка
 		{
-			ISMessageBox::ShowCritical(this, LANG("Message.Error.SelectStorageFileData"));
+			ISMessageBox::ShowCritical(this, qFileStorageGet.GetErrorString());
 		}
 	}
 }

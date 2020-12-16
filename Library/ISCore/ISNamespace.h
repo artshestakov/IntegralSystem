@@ -157,10 +157,11 @@ namespace ISNamespace
 		AMT_DiscussionEdit, //Изменить обсуждение
 		AMT_DiscussionCopy, //Скопировать обсуждение
 		AMT_GetTableData, //Получить данные таблицы
-		AMT_GetNoteRecord, //Получить примечание записи
-		AMT_SetNoteRecord, //Изменить примечание записи
+		AMT_NoteRecordGet, //Получить примечание записи
+		AMT_NoteRecordSet, //Изменить примечание записи
 		AMT_FileStorageAdd, //Добавить файл в хранилище
 		AMT_FileStorageCopy, //Скопировать файл в хранилище
+		AMT_FileStorageGet, //Получить файл из хранилища
 	};
 };
 //-----------------------------------------------------------------------------

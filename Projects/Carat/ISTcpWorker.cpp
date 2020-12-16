@@ -187,6 +187,10 @@ static QString QI_FILE_STORAGE_COPY = PREPARE_QUERY("INSERT INTO _storagefiles(s
 													"WHERE sgfs_id = :ObjectID "
 													"RETURNING sgfs_id");
 //-----------------------------------------------------------------------------
+static QString QS_FILE_STORAGE = PREPARE_QUERY("SELECT sgfs_data "
+											   "FROM _storagefiles "
+											   "WHERE sgfs_id = :ObjectID");
+//-----------------------------------------------------------------------------
 ISTcpWorker::ISTcpWorker(const QString &db_host, int db_port, const QString &db_name, const QString &db_user, const QString &db_password)
 	: QObject(),
 	ErrorString(NO_ERROR_STRING),
@@ -332,10 +336,11 @@ void ISTcpWorker::Process()
 					case ISNamespace::AMT_DiscussionEdit: Result = DiscussionEdit(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_DiscussionCopy: Result = DiscussionCopy(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_GetTableData: Result = GetTableData(tcp_message, TcpAnswer); break;
-					case ISNamespace::AMT_GetNoteRecord: Result = GetNoteRecord(tcp_message, TcpAnswer); break;
-					case ISNamespace::AMT_SetNoteRecord: Result = SetNoteRecord(tcp_message, TcpAnswer); break;
+					case ISNamespace::AMT_NoteRecordGet: Result = GetNoteRecord(tcp_message, TcpAnswer); break;
+					case ISNamespace::AMT_NoteRecordSet: Result = SetNoteRecord(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_FileStorageAdd: Result = FileStorageAdd(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_FileStorageCopy: Result = FileStorageCopy(tcp_message, TcpAnswer); break;
+					case ISNamespace::AMT_FileStorageGet: Result = FileStorageGet(tcp_message, TcpAnswer); break;
 					}
 					PerfomanceMsec = ISAlgorithm::GetTickDiff(ISAlgorithm::GetTick(), TimePoint);
 				}
@@ -1878,7 +1883,7 @@ bool ISTcpWorker::FileStorageAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
 
 	QVariant FileName = CheckNullField("FileName", TcpMessage->Parameters),
 		Data = CheckNullField("Data", TcpMessage->Parameters);
-	if (!FileName.isValid() || !Data.isValid())
+	if (!FileName.isValid())
 	{
 		return false;
 	}
@@ -1901,7 +1906,7 @@ bool ISTcpWorker::FileStorageAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
 	qInsert.BindValue(":Owner", TcpMessage->TcpSocket->GetUserID());
 	qInsert.BindValue(":Name", Name);
 	qInsert.BindValue(":Expansion", Expansion);
-	qInsert.BindValue(":Size", Size);
+	qInsert.BindValue(":Size", ISSystem::FileSizeFromString(Size));
 	qInsert.BindValue(":Data", ByteArray);
 	if (!qInsert.Execute())
 	{
@@ -1927,20 +1932,46 @@ bool ISTcpWorker::FileStorageCopy(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnsw
 	qInsertCopy.BindValue(":ObjectID", ID);
 	if (!qInsertCopy.Execute()) //Ошибка запроса
 	{
-		ErrorString = LANG("Carat.Error.Query.FileStorageAdd.Insert").arg(qInsertCopy.GetErrorString());
+		ErrorString = LANG("Carat.Error.Query.FileStorageCopy.Insert").arg(qInsertCopy.GetErrorString());
 		return false;
 	}
 
 	//Если файл не был скопирован, значит его не существует - ошибка
 	if (qInsertCopy.GetCountAffected() == 0)
 	{
-		ErrorString = LANG("Carat.Error.Query.FileStorageAdd.NotExist").arg(ID.toInt());
+		ErrorString = LANG("Carat.Error.Query.FileStorageCopy.NotExist").arg(ID.toInt());
 		return false;
 	}
 
 	//Если удалось перейти на первую строку - получаем новый идентификатор записи,
 	//иначе - идентификатор исходной записи
 	TcpAnswer->Parameters["NewID"] = qInsertCopy.First() ? qInsertCopy.ReadColumn("sgfs_id") : ID;
+	return true;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::FileStorageGet(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+	QVariant ID = CheckNullField("ID", TcpMessage->Parameters);
+	if (!ID.isValid())
+	{
+		return false;
+	}
+
+	//Вытаскиваем файл
+	ISQuery qSelect(ISDatabase::Instance().GetDB(DBConnectionName), QS_FILE_STORAGE);
+	qSelect.BindValue(":ObjectID", ID);
+	if (!qSelect.Execute()) //Ошибка запроса
+	{
+		ErrorString = LANG("Carat.Error.Query.FileStorageGet.Select").arg(qSelect.GetErrorString());
+		return false;
+	}
+
+	if (!qSelect.First()) //Такой файл не существует
+	{
+		ErrorString = LANG("Carat.Error.Query.FileStorageGet.NotExist").arg(ID.toInt());
+		return false;
+	}
+	TcpAnswer->Parameters["Data"] = qSelect.ReadColumn("sgfs_data").toByteArray().toBase64();
 	return true;
 }
 //-----------------------------------------------------------------------------

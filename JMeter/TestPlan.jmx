@@ -196,6 +196,11 @@
             <stringProp name="Argument.value">Test6</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
+          <elementProp name="FileStorageGet_ID" elementType="Argument">
+            <stringProp name="Argument.name">FileStorageGet_ID</stringProp>
+            <stringProp name="Argument.value">10</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
         </collectionProp>
       </Arguments>
       <hashTree/>
@@ -453,7 +458,18 @@ def MapFileStorageCopy =
 			Name: vars.get(&quot;FileStorageCopy_Name&quot;)
 		]
 ];
-vars.put(&quot;QueryFileStorageCopy&quot;, MapToString(MapFileStorageCopy));</stringProp>
+vars.put(&quot;QueryFileStorageCopy&quot;, MapToString(MapFileStorageCopy));
+
+//Получить файл из хранилища
+def MapFileStorageGet =
+[
+	Type: &quot;FileStorageGet&quot;,
+	Parameters:
+		[
+			ID: vars.get(&quot;FileStorageGet_ID&quot;)
+		]
+];
+vars.put(&quot;QueryFileStorageGet&quot;, MapToString(MapFileStorageGet));</stringProp>
           <stringProp name="scriptLanguage">groovy</stringProp>
         </JSR223Sampler>
         <hashTree/>
@@ -678,13 +694,26 @@ vars.put(&quot;QueryFileStorageCopy&quot;, MapToString(MapFileStorageCopy));</st
           <stringProp name="ConfigTestElement.password"></stringProp>
         </TCPSampler>
         <hashTree/>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: FileStorageCopy" enabled="true">
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: FileStorageCopy" enabled="false">
           <stringProp name="TCPSampler.server">127.0.0.1</stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
           <stringProp name="TCPSampler.port">50000</stringProp>
           <boolProp name="TCPSampler.nodelay">false</boolProp>
           <stringProp name="TCPSampler.timeout"></stringProp>
           <stringProp name="TCPSampler.request">${QueryFileStorageCopy}</stringProp>
+          <boolProp name="TCPSampler.closeConnection">true</boolProp>
+          <stringProp name="TCPSampler.EolByte">10</stringProp>
+          <stringProp name="ConfigTestElement.username"></stringProp>
+          <stringProp name="ConfigTestElement.password"></stringProp>
+        </TCPSampler>
+        <hashTree/>
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: FileStorageGet" enabled="true">
+          <stringProp name="TCPSampler.server">127.0.0.1</stringProp>
+          <boolProp name="TCPSampler.reUseConnection">true</boolProp>
+          <stringProp name="TCPSampler.port">50000</stringProp>
+          <boolProp name="TCPSampler.nodelay">false</boolProp>
+          <stringProp name="TCPSampler.timeout"></stringProp>
+          <stringProp name="TCPSampler.request">${QueryFileStorageGet}</stringProp>
           <boolProp name="TCPSampler.closeConnection">true</boolProp>
           <stringProp name="TCPSampler.EolByte">10</stringProp>
           <stringProp name="ConfigTestElement.username"></stringProp>

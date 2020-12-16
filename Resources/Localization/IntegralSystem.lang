@@ -83,7 +83,6 @@
   <Local Name="Message.Error.InitializeSortingBuffer" Russian="Не удалось загрузить сортировки."/>
   <Local Name="Message.Error.InitializeColumnSizer" Russian="Не удалось загрузить размеры полей."/>
   <Local Name="Message.Error.CreateCopyStorageFile" Russian="Не удалось создать копию файла &quot;%1&quot;."/>
-  <Local Name="Message.Error.SelectStorageFileData" Russian="Не удалось получить файл из базы данных."/>
   <Local Name="Message.Error.CheckAllQuery" Russian="Ошибка в SQL-запросе!"/>
   <Local Name="Message.Error.SelectSettingsDatabase" Russian="Не удалось загрузить настройки базы данных."/>
   <Local Name="Message.Error.InitializeMetaData" Russian="Не удалось иницилизировать мета-данные."/>

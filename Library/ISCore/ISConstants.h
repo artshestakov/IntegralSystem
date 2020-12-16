@@ -162,10 +162,11 @@ const char API_DISCUSSION_ADD[] = "DiscussionAdd"; //Добавить обсуждение
 const char API_DISCUSSION_EDIT[] = "DiscussionEdit"; //Изменить обсуждение
 const char API_DISCUSSION_COPY[] = "DiscussionCopy"; //Скопировать обсуждение
 const char API_GET_TABLE_DATA[] = "GetTableData"; //Получить данные из таблицы
-const char API_GET_NOTE_RECORD[] = "GetNoteRecord"; //Получить примечание записи
-const char API_SET_NOTE_RECORD[] = "SetNoteRecord"; //Изменить примечание записи
+const char API_NOTE_RECORD_GET[] = "GetNoteRecord"; //Получить примечание записи
+const char API_NOTE_RECORD_SET[] = "SetNoteRecord"; //Изменить примечание записи
 const char API_FILE_STORAGE_ADD[] = "FileStorageAdd"; //Добавить файл в хранилище
 const char API_FILE_STORAGE_COPY[] = "FileStorageCopy"; //Скопировать файл в хранилище
+const char API_FILE_STORAGE_GET[] = "FileStorageGet"; //Получить файл из хранилища
 //CARAT_LOCAL_API--------------------------------------------------------------
 const char		CARAT_LOCAL_API_SHUTDOWN[] = "shutdown"; //Завершение работы
 //-----------------------------------------------------------------------------
