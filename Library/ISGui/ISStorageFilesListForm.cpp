@@ -2,6 +2,7 @@
 #include "ISSystem.h"
 #include "ISLocalization.h"
 #include "ISQuery.h"
+#include "ISTcpQuery.h"
 #include "ISProgressForm.h"
 #include "ISConstants.h"
 #include "ISMessageBox.h"
@@ -48,74 +49,42 @@ void ISStorageFilesListForm::Create()
 	QStringList StringList = ISFileDialog::GetOpenFileNames(this);
 	if (!StringList.isEmpty())
 	{
-		bool IsUpdateList = false;
-		ISVectorInt VectorInt;
-		int LastObjectID = 0;
-
 		ISProgressForm ProgressForm(StringList.size(), LANG("InsertingFiles"), this);
 		ProgressForm.show();
 
 		//Обходим все выбранные файлы
+		bool Result = false;
 		for (const QString &FilePath : StringList)
 		{
-			ProgressForm.IncrementValue();
-
-			QFileInfo FileInfo(FilePath);
-			QFile File(FilePath);
-
 			//Открываем файл
+			QFile File(FilePath);
 			if (!File.open(QIODevice::ReadOnly))
 			{
-				ISMessageBox::ShowWarning(this, LANG("Message.Error.NotOpenedFile").arg(FilePath));
+				ISMessageBox::ShowWarning(&ProgressForm, LANG("Message.Error.NotOpenedFile").arg(FilePath));
 				continue;
 			}
 
-			//Читаем
+			//Читаем и закрываем
 			QByteArray ByteArray = File.readAll().toBase64();
 			File.close();
 			
-			ISQuery qInsert(QI_FILE);
-			qInsert.BindValue(":Owner", CURRENT_USER_ID);
-			qInsert.BindValue(":Name", FileInfo.baseName());
-			qInsert.BindValue(":Expansion", FileInfo.suffix());
-			qInsert.BindValue(":Size", ISSystem::FileSizeFromString(FileInfo.size()));
-			qInsert.BindValue(":Data", ByteArray);
+			ISTcpQuery qAddFileStorage(API_ADD_FILE_STORAGE);
+			qAddFileStorage.BindValue("FileName", QFileInfo(FilePath).fileName());
+			qAddFileStorage.BindValue("Data", ByteArray);
 
 			ISGui::SetWaitGlobalCursor(true);
-			bool Inserted = qInsert.ExecuteFirst();
+			Result = qAddFileStorage.Execute();
 			ISGui::SetWaitGlobalCursor(false);
 
-			if (Inserted)
+			if (!Result)
 			{
-				LastObjectID = qInsert.ReadColumn("sgfs_id").toInt();
-				VectorInt.emplace_back(LastObjectID);
-				IsUpdateList = true;
-			}
-			else
-			{
-				ISMessageBox::ShowCritical(this, LANG("Message.Error.ErrorInsertFileToStorage").arg(FilePath), qInsert.GetErrorString());
+				ISMessageBox::ShowCritical(&ProgressForm, qAddFileStorage.GetErrorString());
 			}
 
 			if (ProgressForm.WasCanceled())
 			{
-				if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.StopInsertingToStorage")))
+				if (ISMessageBox::ShowQuestion(&ProgressForm, LANG("Message.Question.StopInsertingToStorage")))
 				{
-					if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.DeleteInsetedFiles")))
-					{
-						QString SqlText = "DELETE FROM _storagefiles WHERE sgfs_id IN (";
-						for (int ID : VectorInt)
-						{
-							SqlText += QString::number(ID) + ", ";
-						}
-						SqlText.chop(2);
-						SqlText += ')';
-
-						ISQuery qDelete(SqlText);
-						if (!qDelete.Execute())
-						{
-							ISMessageBox::ShowCritical(this, LANG("Message.Error.DeleteInsetedFiles"));
-						}
-					}
 					break;
 				}
 				else
@@ -123,9 +92,10 @@ void ISStorageFilesListForm::Create()
 					ProgressForm.SetCanceled(false);
 				}
 			}
+			ProgressForm.IncrementValue();
 		}
 
-		if (IsUpdateList)
+		if (Result)
 		{
 			Update();
 		}

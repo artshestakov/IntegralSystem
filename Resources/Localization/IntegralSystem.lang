@@ -63,7 +63,6 @@
   <Local Name="Message.Error.User.NotAccessAllowed" Russian="Для Вашей учетной записи доступ закрыт, обратитесь к системному администратору."/>
   <Local Name="Message.Error.User.NotLinkWithGroup" Russian="Ваша учётная запись не привязана ни к одной из групп. Обратитесь к системному администратору."/>
   <Local Name="Message.Error.NotOpenedFile" Russian="Не удалось открыть файл &quot;%1&quot;."/>
-  <Local Name="Message.Error.ErrorInsertFileToStorage" Russian="Не удалось добавить файл &quot;%1&quot; в хранилище."/>
   <Local Name="Message.Error.ErrorOpenedFolderPath" Russian="Не удалось открыть директорию &quot;%1&quot;."/>
   <Local Name="Message.Error.ErrorOpenedFileTemplatePrinting" Russian="Не удалось открыть файл шаблона печати."/>
   <Local Name="Message.Error.ErrorFillTemplateData" Russian="Произошла ошибка при заполнении шаблона данными."/>
@@ -83,7 +82,6 @@
   <Local Name="Message.Error.InitializeHistory" Russian="Не удалось загрузить историю открытых объектов."/>
   <Local Name="Message.Error.InitializeSortingBuffer" Russian="Не удалось загрузить сортировки."/>
   <Local Name="Message.Error.InitializeColumnSizer" Russian="Не удалось загрузить размеры полей."/>
-  <Local Name="Message.Error.DeleteInsetedFiles" Russian="Не удалось удалить добавленные файлы."/>
   <Local Name="Message.Error.CreateCopyStorageFile" Russian="Не удалось создать копию файла &quot;%1&quot;."/>
   <Local Name="Message.Error.SelectStorageFileData" Russian="Не удалось получить файл из базы данных."/>
   <Local Name="Message.Error.CheckAllQuery" Russian="Ошибка в SQL-запросе!"/>
@@ -192,7 +190,6 @@
   <Local Name="Message.Question.StorageFileIsPrivate" Russian="Приватный файл?"/>
   <Local Name="Message.Question.AllStorageFileIsPrivate" Russian="Применить приватность для всех файлов (%1)?"/>
   <Local Name="Message.Question.StopInsertingToStorage" Russian="Остановить добавление файлов?"/>
-  <Local Name="Message.Question.DeleteInsetedFiles" Russian="Удалить добавленные файлы?"/>
   <Local Name="Message.Question.DeleteTaskComment" Russian="Удалить комментарий? Это действие нельзя отменить."/>
   <Local Name="Message.Question.DeleteTaskLink" Russian="Удалить связь? Это действие нельзя отменить."/>
   <Local Name="Message.Question.TaskFileSave" Russian="Сохранить файл?"/>

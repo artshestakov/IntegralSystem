@@ -105,4 +105,7 @@
   <Local Name="Carat.Error.Query.SetNoteRecord.Update" Russian="Не удалось изменить примечание: %1"/>
   <Local Name="Carat.Error.Query.SetNoteRecord.Insert" Russian="Не удалось добавить примечание: %1"/>
 
+  <Local Name="Carat.Error.Query.AddFileStorage.Size" Russian="Размер файла &quot;%1&quot; превышает ограничение в %2 MB. Файл не будет добавлен."/>
+  <Local Name="Carat.Error.Query.AddFileStorage.Insert" Russian="Не удалось добавить файл &quot;%1&quot; в хранилище: %2"/>
+
 </LANG>

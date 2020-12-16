@@ -164,6 +164,7 @@ const char API_DISCUSSION_COPY[] = "DiscussionCopy"; //Скопировать обсуждение
 const char API_GET_TABLE_DATA[] = "GetTableData"; //Получить данные из таблицы
 const char API_GET_NOTE_RECORD[] = "GetNoteRecord"; //Получить примечание записи
 const char API_SET_NOTE_RECORD[] = "SetNoteRecord"; //Изменить примечание записи
+const char API_ADD_FILE_STORAGE[] = "AddFileStorage"; //Добавить файл в хранилище
 //CARAT_LOCAL_API--------------------------------------------------------------
 const char		CARAT_LOCAL_API_SHUTDOWN[] = "shutdown"; //Завершение работы
 //-----------------------------------------------------------------------------

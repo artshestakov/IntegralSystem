@@ -178,6 +178,9 @@ static QString QU_NOTE_RECORD = PREPARE_QUERY("UPDATE _noteobject SET "
 static QString QI_NOTE_RECORD = PREPARE_QUERY("INSERT INTO _noteobject(nobj_tablename, nobj_objectid, nobj_note) "
 											  "VALUES(:TableName, :ObjectID, :Note)");
 //-----------------------------------------------------------------------------
+static QString QI_FILE_STORAGE = PREPARE_QUERY("INSERT INTO _storagefiles(sgfs_owner, sgfs_name, sgfs_expansion, sgfs_size, sgfs_data) "
+											   "VALUES (:Owner, :Name, :Expansion, :Size, :Data)");
+//-----------------------------------------------------------------------------
 ISTcpWorker::ISTcpWorker(const QString &db_host, int db_port, const QString &db_name, const QString &db_user, const QString &db_password)
 	: QObject(),
 	ErrorString(NO_ERROR_STRING),
@@ -325,6 +328,7 @@ void ISTcpWorker::Process()
 					case ISNamespace::AMT_GetTableData: Result = GetTableData(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_GetNoteRecord: Result = GetNoteRecord(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_SetNoteRecord: Result = SetNoteRecord(tcp_message, TcpAnswer); break;
+					case ISNamespace::AMT_AddFileStorage: Result = AddFileStorage(tcp_message, TcpAnswer); break;
 					}
 					PerfomanceMsec = ISAlgorithm::GetTickDiff(ISAlgorithm::GetTick(), TimePoint);
 				}
@@ -1857,6 +1861,44 @@ bool ISTcpWorker::SetNoteRecord(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer
 				LANG("Carat.Error.Query.SetNoteRecord.Insert")).arg(qUpsert.GetErrorString());
 			return false;
 		}
+	}
+	return true;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::AddFileStorage(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+	Q_UNUSED(TcpAnswer);
+
+	QVariant FileName = CheckNullField("FileName", TcpMessage->Parameters),
+		Data = CheckNullField("Data", TcpMessage->Parameters);
+	if (!FileName.isValid() || !Data.isValid())
+	{
+		return false;
+	}
+
+	//Получаем имя файла, его расширение и массив файл
+	QFileInfo FileInfo(FileName.toString());
+	QString Name = FileInfo.baseName(), Expansion = FileInfo.suffix();
+	QByteArray ByteArray = QByteArray::fromBase64(Data.toByteArray());
+
+	//Проверяем размер
+	int Size = ByteArray.size(), MaxSizeMB = 10; //??? Нужно использовать настройку из БД
+	if (Size > (((1000 * 1024) * MaxSizeMB)))
+	{
+		ErrorString = LANG("Carat.Error.Query.AddFileStorage.Size").arg(Name).arg(MaxSizeMB);
+		return false;
+	}
+
+	ISQuery qInsert(ISDatabase::Instance().GetDB(DBConnectionName), QI_FILE_STORAGE);
+	qInsert.BindValue(":Owner", TcpMessage->TcpSocket->GetUserID());
+	qInsert.BindValue(":Name", Name);
+	qInsert.BindValue(":Expansion", Expansion);
+	qInsert.BindValue(":Size", Size);
+	qInsert.BindValue(":Data", ByteArray);
+	if (!qInsert.Execute())
+	{
+		ErrorString = LANG("Carat.Error.Query.AddFileStorage.Insert").arg(Name).arg(qInsert.GetErrorString());
+		return false;
 	}
 	return true;
 }

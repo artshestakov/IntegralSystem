@@ -176,6 +176,16 @@
             <stringProp name="Argument.value"></stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
+          <elementProp name="AddFileStorage_FileName" elementType="Argument">
+            <stringProp name="Argument.name">AddFileStorage_FileName</stringProp>
+            <stringProp name="Argument.value">Задачи.csv</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="AddFileStorage_Data" elementType="Argument">
+            <stringProp name="Argument.name">AddFileStorage_Data</stringProp>
+            <stringProp name="Argument.value">yu7kO8fg4+7r7uLu6g0KMTM70uXx8ujw7uLg7ejlDQoyMTvR4v/n4O3t4P9f5+Dk4PfgINHi/+fg7e3g/1/n4OTg9+Ag0eL/5+Dt7eD/X+fg5OD34CDR4v/n4O3t4P9f5+Dk4PfgINHi/+fg7e3g/1/n4OTg9+Ag0eL/5+Dt7eD/X+fg5OD34CDn4OTg9+Ag5+Dk4PfgIOfg5OD34CDn4OTg9+Ag5+Dk4PfgIOfg5OD34CDn4OTg9+Ag5+Dk4PfgIOfg5OD34CDn4OTg9+Ag5+Dk4PfgIOfg5OD34CDn4OTg9+Ag5+Dk4PfgIOfg5OD34CDn4OTg9+Ag5+Dk4PfgIOfg5OD34CDn4OTg9+Ag5+Dk4PfgIOfg5OD34CDn4OTg9+Ag5+Dk4PfgIOfg5OD34CDn4OTg9+Ag5+Dk4PfgIOfg5OD34CDn4OTg9+Ag5+Dk4PfgIOfg5OD34CDn4OTg9+Ag5+Dk4PfgIOfg5OD34CDn4OTg9+ANCjIyOzEyMw0KMjM7x+Dk4PfgIOTr/yDy5fHy7uIgx+Dk4PfgIOTr/yDy5fHy7uIgx+Dk4PfgIOTr/yDy5fHy7uIgx+Dk4PfgIOTr/yDy5fHy7uINCjI0O8/u5Ofg5OD34CAyDQo=</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
         </collectionProp>
       </Arguments>
       <hashTree/>
@@ -409,7 +419,19 @@ def MapSetNoteRecord =
 			Note: vars.get(&quot;SetNoteRecord_Note&quot;)
 		]
 ];
-vars.put(&quot;QuerySetNoteRecord&quot;, MapToString(MapSetNoteRecord));</stringProp>
+vars.put(&quot;QuerySetNoteRecord&quot;, MapToString(MapSetNoteRecord));
+
+//Добавить файл в хранилище
+def MapAddFileStorage =
+[
+	Type: &quot;AddFileStorage&quot;,
+	Parameters:
+		[
+			FileName: vars.get(&quot;AddFileStorage_FileName&quot;),
+			Data: vars.get(&quot;AddFileStorage_Data&quot;)
+		]
+];
+vars.put(&quot;QueryAddFileStorage&quot;, MapToString(MapAddFileStorage));</stringProp>
           <stringProp name="scriptLanguage">groovy</stringProp>
         </JSR223Sampler>
         <hashTree/>
@@ -608,13 +630,26 @@ vars.put(&quot;QuerySetNoteRecord&quot;, MapToString(MapSetNoteRecord));</string
           <stringProp name="ConfigTestElement.password"></stringProp>
         </TCPSampler>
         <hashTree/>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: SetNoteRecord" enabled="true">
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: SetNoteRecord" enabled="false">
           <stringProp name="TCPSampler.server">127.0.0.1</stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
           <stringProp name="TCPSampler.port">50000</stringProp>
           <boolProp name="TCPSampler.nodelay">false</boolProp>
           <stringProp name="TCPSampler.timeout"></stringProp>
           <stringProp name="TCPSampler.request">${QuerySetNoteRecord}</stringProp>
+          <boolProp name="TCPSampler.closeConnection">true</boolProp>
+          <stringProp name="TCPSampler.EolByte">10</stringProp>
+          <stringProp name="ConfigTestElement.username"></stringProp>
+          <stringProp name="ConfigTestElement.password"></stringProp>
+        </TCPSampler>
+        <hashTree/>
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: AddFileStorage" enabled="true">
+          <stringProp name="TCPSampler.server">127.0.0.1</stringProp>
+          <boolProp name="TCPSampler.reUseConnection">true</boolProp>
+          <stringProp name="TCPSampler.port">50000</stringProp>
+          <boolProp name="TCPSampler.nodelay">false</boolProp>
+          <stringProp name="TCPSampler.timeout"></stringProp>
+          <stringProp name="TCPSampler.request">${QueryAddFileStorage}</stringProp>
           <boolProp name="TCPSampler.closeConnection">true</boolProp>
           <stringProp name="TCPSampler.EolByte">10</stringProp>
           <stringProp name="ConfigTestElement.username"></stringProp>
