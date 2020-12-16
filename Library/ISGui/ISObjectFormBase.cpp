@@ -65,7 +65,7 @@ ISNamespace::ObjectFormType ISObjectFormBase::GetFormType()
 	return FormType;
 }
 //-----------------------------------------------------------------------------
-int ISObjectFormBase::GetObjectID() const
+unsigned int ISObjectFormBase::GetObjectID() const
 {
 	return ObjectID;
 }

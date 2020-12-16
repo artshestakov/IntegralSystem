@@ -17,7 +17,7 @@ class ISObjectFormBase : public ISInterfaceForm
 	Q_OBJECT
 
 signals:
-	void SavedObject(int ObjectID);
+	void SavedObject(unsigned int ObjectID);
 	void UpdateList();
 	void CurrentObjectTab(); //Сигнал для вкладки (установление текущей вкладки)
 	void Close();
@@ -30,7 +30,7 @@ public:
 	void SetParentObjectID(int parent_object_id, const QString &parent_filter_field);
 
 	ISNamespace::ObjectFormType GetFormType(); //Получить тип формы
-	int GetObjectID() const; //Получить идентификатор объекта
+	unsigned int GetObjectID() const; //Получить идентификатор объекта
 	PMetaTable* GetMetaTable(); //Получить мета-таблицу
 	bool GetModificationFlag() const; //Получить флаг модицикации данных 
 
@@ -87,7 +87,7 @@ protected:
 private:
 	ISNamespace::ObjectFormType FormType; //Тип формы
 	PMetaTable *MetaTable; //Мета-таблица
-	int ObjectID; //Идентификатор текущего объекта
+	unsigned int ObjectID; //Идентификатор текущего объекта
 	int ParentObjectID; //Идентификатор родителя
 	QString ParentFilterField; //Имя поля для фильтрации
 

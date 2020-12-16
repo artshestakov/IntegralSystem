@@ -311,7 +311,7 @@ int ISListBaseForm::GetCurrentRowIndex()
 	return TableView->selectionModel()->currentIndex().row();
 }
 //-----------------------------------------------------------------------------
-int ISListBaseForm::GetObjectID()
+unsigned int ISListBaseForm::GetObjectID()
 {
 	int ObjectID = GetCurrentRecordValue("ID").toInt();
 	if (!ObjectID)
@@ -321,7 +321,7 @@ int ISListBaseForm::GetObjectID()
 	return ObjectID;
 }
 //-----------------------------------------------------------------------------
-int ISListBaseForm::GetObjectID(int RowIndex)
+unsigned int ISListBaseForm::GetObjectID(int RowIndex)
 {
 	return SqlModel->index(RowIndex, 0).data().toInt();
 }
@@ -366,9 +366,9 @@ QVariant ISListBaseForm::GetRecordValue(const QString &FieldName, int RowIndex)
 	return SqlModel->GetRecord(RowIndex).value(FieldName);
 }
 //-----------------------------------------------------------------------------
-ISVectorInt ISListBaseForm::GetSelectedIDs()
+ISVectorUInt ISListBaseForm::GetSelectedIDs()
 {
-	ISVectorInt VectorInt;
+	ISVectorUInt VectorInt;
 	QModelIndexList ModelIndexList = GetTableView()->selectionModel()->selectedRows();
 	if (!ModelIndexList.isEmpty())
 	{
@@ -414,12 +414,12 @@ ISQueryModel* ISListBaseForm::GetQueryModel()
 	return QueryModel;
 }
 //-----------------------------------------------------------------------------
-void ISListBaseForm::SetSelectObjectAfterUpdate(int ObjectID)
+void ISListBaseForm::SetSelectObjectAfterUpdate(unsigned int ObjectID)
 {
-	SetSelectObjectAfterUpdate(ISVectorInt{ ObjectID });
+	SetSelectObjectAfterUpdate(ISVectorUInt{ ObjectID });
 }
 //-----------------------------------------------------------------------------
-void ISListBaseForm::SetSelectObjectAfterUpdate(const ISVectorInt &Objects)
+void ISListBaseForm::SetSelectObjectAfterUpdate(const ISVectorUInt &Objects)
 {
 	SelectObjectAfterUpdate = Objects;
 }
@@ -458,7 +458,7 @@ void ISListBaseForm::DoubleClickedTable(const QModelIndex &ModelIndex)
 	{
 		ISObjectFormBase *ObjectFormBase = ISGui::CreateObjectForm(ISNamespace::OFT_Edit, MetaTable->Name, GetObjectID());
 		ObjectFormBase->SetParentObjectID(GetParentObjectID(), GetParentFilterField());
-		connect(ObjectFormBase, &ISObjectFormBase::SavedObject, this, static_cast<void(ISListBaseForm::*)(int)>(&ISListBaseForm::SetSelectObjectAfterUpdate));
+		connect(ObjectFormBase, &ISObjectFormBase::SavedObject, this, static_cast<void(ISListBaseForm::*)(unsigned int)>(&ISListBaseForm::SetSelectObjectAfterUpdate));
 		connect(ObjectFormBase, &ISObjectFormBase::SavedObject, this, &ISListBaseForm::Updated);
 		connect(ObjectFormBase, &ISObjectFormBase::UpdateList, this, &ISListBaseForm::Update);
 		connect(ObjectFormBase, &ISObjectFormBase::Close, TableView, static_cast<void(ISBaseTableView::*)(void)>(&ISBaseTableView::setFocus));
@@ -733,7 +733,7 @@ void ISListBaseForm::ResizeColumnsToContents()
 	FieldResized(true);
 }
 //-----------------------------------------------------------------------------
-void ISListBaseForm::SelectRowObject(const ISVectorInt &Objects)
+void ISListBaseForm::SelectRowObject(const ISVectorUInt &Objects)
 {
 	if (!Objects.empty()) //Если вектор не пустой
 	{
@@ -930,7 +930,7 @@ void ISListBaseForm::Create()
 
 	ISObjectFormBase *ObjectFormBase = ISGui::CreateObjectForm(ISNamespace::OFT_New, MetaTable->Name, 0, parentWidget());
 	ObjectFormBase->SetParentObjectID(GetParentObjectID(), GetParentFilterField());
-	connect(ObjectFormBase, &ISObjectFormBase::SavedObject, this, static_cast<void(ISListBaseForm::*)(int)>(&ISListBaseForm::SetSelectObjectAfterUpdate));
+	connect(ObjectFormBase, &ISObjectFormBase::SavedObject, this, static_cast<void(ISListBaseForm::*)(unsigned int)>(&ISListBaseForm::SetSelectObjectAfterUpdate));
 	connect(ObjectFormBase, &ISObjectFormBase::SavedObject, this, &ISListBaseForm::Updated);
 	connect(ObjectFormBase, &ISObjectFormBase::UpdateList, this, &ISListBaseForm::Update);
 	connect(ObjectFormBase, &ISObjectFormBase::Close, TableView, static_cast<void(ISBaseTableView::*)(void)>(&ISBaseTableView::setFocus));
@@ -953,7 +953,7 @@ void ISListBaseForm::CreateCopy()
 
 	ISObjectFormBase *ObjectFormBase = ISGui::CreateObjectForm(ISNamespace::ObjectFormType::OFT_Copy, MetaTable->Name, GetObjectID(), parentWidget());
 	ObjectFormBase->SetParentObjectID(GetParentObjectID(), GetParentFilterField());
-	connect(ObjectFormBase, &ISObjectFormBase::SavedObject, this, static_cast<void(ISListBaseForm::*)(int)>(&ISListBaseForm::SetSelectObjectAfterUpdate));
+	connect(ObjectFormBase, &ISObjectFormBase::SavedObject, this, static_cast<void(ISListBaseForm::*)(unsigned int)>(&ISListBaseForm::SetSelectObjectAfterUpdate));
 	connect(ObjectFormBase, &ISObjectFormBase::SavedObject, this, &ISListBaseForm::Updated);
 	connect(ObjectFormBase, &ISObjectFormBase::UpdateList, this, &ISListBaseForm::Update);
 	connect(ObjectFormBase, &ISObjectFormBase::Close, TableView, static_cast<void(ISBaseTableView::*)(void)>(&ISBaseTableView::setFocus));
@@ -976,7 +976,7 @@ void ISListBaseForm::Edit()
 
 	ISObjectFormBase *ObjectFormBase = ISGui::CreateObjectForm(ISNamespace::OFT_Edit, MetaTable->Name, GetObjectID(), parentWidget());
 	ObjectFormBase->SetParentObjectID(GetParentObjectID(), GetParentFilterField());
-	connect(ObjectFormBase, &ISObjectFormBase::SavedObject, this, static_cast<void(ISListBaseForm::*)(int)>(&ISListBaseForm::SetSelectObjectAfterUpdate));
+	connect(ObjectFormBase, &ISObjectFormBase::SavedObject, this, static_cast<void(ISListBaseForm::*)(unsigned int)>(&ISListBaseForm::SetSelectObjectAfterUpdate));
 	connect(ObjectFormBase, &ISObjectFormBase::SavedObject, this, &ISListBaseForm::Updated);
 	connect(ObjectFormBase, &ISObjectFormBase::UpdateList, this, &ISListBaseForm::Update);
 	connect(ObjectFormBase, &ISObjectFormBase::Close, TableView, static_cast<void(ISBaseTableView::*)(void)>(&ISBaseTableView::setFocus));
@@ -1011,7 +1011,7 @@ bool ISListBaseForm::Delete()
 
 	QString ErrorString;
 	bool Result = true;
-	ISVectorInt VectorInt = GetSelectedIDs();
+	ISVectorUInt VectorInt = GetSelectedIDs();
 
 	if (CONFIG_BOOL("Protocol/Include"))
 	{

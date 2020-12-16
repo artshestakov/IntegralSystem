@@ -36,7 +36,7 @@ public:
 	static bool OpenFolder(const QString &FolderPath); //Открыть дикекторию
 	static QString ConvertDateTimeToString(const QDateTime &DateTime, const QString &DateFormat, const QString &TimeFormat); //Конвертировать дату и время в строку
 	static QString ConvertDateToString(const QDate &Date, const QString &DateFormat); //Конвертировать дату в строку
-	static bool RecordsDelete(const QString &TableName, const ISVectorInt &ObjectsID, QString &ErrorString); //Удалить записи
+	static bool RecordsDelete(const QString &TableName, const ISVectorUInt &ObjectsID, QString &ErrorString); //Удалить записи
 
 	static void ExitApplication(); //Выход из программы
 
@@ -48,8 +48,8 @@ public:
 	static ISObjectFormBase* CreateObjectForm(ISNamespace::ObjectFormType FormType, const QString &TableName, int ObjectID = 0, QWidget *parent = 0);
 	static ISComboSearchBase* CreateSearchOperator(QWidget *parent, ISNamespace::FieldType DataType, PMetaForeign *MetaForeign);
 
-	static int SelectObject(const QString &TableName, int SelectObjectID = 0); //Выбор одной записи из таблицы
-	static ISVectorInt SelectObjects(const QString &TableName); //Выбор нескольких записей из таблицы
+	static unsigned int SelectObject(const QString &TableName, int SelectObjectID = 0); //Выбор одной записи из таблицы
+	static ISVectorUInt SelectObjects(const QString &TableName); //Выбор нескольких записей из таблицы
 
 	static void ShowSettingsForm(const QString &SettingGroupUID = QString()); //Открыть форму настроек
 	static void ShowUserPasswordForm(unsigned int UserID, const QString &UserFIO, const QString &UserLogin); //Открыть форму изменения пароля для пользователя

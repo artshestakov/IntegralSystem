@@ -185,8 +185,6 @@
   <Local Name="Message.Question.FileSaved" Russian="Файл успешно сохранен! Открыть его?"/>
   <Local Name="Message.Question.CalendarCloseEvent" Russian="Завершить событие?"/>
   <Local Name="Message.Question.DeleteGroup" Russian="Удалить группу &quot;%1&quot;?"/>
-  <Local Name="Message.Question.StorageFileIsPrivate" Russian="Приватный файл?"/>
-  <Local Name="Message.Question.AllStorageFileIsPrivate" Russian="Применить приватность для всех файлов (%1)?"/>
   <Local Name="Message.Question.StopInsertingToStorage" Russian="Остановить добавление файлов?"/>
   <Local Name="Message.Question.DeleteTaskComment" Russian="Удалить комментарий? Это действие нельзя отменить."/>
   <Local Name="Message.Question.DeleteTaskLink" Russian="Удалить связь? Это действие нельзя отменить."/>

@@ -13,8 +13,8 @@ public:
 	virtual ~ISSelectDialogForm();
 
 	bool Exec() override;
-	int GetSelectedObject() const;
-	ISVectorInt GetSelectedObjects() const;
+	unsigned int GetSelectedObject() const;
+	ISVectorUInt GetSelectedObjects() const;
 
 protected:
 	void AfterShowEvent() override;

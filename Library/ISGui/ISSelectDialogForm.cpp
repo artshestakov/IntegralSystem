@@ -37,12 +37,12 @@ bool ISSelectDialogForm::Exec()
 	return ISInterfaceDialogForm::Exec();
 }
 //-----------------------------------------------------------------------------
-int ISSelectDialogForm::GetSelectedObject() const
+unsigned int ISSelectDialogForm::GetSelectedObject() const
 {
 	return SelectListForm->GetObjectID();
 }
 //-----------------------------------------------------------------------------
-ISVectorInt ISSelectDialogForm::GetSelectedObjects() const
+ISVectorUInt ISSelectDialogForm::GetSelectedObjects() const
 {
 	return SelectListForm->GetSelectedIDs();
 }

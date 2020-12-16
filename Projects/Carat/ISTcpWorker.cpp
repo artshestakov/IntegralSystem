@@ -1959,6 +1959,7 @@ bool ISTcpWorker::FileStorageGet(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
 
 	//Вытаскиваем файл
 	ISQuery qSelect(ISDatabase::Instance().GetDB(DBConnectionName), QS_FILE_STORAGE);
+	qSelect.SetShowLongQuery(false);
 	qSelect.BindValue(":ObjectID", ID);
 	if (!qSelect.Execute()) //Ошибка запроса
 	{

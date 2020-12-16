@@ -382,13 +382,13 @@ QString ISGui::ConvertDateToString(const QDate &Date, const QString &DateFormat)
 	return Result;
 }
 //-----------------------------------------------------------------------------
-bool ISGui::RecordsDelete(const QString &TableName, const ISVectorInt &ObjectsID, QString &ErrorString)
+bool ISGui::RecordsDelete(const QString &TableName, const ISVectorUInt &ObjectsID, QString &ErrorString)
 {
 	ISTcpQuery qDelete(API_RECORD_DELETE);
 	qDelete.BindValue("TableName", TableName);
 
 	QVariantList Objects;
-	for (const int &ObjectID : ObjectsID)
+	for (const unsigned int &ObjectID : ObjectsID)
 	{
 		Objects.push_back(ObjectID);
 	}
@@ -457,7 +457,7 @@ ISComboSearchBase* ISGui::CreateSearchOperator(QWidget *parent, ISNamespace::Fie
 	return ComboSearchBase;
 }
 //-----------------------------------------------------------------------------
-int ISGui::SelectObject(const QString &TableName, int SelectObjectID)
+unsigned int ISGui::SelectObject(const QString &TableName, int SelectObjectID)
 {
 	SetWaitGlobalCursor(true);
 	ISSelectDialogForm SelectDialogForm(ISNamespace::SLM_Single, TableName, SelectObjectID);
@@ -465,9 +465,9 @@ int ISGui::SelectObject(const QString &TableName, int SelectObjectID)
 	return SelectDialogForm.Exec() ? SelectDialogForm.GetSelectedObject() : 0;
 }
 //-----------------------------------------------------------------------------
-ISVectorInt ISGui::SelectObjects(const QString &TableName)
+ISVectorUInt ISGui::SelectObjects(const QString &TableName)
 {
-	ISVectorInt VectorInt;
+	ISVectorUInt VectorInt;
 	SetWaitGlobalCursor(true);
 	ISSelectDialogForm SelectDialogForm(ISNamespace::SLM_Multi, TableName, 0);
 	SetWaitGlobalCursor(false);

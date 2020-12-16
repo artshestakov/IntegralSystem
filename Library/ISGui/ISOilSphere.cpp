@@ -689,7 +689,7 @@ void ISOilSphere::GasStationStatementObjectForm::AfterShowEvent()
 //-----------------------------------------------------------------------------
 void ISOilSphere::GasStationStatementObjectForm::FillInBased()
 {
-	int SelectedID = ISGui::SelectObject("GasStationStatement");
+	unsigned int SelectedID = ISGui::SelectObject("GasStationStatement");
 	if (SelectedID) //Если запись была выбрана - заполняем
 	{
 		if (SelectedID == GetObjectID())

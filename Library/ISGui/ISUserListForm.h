@@ -1,6 +1,5 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "StdAfx.h"
 #include "ISListBaseForm.h"
 //-----------------------------------------------------------------------------
 class ISUserListForm : public ISListBaseForm
@@ -10,9 +9,5 @@ class ISUserListForm : public ISListBaseForm
 public:
 	Q_INVOKABLE ISUserListForm(QWidget *parent = 0);
 	virtual ~ISUserListForm();
-
-private:
-	void PasswordManagement();
-	void PasswordReset();
 };
 //-----------------------------------------------------------------------------

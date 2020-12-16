@@ -9,6 +9,9 @@
 #include "ISGui.h"
 #include "ISSystem.h"
 #include "ISUserPhotoCreator.h"
+#include "ISTcpQuery.h"
+#include "ISBuffer.h"
+#include "ISPopupMessage.h"
 //-----------------------------------------------------------------------------
 ISUserObjectForm::ISUserObjectForm(ISNamespace::ObjectFormType form_type, PMetaTable *meta_table, QWidget *parent, int object_id) : ISObjectFormBase(form_type, meta_table, parent, object_id)
 {
@@ -20,6 +23,14 @@ ISUserObjectForm::ISUserObjectForm(ISNamespace::ObjectFormType form_type, PMetaT
 
 	EditAccountLifeTimeEnd = GetFieldWidget("AccountLifeTimeEnd");
 	EditAccountLifeTimeEnd->setEnabled(false);
+
+	QAction *ActionPassword = new QAction(BUFFER_ICONS("User.Password"), LANG("PasswordManagement"), this);
+	connect(ActionPassword, &QAction::triggered, this, &ISUserObjectForm::PasswordManagement);
+	AddActionToolBar(ActionPassword, true);
+
+	QAction *ActionPasswordReset = new QAction(BUFFER_ICONS("User.Password.Reset"), LANG("PasswordReset"), this);
+	connect(ActionPasswordReset, &QAction::triggered, this, &ISUserObjectForm::PasswordReset);
+	AddActionToolBar(ActionPasswordReset, true);
 }
 //-----------------------------------------------------------------------------
 ISUserObjectForm::~ISUserObjectForm()
@@ -84,6 +95,33 @@ bool ISUserObjectForm::Save()
 		Result = ISObjectFormBase::Save();
 	}
 	return Result;
+}
+//-----------------------------------------------------------------------------
+void ISUserObjectForm::PasswordManagement()
+{
+	if (GetModificationFlag())
+	{
+		ISMessageBox::ShowWarning(this, LANG("Message.Warning.SaveObjectFromContinue"));
+		return;
+	}
+	ISGui::ShowUserPasswordForm(GetObjectID(), GetFieldValue("FIO").toString(), GetFieldValue("Login").toString());
+}
+//-----------------------------------------------------------------------------
+void ISUserObjectForm::PasswordReset()
+{
+	if (ISMessageBox::ShowQuestion(nullptr, LANG("Message.Question.PasswordReset"), LANG("ThisActionIsNotReversible")))
+	{
+		ISTcpQuery qPasswordReset(API_USER_PASSWORD_RESET);
+		qPasswordReset.BindValue("UserID", GetObjectID());
+		if (qPasswordReset.Execute())
+		{
+			ISPopupMessage::ShowNotification(LANG("PasswordResetDone"));
+		}
+		else
+		{
+			ISMessageBox::ShowCritical(nullptr, qPasswordReset.GetErrorString());
+		}
+	}
 }
 //-----------------------------------------------------------------------------
 void ISUserObjectForm::AccountLifeTimeChanged()
