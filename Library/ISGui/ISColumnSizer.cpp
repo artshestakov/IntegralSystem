@@ -19,8 +19,8 @@ static QString QU_COLUMN_SIZE = PREPARE_QUERY("UPDATE _columnsize SET "
 											  "AND clsz_tablename = :TableName "
 											  "AND clsz_fieldname = :FieldName");
 //-----------------------------------------------------------------------------
-static QString QI_COLUMN_SIZE = PREPARE_QUERY("INSERT INTO _columnsize(clsz_tablename, clsz_fieldname, clsz_size) "
-											  "VALUES (:TableName, :FieldName, :Size)");
+static QString QI_COLUMN_SIZE = PREPARE_QUERY("INSERT INTO _columnsize(clsz_user, clsz_tablename, clsz_fieldname, clsz_size) "
+											  "VALUES (:UserID, :TableName, :FieldName, :Size)");
 //-----------------------------------------------------------------------------
 static QString QD_COLUMN_SIZE = PREPARE_QUERY("DELETE FROM _columnsize "
 											  "WHERE clsz_user = :UserID");
