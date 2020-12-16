@@ -121,7 +121,7 @@
       <Index Field="Comment"/>
     </Indexes>
     <Foreigns>
-      <Foreign Field="Owner" ForeignClass="_Users" ForeignField="ID"/>
+      <Foreign Field="Owner" ForeignClass="_Users" ForeignField="ID" ForeignViewNameField="FIO"/>
       <Foreign Field="Task" ForeignClass="_Task" ForeignField="ID" ForeignViewNameField="Name"/>
       <Foreign Field="Parent" ForeignClass="_TaskComment" ForeignField="ID" ForeignViewNameField="Comment"/>
     </Foreigns>
