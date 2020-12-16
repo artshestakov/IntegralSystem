@@ -99,6 +99,7 @@
   <Local Name="Carat.Error.Query.GetTableData.InsertSorting" Russian="Не удалось добавить сортировку: %1"/>
   <Local Name="Carat.Error.Query.GetTableData.Select" Russian="Не удалось получить данные: %1"/>
 
+  <Local Name="Carat.Error.Query.GetNoteRecord.TableNotExist" Russian="Таблица %1 не существует."/>
   <Local Name="Carat.Error.Query.GetNoteRecord.Select" Russian="Не удалось получить примечание: %1"/>
   
   <Local Name="Carat.Error.Query.SetNoteRecord.Delete" Russian="Не удалось удалить примечание: %1"/>

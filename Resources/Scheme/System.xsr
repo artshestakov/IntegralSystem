@@ -36,8 +36,10 @@
   <_ProtocolType IsSystem="true" UID="{916A2119-5D8D-41C9-8358-AE587F365898}" Name="Печать"/>
   <_ProtocolType IsSystem="true" UID="{179F73BF-8983-4B52-B505-AF0EF4BF8093}" Name="Расширенный поиск"/>
   <_ProtocolType IsSystem="true" UID="{B0A1EF68-2AA4-4EB2-A5A9-F8E5604F864B}" Name="Полнотекстовый поиск"/>
+  <_ProtocolType IsSystem="true" UID="{0A6320B0-827B-4043-886A-1D7FD5D9B6DE}" Name="Просмотр примечания записи"/>
   <_ProtocolType IsSystem="true" UID="{662105B6-6671-46BE-8E1A-E57061C5C268}" Name="Добавление примечания к записи"/>
   <_ProtocolType IsSystem="true" UID="{C20634AF-EF58-4D96-9215-8085C2B8C416}" Name="Изменение примечания к записи"/>
+  <_ProtocolType IsSystem="true" UID="{08904DF2-3785-4454-B5E5-2D83A9FAA231}" Name="Удаление примечания к записи"/>
   <_ProtocolType IsSystem="true" UID="{A0115A19-05CC-4AFD-8568-F9AE970E7157}" Name="Просмотр информации о программе"/>
   <_ProtocolType IsSystem="true" UID="{CDCB7490-C975-4ECA-AC3A-4532A32ECC4D}" Name="Изменение пароля от своей учётной записи"/>
   <_ProtocolType IsSystem="true" UID="{EA765447-6811-43AD-8CFC-9B2E758A5B4E}" Name="Добавление права на подсистему"/>
@@ -49,6 +51,9 @@
   <_ProtocolType IsSystem="true" UID="{6DD00B13-2A69-45FD-B565-3142C2D2BA97}" Name="Создание пароля"/>
   <_ProtocolType IsSystem="true" UID="{0EEE6D67-A0F3-4558-B7AD-173678A8C9DC}" Name="Изменение пароля"/>
   <_ProtocolType IsSystem="true" UID="{3B005C51-B44E-48C6-95F8-3AC6BD913BB3}" Name="Сброс пароля"/>
+  <_ProtocolType IsSystem="true" UID="{7E9FF116-CF0A-4568-B048-7FAB8D773D57}" Name="Добавление файла в хранилище"/>
+  <_ProtocolType IsSystem="true" UID="{5CB370B6-D1AA-4E40-83A9-AEAC7FEA65E2}" Name="Копирование файла в хранилище"/>
+  <_ProtocolType IsSystem="true" UID="{E73BEDC4-79FF-4B94-ACC9-2692E1927D18}" Name="Сохранение файла из хранилища"/>
 
   <_InternalDirectories IsSystem="true" UID="{A57D9B44-CD09-4880-897D-3B0BACB1F093}" TableName="_TaskType" Order="1"/>
   <_InternalDirectories IsSystem="true" UID="{275E8EE8-C1EE-4495-95C2-79AB3AD98AB9}" TableName="_TaskSpace" Order="2"/>

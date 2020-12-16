@@ -179,7 +179,8 @@ static QString QI_NOTE_RECORD = PREPARE_QUERY("INSERT INTO _noteobject(nobj_tabl
 											  "VALUES(:TableName, :ObjectID, :Note)");
 //-----------------------------------------------------------------------------
 static QString QI_FILE_STORAGE = PREPARE_QUERY("INSERT INTO _storagefiles(sgfs_owner, sgfs_name, sgfs_expansion, sgfs_size, sgfs_data) "
-											   "VALUES (:Owner, :Name, :Expansion, :Size, :Data)");
+											   "VALUES (:Owner, :Name, :Expansion, :Size, :Data) "
+											   "RETURNING sgfs_id");
 //-----------------------------------------------------------------------------
 static QString QI_FILE_STORAGE_COPY = PREPARE_QUERY("INSERT INTO _storagefiles(sgfs_owner, sgfs_name, sgfs_expansion, sgfs_size, sgfs_note, sgfs_data) "
 													"SELECT sgfs_owner, :Name, sgfs_expansion, sgfs_size, sgfs_note, sgfs_data "
@@ -187,7 +188,7 @@ static QString QI_FILE_STORAGE_COPY = PREPARE_QUERY("INSERT INTO _storagefiles(s
 													"WHERE sgfs_id = :ObjectID "
 													"RETURNING sgfs_id");
 //-----------------------------------------------------------------------------
-static QString QS_FILE_STORAGE = PREPARE_QUERY("SELECT sgfs_data "
+static QString QS_FILE_STORAGE = PREPARE_QUERY("SELECT sgfs_id, sgfs_data "
 											   "FROM _storagefiles "
 											   "WHERE sgfs_id = :ObjectID");
 //-----------------------------------------------------------------------------
@@ -336,8 +337,8 @@ void ISTcpWorker::Process()
 					case ISNamespace::AMT_DiscussionEdit: Result = DiscussionEdit(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_DiscussionCopy: Result = DiscussionCopy(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_GetTableData: Result = GetTableData(tcp_message, TcpAnswer); break;
-					case ISNamespace::AMT_NoteRecordGet: Result = GetNoteRecord(tcp_message, TcpAnswer); break;
-					case ISNamespace::AMT_NoteRecordSet: Result = SetNoteRecord(tcp_message, TcpAnswer); break;
+					case ISNamespace::AMT_NoteRecordGet: Result = NoteRecordGet(tcp_message, TcpAnswer); break;
+					case ISNamespace::AMT_NoteRecordSet: Result = NoteRecordSet(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_FileStorageAdd: Result = FileStorageAdd(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_FileStorageCopy: Result = FileStorageCopy(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_FileStorageGet: Result = FileStorageGet(tcp_message, TcpAnswer); break;
@@ -1791,7 +1792,7 @@ bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	return true;
 }
 //-----------------------------------------------------------------------------
-bool ISTcpWorker::GetNoteRecord(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+bool ISTcpWorker::NoteRecordGet(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
 	QVariant TableName = CheckNullField("TableName", TcpMessage->Parameters),
 		ObjectID = CheckNullField("ObjectID", TcpMessage->Parameters);
@@ -1800,9 +1801,17 @@ bool ISTcpWorker::GetNoteRecord(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer
 		return false;
 	}
 
+	//Получаем мета-таблицу
+	PMetaTable *MetaTable = ISMetaData::Instance().GetMetaTable(TableName.toString());
+	if (!MetaTable)
+	{
+		ErrorString = LANG("Carat.Error.Query.GetNoteRecord.TableNotExist").arg(TableName.toString());
+		return false;
+	}
+
 	//Получаем примечание
 	ISQuery qSelect(ISDatabase::Instance().GetDB(DBConnectionName), QS_NOTE_RECORD);
-	qSelect.BindValue(":TableName", TableName);
+	qSelect.BindValue(":TableName", MetaTable->Name);
 	qSelect.BindValue(":ObjectID", ObjectID);
 	if (!qSelect.Execute()) //Ошибка запроса
 	{
@@ -1816,10 +1825,13 @@ bool ISTcpWorker::GetNoteRecord(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer
 		Note = qSelect.ReadColumn("nobj_note");
 	}
 	TcpAnswer->Parameters["Note"] = Note;
+
+	//Протоколируем и выходим
+	Protocol(TcpMessage->TcpSocket->GetUserID(), CONST_UID_PROTOCOL_NOTE_RECORD_SHOW, MetaTable->Name, MetaTable->LocalListName, ObjectID);
 	return true;
 }
 //-----------------------------------------------------------------------------
-bool ISTcpWorker::SetNoteRecord(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+bool ISTcpWorker::NoteRecordSet(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
 	Q_UNUSED(TcpAnswer);
 
@@ -1830,10 +1842,18 @@ bool ISTcpWorker::SetNoteRecord(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer
 		return false;
 	}
 
+	//Получаем мета-таблицу
+	PMetaTable *MetaTable = ISMetaData::Instance().GetMetaTable(TableName.toString());
+	if (!MetaTable)
+	{
+		ErrorString = LANG("Carat.Error.Query.GetNoteRecord.TableNotExist").arg(TableName.toString());
+		return false;
+	}
+
 	//Проверяем наличие записи
 	QString NoteDB, Note = TcpMessage->Parameters["Note"].toString();
 	ISQuery qSelect(ISDatabase::Instance().GetDB(DBConnectionName), QS_NOTE_RECORD);
-	qSelect.BindValue(":TableName", TableName);
+	qSelect.BindValue(":TableName", MetaTable->Name);
 	qSelect.BindValue(":ObjectID", ObjectID);
 	bool Exist = qSelect.ExecuteFirst();
 	if (Exist)
@@ -1852,19 +1872,20 @@ bool ISTcpWorker::SetNoteRecord(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer
 	if (Exist && Note.isEmpty())
 	{
 		ISQuery qDelete(ISDatabase::Instance().GetDB(DBConnectionName), QD_NOTE_RECORD);
-		qDelete.BindValue(":TableName", TableName);
+		qDelete.BindValue(":TableName", MetaTable->Name);
 		qDelete.BindValue(":ObjectID", ObjectID);
 		if (!qDelete.Execute())
 		{
 			ErrorString = LANG("Carat.Error.Query.SetNoteRecord.Delete").arg(qDelete.GetErrorString());
 			return false;
 		}
+		Protocol(TcpMessage->TcpSocket->GetUserID(), CONST_UID_PROTOCOL_NOTE_RECORD_DELETE, MetaTable->Name, MetaTable->LocalListName, ObjectID);
 	}
-	else //добавляем/обновляем
+	else //Добавляем/обновляем
 	{
 		ISQuery qUpsert(ISDatabase::Instance().GetDB(DBConnectionName), Exist ? QU_NOTE_RECORD : QI_NOTE_RECORD);
 		qUpsert.BindValue(":Note", Note);
-		qUpsert.BindValue(":TableName", TableName);
+		qUpsert.BindValue(":TableName", MetaTable->Name);
 		qUpsert.BindValue(":ObjectID", ObjectID);
 		if (!qUpsert.Execute()) //Ошибка запроса
 		{
@@ -1873,6 +1894,8 @@ bool ISTcpWorker::SetNoteRecord(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer
 				LANG("Carat.Error.Query.SetNoteRecord.Insert")).arg(qUpsert.GetErrorString());
 			return false;
 		}
+		Protocol(TcpMessage->TcpSocket->GetUserID(), Exist ? CONST_UID_PROTOCOL_NOTE_RECORD_EDIT : CONST_UID_PROTOCOL_NOTE_RECORD_ADD,
+			MetaTable->Name, MetaTable->LocalListName, ObjectID, Note);
 	}
 	return true;
 }
@@ -1908,11 +1931,12 @@ bool ISTcpWorker::FileStorageAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
 	qInsert.BindValue(":Expansion", Expansion);
 	qInsert.BindValue(":Size", ISSystem::FileSizeFromString(Size));
 	qInsert.BindValue(":Data", ByteArray);
-	if (!qInsert.Execute())
+	if (!qInsert.ExecuteFirst())
 	{
 		ErrorString = LANG("Carat.Error.Query.FileStorageAdd.Insert").arg(Name).arg(qInsert.GetErrorString());
 		return false;
 	}
+	Protocol(TcpMessage->TcpSocket->GetUserID(), CONST_UID_PROTOCOL_FILE_STORAGE_ADD, QVariant(), QVariant(), qInsert.ReadColumn("sgfs_id"), Name);
 	return true;
 }
 //-----------------------------------------------------------------------------
@@ -1945,7 +1969,9 @@ bool ISTcpWorker::FileStorageCopy(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnsw
 
 	//Если удалось перейти на первую строку - получаем новый идентификатор записи,
 	//иначе - идентификатор исходной записи
-	TcpAnswer->Parameters["NewID"] = qInsertCopy.First() ? qInsertCopy.ReadColumn("sgfs_id") : ID;
+	ID = qInsertCopy.First() ? qInsertCopy.ReadColumn("sgfs_id") : ID;
+	TcpAnswer->Parameters["NewID"] = ID;
+	Protocol(TcpMessage->TcpSocket->GetUserID(), CONST_UID_PROTOCOL_FILE_STORAGE_COPY, QVariant(), QVariant(), ID, Name);
 	return true;
 }
 //-----------------------------------------------------------------------------
@@ -1973,6 +1999,7 @@ bool ISTcpWorker::FileStorageGet(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
 		return false;
 	}
 	TcpAnswer->Parameters["Data"] = qSelect.ReadColumn("sgfs_data").toByteArray().toBase64();
+	Protocol(TcpMessage->TcpSocket->GetUserID(), CONST_UID_PROTOCOL_FILE_STORAGE_SAVE, QVariant(), QVariant(), qSelect.ReadColumn("sgfs_id"));
 	return true;
 }
 //-----------------------------------------------------------------------------
