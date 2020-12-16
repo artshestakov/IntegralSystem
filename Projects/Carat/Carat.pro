@@ -30,6 +30,7 @@ HEADERS += \
     ISAsterisk.h \
     ISCaratApplication.h \
     ISCaratController.h \
+    ISFail2Ban.h \
     ISTcpAnswer.h \
     ISTcpClients.h \
     ISTcpMessage.h \
@@ -42,6 +43,7 @@ SOURCES += \
     ISAsterisk.cpp \
     ISCaratApplication.cpp \
     ISCaratController.cpp \
+    ISFail2Ban.cpp \
     ISTcpAnswer.cpp \
     ISTcpClients.cpp \
     ISTcpMessage.cpp \

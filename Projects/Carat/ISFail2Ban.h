@@ -18,7 +18,7 @@ public:
 private:
 	ISFail2Ban();
 	~ISFail2Ban();
-	ISFail2Ban(ISFail2Ban const &) {};
+    ISFail2Ban(ISFail2Ban const &) : QObject() {};
 	ISFail2Ban& operator=(ISFail2Ban const&) { return *this; };
 
 private:
