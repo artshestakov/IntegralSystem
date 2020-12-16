@@ -159,7 +159,8 @@ namespace ISNamespace
 		AMT_GetTableData, //Получить данные таблицы
 		AMT_GetNoteRecord, //Получить примечание записи
 		AMT_SetNoteRecord, //Изменить примечание записи
-		AMT_AddFileStorage, //Добавить файл в хранилище
+		AMT_FileStorageAdd, //Добавить файл в хранилище
+		AMT_FileStorageCopy, //Скопировать файл в хранилище
 	};
 };
 //-----------------------------------------------------------------------------

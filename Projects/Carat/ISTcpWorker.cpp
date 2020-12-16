@@ -181,6 +181,12 @@ static QString QI_NOTE_RECORD = PREPARE_QUERY("INSERT INTO _noteobject(nobj_tabl
 static QString QI_FILE_STORAGE = PREPARE_QUERY("INSERT INTO _storagefiles(sgfs_owner, sgfs_name, sgfs_expansion, sgfs_size, sgfs_data) "
 											   "VALUES (:Owner, :Name, :Expansion, :Size, :Data)");
 //-----------------------------------------------------------------------------
+static QString QI_FILE_STORAGE_COPY = PREPARE_QUERY("INSERT INTO _storagefiles(sgfs_owner, sgfs_name, sgfs_expansion, sgfs_size, sgfs_note, sgfs_data) "
+													"SELECT sgfs_owner, :Name, sgfs_expansion, sgfs_size, sgfs_note, sgfs_data "
+													"FROM _storagefiles "
+													"WHERE sgfs_id = :ObjectID "
+													"RETURNING sgfs_id");
+//-----------------------------------------------------------------------------
 ISTcpWorker::ISTcpWorker(const QString &db_host, int db_port, const QString &db_name, const QString &db_user, const QString &db_password)
 	: QObject(),
 	ErrorString(NO_ERROR_STRING),
@@ -328,7 +334,8 @@ void ISTcpWorker::Process()
 					case ISNamespace::AMT_GetTableData: Result = GetTableData(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_GetNoteRecord: Result = GetNoteRecord(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_SetNoteRecord: Result = SetNoteRecord(tcp_message, TcpAnswer); break;
-					case ISNamespace::AMT_AddFileStorage: Result = AddFileStorage(tcp_message, TcpAnswer); break;
+					case ISNamespace::AMT_FileStorageAdd: Result = FileStorageAdd(tcp_message, TcpAnswer); break;
+					case ISNamespace::AMT_FileStorageCopy: Result = FileStorageCopy(tcp_message, TcpAnswer); break;
 					}
 					PerfomanceMsec = ISAlgorithm::GetTickDiff(ISAlgorithm::GetTick(), TimePoint);
 				}
@@ -1865,7 +1872,7 @@ bool ISTcpWorker::SetNoteRecord(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer
 	return true;
 }
 //-----------------------------------------------------------------------------
-bool ISTcpWorker::AddFileStorage(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+bool ISTcpWorker::FileStorageAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
 	Q_UNUSED(TcpAnswer);
 
@@ -1885,11 +1892,12 @@ bool ISTcpWorker::AddFileStorage(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
 	int Size = ByteArray.size(), MaxSizeMB = 10; //??? Нужно использовать настройку из БД
 	if (Size > (((1000 * 1024) * MaxSizeMB)))
 	{
-		ErrorString = LANG("Carat.Error.Query.AddFileStorage.Size").arg(Name).arg(MaxSizeMB);
+		ErrorString = LANG("Carat.Error.Query.FileStorageAdd.Size").arg(Name).arg(MaxSizeMB);
 		return false;
 	}
 
 	ISQuery qInsert(ISDatabase::Instance().GetDB(DBConnectionName), QI_FILE_STORAGE);
+	qInsert.SetShowLongQuery(false);
 	qInsert.BindValue(":Owner", TcpMessage->TcpSocket->GetUserID());
 	qInsert.BindValue(":Name", Name);
 	qInsert.BindValue(":Expansion", Expansion);
@@ -1897,9 +1905,42 @@ bool ISTcpWorker::AddFileStorage(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
 	qInsert.BindValue(":Data", ByteArray);
 	if (!qInsert.Execute())
 	{
-		ErrorString = LANG("Carat.Error.Query.AddFileStorage.Insert").arg(Name).arg(qInsert.GetErrorString());
+		ErrorString = LANG("Carat.Error.Query.FileStorageAdd.Insert").arg(Name).arg(qInsert.GetErrorString());
 		return false;
 	}
+	return true;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::FileStorageCopy(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+	QVariant ID = CheckNullField("ID", TcpMessage->Parameters),
+		Name = CheckNullField("Name", TcpMessage->Parameters);
+	if (!ID.isValid() || !Name.isValid())
+	{
+		return false;
+	}
+
+	//Копируем файл
+	ISQuery qInsertCopy(ISDatabase::Instance().GetDB(DBConnectionName), QI_FILE_STORAGE_COPY);
+	qInsertCopy.SetShowLongQuery(false);
+	qInsertCopy.BindValue(":Name", Name);
+	qInsertCopy.BindValue(":ObjectID", ID);
+	if (!qInsertCopy.Execute()) //Ошибка запроса
+	{
+		ErrorString = LANG("Carat.Error.Query.FileStorageAdd.Insert").arg(qInsertCopy.GetErrorString());
+		return false;
+	}
+
+	//Если файл не был скопирован, значит его не существует - ошибка
+	if (qInsertCopy.GetCountAffected() == 0)
+	{
+		ErrorString = LANG("Carat.Error.Query.FileStorageAdd.NotExist").arg(ID.toInt());
+		return false;
+	}
+
+	//Если удалось перейти на первую строку - получаем новый идентификатор записи,
+	//иначе - идентификатор исходной записи
+	TcpAnswer->Parameters["NewID"] = qInsertCopy.First() ? qInsertCopy.ReadColumn("sgfs_id") : ID;
 	return true;
 }
 //-----------------------------------------------------------------------------

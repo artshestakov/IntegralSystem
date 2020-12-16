@@ -16,16 +16,6 @@
 #include "ISMetaUser.h"
 #include "ISDatabase.h"
 //-----------------------------------------------------------------------------
-static QString QI_FILE = PREPARE_QUERY("INSERT INTO _storagefiles(sgfs_owner, sgfs_name, sgfs_expansion, sgfs_size, sgfs_data) "
-									   "VALUES(:Owner, :Name, :Expansion, :Size, :Data) "
-									   "RETURNING sgfs_id");
-//-----------------------------------------------------------------------------
-static QString QI_FILE_COPY = PREPARE_QUERY("INSERT INTO _storagefiles(sgfs_name, sgfs_expansion, sgfs_size, sgfs_data) "
-											"SELECT :Name, sgfs_expansion, sgfs_size, sgfs_data "
-											"FROM _storagefiles "
-											"WHERE sgfs_id = :ObjectID "
-											"RETURNING sgfs_id");
-//-----------------------------------------------------------------------------
 static QString QS_FILE = PREPARE_QUERY("SELECT sgfs_data "
 									   "FROM _storagefiles "
 									   "WHERE sgfs_id = :ObjectID");
@@ -68,7 +58,7 @@ void ISStorageFilesListForm::Create()
 			QByteArray ByteArray = File.readAll().toBase64();
 			File.close();
 			
-			ISTcpQuery qAddFileStorage(API_ADD_FILE_STORAGE);
+			ISTcpQuery qAddFileStorage(API_FILE_STORAGE_ADD);
 			qAddFileStorage.BindValue("FileName", QFileInfo(FilePath).fileName());
 			qAddFileStorage.BindValue("Data", ByteArray);
 
@@ -108,29 +98,27 @@ void ISStorageFilesListForm::CreateCopy()
 	if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.CreateCopyFile").arg(FileName)))
 	{
 		FileName = ISInputDialog::GetString(LANG("Named"), LANG("FileName") + ':', FileName);
-		if (!FileName.isEmpty())
+		if (FileName.isEmpty())
 		{
-			ISQuery qInsertCopy(QI_FILE_COPY);
-			qInsertCopy.BindValue(":Name", FileName);
-			qInsertCopy.BindValue(":ObjectID", GetObjectID());
+			return;
+		}
 
-			ISGui::SetWaitGlobalCursor(true);
-			bool Inserted = qInsertCopy.ExecuteFirst();
-			ISGui::SetWaitGlobalCursor(false);
-			
-			if (Inserted)
-			{
-				SetSelectObjectAfterUpdate(qInsertCopy.ReadColumn("sgfs_id").toInt());
-				Update();
-			}
-			else
-			{
-				ISMessageBox::ShowCritical(this, LANG("Message.Error.CreateCopyStorageFile"));
-			}
+		ISTcpQuery qFileStorageCopy(API_FILE_STORAGE_COPY);
+		qFileStorageCopy.BindValue("ID", GetObjectID());
+		qFileStorageCopy.BindValue("Name", FileName);
+
+		ISGui::SetWaitGlobalCursor(true);
+		bool Result = qFileStorageCopy.Execute();
+		ISGui::SetWaitGlobalCursor(false);
+
+		if (Result)
+		{
+			SetSelectObjectAfterUpdate(qFileStorageCopy.GetAnswer()["NewID"].toInt());
+			Update();
 		}
 		else
 		{
-			ISMessageBox::ShowWarning(this, LANG("Message.Warning.FileNameIsNull"));
+			ISMessageBox::ShowCritical(this, LANG("Message.Error.CreateCopyStorageFile"));
 		}
 	}
 }

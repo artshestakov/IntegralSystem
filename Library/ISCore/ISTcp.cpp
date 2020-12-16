@@ -108,9 +108,13 @@ ISNamespace::ApiMessageType ISTcp::GetMessageTypeByName(const QString &Name)
 	{
 		return ISNamespace::AMT_SetNoteRecord;
 	}
-	else if (Name == API_ADD_FILE_STORAGE)
+	else if (Name == API_FILE_STORAGE_ADD)
 	{
-		return ISNamespace::AMT_AddFileStorage;
+		return ISNamespace::AMT_FileStorageAdd;
+	}
+	else if (Name == API_FILE_STORAGE_COPY)
+	{
+		return ISNamespace::AMT_FileStorageCopy;
 	}
 	return ISNamespace::AMT_Unknown;
 }

@@ -176,14 +176,24 @@
             <stringProp name="Argument.value"></stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
-          <elementProp name="AddFileStorage_FileName" elementType="Argument">
-            <stringProp name="Argument.name">AddFileStorage_FileName</stringProp>
+          <elementProp name="FileStorageAdd_FileName" elementType="Argument">
+            <stringProp name="Argument.name">FileStorageAdd_FileName</stringProp>
             <stringProp name="Argument.value">Задачи.csv</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
-          <elementProp name="AddFileStorage_Data" elementType="Argument">
-            <stringProp name="Argument.name">AddFileStorage_Data</stringProp>
+          <elementProp name="FileStorageAdd_Data" elementType="Argument">
+            <stringProp name="Argument.name">FileStorageAdd_Data</stringProp>
             <stringProp name="Argument.value">yu7kO8fg4+7r7uLu6g0KMTM70uXx8ujw7uLg7ejlDQoyMTvR4v/n4O3t4P9f5+Dk4PfgINHi/+fg7e3g/1/n4OTg9+Ag0eL/5+Dt7eD/X+fg5OD34CDR4v/n4O3t4P9f5+Dk4PfgINHi/+fg7e3g/1/n4OTg9+Ag0eL/5+Dt7eD/X+fg5OD34CDn4OTg9+Ag5+Dk4PfgIOfg5OD34CDn4OTg9+Ag5+Dk4PfgIOfg5OD34CDn4OTg9+Ag5+Dk4PfgIOfg5OD34CDn4OTg9+Ag5+Dk4PfgIOfg5OD34CDn4OTg9+Ag5+Dk4PfgIOfg5OD34CDn4OTg9+Ag5+Dk4PfgIOfg5OD34CDn4OTg9+Ag5+Dk4PfgIOfg5OD34CDn4OTg9+Ag5+Dk4PfgIOfg5OD34CDn4OTg9+Ag5+Dk4PfgIOfg5OD34CDn4OTg9+Ag5+Dk4PfgIOfg5OD34CDn4OTg9+Ag5+Dk4PfgIOfg5OD34CDn4OTg9+ANCjIyOzEyMw0KMjM7x+Dk4PfgIOTr/yDy5fHy7uIgx+Dk4PfgIOTr/yDy5fHy7uIgx+Dk4PfgIOTr/yDy5fHy7uIgx+Dk4PfgIOTr/yDy5fHy7uINCjI0O8/u5Ofg5OD34CAyDQo=</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="FileStorageCopy_ID" elementType="Argument">
+            <stringProp name="Argument.name">FileStorageCopy_ID</stringProp>
+            <stringProp name="Argument.value">10</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="FileStorageCopy_Name" elementType="Argument">
+            <stringProp name="Argument.name">FileStorageCopy_Name</stringProp>
+            <stringProp name="Argument.value">Test6</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
         </collectionProp>
@@ -422,16 +432,28 @@ def MapSetNoteRecord =
 vars.put(&quot;QuerySetNoteRecord&quot;, MapToString(MapSetNoteRecord));
 
 //Добавить файл в хранилище
-def MapAddFileStorage =
+def MapFileStorageAdd =
 [
-	Type: &quot;AddFileStorage&quot;,
+	Type: &quot;FileStorageAdd&quot;,
 	Parameters:
 		[
-			FileName: vars.get(&quot;AddFileStorage_FileName&quot;),
-			Data: vars.get(&quot;AddFileStorage_Data&quot;)
+			FileName: vars.get(&quot;FileStorageAdd_FileName&quot;),
+			Data: vars.get(&quot;FileStorageAdd_Data&quot;)
 		]
 ];
-vars.put(&quot;QueryAddFileStorage&quot;, MapToString(MapAddFileStorage));</stringProp>
+vars.put(&quot;QueryFileStorageAdd&quot;, MapToString(MapFileStorageAdd));
+
+//Скопировать файл в хранилище
+def MapFileStorageCopy =
+[
+	Type: &quot;FileStorageCopy&quot;,
+	Parameters:
+		[
+			ID: vars.get(&quot;FileStorageCopy_ID&quot;),
+			Name: vars.get(&quot;FileStorageCopy_Name&quot;)
+		]
+];
+vars.put(&quot;QueryFileStorageCopy&quot;, MapToString(MapFileStorageCopy));</stringProp>
           <stringProp name="scriptLanguage">groovy</stringProp>
         </JSR223Sampler>
         <hashTree/>
@@ -643,13 +665,26 @@ vars.put(&quot;QueryAddFileStorage&quot;, MapToString(MapAddFileStorage));</stri
           <stringProp name="ConfigTestElement.password"></stringProp>
         </TCPSampler>
         <hashTree/>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: AddFileStorage" enabled="true">
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: FileStorageAdd" enabled="false">
           <stringProp name="TCPSampler.server">127.0.0.1</stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
           <stringProp name="TCPSampler.port">50000</stringProp>
           <boolProp name="TCPSampler.nodelay">false</boolProp>
           <stringProp name="TCPSampler.timeout"></stringProp>
-          <stringProp name="TCPSampler.request">${QueryAddFileStorage}</stringProp>
+          <stringProp name="TCPSampler.request">${QueryFileStorageAdd}</stringProp>
+          <boolProp name="TCPSampler.closeConnection">true</boolProp>
+          <stringProp name="TCPSampler.EolByte">10</stringProp>
+          <stringProp name="ConfigTestElement.username"></stringProp>
+          <stringProp name="ConfigTestElement.password"></stringProp>
+        </TCPSampler>
+        <hashTree/>
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: FileStorageCopy" enabled="true">
+          <stringProp name="TCPSampler.server">127.0.0.1</stringProp>
+          <boolProp name="TCPSampler.reUseConnection">true</boolProp>
+          <stringProp name="TCPSampler.port">50000</stringProp>
+          <boolProp name="TCPSampler.nodelay">false</boolProp>
+          <stringProp name="TCPSampler.timeout"></stringProp>
+          <stringProp name="TCPSampler.request">${QueryFileStorageCopy}</stringProp>
           <boolProp name="TCPSampler.closeConnection">true</boolProp>
           <stringProp name="TCPSampler.EolByte">10</stringProp>
           <stringProp name="ConfigTestElement.username"></stringProp>
