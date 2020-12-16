@@ -15,6 +15,7 @@ public:
 	bool Execute(const QString &query_type);
 	bool Execute();
 	QVariantMap& GetAnswer();
+	QVariantMap TakeAnswer();
 
 private:
 	bool IsValidAnswer(const QByteArray &ByteArray, QVariantMap &VariantMap);

@@ -1560,15 +1560,13 @@ bool ISTcpWorker::DiscussionCopy(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
-	QVariant TableName = CheckNullField("TableName", TcpMessage->Parameters);
-	if (!TableName.isValid())
+	QVariant TableName = CheckNullField("TableName", TcpMessage->Parameters),
+		SortingField = CheckNullField("SortingField", TcpMessage->Parameters),
+		SortingOrder = CheckNullField("SortingOrder", TcpMessage->Parameters);
+	if (!TableName.isValid() || !SortingField.isValid() || !SortingOrder.isValid())
 	{
 		return false;
 	}
-
-	//Получаем необязательные параметры
-	QString OrderField = TcpMessage->Parameters["OrderField"].toString(),
-		OrderType = TcpMessage->Parameters["OrderType"].toString();
 
 	//Получаем мета-таблицу
 	PMetaTable *MetaTable = ISMetaData::Instance().GetMetaTable(TableName.toString());
@@ -1578,14 +1576,9 @@ bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 		return false;
 	}
 
+	//Создаём объект модели
 	ISQueryModel QueryModel(MetaTable, ISNamespace::QMT_List);
-
-	//Если сортировка указана - используем её
-	if (!OrderField.isEmpty() && !OrderType.isEmpty())
-	{
-		QueryModel.SetOrderField(MetaTable->Alias + '_' + OrderField, OrderField,
-			OrderType.toLower() == "asc" ? Qt::AscendingOrder : Qt::DescendingOrder);
-	}
+	QueryModel.SetSorting(SortingField.toString(), static_cast<Qt::SortOrder>(SortingOrder.toUInt()));
 
 	ISQuery qSelect(ISDatabase::Instance().GetDB(DBConnectionName), QueryModel.GetQueryText());
 	qSelect.SetShowLongQuery(false);

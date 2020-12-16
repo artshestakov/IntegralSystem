@@ -12,7 +12,11 @@ public:
 	ISTcpModel(QObject *parent);
 	virtual ~ISTcpModel();
 
-	void SetData(const QVariantList &fields, const QVariantList &records);
+	void Clear();
+	void SetSource(const QVariantList &fields, const QVariantList &records);
+	void SetSorting(const QString &sorting_field, Qt::SortOrder sorting_order);
+
+	int GetFieldIndex(const QString &FieldName) const;
 
 	QVariant data(const QModelIndex &ModelIndex, int Role = Qt::DisplayRole) const override;
 	bool setData(const QModelIndex &ModelIndex, const QVariant &Value, int Role = Qt::EditRole) override;
@@ -25,6 +29,10 @@ public:
 private:
 	std::vector<ISFieldModel> Fields;
 	std::vector<ISVectorVariant> Records;
+	int SortingColumnIndex;
+	Qt::SortOrder SortingOrder;
+	QIcon SortingIconUp;
+	QIcon SortingIconDown;
 };
 //-----------------------------------------------------------------------------
 #endif

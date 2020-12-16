@@ -1,6 +1,12 @@
 #include "ISTcpModel.h"
+#include "ISBuffer.h"
 //-----------------------------------------------------------------------------
-ISTcpModel::ISTcpModel(QObject *parent) : QAbstractItemModel(parent)
+ISTcpModel::ISTcpModel(QObject *parent)
+	: QAbstractItemModel(parent),
+	SortingColumnIndex(-1),
+	SortingOrder(Qt::AscendingOrder),
+	SortingIconUp(BUFFER_ICONS("Table.Sorting.Up")),
+	SortingIconDown(BUFFER_ICONS("Table.Sorting.Down"))
 {
 
 }
@@ -10,8 +16,20 @@ ISTcpModel::~ISTcpModel()
 
 }
 //-----------------------------------------------------------------------------
-void ISTcpModel::SetData(const QVariantList &fields, const QVariantList &records)
+void ISTcpModel::Clear()
 {
+	beginResetModel();
+	Fields.clear();
+	Records.clear();
+	endResetModel();
+	SortingColumnIndex = -1;
+}
+//-----------------------------------------------------------------------------
+void ISTcpModel::SetSource(const QVariantList &fields, const QVariantList &records)
+{
+	Clear();
+	
+	beginResetModel();
 	//Заполняем поля
 	for (const QVariant &Field : fields)
 	{
@@ -32,6 +50,25 @@ void ISTcpModel::SetData(const QVariantList &fields, const QVariantList &records
 	{
 		Records[i] = QVector<QVariant>::fromList(records[i].toList()).toStdVector();
 	}
+	endResetModel();
+}
+//-----------------------------------------------------------------------------
+void ISTcpModel::SetSorting(const QString &sorting_field, Qt::SortOrder sorting_order)
+{
+	SortingColumnIndex = GetFieldIndex(sorting_field);
+	SortingOrder = sorting_order;
+}
+//-----------------------------------------------------------------------------
+int ISTcpModel::GetFieldIndex(const QString &FieldName) const
+{
+	for (size_t i = 0, c = Fields.size(); i < c; ++i)
+	{
+		if (Fields[i].Name == FieldName)
+		{
+			return (int)i;
+		}
+	}
+	return -1;
 }
 //-----------------------------------------------------------------------------
 QVariant ISTcpModel::data(const QModelIndex &ModelIndex, int Role) const
@@ -90,9 +127,9 @@ QVariant ISTcpModel::headerData(int Section, Qt::Orientation Orientation, int Ro
 		}
 		else if (Role == Qt::DecorationRole) //Отображение иконки сортируемого столбца
 		{
-			//if (Section == SortingColumn)
+			if (Section == SortingColumnIndex && SortingColumnIndex != -1)
 			{
-				//Value = SortingOrder == Qt::AscendingOrder ? IconSortingUp : IconSortingDown;
+				Value = SortingOrder == Qt::AscendingOrder ? SortingIconUp : SortingIconDown;
 			}
 		}
 		else if (Role == Qt::UserRole) //Отображение наименования столбца

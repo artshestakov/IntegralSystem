@@ -145,6 +145,13 @@ QVariantMap& ISTcpQuery::GetAnswer()
 	return TcpAnswer;
 }
 //-----------------------------------------------------------------------------
+QVariantMap ISTcpQuery::TakeAnswer()
+{
+	QVariantMap Answer = TcpAnswer;
+	TcpAnswer.clear();
+	return Answer;
+}
+//-----------------------------------------------------------------------------
 bool ISTcpQuery::IsValidAnswer(const QByteArray &ByteArray, QVariantMap &VariantMap)
 {
 	QJsonParseError JsonParseError;

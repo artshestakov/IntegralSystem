@@ -248,7 +248,7 @@ ISListBaseForm::ISListBaseForm(const QString &TableName, QWidget *parent)
 		ISSortingMetaTable *MetaSorting = ISSortingBuffer::Instance().GetSorting(MetaTable->Name);
 		if (MetaSorting) //Если сортировка для этой таблицы уже существует, использовать её
 		{
-			QueryModel->SetOrderField(MetaTable->Alias + '_' + MetaSorting->FieldName.toLower(), MetaSorting->FieldName, MetaSorting->Order);
+			QueryModel->SetSorting(MetaSorting->FieldName, MetaSorting->Order);
 		}
 
 		//Это соединение обязательно должно быть после присваивания модели к QTableView
@@ -502,7 +502,7 @@ void ISListBaseForm::SortingChanged(int LogicalIndex, Qt::SortOrder Order)
 	}
 
 	QString FieldName = SqlModel->headerData(LogicalIndex, Qt::Horizontal, Qt::UserRole).toString();
-	QueryModel->SetOrderField(MetaTable->Alias + '_' + FieldName.toLower(), FieldName, Order);
+	QueryModel->SetSorting(FieldName, Order);
 	SqlModel->SetSorting(LogicalIndex, Order);
 
 	if (SETTING_BOOL(CONST_UID_SETTING_TABLES_REMEMBERSORTING))

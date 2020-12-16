@@ -141,14 +141,14 @@
             <stringProp name="Argument.value">_Users</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
-          <elementProp name="GetTableData_OrderField" elementType="Argument">
-            <stringProp name="Argument.name">GetTableData_OrderField</stringProp>
-            <stringProp name="Argument.value">ID</stringProp>
+          <elementProp name="GetTableData_SortingField" elementType="Argument">
+            <stringProp name="Argument.name">GetTableData_SortingField</stringProp>
+            <stringProp name="Argument.value">Group</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
-          <elementProp name="GetTableData_OrderType" elementType="Argument">
-            <stringProp name="Argument.name">GetTableData_OrderType</stringProp>
-            <stringProp name="Argument.value">ASC</stringProp>
+          <elementProp name="GetTableData_SortingOrder" elementType="Argument">
+            <stringProp name="Argument.name">GetTableData_SortingOrder</stringProp>
+            <stringProp name="Argument.value">1</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
         </collectionProp>
@@ -355,8 +355,8 @@ def MapGetTableData =
 	Parameters:
 		[
 			TableName: vars.get(&quot;GetTableData_TableName&quot;),
-			OrderField: vars.get(&quot;GetTableData_OrderField&quot;),
-			OrderType: vars.get(&quot;GetTableData_OrderType&quot;)
+			SortingField: vars.get(&quot;GetTableData_SortingField&quot;),
+			SortingOrder: vars.get(&quot;GetTableData_SortingOrder&quot;)
 		]
 ];
 vars.put(&quot;QueryGetTableData&quot;, MapToString(MapGetTableData));</stringProp>

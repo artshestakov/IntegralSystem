@@ -8,10 +8,10 @@ ISQueryModel::ISQueryModel(PMetaTable *meta_table, ISNamespace::QueryModelType m
 	: QObject(parent),
 	MetaTable(meta_table),
 	ModelType(model_type),
-	ClassAlias(meta_table->Alias),
-	QuerySelectFrom("FROM " + MetaTable->Name.toLower() + SYMBOL_SPACE + ClassAlias + " \n"),
-	OrderFieldDefault(ClassAlias + SYMBOL_POINT + ClassAlias + "_id"),
-	OrderSort(Qt::AscendingOrder),
+	QuerySelectFrom("FROM " + MetaTable->Name.toLower() + SYMBOL_SPACE + MetaTable->Alias + " \n"),
+	SortingField("ID"),
+	SortingOrder(Qt::AscendingOrder),
+	SortingIsForeign(false),
     Limit(0),
     Offset(0),
     ClassFilter(meta_table->ClassFilter)
@@ -37,7 +37,7 @@ ISQueryModel::ISQueryModel(PMetaTable *meta_table, ISNamespace::QueryModelType m
 		if (MetaField->Foreign) //Если на поле установлен внешний ключ
 		{
 			PMetaTable *MetaTableForeign = ISMetaData::Instance().GetMetaTable(MetaField->Foreign->ForeignClass);
-			QuerySelectLeftJoin += "LEFT JOIN " + MetaTableForeign->Name.toLower() + SYMBOL_SPACE + GetAliasForLeftJoinTable(MetaTableForeign->Alias, i) + " ON " + ClassAlias + SYMBOL_POINT + ClassAlias + '_' + MetaField->Name.toLower() + " = " + GetAliasForLeftJoinTable(MetaTableForeign->Alias, i) + SYMBOL_POINT + MetaTableForeign->Alias + '_' + MetaField->Foreign->ForeignField.toLower() + " \n";
+			QuerySelectLeftJoin += "LEFT JOIN " + MetaTableForeign->Name.toLower() + SYMBOL_SPACE + GetAliasForLeftJoinTable(MetaTableForeign->Alias, i) + " ON " + MetaTable->Alias + SYMBOL_POINT + MetaTable->Alias + '_' + MetaField->Name.toLower() + " = " + GetAliasForLeftJoinTable(MetaTableForeign->Alias, i) + SYMBOL_POINT + MetaTableForeign->Alias + '_' + MetaField->Foreign->ForeignField.toLower() + " \n";
 
 			QString Temp = GetForeignViewNameField(MetaTableForeign->Alias, MetaField->Foreign, i).toLower();
 			ForeignFields.emplace(MetaField->Name, Temp);
@@ -52,7 +52,7 @@ ISQueryModel::ISQueryModel(PMetaTable *meta_table, ISNamespace::QueryModelType m
 			}
 			else
 			{
-				QuerySelectFields += ClassAlias + SYMBOL_POINT + ClassAlias + '_' + MetaField->Name.toLower();
+				QuerySelectFields += MetaTable->Alias + SYMBOL_POINT + MetaTable->Alias + '_' + MetaField->Name.toLower();
 				if (MetaField->Type == ISNamespace::FT_File && ModelType == ISNamespace::QMT_List)
 				{
 					QuerySelectFields += " IS NULL";
@@ -110,11 +110,12 @@ QString ISQueryModel::GetQueryText()
 		SqlText += "AND " + SearchFilter + " \n";
 	}
 
-	//Учитывание сортировки
-	QString Sort = OrderSort == Qt::AscendingOrder ? " ASC" : " DESC";
-	QueryOrderText = "ORDER BY " + (OrderField.isEmpty() ? OrderFieldDefault : OrderField) + Sort;
-	SqlText += QueryOrderText;
+	//Учитываем сортировку
+	SqlText += "ORDER BY " +
+		(SortingIsForeign ? SortingField : MetaTable->Alias + '.' + MetaTable->Alias + '_' + SortingField) + ' ' + 
+		(SortingOrder == Qt::AscendingOrder ? "ASC" : "DESC");
 
+	//Учитываем лимит
 	if (Limit)
 	{
 		SqlText += QString(" \nLIMIT %1 OFFSET %2").arg(Limit).arg(Offset);
@@ -164,19 +165,33 @@ void ISQueryModel::ClearSearchFilter()
 	SearchFilter.clear();
 }
 //-----------------------------------------------------------------------------
-void ISQueryModel::SetOrderField(const QString &FullFieldName, const QString &FieldName, Qt::SortOrder Order)
+QString ISQueryModel::GetSortingField() const
 {
-	PMetaField *MetaField = MetaTable->GetField(FieldName);
-	QString FieldQueryText = MetaField->QueryText;
-	if (!FieldQueryText.isEmpty()) //Если сортируемое поле является виртуальным - сортировать по запросу поля
+	return SortingField;
+}
+//-----------------------------------------------------------------------------
+Qt::SortOrder ISQueryModel::GetSortingOrder() const
+{
+	return SortingOrder;
+}
+//-----------------------------------------------------------------------------
+void ISQueryModel::SetSorting(const QString &FieldName, Qt::SortOrder Order)
+{
+	if (SortingField != FieldName)
 	{
-		OrderField = '(' + FieldQueryText + ')';
+		PMetaField *MetaField = MetaTable->GetField(FieldName);
+		QString FieldQueryText = MetaField->QueryText;
+		if (!FieldQueryText.isEmpty()) //Если сортируемое поле является виртуальным - сортировать по запросу поля
+		{
+			SortingField = '(' + FieldQueryText + ')';
+		}
+		else
+		{
+			SortingIsForeign = MetaField->Foreign;
+			SortingField = SortingIsForeign ? ForeignFields[FieldName] : FieldName;
+		}
 	}
-	else
-	{
-		OrderField = MetaField->Foreign ? ForeignFields[FieldName] : FullFieldName;
-	}
-	OrderSort = Order;
+	SortingOrder = Order;
 }
 //-----------------------------------------------------------------------------
 void ISQueryModel::SetLimit(int limit)
