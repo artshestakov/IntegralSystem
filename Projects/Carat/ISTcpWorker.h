@@ -54,6 +54,8 @@ private:
 	bool DiscussionEdit(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
 	bool DiscussionCopy(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
 	bool GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
+	bool GetNoteRecord(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
+	bool SetNoteRecord(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
 
 private:
     QString ErrorString; //Текстовое описание ошибки запроса

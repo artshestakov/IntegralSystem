@@ -151,6 +151,31 @@
             <stringProp name="Argument.value">1</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
+          <elementProp name="GetNoteRecord_TableName" elementType="Argument">
+            <stringProp name="Argument.name">GetNoteRecord_TableName</stringProp>
+            <stringProp name="Argument.value">_Users</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="GetNoteRecord_ObjectID" elementType="Argument">
+            <stringProp name="Argument.name">GetNoteRecord_ObjectID</stringProp>
+            <stringProp name="Argument.value">2</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="SetNoteRecord_TableName" elementType="Argument">
+            <stringProp name="Argument.name">SetNoteRecord_TableName</stringProp>
+            <stringProp name="Argument.value">_Users</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="SetNoteRecord_ObjectID" elementType="Argument">
+            <stringProp name="Argument.name">SetNoteRecord_ObjectID</stringProp>
+            <stringProp name="Argument.value">2</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="SetNoteRecord_Note" elementType="Argument">
+            <stringProp name="Argument.name">SetNoteRecord_Note</stringProp>
+            <stringProp name="Argument.value"></stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
         </collectionProp>
       </Arguments>
       <hashTree/>
@@ -359,7 +384,32 @@ def MapGetTableData =
 			SortingOrder: vars.get(&quot;GetTableData_SortingOrder&quot;)
 		]
 ];
-vars.put(&quot;QueryGetTableData&quot;, MapToString(MapGetTableData));</stringProp>
+vars.put(&quot;QueryGetTableData&quot;, MapToString(MapGetTableData));
+
+//Получить примечание записи
+def MapGetNoteRecord =
+[
+	Type: &quot;GetNoteRecord&quot;,
+	Parameters:
+		[
+			TableName: vars.get(&quot;GetNoteRecord_TableName&quot;),
+			ObjectID: vars.get(&quot;GetNoteRecord_ObjectID&quot;)
+		]
+];
+vars.put(&quot;QueryGetNoteRecord&quot;, MapToString(MapGetNoteRecord));
+
+//Изменить примечание записи
+def MapSetNoteRecord =
+[
+	Type: &quot;SetNoteRecord&quot;,
+	Parameters:
+		[
+			TableName: vars.get(&quot;SetNoteRecord_TableName&quot;),
+			ObjectID: vars.get(&quot;SetNoteRecord_ObjectID&quot;),
+			Note: vars.get(&quot;SetNoteRecord_Note&quot;)
+		]
+];
+vars.put(&quot;QuerySetNoteRecord&quot;, MapToString(MapSetNoteRecord));</stringProp>
           <stringProp name="scriptLanguage">groovy</stringProp>
         </JSR223Sampler>
         <hashTree/>
@@ -507,7 +557,7 @@ vars.put(&quot;QueryGetTableData&quot;, MapToString(MapGetTableData));</stringPr
           <stringProp name="ConfigTestElement.password"></stringProp>
         </TCPSampler>
         <hashTree/>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: GetTableData" enabled="true">
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: GetTableData" enabled="false">
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
           <stringProp name="TCPSampler.port"></stringProp>
@@ -540,6 +590,32 @@ vars.put(&quot;QueryGetTableData&quot;, MapToString(MapGetTableData));</stringPr
           <stringProp name="TCPSampler.timeout"></stringProp>
           <stringProp name="TCPSampler.request">${QuerySleep}</stringProp>
           <boolProp name="TCPSampler.closeConnection">false</boolProp>
+          <stringProp name="TCPSampler.EolByte">10</stringProp>
+          <stringProp name="ConfigTestElement.username"></stringProp>
+          <stringProp name="ConfigTestElement.password"></stringProp>
+        </TCPSampler>
+        <hashTree/>
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: GetNoteRecord" enabled="false">
+          <stringProp name="TCPSampler.server">127.0.0.1</stringProp>
+          <boolProp name="TCPSampler.reUseConnection">true</boolProp>
+          <stringProp name="TCPSampler.port">50000</stringProp>
+          <boolProp name="TCPSampler.nodelay">false</boolProp>
+          <stringProp name="TCPSampler.timeout"></stringProp>
+          <stringProp name="TCPSampler.request">${QueryGetNoteRecord}</stringProp>
+          <boolProp name="TCPSampler.closeConnection">true</boolProp>
+          <stringProp name="TCPSampler.EolByte">10</stringProp>
+          <stringProp name="ConfigTestElement.username"></stringProp>
+          <stringProp name="ConfigTestElement.password"></stringProp>
+        </TCPSampler>
+        <hashTree/>
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: SetNoteRecord" enabled="true">
+          <stringProp name="TCPSampler.server">127.0.0.1</stringProp>
+          <boolProp name="TCPSampler.reUseConnection">true</boolProp>
+          <stringProp name="TCPSampler.port">50000</stringProp>
+          <boolProp name="TCPSampler.nodelay">false</boolProp>
+          <stringProp name="TCPSampler.timeout"></stringProp>
+          <stringProp name="TCPSampler.request">${QuerySetNoteRecord}</stringProp>
+          <boolProp name="TCPSampler.closeConnection">true</boolProp>
           <stringProp name="TCPSampler.EolByte">10</stringProp>
           <stringProp name="ConfigTestElement.username"></stringProp>
           <stringProp name="ConfigTestElement.password"></stringProp>

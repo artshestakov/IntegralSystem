@@ -111,9 +111,6 @@
       <Field UID="{72811592-42A6-43F3-A7B3-D98C71215A30}" Name="Note" Type="String" LabelName="Примечание" LocalListName="Примечание"/>
     </Fields>
     <Indexes>
-      <Index Field="TableName"/>
-      <Index Field="ObjectID"/>
-      <Index Field="Note"/>
       <Index Field="TableName;ObjectID" Unique="true"/>
     </Indexes>
   </Table>
@@ -276,7 +273,7 @@
       <Field UID="{D59D39AD-C4BE-451C-9BB7-6A3EE3A3DCC9}" Name="Sorting" Type="Int" LabelName="Сортировка" LocalListName="Сортировка" NotNull="true"/>
     </Fields>
     <Indexes>
-      <Index Field="User;TableName"/>
+      <Index Field="User;TableName" Unique="true"/>
     </Indexes>
   </Table>
 

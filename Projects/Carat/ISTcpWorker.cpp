@@ -161,6 +161,23 @@ static QString QU_SORTING = PREPARE_QUERY("UPDATE _sortingtables SET "
 static QString QI_SORTING = PREPARE_QUERY("INSERT INTO _sortingtables(sgts_user, sgts_tablename, sgts_fieldname, sgts_sorting)"
 										  "VALUES(:UserID, :TableName, :FieldName, :Sorting)");
 //-----------------------------------------------------------------------------
+static QString QS_NOTE_RECORD = PREPARE_QUERY("SELECT nobj_note "
+											  "FROM _noteobject "
+											  "WHERE nobj_tablename = :TableName "
+											  "AND nobj_objectid = :ObjectID");
+//-----------------------------------------------------------------------------
+static QString QD_NOTE_RECORD = PREPARE_QUERY("DELETE FROM _noteobject "
+											  "WHERE nobj_tablename = :TableName "
+											  "AND nobj_objectid = :ObjectID");
+//-----------------------------------------------------------------------------
+static QString QU_NOTE_RECORD = PREPARE_QUERY("UPDATE _noteobject SET "
+											  "nobj_note = :Note "
+											  "WHERE nobj_tablename = :TableName "
+											  "AND nobj_objectid = :ObjectID");
+//-----------------------------------------------------------------------------
+static QString QI_NOTE_RECORD = PREPARE_QUERY("INSERT INTO _noteobject(nobj_tablename, nobj_objectid, nobj_note) "
+											  "VALUES(:TableName, :ObjectID, :Note)");
+//-----------------------------------------------------------------------------
 ISTcpWorker::ISTcpWorker(const QString &db_host, int db_port, const QString &db_name, const QString &db_user, const QString &db_password)
 	: QObject(),
 	ErrorString(NO_ERROR_STRING),
@@ -306,6 +323,8 @@ void ISTcpWorker::Process()
 					case ISNamespace::AMT_DiscussionEdit: Result = DiscussionEdit(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_DiscussionCopy: Result = DiscussionCopy(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_GetTableData: Result = GetTableData(tcp_message, TcpAnswer); break;
+					case ISNamespace::AMT_GetNoteRecord: Result = GetNoteRecord(tcp_message, TcpAnswer); break;
+					case ISNamespace::AMT_SetNoteRecord: Result = SetNoteRecord(tcp_message, TcpAnswer); break;
 					}
 					PerfomanceMsec = ISAlgorithm::GetTickDiff(ISAlgorithm::GetTick(), TimePoint);
 				}
@@ -1753,6 +1772,92 @@ bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	TcpAnswer->Parameters["ServiceInfo"] = ServiceInfoMap;
 	TcpAnswer->Parameters["FieldList"] = FieldList;
 	TcpAnswer->Parameters["RecordList"] = RecordList;
+	return true;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::GetNoteRecord(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+	QVariant TableName = CheckNullField("TableName", TcpMessage->Parameters),
+		ObjectID = CheckNullField("ObjectID", TcpMessage->Parameters);
+	if (!TableName.isValid() || !ObjectID.isValid())
+	{
+		return false;
+	}
+
+	//Получаем примечание
+	ISQuery qSelect(ISDatabase::Instance().GetDB(DBConnectionName), QS_NOTE_RECORD);
+	qSelect.BindValue(":TableName", TableName);
+	qSelect.BindValue(":ObjectID", ObjectID);
+	if (!qSelect.Execute()) //Ошибка запроса
+	{
+		ErrorString = LANG("Carat.Error.Query.GetNoteRecord.Select").arg(qSelect.GetErrorString());
+		return false;
+	}
+
+	QVariant Note;
+	if (qSelect.First()) //Если запись есть - вытаскиваем её
+	{
+		Note = qSelect.ReadColumn("nobj_note");
+	}
+	TcpAnswer->Parameters["Note"] = Note;
+	return true;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::SetNoteRecord(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+	Q_UNUSED(TcpAnswer);
+
+	QVariant TableName = CheckNullField("TableName", TcpMessage->Parameters),
+		ObjectID = CheckNullField("ObjectID", TcpMessage->Parameters);
+	if (!TableName.isValid() || !ObjectID.isValid())
+	{
+		return false;
+	}
+
+	//Проверяем наличие записи
+	QString NoteDB, Note = TcpMessage->Parameters["Note"].toString();
+	ISQuery qSelect(ISDatabase::Instance().GetDB(DBConnectionName), QS_NOTE_RECORD);
+	qSelect.BindValue(":TableName", TableName);
+	qSelect.BindValue(":ObjectID", ObjectID);
+	bool Exist = qSelect.ExecuteFirst();
+	if (Exist)
+	{
+		NoteDB = qSelect.ReadColumn("nobj_note").toString();
+	}
+
+	//Если примечание такое же как и в БД - ничего не делаем
+	if (Note == NoteDB)
+	{
+		return true;
+	}
+
+	//Примечания отличаются - проверяем что делать дальше
+	//Если примечание в БД есть, а новое пустое - удаляем
+	if (Exist && Note.isEmpty())
+	{
+		ISQuery qDelete(ISDatabase::Instance().GetDB(DBConnectionName), QD_NOTE_RECORD);
+		qDelete.BindValue(":TableName", TableName);
+		qDelete.BindValue(":ObjectID", ObjectID);
+		if (!qDelete.Execute())
+		{
+			ErrorString = LANG("Carat.Error.Query.SetNoteRecord.Delete").arg(qDelete.GetErrorString());
+			return false;
+		}
+	}
+	else //добавляем/обновляем
+	{
+		ISQuery qUpsert(ISDatabase::Instance().GetDB(DBConnectionName), Exist ? QU_NOTE_RECORD : QI_NOTE_RECORD);
+		qUpsert.BindValue(":Note", Note);
+		qUpsert.BindValue(":TableName", TableName);
+		qUpsert.BindValue(":ObjectID", ObjectID);
+		if (!qUpsert.Execute()) //Ошибка запроса
+		{
+			ErrorString = (Exist ?
+				LANG("Carat.Error.Query.SetNoteRecord.Update") :
+				LANG("Carat.Error.Query.SetNoteRecord.Insert")).arg(qUpsert.GetErrorString());
+			return false;
+		}
+	}
 	return true;
 }
 //-----------------------------------------------------------------------------

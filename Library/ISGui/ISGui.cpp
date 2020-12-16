@@ -16,7 +16,6 @@
 #include "ISConfig.h"
 #include "ISBuffer.h"
 #include "ISVersionInfo.h"
-#include "ISQuery.h"
 #include "ISQueryPool.h"
 #include "ISSettings.h"
 #include "ISLogger.h"
@@ -52,12 +51,6 @@
 #include "ISSystem.h"
 #include "ISTcpConnector.h"
 #include "ISTcpQuery.h"
-//-----------------------------------------------------------------------------
-static QString QS_NOTE_OBJECT = PREPARE_QUERY("SELECT nobj_note FROM _noteobject WHERE nobj_tablename = :TableName AND nobj_objectid = :ObjectID");
-//-----------------------------------------------------------------------------
-static QString QU_NOTE_OBJECT = PREPARE_QUERY("UPDATE _noteobject SET nobj_note = :Note WHERE nobj_tablename = :TableName AND nobj_objectid = :ObjectID");
-//-----------------------------------------------------------------------------
-static QString QI_NOTE_OBJECT = PREPARE_QUERY("INSERT INTO _noteobject(nobj_tablename, nobj_objectid, nobj_note) VALUES(:TableName, :ObjectID, :Note)");
 //-----------------------------------------------------------------------------
 bool ISGui::Startup(QString &ErrorString)
 {
@@ -541,41 +534,29 @@ ISImageViewerForm* ISGui::ShowImageForm(const QByteArray &ByteArray)
 //-----------------------------------------------------------------------------
 void ISGui::ShowNoteObject(QWidget *parent, const QString &TableName, int ObjectID)
 {
-	bool IsExist = false; //Флаг существования примечания
-
-	ISQuery qSelect(QS_NOTE_OBJECT);
-	qSelect.BindValue(":TableName", TableName);
-	qSelect.BindValue(":ObjectID", ObjectID);
-	if (!qSelect.ExecuteFirst()) //Вероятно примечание не существует - проверяем на ошибку
+	ISTcpQuery TcpQuery(API_GET_NOTE_RECORD);
+	TcpQuery.BindValue("TableName", TableName);
+	TcpQuery.BindValue("ObjectID", ObjectID);
+	if (!TcpQuery.Execute())
 	{
-		if (qSelect.GetErrorType() != QSqlError::NoError) //Есть ошибка
-		{
-			ISMessageBox::ShowCritical(parent, qSelect.GetErrorString());
-			return;
-		}
+		ISMessageBox::ShowCritical(parent, TcpQuery.GetErrorString());
+		return;
 	}
-	else
-	{
-		IsExist = true;
-	}
+	QVariant Note = TcpQuery.GetAnswer()["Note"];
 
-	QString Note = qSelect.ReadColumn("nobj_note").toString();
 	bool Ok = true;
-	QString NewNote = ISInputDialog::GetText(LANG("Note"), LANG("InputNote") + ':', IsExist ? Note : QVariant(), Ok);
-	if (Ok && NewNote != Note) //Примечание введено
+	Note = ISInputDialog::GetText(LANG("Note"), LANG("InputNote") + ':', Note, Ok);
+	if (!Ok) //Примечание не введено - выходим из функции
 	{
-		ISQuery qUpsert(IsExist ? QU_NOTE_OBJECT : QI_NOTE_OBJECT);
-		qUpsert.BindValue(":TableName", TableName);
-		qUpsert.BindValue(":ObjectID", ObjectID);
-		qUpsert.BindValue(":Note", NewNote.isEmpty() ? QVariant() : NewNote);
-		if (qUpsert.Execute()) //Запрос выполнен успешно - протоколируем
-		{
-			ISProtocol::Insert(true, IsExist ? CONST_UID_PROTOCOL_EDIT_NOTE_RECORD : CONST_UID_PROTOCOL_ADD_NOTE_RECORD, TableName, ISMetaData::Instance().GetMetaTable(TableName)->LocalListName, ObjectID);
-		}
-		else
-		{
-			ISMessageBox::ShowCritical(parent, qUpsert.GetErrorString());
-		}
+		return;
+	}
+
+	TcpQuery.BindValue("TableName", TableName);
+	TcpQuery.BindValue("ObjectID", ObjectID);
+	TcpQuery.BindValue("Note", Note);
+	if (!TcpQuery.Execute(API_SET_NOTE_RECORD))
+	{
+		ISMessageBox::ShowCritical(parent, TcpQuery.GetErrorString());
 	}
 }
 //-----------------------------------------------------------------------------

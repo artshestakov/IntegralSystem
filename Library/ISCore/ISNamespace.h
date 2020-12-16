@@ -157,6 +157,8 @@ namespace ISNamespace
 		AMT_DiscussionEdit, //Изменить обсуждение
 		AMT_DiscussionCopy, //Скопировать обсуждение
 		AMT_GetTableData, //Получить данные таблицы
+		AMT_GetNoteRecord, //Получить примечание записи
+		AMT_SetNoteRecord, //Изменить примечание записи
 	};
 };
 //-----------------------------------------------------------------------------
