@@ -92,8 +92,6 @@
   <Local Name="Message.Error.ObjectDateExpired" Russian="Программа не может быть запущена."/>
   <Local Name="Message.Error.InitializeUserSettings" Russian="Не удалось загрузить пользовательские настройки."/>
   <Local Name="Message.Error.InitializeParagraphs" Russian="Не удалось загрузить параграфы."/>
-  <Local Name="Message.Error.InstallPasswordStorageFile" Russian="Ошибка установки пароля."/>
-  <Local Name="Message.Error.IncorrectPassword" Russian="Неверный пароль."/>
   <Local Name="Message.Error.QueryRecord" Russian="Ошибка запроса данных."/>
   <Local Name="Message.Error.ConnectToServer" Russian="Ошибка подключения к серверу!"/>
   <Local Name="Message.Error.Auth" Russian="Ошибка авторизации!"/>
@@ -159,9 +157,6 @@
   <Local Name="Message.Warning.NotAccess.Special.TaskTransformation" Russian="У Вас нет прав на преобразование задачи в подзадачу и наоборот."/>
   <Local Name="Message.Warning.NotAccess.Special.Appoint" Russian="У Вас нет прав на назначение исполнителя. Вы можете назначить исполнителем только себя."/>
   <Local Name="Message.Warning.NotAccessToDatabase" Russian="На подключение пользователей к базе данных наложен запрет. Программа будет закрыта. Обратитесь к системному администратору за дополнительной информацией."/>
-  <Local Name="Message.Warning.InsertingFileSizeVeryBig" Russian="Размер файла &quot;%1&quot; превышает ограничение в %2 MB. Файл не будет добавлен."/>
-  <Local Name="Message.Warning.NotEditAlienStorageFiles" Russian="Редактировать чужие файлы запрещено."/>
-  <Local Name="Message.Warning.NotCopyAlienStorageFiles" Russian="Создавать копии чужих файлов запрещено."/>
   <Local Name="Message.Warning.UserNotLinkedToGroup" Russian="ВНИМАНИЕ! Вы не заполнили поле &quot;Группа&quot;. Пользователи не привязанные к группе не смогут авторизоваться в программе."/>
   <Local Name="Message.Warning.InvalidAccountLifeTimeDatesUser" Russian="ВНИМАНИЕ! Установлен некорректный диапазон даты начала и окончания срока действия учётной записи."/>
   <Local Name="Message.Warning.TaskWithNumberNotFound" Russian="Задача с номером #%1 не найдена!"/>
@@ -198,7 +193,6 @@
   <Local Name="Message.Question.AllStorageFileIsPrivate" Russian="Применить приватность для всех файлов (%1)?"/>
   <Local Name="Message.Question.StopInsertingToStorage" Russian="Остановить добавление файлов?"/>
   <Local Name="Message.Question.DeleteInsetedFiles" Russian="Удалить добавленные файлы?"/>
-  <Local Name="Message.Question.InstallPasswordToStorageFile" Russian="Установить пароль на файл &quot;%1&quot;?"/>
   <Local Name="Message.Question.DeleteTaskComment" Russian="Удалить комментарий? Это действие нельзя отменить."/>
   <Local Name="Message.Question.DeleteTaskLink" Russian="Удалить связь? Это действие нельзя отменить."/>
   <Local Name="Message.Question.TaskFileSave" Russian="Сохранить файл?"/>
@@ -372,9 +366,6 @@
 
   <!--StorageFiles-->
   <Local Name="StorageFiles.Create" Russian="Добавить файл(ы)"/>
-  <Local Name="StorageFiles.AllFiles" Russian="Все файлы"/>
-  <Local Name="StorageFiles.MyFiles" Russian="Мои файлы"/>
-  <Local Name="StorageFiles.MyPrivateFiles" Russian="Мои приватные файлы"/>
 
   <!--Export-->
   <Local Name="Export.Table" Russian="Экспорт таблицы"/>

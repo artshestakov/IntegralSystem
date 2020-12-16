@@ -15,12 +15,12 @@
 #include "ISMetaUser.h"
 #include "ISDatabase.h"
 //-----------------------------------------------------------------------------
-static QString QI_FILE = PREPARE_QUERY("INSERT INTO _storagefiles(sgfs_name, sgfs_expansion, sgfs_size, sgfs_private, sgfs_data) "
-									   "VALUES (:Name, :Expansion, :Size, :Private, :Data) "
+static QString QI_FILE = PREPARE_QUERY("INSERT INTO _storagefiles(sgfs_owner, sgfs_name, sgfs_expansion, sgfs_size, sgfs_data) "
+									   "VALUES(:Owner, :Name, :Expansion, :Size, :Data) "
 									   "RETURNING sgfs_id");
 //-----------------------------------------------------------------------------
-static QString QI_FILE_COPY = PREPARE_QUERY("INSERT INTO _storagefiles(sgfs_name, sgfs_expansion, sgfs_size, sgfs_private, sgfs_data) "
-											"SELECT :Name, sgfs_expansion, sgfs_size, sgfs_private, sgfs_data "
+static QString QI_FILE_COPY = PREPARE_QUERY("INSERT INTO _storagefiles(sgfs_name, sgfs_expansion, sgfs_size, sgfs_data) "
+											"SELECT :Name, sgfs_expansion, sgfs_size, sgfs_data "
 											"FROM _storagefiles "
 											"WHERE sgfs_id = :ObjectID "
 											"RETURNING sgfs_id");
@@ -29,36 +29,13 @@ static QString QS_FILE = PREPARE_QUERY("SELECT sgfs_data "
 									   "FROM _storagefiles "
 									   "WHERE sgfs_id = :ObjectID");
 //-----------------------------------------------------------------------------
-static QString QU_FILE_PASSWORD = PREPARE_QUERY("UPDATE _storagefiles SET "
-												"sgfs_password = :Password "
-												"WHERE sgfs_id = :ObjectID");
-//-----------------------------------------------------------------------------
 ISStorageFilesListForm::ISStorageFilesListForm(QWidget *parent) : ISListBaseForm("_StorageFiles", parent)
 {
-	GetQueryModel()->SetClassFilter("NOT sgfs_private");
-
-	GetAction(ISNamespace::AT_Create)->setText(LANG("StorageFiles.Create"));
 	GetAction(ISNamespace::AT_Create)->setToolTip(LANG("StorageFiles.Create"));
 	
 	QAction *ActionSave = ISControls::CreateActionSave(this);
 	connect(ActionSave, &QAction::triggered, this, &ISStorageFilesListForm::SaveFile);
 	AddAction(ActionSave, true, true);
-
-	RadioAllFiles = new QRadioButton(LANG("StorageFiles.AllFiles"), this);
-	RadioAllFiles->setChecked(true);
-	GetToolBar()->addWidget(RadioAllFiles);
-
-	RadioMyFiles = new QRadioButton(LANG("StorageFiles.MyFiles"), this);
-	GetToolBar()->addWidget(RadioMyFiles);
-
-	RadioMyPrivateFiles = new QRadioButton(LANG("StorageFiles.MyPrivateFiles"), this);
-	GetToolBar()->addWidget(RadioMyPrivateFiles);
-
-	QButtonGroup *ButtonGroup = new QButtonGroup(this);
-	ButtonGroup->addButton(RadioAllFiles);
-	ButtonGroup->addButton(RadioMyFiles);
-	ButtonGroup->addButton(RadioMyPrivateFiles);
-	connect(ButtonGroup, static_cast<void(QButtonGroup::*)(QAbstractButton *)>(&QButtonGroup::buttonClicked), this, &ISStorageFilesListForm::FilterChanged);
 }
 //-----------------------------------------------------------------------------
 ISStorageFilesListForm::~ISStorageFilesListForm()
@@ -71,15 +48,14 @@ void ISStorageFilesListForm::Create()
 	QStringList StringList = ISFileDialog::GetOpenFileNames(this);
 	if (!StringList.isEmpty())
 	{
-		bool Private = ISMessageBox::ShowQuestion(this, StringList.size() > 1 ? LANG("Message.Question.AllStorageFileIsPrivate").arg(StringList.size()) : LANG("Message.Question.StorageFileIsPrivate")),
-			IsUpdateList = false;
+		bool IsUpdateList = false;
 		ISVectorInt VectorInt;
-		QString LastFileName;
 		int LastObjectID = 0;
 
 		ISProgressForm ProgressForm(StringList.size(), LANG("InsertingFiles"), this);
 		ProgressForm.show();
 
+		//Обходим все выбранные файлы
 		for (const QString &FilePath : StringList)
 		{
 			ProgressForm.IncrementValue();
@@ -87,27 +63,22 @@ void ISStorageFilesListForm::Create()
 			QFileInfo FileInfo(FilePath);
 			QFile File(FilePath);
 
-			if (File.size() > (((1000 * 1024) * SETTING_DATABASE_VALUE_INT(CONST_UID_DATABASE_SETTING_OTHER_STORAGEFILEMAXSIZE))))
-			{
-				ISMessageBox::ShowWarning(this, LANG("Message.Warning.InsertingFileSizeVeryBig").arg(FileInfo.fileName()).arg(SETTING_DATABASE_VALUE_INT(CONST_UID_DATABASE_SETTING_OTHER_STORAGEFILEMAXSIZE)));
-				continue;
-			}
-
+			//Открываем файл
 			if (!File.open(QIODevice::ReadOnly))
 			{
 				ISMessageBox::ShowWarning(this, LANG("Message.Error.NotOpenedFile").arg(FilePath));
 				continue;
 			}
 
-			QByteArray ByteArray = File.readAll();
+			//Читаем
+			QByteArray ByteArray = File.readAll().toBase64();
 			File.close();
-			LastFileName = FileInfo.baseName();
-
+			
 			ISQuery qInsert(QI_FILE);
-			qInsert.BindValue(":Name", LastFileName);
+			qInsert.BindValue(":Owner", CURRENT_USER_ID);
+			qInsert.BindValue(":Name", FileInfo.baseName());
 			qInsert.BindValue(":Expansion", FileInfo.suffix());
 			qInsert.BindValue(":Size", ISSystem::FileSizeFromString(FileInfo.size()));
-			qInsert.BindValue(":Private", Private);
 			qInsert.BindValue(":Data", ByteArray);
 
 			ISGui::SetWaitGlobalCursor(true);
@@ -154,21 +125,6 @@ void ISStorageFilesListForm::Create()
 			}
 		}
 
-		if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.InstallPasswordToStorageFile").arg(LastFileName)))
-		{
-			QString Password = ISInputDialog::GetPassword();
-			if (!Password.isEmpty())
-			{
-				ISQuery qUpdate(QU_FILE_PASSWORD);
-				qUpdate.BindValue(":Password", ISSystem::StringToMD5(Password));
-				qUpdate.BindValue(":ObjectID", LastObjectID);
-				if (!qUpdate.Execute())
-				{
-					ISMessageBox::ShowCritical(this, LANG("Message.Error.InstallPasswordStorageFile"), qUpdate.GetErrorString());
-				}
-			}
-		}
-
 		if (IsUpdateList)
 		{
 			Update();
@@ -178,20 +134,9 @@ void ISStorageFilesListForm::Create()
 //-----------------------------------------------------------------------------
 void ISStorageFilesListForm::CreateCopy()
 {
-	if (!IsMyFile())
-	{
-		ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotCopyAlienStorageFiles"));
-		return;
-	}
-
 	QString FileName = GetCurrentRecordValue("Name").toString();
 	if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.CreateCopyFile").arg(FileName)))
 	{
-		if (!CheckPassword())
-		{
-			return;
-		}
-
 		FileName = ISInputDialog::GetString(LANG("Named"), LANG("FileName") + ':', FileName);
 		if (!FileName.isEmpty())
 		{
@@ -220,25 +165,12 @@ void ISStorageFilesListForm::CreateCopy()
 	}
 }
 //-----------------------------------------------------------------------------
-void ISStorageFilesListForm::Edit()
-{
-	//Если текущий пользователь владелец файла - редактирование возможно, иначе - запрещено
-	IsMyFile() ?
-		ISListBaseForm::Edit() :
-		ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotEditAlienStorageFiles"));
-}
-//-----------------------------------------------------------------------------
 void ISStorageFilesListForm::SaveFile()
 {
 	QString FileExpansion = GetCurrentRecordValue("Expansion").toString();
 	QString FileName = GetCurrentRecordValue("Name").toString();
 	if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.SaveFile").arg(FileName)))
 	{
-		if (!CheckPassword())
-		{
-			return;
-		}
-
 		QString FilePath = ISFileDialog::GetSaveFileName(this, LANG("File.Filter.File").arg(FileExpansion), FileName);
 		if (FilePath.isEmpty())
 		{
@@ -271,50 +203,5 @@ void ISStorageFilesListForm::SaveFile()
 			ISMessageBox::ShowCritical(this, LANG("Message.Error.SelectStorageFileData"));
 		}
 	}
-}
-//-----------------------------------------------------------------------------
-void ISStorageFilesListForm::FilterChanged(QAbstractButton *AbstractButton)
-{
-	if (AbstractButton == RadioAllFiles)
-	{
-		GetQueryModel()->SetClassFilter("NOT sgfs_private");
-	}
-	else if (AbstractButton == RadioMyFiles)
-	{
-		GetQueryModel()->SetClassFilter("sgfs_owner = " + QString::number(CURRENT_USER_ID));
-	}
-	else if (AbstractButton == RadioMyPrivateFiles)
-	{
-		GetQueryModel()->SetClassFilter("sgfs_owner = " + QString::number(CURRENT_USER_ID) + " AND sgfs_private");
-	}
-	Update();
-}
-//-----------------------------------------------------------------------------
-bool ISStorageFilesListForm::IsMyFile()
-{
-	return GetCurrentRecordValueDB("Owner").toUInt() == CURRENT_USER_ID;
-}
-//-----------------------------------------------------------------------------
-bool ISStorageFilesListForm::CheckPassword()
-{
-	QString PasswordDB = ISDatabase::Instance().GetValue(GetMetaTable()->Name, "Password", GetObjectID()).toString();
-	if (PasswordDB.isEmpty())
-	{
-		return true;
-	}
-
-	QString PasswordInput = ISInputDialog::GetPassword();
-	if (!PasswordInput.isEmpty())
-	{
-		if (PasswordDB == ISSystem::StringToMD5(PasswordInput))
-		{
-			return true;
-		}
-		else
-		{
-			ISMessageBox::ShowCritical(this, LANG("Message.Error.IncorrectPassword"));
-		}
-	}
-	return false;
 }
 //-----------------------------------------------------------------------------

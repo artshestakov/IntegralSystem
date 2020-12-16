@@ -15,19 +15,9 @@ public:
 protected:
 	void Create() override;
 	void CreateCopy() override;
-	void Edit() override;
 
 private:
 	void SaveFile(); //Сохранить файл
-	void FilterChanged(QAbstractButton *AbstractButton);
-	
-	bool IsMyFile();
-	bool CheckPassword();
-
-private:
-	QRadioButton *RadioAllFiles;
-	QRadioButton *RadioMyFiles;
-	QRadioButton *RadioMyPrivateFiles;
 };
 //-----------------------------------------------------------------------------
 #endif

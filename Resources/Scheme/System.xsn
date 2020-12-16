@@ -176,7 +176,6 @@
       <Field UID="{DF4FBDE0-3434-4DBC-8E1B-946E51002964}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
       <Field UID="{B3AB39BD-09B8-4AA7-A81A-08BB1E7EA727}" Name="Expansion" Type="String" LabelName="Расширение" LocalListName="Расширение" HideFromObject="true" NotNull="true"/>
       <Field UID="{91980012-F6A6-4F08-A35F-FD8335989C85}" Name="Size" Type="String" LabelName="Размер" LocalListName="Размер" HideFromObject="true" NotNull="true"/>
-      <Field UID="{3C553AB8-E7A6-4334-B280-C952FECF5E92}" Name="Private" Type="Bool" DefaultValue="false" LabelName="Приватный файл" LocalListName="Приватный файл" HideFromList="true" Hint="Если Вы установите файл как приватный, то другие пользователи его не увидят."/>
       <Field UID="{C3A5FEF7-86F0-4FD9-8D32-656C926604C1}" Name="Note" Type="String" LabelName="Примечание" LocalListName="Примечание"/>
       <Field UID="{F3B4D524-5B30-4B70-8DAA-1245FB97C808}" Name="Data" Type="ByteArray" LabelName="Данные" LocalListName="Данные" HideFromList="true" HideFromObject="true" NotNull="true"/>
       <Field UID="{3A6520F0-EC9B-4405-BA2E-FDA42AE98F44}" Name="Password" Type="String" Size="32" LabelName="Пароль" LocalListName="Пароль" HideFromList="true" HideFromObject="true"/>
@@ -186,12 +185,12 @@
       <Index Field="Name"/>
       <Index Field="Expansion"/>
       <Index Field="Size"/>
-      <Index Field="Private"/>
       <Index Field="Note"/>
       <Index Field="Password"/>
+      <Index Field="Name;Expansion"/>
     </Indexes>
     <Foreigns>
-      <Foreign Field="Owner" ForeignClass="_Users" ForeignField="ID"/>
+      <Foreign Field="Owner" ForeignClass="_Users" ForeignField="ID" ForeignViewNameField="FIO"/>
     </Foreigns>
   </Table>
 
