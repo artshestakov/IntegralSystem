@@ -162,6 +162,7 @@ namespace ISNamespace
 		AMT_FileStorageAdd, //Добавить файл в хранилище
 		AMT_FileStorageCopy, //Скопировать файл в хранилище
 		AMT_FileStorageGet, //Получить файл из хранилища
+		AMT_TaskSearchText, //Поиск задач по тексту
 	};
 };
 //-----------------------------------------------------------------------------

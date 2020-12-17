@@ -54,6 +54,7 @@
   <_ProtocolType IsSystem="true" UID="{7E9FF116-CF0A-4568-B048-7FAB8D773D57}" Name="Добавление файла в хранилище"/>
   <_ProtocolType IsSystem="true" UID="{5CB370B6-D1AA-4E40-83A9-AEAC7FEA65E2}" Name="Копирование файла в хранилище"/>
   <_ProtocolType IsSystem="true" UID="{E73BEDC4-79FF-4B94-ACC9-2692E1927D18}" Name="Сохранение файла из хранилища"/>
+  <_ProtocolType IsSystem="true" UID="{E4698E8F-C1F4-4F04-A4B6-5CD8805B7FAC}" Name="Поиск задачи по тексту"/>
 
   <_InternalDirectories IsSystem="true" UID="{A57D9B44-CD09-4880-897D-3B0BACB1F093}" TableName="_TaskType" Order="1"/>
   <_InternalDirectories IsSystem="true" UID="{275E8EE8-C1EE-4495-95C2-79AB3AD98AB9}" TableName="_TaskSpace" Order="2"/>

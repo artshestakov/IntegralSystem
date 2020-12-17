@@ -2,31 +2,9 @@
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISDefinesGui.h"
-#include "ISQuery.h"
+#include "ISTcpQuery.h"
 #include "ISMessageBox.h"
 #include "ISGui.h"
-//-----------------------------------------------------------------------------
-static QString QS_SEARCH = PREPARE_QUERY("WITH w AS "
-										 "( "
-										 "SELECT task_id, task_parent, lower(task_name) AS search_field "
-										 "FROM _task "
-										 "UNION "
-										 "SELECT task_id, task_parent, lower(task_description) AS search_field "
-										 "FROM _task "
-										 "WHERE task_description IS NOT NULL "
-										 "UNION "
-										 "SELECT tcom_task AS task_id, task_parent, lower(tcom_comment) AS search_field "
-										 "FROM _taskcomment "
-										 "LEFT JOIN _task ON tcom_task = task_id "
-										 "UNION "
-										 "SELECT tfls_task AS task_id, task_parent, lower(tfls_name) AS search_field "
-										 "FROM _taskfile "
-										 "LEFT JOIN _task ON tfls_task = task_id "
-										 ") "
-										 "SELECT DISTINCT task_id, task_parent, (SELECT task_name FROM _task WHERE task_id = w.task_id) "
-										 "FROM w "
-										 "WHERE search_field LIKE '%' || lower(:Value) || '%' "
-										 "ORDER BY task_id");
 //-----------------------------------------------------------------------------
 ISTaskSearchByTextForm::ISTaskSearchByTextForm(QWidget *parent) : ISInterfaceForm(parent)
 {
@@ -94,17 +72,18 @@ void ISTaskSearchByTextForm::Search()
 	ISGui::SetWaitGlobalCursor(true);
 	ListWidget->Clear();
 
-	ISQuery qSelect(QS_SEARCH);
-	qSelect.BindValue(":Value", EditValue->GetValue());
-	if (qSelect.Execute())
+	ISTcpQuery qTaskSearchText(API_TASK_SEARCH_TEXT);
+	qTaskSearchText.BindValue("Value", EditValue->GetValue());
+	if (qTaskSearchText.Execute())
 	{
-		int ResultCount = qSelect.GetCountResultRows();
-		LabelResult->setText(LANG("Task.SearchByText.ResultLabel").arg(ResultCount));
-		while (qSelect.Next())
+		QVariantList ResultList = qTaskSearchText.TakeAnswer()["Results"].toList();
+		LabelResult->setText(LANG("Task.SearchByText.ResultLabel").arg(ResultList.size()));
+		for (const QVariant &Variant : ResultList)
 		{
-			int TaskID = qSelect.ReadColumn("task_id").toInt();
-			int TaskParentID = qSelect.ReadColumn("task_parent").toInt();
-			QString TaskName = qSelect.ReadColumn("task_name").toString();
+			QVariantMap ResultItem = Variant.toMap();
+			unsigned int TaskID = ResultItem["ID"].toUInt();
+			unsigned int TaskParentID = ResultItem["ParentID"].toUInt();
+			QString TaskName = ResultItem["Name"].toString();
 
 			QListWidgetItem *ListWidgetItem = new QListWidgetItem(ListWidget);
 			ListWidgetItem->setText(TaskParentID ?
@@ -115,7 +94,7 @@ void ISTaskSearchByTextForm::Search()
 			ListWidgetItem->setData(Qt::UserRole, TaskID);
 		}
 
-		if (ResultCount > 0)
+		if (ResultList.size())
 		{
 			ListWidget->setItemSelected(ListWidget->item(0), true);
 			ListWidget->setFocus();
@@ -124,7 +103,7 @@ void ISTaskSearchByTextForm::Search()
 	else
 	{
 		ISGui::SetWaitGlobalCursor(false);
-		ISMessageBox::ShowCritical(this, LANG("Message.Error.TaskSearchByText"), qSelect.GetErrorString());
+		ISMessageBox::ShowCritical(this, qTaskSearchText.GetErrorString());
 	}
 	ISGui::SetWaitGlobalCursor(false);
 }

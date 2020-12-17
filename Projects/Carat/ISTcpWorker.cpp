@@ -192,6 +192,28 @@ static QString QS_FILE_STORAGE = PREPARE_QUERY("SELECT sgfs_id, sgfs_data "
 											   "FROM _storagefiles "
 											   "WHERE sgfs_id = :ObjectID");
 //-----------------------------------------------------------------------------
+static QString QS_TEXT_SEARCH_SEARCH_TEXT = PREPARE_QUERY("WITH w AS "
+														  "( "
+														  "SELECT task_id, task_parent, lower(task_name) AS search_field "
+														  "FROM _task "
+														  "UNION "
+														  "SELECT task_id, task_parent, lower(task_description) AS search_field "
+														  "FROM _task "
+														  "WHERE task_description IS NOT NULL "
+														  "UNION "
+														  "SELECT tcom_task AS task_id, task_parent, lower(tcom_comment) AS search_field "
+														  "FROM _taskcomment "
+														  "LEFT JOIN _task ON tcom_task = task_id "
+														  "UNION "
+														  "SELECT tfls_task AS task_id, task_parent, lower(tfls_name) AS search_field "
+														  "FROM _taskfile "
+														  "LEFT JOIN _task ON tfls_task = task_id "
+														  ") "
+														  "SELECT DISTINCT task_id, task_parent, (SELECT task_name FROM _task WHERE task_id = w.task_id) "
+														  "FROM w "
+														  "WHERE search_field LIKE '%' || lower(:Value) || '%' "
+														  "ORDER BY task_id");
+//-----------------------------------------------------------------------------
 ISTcpWorker::ISTcpWorker(const QString &db_host, int db_port, const QString &db_name, const QString &db_user, const QString &db_password)
 	: QObject(),
 	ErrorString(NO_ERROR_STRING),
@@ -342,6 +364,7 @@ void ISTcpWorker::Process()
 					case ISNamespace::AMT_FileStorageAdd: Result = FileStorageAdd(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_FileStorageCopy: Result = FileStorageCopy(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_FileStorageGet: Result = FileStorageGet(tcp_message, TcpAnswer); break;
+					case ISNamespace::AMT_TaskSearchText: Result = TaskSearchText(tcp_message, TcpAnswer); break;
 					}
 					PerfomanceMsec = ISAlgorithm::GetTickDiff(ISAlgorithm::GetTick(), TimePoint);
 				}
@@ -2000,6 +2023,39 @@ bool ISTcpWorker::FileStorageGet(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
 	}
 	TcpAnswer->Parameters["Data"] = qSelect.ReadColumn("sgfs_data").toByteArray().toBase64();
 	Protocol(TcpMessage->TcpSocket->GetUserID(), CONST_UID_PROTOCOL_FILE_STORAGE_SAVE, QVariant(), QVariant(), qSelect.ReadColumn("sgfs_id"));
+	return true;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::TaskSearchText(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+	QVariant Value = CheckNullField("Value", TcpMessage->Parameters);
+	if (!Value.isValid())
+	{
+		return false;
+	}
+
+	//Выполняем поисковый запрос
+	ISQuery qSelect(ISDatabase::Instance().GetDB(DBConnectionName), QS_TEXT_SEARCH_SEARCH_TEXT);
+	qSelect.BindValue(":Value", Value);
+	if (!qSelect.Execute())
+	{
+		ErrorString = LANG("Carat.Error.Query.TaskSearchText.Select").arg(qSelect.GetErrorString());
+		return false;
+	}
+
+	//Обходим результаты поиска
+	QVariantList ResultList;
+	while (qSelect.Next())
+	{
+		ResultList.append(QVariantMap
+		{
+			{ "ID", qSelect.ReadColumn("task_id") },
+			{ "ParentID", qSelect.ReadColumn("task_parent") },
+			{ "Name", qSelect.ReadColumn("task_name") }
+		});
+	}
+	TcpAnswer->Parameters["Results"] = ResultList;
+	Protocol(TcpMessage->TcpSocket->GetUserID(), CONST_UID_PROTOCOL_TASK_SEARCH_TEXT, QVariant(), QVariant(), QVariant(), Value);
 	return true;
 }
 //-----------------------------------------------------------------------------
