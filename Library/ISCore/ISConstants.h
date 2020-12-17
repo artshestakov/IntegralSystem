@@ -167,8 +167,9 @@ const char API_NOTE_RECORD_SET[] = "SetNoteRecord"; //Изменить примечание записи
 const char API_FILE_STORAGE_ADD[] = "FileStorageAdd"; //Добавить файл в хранилище
 const char API_FILE_STORAGE_COPY[] = "FileStorageCopy"; //Скопировать файл в хранилище
 const char API_FILE_STORAGE_GET[] = "FileStorageGet"; //Получить файл из хранилища
-const char API_TASK_SEARCH_TEXT[] = "TaskSearchText"; //Поиск задач по тексту
-const char API_TASK_SEARCH_ID[] = "TaskSearchID"; //Поиск задач по номеру
+const char API_SEARCH_TASK_TEXT[] = "SearchTaskText"; //Поиск задач по тексту
+const char API_SEARCH_TASK_ID[] = "SearchTaskID"; //Поиск задач по номеру
+const char API_SEARCH_FULL_TEXT[] = "SearchFullText"; //Полтекстовый поиск
 //CARAT_LOCAL_API--------------------------------------------------------------
 const char		CARAT_LOCAL_API_SHUTDOWN[] = "shutdown"; //Завершение работы
 //-----------------------------------------------------------------------------

@@ -8,6 +8,7 @@
 #include "ISTypedefs.h"
 #include "ISStructs.h"
 #include "ISQuery.h"
+#include "PMetaClass.h"
 //-----------------------------------------------------------------------------
 class ISTcpWorker : public QObject
 {
@@ -37,6 +38,7 @@ private:
 	bool UserIsSystem(const QVariant &UserID, bool &IsSystem); //Проверка пользователя на системность
 	QString ConvertDateTimeToString(const QDateTime &DateTime, const QString &DateFormat, const QString &TimeFormat); //Конвертировать дату и время в строку
 	QString ConvertDateToString(const QDate &Date, const QString &DateFormat); //Конвертировать дату в строку
+	QString GetObjectName(PMetaTable *MetaTable, unsigned int ObjectID); //Получить наименование объекта
 
 private:
 	bool Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
@@ -59,8 +61,9 @@ private:
 	bool FileStorageAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
 	bool FileStorageCopy(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
 	bool FileStorageGet(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
-	bool TaskSearchText(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
-	bool TaskSearchID(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
+	bool SearchTaskText(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
+	bool SearchTaskID(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
+	bool SearchFullText(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
 
 private:
     QString ErrorString; //Текстовое описание ошибки запроса

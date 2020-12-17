@@ -120,13 +120,17 @@ ISNamespace::ApiMessageType ISTcp::GetMessageTypeByName(const QString &Name)
 	{
 		return ISNamespace::AMT_FileStorageGet;
 	}
-	else if (Name == API_TASK_SEARCH_TEXT)
+	else if (Name == API_SEARCH_TASK_TEXT)
 	{
-		return ISNamespace::AMT_TaskSearchText;
+		return ISNamespace::AMT_SearchTaskText;
 	}
-	else if (Name == API_TASK_SEARCH_ID)
+	else if (Name == API_SEARCH_TASK_ID)
 	{
-		return ISNamespace::AMT_TaskSearchID;
+		return ISNamespace::AMT_SearchTaskID;
+	}
+	else if (Name == API_SEARCH_FULL_TEXT)
+	{
+		return ISNamespace::AMY_SearchFullText;
 	}
 	return ISNamespace::AMT_Unknown;
 }

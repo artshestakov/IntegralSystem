@@ -72,7 +72,7 @@ void ISTaskSearchByTextForm::Search()
 	ISGui::SetWaitGlobalCursor(true);
 	ListWidget->Clear();
 
-	ISTcpQuery qTaskSearchText(API_TASK_SEARCH_TEXT);
+	ISTcpQuery qTaskSearchText(API_SEARCH_TASK_TEXT);
 	qTaskSearchText.BindValue("Value", EditValue->GetValue());
 	if (qTaskSearchText.Execute())
 	{

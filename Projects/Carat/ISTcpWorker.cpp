@@ -10,6 +10,7 @@
 #include "ISConfig.h"
 #include "ISTcpClients.h"
 #include "ISMetaData.h"
+#include "ISMetaDataHelper.h"
 #include "ISFail2Ban.h"
 #include "ISQueryModel.h"
 //-----------------------------------------------------------------------------
@@ -368,8 +369,9 @@ void ISTcpWorker::Process()
 					case ISNamespace::AMT_FileStorageAdd: Result = FileStorageAdd(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_FileStorageCopy: Result = FileStorageCopy(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_FileStorageGet: Result = FileStorageGet(tcp_message, TcpAnswer); break;
-					case ISNamespace::AMT_TaskSearchText: Result = TaskSearchText(tcp_message, TcpAnswer); break;
-					case ISNamespace::AMT_TaskSearchID: Result = TaskSearchID(tcp_message, TcpAnswer); break;
+					case ISNamespace::AMT_SearchTaskText: Result = SearchTaskText(tcp_message, TcpAnswer); break;
+					case ISNamespace::AMT_SearchTaskID: Result = SearchTaskID(tcp_message, TcpAnswer); break;
+					case ISNamespace::AMY_SearchFullText: Result = SearchFullText(tcp_message, TcpAnswer); break;
 					}
 					PerfomanceMsec = ISAlgorithm::GetTickDiff(ISAlgorithm::GetTick(), TimePoint);
 				}
@@ -513,6 +515,61 @@ QString ISTcpWorker::ConvertDateToString(const QDate &Date, const QString &DateF
 		Result = Date.toString(DateFormat);
 	}
 	return Result;
+}
+//-----------------------------------------------------------------------------
+QString ISTcpWorker::GetObjectName(PMetaTable *MetaTable, unsigned int ObjectID)
+{
+	if (MetaTable->TitleName.isEmpty()) //Если TitleName у мета-таблицы не заполнен - возвращаем идентификатор объекта
+	{
+		return QString::number(ObjectID);
+	}
+
+	QString ObjectName;
+	QStringList StringList = MetaTable->TitleName.split(';');
+	QString QueryText = "SELECT ";
+
+	if (StringList.count() > 1) //Если имя объекта строится из нескольких полей
+	{
+		QueryText += "concat(";
+		for (const QString &FieldName : StringList) //Обход полей
+		{
+			PMetaForeign *MetaForeign = MetaTable->GetField(FieldName)->Foreign;
+			QueryText += MetaForeign ?
+				("(" + ISMetaDataHelper::GenerateSqlQueryFromTitleName(MetaForeign, MetaTable->Alias, FieldName) + "), ' ', ") :
+				(MetaTable->Alias + '_' + FieldName + ", ' ', ");
+		}
+		QueryText.chop(7);
+		QueryText += ") \n";
+	}
+	else //Если указано только одно поле
+	{
+		PMetaForeign *MetaForeign = MetaTable->GetField(MetaTable->TitleName)->Foreign;
+		QueryText += MetaForeign ?
+			("(" + ISMetaDataHelper::GenerateSqlQueryFromTitleName(MetaForeign, MetaTable->Alias, MetaTable->TitleName) + ") \n") :
+			(MetaTable->Alias + '_' + MetaTable->TitleName + " \n");
+	}
+
+	QueryText += "FROM " + MetaTable->Name + " \n";
+	QueryText += "WHERE " + MetaTable->Alias + "_id = :ObjectID";
+
+	ISQuery qSelectName(ISDatabase::Instance().GetDB(DBConnectionName), QueryText);
+	qSelectName.SetShowLongQuery(false);
+	qSelectName.BindValue(":ObjectID", ObjectID);
+	if (qSelectName.ExecuteFirst())
+	{
+		QVariant Value = qSelectName.ReadColumn(0);
+		switch (Value.type())
+		{
+		case QVariant::Date: ObjectName = Value.toDate().toString(FORMAT_DATE_V2); break;
+		case QVariant::Time: ObjectName = Value.toTime().toString(FORMAT_TIME_V1); break;
+		case QVariant::DateTime: ObjectName = Value.toDateTime().toString(FORMAT_DATE_TIME_V2); break;
+		default: ObjectName = qSelectName.ReadColumn(0).toString();
+		}
+	}
+
+	//Удаляем возможные пробелы в конце имени объекта
+	ISAlgorithm::RemoveLastSymbolLoop(ObjectName, SYMBOL_SPACE);
+	return ObjectName;
 }
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
@@ -2031,7 +2088,7 @@ bool ISTcpWorker::FileStorageGet(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
 	return true;
 }
 //-----------------------------------------------------------------------------
-bool ISTcpWorker::TaskSearchText(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+bool ISTcpWorker::SearchTaskText(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
 	QVariant Value = CheckNullField("Value", TcpMessage->Parameters);
 	if (!Value.isValid())
@@ -2041,10 +2098,11 @@ bool ISTcpWorker::TaskSearchText(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
 
 	//Выполняем поисковый запрос
 	ISQuery qSelect(ISDatabase::Instance().GetDB(DBConnectionName), QS_TASK_SEARCH_TEXT);
+	qSelect.SetShowLongQuery(false);
 	qSelect.BindValue(":Value", Value);
 	if (!qSelect.Execute())
 	{
-		ErrorString = LANG("Carat.Error.Query.TaskSearchText.Select").arg(qSelect.GetErrorString());
+		ErrorString = LANG("Carat.Error.Query.SearchTaskText.Select").arg(qSelect.GetErrorString());
 		return false;
 	}
 
@@ -2064,7 +2122,7 @@ bool ISTcpWorker::TaskSearchText(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
 	return true;
 }
 //-----------------------------------------------------------------------------
-bool ISTcpWorker::TaskSearchID(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+bool ISTcpWorker::SearchTaskID(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
 	QVariant ID = CheckNullField("ID", TcpMessage->Parameters);
 	if (!ID.isValid())
@@ -2073,10 +2131,11 @@ bool ISTcpWorker::TaskSearchID(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	}
 
 	ISQuery qSelect(ISDatabase::Instance().GetDB(DBConnectionName), QS_TASK_SEARCH_ID);
+	qSelect.SetShowLongQuery(false);
 	qSelect.BindValue(":ID", ID);
 	if (!qSelect.Execute())
 	{
-		ErrorString = LANG("Carat.Error.Query.TaskSearchID.Select").arg(qSelect.GetErrorString());
+		ErrorString = LANG("Carat.Error.Query.SearchTaskID.Select").arg(qSelect.GetErrorString());
 		return false;
 	}
 
@@ -2087,6 +2146,59 @@ bool ISTcpWorker::TaskSearchID(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	}
 	TcpAnswer->Parameters["Result"] = qSelect.ReadColumn("result");
 	Protocol(TcpMessage->TcpSocket->GetUserID(), CONST_UID_PROTOCOL_TASK_SEARCH_ID, QVariant(), QVariant(), QVariant(), ID);
+	return true;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::SearchFullText(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+	QVariant Value = CheckNullField("Value", TcpMessage->Parameters);
+	if (!Value.isValid())
+	{
+		return false;
+	}
+
+	//Формируем запрос
+	QString SqlText;
+	for (PMetaTable *MetaTable : ISMetaData::Instance().GetTables()) //Обходим все таблицы
+	{
+		SqlText += "SELECT " + MetaTable->Alias + "_id AS id, '" + MetaTable->Name + "' AS table_name \n";
+		SqlText += "FROM " + MetaTable->Name + " \n";
+		SqlText += "WHERE lower(concat(";
+		for (PMetaField *MetaField : MetaTable->Fields) //Обходим поля конкретной таблицы
+		{
+			//Если поле является первичным ключом или виртуальным - пропускаем его
+			if (MetaField->PrimaryKey || !MetaField->QueryText.isEmpty())
+			{
+				continue;
+			}
+			SqlText += MetaTable->Alias + '_' + MetaField->Name + ",";
+		}
+		SqlText.chop(1);
+		SqlText += ")) LIKE '%' || lower(:Value) || '%'\n";
+		SqlText += "UNION \n";
+	}
+	SqlText.chop(8);
+
+	//Выполняем запрос
+	ISQuery qSelect(ISDatabase::Instance().GetDB(DBConnectionName), SqlText);
+	qSelect.SetShowLongQuery(false);
+	qSelect.BindValue(":Value", Value);
+	if (!qSelect.Execute())
+	{
+		ErrorString = LANG("Carat.Error.Query.SearchFullText.Select").arg(qSelect.GetErrorString());
+		return false;
+	}
+
+	//Анализируем ответ
+	QVariantMap ResultMap;
+	while (qSelect.Next())
+	{
+		QVariant ID = qSelect.ReadColumn("id");
+		ResultMap[ID.toString()] = GetObjectName(
+			ISMetaData::Instance().GetMetaTable(qSelect.ReadColumn("table_name").toString()), ID.toUInt());
+	}
+	TcpAnswer->Parameters["Result"] = ResultMap;
+	Protocol(TcpMessage->TcpSocket->GetUserID(), CONST_UID_PROTOCOL_SEARCH_FULL_TEXT, QVariant(), QVariant(), QVariant(), Value);
 	return true;
 }
 //-----------------------------------------------------------------------------

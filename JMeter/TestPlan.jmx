@@ -201,14 +201,19 @@
             <stringProp name="Argument.value">10</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
-          <elementProp name="TaskSearchText_Value" elementType="Argument">
-            <stringProp name="Argument.name">TaskSearchText_Value</stringProp>
+          <elementProp name="SearchTaskText_Value" elementType="Argument">
+            <stringProp name="Argument.name">SearchTaskText_Value</stringProp>
             <stringProp name="Argument.value">тест</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
-          <elementProp name="TaskSearchID_ID" elementType="Argument">
-            <stringProp name="Argument.name">TaskSearchID_ID</stringProp>
+          <elementProp name="SearchTaskID_ID" elementType="Argument">
+            <stringProp name="Argument.name">SearchTaskID_ID</stringProp>
             <stringProp name="Argument.value">1</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="SearchFullText_Value" elementType="Argument">
+            <stringProp name="Argument.name">SearchFullText_Value</stringProp>
+            <stringProp name="Argument.value">петров</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
         </collectionProp>
@@ -482,26 +487,37 @@ def MapFileStorageGet =
 vars.put(&quot;QueryFileStorageGet&quot;, MapToString(MapFileStorageGet));
 
 //Поиск задачи по тексту
-def MapTaskSearchText =
+def MapSearchTaskText =
 [
-	Type: &quot;TaskSearchText&quot;,
+	Type: &quot;SearchTaskText&quot;,
 	Parameters:
 		[
-			Value: vars.get(&quot;TaskSearchText_Value&quot;)
+			Value: vars.get(&quot;SearchTaskText_Value&quot;)
 		]
 ];
-vars.put(&quot;QueryTaskSearchText&quot;, MapToString(MapTaskSearchText));
+vars.put(&quot;QuerySearchTaskText&quot;, MapToString(MapSearchTaskText));
 
 //Поиск задачи по номеру
-def MapTaskSearchID =
+def MapSearchTaskID =
 [
-	Type: &quot;TaskSearchID&quot;,
+	Type: &quot;SearchTaskID&quot;,
 	Parameters:
 		[
-			ID: vars.get(&quot;TaskSearchID_ID&quot;)
+			ID: vars.get(&quot;SearchTaskID_ID&quot;)
 		]
 ];
-vars.put(&quot;QueryTaskSearchID&quot;, MapToString(MapTaskSearchID));</stringProp>
+vars.put(&quot;QuerySearchTaskID&quot;, MapToString(MapSearchTaskID));
+
+//Поиск задачи по номеру
+def MapSearchFullText =
+[
+	Type: &quot;SearchFullText&quot;,
+	Parameters:
+		[
+			Value: vars.get(&quot;SearchFullText_Value&quot;)
+		]
+];
+vars.put(&quot;QuerySearchFullText&quot;, MapToString(MapSearchFullText));</stringProp>
           <stringProp name="scriptLanguage">groovy</stringProp>
         </JSR223Sampler>
         <hashTree/>
@@ -752,26 +768,39 @@ vars.put(&quot;QueryTaskSearchID&quot;, MapToString(MapTaskSearchID));</stringPr
           <stringProp name="ConfigTestElement.password"></stringProp>
         </TCPSampler>
         <hashTree/>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: TaskSearchText" enabled="false">
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: SearchTaskText" enabled="false">
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
           <stringProp name="TCPSampler.port"></stringProp>
           <boolProp name="TCPSampler.nodelay">false</boolProp>
           <stringProp name="TCPSampler.timeout"></stringProp>
-          <stringProp name="TCPSampler.request">${QueryTaskSearchText}</stringProp>
+          <stringProp name="TCPSampler.request">${QuerySearchTaskText}</stringProp>
           <boolProp name="TCPSampler.closeConnection">true</boolProp>
           <stringProp name="TCPSampler.EolByte">10</stringProp>
           <stringProp name="ConfigTestElement.username"></stringProp>
           <stringProp name="ConfigTestElement.password"></stringProp>
         </TCPSampler>
         <hashTree/>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: TaskSearchID" enabled="true">
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: SearchTaskID" enabled="false">
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
           <stringProp name="TCPSampler.port"></stringProp>
           <boolProp name="TCPSampler.nodelay">false</boolProp>
           <stringProp name="TCPSampler.timeout"></stringProp>
-          <stringProp name="TCPSampler.request">${QueryTaskSearchID}</stringProp>
+          <stringProp name="TCPSampler.request">${QuerySearchTaskID}</stringProp>
+          <boolProp name="TCPSampler.closeConnection">true</boolProp>
+          <stringProp name="TCPSampler.EolByte">10</stringProp>
+          <stringProp name="ConfigTestElement.username"></stringProp>
+          <stringProp name="ConfigTestElement.password"></stringProp>
+        </TCPSampler>
+        <hashTree/>
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: SearchFullText" enabled="true">
+          <stringProp name="TCPSampler.server"></stringProp>
+          <boolProp name="TCPSampler.reUseConnection">true</boolProp>
+          <stringProp name="TCPSampler.port"></stringProp>
+          <boolProp name="TCPSampler.nodelay">false</boolProp>
+          <stringProp name="TCPSampler.timeout"></stringProp>
+          <stringProp name="TCPSampler.request">${QuerySearchFullText}</stringProp>
           <boolProp name="TCPSampler.closeConnection">true</boolProp>
           <stringProp name="TCPSampler.EolByte">10</stringProp>
           <stringProp name="ConfigTestElement.username"></stringProp>

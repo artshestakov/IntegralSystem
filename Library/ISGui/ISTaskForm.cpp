@@ -146,7 +146,7 @@ void ISTaskForm::SearchByNumber()
 		unsigned int TaskID = ISInputDialog::GetUInteger(Ok, LANG("Task.Search"), LANG("Task.InputTaskNumber") + ':', INT_MAX);
 		if (Ok && TaskID > 0)
 		{
-			ISTcpQuery qTaskSearchID(API_TASK_SEARCH_ID);
+			ISTcpQuery qTaskSearchID(API_SEARCH_TASK_ID);
 			qTaskSearchID.BindValue("ID", TaskID);
 			if (qTaskSearchID.Execute())
 			{
