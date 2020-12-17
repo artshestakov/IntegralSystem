@@ -12,6 +12,7 @@ ISQueryModel::ISQueryModel(PMetaTable *meta_table, ISNamespace::QueryModelType m
 	SortingField("ID"),
 	SortingOrder(Qt::AscendingOrder),
 	SortingIsForeign(false),
+	SortingIsVirtual(false),
     Limit(0),
     Offset(0),
     ClassFilter(meta_table->ClassFilter)
@@ -111,8 +112,8 @@ QString ISQueryModel::GetQueryText()
 	}
 
 	//Учитываем сортировку
-	SqlText += "ORDER BY " +
-		(SortingIsForeign ? SortingField : MetaTable->Alias + '.' + MetaTable->Alias + '_' + SortingField) + ' ' + 
+	SqlText += "ORDER BY " + (SortingIsVirtual || SortingIsForeign ? SortingField :
+		MetaTable->Alias + '.' + MetaTable->Alias + '_' + SortingField) + ' ' + 
 		(SortingOrder == Qt::AscendingOrder ? "ASC" : "DESC");
 
 	//Учитываем лимит
@@ -180,10 +181,10 @@ void ISQueryModel::SetSorting(const QString &FieldName, Qt::SortOrder Order)
 	if (SortingField != FieldName)
 	{
 		PMetaField *MetaField = MetaTable->GetField(FieldName);
-		QString FieldQueryText = MetaField->QueryText;
-		if (!FieldQueryText.isEmpty()) //Если сортируемое поле является виртуальным - сортировать по запросу поля
+		SortingIsVirtual = !MetaField->QueryText.isEmpty();
+		if (SortingIsVirtual) //Если сортируемое поле является виртуальным - сортировать по запросу поля
 		{
-			SortingField = '(' + FieldQueryText + ')';
+			SortingField = '(' + MetaField->QueryText + ')';
 		}
 		else
 		{

@@ -51,6 +51,7 @@ private:
 	QString SortingField; //Имя поля по которому идет сортировка
 	Qt::SortOrder SortingOrder; //Тип сортировки
 	bool SortingIsForeign; //Сортируемое поле является внешним ключом
+	bool SortingIsVirtual; //Сортируемое поле является виртуальным
 	int Limit; //Вывод записей на странице
 	int Offset; //Страница
 
