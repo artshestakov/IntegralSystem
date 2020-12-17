@@ -192,27 +192,31 @@ static QString QS_FILE_STORAGE = PREPARE_QUERY("SELECT sgfs_id, sgfs_data "
 											   "FROM _storagefiles "
 											   "WHERE sgfs_id = :ObjectID");
 //-----------------------------------------------------------------------------
-static QString QS_TEXT_SEARCH_SEARCH_TEXT = PREPARE_QUERY("WITH w AS "
-														  "( "
-														  "SELECT task_id, task_parent, lower(task_name) AS search_field "
-														  "FROM _task "
-														  "UNION "
-														  "SELECT task_id, task_parent, lower(task_description) AS search_field "
-														  "FROM _task "
-														  "WHERE task_description IS NOT NULL "
-														  "UNION "
-														  "SELECT tcom_task AS task_id, task_parent, lower(tcom_comment) AS search_field "
-														  "FROM _taskcomment "
-														  "LEFT JOIN _task ON tcom_task = task_id "
-														  "UNION "
-														  "SELECT tfls_task AS task_id, task_parent, lower(tfls_name) AS search_field "
-														  "FROM _taskfile "
-														  "LEFT JOIN _task ON tfls_task = task_id "
-														  ") "
-														  "SELECT DISTINCT task_id, task_parent, (SELECT task_name FROM _task WHERE task_id = w.task_id) "
-														  "FROM w "
-														  "WHERE search_field LIKE '%' || lower(:Value) || '%' "
-														  "ORDER BY task_id");
+static QString QS_TASK_SEARCH_TEXT = PREPARE_QUERY("WITH w AS "
+												   "( "
+												   "SELECT task_id, task_parent, lower(task_name) AS search_field "
+												   "FROM _task "
+												   "UNION "
+												   "SELECT task_id, task_parent, lower(task_description) AS search_field "
+												   "FROM _task "
+												   "WHERE task_description IS NOT NULL "
+												   "UNION "
+												   "SELECT tcom_task AS task_id, task_parent, lower(tcom_comment) AS search_field "
+												   "FROM _taskcomment "
+												   "LEFT JOIN _task ON tcom_task = task_id "
+												   "UNION "
+												   "SELECT tfls_task AS task_id, task_parent, lower(tfls_name) AS search_field "
+												   "FROM _taskfile "
+												   "LEFT JOIN _task ON tfls_task = task_id "
+												   ") "
+												   "SELECT DISTINCT task_id, task_parent, (SELECT task_name FROM _task WHERE task_id = w.task_id) "
+												   "FROM w "
+												   "WHERE search_field LIKE '%' || lower(:Value) || '%' "
+												   "ORDER BY task_id");
+//-----------------------------------------------------------------------------
+static QString QS_TASK_SEARCH_ID = PREPARE_QUERY("SELECT (COUNT(*) > 0)::BOOLEAN AS result "
+												 "FROM _task "
+												 "WHERE task_id = :ID");
 //-----------------------------------------------------------------------------
 ISTcpWorker::ISTcpWorker(const QString &db_host, int db_port, const QString &db_name, const QString &db_user, const QString &db_password)
 	: QObject(),
@@ -365,6 +369,7 @@ void ISTcpWorker::Process()
 					case ISNamespace::AMT_FileStorageCopy: Result = FileStorageCopy(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_FileStorageGet: Result = FileStorageGet(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_TaskSearchText: Result = TaskSearchText(tcp_message, TcpAnswer); break;
+					case ISNamespace::AMT_TaskSearchID: Result = TaskSearchID(tcp_message, TcpAnswer); break;
 					}
 					PerfomanceMsec = ISAlgorithm::GetTickDiff(ISAlgorithm::GetTick(), TimePoint);
 				}
@@ -2035,7 +2040,7 @@ bool ISTcpWorker::TaskSearchText(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
 	}
 
 	//Выполняем поисковый запрос
-	ISQuery qSelect(ISDatabase::Instance().GetDB(DBConnectionName), QS_TEXT_SEARCH_SEARCH_TEXT);
+	ISQuery qSelect(ISDatabase::Instance().GetDB(DBConnectionName), QS_TASK_SEARCH_TEXT);
 	qSelect.BindValue(":Value", Value);
 	if (!qSelect.Execute())
 	{
@@ -2056,6 +2061,32 @@ bool ISTcpWorker::TaskSearchText(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
 	}
 	TcpAnswer->Parameters["Results"] = ResultList;
 	Protocol(TcpMessage->TcpSocket->GetUserID(), CONST_UID_PROTOCOL_TASK_SEARCH_TEXT, QVariant(), QVariant(), QVariant(), Value);
+	return true;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::TaskSearchID(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+	QVariant ID = CheckNullField("ID", TcpMessage->Parameters);
+	if (!ID.isValid())
+	{
+		return false;
+	}
+
+	ISQuery qSelect(ISDatabase::Instance().GetDB(DBConnectionName), QS_TASK_SEARCH_ID);
+	qSelect.BindValue(":ID", ID);
+	if (!qSelect.Execute())
+	{
+		ErrorString = LANG("Carat.Error.Query.TaskSearchID.Select").arg(qSelect.GetErrorString());
+		return false;
+	}
+
+	if (!qSelect.First())
+	{
+		ErrorString = qSelect.GetErrorString();
+		return false;
+	}
+	TcpAnswer->Parameters["Result"] = qSelect.ReadColumn("result");
+	Protocol(TcpMessage->TcpSocket->GetUserID(), CONST_UID_PROTOCOL_TASK_SEARCH_ID, QVariant(), QVariant(), QVariant(), ID);
 	return true;
 }
 //-----------------------------------------------------------------------------

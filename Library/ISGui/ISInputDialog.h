@@ -19,6 +19,7 @@ public:
 	static QString GetText(const QString &Title = QString(), const QString &LabelText = QString(), const QVariant &Value = QVariant()); //Получить большую строку
 	static QString GetText(const QString &Title, const QString &LabelText, const QVariant &Value, bool &Ok); //Получить большую строку
 	static int GetInteger(bool &Ok, const QString &Title = QString(), const QString &LabelText = QString(), int Minimum = 0, int Maximum = 0, const QVariant &Value = QVariant()); //Получить целое число
+	static unsigned int GetUInteger(bool &Ok, const QString &Title = QString(), const QString &LabelText = QString(), unsigned int Maximum = 0, const QVariant &Value = QVariant()); //Получить целое беззнаковое число
 	static QDateTime GetDateTime(const QString &Title = QString(), const QString &LabelText = QString()); //Получить дату и время
 	static QDate GetDate(const QString &Title = QString(), const QString &LabelText = QString()); //Получить дату
 	static QTime GetTime(const QString &Title = QString(), const QString &LabelText = QString()); //Получить время

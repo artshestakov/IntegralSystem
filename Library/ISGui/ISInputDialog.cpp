@@ -98,6 +98,11 @@ int ISInputDialog::GetInteger(bool &Ok, const QString &Title, const QString &Lab
 	return 0;
 }
 //-----------------------------------------------------------------------------
+unsigned int ISInputDialog::GetUInteger(bool &Ok, const QString &Title, const QString &LabelText, unsigned int Maximum, const QVariant &Value)
+{
+	return (unsigned int)ISInputDialog::GetInteger(Ok, Title, LabelText, 0, Maximum, Value);
+}
+//-----------------------------------------------------------------------------
 QDateTime ISInputDialog::GetDateTime(const QString &Title, const QString &LabelText)
 {
 	ISInputDialog InputDialog(ISNamespace::FT_DateTime, Title, LabelText);

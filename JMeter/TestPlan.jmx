@@ -206,6 +206,11 @@
             <stringProp name="Argument.value">тест</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
+          <elementProp name="TaskSearchID_ID" elementType="Argument">
+            <stringProp name="Argument.name">TaskSearchID_ID</stringProp>
+            <stringProp name="Argument.value">1</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
         </collectionProp>
       </Arguments>
       <hashTree/>
@@ -476,7 +481,7 @@ def MapFileStorageGet =
 ];
 vars.put(&quot;QueryFileStorageGet&quot;, MapToString(MapFileStorageGet));
 
-//Получить файл из хранилища
+//Поиск задачи по тексту
 def MapTaskSearchText =
 [
 	Type: &quot;TaskSearchText&quot;,
@@ -485,7 +490,18 @@ def MapTaskSearchText =
 			Value: vars.get(&quot;TaskSearchText_Value&quot;)
 		]
 ];
-vars.put(&quot;QueryTaskSearchText&quot;, MapToString(MapTaskSearchText));</stringProp>
+vars.put(&quot;QueryTaskSearchText&quot;, MapToString(MapTaskSearchText));
+
+//Поиск задачи по номеру
+def MapTaskSearchID =
+[
+	Type: &quot;TaskSearchID&quot;,
+	Parameters:
+		[
+			ID: vars.get(&quot;TaskSearchID_ID&quot;)
+		]
+];
+vars.put(&quot;QueryTaskSearchID&quot;, MapToString(MapTaskSearchID));</stringProp>
           <stringProp name="scriptLanguage">groovy</stringProp>
         </JSR223Sampler>
         <hashTree/>
@@ -646,9 +662,9 @@ vars.put(&quot;QueryTaskSearchText&quot;, MapToString(MapTaskSearchText));</stri
         </TCPSampler>
         <hashTree/>
         <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: GetLastClient" enabled="false">
-          <stringProp name="TCPSampler.server">127.0.0.1</stringProp>
+          <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
-          <stringProp name="TCPSampler.port">50000</stringProp>
+          <stringProp name="TCPSampler.port"></stringProp>
           <boolProp name="TCPSampler.nodelay">false</boolProp>
           <stringProp name="TCPSampler.timeout"></stringProp>
           <stringProp name="TCPSampler.request">${QueryGetLastClient}</stringProp>
@@ -659,9 +675,9 @@ vars.put(&quot;QueryTaskSearchText&quot;, MapToString(MapTaskSearchText));</stri
         </TCPSampler>
         <hashTree/>
         <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: Sleep" enabled="false">
-          <stringProp name="TCPSampler.server">127.0.0.1</stringProp>
+          <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
-          <stringProp name="TCPSampler.port">50000</stringProp>
+          <stringProp name="TCPSampler.port"></stringProp>
           <boolProp name="TCPSampler.nodelay">false</boolProp>
           <stringProp name="TCPSampler.timeout"></stringProp>
           <stringProp name="TCPSampler.request">${QuerySleep}</stringProp>
@@ -672,9 +688,9 @@ vars.put(&quot;QueryTaskSearchText&quot;, MapToString(MapTaskSearchText));</stri
         </TCPSampler>
         <hashTree/>
         <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: GetNoteRecord" enabled="false">
-          <stringProp name="TCPSampler.server">127.0.0.1</stringProp>
+          <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
-          <stringProp name="TCPSampler.port">50000</stringProp>
+          <stringProp name="TCPSampler.port"></stringProp>
           <boolProp name="TCPSampler.nodelay">false</boolProp>
           <stringProp name="TCPSampler.timeout"></stringProp>
           <stringProp name="TCPSampler.request">${QueryGetNoteRecord}</stringProp>
@@ -685,9 +701,9 @@ vars.put(&quot;QueryTaskSearchText&quot;, MapToString(MapTaskSearchText));</stri
         </TCPSampler>
         <hashTree/>
         <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: SetNoteRecord" enabled="false">
-          <stringProp name="TCPSampler.server">127.0.0.1</stringProp>
+          <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
-          <stringProp name="TCPSampler.port">50000</stringProp>
+          <stringProp name="TCPSampler.port"></stringProp>
           <boolProp name="TCPSampler.nodelay">false</boolProp>
           <stringProp name="TCPSampler.timeout"></stringProp>
           <stringProp name="TCPSampler.request">${QuerySetNoteRecord}</stringProp>
@@ -698,9 +714,9 @@ vars.put(&quot;QueryTaskSearchText&quot;, MapToString(MapTaskSearchText));</stri
         </TCPSampler>
         <hashTree/>
         <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: FileStorageAdd" enabled="false">
-          <stringProp name="TCPSampler.server">127.0.0.1</stringProp>
+          <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
-          <stringProp name="TCPSampler.port">50000</stringProp>
+          <stringProp name="TCPSampler.port"></stringProp>
           <boolProp name="TCPSampler.nodelay">false</boolProp>
           <stringProp name="TCPSampler.timeout"></stringProp>
           <stringProp name="TCPSampler.request">${QueryFileStorageAdd}</stringProp>
@@ -711,9 +727,9 @@ vars.put(&quot;QueryTaskSearchText&quot;, MapToString(MapTaskSearchText));</stri
         </TCPSampler>
         <hashTree/>
         <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: FileStorageCopy" enabled="false">
-          <stringProp name="TCPSampler.server">127.0.0.1</stringProp>
+          <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
-          <stringProp name="TCPSampler.port">50000</stringProp>
+          <stringProp name="TCPSampler.port"></stringProp>
           <boolProp name="TCPSampler.nodelay">false</boolProp>
           <stringProp name="TCPSampler.timeout"></stringProp>
           <stringProp name="TCPSampler.request">${QueryFileStorageCopy}</stringProp>
@@ -724,9 +740,9 @@ vars.put(&quot;QueryTaskSearchText&quot;, MapToString(MapTaskSearchText));</stri
         </TCPSampler>
         <hashTree/>
         <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: FileStorageGet" enabled="false">
-          <stringProp name="TCPSampler.server">127.0.0.1</stringProp>
+          <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
-          <stringProp name="TCPSampler.port">50000</stringProp>
+          <stringProp name="TCPSampler.port"></stringProp>
           <boolProp name="TCPSampler.nodelay">false</boolProp>
           <stringProp name="TCPSampler.timeout"></stringProp>
           <stringProp name="TCPSampler.request">${QueryFileStorageGet}</stringProp>
@@ -736,13 +752,26 @@ vars.put(&quot;QueryTaskSearchText&quot;, MapToString(MapTaskSearchText));</stri
           <stringProp name="ConfigTestElement.password"></stringProp>
         </TCPSampler>
         <hashTree/>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: TaskSearchText" enabled="true">
-          <stringProp name="TCPSampler.server">127.0.0.1</stringProp>
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: TaskSearchText" enabled="false">
+          <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
-          <stringProp name="TCPSampler.port">50000</stringProp>
+          <stringProp name="TCPSampler.port"></stringProp>
           <boolProp name="TCPSampler.nodelay">false</boolProp>
           <stringProp name="TCPSampler.timeout"></stringProp>
           <stringProp name="TCPSampler.request">${QueryTaskSearchText}</stringProp>
+          <boolProp name="TCPSampler.closeConnection">true</boolProp>
+          <stringProp name="TCPSampler.EolByte">10</stringProp>
+          <stringProp name="ConfigTestElement.username"></stringProp>
+          <stringProp name="ConfigTestElement.password"></stringProp>
+        </TCPSampler>
+        <hashTree/>
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: TaskSearchID" enabled="true">
+          <stringProp name="TCPSampler.server"></stringProp>
+          <boolProp name="TCPSampler.reUseConnection">true</boolProp>
+          <stringProp name="TCPSampler.port"></stringProp>
+          <boolProp name="TCPSampler.nodelay">false</boolProp>
+          <stringProp name="TCPSampler.timeout"></stringProp>
+          <stringProp name="TCPSampler.request">${QueryTaskSearchID}</stringProp>
           <boolProp name="TCPSampler.closeConnection">true</boolProp>
           <stringProp name="TCPSampler.EolByte">10</stringProp>
           <stringProp name="ConfigTestElement.username"></stringProp>

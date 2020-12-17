@@ -13,9 +13,6 @@ public:
 	static int CalendarInsert(const QDateTime &DateTime, const QString &Name, const QVariant &Text, const QString &TableName = QString(), int ObjectID = 0); //Добавить событие в календарь
 	static bool CalendarCloseEvent(int CalendarID); //Завершить событие календаря
 
-	//Задачи
-	static bool TaskCheckExist(int TaskID); //Проверить существование задачи по её номеру
-
 	//Объекты
 	static bool DeleteObject(PMetaTable *MetaTable, int ObjectID, QString &ErrorString); //Удалить объект каскадом
 

@@ -168,6 +168,7 @@ const char API_FILE_STORAGE_ADD[] = "FileStorageAdd"; //Добавить файл в хранилищ
 const char API_FILE_STORAGE_COPY[] = "FileStorageCopy"; //Скопировать файл в хранилище
 const char API_FILE_STORAGE_GET[] = "FileStorageGet"; //Получить файл из хранилища
 const char API_TASK_SEARCH_TEXT[] = "TaskSearchText"; //Поиск задач по тексту
+const char API_TASK_SEARCH_ID[] = "TaskSearchID"; //Поиск задач по номеру
 //CARAT_LOCAL_API--------------------------------------------------------------
 const char		CARAT_LOCAL_API_SHUTDOWN[] = "shutdown"; //Завершение работы
 //-----------------------------------------------------------------------------
@@ -211,6 +212,7 @@ const char CONST_UID_PROTOCOL_FILE_STORAGE_ADD[] = "{7E9FF116-CF0A-4568-B048-7FA
 const char CONST_UID_PROTOCOL_FILE_STORAGE_COPY[] = "{5CB370B6-D1AA-4E40-83A9-AEAC7FEA65E2}";
 const char CONST_UID_PROTOCOL_FILE_STORAGE_SAVE[] = "{E73BEDC4-79FF-4B94-ACC9-2692E1927D18}";
 const char CONST_UID_PROTOCOL_TASK_SEARCH_TEXT[] = "{E4698E8F-C1F4-4F04-A4B6-5CD8805B7FAC}";
+const char CONST_UID_PROTOCOL_TASK_SEARCH_ID[] = "{4DFD26F5-799F-4E34-8DBD-78E52F01423D}";
 //-----------------------------------------------------------------------------
 const char CONST_UID_GROUP_ACCESS_TYPE_SHOW[] = "{41743776-D7CE-414F-ACF3-71C42A607742}"; //Просмотр данных
 const char CONST_UID_GROUP_ACCESS_TYPE_CREATE[] = "{1CFA961D-08A2-4AA3-978E-FF23FC88CA08}"; //Создание данных

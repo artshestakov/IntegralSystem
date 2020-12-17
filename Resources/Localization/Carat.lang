@@ -117,4 +117,6 @@
 
   <Local Name="Carat.Error.Query.TaskSearchText.Select" Russian="Не удалось выполнить поисковый запрос: %1"/>
 
+  <Local Name="Carat.Error.Query.TaskSearchID.Select" Russian="Не удалось выполнить поисковый запрос: %1"/>
+
 </LANG>

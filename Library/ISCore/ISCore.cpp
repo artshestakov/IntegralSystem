@@ -20,8 +20,6 @@ static QString QI_CALENDAR = PREPARE_QUERY("INSERT INTO _calendar(cldr_date, cld
 //-----------------------------------------------------------------------------
 static QString QU_CALENDAR_CLOSE = PREPARE_QUERY("UPDATE _calendar SET cldr_closed = true WHERE cldr_id = :CalendarID");
 //-----------------------------------------------------------------------------
-static QString QS_TASK_COUNT = PREPARE_QUERY("SELECT COUNT(*) FROM _task WHERE task_id = :TaskID");
-//-----------------------------------------------------------------------------
 QString ISCore::GetObjectName(const QString &TableName, int ObjectID)
 {
 	return GetObjectName(ISMetaData::Instance().GetMetaTable(TableName), ObjectID);
@@ -116,18 +114,6 @@ bool ISCore::CalendarCloseEvent(int CalendarID)
 	ISQuery qCloseEvent(QU_CALENDAR_CLOSE);
 	qCloseEvent.BindValue(":CalendarID", CalendarID);
 	return qCloseEvent.Execute();
-}
-//-----------------------------------------------------------------------------
-bool ISCore::TaskCheckExist(int TaskID)
-{
-	ISQuery qSelect(QS_TASK_COUNT);
-	qSelect.BindValue(":TaskID", TaskID);
-	bool Result = qSelect.ExecuteFirst();
-	if (Result)
-	{
-		Result = qSelect.ReadColumn("count").toInt() > 0;
-	}
-	return Result;
 }
 //-----------------------------------------------------------------------------
 bool ISCore::DeleteObject(PMetaTable *MetaTable, int ObjectID, QString &ErrorString)

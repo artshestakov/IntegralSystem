@@ -124,6 +124,10 @@ ISNamespace::ApiMessageType ISTcp::GetMessageTypeByName(const QString &Name)
 	{
 		return ISNamespace::AMT_TaskSearchText;
 	}
+	else if (Name == API_TASK_SEARCH_ID)
+	{
+		return ISNamespace::AMT_TaskSearchID;
+	}
 	return ISNamespace::AMT_Unknown;
 }
 //-----------------------------------------------------------------------------

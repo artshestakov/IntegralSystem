@@ -12,6 +12,7 @@
 #include "ISAlgorithm.h"
 #include "ISTaskSearchByTextForm.h"
 #include "ISMetaUser.h"
+#include "ISTcpQuery.h"
 //-----------------------------------------------------------------------------
 ISTaskForm::ISTaskForm(QWidget *parent)
 	: ISParagraphBaseForm(parent),
@@ -142,17 +143,27 @@ void ISTaskForm::SearchByNumber()
 	bool Ok = true;
 	while (true)
 	{
-		int TaskID = ISInputDialog::GetInteger(Ok, LANG("Task.Search"), LANG("Task.InputTaskNumber") + ':', 0, INT_MAX);
+		unsigned int TaskID = ISInputDialog::GetUInteger(Ok, LANG("Task.Search"), LANG("Task.InputTaskNumber") + ':', INT_MAX);
 		if (Ok && TaskID > 0)
 		{
-			if (ISCore::TaskCheckExist(TaskID))
+			ISTcpQuery qTaskSearchID(API_TASK_SEARCH_ID);
+			qTaskSearchID.BindValue("ID", TaskID);
+			if (qTaskSearchID.Execute())
 			{
-				ISGui::ShowTaskViewForm(TaskID);
-				break;
+				bool Result = qTaskSearchID.GetAnswer()["Result"].toBool();
+				if (Result)
+				{
+					ISGui::ShowTaskViewForm(TaskID);
+					break;
+				}
+				else
+				{
+					ISMessageBox::ShowWarning(this, LANG("Message.Warning.TaskWithNumberNotFound").arg(TaskID));
+				}
 			}
 			else
 			{
-				ISMessageBox::ShowInformation(this, LANG("Message.Warning.TaskWithNumberNotFound").arg(TaskID));
+				ISMessageBox::ShowWarning(this, qTaskSearchID.GetErrorString());
 			}
 		}
 		else

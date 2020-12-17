@@ -60,6 +60,7 @@ private:
 	bool FileStorageCopy(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
 	bool FileStorageGet(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
 	bool TaskSearchText(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
+	bool TaskSearchID(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
 
 private:
     QString ErrorString; //Текстовое описание ошибки запроса
