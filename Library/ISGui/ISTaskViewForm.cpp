@@ -84,8 +84,8 @@ static QString QS_FILE = PREPARE_QUERY("SELECT tfls_id, tfls_datetime, tfls_isim
 									   "WHERE tfls_task = :TaskID "
 									   "ORDER BY tfls_id");
 //-----------------------------------------------------------------------------
-static QString QI_FILE = PREPARE_QUERY("INSERT INTO _taskfile(tfls_task, tfls_isimage, tfls_name, tfls_extension, tfls_data, tfls_size, tfls_icon) "
-									   "VALUES(:TaskID, :IsImage, :Name, :Extension, :Data, :Size, :Icon)");
+static QString QI_FILE = PREPARE_QUERY("INSERT INTO _taskfile(tfls_user, tfls_task, tfls_isimage, tfls_name, tfls_extension, tfls_data, tfls_size, tfls_icon) "
+									   "VALUES(:UserID, :TaskID, :IsImage, :Name, :Extension, :Data, :Size, :Icon)");
 //-----------------------------------------------------------------------------
 static QString QS_FILE_DATA = PREPARE_QUERY("SELECT tfls_data "
 											"FROM _taskfile "
@@ -108,8 +108,8 @@ static QString QS_LINK = PREPARE_QUERY("SELECT tlnk_id, "
 									   "WHERE tlnk_task = :TaskID "
 									   "ORDER BY tlnk_id");
 //-----------------------------------------------------------------------------
-static QString QI_LINK = PREPARE_QUERY("INSERT INTO _tasklink(tlnk_task, tlnk_link) "
-									   "VALUES(:CurrentTaskID, :LinkTaskID)");
+static QString QI_LINK = PREPARE_QUERY("INSERT INTO _tasklink(tlnk_user, tlnk_task, tlnk_link) "
+									   "VALUES(:UserID, :CurrentTaskID, :LinkTaskID)");
 //-----------------------------------------------------------------------------
 static QString QD_LINK = PREPARE_QUERY("DELETE FROM _tasklink "
 									   "WHERE tlnk_id = :LinkID");
@@ -127,8 +127,8 @@ static QString QS_COMMENT = PREPARE_QUERY("SELECT "
 										  "WHERE tcom_task = :TaskID "
 										  "ORDER BY tcom_id");
 //-----------------------------------------------------------------------------
-static QString QI_COMMENT = PREPARE_QUERY("INSERT INTO _taskcomment(tcom_task, tcom_parent, tcom_comment) "
-										  "VALUES(:TaskID, :Parent, :Comment)");
+static QString QI_COMMENT = PREPARE_QUERY("INSERT INTO _taskcomment(tcom_owner, tcom_task, tcom_parent, tcom_comment) "
+										  "VALUES(:UserID, :TaskID, :Parent, :Comment)");
 //-----------------------------------------------------------------------------
 static QString QU_COMMENT = PREPARE_QUERY("UPDATE _taskcomment SET "
 										  "tcom_comment = :Comment "
@@ -544,6 +544,7 @@ void ISTaskViewForm::PasteClicked()
 		QByteArray ByteArray = ISGui::PixmapToByteArray(Pixmap);
 
 		ISQuery qInsertImage(QI_FILE);
+		qInsertImage.BindValue(":UserID", CURRENT_USER_ID);
 		qInsertImage.BindValue(":TaskID", TaskID);
 		qInsertImage.BindValue(":IsImage", true);
 		qInsertImage.BindValue(":Name", ImageName);
@@ -992,6 +993,7 @@ void ISTaskViewForm::FileAdd()
 				}
 
 				ISQuery qInsertFile(QI_FILE);
+				qInsertFile.BindValue(":UserID", CURRENT_USER_ID);
 				qInsertFile.BindValue(":TaskID", TaskID);
 				qInsertFile.BindValue(":IsImage", IsImage);
 				qInsertFile.BindValue(":Name", FileName);
@@ -1166,6 +1168,7 @@ void ISTaskViewForm::LinkAdd()
 			}
 
 			ISQuery qInsertLink(QI_LINK);
+			qInsertLink.BindValue(":UserID", CURRENT_USER_ID);
 			qInsertLink.BindValue(":CurrentTaskID", TaskID);
 			qInsertLink.BindValue(":LinkTaskID", LinkTaskID);
 			if (qInsertLink.Execute())
@@ -1329,6 +1332,7 @@ void ISTaskViewForm::CommentAdd()
 	if (!Comment.isEmpty())
 	{
 		ISQuery qInsertComment(QI_COMMENT);
+		qInsertComment.BindValue(":UserID", CURRENT_USER_ID);
 		qInsertComment.BindValue(":TaskID", TaskID);
 		qInsertComment.BindValue(":Parent", sender()->property("ParentID"));
 		qInsertComment.BindValue(":Comment", Comment);
