@@ -6,6 +6,7 @@
 #include "ISGui.h"
 #include "ISCalendarObjectForm.h"
 #include "ISQuery.h"
+#include "ISTcpQuery.h"
 #include "ISMessageBox.h"
 #include "ISCalendarEventForm.h"
 #include "ISInputDialog.h"
@@ -344,12 +345,16 @@ void ISCalendarForm::DeleteEvent(int CalendarID)
 {
 	if (ISMessageBox::ShowQuestion(CalendarPanel, LANG("Message.Question.DeleteCalendarEvent")))
 	{
-		ISQuery qDelete(QD_CALENDAR);
-		qDelete.BindValue(":CalendarID", CalendarID);
-		if (qDelete.Execute())
+		ISTcpQuery qCalendarDelete(API_CALENDAR_DELETE);
+		qCalendarDelete.BindValue("ID", CalendarID);
+		if (qCalendarDelete.Execute())
 		{
 			CalendarPanel->selectionChanged();
 			CalendarPanel->UpdateCells();
+		}
+		else
+		{
+			ISMessageBox::ShowCritical(this, qCalendarDelete.GetErrorString());
 		}
 	}
 }
