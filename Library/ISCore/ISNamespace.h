@@ -150,6 +150,7 @@ namespace ISNamespace
 		AMT_UserPasswordCreate, //Создание пароля пользователю
 		AMT_UserPasswordEdit, //Изменение пароля пользователя
 		AMT_UserPasswordReset, //Сброс пароля парользователя
+		AMT_UserSettingsReset, //Сброс пользовательских настроек
 		AMT_GetRecordCall, //Получить запись разговора
 		AMT_GetClients, //Получить список подключенных клиентов
 		AMT_RecordDelete, //Удаление записи
@@ -164,7 +165,7 @@ namespace ISNamespace
 		AMT_FileStorageGet, //Получить файл из хранилища
 		AMT_SearchTaskText, //Поиск задач по тексту
 		AMT_SearchTaskID, //Поиск задач по номеру
-		AMY_SearchFullText, //Полнотекстовый поиск
+		AMT_SearchFullText, //Полнотекстовый поиск
 	};
 };
 //-----------------------------------------------------------------------------

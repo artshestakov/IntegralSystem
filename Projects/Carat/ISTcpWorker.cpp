@@ -111,6 +111,11 @@ static QString QU_USER_HASH_RESET = PREPARE_QUERY("UPDATE _users SET "
 												  "usrs_salt = NULL "
 												  "WHERE usrs_id = :UserID");
 //-----------------------------------------------------------------------------
+static QString QU_USER_SETTINGS_RESET = PREPARE_QUERY("UPDATE _usersettings SET "
+													  "usst_value = (SELECT stgs_defaultvalue FROM _settings WHERE stgs_id = usst_setting) "
+													  "WHERE usst_user = :UserID "
+													  "RETURNING (SELECT stgs_uid FROM _settings WHERE stgs_id = usst_setting), usst_value");
+//-----------------------------------------------------------------------------
 static QString QS_ASTERISK_RECORD = PREPARE_QUERY("SELECT ascl_uniqueid "
 												  "FROM _asteriskcalls "
 												  "WHERE ascl_id = :RecordID");
@@ -357,6 +362,7 @@ void ISTcpWorker::Process()
 					case ISNamespace::AMT_UserPasswordCreate: Result = UserPasswordCreate(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_UserPasswordEdit: Result = UserPasswordEdit(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_UserPasswordReset: Result = UserPasswordReset(tcp_message, TcpAnswer); break;
+					case ISNamespace::AMT_UserSettingsReset: Result = UserSettingsReset(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_GetRecordCall: Result = GetRecordCall(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_GetClients: Result = GetClients(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_RecordDelete: Result = RecordDelete(tcp_message, TcpAnswer); break;
@@ -371,7 +377,9 @@ void ISTcpWorker::Process()
 					case ISNamespace::AMT_FileStorageGet: Result = FileStorageGet(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_SearchTaskText: Result = SearchTaskText(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_SearchTaskID: Result = SearchTaskID(tcp_message, TcpAnswer); break;
-					case ISNamespace::AMY_SearchFullText: Result = SearchFullText(tcp_message, TcpAnswer); break;
+					case ISNamespace::AMT_SearchFullText: Result = SearchFullText(tcp_message, TcpAnswer); break;
+					default:
+						ErrorString = LANG("Carat.Error.NotExistFunction").arg(tcp_message->TypeName);
 					}
 					PerfomanceMsec = ISAlgorithm::GetTickDiff(ISAlgorithm::GetTick(), TimePoint);
 				}
@@ -1451,6 +1459,28 @@ bool ISTcpWorker::UserPasswordReset(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAn
 
 	//Фиксируем изменение пароля
 	Protocol(UserID.toInt(), CONST_UID_PROTOCOL_USER_PASSWORD_RESET, "_Users", ISMetaData::Instance().GetMetaTable("_Users")->LocalListName, UserID);
+	return true;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::UserSettingsReset(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+	//Сбрасываем значения настроек в дефолтные
+	ISQuery qUpdate(ISDatabase::Instance().GetDB(DBConnectionName), QU_USER_SETTINGS_RESET);
+	qUpdate.BindValue(":UserID", TcpMessage->TcpSocket->GetUserID());
+	if (!qUpdate.Execute()) //Ошибка запроса
+	{
+		ErrorString = LANG("Carat.Error.Query.UserSettingsReset.Update").arg(qUpdate.GetErrorString());
+		return false;
+	}
+
+	//Обходим результат
+	QVariantMap ResultMap;
+	while (qUpdate.Next())
+	{
+		ResultMap[ISUuid(qUpdate.ReadColumn("stgs_uid"))] = qUpdate.ReadColumn("usst_value");
+	}
+	TcpAnswer->Parameters["Result"] = ResultMap;
+	Protocol(TcpMessage->TcpSocket->GetUserID(), CONST_UID_PROTOCOL_USER_SETTINGS_RESET, QVariant(), QVariant(), QVariant());
 	return true;
 }
 //-----------------------------------------------------------------------------

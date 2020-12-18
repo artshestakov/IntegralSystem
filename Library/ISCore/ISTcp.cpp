@@ -72,6 +72,10 @@ ISNamespace::ApiMessageType ISTcp::GetMessageTypeByName(const QString &Name)
 	{
 		return ISNamespace::AMT_UserPasswordReset;
 	}
+	else if (Name == API_USER_SETTINGS_RESET)
+	{
+		return ISNamespace::AMT_UserSettingsReset;
+	}
 	else if (Name == API_GET_RECORD_CALL)
 	{
 		return ISNamespace::AMT_GetRecordCall;
@@ -130,7 +134,7 @@ ISNamespace::ApiMessageType ISTcp::GetMessageTypeByName(const QString &Name)
 	}
 	else if (Name == API_SEARCH_FULL_TEXT)
 	{
-		return ISNamespace::AMY_SearchFullText;
+		return ISNamespace::AMT_SearchFullText;
 	}
 	return ISNamespace::AMT_Unknown;
 }

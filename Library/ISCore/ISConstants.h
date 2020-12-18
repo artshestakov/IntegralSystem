@@ -154,6 +154,7 @@ const char API_USER_PASSWORD_EXIST[] = "UserPasswordExist"; //Проверить существо
 const char API_USER_PASSWORD_CREATE[] = "UserPasswordCreate"; //Создание пароля пользователю
 const char API_USER_PASSWORD_EDIT[] = "UserPasswordEdit"; //Изменение пароля пользователя
 const char API_USER_PASSWORD_RESET[] = "UserPasswordReset"; //Сброс пароля пользователя
+const char API_USER_SETTINGS_RESET[] = "UserSettingsReset"; //Сброс пользовательских настроек
 const char API_GET_RECORD_CALL[] = "GetRecordCall"; //Получить запись разговора
 const char API_GET_CLIENTS[] = "GetClients"; //Получить список подключенных клиентов
 const char API_RECORD_DELETE[] = "RecordDelete"; //Удалить запись
@@ -170,7 +171,7 @@ const char API_SEARCH_TASK_TEXT[] = "SearchTaskText"; //Поиск задач по тексту
 const char API_SEARCH_TASK_ID[] = "SearchTaskID"; //Поиск задач по номеру
 const char API_SEARCH_FULL_TEXT[] = "SearchFullText"; //Полтекстовый поиск
 //CARAT_LOCAL_API--------------------------------------------------------------
-const char		CARAT_LOCAL_API_SHUTDOWN[] = "shutdown"; //Завершение работы
+const char	CARAT_LOCAL_API_SHUTDOWN[] = "shutdown"; //Завершение работы
 //-----------------------------------------------------------------------------
 const char CONST_UID_SETTINGS_DATABASE[] = "{1DE3449C-C700-4EFC-A455-E99E38063D9B}"; //Идентификатор настроек базы данных
 //-----------------------------------------------------------------------------
@@ -208,6 +209,7 @@ const char CONST_UID_PROTOCOL_DEL_ACCESS_TO_SPECIAL[] = "{4E7C34E5-C7FE-4C0D-BB4
 const char CONST_UID_PROTOCOL_USER_PASSWORD_CREATE[] = "{6DD00B13-2A69-45FD-B565-3142C2D2BA97}";
 const char CONST_UID_PROTOCOL_USER_PASSWORD_UPDATE[] = "{0EEE6D67-A0F3-4558-B7AD-173678A8C9DC}";
 const char CONST_UID_PROTOCOL_USER_PASSWORD_RESET[] = "{3B005C51-B44E-48C6-95F8-3AC6BD913BB3}";
+const char CONST_UID_PROTOCOL_USER_SETTINGS_RESET[] = "{075E58A5-5336-4A71-8D1D-91202173F4D4}";
 const char CONST_UID_PROTOCOL_FILE_STORAGE_ADD[] = "{7E9FF116-CF0A-4568-B048-7FAB8D773D57}";
 const char CONST_UID_PROTOCOL_FILE_STORAGE_COPY[] = "{5CB370B6-D1AA-4E40-83A9-AEAC7FEA65E2}";
 const char CONST_UID_PROTOCOL_FILE_STORAGE_SAVE[] = "{E73BEDC4-79FF-4B94-ACC9-2692E1927D18}";

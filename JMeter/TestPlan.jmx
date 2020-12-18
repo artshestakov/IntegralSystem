@@ -347,6 +347,13 @@ def MapUserPasswordReset =
 ];
 vars.put(&quot;QueryUserPasswordReset&quot;, MapToString(MapUserPasswordReset));
 
+//Сброс настроек пользователя
+def MapUserSettingsReset =
+[
+	Type: &quot;UserSettingsReset&quot;
+];
+vars.put(&quot;QueryUserSettingsReset&quot;, MapToString(MapUserSettingsReset));
+
 //Получение записи разговора
 def MapGetRecordCall =
 [
@@ -653,6 +660,18 @@ vars.put(&quot;QuerySearchFullText&quot;, MapToString(MapSearchFullText));</stri
           <stringProp name="ConfigTestElement.password"></stringProp>
         </TCPSampler>
         <hashTree/>
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: UserSettingsReset" enabled="true">
+          <stringProp name="TCPSampler.server"></stringProp>
+          <boolProp name="TCPSampler.reUseConnection">true</boolProp>
+          <stringProp name="TCPSampler.port"></stringProp>
+          <boolProp name="TCPSampler.nodelay">false</boolProp>
+          <stringProp name="TCPSampler.timeout"></stringProp>
+          <stringProp name="TCPSampler.request">${QueryUserSettingsReset}</stringProp>
+          <boolProp name="TCPSampler.closeConnection">true</boolProp>
+          <stringProp name="ConfigTestElement.username"></stringProp>
+          <stringProp name="ConfigTestElement.password"></stringProp>
+        </TCPSampler>
+        <hashTree/>
         <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: GetMetaData" enabled="false">
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
@@ -785,7 +804,7 @@ vars.put(&quot;QuerySearchFullText&quot;, MapToString(MapSearchFullText));</stri
           <stringProp name="ConfigTestElement.password"></stringProp>
         </TCPSampler>
         <hashTree/>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: SearchFullText" enabled="true">
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: SearchFullText" enabled="false">
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
           <stringProp name="TCPSampler.port"></stringProp>

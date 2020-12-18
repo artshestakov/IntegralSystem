@@ -11,6 +11,7 @@
   <Local Name="Carat.Error.InvalidMessage" Russian="Сообщение невалидное: %1"/>
   <Local Name="Carat.Error.InvalidMessageType" Russian="Тип сообщения &quot;%1&quot; не поддерживается."/>
   <Local Name="Carat.Error.NotAuthorized" Russian="Вы не авторизованы!"/>
+  <Local Name="Carat.Error.NotExistFunction" Russian="Функция-обработчик для сообщения &quot;%1&quot; не найдена."/>
   <Local Name="Carat.Error.FieldNotExist" Russian="Поле &quot;%1&quot; не указано."/>
   <Local Name="Carat.Error.FieldIsEmpty" Russian="Поле &quot;%1&quot; не заполнено."/>
   <Local Name="Carat.Error.CheckExistUserPassword" Russian="Не удалось проверить наличие пароля у пользователя: %1"/>
@@ -70,6 +71,8 @@
   <Local Name="Carat.Error.Query.UserLoginReset.UserIsSystem" Russian="Пользователь является системным, сброс пароля невозможен."/>
   <Local Name="Carat.Error.Query.UserLoginReset.PasswordIsNull" Russian="Пароль у пользователя не установлен, сброс пароля невозможен."/>
   <Local Name="Carat.Error.Query.UserLoginReset.Reset" Russian="Не удалось сбросить пароль пользователя."/>
+
+  <Local Name="Carat.Error.Query.UserSettingsReset.Update" Russian="Не удалось сбросить настройки: %1"/>
   
   <Local Name="Carat.Error.Query.GetRecordCall.RecordDirIsEmpty" Russian="На сервере не настроена директория хранения записей разговоров."/>
   <Local Name="Carat.Error.Query.GetRecordCall.SelectUniqueID" Russian="Не удалось получить уникальный идентификатор записи разговора: %1"/>

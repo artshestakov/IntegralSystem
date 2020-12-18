@@ -50,6 +50,7 @@
   <_ProtocolType IsSystem="true" UID="{6DD00B13-2A69-45FD-B565-3142C2D2BA97}" Name="Создание пароля"/>
   <_ProtocolType IsSystem="true" UID="{0EEE6D67-A0F3-4558-B7AD-173678A8C9DC}" Name="Изменение пароля"/>
   <_ProtocolType IsSystem="true" UID="{3B005C51-B44E-48C6-95F8-3AC6BD913BB3}" Name="Сброс пароля"/>
+  <_ProtocolType IsSystem="true" UID="{075E58A5-5336-4A71-8D1D-91202173F4D4}" Name="Сброс пользовательских настроек"/>
   <_ProtocolType IsSystem="true" UID="{7E9FF116-CF0A-4568-B048-7FAB8D773D57}" Name="Добавление файла в хранилище"/>
   <_ProtocolType IsSystem="true" UID="{5CB370B6-D1AA-4E40-83A9-AEAC7FEA65E2}" Name="Копирование файла в хранилище"/>
   <_ProtocolType IsSystem="true" UID="{E73BEDC4-79FF-4B94-ACC9-2692E1927D18}" Name="Сохранение файла из хранилища"/>
