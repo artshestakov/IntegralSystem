@@ -16,6 +16,7 @@
   <Local Name="Carat.Error.CheckExistUserPassword" Russian="Не удалось проверить наличие пароля у пользователя: %1"/>
   <Local Name="Carat.Error.UserNotExist" Russian="Пользователь с идентификатором %1 не существует."/>
   <Local Name="Carat.Error.CheckUserIsSystem" Russian="Не удалось проверить пользователя на системность: %1"/>
+  <Local Name="Carat.Error.GetObjectName" Russian="Не удалось получить имя объекта: %1"/>
   
   <!--Ошибки протокола-->
   <Local Name="Carat.Error.Query.Auth.AlreadyAuthorized" Russian="Вы уже авторизованы!"/>

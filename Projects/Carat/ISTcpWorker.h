@@ -38,7 +38,7 @@ private:
 	bool UserIsSystem(const QVariant &UserID, bool &IsSystem); //Проверка пользователя на системность
 	QString ConvertDateTimeToString(const QDateTime &DateTime, const QString &DateFormat, const QString &TimeFormat); //Конвертировать дату и время в строку
 	QString ConvertDateToString(const QDate &Date, const QString &DateFormat); //Конвертировать дату в строку
-	QString GetObjectName(PMetaTable *MetaTable, unsigned int ObjectID); //Получить наименование объекта
+	bool GetObjectName(PMetaTable *MetaTable, unsigned int ObjectID, QString &ObjectName); //Получить наименование объекта
 
 private:
 	bool Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);

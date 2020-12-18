@@ -517,17 +517,18 @@ QString ISTcpWorker::ConvertDateToString(const QDate &Date, const QString &DateF
 	return Result;
 }
 //-----------------------------------------------------------------------------
-QString ISTcpWorker::GetObjectName(PMetaTable *MetaTable, unsigned int ObjectID)
+bool ISTcpWorker::GetObjectName(PMetaTable *MetaTable, unsigned int ObjectID, QString &ObjectName)
 {
-	if (MetaTable->TitleName.isEmpty()) //Если TitleName у мета-таблицы не заполнен - возвращаем идентификатор объекта
+	//Если TitleName у мета-таблицы не заполнен - возвращаем идентификатор объекта
+	if (MetaTable->TitleName.isEmpty())
 	{
-		return QString::number(ObjectID);
+		ObjectName = QString::number(ObjectID);
+		return true;
 	}
 
-	QString ObjectName;
-	QStringList StringList = MetaTable->TitleName.split(';');
+	//Формируем запрос
 	QString QueryText = "SELECT ";
-
+	QStringList StringList = MetaTable->TitleName.split(';');
 	if (StringList.count() > 1) //Если имя объекта строится из нескольких полей
 	{
 		QueryText += "concat(";
@@ -548,28 +549,38 @@ QString ISTcpWorker::GetObjectName(PMetaTable *MetaTable, unsigned int ObjectID)
 			("(" + ISMetaDataHelper::GenerateSqlQueryFromTitleName(MetaForeign, MetaTable->Alias, MetaTable->TitleName) + ") \n") :
 			(MetaTable->Alias + '_' + MetaTable->TitleName + " \n");
 	}
-
 	QueryText += "FROM " + MetaTable->Name + " \n";
 	QueryText += "WHERE " + MetaTable->Alias + "_id = :ObjectID";
 
+	//Запрашиваем имя
 	ISQuery qSelectName(ISDatabase::Instance().GetDB(DBConnectionName), QueryText);
 	qSelectName.SetShowLongQuery(false);
 	qSelectName.BindValue(":ObjectID", ObjectID);
-	if (qSelectName.ExecuteFirst())
+	if (!qSelectName.Execute()) //Ошибка запроса
 	{
-		QVariant Value = qSelectName.ReadColumn(0);
-		switch (Value.type())
-		{
-		case QVariant::Date: ObjectName = Value.toDate().toString(FORMAT_DATE_V2); break;
-		case QVariant::Time: ObjectName = Value.toTime().toString(FORMAT_TIME_V1); break;
-		case QVariant::DateTime: ObjectName = Value.toDateTime().toString(FORMAT_DATE_TIME_V2); break;
-		default: ObjectName = qSelectName.ReadColumn(0).toString();
-		}
+		ErrorString = LANG("Carat.Error.GetObjectName").arg(qSelectName.GetErrorString());
+		return false;
+	}
+
+	if (!qSelectName.First()) //Запись не найдена
+	{
+		return true;
+	}
+	
+	//Анализируем
+	QVariant Value = qSelectName.ReadColumn(0);
+	switch (Value.type())
+	{
+	case QVariant::Date: ObjectName = Value.toDate().toString(FORMAT_DATE_V2); break;
+	case QVariant::Time: ObjectName = Value.toTime().toString(FORMAT_TIME_V1); break;
+	case QVariant::DateTime: ObjectName = Value.toDateTime().toString(FORMAT_DATE_TIME_V2); break;
+	default:
+		ObjectName = qSelectName.ReadColumn(0).toString();
 	}
 
 	//Удаляем возможные пробелы в конце имени объекта
 	ISAlgorithm::RemoveLastSymbolLoop(ObjectName, SYMBOL_SPACE);
-	return ObjectName;
+	return true;
 }
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
@@ -2198,11 +2209,19 @@ bool ISTcpWorker::SearchFullText(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
 	{
 		QVariant ID = qSelect.ReadColumn("id"),
 			TableName = qSelect.ReadColumn("table_name");
+
+		//Получаем имя объекта
+		QString ObjectName;
+		if (!GetObjectName(ISMetaData::Instance().GetMetaTable(TableName.toString()), ID.toUInt(), ObjectName))
+		{
+			return false;
+		}
+
 		ResultList.append(QVariantMap
 		{
 			{ "ID", ID },
 			{ "TableName", TableName },
-			{ "ObjectName", GetObjectName(ISMetaData::Instance().GetMetaTable(TableName.toString()), ID.toUInt()) }
+			{ "ObjectName", ObjectName }
 		});
 	}
 	TcpAnswer->Parameters["Result"] = ResultList;
