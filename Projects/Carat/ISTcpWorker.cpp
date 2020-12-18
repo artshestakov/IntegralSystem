@@ -414,11 +414,11 @@ void ISTcpWorker::Finish()
 	CRITICAL_SECTION_UNLOCK(&CriticalSection);
 }
 //-----------------------------------------------------------------------------
-QVariant ISTcpWorker::CheckNullField(const QString &FieldName, const QVariantMap &VariantMap)
+QVariant ISTcpWorker::CheckNullField(const QString &FieldName, ISTcpMessage *TcpMessage)
 {
-	if (VariantMap.contains(FieldName))
+	if (TcpMessage->Parameters.contains(FieldName))
 	{
-		QVariant Value = VariantMap[FieldName];
+		QVariant Value = TcpMessage->Parameters[FieldName];
 		if (!Value.toString().isEmpty())
 		{
 			return Value;
@@ -602,7 +602,7 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 		return false;
 	}
 
-	QVariant Hash = CheckNullField("Hash", TcpMessage->Parameters);
+	QVariant Hash = CheckNullField("Hash", TcpMessage);
 	if (!Hash.isValid())
 	{
 		return false;
@@ -793,7 +793,7 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 bool ISTcpWorker::Sleep(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
 	Q_UNUSED(TcpAnswer);
-	QVariant Timeout = CheckNullField("Timeout", TcpMessage->Parameters);
+	QVariant Timeout = CheckNullField("Timeout", TcpMessage);
 	if (!Timeout.isValid())
 	{
 		return false;
@@ -1266,7 +1266,7 @@ bool ISTcpWorker::GetLastClient(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::UserPasswordExist(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
-	QVariant UserID = CheckNullField("UserID", TcpMessage->Parameters);
+	QVariant UserID = CheckNullField("UserID", TcpMessage);
 	if (!UserID.isValid())
 	{
 		return false;
@@ -1286,8 +1286,8 @@ bool ISTcpWorker::UserPasswordCreate(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpA
 {
 	Q_UNUSED(TcpAnswer);
 
-	QVariant UserID = CheckNullField("UserID", TcpMessage->Parameters),
-		Hash = CheckNullField("Hash", TcpMessage->Parameters);
+	QVariant UserID = CheckNullField("UserID", TcpMessage),
+		Hash = CheckNullField("Hash", TcpMessage);
 	if (!Hash.isValid() || !UserID.isValid())
 	{
 		return false;
@@ -1347,9 +1347,9 @@ bool ISTcpWorker::UserPasswordEdit(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAns
 {
 	Q_UNUSED(TcpAnswer);
 
-	QVariant UserID = CheckNullField("UserID", TcpMessage->Parameters),
-		HashOld = CheckNullField("HashOld", TcpMessage->Parameters), //Старый пароль
-		Hash = CheckNullField("Hash", TcpMessage->Parameters); //Новый пароль
+	QVariant UserID = CheckNullField("UserID", TcpMessage),
+		HashOld = CheckNullField("HashOld", TcpMessage), //Старый пароль
+		Hash = CheckNullField("Hash", TcpMessage); //Новый пароль
 	if (!UserID.isValid() || !HashOld.isValid() || !Hash.isValid())
 	{
 		return false;
@@ -1408,7 +1408,7 @@ bool ISTcpWorker::UserPasswordReset(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAn
 {
 	Q_UNUSED(TcpAnswer);
 
-	QVariant UserID = CheckNullField("UserID", TcpMessage->Parameters);
+	QVariant UserID = CheckNullField("UserID", TcpMessage);
 	if (!UserID.isValid())
 	{
 		return false;
@@ -1464,7 +1464,7 @@ bool ISTcpWorker::GetRecordCall(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer
 		return false;
 	}
 
-	QVariant RecordID = CheckNullField("RecordID", TcpMessage->Parameters);
+	QVariant RecordID = CheckNullField("RecordID", TcpMessage);
 	if (!RecordID.isValid())
 	{
 		return false;
@@ -1552,7 +1552,7 @@ bool ISTcpWorker::RecordDelete(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
 	Q_UNUSED(TcpAnswer);
 
-	QVariant TableName = CheckNullField("TableName", TcpMessage->Parameters);
+	QVariant TableName = CheckNullField("TableName", TcpMessage);
 	if (!TableName.isValid())
 	{
 		return false;
@@ -1629,9 +1629,9 @@ bool ISTcpWorker::RecordDelete(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::DiscussionAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
-	QVariant TableName = CheckNullField("TableName", TcpMessage->Parameters),
-		ObjectID = CheckNullField("ObjectID", TcpMessage->Parameters),
-		Message = CheckNullField("Message", TcpMessage->Parameters);
+	QVariant TableName = CheckNullField("TableName", TcpMessage),
+		ObjectID = CheckNullField("ObjectID", TcpMessage),
+		Message = CheckNullField("Message", TcpMessage);
 	if (!TableName.isValid() || !ObjectID.isValid() || !Message.isValid())
 	{
 		return false;
@@ -1661,8 +1661,8 @@ bool ISTcpWorker::DiscussionEdit(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
 {
 	Q_UNUSED(TcpAnswer);
 
-	QVariant DiscussionID = CheckNullField("ID", TcpMessage->Parameters),
-		Message = CheckNullField("Message", TcpMessage->Parameters);
+	QVariant DiscussionID = CheckNullField("ID", TcpMessage),
+		Message = CheckNullField("Message", TcpMessage);
 	if (!DiscussionID.isValid() || !Message.isValid())
 	{
 		return false;
@@ -1681,7 +1681,7 @@ bool ISTcpWorker::DiscussionEdit(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::DiscussionCopy(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
-	QVariant DiscussionID = CheckNullField("ID", TcpMessage->Parameters);
+	QVariant DiscussionID = CheckNullField("ID", TcpMessage);
 	if (!DiscussionID.isValid())
 	{
 		return false;
@@ -1706,7 +1706,7 @@ bool ISTcpWorker::DiscussionCopy(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
-	QVariant TableName = CheckNullField("TableName", TcpMessage->Parameters);
+	QVariant TableName = CheckNullField("TableName", TcpMessage);
 	if (!TableName.isValid())
 	{
 		return false;
@@ -1890,8 +1890,8 @@ bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::NoteRecordGet(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
-	QVariant TableName = CheckNullField("TableName", TcpMessage->Parameters),
-		ObjectID = CheckNullField("ObjectID", TcpMessage->Parameters);
+	QVariant TableName = CheckNullField("TableName", TcpMessage),
+		ObjectID = CheckNullField("ObjectID", TcpMessage);
 	if (!TableName.isValid() || !ObjectID.isValid())
 	{
 		return false;
@@ -1931,8 +1931,8 @@ bool ISTcpWorker::NoteRecordSet(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer
 {
 	Q_UNUSED(TcpAnswer);
 
-	QVariant TableName = CheckNullField("TableName", TcpMessage->Parameters),
-		ObjectID = CheckNullField("ObjectID", TcpMessage->Parameters);
+	QVariant TableName = CheckNullField("TableName", TcpMessage),
+		ObjectID = CheckNullField("ObjectID", TcpMessage);
 	if (!TableName.isValid() || !ObjectID.isValid())
 	{
 		return false;
@@ -2000,8 +2000,8 @@ bool ISTcpWorker::FileStorageAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
 {
 	Q_UNUSED(TcpAnswer);
 
-	QVariant FileName = CheckNullField("FileName", TcpMessage->Parameters),
-		Data = CheckNullField("Data", TcpMessage->Parameters);
+	QVariant FileName = CheckNullField("FileName", TcpMessage),
+		Data = CheckNullField("Data", TcpMessage);
 	if (!FileName.isValid())
 	{
 		return false;
@@ -2038,8 +2038,8 @@ bool ISTcpWorker::FileStorageAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::FileStorageCopy(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
-	QVariant ID = CheckNullField("ID", TcpMessage->Parameters),
-		Name = CheckNullField("Name", TcpMessage->Parameters);
+	QVariant ID = CheckNullField("ID", TcpMessage),
+		Name = CheckNullField("Name", TcpMessage);
 	if (!ID.isValid() || !Name.isValid())
 	{
 		return false;
@@ -2073,7 +2073,7 @@ bool ISTcpWorker::FileStorageCopy(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnsw
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::FileStorageGet(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
-	QVariant ID = CheckNullField("ID", TcpMessage->Parameters);
+	QVariant ID = CheckNullField("ID", TcpMessage);
 	if (!ID.isValid())
 	{
 		return false;
@@ -2101,7 +2101,7 @@ bool ISTcpWorker::FileStorageGet(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::SearchTaskText(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
-	QVariant Value = CheckNullField("Value", TcpMessage->Parameters);
+	QVariant Value = CheckNullField("Value", TcpMessage);
 	if (!Value.isValid())
 	{
 		return false;
@@ -2135,7 +2135,7 @@ bool ISTcpWorker::SearchTaskText(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::SearchTaskID(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
-	QVariant ID = CheckNullField("ID", TcpMessage->Parameters);
+	QVariant ID = CheckNullField("ID", TcpMessage);
 	if (!ID.isValid())
 	{
 		return false;
@@ -2162,7 +2162,7 @@ bool ISTcpWorker::SearchTaskID(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::SearchFullText(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
-	QVariant Value = CheckNullField("Value", TcpMessage->Parameters);
+	QVariant Value = CheckNullField("Value", TcpMessage);
 	if (!Value.isValid())
 	{
 		return false;
