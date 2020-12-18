@@ -224,7 +224,7 @@ static QString QS_TASK_SEARCH_ID = PREPARE_QUERY("SELECT (COUNT(*) > 0)::BOOLEAN
 												 "FROM _task "
 												 "WHERE task_id = :ID");
 //-----------------------------------------------------------------------------
-static QString QS_CALENDAR_EVENTS = PREPARE_QUERY("SELECT EXTRACT(DAY FROM cldr_date) AS day, cldr_timealert, cldr_name, cldr_text, cldr_closed "
+static QString QS_CALENDAR_EVENTS = PREPARE_QUERY("SELECT cldr_id, EXTRACT(DAY FROM cldr_date) AS day, cldr_timealert, cldr_name, cldr_text, cldr_closed "
 												  "FROM _calendar "
 												  "WHERE cldr_user = :UserID "
 												  "AND cldr_date "
@@ -2300,6 +2300,7 @@ bool ISTcpWorker::GetCalendarEvents(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAn
 	{
 		ResultList.append(QVariantMap
 		{
+			{ "ID", qSelect.ReadColumn("cldr_id") },
 			{ "Day", qSelect.ReadColumn("day") },
 			{ "TimeAlert", qSelect.ReadColumn("cldr_timealert").toTime().toString(FORMAT_TIME_V3) },
 			{ "Name", qSelect.ReadColumn("cldr_name") },
