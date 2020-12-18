@@ -276,9 +276,6 @@
     <ClCompile Include="ISInternalDirectoriesForm.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
-    <ClCompile Include="ISKnowledgeBaseSubSystem.cpp">
-      <Filter>Forms</Filter>
-    </ClCompile>
     <ClCompile Include="ISMainWindow.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
@@ -600,9 +597,6 @@
       <Filter>Forms</Filter>
     </QtMoc>
     <QtMoc Include="ISInternalDirectoriesForm.h">
-      <Filter>Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISKnowledgeBaseSubSystem.h">
       <Filter>Forms</Filter>
     </QtMoc>
     <QtMoc Include="ISMainWindow.h">

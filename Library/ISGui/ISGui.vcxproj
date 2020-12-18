@@ -228,7 +228,6 @@
     <ClCompile Include="ISInterfaceForm.cpp" />
     <ClCompile Include="ISInterfaceMetaForm.cpp" />
     <ClCompile Include="ISInternalDirectoriesForm.cpp" />
-    <ClCompile Include="ISKnowledgeBaseSubSystem.cpp" />
     <ClCompile Include="ISLabels.cpp" />
     <ClCompile Include="ISListBaseForm.cpp" />
     <ClCompile Include="ISListIndicatorWidget.cpp" />
@@ -379,7 +378,6 @@
     <QtMoc Include="ISHistoryForm.h" />
     <QtMoc Include="ISImageViewerForm.h" />
     <QtMoc Include="ISInternalDirectoriesForm.h" />
-    <QtMoc Include="ISKnowledgeBaseSubSystem.h" />
     <QtMoc Include="ISMainWindow.h" />
     <QtMoc Include="ISMonitorActivityForm.h" />
     <QtMoc Include="ISParagraphBaseForm.h" />

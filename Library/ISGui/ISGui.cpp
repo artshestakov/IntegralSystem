@@ -39,7 +39,6 @@
 #include "ISUserGroupListForm.h"
 #include "ISMonitorActivityForm.h"
 #include "ISFullTextSearchForm.h"
-#include "ISKnowledgeBaseSubSystem.h"
 #include "ISSettingsDatabaseListForm.h"
 #include "ISTaskObjectForm.h"
 #include "ISAsteriskCallsListForm.h"
@@ -644,7 +643,6 @@ void ISGui::RegisterMetaType()
 	qRegisterMetaType<ISUserGroupListForm*>("ISUserGroupListForm");
 	qRegisterMetaType<ISMonitorActivityForm*>("ISMonitorActivityForm");
 	qRegisterMetaType<ISFullTextSearchForm*>("ISFullTextSearchForm");
-	qRegisterMetaType<ISKnowledgeBaseSubSystem*>("ISKnowledgeBaseSubSystem");
 	qRegisterMetaType<ISSettingsDatabaseListForm*>("ISSettingsDatabaseListForm");
 	qRegisterMetaType<ISTaskObjectForm*>("ISTaskObjectForm");
 	qRegisterMetaType<ISAsteriskCallsListForm*>("ISAsteriskCallsListForm");
