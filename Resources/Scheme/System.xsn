@@ -318,18 +318,4 @@
     </Indexes>
   </Table>
 
-  <Table Name="_FullSearchTextHistory" UID="{429C3330-5CEB-4374-97B1-D876621F0624}" Alias="fsth" LocalName="История полнотекстового поиска" LocalListName="История полнотекстового поиска" TitleName="Value" IsSystem="true">
-    <Fields>
-      <Field UID="{425EE1ED-CEFA-4DA4-903F-7D58542E0139}" Name="User" Type="BigInt" LabelName="Пользователь" LocalListName="Пользователь" NotNull="true"/>
-      <Field UID="{921A3977-DE7E-4CB1-A251-045A89A71958}" Name="Value" Type="String" LabelName="Поисковое значение" LocalListName="Поисковое значение" NotNull="true"/>
-    </Fields>
-    <Indexes>
-      <Index Field="User"/>
-      <Index Field="Value"/>
-    </Indexes>
-    <Foreigns>
-      <Foreign Field="User" ForeignClass="_Users" ForeignField="ID" ForeignViewNameField="FIO"/>
-    </Foreigns>
-  </Table>
-
 </XSN>

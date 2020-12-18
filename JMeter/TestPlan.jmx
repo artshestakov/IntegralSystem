@@ -213,7 +213,7 @@
           </elementProp>
           <elementProp name="SearchFullText_Value" elementType="Argument">
             <stringProp name="Argument.name">SearchFullText_Value</stringProp>
-            <stringProp name="Argument.value">петров</stringProp>
+            <stringProp name="Argument.value">test</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
         </collectionProp>

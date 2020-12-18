@@ -2158,7 +2158,7 @@ bool ISTcpWorker::SearchFullText(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
 	}
 
 	//Формируем запрос
-	QString SqlText;
+	QString SqlText = "WITH r AS \n(\n";
 	for (PMetaTable *MetaTable : ISMetaData::Instance().GetTables()) //Обходим все таблицы
 	{
 		SqlText += "SELECT " + MetaTable->Alias + "_id AS id, '" + MetaTable->Name + "' AS table_name \n";
@@ -2166,8 +2166,7 @@ bool ISTcpWorker::SearchFullText(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
 		SqlText += "WHERE lower(concat(";
 		for (PMetaField *MetaField : MetaTable->Fields) //Обходим поля конкретной таблицы
 		{
-			//Если поле является первичным ключом или виртуальным - пропускаем его
-			if (MetaField->PrimaryKey || !MetaField->QueryText.isEmpty())
+			if (MetaField->IsSystem || !MetaField->QueryText.isEmpty()) //Если поле является системным - пропускаем его
 			{
 				continue;
 			}
@@ -2178,6 +2177,10 @@ bool ISTcpWorker::SearchFullText(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
 		SqlText += "UNION \n";
 	}
 	SqlText.chop(8);
+	SqlText += " \n) \n";
+	SqlText += "SELECT * \n";
+	SqlText += "FROM r \n";
+	SqlText += "ORDER BY table_name, id";
 
 	//Выполняем запрос
 	ISQuery qSelect(ISDatabase::Instance().GetDB(DBConnectionName), SqlText);
@@ -2190,14 +2193,19 @@ bool ISTcpWorker::SearchFullText(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
 	}
 
 	//Анализируем ответ
-	QVariantMap ResultMap;
+	QVariantList ResultList;
 	while (qSelect.Next())
 	{
-		QVariant ID = qSelect.ReadColumn("id");
-		ResultMap[ID.toString()] = GetObjectName(
-			ISMetaData::Instance().GetMetaTable(qSelect.ReadColumn("table_name").toString()), ID.toUInt());
+		QVariant ID = qSelect.ReadColumn("id"),
+			TableName = qSelect.ReadColumn("table_name");
+		ResultList.append(QVariantMap
+		{
+			{ "ID", ID },
+			{ "TableName", TableName },
+			{ "ObjectName", GetObjectName(ISMetaData::Instance().GetMetaTable(TableName.toString()), ID.toUInt()) }
+		});
 	}
-	TcpAnswer->Parameters["Result"] = ResultMap;
+	TcpAnswer->Parameters["Result"] = ResultList;
 	Protocol(TcpMessage->TcpSocket->GetUserID(), CONST_UID_PROTOCOL_SEARCH_FULL_TEXT, QVariant(), QVariant(), QVariant(), Value);
 	return true;
 }

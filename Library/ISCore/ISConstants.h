@@ -97,7 +97,6 @@ const char SYMBOL_SPECIAL_ARRAY[] = "!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~";
 //DATABASE_CONNECTIONS---------------------------------------------------------
 const char CONNECTION_DEFAULT[] = "DefaultDB";
 const char CONNECTION_SYSTEM[] = "SystemDB";
-const char CONNECTION_FULL_TEXT_SEARCH[] = "FullTextSearchDB";
 const char CONNECTION_QUERY_POOL[] = "QueryPoolDB";
 const char CONNECTION_ASTERISK[] = "AsteriskDB";
 //-----------------------------------------------------------------------------
