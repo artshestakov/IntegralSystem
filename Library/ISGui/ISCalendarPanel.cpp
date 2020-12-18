@@ -1,26 +1,17 @@
 #include "ISCalendarPanel.h"
 #include "ISDefinesGui.h"
 #include "ISBuffer.h"
-#include "ISQuery.h"
-#include "ISGui.h"
-#include "ISMetaUser.h"
+#include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
-static QString QS_CALENDAR = PREPARE_QUERY("SELECT COUNT(*) "
-										   "FROM _calendar "
-										   "WHERE cldr_user = :UserID "
-										   "AND cldr_date = :Date");
-//-----------------------------------------------------------------------------
-ISCalendarPanel::ISCalendarPanel(QWidget *parent) : ISCalendarWidget(parent)
+ISCalendarPanel::ISCalendarPanel(QWidget *parent)
+	: ISCalendarWidget(parent),
+	PixmapIndicator(BUFFER_ICONS("CalendarMain.Indicator").pixmap(ISDefines::Gui::SIZE_45_45))
 {
-	PixmapIndicator = BUFFER_ICONS("CalendarMain.Indicator").pixmap(ISDefines::Gui::SIZE_45_45);
-
 	setHorizontalHeaderFormat(QCalendarWidget::LongDayNames);
 	setFont(ISDefines::Gui::FONT_TAHOMA_14);
 	GetNavigationBar()->setMinimumHeight(GetNavigationBar()->height() * 1.5);
 	GetButtonPrevMonth()->setIconSize(GetButtonPrevMonth()->iconSize() * 1.5);
 	GetButtonNextMonth()->setIconSize(GetButtonNextMonth()->iconSize() * 1.5);
-
-	connect(this, &ISCalendarWidget::currentPageChanged, this, &ISCalendarPanel::CurrentPageChanged);
 }
 //-----------------------------------------------------------------------------
 ISCalendarPanel::~ISCalendarPanel()
@@ -28,9 +19,10 @@ ISCalendarPanel::~ISCalendarPanel()
 
 }
 //-----------------------------------------------------------------------------
-void ISCalendarPanel::UpdateCells()
+void ISCalendarPanel::SetDays(const ISVectorUInt &days)
 {
-	currentPageChanged(selectedDate().year(), selectedDate().month());
+	Days = days;
+	repaint();
 }
 //-----------------------------------------------------------------------------
 void ISCalendarPanel::paintCell(QPainter *Painter, const QRect &Rect, const QDate &Date) const
@@ -68,7 +60,7 @@ void ISCalendarPanel::paintCell(QPainter *Painter, const QRect &Rect, const QDat
 		PointIndicator = QPoint(Rect.x() + 3, Rect.y() + 3);
 	}
 
-	if (DaysEvent.contains(Date))
+	if (ISAlgorithm::VectorContains(Days, (unsigned int)Date.day()))
 	{
 		Painter->drawPixmap(PointIndicator, PixmapIndicator);
 	}
@@ -77,31 +69,5 @@ void ISCalendarPanel::paintCell(QPainter *Painter, const QRect &Rect, const QDat
 	QString DayString = QString::number(Date.day());
 	Painter->drawText(RectText, DayString);
 	Painter->restore();
-}
-//-----------------------------------------------------------------------------
-void ISCalendarPanel::CurrentPageChanged(int Year, int Month)
-{
-	ISGui::SetWaitGlobalCursor(true);
-	DaysEvent.clear();
-
-	QDate Date(Year, Month, 1);
-	for (int i = 0; i < Date.daysInMonth(); ++i)
-	{
-		QDate DateEvent(Year, Month, i + 1);
-
-		ISQuery qSelect(QS_CALENDAR);
-		qSelect.BindValue(":UserID", CURRENT_USER_ID);
-		qSelect.BindValue(":Date", DateEvent);
-		if (qSelect.ExecuteFirst())
-		{
-			int Count = qSelect.ReadColumn("count").toInt();
-			if (Count)
-			{
-				DaysEvent.insert(DateEvent, Count);
-			}
-		}
-	}
-
-	ISGui::SetWaitGlobalCursor(false);
 }
 //-----------------------------------------------------------------------------

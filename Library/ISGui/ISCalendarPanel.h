@@ -1,7 +1,7 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "StdAfx.h"
 #include "ISCalendarWidget.h"
+#include "ISTypedefs.h"
 //-----------------------------------------------------------------------------
 class ISCalendarPanel : public ISCalendarWidget
 {
@@ -11,14 +11,14 @@ public:
 	ISCalendarPanel(QWidget *parent = 0);
 	virtual ~ISCalendarPanel();
 
-	void UpdateCells();
+	void SetDays(const ISVectorUInt &days);
 
 protected:
 	void paintCell(QPainter *Painter, const QRect &Rect, const QDate &Date) const;
 	void CurrentPageChanged(int Year, int Month);
 
 private:
-	QMap<QDate, int> DaysEvent; //Список дат, по которым числятся события
+	ISVectorUInt Days;
 	QPixmap PixmapIndicator;
 };
 //-----------------------------------------------------------------------------

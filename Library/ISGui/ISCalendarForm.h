@@ -19,6 +19,7 @@ public:
 
 protected:
 	void ShowOverdueEvents(); //Показ просроченных событий
+	void ReloadEvents(int Year, int Month); //Загрузка событий на месяц
 	void SelectedDateChanged(); //Событие смены выбранной даты
 
 	void Create(); //Создание нового события календаря
@@ -43,6 +44,10 @@ protected:
 	void ShowEventForm(int CalendarID);
 
 private:
+	bool FirstUpdate;
+	std::map<unsigned int, QVariantList> EventsMap;
+
+private:
 	QHBoxLayout *MainLayout;
 	
 	ISCalendarPanel *CalendarPanel;
@@ -62,6 +67,5 @@ private:
 	ISLineEdit *EditSearch;
 	QGroupBox *GroupBox;
 	ISCalendarEventsWidget *ListWidget;
-	bool FirstUpdate;
 };
 //-----------------------------------------------------------------------------

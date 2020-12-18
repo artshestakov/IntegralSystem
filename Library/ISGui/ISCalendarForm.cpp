@@ -14,15 +14,6 @@
 #include "ISDefinesGui.h"
 #include "ISMetaUser.h"
 //-----------------------------------------------------------------------------
-static QString QS_CALENDAR = PREPARE_QUERY("SELECT cldr_id, cldr_date, cldr_timealert, cldr_name, cldr_text, cldr_closed "
-										   "FROM _calendar "
-										   "WHERE cldr_user = :UserID "
-										   "AND cldr_date = :Date "
-										   "ORDER BY cldr_id DESC");
-//-----------------------------------------------------------------------------
-static QString QD_CALENDAR = PREPARE_QUERY("DELETE FROM _calendar "
-										   "WHERE cldr_id = :CalendarID");
-//-----------------------------------------------------------------------------
 static QString QS_CALENDAR_OVERDUE = PREPARE_QUERY("SELECT cldr_id "
 												   "FROM _calendar "
 												   "WHERE cldr_user = :UserID "
@@ -106,6 +97,7 @@ ISCalendarForm::ISCalendarForm(QWidget *parent)
 
 	CalendarPanel = new ISCalendarPanel(this);
 	connect(CalendarPanel, &ISCalendarPanel::selectionChanged, this, &ISCalendarForm::SelectedDateChanged);
+	connect(CalendarPanel, &ISCalendarPanel::currentPageChanged, this, &ISCalendarForm::ReloadEvents);
 	LayoutCentral->addWidget(CalendarPanel);
 
 	QVBoxLayout *LayoutRight = new QVBoxLayout();
@@ -117,18 +109,22 @@ ISCalendarForm::ISCalendarForm(QWidget *parent)
 	LayoutSelectedDate->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_NULL);
 	LayoutRight->addLayout(LayoutSelectedDate);
 
-	LabelDayNumber = new QLabel(Panel);
+	QDate CurrentDate = QDate::currentDate();
+
+	LabelDayNumber = new QLabel(QString::number(CurrentDate.day()), Panel);
 	LabelDayNumber->setFont(ISDefines::Gui::FONT_TAHOMA_35);
 	LayoutSelectedDate->addWidget(LabelDayNumber, 0, Qt::AlignVCenter);
 
 	QVBoxLayout *LayoutSelectedDateRight = new QVBoxLayout();
 	LayoutSelectedDate->addLayout(LayoutSelectedDateRight);
 
-	LabelDayName = new QLabel(this);
+	LabelDayName = new QLabel(CurrentDate == QDate::currentDate() ?
+		QString("%1 (%2)").arg(CurrentDate.longDayName(CurrentDate.dayOfWeek())).arg(LANG("Today")) :
+		CurrentDate.longDayName(CurrentDate.dayOfWeek()), this);
 	LabelDayName->setFont(ISDefines::Gui::FONT_TAHOMA_18);
 	LayoutSelectedDateRight->addWidget(LabelDayName);
 
-	LabelMonthYear = new QLabel(this);
+	LabelMonthYear = new QLabel(QString("%1 %2").arg(CurrentDate.longMonthName(CurrentDate.month())).arg(CurrentDate.year()), this);
 	LabelMonthYear->setFont(ISDefines::Gui::FONT_TAHOMA_12);
 	LayoutSelectedDateRight->addWidget(LabelMonthYear);
 
@@ -170,11 +166,10 @@ ISCalendarForm::~ISCalendarForm()
 void ISCalendarForm::Invoke()
 {
 	ISParagraphBaseForm::Invoke();
-	CalendarPanel->selectionChanged();
-
 	if (!FirstUpdate)
 	{
-		CalendarPanel->UpdateCells();
+		QDate CurrentDate = QDate::currentDate();
+		ReloadEvents(CurrentDate.year(), CurrentDate.month());
 		FirstUpdate = true;
 	}
 }
@@ -192,10 +187,31 @@ void ISCalendarForm::ShowOverdueEvents()
 	}
 }
 //-----------------------------------------------------------------------------
+void ISCalendarForm::ReloadEvents(int Year, int Month)
+{
+	ISTcpQuery qGetCalendarEvents(API_GET_CALENDAR_EVENTS);
+	qGetCalendarEvents.BindValue("Month", Month);
+	qGetCalendarEvents.BindValue("Year", Year);
+	if (qGetCalendarEvents.Execute())
+	{
+		EventsMap.clear();
+		QVariantList Result = qGetCalendarEvents.TakeAnswer()["Result"].toList();
+		for (const QVariant &Variant : Result)
+		{
+			QVariantMap EventMap = Variant.toMap();
+			unsigned int Day = EventMap.take("Day").toUInt();
+			EventsMap[Day].append(EventMap);
+		}
+		CalendarPanel->SetDays(ISAlgorithm::ConvertMapToKeys(EventsMap));
+	}
+	else
+	{
+		ISMessageBox::ShowCritical(this, qGetCalendarEvents.GetErrorString());
+	}
+}
+//-----------------------------------------------------------------------------
 void ISCalendarForm::SelectedDateChanged()
 {
-	ISGui::SetWaitGlobalCursor(true);
-
 	QDate Date = CalendarPanel->selectedDate();
 	LabelDayNumber->setText(QString::number(Date.day()));
 	LabelDayName->setText(Date == QDate::currentDate() ? QString("%1 (%2)").arg(Date.longDayName(Date.dayOfWeek())).arg(LANG("Today")) : Date.longDayName(Date.dayOfWeek()));
@@ -203,25 +219,17 @@ void ISCalendarForm::SelectedDateChanged()
 	EditSearch->Clear();
 	ListWidget->Clear();
 
-	ISQuery qSelect(QS_CALENDAR);
-	qSelect.BindValue(":UserID", CURRENT_USER_ID);
-	qSelect.BindValue(":Date", Date);
-	if (qSelect.Execute())
+	//ѕолучаем список событий за выбранный день
+	QVariantList VariantList = EventsMap[Date.day()];
+	for (const QVariant &Variant : VariantList)
 	{
-		while (qSelect.Next())
-		{
-			int ID = qSelect.ReadColumn("cldr_id").toInt();
-			QTime TimeAlert = qSelect.ReadColumn("cldr_timealert").toTime();
-			QString Name = qSelect.ReadColumn("cldr_name").toString();
-			QString Text = qSelect.ReadColumn("cldr_text").toString();
-			bool Closed = qSelect.ReadColumn("cldr_closed").toBool();
-
-			AddEventItem(ID, Name, Text, TimeAlert, Closed);
-		}
+		QVariantMap EventMap = Variant.toMap();
+		AddEventItem(EventMap["ID"].toInt(),
+			EventMap["Name"].toString(),
+			EventMap["Text"].toString(),
+			QTime::fromString(EventMap["TimeAlert"].toString(), FORMAT_TIME_V3),
+			EventMap["Closed"].toBool());
 	}
-
-	GroupBox->setTitle(LANG("CalendarForm.Events"));
-	ISGui::SetWaitGlobalCursor(false);
 }
 //-----------------------------------------------------------------------------
 void ISCalendarForm::Create()
@@ -230,7 +238,6 @@ void ISCalendarForm::Create()
 	CalendarObjectForm->SetFieldValue("User", CURRENT_USER_ID);
 	CalendarObjectForm->SetFieldValue("Date", CalendarPanel->selectedDate());
 	connect(CalendarObjectForm, &ISCalendarObjectForm::UpdateList, this, &ISCalendarForm::SelectedDateChanged);
-	connect(CalendarObjectForm, &ISCalendarObjectForm::UpdateList, CalendarPanel, &ISCalendarPanel::UpdateCells);
 	ISGui::ShowObjectForm(CalendarObjectForm);
 }
 //-----------------------------------------------------------------------------
@@ -284,7 +291,6 @@ void ISCalendarForm::CloseEvent()
 			if (ISCore::CalendarCloseEvent(EventItem->GetCalendarID()))
 			{
 				CalendarPanel->selectionChanged();
-				CalendarPanel->UpdateCells();
 			}
 		}
 	}
@@ -337,7 +343,6 @@ void ISCalendarForm::EditEvent(int CalendarID)
 {
 	ISCalendarObjectForm *CalendarObjectForm = dynamic_cast<ISCalendarObjectForm*>(ISGui::CreateObjectForm(ISNamespace::OFT_Edit, "_Calendar", CalendarID));
 	connect(CalendarObjectForm, &ISCalendarObjectForm::UpdateList, this, &ISCalendarForm::SelectedDateChanged);
-	connect(CalendarObjectForm, &ISCalendarObjectForm::UpdateList, CalendarPanel, &ISCalendarPanel::UpdateCells);
 	ISGui::ShowObjectForm(CalendarObjectForm);
 }
 //-----------------------------------------------------------------------------
@@ -350,7 +355,6 @@ void ISCalendarForm::DeleteEvent(int CalendarID)
 		if (qCalendarDelete.Execute())
 		{
 			CalendarPanel->selectionChanged();
-			CalendarPanel->UpdateCells();
 		}
 		else
 		{
