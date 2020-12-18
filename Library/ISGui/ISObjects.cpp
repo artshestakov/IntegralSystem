@@ -2,7 +2,6 @@
 #include "ISAssert.h"
 #include "ISSystem.h"
 #include "ISConstants.h"
-#include "ISQuery.h"
 #include "ISMetaDataHelper.h"
 #include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------

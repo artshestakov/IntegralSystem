@@ -6,7 +6,6 @@
 #include "ISMessageBox.h"
 #include "ISFileDialog.h"
 #include "ISButtons.h"
-#include "ISQuery.h"
 #include "ISVersionInfo.h"
 #include "ISConstants.h"
 #include "ISObjects.h"

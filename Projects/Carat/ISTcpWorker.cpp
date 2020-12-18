@@ -134,16 +134,16 @@ static QString QS_CLIENT = PREPARE_QUERY("SELECT usrs_fio "
 										 "FROM _users "
 										 "WHERE usrs_id = :UserID");
 //-----------------------------------------------------------------------------
-static QString QI_DISCUSSION = PREPARE_QUERY("INSERT INTO _discussion(dson_tablename, dson_objectid, dson_message) "
-											 "VALUES(:TableName, :ObjectID, :Message) "
+static QString QI_DISCUSSION = PREPARE_QUERY("INSERT INTO _discussion(dson_user, dson_tablename, dson_objectid, dson_message) "
+											 "VALUES(:UserID, :TableName, :ObjectID, :Message) "
 											 "RETURNING dson_id");
 //-----------------------------------------------------------------------------
 static QString QU_DISCUSSION = PREPARE_QUERY("UPDATE _discussion SET "
 											 "dson_message = :Message "
 											 "WHERE dson_id = :DiscussionID");
 //-----------------------------------------------------------------------------
-static QString QI_DISCUSSION_COPY = PREPARE_QUERY("INSERT INTO _discussion(dson_tablename, dson_objectid, dson_message) "
-												  "SELECT dson_tablename, dson_objectid, dson_message "
+static QString QI_DISCUSSION_COPY = PREPARE_QUERY("INSERT INTO _discussion(dson_user, dson_tablename, dson_objectid, dson_message) "
+												  "SELECT dson_user, dson_tablename, dson_objectid, dson_message "
 												  "FROM _discussion "
 												  "WHERE dson_id = :DiscussionID "
 												  "RETURNING dson_id");
@@ -1638,6 +1638,7 @@ bool ISTcpWorker::DiscussionAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer
 	}
 
 	ISQuery qInsert(ISDatabase::Instance().GetDB(DBConnectionName), QI_DISCUSSION);
+	qInsert.BindValue(":UserID", TcpMessage->TcpSocket->GetUserID());
 	qInsert.BindValue(":TableName", TableName);
 	qInsert.BindValue(":ObjectID", ObjectID);
 	qInsert.BindValue(":Message", Message);

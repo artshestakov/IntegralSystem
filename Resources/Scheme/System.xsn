@@ -117,17 +117,17 @@
 
   <Table Name="_Discussion" UID="{40A4BD67-DA00-4443-831A-D41B6B3FC415}" Alias="dson" LocalName="Обсуждение" LocalListName="Обсуждения" TitleName="Message" IsSystem="true">
     <Fields>
-      <Field UID="{969E2A77-691F-4E12-9095-2C9BB933739B}" Name="TableName" Type="String" LabelName="Имя таблицы" LocalListName="Имя таблицы" NotSearch="true" NotNull="true" HideFromList="true"/>
-      <Field UID="{32684211-638E-4EC7-A107-043D8DB16793}" Name="ObjectID" Type="Int" LabelName="Идентификатор объекта" LocalListName="Идентификатор объекта" NotSearch="true" NotNull="true" HideFromList="true"/>
       <Field UID="{3B2191E4-3555-4D83-A90D-A5065EC7EB8F}" Name="User" Type="BigInt" LabelName="Оставил примечание" LocalListName="Оставил примечание" NotNull="true"/>
       <Field UID="{FBE8C2AF-4F28-4CAF-9912-5D32FFB5EB13}" Name="DateTime" Type="DateTime" DefaultValue="now()" LabelNane="Дата и время" LocalListName="Дата и время" NotNull="true"/>
+      <Field UID="{969E2A77-691F-4E12-9095-2C9BB933739B}" Name="TableName" Type="String" LabelName="Имя таблицы" LocalListName="Имя таблицы" NotSearch="true" NotNull="true" HideFromList="true"/>
+      <Field UID="{32684211-638E-4EC7-A107-043D8DB16793}" Name="ObjectID" Type="Int" LabelName="Идентификатор объекта" LocalListName="Идентификатор объекта" NotSearch="true" NotNull="true" HideFromList="true"/>
       <Field UID="{04D790CB-F34A-4367-A1C8-2DFA28F01A7A}" Name="Message" Type="Text" LabelName="Сообщение" LocalListName="Сообщение" NotNull="true" PlaceholderText="Что Вы хотите сказать?"/>
     </Fields>
     <Indexes>
-      <Index Field="TableName"/>
-      <Index Field="ObjectID"/>
       <Index Field="User"/>
       <Index Field="DateTime"/>
+      <Index Field="TableName"/>
+      <Index Field="ObjectID"/>
       <Index Field="Message"/>
     </Indexes>
     <Foreigns>

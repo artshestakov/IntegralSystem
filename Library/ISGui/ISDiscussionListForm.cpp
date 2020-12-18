@@ -1,16 +1,8 @@
 #include "ISDiscussionListForm.h"
-#include "ISQuery.h"
+#include "ISTcpQuery.h"
 #include "ISInputDialog.h"
 #include "ISLocalization.h"
 #include "ISMessageBox.h"
-//-----------------------------------------------------------------------------
-static QString QI_DISCUSSION = PREPARE_QUERY("INSERT INTO _discussion(dson_tablename, dson_objectid, dson_message) "
-											  "VALUES(:TableName, :ObjectID, :Message) "
-											  "RETURNING dson_id");
-//-----------------------------------------------------------------------------
-static QString QU_DISCUSSION = PREPARE_QUERY("UPDATE _discussion SET "
-											 "dson_message = :Message "
-											 "WHERE dson_id = :DiscussionID");
 //-----------------------------------------------------------------------------
 ISDiscussionListForm::ISDiscussionListForm(QWidget *parent) : ISListBaseForm("_Discussion", parent)
 {
@@ -40,18 +32,18 @@ void ISDiscussionListForm::Create()
 	QString Message = ISInputDialog::GetText(LANG("Discussion"), LANG("WhatDoYouWantToSay"), QVariant(), Ok);
 	if (Ok && !Message.isEmpty())
 	{
-		ISQuery qInsert(QI_DISCUSSION);
-		qInsert.BindValue(":TableName", GetParentTableName());
-		qInsert.BindValue(":ObjectID", GetParentObjectID());
-		qInsert.BindValue(":Message", Message);
-		if (qInsert.ExecuteFirst())
+		ISTcpQuery qDiscussionAdd(API_DISCUSSION_ADD);
+		qDiscussionAdd.BindValue("TableName", GetParentTableName());
+		qDiscussionAdd.BindValue("ObjectID", GetParentObjectID());
+		qDiscussionAdd.BindValue("Message", Message);
+		if (qDiscussionAdd.Execute())
 		{
-			SetSelectObjectAfterUpdate(qInsert.ReadColumn("dson_id").toInt());
+			SetSelectObjectAfterUpdate(qDiscussionAdd.GetAnswer()["ID"].toUInt());
 			Update();
 		}
 		else
 		{
-			ISMessageBox::ShowCritical(this, qInsert.GetErrorString());
+			ISMessageBox::ShowCritical(this, qDiscussionAdd.GetErrorString());
 		}
 	}
 }
@@ -60,18 +52,16 @@ void ISDiscussionListForm::CreateCopy()
 {
 	if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.CopyDiscussion")))
 	{
-		ISQuery qInsert(QI_DISCUSSION);
-		qInsert.BindValue(":TableName", GetParentTableName());
-		qInsert.BindValue(":ObjectID", GetParentObjectID());
-		qInsert.BindValue(":Message", GetCurrentRecordValue("Message"));
-		if (qInsert.ExecuteFirst())
+		ISTcpQuery qDiscussionCopy(API_DISCUSSION_COPY);
+		qDiscussionCopy.BindValue("ID", GetObjectID());
+		if (qDiscussionCopy.Execute())
 		{
-			SetSelectObjectAfterUpdate(qInsert.ReadColumn("dson_id").toInt());
+			SetSelectObjectAfterUpdate(qDiscussionCopy.GetAnswer()["ID"].toUInt());
 			Update();
 		}
 		else
 		{
-			ISMessageBox::ShowCritical(this, qInsert.GetErrorString());
+			ISMessageBox::ShowCritical(this, qDiscussionCopy.GetErrorString());
 		}
 	}
 }
@@ -85,17 +75,17 @@ void ISDiscussionListForm::Edit()
 	QString NewMessage = ISInputDialog::GetText(LANG("Discussion"), LANG("WhatDoYouWantToSay"), Message, Ok);
 	if (Ok && !NewMessage.isEmpty() && NewMessage != Message)
 	{
-		ISQuery qUpdate(QU_DISCUSSION);
-		qUpdate.BindValue(":Message", NewMessage);
-		qUpdate.BindValue(":DiscussionID", DiscussionID);
-		if (qUpdate.Execute())
+		ISTcpQuery qDiscussionEdit(API_DISCUSSION_EDIT);
+		qDiscussionEdit.BindValue("ID", GetObjectID());
+		qDiscussionEdit.BindValue("Message", NewMessage);
+		if (qDiscussionEdit.Execute())
 		{
 			SetSelectObjectAfterUpdate(DiscussionID);
 			Update();
 		}
 		else
 		{
-			ISMessageBox::ShowCritical(this, qUpdate.GetErrorString());
+			ISMessageBox::ShowCritical(this, qDiscussionEdit.GetErrorString());
 		}
 	}
 }
