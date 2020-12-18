@@ -1111,7 +1111,7 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 						{ "UID", SettingUID },
 						{ "Name", qSelectSettingUser.ReadColumn("stgs_name") },
 						{ "Type", qSelectSettingUser.ReadColumn("stgs_type") },
-						{ "WidgetEdit", qSelectSettingUser.ReadColumn("stgs_widgeteditname") },
+						{ "WidgetEditName", qSelectSettingUser.ReadColumn("stgs_widgeteditname") },
 						{ "Local", qSelectSettingUser.ReadColumn("stgs_localname") },
 						{ "Hint", qSelectSettingUser.ReadColumn("stgs_hint") },
 						{ "Default", SettingDefault }
