@@ -65,6 +65,7 @@ private:
 	bool SearchTaskText(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
 	bool SearchTaskID(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
 	bool SearchFullText(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
+	bool CalendarDelete(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
 
 private:
     QString ErrorString; //Текстовое описание ошибки запроса

@@ -136,6 +136,10 @@ ISNamespace::ApiMessageType ISTcp::GetMessageTypeByName(const QString &Name)
 	{
 		return ISNamespace::AMT_SearchFullText;
 	}
+	else if (Name == API_CALENDAR_DELETE)
+	{
+		return ISNamespace::AMT_CalendarDelete;
+	}
 	return ISNamespace::AMT_Unknown;
 }
 //-----------------------------------------------------------------------------

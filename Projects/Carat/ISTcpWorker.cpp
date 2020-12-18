@@ -224,6 +224,10 @@ static QString QS_TASK_SEARCH_ID = PREPARE_QUERY("SELECT (COUNT(*) > 0)::BOOLEAN
 												 "FROM _task "
 												 "WHERE task_id = :ID");
 //-----------------------------------------------------------------------------
+static QString QD_CALENDAR = PREPARE_QUERY("DELETE FROM _calendar "
+										   "WHERE cldr_id = :ObjectID "
+										   "RETURNING cldr_name");
+//-----------------------------------------------------------------------------
 ISTcpWorker::ISTcpWorker(const QString &db_host, int db_port, const QString &db_name, const QString &db_user, const QString &db_password)
 	: QObject(),
 	ErrorString(NO_ERROR_STRING),
@@ -378,6 +382,7 @@ void ISTcpWorker::Process()
 					case ISNamespace::AMT_SearchTaskText: Result = SearchTaskText(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_SearchTaskID: Result = SearchTaskID(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_SearchFullText: Result = SearchFullText(tcp_message, TcpAnswer); break;
+					case ISNamespace::AMT_CalendarDelete: Result = CalendarDelete(tcp_message, TcpAnswer); break;
 					default:
 						ErrorString = LANG("Carat.Error.NotExistFunction").arg(tcp_message->TypeName);
 					}
@@ -2257,6 +2262,41 @@ bool ISTcpWorker::SearchFullText(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
 	}
 	TcpAnswer->Parameters["Result"] = ResultList;
 	Protocol(TcpMessage->TcpSocket->GetUserID(), CONST_UID_PROTOCOL_SEARCH_FULL_TEXT, QVariant(), QVariant(), QVariant(), Value);
+	return true;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::CalendarDelete(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+	Q_UNUSED(TcpAnswer);
+	
+	QVariant ID = CheckNullField("ID", TcpMessage);
+	if (!ID.isValid())
+	{
+		return false;
+	}
+
+	//Удаляем событие
+	ISQuery qDelete(ISDatabase::Instance().GetDB(DBConnectionName), QD_CALENDAR);
+	qDelete.BindValue(":ObjectID", ID);
+	if (!qDelete.Execute()) //Ошибка запроса
+	{
+		ErrorString = LANG("Carat.Error.Query.CalendarDelete.Delete").arg(qDelete.GetErrorString());
+		return false;
+	}
+
+	//Если ни одна запись не была удалена - значит такой записи нет - ошибка
+	if (qDelete.GetCountAffected() == 0)
+	{
+		ErrorString = LANG("Carat.Error.Query.CalendarDelete.NotExist").arg(ID.toInt());
+		return false;
+	}
+
+	if (!qDelete.First())
+	{
+		ErrorString = qDelete.GetErrorString();
+		return false;
+	}
+	Protocol(TcpMessage->TcpSocket->GetUserID(), CONST_UID_PROTOCOL_CALENDAR_DELETE, QVariant(), QVariant(), QVariant(), qDelete.ReadColumn("cldr_name"));
 	return true;
 }
 //-----------------------------------------------------------------------------
