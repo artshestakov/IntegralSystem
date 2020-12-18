@@ -224,6 +224,14 @@ static QString QS_TASK_SEARCH_ID = PREPARE_QUERY("SELECT (COUNT(*) > 0)::BOOLEAN
 												 "FROM _task "
 												 "WHERE task_id = :ID");
 //-----------------------------------------------------------------------------
+static QString QS_CALENDAR_EVENTS = PREPARE_QUERY("SELECT EXTRACT(DAY FROM cldr_date) AS day, cldr_timealert, cldr_name, cldr_text, cldr_closed "
+												  "FROM _calendar "
+												  "WHERE cldr_user = :UserID "
+												  "AND cldr_date "
+												  "BETWEEN to_timestamp('01' || to_char(:Month::INTEGER, '09') || :Year, 'DDMMYYYY')::DATE "
+												  "AND to_timestamp('01' || to_char(:Month::INTEGER, '09') || :Year, 'DDMMYYYY')::DATE + INTERVAL '1 MONTH - 1 day' "
+												  "ORDER BY cldr_date, cldr_timealert");
+//-----------------------------------------------------------------------------
 static QString QD_CALENDAR = PREPARE_QUERY("DELETE FROM _calendar "
 										   "WHERE cldr_id = :ObjectID "
 										   "RETURNING cldr_name");
@@ -382,6 +390,7 @@ void ISTcpWorker::Process()
 					case ISNamespace::AMT_SearchTaskText: Result = SearchTaskText(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_SearchTaskID: Result = SearchTaskID(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_SearchFullText: Result = SearchFullText(tcp_message, TcpAnswer); break;
+					case ISNamespace::AMT_GetCalendarEvents: Result = GetCalendarEvents(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_CalendarDelete: Result = CalendarDelete(tcp_message, TcpAnswer); break;
 					default:
 						ErrorString = LANG("Carat.Error.NotExistFunction").arg(tcp_message->TypeName);
@@ -2262,6 +2271,43 @@ bool ISTcpWorker::SearchFullText(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
 	}
 	TcpAnswer->Parameters["Result"] = ResultList;
 	Protocol(TcpMessage->TcpSocket->GetUserID(), CONST_UID_PROTOCOL_SEARCH_FULL_TEXT, QVariant(), QVariant(), QVariant(), Value);
+	return true;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::GetCalendarEvents(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+	QVariant Month = CheckNullField("Month", TcpMessage),
+		Year = CheckNullField("Year", TcpMessage);
+	if (!Month.isValid() || !Year.isValid())
+	{
+		return false;
+	}
+
+	//Запрашиваем события
+	ISQuery qSelect(ISDatabase::Instance().GetDB(DBConnectionName), QS_CALENDAR_EVENTS);
+	qSelect.BindValue(":UserID", TcpMessage->TcpSocket->GetUserID());
+	qSelect.BindValue(":Month", Month);
+	qSelect.BindValue(":Year", Year);
+	if (!qSelect.Execute()) //Ошибка запроса
+	{
+		ErrorString = LANG("Carat.Error.Query.GetCalendarEvents.Select").arg(qSelect.GetErrorString());
+		return false;
+	}
+
+	//Обходим результаты
+	QVariantList ResultList;
+	while (qSelect.Next())
+	{
+		ResultList.append(QVariantMap
+		{
+			{ "Day", qSelect.ReadColumn("day") },
+			{ "TimeAlert", qSelect.ReadColumn("cldr_timealert").toTime().toString(FORMAT_TIME_V3) },
+			{ "Name", qSelect.ReadColumn("cldr_name") },
+			{ "Text", qSelect.ReadColumn("cldr_text") },
+			{ "Closed", qSelect.ReadColumn("cldr_closed") }
+		});
+	}
+	TcpAnswer->Parameters["Result"] = ResultList;
 	return true;
 }
 //-----------------------------------------------------------------------------

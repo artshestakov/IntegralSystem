@@ -36,7 +36,6 @@ void ISCalendarPanel::UpdateCells()
 void ISCalendarPanel::paintCell(QPainter *Painter, const QRect &Rect, const QDate &Date) const
 {
 	Painter->save();
-
 	if (Date == QDate::currentDate()) //Если рисуется текущая дата
 	{
 		if (Date == selectedDate())
@@ -51,17 +50,11 @@ void ISCalendarPanel::paintCell(QPainter *Painter, const QRect &Rect, const QDat
 	}
 	else
 	{
-		if (Date == selectedDate()) //Если рисуется выделенная пользоваелем дата
-		{
-			Painter->fillRect(Rect, ISDefines::Gui::COLOR_CALENDAR_SELECTED_DATE_BACKGROUND); //Заполнение фона
-		}
-		else
-		{
-			Painter->fillRect(Rect, Qt::white); //Заполнение фона
-		}
+		//Если рисуется выделенная пользоваелем дата - заполняем фон одним цветом, иначе - другим
+		Painter->fillRect(Rect, Date == selectedDate() ? ISDefines::Gui::COLOR_CALENDAR_SELECTED_DATE_BACKGROUND : Qt::white);
 	}
 
-	if (Date.month() != monthShown()) //Если рисуется дни НЕ ТЕКУЩЕГО месяца
+	if (Date.month() != monthShown()) //Если рисуются дни НЕ ТЕКУЩЕГО месяца
 	{
 		Painter->fillRect(Rect, ISDefines::Gui::COLOR_CAALENDAR_DAY_NOT_CURRENT_MONTH); //Заполнение фона
 	}
@@ -80,11 +73,9 @@ void ISCalendarPanel::paintCell(QPainter *Painter, const QRect &Rect, const QDat
 		Painter->drawPixmap(PointIndicator, PixmapIndicator);
 	}
 
-	char Buffer[3] = { 0 };
-	_itoa(Date.day(), &Buffer[0], 10);
-
 	//Рисование текста с датой
-	Painter->drawText(RectText, Buffer);
+	QString DayString = QString::number(Date.day());
+	Painter->drawText(RectText, DayString);
 	Painter->restore();
 }
 //-----------------------------------------------------------------------------

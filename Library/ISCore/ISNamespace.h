@@ -166,6 +166,7 @@ namespace ISNamespace
 		AMT_SearchTaskText, //Поиск задач по тексту
 		AMT_SearchTaskID, //Поиск задач по номеру
 		AMT_SearchFullText, //Полнотекстовый поиск
+		AMT_GetCalendarEvents, //Получить события календаря
 		AMT_CalendarDelete, //Удаление события календаря
 	};
 };

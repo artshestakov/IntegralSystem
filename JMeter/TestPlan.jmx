@@ -221,6 +221,16 @@
             <stringProp name="Argument.value">3</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
+          <elementProp name="GetCalendarEvents_Month" elementType="Argument">
+            <stringProp name="Argument.name">GetCalendarEvents_Month</stringProp>
+            <stringProp name="Argument.value">1</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="GetCalendarEvents_Year" elementType="Argument">
+            <stringProp name="Argument.name">GetCalendarEvents_Year</stringProp>
+            <stringProp name="Argument.value">2021</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
         </collectionProp>
       </Arguments>
       <hashTree/>
@@ -531,6 +541,18 @@ def MapSearchFullText =
 ];
 vars.put(&quot;QuerySearchFullText&quot;, MapToString(MapSearchFullText));
 
+//Получение событий календаря
+def MapGetCalendarEvents =
+[
+	Type: &quot;GetCalendarEvents&quot;,
+	Parameters:
+		[
+			Month: vars.get(&quot;GetCalendarEvents_Month&quot;),
+			Year: vars.get(&quot;GetCalendarEvents_Year&quot;)
+		]
+];
+vars.put(&quot;QueryGetCalendarEvents&quot;, MapToString(MapGetCalendarEvents));
+
 //Удаление события календаря
 def MapCalendarDelete =
 [
@@ -832,7 +854,19 @@ vars.put(&quot;QueryCalendarDelete&quot;, MapToString(MapCalendarDelete));</stri
           <stringProp name="ConfigTestElement.password"></stringProp>
         </TCPSampler>
         <hashTree/>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: CalendarDelete" enabled="true">
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: GetCalendarEvents" enabled="true">
+          <stringProp name="TCPSampler.server"></stringProp>
+          <boolProp name="TCPSampler.reUseConnection">true</boolProp>
+          <stringProp name="TCPSampler.port"></stringProp>
+          <boolProp name="TCPSampler.nodelay">false</boolProp>
+          <stringProp name="TCPSampler.timeout"></stringProp>
+          <stringProp name="TCPSampler.request">${QueryGetCalendarEvents}</stringProp>
+          <boolProp name="TCPSampler.closeConnection">true</boolProp>
+          <stringProp name="ConfigTestElement.username"></stringProp>
+          <stringProp name="ConfigTestElement.password"></stringProp>
+        </TCPSampler>
+        <hashTree/>
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: CalendarDelete" enabled="false">
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
           <stringProp name="TCPSampler.port"></stringProp>

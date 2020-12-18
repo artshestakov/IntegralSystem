@@ -125,6 +125,8 @@
 
   <Local Name="Carat.Error.Query.SearchFullText.Select" Russian="Не удалось выполнить поисковый запрос: %1"/>
 
+  <Local Name="Carat.Error.Query.GetCalendarEvents.Select" Russian="Не удалось получить события календаря: %1"/>
+
   <Local Name="Carat.Error.Query.CalendarDelete.Delete" Russian="Не удалось удалить событие календаря: %1"/>
   <Local Name="Carat.Error.Query.CalendarDelete.NotExist" Russian="Событие с идентификатором &quot;%1&quot; не существует."/>
 

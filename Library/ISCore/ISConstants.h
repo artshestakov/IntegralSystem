@@ -170,6 +170,7 @@ const char API_FILE_STORAGE_GET[] = "FileStorageGet"; //Получить файл из хранили
 const char API_SEARCH_TASK_TEXT[] = "SearchTaskText"; //Поиск задач по тексту
 const char API_SEARCH_TASK_ID[] = "SearchTaskID"; //Поиск задач по номеру
 const char API_SEARCH_FULL_TEXT[] = "SearchFullText"; //Полтекстовый поиск
+const char API_GET_CALENDAR_EVENTS[] = "GetCalendarEvents"; //Получить события календаря
 const char API_CALENDAR_DELETE[] = "CalendarDelete"; //Удаление события календаря
 //CARAT_LOCAL_API--------------------------------------------------------------
 const char	CARAT_LOCAL_API_SHUTDOWN[] = "shutdown"; //Завершение работы
