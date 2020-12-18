@@ -41,7 +41,7 @@ public:
 	static void ExitApplication(); //Выход из программы
 
 	//Календарь
-	static int CalendarInsert(const QDateTime &DateTime, const QString &Name, const QVariant &Text, const QString &TableName = QString(), int ObjectID = 0);
+	static int CalendarInsert(const QDateTime &DateTime, const QString &Name, const QVariant &Text);
 
 	static ISFieldEditBase* CreateColumnForField(QWidget *ParentWidget, PMetaField *MetaField);
 	static ISFieldEditBase* CreateColumnForField(QWidget *ParentWidget, ISNamespace::FieldType DataType, const QString &ControlWidget = QString());

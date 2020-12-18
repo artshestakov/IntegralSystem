@@ -194,14 +194,12 @@
 
   <Table Name="_Calendar" UID="{D5E4684A-569B-4567-B94A-0C94E5656AFF}" Alias="cldr" LocalName="Событие календаря" LocalListName="События календаря" ObjectForm="ISCalendarObjectForm" TitleName="Name" IsSystem="true">
     <Fields>
-      <Field UID="{33421A8E-8155-46E2-85E1-631AE802023A}" Name="User" Type="BigInt" LabelName="Пользователь" LocalListName="Пользователь" NotNull="true"/>
+      <Field UID="{33421A8E-8155-46E2-85E1-631AE802023A}" Name="User" Type="BigInt" ReadOnly="true" LabelName="Пользователь" LocalListName="Пользователь" NotNull="true"/>
       <Field UID="{7A51954F-3824-46E0-BCDF-CCEB4BB9F078}" Name="Date" Type="Date" LabelName="Дата" LocalListName="Дата" NotNull="true"/>
       <Field UID="{D3C94B05-BC05-4F3F-95CE-CE8B0A420614}" Name="TimeAlert" Type="Time" LabelName="Время уведомления" LocalListName="Время уведомления" NotNull="true"/>
       <Field UID="{25B75ECE-DE5E-4952-A290-7E581576C924}" Name="Name" Type="String" LabelName="Название события" LocalListName="Название события" NotNull="true"/>
       <Field UID="{97110CE7-6D68-41E1-BD46-303FE1759A9E}" Name="Text" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
       <Field UID="{088B15C9-2728-4595-9AB4-908F28A3D11B}" Name="Closed" Type="Bool" DefaultValue="false" LabelName="Закрыто" LocalListName="Закрыто" HideFromObject="true"/>
-      <Field UID="{59AA391F-9227-4060-B515-024CA9331114}" Name="TableName" Type="String" LabelName="Таблица" LocalListName="Таблица" HideFromObject="true"/>
-      <Field UID="{CCFFEFC9-FF08-489F-989C-ACD5BD1060E7}" Name="ObjectID" Type="Int" LabelName="Идентификатор объекта" LocalListName="Идентификатор объекта" HideFromObject="true"/>
     </Fields>
     <Indexes>
       <Index Field="User"/>
@@ -210,8 +208,6 @@
       <Index Field="Name"/>
       <Index Field="Text"/>
       <Index Field="Closed"/>
-      <Index Field="TableName"/>
-      <Index Field="ObjectID"/>
       <Index Field="Closed;Date;TimeAlert"/>
     </Indexes>
     <Foreigns>

@@ -226,7 +226,8 @@ void ISCalendarForm::SelectedDateChanged()
 void ISCalendarForm::Create()
 {
 	ISCalendarObjectForm *CalendarObjectForm = dynamic_cast<ISCalendarObjectForm*>(ISGui::CreateObjectForm(ISNamespace::OFT_New, "_Calendar"));
-	CalendarObjectForm->SetDate(CalendarPanel->selectedDate());
+	CalendarObjectForm->SetFieldValue("User", CURRENT_USER_ID);
+	CalendarObjectForm->SetFieldValue("Date", CalendarPanel->selectedDate());
 	connect(CalendarObjectForm, &ISCalendarObjectForm::UpdateList, this, &ISCalendarForm::SelectedDateChanged);
 	connect(CalendarObjectForm, &ISCalendarObjectForm::UpdateList, CalendarPanel, &ISCalendarPanel::UpdateCells);
 	ISGui::ShowObjectForm(CalendarObjectForm);

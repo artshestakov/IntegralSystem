@@ -408,9 +408,9 @@ void ISGui::ExitApplication()
 	qApp->closeAllWindows();
 }
 //-----------------------------------------------------------------------------
-int ISGui::CalendarInsert(const QDateTime &DateTime, const QString &Name, const QVariant &Text, const QString &TableName, int ObjectID)
+int ISGui::CalendarInsert(const QDateTime &DateTime, const QString &Name, const QVariant &Text)
 {
-	int CalendarID = ISCore::CalendarInsert(DateTime, Name, Text, TableName, ObjectID);
+	int CalendarID = ISCore::CalendarInsert(DateTime, Name, Text);
 	if (CalendarID)
 	{
 		ISPopupMessage::ShowNotification(LANG("NotifyInsertedDone").arg(Name));

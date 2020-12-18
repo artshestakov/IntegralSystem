@@ -9,26 +9,11 @@ ISCalendarObjectForm::ISCalendarObjectForm(ISNamespace::ObjectFormType form_type
 	SetVisibleNavigationBar(false);
 	SetVisibleFavorites(false);
 	SetVisibleDelete(false);
-
-	if (GetFieldValue("TableName").isValid())
-	{
-		QAction *ActionCard = new QAction(this);
-		ActionCard->setText(LANG("Card"));
-		ActionCard->setToolTip(LANG("Card"));
-		ActionCard->setIcon(BUFFER_ICONS("Document"));
-		connect(ActionCard, &QAction::triggered, this, &ISCalendarObjectForm::OpenCard);
-		AddActionToolBar(ActionCard);
-	}
 }
 //-----------------------------------------------------------------------------
 ISCalendarObjectForm::~ISCalendarObjectForm()
 {
 
-}
-//-----------------------------------------------------------------------------
-void ISCalendarObjectForm::SetDate(const QDate &Date)
-{
-	GetFieldWidget("Date")->SetValue(Date);
 }
 //-----------------------------------------------------------------------------
 bool ISCalendarObjectForm::Save()
@@ -69,10 +54,5 @@ void ISCalendarObjectForm::AfterShowEvent()
 void ISCalendarObjectForm::EscapeClicked()
 {
 	close();
-}
-//-----------------------------------------------------------------------------
-void ISCalendarObjectForm::OpenCard()
-{
-	ISGui::ShowObjectForm(ISGui::CreateObjectForm(ISNamespace::OFT_Edit, GetFieldValue("TableName").toString(), GetFieldValue("ObjectID").toInt()));
 }
 //-----------------------------------------------------------------------------

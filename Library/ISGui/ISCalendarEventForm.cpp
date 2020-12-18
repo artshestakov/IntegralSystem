@@ -12,7 +12,7 @@
 #include "ISAssert.h"
 #include "ISCore.h"
 //-----------------------------------------------------------------------------
-static QString QS_CALENDAR = PREPARE_QUERY("SELECT cldr_date, cldr_timealert, cldr_name, cldr_text, cldr_tablename, cldr_objectid "
+static QString QS_CALENDAR = PREPARE_QUERY("SELECT cldr_date, cldr_timealert, cldr_name, cldr_text "
 										   "FROM _calendar "
 										   "WHERE cldr_id = :CalendarID");
 //-----------------------------------------------------------------------------
@@ -35,8 +35,6 @@ ISCalendarEventForm::ISCalendarEventForm(int calendar_id, QWidget *parent) : ISI
 	QTime EventTimeAlert = qSelectEvent.ReadColumn("cldr_timealert").toTime();
 	QString EventName = qSelectEvent.ReadColumn("cldr_name").toString();
 	QString EventText = qSelectEvent.ReadColumn("cldr_text").toString();
-	TableName = qSelectEvent.ReadColumn("cldr_tablename").toString();
-	ObjectID = qSelectEvent.ReadColumn("cldr_objectid").toInt();
 
 	setWindowTitle(LANG("Reminder"));
 	setWindowIcon(BUFFER_ICONS("Bell"));
@@ -113,16 +111,7 @@ ISCalendarEventForm::ISCalendarEventForm(int calendar_id, QWidget *parent) : ISI
 	connect(ButtonDefer, &ISPushButton::clicked, this, &ISCalendarEventForm::Defer);
 	LayoutBottom->addWidget(ButtonDefer);
 
-	if (TableName.length()) //Если таблица была указана
-	{
-		ISPushButton *ButtonCard = new ISPushButton(this);
-		ButtonCard->setText(LANG("Card"));
-		ButtonCard->setIcon(BUFFER_ICONS("Document"));
-		connect(ButtonCard, &ISPushButton::clicked, this, &ISCalendarEventForm::OpenCard);
-		LayoutBottom->addWidget(ButtonCard);
-	}
-
-	LayoutBottom->addStretch();
+		LayoutBottom->addStretch();
 
 	ISPushButton *ButtonClose = new ISPushButton(BUFFER_ICONS("Close"), LANG("CalendarCloseEvent"), this);
 	connect(ButtonClose, &ISPushButton::clicked, this, &ISCalendarEventForm::EventClose);
@@ -193,11 +182,6 @@ void ISCalendarEventForm::Defer()
 	}
 
 	ISGui::SetWaitGlobalCursor(false);
-}
-//-----------------------------------------------------------------------------
-void ISCalendarEventForm::OpenCard()
-{
-	ISGui::ShowObjectForm(ISGui::CreateObjectForm(ISNamespace::OFT_Edit, TableName, ObjectID));
 }
 //-----------------------------------------------------------------------------
 void ISCalendarEventForm::EventClose()

@@ -21,13 +21,10 @@ protected:
 
 private:
 	void Defer();
-	void OpenCard();
 	void EventClose(); //Завершение события
 
 private:
 	int CalendarID;
-	QString TableName;
-	int ObjectID;
 
 	ISComboTimeEdit *ComboEdit;
 

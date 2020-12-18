@@ -283,7 +283,6 @@
   <Local Name="SelectAllFields" Russian="Выбрать все поля"/>
   <Local Name="DeselectAllFields" Russian="Снять выбор со всех полей"/>
   <Local Name="User" Russian="Пользователь"/>
-  <Local Name="Card" Russian="Карточка"/>
   <Local Name="CloseCard" Russian="Закрыть карточку"/>
   <Local Name="AllTabs" Russian="Все вкладки"/>
   <Local Name="All" Russian="Все"/>
