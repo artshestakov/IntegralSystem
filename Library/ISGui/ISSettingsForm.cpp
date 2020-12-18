@@ -6,20 +6,12 @@
 #include "ISLocalization.h"
 #include "ISCore.h"
 #include "ISSettings.h"
-#include "ISQuery.h"
+#include "ISTcpQuery.h"
 #include "ISLabels.h"
 #include "ISControls.h"
 #include "ISFileDialog.h"
 #include "ISGui.h"
 #include "ISConstants.h"
-//-----------------------------------------------------------------------------
-static QString QS_SETTINGS = PREPARE_QUERY("SELECT stgs_uid, stgs_defaultvalue "
-										   "FROM _settings "
-										   "ORDER BY stgs_id");
-//-----------------------------------------------------------------------------
-static QString QU_SETTINGS_DEFAULT = PREPARE_QUERY("UPDATE _usersettings SET "
-												   "usst_value = :SettingValue "
-												   "WHERE usst_setting = :SettingUID");
 //-----------------------------------------------------------------------------
 ISSettingsForm::ISSettingsForm(const QString &SettingGroupUID) : ISInterfaceDialogForm()
 {
@@ -162,18 +154,20 @@ void ISSettingsForm::DefaultSettings()
 {
 	if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.ChangeSettingsToDefault"), LANG("ThisActionCanNotUndone")))
 	{
-		ISQuery qSelectSettings(QS_SETTINGS);
-		if (qSelectSettings.Execute())
+		ISTcpQuery qUserSettingsReset(API_USER_SETTINGS_RESET);
+		if (qUserSettingsReset.Execute())
 		{
-			while (qSelectSettings.Next())
+			QVariantMap ResultMap = qUserSettingsReset.GetAnswer()["Result"].toMap();
+			for (const auto &MapItem : ResultMap.toStdMap())
 			{
-				ISQuery qUpdateDefault(QU_SETTINGS_DEFAULT);
-				qUpdateDefault.BindValue(":SettingValue", qSelectSettings.ReadColumn("stgs_defaultvalue"));
-				qUpdateDefault.BindValue(":SettingUID", qSelectSettings.ReadColumn("stgs_uid"));
-				qUpdateDefault.Execute();
+				ISSettings::Instance().SetValue(MapItem.first, MapItem.second);
 			}
 			ISMessageBox::ShowInformation(this, LANG("Message.Information.AppliocationWillBeRestart"));
 			close();
+		}
+		else
+		{
+			ISMessageBox::ShowCritical(this, qUserSettingsReset.GetErrorString());
 		}
 	}
 }
