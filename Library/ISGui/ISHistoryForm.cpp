@@ -2,7 +2,6 @@
 #include "ISDefinesGui.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
-#include "ISQuery.h"
 #include "ISSettings.h"
 #include "ISConstants.h"
 #include "ISGui.h"

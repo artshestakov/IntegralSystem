@@ -221,7 +221,7 @@
 
   <Table Name="_QuestionAnswerGroup" UID="{72608326-C278-4B2B-90E9-7E1226E3471E}" Alias="qagr" LocalName="Группа вопросов и ответов" LocalListName="Группы вопросов и ответов" TitleName="Name">
     <Fields>
-      <Field UID="{D816C232-61EE-4234-8FEF-A220B0379070}" Name="Parent" Type="BigInt" LabelName="Родитель" LocalListName="Родитель" HideFromObject="true"/>
+      <Field UID="{D816C232-61EE-4234-8FEF-A220B0379070}" Name="Parent" Type="BigInt" ReadOnly="true" LabelName="Родитель" LocalListName="Родитель"/>
       <Field UID="{CC7D8A82-9D83-4C27-A720-9C133DF1AD67}" Name="Name" Type="String" LabelName="Наименование группы" LocalListName="Наименование группы" NotNull="true"/>
     </Fields>
     <Indexes>
@@ -235,12 +235,12 @@
 
   <Table Name="_QuestionAnswer" UID="{C60B9B7F-AB54-483B-A519-527D1347A87B}" Alias="quan" LocalName="Вопрос-ответ" LocalListName="Вопросы-ответы" TitleName="Question">
     <Fields>
-      <Field UID="{A723D260-5159-4216-B7E1-A97D23283CE0}" Name="Group" Type="BigInt" LabelName="Группа" LocalListName="Группа" HideFromObject="true" NotNull="true"/>
+      <Field UID="{A723D260-5159-4216-B7E1-A97D23283CE0}" Name="Group" Type="BigInt" ReadOnly="true" LabelName="Группа" LocalListName="Группа" NotNull="true"/>
       <Field UID="{2B37D004-ABF3-42C5-9606-43D7FA6905CE}" Name="Question" Type="String" LabelName="Вопрос" LocalListName="Вопрос" NotNull="true"/>
       <Field UID="{F1BB522A-90AF-4E12-A9F2-26463B78BEC7}" Name="Answer" Type="Text" LabelName="Ответ" LocalListName="Ответ" NotNull="true"/>
     </Fields>
     <Indexes>
-      <Index Field="Question" Unique="true"/>
+      <Index Field="Question"/>
       <Index Field="Answer"/>
     </Indexes>
     <Foreigns>
