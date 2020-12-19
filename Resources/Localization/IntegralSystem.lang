@@ -335,11 +335,6 @@
   <Local Name="Protocol.Port" Russian="Порт"/>
   <Local Name="TcpConnector.Timeout" Russian="Время на ожидание подключения истекло."/>
 
-  <!--MonitorActivity-->
-  <Local Name="MonitorActivity.HideOffline" Russian="Скрыть пользователей не в сети"/>
-  <Local Name="MonitorActivity.MonitorUser.Online" Russian="(в сети)"/>
-  <Local Name="MonitorActivity.MonitorUser.Offline" Russian="(не в сети)"/>
-
   <!--Access rights-->
   <Local Name="AccessRights" Russian="Права доступа"/>
   <Local Name="AccessRights.SettingAcceessFromGroup" Russian="Настрока прав для группы: %1"/>

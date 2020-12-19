@@ -3,8 +3,10 @@
 #include "ISConstants.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
+#include "ISGui.h"
+#include "ISMetaUser.h"
 //-----------------------------------------------------------------------------
-ISMonitorUserWidget::ISMonitorUserWidget(bool is_online, int user_id, const QString &user_name, const QPixmap &UserPhoto, QWidget *parent) : QFrame(parent)
+ISMonitorUserWidget::ISMonitorUserWidget(unsigned int user_id, const QString &user_name, const QPixmap &UserPhoto, QWidget *parent) : QFrame(parent)
 {
 	setFrameShape(QFrame::Box);
 	setFrameShadow(QFrame::Plain);
@@ -26,14 +28,14 @@ ISMonitorUserWidget::ISMonitorUserWidget(bool is_online, int user_id, const QStr
 	LabelIcon->setPixmap(UserPhoto.isNull() ? BUFFER_ICONS("User").pixmap(ISDefines::Gui::SIZE_32_32) : UserPhoto);
 	Layout->addWidget(LabelIcon, 0, Qt::AlignHCenter);
 
-	QLabel *LabelUserName = new QLabel(this);
-	LabelUserName->setText(QString(user_name).replace(SYMBOL_SPACE, "\n") + "\n" + (is_online ? LANG("MonitorActivity.MonitorUser.Online") : LANG("MonitorActivity.MonitorUser.Offline")));
+	QLabel *LabelUserName = new QLabel(user_name, this);
+	LabelUserName->setText(user_id == CURRENT_USER_ID ? LabelUserName->text() + '\n' + '(' + LANG("You") + ')' : LabelUserName->text());
 	LabelUserName->setAlignment(Qt::AlignHCenter);
 	LabelUserName->setWordWrap(true);
 	Layout->addWidget(LabelUserName, 0, Qt::AlignHCenter);
+	ISGui::SetFontWidgetBold(LabelUserName, user_id == CURRENT_USER_ID);
 
-	QAction *ActionUser = new QAction(this);
-	ActionUser->setText(user_name);
+	QAction *ActionUser = new QAction(user_name, this);
 	ActionUser->setIcon(BUFFER_ICONS("User"));
 	ActionUser->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
 	connect(ActionUser, &QAction::triggered, this, &ISMonitorUserWidget::ShowUserCard);

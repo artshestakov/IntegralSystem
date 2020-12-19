@@ -1,7 +1,7 @@
 #include "ISMonitorActivityForm.h"
 #include "ISDefinesGui.h"
 #include "ISConstants.h"
-#include "ISQuery.h"
+#include "ISTcpQuery.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISFlowLayout.h"
@@ -16,11 +16,6 @@
 #include "ISQueryPool.h"
 #include "ISInputDialog.h"
 //-----------------------------------------------------------------------------
-static QString QS_USERS = PREPARE_QUERY("SELECT usrs_id, usrs_fio, usrs_photo "
-										"FROM _users "
-										"WHERE usrs_uid != :PostgresUID "
-										"ORDER BY usrs_fio");
-//-----------------------------------------------------------------------------
 ISMonitorActivityForm::ISMonitorActivityForm(QWidget *parent) : ISInterfaceMetaForm(parent)
 {
 	GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);
@@ -33,18 +28,6 @@ ISMonitorActivityForm::ISMonitorActivityForm(QWidget *parent) : ISInterfaceMetaF
 	ButtonUpdate->setIcon(BUFFER_ICONS("Update"));
 	connect(ButtonUpdate, &ISPushButton::clicked, this, &ISMonitorActivityForm::LoadData);
 	LayoutTitle->addWidget(ButtonUpdate);
-
-	ISLineEdit *EditSearch = new ISLineEdit(this);
-	EditSearch->SetPlaceholderText(LANG("Search"));
-	EditSearch->setFixedWidth(200);
-	connect(EditSearch, &ISLineEdit::ValueChange, this, &ISMonitorActivityForm::Search);
-	LayoutTitle->addWidget(EditSearch);
-
-	CheckEdit = new ISCheckEdit(this);
-	CheckEdit->SetText(LANG("MonitorActivity.HideOffline"));
-	CheckEdit->SetValue(SETTING_BOOL(CONST_UID_SETTING_OTHER_HIDE_OFFLINE_MONITOR_ACTIVITY));
-	connect(CheckEdit, &ISCheckEdit::ValueChange, this, &ISMonitorActivityForm::CheckEditChanged);
-	LayoutTitle->addWidget(CheckEdit);
 
 	LayoutTitle->addStretch();
 
@@ -69,29 +52,23 @@ ISMonitorActivityForm::~ISMonitorActivityForm()
 //-----------------------------------------------------------------------------
 void ISMonitorActivityForm::LoadData()
 {
-	ISGui::SetWaitGlobalCursor(true);
 	while (!VectorUsers.empty())
 	{
 		delete ISAlgorithm::VectorTakeBack(VectorUsers);
 	}
 
 	QSize SizeWidget;
-	ISQuery qSelect(QS_USERS);
-	qSelect.BindValue(":PostgresUID", SYSTEM_USER_UID);
-	if (qSelect.Execute())
+	ISTcpQuery qGetClients(API_GET_CLIENTS);
+	if (qGetClients.Execute())
 	{
-		while (qSelect.Next())
+		QVariantList Clients = qGetClients.GetAnswer()["Clients"].toList();
+		for (const QVariant &Variant : Clients)
 		{
-			bool IsOnline = false;
-			if (CheckEdit->GetValue().toBool() && !IsOnline)
-			{
-				continue;
-			}
+			QVariantMap ClientMap = Variant.toMap();
 
-			ISMonitorUserWidget *MonitorUserWidget = new ISMonitorUserWidget(IsOnline,
-				qSelect.ReadColumn("usrs_id").toInt(),
-				qSelect.ReadColumn("usrs_fio").toString(),
-				ISGui::ByteArrayToPixmap(qSelect.ReadColumn("usrs_photo").toByteArray()).scaled(ISDefines::Gui::SIZE_32_32),
+			ISMonitorUserWidget *MonitorUserWidget = new ISMonitorUserWidget(
+				ClientMap["ID"].toUInt(), ClientMap["FIO"].toString(),
+				ISGui::ByteArrayToPixmap(QByteArray::fromBase64(ClientMap["Photo"].toByteArray())).scaled(ISDefines::Gui::SIZE_32_32),
 				ScrollArea);
 			connect(MonitorUserWidget, &ISMonitorUserWidget::ShowUserCard, this, &ISMonitorActivityForm::ShowUserCard);
 			connect(MonitorUserWidget, &ISMonitorUserWidget::ShowProtocol, this, &ISMonitorActivityForm::ShowProtocol);
@@ -111,34 +88,16 @@ void ISMonitorActivityForm::LoadData()
 			VectorUsers.emplace_back(MonitorUserWidget);
 		}
 	}
+	else
+	{
+		ISMessageBox::ShowCritical(this, qGetClients.GetErrorString());
+	}
 
 	SizeWidget.setHeight(SizeWidget.height() + 10);
 	SizeWidget.setWidth(SizeWidget.width() + 10);
 	for (ISMonitorUserWidget *MonitorUserWidget : VectorUsers)
 	{
 		MonitorUserWidget->setMinimumSize(SizeWidget);
-	}
-	ISGui::SetWaitGlobalCursor(false);
-}
-//-----------------------------------------------------------------------------
-void ISMonitorActivityForm::CheckEditChanged(const QVariant &value)
-{
-	ISSettings::Instance().SetValue(CONST_UID_SETTING_OTHER_HIDE_OFFLINE_MONITOR_ACTIVITY, value);
-	LoadData();
-}
-//-----------------------------------------------------------------------------
-void ISMonitorActivityForm::Search(const QVariant &value)
-{
-	for (ISMonitorUserWidget *MonitorUserWidget : VectorUsers)
-	{
-		if (value.isValid())
-		{
-			MonitorUserWidget->setVisible(MonitorUserWidget->property("UserName").toString().toLower().contains(value.toString().toLower()));
-		}
-		else
-		{
-			MonitorUserWidget->setVisible(true);
-		}
 	}
 }
 //-----------------------------------------------------------------------------

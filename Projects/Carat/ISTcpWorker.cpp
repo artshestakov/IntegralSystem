@@ -135,7 +135,7 @@ static QString QS_USER_IS_SYSTEM = PREPARE_QUERY("SELECT usrs_issystem "
 												 "FROM _users "
 												 "WHERE usrs_id = :UserID");
 //-----------------------------------------------------------------------------
-static QString QS_CLIENT = PREPARE_QUERY("SELECT usrs_fio "
+static QString QS_CLIENT = PREPARE_QUERY("SELECT usrs_fio, usrs_photo "
 										 "FROM _users "
 										 "WHERE usrs_id = :UserID");
 //-----------------------------------------------------------------------------
@@ -1578,7 +1578,9 @@ bool ISTcpWorker::GetClients(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 		{
 			{ "Address", ClientInfo.Address },
 			{ "Port", ClientInfo.Port },
-			{ "FIO", qSelectClient.ReadColumn("usrs_fio") }
+			{ "ID", ClientInfo.ID },
+			{ "FIO", qSelectClient.ReadColumn("usrs_fio") },
+			{ "Photo", qSelectClient.ReadColumn("usrs_photo").toByteArray().toBase64() }
 		});
 	}
 	

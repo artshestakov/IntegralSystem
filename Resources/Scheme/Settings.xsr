@@ -35,6 +35,5 @@
   
   <_SettingsGroup IsSystem="true" UID="{0BAEF651-D749-4566-B682-F11D03C6D849}" Name="Other" LocalName="Прочее" IconName="Settings.Other" Order="8" System="true"/>
   <_Settings IsSystem="true" UID="{97D72002-CEF4-4D2A-B00F-7A3E9F1B8DA2}" Group="{0BAEF651-D749-4566-B682-F11D03C6D849}" Order="1" Name="EnableHistoryTracking" Type="Bool" LocalName="Ведение истории открытых записей" DefaultValue="true"/>
-  <_Settings IsSystem="true" UID="{3E366971-6521-47EC-A250-95F51370EC72}" Group="{0BAEF651-D749-4566-B682-F11D03C6D849}" Order="2" Name="HideOfflineMonitorActivity" Type="Bool" LocalName="Скрывать не активных пользователей в мониторе активности" DefaultValue="false"/>
 
 </XSR>

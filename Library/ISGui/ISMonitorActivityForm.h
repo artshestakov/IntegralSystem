@@ -17,13 +17,10 @@ public:
 	void LoadData() override;
 
 protected:
-	void CheckEditChanged(const QVariant &value);
-	void Search(const QVariant &value);
 	void ShowUserCard(); //Показать карточку пользователя
 	void ShowProtocol(); //Просмотр протокола
 
 private:
-	ISCheckEdit *CheckEdit;
 	QLabel *LabelCount;
 	ISScrollArea *ScrollArea;
 	std::vector<ISMonitorUserWidget*> VectorUsers;
