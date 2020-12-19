@@ -14,13 +14,6 @@
 #include "ISDefinesGui.h"
 #include "ISMetaUser.h"
 //-----------------------------------------------------------------------------
-static QString QS_CALENDAR_SEARCH = PREPARE_QUERY("SELECT cldr_id, cldr_date, cldr_timealert, cldr_name, cldr_text, cldr_closed "
-												  "FROM _calendar "
-												  "WHERE cldr_user = :UserID "
-												  "ORDER BY cldr_id DESC");
-//-----------------------------------------------------------------------------
-static QString QS_CALENDAR_EVENT_DATE = PREPARE_QUERY("SELECT cldr_date FROM _calendar WHERE cldr_id = :CalendarID");
-//-----------------------------------------------------------------------------
 ISCalendarForm::ISCalendarForm(QWidget *parent)
 	: ISParagraphBaseForm(parent),
 	FirstUpdate(false)
@@ -39,27 +32,27 @@ ISCalendarForm::ISCalendarForm(QWidget *parent)
 	Spacer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 	ToolBar->addWidget(Spacer);
 
-	ActionCreate = ISControls::CreateActionCreate(ToolBar);
+	QAction *ActionCreate = ISControls::CreateActionCreate(ToolBar);
 	ActionCreate->setText(LANG("CalendarForm.CreateEvent"));
 	ActionCreate->setToolTip(LANG("CalendarForm.CreateEvent.ToolTip"));
 	connect(ActionCreate, &QAction::triggered, this, &ISCalendarForm::Create);
 	ToolBar->addAction(ActionCreate);
 
-	ActionDateTo = new QAction(ToolBar);
+	QAction *ActionDateTo = new QAction(ToolBar);
 	ActionDateTo->setText(LANG("CalendarForm.CalendarDateTo"));
 	ActionDateTo->setToolTip(LANG("CalendarForm.CalendarDateTo"));
 	ActionDateTo->setIcon(BUFFER_ICONS("CalendarMain.DateTo"));
 	connect(ActionDateTo, &QAction::triggered, this, &ISCalendarForm::DateTo);
 	ToolBar->addAction(ActionDateTo);
 
-	ActionToday = new QAction(ToolBar);
+	QAction *ActionToday = new QAction(ToolBar);
 	ActionToday->setText(LANG("Today"));
 	ActionToday->setToolTip(LANG("Today"));
 	ActionToday->setIcon(BUFFER_ICONS("CalendarMain.Today"));
 	connect(ActionToday, &QAction::triggered, this, &ISCalendarForm::ToCurrentDate);
 	ToolBar->addAction(ActionToday);
 
-	ActionSettings = new QAction(ToolBar);
+	QAction *ActionSettings = new QAction(ToolBar);
 	ActionSettings->setText(LANG("Settings"));
 	ActionSettings->setToolTip(LANG("Settings"));
 	ActionSettings->setIcon(BUFFER_ICONS("Settings"));
@@ -81,12 +74,6 @@ ISCalendarForm::ISCalendarForm(QWidget *parent)
 	ActionCloseEvent->setIcon(BUFFER_ICONS("Close"));
 	ActionCloseEvent->setEnabled(false);
 	connect(ActionCloseEvent, &QAction::triggered, this, &ISCalendarForm::CloseEvent);
-
-	ActionDateEvent = new QAction(this);
-	ActionDateEvent->setText(LANG("CalendarForm.OnDateEvent"));
-	ActionDateEvent->setIcon(BUFFER_ICONS("Arrow.Left"));
-	ActionDateEvent->setEnabled(false);
-	connect(ActionDateEvent, &QAction::triggered, this, &ISCalendarForm::DateEvent);
 
 	CalendarPanel = new ISCalendarPanel(this);
 	connect(CalendarPanel, &ISCalendarPanel::selectionChanged, this, &ISCalendarForm::SelectedDateChanged);
@@ -123,12 +110,7 @@ ISCalendarForm::ISCalendarForm(QWidget *parent)
 
 	LayoutSelectedDate->addStretch();
 
-	EditSearch = new ISLineEdit(this);
-	EditSearch->SetPlaceholderText(LANG("CalendarForm.EnteringSearchQuery"));
-	connect(EditSearch, &ISLineEdit::ValueChange, this, &ISCalendarForm::SearchChanged);
-	LayoutRight->addWidget(EditSearch);
-
-	GroupBox = new QGroupBox(this);
+	QGroupBox *GroupBox = new QGroupBox(this);
 	GroupBox->setTitle(LANG("CalendarForm.Events"));
 	GroupBox->setLayout(new QVBoxLayout());
 	LayoutRight->addWidget(GroupBox);
@@ -141,12 +123,6 @@ ISCalendarForm::ISCalendarForm(QWidget *parent)
 	ListWidget->addAction(ActionEdit);
 	ListWidget->addAction(ActionDelete);
 	ListWidget->addAction(ActionCloseEvent);
-	ListWidget->addAction(ActionDateEvent);
-
-	QAction *ActionSearch = new QAction(this);
-	ActionSearch->setShortcut(Qt::Key_F8);
-	connect(ActionSearch, &QAction::triggered, EditSearch, &ISLineEdit::SetFocus);
-	addAction(ActionSearch);
 }
 //-----------------------------------------------------------------------------
 ISCalendarForm::~ISCalendarForm()
@@ -181,6 +157,7 @@ void ISCalendarForm::ReloadEvents(int Year, int Month)
 			EventsMap[Day].append(EventMap);
 		}
 		CalendarPanel->SetDays(ISAlgorithm::ConvertMapToKeys(EventsMap));
+		SelectedDateChanged();
 	}
 	else
 	{
@@ -194,7 +171,6 @@ void ISCalendarForm::SelectedDateChanged()
 	LabelDayNumber->setText(QString::number(Date.day()));
 	LabelDayName->setText(Date == QDate::currentDate() ? QString("%1 (%2)").arg(Date.longDayName(Date.dayOfWeek())).arg(LANG("Today")) : Date.longDayName(Date.dayOfWeek()));
 	LabelMonthYear->setText(QString("%1 %2").arg(Date.longMonthName(Date.month())).arg(Date.year()));
-	EditSearch->Clear();
 	ListWidget->Clear();
 
 	//ѕолучаем список событий за выбранный день
@@ -202,11 +178,15 @@ void ISCalendarForm::SelectedDateChanged()
 	for (const QVariant &Variant : VariantList)
 	{
 		QVariantMap EventMap = Variant.toMap();
-		AddEventItem(EventMap["ID"].toInt(),
+		ISCalendarEventItem *EventItem = new ISCalendarEventItem(EventMap["ID"].toInt(),
 			EventMap["Name"].toString(),
 			EventMap["Text"].toString(),
 			QTime::fromString(EventMap["TimeAlert"].toString(), FORMAT_TIME_V3),
-			EventMap["Closed"].toBool());
+			EventMap["Closed"].toBool(), ListWidget);
+		QListWidgetItem *ListWidgetItem = new QListWidgetItem(ListWidget);
+		ListWidgetItem->setSizeHint(EventItem->sizeHint());
+		ListWidget->setItemWidget(ListWidgetItem, EventItem);
+		connect(EventItem, &ISCalendarEventItem::SizeHintChanged, [=] { ListWidgetItem->setSizeHint(EventItem->sizeHint()); });
 	}
 }
 //-----------------------------------------------------------------------------
@@ -274,21 +254,6 @@ void ISCalendarForm::CloseEvent()
 	}
 }
 //-----------------------------------------------------------------------------
-void ISCalendarForm::DateEvent()
-{
-	ISCalendarEventItem *EventItem = dynamic_cast<ISCalendarEventItem*>(ListWidget->itemWidget(ListWidget->currentItem()));
-	if (EventItem)
-	{
-		ISQuery qSelect(QS_CALENDAR_EVENT_DATE);
-		qSelect.BindValue(":CalendarID", EventItem->GetCalendarID());
-		if (qSelect.ExecuteFirst())
-		{
-			QDate Date = qSelect.ReadColumn("cldr_date").toDate();
-			CalendarPanel->setSelectedDate(Date);
-		}
-	}
-}
-//-----------------------------------------------------------------------------
 void ISCalendarForm::ItemDoubleClicked(QListWidgetItem *ListWidgetItem)
 {
 	ISCalendarEventItem *EventItem = dynamic_cast<ISCalendarEventItem*>(ListWidget->itemWidget(ListWidgetItem));
@@ -306,14 +271,12 @@ void ISCalendarForm::ItemSelectionChanged()
 		ActionEdit->setEnabled(!EventItem->GetClosed());
 		ActionDelete->setEnabled(!EventItem->GetClosed());
 		ActionCloseEvent->setEnabled(!EventItem->GetClosed());
-		ActionDateEvent->setEnabled(true);
 	}
 	else
 	{
 		ActionEdit->setEnabled(false);
 		ActionDelete->setEnabled(false);
 		ActionCloseEvent->setEnabled(false);
-		ActionDateEvent->setEnabled(false);
 	}
 }
 //-----------------------------------------------------------------------------
@@ -339,50 +302,5 @@ void ISCalendarForm::DeleteEvent(int CalendarID)
 			ISMessageBox::ShowCritical(this, qCalendarDelete.GetErrorString());
 		}
 	}
-}
-//-----------------------------------------------------------------------------
-void ISCalendarForm::SearchChanged(const QVariant &value)
-{
-	ListWidget->Clear();
-
-	if (value.isValid())
-	{
-		GroupBox->setTitle(LANG("CalendarForm.SearchResults"));
-		QString SearchValue = value.toString();
-
-		ISQuery qSelect(QS_CALENDAR_SEARCH);
-		qSelect.BindValue(":UserID", CURRENT_USER_ID);
-		if (qSelect.Execute())
-		{
-			while (qSelect.Next())
-			{
-				int ID = qSelect.ReadColumn("cldr_id").toInt();
-				QDate Date = qSelect.ReadColumn("cldr_date").toDate();
-				QTime TimeAlert = qSelect.ReadColumn("cldr_timealert").toTime();
-				QString Name = qSelect.ReadColumn("cldr_name").toString().toLower();
-				QString Text = qSelect.ReadColumn("cldr_text").toString().toLower();
-				bool Closed = qSelect.ReadColumn("cldr_closed").toBool();
-
-				if (Name.contains(SearchValue) || Text.contains(SearchValue))
-				{
-					AddEventItem(ID, Name, Text, TimeAlert, Closed)->SetVisibleDate(Date);
-				}
-			}
-		}
-	}
-	else
-	{
-		CalendarPanel->selectionChanged();
-	}
-}
-//-----------------------------------------------------------------------------
-ISCalendarEventItem* ISCalendarForm::AddEventItem(int CalendarID, const QString &Name, const QString &Text, const QTime &Time, bool Closed)
-{
-	ISCalendarEventItem *EventItem = new ISCalendarEventItem(CalendarID, Name, Text, Time, Closed, ListWidget);
-	QListWidgetItem *ListWidgetItem = new QListWidgetItem(ListWidget);
-	ListWidgetItem->setSizeHint(EventItem->sizeHint());
-	ListWidget->setItemWidget(ListWidgetItem, EventItem);
-	connect(EventItem, &ISCalendarEventItem::SizeHintChanged, [=] { ListWidgetItem->setSizeHint(EventItem->sizeHint()); });
-	return EventItem;
 }
 //-----------------------------------------------------------------------------

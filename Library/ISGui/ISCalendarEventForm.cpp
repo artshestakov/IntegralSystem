@@ -21,12 +21,12 @@ static QString QU_DEFER = PREPARE_QUERY("UPDATE _calendar SET "
 										"cldr_timealert = :Time "
 										"WHERE cldr_id = :CalendarID");
 //-----------------------------------------------------------------------------
-ISCalendarEventForm::ISCalendarEventForm(int calendar_id, QWidget *parent) : ISInterfaceForm(parent)
+ISCalendarEventForm::ISCalendarEventForm(int calendar_id, QWidget *parent)
+	: ISInterfaceForm(parent),
+	CalendarID(calendar_id),
+	CloseEvent(true),
+	Sound(nullptr)
 {
-	CalendarID = calendar_id;
-	CloseEvent = true;
-	Sound = nullptr;
-
 	ISQuery qSelectEvent(QS_CALENDAR);
 	qSelectEvent.BindValue(":CalendarID", calendar_id);
 	IS_ASSERT(qSelectEvent.ExecuteFirst(), qSelectEvent.GetErrorString());

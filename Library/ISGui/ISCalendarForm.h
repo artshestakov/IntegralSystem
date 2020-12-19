@@ -28,7 +28,6 @@ protected:
 	void Edit(); //Изменение события календаря
 	void Delete(); //Удаление события календаря
 	void CloseEvent(); //Завершение события
-	void DateEvent(); //Переход на дату выбранного события
 	
 	void ItemDoubleClicked(QListWidgetItem *ListWidgetItem); //Двойное нажатие на событие
 	void ItemSelectionChanged();
@@ -36,7 +35,6 @@ protected:
 	void EditEvent(int CalendarID);
 	void DeleteEvent(int CalendarID);
 
-	void SearchChanged(const QVariant &value);
 	ISCalendarEventItem* AddEventItem(int CalendarID, const QString &Name, const QString &Text, const QTime &Time, bool Closed); //Добавить элемент события в список
 	
 private:
@@ -51,17 +49,10 @@ private:
 	QLabel *LabelDayName;
 	QLabel *LabelMonthYear;
 
-	QAction *ActionCreate;
-	QAction *ActionDateTo;
-	QAction *ActionToday;
-	QAction *ActionSettings;
 	QAction *ActionEdit;
 	QAction *ActionDelete;
 	QAction *ActionCloseEvent;
-	QAction *ActionDateEvent;
 
-	ISLineEdit *EditSearch;
-	QGroupBox *GroupBox;
 	ISCalendarEventsWidget *ListWidget;
 };
 //-----------------------------------------------------------------------------
