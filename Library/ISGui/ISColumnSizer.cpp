@@ -50,28 +50,6 @@ QString ISColumnSizer::GetErrorString() const
 	return ErrorString;
 }
 //-----------------------------------------------------------------------------
-void ISColumnSizer::Initialize(const QVariantList &VariantList)
-{
-	for (int i = 0, c = VariantList.size(); i < c; ++i)
-	{
-		QVariantMap VariantMap = VariantList[i].toMap();
-		QString TableName = VariantMap["Table"].toString();
-		QString FieldName = VariantMap["Field"].toString();
-		unsigned int Size = VariantMap["Size"].toUInt();
-		if (TablesNew.count(TableName))
-		{
-			TablesNew[TableName][FieldName] = Size;
-		}
-		else
-		{
-			TablesNew.emplace(TableName, ISStringToIntMap
-			{
-				{ FieldName, Size }
-			});
-		}
-	}
-}
-//-----------------------------------------------------------------------------
 bool ISColumnSizer::Initialize()
 {
 	ISQuery qSelect(QS_COLUMN_SIZE);

@@ -191,20 +191,20 @@ bool ISStartup::StartupNew(ISSplashScreen *SplashScreen)
 		ISMessageBox::ShowCritical(SplashScreen, qAuth.GetErrorString());
 		return false;
 	}
+	QVariantMap MetaData = qAuth.TakeAnswer();
 	ISObjects::Instance().Initialize(ISVersionInfo::Instance().ConfigurationInfo.Name);
-	ISSettingsDatabase::Instance().Initialize(qAuth.GetAnswer()["SettingsDB"].toMap());
-	ISUserRoleEntity::Instance().InitializeTables(qAuth.GetAnswer()["AccessTables"].toMap());
-	ISUserRoleEntity::Instance().InitializeSpecial(qAuth.GetAnswer()["AccessSpecial"].toList());
-	ISMetaSystemsEntity::Instance().Initialize(qAuth.GetAnswer()["SystemSubSystem"].toList());
-	ISPrintingEntity::Instance().Initialize(qAuth.GetAnswer()["Printing"].toList());
-	ISFavorites::Instance().Initialize(qAuth.GetAnswer()["Favorite"].toMap());
-	ISHistory::Instance().Initialize(qAuth.GetAnswer()["History"].toList());
-	ISSortingBuffer::Instance().Initialize(qAuth.GetAnswer()["Sorting"].toList());
-	ISColumnSizer::Instance().Initialize(qAuth.GetAnswer()["ColumnSize"].toList());
-	ISSettings::Instance().Initialize(qAuth.GetAnswer()["Settings"].toList());
-	ISParagraphEntity::Instance().Initialize(qAuth.GetAnswer()["Paragraphs"].toList());
+	ISSettingsDatabase::Instance().Initialize(MetaData["SettingsDB"].toMap());
+	ISUserRoleEntity::Instance().InitializeTables(MetaData["AccessTables"].toMap());
+	ISUserRoleEntity::Instance().InitializeSpecial(MetaData["AccessSpecial"].toList());
+	ISMetaSystemsEntity::Instance().Initialize(MetaData["SystemSubSystem"].toList());
+	ISPrintingEntity::Instance().Initialize(MetaData["Printing"].toList());
+	ISFavorites::Instance().Initialize(MetaData["Favorite"].toMap());
+	ISHistory::Instance().Initialize(MetaData["History"].toList());
+	ISSortingBuffer::Instance().Initialize(MetaData["Sorting"].toList());
+	ISSettings::Instance().Initialize(MetaData["Settings"].toList());
+	ISParagraphEntity::Instance().Initialize(MetaData["Paragraphs"].toList());
 	ISObjects::Instance().GetInterface()->BeforeShowMainWindow();
-	if (!ISMetaData::Instance().Initialize(qAuth.GetAnswer()["MetaData"].toList())) //Ќе удалось проинициализировать мета-данные
+	if (!ISMetaData::Instance().Initialize(MetaData["MetaData"].toList())) //Ќе удалось проинициализировать мета-данные
 	{
 		ISMessageBox::ShowCritical(SplashScreen, LANG("Message.Error.InitializeMetaData"), ISMetaData::Instance().GetErrorString());
 		return false;

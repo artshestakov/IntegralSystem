@@ -74,10 +74,6 @@ static QString QS_SORTINGS = PREPARE_QUERY("SELECT sgts_tablename, sgts_fieldnam
 										   "FROM _sortingtables "
 										   "WHERE sgts_user = :UserID");
 //-----------------------------------------------------------------------------
-static QString QS_COLUMN_SIZE = PREPARE_QUERY("SELECT clsz_tablename, clsz_fieldname, clsz_size "
-											  "FROM _columnsize "
-											  "WHERE clsz_user = :UserID");
-//-----------------------------------------------------------------------------
 static QString QS_SETTING_GROUP = PREPARE_QUERY("SELECT stgp_uid, stgp_name, stgp_localname, stgp_iconname, stgp_hint "
 												"FROM _settingsgroup "
 												"ORDER BY stgp_order");
@@ -167,9 +163,9 @@ static QString QU_SORTING = PREPARE_QUERY("UPDATE _sortingtables SET "
 static QString QI_SORTING = PREPARE_QUERY("INSERT INTO _sortingtables(sgts_user, sgts_tablename, sgts_fieldname, sgts_sorting)"
 										  "VALUES(:UserID, :TableName, :FieldName, :Sorting)");
 //-----------------------------------------------------------------------------
-static QString QS_COLUMN_SIZE_TABLE = PREPARE_QUERY("SELECT clsz_fieldname, clsz_size "
-													"FROM _columnsize "
-													"WHERE clsz_user = :UserID");
+static QString QS_COLUMN_SIZE = PREPARE_QUERY("SELECT clsz_fieldname, clsz_size "
+											  "FROM _columnsize "
+											  "WHERE clsz_user = :UserID");
 //-----------------------------------------------------------------------------
 static QString QS_NOTE_RECORD = PREPARE_QUERY("SELECT nobj_note "
 											  "FROM _noteobject "
@@ -1088,29 +1084,6 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 		return false;
 	}
 
-	//Получаем размеры колонок
-	QVariantList ColumnSizeList;
-	ISQuery qSelectColumnSize(ISDatabase::Instance().GetDB(DBConnectionName), QS_COLUMN_SIZE);
-	qSelectColumnSize.BindValue(":UserID", TcpMessage->TcpSocket->GetUserID());
-	if (qSelectColumnSize.Execute())
-	{
-		while (qSelectColumnSize.Next())
-		{
-			ColumnSizeList.append(QVariantMap
-			{
-				{ "Table", qSelectColumnSize.ReadColumn("clsz_tablename") },
-				{ "Field", qSelectColumnSize.ReadColumn("clsz_fieldname") },
-				{ "Size", qSelectColumnSize.ReadColumn("clsz_size") }
-			});
-		}
-		TcpAnswer->Parameters["ColumnSize"] = ColumnSizeList;
-	}
-	else
-	{
-		ErrorString = LANG("Carat.Error.Query.GetMetaData.ColumnSize").arg(qSelectColumnSize.GetErrorString());
-		return false;
-	}
-
 	//Получаем пользовательские настройки
 	QVariantList Settings;
 	ISQuery qSelectSettingGroup(ISDatabase::Instance().GetDB(DBConnectionName), QS_SETTING_GROUP),
@@ -1840,7 +1813,7 @@ bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	}
 
 	//Получаем размеры полей
-	ISQuery qSelectColumnSize(ISDatabase::Instance().GetDB(DBConnectionName), QS_COLUMN_SIZE_TABLE);
+	ISQuery qSelectColumnSize(ISDatabase::Instance().GetDB(DBConnectionName), QS_COLUMN_SIZE);
 	qSelectColumnSize.BindValue(":UserID", UserID);
 	if (!qSelectColumnSize.Execute()) //Ошибка запроса
 	{
