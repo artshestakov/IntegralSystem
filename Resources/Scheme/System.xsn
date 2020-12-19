@@ -253,7 +253,7 @@
       <Index Field="TableName"/>
       <Index Field="FieldName"/>
       <Index Field="Size"/>
-      <Index Field="User;TableName;FieldName"/>
+      <Index Field="User;TableName;FieldName" Unique="true"/>
     </Indexes>
   </Table>
 

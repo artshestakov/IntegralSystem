@@ -50,6 +50,21 @@ QString ISColumnSizer::GetErrorString() const
 	return ErrorString;
 }
 //-----------------------------------------------------------------------------
+QVariantMap ISColumnSizer::GetColumnSize() const
+{
+	QVariantMap VariantMap;
+	for (const auto &TableItem : TablesNew)
+	{
+		QVariantMap TableMap;
+		for (const auto &ColumnItem : TableItem.second)
+		{
+			TableMap[ColumnItem.first] = ColumnItem.second;
+		}
+		VariantMap[TableItem.first] = TableMap;
+	}
+	return VariantMap;
+}
+//-----------------------------------------------------------------------------
 bool ISColumnSizer::Initialize()
 {
 	ISQuery qSelect(QS_COLUMN_SIZE);
@@ -146,6 +161,16 @@ void ISColumnSizer::SetColumnSize(const QString &TableName, const QString &Field
 	}
 	ColumnSizeItem->Fields[FieldName] = Size;
 	ColumnSizeItem->ModificationFlag = true;
+}
+//-----------------------------------------------------------------------------
+void ISColumnSizer::SetColumnSizeNew(const QString &TableName, const QString &FieldName, int Size)
+{
+	//Если такой таблицы ещё нет - добавляем
+	if (TablesNew.find(TableName) == TablesNew.end())
+	{
+		TablesNew[TableName] = ISStringToIntMap();
+	}
+	TablesNew[TableName][FieldName] = Size;
 }
 //-----------------------------------------------------------------------------
 int ISColumnSizer::GetColumnSize(const QString &TableName, const QString &FieldName) const

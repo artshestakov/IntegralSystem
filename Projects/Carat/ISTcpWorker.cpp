@@ -236,6 +236,15 @@ static QString QS_INTERNAL_LISTS = PREPARE_QUERY("SELECT intd_tablename "
 												 "FROM _internaldirectories "
 												 "ORDER BY intd_order");
 //-----------------------------------------------------------------------------
+static QString QI_COLUMN_SIZE = PREPARE_QUERY("INSERT INTO _columnsize(clsz_user, clsz_tablename, clsz_fieldname, clsz_size) "
+											  "VALUES(:UserID, :TableName, :FieldName, :Size)");
+//-----------------------------------------------------------------------------
+static QString QU_COLUMN_SIZE = PREPARE_QUERY("UPDATE _columnsize SET "
+											  "clsz_size = :Size "
+											  "WHERE clsz_user = :UserID "
+											  "AND clsz_tablename = :TableName "
+											  "AND clsz_fieldname = :FieldName");
+//-----------------------------------------------------------------------------
 ISTcpWorker::ISTcpWorker(const QString &db_host, int db_port, const QString &db_name, const QString &db_user, const QString &db_password)
 	: QObject(),
 	ErrorString(NO_ERROR_STRING),
@@ -393,6 +402,7 @@ void ISTcpWorker::Process()
 					case ISNamespace::AMT_GetCalendarEvents: Result = GetCalendarEvents(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_CalendarDelete: Result = CalendarDelete(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_GetInternalLists: Result = GetInternalLists(tcp_message, TcpAnswer); break;
+					case ISNamespace::AMT_SaveMetaData: Result = SaveMetaData(tcp_message, TcpAnswer); break;
 					default:
 						ErrorString = LANG("Carat.Error.NotExistFunction").arg(tcp_message->TypeName);
 					}
@@ -2341,6 +2351,48 @@ bool ISTcpWorker::GetInternalLists(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAns
 		Lists.append(qSelect.ReadColumn("intd_tablename"));
 	}
 	TcpAnswer->Parameters["Lists"] = Lists;
+	return true;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::SaveMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+	Q_UNUSED(TcpAnswer);
+
+	//Готовим запросы для размеров полей
+	ISQuery qInsertColumnSize(ISDatabase::Instance().GetDB(DBConnectionName), QI_COLUMN_SIZE),
+		qUpdateColumnSize(ISDatabase::Instance().GetDB(DBConnectionName), QU_COLUMN_SIZE);
+
+	//Получаем размеры полей и обходим их
+	QVariantMap ColumnSize = TcpMessage->Parameters["ColumnSize"].toMap();
+	for (const auto &TableItem : ColumnSize.toStdMap())
+	{
+		for (const auto &FieldItem : TableItem.second.toMap().toStdMap())
+		{
+			//Пытаем добавить размер поля
+			qInsertColumnSize.BindValue(":UserID", TcpMessage->TcpSocket->GetUserID());
+			qInsertColumnSize.BindValue(":TableName", TableItem.first);
+			qInsertColumnSize.BindValue(":FieldName", FieldItem.first);
+			qInsertColumnSize.BindValue(":Size", FieldItem.second);
+			if (!qInsertColumnSize.Execute() && qInsertColumnSize.GetErrorNumber() == 23505) //Если вставка не удалась и ошибка говорит о наружении уникальности - обновляем
+			{
+				qUpdateColumnSize.BindValue(":Size", FieldItem.second);
+				qUpdateColumnSize.BindValue(":UserID", TcpMessage->TcpSocket->GetUserID());
+				qUpdateColumnSize.BindValue(":TableName", TableItem.first);
+				qUpdateColumnSize.BindValue(":FieldName", FieldItem.first);
+				if (!qUpdateColumnSize.Execute()) //Обновить не получилось
+				{
+					ErrorString = LANG("Carat.Error.Query.SaveMetaData.UpdateColumnSize").arg(qUpdateColumnSize.GetErrorString());
+					return false;
+				}
+			}
+			else //Вставка не удалась по другой причине
+			{
+				ErrorString = LANG("Carat.Error.Query.SaveMetaData.InsertColumnSize").arg(qInsertColumnSize.GetErrorString());
+				return false;
+			}
+		}
+	}
+
 	return true;
 }
 //-----------------------------------------------------------------------------

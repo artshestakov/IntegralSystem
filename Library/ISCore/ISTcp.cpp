@@ -148,6 +148,10 @@ ISNamespace::ApiMessageType ISTcp::GetMessageTypeByName(const QString &Name)
 	{
 		return ISNamespace::AMT_GetInternalLists;
 	}
+	else if (Name == API_SAVE_META_DATA)
+	{
+		return ISNamespace::AMT_SaveMetaData;
+	}
 	return ISNamespace::AMT_Unknown;
 }
 //-----------------------------------------------------------------------------

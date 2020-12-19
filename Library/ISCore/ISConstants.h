@@ -173,6 +173,7 @@ const char API_SEARCH_FULL_TEXT[] = "SearchFullText"; //Полтекстовый поиск
 const char API_GET_CALENDAR_EVENTS[] = "GetCalendarEvents"; //Получить события календаря
 const char API_CALENDAR_DELETE[] = "CalendarDelete"; //Удаление события календаря
 const char API_GET_INTERNAL_LISTS[] = "GetInternalLists"; //Получить список внутренних справочников
+const char API_SAVE_META_DATA[] = "SaveMetaData"; //Сохранение мета-данных
 //CARAT_LOCAL_API--------------------------------------------------------------
 const char	CARAT_LOCAL_API_SHUTDOWN[] = "shutdown"; //Завершение работы
 //-----------------------------------------------------------------------------

@@ -131,4 +131,7 @@
 
   <Local Name="Carat.Error.Query.GetInternalLists.Select" Russian="Не удалось получить список справочников: %1"/>
 
+  <Local Name="Carat.Error.Query.SaveMetaData.UpdateColumnSize" Russian="Не удалось обновить размер поля: %1"/>
+  <Local Name="Carat.Error.Query.SaveMetaData.InsertColumnSize" Russian="Не удалось добавить размер поля: %1"/>
+
 </LANG>

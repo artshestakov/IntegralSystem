@@ -35,6 +35,13 @@ bool ISStartup::Startup(ISSplashScreen *SplashScreen)
 //-----------------------------------------------------------------------------
 void ISStartup::Shutdown(ISSplashScreen *SplashScreen)
 {
+	ISTcpQuery qSaveMetaData(API_SAVE_META_DATA);
+	qSaveMetaData.BindValue("ColumnSize", ISColumnSizer::Instance().GetColumnSize());
+	if (!qSaveMetaData.Execute())
+	{
+		ISMessageBox::ShowCritical(SplashScreen, qSaveMetaData.GetErrorString());
+	}
+
 	ISProtocol::ExitApplication();
 	if (!(SETTING_BOOL(CONST_UID_SETTING_TABLES_REMEMBERSORTING) ? ISSortingBuffer::Instance().SaveSortings() : ISSortingBuffer::Instance().Clear()))
 	{
