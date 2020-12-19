@@ -167,6 +167,10 @@ static QString QU_SORTING = PREPARE_QUERY("UPDATE _sortingtables SET "
 static QString QI_SORTING = PREPARE_QUERY("INSERT INTO _sortingtables(sgts_user, sgts_tablename, sgts_fieldname, sgts_sorting)"
 										  "VALUES(:UserID, :TableName, :FieldName, :Sorting)");
 //-----------------------------------------------------------------------------
+static QString QS_COLUMN_SIZE_TABLE = PREPARE_QUERY("SELECT clsz_fieldname, clsz_size "
+													"FROM _columnsize "
+													"WHERE clsz_user = :UserID");
+//-----------------------------------------------------------------------------
 static QString QS_NOTE_RECORD = PREPARE_QUERY("SELECT nobj_note "
 											  "FROM _noteobject "
 											  "WHERE nobj_tablename = :TableName "
@@ -1771,12 +1775,13 @@ bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 		ErrorString = LANG("Carat.Error.Query.GetTableData.TableNotExist").arg(TableName.toString());
 		return false;
 	}
+	unsigned int UserID = TcpMessage->TcpSocket->GetUserID();
 
 	//Получаем сортировку для этой таблицы
 	QString SortingField;
 	Qt::SortOrder SortingOrder;
 	ISQuery qSelectSorting(ISDatabase::Instance().GetDB(DBConnectionName), QS_SORTING);
-	qSelectSorting.BindValue(":UserID", TcpMessage->TcpSocket->GetUserID());
+	qSelectSorting.BindValue(":UserID", UserID);
 	qSelectSorting.BindValue(":TableName", MetaTable->Name);
 	if (!qSelectSorting.Execute()) //Ошибка запроса
 	{
@@ -1808,7 +1813,7 @@ bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 			ISQuery qUpdateSorting(ISDatabase::Instance().GetDB(DBConnectionName), QU_SORTING);
 			qUpdateSorting.BindValue(":FieldName", SortingField);
 			qUpdateSorting.BindValue(":Sorting", SortingOrder);
-			qUpdateSorting.BindValue(":UserID", TcpMessage->TcpSocket->GetUserID());
+			qUpdateSorting.BindValue(":UserID", UserID);
 			qUpdateSorting.BindValue(":TableName", MetaTable->Name);
 			if (!qUpdateSorting.Execute())
 			{
@@ -1823,7 +1828,7 @@ bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 		SortingOrder = Qt::AscendingOrder;
 
 		ISQuery qInsertSorting(ISDatabase::Instance().GetDB(DBConnectionName), QI_SORTING);
-		qInsertSorting.BindValue(":UserID", TcpMessage->TcpSocket->GetUserID());
+		qInsertSorting.BindValue(":UserID", UserID);
 		qInsertSorting.BindValue(":TableName", MetaTable->Name);
 		qInsertSorting.BindValue(":FieldName", SortingField);
 		qInsertSorting.BindValue(":Sorting", SortingOrder);
@@ -1832,6 +1837,22 @@ bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 			ErrorString = LANG("Carat.Error.Query.GetTableData.InsertSorting").arg(qInsertSorting.GetErrorString());
 			return false;
 		}
+	}
+
+	//Получаем размеры полей
+	ISQuery qSelectColumnSize(ISDatabase::Instance().GetDB(DBConnectionName), QS_COLUMN_SIZE_TABLE);
+	qSelectColumnSize.BindValue(":UserID", UserID);
+	if (!qSelectColumnSize.Execute()) //Ошибка запроса
+	{
+		ErrorString = LANG("Carat.Error.Query.GetTableData.SelectColumnSize").arg(qSelectColumnSize.GetErrorString());
+		return false;
+	}
+
+	//Обходим результаты
+	QVariantMap ColumnSizeMap;
+	while (qSelectColumnSize.Next())
+	{
+		ColumnSizeMap[qSelectColumnSize.ReadColumn("clsz_fieldname").toString()] = qSelectColumnSize.ReadColumn("clsz_size");
 	}
 
 	//Создаём объект модели
@@ -1935,6 +1956,7 @@ bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 		} while (qSelect.Next()); //Обходим выборку	
 	}
 	TcpAnswer->Parameters["ServiceInfo"] = ServiceInfoMap;
+	TcpAnswer->Parameters["ColumnSize"] = ColumnSizeMap;
 	TcpAnswer->Parameters["FieldList"] = FieldList;
 	TcpAnswer->Parameters["RecordList"] = RecordList;
 	return true;
