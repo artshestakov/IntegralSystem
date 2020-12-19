@@ -19,8 +19,6 @@ int main(int argc, char **argv)
 	Applicaton.setEffectEnabled(Qt::UI_FadeTooltip);
 	Applicaton.setEffectEnabled(Qt::UI_AnimateToolBox);
 
-	PROPERTY_SET("PathLastDirectory", QDir::homePath());
-
 	QString ErrorString;
 	bool Result = ISGui::Startup(ErrorString);
 	if (!Result)
@@ -28,6 +26,7 @@ int main(int argc, char **argv)
 		QMessageBox::critical(nullptr, "Error", ErrorString, QMessageBox::Ok, QMessageBox::Ok);
 		return EXIT_FAILURE;
 	}
+	PROPERTY_SET("PathLastDirectory", QDir::homePath());
 
 	ISAuthForm AuthForm;
 	Result = AuthForm.Exec();

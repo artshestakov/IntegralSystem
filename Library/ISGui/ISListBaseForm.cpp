@@ -480,7 +480,7 @@ void ISListBaseForm::FieldResized(bool Include)
 void ISListBaseForm::FieldResized(int LogicalIndex, int WidthOld, int WidthNew)
 {
 	Q_UNUSED(WidthOld);
-	ISColumnSizer::Instance().SetColumnSize(MetaTable->Name, SqlModel->headerData(LogicalIndex, Qt::Horizontal, Qt::UserRole).toString(), WidthNew);
+	ISColumnSizer::Instance().SetColumnSizeNew(MetaTable->Name, SqlModel->headerData(LogicalIndex, Qt::Horizontal, Qt::UserRole).toString(), WidthNew);
 }
 //-----------------------------------------------------------------------------
 void ISListBaseForm::SortingChanged(int LogicalIndex, Qt::SortOrder Order)

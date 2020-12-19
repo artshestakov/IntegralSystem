@@ -143,12 +143,12 @@
           </elementProp>
           <elementProp name="GetTableData_SortingField" elementType="Argument">
             <stringProp name="Argument.name">GetTableData_SortingField</stringProp>
-            <stringProp name="Argument.value">Group</stringProp>
+            <stringProp name="Argument.value"></stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="GetTableData_SortingOrder" elementType="Argument">
             <stringProp name="Argument.name">GetTableData_SortingOrder</stringProp>
-            <stringProp name="Argument.value">1</stringProp>
+            <stringProp name="Argument.value"></stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="GetNoteRecord_TableName" elementType="Argument">
@@ -597,7 +597,7 @@ vars.put(&quot;QueryGetInternalLists&quot;, MapToString(MapGetInternalLists));</
           <stringProp name="ConfigTestElement.password"></stringProp>
         </TCPSampler>
         <hashTree/>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: GetInternalLists" enabled="true">
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: GetInternalLists" enabled="false">
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
           <stringProp name="TCPSampler.port"></stringProp>
@@ -741,7 +741,7 @@ vars.put(&quot;QueryGetInternalLists&quot;, MapToString(MapGetInternalLists));</
           <stringProp name="ConfigTestElement.password"></stringProp>
         </TCPSampler>
         <hashTree/>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: GetTableData" enabled="false">
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: GetTableData" enabled="true">
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
           <stringProp name="TCPSampler.port"></stringProp>
