@@ -14,13 +14,6 @@
 #include "ISDefinesGui.h"
 #include "ISMetaUser.h"
 //-----------------------------------------------------------------------------
-static QString QS_CALENDAR_OVERDUE = PREPARE_QUERY("SELECT cldr_id "
-												   "FROM _calendar "
-												   "WHERE cldr_user = :UserID "
-												   "AND NOT cldr_closed "
-												   "AND cldr_date <= CURRENT_DATE "
-												   "AND cldr_timealert <= CURRENT_TIME");
-//-----------------------------------------------------------------------------
 static QString QS_CALENDAR_SEARCH = PREPARE_QUERY("SELECT cldr_id, cldr_date, cldr_timealert, cldr_name, cldr_text, cldr_closed "
 												  "FROM _calendar "
 												  "WHERE cldr_user = :UserID "
@@ -154,8 +147,6 @@ ISCalendarForm::ISCalendarForm(QWidget *parent)
 	ActionSearch->setShortcut(Qt::Key_F8);
 	connect(ActionSearch, &QAction::triggered, EditSearch, &ISLineEdit::SetFocus);
 	addAction(ActionSearch);
-
-	QTimer::singleShot(5000, this, &ISCalendarForm::ShowOverdueEvents);
 }
 //-----------------------------------------------------------------------------
 ISCalendarForm::~ISCalendarForm()
@@ -171,19 +162,6 @@ void ISCalendarForm::Invoke()
 		QDate CurrentDate = QDate::currentDate();
 		ReloadEvents(CurrentDate.year(), CurrentDate.month());
 		FirstUpdate = true;
-	}
-}
-//-----------------------------------------------------------------------------
-void ISCalendarForm::ShowOverdueEvents()
-{
-	ISQuery qSelect(QS_CALENDAR_OVERDUE);
-	qSelect.BindValue(":UserID", CURRENT_USER_ID);
-	if (qSelect.Execute())
-	{
-		while (qSelect.Next())
-		{
-			ShowEventForm(qSelect.ReadColumn("cldr_id").toInt());
-		}
 	}
 }
 //-----------------------------------------------------------------------------
@@ -406,18 +384,5 @@ ISCalendarEventItem* ISCalendarForm::AddEventItem(int CalendarID, const QString 
 	ListWidget->setItemWidget(ListWidgetItem, EventItem);
 	connect(EventItem, &ISCalendarEventItem::SizeHintChanged, [=] { ListWidgetItem->setSizeHint(EventItem->sizeHint()); });
 	return EventItem;
-}
-//-----------------------------------------------------------------------------
-void ISCalendarForm::CalendarEvent(const QVariantMap &VariantMap)
-{
-	ShowEventForm(VariantMap.value("Payload").toInt());
-}
-//-----------------------------------------------------------------------------
-void ISCalendarForm::ShowEventForm(int CalendarID)
-{
-	ISCalendarEventForm *CalendarEventForm = new ISCalendarEventForm(CalendarID);
-	CalendarEventForm->show();
-	CalendarEventForm->activateWindow();
-	connect(CalendarEventForm, &ISCalendarEventForm::ClosedEvent, this, &ISCalendarForm::Invoke);
 }
 //-----------------------------------------------------------------------------

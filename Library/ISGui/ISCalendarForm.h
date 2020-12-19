@@ -18,7 +18,6 @@ public:
 	void Invoke() override;
 
 protected:
-	void ShowOverdueEvents(); //Показ просроченных событий
 	void ReloadEvents(int Year, int Month); //Загрузка событий на месяц
 	void SelectedDateChanged(); //Событие смены выбранной даты
 
@@ -40,9 +39,6 @@ protected:
 	void SearchChanged(const QVariant &value);
 	ISCalendarEventItem* AddEventItem(int CalendarID, const QString &Name, const QString &Text, const QTime &Time, bool Closed); //Добавить элемент события в список
 	
-	void CalendarEvent(const QVariantMap &VariantMap); //Показать форму события
-	void ShowEventForm(int CalendarID);
-
 private:
 	bool FirstUpdate;
 	std::map<unsigned int, QVariantList> EventsMap;
