@@ -2,14 +2,11 @@
 #include "ISDefinesGui.h"
 #include "ISConstants.h"
 #include "ISLocalization.h"
-#include "ISQuery.h"
+#include "ISTcpQuery.h"
 #include "ISMetaData.h"
 #include "ISGui.h"
 #include "ISBuffer.h"
-//-----------------------------------------------------------------------------
-static QString QS_INTERNAL_DIRECTORIES = PREPARE_QUERY("SELECT intd_tablename "
-													   "FROM _internaldirectories "
-													   "ORDER BY intd_order");
+#include "ISMessageBox.h"
 //-----------------------------------------------------------------------------
 ISInternalDirectoriesForm::ISInternalDirectoriesForm(QWidget *parent)
 	: ISInterfaceMetaForm(parent),
@@ -25,19 +22,22 @@ ISInternalDirectoriesForm::ISInternalDirectoriesForm(QWidget *parent)
 	connect(ListWidget, &ISListWidget::itemSelectionChanged, this, &ISInternalDirectoriesForm::ItemSelectionChanged);
 	Layout->addWidget(ListWidget);
 
-	ISQuery qSelect(QS_INTERNAL_DIRECTORIES);
-	if (qSelect.Execute())
+	ISTcpQuery qGetInternalLists(API_GET_INTERNAL_LISTS);
+	if (qGetInternalLists.Execute())
 	{
-		while (qSelect.Next())
+		QVariantList Lists = qGetInternalLists.GetAnswer()["Lists"].toList();
+		for (const QVariant &ListName : Lists)
 		{
-			QString TableName = qSelect.ReadColumn("intd_tablename").toString();
-
 			QListWidgetItem *ListWidgetItem = new QListWidgetItem(ListWidget);
-			ListWidgetItem->setText(ISMetaData::Instance().GetMetaTable(TableName)->LocalListName);
-			ListWidgetItem->setData(Qt::UserRole, TableName);
+			ListWidgetItem->setText(ISMetaData::Instance().GetMetaTable(ListName.toString())->LocalListName);
+			ListWidgetItem->setData(Qt::UserRole, ListName);
 			ListWidgetItem->setSizeHint(QSize(ListWidgetItem->sizeHint().width(), 30));
 			ListWidgetItem->setFont(ISDefines::Gui::FONT_APPLICATION);
 		}
+	}
+	else
+	{
+		ISMessageBox::ShowCritical(this, qGetInternalLists.GetErrorString());
 	}
 
 	Label = new QLabel(this);
@@ -61,7 +61,6 @@ void ISInternalDirectoriesForm::LoadData()
 void ISInternalDirectoriesForm::ItemSelectionChanged()
 {
 	ISGui::SetWaitGlobalCursor(true);
-
 	POINTER_DELETE(Label);
 	POINTER_DELETE(ListBaseForm);
 
@@ -72,7 +71,6 @@ void ISInternalDirectoriesForm::ItemSelectionChanged()
 	ListBaseForm = new ISListBaseForm(CurrentItem->data(Qt::UserRole).toString(), this);
 	ListBaseForm->LoadData();
 	Layout->addWidget(ListBaseForm);
-
 	ISGui::SetWaitGlobalCursor(false);
 }
 //-----------------------------------------------------------------------------

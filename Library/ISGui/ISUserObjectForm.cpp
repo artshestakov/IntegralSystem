@@ -4,7 +4,6 @@
 #include "ISUserListForm.h"
 #include "ISLocalization.h"
 #include "ISMessageBox.h"
-#include "ISQuery.h"
 #include "ISCore.h"
 #include "ISGui.h"
 #include "ISSystem.h"
