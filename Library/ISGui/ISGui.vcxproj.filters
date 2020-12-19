@@ -243,9 +243,6 @@
     <ClCompile Include="ISAuthForm.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
-    <ClCompile Include="ISCalendarEventForm.cpp">
-      <Filter>Forms</Filter>
-    </ClCompile>
     <ClCompile Include="ISCalendarForm.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
@@ -564,9 +561,6 @@
       <Filter>Forms</Filter>
     </QtMoc>
     <QtMoc Include="ISAuthForm.h">
-      <Filter>Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISCalendarEventForm.h">
       <Filter>Forms</Filter>
     </QtMoc>
     <QtMoc Include="ISCalendarForm.h">

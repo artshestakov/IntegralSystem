@@ -181,7 +181,6 @@
     <ClCompile Include="ISBaseTableView.cpp" />
     <ClCompile Include="ISBuffer.cpp" />
     <ClCompile Include="ISButtons.cpp" />
-    <ClCompile Include="ISCalendarEventForm.cpp" />
     <ClCompile Include="ISCalendarEventItem.cpp" />
     <ClCompile Include="ISCalendarEventsWidget.cpp" />
     <ClCompile Include="ISCalendarForm.cpp" />
@@ -367,7 +366,6 @@
     <QtMoc Include="ISWorkspaceForm.h" />
     <QtMoc Include="ISAboutForm.h" />
     <QtMoc Include="ISAuthForm.h" />
-    <QtMoc Include="ISCalendarEventForm.h" />
     <QtMoc Include="ISCalendarForm.h" />
     <QtMoc Include="ISCalendarObjectForm.h" />
     <QtMoc Include="ISConnectionForm.h" />

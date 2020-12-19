@@ -8,7 +8,6 @@
 #include "ISQuery.h"
 #include "ISTcpQuery.h"
 #include "ISMessageBox.h"
-#include "ISCalendarEventForm.h"
 #include "ISInputDialog.h"
 #include "ISCore.h"
 #include "ISDefinesGui.h"

@@ -180,7 +180,6 @@
   <Local Name="Message.Question.ConnectionError.Reconnect" Russian="Не удалось подключиться к базе данных.&#10;Ошибка: %1&#10;&#10;Повторить попытку подключения?"/>
   <Local Name="Message.Question.CancelChanged" Russian="Отменить изменения?"/>
   <Local Name="Message.Question.DeleteCalendarEvent" Russian="Удалить это событие?"/>
-  <Local Name="Message.Question.CalendarEventFormClose" Russian="Закрытие окна привезет к автомтическому завернею события. Закрыть окно?"/>
   <Local Name="Message.Question.FileSaved" Russian="Файл успешно сохранен! Открыть его?"/>
   <Local Name="Message.Question.CalendarCloseEvent" Russian="Завершить событие?"/>
   <Local Name="Message.Question.StopInsertingToStorage" Russian="Остановить добавление файлов?"/>
@@ -288,9 +287,7 @@
   <Local Name="All" Russian="Все"/>
   <Local Name="InSeparateWindow" Russian="В отдельное окно"/>
   <Local Name="Founded" Russian="Найдено"/>
-  <Local Name="Reminder" Russian="Напоминание"/>
   <Local Name="CalendarCloseEvent" Russian="Завершить событие"/>
-  <Local Name="Defer" Russian="Отложить"/>
   <Local Name="SelectDate" Russian="Выберите дату"/>
   <Local Name="PasswordManagement" Russian="Управление паролем"/>
   <Local Name="PasswordReset" Russian="Сброс пароля"/>
@@ -317,7 +314,6 @@
   <Local Name="Age" Russian="Возраст"/>
   <Local Name="AgeNotSelected" Russian="Не указан"/>
   <Local Name="TimeAlert" Russian="Время уведомления"/>
-  <Local Name="OverdueEvent" Russian="Просроченное событие"/>
   <Local Name="EnteringSearchQuery" Russian="Введите поисковый запрос"/>
   <Local Name="Edit" Russian="Изменить"/>
   <Local Name="ListIsEmpty" Russian="Справочник пуст"/>
@@ -575,7 +571,6 @@
 
   <!--Calendar-->
   <Local Name="Date" Russian="Дата"/>
-  <Local Name="Time" Russian="Время"/>
   <Local Name="Everyday" Russian="Каждый день"/>
   <Local Name="Month.January" Russian="Январь"/>
   <Local Name="Month.February" Russian="Февраль"/>
@@ -647,7 +642,6 @@
   <Local Name="NextMouth" Russian="Следующий месяц"/>
   <Local Name="PrevMouth" Russian="Предыдущий месяц"/>
   <Local Name="CurrentYear" Russian="Текущий год"/>
-  <Local Name="Year.Reduction" Russian="г."/>
 
   <!--PlaceholderText-->
   <Local Name="Field.Bik.PlaceholderText" Russian="9 цифр"/>
@@ -709,7 +703,6 @@
   <Local Name="Calculated" Russian="вычисляется"/>
   <Local Name="OrdinalNumber" Russian="Порядковый номер"/>
   <Local Name="FileName" Russian="Имя файла"/>
-  <Local Name="Text" Russian="Текст"/>
   <Local Name="Overview" Russian="Обзор..."/>
   <Local Name="Hide" Russian="Скрыть"/>
   <Local Name="SearchFromINN" Russian="Поиск по ИНН"/>
