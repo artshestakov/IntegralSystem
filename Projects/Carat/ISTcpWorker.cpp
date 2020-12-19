@@ -236,6 +236,10 @@ static QString QD_CALENDAR = PREPARE_QUERY("DELETE FROM _calendar "
 										   "WHERE cldr_id = :ObjectID "
 										   "RETURNING cldr_name");
 //-----------------------------------------------------------------------------
+static QString QS_INTERNAL_LISTS = PREPARE_QUERY("SELECT intd_tablename "
+												 "FROM _internaldirectories "
+												 "ORDER BY intd_order");
+//-----------------------------------------------------------------------------
 ISTcpWorker::ISTcpWorker(const QString &db_host, int db_port, const QString &db_name, const QString &db_user, const QString &db_password)
 	: QObject(),
 	ErrorString(NO_ERROR_STRING),
@@ -392,6 +396,7 @@ void ISTcpWorker::Process()
 					case ISNamespace::AMT_SearchFullText: Result = SearchFullText(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_GetCalendarEvents: Result = GetCalendarEvents(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_CalendarDelete: Result = CalendarDelete(tcp_message, TcpAnswer); break;
+					case ISNamespace::AMT_GetInternalLists: Result = GetInternalLists(tcp_message, TcpAnswer); break;
 					default:
 						ErrorString = LANG("Carat.Error.NotExistFunction").arg(tcp_message->TypeName);
 					}
@@ -2346,6 +2351,28 @@ bool ISTcpWorker::CalendarDelete(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
 		return false;
 	}
 	Protocol(TcpMessage->TcpSocket->GetUserID(), CONST_UID_PROTOCOL_CALENDAR_DELETE, QVariant(), QVariant(), QVariant(), qDelete.ReadColumn("cldr_name"));
+	return true;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::GetInternalLists(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+	Q_UNUSED(TcpMessage);
+
+	//Запрашиваем справочники
+	ISQuery qSelect(ISDatabase::Instance().GetDB(DBConnectionName), QS_INTERNAL_LISTS);
+	if (!qSelect.Execute()) //Ошибка запроса
+	{
+		ErrorString = LANG("Carat.Error.Query.GetInternalLists.Select").arg(qSelect.GetErrorString());
+		return false;
+	}
+
+	//Обходим результаты запроса
+	QVariantList Lists;
+	while (qSelect.Next())
+	{
+		Lists.append(qSelect.ReadColumn("intd_tablename"));
+	}
+	TcpAnswer->Parameters["Lists"] = Lists;
 	return true;
 }
 //-----------------------------------------------------------------------------
