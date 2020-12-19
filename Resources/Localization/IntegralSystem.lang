@@ -70,7 +70,6 @@
   <Local Name="Message.Error.ErrorQuerySQL" Russian="Произошла ошибка SQL-запроса!"/>
   <Local Name="Message.Error.ErrorQuerySQL.Details" Russian="Текст ошибки:&#10;%1&#10;&#10;Текст запроса:&#10;%2"/>
   <Local Name="Message.Error.SaveSortingBuffer" Russian="Не удалось сохранить сортировки полей."/>
-  <Local Name="Message.Error.SaveColumnSizer" Russian="Не удалось сохранить размерность полей."/>
   <Local Name="Message.Error.SaveFavorites" Russian="Не удалось сохранить избранные объекты."/>
   <Local Name="Message.Error.SaveHistory" Russian="Не удалось сохранить историю открытий объектов."/>
   <Local Name="Message.Error.SaveUserSettings" Russian="Не удалось сохранить пользовательские настройки."/>

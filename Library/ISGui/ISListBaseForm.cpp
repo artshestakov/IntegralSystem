@@ -472,12 +472,9 @@ void ISListBaseForm::DoubleClickedTable(const QModelIndex &ModelIndex)
 //-----------------------------------------------------------------------------
 void ISListBaseForm::FieldResized(bool Include)
 {
-	if (SETTING_BOOL(CONST_UID_SETTING_TABLES_REMEMBERCOLUMNSIZE))
-	{
-		Include ?
-			connect(TableView->horizontalHeader(), &QHeaderView::sectionResized, this, static_cast<void(ISListBaseForm::*)(int, int, int)>(&ISListBaseForm::FieldResized)) :
-			disconnect(TableView->horizontalHeader(), &QHeaderView::sectionResized, this, static_cast<void(ISListBaseForm::*)(int, int, int)>(&ISListBaseForm::FieldResized));
-	}
+	Include ?
+		connect(TableView->horizontalHeader(), &QHeaderView::sectionResized, this, static_cast<void(ISListBaseForm::*)(int, int, int)>(&ISListBaseForm::FieldResized)) :
+		disconnect(TableView->horizontalHeader(), &QHeaderView::sectionResized, this, static_cast<void(ISListBaseForm::*)(int, int, int)>(&ISListBaseForm::FieldResized));
 }
 //-----------------------------------------------------------------------------
 void ISListBaseForm::FieldResized(int LogicalIndex, int WidthOld, int WidthNew)
