@@ -140,7 +140,6 @@ void ISCalendarWidget::CurrentPageChanged(int Year, int Month)
 void ISCalendarWidget::paintCell(QPainter *Painter, const QRect &Rect, const QDate &Date) const
 {
 	Painter->save();
-
 	if (Date == QDate::currentDate()) //Если рисуется текущая дата
 	{
 		Painter->fillRect(Rect, ISDefines::Gui::COLOR_CALENDAR_SELECTED_DATE_BACKGROUND); //Заполнение фона
@@ -152,26 +151,14 @@ void ISCalendarWidget::paintCell(QPainter *Painter, const QRect &Rect, const QDa
 	}
 	else
 	{
-		if (Date == selectedDate()) //Есл рисуется выделенная пользоваелем дата
-		{
-			Painter->fillRect(Rect, ISDefines::Gui::COLOR_CALENDAR_SELECTED_DATE_BACKGROUND); //Заполнение фона
-		}
-		else
-		{
-			Painter->fillRect(Rect, Qt::white); //Заполнение фона
-		}
+		Painter->fillRect(Rect, Date == selectedDate() ? ISDefines::Gui::COLOR_CALENDAR_SELECTED_DATE_BACKGROUND : Qt::white); //Заполнение фона
 	}
 
 	if (Date.month() != monthShown()) //Если рисуются дни НЕ ТЕКУЩЕГО месяца
 	{
 		Painter->fillRect(Rect, ISDefines::Gui::COLOR_CALENDAR_CELL_BACKGROUP); //Заполнение фона
 	}
-
-	QString Text = QString::number(Date.day()); //Текст
-	
-	QRect RectText(Rect.x() + 3, Rect.y() + 2, Rect.width(), Rect.height()); //Расположение текста
-	Painter->drawText(RectText, Text); //Рисование текста с датой
-
+	Painter->drawText(QRect(Rect.x() + 3, Rect.y() + 2, Rect.width(), Rect.height()), QString::number(Date.day())); //Рисование текста с датой
 	Painter->restore();
 }
 //-----------------------------------------------------------------------------

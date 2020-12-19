@@ -22,7 +22,7 @@ ISCalendarPanel::~ISCalendarPanel()
 void ISCalendarPanel::SetDays(const ISVectorUInt &days)
 {
 	Days = days;
-	repaint();
+	updateCells();
 }
 //-----------------------------------------------------------------------------
 void ISCalendarPanel::paintCell(QPainter *Painter, const QRect &Rect, const QDate &Date) const
@@ -60,7 +60,9 @@ void ISCalendarPanel::paintCell(QPainter *Painter, const QRect &Rect, const QDat
 		PointIndicator = QPoint(Rect.x() + 3, Rect.y() + 3);
 	}
 
-	if (ISAlgorithm::VectorContains(Days, (unsigned int)Date.day()))
+	//–исуем плажку событи€ если по текущей дате есть событи€
+	//и мес€ц текущей датысоответствует отображаемому мес€ц
+	if (ISAlgorithm::VectorContains(Days, (unsigned int)Date.day()) && Date.month() == monthShown())
 	{
 		Painter->drawPixmap(PointIndicator, PixmapIndicator);
 	}
