@@ -13,8 +13,6 @@ public:
 	QString GetErrorString() const; //Получить описание ошибки
 	QVariantMap GetColumnSize() const; //Получить данные о размера полей
 	bool Initialize();
-	bool Save(); //Сохранить размеры в базу данных
-	bool Clear(); //Очистить размеры
 
 	void SetColumnSize(const QString &TableName, const QString &FieldName, int Size); //Изменить размер поля в таблице
 	void SetColumnSizeNew(const QString &TableName, const QString &FieldName, int Size); //Изменить размер поля в таблице

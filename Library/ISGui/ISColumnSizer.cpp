@@ -7,24 +7,6 @@ static QString QS_COLUMN_SIZE = PREPARE_QUERY("SELECT clsz_tablename, clsz_field
 											  "FROM _columnsize "
 											  "WHERE clsz_user = :UserID");
 //-----------------------------------------------------------------------------
-static QString QS_COLUMN_SIZE_COUNT = PREPARE_QUERY("SELECT COUNT(*) "
-													"FROM _columnsize "
-													"WHERE clsz_user = :UserID "
-													"AND clsz_tablename = :TableName "
-													"AND clsz_fieldname = :FieldName");
-//-----------------------------------------------------------------------------
-static QString QU_COLUMN_SIZE = PREPARE_QUERY("UPDATE _columnsize SET "
-											  "clsz_size = :Size "
-											  "WHERE clsz_user = :UserID "
-											  "AND clsz_tablename = :TableName "
-											  "AND clsz_fieldname = :FieldName");
-//-----------------------------------------------------------------------------
-static QString QI_COLUMN_SIZE = PREPARE_QUERY("INSERT INTO _columnsize(clsz_user, clsz_tablename, clsz_fieldname, clsz_size) "
-											  "VALUES (:UserID, :TableName, :FieldName, :Size)");
-//-----------------------------------------------------------------------------
-static QString QD_COLUMN_SIZE = PREPARE_QUERY("DELETE FROM _columnsize "
-											  "WHERE clsz_user = :UserID");
-//-----------------------------------------------------------------------------
 ISColumnSizer::ISColumnSizer()
 	: ErrorString(NO_ERROR_STRING)
 {
@@ -92,61 +74,6 @@ bool ISColumnSizer::Initialize()
 	else
 	{
 		ErrorString = qSelect.GetErrorString();
-	}
-	return Result;
-}
-//-----------------------------------------------------------------------------
-bool ISColumnSizer::Save()
-{
-	bool Result = true;
-	for (const auto &TableItem : Tables)
-	{
-		if (TableItem.second->ModificationFlag)
-		{
-			for (const auto &FieldItem : TableItem.second->Fields)
-			{
-				ISQuery qSelect(QS_COLUMN_SIZE_COUNT);
-				qSelect.BindValue(":UserID", CURRENT_USER_ID);
-				qSelect.BindValue(":TableName", TableItem.first);
-				qSelect.BindValue(":FieldName", FieldItem.first);
-				Result = qSelect.ExecuteFirst();
-				if (!Result)
-				{
-					ErrorString = qSelect.GetErrorString();
-					break;
-				}
-
-				ISQuery qUpsert(qSelect.ReadColumn("count").toInt() ? QU_COLUMN_SIZE : QI_COLUMN_SIZE);
-				qUpsert.BindValue(":UserID", CURRENT_USER_ID);
-				qUpsert.BindValue(":TableName", TableItem.first);
-				qUpsert.BindValue(":FieldName", FieldItem.first);
-				qUpsert.BindValue(":Size", FieldItem.second);
-				Result = qUpsert.Execute();
-				if (!Result)
-				{
-					ErrorString = qUpsert.GetErrorString();
-					break;
-				}
-			}
-
-			if (!Result)
-			{
-				break;
-			}
-		}
-	}
-
-	return Result;
-}
-//-----------------------------------------------------------------------------
-bool ISColumnSizer::Clear()
-{
-	ISQuery qDelete(QD_COLUMN_SIZE);
-	qDelete.BindValue(":UserID", CURRENT_USER_ID);
-	bool Result = qDelete.Execute();
-	if (!Result)
-	{
-		ErrorString = qDelete.GetErrorString();
 	}
 	return Result;
 }
