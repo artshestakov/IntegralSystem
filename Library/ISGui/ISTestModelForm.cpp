@@ -42,6 +42,12 @@ void ISTestModelForm::SetSource(const QVariantMap &TcpAnswer)
 	disconnect(TableView->horizontalHeader(), &QHeaderView::sortIndicatorChanged, this, &ISTestModelForm::SortingChanged);
 	TableView->horizontalHeader()->setSortIndicator(TcpModel->GetFieldIndex(SortingField), SortingOrder);
 	connect(TableView->horizontalHeader(), &QHeaderView::sortIndicatorChanged, this, &ISTestModelForm::SortingChanged);
+
+	QVariantMap ColumnSizeMap = TcpAnswer["ColumnSize"].toMap();
+	for (const auto &MapItem : ColumnSizeMap.toStdMap())
+	{
+		TableView->setColumnWidth(TcpModel->GetFieldIndex(MapItem.first), MapItem.second.toInt());
+	}
 }
 //-----------------------------------------------------------------------------
 void ISTestModelForm::SortingChanged(int LogicalIndex, Qt::SortOrder Order)
