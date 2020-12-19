@@ -200,7 +200,6 @@ bool ISStartup::StartupNew(ISSplashScreen *SplashScreen)
 	ISPrintingEntity::Instance().Initialize(MetaData["Printing"].toList());
 	ISFavorites::Instance().Initialize(MetaData["Favorite"].toMap());
 	ISHistory::Instance().Initialize(MetaData["History"].toList());
-	ISSortingBuffer::Instance().Initialize(MetaData["Sorting"].toList());
 	ISSettings::Instance().Initialize(MetaData["Settings"].toList());
 	ISParagraphEntity::Instance().Initialize(MetaData["Paragraphs"].toList());
 	ISObjects::Instance().GetInterface()->BeforeShowMainWindow();

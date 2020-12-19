@@ -49,15 +49,6 @@ QString ISSortingBuffer::GetErrorString() const
 	return ErrorString;
 }
 //-----------------------------------------------------------------------------
-void ISSortingBuffer::Initialize(const QVariantList &VariantList)
-{
-	for (const QVariant &Variant : VariantList)
-	{
-		QVariantMap VariantMap = Variant.toMap();
-		Sortings.emplace_back(CreateSorting(VariantMap["Table"].toString(), VariantMap["Field"].toString(), qvariant_cast<Qt::SortOrder>(VariantMap["Sort"])));
-	}
-}
-//-----------------------------------------------------------------------------
 bool ISSortingBuffer::Initialize()
 {
 	ISQuery qSelect(QS_SORTINGS);

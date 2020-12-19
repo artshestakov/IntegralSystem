@@ -70,10 +70,6 @@ static QString QS_HISTORY = PREPARE_QUERY("SELECT htry_datetime, htry_tablename,
 										  "WHERE htry_user = :UserID "
 										  "ORDER BY htry_id");
 //-----------------------------------------------------------------------------
-static QString QS_SORTINGS = PREPARE_QUERY("SELECT sgts_tablename, sgts_fieldname, sgts_sorting "
-										   "FROM _sortingtables "
-										   "WHERE sgts_user = :UserID");
-//-----------------------------------------------------------------------------
 static QString QS_SETTING_GROUP = PREPARE_QUERY("SELECT stgp_uid, stgp_name, stgp_localname, stgp_iconname, stgp_hint "
 												"FROM _settingsgroup "
 												"ORDER BY stgp_order");
@@ -1058,29 +1054,6 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	else
 	{
 		ErrorString = LANG("Carat.Error.Query.GetMetaData.History").arg(qSelectHistory.GetErrorString());
-		return false;
-	}
-
-	//Получаем сортировки
-	QVariantList SortingList;
-	ISQuery qSelectSorting(ISDatabase::Instance().GetDB(DBConnectionName), QS_SORTINGS);
-	qSelectSorting.BindValue(":UserID", TcpMessage->TcpSocket->GetUserID());
-	if (qSelectSorting.Execute())
-	{
-		while (qSelectSorting.Next())
-		{
-			SortingList.append(QVariantMap
-			{
-				{ "Table", qSelectSorting.ReadColumn("sgts_tablename") },
-				{ "Field", qSelectSorting.ReadColumn("sgts_fieldname") },
-				{ "Sort", qSelectSorting.ReadColumn("sgts_sorting") }
-			});
-		}
-		TcpAnswer->Parameters["Sorting"] = SortingList;
-	}
-	else
-	{
-		ErrorString = LANG("Carat.Error.Query.GetMetaData.Sorting").arg(qSelectSorting.GetErrorString());
 		return false;
 	}
 
