@@ -5,7 +5,6 @@
 #include "ISControls.h"
 #include "ISGui.h"
 #include "ISCalendarObjectForm.h"
-#include "ISQuery.h"
 #include "ISTcpQuery.h"
 #include "ISMessageBox.h"
 #include "ISInputDialog.h"

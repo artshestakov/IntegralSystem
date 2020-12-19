@@ -1,5 +1,4 @@
 #include "ISSettingFIeldWidgets.h"
-#include "ISQuery.h"
 #include "ISLocalization.h"
 #include "ISDefinesGui.h"
 //-----------------------------------------------------------------------------
