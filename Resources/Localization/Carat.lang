@@ -134,4 +134,7 @@
   <Local Name="Carat.Error.Query.SaveMetaData.UpdateColumnSize" Russian="Не удалось обновить размер поля: %1"/>
   <Local Name="Carat.Error.Query.SaveMetaData.InsertColumnSize" Russian="Не удалось добавить размер поля: %1"/>
 
+  <Local Name="Carat.Error.Query.GetGroupRights.SelectSubSystems" Russian="Не удалось получить информацию о подсистемах: %1"/>
+  <Local Name="Carat.Error.Query.GetGroupRights.SelectTables" Russian="Не удалось получить информацию о таблицах: %1"/>
+
 </LANG>

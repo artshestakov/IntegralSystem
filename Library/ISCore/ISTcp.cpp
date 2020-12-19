@@ -152,6 +152,10 @@ ISNamespace::ApiMessageType ISTcp::GetMessageTypeByName(const QString &Name)
 	{
 		return ISNamespace::AMT_SaveMetaData;
 	}
+	else if (Name == API_GET_GROUP_RIGHTS)
+	{
+		return ISNamespace::AMT_GetGroupRights;
+	}
 	return ISNamespace::AMT_Unknown;
 }
 //-----------------------------------------------------------------------------

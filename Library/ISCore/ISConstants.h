@@ -174,6 +174,7 @@ const char API_GET_CALENDAR_EVENTS[] = "GetCalendarEvents"; //Получить события к
 const char API_CALENDAR_DELETE[] = "CalendarDelete"; //Удаление события календаря
 const char API_GET_INTERNAL_LISTS[] = "GetInternalLists"; //Получить список внутренних справочников
 const char API_SAVE_META_DATA[] = "SaveMetaData"; //Сохранение мета-данных
+const char API_GET_GROUP_RIGHTS[] = "GetGroupRights"; //Получить права группы
 //CARAT_LOCAL_API--------------------------------------------------------------
 const char	CARAT_LOCAL_API_SHUTDOWN[] = "shutdown"; //Завершение работы
 //-----------------------------------------------------------------------------

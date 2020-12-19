@@ -245,6 +245,16 @@ static QString QU_COLUMN_SIZE = PREPARE_QUERY("UPDATE _columnsize SET "
 											  "AND clsz_tablename = :TableName "
 											  "AND clsz_fieldname = :FieldName");
 //-----------------------------------------------------------------------------
+static QString QS_GROUP_RIGHT_SUBSYSTEM = PREPARE_QUERY("SELECT sbsm_uid "
+														"FROM _subsystems "
+														"WHERE (SELECT COUNT(*) FROM _groupaccesssubsystem WHERE gass_group = :GroupID AND gass_subsystem = sbsm_uid) > 0 "
+														"ORDER BY sbsm_orderid");
+//-----------------------------------------------------------------------------
+static QString QS_GROUP_RIGHT_TABLE = PREPARE_QUERY("SELECT gatb_table, gatt_uid "
+													"FROM _groupaccesstable "
+													"LEFT JOIN _groupaccesstabletype ON gatt_id = gatb_accesstype "
+													"WHERE gatb_group = :GroupID");
+//-----------------------------------------------------------------------------
 ISTcpWorker::ISTcpWorker(const QString &db_host, int db_port, const QString &db_name, const QString &db_user, const QString &db_password)
 	: QObject(),
 	ErrorString(NO_ERROR_STRING),
@@ -403,6 +413,7 @@ void ISTcpWorker::Process()
 					case ISNamespace::AMT_CalendarDelete: Result = CalendarDelete(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_GetInternalLists: Result = GetInternalLists(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_SaveMetaData: Result = SaveMetaData(tcp_message, TcpAnswer); break;
+					case ISNamespace::AMT_GetGroupRights: Result = GetGroupRights(tcp_message, TcpAnswer); break;
 					default:
 						ErrorString = LANG("Carat.Error.NotExistFunction").arg(tcp_message->TypeName);
 					}
@@ -2393,6 +2404,56 @@ bool ISTcpWorker::SaveMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 		}
 	}
 
+	return true;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::GetGroupRights(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+	QVariant GroupID = CheckNullField("GroupID", TcpMessage);
+	if (!GroupID.isValid())
+	{
+		return false;
+	}
+
+	//Запрашиваем права на подсистемы
+	ISQuery qSelectSubSystem(ISDatabase::Instance().GetDB(DBConnectionName), QS_GROUP_RIGHT_SUBSYSTEM);
+	qSelectSubSystem.BindValue(":GroupID", GroupID);
+	if (!qSelectSubSystem.Execute())
+	{
+		ErrorString = LANG("Carat.Error.Query.GetGroupRights.SelectSubSystems").arg(qSelectSubSystem.GetErrorString());
+		return false;
+	}
+
+	//Обходим системы
+	QVariantList SubSystemsList;
+	while (qSelectSubSystem.Next())
+	{
+		SubSystemsList.append(ISUuid(qSelectSubSystem.ReadColumn("sbsm_uid")));
+	}
+
+	//Запрашиваем права на таблицы
+	ISQuery qSelectTables(ISDatabase::Instance().GetDB(DBConnectionName), QS_GROUP_RIGHT_TABLE);
+	qSelectTables.BindValue(":GroupID", GroupID);
+	if (!qSelectTables.Execute())
+	{
+		ErrorString = LANG("Carat.Error.Query.GetGroupRights.SelectTables").arg(qSelectTables.GetErrorString());
+		return false;
+	}
+
+	//Обходим таблицы
+	QVariantMap TablesMap;
+	while (qSelectTables.Next())
+	{
+		QString TableName = qSelectTables.ReadColumn("gatb_table").toString();
+		QVariantList VariantList = TablesMap[TableName].toList();
+		VariantList.append(ISUuid(qSelectTables.ReadColumn("gatt_uid")));
+		TablesMap[TableName] = VariantList;
+	}
+
+	//Получаем спец. права
+
+	TcpAnswer->Parameters["SubSystems"] = SubSystemsList;
+	TcpAnswer->Parameters["Tables"] = TablesMap;
 	return true;
 }
 //-----------------------------------------------------------------------------
