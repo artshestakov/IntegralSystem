@@ -1618,6 +1618,7 @@ bool ISTcpWorker::RecordDelete(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 
 	//Проверяем, нет ли системных записей
 	ISQuery qSqlQuery(ISDatabase::Instance().GetDB(DBConnectionName), "SELECT (COUNT(*) > 0)::BOOLEAN AS is_exist FROM " + TableNameString + " WHERE " + MetaTable->Alias + "_issystem AND " + MetaTable->Alias + "_id IN(" + SqlIN + ")");
+	qSqlQuery.SetShowLongQuery(false);
 	if (!qSqlQuery.Execute()) //Ошибка запроса
 	{
 		ErrorString = LANG("Carat.Error.Query.RecordDelete.Select").arg(qSqlQuery.GetErrorString());
@@ -1640,6 +1641,7 @@ bool ISTcpWorker::RecordDelete(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 
 	//Удаляем
 	ISQuery qDelete(ISDatabase::Instance().GetDB(DBConnectionName), "DELETE FROM " + TableNameString + " WHERE " + MetaTable->Alias + "_id IN(" + SqlIN + ")");
+	qDelete.SetShowLongQuery(false);
 	if (!qDelete.Execute()) //Ошибка запроса
 	{
 		ErrorString = LANG("Carat.Error.Query.RecordDelete.Delete").arg(qDelete.GetErrorString());
