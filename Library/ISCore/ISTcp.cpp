@@ -164,6 +164,14 @@ ISNamespace::ApiMessageType ISTcp::GetMessageTypeByName(const QString &Name)
 	{
 		return ISNamespace::AMT_GroupRightSubSystemDelete;
 	}
+	else if (Name == API_GROUP_RIGHT_TABLE_ADD)
+	{
+		return ISNamespace::AMT_GroupRightTableAdd;
+	}
+	else if (Name == API_GROUP_RIGHT_TABLE_DELETE)
+	{
+		return ISNamespace::AMT_GroupRightTableDelete;
+	}
 	return ISNamespace::AMT_Unknown;
 }
 //-----------------------------------------------------------------------------

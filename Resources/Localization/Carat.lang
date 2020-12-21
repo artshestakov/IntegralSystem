@@ -143,4 +143,10 @@
 
   <Local Name="Carat.Error.Query.GroupRightSubSystemDelete.Delete" Russian="Не удалось удалить право на подсистему: %1"/>
 
+  <Local Name="Carat.Error.Query.GroupRightTableAdd.TableNotExist" Russian="Таблица %1 не существует."/>
+  <Local Name="Carat.Error.Query.GroupRightTableAdd.Insert" Russian="Не удалось добавить право на таблицу: %1"/>
+
+  <Local Name="Carat.Error.Query.GroupRightTableDelete.TableNotExist" Russian="Таблица %1 не существует."/>
+  <Local Name="Carat.Error.Query.GroupRightTableDelete.Delete" Russian="Не удалось удалить право на таблицу: %1"/>
+
 </LANG>

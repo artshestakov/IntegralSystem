@@ -273,6 +273,16 @@ static QString QD_GROUP_RIGHT_SUBSYSTEM = PREPARE_QUERY("DELETE FROM _groupacces
 														"AND gass_subsystem = :SubSystemUID "
 														"RETURNING (SELECT sbsm_localname FROM _subsystems WHERE sbsm_uid = :SubSystemUID)");
 //-----------------------------------------------------------------------------
+static QString QI_GROUP_RIGHT_TABLE = PREPARE_QUERY("INSERT INTO _groupaccesstable(gatb_group, gatb_table, gatb_accesstype) "
+													"VALUES(:GroupID, :TableName, (SELECT gatt_id FROM _groupaccesstabletype WHERE gatt_uid = :AccessUID)) "
+													"RETURNING (SELECT gatt_name FROM _groupaccesstabletype WHERE gatt_uid = :AccessUID)");
+//-----------------------------------------------------------------------------
+static QString QD_GROUP_RIGHT_TABLE = PREPARE_QUERY("DELETE FROM _groupaccesstable "
+													"WHERE gatb_group = :GroupID "
+													"AND gatb_table = :TableName "
+													"AND gatb_accesstype = (SELECT gatt_id FROM _groupaccesstabletype WHERE gatt_uid = :AccessUID) "
+													"RETURNING (SELECT gatt_name FROM _groupaccesstabletype WHERE gatt_uid = :AccessUID)");
+//-----------------------------------------------------------------------------
 ISTcpWorker::ISTcpWorker(const QString &db_host, int db_port, const QString &db_name, const QString &db_user, const QString &db_password)
 	: QObject(),
 	ErrorString(NO_ERROR_STRING),
@@ -434,6 +444,8 @@ void ISTcpWorker::Process()
 					case ISNamespace::AMT_GetGroupRights: Result = GetGroupRights(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_GroupRightSubSystemAdd: Result = GroupRightSubSystemAdd(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_GroupRightSubSystemDelete: Result = GroupRightSubSystemDelete(tcp_message, TcpAnswer); break;
+					case ISNamespace::AMT_GroupRightTableAdd: Result = GroupRightTableAdd(tcp_message, TcpAnswer); break;
+					case ISNamespace::AMT_GroupRightTableDelete: Result = GroupRightTableDelete(tcp_message, TcpAnswer); break;
 					default:
 						ErrorString = LANG("Carat.Error.NotExistFunction").arg(tcp_message->TypeName);
 					}
@@ -2577,6 +2589,86 @@ bool ISTcpWorker::GroupRightSubSystemDelete(ISTcpMessage *TcpMessage, ISTcpAnswe
 		return false;
 	}
 	Protocol(TcpMessage->TcpSocket->GetUserID(), CONST_UID_PROTOCOL_DEL_ACCESS_TO_SUBSYSTEM, QVariant(), QVariant(), QVariant(), qDelete.ReadColumn("sbsm_localname"));
+	return true;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::GroupRightTableAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+	Q_UNUSED(TcpAnswer);
+
+	QVariant GroupID = CheckNullField("GroupID", TcpMessage),
+		TableName = CheckNullField("TableName", TcpMessage),
+		AccessUID = CheckNullField("AccessUID", TcpMessage);
+	if (!GroupID.isValid() || !TableName.isValid() || !AccessUID.isValid())
+	{
+		return false;
+	}
+
+	//Получаем мета-таблицу
+	PMetaTable *MetaTable = ISMetaData::Instance().GetMetaTable(TableName.toString());
+	if (!MetaTable)
+	{
+		ErrorString = LANG("Carat.Error.Query.GroupRightTableAdd.TableNotExist").arg(TableName.toString());
+		return false;
+	}
+
+	//Добавляем право
+	ISQuery qInsert(ISDatabase::Instance().GetDB(DBConnectionName), QI_GROUP_RIGHT_TABLE);
+	qInsert.BindValue(":GroupID", GroupID);
+	qInsert.BindValue(":TableName", MetaTable->Name);
+	qInsert.BindValue(":AccessUID", AccessUID);
+	if (!qInsert.Execute()) //Ошибка запроса
+	{
+		ErrorString = LANG("Carat.Error.Query.GroupRightTableAdd.Insert").arg(qInsert.GetErrorString());
+		return false;
+	}
+
+	//Не удалось прочитать
+	if (!qInsert.First())
+	{
+		return false;
+	}
+	Protocol(TcpMessage->TcpSocket->GetUserID(), CONST_UID_PROTOCOL_ADD_ACCESS_TO_TABLE, MetaTable->Name, MetaTable->LocalListName, QVariant(), qInsert.ReadColumn("gatt_name"));
+	return true;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::GroupRightTableDelete(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+	Q_UNUSED(TcpAnswer);
+	
+	QVariant GroupID = CheckNullField("GroupID", TcpMessage),
+		TableName = CheckNullField("TableName", TcpMessage),
+		AccessUID = CheckNullField("AccessUID", TcpMessage);
+	if (!GroupID.isValid() || !TableName.isValid() || !AccessUID.isValid())
+	{
+		return false;
+	}
+
+	//Получаем мета-таблицу
+	PMetaTable *MetaTable = ISMetaData::Instance().GetMetaTable(TableName.toString());
+	if (!MetaTable)
+	{
+		ErrorString = LANG("Carat.Error.Query.GroupRightTableDelete.TableNotExist").arg(TableName.toString());
+		return false;
+	}
+
+	//Удаляем право
+	ISQuery qDelete(ISDatabase::Instance().GetDB(DBConnectionName), QD_GROUP_RIGHT_TABLE);
+	qDelete.BindValue(":GroupID", GroupID);
+	qDelete.BindValue(":TableName", MetaTable->Name);
+	qDelete.BindValue(":AccessUID", AccessUID);
+	if (!qDelete.Execute())
+	{
+		ErrorString = LANG("Carat.Error.Query.GroupRightTableDelete.Delete").arg(qDelete.GetErrorString());
+		return false;
+	}
+
+	if (!qDelete.First())
+	{
+		ErrorString = qDelete.GetErrorString();
+		return false;
+	}
+	Protocol(TcpMessage->TcpSocket->GetUserID(), CONST_UID_PROTOCOL_DEL_ACCESS_TO_TABLE, MetaTable->Name, MetaTable->LocalListName, QVariant(), qDelete.ReadColumn("gatt_name"));
 	return true;
 }
 //-----------------------------------------------------------------------------

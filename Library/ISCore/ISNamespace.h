@@ -173,6 +173,8 @@ namespace ISNamespace
 		AMT_GetGroupRights, //Получить права группы
 		AMT_GroupRightSubSystemAdd, //Добавить группе право на подсистему
 		AMT_GroupRightSubSystemDelete, //Удалить у группы право на подсистему
+		AMT_GroupRightTableAdd, //Добавить группе право на таблицу
+		AMT_GroupRightTableDelete, //Удалить у группы право на таблицу
 	};
 };
 //-----------------------------------------------------------------------------

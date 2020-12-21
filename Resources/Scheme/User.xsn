@@ -76,11 +76,6 @@
       <Field UID="{61BB211B-5BAC-4232-8BB7-5078910DC27E}" Name="Icon" Type="String" LabelName="Иконка" LocalListName="Иконка"/>
       <Field UID="{D6C1A9D5-C60E-4577-90DB-B9FA6F341CEA}" Name="Order" Type="Int" LabelName="Порядок" LocalListName="Порядок" NotNull="true"/>
     </Fields>
-    <Indexes>
-      <Index Field="Name" Unique="true"/>
-      <Index Field="Icon"/>
-      <Index Field="Order"/>
-    </Indexes>
   </Table>
 
   <Table Name="_GroupAccessSpecial" UID="{BE0E381C-7265-494E-81F6-02257399ECDD}" Alias="gasp" LocalName="Специальное право" LocalListName="Специальные права" TitleName="Group" IsSystem="true">
