@@ -30,5 +30,6 @@ private:
 private:
 	int GroupID;
 	QVariantList SubSystems;
+	QVariantMap Tables;
 };
 //-----------------------------------------------------------------------------

@@ -8,10 +8,6 @@ class ISUserRoleEntity
 public:
 	static ISUserRoleEntity& Instance();
 
-	static bool CheckExistTableAccess(int GroupID, const QString &TableName, int AccessTypeID); //ѕроверить наличие права на таблицу в базе
-	static void InsertTableAccess(int GroupID, const QString &TableName, int AccessTypeID);
-	static void DeleteTableAccess(int GroupID, const QString &TableName, int AccessTypeID);
-	
 	static bool CheckExistSpecialAccess(int GroupID, int SpecialAccessID);
 	static void InsertSpecialAccess(int GroupID, int SpecialAccessID);
 	static void DeleteSpecialAccess(int GroupID, int SpecialAccessID);

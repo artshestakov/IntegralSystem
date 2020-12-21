@@ -14,10 +14,6 @@
 #include "ISTcpQuery.h"
 #include "ISMessageBox.h"
 //-----------------------------------------------------------------------------
-static QString QS_GROUP_ACCESS_TABLE_TYPE = PREPARE_QUERY("SELECT gatt_id, gatt_name, gatt_icon "
-														  "FROM _groupaccesstabletype "
-														  "ORDER BY gatt_order");
-//-----------------------------------------------------------------------------
 static QString QS_GROUP_ACCESS_SPECIAL_GROUP = PREPARE_QUERY("SELECT gast_uid, gast_name "
 															 "FROM _groupaccessspecialtype "
 															 "WHERE gast_parent IS NULL "
@@ -48,6 +44,7 @@ ISUserGroupForm::~ISUserGroupForm()
 void ISUserGroupForm::AfterShowEvent()
 {
 	ISInterfaceDialogForm::AfterShowEvent();
+	ISGui::SetWaitGlobalCursor(true);
 
 	ISTcpQuery qGetGroupRights(API_GET_GROUP_RIGHTS);
 	qGetGroupRights.BindValue("GroupID", GroupID);
@@ -55,13 +52,16 @@ void ISUserGroupForm::AfterShowEvent()
 	{
 		QVariantMap ResultMap = qGetGroupRights.TakeAnswer();
 		SubSystems = ResultMap["SubSystems"].toList();
+		Tables = ResultMap["Tables"].toMap();
 
 		CreateSubSystems();
 		CreateTables();
 		CreateSpecial();
+		ISGui::SetWaitGlobalCursor(false);
 	}
 	else
 	{
+		ISGui::SetWaitGlobalCursor(false);
 		ISMessageBox::ShowCritical(this, qGetGroupRights.GetErrorString());
 		close();
 	}
@@ -101,47 +101,31 @@ void ISUserGroupForm::CreateTables()
 	TabWidget->addTab(ScrollArea, LANG("AccessRights.Tables"));
 
 	//Вытаскиваем типы прав на таблицы
-	ISVectorMap AccessTypeVector;
-	ISQuery qSelectAccess(QS_GROUP_ACCESS_TABLE_TYPE);
-	if (qSelectAccess.Execute())
-	{
-		while (qSelectAccess.Next())
-		{
-			AccessTypeVector.emplace_back(QVariantMap
-			{
-				{ "AccessID", qSelectAccess.ReadColumn("gatt_id") },
-				{ "Name", qSelectAccess.ReadColumn("gatt_name") },
-				{ "Icon", qSelectAccess.ReadColumn("gatt_icon") }
-			});
-		}
-	}
+	ISVectorMap AccessTypeVector = ISBuffer::Instance().GetAccessTableType();
 
 	//Вытаскиваем из мета-данных все НЕ системные таблицы
 	ISStringMap Map;
 	for (PMetaTable *MetaTable : ISMetaData::Instance().GetTables())
 	{
-		if (!MetaTable->IsSystem) //Если таблица является системной - пропускать
+		if (MetaTable->IsSystem) //Если таблица является системной - пропускать
 		{
-			Map[MetaTable->LocalListName] = MetaTable->Name;
+			continue;
 		}
-	}
-
-	for (const auto &MapItem : Map) //Обходим таблицы
-	{
+		
 		QToolBar *ToolBar = new QToolBar(ScrollArea);
 		ToolBar->setToolButtonStyle(Qt::ToolButtonIconOnly);
 		ToolBar->setIconSize(ISDefines::Gui::SIZE_20_20);
 		connect(ToolBar, &QToolBar::actionTriggered, this, &ISUserGroupForm::TableClicked);
-		FormLayout->addRow(MapItem.first + ':', ToolBar);
+		FormLayout->addRow(MetaTable->LocalListName + ':', ToolBar);
 
 		for (const QVariantMap &VariantMap : AccessTypeVector) //Обходим типы прав
 		{
 			QAction *Action = ToolBar->addAction(BUFFER_ICONS(VariantMap["Icon"].toString()), VariantMap["Name"].toString());
 			Action->setCheckable(true);
-			Action->setProperty("TableName", MapItem.second);
-			Action->setProperty("LocalName", MapItem.first);
-			Action->setProperty("AccessID", VariantMap["AccessID"]);
-			Action->setChecked(ISUserRoleEntity::CheckExistTableAccess(GroupID, MapItem.second, VariantMap["AccessID"].toInt()));
+			Action->setProperty("TableName", MetaTable->Name);
+			Action->setProperty("LocalName", MetaTable->LocalListName);
+			Action->setProperty("AccessUID", VariantMap["AccessUID"]);
+			Action->setChecked(Tables.contains(MetaTable->Name) && Tables.value(MetaTable->Name).toList().contains(VariantMap["AccessUID"]));
 			ToolBar->widgetForAction(Action)->setCursor(CURSOR_POINTING_HAND);
 		}
 	}
@@ -208,19 +192,14 @@ void ISUserGroupForm::SubSystemClicked(const QVariant &value)
 void ISUserGroupForm::TableClicked(QAction *Action)
 {
 	ISGui::SetWaitGlobalCursor(true);
-	QString TableName = Action->property("TableName").toString(); //Имя таблицы
-	QString LocalName = Action->property("LocalName").toString(); //Локальное имя таблицы
-	int AccessID = Action->property("AccessID").toInt(); //Идентификатор права
-
-	if (Action->isChecked()) //Если право было включено
+	ISTcpQuery qAlterAccess(Action->isChecked() ? API_GROUP_RIGHT_TABLE_ADD : API_GROUP_RIGHT_TABLE_DELETE);
+	qAlterAccess.BindValue("GroupID", GroupID);
+	qAlterAccess.BindValue("TableName", Action->property("TableName"));
+	qAlterAccess.BindValue("AccessUID", Action->property("AccessUID"));
+	if (!qAlterAccess.Execute())
 	{
-		ISUserRoleEntity::InsertTableAccess(GroupID, TableName, AccessID);
-		ISProtocol::Insert(true, CONST_UID_PROTOCOL_ADD_ACCESS_TO_TABLE, "_UserGroup", ISMetaData::Instance().GetMetaTable("_UserGroup")->LocalListName, GroupID, LocalName);
-	}
-	else
-	{
-		ISUserRoleEntity::DeleteTableAccess(GroupID, TableName, AccessID);
-		ISProtocol::Insert(true, CONST_UID_PROTOCOL_DEL_ACCESS_TO_TABLE, "_UserGroup", ISMetaData::Instance().GetMetaTable("_UserGroup")->LocalListName, GroupID, LocalName);
+		ISGui::SetWaitGlobalCursor(false);
+		ISMessageBox::ShowCritical(this, qAlterAccess.GetErrorString());
 	}
 	ISGui::SetWaitGlobalCursor(false);
 }

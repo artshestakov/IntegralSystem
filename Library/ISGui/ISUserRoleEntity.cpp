@@ -5,20 +5,6 @@
 #include "ISLogger.h"
 #include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
-static QString QS_GROUP_ACCESS_TABLE_CHECK = PREPARE_QUERY("SELECT COUNT(*) "
-														   "FROM _groupaccesstable "
-														   "WHERE gatb_group = :GroupID "
-														   "AND gatb_table = :TableName "
-														   "AND gatb_accesstype = :AccessTypeID");
-//-----------------------------------------------------------------------------
-static QString QI_GROUP_ACCESS_TABLE = PREPARE_QUERY("INSERT INTO _groupaccesstable(gatb_group, gatb_table, gatb_accesstype) "
-													 "VALUES(:GroupID, :TableName, :AccessTypeID)");
-//-----------------------------------------------------------------------------
-static QString QD_GROUP_ACCESS_TABLE = PREPARE_QUERY("DELETE FROM _groupaccesstable "
-													 "WHERE gatb_group = :GroupID "
-													 "AND gatb_table = :TableName "
-													 "AND gatb_accesstype = :AccessTypeID");
-//-----------------------------------------------------------------------------
 static QString QS_GROUP_ACCESS_SPECIAL_CHECK = PREPARE_QUERY("SELECT COUNT(*) "
 															 "FROM _groupaccessspecial "
 															 "WHERE gasp_group = :GroupID "
@@ -60,40 +46,6 @@ ISUserRoleEntity& ISUserRoleEntity::Instance()
 {
 	static ISUserRoleEntity UserRoleEntity;
 	return UserRoleEntity;
-}
-//-----------------------------------------------------------------------------
-bool ISUserRoleEntity::CheckExistTableAccess(int GroupID, const QString &TableName, int AccessTypeID)
-{
-	ISQuery qSelect(QS_GROUP_ACCESS_TABLE_CHECK);
-	qSelect.BindValue(":GroupID", GroupID);
-	qSelect.BindValue(":TableName", TableName);
-	qSelect.BindValue(":AccessTypeID", AccessTypeID);
-	if (qSelect.ExecuteFirst())
-	{
-		if (qSelect.ReadColumn("count").toInt())
-		{
-			return true;
-		}
-	}
-	return false;
-}
-//-----------------------------------------------------------------------------
-void ISUserRoleEntity::InsertTableAccess(int GroupID, const QString &TableName, int AccessTypeID)
-{
-	ISQuery qInsert(QI_GROUP_ACCESS_TABLE);
-	qInsert.BindValue(":GroupID", GroupID);
-	qInsert.BindValue(":TableName", TableName);
-	qInsert.BindValue(":AccessTypeID", AccessTypeID);
-	qInsert.Execute();
-}
-//-----------------------------------------------------------------------------
-void ISUserRoleEntity::DeleteTableAccess(int GroupID, const QString &TableName, int AccessTypeID)
-{
-	ISQuery qDelete(QD_GROUP_ACCESS_TABLE);
-	qDelete.BindValue(":GroupID", GroupID);
-	qDelete.BindValue(":TableName", TableName);
-	qDelete.BindValue(":AccessTypeID", AccessTypeID);
-	qDelete.Execute();
 }
 //-----------------------------------------------------------------------------
 bool ISUserRoleEntity::CheckExistSpecialAccess(int GroupID, int SpecialAccessID)
