@@ -41,12 +41,12 @@
   <_ProtocolType IsSystem="true" UID="{08904DF2-3785-4454-B5E5-2D83A9FAA231}" Name="Удаление примечания к записи"/>
   <_ProtocolType IsSystem="true" UID="{A0115A19-05CC-4AFD-8568-F9AE970E7157}" Name="Просмотр информации о программе"/>
   <_ProtocolType IsSystem="true" UID="{CDCB7490-C975-4ECA-AC3A-4532A32ECC4D}" Name="Изменение пароля от своей учётной записи"/>
-  <_ProtocolType IsSystem="true" UID="{EA765447-6811-43AD-8CFC-9B2E758A5B4E}" Name="Добавление права на подсистему"/>
-  <_ProtocolType IsSystem="true" UID="{5E5EC969-0D11-41FB-9652-7E2ADD466782}" Name="Удаление права на подсистему"/>
-  <_ProtocolType IsSystem="true" UID="{44FDDA11-9F7B-4006-8178-944DA65FB7AA}" Name="Добавление права на таблицу"/>
-  <_ProtocolType IsSystem="true" UID="{9D4E8104-33F9-4F9E-A6AA-272DDA7C1A52}" Name="Удаление права на таблицу"/>
-  <_ProtocolType IsSystem="true" UID="{FB494E8E-BDF3-4804-AF42-43487AF8A871}" Name="Добавление специального права"/>
-  <_ProtocolType IsSystem="true" UID="{4E7C34E5-C7FE-4C0D-BB4D-7B4A1D4CF9D2}" Name="Удаление специального права"/>
+  <_ProtocolType IsSystem="true" UID="{EA765447-6811-43AD-8CFC-9B2E758A5B4E}" Name="Добавление права доступа на подсистему"/>
+  <_ProtocolType IsSystem="true" UID="{5E5EC969-0D11-41FB-9652-7E2ADD466782}" Name="Удаление права доступа на подсистему"/>
+  <_ProtocolType IsSystem="true" UID="{44FDDA11-9F7B-4006-8178-944DA65FB7AA}" Name="Добавление права доступа на таблицу"/>
+  <_ProtocolType IsSystem="true" UID="{9D4E8104-33F9-4F9E-A6AA-272DDA7C1A52}" Name="Удаление права доступа на таблицу"/>
+  <_ProtocolType IsSystem="true" UID="{FB494E8E-BDF3-4804-AF42-43487AF8A871}" Name="Добавление специального права доступа"/>
+  <_ProtocolType IsSystem="true" UID="{4E7C34E5-C7FE-4C0D-BB4D-7B4A1D4CF9D2}" Name="Удаление специального права доступа"/>
   <_ProtocolType IsSystem="true" UID="{6DD00B13-2A69-45FD-B565-3142C2D2BA97}" Name="Создание пароля"/>
   <_ProtocolType IsSystem="true" UID="{0EEE6D67-A0F3-4558-B7AD-173678A8C9DC}" Name="Изменение пароля"/>
   <_ProtocolType IsSystem="true" UID="{3B005C51-B44E-48C6-95F8-3AC6BD913BB3}" Name="Сброс пароля"/>
