@@ -25,6 +25,9 @@ public:
 	QString GetStyle(const QString &StyleName, const char *SourceFile, int FileLine) const; //Получить стиль
 	QString GetSQL(const QString &QueryName, const char *SourceFile, int FileLine) const; //Получить запрос
 
+	ISVectorMap GetAccessTableType() const;
+	void SetAccessTableType(const QVariantList &VariantList);
+
 private:
 	void InitializeAnimations(); //Инициализация анимаций
 	void InitializeIcons(); //Инициализация иконок
@@ -49,6 +52,8 @@ private:
 	ISStringMap Audios; //Звуки
 	ISStringMap StyleSheets; //CSS-стили
 	ISStringMap SqlQueryes; //SQL-запросы
+
+	ISVectorMap AccessTableType;
 };
 //-----------------------------------------------------------------------------
 #define BUFFER_ANIMATION(ANIMATION_NAME, PARENT) ISBuffer::Instance().GetAnimation(ANIMATION_NAME, PARENT, __FILE__, __LINE__)

@@ -89,6 +89,10 @@ static QString QS_PARAGRAPH = PREPARE_QUERY("SELECT prhs_uid, prhs_name, prhs_lo
 											"FROM _paragraphs "
 											"ORDER BY prhs_orderid");
 //-----------------------------------------------------------------------------
+static QString QS_GROUP_ACCESS_TABLE_TYPE = PREPARE_QUERY("SELECT gatt_id, gatt_name, gatt_icon "
+														  "FROM _groupaccesstabletype "
+														  "ORDER BY gatt_order");
+//-----------------------------------------------------------------------------
 static QString QU_USER_HASH = PREPARE_QUERY("UPDATE _users SET "
 											"usrs_hash = :Hash, "
 											"usrs_salt = :Salt "
@@ -1182,6 +1186,27 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 		return false;
 	}
 
+	//Получаем типа прав доступа на таблицы
+	QVariantList AccessTablesTypeList;
+	ISQuery qSelectAccessTablesType(ISDatabase::Instance().GetDB(DBConnectionName), QS_GROUP_ACCESS_TABLE_TYPE);
+	if (qSelectAccessTablesType.Execute())
+	{
+		while (qSelectAccessTablesType.Next())
+		{
+			AccessTablesTypeList.append(QVariantMap
+			{
+				{ "ID", qSelectAccessTablesType.ReadColumn("gatt_id") },
+				{ "Name", qSelectAccessTablesType.ReadColumn("gatt_name") },
+				{ "Icon", qSelectAccessTablesType.ReadColumn("gatt_icon") }
+			});
+		}
+	}
+	else
+	{
+		ErrorString = LANG("Carat.Error.Query.GetMetaData.AccessTableType").arg(qSelectAccessTablesType.GetErrorString());
+		return false;
+	}
+
 	//Читаем мета-данные
 	QVariantList MetaDataList;
 	QStringList Filter("*.xsn"); //Фильтр
@@ -1208,6 +1233,7 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	TcpAnswer->Parameters["History"] = HistoryList;
 	TcpAnswer->Parameters["Settings"] = Settings;
 	TcpAnswer->Parameters["Paragraphs"] = ParagraphList;
+	TcpAnswer->Parameters["AccessTablesType"] = AccessTablesTypeList;
 	TcpAnswer->Parameters["MetaData"] = MetaDataList;
 	return true;
 }

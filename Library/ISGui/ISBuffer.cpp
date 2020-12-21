@@ -82,6 +82,19 @@ QString ISBuffer::GetSQL(const QString &QueryName, const char *SourceFile, int F
 	return Iterator->second;
 }
 //-----------------------------------------------------------------------------
+ISVectorMap ISBuffer::GetAccessTableType() const
+{
+	return AccessTableType;
+}
+//-----------------------------------------------------------------------------
+void ISBuffer::SetAccessTableType(const QVariantList &VariantList)
+{
+	for (const QVariant &Variant : VariantList)
+	{
+		AccessTableType.emplace_back(Variant.toMap());
+	}
+}
+//-----------------------------------------------------------------------------
 void ISBuffer::InitializeAnimations()
 {
 	QFileInfoList FileInfoList = QDir(":Animation").entryInfoList(QDir::NoFilter);
