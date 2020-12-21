@@ -156,6 +156,14 @@ ISNamespace::ApiMessageType ISTcp::GetMessageTypeByName(const QString &Name)
 	{
 		return ISNamespace::AMT_GetGroupRights;
 	}
+	else if (Name == API_GROUP_RIGHT_SUBSYSTEM_ADD)
+	{
+		return ISNamespace::AMT_GroupRightSubSystemAdd;
+	}
+	else if (Name == API_GROUP_RIGHT_SUBSYSTEM_DELETE)
+	{
+		return ISNamespace::AMT_GroupRightSubSystemDelete;
+	}
 	return ISNamespace::AMT_Unknown;
 }
 //-----------------------------------------------------------------------------

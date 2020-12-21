@@ -260,6 +260,15 @@ static QString QS_GROUP_RIGHT_SPECIAL = PREPARE_QUERY("SELECT gast_uid "
 													  "LEFT JOIN _groupaccessspecialtype ON gast_id = gasp_specialaccess "
 													  "WHERE gasp_group = :GroupID");
 //-----------------------------------------------------------------------------
+static QString QI_GROUP_RIGHT_SUBSYSTEM = PREPARE_QUERY("INSERT INTO _groupaccesssubsystem(gass_group, gass_subsystem) "
+														"VALUES(:GroupID, :SubSystemUID) "
+														"RETURNING (SELECT sbsm_localname FROM _subsystems WHERE sbsm_uid = :SubSystemUID)");
+//-----------------------------------------------------------------------------
+static QString QD_GROUP_RIGHT_SUBSYSTEM = PREPARE_QUERY("DELETE FROM _groupaccesssubsystem "
+														"WHERE gass_group = :GroupID "
+														"AND gass_subsystem = :SubSystemUID "
+														"RETURNING (SELECT sbsm_localname FROM _subsystems WHERE sbsm_uid = :SubSystemUID)");
+//-----------------------------------------------------------------------------
 ISTcpWorker::ISTcpWorker(const QString &db_host, int db_port, const QString &db_name, const QString &db_user, const QString &db_password)
 	: QObject(),
 	ErrorString(NO_ERROR_STRING),
@@ -419,6 +428,8 @@ void ISTcpWorker::Process()
 					case ISNamespace::AMT_GetInternalLists: Result = GetInternalLists(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_SaveMetaData: Result = SaveMetaData(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_GetGroupRights: Result = GetGroupRights(tcp_message, TcpAnswer); break;
+					case ISNamespace::AMT_GroupRightSubSystemAdd: Result = GroupRightSubSystemAdd(tcp_message, TcpAnswer); break;
+					case ISNamespace::AMT_GroupRightSubSystemDelete: Result = GroupRightSubSystemDelete(tcp_message, TcpAnswer); break;
 					default:
 						ErrorString = LANG("Carat.Error.NotExistFunction").arg(tcp_message->TypeName);
 					}
@@ -2478,6 +2489,68 @@ bool ISTcpWorker::GetGroupRights(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
 	TcpAnswer->Parameters["SubSystems"] = SubSystemsList;
 	TcpAnswer->Parameters["Tables"] = TablesMap;
 	TcpAnswer->Parameters["Special"] = SpecialList;
+	return true;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::GroupRightSubSystemAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+	Q_UNUSED(TcpAnswer);
+
+	QVariant GroupID = CheckNullField("GroupID", TcpMessage),
+		SubSystemUID = CheckNullField("UID", TcpMessage);
+	if (!GroupID.isValid() || !SubSystemUID.isValid())
+	{
+		return false;
+	}
+
+	//Добавляем право
+	ISQuery qInsert(ISDatabase::Instance().GetDB(DBConnectionName), QI_GROUP_RIGHT_SUBSYSTEM);
+	qInsert.BindValue(":GroupID", GroupID);
+	qInsert.BindValue(":SubSystemUID", SubSystemUID);
+	if (!qInsert.Execute()) //Ошибка запроса
+	{
+		ErrorString = LANG("Carat.Error.Query.GroupRightSubSystemAdd.Insert").arg(qInsert.GetErrorString());
+		return false;
+	}
+
+	//Не удалось прочитать имя подсистемы
+	if (!qInsert.First())
+	{
+		ErrorString = qInsert.GetErrorString();
+		return false;
+	}
+	Protocol(TcpMessage->TcpSocket->GetUserID(), CONST_UID_PROTOCOL_ADD_ACCESS_TO_SUBSYSTEM, QVariant(), QVariant(), QVariant(), qInsert.ReadColumn("sbsm_localname"));
+	return true;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::GroupRightSubSystemDelete(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+	Q_UNUSED(TcpAnswer);
+
+	QVariant GroupID = CheckNullField("GroupID", TcpMessage),
+		SubSystemUID = CheckNullField("UID", TcpMessage);
+	if (!GroupID.isValid() || !SubSystemUID.isValid())
+	{
+		return false;
+	}
+
+	//Удаляем право
+	ISQuery qDelete(ISDatabase::Instance().GetDB(DBConnectionName), QD_GROUP_RIGHT_SUBSYSTEM);
+	qDelete.BindValue(":GroupID", GroupID);
+	qDelete.BindValue(":SubSystemUID", SubSystemUID);
+	if (!qDelete.Execute()) //Ошибка запроса
+	{
+		ErrorString = LANG("Carat.Error.Query.GroupRightSubSystemDelete.Delete").arg(qDelete.GetErrorString());
+		return false;
+	}
+
+	//Не удалось прочитать имя подсистемы
+	if (!qDelete.First())
+	{
+		ErrorString = qDelete.GetErrorString();
+		return false;
+	}
+	Protocol(TcpMessage->TcpSocket->GetUserID(), CONST_UID_PROTOCOL_DEL_ACCESS_TO_SUBSYSTEM, QVariant(), QVariant(), QVariant(), qDelete.ReadColumn("sbsm_localname"));
 	return true;
 }
 //-----------------------------------------------------------------------------

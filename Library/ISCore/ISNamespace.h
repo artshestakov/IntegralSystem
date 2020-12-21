@@ -171,6 +171,8 @@ namespace ISNamespace
 		AMT_GetInternalLists, //Получить список внутренних справочников
 		AMT_SaveMetaData, //Сохранение мета-данных
 		AMT_GetGroupRights, //Получить права группы
+		AMT_GroupRightSubSystemAdd, //Добавить группе право на подсистему
+		AMT_GroupRightSubSystemDelete, //Удалить у группы право на подсистему
 	};
 };
 //-----------------------------------------------------------------------------

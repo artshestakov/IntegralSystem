@@ -138,4 +138,8 @@
   <Local Name="Carat.Error.Query.GetGroupRights.SelectTables" Russian="Не удалось получить информацию о таблицах: %1"/>
   <Local Name="Carat.Error.Query.GetGroupRights.SelectSpecial" Russian="Не удалось получить информацию спец. правах: %1"/>
 
+  <Local Name="Carat.Error.Query.GroupRightSubSystemAdd.Insert" Russian="Не удалось добавить право на подсистему: %1"/>
+
+  <Local Name="Carat.Error.Query.GroupRightSubSystemDelete.Delete" Russian="Не удалось удалить право на подсистему: %1"/>
+
 </LANG>

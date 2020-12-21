@@ -175,6 +175,8 @@ const char API_CALENDAR_DELETE[] = "CalendarDelete"; //Удаление события календар
 const char API_GET_INTERNAL_LISTS[] = "GetInternalLists"; //Получить список внутренних справочников
 const char API_SAVE_META_DATA[] = "SaveMetaData"; //Сохранение мета-данных
 const char API_GET_GROUP_RIGHTS[] = "GetGroupRights"; //Получить права группы
+const char API_GROUP_RIGHT_SUBSYSTEM_ADD[] = "GroupRightSubSystemAdd"; //Добавить группа право на подсистему
+const char API_GROUP_RIGHT_SUBSYSTEM_DELETE[] = "GroupRightSubSystemDelete"; //Удалить у группы право на подсистему
 //CARAT_LOCAL_API--------------------------------------------------------------
 const char	CARAT_LOCAL_API_SHUTDOWN[] = "shutdown"; //Завершение работы
 //-----------------------------------------------------------------------------
