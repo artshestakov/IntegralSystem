@@ -2733,9 +2733,12 @@ bool ISTcpWorker::GroupRightSpecialAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *Tc
 	ISQuery qInsert(ISDatabase::Instance().GetDB(DBConnectionName), QI_GROUP_RIGHT_SPECIAL);
 	qInsert.BindValue(":GroupID", GroupID);
 	qInsert.BindValue(":SpecialRightUID", SpecialRightUID);
-	if (!qInsert.Execute() && qInsert.GetErrorNumber() == 23505) //Вставка не удалась и ошибка говорит о наружении уникальности
+	if (!qInsert.Execute()) //Вставка не удалась и ошибка говорит о наружении уникальности
 	{
-		ErrorString = LANG("Carat.Error.Query.GroupRightSpecialAdd.Insert");
+		//Определяем тип ошибки
+		ErrorString = qInsert.GetErrorNumber() == 23505 ?
+			LANG("Carat.Error.Query.GroupRightSpecialAdd.AlreadyExist") :
+			LANG("Carat.Error.Query.GroupRightSpecialAdd.Insert").arg(qInsert.GetErrorString());
 		return false;
 	}
 
