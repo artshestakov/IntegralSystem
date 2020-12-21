@@ -259,10 +259,16 @@ static QString QS_GROUP_RIGHT_TABLE = PREPARE_QUERY("SELECT gatb_table, gatt_uid
 													"LEFT JOIN _groupaccesstabletype ON gatt_id = gatb_accesstype "
 													"WHERE gatb_group = :GroupID");
 //-----------------------------------------------------------------------------
-static QString QS_GROUP_RIGHT_SPECIAL = PREPARE_QUERY("SELECT gast_uid "
-													  "FROM _groupaccessspecial "
-													  "LEFT JOIN _groupaccessspecialtype ON gast_id = gasp_specialaccess "
-													  "WHERE gasp_group = :GroupID");
+static QString QS_GROUP_RIGHT_SPECIAL_PARENT = PREPARE_QUERY("SELECT gast_uid, gast_name "
+															 "FROM _groupaccessspecialtype "
+															 "WHERE gast_parent IS NULL "
+															 "ORDER BY gast_order");
+//-----------------------------------------------------------------------------
+static QString QS_GROUP_RIGHT_SPECIAL = PREPARE_QUERY("SELECT gast_uid, gast_name, "
+													  "(SELECT (COUNT(*) > 0)::BOOLEAN AS is_exist FROM _groupaccessspecial WHERE gasp_group = :GroupID AND gasp_specialaccess = gast_id) "
+													  "FROM _groupaccessspecialtype "
+													  "WHERE gast_parent = :ParentUID "
+													  "ORDER BY gast_order");
 //-----------------------------------------------------------------------------
 static QString QI_GROUP_RIGHT_SUBSYSTEM = PREPARE_QUERY("INSERT INTO _groupaccesssubsystem(gass_group, gass_subsystem) "
 														"VALUES(:GroupID, :SubSystemUID) "
@@ -2509,19 +2515,43 @@ bool ISTcpWorker::GetGroupRights(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
 	}
 
 	//Получаем спец. права
-	ISQuery qSelectSpecial(ISDatabase::Instance().GetDB(DBConnectionName), QS_GROUP_RIGHT_SPECIAL);
-	qSelectSpecial.BindValue(":GroupID", GroupID);
-	if (!qSelectSpecial.Execute())
-	{
-		ErrorString = LANG("Carat.Error.Query.GetGroupRights.SelectSpecial").arg(qSelectSpecial.GetErrorString());
-		return false;
-	}
-
-	//Обходим спец. права
 	QVariantList SpecialList;
-	while (qSelectSpecial.Next())
+	ISQuery qSelectSpecialParent(ISDatabase::Instance().GetDB(DBConnectionName), QS_GROUP_RIGHT_SPECIAL_PARENT),
+		qSelectSpecial(ISDatabase::Instance().GetDB(DBConnectionName), QS_GROUP_RIGHT_SPECIAL);
+	if (qSelectSpecialParent.Execute()) //Запрашиваем группы спец. прав
 	{
-		SpecialList.append(ISUuid(qSelectSpecial.ReadColumn("gast_uid")));
+		while (qSelectSpecialParent.Next()) //Обходим группы спец. прав
+		{
+			QVariantMap SpecialGroupMap = { { "Name", qSelectSpecialParent.ReadColumn("gast_name") } };
+
+			qSelectSpecial.BindValue(":GroupID", GroupID);
+			qSelectSpecial.BindValue(":ParentUID", qSelectSpecialParent.ReadColumn("gast_uid"));
+			if (qSelectSpecial.Execute()) //Запрашиваем спец. права
+			{
+				while (qSelectSpecial.Next()) //Обходим спец. права
+				{
+					QVariantList VariantList = SpecialGroupMap["Rights"].toList();
+					VariantList.append(QVariantMap
+					{
+						{ "UID", qSelectSpecial.ReadColumn("gast_uid") },
+						{ "Name", qSelectSpecial.ReadColumn("gast_name") },
+						{ "IsExist", qSelectSpecial.ReadColumn("is_exist") }
+					});
+					SpecialGroupMap["Rights"] = VariantList;
+				}
+			}
+			else //Ошибка запроса к спец. правам
+			{
+				ErrorString = LANG("Carat.Error.Query.GetGroupRights.SelectSpecial").arg(qSelectSpecial.GetErrorString());
+				return false;
+			}
+			SpecialList.append(SpecialGroupMap);
+		}
+	}
+	else //Ошибка запроса к группам спец. прав
+	{
+		ErrorString = LANG("Carat.Error.Query.GetGroupRights.SelectSpecialGroup").arg(qSelectSpecialParent.GetErrorString());
+		return false;
 	}
 
 	TcpAnswer->Parameters["SubSystems"] = SubSystemsList;
