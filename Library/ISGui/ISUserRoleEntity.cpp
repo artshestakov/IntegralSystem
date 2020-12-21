@@ -5,18 +5,6 @@
 #include "ISLogger.h"
 #include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
-static QString QS_GROUP_ACCESS_SUBSYSTEM_CHECK = PREPARE_QUERY("SELECT COUNT(*) "
-															   "FROM _groupaccesssubsystem "
-															   "WHERE gass_group = :GroupID "
-															   "AND gass_subsystem = :SubSystemUID");
-//-----------------------------------------------------------------------------
-static QString QI_GROUP_ACCESS_SUBSYSTEM = PREPARE_QUERY("INSERT INTO _groupaccesssubsystem(gass_group, gass_subsystem) "
-														 "VALUES(:GroupID, :SubSystemUID)");
-//-----------------------------------------------------------------------------
-static QString QD_GROUP_ACCESS_SUBSYSTEM = PREPARE_QUERY("DELETE FROM _groupaccesssubsystem "
-														 "WHERE gass_group = :GroupID "
-														 "AND gass_subsystem = :SubSystemUID");
-//-----------------------------------------------------------------------------
 static QString QS_GROUP_ACCESS_TABLE_CHECK = PREPARE_QUERY("SELECT COUNT(*) "
 														   "FROM _groupaccesstable "
 														   "WHERE gatb_group = :GroupID "
@@ -72,37 +60,6 @@ ISUserRoleEntity& ISUserRoleEntity::Instance()
 {
 	static ISUserRoleEntity UserRoleEntity;
 	return UserRoleEntity;
-}
-//-----------------------------------------------------------------------------
-bool ISUserRoleEntity::CheckExistSubSystemAccess(int GroupID, const ISUuid &SubSystemUID)
-{
-	ISQuery qSelect(QS_GROUP_ACCESS_SUBSYSTEM_CHECK);
-	qSelect.BindValue(":GroupID", GroupID);
-	qSelect.BindValue(":SubSystemUID", SubSystemUID);
-	if (qSelect.ExecuteFirst())
-	{
-		if (qSelect.ReadColumn("count").toInt())
-		{
-			return true;
-		}
-	}
-	return false;
-}
-//-----------------------------------------------------------------------------
-void ISUserRoleEntity::InsertSubSystemAccess(int GroupID, const ISUuid &SubSystemUID)
-{
-	ISQuery qInsert(QI_GROUP_ACCESS_SUBSYSTEM);
-	qInsert.BindValue(":GroupID", GroupID);
-	qInsert.BindValue(":SubSystemUID", SubSystemUID);
-	qInsert.Execute();
-}
-//-----------------------------------------------------------------------------
-void ISUserRoleEntity::DeleteSubSystemAccess(int GroupID, const ISUuid &SubSystemUID)
-{
-	ISQuery qDelete(QD_GROUP_ACCESS_SUBSYSTEM);
-	qDelete.BindValue(":GroupID", GroupID);
-	qDelete.BindValue(":SubSystemUID", SubSystemUID);
-	qDelete.Execute();
 }
 //-----------------------------------------------------------------------------
 bool ISUserRoleEntity::CheckExistTableAccess(int GroupID, const QString &TableName, int AccessTypeID)

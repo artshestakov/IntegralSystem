@@ -11,6 +11,8 @@
 #include "ISControls.h"
 #include "ISProtocol.h"
 #include "ISGui.h"
+#include "ISTcpQuery.h"
+#include "ISMessageBox.h"
 //-----------------------------------------------------------------------------
 static QString QS_GROUP_ACCESS_TABLE_TYPE = PREPARE_QUERY("SELECT gatt_id, gatt_name, gatt_icon "
 														  "FROM _groupaccesstabletype "
@@ -36,15 +38,33 @@ ISUserGroupForm::ISUserGroupForm(int group_id, const QString &group_name)
 
 	TabWidget = new QTabWidget(this);
 	GetMainLayout()->addWidget(TabWidget);
-
-	CreateSubSystems();
-	CreateTables();
-	CreateSpecial();
 }
 //-----------------------------------------------------------------------------
 ISUserGroupForm::~ISUserGroupForm()
 {
 
+}
+//-----------------------------------------------------------------------------
+void ISUserGroupForm::AfterShowEvent()
+{
+	ISInterfaceDialogForm::AfterShowEvent();
+
+	ISTcpQuery qGetGroupRights(API_GET_GROUP_RIGHTS);
+	qGetGroupRights.BindValue("GroupID", GroupID);
+	if (qGetGroupRights.Execute())
+	{
+		QVariantMap ResultMap = qGetGroupRights.TakeAnswer();
+		SubSystems = ResultMap["SubSystems"].toList();
+
+		CreateSubSystems();
+		CreateTables();
+		CreateSpecial();
+	}
+	else
+	{
+		ISMessageBox::ShowCritical(this, qGetGroupRights.GetErrorString());
+		close();
+	}
 }
 //-----------------------------------------------------------------------------
 void ISUserGroupForm::CreateSubSystems()
@@ -55,23 +75,20 @@ void ISUserGroupForm::CreateSubSystems()
 
 	for (ISMetaSystem *MetaSystem : ISMetaSystemsEntity::Instance().GetSystems()) //Обход всех систем
 	{
-		QFormLayout *FormLayout = new QFormLayout();
-
-		QGroupBox *GroupBox = new QGroupBox(ScrollArea);
-		GroupBox->setTitle(MetaSystem->LocalName);
-		GroupBox->setLayout(FormLayout);
+		QGroupBox *GroupBox = new QGroupBox(MetaSystem->LocalName, ScrollArea);
+		GroupBox->setLayout(new QVBoxLayout());
 		GroupBox->setStyleSheet(BUFFER_STYLE_SHEET("QGroupBoxAccessSubSystem"));
 		ScrollArea->widget()->layout()->addWidget(GroupBox);
 
 		for (ISMetaSubSystem *SubSystem : MetaSystem->SubSystems) //Обход всех подсистем текущей системы
 		{
 			ISCheckEdit *CheckEdit = new ISCheckEdit(GroupBox);
-			CheckEdit->SetValue(ISUserRoleEntity::CheckExistSubSystemAccess(GroupID, SubSystem->UID));
+			CheckEdit->SetValue(SubSystems.contains(SubSystem->UID));
+			CheckEdit->SetText(SubSystem->LocalName);
 			CheckEdit->setProperty("SubSystemUID", SubSystem->UID);
-			CheckEdit->setProperty("SubSystemName", SubSystem->LocalName);
 			CheckEdit->SetToolTip(LANG("AccessRights.ClickedToGiveAccessFromSubSystem"));
 			connect(CheckEdit, &ISCheckEdit::ValueChange, this, &ISUserGroupForm::SubSystemClicked);
-			FormLayout->addRow(SubSystem->LocalName + ':', CheckEdit);
+			GroupBox->layout()->addWidget(CheckEdit);
 		}
 	}
 }
@@ -177,18 +194,13 @@ void ISUserGroupForm::CreateSpecial()
 void ISUserGroupForm::SubSystemClicked(const QVariant &value)
 {
 	ISGui::SetWaitGlobalCursor(true);
-	ISUuid SubSystemUID = sender()->property("SubSystemUID"); //Идентификатор подсистемы
-	QString SubSystemName = sender()->property("SubSystemName").toString();
-
-	if (value.toBool()) //Если право было включено
+	ISTcpQuery qAlterAccess(value.toBool() ? API_GROUP_RIGHT_SUBSYSTEM_ADD : API_GROUP_RIGHT_SUBSYSTEM_DELETE);
+	qAlterAccess.BindValue("GroupID", GroupID);
+	qAlterAccess.BindValue("UID", sender()->property("SubSystemUID"));
+	if (!qAlterAccess.Execute())
 	{
-		ISUserRoleEntity::InsertSubSystemAccess(GroupID, SubSystemUID);
-		ISProtocol::Insert(true, CONST_UID_PROTOCOL_ADD_ACCESS_TO_SUBSYSTEM, "_UserGroup", ISMetaData::Instance().GetMetaTable("_UserGroup")->LocalListName, GroupID, SubSystemName);
-	}
-	else
-	{
-		ISUserRoleEntity::DeleteSubSystemAccess(GroupID, SubSystemUID);
-		ISProtocol::Insert(true, CONST_UID_PROTOCOL_DEL_ACCESS_TO_SUBSYSTEM, "_UserGroup", ISMetaData::Instance().GetMetaTable("_UserGroup")->LocalListName, GroupID, SubSystemName);
+		ISGui::SetWaitGlobalCursor(false);
+		ISMessageBox::ShowCritical(this, qAlterAccess.GetErrorString());
 	}
 	ISGui::SetWaitGlobalCursor(false);
 }

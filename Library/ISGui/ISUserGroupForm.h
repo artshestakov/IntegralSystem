@@ -1,6 +1,7 @@
 #pragma once
 //-----------------------------------------------------------------------------
 #include "ISInterfaceDialogForm.h"
+#include "ISTypedefs.h"
 //-----------------------------------------------------------------------------
 class ISUserGroupForm : public ISInterfaceDialogForm
 {
@@ -11,16 +12,23 @@ public:
 	virtual ~ISUserGroupForm();
 
 protected:
+	void AfterShowEvent() override;
+
+private:
 	void CreateSubSystems();
 	void CreateTables();
 	void CreateSpecial();
 
+private:
 	void SubSystemClicked(const QVariant &value); //Обработка нажатия на право для подсистемы
 	void TableClicked(QAction *Action); //Обработка нажатия на право для таблицы
 	void SpecialClicked(const QVariant &value); //Обработка нажатия на специальное право
 
 private:
-	int GroupID;
 	QTabWidget *TabWidget;
+
+private:
+	int GroupID;
+	QVariantList SubSystems;
 };
 //-----------------------------------------------------------------------------

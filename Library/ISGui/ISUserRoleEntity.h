@@ -8,10 +8,6 @@ class ISUserRoleEntity
 public:
 	static ISUserRoleEntity& Instance();
 
-	static bool CheckExistSubSystemAccess(int GroupID, const ISUuid &SubSystemUID); //ѕроверить наличие права на подсистему в базе
-	static void InsertSubSystemAccess(int GroupID, const ISUuid &SubSystemUID); //ƒобавить право на подсистему в базу
-	static void DeleteSubSystemAccess(int GroupID, const ISUuid &SubSystemUID); //”далить право на подсистему из базы
-	
 	static bool CheckExistTableAccess(int GroupID, const QString &TableName, int AccessTypeID); //ѕроверить наличие права на таблицу в базе
 	static void InsertTableAccess(int GroupID, const QString &TableName, int AccessTypeID);
 	static void DeleteTableAccess(int GroupID, const QString &TableName, int AccessTypeID);
