@@ -880,7 +880,6 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 			SettingsDBMap["UserAccessDatabase"] = qSelectSettingsDB.ReadColumn("sgdb_useraccessdatabase");
 			SettingsDBMap["NumberSymbolsAfterComma"] = qSelectSettingsDB.ReadColumn("sgdb_numbersimbolsaftercomma");
 			SettingsDBMap["StirageFileMaxSize"] = qSelectSettingsDB.ReadColumn("sgdb_storagefilemaxsize");
-			TcpAnswer->Parameters["SettingsDB"] = SettingsDBMap;
 		}
 		else
 		{
@@ -915,7 +914,6 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 				AccessTablesMap[TableName] = QVariantList{ AccessUID };
 			}
 		}
-		TcpAnswer->Parameters["AccessTables"] = AccessTablesMap;
 	}
 	else
 	{
@@ -933,7 +931,6 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 		{
 			AccessSpecialList.append(qSelectAccessSpecial.ReadColumn("gast_uid"));
 		}
-		TcpAnswer->Parameters["AccessSpecial"] = AccessSpecialList;
 	}
 	else
 	{
@@ -988,7 +985,6 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 				});
 			}
 		}
-		TcpAnswer->Parameters["SystemSubSystem"] = SystemSubSystemList;
 	}
 	else
 	{
@@ -1027,7 +1023,6 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 				{ "Fields", ReportFieldMap }
 			});
 		}
-		TcpAnswer->Parameters["Printing"] = PrintingList;
 	}
 	else
 	{
@@ -1047,7 +1042,6 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 			QString ObjectsID = qSelectFavorite.ReadColumn("fvts_objectsid").toString();
 			FavoriteMap[TableName] = ObjectsID.mid(1, ObjectsID.size() - 2).split(SYMBOL_COMMA);
 		}
-		TcpAnswer->Parameters["Favorite"] = FavoriteMap;
 	}
 	else
 	{
@@ -1070,7 +1064,6 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 				{ "ID", qSelectHistory.ReadColumn("htry_objectid") }
 			});
 		}
-		TcpAnswer->Parameters["History"] = HistoryList;
 	}
 	else
 	{
@@ -1142,7 +1135,6 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 				{ "Settings", SettingsList }
 			});
 		}
-		TcpAnswer->Parameters["Settings"] = Settings;
 	}
 	else
 	{
@@ -1167,7 +1159,6 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 				{ "Class", qSelectParagraph.ReadColumn("prhs_classname") }
 			});
 		}
-		TcpAnswer->Parameters["Paragraphs"] = ParagraphList;
 	}
 	else
 	{
@@ -1191,6 +1182,16 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 		MetaDataList.append(FileXSN.readAll());
 		FileXSN.close();
 	}
+
+	TcpAnswer->Parameters["SettingsDB"] = SettingsDBMap;
+	TcpAnswer->Parameters["AccessTables"] = AccessTablesMap;
+	TcpAnswer->Parameters["AccessSpecial"] = AccessSpecialList;
+	TcpAnswer->Parameters["SystemSubSystem"] = SystemSubSystemList;
+	TcpAnswer->Parameters["Printing"] = PrintingList;
+	TcpAnswer->Parameters["Favorite"] = FavoriteMap;
+	TcpAnswer->Parameters["History"] = HistoryList;
+	TcpAnswer->Parameters["Settings"] = Settings;
+	TcpAnswer->Parameters["Paragraphs"] = ParagraphList;
 	TcpAnswer->Parameters["MetaData"] = MetaDataList;
 	return true;
 }
