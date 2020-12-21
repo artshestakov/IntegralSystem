@@ -39,6 +39,7 @@ private:
 	QString ConvertDateTimeToString(const QDateTime &DateTime, const QString &DateFormat, const QString &TimeFormat); //Конвертировать дату и время в строку
 	QString ConvertDateToString(const QDate &Date, const QString &DateFormat); //Конвертировать дату в строку
 	bool GetObjectName(PMetaTable *MetaTable, unsigned int ObjectID, QString &ObjectName); //Получить наименование объекта
+	PMetaTable* GetMetaTable(const QString &TableName); //Получить указатель на мета-таблицу
 
 private:
 	bool Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);

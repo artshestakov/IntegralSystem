@@ -18,6 +18,7 @@
   <Local Name="Carat.Error.UserNotExist" Russian="Пользователь с идентификатором %1 не существует."/>
   <Local Name="Carat.Error.CheckUserIsSystem" Russian="Не удалось проверить пользователя на системность: %1"/>
   <Local Name="Carat.Error.GetObjectName" Russian="Не удалось получить имя объекта: %1"/>
+  <Local Name="Carat.Error.GetMetaTable" Russian="Таблица %1 не существует."/>
   
   <!--Ошибки протокола-->
   <Local Name="Carat.Error.Query.Auth.AlreadyAuthorized" Russian="Вы уже авторизованы!"/>
@@ -81,7 +82,6 @@
   <Local Name="Carat.Error.Query.GetClients.Select" Russian="Не удалось получить информацию по пользователю с кодом %1."/>
   <Local Name="Carat.Error.Query.GetClients.UserNotExist" Russian="Пользователь с идентификатором %1 не существует."/>
 
-  <Local Name="Carat.Error.Query.RecordDelete.TableNotExist" Russian="Таблица %1 не существует."/>
   <Local Name="Carat.Error.Query.RecordDelete.NotSpecifiedID" Russian="Вы не указали список идентификаторов записей."/>
   <Local Name="Carat.Error.Query.RecordDelete.ToInt" Russian="Не удалось привести к целому числу один из идентификаторов."/>
   <Local Name="Carat.Error.Query.RecordDelete.Select" Russian="Не удалось проверить системные записи: %1"/>
@@ -95,14 +95,12 @@
 
   <Local Name="Carat.Error.Query.DiscussionCopy.Insert" Russian="Не удалось скопировать сообщение: %1"/>
 
-  <Local Name="Carat.Error.Query.GetTableData.TableNotExist" Russian="Таблица %1 не существует."/>
   <Local Name="Carat.Error.Query.GetTableData.SelectSorting" Russian="Не удалось получить сортировку: %1"/>
   <Local Name="Carat.Error.Query.GetTableData.UpdateSorting" Russian="Не удалось обновить сортировку: %1"/>
   <Local Name="Carat.Error.Query.GetTableData.InsertSorting" Russian="Не удалось добавить сортировку: %1"/>
   <Local Name="Carat.Error.Query.GetTableData.SelectColumnSize" Russian="Не удалось получить размеры полей: %1"/>
   <Local Name="Carat.Error.Query.GetTableData.Select" Russian="Не удалось получить данные: %1"/>
 
-  <Local Name="Carat.Error.Query.GetNoteRecord.TableNotExist" Russian="Таблица %1 не существует."/>
   <Local Name="Carat.Error.Query.GetNoteRecord.Select" Russian="Не удалось получить примечание: %1"/>
   
   <Local Name="Carat.Error.Query.SetNoteRecord.Delete" Russian="Не удалось удалить примечание: %1"/>
@@ -147,11 +145,9 @@
   <Local Name="Carat.Error.Query.GroupRightSubSystemDelete.Delete" Russian="Не удалось удалить право на подсистему: %1"/>
   <Local Name="Carat.Error.Query.GroupRightSubSystemDelete.NotExist" Russian="Право на подсистему не существует."/>
 
-  <Local Name="Carat.Error.Query.GroupRightTableAdd.TableNotExist" Russian="Таблица %1 не существует."/>
   <Local Name="Carat.Error.Query.GroupRightTableAdd.AlreadyExist" Russian="Такое право уже есть."/>
   <Local Name="Carat.Error.Query.GroupRightTableAdd.Insert" Russian="Не удалось добавить право на таблицу: %1"/>
 
-  <Local Name="Carat.Error.Query.GroupRightTableDelete.TableNotExist" Russian="Таблица %1 не существует."/>
   <Local Name="Carat.Error.Query.GroupRightTableDelete.Delete" Russian="Не удалось удалить право на таблицу: %1"/>
   <Local Name="Carat.Error.Query.GroupRightTableDelete.NotExist" Russian="Право на таблицу не существует."/>
 

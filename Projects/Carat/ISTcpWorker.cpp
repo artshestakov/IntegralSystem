@@ -682,6 +682,16 @@ bool ISTcpWorker::GetObjectName(PMetaTable *MetaTable, unsigned int ObjectID, QS
 	return true;
 }
 //-----------------------------------------------------------------------------
+PMetaTable* ISTcpWorker::GetMetaTable(const QString &TableName)
+{
+	PMetaTable *MetaTable = ISMetaData::Instance().GetMetaTable(TableName);
+	if (!MetaTable)
+	{
+		ErrorString = LANG("Carat.Error.GetMetaTable").arg(TableName);
+	}
+	return MetaTable;
+}
+//-----------------------------------------------------------------------------
 bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
 	Q_UNUSED(TcpAnswer);
@@ -1635,12 +1645,10 @@ bool ISTcpWorker::RecordDelete(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	{
 		return false;
 	}
-	QString TableNameString = TableName.toString();
-
-	PMetaTable *MetaTable = ISMetaData::Instance().GetMetaTable(TableNameString);
+	
+	PMetaTable *MetaTable = GetMetaTable(TableName.toString());
 	if (!MetaTable)
 	{
-		ErrorString = LANG("Carat.Error.Query.RecordDelete.TableNotExist").arg(TableNameString);
 		return false;
 	}
 
@@ -1667,7 +1675,7 @@ bool ISTcpWorker::RecordDelete(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	SqlIN.chop(1);
 
 	//Проверяем, нет ли системных записей
-	ISQuery qSqlQuery(ISDatabase::Instance().GetDB(DBConnectionName), "SELECT (COUNT(*) > 0)::BOOLEAN AS is_exist FROM " + TableNameString + " WHERE " + MetaTable->Alias + "_issystem AND " + MetaTable->Alias + "_id IN(" + SqlIN + ")");
+	ISQuery qSqlQuery(ISDatabase::Instance().GetDB(DBConnectionName), "SELECT (COUNT(*) > 0)::BOOLEAN AS is_exist FROM " + MetaTable->Name + " WHERE " + MetaTable->Alias + "_issystem AND " + MetaTable->Alias + "_id IN(" + SqlIN + ")");
 	qSqlQuery.SetShowLongQuery(false);
 	if (!qSqlQuery.Execute()) //Ошибка запроса
 	{
@@ -1690,7 +1698,7 @@ bool ISTcpWorker::RecordDelete(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	}
 
 	//Удаляем
-	ISQuery qDelete(ISDatabase::Instance().GetDB(DBConnectionName), "DELETE FROM " + TableNameString + " WHERE " + MetaTable->Alias + "_id IN(" + SqlIN + ")");
+	ISQuery qDelete(ISDatabase::Instance().GetDB(DBConnectionName), "DELETE FROM " + MetaTable->Name + " WHERE " + MetaTable->Alias + "_id IN(" + SqlIN + ")");
 	qDelete.SetShowLongQuery(false);
 	if (!qDelete.Execute()) //Ошибка запроса
 	{
@@ -1794,10 +1802,9 @@ bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	}
 
 	//Получаем мета-таблицу
-	PMetaTable *MetaTable = ISMetaData::Instance().GetMetaTable(TableName.toString());
+	PMetaTable *MetaTable = GetMetaTable(TableName.toString());
 	if (!MetaTable)
 	{
-		ErrorString = LANG("Carat.Error.Query.GetTableData.TableNotExist").arg(TableName.toString());
 		return false;
 	}
 	unsigned int UserID = TcpMessage->TcpSocket->GetUserID();
@@ -1997,10 +2004,9 @@ bool ISTcpWorker::NoteRecordGet(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer
 	}
 
 	//Получаем мета-таблицу
-	PMetaTable *MetaTable = ISMetaData::Instance().GetMetaTable(TableName.toString());
+	PMetaTable *MetaTable = GetMetaTable(TableName.toString());
 	if (!MetaTable)
 	{
-		ErrorString = LANG("Carat.Error.Query.GetNoteRecord.TableNotExist").arg(TableName.toString());
 		return false;
 	}
 
@@ -2038,10 +2044,9 @@ bool ISTcpWorker::NoteRecordSet(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer
 	}
 
 	//Получаем мета-таблицу
-	PMetaTable *MetaTable = ISMetaData::Instance().GetMetaTable(TableName.toString());
+	PMetaTable *MetaTable = GetMetaTable(TableName.toString());
 	if (!MetaTable)
 	{
-		ErrorString = LANG("Carat.Error.Query.GetNoteRecord.TableNotExist").arg(TableName.toString());
 		return false;
 	}
 
@@ -2699,10 +2704,9 @@ bool ISTcpWorker::GroupRightTableAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpA
 	}
 
 	//Получаем мета-таблицу
-	PMetaTable *MetaTable = ISMetaData::Instance().GetMetaTable(TableName.toString());
+	PMetaTable *MetaTable = GetMetaTable(TableName.toString());
 	if (!MetaTable)
 	{
-		ErrorString = LANG("Carat.Error.Query.GroupRightTableAdd.TableNotExist").arg(TableName.toString());
 		return false;
 	}
 
@@ -2742,10 +2746,9 @@ bool ISTcpWorker::GroupRightTableDelete(ISTcpMessage *TcpMessage, ISTcpAnswer *T
 	}
 
 	//Получаем мета-таблицу
-	PMetaTable *MetaTable = ISMetaData::Instance().GetMetaTable(TableName.toString());
+	PMetaTable *MetaTable = GetMetaTable(TableName.toString());
 	if (!MetaTable)
 	{
-		ErrorString = LANG("Carat.Error.Query.GroupRightTableDelete.TableNotExist").arg(TableName.toString());
 		return false;
 	}
 
