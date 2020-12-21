@@ -136,5 +136,6 @@
 
   <Local Name="Carat.Error.Query.GetGroupRights.SelectSubSystems" Russian="Не удалось получить информацию о подсистемах: %1"/>
   <Local Name="Carat.Error.Query.GetGroupRights.SelectTables" Russian="Не удалось получить информацию о таблицах: %1"/>
+  <Local Name="Carat.Error.Query.GetGroupRights.SelectSpecial" Russian="Не удалось получить информацию спец. правах: %1"/>
 
 </LANG>

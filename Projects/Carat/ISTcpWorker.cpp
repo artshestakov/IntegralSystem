@@ -255,6 +255,11 @@ static QString QS_GROUP_RIGHT_TABLE = PREPARE_QUERY("SELECT gatb_table, gatt_uid
 													"LEFT JOIN _groupaccesstabletype ON gatt_id = gatb_accesstype "
 													"WHERE gatb_group = :GroupID");
 //-----------------------------------------------------------------------------
+static QString QS_GROUP_RIGHT_SPECIAL = PREPARE_QUERY("SELECT gast_uid "
+													  "FROM _groupaccessspecial "
+													  "LEFT JOIN _groupaccessspecialtype ON gast_id = gasp_specialaccess "
+													  "WHERE gasp_group = :GroupID");
+//-----------------------------------------------------------------------------
 ISTcpWorker::ISTcpWorker(const QString &db_host, int db_port, const QString &db_name, const QString &db_user, const QString &db_password)
 	: QObject(),
 	ErrorString(NO_ERROR_STRING),
@@ -2453,9 +2458,24 @@ bool ISTcpWorker::GetGroupRights(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
 	}
 
 	//Получаем спец. права
+	ISQuery qSelectSpecial(ISDatabase::Instance().GetDB(DBConnectionName), QS_GROUP_RIGHT_SPECIAL);
+	qSelectSpecial.BindValue(":GroupID", GroupID);
+	if (!qSelectSpecial.Execute())
+	{
+		ErrorString = LANG("Carat.Error.Query.GetGroupRights.SelectSpecial").arg(qSelectSpecial.GetErrorString());
+		return false;
+	}
+
+	//Обходим спец. права
+	QVariantList SpecialList;
+	while (qSelectSpecial.Next())
+	{
+		SpecialList.append(ISUuid(qSelectSpecial.ReadColumn("gast_uid")));
+	}
 
 	TcpAnswer->Parameters["SubSystems"] = SubSystemsList;
 	TcpAnswer->Parameters["Tables"] = TablesMap;
+	TcpAnswer->Parameters["Special"] = SpecialList;
 	return true;
 }
 //-----------------------------------------------------------------------------
