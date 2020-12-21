@@ -89,7 +89,7 @@ static QString QS_PARAGRAPH = PREPARE_QUERY("SELECT prhs_uid, prhs_name, prhs_lo
 											"FROM _paragraphs "
 											"ORDER BY prhs_orderid");
 //-----------------------------------------------------------------------------
-static QString QS_GROUP_ACCESS_TABLE_TYPE = PREPARE_QUERY("SELECT gatt_id, gatt_name, gatt_icon "
+static QString QS_GROUP_ACCESS_TABLE_TYPE = PREPARE_QUERY("SELECT gatt_uid, gatt_name, gatt_icon "
 														  "FROM _groupaccesstabletype "
 														  "ORDER BY gatt_order");
 //-----------------------------------------------------------------------------
@@ -1195,7 +1195,7 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 		{
 			AccessTablesTypeList.append(QVariantMap
 			{
-				{ "ID", qSelectAccessTablesType.ReadColumn("gatt_id") },
+				{ "AccessUID", ISUuid(qSelectAccessTablesType.ReadColumn("gatt_uid")) },
 				{ "Name", qSelectAccessTablesType.ReadColumn("gatt_name") },
 				{ "Icon", qSelectAccessTablesType.ReadColumn("gatt_icon") }
 			});

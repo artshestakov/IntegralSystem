@@ -48,8 +48,6 @@
       <Field UID="{9246E78B-FF72-4517-A963-71E6014CD972}" Name="SubSystem" Type="UID" LabelName="Подсистема" LocalListName="Подсистема" NotNull="true"/>
     </Fields>
     <Indexes>
-      <Index Field="Group"/>
-      <Index Field="SubSystem"/>
       <Index Field="Group;SubSystem" Unique="true"/>
     </Indexes>
     <Foreigns>
@@ -64,9 +62,6 @@
       <Field UID="{9C8B015B-6A70-4CF8-9F66-70FBCA2DC1E7}" Name="AccessType" Type="BigInt" LabelName="Право" LocalListName="Право" NotNull="true"/>
     </Fields>
     <Indexes>
-      <Index Field="Group"/>
-      <Index Field="Table"/>
-      <Index Field="AccessType"/>
       <Index Field="Group;Table;AccessType" Unique="true"/>
     </Indexes>
     <Foreigns>
@@ -94,8 +89,6 @@
       <Field UID="{5504048E-C6D9-4F16-ABF4-9D8341BECAC9}" Name="SpecialAccess" Type="BigInt" LabelName="Право" LocalListName="Право" NotNull="true"/>
     </Fields>
     <Indexes>
-      <Index Field="Group"/>
-      <Index Field="SpecialAccess"/>
       <Index Field="Group;SpecialAccess" Unique="true"/>
     </Indexes>
     <Foreigns>
