@@ -264,7 +264,7 @@ static QString QS_GROUP_RIGHT_SPECIAL_PARENT = PREPARE_QUERY("SELECT gast_uid, g
 															 "WHERE gast_parent IS NULL "
 															 "ORDER BY gast_order");
 //-----------------------------------------------------------------------------
-static QString QS_GROUP_RIGHT_SPECIAL = PREPARE_QUERY("SELECT gast_uid, gast_name, "
+static QString QS_GROUP_RIGHT_SPECIAL = PREPARE_QUERY("SELECT gast_uid, gast_name, gast_hint, "
 													  "(SELECT (COUNT(*) > 0)::BOOLEAN AS is_exist FROM _groupaccessspecial WHERE gasp_group = :GroupID AND gasp_specialaccess = gast_id) "
 													  "FROM _groupaccessspecialtype "
 													  "WHERE gast_parent = :ParentUID "
@@ -2522,7 +2522,7 @@ bool ISTcpWorker::GetGroupRights(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
 	{
 		while (qSelectSpecialParent.Next()) //Обходим группы спец. прав
 		{
-			QVariantMap SpecialGroupMap = { { "Name", qSelectSpecialParent.ReadColumn("gast_name") } };
+			QVariantMap SpecialGroupMap = { { "LocalName", qSelectSpecialParent.ReadColumn("gast_name") } };
 
 			qSelectSpecial.BindValue(":GroupID", GroupID);
 			qSelectSpecial.BindValue(":ParentUID", qSelectSpecialParent.ReadColumn("gast_uid"));
@@ -2533,8 +2533,9 @@ bool ISTcpWorker::GetGroupRights(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
 					QVariantList VariantList = SpecialGroupMap["Rights"].toList();
 					VariantList.append(QVariantMap
 					{
-						{ "UID", qSelectSpecial.ReadColumn("gast_uid") },
-						{ "Name", qSelectSpecial.ReadColumn("gast_name") },
+						{ "UID", ISUuid(qSelectSpecial.ReadColumn("gast_uid")) },
+						{ "LocalName", qSelectSpecial.ReadColumn("gast_name") },
+						{ "Hint", qSelectSpecial.ReadColumn("gast_hint") },
 						{ "IsExist", qSelectSpecial.ReadColumn("is_exist") }
 					});
 					SpecialGroupMap["Rights"] = VariantList;
