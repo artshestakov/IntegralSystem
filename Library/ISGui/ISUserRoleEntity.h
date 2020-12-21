@@ -8,10 +8,6 @@ class ISUserRoleEntity
 public:
 	static ISUserRoleEntity& Instance();
 
-	static bool CheckExistSpecialAccess(int GroupID, int SpecialAccessID);
-	static void InsertSpecialAccess(int GroupID, int SpecialAccessID);
-	static void DeleteSpecialAccess(int GroupID, int SpecialAccessID);
-
 	QString GetErrorString() const;
 	void InitializeTables(const QVariantMap &VariantMap);
 	void InitializeSpecial(const QVariantList &VariantList);

@@ -5,18 +5,6 @@
 #include "ISLogger.h"
 #include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
-static QString QS_GROUP_ACCESS_SPECIAL_CHECK = PREPARE_QUERY("SELECT COUNT(*) "
-															 "FROM _groupaccessspecial "
-															 "WHERE gasp_group = :GroupID "
-															 "AND gasp_specialaccess = :SpecialAccessID");
-//-----------------------------------------------------------------------------
-static QString QI_GROUP_ACCESS_SPECIAL = PREPARE_QUERY("INSERT INTO _groupaccessspecial(gasp_group, gasp_specialaccess) "
-													   "VALUES(:GroupID, :SpecialAccessID)");
-//-----------------------------------------------------------------------------
-static QString QD_GROUP_ACCESS_SPECIAL = PREPARE_QUERY("DELETE FROM _groupaccessspecial "
-													   "WHERE gasp_group = :GroupID "
-													   "AND gasp_specialaccess = :SpecialAccessID");
-//-----------------------------------------------------------------------------
 static QString QS_GROUP_ACCESS_SUBSYSTEM = PREPARE_QUERY("SELECT gass_subsystem "
 														 "FROM _groupaccesssubsystem "
 														 "WHERE gass_group = :GroupID");
@@ -46,37 +34,6 @@ ISUserRoleEntity& ISUserRoleEntity::Instance()
 {
 	static ISUserRoleEntity UserRoleEntity;
 	return UserRoleEntity;
-}
-//-----------------------------------------------------------------------------
-bool ISUserRoleEntity::CheckExistSpecialAccess(int GroupID, int SpecialAccessID)
-{
-	ISQuery qSelect(QS_GROUP_ACCESS_SPECIAL_CHECK);
-	qSelect.BindValue(":GroupID", GroupID);
-	qSelect.BindValue(":SpecialAccessID", SpecialAccessID);
-	if (qSelect.ExecuteFirst())
-	{
-		if (qSelect.ReadColumn("count").toInt())
-		{
-			return true;
-		}
-	}
-	return false;
-}
-//-----------------------------------------------------------------------------
-void ISUserRoleEntity::InsertSpecialAccess(int GroupID, int SpecialAccessID)
-{
-	ISQuery qInsert(QI_GROUP_ACCESS_SPECIAL);
-	qInsert.BindValue(":GroupID", GroupID);
-	qInsert.BindValue(":SpecialAccessID", SpecialAccessID);
-	qInsert.Execute();
-}
-//-----------------------------------------------------------------------------
-void ISUserRoleEntity::DeleteSpecialAccess(int GroupID, int SpecialAccessID)
-{
-	ISQuery qDelete(QD_GROUP_ACCESS_SPECIAL);
-	qDelete.BindValue(":GroupID", GroupID);
-	qDelete.BindValue(":SpecialAccessID", SpecialAccessID);
-	qDelete.Execute();
 }
 //-----------------------------------------------------------------------------
 QString ISUserRoleEntity::GetErrorString() const

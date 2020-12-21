@@ -146,6 +146,7 @@ void ISUserGroupForm::CreateSpecial(const QVariantList &SpecialRights)
 			CheckEdit->SetText(SpecialRightMap["LocalName"].toString());
 			CheckEdit->CreateHint(SpecialRightMap["Hint"].toString());
 			CheckEdit->setProperty("UID", SpecialRightMap["UID"]);
+			connect(CheckEdit, &ISCheckEdit::ValueChange, this, &ISUserGroupForm::SpecialClicked);
 			GroupBox->layout()->addWidget(CheckEdit);
 		}
 		dynamic_cast<QVBoxLayout*>(GroupBox->layout())->addStretch();
@@ -184,18 +185,13 @@ void ISUserGroupForm::TableClicked(QAction *Action)
 void ISUserGroupForm::SpecialClicked(const QVariant &value)
 {
 	ISGui::SetWaitGlobalCursor(true);
-	int SpecialAccessID = sender()->property("SpecialAccessID").toInt();
-	QString SpecialAccessName = sender()->property("SpecialAccessName").toString();
-
-	if (value.toBool())
+	ISTcpQuery qGroupRightSpecial(value.toBool() ? API_GROUP_RIGHT_SPECIAL_ADD : API_GROUP_RIGHT_SPECIAL_DELETE);
+	qGroupRightSpecial.BindValue("GroupID", GroupID);
+	qGroupRightSpecial.BindValue("SpecialRightUID", sender()->property("UID"));
+	if (!qGroupRightSpecial.Execute())
 	{
-		ISUserRoleEntity::InsertSpecialAccess(GroupID, SpecialAccessID);
-		ISProtocol::Insert(true, CONST_UID_PROTOCOL_ADD_ACCESS_TO_SPECIAL, "_UserGroup", ISMetaData::Instance().GetMetaTable("_UserGroup")->LocalListName, GroupID, SpecialAccessName);
-	}
-	else
-	{
-		ISUserRoleEntity::DeleteSpecialAccess(GroupID, SpecialAccessID);
-		ISProtocol::Insert(true, CONST_UID_PROTOCOL_DEL_ACCESS_TO_SPECIAL, "_UserGroup", ISMetaData::Instance().GetMetaTable("_UserGroup")->LocalListName, GroupID, SpecialAccessName);
+		ISGui::SetWaitGlobalCursor(false);
+		ISMessageBox::ShowCritical(this, qGroupRightSpecial.GetErrorString());
 	}
 	ISGui::SetWaitGlobalCursor(false);
 }
