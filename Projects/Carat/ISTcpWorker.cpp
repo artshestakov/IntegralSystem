@@ -89,10 +89,6 @@ static QString QS_PARAGRAPH = PREPARE_QUERY("SELECT prhs_uid, prhs_name, prhs_lo
 											"FROM _paragraphs "
 											"ORDER BY prhs_orderid");
 //-----------------------------------------------------------------------------
-static QString QS_GROUP_ACCESS_TABLE_TYPE = PREPARE_QUERY("SELECT gatt_uid, gatt_name, gatt_icon "
-														  "FROM _groupaccesstabletype "
-														  "ORDER BY gatt_order");
-//-----------------------------------------------------------------------------
 static QString QU_USER_HASH = PREPARE_QUERY("UPDATE _users SET "
 											"usrs_hash = :Hash, "
 											"usrs_salt = :Salt "
@@ -259,10 +255,15 @@ static QString QS_GROUP_RIGHT_SUBSYSTEM = PREPARE_QUERY("SELECT sbsm_uid, sbsm_l
 														"WHERE sbsm_system = :SystemUID "
 														"ORDER BY sbsm_orderid");
 //-----------------------------------------------------------------------------
-static QString QS_GROUP_RIGHT_TABLE = PREPARE_QUERY("SELECT gatb_table, gatt_uid "
+static QString QS_GROUP_RIGHT_TABLE_TYPE = PREPARE_QUERY("SELECT gatt_uid, gatt_name, gatt_icon "
+														 "FROM _groupaccesstabletype "
+														 "ORDER BY gatt_order");
+//-----------------------------------------------------------------------------
+static QString QS_GROUP_RIGHT_TABLE = PREPARE_QUERY("SELECT gatt_uid "
 													"FROM _groupaccesstable "
 													"LEFT JOIN _groupaccesstabletype ON gatt_id = gatb_accesstype "
-													"WHERE gatb_group = :GroupID");
+													"WHERE gatb_group = :GroupID "
+													"AND gatb_table = :TableName");
 //-----------------------------------------------------------------------------
 static QString QS_GROUP_RIGHT_SPECIAL_PARENT = PREPARE_QUERY("SELECT gast_uid, gast_name "
 															 "FROM _groupaccessspecialtype "
@@ -1220,27 +1221,6 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 		return false;
 	}
 
-	//Получаем типа прав доступа на таблицы
-	QVariantList AccessTablesTypeList;
-	ISQuery qSelectAccessTablesType(ISDatabase::Instance().GetDB(DBConnectionName), QS_GROUP_ACCESS_TABLE_TYPE);
-	if (qSelectAccessTablesType.Execute())
-	{
-		while (qSelectAccessTablesType.Next())
-		{
-			AccessTablesTypeList.append(QVariantMap
-			{
-				{ "AccessUID", ISUuid(qSelectAccessTablesType.ReadColumn("gatt_uid")) },
-				{ "Name", qSelectAccessTablesType.ReadColumn("gatt_name") },
-				{ "Icon", qSelectAccessTablesType.ReadColumn("gatt_icon") }
-			});
-		}
-	}
-	else
-	{
-		ErrorString = LANG("Carat.Error.Query.GetMetaData.AccessTableType").arg(qSelectAccessTablesType.GetErrorString());
-		return false;
-	}
-
 	//Читаем мета-данные
 	QVariantList MetaDataList;
 	QStringList Filter("*.xsn"); //Фильтр
@@ -1267,7 +1247,6 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	TcpAnswer->Parameters["History"] = HistoryList;
 	TcpAnswer->Parameters["Settings"] = Settings;
 	TcpAnswer->Parameters["Paragraphs"] = ParagraphList;
-	TcpAnswer->Parameters["AccessTablesType"] = AccessTablesTypeList;
 	TcpAnswer->Parameters["MetaData"] = MetaDataList;
 	return true;
 }
@@ -2535,23 +2514,55 @@ bool ISTcpWorker::GetGroupRights(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
 		return false;
 	}
 
-	//Запрашиваем права на таблицы
-	ISQuery qSelectTables(ISDatabase::Instance().GetDB(DBConnectionName), QS_GROUP_RIGHT_TABLE);
-	qSelectTables.BindValue(":GroupID", GroupID);
-	if (!qSelectTables.Execute())
+	//Получаем типы прав доступа на таблицы
+	QVariantList RightsTableTypeList;
+	ISQuery qSelectAccessTablesType(ISDatabase::Instance().GetDB(DBConnectionName), QS_GROUP_RIGHT_TABLE_TYPE);
+	if (qSelectAccessTablesType.Execute())
 	{
-		ErrorString = LANG("Carat.Error.Query.GetGroupRights.SelectTables").arg(qSelectTables.GetErrorString());
+		while (qSelectAccessTablesType.Next())
+		{
+			RightsTableTypeList.append(QVariantMap
+			{
+				{ "UID", ISUuid(qSelectAccessTablesType.ReadColumn("gatt_uid")) },
+				{ "LocalName", qSelectAccessTablesType.ReadColumn("gatt_name") },
+				{ "Icon", qSelectAccessTablesType.ReadColumn("gatt_icon") }
+			});
+		}
+	}
+	else
+	{
+		ErrorString = LANG("Carat.Error.Query.GetGroupRights.RightTableType").arg(qSelectAccessTablesType.GetErrorString());
 		return false;
 	}
 
 	//Обходим таблицы
-	QVariantMap TablesMap;
-	while (qSelectTables.Next())
+	QVariantList TablesList;
+	ISQuery qSelectTables(ISDatabase::Instance().GetDB(DBConnectionName), QS_GROUP_RIGHT_TABLE);
+	for (PMetaTable *MetaTable : ISMetaData::Instance().GetTables())
 	{
-		QString TableName = qSelectTables.ReadColumn("gatb_table").toString();
-		QVariantList VariantList = TablesMap[TableName].toList();
-		VariantList.append(ISUuid(qSelectTables.ReadColumn("gatt_uid")));
-		TablesMap[TableName] = VariantList;
+		QVariantMap TableMap =
+		{
+			{ "TableName", MetaTable->Name },
+			{ "LocalName", MetaTable->LocalListName },
+			{ "Rights", QVariantList() }
+		};
+		qSelectTables.BindValue(":GroupID", GroupID);
+		qSelectTables.BindValue(":TableName", MetaTable->Name);
+		if (qSelectTables.Execute()) //Запрашиваем права на текущую таблицу
+		{
+			while (qSelectTables.Next()) //Обходим права на текущую таблицу
+			{
+				QVariantList RightList = TableMap["Rights"].toList();
+				RightList.append(ISUuid(qSelectTables.ReadColumn("gatt_uid")));
+				TableMap["Rights"] = RightList;
+			}
+		}
+		else //Ошибка запроса
+		{
+			ErrorString = LANG("Carat.Error.Query.GetGroupRights.SelectTables").arg(qSelectTables.GetErrorString());
+			return false;
+		}
+		TablesList.append(TableMap);
 	}
 
 	//Получаем спец. права
@@ -2596,7 +2607,8 @@ bool ISTcpWorker::GetGroupRights(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
 	}
 
 	TcpAnswer->Parameters["Systems"] = SystemsList;
-	TcpAnswer->Parameters["Tables"] = TablesMap;
+	TcpAnswer->Parameters["RightsTableType"] = RightsTableTypeList;
+	TcpAnswer->Parameters["Tables"] = TablesList;
 	TcpAnswer->Parameters["Special"] = SpecialList;
 	return true;
 }

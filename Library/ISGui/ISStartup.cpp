@@ -209,7 +209,6 @@ bool ISStartup::StartupNew(ISSplashScreen *SplashScreen)
 	ISHistory::Instance().Initialize(MetaData["History"].toList());
 	ISSettings::Instance().Initialize(MetaData["Settings"].toList());
 	ISParagraphEntity::Instance().Initialize(MetaData["Paragraphs"].toList());
-	ISBuffer::Instance().SetAccessTableType(MetaData["AccessTablesType"].toList());
 	ISObjects::Instance().GetInterface()->BeforeShowMainWindow();
 	if (!ISMetaData::Instance().Initialize(MetaData["MetaData"].toList())) //Ќе удалось проинициализировать мета-данные
 	{

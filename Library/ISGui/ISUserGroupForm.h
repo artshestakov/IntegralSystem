@@ -16,7 +16,7 @@ protected:
 
 private:
 	void CreateSubSystems(const QVariantList &Systems);
-	void CreateTables();
+	void CreateTables(const QVariantList &RightTableType, const QVariantList &Tables);
 	void CreateSpecial(const QVariantList &SpecialRights);
 
 private:
@@ -29,6 +29,5 @@ private:
 
 private:
 	int GroupID;
-	QVariantMap Tables;
 };
 //-----------------------------------------------------------------------------

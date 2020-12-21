@@ -40,10 +40,8 @@ void ISUserGroupForm::AfterShowEvent()
 	if (qGetGroupRights.Execute())
 	{
 		QVariantMap ResultMap = qGetGroupRights.TakeAnswer();
-		Tables = ResultMap["Tables"].toMap();
-
 		CreateSubSystems(ResultMap["Systems"].toList());
-		CreateTables();
+		CreateTables(ResultMap["RightsTableType"].toList(), ResultMap["Tables"].toList());
 		CreateSpecial(ResultMap["Special"].toList());
 		ISGui::SetWaitGlobalCursor(false);
 	}
@@ -85,39 +83,33 @@ void ISUserGroupForm::CreateSubSystems(const QVariantList &Systems)
 	}
 }
 //-----------------------------------------------------------------------------
-void ISUserGroupForm::CreateTables()
+void ISUserGroupForm::CreateTables(const QVariantList &RightTableType, const QVariantList &Tables)
 {
 	QFormLayout *FormLayout = new QFormLayout();
 	ISScrollArea *ScrollArea = new ISScrollArea(TabWidget);
 	ScrollArea->widget()->setLayout(FormLayout);
 	TabWidget->addTab(ScrollArea, LANG("AccessRights.Tables"));
 
-	//Вытаскиваем типы прав на таблицы
-	ISVectorMap AccessTypeVector = ISBuffer::Instance().GetAccessTableType();
-
 	//Вытаскиваем из мета-данных все НЕ системные таблицы
-	ISStringMap Map;
-	for (PMetaTable *MetaTable : ISMetaData::Instance().GetTables())
+	for (const QVariant &VariantTable : Tables)
 	{
-		if (MetaTable->IsSystem) //Если таблица является системной - пропускать
-		{
-			continue;
-		}
-		
+		QVariantMap TableMap = VariantTable.toMap();
+
 		QToolBar *ToolBar = new QToolBar(ScrollArea);
 		ToolBar->setToolButtonStyle(Qt::ToolButtonIconOnly);
 		ToolBar->setIconSize(ISDefines::Gui::SIZE_20_20);
 		connect(ToolBar, &QToolBar::actionTriggered, this, &ISUserGroupForm::TableClicked);
-		FormLayout->addRow(MetaTable->LocalListName + ':', ToolBar);
+		FormLayout->addRow(TableMap["LocalName"].toString() + ':', ToolBar);
 
-		for (const QVariantMap &VariantMap : AccessTypeVector) //Обходим типы прав
+		for (const QVariant &VariantRight : RightTableType) //Обходим типы прав
 		{
-			QAction *Action = ToolBar->addAction(BUFFER_ICONS(VariantMap["Icon"].toString()), VariantMap["Name"].toString());
+			QVariantMap RightMap = VariantRight.toMap();
+
+			QAction *Action = ToolBar->addAction(BUFFER_ICONS(RightMap["Icon"].toString()), RightMap["Name"].toString());
 			Action->setCheckable(true);
-			Action->setProperty("TableName", MetaTable->Name);
-			Action->setProperty("LocalName", MetaTable->LocalListName);
-			Action->setProperty("AccessUID", VariantMap["AccessUID"]);
-			Action->setChecked(Tables.contains(MetaTable->Name) && Tables.value(MetaTable->Name).toList().contains(VariantMap["AccessUID"]));
+			Action->setProperty("TableName", TableMap["TableName"]);
+			Action->setProperty("AccessUID", RightMap["UID"]);
+			Action->setChecked(TableMap["Rights"].toList().contains(RightMap["UID"]));
 			ToolBar->widgetForAction(Action)->setCursor(CURSOR_POINTING_HAND);
 		}
 	}
