@@ -2584,22 +2584,24 @@ bool ISTcpWorker::GroupRightSubSystemAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *
 	}
 
 	//Добавляем право
-	ISQuery qInsert(ISDatabase::Instance().GetDB(DBConnectionName), QI_GROUP_RIGHT_SUBSYSTEM);
-	qInsert.BindValue(":GroupID", GroupID);
-	qInsert.BindValue(":SubSystemUID", SubSystemUID);
-	if (!qInsert.Execute()) //Ошибка запроса
+	ISQuery qInsertSubSystemRight(ISDatabase::Instance().GetDB(DBConnectionName), QI_GROUP_RIGHT_SUBSYSTEM);
+	qInsertSubSystemRight.BindValue(":GroupID", GroupID);
+	qInsertSubSystemRight.BindValue(":SubSystemUID", SubSystemUID);
+	if (!qInsertSubSystemRight.Execute()) //Ошибка запроса
 	{
-		ErrorString = LANG("Carat.Error.Query.GroupRightSubSystemAdd.Insert").arg(qInsert.GetErrorString());
+		ErrorString = qInsertSubSystemRight.GetErrorNumber() == 23505 ?
+			LANG("Carat.Error.Query.GroupRightSubSystemAdd.AlreadyExist") :
+			LANG("Carat.Error.Query.GroupRightSubSystemAdd.Insert").arg(qInsertSubSystemRight.GetErrorString());
 		return false;
 	}
 
 	//Не удалось прочитать имя подсистемы
-	if (!qInsert.First())
+	if (!qInsertSubSystemRight.First())
 	{
-		ErrorString = qInsert.GetErrorString();
+		ErrorString = qInsertSubSystemRight.GetErrorString();
 		return false;
 	}
-	Protocol(TcpMessage->TcpSocket->GetUserID(), CONST_UID_PROTOCOL_ADD_ACCESS_TO_SUBSYSTEM, QVariant(), QVariant(), QVariant(), qInsert.ReadColumn("sbsm_localname"));
+	Protocol(TcpMessage->TcpSocket->GetUserID(), CONST_UID_PROTOCOL_ADD_ACCESS_TO_SUBSYSTEM, QVariant(), QVariant(), QVariant(), qInsertSubSystemRight.ReadColumn("sbsm_localname"));
 	return true;
 }
 //-----------------------------------------------------------------------------
@@ -2615,22 +2617,22 @@ bool ISTcpWorker::GroupRightSubSystemDelete(ISTcpMessage *TcpMessage, ISTcpAnswe
 	}
 
 	//Удаляем право
-	ISQuery qDelete(ISDatabase::Instance().GetDB(DBConnectionName), QD_GROUP_RIGHT_SUBSYSTEM);
-	qDelete.BindValue(":GroupID", GroupID);
-	qDelete.BindValue(":SubSystemUID", SubSystemUID);
-	if (!qDelete.Execute()) //Ошибка запроса
+	ISQuery qDeleteSubSystemRight(ISDatabase::Instance().GetDB(DBConnectionName), QD_GROUP_RIGHT_SUBSYSTEM);
+	qDeleteSubSystemRight.BindValue(":GroupID", GroupID);
+	qDeleteSubSystemRight.BindValue(":SubSystemUID", SubSystemUID);
+	if (!qDeleteSubSystemRight.Execute()) //Ошибка запроса
 	{
-		ErrorString = LANG("Carat.Error.Query.GroupRightSubSystemDelete.Delete").arg(qDelete.GetErrorString());
+		ErrorString = LANG("Carat.Error.Query.GroupRightSubSystemDelete.Delete").arg(qDeleteSubSystemRight.GetErrorString());
 		return false;
 	}
 
-	//Не удалось прочитать имя подсистемы
-	if (!qDelete.First())
+	//Если ни одна строка не была затронута, значит такого права нет - ошибка
+	if (qDeleteSubSystemRight.GetCountAffected() == 0)
 	{
-		ErrorString = qDelete.GetErrorString();
+		ErrorString = LANG("Carat.Error.Query.GroupRightSubSystemDelete.NotExist");
 		return false;
 	}
-	Protocol(TcpMessage->TcpSocket->GetUserID(), CONST_UID_PROTOCOL_DEL_ACCESS_TO_SUBSYSTEM, QVariant(), QVariant(), QVariant(), qDelete.ReadColumn("sbsm_localname"));
+	Protocol(TcpMessage->TcpSocket->GetUserID(), CONST_UID_PROTOCOL_DEL_ACCESS_TO_SUBSYSTEM, QVariant(), QVariant(), QVariant(), qDeleteSubSystemRight.ReadColumn("sbsm_localname"));
 	return true;
 }
 //-----------------------------------------------------------------------------
@@ -2655,25 +2657,25 @@ bool ISTcpWorker::GroupRightTableAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpA
 	}
 
 	//Добавляем право
-	ISQuery qInsert(ISDatabase::Instance().GetDB(DBConnectionName), QI_GROUP_RIGHT_TABLE);
-	qInsert.BindValue(":GroupID", GroupID);
-	qInsert.BindValue(":TableName", MetaTable->Name);
-	qInsert.BindValue(":AccessUID", AccessUID);
-	if (!qInsert.Execute()) //Вставка не удалась
+	ISQuery qInsertTableRight(ISDatabase::Instance().GetDB(DBConnectionName), QI_GROUP_RIGHT_TABLE);
+	qInsertTableRight.BindValue(":GroupID", GroupID);
+	qInsertTableRight.BindValue(":TableName", MetaTable->Name);
+	qInsertTableRight.BindValue(":AccessUID", AccessUID);
+	if (!qInsertTableRight.Execute()) //Вставка не удалась
 	{
 		//Определяем тип ошибки
-		ErrorString = qInsert.GetErrorNumber() == 23505 ?
+		ErrorString = qInsertTableRight.GetErrorNumber() == 23505 ?
 			LANG("Carat.Error.Query.GroupRightTableAdd.AlreadyExist") :
-			LANG("Carat.Error.Query.GroupRightTableAdd.Insert").arg(qInsert.GetErrorString());
+			LANG("Carat.Error.Query.GroupRightTableAdd.Insert").arg(qInsertTableRight.GetErrorString());
 		return false;
 	}
 
 	//Не удалось прочитать
-	if (!qInsert.First())
+	if (!qInsertTableRight.First())
 	{
 		return false;
 	}
-	Protocol(TcpMessage->TcpSocket->GetUserID(), CONST_UID_PROTOCOL_ADD_ACCESS_TO_TABLE, MetaTable->Name, MetaTable->LocalListName, QVariant(), qInsert.ReadColumn("gatt_name"));
+	Protocol(TcpMessage->TcpSocket->GetUserID(), CONST_UID_PROTOCOL_ADD_ACCESS_TO_TABLE, MetaTable->Name, MetaTable->LocalListName, QVariant(), qInsertTableRight.ReadColumn("gatt_name"));
 	return true;
 }
 //-----------------------------------------------------------------------------
@@ -2698,23 +2700,23 @@ bool ISTcpWorker::GroupRightTableDelete(ISTcpMessage *TcpMessage, ISTcpAnswer *T
 	}
 
 	//Удаляем право
-	ISQuery qDelete(ISDatabase::Instance().GetDB(DBConnectionName), QD_GROUP_RIGHT_TABLE);
-	qDelete.BindValue(":GroupID", GroupID);
-	qDelete.BindValue(":TableName", MetaTable->Name);
-	qDelete.BindValue(":AccessUID", AccessUID);
-	if (!qDelete.Execute())
+	ISQuery qDeleteTableRight(ISDatabase::Instance().GetDB(DBConnectionName), QD_GROUP_RIGHT_TABLE);
+	qDeleteTableRight.BindValue(":GroupID", GroupID);
+	qDeleteTableRight.BindValue(":TableName", MetaTable->Name);
+	qDeleteTableRight.BindValue(":AccessUID", AccessUID);
+	if (!qDeleteTableRight.Execute())
 	{
-		ErrorString = LANG("Carat.Error.Query.GroupRightTableDelete.Delete").arg(qDelete.GetErrorString());
+		ErrorString = LANG("Carat.Error.Query.GroupRightTableDelete.Delete").arg(qDeleteTableRight.GetErrorString());
 		return false;
 	}
 
 	//Если ни одна строка не была затронута, значит такого права нет - ошибка
-	if (qDelete.GetCountAffected() == 0)
+	if (qDeleteTableRight.GetCountAffected() == 0)
 	{
 		ErrorString = LANG("Carat.Error.Query.GroupRightTableDelete.NotExist");
 		return false;
 	}
-	Protocol(TcpMessage->TcpSocket->GetUserID(), CONST_UID_PROTOCOL_DEL_ACCESS_TO_TABLE, MetaTable->Name, MetaTable->LocalListName, QVariant(), qDelete.ReadColumn("gatt_name"));
+	Protocol(TcpMessage->TcpSocket->GetUserID(), CONST_UID_PROTOCOL_DEL_ACCESS_TO_TABLE, MetaTable->Name, MetaTable->LocalListName, QVariant(), qDeleteTableRight.ReadColumn("gatt_name"));
 	return true;
 }
 //-----------------------------------------------------------------------------
@@ -2730,24 +2732,24 @@ bool ISTcpWorker::GroupRightSpecialAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *Tc
 	}
 
 	//Добавляем спец. право
-	ISQuery qInsert(ISDatabase::Instance().GetDB(DBConnectionName), QI_GROUP_RIGHT_SPECIAL);
-	qInsert.BindValue(":GroupID", GroupID);
-	qInsert.BindValue(":SpecialRightUID", SpecialRightUID);
-	if (!qInsert.Execute()) //Вставка не удалась и ошибка говорит о наружении уникальности
+	ISQuery qInsertSpecialRight(ISDatabase::Instance().GetDB(DBConnectionName), QI_GROUP_RIGHT_SPECIAL);
+	qInsertSpecialRight.BindValue(":GroupID", GroupID);
+	qInsertSpecialRight.BindValue(":SpecialRightUID", SpecialRightUID);
+	if (!qInsertSpecialRight.Execute()) //Вставка не удалась и ошибка говорит о наружении уникальности
 	{
 		//Определяем тип ошибки
-		ErrorString = qInsert.GetErrorNumber() == 23505 ?
+		ErrorString = qInsertSpecialRight.GetErrorNumber() == 23505 ?
 			LANG("Carat.Error.Query.GroupRightSpecialAdd.AlreadyExist") :
-			LANG("Carat.Error.Query.GroupRightSpecialAdd.Insert").arg(qInsert.GetErrorString());
+			LANG("Carat.Error.Query.GroupRightSpecialAdd.Insert").arg(qInsertSpecialRight.GetErrorString());
 		return false;
 	}
 
-	if (!qInsert.First())
+	if (!qInsertSpecialRight.First())
 	{
-		ErrorString = qInsert.GetErrorString();
+		ErrorString = qInsertSpecialRight.GetErrorString();
 		return false;
 	}
-	Protocol(TcpMessage->TcpSocket->GetUserID(), CONST_UID_PROTOCOL_ADD_ACCESS_TO_SPECIAL, QVariant(), QVariant(), QVariant(), qInsert.ReadColumn("gast_name"));
+	Protocol(TcpMessage->TcpSocket->GetUserID(), CONST_UID_PROTOCOL_ADD_ACCESS_TO_SPECIAL, QVariant(), QVariant(), QVariant(), qInsertSpecialRight.ReadColumn("gast_name"));
 	return true;
 }
 //-----------------------------------------------------------------------------
@@ -2763,22 +2765,22 @@ bool ISTcpWorker::GroupRightSpecialDelete(ISTcpMessage *TcpMessage, ISTcpAnswer 
 	}
 
 	//Удаляем спец. право
-	ISQuery qDelete(ISDatabase::Instance().GetDB(DBConnectionName), QD_GROUP_RIGHT_SPECIAL);
-	qDelete.BindValue(":GroupID", GroupID);
-	qDelete.BindValue(":SpecialRightUID", SpecialRightUID);
-	if (!qDelete.Execute()) //Ошибка запроса
+	ISQuery qDeleteSpecialRight(ISDatabase::Instance().GetDB(DBConnectionName), QD_GROUP_RIGHT_SPECIAL);
+	qDeleteSpecialRight.BindValue(":GroupID", GroupID);
+	qDeleteSpecialRight.BindValue(":SpecialRightUID", SpecialRightUID);
+	if (!qDeleteSpecialRight.Execute()) //Ошибка запроса
 	{
-		ErrorString = LANG("Carat.Error.Query.GroupRightSpecialDelete.Delete").arg(qDelete.GetErrorString());
+		ErrorString = LANG("Carat.Error.Query.GroupRightSpecialDelete.Delete").arg(qDeleteSpecialRight.GetErrorString());
 		return false;
 	}
 
 	//Если ни одна строка не была затронута, значит такого права нет - ошибка
-	if (qDelete.GetCountAffected() == 0)
+	if (qDeleteSpecialRight.GetCountAffected() == 0)
 	{
 		ErrorString = LANG("Carat.Error.Query.GroupRightSpecialDelete.NotExist");
 		return false;
 	}
-	Protocol(TcpMessage->TcpSocket->GetUserID(), CONST_UID_PROTOCOL_DEL_ACCESS_TO_SPECIAL, QVariant(), QVariant(), QVariant(), qDelete.ReadColumn("gast_name"));
+	Protocol(TcpMessage->TcpSocket->GetUserID(), CONST_UID_PROTOCOL_DEL_ACCESS_TO_SPECIAL, QVariant(), QVariant(), QVariant(), qDeleteSpecialRight.ReadColumn("gast_name"));
 	return true;
 }
 //-----------------------------------------------------------------------------

@@ -140,9 +140,11 @@
   <Local Name="Carat.Error.Query.GetGroupRights.SelectSpecial" Russian="Не удалось получить информацию специальных правах: %1"/>
   <Local Name="Carat.Error.Query.GetGroupRights.SelectSpecialGroup" Russian="Не удалось получить информацию о группах специальных прав: %1"/>
 
+  <Local Name="Carat.Error.Query.GroupRightSubSystemAdd.AlreadyExist" Russian="Такое право уже есть."/>
   <Local Name="Carat.Error.Query.GroupRightSubSystemAdd.Insert" Russian="Не удалось добавить право на подсистему: %1"/>
 
   <Local Name="Carat.Error.Query.GroupRightSubSystemDelete.Delete" Russian="Не удалось удалить право на подсистему: %1"/>
+  <Local Name="Carat.Error.Query.GroupRightSubSystemDelete.NotExist" Russian="Право на подсистему не существует."/>
 
   <Local Name="Carat.Error.Query.GroupRightTableAdd.TableNotExist" Russian="Таблица %1 не существует."/>
   <Local Name="Carat.Error.Query.GroupRightTableAdd.AlreadyExist" Russian="Такое право уже есть."/>
