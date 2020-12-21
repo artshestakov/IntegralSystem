@@ -5,7 +5,6 @@
 #include "ISBuffer.h"
 #include "ISScrollArea.h"
 #include "ISMetaSystemsEntity.h"
-#include "ISQuery.h"
 #include "ISMetaData.h"
 #include "ISUserRoleEntity.h"
 #include "ISControls.h"
@@ -13,16 +12,6 @@
 #include "ISGui.h"
 #include "ISTcpQuery.h"
 #include "ISMessageBox.h"
-//-----------------------------------------------------------------------------
-static QString QS_GROUP_ACCESS_SPECIAL_GROUP = PREPARE_QUERY("SELECT gast_uid, gast_name "
-															 "FROM _groupaccessspecialtype "
-															 "WHERE gast_parent IS NULL "
-															 "ORDER BY gast_order");
-//-----------------------------------------------------------------------------
-static QString QS_GROUP_ACCESS_SPECIAL_CHECK = PREPARE_QUERY("SELECT gast_id, gast_name, gast_hint "
-													   "FROM _groupaccessspecialtype "
-													   "WHERE gast_parent = :ParentUID "
-													   "ORDER BY gast_order");
 //-----------------------------------------------------------------------------
 ISUserGroupForm::ISUserGroupForm(int group_id, const QString &group_name)
 	: ISInterfaceDialogForm(),
@@ -56,7 +45,7 @@ void ISUserGroupForm::AfterShowEvent()
 
 		CreateSubSystems();
 		CreateTables();
-		CreateSpecial();
+		CreateSpecial(ResultMap["Special"].toList());
 		ISGui::SetWaitGlobalCursor(false);
 	}
 	else
@@ -131,47 +120,35 @@ void ISUserGroupForm::CreateTables()
 	}
 }
 //-----------------------------------------------------------------------------
-void ISUserGroupForm::CreateSpecial()
+void ISUserGroupForm::CreateSpecial(const QVariantList &SpecialRights)
 {
-	QFormLayout *FormLayout = new QFormLayout();
 	ISScrollArea *ScrollArea = new ISScrollArea(TabWidget);
-	ScrollArea->widget()->setLayout(FormLayout);
+	ScrollArea->widget()->setLayout(new QVBoxLayout());
 	TabWidget->addTab(ScrollArea, LANG("AccessRights.SpecialRoles"));
 
-	ISQuery qSelectSpecialGroup(QS_GROUP_ACCESS_SPECIAL_GROUP);
-	if (qSelectSpecialGroup.Execute())
+	//Обходим группы спец. прав
+	for (const QVariant &SpecialRightGroup : SpecialRights)
 	{
-		while (qSelectSpecialGroup.Next())
+		QVariantMap SpecialRightGroupMap = SpecialRightGroup.toMap();
+
+		QGroupBox *GroupBox = new QGroupBox(SpecialRightGroupMap["LocalName"].toString() + ':', ScrollArea);
+		GroupBox->setLayout(new QVBoxLayout());
+		GroupBox->setStyleSheet(BUFFER_STYLE_SHEET("QGroupBoxAccessSubSystem"));
+		ScrollArea->widget()->layout()->addWidget(GroupBox);
+
+		//Обходим спец. права текущей группы
+		for (const QVariant &SpecialRight : SpecialRightGroupMap["Rights"].toList())
 		{
-			QLabel *LabelSpecialGroup = new QLabel(qSelectSpecialGroup.ReadColumn("gast_name").toString() + ':', ScrollArea);
-			LabelSpecialGroup->setSizePolicy(QSizePolicy::Maximum, LabelSpecialGroup->sizePolicy().verticalPolicy());
-			LabelSpecialGroup->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
-			
-			QHBoxLayout *Layout = new QHBoxLayout();
-			Layout->addWidget(LabelSpecialGroup);
-			Layout->addWidget(ISControls::CreateHorizontalLine(ScrollArea));
-			FormLayout->addRow(Layout);
+			QVariantMap SpecialRightMap = SpecialRight.toMap();
 
-			ISQuery qSelectSpecial(QS_GROUP_ACCESS_SPECIAL_CHECK);
-			qSelectSpecial.BindValue(":ParentUID", qSelectSpecialGroup.ReadColumn("gast_uid"));
-			if (qSelectSpecial.Execute())
-			{
-				while (qSelectSpecial.Next())
-				{
-					int SpecialAccessID = qSelectSpecial.ReadColumn("gast_id").toInt();
-					QString Name = qSelectSpecial.ReadColumn("gast_name").toString();
-					QString Hint = qSelectSpecial.ReadColumn("gast_hint").toString();
-
-					ISCheckEdit *CheckEdit = new ISCheckEdit(ScrollArea);
-					CheckEdit->CreateHint(Hint);
-					CheckEdit->setProperty("SpecialAccessID", SpecialAccessID);
-					CheckEdit->setProperty("SpecialAccessName", Name);
-					CheckEdit->SetValue(ISUserRoleEntity::CheckExistSpecialAccess(GroupID, SpecialAccessID));
-					connect(CheckEdit, &ISCheckEdit::ValueChange, this, &ISUserGroupForm::SpecialClicked);
-					FormLayout->addRow("  " + Name + ':', CheckEdit);
-				}
-			}
+			ISCheckEdit *CheckEdit = new ISCheckEdit(GroupBox);
+			CheckEdit->SetValue(SpecialRightMap["IsExist"]);
+			CheckEdit->SetText(SpecialRightMap["LocalName"].toString());
+			CheckEdit->CreateHint(SpecialRightMap["Hint"].toString());
+			CheckEdit->setProperty("UID", SpecialRightMap["UID"]);
+			GroupBox->layout()->addWidget(CheckEdit);
 		}
+		dynamic_cast<QVBoxLayout*>(GroupBox->layout())->addStretch();
 	}
 }
 //-----------------------------------------------------------------------------

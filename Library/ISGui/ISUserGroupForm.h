@@ -17,7 +17,7 @@ protected:
 private:
 	void CreateSubSystems();
 	void CreateTables();
-	void CreateSpecial();
+	void CreateSpecial(const QVariantList &SpecialRights);
 
 private:
 	void SubSystemClicked(const QVariant &value); //Обработка нажатия на право для подсистемы
