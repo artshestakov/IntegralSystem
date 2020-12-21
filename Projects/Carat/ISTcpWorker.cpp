@@ -2659,9 +2659,12 @@ bool ISTcpWorker::GroupRightTableAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpA
 	qInsert.BindValue(":GroupID", GroupID);
 	qInsert.BindValue(":TableName", MetaTable->Name);
 	qInsert.BindValue(":AccessUID", AccessUID);
-	if (!qInsert.Execute()) //Ошибка запроса
+	if (!qInsert.Execute()) //Вставка не удалась
 	{
-		ErrorString = LANG("Carat.Error.Query.GroupRightTableAdd.Insert").arg(qInsert.GetErrorString());
+		//Определяем тип ошибки
+		ErrorString = qInsert.GetErrorNumber() == 23505 ?
+			LANG("Carat.Error.Query.GroupRightTableAdd.AlreadyExist") :
+			LANG("Carat.Error.Query.GroupRightTableAdd.Insert").arg(qInsert.GetErrorString());
 		return false;
 	}
 
@@ -2705,9 +2708,10 @@ bool ISTcpWorker::GroupRightTableDelete(ISTcpMessage *TcpMessage, ISTcpAnswer *T
 		return false;
 	}
 
-	if (!qDelete.First())
+	//Если ни одна строка не была затронута, значит такого права нет - ошибка
+	if (qDelete.GetCountAffected() == 0)
 	{
-		ErrorString = qDelete.GetErrorString();
+		ErrorString = LANG("Carat.Error.Query.GroupRightTableDelete.NotExist");
 		return false;
 	}
 	Protocol(TcpMessage->TcpSocket->GetUserID(), CONST_UID_PROTOCOL_DEL_ACCESS_TO_TABLE, MetaTable->Name, MetaTable->LocalListName, QVariant(), qDelete.ReadColumn("gatt_name"));
