@@ -59,12 +59,12 @@ bool ISTcpSocket::GetAuthorized() const
 	return IsAuthorized;
 }
 //-----------------------------------------------------------------------------
-void ISTcpSocket::SetUserID(int user_id)
+void ISTcpSocket::SetUserID(unsigned int user_id)
 {
 	UserID = user_id;
 }
 //-----------------------------------------------------------------------------
-int ISTcpSocket::GetUserID() const
+unsigned int ISTcpSocket::GetUserID() const
 {
 	return UserID;
 }

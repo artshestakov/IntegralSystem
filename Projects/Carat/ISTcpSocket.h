@@ -18,8 +18,8 @@ public:
 	void SetAuthorized(bool authorized);
 	bool GetAuthorized() const;
 
-	void SetUserID(int user_id);
-	int GetUserID() const;
+	void SetUserID(unsigned int user_id);
+	unsigned int GetUserID() const;
 
 	void SetUserGroupID(int user_group_id);
 	int GetUserGroupID() const;
@@ -42,7 +42,7 @@ private:
 	QTimer *Timer;
 
 	bool IsAuthorized; //Флаг авторизации клиента
-	int UserID; //Идентификатор пользователя
+	unsigned int UserID; //Идентификатор пользователя
 	int UserGroupID; //Идентификатор группы пользователя
 	bool UserIsSystem; //Флаг системного пользователя
 };

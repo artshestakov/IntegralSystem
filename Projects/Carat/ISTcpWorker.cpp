@@ -479,7 +479,7 @@ QVariant ISTcpWorker::CheckNullField(const QString &FieldName, ISTcpMessage *Tcp
 	return QVariant();
 }
 //-----------------------------------------------------------------------------
-void ISTcpWorker::Protocol(int UserID, const ISUuid &ActionTypeUID, const QVariant &TableName, const QVariant &TableLocalName, const QVariant &ObjectID, const QVariant &Information)
+void ISTcpWorker::Protocol(unsigned int UserID, const ISUuid &ActionTypeUID, const QVariant &TableName, const QVariant &TableLocalName, const QVariant &ObjectID, const QVariant &Information)
 {
 	qProtocol->BindValue(":DateTime", QDateTime::currentDateTime());
 	qProtocol->BindValue(":UserID", UserID);
@@ -735,7 +735,7 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 		return false;
 	}
 
-	int UserID = qSelectAuth.ReadColumn("usrs_id").toInt();
+	unsigned int UserID = qSelectAuth.ReadColumn("usrs_id").toUInt();
 	bool IsSystem = qSelectAuth.ReadColumn("usrs_issystem").toBool();
 	QString UserFIO = qSelectAuth.ReadColumn("usrs_fio").toString();
 	int GroupID = qSelectAuth.ReadColumn("usrs_group").toInt();
@@ -1337,7 +1337,7 @@ bool ISTcpWorker::UserPasswordCreate(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpA
 	}
 
 	//Фиксируем изменение пароля
-	Protocol(UserID.toInt(), CONST_UID_PROTOCOL_USER_PASSWORD_CREATE, "_Users", ISMetaData::Instance().GetMetaTable("_Users")->LocalListName, UserID);
+	Protocol(UserID.toUInt(), CONST_UID_PROTOCOL_USER_PASSWORD_CREATE, "_Users", ISMetaData::Instance().GetMetaTable("_Users")->LocalListName, UserID);
 	return true;
 }
 //-----------------------------------------------------------------------------
@@ -1398,7 +1398,7 @@ bool ISTcpWorker::UserPasswordEdit(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAns
 	}
 
 	//Фиксируем изменение пароля
-	Protocol(UserID.toInt(), CONST_UID_PROTOCOL_USER_PASSWORD_UPDATE, "_Users", ISMetaData::Instance().GetMetaTable("_Users")->LocalListName, UserID);
+	Protocol(UserID.toUInt(), CONST_UID_PROTOCOL_USER_PASSWORD_UPDATE, "_Users", ISMetaData::Instance().GetMetaTable("_Users")->LocalListName, UserID);
 	return true;
 }
 //-----------------------------------------------------------------------------
@@ -1448,7 +1448,7 @@ bool ISTcpWorker::UserPasswordReset(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAn
 	}
 
 	//Фиксируем изменение пароля
-	Protocol(UserID.toInt(), CONST_UID_PROTOCOL_USER_PASSWORD_RESET, "_Users", ISMetaData::Instance().GetMetaTable("_Users")->LocalListName, UserID);
+	Protocol(UserID.toUInt(), CONST_UID_PROTOCOL_USER_PASSWORD_RESET, "_Users", ISMetaData::Instance().GetMetaTable("_Users")->LocalListName, UserID);
 	return true;
 }
 //-----------------------------------------------------------------------------
@@ -1470,7 +1470,7 @@ bool ISTcpWorker::UserSettingsReset(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAn
 		ResultMap[ISUuid(qUpdate.ReadColumn("stgs_uid"))] = qUpdate.ReadColumn("usst_value");
 	}
 	TcpAnswer->Parameters["Result"] = ResultMap;
-	Protocol(TcpMessage->TcpSocket->GetUserID(), CONST_UID_PROTOCOL_USER_SETTINGS_RESET, QVariant(), QVariant(), QVariant());
+	Protocol(TcpMessage->TcpSocket->GetUserID(), CONST_UID_PROTOCOL_USER_SETTINGS_RESET);
 	return true;
 }
 //-----------------------------------------------------------------------------
@@ -1641,10 +1641,10 @@ bool ISTcpWorker::RecordDelete(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	}
 
 	//Протоколируем
-	int UseriD = TcpMessage->TcpSocket->GetUserID();
+	unsigned int UserID = TcpMessage->TcpSocket->GetUserID();
 	for (const QVariant &ObjectID : Objects)
 	{
-		Protocol(UseriD, CONST_UID_PROTOCOL_DELETE_OBJECT, MetaTable->Name, MetaTable->LocalListName, ObjectID, QVariant());
+		Protocol(UserID, CONST_UID_PROTOCOL_DELETE_OBJECT, MetaTable->Name, MetaTable->LocalListName, ObjectID);
 	}
 	return true;
 }
@@ -2404,6 +2404,7 @@ bool ISTcpWorker::SaveMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 		}
 	}
 
+	Protocol(TcpMessage->TcpSocket->GetUserID(), CONST_UID_PROTOCOL_EXIT_APPLICATION);
 	return true;
 }
 //-----------------------------------------------------------------------------
