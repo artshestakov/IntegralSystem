@@ -289,6 +289,15 @@ static QString QD_GROUP_RIGHT_TABLE = PREPARE_QUERY("DELETE FROM _groupaccesstab
 													"AND gatb_accesstype = (SELECT gatt_id FROM _groupaccesstabletype WHERE gatt_uid = :AccessUID) "
 													"RETURNING (SELECT gatt_name FROM _groupaccesstabletype WHERE gatt_uid = :AccessUID)");
 //-----------------------------------------------------------------------------
+static QString QI_GROUP_RIGHT_SPECIAL = PREPARE_QUERY("INSERT INTO _groupaccessspecial(gasp_group, gasp_specialaccess) "
+													  "VALUES(:GroupID, (SELECT gast_id FROM _groupaccessspecialtype WHERE gast_uid = :SpecialRightUID)) "
+													  "RETURNING (SELECT gast_name FROM _groupaccessspecialtype WHERE gast_uid = :SpecialRightUID)");
+//-----------------------------------------------------------------------------
+static QString QD_GROUP_RIGHT_SPECIAL = PREPARE_QUERY("DELETE FROM _groupaccessspecial "
+													  "WHERE gasp_group = :GroupID "
+													  "AND gasp_specialaccess = (SELECT gast_id FROM _groupaccessspecialtype WHERE gast_uid = :SpecialRightUID) "
+													  "RETURNING (SELECT gast_name FROM _groupaccessspecialtype WHERE gast_uid = :SpecialRightUID)");
+//-----------------------------------------------------------------------------
 ISTcpWorker::ISTcpWorker(const QString &db_host, int db_port, const QString &db_name, const QString &db_user, const QString &db_password)
 	: QObject(),
 	ErrorString(NO_ERROR_STRING),
@@ -452,6 +461,8 @@ void ISTcpWorker::Process()
 					case ISNamespace::AMT_GroupRightSubSystemDelete: Result = GroupRightSubSystemDelete(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_GroupRightTableAdd: Result = GroupRightTableAdd(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_GroupRightTableDelete: Result = GroupRightTableDelete(tcp_message, TcpAnswer); break;
+					case ISNamespace::AMT_GroupRightSpecialAdd: Result = GroupRightSpecialAdd(tcp_message, TcpAnswer); break;
+					case ISNamespace::AMT_GroupRightSpecialDelete: Result = GroupRightSpecialDelete(tcp_message, TcpAnswer); break;
 					default:
 						ErrorString = LANG("Carat.Error.NotExistFunction").arg(tcp_message->TypeName);
 					}
@@ -2700,6 +2711,67 @@ bool ISTcpWorker::GroupRightTableDelete(ISTcpMessage *TcpMessage, ISTcpAnswer *T
 		return false;
 	}
 	Protocol(TcpMessage->TcpSocket->GetUserID(), CONST_UID_PROTOCOL_DEL_ACCESS_TO_TABLE, MetaTable->Name, MetaTable->LocalListName, QVariant(), qDelete.ReadColumn("gatt_name"));
+	return true;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::GroupRightSpecialAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+	Q_UNUSED(TcpAnswer);
+
+	QVariant GroupID = CheckNullField("GroupID", TcpMessage),
+		SpecialRightUID = CheckNullField("SpecialRightUID", TcpMessage);
+	if (!GroupID.isValid() || !SpecialRightUID.isValid())
+	{
+		return false;
+	}
+
+	//Добавляем спец. право
+	ISQuery qInsert(ISDatabase::Instance().GetDB(DBConnectionName), QI_GROUP_RIGHT_SPECIAL);
+	qInsert.BindValue(":GroupID", GroupID);
+	qInsert.BindValue(":SpecialRightUID", SpecialRightUID);
+	if (!qInsert.Execute() && qInsert.GetErrorNumber() == 23505) //Вставка не удалась и ошибка говорит о наружении уникальности
+	{
+		ErrorString = LANG("Carat.Error.Query.GroupRightSpecialAdd.Insert");
+		return false;
+	}
+
+	if (!qInsert.First())
+	{
+		ErrorString = qInsert.GetErrorString();
+		return false;
+	}
+	Protocol(TcpMessage->TcpSocket->GetUserID(), CONST_UID_PROTOCOL_ADD_ACCESS_TO_SPECIAL, QVariant(), QVariant(), QVariant(), qInsert.ReadColumn("gast_name"));
+	return true;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::GroupRightSpecialDelete(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+	Q_UNUSED(TcpAnswer);
+
+	QVariant GroupID = CheckNullField("GroupID", TcpMessage),
+		SpecialRightUID = CheckNullField("SpecialRightUID", TcpMessage);
+	if (!GroupID.isValid() || !SpecialRightUID.isValid())
+	{
+		return false;
+	}
+
+	//Удаляем спец. право
+	ISQuery qDelete(ISDatabase::Instance().GetDB(DBConnectionName), QD_GROUP_RIGHT_SPECIAL);
+	qDelete.BindValue(":GroupID", GroupID);
+	qDelete.BindValue(":SpecialRightUID", SpecialRightUID);
+	if (!qDelete.Execute()) //Ошибка запроса
+	{
+		ErrorString = LANG("Carat.Error.Query.GroupRightSpecialDelete.Delete").arg(qDelete.GetErrorString());
+		return false;
+	}
+
+	//Если ни одна строка не была затронута, значит такого права нет - ошибка
+	if (qDelete.GetCountAffected() == 0)
+	{
+		ErrorString = LANG("Carat.Error.Query.GroupRightSpecialDelete.NotExist");
+		return false;
+	}
+	Protocol(TcpMessage->TcpSocket->GetUserID(), CONST_UID_PROTOCOL_DEL_ACCESS_TO_SPECIAL, QVariant(), QVariant(), QVariant(), qDelete.ReadColumn("gast_name"));
 	return true;
 }
 //-----------------------------------------------------------------------------

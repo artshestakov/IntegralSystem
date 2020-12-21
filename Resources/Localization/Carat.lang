@@ -150,4 +150,9 @@
   <Local Name="Carat.Error.Query.GroupRightTableDelete.TableNotExist" Russian="Таблица %1 не существует."/>
   <Local Name="Carat.Error.Query.GroupRightTableDelete.Delete" Russian="Не удалось удалить право на таблицу: %1"/>
 
+  <Local Name="Carat.Error.Query.GroupRightSpecialAdd.Insert" Russian="Такое право у группы уже есть."/>
+
+  <Local Name="Carat.Error.Query.GroupRightSpecialDelete.Delete" Russian="Не удалось удалить специальное право: %1"/>
+  <Local Name="Carat.Error.Query.GroupRightSpecialDelete.NotExist" Russian="Специальное право не существует."/>
+
 </LANG>
