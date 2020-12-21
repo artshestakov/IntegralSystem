@@ -2442,22 +2442,25 @@ bool ISTcpWorker::SaveMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 			qInsertColumnSize.BindValue(":TableName", TableItem.first);
 			qInsertColumnSize.BindValue(":FieldName", FieldItem.first);
 			qInsertColumnSize.BindValue(":Size", FieldItem.second);
-			if (!qInsertColumnSize.Execute() && qInsertColumnSize.GetErrorNumber() == 23505) //≈сли вставка не удалась и ошибка говорит о наружении уникальности - обновл€ем
+			if (!qInsertColumnSize.Execute()) //≈сли вставка не удалась - провер€ем причину
 			{
-				qUpdateColumnSize.BindValue(":Size", FieldItem.second);
-				qUpdateColumnSize.BindValue(":UserID", TcpMessage->TcpSocket->GetUserID());
-				qUpdateColumnSize.BindValue(":TableName", TableItem.first);
-				qUpdateColumnSize.BindValue(":FieldName", FieldItem.first);
-				if (!qUpdateColumnSize.Execute()) //ќбновить не получилось
+				if (qInsertColumnSize.GetErrorNumber() == 23505) //ѕричина - наружение уникальности - обновл€ем
 				{
-					ErrorString = LANG("Carat.Error.Query.SaveMetaData.UpdateColumnSize").arg(qUpdateColumnSize.GetErrorString());
+					qUpdateColumnSize.BindValue(":Size", FieldItem.second);
+					qUpdateColumnSize.BindValue(":UserID", TcpMessage->TcpSocket->GetUserID());
+					qUpdateColumnSize.BindValue(":TableName", TableItem.first);
+					qUpdateColumnSize.BindValue(":FieldName", FieldItem.first);
+					if (!qUpdateColumnSize.Execute()) //ќбновить не получилось
+					{
+						ErrorString = LANG("Carat.Error.Query.SaveMetaData.UpdateColumnSize").arg(qUpdateColumnSize.GetErrorString());
+						return false;
+					}
+				}
+				else //¬ставка не удалась по другой причине
+				{
+					ErrorString = LANG("Carat.Error.Query.SaveMetaData.InsertColumnSize").arg(qInsertColumnSize.GetErrorString());
 					return false;
 				}
-			}
-			else //¬ставка не удалась по другой причине
-			{
-				ErrorString = LANG("Carat.Error.Query.SaveMetaData.InsertColumnSize").arg(qInsertColumnSize.GetErrorString());
-				return false;
 			}
 		}
 	}
@@ -2673,6 +2676,12 @@ bool ISTcpWorker::GroupRightSubSystemDelete(ISTcpMessage *TcpMessage, ISTcpAnswe
 		ErrorString = LANG("Carat.Error.Query.GroupRightSubSystemDelete.NotExist");
 		return false;
 	}
+
+	if (!qDeleteSubSystemRight.First()) //Ќе удалось переместитьс€ на первую строку
+	{
+		ErrorString = qDeleteSubSystemRight.GetErrorString();
+		return false;
+	}
 	Protocol(TcpMessage->TcpSocket->GetUserID(), CONST_UID_PROTOCOL_DEL_ACCESS_TO_SUBSYSTEM, QVariant(), QVariant(), QVariant(), qDeleteSubSystemRight.ReadColumn("sbsm_localname"));
 	return true;
 }
@@ -2757,6 +2766,12 @@ bool ISTcpWorker::GroupRightTableDelete(ISTcpMessage *TcpMessage, ISTcpAnswer *T
 		ErrorString = LANG("Carat.Error.Query.GroupRightTableDelete.NotExist");
 		return false;
 	}
+
+	if (!qDeleteTableRight.First()) //Ќе удалось переместитьс€ на первую строку
+	{
+		ErrorString = qDeleteTableRight.GetErrorString();
+		return false;
+	}
 	Protocol(TcpMessage->TcpSocket->GetUserID(), CONST_UID_PROTOCOL_DEL_ACCESS_TO_TABLE, MetaTable->Name, MetaTable->LocalListName, QVariant(), qDeleteTableRight.ReadColumn("gatt_name"));
 	return true;
 }
@@ -2819,6 +2834,12 @@ bool ISTcpWorker::GroupRightSpecialDelete(ISTcpMessage *TcpMessage, ISTcpAnswer 
 	if (qDeleteSpecialRight.GetCountAffected() == 0)
 	{
 		ErrorString = LANG("Carat.Error.Query.GroupRightSpecialDelete.NotExist");
+		return false;
+	}
+
+	if (!qDeleteSpecialRight.First()) //Ќе удалось переместитьс€ на первую строку
+	{
+		ErrorString = qDeleteSpecialRight.GetErrorString();
 		return false;
 	}
 	Protocol(TcpMessage->TcpSocket->GetUserID(), CONST_UID_PROTOCOL_DEL_ACCESS_TO_SPECIAL, QVariant(), QVariant(), QVariant(), qDeleteSpecialRight.ReadColumn("gast_name"));
