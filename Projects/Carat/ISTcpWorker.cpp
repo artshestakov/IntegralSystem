@@ -249,9 +249,14 @@ static QString QU_COLUMN_SIZE = PREPARE_QUERY("UPDATE _columnsize SET "
 											  "AND clsz_tablename = :TableName "
 											  "AND clsz_fieldname = :FieldName");
 //-----------------------------------------------------------------------------
-static QString QS_GROUP_RIGHT_SUBSYSTEM = PREPARE_QUERY("SELECT sbsm_uid "
+static QString QS_GROUP_RIGHT_SYSTEM = PREPARE_QUERY("SELECT stms_uid, stms_localname "
+													 "FROM _systems "
+													 "ORDER BY stms_orderid");
+//-----------------------------------------------------------------------------
+static QString QS_GROUP_RIGHT_SUBSYSTEM = PREPARE_QUERY("SELECT sbsm_uid, sbsm_localname, "
+														"(SELECT (COUNT(*) > 0)::BOOLEAN AS is_exist FROM _groupaccesssubsystem WHERE gass_group = :GroupID AND gass_subsystem = sbsm_uid) "
 														"FROM _subsystems "
-														"WHERE (SELECT COUNT(*) FROM _groupaccesssubsystem WHERE gass_group = :GroupID AND gass_subsystem = sbsm_uid) > 0 "
+														"WHERE sbsm_system = :SystemUID "
 														"ORDER BY sbsm_orderid");
 //-----------------------------------------------------------------------------
 static QString QS_GROUP_RIGHT_TABLE = PREPARE_QUERY("SELECT gatb_table, gatt_uid "
@@ -2490,20 +2495,44 @@ bool ISTcpWorker::GetGroupRights(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
 		return false;
 	}
 
-	//Запрашиваем права на подсистемы
-	ISQuery qSelectSubSystem(ISDatabase::Instance().GetDB(DBConnectionName), QS_GROUP_RIGHT_SUBSYSTEM);
-	qSelectSubSystem.BindValue(":GroupID", GroupID);
-	if (!qSelectSubSystem.Execute())
+	//Получаем системы и подсистемы
+	QVariantList SystemsList;
+	ISQuery qSelectSystems(ISDatabase::Instance().GetDB(DBConnectionName), QS_GROUP_RIGHT_SYSTEM),
+		qSelectSubSystems(ISDatabase::Instance().GetDB(DBConnectionName), QS_GROUP_RIGHT_SUBSYSTEM);
+	if (qSelectSystems.Execute()) //Запрашиваем список систем
 	{
-		ErrorString = LANG("Carat.Error.Query.GetGroupRights.SelectSubSystems").arg(qSelectSubSystem.GetErrorString());
-		return false;
-	}
+		while (qSelectSystems.Next())
+		{
+			QVariantMap SystemMap = { { "LocalName", qSelectSystems.ReadColumn("stms_localname") } };
 
-	//Обходим системы
-	QVariantList SubSystemsList;
-	while (qSelectSubSystem.Next())
+			qSelectSubSystems.BindValue(":GroupID", GroupID);
+			qSelectSubSystems.BindValue(":SystemUID", qSelectSystems.ReadColumn("stms_uid"));
+			if (qSelectSubSystems.Execute())
+			{
+				while (qSelectSubSystems.Next())
+				{
+					QVariantList SubSystemsList = SystemMap["SubSystems"].toList();
+					SubSystemsList.append(QVariantMap
+					{
+						{ "UID", ISUuid(qSelectSubSystems.ReadColumn("sbsm_uid")) },
+						{ "LocalName", qSelectSubSystems.ReadColumn("sbsm_localname") },
+						{ "IsExist", qSelectSubSystems.ReadColumn("is_exist") }
+					});
+					SystemMap["SubSystems"] = SubSystemsList;
+				}
+			}
+			else
+			{
+				ErrorString = LANG("Carat.Error.Query.GetGroupRights.SelectSubSystems").arg(qSelectSubSystems.GetErrorString());
+				return false;
+			}
+			SystemsList.append(SystemMap);
+		}
+	}
+	else //Ошибка запроса
 	{
-		SubSystemsList.append(ISUuid(qSelectSubSystem.ReadColumn("sbsm_uid")));
+		ErrorString = LANG("Carat.Error.Query.GetGroupRights.SelectSystems").arg(qSelectSystems.GetErrorString());
+		return false;
 	}
 
 	//Запрашиваем права на таблицы
@@ -2566,7 +2595,7 @@ bool ISTcpWorker::GetGroupRights(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
 		return false;
 	}
 
-	TcpAnswer->Parameters["SubSystems"] = SubSystemsList;
+	TcpAnswer->Parameters["Systems"] = SystemsList;
 	TcpAnswer->Parameters["Tables"] = TablesMap;
 	TcpAnswer->Parameters["Special"] = SpecialList;
 	return true;

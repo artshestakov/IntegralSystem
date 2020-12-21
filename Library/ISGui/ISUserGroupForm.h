@@ -15,7 +15,7 @@ protected:
 	void AfterShowEvent() override;
 
 private:
-	void CreateSubSystems();
+	void CreateSubSystems(const QVariantList &Systems);
 	void CreateTables();
 	void CreateSpecial(const QVariantList &SpecialRights);
 
@@ -29,7 +29,6 @@ private:
 
 private:
 	int GroupID;
-	QVariantList SubSystems;
 	QVariantMap Tables;
 };
 //-----------------------------------------------------------------------------

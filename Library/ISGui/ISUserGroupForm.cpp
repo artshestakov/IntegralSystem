@@ -40,10 +40,9 @@ void ISUserGroupForm::AfterShowEvent()
 	if (qGetGroupRights.Execute())
 	{
 		QVariantMap ResultMap = qGetGroupRights.TakeAnswer();
-		SubSystems = ResultMap["SubSystems"].toList();
 		Tables = ResultMap["Tables"].toMap();
 
-		CreateSubSystems();
+		CreateSubSystems(ResultMap["Systems"].toList());
 		CreateTables();
 		CreateSpecial(ResultMap["Special"].toList());
 		ISGui::SetWaitGlobalCursor(false);
@@ -56,25 +55,29 @@ void ISUserGroupForm::AfterShowEvent()
 	}
 }
 //-----------------------------------------------------------------------------
-void ISUserGroupForm::CreateSubSystems()
+void ISUserGroupForm::CreateSubSystems(const QVariantList &Systems)
 {
 	ISScrollArea *ScrollArea = new ISScrollArea(TabWidget);
 	ScrollArea->widget()->setLayout(new QVBoxLayout());
 	TabWidget->addTab(ScrollArea, LANG("AccessRights.SubSystems"));
 
-	for (ISMetaSystem *MetaSystem : ISMetaSystemsEntity::Instance().GetSystems()) //Обход всех систем
+	for (const QVariant &VariantSystem : Systems) //Обход всех систем
 	{
-		QGroupBox *GroupBox = new QGroupBox(MetaSystem->LocalName, ScrollArea);
+		QVariantMap SystemMap = VariantSystem.toMap();
+
+		QGroupBox *GroupBox = new QGroupBox(SystemMap["LocalName"].toString(), ScrollArea);
 		GroupBox->setLayout(new QVBoxLayout());
 		GroupBox->setStyleSheet(BUFFER_STYLE_SHEET("QGroupBoxAccessSubSystem"));
 		ScrollArea->widget()->layout()->addWidget(GroupBox);
 
-		for (ISMetaSubSystem *SubSystem : MetaSystem->SubSystems) //Обход всех подсистем текущей системы
+		for (const QVariant &VariantSubSystem : SystemMap["SubSystems"].toList()) //Обход всех подсистем текущей системы
 		{
+			QVariantMap SubSystemMap = VariantSubSystem.toMap();
+
 			ISCheckEdit *CheckEdit = new ISCheckEdit(GroupBox);
-			CheckEdit->SetValue(SubSystems.contains(SubSystem->UID));
-			CheckEdit->SetText(SubSystem->LocalName);
-			CheckEdit->setProperty("SubSystemUID", SubSystem->UID);
+			CheckEdit->SetValue(SubSystemMap["IsExist"]);
+			CheckEdit->SetText(SubSystemMap["LocalName"].toString());
+			CheckEdit->setProperty("SubSystemUID", SubSystemMap["UID"]);
 			CheckEdit->SetToolTip(LANG("AccessRights.ClickedToGiveAccessFromSubSystem"));
 			connect(CheckEdit, &ISCheckEdit::ValueChange, this, &ISUserGroupForm::SubSystemClicked);
 			GroupBox->layout()->addWidget(CheckEdit);
