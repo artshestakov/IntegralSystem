@@ -18,7 +18,6 @@
 #include "ISPrintingHtml.h"
 #include "ISUserRoleEntity.h"
 #include "ISSystem.h"
-#include "ISQuery.h"
 #include "ISPrintingEntity.h"
 #include "ISPrintForm.h"
 #include "ISDatabaseHelper.h"

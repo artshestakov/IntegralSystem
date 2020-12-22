@@ -1,6 +1,5 @@
 #include "ISMetaDataHelper.h"
 #include "ISMetaData.h"
-#include "ISQuery.h"
 #include "ISSystem.h"
 //-----------------------------------------------------------------------------
 QString ISMetaDataHelper::GenerateSqlQueryFromForeign(PMetaForeign *MetaForeign, const QString &SqlFilter, const QVariant &ObjectID)
