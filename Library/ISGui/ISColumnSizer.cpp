@@ -1,7 +1,6 @@
 #include "ISColumnSizer.h"
 #include "ISQuery.h"
 #include "ISAlgorithm.h"
-#include "ISMetaUser.h"
 //-----------------------------------------------------------------------------
 ISColumnSizer::ISColumnSizer()
 	: ErrorString(NO_ERROR_STRING)

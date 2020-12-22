@@ -3,7 +3,6 @@
 #include "ISMetaData.h"
 #include "ISAssert.h"
 #include "ISAlgorithm.h"
-#include "ISMetaUser.h"
 //-----------------------------------------------------------------------------
 ISSettings::ISSettings()
 	: ErrorString(NO_ERROR_STRING)

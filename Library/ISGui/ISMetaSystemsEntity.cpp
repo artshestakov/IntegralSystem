@@ -1,7 +1,7 @@
 #include "ISMetaSystemsEntity.h"
 #include "ISQuery.h"
-#include "ISMetaUser.h"
 #include "ISUserRoleEntity.h"
+#include "ISBuffer.h"
 //-----------------------------------------------------------------------------
 static QString QS_SYSTEMS = PREPARE_QUERY("SELECT "
 										  "stms_issystem, stms_uid, stms_localname, stms_icon, stms_hint, "
@@ -74,9 +74,9 @@ bool ISMetaSystemsEntity::Initialize()
 		while (qSelect.Next())
 		{
 			ISUuid SystemUID = qSelect.ReadColumn("stms_uid"), SubSystemUID = qSelect.ReadColumn("sbsm_uid");
-			if (!ISMetaUser::Instance().UserData.System) //≈сли текущий пользователь не системный
+			if (!ISBuffer::Instance().CurrentUserInfo.System) //≈сли текущий пользователь не системный
 			{
-				if (!ISMetaUser::Instance().UserData.GroupFullAccess) //≈сли у группы пользовател€ нет полного доступа - провер€ть доступ к подсистемам
+				if (!ISBuffer::Instance().CurrentUserInfo.GroupFullAccess) //≈сли у группы пользовател€ нет полного доступа - провер€ть доступ к подсистемам
 				{
 					if (!ISUserRoleEntity::Instance().CheckAccessSubSystem(SubSystemUID)) //≈сли доступа к подсистеме нет - переходить на следующую итерацию цикла
 					{

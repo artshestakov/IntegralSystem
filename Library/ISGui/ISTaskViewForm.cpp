@@ -15,7 +15,6 @@
 #include "ISDatabase.h"
 #include "ISMetaData.h"
 #include "ISUserRoleEntity.h"
-#include "ISMetaUser.h"
 //-----------------------------------------------------------------------------
 static QString QS_TASK = PREPARE_QUERY("SELECT "
 									   "t.task_name, "

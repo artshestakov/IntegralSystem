@@ -9,7 +9,6 @@
 #include "ISProtocolListForm.h"
 #include "ISMessageBox.h"
 #include "ISDatabase.h"
-#include "ISMetaUser.h"
 #include "ISProtocol.h"
 #include "ISUserRoleEntity.h"
 #include "ISSettings.h"

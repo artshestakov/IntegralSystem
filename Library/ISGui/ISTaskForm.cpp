@@ -11,7 +11,6 @@
 #include "ISMessageBox.h"
 #include "ISAlgorithm.h"
 #include "ISTaskSearchByTextForm.h"
-#include "ISMetaUser.h"
 #include "ISTcpQuery.h"
 //-----------------------------------------------------------------------------
 ISTaskForm::ISTaskForm(QWidget *parent)

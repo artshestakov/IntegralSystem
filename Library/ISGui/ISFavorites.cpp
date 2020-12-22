@@ -1,7 +1,7 @@
 #include "ISFavorites.h"
 #include "ISQuery.h"
 #include "ISAlgorithm.h"
-#include "ISMetaUser.h"
+#include "ISBuffer.h"
 //-----------------------------------------------------------------------------
 static QString QS_FAVORITES = PREPARE_QUERY("SELECT fvts_tablename, fvts_objectsid "
 											"FROM _favorites "

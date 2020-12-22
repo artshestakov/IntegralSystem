@@ -2,7 +2,7 @@
 #include "ISConstants.h"
 #include "ISQuery.h"
 #include "ISSettings.h"
-#include "ISMetaUser.h"
+#include "ISBuffer.h"
 //-----------------------------------------------------------------------------
 static QString QS_HISTORY = PREPARE_QUERY("SELECT htry_datetime, htry_tablename, htry_objectid "
 										  "FROM _history "

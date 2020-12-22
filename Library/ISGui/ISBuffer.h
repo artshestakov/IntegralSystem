@@ -3,17 +3,14 @@
 #define _ISBUFFER_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "isgui_global.h"
-#include "ISTypedefs.h"
+#include "ISStructs.h"
 //-----------------------------------------------------------------------------
 class ISGUI_EXPORT ISBuffer
 {
 public:
-	ISBuffer(const ISBuffer &) = delete;
-	ISBuffer(ISBuffer &&) = delete;
-	ISBuffer &operator=(const ISBuffer &) = delete;
-	ISBuffer &operator=(ISBuffer &&) = delete;
-	~ISBuffer();
+	ISCurrentUserInfo CurrentUserInfo; //Информация о текущем пользователе
 
+public:
 	static ISBuffer& Instance();
 
 	void Initialize(); //Инициализация
@@ -42,6 +39,9 @@ private:
 
 private:
 	ISBuffer();
+	~ISBuffer();
+	ISBuffer(ISBuffer const &) {};
+	ISBuffer& operator=(ISBuffer const&) { return *this; };
 
 	ISStringMap Animations; //Анимации
 	std::map<QString, QIcon> Icons; //Иконки
@@ -50,6 +50,8 @@ private:
 	ISStringMap StyleSheets; //CSS-стили
 	ISStringMap SqlQueryes; //SQL-запросы
 };
+//-----------------------------------------------------------------------------
+#define CURRENT_USER_ID ISBuffer::Instance().CurrentUserInfo.ID
 //-----------------------------------------------------------------------------
 #define BUFFER_ANIMATION(ANIMATION_NAME, PARENT) ISBuffer::Instance().GetAnimation(ANIMATION_NAME, PARENT, __FILE__, __LINE__)
 #define BUFFER_ICONS(ICON_NAME) ISBuffer::Instance().GetIcon(ICON_NAME, __FILE__, __LINE__)

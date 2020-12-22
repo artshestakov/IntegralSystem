@@ -9,9 +9,6 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="MetaUser">
-      <UniqueIdentifier>{1622ff2b-c6fb-4642-9eea-c58c267b792a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Network">
       <UniqueIdentifier>{e4784d47-59e4-4c39-956f-f5725430d28f}</UniqueIdentifier>
     </Filter>
@@ -52,9 +49,6 @@
     </ClCompile>
     <ClCompile Include="ISMetaUuidCheckeder.cpp">
       <Filter>MetaData</Filter>
-    </ClCompile>
-    <ClCompile Include="ISMetaUser.cpp">
-      <Filter>MetaUser</Filter>
     </ClCompile>
     <ClCompile Include="ISAuthConnector.cpp">
       <Filter>Network</Filter>
@@ -104,9 +98,6 @@
     <ClCompile Include="StdAfx.cpp">
       <Filter>System</Filter>
     </ClCompile>
-    <ClCompile Include="ISProtocol.cpp">
-      <Filter>System</Filter>
-    </ClCompile>
     <ClCompile Include="ISTcp.cpp">
       <Filter>Protocol</Filter>
     </ClCompile>
@@ -150,9 +141,6 @@
     </ClInclude>
     <ClInclude Include="PMetaClass.h">
       <Filter>MetaData</Filter>
-    </ClInclude>
-    <ClInclude Include="ISMetaUser.h">
-      <Filter>MetaUser</Filter>
     </ClInclude>
     <ClInclude Include="ISSettingsDatabase.h">
       <Filter>Settings</Filter>
@@ -204,9 +192,6 @@
       <Filter>System</Filter>
     </ClInclude>
     <ClInclude Include="StdAfx.h">
-      <Filter>System</Filter>
-    </ClInclude>
-    <ClInclude Include="ISProtocol.h">
       <Filter>System</Filter>
     </ClInclude>
     <ClInclude Include="ISTcp.h">

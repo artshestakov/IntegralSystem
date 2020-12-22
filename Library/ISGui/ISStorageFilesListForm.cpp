@@ -12,7 +12,6 @@
 #include "ISGui.h"
 #include "ISProgressForm.h"
 #include "ISSettingsDatabase.h"
-#include "ISMetaUser.h"
 #include "ISDatabase.h"
 //-----------------------------------------------------------------------------
 ISStorageFilesListForm::ISStorageFilesListForm(QWidget *parent) : ISListBaseForm("_StorageFiles", parent)

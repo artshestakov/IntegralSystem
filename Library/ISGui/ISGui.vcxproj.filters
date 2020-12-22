@@ -447,6 +447,9 @@
     <ClCompile Include="ISTestModelForm.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
+    <ClCompile Include="ISProtocol.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ISExportForm.h">
@@ -820,6 +823,9 @@
     </ClInclude>
     <ClInclude Include="ISTcpQuery.h">
       <Filter>Protocol</Filter>
+    </ClInclude>
+    <ClInclude Include="ISProtocol.h">
+      <Filter>System</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

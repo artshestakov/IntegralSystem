@@ -12,7 +12,6 @@
 #include "ISMessageBox.h"
 #include "ISProtocol.h"
 #include "ISQueryPool.h"
-#include "ISMetaUser.h"
 //-----------------------------------------------------------------------------
 ISFullTextSearchForm::ISFullTextSearchForm(QWidget *parent) : ISInterfaceMetaForm(parent)
 {

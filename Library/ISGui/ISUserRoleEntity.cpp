@@ -1,9 +1,9 @@
 #include "ISUserRoleEntity.h"
 #include "ISQuery.h"
-#include "ISMetaUser.h"
 #include "ISMetaSystemsEntity.h"
 #include "ISLogger.h"
 #include "ISAlgorithm.h"
+#include "ISBuffer.h"
 //-----------------------------------------------------------------------------
 static QString QS_GROUP_ACCESS_SUBSYSTEM = PREPARE_QUERY("SELECT gass_subsystem "
 														 "FROM _groupaccesssubsystem "
@@ -62,7 +62,7 @@ void ISUserRoleEntity::InitializeSpecial(const QVariantList &VariantList)
 //-----------------------------------------------------------------------------
 bool ISUserRoleEntity::Initialize()
 {
-	if (!ISMetaUser::Instance().UserData.System) //Если текущий пользователь не является системным - инициализируем
+	if (!ISBuffer::Instance().CurrentUserInfo.System) //Если текущий пользователь не является системным - инициализируем
 	{
 		if (!InitializeSubSystem())
 		{
@@ -82,32 +82,32 @@ bool ISUserRoleEntity::Initialize()
 //-----------------------------------------------------------------------------
 bool ISUserRoleEntity::CheckAccessSubSystem(const ISUuid &SubSystemUID)
 {
-	return ISMetaUser::Instance().UserData.System || ISMetaUser::Instance().UserData.GroupFullAccess ?
+	return ISBuffer::Instance().CurrentUserInfo.System || ISBuffer::Instance().CurrentUserInfo.GroupFullAccess ?
 		true : ISAlgorithm::VectorContains(SubSystems, SubSystemUID);
 }
 //-----------------------------------------------------------------------------
 bool ISUserRoleEntity::CheckAccessTable(const QString &TableName, const ISUuid &AccessUID)
 {
-	return ISMetaUser::Instance().UserData.System || ISMetaUser::Instance().UserData.GroupFullAccess ?
+	return ISBuffer::Instance().CurrentUserInfo.System || ISBuffer::Instance().CurrentUserInfo.GroupFullAccess ?
 		true : ISAlgorithm::VectorContains(Tables[TableName], AccessUID);
 }
 //-----------------------------------------------------------------------------
 bool ISUserRoleEntity::CheckAccessSpecial(const ISUuid &SpecialAccessUID)
 {
-	return ISMetaUser::Instance().UserData.System || ISMetaUser::Instance().UserData.GroupFullAccess ?
+	return ISBuffer::Instance().CurrentUserInfo.System || ISBuffer::Instance().CurrentUserInfo.GroupFullAccess ?
 		true : ISAlgorithm::VectorContains(Specials, SpecialAccessUID);
 }
 //-----------------------------------------------------------------------------
 bool ISUserRoleEntity::CheckExistAccesses() const
 {
-	return ISMetaUser::Instance().UserData.System || ISMetaUser::Instance().UserData.GroupFullAccess ?
+	return ISBuffer::Instance().CurrentUserInfo.System || ISBuffer::Instance().CurrentUserInfo.GroupFullAccess ?
 		true : SubSystems.size() + Tables.size() + Specials.size();
 }
 //-----------------------------------------------------------------------------
 bool ISUserRoleEntity::InitializeSubSystem()
 {
 	ISQuery qSelect(QS_GROUP_ACCESS_SUBSYSTEM);
-	qSelect.BindValue(":GroupID", ISMetaUser::Instance().UserData.GroupID);
+	qSelect.BindValue(":GroupID", ISBuffer::Instance().CurrentUserInfo.GroupID);
 	bool Result = qSelect.Execute();
 	if (Result)
 	{
@@ -126,7 +126,7 @@ bool ISUserRoleEntity::InitializeSubSystem()
 bool ISUserRoleEntity::InitializeTables()
 {
 	ISQuery qSelect(QS_GROUP_ACCESS_TABLE);
-	qSelect.BindValue(":GroupID", ISMetaUser::Instance().UserData.GroupID);
+	qSelect.BindValue(":GroupID", ISBuffer::Instance().CurrentUserInfo.GroupID);
 	bool Result = qSelect.Execute();
 	if (Result)
 	{
@@ -147,7 +147,7 @@ bool ISUserRoleEntity::InitializeTables()
 bool ISUserRoleEntity::InitializeSpecial()
 {
 	ISQuery qSelect(QS_GROUP_ACCESS_SPECIAL);
-	qSelect.BindValue(":GroupID", ISMetaUser::Instance().UserData.GroupID);
+	qSelect.BindValue(":GroupID", ISBuffer::Instance().CurrentUserInfo.GroupID);
 	bool Result = qSelect.Execute();
 	if (Result)
 	{

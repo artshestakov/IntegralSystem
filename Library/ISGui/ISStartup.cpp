@@ -4,7 +4,6 @@
 #include "ISMessageBox.h"
 #include "ISMetaData.h"
 #include "ISQuery.h"
-#include "ISMetaUser.h"
 #include "ISFavorites.h"
 #include "ISColumnSizer.h"
 #include "ISUserRoleEntity.h"
@@ -119,7 +118,7 @@ bool ISStartup::StartupOld(ISSplashScreen *SplashScreen)
 	}
 
 	if (!ISQueryPool::Instance().Start(CONFIG_STRING(CONST_CONFIG_CONNECTION_SERVER), CONFIG_INT(CONST_CONFIG_CONNECTION_PORT), CONFIG_STRING(CONST_CONFIG_CONNECTION_DATABASE),
-		ISMetaUser::Instance().UserData.Login, ISMetaUser::Instance().UserData.Password))
+		ISBuffer::Instance().CurrentUserInfo.Login, ISBuffer::Instance().CurrentUserInfo.Password))
 	{
 		ISMessageBox::ShowCritical(SplashScreen, LANG("Message.Error.InitializeQueryPool"), ISQueryPool::Instance().GetErrorString());
 		return false;
@@ -195,7 +194,7 @@ bool ISStartup::StartupNew(ISSplashScreen *SplashScreen)
 //-----------------------------------------------------------------------------
 bool ISStartup::CheckAccessDatabase(ISSplashScreen *SplashScreen)
 {
-	if (ISMetaUser::Instance().UserData.System)
+	if (ISBuffer::Instance().CurrentUserInfo.System)
 	{
 		return true;
 	}

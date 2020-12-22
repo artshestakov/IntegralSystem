@@ -24,7 +24,6 @@
 #include "ISDelegates.h"
 #include "ISMetaData.h"
 #include "ISConstants.h"
-#include "ISMetaUser.h"
 #include "ISColumnSizer.h"
 #include "ISInputDialog.h"
 #include "ISExportWorker.h"

@@ -29,9 +29,9 @@ struct StructModelItem
     ISNamespace::FieldType FieldType;
 };
 //-----------------------------------------------------------------------------
-struct ISMetaUserData
+struct ISCORE_EXPORT ISCurrentUserInfo
 {
-    ISMetaUserData() : System(false), ID(0), GroupID(0), GroupFullAccess(false) { }
+    ISCurrentUserInfo() : System(false), ID(0), GroupID(0), GroupFullAccess(false) { }
 
     bool System; //Системный
     unsigned int ID; //Идентификатор пользователя

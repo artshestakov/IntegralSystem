@@ -4,7 +4,6 @@
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISGui.h"
-#include "ISMetaUser.h"
 //-----------------------------------------------------------------------------
 ISMonitorUserWidget::ISMonitorUserWidget(unsigned int user_id, const QString &user_name, const QPixmap &UserPhoto, QWidget *parent) : QFrame(parent)
 {

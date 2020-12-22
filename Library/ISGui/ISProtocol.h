@@ -2,9 +2,9 @@
 #ifndef _ISPROTOCOL_H_INCLUDED
 #define _ISPROTOCOL_H_INCLUDED
 //-----------------------------------------------------------------------------
-#include "iscore_global.h"
+#include "isgui_global.h"
 //-----------------------------------------------------------------------------
-class ISCORE_EXPORT ISProtocol
+class ISProtocol
 {
 public:
 	static void EnterApplication(); //¬ход в программу

@@ -10,7 +10,6 @@
 #include "ISPopupMessage.h"
 #include "ISDefinesGui.h"
 #include "ISQuery.h"
-#include "ISMetaUser.h"
 #include "ISSettingsDatabase.h"
 #include "ISSettings.h"
 #include "ISUserRoleEntity.h"

@@ -257,6 +257,7 @@
     <ClCompile Include="ISPrintPreviewDialog.cpp" />
     <ClCompile Include="ISProcessForm.cpp" />
     <ClCompile Include="ISProgressForm.cpp" />
+    <ClCompile Include="ISProtocol.cpp" />
     <ClCompile Include="ISProtocolListForm.cpp" />
     <ClCompile Include="ISProtocolObjectListForm.cpp" />
     <ClCompile Include="ISReconnectForm.cpp" />
@@ -424,6 +425,7 @@
     <QtMoc Include="ISTaskObjectForm.h" />
     <QtMoc Include="ISListViewForm.h" />
     <QtMoc Include="ISReconnectForm.h" />
+    <ClInclude Include="ISProtocol.h" />
     <ClInclude Include="ISSearchModel.h" />
     <QtMoc Include="ISTcpConnector.h" />
     <QtMoc Include="ISTcpModel.h" />

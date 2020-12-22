@@ -10,7 +10,6 @@
 #include "ISInputDialog.h"
 #include "ISCore.h"
 #include "ISDefinesGui.h"
-#include "ISMetaUser.h"
 //-----------------------------------------------------------------------------
 ISCalendarForm::ISCalendarForm(QWidget *parent)
 	: ISParagraphBaseForm(parent),

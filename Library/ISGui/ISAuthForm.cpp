@@ -10,7 +10,6 @@
 #include "ISConnectionForm.h"
 #include "ISMessageBox.h"
 #include "ISGui.h"
-#include "ISMetaUser.h"
 #include "ISVersionInfo.h"
 #include "ISLogger.h"
 #include "ISSystem.h"
@@ -234,13 +233,13 @@ void ISAuthForm::InputNew()
 				}
 			}
 		}
-		ISMetaUser::Instance().UserData.System = AnswerMap["UserIsSystem"].toBool();
-		ISMetaUser::Instance().UserData.ID = AnswerMap["UserID"].toUInt();
-		ISMetaUser::Instance().UserData.FIO = AnswerMap["UserFIO"].toString();
-		ISMetaUser::Instance().UserData.Login = EditLogin->GetValue().toString();
-		ISMetaUser::Instance().UserData.Password = EditPassword->GetValue().toString();
-		ISMetaUser::Instance().UserData.GroupID = AnswerMap["UserGroupID"].toUInt();
-		ISMetaUser::Instance().UserData.GroupFullAccess = AnswerMap["UserGroupFullAccess"].toBool();
+		ISBuffer::Instance().CurrentUserInfo.System = AnswerMap["UserIsSystem"].toBool();
+		ISBuffer::Instance().CurrentUserInfo.ID = AnswerMap["UserID"].toUInt();
+		ISBuffer::Instance().CurrentUserInfo.FIO = AnswerMap["UserFIO"].toString();
+		ISBuffer::Instance().CurrentUserInfo.Login = EditLogin->GetValue().toString();
+		ISBuffer::Instance().CurrentUserInfo.Password = EditPassword->GetValue().toString();
+		ISBuffer::Instance().CurrentUserInfo.GroupID = AnswerMap["UserGroupID"].toUInt();
+		ISBuffer::Instance().CurrentUserInfo.GroupFullAccess = AnswerMap["UserGroupFullAccess"].toBool();
 		ISVersionInfo::Instance().ConfigurationInfo.UID = AnswerMap["Configuration"].toMap()["UID"];
 		ISVersionInfo::Instance().ConfigurationInfo.Name = AnswerMap["Configuration"].toMap()["Name"].toString();
 		ISVersionInfo::Instance().ConfigurationInfo.LocalName = LANG(AnswerMap["Configuration"].toMap()["Local"].toString());
@@ -271,8 +270,8 @@ void ISAuthForm::ConnectedDone()
 			ISConfig::Instance().SetValue(CONST_CONFIG_REMEMBER_USER_LOGIN, QString());
 		hide();
 		SetResult(true);
-		ISMetaUser::Instance().UserData.Login = EditLogin->GetValue().toString();
-		ISMetaUser::Instance().UserData.Password = EditPassword->GetValue().toString();
+		ISBuffer::Instance().CurrentUserInfo.Login = EditLogin->GetValue().toString();
+		ISBuffer::Instance().CurrentUserInfo.Password = EditPassword->GetValue().toString();
 		close();
 	}
 	else //Ошибка подключения к базе данных

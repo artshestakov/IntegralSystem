@@ -6,7 +6,6 @@
 #include "ISProtocol.h"
 #include "ISBuffer.h"
 #include "ISMessageBox.h"
-#include "ISMetaUser.h"
 #include "ISAboutForm.h"
 #include "ISSettingsDatabase.h"
 #include "ISControls.h"
@@ -36,8 +35,8 @@ ISMainWindow::ISMainWindow(QWidget *parent)
 	connect(&ISCreatedObjectsEntity::Instance(), &ISCreatedObjectsEntity::Existed, this, &ISMainWindow::ActivateWorkspace);
 
 	ISVersionInfo::Instance().ConfigurationInfo.LocalName.isEmpty() ?
-		setWindowTitle("IntegralSystem: " + ISMetaUser::Instance().UserData.FIO) :
-		setWindowTitle("IntegralSystem - " + ISVersionInfo::Instance().ConfigurationInfo.LocalName + " : " + ISMetaUser::Instance().UserData.FIO);
+		setWindowTitle("IntegralSystem: " + ISBuffer::Instance().CurrentUserInfo.FIO) :
+		setWindowTitle("IntegralSystem - " + ISVersionInfo::Instance().ConfigurationInfo.LocalName + " : " + ISBuffer::Instance().CurrentUserInfo.FIO);
 	setAttribute(Qt::WA_DeleteOnClose, false);
 	setWindowIcon(BUFFER_ICONS("Logo"));
 	resize(ISDefines::Gui::SIZE_MAIN_WINDOW);
@@ -162,13 +161,13 @@ void ISMainWindow::ShowHistoryForm()
 //-----------------------------------------------------------------------------
 void ISMainWindow::ShowChangePasswordForm()
 {
-	if (ISMetaUser::Instance().UserData.System) //≈сли пользователь системный - не разрешаем мен€ть пароль
+	if (ISBuffer::Instance().CurrentUserInfo.System) //≈сли пользователь системный - не разрешаем мен€ть пароль
 	{
 		ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotChangeSystemUserPassword"));
 		return;
 	}
 	SetVisibleShadow(true);
-	ISGui::ShowUserPasswordForm(CURRENT_USER_ID, ISMetaUser::Instance().UserData.FIO, ISMetaUser::Instance().UserData.Login);
+	ISGui::ShowUserPasswordForm(CURRENT_USER_ID, ISBuffer::Instance().CurrentUserInfo.FIO, ISBuffer::Instance().CurrentUserInfo.Login);
 	SetVisibleShadow(false);
 }
 //-----------------------------------------------------------------------------
@@ -202,7 +201,7 @@ void ISMainWindow::Reconnect()
 	if (Result) //ѕереподключение прошло успешно - посылаем запрос на авторизацию
 	{
 		ISTcpQuery qReAuth(API_AUTH);
-		qReAuth.BindValue("Hash", ISSystem::StringToSha256(ISMetaUser::Instance().UserData.Login + ISMetaUser::Instance().UserData.Password));
+		qReAuth.BindValue("Hash", ISSystem::StringToSha256(ISBuffer::Instance().CurrentUserInfo.Login + ISBuffer::Instance().CurrentUserInfo.Password));
 		Result = qReAuth.Execute();
 		if (Result)
 		{

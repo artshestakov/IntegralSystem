@@ -218,11 +218,9 @@
     <ClCompile Include="ISLogger.cpp" />
     <ClCompile Include="ISMetaData.cpp" />
     <ClCompile Include="ISMetaDataHelper.cpp" />
-    <ClCompile Include="ISMetaUser.cpp" />
     <ClCompile Include="ISMetaUuidCheckeder.cpp" />
     <ClCompile Include="ISNetwork.cpp" />
     <ClCompile Include="ISProperty.cpp" />
-    <ClCompile Include="ISProtocol.cpp" />
     <ClCompile Include="ISQuery.cpp" />
     <ClCompile Include="ISQueryModel.cpp" />
     <ClCompile Include="ISQueryPool.cpp" />
@@ -269,7 +267,6 @@
     <ClInclude Include="ISVersion.h" />
     <ClInclude Include="ISVersionInfo.h" />
     <ClInclude Include="StdAfx.h" />
-    <ClInclude Include="ISProtocol.h" />
     <ClInclude Include="ISSettings.h" />
     <ClInclude Include="ISSettingsDatabase.h" />
     <QtMoc Include="ISRestWorker.h" />
@@ -278,7 +275,6 @@
     <ClInclude Include="ISDatabase.h" />
     <ClInclude Include="ISMetaData.h" />
     <ClInclude Include="ISMetaDataHelper.h" />
-    <ClInclude Include="ISMetaUser.h" />
     <ClInclude Include="ISMetaUuidCheckeder.h" />
     <ClInclude Include="ISQuery.h" />
     <ClInclude Include="ISQueryText.h" />
