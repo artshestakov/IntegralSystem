@@ -21,10 +21,9 @@ ISFullTextSearchForm::ISFullTextSearchForm(QWidget *parent) : ISInterfaceMetaFor
 	QHBoxLayout *LayoutTitle = new QHBoxLayout();
 	GetMainLayout()->addLayout(LayoutTitle);
 
-	LineEdit = new ISLineEdit(this);
-	LineEdit->SetPlaceholderText(LANG("InputThisSearchQuery"));
-	LineEdit->SetFont(ISDefines::Gui::FONT_TAHOMA_10);
-	LayoutTitle->addWidget(LineEdit);
+	EditSearch = new ISSearchEdit(this);
+	EditSearch->SetFont(ISDefines::Gui::FONT_TAHOMA_10);
+	LayoutTitle->addWidget(EditSearch);
 
 	WaitWidget = new ISWaitWidget(this, false, false);
 	WaitWidget->SetRoundness(70);
@@ -65,13 +64,13 @@ ISFullTextSearchForm::~ISFullTextSearchForm()
 //-----------------------------------------------------------------------------
 void ISFullTextSearchForm::LoadData()
 {
-	LineEdit->SetFocus();
+	EditSearch->SetFocus();
 }
 //-----------------------------------------------------------------------------
 void ISFullTextSearchForm::SetSearchInProgress(bool InProgress)
 {
 	ISGui::SetWaitGlobalCursor(InProgress);
-	LineEdit->setEnabled(!InProgress);
+	EditSearch->setEnabled(!InProgress);
 	ButtonSearch->setEnabled(!InProgress);
 	InProgress ? WaitWidget->Start() : WaitWidget->Stop();
 
@@ -85,24 +84,24 @@ void ISFullTextSearchForm::SetSearchInProgress(bool InProgress)
 	}
 	else
 	{
-		LineEdit->SetFocus();
-		LineEdit->SelectAll();
+		EditSearch->SetFocus();
+		EditSearch->SelectAll();
 		Frame->setVisible(true);
 	}
 }
 //-----------------------------------------------------------------------------
 void ISFullTextSearchForm::Search()
 {
-	if (LineEdit->GetValue().toString().isEmpty())
+	if (EditSearch->GetValue().toString().isEmpty())
 	{
 		ISMessageBox::ShowWarning(this, LANG("Message.Warning.SearchFieldNotValid"));
-		LineEdit->BlinkRed();
+		EditSearch->BlinkRed();
 		return;
 	}
 	SetSearchInProgress(true);
 	
 	ISTcpQuery qSearchFullText(API_SEARCH_FULL_TEXT);
-	qSearchFullText.BindValue("Value", LineEdit->GetValue());
+	qSearchFullText.BindValue("Value", EditSearch->GetValue());
 	if (!qSearchFullText.Execute())
 	{
 		SetSearchInProgress(false);

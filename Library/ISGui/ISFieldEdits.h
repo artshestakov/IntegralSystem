@@ -619,7 +619,7 @@ class ISSearchEdit : public ISLineEdit
 	Q_OBJECT
 
 public:
-	ISSearchEdit(QWidget *parent);
+	ISSearchEdit(QWidget *parent, const QString &PlaceholderText = QString());
 	virtual ~ISSearchEdit();
 };
 //-----------------------------------------------------------------------------

@@ -1455,10 +1455,9 @@ bool ISPhoneEdit::IsValid() const
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-ISSearchEdit::ISSearchEdit(QWidget *parent) : ISLineEdit(parent)
+ISSearchEdit::ISSearchEdit(QWidget *parent, const QString &PlaceholderText) : ISLineEdit(parent)
 {
-	SetPlaceholderText(LANG("Search"));
-	SetToolTip(LANG("EnteringSearchQuery"));
+	SetPlaceholderText(PlaceholderText.isEmpty() ? LANG("EnteringSearchQuery") : PlaceholderText);
 	SetIcon(BUFFER_ICONS("Search"));
 }
 //-----------------------------------------------------------------------------

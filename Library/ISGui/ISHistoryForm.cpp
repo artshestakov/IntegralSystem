@@ -17,8 +17,7 @@ ISHistoryForm::ISHistoryForm(QWidget *parent) : ISInterfaceForm(parent)
 	resize(ISDefines::Gui::SIZE_640_480);
 	GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);
 
-	ISLineEdit *EditSearch = new ISLineEdit(this);
-	EditSearch->SetPlaceholderText(LANG("InputThisSearchQuery"));
+	ISSearchEdit *EditSearch = new ISSearchEdit(this);
 	connect(EditSearch, &ISLineEdit::ValueChange, this, &ISHistoryForm::Search);
 	GetMainLayout()->addWidget(EditSearch);
 

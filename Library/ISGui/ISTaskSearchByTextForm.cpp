@@ -15,11 +15,9 @@ ISTaskSearchByTextForm::ISTaskSearchByTextForm(QWidget *parent) : ISInterfaceFor
 	QHBoxLayout *LayoutTitle = new QHBoxLayout();
 	GetMainLayout()->addLayout(LayoutTitle);
 
-	EditValue = new ISLineEdit(this);
-	EditValue->SetPlaceholderText(LANG("Task.SearchByText.PlaceholderText"));
-	EditValue->SetFocus();
-	connect(EditValue, &ISLineEdit::DataChanged, this, &ISTaskSearchByTextForm::EditValueChanged);
-	LayoutTitle->addWidget(EditValue);
+	EditSearch = new ISSearchEdit(this, LANG("Task.SearchByText.PlaceholderText"));
+	connect(EditSearch, &ISLineEdit::DataChanged, this, &ISTaskSearchByTextForm::EditValueChanged);
+	LayoutTitle->addWidget(EditSearch);
 
 	ButtonSearch = new ISPushButton(BUFFER_ICONS("Search"), LANG("Search"), this);
 	ButtonSearch->setEnabled(false);
@@ -56,7 +54,7 @@ void ISTaskSearchByTextForm::EscapeClicked()
 //-----------------------------------------------------------------------------
 void ISTaskSearchByTextForm::EnterClicked()
 {
-	if (EditValue->GetValue().isValid())
+	if (EditSearch->GetValue().isValid())
 	{
 		Search();
 	}
@@ -64,7 +62,7 @@ void ISTaskSearchByTextForm::EnterClicked()
 //-----------------------------------------------------------------------------
 void ISTaskSearchByTextForm::EditValueChanged()
 {
-	ButtonSearch->setEnabled(EditValue->GetValue().isValid());
+	ButtonSearch->setEnabled(EditSearch->GetValue().isValid());
 }
 //-----------------------------------------------------------------------------
 void ISTaskSearchByTextForm::Search()
@@ -73,7 +71,7 @@ void ISTaskSearchByTextForm::Search()
 	ListWidget->Clear();
 
 	ISTcpQuery qTaskSearchText(API_SEARCH_TASK_TEXT);
-	qTaskSearchText.BindValue("Value", EditValue->GetValue());
+	qTaskSearchText.BindValue("Value", EditSearch->GetValue());
 	if (qTaskSearchText.Execute())
 	{
 		QVariantList ResultList = qTaskSearchText.TakeAnswer()["Results"].toList();

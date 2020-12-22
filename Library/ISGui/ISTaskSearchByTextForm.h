@@ -25,7 +25,7 @@ private:
 	void ItemDoubleClicked(QListWidgetItem *ListWidgetItem);
 
 private:
-	ISLineEdit *EditValue;
+	ISSearchEdit *EditSearch;
 	ISPushButton *ButtonSearch;
 	ISListWidget *ListWidget;
 	QLabel *LabelResult;

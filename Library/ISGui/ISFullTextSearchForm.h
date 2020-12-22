@@ -26,7 +26,7 @@ private:
 private:
 	QWidgetList WidgetList;
 
-	ISLineEdit *LineEdit;
+	ISSearchEdit *EditSearch;
 	ISWaitWidget *WaitWidget;
 	ISPushButton *ButtonSearch;
 	QLabel *LabelResult;

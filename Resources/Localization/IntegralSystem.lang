@@ -384,7 +384,6 @@
   <Local Name="ClickFromSelectCurrentDay" Russian="Нажмите, чтобы выбрать сегодняшний день"/>
   <Local Name="ClickFromGenerateNewUID" Russian="Нажмите, чтобы сгенерировать новый UID"/>
   <Local Name="ClickFromAddNewrecordInList" Russian="Нажмите, чтобы добавить новую запись в справочник"/>
-  <Local Name="InputThisSearchQuery" Russian="Введите поисковый запрос"/>
   <Local Name="OpeningUrl" Russian="Открытие ссылки..."/>
   <Local Name="NoAdministratorRights" Russian="Недостаточно прав, запустите программу от имени администратора."/>
   <Local Name="FullSearchTextNotResult" Russian="Полнотекстовый поиск не дал результатов."/>
