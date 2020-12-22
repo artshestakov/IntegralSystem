@@ -57,6 +57,7 @@
   <_ProtocolType IsSystem="true" UID="{E4698E8F-C1F4-4F04-A4B6-5CD8805B7FAC}" Name="Поиск задачи по тексту"/>
   <_ProtocolType IsSystem="true" UID="{4DFD26F5-799F-4E34-8DBD-78E52F01423D}" Name="Поиск задачи по номеру"/>
   <_ProtocolType IsSystem="true" UID="{D9372E46-8DB0-41B4-80C0-6AEC2CC6CD17}" Name="Удаление события календаря"/>
+  <_ProtocolType IsSystem="true" UID="{0234643A-AF60-44BF-A2EB-08A71307841C}" Name="Запрос обновления клиента"/>
 
   <_InternalDirectories IsSystem="true" UID="{A57D9B44-CD09-4880-897D-3B0BACB1F093}" TableName="_TaskType" Order="1"/>
   <_InternalDirectories IsSystem="true" UID="{275E8EE8-C1EE-4495-95C2-79AB3AD98AB9}" TableName="_TaskSpace" Order="2"/>

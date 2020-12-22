@@ -1322,7 +1322,8 @@ bool ISTcpWorker::GetLastClient(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer
 	QByteArray ByteArray = File.readAll();
 	File.close();
 
-	//Конвертируем в base64 и отдаём
+	//Протоколируем, конвертируем в base64 и отдаём
+	Protocol(TcpMessage->TcpSocket->GetUserID(), CONST_UID_PROTOCOL_GET_UPDATE_CLIENT);
 	TcpAnswer->Parameters["FileName"] = QFileInfo(FilePath).fileName();
 	TcpAnswer->Parameters["Data"] = ByteArray.toBase64();
 	return true;
