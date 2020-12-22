@@ -172,7 +172,6 @@ ISListBaseForm::ISListBaseForm(const QString &TableName, QWidget *parent)
 		ActionAdditionally->setMenu(new QMenu(ToolBar));
 		ActionAdditionally->menu()->addAction(GetAction(ISNamespace::AT_Favorites));
 		ActionAdditionally->menu()->addAction(GetAction(ISNamespace::AT_Export));
-		ActionAdditionally->menu()->addAction(GetSpecialAction(ISNamespace::AST_SortDefault));
 		ActionAdditionally->menu()->addAction(GetSpecialAction(ISNamespace::AST_ResizeFromContent));
 		ActionAdditionally->menu()->addAction(GetSpecialAction(ISNamespace::AST_ResetWidthColumn));
 		ActionAdditionally->menu()->addAction(LANG("SettingsList"), this, &ISListBaseForm::ShowSettingsForm);
