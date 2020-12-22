@@ -5,10 +5,6 @@
 #include "ISAssert.h"
 #include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
-static QString QS_PARAGRAPHS = PREPARE_QUERY("SELECT prhs_uid, prhs_name, prhs_localname, prhs_tooltip, prhs_icon, prhs_classname "
-											 "FROM _paragraphs "
-											 "ORDER BY prhs_orderid");
-//-----------------------------------------------------------------------------
 ISParagraphEntity::ISParagraphEntity()
 	: ErrorString(NO_ERROR_STRING)
 {
@@ -49,32 +45,6 @@ void ISParagraphEntity::Initialize(const QVariantList &VariantList)
 			ParagraphMap["Class"].toString()
 		});
 	}
-}
-//-----------------------------------------------------------------------------
-bool ISParagraphEntity::Initialize()
-{
-	ISQuery qSelect(QS_PARAGRAPHS);
-	bool Result = qSelect.Execute();
-	if (Result)
-	{
-		while (qSelect.Next())
-		{
-			Paragraphs.emplace_back(new ISMetaParagraph
-			{
-				qSelect.ReadColumn("prhs_uid"),
-				qSelect.ReadColumn("prhs_name").toString(),
-				qSelect.ReadColumn("prhs_localname").toString(),
-				qSelect.ReadColumn("prhs_tooltip").toString(),
-				qSelect.ReadColumn("prhs_icon").toString(),
-				qSelect.ReadColumn("prhs_classname").toString()
-			});
-		}
-	}
-	else
-	{
-		ErrorString = qSelect.GetErrorString();
-	}
-	return Result;
 }
 //-----------------------------------------------------------------------------
 ISMetaParagraph* ISParagraphEntity::GetParagraph(const QString &ParagraphUID)

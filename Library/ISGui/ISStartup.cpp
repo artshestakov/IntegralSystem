@@ -138,13 +138,6 @@ bool ISStartup::StartupOld(ISSplashScreen *SplashScreen)
 		return false;
 	}
 
-	//Инициализация параграфов
-	if (!ISParagraphEntity::Instance().Initialize())
-	{
-		ISMessageBox::ShowCritical(SplashScreen, LANG("Message.Error.InitializeParagraphs"), ISSettings::Instance().GetErrorString());
-		return false;
-	}
-
 	ISProtocol::EnterApplication();
 	ISObjects::Instance().GetInterface()->BeforeShowMainWindow();
 	return true;

@@ -80,7 +80,6 @@
   <Local Name="Message.Error.SelectSettingsDatabase" Russian="Не удалось загрузить настройки базы данных."/>
   <Local Name="Message.Error.InitializeMetaData" Russian="Не удалось иницилизировать мета-данные."/>
   <Local Name="Message.Error.ObjectDateExpired" Russian="Программа не может быть запущена."/>
-  <Local Name="Message.Error.InitializeParagraphs" Russian="Не удалось загрузить параграфы."/>
   <Local Name="Message.Error.QueryRecord" Russian="Ошибка запроса данных."/>
   <Local Name="Message.Error.ConnectToServer" Russian="Ошибка подключения к серверу!"/>
   <Local Name="Message.Error.Auth" Russian="Ошибка авторизации!"/>
