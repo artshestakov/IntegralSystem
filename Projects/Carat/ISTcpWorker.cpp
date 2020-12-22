@@ -1675,6 +1675,18 @@ bool ISTcpWorker::RecordDelete(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	}
 	SqlIN.chop(1);
 
+	//ѕолучаем имена удал€емых записей дл€ протокола
+	ISStringMap ObjectNameMap;
+	for (const QVariant &ID : Objects)
+	{
+		QString ObjectName;
+		if (!GetObjectName(MetaTable, ID.toUInt(), ObjectName))
+		{
+			return false;
+		}
+		ObjectNameMap[ID.toString()] = ObjectName;
+	}
+
 	//ѕровер€ем, нет ли системных записей
 	ISQuery qSqlQuery(ISDatabase::Instance().GetDB(DBConnectionName), "SELECT (COUNT(*) > 0)::BOOLEAN AS is_exist FROM " + MetaTable->Name + " WHERE " + MetaTable->Alias + "_issystem AND " + MetaTable->Alias + "_id IN(" + SqlIN + ")");
 	qSqlQuery.SetShowLongQuery(false);
@@ -1711,7 +1723,7 @@ bool ISTcpWorker::RecordDelete(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	unsigned int UserID = TcpMessage->TcpSocket->GetUserID();
 	for (const QVariant &ObjectID : Objects)
 	{
-		Protocol(UserID, CONST_UID_PROTOCOL_DELETE_OBJECT, MetaTable->Name, MetaTable->LocalListName, ObjectID);
+		Protocol(UserID, CONST_UID_PROTOCOL_DELETE_OBJECT, MetaTable->Name, MetaTable->LocalListName, ObjectID, ObjectNameMap[ObjectID.toString()]);
 	}
 	return true;
 }
