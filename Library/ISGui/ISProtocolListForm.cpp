@@ -14,12 +14,11 @@ ISProtocolListForm::~ISProtocolListForm()
 void ISProtocolListForm::DoubleClickedTable(const QModelIndex &ModelIndex)
 {
     Q_UNUSED(ModelIndex);
-
-	QString TableName = GetCurrentRecordValueDB("TableName").toString();
-	int ObjectID = GetCurrentRecordValueDB("ObjectID").toInt();
-	if (!TableName.isEmpty() && ObjectID)
+	QVariant TableName = GetCurrentRecordValueDB("TableName");
+	QVariant ObjectID = GetCurrentRecordValueDB("ObjectID");
+	if (TableName.isValid() && ObjectID.isValid())
 	{
-		ISGui::ShowObjectForm(ISGui::CreateObjectForm(ISNamespace::OFT_Edit, TableName, ObjectID));
+		ISGui::ShowObjectForm(ISGui::CreateObjectForm(ISNamespace::OFT_Edit, TableName.toString(), ObjectID.toInt()));
 	}
 }
 //-----------------------------------------------------------------------------

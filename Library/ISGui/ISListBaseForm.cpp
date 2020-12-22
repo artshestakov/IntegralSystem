@@ -36,6 +36,7 @@
 #include "ISQueryPool.h"
 #include "ISGui.h"
 #include "ISAlgorithm.h"
+#include "ISTcpQuery.h"
 //-----------------------------------------------------------------------------
 ISListBaseForm::ISListBaseForm(const QString &TableName, QWidget *parent)
 	: ISInterfaceMetaForm(parent),
@@ -340,11 +341,17 @@ QVariant ISListBaseForm::GetCurrentRecordValue(const QString &FieldName)
 QVariant ISListBaseForm::GetCurrentRecordValueDB(const QString &FieldName)
 {
 	QVariant Value;
-	ISQuery qSelect(QString("SELECT %1_%2 FROM %3 WHERE %1_id = :ObjectID").arg(MetaTable->Alias).arg(FieldName.toLower()).arg(MetaTable->Name.toLower()));
-	qSelect.BindValue(":ObjectID", GetObjectID());
-	if (qSelect.ExecuteFirst())
+	ISTcpQuery qGetRecordValue(API_GET_RECORD_VALUE);
+	qGetRecordValue.BindValue("TableName", MetaTable->Name);
+	qGetRecordValue.BindValue("FieldName", FieldName);
+	qGetRecordValue.BindValue("ObjectID", GetObjectID());
+	if (qGetRecordValue.Execute())
 	{
-		Value = qSelect.ReadColumn(0);
+		Value = qGetRecordValue.GetAnswer()["Value"];
+	}
+	else
+	{
+		ISMessageBox::ShowCritical(this, qGetRecordValue.GetErrorString());
 	}
 	return Value;
 }

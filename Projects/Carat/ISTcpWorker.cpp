@@ -2901,7 +2901,8 @@ bool ISTcpWorker::GetRecordValue(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
 		ErrorString = LANG("Carat.Error.Query.GetRecordValue.RecordNotFound").arg(ObjectID.toInt());
 		return false;
 	}
-	TcpAnswer->Parameters["Value"] = qSelectValue.ReadColumn(0);
+	QVariant Value = qSelectValue.ReadColumn(0);
+	TcpAnswer->Parameters["Value"] = Value.isNull() ? QVariant() : Value;
 	return true;
 }
 //-----------------------------------------------------------------------------
