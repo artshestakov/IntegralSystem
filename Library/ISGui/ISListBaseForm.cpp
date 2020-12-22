@@ -36,7 +36,6 @@
 #include "ISQueryPool.h"
 #include "ISGui.h"
 #include "ISAlgorithm.h"
-#include "ISConfig.h"
 //-----------------------------------------------------------------------------
 ISListBaseForm::ISListBaseForm(const QString &TableName, QWidget *parent)
 	: ISInterfaceMetaForm(parent),
@@ -921,86 +920,21 @@ bool ISListBaseForm::Delete()
 		return false;
 	}
 
-	QString ErrorString;
-	bool Result = true;
 	ISVectorUInt VectorInt = GetSelectedIDs();
-
-	if (CONFIG_BOOL("Protocol/Include"))
+	bool Result = VectorInt.size() == 1 ?
+		ISMessageBox::ShowQuestion(this, LANG("Message.Object.Delete")) :
+		ISMessageBox::ShowQuestion(this, LANG("Message.Objects.Delete").arg(VectorInt.size()));
+	if (Result) //Получили подтверждение от пользователя
 	{
-		Result = VectorInt.size() == 1 ?
-			ISMessageBox::ShowQuestion(this, LANG("Message.Object.Delete")) :
-			ISMessageBox::ShowQuestion(this, LANG("Message.Objects.Delete").arg(VectorInt.size()));
-		if (Result) //Получили подтверждение от пользователя
+		QString ErrorString;
+		Result = ISGui::RecordsDelete(MetaTable->Name, VectorInt, ErrorString);
+		if (Result)
 		{
-			Result = ISGui::RecordsDelete(MetaTable->Name, VectorInt, ErrorString);
-			if (Result)
-			{
-				ISPopupMessage::ShowNotification(VectorInt.size() == 1 ?
-					LANG("NotificationForm.Title.Deleted").arg(VectorInt.front()) :
-					LANG("NotificationForm.Title.Deleteds"));
-				Update();
-			}
-			else
-			{
-				ISMessageBox::ShowCritical(this, ErrorString);
-			}
+			Update();
 		}
-	}
-	else
-	{
-		if (VectorInt.size() == 1) //Если удаляется одна запись
+		else
 		{
-			if (CheckIsSystemObject()) //Если запись является системной - выходим из функции
-			{
-				ISMessageBox::ShowWarning(this, LANG("Message.Warning.SystemObject.NotDelete"));
-				return false;
-			}
-
-			if (ISMessageBox::ShowQuestion(this, LANG("Message.Object.Delete")))
-			{
-				int ObjectID = VectorInt.front();
-				Result = ISCore::DeleteObject(MetaTable, ObjectID, ErrorString);
-				if (Result)
-				{
-					ISPopupMessage::ShowNotification(LANG("NotificationForm.Title.Deleted").arg(ObjectID));
-					ISProtocol::DeleteObject(MetaTable->Name, MetaTable->LocalListName, GetObjectID());
-					Update();
-				}
-				else
-				{
-					ISMessageBox::ShowCritical(this, LANG("Message.Error.DeleteObject"), ErrorString);
-				}
-				return Result;
-			}
-		}
-		else //Удаляется несколько записей
-		{
-			if (ISMessageBox::ShowQuestion(this, LANG("Message.Objects.Delete").arg(VectorInt.size())))
-			{
-				ISProgressForm ProgressForm((int)VectorInt.size(), LANG("DeletingObjects"), this);
-				ProgressForm.show();
-
-				for (int ObjectID : VectorInt)
-				{
-					ProgressForm.IncrementValue();
-					Result = ISCore::DeleteObject(MetaTable, ObjectID, ErrorString);
-					if (Result) //Если запись удалена - протоколируем
-					{
-						ISProtocol::DeleteObject(MetaTable->Name, MetaTable->LocalListName, GetObjectID());
-					}
-					else //Не удалось удалить запись - выходим из цикла
-					{
-						ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotDeleteRecord").arg(ObjectID), ErrorString);
-						break;
-					}
-
-					if (ProgressForm.wasCanceled())
-					{
-						break;
-					}
-				}
-				Update();
-			}
+			ISMessageBox::ShowCritical(this, ErrorString);
 		}
 	}
 	return Result;

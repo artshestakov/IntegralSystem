@@ -21,7 +21,6 @@
 #include "ISUserRoleEntity.h"
 #include "ISAlgorithm.h"
 #include "ISHistory.h"
-#include "ISConfig.h"
 //-----------------------------------------------------------------------------
 ISObjectFormBase::ISObjectFormBase(ISNamespace::ObjectFormType form_type, PMetaTable *meta_table, QWidget *parent, int object_id)
 	: ISInterfaceForm(parent),
@@ -882,38 +881,17 @@ void ISObjectFormBase::Delete()
 		return;
 	}
 
-	QString ErrorString;
-	if (CONFIG_BOOL("Protocol/Include"))
+	if (ISMessageBox::ShowQuestion(this, LANG("Message.Object.Delete")))
 	{
-		if (ISMessageBox::ShowQuestion(this, LANG("Message.Object.Delete")))
+		QString ErrorString;
+		if (ISGui::RecordsDelete(MetaTable->Name, { GetObjectID() }, ErrorString))
 		{
-			if (ISGui::RecordsDelete(MetaTable->Name, { GetObjectID() }, ErrorString))
-			{
-				ISPopupMessage::ShowNotification(LANG("NotificationForm.Title.Deleted").arg(GetObjectID()));
-				emit UpdateList();
-				close();
-			}
-			else
-			{
-				ISMessageBox::ShowCritical(this, LANG("Message.Error.DeleteObject"), ErrorString);
-			}
+			emit UpdateList();
+			close();
 		}
-	}
-	else
-	{
-		if (ISMessageBox::ShowQuestion(this, LANG("Message.Object.Delete")))
+		else
 		{
-			if (ISCore::DeleteObject(MetaTable, GetObjectID(), ErrorString))
-			{
-				ISPopupMessage::ShowNotification(LANG("NotificationForm.Title.Deleted").arg(GetObjectID()));
-				ISProtocol::DeleteObject(MetaTable->Name, MetaTable->LocalListName, GetObjectID());
-				emit UpdateList();
-				close();
-			}
-			else
-			{
-				ISMessageBox::ShowCritical(this, LANG("Message.Error.DeleteObject"), ErrorString);
-			}
+			ISMessageBox::ShowCritical(this, LANG("Message.Error.DeleteObject"), ErrorString);
 		}
 	}
 }

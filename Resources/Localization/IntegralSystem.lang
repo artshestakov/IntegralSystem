@@ -127,12 +127,10 @@
   <Local Name="Message.Objects.Delete" Russian="Вы действительно удалить выбранные записи (%1 шт.)?"/>
   <Local Name="Message.Warning.SystemObject.NotEdit" Russian="Запрещено редактировать системные записи."/>
   <Local Name="Message.Warning.SystemObject.Copy" Russian="Запрещено создавать копии системных записей."/>
-  <Local Name="Message.Warning.SystemObject.NotDelete" Russian="Запрещено удалять системные записи."/>
   <Local Name="Message.Warning.NotifyNotInserted" Russian="Не удалось добавить напоминание!"/>
   <Local Name="Message.Warning.ValueFieldEditInvalid" Russian="Значение в поле &quot;%1&quot; введено некорректно!"/>
   <Local Name="Message.Warning.AccountLifetimeNotStarted" Russian="ВНИМАНИЕ! Срок действия Вашей учётной записи ещё не начался."/>
   <Local Name="Message.Warning.AccountLifetimeEnded" Russian="ВНИМАНИЕ! Срок действия Вашей учётной записи закончился. Обратитесь к администратору системы за подробностями для восстановления доступа."/>
-  <Local Name="Message.Warning.NotDeleteRecord" Russian="Не удалось удалить запись с кодом &quot;%1&quot;."/>
   <Local Name="Message.Warning.NotChangeSystemUserPassword" Russian="Менять пароль для системного пользователя запрещено!"/>
   <Local Name="Message.Warning.SearchFieldNotValid" Russian="Поисковое поле &quot;%1&quot; не заполнено."/>
   <Local Name="Message.Warning.NotCreateCalendarEventPast" Russian="Создавать события в прошлом запрещено."/>
@@ -365,7 +363,6 @@
 
   <Local Name="ThisActionCanNotUndone" Russian="Это действие нельзя отменить."/>
   <Local Name="ClickToViewHelp" Russian="Нажмите, чтобы просмотреть дополнительную информацию."/>
-  <Local Name="DeletingObjects" Russian="Удаление записей"/>
   <Local Name="WhatDoYouWantToSay" Russian="Что Вы хотите сказать?"/>
   <Local Name="ClickRightButtonMouseForCallContextMenu" Russian="Кликните правой клавишей мыши чтобы вызвать контекстное меню."/>
   <Local Name="ClickCreateFromCreateObject" Russian="Нажмите кнопку &quot;Создать&quot; чтобы добавить запись."/>

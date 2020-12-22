@@ -397,6 +397,10 @@ bool ISGui::RecordsDelete(const QString &TableName, const ISVectorUInt &ObjectsI
 		ErrorString = qDelete.GetErrorString();
 		return false;
 	}
+
+	ISPopupMessage::ShowNotification(ObjectsID.size() == 1 ?
+		LANG("NotificationForm.Title.Deleted").arg(ObjectsID.front()) :
+		LANG("NotificationForm.Title.Deleteds"));
 	return true;
 }
 //-----------------------------------------------------------------------------

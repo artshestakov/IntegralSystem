@@ -101,18 +101,6 @@ bool ISCore::CalendarCloseEvent(int CalendarID)
 	return qCloseEvent.Execute();
 }
 //-----------------------------------------------------------------------------
-bool ISCore::DeleteObject(PMetaTable *MetaTable, int ObjectID, QString &ErrorString)
-{
-	ISQuery qDelete(QString("DELETE FROM %1 WHERE %2_id = :ObjectID").arg(MetaTable->Name).arg(MetaTable->Alias));
-	qDelete.BindValue(":ObjectID", ObjectID);
-	bool Result = qDelete.Execute();
-	if (!Result)
-	{
-		ErrorString = qDelete.GetErrorString();
-	}
-	return Result;
-}
-//-----------------------------------------------------------------------------
 void ISCore::PhoneNumberPrepare(QString &PhoneNumber)
 {
 	for (int i = 0; i < PhoneNumber.size(); ++i) //Обходим строку с номером телефона

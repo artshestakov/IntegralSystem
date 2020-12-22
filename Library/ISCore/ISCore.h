@@ -13,9 +13,6 @@ public:
 	static int CalendarInsert(const QDateTime &DateTime, const QString &Name, const QVariant &Text); //Добавить событие в календарь
 	static bool CalendarCloseEvent(int CalendarID); //Завершить событие календаря
 
-	//Объекты
-	static bool DeleteObject(PMetaTable *MetaTable, int ObjectID, QString &ErrorString); //Удалить объект каскадом
-
 	//Номера телефонов
 	static void PhoneNumberPrepare(QString &PhoneNumber); //Подготовить номер телефона (удалить все кроме цифр)
 	static void PhoneNumberFormat(QString &PhoneNumber); //Форматировать номер телефона
