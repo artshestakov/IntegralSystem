@@ -10,7 +10,6 @@ public:
 
 	QString GetErrorString() const;
 	void Initialize(const QVariantList &VariantList);
-	bool Initialize(); //Инициализация
 
 	std::vector<ISMetaSystem*> GetSystems(); //Получить список всех систем
 	ISMetaSystem* GetSystem(const QString &SystemUID); //Получить систему по её идентификатору

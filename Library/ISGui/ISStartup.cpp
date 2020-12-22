@@ -110,13 +110,6 @@ bool ISStartup::StartupOld(ISSplashScreen *SplashScreen)
 		return false;;
 	}
 
-	//«агрузка мета-данных о системах и подсистемах
-	if (!ISMetaSystemsEntity::Instance().Initialize())
-	{
-		ISMessageBox::ShowCritical(SplashScreen, LANG("Message.Error.InitializeMetaSystems"), ISMetaSystemsEntity::Instance().GetErrorString());
-		return false;
-	}
-
 	if (!ISQueryPool::Instance().Start(CONFIG_STRING(CONST_CONFIG_CONNECTION_SERVER), CONFIG_INT(CONST_CONFIG_CONNECTION_PORT), CONFIG_STRING(CONST_CONFIG_CONNECTION_DATABASE),
 		ISBuffer::Instance().CurrentUserInfo.Login, ISBuffer::Instance().CurrentUserInfo.Password))
 	{

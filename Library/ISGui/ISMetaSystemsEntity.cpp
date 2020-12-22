@@ -3,13 +3,6 @@
 #include "ISUserRoleEntity.h"
 #include "ISBuffer.h"
 //-----------------------------------------------------------------------------
-static QString QS_SYSTEMS = PREPARE_QUERY("SELECT "
-										  "stms_issystem, stms_uid, stms_localname, stms_icon, stms_hint, "
-										  "sbsm_uid, sbsm_localname, sbsm_icon, sbsm_classname, sbsm_tablename, sbsm_hint "
-										  "FROM _subsystems "
-										  "LEFT JOIN _systems ON stms_uid = sbsm_system "
-										  "ORDER BY stms_orderid, sbsm_orderid");
-//-----------------------------------------------------------------------------
 ISMetaSystemsEntity::ISMetaSystemsEntity()
 	: ErrorString(NO_ERROR_STRING)
 {
@@ -63,56 +56,6 @@ void ISMetaSystemsEntity::Initialize(const QVariantList &VariantList)
 		}
 		Systems.emplace_back(MetaSystem);
 	}
-}
-//-----------------------------------------------------------------------------
-bool ISMetaSystemsEntity::Initialize()
-{
-	ISQuery qSelect(QS_SYSTEMS);
-	bool Result = qSelect.Execute();
-	if (Result)
-	{
-		while (qSelect.Next())
-		{
-			ISUuid SystemUID = qSelect.ReadColumn("stms_uid"), SubSystemUID = qSelect.ReadColumn("sbsm_uid");
-			if (!ISBuffer::Instance().CurrentUserInfo.System) //≈сли текущий пользователь не системный
-			{
-				if (!ISBuffer::Instance().CurrentUserInfo.GroupFullAccess) //≈сли у группы пользовател€ нет полного доступа - провер€ть доступ к подсистемам
-				{
-					if (!ISUserRoleEntity::Instance().CheckAccessSubSystem(SubSystemUID)) //≈сли доступа к подсистеме нет - переходить на следующую итерацию цикла
-					{
-						continue;
-					}
-				}
-			}
-
-			ISMetaSystem *MetaSystem = CheckExistSystem(SystemUID);
-			if (!MetaSystem)
-			{
-				MetaSystem = new ISMetaSystem();
-				MetaSystem->IsSystem = qSelect.ReadColumn("stms_issystem").toBool();
-				MetaSystem->UID = SystemUID;
-				MetaSystem->LocalName = qSelect.ReadColumn("stms_localname").toString();
-				MetaSystem->IconName = qSelect.ReadColumn("stms_icon").toString();
-				MetaSystem->Hint = qSelect.ReadColumn("stms_hint").toString();
-				Systems.emplace_back(MetaSystem);
-			}
-
-			ISMetaSubSystem *MetaSubSystem = new ISMetaSubSystem();
-			MetaSubSystem->UID = SubSystemUID;
-			MetaSubSystem->LocalName = qSelect.ReadColumn("sbsm_localname").toString();
-			MetaSubSystem->IconName = qSelect.ReadColumn("sbsm_icon").toString();
-			MetaSubSystem->ClassName = qSelect.ReadColumn("sbsm_classname").toString();
-			MetaSubSystem->TableName = qSelect.ReadColumn("sbsm_tablename").toString();
-			MetaSubSystem->Hint = qSelect.ReadColumn("sbsm_hint").toString();
-			MetaSubSystem->SystemUID = SystemUID;
-			MetaSystem->SubSystems.emplace_back(MetaSubSystem);
-		}
-	}
-	else
-	{
-		ErrorString = qSelect.GetErrorString();
-	}
-	return Result;
 }
 //-----------------------------------------------------------------------------
 std::vector<ISMetaSystem*> ISMetaSystemsEntity::GetSystems()

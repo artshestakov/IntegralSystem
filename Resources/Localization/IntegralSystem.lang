@@ -70,7 +70,6 @@
   <Local Name="Message.Error.SaveSortingBuffer" Russian="Не удалось сохранить сортировки полей."/>
   <Local Name="Message.Error.SaveFavorites" Russian="Не удалось сохранить избранные объекты."/>
   <Local Name="Message.Error.SaveHistory" Russian="Не удалось сохранить историю открытий объектов."/>
-  <Local Name="Message.Error.InitializeMetaSystems" Russian="Не удалось загрузить информацию о системах и подсистемах."/>
   <Local Name="Message.Error.InitializeQueryPool" Russian="Не удалось запустить пул запросов."/>
   <Local Name="Message.Error.InitializeUserRole" Russian="Не удалось загрузить права пользователя."/>
   <Local Name="Message.Error.InitializeFavorites" Russian="Не удалось загрузить избранные объекты."/>
