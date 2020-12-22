@@ -15,17 +15,11 @@ public:
 public:
 	static ISMetaUser& Instance();
 
-	QString GetErrorString() const;
-	bool Initialize();
-
 private:
 	ISMetaUser();
 	~ISMetaUser();
 	ISMetaUser(ISMetaUser const &) {};
 	ISMetaUser& operator=(ISMetaUser const&) { return *this; };
-
-private:
-	QString ErrorString;
 };
 //-----------------------------------------------------------------------------
 #endif

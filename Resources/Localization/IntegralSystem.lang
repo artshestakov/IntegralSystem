@@ -60,8 +60,6 @@
   <Local Name="Message.Error.Input.LoginEmpty" Russian="Введите логин!"/>
   <Local Name="Message.Error.Input.PasswordEmpty" Russian="Введите пароль!"/>
   <Local Name="Message.Error.Field.NullValue" Russian="Поле &quot;%1&quot; обязательно для заполнения."/>
-  <Local Name="Message.Error.User.NotAccessAllowed" Russian="Для Вашей учетной записи доступ закрыт, обратитесь к системному администратору."/>
-  <Local Name="Message.Error.User.NotLinkWithGroup" Russian="Ваша учётная запись не привязана ни к одной из групп. Обратитесь к системному администратору."/>
   <Local Name="Message.Error.NotOpenedFile" Russian="Не удалось открыть файл &quot;%1&quot;."/>
   <Local Name="Message.Error.ErrorOpenedFolderPath" Russian="Не удалось открыть директорию &quot;%1&quot;."/>
   <Local Name="Message.Error.ErrorOpenedFileTemplatePrinting" Russian="Не удалось открыть файл шаблона печати."/>
@@ -115,8 +113,6 @@
   <Local Name="Message.Error.UpdateTaskCheckList" Russian="Не удалось переименовать элемент чек-листа!"/>
   <Local Name="Message.Error.UpdateDoneTaskCheckList" Russian="Не удалось изменить состояние пункта!"/>
   <Local Name="Message.Error.DeleteTaskCheckList" Russian="Не удалось удалить пункт!"/>
-  <Local Name="Message.Error.MetaUserSelect" Russian="Не удалось загрузить данные пользователя: %1"/>
-  <Local Name="Message.Error.NotFoundUserWithLogin" Russian="Пользователь с логином &quot;%1&quot; не найден. Убедитесь, что Вы правильно ввели свой логин или обратитесь к системному администратору."/>
   <Local Name="Message.Error.PasswordsNotEqual" Russian="Пароли не совпадают!"/>
   <Local Name="Message.Error.DownloadUpdate" Russian="Не удалось загрузить обновление!"/>
   <Local Name="Message.Error.SaveUpdate" Russian="Не удалось сохранить файл обновления!"/>
@@ -125,8 +121,6 @@
   <Local Name="Message.Warning.SystemObject.NotEdit" Russian="Запрещено редактировать системные записи."/>
   <Local Name="Message.Warning.SystemObject.Copy" Russian="Запрещено создавать копии системных записей."/>
   <Local Name="Message.Warning.ValueFieldEditInvalid" Russian="Значение в поле &quot;%1&quot; введено некорректно!"/>
-  <Local Name="Message.Warning.AccountLifetimeNotStarted" Russian="ВНИМАНИЕ! Срок действия Вашей учётной записи ещё не начался."/>
-  <Local Name="Message.Warning.AccountLifetimeEnded" Russian="ВНИМАНИЕ! Срок действия Вашей учётной записи закончился. Обратитесь к администратору системы за подробностями для восстановления доступа."/>
   <Local Name="Message.Warning.NotChangeSystemUserPassword" Russian="Менять пароль для системного пользователя запрещено!"/>
   <Local Name="Message.Warning.SearchFieldNotValid" Russian="Поисковое поле &quot;%1&quot; не заполнено."/>
   <Local Name="Message.Warning.NotCreateCalendarEventPast" Russian="Создавать события в прошлом запрещено."/>

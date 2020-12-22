@@ -104,13 +104,6 @@ bool ISStartup::StartupOld(ISSplashScreen *SplashScreen)
 		return false;
 	}
 
-	//Загрузка мета-данных о пользователе
-	if (!ISMetaUser::Instance().Initialize())
-	{
-		ISMessageBox::ShowCritical(SplashScreen, ISMetaUser::Instance().GetErrorString());
-		return false;
-	}
-
 	//Инициализация прав доступа
 	if (!ISUserRoleEntity::Instance().Initialize())
 	{
