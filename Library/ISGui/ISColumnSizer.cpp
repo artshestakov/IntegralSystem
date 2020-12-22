@@ -3,10 +3,6 @@
 #include "ISAlgorithm.h"
 #include "ISMetaUser.h"
 //-----------------------------------------------------------------------------
-static QString QS_COLUMN_SIZE = PREPARE_QUERY("SELECT clsz_tablename, clsz_fieldname, clsz_size "
-											  "FROM _columnsize "
-											  "WHERE clsz_user = :UserID");
-//-----------------------------------------------------------------------------
 ISColumnSizer::ISColumnSizer()
 	: ErrorString(NO_ERROR_STRING)
 {
@@ -45,37 +41,6 @@ QVariantMap ISColumnSizer::GetColumnSize() const
 		VariantMap[TableItem.first] = TableMap;
 	}
 	return VariantMap;
-}
-//-----------------------------------------------------------------------------
-bool ISColumnSizer::Initialize()
-{
-	ISQuery qSelect(QS_COLUMN_SIZE);
-	qSelect.BindValue(":UserID", CURRENT_USER_ID);
-	bool Result = qSelect.Execute();
-	if (Result)
-	{
-		while (qSelect.Next())
-		{
-			QString TableName = qSelect.ReadColumn("clsz_tablename").toString();
-			QString FieldName = qSelect.ReadColumn("clsz_fieldname").toString();
-			int FieldSize = qSelect.ReadColumn("clsz_size").toInt();
-			if (Tables.count(TableName))
-			{
-				Tables[TableName]->Fields[FieldName] = FieldSize;
-			}
-			else
-			{
-				ISColumnSizeItem *ColumnSizeItem = new ISColumnSizeItem();
-				ColumnSizeItem->Fields[FieldName] = FieldSize;
-				Tables.emplace(TableName, ColumnSizeItem);
-			}
-		}
-	}
-	else
-	{
-		ErrorString = qSelect.GetErrorString();
-	}
-	return Result;
 }
 //-----------------------------------------------------------------------------
 void ISColumnSizer::SetColumnSize(const QString &TableName, const QString &FieldName, int Size)

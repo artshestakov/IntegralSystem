@@ -160,13 +160,6 @@ bool ISStartup::StartupOld(ISSplashScreen *SplashScreen)
 		return false;
 	}
 
-	//Инициализация размеров колонок
-	if (!ISColumnSizer::Instance().Initialize())
-	{
-		ISMessageBox::ShowCritical(SplashScreen, LANG("Message.Error.InitializeColumnSizer"), ISColumnSizer::Instance().GetErrorString());
-		return false;
-	}
-
 	//Инициализация параграфов
 	if (!ISParagraphEntity::Instance().Initialize())
 	{
