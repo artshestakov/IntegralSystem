@@ -4,11 +4,6 @@
 #include "ISSettings.h"
 #include "ISBuffer.h"
 //-----------------------------------------------------------------------------
-static QString QS_HISTORY = PREPARE_QUERY("SELECT htry_datetime, htry_tablename, htry_objectid "
-										  "FROM _history "
-										  "WHERE htry_user = :UserID "
-										  "ORDER BY htry_id");
-//-----------------------------------------------------------------------------
 static QString QD_HISTORY = PREPARE_QUERY("DELETE FROM _history WHERE htry_user = :UserID");
 //-----------------------------------------------------------------------------
 static QString QI_HISTORY = PREPARE_QUERY("INSERT INTO _history(htry_user, htry_datetime, htry_tablename, htry_objectid) "
@@ -49,31 +44,6 @@ void ISHistory::Initialize(const QVariantList &VariantList)
 			false
 		});
 	}
-}
-//-----------------------------------------------------------------------------
-bool ISHistory::Initialize()
-{
-	ISQuery qSelect(QS_HISTORY);
-	qSelect.BindValue(":UserID", CURRENT_USER_ID);
-	bool Result = qSelect.Execute();
-	if (Result)
-	{
-		while (qSelect.Next())
-		{
-			Stories.emplace_back(ISHistoryObject
-			{
-				qSelect.ReadColumn("htry_datetime").toDateTime(),
-				qSelect.ReadColumn("htry_tablename").toString(),
-				qSelect.ReadColumn("htry_objectid").toInt(),
-				false
-			});
-		}
-	}
-	else
-	{
-		ErrorString = qSelect.GetErrorString();
-	}
-	return Result;
 }
 //-----------------------------------------------------------------------------
 void ISHistory::AddObject(const QString &TableName, int ObjectID)

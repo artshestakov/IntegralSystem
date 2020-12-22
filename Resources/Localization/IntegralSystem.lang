@@ -68,10 +68,8 @@
   <Local Name="Message.Error.ErrorQuerySQL" Russian="Произошла ошибка SQL-запроса!"/>
   <Local Name="Message.Error.ErrorQuerySQL.Details" Russian="Текст ошибки:&#10;%1&#10;&#10;Текст запроса:&#10;%2"/>
   <Local Name="Message.Error.SaveSortingBuffer" Russian="Не удалось сохранить сортировки полей."/>
-  <Local Name="Message.Error.SaveHistory" Russian="Не удалось сохранить историю открытий объектов."/>
   <Local Name="Message.Error.InitializeQueryPool" Russian="Не удалось запустить пул запросов."/>
   <Local Name="Message.Error.InitializeUserRole" Russian="Не удалось загрузить права пользователя."/>
-  <Local Name="Message.Error.InitializeHistory" Russian="Не удалось загрузить историю открытых объектов."/>
   <Local Name="Message.Error.InitializeSortingBuffer" Russian="Не удалось загрузить сортировки."/>
   <Local Name="Message.Error.CreateCopyStorageFile" Russian="Не удалось создать копию файла &quot;%1&quot;."/>
   <Local Name="Message.Error.CheckAllQuery" Russian="Ошибка в SQL-запросе!"/>

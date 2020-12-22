@@ -49,11 +49,6 @@ void ISStartup::Shutdown(ISSplashScreen *SplashScreen)
 		ISMessageBox::ShowCritical(SplashScreen, LANG("Message.Error.SaveSortingBuffer"), ISSortingBuffer::Instance().GetErrorString());
 	}
 
-	if (!ISHistory::Instance().Save())
-	{
-		ISMessageBox::ShowCritical(SplashScreen, LANG("Message.Error.SaveHistory"), ISHistory::Instance().GetErrorString());
-	}
-
 	ISQueryPool::Instance().Shutdown();
 	ISDatabase::Instance().DisconnectAll();
 	ISGui::ExitApplication();
@@ -110,13 +105,6 @@ bool ISStartup::StartupOld(ISSplashScreen *SplashScreen)
 		ISBuffer::Instance().CurrentUserInfo.Login, ISBuffer::Instance().CurrentUserInfo.Password))
 	{
 		ISMessageBox::ShowCritical(SplashScreen, LANG("Message.Error.InitializeQueryPool"), ISQueryPool::Instance().GetErrorString());
-		return false;
-	}
-
-	//Инициализация истории
-	if (!ISHistory::Instance().Initialize())
-	{
-		ISMessageBox::ShowCritical(SplashScreen, LANG("Message.Error.InitializeHistory"), ISHistory::Instance().GetErrorString());
 		return false;
 	}
 

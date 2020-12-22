@@ -11,7 +11,6 @@ public:
 
 	QString GetErrorString() const;
 	void Initialize(const QVariantList &VariantList);
-	bool Initialize();
 	void AddObject(const QString &TableName, int ObjectID); //Добавить объект в историю
 	void Clear(); //Удалить все объекты из истории
 	std::vector<ISHistoryObject>& GetHistory(); //Получить всю историю
