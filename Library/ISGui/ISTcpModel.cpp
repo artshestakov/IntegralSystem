@@ -22,8 +22,8 @@ void ISTcpModel::Clear()
 	beginResetModel();
 	Fields.clear();
 	Records.clear();
-	endResetModel();
 	SortingColumnIndex = -1;
+	endResetModel();
 }
 //-----------------------------------------------------------------------------
 void ISTcpModel::SetSource(const QVariantList &fields, const QVariantList &records)
@@ -58,6 +58,16 @@ void ISTcpModel::SetSorting(const QString &sorting_field, Qt::SortOrder sorting_
 {
 	SortingColumnIndex = GetFieldIndex(sorting_field);
 	SortingOrder = sorting_order;
+}
+//-----------------------------------------------------------------------------
+void ISTcpModel::RemoveRecord(unsigned int RowIndex)
+{
+	if (!Records.empty())
+	{
+		beginResetModel();
+		Records.erase(Records.begin() + RowIndex);
+		endResetModel();
+	}
 }
 //-----------------------------------------------------------------------------
 int ISTcpModel::GetFieldIndex(const QString &FieldName) const
