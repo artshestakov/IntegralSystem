@@ -215,20 +215,6 @@
     </Foreigns>
   </Table>
 
-  <Table Name="_SearchFast" UID="{382BA5DC-C0A2-4934-A718-70B9F6BBE6F2}" Alias="srfs" LocalName="Запрос быстрого поиска" LocalListName="Запросы быстрого поиска" TitleName="Value" IsSystem="true">
-    <Fields>
-      <Field UID="{4254E1CC-7616-4635-A00C-01FFC5C91C3A}" Name="User" Type="BigInt" LabelName="Пользователь" LocalListName="Пользователь" NotNull="true"/>
-      <Field UID="{57F639C8-2A73-4DBA-AA20-CB693219A408}" Name="Value" Type="String" LabelName="Поисковой запрос" LocalListName="Поисковой запрос" NotNull="true"/>
-    </Fields>
-    <Indexes>
-      <Index Field="Value"/>
-      <Index Field="User"/>
-    </Indexes>
-    <Foreigns>
-      <Foreign Field="User" ForeignClass="_Users" ForeignField="ID" ForeignViewNameField="FIO"/>
-    </Foreigns>
-  </Table>
-
   <Table Name="_SortingTables" UID="{FDE07704-8804-4950-A4A8-8220F0C54B5F}" Alias="sgts" LocalName="Сортировка таблицы" LocalListName="Сортировки таблиц" TitleName="TableName" IsSystem="true">
     <Fields>
       <Field UID="{F348BAEC-7027-46CA-A17E-85A09C770C1F}" Name="User" Type="BigInt" LabelName="Пользователь" LocalListName="Пользователь" NotNull="true"/>

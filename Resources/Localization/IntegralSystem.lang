@@ -379,7 +379,6 @@
   <Local Name="ClickFromCheckLevelVolume" Russian="Нажмите, чтобы проверить уровень громкости"/>
   <Local Name="LoadDataPleceWait" Russian="Загрузка данных. Пожалуйста, подождите..."/>
   <Local Name="ClickFromViewList" Russian="Чтобы просмотреть справочник, нажмите на соответствующий пункт слева."/>
-  <Local Name="ClickFromViewMyLLastSearchQuery" Russian="Нажмите, чтобы увидеть Ваши последние поисковые запросы"/>
   <Local Name="ISImportantEditToolTip" Russian="Отметьте этот флажок, чтобы другие пользователи видели, что эта задача является важной."/>
   <Local Name="NotEventsWithSelectedDay" Russian="События на выбранный день отсутствуют"/>
   <Local Name="ClickFromSelectCurrentDay" Russian="Нажмите, чтобы выбрать сегодняшний день"/>

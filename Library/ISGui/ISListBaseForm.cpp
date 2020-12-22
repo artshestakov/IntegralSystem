@@ -38,9 +38,6 @@
 #include "ISAlgorithm.h"
 #include "ISConfig.h"
 //-----------------------------------------------------------------------------
-static QString QI_SEARCH_FAST = PREPARE_QUERY("INSERT INTO _searchfast(srfs_user, srfs_value) "
-											  "VALUES(:UserID, :Value)");
-//-----------------------------------------------------------------------------
 ISListBaseForm::ISListBaseForm(const QString &TableName, QWidget *parent)
 	: ISInterfaceMetaForm(parent),
 	ActionObjectGroup(new QActionGroup(this)), //√руппа действий, остос€щихс€ только к одному объекту
@@ -283,10 +280,9 @@ ISListBaseForm::ISListBaseForm(const QString &TableName, QWidget *parent)
 
 		EditSearch = new ISSearchEdit(StatusBar);
 		EditSearch->setSizePolicy(QSizePolicy::Maximum, EditSearch->sizePolicy().verticalPolicy());
-		connect(EditSearch, &ISSearchEdit::Search, this, &ISListBaseForm::SearchFast);
+		connect(EditSearch, &ISSearchEdit::ValueChange, this, &ISListBaseForm::SearchFast);
 		connect(EditSearch, &ISSearchEdit::ClearPressed, this, &ISListBaseForm::SearchFastClear);
-		connect(this, &ISListBaseForm::Updated, EditSearch, &ISSearchEdit::Updated);
-		connect(this, &ISListBaseForm::Updated, EditSearch, static_cast<void(ISSearchEdit::*)(void)>(&ISSearchEdit::setFocus));
+		//connect(this, &ISListBaseForm::Updated, EditSearch, static_cast<void(ISSearchEdit::*)(void)>(&ISSearchEdit::setFocus));
 		StatusBar->addPermanentWidget(EditSearch);
 	}
 
@@ -777,15 +773,9 @@ void ISListBaseForm::SetEnabledPageNavigation(bool Enabled)
 	}
 }
 //-----------------------------------------------------------------------------
-void ISListBaseForm::SearchFast(const QString &SearchValue)
+void ISListBaseForm::SearchFast(const QVariant &SearchValue)
 {
-	ISQueryPool::Instance().AddQuery(QI_SEARCH_FAST,
-	{
-		{ ":UserID", CURRENT_USER_ID },
-		{ ":Value", SearchValue }
-	});
-
-	QString PreparedSearchValue = SearchValue.toLower(); //ѕреобразование поискового запроса в нижний регистр (ќЅя«ј“≈Ћ№Ќќ!!!)
+	QString PreparedSearchValue = SearchValue.toString().toLower(); //ѕреобразование поискового запроса в нижний регистр (ќЅя«ј“≈Ћ№Ќќ!!!)
 	if (PreparedSearchValue.length()) //≈сли пользователь ввел поисковое значение
 	{
 		EditSearch->setAccessibleName(PreparedSearchValue); //«апомнить предыдущее поисковое значение
@@ -840,12 +830,12 @@ void ISListBaseForm::SearchFast(const QString &SearchValue)
 //-----------------------------------------------------------------------------
 void ISListBaseForm::SearchFastClear()
 {
-	disconnect(EditSearch, &ISSearchEdit::Search, this, &ISListBaseForm::SearchFast);
+	//disconnect(EditSearch, &ISSearchEdit::Search, this, &ISListBaseForm::SearchFast);
 	SearchFlag = false;
 	QueryModel->ClearSearchFilter();
 	QueryModel->ClearConditions();
 	Update();
-	connect(EditSearch, &ISSearchEdit::Search, this, &ISListBaseForm::SearchFast);
+	//connect(EditSearch, &ISSearchEdit::Search, this, &ISListBaseForm::SearchFast);
 	GetAction(ISNamespace::AT_SearchClear)->setEnabled(false);
 }
 //-----------------------------------------------------------------------------

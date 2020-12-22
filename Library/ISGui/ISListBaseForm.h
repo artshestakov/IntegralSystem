@@ -91,7 +91,7 @@ protected:
 	void SelectRowIndex(int row_index); //Выделение строки по индексу
 	void SetEnabledActionObject(bool Enabled); //Изменить доступность действий над объектом
 	void SetEnabledPageNavigation(bool Enabled); //Изменить доступность постраничной навигации
-	void SearchFast(const QString &SearchValue); //Быстрый поиск
+	void SearchFast(const QVariant &SearchValue); //Быстрый поиск
 	void SearchFastClear(); //Очистить результаты быстрого поиска
 
 	void ModelThreadStarted(); //Событие запуска запроса на загрузку данных
