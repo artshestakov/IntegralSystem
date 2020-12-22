@@ -128,11 +128,6 @@ ISListBaseForm::ISListBaseForm(const QString &TableName, QWidget *parent)
 	}
 
 	{//Создание специальных действий
-		//Сортировка по умолчанию
-		QAction *ActionSortDefault = new QAction(BUFFER_ICONS("DefaultSorting"), LANG("DefaultSorting"), this);
-		connect(ActionSortDefault, &QAction::triggered, this, &ISListBaseForm::SortingDefault);
-		ActionsSpecial.emplace(ISNamespace::AST_SortDefault, ActionSortDefault);
-
 		//Примечание
 		QAction *ActionNoteObject = ISControls::CreateActionNoteObject(this);
 		connect(ActionNoteObject, &QAction::triggered, this, &ISListBaseForm::NoteObject);
@@ -493,11 +488,6 @@ void ISListBaseForm::SortingChanged(int LogicalIndex, Qt::SortOrder Order)
 	}
 
 	Update();
-}
-//-----------------------------------------------------------------------------
-void ISListBaseForm::SortingDefault()
-{
-	SortingChanged(0, Qt::AscendingOrder);
 }
 //-----------------------------------------------------------------------------
 void ISListBaseForm::VisibleIndicatorWidget()

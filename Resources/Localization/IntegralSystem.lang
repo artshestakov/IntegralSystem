@@ -255,7 +255,6 @@
   <Local Name="ClearFavorites" Russian="Очистить избранное"/>
   <Local Name="ClearHistory" Russian="Очистить историю"/>
   <Local Name="History" Russian="История"/>
-  <Local Name="DefaultSorting" Russian="Установить сортировку по умолчанию"/>
   <Local Name="AutoFitColumnWidth" Russian="Автоподбор ширины колонок"/>
   <Local Name="ResetWidthColumn" Russian="Сброс ширины колонок"/>
   <Local Name="Creating" Russian="Создание"/>

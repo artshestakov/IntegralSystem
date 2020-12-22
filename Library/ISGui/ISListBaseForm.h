@@ -104,7 +104,6 @@ protected:
 	void FieldResized(int LogicalIndex, int WidthOld, int WidthNew);
 
 	void SortingChanged(int LogicalIndex, Qt::SortOrder Order);
-	void SortingDefault(); //Установка сортировки по умолчанию
 	void VisibleIndicatorWidget(); //Изменение видимости индикатора
 	void ShowSettingsForm();
 

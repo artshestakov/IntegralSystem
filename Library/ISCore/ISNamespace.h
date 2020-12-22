@@ -103,7 +103,6 @@ namespace ISNamespace
 
     enum ActionSpecialType
     {
-        AST_SortDefault,
         AST_Note,
         AST_ResizeFromContent,
         AST_ResetWidthColumn,
