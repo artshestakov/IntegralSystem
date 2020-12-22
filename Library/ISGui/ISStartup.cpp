@@ -167,13 +167,6 @@ bool ISStartup::StartupOld(ISSplashScreen *SplashScreen)
 		return false;
 	}
 
-	//Инициализация настроек пользователя
-	if (!ISSettings::Instance().Initialize())
-	{
-		ISMessageBox::ShowCritical(SplashScreen, LANG("Message.Error.InitializeUserSettings"), ISSettings::Instance().GetErrorString());
-		return false;
-	}
-
 	//Инициализация параграфов
 	if (!ISParagraphEntity::Instance().Initialize())
 	{

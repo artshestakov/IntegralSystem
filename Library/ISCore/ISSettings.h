@@ -12,7 +12,6 @@ public:
 	
 	QString GetErrorString() const;
 	void Initialize(const QVariantList &VariantList);
-	bool Initialize(); //Инициализация
 	QVariantMap GetSettingsChanged() const; //Получить измененные настройки
 
 	QVariant GetValue(const QString &SettingUID); //Получить значение мета-настройки
@@ -20,10 +19,6 @@ public:
 	
 	std::vector<ISMetaSettingsGroup*> GetSettingGroups(); //Получить все группы настроек
 	ISMetaSetting* GetMetaSetting(const QString &SettingUID); //Получить мета-настройку по её идентификатору
-
-private:
-	ISMetaSettingsGroup* CheckExistGroup(const ISUuid &GroupUID); //??? После перехода на Карат этот метод не понадобится
-	bool InsertSetting(const ISUuid &SettingUID, const QVariant &Value);
 
 private:
 	ISSettings();
