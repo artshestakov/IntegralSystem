@@ -124,13 +124,6 @@ bool ISStartup::StartupOld(ISSplashScreen *SplashScreen)
 		return false;
 	}
 
-	//Инициалищация печати
-	if (!ISPrintingEntity::Instance().Initialize())
-	{
-		ISMessageBox::ShowCritical(SplashScreen, LANG("Message.Error.InitializePrinting"), ISPrintingEntity::Instance().GetErrorString());
-		return false;
-	}
-
 	//Инициализация избранного
 	if (!ISFavorites::Instance().Initialize())
 	{

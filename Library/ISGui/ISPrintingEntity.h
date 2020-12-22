@@ -10,7 +10,6 @@ public:
 
 	QString GetErrorString() const;
 	void Initialize(const QVariantList &VariantList);
-	bool Initialize();
 	std::vector<ISPrintMetaReport*> GetReports(const QString &TableName);
 	size_t GetCountReports(const QString &TableName);
 
