@@ -91,8 +91,6 @@ protected:
 	void SelectRowIndex(int row_index); //Выделение строки по индексу
 	void SetEnabledActionObject(bool Enabled); //Изменить доступность действий над объектом
 	void SetEnabledPageNavigation(bool Enabled); //Изменить доступность постраничной навигации
-	void SearchFast(const QVariant &SearchValue); //Быстрый поиск
-	void SearchFastClear(); //Очистить результаты быстрого поиска
 
 	void ModelThreadStarted(); //Событие запуска запроса на загрузку данных
 	void ModelThreadLoadingData(); //Событие загрузки данных в память
@@ -121,7 +119,6 @@ private:
 	QLabel *LabelRowCount;
 	QLabel *LabelSelectedRow;
 	ISPageNavigation *PageNavigation;
-	ISSearchEdit *EditSearch;
 	QStatusBar *StatusBar;
 
 	ISModelThreadQuery *ModelThreadQuery;

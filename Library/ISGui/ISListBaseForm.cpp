@@ -277,13 +277,6 @@ ISListBaseForm::ISListBaseForm(const QString &TableName, QWidget *parent)
 		LabelSelectedRow = new QLabel(StatusBar);
 		LabelSelectedRow->setVisible(false);
 		StatusBar->addWidget(LabelSelectedRow);
-
-		EditSearch = new ISSearchEdit(StatusBar);
-		EditSearch->setSizePolicy(QSizePolicy::Maximum, EditSearch->sizePolicy().verticalPolicy());
-		connect(EditSearch, &ISSearchEdit::ValueChange, this, &ISListBaseForm::SearchFast);
-		connect(EditSearch, &ISSearchEdit::ClearPressed, this, &ISListBaseForm::SearchFastClear);
-		//connect(this, &ISListBaseForm::Updated, EditSearch, static_cast<void(ISSearchEdit::*)(void)>(&ISSearchEdit::setFocus));
-		StatusBar->addPermanentWidget(EditSearch);
 	}
 
 	//Создание этого виджета должно происходить после создания всех остальных
@@ -773,72 +766,6 @@ void ISListBaseForm::SetEnabledPageNavigation(bool Enabled)
 	}
 }
 //-----------------------------------------------------------------------------
-void ISListBaseForm::SearchFast(const QVariant &SearchValue)
-{
-	QString PreparedSearchValue = SearchValue.toString().toLower(); //Преобразование поискового запроса в нижний регистр (ОБЯЗАТЕЛЬНО!!!)
-	if (PreparedSearchValue.length()) //Если пользователь ввел поисковое значение
-	{
-		EditSearch->setAccessibleName(PreparedSearchValue); //Запомнить предыдущее поисковое значение
-		QString WhereText = "lower(concat(";
-
-		for (int Column = 0; Column < SqlModel->columnCount(); ++Column) //Обход полей записи
-		{
-			PMetaField *MetaField = SqlModel->GetField(Column);
-			if (!ISMetaData::Instance().GetSearch(MetaField->Type))
-			{
-				continue;
-			}
-
-			if (!MetaField->QueryText.isEmpty()) //Если поле является виртуальным
-			{
-				WhereText += '(' + MetaField->QueryText + ')';
-			}
-			else //Стандартное мета-поле
-			{
-				if (MetaField->Foreign) //Если на поле установлен внешний ключ
-				{
-					PMetaTable *MetaForeignTable = ISMetaData::Instance().GetMetaTable(MetaField->Foreign->ForeignClass);
-					WhereText += "(SELECT concat(";
-					for (const QString &FieldName : MetaField->Foreign->ForeignViewNameField.split(';'))
-					{
-						WhereText += MetaForeignTable->Alias + '_' + FieldName + ", ";
-					}
-					WhereText.chop(2);
-					WhereText += ") FROM " + MetaForeignTable->Name + SYMBOL_SPACE;
-					WhereText += "WHERE " + MetaForeignTable->Alias + '_' + MetaField->Foreign->ForeignField + " = " + MetaTable->Alias + '_' + MetaField->Name + ')';
-				}
-				else //Поле без внешнего ключа
-				{
-					WhereText += MetaTable->Alias + '.' + MetaTable->Alias + '_' + MetaField->Name;
-				}
-			}
-
-			WhereText += ", ';', ";
-		}
-
-		WhereText.chop(7);
-		WhereText += ")) LIKE '%' || :Search || '%'";
-
-		QueryModel->SetSearchFilter(WhereText);
-		QueryModel->ClearConditions();
-		QueryModel->AddCondition(":Search", PreparedSearchValue);
-
-		Update();
-		SearchFlag = true;
-	}
-}
-//-----------------------------------------------------------------------------
-void ISListBaseForm::SearchFastClear()
-{
-	//disconnect(EditSearch, &ISSearchEdit::Search, this, &ISListBaseForm::SearchFast);
-	SearchFlag = false;
-	QueryModel->ClearSearchFilter();
-	QueryModel->ClearConditions();
-	Update();
-	//connect(EditSearch, &ISSearchEdit::Search, this, &ISListBaseForm::SearchFast);
-	GetAction(ISNamespace::AT_SearchClear)->setEnabled(false);
-}
-//-----------------------------------------------------------------------------
 void ISListBaseForm::ModelThreadStarted()
 {
 	ISGui::SetWaitGlobalCursor(true);
@@ -851,7 +778,6 @@ void ISListBaseForm::ModelThreadStarted()
 	LabelRowCount->setText(QString("%1: %2...").arg(LANG("RecordsCount")).arg(LANG("Calculated"))); //Изменение значения в надписе "Записей"
 	ToolBar->setEnabled(false);
 	SetEnabledPageNavigation(false);
-	EditSearch->setEnabled(false);
 }
 //-----------------------------------------------------------------------------
 void ISListBaseForm::ModelThreadLoadingData()
@@ -867,7 +793,6 @@ void ISListBaseForm::ModelThreadFinished()
 	ListIndicatorWidget->hide();
 	ToolBar->setEnabled(true);
 	SetEnabledPageNavigation(true);
-	EditSearch->setEnabled(true);
 
 	if (!SETTING_BOOL(CONST_UID_SETTING_TABLE_VISIBLE_FIELD_ID))
 	{
