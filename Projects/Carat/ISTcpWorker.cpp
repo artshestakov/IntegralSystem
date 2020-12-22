@@ -61,7 +61,7 @@ static QString QS_REPORT_FIELD = PREPARE_QUERY("SELECT rprt_replacevalue, rprt_s
 											   "FROM _report "
 											   "WHERE rprt_parent = :ParentUID");
 //-----------------------------------------------------------------------------
-static QString QS_FAVORITE = PREPARE_QUERY("SELECT fvts_tablename, fvts_objectid "
+static QString QS_FAVORITE = PREPARE_QUERY("SELECT fvts_tablename, array_to_string(fvts_objectsid, ',') AS fvts_objectsid "
 										   "FROM _favorites "
 										   "WHERE fvts_user = :UserID");
 //-----------------------------------------------------------------------------
@@ -250,11 +250,20 @@ static QString QU_SETTING = PREPARE_QUERY("UPDATE _usersettings SET "
 										  "WHERE usst_user = :UserID "
 										  "AND usst_setting = (SELECT stgs_id FROM _settings WHERE stgs_uid = :SettingUID)");
 //-----------------------------------------------------------------------------
-static QString QD_FAVIROTES = PREPARE_QUERY("DELETE FROM _favorites "
-											"WHERE fvts_user = :UserID");
+static QString QD_FAVIROTES_USER = PREPARE_QUERY("DELETE FROM _favorites "
+												 "WHERE fvts_user = :UserID");
 //-----------------------------------------------------------------------------
-static QString QI_FAVORITE = PREPARE_QUERY("INSERT INTO _favorites(fvts_user, fvts_tablename, fvts_objectid) "
-										   "VALUES(:UserID, :TableName, :ObjectID)");
+static QString QD_FAVORITES = PREPARE_QUERY("DELETE FROM _favorites "
+											"WHERE fvts_user = :UserID "
+											"AND fvts_tablename NOT IN(:Tables)");
+//-----------------------------------------------------------------------------
+static QString QI_FAVORITE = PREPARE_QUERY("INSERT INTO _favorites(fvts_user, fvts_tablename, fvts_objectsid) "
+										   "VALUES(:UserID, :TableName, :ObjectsID)");
+//-----------------------------------------------------------------------------
+static QString QU_FAVORITE = PREPARE_QUERY("UPDATE _favorites SET "
+										   "fvts_objectsid = :ObjectsID "
+										   "WHERE fvts_user = :UserID "
+										   "AND fvts_tablename = :TableName");
 //-----------------------------------------------------------------------------
 static QString QS_GROUP_RIGHT_SYSTEM = PREPARE_QUERY("SELECT stms_uid, stms_localname "
 													 "FROM _systems "
@@ -1116,8 +1125,7 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 		while (qSelectFavorite.Next())
 		{
 			QString TableName = qSelectFavorite.ReadColumn("fvts_tablename").toString();
-			QVariantList Objects = FavoriteMap[TableName].toList();
-			Objects.append(qSelectFavorite.ReadColumn("fvts_objectid"));
+			QStringList Objects = qSelectFavorite.ReadColumn("fvts_objectsid").toString().split(',');
 			FavoriteMap[TableName] = Objects;
 		}
 	}
@@ -2523,25 +2531,54 @@ bool ISTcpWorker::SaveMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	QVariantMap FavoritesMap = TcpMessage->Parameters["Favorites"].toMap();
 	if (FavoritesMap.isEmpty()) //Если объектов нет - удаляем то, что есть в БД
 	{
-		ISQuery qDeleteFavorites(ISDatabase::Instance().GetDB(DBConnectionName), QD_FAVIROTES);
+		ISQuery qDeleteFavorites(ISDatabase::Instance().GetDB(DBConnectionName), QD_FAVIROTES_USER);
 		qDeleteFavorites.BindValue(":UserID", TcpMessage->TcpSocket->GetUserID());
 		if (!qDeleteFavorites.Execute()) //Не удалось удалить
 		{
-			ErrorString = LANG("Carat.Error.Query.SaveMetaData.DeleteFavorites").arg(qDeleteFavorites.GetErrorString());
+			ErrorString = LANG("Carat.Error.Query.SaveMetaData.DeleteUserFavorites").arg(qDeleteFavorites.GetErrorString());
 			return false;
 		}
 	}
 	else //Объекты есть
 	{
-		ISQuery qInsertFavorite(ISDatabase::Instance().GetDB(DBConnectionName), QI_FAVORITE);
+		//Удаляем
+		QStringList Tables = FavoritesMap.keys();
+		ISQuery qDelete(ISDatabase::Instance().GetDB(DBConnectionName), QD_FAVORITES.replace(":Tables", "'{" + Tables.join(',') + "}'"));
+		qDelete.BindValue(":UserID", TcpMessage->TcpSocket->GetUserID());
+		if (!qDelete.Execute())
+		{
+			ErrorString = LANG("Carat.Error.Query.SaveMetaData.DeleteFavorites").arg(qDelete.GetErrorString());
+			return false;
+		}
+
+		//Добавляем
 		for (const auto &MapItem : FavoritesMap.toStdMap())
 		{
+			QString Objects;
 			for (const QVariant &ObjectID : MapItem.second.toList())
 			{
-				qInsertFavorite.BindValue(":UserID", TcpMessage->TcpSocket->GetUserID());
-				qInsertFavorite.BindValue(":TableName", MapItem.first);
-				qInsertFavorite.BindValue(":ObjectID", ObjectID);
-				if (!qInsertFavorite.Execute())
+				Objects += ObjectID.toString() + ',';
+			}
+			Objects.chop(1);
+
+			//Добавляем избранные объекты
+			ISQuery qInsertFavorite(ISDatabase::Instance().GetDB(DBConnectionName), QI_FAVORITE.replace(":ObjectsID", "'{" + Objects + "}'"));
+			qInsertFavorite.BindValue(":UserID", TcpMessage->TcpSocket->GetUserID());
+			qInsertFavorite.BindValue(":TableName", MapItem.first);
+			if (!qInsertFavorite.Execute()) //Вставка не удалась
+			{
+				if (qInsertFavorite.GetErrorNumber() == 23505) //Вставка не удалась из-за ограничения индекса - обновляем
+				{
+					ISQuery qUpdateFavorites(ISDatabase::Instance().GetDB(DBConnectionName), QU_FAVORITE.replace(":ObjectsID", "'{" + Objects + "}'"));
+					qUpdateFavorites.BindValue(":UserID", TcpMessage->TcpSocket->GetUserID());
+					qUpdateFavorites.BindValue(":TableName", MapItem.first);
+					if (!qUpdateFavorites.Execute()) //Не удалось обновить
+					{
+						ErrorString = LANG("Carat.Error.Query.SaveMetaData.UpdateFavorite").arg(qUpdateFavorites.GetErrorString());
+						return false;
+					}
+				}
+				else //Вставка не удалась по другой причине
 				{
 					ErrorString = LANG("Carat.Error.Query.SaveMetaData.InsertFavorite").arg(qInsertFavorite.GetErrorString());
 					return false;
