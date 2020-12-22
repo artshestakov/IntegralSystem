@@ -40,9 +40,6 @@ public:
 
 	static void ExitApplication(); //Выход из программы
 
-	//Календарь
-	static int CalendarInsert(const QDateTime &DateTime, const QString &Name, const QVariant &Text);
-
 	static ISFieldEditBase* CreateColumnForField(QWidget *ParentWidget, PMetaField *MetaField);
 	static ISFieldEditBase* CreateColumnForField(QWidget *ParentWidget, ISNamespace::FieldType DataType, const QString &ControlWidget = QString());
 	static ISObjectFormBase* CreateObjectForm(ISNamespace::ObjectFormType FormType, const QString &TableName, int ObjectID = 0, QWidget *parent = 0);

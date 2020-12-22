@@ -14,10 +14,6 @@
 #include "ISDatabase.h"
 #include "ISMetaDataHelper.h"
 //-----------------------------------------------------------------------------
-static QString QI_CALENDAR = PREPARE_QUERY("INSERT INTO _calendar(cldr_date, cldr_timealert, cldr_name, cldr_text) "
-                                           "VALUES(:Date, :TimeAlert, :Name, :Text) "
-										   "RETURNING cldr_id");
-//-----------------------------------------------------------------------------
 static QString QU_CALENDAR_CLOSE = PREPARE_QUERY("UPDATE _calendar SET cldr_closed = true WHERE cldr_id = :CalendarID");
 //-----------------------------------------------------------------------------
 QString ISCore::GetObjectName(const QString &TableName, int ObjectID)
@@ -77,21 +73,6 @@ QString ISCore::GetObjectName(PMetaTable *MetaTable, int ObjectID)
 	//Удаляем возможные пробелы в конце имени объекта
 	ISAlgorithm::RemoveLastSymbolLoop(ObjectName, SYMBOL_SPACE);
 	return ObjectName;
-}
-//-----------------------------------------------------------------------------
-int ISCore::CalendarInsert(const QDateTime &DateTime, const QString &Name, const QVariant &Text)
-{
-	int CalendarID = 0;
-	ISQuery qInsertCalendar(QI_CALENDAR);
-	qInsertCalendar.BindValue(":Date", DateTime.date());
-	qInsertCalendar.BindValue(":TimeAlert", DateTime.time());
-	qInsertCalendar.BindValue(":Name", Name);
-	qInsertCalendar.BindValue(":Text", Text);
-	if (qInsertCalendar.ExecuteFirst())
-	{
-		CalendarID = qInsertCalendar.ReadColumn("cldr_id").toInt();
-	}
-	return CalendarID;
 }
 //-----------------------------------------------------------------------------
 bool ISCore::CalendarCloseEvent(int CalendarID)

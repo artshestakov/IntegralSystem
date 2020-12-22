@@ -127,7 +127,6 @@
   <Local Name="Message.Objects.Delete" Russian="Вы действительно удалить выбранные записи (%1 шт.)?"/>
   <Local Name="Message.Warning.SystemObject.NotEdit" Russian="Запрещено редактировать системные записи."/>
   <Local Name="Message.Warning.SystemObject.Copy" Russian="Запрещено создавать копии системных записей."/>
-  <Local Name="Message.Warning.NotifyNotInserted" Russian="Не удалось добавить напоминание!"/>
   <Local Name="Message.Warning.ValueFieldEditInvalid" Russian="Значение в поле &quot;%1&quot; введено некорректно!"/>
   <Local Name="Message.Warning.AccountLifetimeNotStarted" Russian="ВНИМАНИЕ! Срок действия Вашей учётной записи ещё не начался."/>
   <Local Name="Message.Warning.AccountLifetimeEnded" Russian="ВНИМАНИЕ! Срок действия Вашей учётной записи закончился. Обратитесь к администратору системы за подробностями для восстановления доступа."/>
@@ -298,7 +297,6 @@
   <Local Name="EnterThePassword" Russian="Введите пароль"/>
   <Local Name="InputInSystem" Russian="Вход в систему"/>
   <Local Name="InputLoginAndPassword" Russian="Введите логин и пароль"/>
-  <Local Name="NotifyInsertedDone" Russian="Напоминание &quot;%1&quot; успешно добавлено."/>
   <Local Name="Page.Begin" Russian="Первая страница"/>
   <Local Name="Page.Previous" Russian="Предыдущая страница"/>
   <Local Name="Page.Next" Russian="Следующая страница"/>

@@ -412,20 +412,6 @@ void ISGui::ExitApplication()
 	qApp->closeAllWindows();
 }
 //-----------------------------------------------------------------------------
-int ISGui::CalendarInsert(const QDateTime &DateTime, const QString &Name, const QVariant &Text)
-{
-	int CalendarID = ISCore::CalendarInsert(DateTime, Name, Text);
-	if (CalendarID)
-	{
-		ISPopupMessage::ShowNotification(LANG("NotifyInsertedDone").arg(Name));
-	}
-	else
-	{
-		ISMessageBox::ShowWarning(nullptr, LANG("Message.Warning.NotifyNotInserted"));
-	}
-	return CalendarID;
-}
-//-----------------------------------------------------------------------------
 ISFieldEditBase* ISGui::CreateColumnForField(QWidget *ParentWidget, PMetaField *MetaField)
 {
 	return CreateFieldEditBase(ParentWidget, MetaField);

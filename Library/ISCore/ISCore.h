@@ -10,7 +10,6 @@ public:
 	static QString GetObjectName(PMetaTable *MetaTable, int ObjectID); //Получить наименование объекта
 
 	//Календарь
-	static int CalendarInsert(const QDateTime &DateTime, const QString &Name, const QVariant &Text); //Добавить событие в календарь
 	static bool CalendarCloseEvent(int CalendarID); //Завершить событие календаря
 
 	//Номера телефонов
