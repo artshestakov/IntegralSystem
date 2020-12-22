@@ -63,7 +63,7 @@ void ISFavorites::DeleteFavorite(const QString &TableName, unsigned int ObjectID
 //-----------------------------------------------------------------------------
 void ISFavorites::DeleteAllFavorites()
 {
-	
+	Favorites.clear();
 }
 //-----------------------------------------------------------------------------
 bool ISFavorites::CheckExistFavoriteObject(const QString &TableName, unsigned int ObjectID)
@@ -84,10 +84,5 @@ ISVectorInt& ISFavorites::GetObjects(const QString &TableName)
 std::map<QString, ISVectorInt>& ISFavorites::GetObjects()
 {
 	return std::map<QString, ISVectorInt>();
-}
-//-----------------------------------------------------------------------------
-bool ISFavorites::Save()
-{
-	return true;
 }
 //-----------------------------------------------------------------------------

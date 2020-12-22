@@ -17,7 +17,6 @@ public:
 	bool CheckExistFavoriteObject(const QString &TableName, unsigned int ObjectID); //Проверить наличие объекта в избранном
 	ISVectorInt& GetObjects(const QString &TableName); //Получить избранные объекты по таблице
 	std::map<QString, ISVectorInt>& GetObjects(); //Получить все избранные объекты
-	bool Save(); //Сохранить в БД
 
 private:
 	ISFavorites();
