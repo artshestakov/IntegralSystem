@@ -469,6 +469,7 @@ void ISTcpWorker::Process()
 					case ISNamespace::AMT_GroupRightTableDelete: Result = GroupRightTableDelete(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_GroupRightSpecialAdd: Result = GroupRightSpecialAdd(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_GroupRightSpecialDelete: Result = GroupRightSpecialDelete(tcp_message, TcpAnswer); break;
+					case ISNamespace::AMT_GetRecordValue: Result = GetRecordValue(tcp_message, TcpAnswer); break;
 					default:
 						ErrorString = LANG("Carat.Error.NotExistFunction").arg(tcp_message->TypeName);
 					}
@@ -2859,6 +2860,48 @@ bool ISTcpWorker::GroupRightSpecialDelete(ISTcpMessage *TcpMessage, ISTcpAnswer 
 		return false;
 	}
 	Protocol(TcpMessage->TcpSocket->GetUserID(), CONST_UID_PROTOCOL_DEL_ACCESS_TO_SPECIAL, QVariant(), QVariant(), QVariant(), qDeleteSpecialRight.ReadColumn("gast_name"));
+	return true;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::GetRecordValue(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+	QVariant TableName = CheckNullField("TableName", TcpMessage),
+		FieldName = CheckNullField("FieldName", TcpMessage),
+		ObjectID = CheckNullField("ObjectID", TcpMessage);
+	if (!TableName.isValid() || !FieldName.isValid() || !ObjectID.isValid())
+	{
+		return false;
+	}
+
+	//Получаем мета-таблицу
+	PMetaTable *MetaTable = GetMetaTable(TableName.toString());
+	if (!MetaTable)
+	{
+		return false;
+	}
+
+	PMetaField *MetaField = MetaTable->GetField(FieldName.toString());
+	if (!MetaField)
+	{
+		ErrorString = LANG("Carat.Error.Query.GetRecordValue.InvalidFieldName").arg(FieldName.toString());
+		return false;
+	}
+
+	ISQuery qSelectValue(ISDatabase::Instance().GetDB(DBConnectionName),
+		QString("SELECT %1_%2 FROM %3 WHERE %1_id = :ObjectID").arg(MetaTable->Alias).arg(MetaField->Name).arg(MetaTable->Name));
+	qSelectValue.BindValue(":ObjectID", ObjectID);
+	if (!qSelectValue.Execute())
+	{
+		ErrorString = LANG("Carat.Error.Query.GetRecordValue.Select").arg(qSelectValue.GetErrorString());
+		return false;
+	}
+
+	if (!qSelectValue.First())
+	{
+		ErrorString = LANG("Carat.Error.Query.GetRecordValue.RecordNotFound").arg(ObjectID.toInt());
+		return false;
+	}
+	TcpAnswer->Parameters["Value"] = qSelectValue.ReadColumn(0);
 	return true;
 }
 //-----------------------------------------------------------------------------

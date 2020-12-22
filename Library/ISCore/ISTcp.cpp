@@ -180,6 +180,10 @@ ISNamespace::ApiMessageType ISTcp::GetMessageTypeByName(const QString &Name)
 	{
 		return ISNamespace::AMT_GroupRightSpecialDelete;
 	}
+	else if (Name == API_GET_RECORD_VALUE)
+	{
+		return ISNamespace::AMT_GetRecordValue;
+	}
 	return ISNamespace::AMT_Unknown;
 }
 //-----------------------------------------------------------------------------

@@ -181,6 +181,7 @@ const char API_GROUP_RIGHT_TABLE_ADD[] = "GroupRightTableAdd"; //Добавить группе
 const char API_GROUP_RIGHT_TABLE_DELETE[] = "GroupRightTableDelete"; //Удалить у группы право на таблицу
 const char API_GROUP_RIGHT_SPECIAL_ADD[] = "GroupRightSpecialAdd"; //Добавить спец. право группе
 const char API_GROUP_RIGHT_SPECIAL_DELETE[] = "GroupRightSpecialDelete"; //Удалить спец. право у группы
+const char API_GET_RECORD_VALUE[] = "GetRecordValue"; //Получить значение поля записи
 //CARAT_LOCAL_API--------------------------------------------------------------
 const char	CARAT_LOCAL_API_SHUTDOWN[] = "shutdown"; //Завершение работы
 //-----------------------------------------------------------------------------

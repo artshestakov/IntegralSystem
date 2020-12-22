@@ -177,6 +177,7 @@ namespace ISNamespace
 		AMT_GroupRightTableDelete, //Удалить у группы право на таблицу
 		AMT_GroupRightSpecialAdd, //Добавить спец. право группе
 		AMT_GroupRightSpecialDelete, //Удалить спец. право у группы
+		AMT_GetRecordValue, //Получить значение поля записи
 	};
 };
 //-----------------------------------------------------------------------------

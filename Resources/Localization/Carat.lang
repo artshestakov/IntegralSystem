@@ -157,4 +157,8 @@
   <Local Name="Carat.Error.Query.GroupRightSpecialDelete.Delete" Russian="Не удалось удалить специальное право: %1"/>
   <Local Name="Carat.Error.Query.GroupRightSpecialDelete.NotExist" Russian="Специальное право не существует."/>
 
+  <Local Name="Carat.Error.Query.GetRecordValue.InvalidFieldName" Russian="Поле &quot;%1&quot; не существует."/>
+  <Local Name="Carat.Error.Query.GetRecordValue.Select" Russian="Не удалось запросить значение: %1"/>
+  <Local Name="Carat.Error.Query.GetRecordValue.RecordNotFound" Russian="Запись с кодом &quot;%1&quot; не найдена."/>
+
 </LANG>

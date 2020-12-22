@@ -236,6 +236,21 @@
             <stringProp name="Argument.value">50005</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
+          <elementProp name="GetRecordValue_TableName" elementType="Argument">
+            <stringProp name="Argument.name">GetRecordValue_TableName</stringProp>
+            <stringProp name="Argument.value">_Users</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="GetRecordValue_FieldName" elementType="Argument">
+            <stringProp name="Argument.name">GetRecordValue_FieldName</stringProp>
+            <stringProp name="Argument.value">FIO</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="GetRecordValue_ObjectID" elementType="Argument">
+            <stringProp name="Argument.name">GetRecordValue_ObjectID</stringProp>
+            <stringProp name="Argument.value">2</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
         </collectionProp>
       </Arguments>
       <hashTree/>
@@ -585,7 +600,20 @@ def MapGetGroupRights =
 			GroupID: vars.get(&quot;GetGroupRights_GroupID&quot;)
 		]
 ];
-vars.put(&quot;QueryGetGroupRights&quot;, MapToString(MapGetGroupRights));</stringProp>
+vars.put(&quot;QueryGetGroupRights&quot;, MapToString(MapGetGroupRights));
+
+//Получить значение поля записи
+def MapGetRecordValue =
+[
+	Type: &quot;GetRecordValue&quot;,
+	Parameters:
+		[
+			TableName: vars.get(&quot;GetRecordValue_TableName&quot;),
+			FieldName: vars.get(&quot;GetRecordValue_FieldName&quot;),
+			ObjectID: vars.get(&quot;GetRecordValue_ObjectID&quot;)
+		]
+];
+vars.put(&quot;QueryGetRecordValue&quot;, MapToString(MapGetRecordValue));</stringProp>
           <stringProp name="scriptLanguage">groovy</stringProp>
         </JSR223Sampler>
         <hashTree/>
@@ -913,13 +941,25 @@ vars.put(&quot;QueryGetGroupRights&quot;, MapToString(MapGetGroupRights));</stri
           <stringProp name="ConfigTestElement.password"></stringProp>
         </TCPSampler>
         <hashTree/>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: GetGroupRights" enabled="true">
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: GetGroupRights" enabled="false">
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
           <stringProp name="TCPSampler.port"></stringProp>
           <boolProp name="TCPSampler.nodelay">false</boolProp>
           <stringProp name="TCPSampler.timeout"></stringProp>
           <stringProp name="TCPSampler.request">${QueryGetGroupRights}</stringProp>
+          <boolProp name="TCPSampler.closeConnection">true</boolProp>
+          <stringProp name="ConfigTestElement.username"></stringProp>
+          <stringProp name="ConfigTestElement.password"></stringProp>
+        </TCPSampler>
+        <hashTree/>
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: GetRecordValue" enabled="true">
+          <stringProp name="TCPSampler.server"></stringProp>
+          <boolProp name="TCPSampler.reUseConnection">true</boolProp>
+          <stringProp name="TCPSampler.port"></stringProp>
+          <boolProp name="TCPSampler.nodelay">false</boolProp>
+          <stringProp name="TCPSampler.timeout"></stringProp>
+          <stringProp name="TCPSampler.request">${QueryGetRecordValue}</stringProp>
           <boolProp name="TCPSampler.closeConnection">true</boolProp>
           <stringProp name="ConfigTestElement.username"></stringProp>
           <stringProp name="ConfigTestElement.password"></stringProp>
