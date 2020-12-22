@@ -1,5 +1,4 @@
 #include "ISPrintingEntity.h"
-#include "ISQuery.h"
 //-----------------------------------------------------------------------------
 ISPrintingEntity::ISPrintingEntity()
 	: ErrrorString(NO_ERROR_STRING)

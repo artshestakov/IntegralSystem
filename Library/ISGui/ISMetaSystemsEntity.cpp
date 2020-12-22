@@ -1,5 +1,4 @@
 #include "ISMetaSystemsEntity.h"
-#include "ISQuery.h"
 #include "ISUserRoleEntity.h"
 #include "ISBuffer.h"
 //-----------------------------------------------------------------------------
