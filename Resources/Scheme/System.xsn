@@ -139,12 +139,10 @@
     <Fields>
       <Field UID="{960802AE-977A-4980-AE88-54850DB9DD8A}" Name="User" Type="BigInt" LabelName="Пользователь" LocalListName="Пользователь" NotNull="true"/>
       <Field UID="{3E124016-29ED-4636-A7AE-3EEE96F07F35}" Name="TableName" Type="String" LabelName="Имя таблицы" LocalListName="Имя таблицы" NotNull="true"/>
-      <Field UID="{A5E091B4-62D3-4A2D-9E9F-EBBEAA3011EF}" Name="ObjectsID" Type="IntArray" LabelName="Идентификатор объекта" LocalListName="Идентификатор объекта" NotNull="true"/>
+      <Field UID="{A5E091B4-62D3-4A2D-9E9F-EBBEAA3011EF}" Name="ObjectID" Type="BigInt" LabelName="Идентификатор объекта" LocalListName="Идентификатор объекта" NotNull="true"/>
     </Fields>
     <Indexes>
-      <Index Field="TableName"/>
-      <Index Field="ObjectsID"/>
-      <Index Field="User;TableName" Unique="true"/>
+      <Index Field="User;TableName;ObjectID" Unique="true"/>
     </Indexes>
     <Foreigns>
       <Foreign Field="User" ForeignClass="_Users" ForeignField="ID" ForeignViewNameField="FIO"/>

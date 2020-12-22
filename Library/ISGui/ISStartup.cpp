@@ -37,6 +37,7 @@ void ISStartup::Shutdown(ISSplashScreen *SplashScreen)
 	ISTcpQuery qSaveMetaData(API_SAVE_META_DATA);
 	qSaveMetaData.BindValue("ColumnSize", ISColumnSizer::Instance().GetColumnSize());
 	qSaveMetaData.BindValue("Settings", ISSettings::Instance().GetSettingsChanged());
+	qSaveMetaData.BindValue("Favorites", ISFavorites::Instance().GetFavorites());
 	if (!qSaveMetaData.Execute())
 	{
 		ISMessageBox::ShowCritical(SplashScreen, qSaveMetaData.GetErrorString());
@@ -46,11 +47,6 @@ void ISStartup::Shutdown(ISSplashScreen *SplashScreen)
 	if (!(SETTING_BOOL(CONST_UID_SETTING_TABLES_REMEMBERSORTING) ? ISSortingBuffer::Instance().SaveSortings() : ISSortingBuffer::Instance().Clear()))
 	{
 		ISMessageBox::ShowCritical(SplashScreen, LANG("Message.Error.SaveSortingBuffer"), ISSortingBuffer::Instance().GetErrorString());
-	}
-
-	if (!ISFavorites::Instance().Save())
-	{
-		ISMessageBox::ShowCritical(SplashScreen, LANG("Message.Error.SaveFavorites"), ISFavorites::Instance().GetErrorString());
 	}
 
 	if (!ISHistory::Instance().Save())
@@ -114,13 +110,6 @@ bool ISStartup::StartupOld(ISSplashScreen *SplashScreen)
 		ISBuffer::Instance().CurrentUserInfo.Login, ISBuffer::Instance().CurrentUserInfo.Password))
 	{
 		ISMessageBox::ShowCritical(SplashScreen, LANG("Message.Error.InitializeQueryPool"), ISQueryPool::Instance().GetErrorString());
-		return false;
-	}
-
-	//Инициализация избранного
-	if (!ISFavorites::Instance().Initialize())
-	{
-		ISMessageBox::ShowCritical(SplashScreen, LANG("Message.Error.InitializeFavorites"), ISFavorites::Instance().GetErrorString());
 		return false;
 	}
 

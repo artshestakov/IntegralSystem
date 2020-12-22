@@ -280,7 +280,7 @@ void ISObjectFormBase::CreateToolBar()
 	ActionFavorites = new QAction(BUFFER_ICONS("Favorites"), LANG("AddToFavorites"), ToolBar);
 	ActionFavorites->setPriority(QAction::LowPriority);
 	ActionFavorites->setCheckable(true);
-	connect(ActionFavorites, &QAction::triggered, this, &ISObjectFormBase::AddFavoite);
+	connect(ActionFavorites, &QAction::triggered, this, &ISObjectFormBase::FavoiteClicked);
 	AddActionToolBar(ActionFavorites);
 
 	//Удалить карточку
@@ -865,11 +865,11 @@ void ISObjectFormBase::UpdateObjectActions()
 	}
 }
 //-----------------------------------------------------------------------------
-void ISObjectFormBase::AddFavoite()
+void ISObjectFormBase::FavoiteClicked()
 {
 	bool IsExist = ISFavorites::Instance().CheckExistFavoriteObject(MetaTable->Name, ObjectID);
 	IsExist ? ISFavorites::Instance().DeleteFavorite(MetaTable->Name, ObjectID) : ISFavorites::Instance().AddFavorite(MetaTable->Name, ObjectID);
-	ActionFavorites->setCheckable(!IsExist);
+	ActionFavorites->setChecked(!IsExist);
 	IsExist ? ISPopupMessage::ShowNotification(LANG("RecordRemoveFavorites").arg(ObjectName)) : ISPopupMessage::ShowNotification(LANG("RecordAddFavorites").arg(ObjectName));
 }
 //-----------------------------------------------------------------------------

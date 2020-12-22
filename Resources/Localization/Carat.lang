@@ -132,6 +132,8 @@
   <Local Name="Carat.Error.Query.SaveMetaData.UpdateColumnSize" Russian="Не удалось обновить размер поля: %1"/>
   <Local Name="Carat.Error.Query.SaveMetaData.InsertColumnSize" Russian="Не удалось добавить размер поля: %1"/>
   <Local Name="Carat.Error.Query.SaveMetaData.UpdateSetting" Russian="Не удалось обновить настройку: %1"/>
+  <Local Name="Carat.Error.Query.SaveMetaData.DeleteFavorites" Russian="Не удалось удалить избранные объекты: %1"/>
+  <Local Name="Carat.Error.Query.SaveMetaData.InsertFavorite" Russian="Не удалось добавить избранный объект: %1"/>
 
   <Local Name="Carat.Error.Query.GetGroupRights.SelectSystems" Russian="Не удалось получить информацию о системах: %1"/>
   <Local Name="Carat.Error.Query.GetGroupRights.SelectSubSystems" Russian="Не удалось получить информацию о подсистемах: %1"/>

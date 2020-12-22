@@ -61,7 +61,7 @@ static QString QS_REPORT_FIELD = PREPARE_QUERY("SELECT rprt_replacevalue, rprt_s
 											   "FROM _report "
 											   "WHERE rprt_parent = :ParentUID");
 //-----------------------------------------------------------------------------
-static QString QS_FAVORITE = PREPARE_QUERY("SELECT fvts_tablename, fvts_objectsid "
+static QString QS_FAVORITE = PREPARE_QUERY("SELECT fvts_tablename, fvts_objectid "
 										   "FROM _favorites "
 										   "WHERE fvts_user = :UserID");
 //-----------------------------------------------------------------------------
@@ -249,6 +249,12 @@ static QString QU_SETTING = PREPARE_QUERY("UPDATE _usersettings SET "
 										  "usst_value = :Value "
 										  "WHERE usst_user = :UserID "
 										  "AND usst_setting = (SELECT stgs_id FROM _settings WHERE stgs_uid = :SettingUID)");
+//-----------------------------------------------------------------------------
+static QString QD_FAVIROTES = PREPARE_QUERY("DELETE FROM _favorites "
+											"WHERE fvts_user = :UserID");
+//-----------------------------------------------------------------------------
+static QString QI_FAVORITE = PREPARE_QUERY("INSERT INTO _favorites(fvts_user, fvts_tablename, fvts_objectid) "
+										   "VALUES(:UserID, :TableName, :ObjectID)");
 //-----------------------------------------------------------------------------
 static QString QS_GROUP_RIGHT_SYSTEM = PREPARE_QUERY("SELECT stms_uid, stms_localname "
 													 "FROM _systems "
@@ -1110,8 +1116,9 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 		while (qSelectFavorite.Next())
 		{
 			QString TableName = qSelectFavorite.ReadColumn("fvts_tablename").toString();
-			QString ObjectsID = qSelectFavorite.ReadColumn("fvts_objectsid").toString();
-			FavoriteMap[TableName] = ObjectsID.mid(1, ObjectsID.size() - 2).split(SYMBOL_COMMA);
+			QVariantList Objects = FavoriteMap[TableName].toList();
+			Objects.append(qSelectFavorite.ReadColumn("fvts_objectid"));
+			FavoriteMap[TableName] = Objects;
 		}
 	}
 	else
@@ -2508,6 +2515,37 @@ bool ISTcpWorker::SaveMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 			{
 				ErrorString = LANG("Carat.Error.Query.SaveMetaData.UpdateSetting").arg(qUpdateSetting.GetErrorString());
 				return false;
+			}
+		}
+	}
+
+	//Получаем избранные объекты
+	QVariantMap FavoritesMap = TcpMessage->Parameters["Favorites"].toMap();
+	if (FavoritesMap.isEmpty()) //Если объектов нет - удаляем то, что есть в БД
+	{
+		ISQuery qDeleteFavorites(ISDatabase::Instance().GetDB(DBConnectionName), QD_FAVIROTES);
+		qDeleteFavorites.BindValue(":UserID", TcpMessage->TcpSocket->GetUserID());
+		if (!qDeleteFavorites.Execute()) //Не удалось удалить
+		{
+			ErrorString = LANG("Carat.Error.Query.SaveMetaData.DeleteFavorites").arg(qDeleteFavorites.GetErrorString());
+			return false;
+		}
+	}
+	else //Объекты есть
+	{
+		ISQuery qInsertFavorite(ISDatabase::Instance().GetDB(DBConnectionName), QI_FAVORITE);
+		for (const auto &MapItem : FavoritesMap.toStdMap())
+		{
+			for (const QVariant &ObjectID : MapItem.second.toList())
+			{
+				qInsertFavorite.BindValue(":UserID", TcpMessage->TcpSocket->GetUserID());
+				qInsertFavorite.BindValue(":TableName", MapItem.first);
+				qInsertFavorite.BindValue(":ObjectID", ObjectID);
+				if (!qInsertFavorite.Execute())
+				{
+					ErrorString = LANG("Carat.Error.Query.SaveMetaData.InsertFavorite").arg(qInsertFavorite.GetErrorString());
+					return false;
+				}
 			}
 		}
 	}
