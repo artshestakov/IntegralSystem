@@ -245,6 +245,11 @@ static QString QU_COLUMN_SIZE = PREPARE_QUERY("UPDATE _columnsize SET "
 											  "AND clsz_tablename = :TableName "
 											  "AND clsz_fieldname = :FieldName");
 //-----------------------------------------------------------------------------
+static QString QU_SETTING = PREPARE_QUERY("UPDATE _usersettings SET "
+										  "usst_value = :Value "
+										  "WHERE usst_user = :UserID "
+										  "AND usst_setting = (SELECT stgs_id FROM _settings WHERE stgs_uid = :SettingUID)");
+//-----------------------------------------------------------------------------
 static QString QS_GROUP_RIGHT_SYSTEM = PREPARE_QUERY("SELECT stms_uid, stms_localname "
 													 "FROM _systems "
 													 "ORDER BY stms_orderid");
@@ -2446,6 +2451,9 @@ bool ISTcpWorker::SaveMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
 	Q_UNUSED(TcpAnswer);
 
+	//Протоколируем в начале, вдруг где-то дальше будет ошибка
+	Protocol(TcpMessage->TcpSocket->GetUserID(), CONST_UID_PROTOCOL_EXIT_APPLICATION);
+
 	//Готовим запросы для размеров полей
 	ISQuery qInsertColumnSize(ISDatabase::Instance().GetDB(DBConnectionName), QI_COLUMN_SIZE),
 		qUpdateColumnSize(ISDatabase::Instance().GetDB(DBConnectionName), QU_COLUMN_SIZE);
@@ -2484,7 +2492,26 @@ bool ISTcpWorker::SaveMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 		}
 	}
 
-	Protocol(TcpMessage->TcpSocket->GetUserID(), CONST_UID_PROTOCOL_EXIT_APPLICATION);
+	//Получаем изменные настройки
+	QVariantMap SettingsMap = TcpMessage->Parameters["Settings"].toMap();
+	if (!SettingsMap.isEmpty())
+	{
+		//Готовим запрос для обновления настройки
+		ISQuery qUpdateSetting(ISDatabase::Instance().GetDB(DBConnectionName), QU_SETTING);
+
+		for (const auto &MapItem : SettingsMap.toStdMap())
+		{
+			qUpdateSetting.BindValue(":Value", MapItem.second);
+			qUpdateSetting.BindValue(":UserID", TcpMessage->TcpSocket->GetUserID());
+			qUpdateSetting.BindValue(":SettingUID", MapItem.first);
+			if (!qUpdateSetting.Execute())
+			{
+				ErrorString = LANG("Carat.Error.Query.SaveMetaData.UpdateSetting").arg(qUpdateSetting.GetErrorString());
+				return false;
+			}
+		}
+	}
+
 	return true;
 }
 //-----------------------------------------------------------------------------

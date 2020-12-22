@@ -13,14 +13,13 @@ public:
 	QString GetErrorString() const;
 	void Initialize(const QVariantList &VariantList);
 	bool Initialize(); //Инициализация
+	QVariantMap GetSettingsChanged() const; //Получить измененные настройки
 
 	QVariant GetValue(const QString &SettingUID); //Получить значение мета-настройки
 	void SetValue(const QString &SettingUID, const QVariant &Value); //Изменить значение мета-настройки
 	
 	std::vector<ISMetaSettingsGroup*> GetSettingGroups(); //Получить все группы настроек
 	ISMetaSetting* GetMetaSetting(const QString &SettingUID); //Получить мета-настройку по её идентификатору
-	
-	bool Save();
 
 private:
 	ISMetaSettingsGroup* CheckExistGroup(const ISUuid &GroupUID); //??? После перехода на Карат этот метод не понадобится
@@ -35,7 +34,7 @@ private:
 private:
 	QString ErrorString;
 	std::vector<ISMetaSettingsGroup*> SettingGroups;
-	std::map<ISUuid, QVariant> SettingsChanged; //Измененные в ходе работы программы настройки, нужно для сохранения
+	QVariantMap SettingsChanged; //Измененные в ходе работы программы настройки, нужно для сохранения
 };
 //-----------------------------------------------------------------------------
 #define SETTING_VALUE(SETTING_UID) ISSettings::Instance().GetValue(SETTING_UID)

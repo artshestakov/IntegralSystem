@@ -18,11 +18,6 @@ static QString QS_SETTINGS = PREPARE_QUERY("SELECT "
 static QString QI_USER_SETTING = PREPARE_QUERY("INSERT INTO _usersettings(usst_user, usst_setting, usst_value) "
 											   "VALUES(:UserID, (SELECT stgs_id FROM _settings WHERE stgs_uid = :SettingUID), :Value)");
 //-----------------------------------------------------------------------------
-static QString QU_USER_SETTING = PREPARE_QUERY("UPDATE _usersettings SET "
-											   "usst_value = :Value "
-											   "WHERE usst_user = :UserID "
-											   "AND usst_setting = (SELECT stgs_id FROM _settings WHERE stgs_uid = :SettingUID)");
-//-----------------------------------------------------------------------------
 ISSettings::ISSettings()
 	: ErrorString(NO_ERROR_STRING)
 {
@@ -136,6 +131,11 @@ bool ISSettings::Initialize()
 	return Result;
 }
 //-----------------------------------------------------------------------------
+QVariantMap ISSettings::GetSettingsChanged() const
+{
+	return SettingsChanged;
+}
+//-----------------------------------------------------------------------------
 QVariant ISSettings::GetValue(const QString &SettingUID)
 {
 	return GetMetaSetting(SettingUID)->Value;
@@ -166,25 +166,6 @@ ISMetaSetting* ISSettings::GetMetaSetting(const QString &SettingUID)
 	}
 	IS_ASSERT(false, QString("Not found setting \"%1\"").arg(SettingUID));
 	return nullptr;
-}
-//-----------------------------------------------------------------------------
-bool ISSettings::Save()
-{
-	bool Result = true;
-	for (const auto &MapItem : SettingsChanged)
-	{
-		ISQuery qUpdateValue(QU_USER_SETTING);
-		qUpdateValue.BindValue(":UserID", CURRENT_USER_ID);
-		qUpdateValue.BindValue(":Value", MapItem.second);
-		qUpdateValue.BindValue(":SettingUID", MapItem.first);
-		Result = qUpdateValue.Execute();
-		if (!Result)
-		{
-			ErrorString = qUpdateValue.GetErrorString();
-			break;
-		}
-	}
-	return Result;
 }
 //-----------------------------------------------------------------------------
 ISMetaSettingsGroup* ISSettings::CheckExistGroup(const ISUuid &GroupUID)

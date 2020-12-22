@@ -37,6 +37,7 @@ void ISStartup::Shutdown(ISSplashScreen *SplashScreen)
 {
 	ISTcpQuery qSaveMetaData(API_SAVE_META_DATA);
 	qSaveMetaData.BindValue("ColumnSize", ISColumnSizer::Instance().GetColumnSize());
+	qSaveMetaData.BindValue("Settings", ISSettings::Instance().GetSettingsChanged());
 	if (!qSaveMetaData.Execute())
 	{
 		ISMessageBox::ShowCritical(SplashScreen, qSaveMetaData.GetErrorString());
@@ -56,11 +57,6 @@ void ISStartup::Shutdown(ISSplashScreen *SplashScreen)
 	if (!ISHistory::Instance().Save())
 	{
 		ISMessageBox::ShowCritical(SplashScreen, LANG("Message.Error.SaveHistory"), ISHistory::Instance().GetErrorString());
-	}
-
-	if (!ISSettings::Instance().Save())
-	{
-		ISMessageBox::ShowCritical(SplashScreen, LANG("Message.Error.SaveUserSettings"), ISSettings::Instance().GetErrorString());
 	}
 
 	ISQueryPool::Instance().Shutdown();
