@@ -13,7 +13,6 @@
 #include "ISGui.h"
 #include "ISParagraphEntity.h"
 #include "ISPrintingEntity.h"
-#include "ISSortingBuffer.h"
 #include "ISBuffer.h"
 #include "ISMetaSystemsEntity.h"
 #include "ISProperty.h"
@@ -43,11 +42,6 @@ void ISStartup::Shutdown(ISSplashScreen *SplashScreen)
 	}
 
 	ISProtocol::ExitApplication();
-	if (!(SETTING_BOOL(CONST_UID_SETTING_TABLES_REMEMBERSORTING) ? ISSortingBuffer::Instance().SaveSortings() : ISSortingBuffer::Instance().Clear()))
-	{
-		ISMessageBox::ShowCritical(SplashScreen, LANG("Message.Error.SaveSortingBuffer"), ISSortingBuffer::Instance().GetErrorString());
-	}
-
 	ISQueryPool::Instance().Shutdown();
 	ISDatabase::Instance().DisconnectAll();
 	ISGui::ExitApplication();
@@ -97,13 +91,6 @@ bool ISStartup::StartupOld(ISSplashScreen *SplashScreen)
 		ISBuffer::Instance().CurrentUserInfo.Login, ISBuffer::Instance().CurrentUserInfo.Password))
 	{
 		ISMessageBox::ShowCritical(SplashScreen, LANG("Message.Error.InitializeQueryPool"), ISQueryPool::Instance().GetErrorString());
-		return false;
-	}
-
-	//Инициализация сортировок
-	if (!ISSortingBuffer::Instance().Initialize())
-	{
-		ISMessageBox::ShowCritical(SplashScreen, LANG("Message.Error.InitializeSortingBuffer"), ISSortingBuffer::Instance().GetErrorString());
 		return false;
 	}
 

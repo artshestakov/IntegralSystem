@@ -4,7 +4,6 @@
 #include "ISCore.h"
 #include "ISSettings.h"
 #include "ISLocalization.h"
-#include "ISSortingBuffer.h"
 #include "ISProtocol.h"
 #include "ISPopupMessage.h"
 #include "ISExportForm.h"
@@ -225,12 +224,6 @@ ISListBaseForm::ISListBaseForm(const QString &TableName, QWidget *parent)
 		TableView->setModel(SqlModel);
 
 		QueryModel = new ISQueryModel(MetaTable, ISNamespace::QMT_List, this);
-
-		ISSortingMetaTable *MetaSorting = ISSortingBuffer::Instance().GetSorting(MetaTable->Name);
-		if (MetaSorting) //≈сли сортировка дл€ этой таблицы уже существует, использовать еЄ
-		{
-			QueryModel->SetSorting(MetaSorting->FieldName, MetaSorting->Order);
-		}
 
 		//Ёто соединение об€зательно должно быть после присваивани€ модели к QTableView
 		connect(TableView->selectionModel(), &QItemSelectionModel::selectionChanged, this, &ISListBaseForm::SelectedRowEvent);
@@ -472,21 +465,8 @@ void ISListBaseForm::FieldResized(int LogicalIndex, int WidthOld, int WidthNew)
 //-----------------------------------------------------------------------------
 void ISListBaseForm::SortingChanged(int LogicalIndex, Qt::SortOrder Order)
 {
-	if (Order == SqlModel->GetSortOrder() && LogicalIndex == SqlModel->GetSortColumn())
-	{
-		Order = Order == Qt::AscendingOrder ? Qt::DescendingOrder : Qt::AscendingOrder;
-	}
-
-	QString FieldName = SqlModel->headerData(LogicalIndex, Qt::Horizontal, Qt::UserRole).toString();
-	QueryModel->SetSorting(FieldName, Order);
-	SqlModel->SetSorting(LogicalIndex, Order);
-
-	if (SETTING_BOOL(CONST_UID_SETTING_TABLES_REMEMBERSORTING))
-	{
-		ISSortingBuffer::Instance().AddSorting(MetaTable->Name, FieldName, Order);
-	}
-
-	Update();
+	Q_UNUSED(LogicalIndex);
+	Q_UNUSED(Order);
 }
 //-----------------------------------------------------------------------------
 void ISListBaseForm::VisibleIndicatorWidget()
@@ -792,13 +772,6 @@ void ISListBaseForm::ModelThreadFinished()
 		HideField("ID");
 	}
 	HideField("IsSystem");
-
-	ISSortingMetaTable *MetaSorting = ISSortingBuffer::Instance().GetSorting(MetaTable->Name);
-	if (MetaSorting) //≈сли сортировка дл€ этой таблицы уже существует, использовать еЄ
-	{
-		SqlModel->SetSorting(SqlModel->GetFieldIndex(MetaSorting->FieldName), MetaSorting->Order);
-	}
-
 	CreateDelegates();
 	LoadDataAfterEvent();
 }

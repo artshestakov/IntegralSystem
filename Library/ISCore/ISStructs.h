@@ -87,17 +87,6 @@ struct ISMetaParagraph
     QString ClassName;
 };
 //-----------------------------------------------------------------------------
-struct ISSortingMetaTable
-{
-	ISSortingMetaTable(const QString &table_name, const QString &field_name, Qt::SortOrder order) : TableName(table_name), FieldName(field_name), Order(order), ModificationFlag(false) { }
-    ISSortingMetaTable() : ModificationFlag(false) { }
-
-    QString TableName;
-    QString FieldName;
-    Qt::SortOrder Order;
-    bool ModificationFlag;
-};
-//-----------------------------------------------------------------------------
 struct ISColumnSizeItem
 {
     ISColumnSizeItem() : ModificationFlag(false) { }

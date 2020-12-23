@@ -231,9 +231,6 @@
     <ClCompile Include="ISParagraphEntity.cpp">
       <Filter>System</Filter>
     </ClCompile>
-    <ClCompile Include="ISSortingBuffer.cpp">
-      <Filter>System</Filter>
-    </ClCompile>
     <ClCompile Include="ISStartup.cpp">
       <Filter>System</Filter>
     </ClCompile>
@@ -800,9 +797,6 @@
       <Filter>System</Filter>
     </ClInclude>
     <ClInclude Include="ISParagraphEntity.h">
-      <Filter>System</Filter>
-    </ClInclude>
-    <ClInclude Include="ISSortingBuffer.h">
       <Filter>System</Filter>
     </ClInclude>
     <ClInclude Include="ISStartup.h">

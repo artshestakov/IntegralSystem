@@ -269,7 +269,6 @@
     <ClCompile Include="ISSettingFieldWidgets.cpp" />
     <ClCompile Include="ISSettingsDatabaseListForm.cpp" />
     <ClCompile Include="ISSettingsForm.cpp" />
-    <ClCompile Include="ISSortingBuffer.cpp" />
     <ClCompile Include="ISSplashScreen.cpp" />
     <ClCompile Include="ISSplashWidget.cpp" />
     <ClCompile Include="ISSqlModelCore.cpp" />
@@ -462,7 +461,6 @@
     <ClInclude Include="ISParagraphEntity.h" />
     <ClInclude Include="ISPrintingEntity.h" />
     <QtMoc Include="ISPrintingHtml.h" />
-    <ClInclude Include="ISSortingBuffer.h" />
     <ClInclude Include="ISStartup.h" />
     <QtMoc Include="ISModelThreadWorker.h" />
     <QtMoc Include="ISModelThreadQuery.h" />
