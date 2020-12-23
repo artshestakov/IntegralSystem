@@ -87,14 +87,6 @@ struct ISMetaParagraph
     QString ClassName;
 };
 //-----------------------------------------------------------------------------
-struct ISColumnSizeItem
-{
-    ISColumnSizeItem() : ModificationFlag(false) { }
-
-    ISStringToIntMap Fields;
-    bool ModificationFlag;
-};
-//-----------------------------------------------------------------------------
 struct ISMetaSubSystem
 {
     ISMetaSubSystem() { }

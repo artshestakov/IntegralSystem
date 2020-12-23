@@ -116,6 +116,7 @@ bool ISStartup::StartupNew(ISSplashScreen *SplashScreen)
 	ISPrintingEntity::Instance().Initialize(MetaData["Printing"].toList());
 	ISFavorites::Instance().Initialize(MetaData["Favorite"].toMap());
 	ISHistory::Instance().Initialize(MetaData["History"].toList());
+	ISColumnSizer::Instance().Initialize(MetaData["ColumnSize"].toMap());
 	ISSettings::Instance().Initialize(MetaData["Settings"].toList());
 	ISParagraphEntity::Instance().Initialize(MetaData["Paragraphs"].toList());
 	ISObjects::Instance().GetInterface()->BeforeShowMainWindow();

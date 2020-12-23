@@ -70,6 +70,10 @@ static QString QS_HISTORY = PREPARE_QUERY("SELECT htry_datetime, htry_tablename,
 										  "WHERE htry_user = :UserID "
 										  "ORDER BY htry_id");
 //-----------------------------------------------------------------------------
+static QString QS_COLUMN_SIZE = PREPARE_QUERY("SELECT clsz_tablename, clsz_fieldname, clsz_size "
+											  "FROM _columnsize "
+											  "WHERE clsz_user = :UserID");
+//-----------------------------------------------------------------------------
 static QString QS_SETTING_GROUP = PREPARE_QUERY("SELECT stgp_uid, stgp_name, stgp_localname, stgp_iconname, stgp_hint "
 												"FROM _settingsgroup "
 												"ORDER BY stgp_order");
@@ -158,10 +162,6 @@ static QString QU_SORTING = PREPARE_QUERY("UPDATE _sortingtables SET "
 //-----------------------------------------------------------------------------
 static QString QI_SORTING = PREPARE_QUERY("INSERT INTO _sortingtables(sgts_user, sgts_tablename, sgts_fieldname, sgts_sorting)"
 										  "VALUES(:UserID, :TableName, :FieldName, :Sorting)");
-//-----------------------------------------------------------------------------
-static QString QS_COLUMN_SIZE = PREPARE_QUERY("SELECT clsz_fieldname, clsz_size "
-											  "FROM _columnsize "
-											  "WHERE clsz_user = :UserID");
 //-----------------------------------------------------------------------------
 static QString QS_NOTE_RECORD = PREPARE_QUERY("SELECT nobj_note "
 											  "FROM _noteobject "
@@ -1179,6 +1179,26 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 		return false;
 	}
 
+	//Получаем размеры полей
+	QVariantMap ColumnSizeMap;
+	ISQuery qSelectColumnSize(ISDatabase::Instance().GetDB(DBConnectionName), QS_COLUMN_SIZE);
+	qSelectColumnSize.BindValue(":UserID", TcpMessage->TcpSocket->GetUserID());
+	if (qSelectColumnSize.Execute())
+	{
+		while (qSelectColumnSize.Next())
+		{
+			QString TableName = qSelectColumnSize.ReadColumn("clsz_tablename").toString();
+			QVariantMap VariantMap = ColumnSizeMap[TableName].toMap();
+			VariantMap[qSelectColumnSize.ReadColumn("clsz_fieldname").toString()] = qSelectColumnSize.ReadColumn("clsz_size");
+			ColumnSizeMap[TableName] = VariantMap;
+		}
+	}
+	else
+	{
+		ErrorString = LANG("Carat.Error.Query.GetMetaData.ColumnSize").arg(qSelectColumnSize.GetErrorString());
+		return false;
+	}
+
 	//Получаем пользовательские настройки
 	QVariantList Settings;
 	ISQuery qSelectSettingGroup(ISDatabase::Instance().GetDB(DBConnectionName), QS_SETTING_GROUP),
@@ -1298,6 +1318,7 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	TcpAnswer->Parameters["Printing"] = PrintingList;
 	TcpAnswer->Parameters["Favorite"] = FavoriteMap;
 	TcpAnswer->Parameters["History"] = HistoryList;
+	TcpAnswer->Parameters["ColumnSize"] = ColumnSizeMap;
 	TcpAnswer->Parameters["Settings"] = Settings;
 	TcpAnswer->Parameters["Paragraphs"] = ParagraphList;
 	TcpAnswer->Parameters["MetaData"] = MetaDataList;
@@ -1927,22 +1948,6 @@ bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 		}
 	}
 
-	//Получаем размеры полей
-	ISQuery qSelectColumnSize(ISDatabase::Instance().GetDB(DBConnectionName), QS_COLUMN_SIZE);
-	qSelectColumnSize.BindValue(":UserID", UserID);
-	if (!qSelectColumnSize.Execute()) //Ошибка запроса
-	{
-		ErrorString = LANG("Carat.Error.Query.GetTableData.SelectColumnSize").arg(qSelectColumnSize.GetErrorString());
-		return false;
-	}
-
-	//Обходим результаты
-	QVariantMap ColumnSizeMap;
-	while (qSelectColumnSize.Next())
-	{
-		ColumnSizeMap[qSelectColumnSize.ReadColumn("clsz_fieldname").toString()] = qSelectColumnSize.ReadColumn("clsz_size");
-	}
-
 	//Создаём объект модели
 	ISQueryModel QueryModel(MetaTable, ISNamespace::QMT_List);
 	QueryModel.SetSorting(SortingField, SortingOrder);
@@ -2044,7 +2049,6 @@ bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 		} while (qSelect.Next()); //Обходим выборку	
 	}
 	TcpAnswer->Parameters["ServiceInfo"] = ServiceInfoMap;
-	TcpAnswer->Parameters["ColumnSize"] = ColumnSizeMap;
 	TcpAnswer->Parameters["FieldList"] = FieldList;
 	TcpAnswer->Parameters["RecordList"] = RecordList;
 	return true;

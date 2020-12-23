@@ -192,11 +192,9 @@ ISListBaseForm::ISListBaseForm(const QString &TableName, QWidget *parent)
 		TableView = new ISBaseTableView(this);
 		TableView->SetCornerText(LANG("Reduction.SerialNumber"));
 		TableView->SetCornerToolTip(LANG("OrdinalNumber"));
-		//TableView->horizontalHeader()->setSortIndicator(0, Qt::AscendingOrder);
 		connect(TableView, &ISBaseTableView::doubleClicked, this, &ISListBaseForm::DoubleClickedTable);
 		connect(TableView, &ISBaseTableView::customContextMenuRequested, this, &ISListBaseForm::ShowContextMenu);
 		connect(TableView, &ISBaseTableView::CornerClicked, this, &ISListBaseForm::CornerButtonClicked);
-		//connect(TableView->horizontalHeader(), &QHeaderView::sortIndicatorChanged, this, &ISListBaseForm::SortingChanged);
 		FieldResized(true);
 		GetMainLayout()->addWidget(TableView);
 
@@ -463,7 +461,7 @@ void ISListBaseForm::FieldResized(bool Include)
 void ISListBaseForm::FieldResized(int LogicalIndex, int WidthOld, int WidthNew)
 {
 	Q_UNUSED(WidthOld);
-	ISColumnSizer::Instance().SetColumnSizeNew(MetaTable->Name, /*SqlModel*/TcpModel->headerData(LogicalIndex, Qt::Horizontal, Qt::UserRole).toString(), WidthNew);
+	ISColumnSizer::Instance().SetColumnSize(MetaTable->Name, TcpModel->headerData(LogicalIndex, Qt::Horizontal, Qt::UserRole).toString(), WidthNew);
 }
 //-----------------------------------------------------------------------------
 void ISListBaseForm::SortingChanged(int LogicalIndex, Qt::SortOrder SortingOrder)
@@ -868,11 +866,17 @@ bool ISListBaseForm::Update()
 		connect(TableView->horizontalHeader(), &QHeaderView::sortIndicatorChanged, this, &ISListBaseForm::SortingChanged);
 
 		//Устанавливаем размеры полей
-		QVariantMap ColumnSizeMap = AnswerMap["ColumnSize"].toMap();
-		for (const auto &MapItem : ColumnSizeMap.toStdMap())
+		FieldResized(false);
+		for (int i = 0, c = TcpModel->columnCount(); i < c; ++i)
 		{
-			TableView->setColumnWidth(TcpModel->GetFieldIndex(MapItem.first), MapItem.second.toInt());
+			int ColumnSize = ISColumnSizer::Instance().GetColumnSize(MetaTable->Name,
+				TcpModel->headerData(i, Qt::Horizontal, Qt::UserRole).toString());
+			if (ColumnSize)
+			{
+				TableView->setColumnWidth(i, ColumnSize);
+			}
 		}
+		FieldResized(true);
 
 		LabelRowCount->setText(QString("%1: %2").arg(LANG("RecordsCount")).arg(TcpModel->rowCount()));
 		

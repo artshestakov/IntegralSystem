@@ -2,17 +2,13 @@
 #include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
 ISColumnSizer::ISColumnSizer()
-	: ErrorString(NO_ERROR_STRING)
 {
 
 }
 //-----------------------------------------------------------------------------
 ISColumnSizer::~ISColumnSizer()
 {
-	while (!Tables.empty())
-	{
-		delete ISAlgorithm::MapTakeFront<QString, ISColumnSizeItem*>(Tables);
-	}
+	
 }
 //-----------------------------------------------------------------------------
 ISColumnSizer& ISColumnSizer::Instance()
@@ -21,15 +17,23 @@ ISColumnSizer& ISColumnSizer::Instance()
 	return ColumnSizer;
 }
 //-----------------------------------------------------------------------------
-QString ISColumnSizer::GetErrorString() const
+void ISColumnSizer::Initialize(const QVariantMap &VariantMap)
 {
-	return ErrorString;
+	for (const auto &TableItem : VariantMap.toStdMap())
+	{
+		ISStringToIntMap StringToIntMap;
+		for (const auto &ColumnItem : TableItem.second.toMap().toStdMap())
+		{
+			StringToIntMap[ColumnItem.first] = ColumnItem.second.toInt();
+		}
+		Tables[TableItem.first] = StringToIntMap;
+	}
 }
 //-----------------------------------------------------------------------------
 QVariantMap ISColumnSizer::GetColumnSize() const
 {
 	QVariantMap VariantMap;
-	for (const auto &TableItem : TablesNew)
+	for (const auto &TableItem : Tables)
 	{
 		QVariantMap TableMap;
 		for (const auto &ColumnItem : TableItem.second)
@@ -43,32 +47,24 @@ QVariantMap ISColumnSizer::GetColumnSize() const
 //-----------------------------------------------------------------------------
 void ISColumnSizer::SetColumnSize(const QString &TableName, const QString &FieldName, int Size)
 {
-	ISColumnSizeItem *ColumnSizeItem = Tables[TableName];
-	if (!ColumnSizeItem)
-	{
-		ColumnSizeItem = new ISColumnSizeItem();
-		Tables[TableName] = ColumnSizeItem;
-	}
-	ColumnSizeItem->Fields[FieldName] = Size;
-	ColumnSizeItem->ModificationFlag = true;
-}
-//-----------------------------------------------------------------------------
-void ISColumnSizer::SetColumnSizeNew(const QString &TableName, const QString &FieldName, int Size)
-{
 	//Если такой таблицы ещё нет - добавляем
-	if (TablesNew.find(TableName) == TablesNew.end())
+	if (Tables.find(TableName) == Tables.end())
 	{
-		TablesNew[TableName] = ISStringToIntMap();
+		Tables[TableName] = ISStringToIntMap();
 	}
-	TablesNew[TableName][FieldName] = Size;
+	Tables[TableName][FieldName] = Size;
 }
 //-----------------------------------------------------------------------------
 int ISColumnSizer::GetColumnSize(const QString &TableName, const QString &FieldName) const
 {
-	std::map<QString, ISColumnSizeItem*>::const_iterator It = Tables.find(TableName);
-	if (It != Tables.end())
+	std::map<QString, ISStringToIntMap>::const_iterator TableIt = Tables.find(TableName);
+	if (TableIt != Tables.end()) //Нашли таблицу
 	{
-		return It->second->Fields[FieldName];
+		ISStringToIntMap::const_iterator ColumnIt = TableIt->second.find(FieldName);
+		if (ColumnIt != TableIt->second.end())
+		{
+			return ColumnIt->second;
+		}
 	}
 	return 0;
 }
