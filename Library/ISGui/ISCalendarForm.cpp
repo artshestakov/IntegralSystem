@@ -157,8 +157,8 @@ void ISCalendarForm::ReloadEvents(int Year, int Month)
 	if (Result)
 	{
 		EventsMap.clear();
-		QVariantList Result = qGetCalendarEvents.TakeAnswer()["Result"].toList();
-		for (const QVariant &Variant : Result)
+		QVariantList ResultList = qGetCalendarEvents.TakeAnswer()["Result"].toList();
+		for (const QVariant &Variant : ResultList)
 		{
 			QVariantMap EventMap = Variant.toMap();
 			unsigned int Day = EventMap.take("Day").toUInt();
