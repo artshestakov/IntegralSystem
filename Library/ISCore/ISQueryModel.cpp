@@ -1,5 +1,4 @@
 #include "ISQueryModel.h"
-#include "ISQuery.h"
 #include "ISMetaData.h"
 #include "ISConstants.h"
 #include "ISAlgorithm.h"

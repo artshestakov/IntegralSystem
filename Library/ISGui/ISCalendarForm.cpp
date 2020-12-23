@@ -243,9 +243,15 @@ void ISCalendarForm::CloseEvent()
 	{
 		if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.CalendarCloseEvent")))
 		{
-			if (ISCore::CalendarCloseEvent(EventItem->GetCalendarID()))
+			ISTcpQuery qCalendarClose(API_CALENDAR_CLOSE);
+			qCalendarClose.BindValue("CalendarID", EventItem->GetCalendarID());
+			if (qCalendarClose.Execute())
 			{
 				CalendarPanel->selectionChanged();
+			}
+			else
+			{
+				ISMessageBox::ShowCritical(this, qCalendarClose.GetErrorString());
 			}
 		}
 	}

@@ -172,4 +172,7 @@
 
   <Local Name="Carat.Error.Query.FavoritesDelete.Delete" Russian="Не удалось удалить избранные записи: %1"/>
 
+  <Local Name="Carat.Error.Query.CalendarClose.Update" Russian="Не удалось закрыть событие календаря: %1"/>
+  <Local Name="Carat.Error.Query.CalendarClose.NotExist" Russian="Событие календаря не существует."/>
+
 </LANG>

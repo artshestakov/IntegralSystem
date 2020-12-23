@@ -271,6 +271,11 @@
             <stringProp name="Argument.value">2</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
+          <elementProp name="CalendarClose_CalendarID" elementType="Argument">
+            <stringProp name="Argument.name">CalendarClose_CalendarID</stringProp>
+            <stringProp name="Argument.value">50</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
         </collectionProp>
       </Arguments>
       <hashTree/>
@@ -671,7 +676,18 @@ def MapFavoritesDelete =
 [
 	Type: &quot;FavoritesDelete&quot;
 ];
-vars.put(&quot;QueryFavoritesDelete&quot;, MapToString(MapFavoritesDelete));</stringProp>
+vars.put(&quot;QueryFavoritesDelete&quot;, MapToString(MapFavoritesDelete));
+
+//Закрытие события календаря
+def MapCalendarClose =
+[
+	Type: &quot;CalendarClose&quot;,
+	Parameters:
+		[
+			CalendarID: vars.get(&quot;CalendarClose_CalendarID&quot;)
+		]
+];
+vars.put(&quot;QueryCalendarClose&quot;, MapToString(MapCalendarClose));</stringProp>
           <stringProp name="scriptLanguage">groovy</stringProp>
         </JSR223Sampler>
         <hashTree/>
@@ -1047,7 +1063,7 @@ vars.put(&quot;QueryFavoritesDelete&quot;, MapToString(MapFavoritesDelete));</st
           <stringProp name="ConfigTestElement.password"></stringProp>
         </TCPSampler>
         <hashTree/>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: GetFavoriteNames" enabled="true">
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: GetFavoriteNames" enabled="false">
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
           <stringProp name="TCPSampler.port"></stringProp>
@@ -1066,6 +1082,18 @@ vars.put(&quot;QueryFavoritesDelete&quot;, MapToString(MapFavoritesDelete));</st
           <boolProp name="TCPSampler.nodelay">false</boolProp>
           <stringProp name="TCPSampler.timeout"></stringProp>
           <stringProp name="TCPSampler.request">${QueryFavoritesDelete}</stringProp>
+          <boolProp name="TCPSampler.closeConnection">true</boolProp>
+          <stringProp name="ConfigTestElement.username"></stringProp>
+          <stringProp name="ConfigTestElement.password"></stringProp>
+        </TCPSampler>
+        <hashTree/>
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: CalendarClose" enabled="true">
+          <stringProp name="TCPSampler.server"></stringProp>
+          <boolProp name="TCPSampler.reUseConnection">true</boolProp>
+          <stringProp name="TCPSampler.port"></stringProp>
+          <boolProp name="TCPSampler.nodelay">false</boolProp>
+          <stringProp name="TCPSampler.timeout"></stringProp>
+          <stringProp name="TCPSampler.request">${QueryCalendarClose}</stringProp>
           <boolProp name="TCPSampler.closeConnection">true</boolProp>
           <stringProp name="ConfigTestElement.username"></stringProp>
           <stringProp name="ConfigTestElement.password"></stringProp>

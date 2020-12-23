@@ -200,6 +200,10 @@ ISNamespace::ApiMessageType ISTcp::GetMessageTypeByName(const QString &Name)
 	{
 		return ISNamespace::AMT_FavoritesDelete;
 	}
+	else if (Name == API_CALENDAR_CLOSE)
+	{
+		return ISNamespace::AMT_CalendarClose;
+	}
 	return ISNamespace::AMT_Unknown;
 }
 //-----------------------------------------------------------------------------

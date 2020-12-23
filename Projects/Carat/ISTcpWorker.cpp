@@ -335,6 +335,11 @@ static QString QD_FAVORITES_TABLE = PREPARE_QUERY("DELETE FROM _favorites "
 static QString QD_FAVORITES_ALL = PREPARE_QUERY("DELETE FROM _favorites "
 												"WHERE fvts_user = :UserID");
 //-----------------------------------------------------------------------------
+static QString QU_CALENDAR_CLOSE = PREPARE_QUERY("UPDATE _calendar SET "
+												 "cldr_closed = true "
+												 "WHERE cldr_id = :CalendarID "
+												 "RETURNING cldr_name");
+//-----------------------------------------------------------------------------
 ISTcpWorker::ISTcpWorker(const QString &db_host, int db_port, const QString &db_name, const QString &db_user, const QString &db_password)
 	: QObject(),
 	ErrorString(NO_ERROR_STRING),
@@ -505,6 +510,7 @@ void ISTcpWorker::Process()
 					case ISNamespace::AMT_RecordFavoriteDelete: Result = RecordFavoriteDelete(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_GetFavoriteNames: Result = GetFavoriteNames(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_FavoritesDelete: Result = FavoritesDelete(tcp_message, TcpAnswer); break;
+					case ISNamespace::AMT_CalendarClose: Result = CalendarClose(tcp_message, TcpAnswer); break;
 					default:
 						ErrorString = LANG("Carat.Error.NotExistFunction").arg(tcp_message->TypeName);
 					}
@@ -3142,6 +3148,41 @@ bool ISTcpWorker::FavoritesDelete(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnsw
 		ErrorString = LANG("Carat.Error.Query.FavoritesDelete.Delete").arg(qDelete.GetErrorString());
 		return false;
 	}
+	return true;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::CalendarClose(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+	Q_UNUSED(TcpAnswer);
+
+	QVariant CalendarID = CheckNullField("CalendarID", TcpMessage);
+	if (!CalendarID.isValid())
+	{
+		return false;
+	}
+
+	//Закрываем событие
+	ISQuery qUpdate(ISDatabase::Instance().GetDB(DBConnectionName), QU_CALENDAR_CLOSE);
+	qUpdate.BindValue(":CalendarID", CalendarID);
+	if (!qUpdate.Execute()) //Ошибка запроса
+	{
+		ErrorString = LANG("Carat.Error.Query.CalendarClose.Update").arg(qUpdate.GetErrorString());
+		return false;
+	}
+
+	//Ни одна запись не была затрону - значит её и нет - ошибка
+	if (qUpdate.GetCountAffected() == 0)
+	{
+		ErrorString = LANG("Carat.Error.Query.CalendarClose.NotExist");
+		return false;
+	}
+
+	if (!qUpdate.First())
+	{
+		ErrorString = qUpdate.GetErrorString();
+		return false;
+	}
+	Protocol(TcpMessage->TcpSocket->GetUserID(), CONST_UID_PROTOCOL_CALENDAR_CLOSE, QVariant(), QVariant(), QVariant(), qUpdate.ReadColumn("cldr_name"));
 	return true;
 }
 //-----------------------------------------------------------------------------

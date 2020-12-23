@@ -12,8 +12,6 @@
 #include "ISDatabase.h"
 #include "ISMetaDataHelper.h"
 //-----------------------------------------------------------------------------
-static QString QU_CALENDAR_CLOSE = PREPARE_QUERY("UPDATE _calendar SET cldr_closed = true WHERE cldr_id = :CalendarID");
-//-----------------------------------------------------------------------------
 QString ISCore::GetObjectName(const QString &TableName, int ObjectID)
 {
 	return GetObjectName(ISMetaData::Instance().GetMetaTable(TableName), ObjectID);
@@ -71,13 +69,6 @@ QString ISCore::GetObjectName(PMetaTable *MetaTable, int ObjectID)
 	//Удаляем возможные пробелы в конце имени объекта
 	ISAlgorithm::RemoveLastSymbolLoop(ObjectName, SYMBOL_SPACE);
 	return ObjectName;
-}
-//-----------------------------------------------------------------------------
-bool ISCore::CalendarCloseEvent(int CalendarID)
-{
-	ISQuery qCloseEvent(QU_CALENDAR_CLOSE);
-	qCloseEvent.BindValue(":CalendarID", CalendarID);
-	return qCloseEvent.Execute();
 }
 //-----------------------------------------------------------------------------
 void ISCore::PhoneNumberPrepare(QString &PhoneNumber)

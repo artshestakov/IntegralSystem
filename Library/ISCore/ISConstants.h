@@ -186,6 +186,7 @@ const char API_RECORD_FAVORITE_ADD[] = "RecordFavoriteAdd"; //Добавить запись в 
 const char API_RECORD_FAVORITE_DELETE[] = "RecordFavoriteDelete"; //Удалить запись из избранного
 const char API_GET_FAVORITE_NAMES[] = "GetFavoriteNames"; //Получить имена избранных записей
 const char API_FAVORITES_DELETE[] = "FavoritesDelete"; //Удалить все избранные записи пользователя
+const char API_CALENDAR_CLOSE[] = "CalendarClose"; //Закрытие события календаря
 //CARAT_LOCAL_API--------------------------------------------------------------
 const char	CARAT_LOCAL_API_SHUTDOWN[] = "shutdown"; //Завершение работы
 //-----------------------------------------------------------------------------
@@ -235,6 +236,7 @@ const char CONST_UID_PROTOCOL_CALENDAR_DELETE[] = "{D9372E46-8DB0-41B4-80C0-6AEC
 const char CONST_UID_PROTOCOL_GET_UPDATE_CLIENT[] = "{0234643A-AF60-44BF-A2EB-08A71307841C}";
 const char CONST_UID_PROTOCOL_RECORD_FAVORITE_ADD[] = "{8D08A9F9-FC50-4986-8D92-FEC0D7D36DA0}";
 const char CONST_UID_PROTOCOL_RECORD_FAVORITE_DELETE[] = "{AF2641F0-6838-441C-A0A9-B62090826998}";
+const char CONST_UID_PROTOCOL_CALENDAR_CLOSE[] = "{F05B1DE1-47F6-43DB-A8C5-5D3582F7BD5F}";
 //-----------------------------------------------------------------------------
 const char CONST_UID_GROUP_ACCESS_TYPE_SHOW[] = "{41743776-D7CE-414F-ACF3-71C42A607742}"; //Просмотр данных
 const char CONST_UID_GROUP_ACCESS_TYPE_CREATE[] = "{1CFA961D-08A2-4AA3-978E-FF23FC88CA08}"; //Создание данных

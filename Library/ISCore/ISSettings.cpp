@@ -1,5 +1,4 @@
 #include "ISSettings.h"
-#include "ISQuery.h"
 #include "ISMetaData.h"
 #include "ISAssert.h"
 #include "ISAlgorithm.h"
