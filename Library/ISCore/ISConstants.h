@@ -182,6 +182,7 @@ const char API_GROUP_RIGHT_TABLE_DELETE[] = "GroupRightTableDelete"; //Удалить у
 const char API_GROUP_RIGHT_SPECIAL_ADD[] = "GroupRightSpecialAdd"; //Добавить спец. право группе
 const char API_GROUP_RIGHT_SPECIAL_DELETE[] = "GroupRightSpecialDelete"; //Удалить спец. право у группы
 const char API_GET_RECORD_VALUE[] = "GetRecordValue"; //Получить значение поля записи
+const char API_RECORD_FAVORITE_ADD[] = "RecordFavoriteAdd"; //Добавить запись в избранное
 //CARAT_LOCAL_API--------------------------------------------------------------
 const char	CARAT_LOCAL_API_SHUTDOWN[] = "shutdown"; //Завершение работы
 //-----------------------------------------------------------------------------
@@ -229,6 +230,7 @@ const char CONST_UID_PROTOCOL_TASK_SEARCH_TEXT[] = "{E4698E8F-C1F4-4F04-A4B6-5CD
 const char CONST_UID_PROTOCOL_TASK_SEARCH_ID[] = "{4DFD26F5-799F-4E34-8DBD-78E52F01423D}";
 const char CONST_UID_PROTOCOL_CALENDAR_DELETE[] = "{D9372E46-8DB0-41B4-80C0-6AEC2CC6CD17}";
 const char CONST_UID_PROTOCOL_GET_UPDATE_CLIENT[] = "{0234643A-AF60-44BF-A2EB-08A71307841C}";
+const char CONST_UID_PROTOCOL_RECORD_FAVORITE_ADD[] = "{8D08A9F9-FC50-4986-8D92-FEC0D7D36DA0}";
 //-----------------------------------------------------------------------------
 const char CONST_UID_GROUP_ACCESS_TYPE_SHOW[] = "{41743776-D7CE-414F-ACF3-71C42A607742}"; //Просмотр данных
 const char CONST_UID_GROUP_ACCESS_TYPE_CREATE[] = "{1CFA961D-08A2-4AA3-978E-FF23FC88CA08}"; //Создание данных

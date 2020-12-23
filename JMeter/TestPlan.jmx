@@ -251,6 +251,16 @@
             <stringProp name="Argument.value">11</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
+          <elementProp name="RecordFavoriteAdd_TableName" elementType="Argument">
+            <stringProp name="Argument.name">RecordFavoriteAdd_TableName</stringProp>
+            <stringProp name="Argument.value">_Users</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="RecordFavoriteAdd_ObjectID" elementType="Argument">
+            <stringProp name="Argument.name">RecordFavoriteAdd_ObjectID</stringProp>
+            <stringProp name="Argument.value">2</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
         </collectionProp>
       </Arguments>
       <hashTree/>
@@ -613,7 +623,19 @@ def MapGetRecordValue =
 			ObjectID: vars.get(&quot;GetRecordValue_ObjectID&quot;)
 		]
 ];
-vars.put(&quot;QueryGetRecordValue&quot;, MapToString(MapGetRecordValue));</stringProp>
+vars.put(&quot;QueryGetRecordValue&quot;, MapToString(MapGetRecordValue));
+
+//Добавить запись в избранное
+def MapRecordFavoriteAdd =
+[
+	Type: &quot;RecordFavoriteAdd&quot;,
+	Parameters:
+		[
+			TableName: vars.get(&quot;RecordFavoriteAdd_TableName&quot;),
+			ObjectID: vars.get(&quot;RecordFavoriteAdd_ObjectID&quot;)
+		]
+];
+vars.put(&quot;QueryRecordFavoriteAdd&quot;, MapToString(MapRecordFavoriteAdd));</stringProp>
           <stringProp name="scriptLanguage">groovy</stringProp>
         </JSR223Sampler>
         <hashTree/>
@@ -636,7 +658,7 @@ vars.put(&quot;QueryGetRecordValue&quot;, MapToString(MapGetRecordValue));</stri
           <boolProp name="TCPSampler.nodelay">false</boolProp>
           <stringProp name="TCPSampler.timeout"></stringProp>
           <stringProp name="TCPSampler.request">${QueryGetMetaData}</stringProp>
-          <boolProp name="TCPSampler.closeConnection">true</boolProp>
+          <boolProp name="TCPSampler.closeConnection">false</boolProp>
           <stringProp name="ConfigTestElement.username"></stringProp>
           <stringProp name="ConfigTestElement.password"></stringProp>
         </TCPSampler>
@@ -960,6 +982,18 @@ vars.put(&quot;QueryGetRecordValue&quot;, MapToString(MapGetRecordValue));</stri
           <boolProp name="TCPSampler.nodelay">false</boolProp>
           <stringProp name="TCPSampler.timeout"></stringProp>
           <stringProp name="TCPSampler.request">${QueryGetRecordValue}</stringProp>
+          <boolProp name="TCPSampler.closeConnection">true</boolProp>
+          <stringProp name="ConfigTestElement.username"></stringProp>
+          <stringProp name="ConfigTestElement.password"></stringProp>
+        </TCPSampler>
+        <hashTree/>
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: RecordFavoriteAdd" enabled="true">
+          <stringProp name="TCPSampler.server"></stringProp>
+          <boolProp name="TCPSampler.reUseConnection">true</boolProp>
+          <stringProp name="TCPSampler.port"></stringProp>
+          <boolProp name="TCPSampler.nodelay">false</boolProp>
+          <stringProp name="TCPSampler.timeout"></stringProp>
+          <stringProp name="TCPSampler.request">${QueryRecordFavoriteAdd}</stringProp>
           <boolProp name="TCPSampler.closeConnection">true</boolProp>
           <stringProp name="ConfigTestElement.username"></stringProp>
           <stringProp name="ConfigTestElement.password"></stringProp>

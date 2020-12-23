@@ -162,4 +162,7 @@
   <Local Name="Carat.Error.Query.GetRecordValue.Select" Russian="Не удалось запросить значение: %1"/>
   <Local Name="Carat.Error.Query.GetRecordValue.RecordNotFound" Russian="Запись с кодом &quot;%1&quot; не найдена."/>
 
+  <Local Name="Carat.Error.Query.RecordFavoriteAdd.AlreadyExist" Russian="Такая запись уже есть в избранном."/>
+  <Local Name="Carat.Error.Query.RecordFavoriteAdd.Insert" Russian="Не удалось добавить запись в избранное: %1"/>
+
 </LANG>

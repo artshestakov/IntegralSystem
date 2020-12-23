@@ -309,6 +309,9 @@ static QString QD_GROUP_RIGHT_SPECIAL = PREPARE_QUERY("DELETE FROM _groupaccesss
 													  "AND gasp_specialaccess = (SELECT gast_id FROM _groupaccessspecialtype WHERE gast_uid = :SpecialRightUID) "
 													  "RETURNING (SELECT gast_name FROM _groupaccessspecialtype WHERE gast_uid = :SpecialRightUID)");
 //-----------------------------------------------------------------------------
+static QString QI_FAVORITE = PREPARE_QUERY("INSERT INTO _favorites(fvts_user, fvts_tablename, fvts_objectid) "
+										   "VALUES(:UserID, :TableName, :ObjectID)");
+//-----------------------------------------------------------------------------
 ISTcpWorker::ISTcpWorker(const QString &db_host, int db_port, const QString &db_name, const QString &db_user, const QString &db_password)
 	: QObject(),
 	ErrorString(NO_ERROR_STRING),
@@ -475,6 +478,7 @@ void ISTcpWorker::Process()
 					case ISNamespace::AMT_GroupRightSpecialAdd: Result = GroupRightSpecialAdd(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_GroupRightSpecialDelete: Result = GroupRightSpecialDelete(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_GetRecordValue: Result = GetRecordValue(tcp_message, TcpAnswer); break;
+					case ISNamespace::AMT_RecordFavoriteAdd: Result = RecordFavoriteAdd(tcp_message, TcpAnswer); break;
 					default:
 						ErrorString = LANG("Carat.Error.NotExistFunction").arg(tcp_message->TypeName);
 					}
@@ -2931,6 +2935,47 @@ bool ISTcpWorker::GetRecordValue(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
 	}
 	QVariant Value = qSelectValue.ReadColumn(0);
 	TcpAnswer->Parameters["Value"] = Value.isNull() ? QVariant() : Value;
+	return true;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::RecordFavoriteAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+	Q_UNUSED(TcpAnswer);
+
+	QVariant TableName = CheckNullField("TableName", TcpMessage),
+		ObjectID = CheckNullField("ObjectID", TcpMessage);
+	if (!TableName.isValid() || !ObjectID.isValid())
+	{
+		return false;
+	}
+
+	//Получаем мета-таблицу
+	PMetaTable *MetaTable = GetMetaTable(TableName.toString());
+	if (!MetaTable)
+	{
+		return false;
+	}
+
+	QString ObjectName;
+	if (!GetObjectName(MetaTable, ObjectID.toUInt(), ObjectName))
+	{
+		return false;
+	}
+
+	//Добавляем запись в избранное
+	ISQuery qInsert(ISDatabase::Instance().GetDB(DBConnectionName), QI_FAVORITE);
+	qInsert.BindValue(":UserID", TcpMessage->TcpSocket->GetUserID());
+	qInsert.BindValue(":TableName", MetaTable->Name);
+	qInsert.BindValue(":ObjectID", ObjectID);
+	if (!qInsert.Execute()) //Не удалось добавить - проверяем ошибку
+	{
+		ErrorString = qInsert.GetErrorNumber() == 23505 ?
+			LANG("Carat.Error.Query.RecordFavoriteAdd.AlreadyExist") :
+			LANG("Carat.Error.Query.RecordFavoriteAdd.Insert");
+		return false;
+	}
+
+	Protocol(TcpMessage->TcpSocket->GetUserID(), CONST_UID_PROTOCOL_RECORD_FAVORITE_ADD, MetaTable->Name, MetaTable->LocalListName, ObjectID, ObjectName);
 	return true;
 }
 //-----------------------------------------------------------------------------
