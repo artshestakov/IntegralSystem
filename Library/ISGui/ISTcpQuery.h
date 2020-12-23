@@ -17,6 +17,9 @@ public:
 	QVariantMap& GetAnswer();
 	QVariantMap TakeAnswer();
 
+protected:
+	QVariant GetParamet(const QString &ParameterName) const;
+
 private:
 	bool IsValidAnswer(const QByteArray &ByteArray, QVariantMap &VariantMap);
 
@@ -25,6 +28,21 @@ private:
 	QString QueryType;
 	QVariantMap Parameters;
 	QVariantMap TcpAnswer;
+};
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+class ISTcpQueryTable : public ISTcpQuery
+{
+public:
+	ISTcpQueryTable();
+	~ISTcpQueryTable();
+
+	bool ExecuteEx();
+	void AddFilter(const QString &FieldName, const QVariant &Value); //Добавить фильтр
+
+private:
+	QVariantMap FilterMap;
 };
 //-----------------------------------------------------------------------------
 #endif

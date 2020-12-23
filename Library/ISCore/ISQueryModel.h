@@ -58,7 +58,7 @@ private:
 	QString ClassFilter;
 	QString SearchFilter;
 
-	QVariantMap Conditions;
+	QVariantMap WhereMap;
 	ISStringMap ForeignFields;
 };
 //-----------------------------------------------------------------------------

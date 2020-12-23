@@ -72,22 +72,22 @@ ISQueryModel::~ISQueryModel()
 //-----------------------------------------------------------------------------
 void ISQueryModel::SetCondition(const QVariantMap &VariantMap)
 {
-	Conditions = VariantMap;
+	WhereMap = VariantMap;
 }
 //-----------------------------------------------------------------------------
 void ISQueryModel::AddCondition(const QString &Condition, const QVariant &Value)
 {
-	Conditions.insert(Condition, Value);
+	WhereMap[Condition] =  Value;
 }
 //-----------------------------------------------------------------------------
 void ISQueryModel::ClearConditions()
 {
-	Conditions.clear();
+	WhereMap.clear();
 }
 //-----------------------------------------------------------------------------
 QVariantMap ISQueryModel::GetConditions()
 {
-	return Conditions;
+	return WhereMap;
 }
 //-----------------------------------------------------------------------------
 QString ISQueryModel::GetQueryText()
@@ -98,17 +98,28 @@ QString ISQueryModel::GetQueryText()
 	SqlText += QuerySelectLeftJoin;
 	SqlText += QueryWhereText;
 
-	//Если для таблицы существует фильтр
-	if (!ClassFilter.isEmpty())
+	if (!WhereMap.isEmpty())
 	{
-		SqlText += "WHERE " + ClassFilter + " \n";
+		SqlText += "WHERE \n";
+		for (const auto &WhereItem : WhereMap.toStdMap())
+		{
+			SqlText += MetaTable->Alias + '_' + WhereItem.first + " = :" + WhereItem.first +
+				" \nAND ";
+		}
+		SqlText.chop(4);
 	}
 
+	//Если для таблицы существует фильтр
+	/*if (!ClassFilter.isEmpty())
+	{
+		SqlText += "WHERE " + ClassFilter + " \n";
+	}*/
+
 	//Фильтр поиска
-	if (!SearchFilter.isEmpty())
+	/*if (!SearchFilter.isEmpty())
 	{
 		SqlText += "AND " + SearchFilter + " \n";
-	}
+	}*/
 
 	//Учитываем сортировку
 	SqlText += "ORDER BY " + (SortingIsVirtual || SortingIsForeign ? SortingField :
@@ -147,7 +158,7 @@ QString ISQueryModel::GetClassFilter() const
 void ISQueryModel::ClearClassFilter()
 {
 	ClassFilter.clear();
-	Conditions.clear();
+	WhereMap.clear();
 }
 //-----------------------------------------------------------------------------
 void ISQueryModel::SetSearchFilter(const QString &search_filter)

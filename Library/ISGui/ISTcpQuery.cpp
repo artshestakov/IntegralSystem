@@ -152,6 +152,16 @@ QVariantMap ISTcpQuery::TakeAnswer()
 	return Answer;
 }
 //-----------------------------------------------------------------------------
+QVariant ISTcpQuery::GetParamet(const QString &ParameterName) const
+{
+	QVariant Value;
+	if (Parameters.contains(ParameterName))
+	{
+		Value = Parameters[ParameterName];
+	}
+	return Value;
+}
+//-----------------------------------------------------------------------------
 bool ISTcpQuery::IsValidAnswer(const QByteArray &ByteArray, QVariantMap &VariantMap)
 {
 	QJsonParseError JsonParseError;
@@ -188,5 +198,31 @@ bool ISTcpQuery::IsValidAnswer(const QByteArray &ByteArray, QVariantMap &Variant
 		}
 	}
 	return true;
+}
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+ISTcpQueryTable::ISTcpQueryTable() : ISTcpQuery(API_GET_TABLE_DATA)
+{
+
+}
+//-----------------------------------------------------------------------------
+ISTcpQueryTable::~ISTcpQueryTable()
+{
+
+}
+//-----------------------------------------------------------------------------
+bool ISTcpQueryTable::ExecuteEx()
+{
+	if (!FilterMap.isEmpty())
+	{
+		BindValue("Filter", FilterMap);
+	}
+	return ISTcpQuery::Execute();
+}
+//-----------------------------------------------------------------------------
+void ISTcpQueryTable::AddFilter(const QString &FieldName, const QVariant &Value)
+{
+	FilterMap[FieldName] = Value;
 }
 //-----------------------------------------------------------------------------

@@ -81,6 +81,7 @@ protected:
 	QToolBar* GetToolBar(); //Получить указатель на виджет тулбара
 	QAction* GetAction(ISNamespace::ActionType action_type);
 	QAction* GetSpecialAction(ISNamespace::ActionSpecialType action_special);
+	ISTcpQueryTable* GetTcpQuery(); //Получить указатель на объекта запроса
 
 	virtual void SelectedRowEvent(const QItemSelection &ItemSelected, const QItemSelection &ItemDeSelected); //Событие выбора строки в таблице
 	virtual void LoadDataAfterEvent(); //Событие происходящее после загрузки данных
@@ -121,7 +122,7 @@ private:
 	QStatusBar *StatusBar;
 
 	//ISModelThreadQuery *ModelThreadQuery;
-	ISTcpQuery *TcpQueryUpdate;
+	ISTcpQueryTable *TcpQuery;
 	ISQueryModel *QueryModel;
 	ISSearchForm *SearchForm;
 

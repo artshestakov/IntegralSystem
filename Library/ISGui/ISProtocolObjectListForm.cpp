@@ -23,12 +23,9 @@ void ISProtocolObjectListForm::LoadData()
 	//Добавление условия в фильтр таблицы, чтобы в таблице отображался протокол только по текущему объекту и подсистеме, в которой содержится текущий объект
 	if (GetParentObjectID())
 	{
-		QString ClassFilter = GetQueryModel()->GetClassFilter();
-		ClassFilter += " prtc_tablename = '" + GetParentTableName() + '\'';
-		ClassFilter += " AND prtc_objectid = " + QString::number(GetParentObjectID());
-		GetQueryModel()->SetClassFilter(ClassFilter);
+		GetTcpQuery()->AddFilter("TableName", GetParentTableName());
+		GetTcpQuery()->AddFilter("ObjectID", GetParentObjectID());
 	}
-
 	ISListBaseForm::LoadData();
 }
 //-----------------------------------------------------------------------------

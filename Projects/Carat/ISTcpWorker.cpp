@@ -1948,22 +1948,26 @@ bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 		}
 	}
 
-	//Получаем родительские фильтры
-	QVariant ParentFilterField = TcpMessage->Parameters["ParentFilterField"],
-		ParentObjectID = TcpMessage->Parameters["ParentObjectID"];
-
 	//Создаём объект модели и устанавливаем её сортировку
 	ISQueryModel QueryModel(MetaTable, ISNamespace::QMT_List);
 	QueryModel.SetSorting(SortingField, SortingOrder);
 
-	//Если родительские фильтры указаны - устанавливаем
-	if (ParentObjectID.isValid() && ParentFilterField.isValid())
+	//Если фильтрация указана - устанавливаем
+	QVariantMap FilterMap = TcpMessage->Parameters.contains("Filter") ? TcpMessage->Parameters["Filter"].toMap() : QVariantMap();
+	for (const auto &MapItem : FilterMap.toStdMap())
 	{
-		QueryModel.SetParentFilter(ParentObjectID.toUInt(), ParentFilterField.toString());
+		QueryModel.AddCondition(MapItem.first, MapItem.second);
 	}
 
 	ISQuery qSelect(ISDatabase::Instance().GetDB(DBConnectionName), QueryModel.GetQueryText());
 	qSelect.SetShowLongQuery(false);
+
+	//заполняем параметры запроса
+	for (const auto &MapItem : FilterMap.toStdMap())
+	{
+		qSelect.BindValue(":" + MapItem.first, MapItem.second);
+	}
+
 	if (!qSelect.Execute()) //Запрос не отработал
 	{
 		ErrorString = LANG("Carat.Error.Query.GetTableData.Select").arg(qSelect.GetErrorString());

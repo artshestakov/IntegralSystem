@@ -39,7 +39,7 @@ ISListBaseForm::ISListBaseForm(const QString &TableName, QWidget *parent)
 	: ISInterfaceMetaForm(parent),
 	ActionObjectGroup(new QActionGroup(this)), //Группа действий, остосящихся только к одному объекту
 	MetaTable(ISMetaData::Instance().GetMetaTable(TableName)),
-	TcpQueryUpdate(new ISTcpQuery(API_GET_TABLE_DATA)),
+	TcpQuery(new ISTcpQueryTable()),
 	PageNavigation(nullptr),
 	QueryModel(nullptr),
 	SearchForm(nullptr),
@@ -267,6 +267,7 @@ ISListBaseForm::ISListBaseForm(const QString &TableName, QWidget *parent)
 //-----------------------------------------------------------------------------
 ISListBaseForm::~ISListBaseForm()
 {
+	delete TcpQuery;
 	if (SearchForm)
 	{
 		delete SearchForm;
@@ -449,8 +450,8 @@ void ISListBaseForm::FieldResized(int LogicalIndex, int WidthOld, int WidthNew)
 //-----------------------------------------------------------------------------
 void ISListBaseForm::SortingChanged(int LogicalIndex, Qt::SortOrder SortingOrder)
 {
-	TcpQueryUpdate->BindValue("SortingField", TcpModel->headerData(LogicalIndex, Qt::Horizontal, Qt::UserRole));
-	TcpQueryUpdate->BindValue("SortingOrder", SortingOrder);
+	TcpQuery->BindValue("SortingField", TcpModel->headerData(LogicalIndex, Qt::Horizontal, Qt::UserRole));
+	TcpQuery->BindValue("SortingOrder", SortingOrder);
 	Update();
 }
 //-----------------------------------------------------------------------------
@@ -588,6 +589,11 @@ QAction* ISListBaseForm::GetAction(ISNamespace::ActionType action_type)
 QAction* ISListBaseForm::GetSpecialAction(ISNamespace::ActionSpecialType action_special)
 {
 	return ActionsSpecial[action_special];
+}
+//-----------------------------------------------------------------------------
+ISTcpQueryTable* ISListBaseForm::GetTcpQuery()
+{
+	return TcpQuery;
 }
 //-----------------------------------------------------------------------------
 void ISListBaseForm::CreateDelegates()
@@ -821,11 +827,8 @@ bool ISListBaseForm::Update()
 	SetEnabledPageNavigation(false);
 
 	//Готовим запрос и исполняем
-	TcpQueryUpdate->BindValue("TableName", MetaTable->Name);
-	TcpQueryUpdate->BindValue("ParentFilterField", GetParentFilterField().isEmpty() ? QVariant() : GetParentFilterField());
-	TcpQueryUpdate->BindValue("ParentObjectID", GetParentObjectID() > 0 ? GetParentObjectID() : QVariant());
-	//QueryModel->SetParentFilter(GetParentObjectID(), GetParentFilterField());
-	bool Result = TcpQueryUpdate->Execute();
+	TcpQuery->BindValue("TableName", MetaTable->Name);
+	bool Result = TcpQuery->ExecuteEx();
 
 	//Очередные операции с интерфейсом после загрузки
 	ToolBar->setEnabled(true);
@@ -836,7 +839,7 @@ bool ISListBaseForm::Update()
 	{
 		//Забираем ответ и устанавливаем его в модель
 		ListIndicatorWidget->SetText(LANG("FillTableData"));
-		QVariantMap AnswerMap = TcpQueryUpdate->TakeAnswer();
+		QVariantMap AnswerMap = TcpQuery->TakeAnswer();
 		TcpModel->SetSource(AnswerMap["FieldList"].toList(), AnswerMap["RecordList"].toList());
 
 		ListIndicatorWidget->SetVisibleAnimation(false); //Выключаем анимацию
@@ -893,7 +896,7 @@ bool ISListBaseForm::Update()
 		ListIndicatorWidget->SetVisibleAnimation(false);
 		ListIndicatorWidget->SetText(LANG("ErrorLoadingData"));
 		ListIndicatorWidget->SetIcon(BUFFER_ICONS("ListIndicator.Error"));
-		ISMessageBox::ShowCritical(this, TcpQueryUpdate->GetErrorString());
+		ISMessageBox::ShowCritical(this, TcpQuery->GetErrorString());
 	}
 
 	//if (SETTING_BOOL(CONST_UID_SETTING_TABLES_PAGE_NAVIGATION))

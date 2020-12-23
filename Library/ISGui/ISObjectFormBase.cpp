@@ -394,10 +394,11 @@ void ISObjectFormBase::CreateWidgetObject()
 
 		//Подготовка запроса
 		ISQueryModel QueryModel(MetaTable, ISNamespace::QMT_Object);
-		QueryModel.SetClassFilter(MetaTable->Alias + SYMBOL_POINT + MetaTable->Alias + "_id = " + QString::number(ObjectID));
+		QueryModel.AddCondition("ID", ObjectID);
 
 		//Выполнение запроса
 		ISQuery qSelect(QueryModel.GetQueryText());
+		qSelect.BindValue(":ID", ObjectID);
 		if (qSelect.ExecuteFirst())
 		{
 			QSqlRecord SqlRecord = qSelect.GetRecord();
