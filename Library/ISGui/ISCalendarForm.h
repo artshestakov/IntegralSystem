@@ -18,6 +18,7 @@ public:
 	void Invoke() override;
 
 protected:
+	void ReloadEvents(); //Загрузка событий на текущий месяц
 	void ReloadEvents(int Year, int Month); //Загрузка событий на месяц
 	void SelectedDateChanged(); //Событие смены выбранной даты
 

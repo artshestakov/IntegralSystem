@@ -74,7 +74,7 @@ ISCalendarForm::ISCalendarForm(QWidget *parent)
 
 	CalendarPanel = new ISCalendarPanel(this);
 	connect(CalendarPanel, &ISCalendarPanel::selectionChanged, this, &ISCalendarForm::SelectedDateChanged);
-	connect(CalendarPanel, &ISCalendarPanel::currentPageChanged, this, &ISCalendarForm::ReloadEvents);
+	connect(CalendarPanel, &ISCalendarPanel::currentPageChanged, this, static_cast<void(ISCalendarForm::*)(int, int)>(&ISCalendarForm::ReloadEvents));
 	LayoutCentral->addWidget(CalendarPanel);
 
 	QVBoxLayout *LayoutRight = new QVBoxLayout();
@@ -138,12 +138,23 @@ void ISCalendarForm::Invoke()
 	}
 }
 //-----------------------------------------------------------------------------
+void ISCalendarForm::ReloadEvents()
+{
+	QDate CurrentDate = QDate::currentDate();
+	ReloadEvents(CurrentDate.year(), CurrentDate.month());
+}
+//-----------------------------------------------------------------------------
 void ISCalendarForm::ReloadEvents(int Year, int Month)
 {
 	ISTcpQuery qGetCalendarEvents(API_GET_CALENDAR_EVENTS);
 	qGetCalendarEvents.BindValue("Month", Month);
 	qGetCalendarEvents.BindValue("Year", Year);
-	if (qGetCalendarEvents.Execute())
+
+	ISGui::SetWaitGlobalCursor(true);
+	bool Result = qGetCalendarEvents.Execute();
+	ISGui::SetWaitGlobalCursor(false);
+
+	if (Result)
 	{
 		EventsMap.clear();
 		QVariantList Result = qGetCalendarEvents.TakeAnswer()["Result"].toList();
@@ -192,7 +203,7 @@ void ISCalendarForm::Create()
 	ISCalendarObjectForm *CalendarObjectForm = dynamic_cast<ISCalendarObjectForm*>(ISGui::CreateObjectForm(ISNamespace::OFT_New, "_Calendar"));
 	CalendarObjectForm->SetFieldValue("User", CURRENT_USER_ID);
 	CalendarObjectForm->SetFieldValue("Date", CalendarPanel->selectedDate());
-	connect(CalendarObjectForm, &ISCalendarObjectForm::UpdateList, this, &ISCalendarForm::SelectedDateChanged);
+	connect(CalendarObjectForm, &ISCalendarObjectForm::UpdateList, this, static_cast<void(ISCalendarForm::*)()>(&ISCalendarForm::ReloadEvents));
 	ISGui::ShowObjectForm(CalendarObjectForm);
 }
 //-----------------------------------------------------------------------------
@@ -247,7 +258,7 @@ void ISCalendarForm::CloseEvent()
 			qCalendarClose.BindValue("CalendarID", EventItem->GetCalendarID());
 			if (qCalendarClose.Execute())
 			{
-				CalendarPanel->selectionChanged();
+				ReloadEvents();
 			}
 			else
 			{
