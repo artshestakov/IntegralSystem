@@ -97,8 +97,16 @@ void ISFavoritesForm::ClearFavorites()
 {
 	if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.DeleteFavorites")))
 	{
-		ISFavorites::Instance().DeleteAllFavorites();
-		ReloadFavorites();
+		ISTcpQuery qFavoritesDelete(API_FAVORITES_DELETE);
+		if (qFavoritesDelete.Execute())
+		{
+			ISFavorites::Instance().DeleteAllFavorites();
+			ListWidget->Clear();
+		}
+		else
+		{
+			ISMessageBox::ShowCritical(this, qFavoritesDelete.GetErrorString());
+		}
 	}
 }
 //-----------------------------------------------------------------------------
