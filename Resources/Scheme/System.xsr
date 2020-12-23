@@ -59,6 +59,7 @@
   <_ProtocolType IsSystem="true" UID="{D9372E46-8DB0-41B4-80C0-6AEC2CC6CD17}" Name="Удаление события календаря"/>
   <_ProtocolType IsSystem="true" UID="{0234643A-AF60-44BF-A2EB-08A71307841C}" Name="Запрос обновления клиента"/>
   <_ProtocolType IsSystem="true" UID="{8D08A9F9-FC50-4986-8D92-FEC0D7D36DA0}" Name="Добавление записи в избранное"/>
+  <_ProtocolType IsSystem="true" UID="{AF2641F0-6838-441C-A0A9-B62090826998}" Name="Удаление записи из избранного"/>
 
   <_InternalDirectories IsSystem="true" UID="{A57D9B44-CD09-4880-897D-3B0BACB1F093}" TableName="_TaskType" Order="1"/>
   <_InternalDirectories IsSystem="true" UID="{275E8EE8-C1EE-4495-95C2-79AB3AD98AB9}" TableName="_TaskSpace" Order="2"/>

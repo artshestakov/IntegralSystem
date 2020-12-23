@@ -178,6 +178,7 @@ namespace ISNamespace
 		AMT_GroupRightSpecialDelete, //Удалить спец. право у группы
 		AMT_GetRecordValue, //Получить значение поля записи
 		AMT_RecordFavoriteAdd, //Добавить запись в избранное
+		AMT_RecordFavoriteDelete, //Удалить запись из избранного
 	};
 };
 //-----------------------------------------------------------------------------

@@ -312,6 +312,11 @@ static QString QD_GROUP_RIGHT_SPECIAL = PREPARE_QUERY("DELETE FROM _groupaccesss
 static QString QI_FAVORITE = PREPARE_QUERY("INSERT INTO _favorites(fvts_user, fvts_tablename, fvts_objectid) "
 										   "VALUES(:UserID, :TableName, :ObjectID)");
 //-----------------------------------------------------------------------------
+static QString QD_FAVORITE = PREPARE_QUERY("DELETE FROM _favorites "
+										   "WHERE fvts_user = :UserID "
+										   "AND fvts_tablename = :TableName "
+										   "AND fvts_objectid = :ObjectID");
+//-----------------------------------------------------------------------------
 ISTcpWorker::ISTcpWorker(const QString &db_host, int db_port, const QString &db_name, const QString &db_user, const QString &db_password)
 	: QObject(),
 	ErrorString(NO_ERROR_STRING),
@@ -479,6 +484,7 @@ void ISTcpWorker::Process()
 					case ISNamespace::AMT_GroupRightSpecialDelete: Result = GroupRightSpecialDelete(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_GetRecordValue: Result = GetRecordValue(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_RecordFavoriteAdd: Result = RecordFavoriteAdd(tcp_message, TcpAnswer); break;
+					case ISNamespace::AMT_RecordFavoriteDelete: Result = RecordFavoriteDelete(tcp_message, TcpAnswer); break;
 					default:
 						ErrorString = LANG("Carat.Error.NotExistFunction").arg(tcp_message->TypeName);
 					}
@@ -2956,6 +2962,7 @@ bool ISTcpWorker::RecordFavoriteAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAn
 		return false;
 	}
 
+	//Получаем имя записи
 	QString ObjectName;
 	if (!GetObjectName(MetaTable, ObjectID.toUInt(), ObjectName))
 	{
@@ -2974,8 +2981,53 @@ bool ISTcpWorker::RecordFavoriteAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAn
 			LANG("Carat.Error.Query.RecordFavoriteAdd.Insert");
 		return false;
 	}
-
 	Protocol(TcpMessage->TcpSocket->GetUserID(), CONST_UID_PROTOCOL_RECORD_FAVORITE_ADD, MetaTable->Name, MetaTable->LocalListName, ObjectID, ObjectName);
+	return true;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::RecordFavoriteDelete(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+	Q_UNUSED(TcpAnswer);
+
+	QVariant TableName = CheckNullField("TableName", TcpMessage),
+		ObjectID = CheckNullField("ObjectID", TcpMessage);
+	if (!TableName.isValid() || !ObjectID.isValid())
+	{
+		return false;
+	}
+
+	//Получаем мета-таблицу
+	PMetaTable *MetaTable = GetMetaTable(TableName.toString());
+	if (!MetaTable)
+	{
+		return false;
+	}
+
+	//Получаем имя записи
+	QString ObjectName;
+	if (!GetObjectName(MetaTable, ObjectID.toUInt(), ObjectName))
+	{
+		return false;
+	}
+
+	//Удаляем запись
+	ISQuery qDelete(ISDatabase::Instance().GetDB(DBConnectionName), QD_FAVORITE);
+	qDelete.BindValue(":UserID", TcpMessage->TcpSocket->GetUserID());
+	qDelete.BindValue(":TableName", MetaTable->Name);
+	qDelete.BindValue(":ObjectID", ObjectID);
+	if (!qDelete.Execute()) //Не удалось удалить
+	{
+		ErrorString = LANG("Carat.Error.Query.RecordFavoriteDelete.Delete").arg(qDelete.GetErrorString());
+		return false;
+	}
+
+	//Если при удалении не была затронута ни одна строка - значит такой записи нет
+	if (qDelete.GetCountAffected() == 0)
+	{
+		ErrorString = LANG("Carat.Error.Query.RecordFavoriteDelete.NotExist");
+		return false;
+	}
+	Protocol(TcpMessage->TcpSocket->GetUserID(), CONST_UID_PROTOCOL_RECORD_FAVORITE_DELETE, MetaTable->Name, MetaTable->LocalListName, ObjectID, ObjectName);
 	return true;
 }
 //-----------------------------------------------------------------------------

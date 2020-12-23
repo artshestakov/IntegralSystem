@@ -188,6 +188,10 @@ ISNamespace::ApiMessageType ISTcp::GetMessageTypeByName(const QString &Name)
 	{
 		return ISNamespace::AMT_RecordFavoriteAdd;
 	}
+	else if (Name == API_RECORD_FAVORITE_DELETE)
+	{
+		return ISNamespace::AMT_RecordFavoriteDelete;
+	}
 	return ISNamespace::AMT_Unknown;
 }
 //-----------------------------------------------------------------------------
