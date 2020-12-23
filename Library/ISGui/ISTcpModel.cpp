@@ -39,7 +39,7 @@ void ISTcpModel::SetSource(const QVariantList &fields, const QVariantList &recor
 	{
 		QVariantMap FieldMap = Field.toMap();
 
-		ISFieldModel FieldModel;
+		ISModelField FieldModel;
 		FieldModel.Name = FieldMap["Name"].toString();
 		FieldModel.LocalName = FieldMap["LocalName"].toString();
 		FieldModel.Type = static_cast<ISNamespace::FieldType>(FieldMap["Type"].toInt());
@@ -52,7 +52,17 @@ void ISTcpModel::SetSource(const QVariantList &fields, const QVariantList &recor
 	Records.resize(RecordCount);
 	for (int i = 0; i < RecordCount; ++i)
 	{
-		Records[i] = QVector<QVariant>::fromList(records[i].toList()).toStdVector();
+		QVariantList Values = records[i].toList();
+		size_t ValuesSize = Values.size();
+
+		ISModelRecord Record;
+		Record.ID = Values[0].toUInt();
+		Record.Values.resize(ValuesSize);
+		for (size_t j = 0; j < ValuesSize; ++j) //Обходим значения записи
+		{
+			Record.Values[j] = Values[j];
+		}
+		Records[i] = Record;
 	}
 	endResetModel();
 }
@@ -73,20 +83,14 @@ void ISTcpModel::RemoveRecord(unsigned int RowIndex)
 	}
 }
 //-----------------------------------------------------------------------------
-ISModelRecord ISTcpModel::GetRecord(int Index) const
+ISModelRecord& ISTcpModel::GetRecord(int Index)
 {
-	ISStringToVariantMap RecordMap;
-	if (!Records.empty())
-	{
-		size_t ColumnCount = Fields.size();
-		ISVectorVariant VectorVariant = Records[Index];
-		
-		for (size_t i = 0; i < ColumnCount; ++i)
-		{
-			RecordMap[Fields[i].Name] = VectorVariant[i];
-		}
-	}
-	return RecordMap;
+	return Records[Index];
+}
+//-----------------------------------------------------------------------------
+QVariant ISTcpModel::GetRecordValue(int Index, const QString &FieldName)
+{
+	return GetRecord(Index).Values[GetFieldIndex(FieldName)];
 }
 //-----------------------------------------------------------------------------
 int ISTcpModel::GetFieldIndex(const QString &FieldName) const
@@ -111,18 +115,18 @@ QVariant ISTcpModel::data(const QModelIndex &ModelIndex, int Role) const
 	QVariant Value;
 	if (Role == Qt::TextColorRole)
 	{
-		if (Records[ModelIndex.row()][GetFieldIndex("IsSystem")].toBool())
+		if (Records[ModelIndex.row()].Values[GetFieldIndex("IsSystem")].toBool())
 		{
 			return qVariantFromValue(ISDefines::Gui::COLOR_BLUE);
 		}
 	}
 	else if (Role == Qt::DisplayRole)
 	{
-		Value = Records[ModelIndex.row()][ModelIndex.column()].toString();
+		Value = Records[ModelIndex.row()].Values[ModelIndex.column()].toString();
 	}
 	else if (Role == Qt::TextAlignmentRole)
 	{
-		ISFieldModel FieldModel = Fields[ModelIndex.column()];
+		ISModelField FieldModel = Fields[ModelIndex.column()];
 		ISNamespace::FieldType Type = FieldModel.Type;
 		if (Type == ISNamespace::FT_Date ||
 			Type == ISNamespace::FT_Time ||

@@ -13,7 +13,6 @@ typedef pthread_mutex_t ISCriticalSection;
 typedef std::map<QString, QString> ISStringMap;
 typedef std::map<QString, int> ISStringToIntMap;
 typedef std::map<QString, QVariant> ISStringToVariantMap;
-typedef ISStringToVariantMap ISModelRecord;
 typedef std::vector<int> ISVectorInt;
 typedef std::vector<unsigned int> ISVectorUInt;
 typedef std::vector<QString> ISVectorString;

@@ -461,14 +461,22 @@ struct ISFailAuthInfo
 	QDateTime DTUnlock; //Дата и время разблокировки
 };
 //-----------------------------------------------------------------------------
-struct ISCORE_EXPORT ISFieldModel
+struct ISCORE_EXPORT ISModelField
 {
-	ISFieldModel() : IsForeign(false) { }
+	ISModelField() : IsForeign(false) { }
 
 	QString Name;
 	QString LocalName;
 	ISNamespace::FieldType Type;
 	bool IsForeign;
+};
+//-----------------------------------------------------------------------------
+struct ISCORE_EXPORT ISModelRecord
+{
+	ISModelRecord() : ID(0) { }
+
+	unsigned int ID; //Идентификатор записи
+	ISVectorVariant Values; //Список значений
 };
 //-----------------------------------------------------------------------------
 #endif

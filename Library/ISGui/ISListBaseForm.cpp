@@ -39,7 +39,6 @@ ISListBaseForm::ISListBaseForm(const QString &TableName, QWidget *parent)
 	: ISInterfaceMetaForm(parent),
 	ActionObjectGroup(new QActionGroup(this)), //Группа действий, остосящихся только к одному объекту
 	MetaTable(ISMetaData::Instance().GetMetaTable(TableName)),
-	//SqlModel(nullptr),
 	TcpQueryUpdate(new ISTcpQuery(API_GET_TABLE_DATA)),
 	PageNavigation(nullptr),
 	QueryModel(nullptr),
@@ -217,10 +216,9 @@ ISListBaseForm::ISListBaseForm(const QString &TableName, QWidget *parent)
 	}
 
 	{//Создание моделей
-		//SqlModel = new ISSqlModelCore(MetaTable, TableView);
 		TcpModel = new ISTcpModel(TableView);
 
-		TableView->setModel(/*SqlModel*/TcpModel);
+		TableView->setModel(TcpModel);
 		
 		QueryModel = new ISQueryModel(MetaTable, ISNamespace::QMT_List, this);
 
@@ -269,9 +267,6 @@ ISListBaseForm::ISListBaseForm(const QString &TableName, QWidget *parent)
 //-----------------------------------------------------------------------------
 ISListBaseForm::~ISListBaseForm()
 {
-	//ModelThreadQuery->quit();
-	//IS_ASSERT(ModelThreadQuery->wait(), "Not wait() thread");
-
 	if (SearchForm)
 	{
 		delete SearchForm;
@@ -286,17 +281,12 @@ int ISListBaseForm::GetCurrentRowIndex()
 //-----------------------------------------------------------------------------
 unsigned int ISListBaseForm::GetObjectID()
 {
-	int ObjectID = GetCurrentRecordValue("ID").toInt();
-	if (!ObjectID)
-	{
-		IS_ASSERT(false, "ObjectID invalid.");
-	}
-	return ObjectID;
+	return GetCurrentRecord().ID;
 }
 //-----------------------------------------------------------------------------
 unsigned int ISListBaseForm::GetObjectID(int RowIndex)
 {
-	return /*SqlModel*/TcpModel->index(RowIndex, 0).data().toInt();
+	return TcpModel->index(RowIndex, 0).data().toInt();
 }
 //-----------------------------------------------------------------------------
 int ISListBaseForm::GetRowIndex(int object_id)
@@ -312,15 +302,14 @@ int ISListBaseForm::GetRowIndex(int object_id)
 	return -1;
 }
 //-----------------------------------------------------------------------------
-ISModelRecord ISListBaseForm::GetCurrentRecord() /*const*/
+const ISModelRecord& ISListBaseForm::GetCurrentRecord()
 {
 	return TcpModel->GetRecord(GetCurrentRowIndex());
 }
 //-----------------------------------------------------------------------------
 QVariant ISListBaseForm::GetCurrentRecordValue(const QString &FieldName)
 {
-	//return GetCurrentRecord().value(FieldName);
-	return GetCurrentRecord()[FieldName];
+	return TcpModel->GetRecordValue(GetCurrentRowIndex(), FieldName);
 }
 //-----------------------------------------------------------------------------
 QVariant ISListBaseForm::GetCurrentRecordValueDB(const QString &FieldName)
@@ -339,12 +328,6 @@ QVariant ISListBaseForm::GetCurrentRecordValueDB(const QString &FieldName)
 		ISMessageBox::ShowCritical(this, qGetRecordValue.GetErrorString());
 	}
 	return Value;
-}
-//-----------------------------------------------------------------------------
-QVariant ISListBaseForm::GetRecordValue(const QString &FieldName, int RowIndex)
-{
-	//return SqlModel->GetRecord(RowIndex).value(FieldName);
-	return TcpModel->GetRecord(RowIndex)[FieldName];
 }
 //-----------------------------------------------------------------------------
 ISVectorUInt ISListBaseForm::GetSelectedIDs()
@@ -369,9 +352,9 @@ int ISListBaseForm::GetCountSelected()
 ISVectorInt ISListBaseForm::GetIDs() const
 {
 	ISVectorInt VectorInt;
-	for (int i = 0; i < /*SqlModel*/TcpModel->rowCount(); ++i)
+	for (int i = 0; i < TcpModel->rowCount(); ++i)
 	{
-		VectorInt.emplace_back(/*SqlModel*/TcpModel->data(/*SqlModel*/TcpModel->index(i, /*SqlModel*/TcpModel->GetFieldIndex("ID"))).toInt());
+		VectorInt.emplace_back(TcpModel->data(TcpModel->index(i, TcpModel->GetFieldIndex("ID"))).toInt());
 	}
 	return VectorInt;
 }
@@ -917,6 +900,8 @@ bool ISListBaseForm::Update()
 	{
 		//PageNavigation->SetRowCount(ISDatabaseHelper::GetCountRows(MetaTable->Name));
 	}
+
+	IsLoadingData = false;
 	return Result;
 }
 //-----------------------------------------------------------------------------
@@ -982,7 +967,7 @@ void ISListBaseForm::Export()
 		return;
 	}
 
-	if (!/*SqlModel*/TcpModel->rowCount())
+	if (!TcpModel->rowCount())
 	{
 		ISMessageBox::ShowWarning(this, LANG("Export.NoData"));
 		return;
@@ -1007,7 +992,7 @@ void ISListBaseForm::Export()
 	ExportWorker->SetHeader(ExportForm.GetHeader());
 	ExportWorker->SetSelectedRows(GetSelectedRowIndexes());
 
-	ISProgressForm ProgressForm(/*SqlModel*/TcpModel->rowCount(), LANG("Export.Process.Prepare"), this);
+	ISProgressForm ProgressForm(TcpModel->rowCount(), LANG("Export.Process.Prepare"), this);
 	connect(&ProgressForm, &ISProgressForm::canceled, ExportWorker, &ISExportWorker::Cancel);
 	connect(ExportWorker, &ISExportWorker::ExportedRow, &ProgressForm, static_cast<void(ISProgressForm::*)(void)>(&ISProgressForm::IncrementValue));
 	ProgressForm.show();
@@ -1121,7 +1106,7 @@ void ISListBaseForm::ShowFavorites()
 //-----------------------------------------------------------------------------
 void ISListBaseForm::NavigationSelectBeginRecord()
 {
-	if (/*SqlModel*/TcpModel->rowCount())
+	if (TcpModel->rowCount())
 	{
 		TableView->selectRow(0);
 		TableView->verticalScrollBar()->setValue(TableView->verticalScrollBar()->minimum());
@@ -1130,7 +1115,7 @@ void ISListBaseForm::NavigationSelectBeginRecord()
 //-----------------------------------------------------------------------------
 void ISListBaseForm::NavigationSelectPreviousRecord()
 {
-	if (/*SqlModel*/TcpModel->rowCount() || GetCurrentRowIndex())
+	if (TcpModel->rowCount() || GetCurrentRowIndex())
 	{
 		TableView->selectRow(GetCurrentRowIndex() - 1);
 	}
@@ -1138,7 +1123,8 @@ void ISListBaseForm::NavigationSelectPreviousRecord()
 //-----------------------------------------------------------------------------
 void ISListBaseForm::NavigationSelectNextRecord()
 {
-	if (/*SqlModel*/TcpModel->rowCount() || GetCurrentRowIndex() == /*SqlModel*/TcpModel->rowCount() - 1)
+	int RowCount = TcpModel->rowCount();
+	if (RowCount || GetCurrentRowIndex() == RowCount - 1)
 	{
 		TableView->selectRow(GetCurrentRowIndex() + 1);
 	}
@@ -1146,9 +1132,10 @@ void ISListBaseForm::NavigationSelectNextRecord()
 //-----------------------------------------------------------------------------
 void ISListBaseForm::NavigationSelectLastRecord()
 {
-	if (/*SqlModel*/TcpModel->rowCount())
+	int RowCount = TcpModel->rowCount();
+	if (RowCount)
 	{
-		TableView->selectRow(/*SqlModel*/TcpModel->rowCount() - 1);
+		TableView->selectRow(RowCount - 1);
 		TableView->verticalScrollBar()->setValue(TableView->verticalScrollBar()->maximum());
 	}
 }
@@ -1168,7 +1155,7 @@ void ISListBaseForm::AutoFitColumnWidth()
 void ISListBaseForm::ResetWidthColumn()
 {
 	ISGui::SetWaitGlobalCursor(true);
-	for (int i = 0; i < /*SqlModel*/TcpModel->columnCount(); ++i)
+	for (int i = 0; i < TcpModel->columnCount(); ++i)
 	{
 		TableView->setColumnWidth(i, 100);
 	}

@@ -17,7 +17,8 @@ public:
 	void SetSorting(const QString &sorting_field, Qt::SortOrder sorting_order);
 
 	void RemoveRecord(unsigned int RowIndex); //Удаление записи из модели
-	ISModelRecord GetRecord(int Index) const; //Получить строку по индексу
+	ISModelRecord& GetRecord(int Index); //Получить строку по индексу
+	QVariant GetRecordValue(int Index, const QString &FieldName); //Получить значение строки
 	int GetFieldIndex(const QString &FieldName) const;
 
 	QVariant data(const QModelIndex &ModelIndex, int Role = Qt::DisplayRole) const override;
@@ -29,8 +30,8 @@ public:
 	QModelIndex parent(const QModelIndex &Index) const override;
 
 private:
-	std::vector<ISFieldModel> Fields;
-	std::vector<ISVectorVariant> Records;
+	std::vector<ISModelField> Fields;
+	std::vector<ISModelRecord> Records;
 	int SortingColumnIndex;
 	Qt::SortOrder SortingOrder;
 	QIcon SortingIconUp;

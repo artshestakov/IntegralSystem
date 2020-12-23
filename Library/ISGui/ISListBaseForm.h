@@ -33,10 +33,9 @@ public:
 	unsigned int GetObjectID(); //Получить идентификатор текущего объекта
 	unsigned int GetObjectID(int RowIndex); //Получить идентификатор объекта по индексу строки
 	int GetRowIndex(int object_id); //Получить индекс строки по идентификатору объекта
-	ISModelRecord GetCurrentRecord() /*const*/; //Получить текущую запись
+	const ISModelRecord& GetCurrentRecord(); //Получить текущую запись
 	QVariant GetCurrentRecordValue(const QString &FieldName); //Получить значение из столбца по текущей строке
 	QVariant GetCurrentRecordValueDB(const QString &FieldName); //Получить значение из столбца по текущей строке (значение будет взято из базы)
-	QVariant GetRecordValue(const QString &FieldName, int RowIndex); //Получить значение из столбца по индексу строки
 	ISVectorUInt GetSelectedIDs(); //Получить список идентификаторов выделенных строк
 	int GetCountSelected(); //Получить количество выделенных записей
 	ISVectorInt GetIDs() const; //Получить список идентификатор отображаемых строк в данный момент
