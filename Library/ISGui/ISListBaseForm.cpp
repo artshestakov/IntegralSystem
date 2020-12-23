@@ -466,10 +466,11 @@ void ISListBaseForm::FieldResized(int LogicalIndex, int WidthOld, int WidthNew)
 	ISColumnSizer::Instance().SetColumnSizeNew(MetaTable->Name, /*SqlModel*/TcpModel->headerData(LogicalIndex, Qt::Horizontal, Qt::UserRole).toString(), WidthNew);
 }
 //-----------------------------------------------------------------------------
-void ISListBaseForm::SortingChanged(int LogicalIndex, Qt::SortOrder Order)
+void ISListBaseForm::SortingChanged(int LogicalIndex, Qt::SortOrder SortingOrder)
 {
-	Q_UNUSED(LogicalIndex);
-	Q_UNUSED(Order);
+	TcpQueryUpdate->BindValue("SortingField", TcpModel->headerData(LogicalIndex, Qt::Horizontal, Qt::UserRole));
+	TcpQueryUpdate->BindValue("SortingOrder", SortingOrder);
+	Update();
 }
 //-----------------------------------------------------------------------------
 void ISListBaseForm::ShowSettingsForm()

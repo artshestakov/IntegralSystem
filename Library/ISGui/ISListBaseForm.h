@@ -104,7 +104,7 @@ protected:
 	void FieldResized(bool Include); //¬ключить/выключить сигнал изменени€ размера пол€
 	void FieldResized(int LogicalIndex, int WidthOld, int WidthNew);
 
-	void SortingChanged(int LogicalIndex, Qt::SortOrder Order);
+	void SortingChanged(int LogicalIndex, Qt::SortOrder SortingOrder);
 	void ShowSettingsForm();
 
 private:
