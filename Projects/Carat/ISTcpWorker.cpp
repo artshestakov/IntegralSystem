@@ -328,8 +328,12 @@ static QString QS_FAVORITE_NAMES_ALL = PREPARE_QUERY("SELECT fvts_tablename, fvt
 													 "WHERE fvts_user = :UserID "
 													 "ORDER BY fvts_tablename");
 //-----------------------------------------------------------------------------
-static QString QD_FAVORITES = PREPARE_QUERY("DELETE FROM _favorites "
-											"WHERE fvts_user = :UserID");
+static QString QD_FAVORITES_TABLE = PREPARE_QUERY("DELETE FROM _favorites "
+												  "WHERE fvts_user = :UserID "
+												  "AND fvts_tablename = :TableName");
+//-----------------------------------------------------------------------------
+static QString QD_FAVORITES_ALL = PREPARE_QUERY("DELETE FROM _favorites "
+												"WHERE fvts_user = :UserID");
 //-----------------------------------------------------------------------------
 ISTcpWorker::ISTcpWorker(const QString &db_host, int db_port, const QString &db_name, const QString &db_user, const QString &db_password)
 	: QObject(),
@@ -3051,7 +3055,7 @@ bool ISTcpWorker::GetFavoriteNames(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAns
 {
 	//Запрашиваем избранные записи
 	ISQuery qSelectObjects(ISDatabase::Instance().GetDB(DBConnectionName));
-	if (TcpMessage->Parameters.contains("TableName")) //Если таблица указана - один запрос
+	if (TcpMessage->Parameters.contains("TableName")) //Если таблица указана - удаляем записи по указанной таблице
 	{
 		//Проверяем наличие такой таблицы в мета-данных
 		QString TableName = TcpMessage->Parameters["TableName"].toString();
@@ -3060,15 +3064,13 @@ bool ISTcpWorker::GetFavoriteNames(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAns
 			return false;
 		}
 		qSelectObjects.Prepare(QS_FAVORITE_NAMES_TABLE);
-		qSelectObjects.BindValue(":UserID", TcpMessage->TcpSocket->GetUserID());
 		qSelectObjects.BindValue(":TableName", TableName);
 	}
-	else //Таблица не указана - другой запрос
+	else //Таблица не указана - удаляем все записи
 	{
 		qSelectObjects.Prepare(QS_FAVORITE_NAMES_ALL);
-		qSelectObjects.BindValue(":UserID", TcpMessage->TcpSocket->GetUserID());
 	}
-	
+	qSelectObjects.BindValue(":UserID", TcpMessage->TcpSocket->GetUserID());
 	if (!qSelectObjects.Execute()) //Ошибка запроса
 	{
 		ErrorString = LANG("Carat.Error.Query.GetFavoriteNames.Select").arg(qSelectObjects.GetErrorString());
@@ -3118,7 +3120,22 @@ bool ISTcpWorker::FavoritesDelete(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnsw
 	Q_UNUSED(TcpAnswer);
 
 	//Удаляем избранные записи
-	ISQuery qDelete(ISDatabase::Instance().GetDB(DBConnectionName), QD_FAVORITES);
+	ISQuery qDelete(ISDatabase::Instance().GetDB(DBConnectionName));
+	if (TcpMessage->Parameters.contains("TableName")) //Если таблица указана - удаляем записи по указанной таблице
+	{
+		//Проверяем наличие такой таблицы в мета-данных
+		QString TableName = TcpMessage->Parameters["TableName"].toString();
+		if (!GetMetaTable(TableName))
+		{
+			return false;
+		}
+		qDelete.Prepare(QD_FAVORITES_TABLE);
+		qDelete.BindValue(":TableName", TableName);
+	}
+	else //Таблица не указана - удаляем все записи
+	{
+		qDelete.Prepare(QD_FAVORITES_ALL);
+	}
 	qDelete.BindValue(":UserID", TcpMessage->TcpSocket->GetUserID());
 	if (!qDelete.Execute()) //Ошибка запроса
 	{

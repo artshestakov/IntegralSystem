@@ -60,12 +60,10 @@ void ISFavoritesForm::LoadFavorites()
 {
 	ListWidget->Clear();
 	ISTcpQuery qGetFavoritesNames(API_GET_FAVORITE_NAMES);
-
-	if (!TableName.isEmpty())
+	if (!TableName.isEmpty()) //Если таблица указана - подставляем её в запрос
 	{
 		qGetFavoritesNames.BindValue("TableName", TableName);
 	}
-
 	if (qGetFavoritesNames.Execute())
 	{
 		QVariantList NamesList = qGetFavoritesNames.TakeAnswer()["Names"].toList();
@@ -104,6 +102,10 @@ void ISFavoritesForm::ClearFavorites()
 	if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.DeleteFavorites")))
 	{
 		ISTcpQuery qFavoritesDelete(API_FAVORITES_DELETE);
+		if (!TableName.isEmpty()) //Если таблица указана - подставляем её в запрос
+		{
+			qFavoritesDelete.BindValue("TableName", TableName);
+		}
 		if (qFavoritesDelete.Execute())
 		{
 			ISFavorites::Instance().DeleteAllFavorites();
