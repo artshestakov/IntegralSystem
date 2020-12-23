@@ -123,9 +123,9 @@ QString ISQueryModel::GetQueryText()
 	return SqlText;
 }
 //-----------------------------------------------------------------------------
-void ISQueryModel::SetParentFilter(int ParentObjectID, const QString &FieldName)
+void ISQueryModel::SetParentFilter(unsigned int ParentObjectID, const QString &FieldName)
 {
-	if (ParentObjectID && !FieldName.isEmpty())
+	if (ParentObjectID > 0 && !FieldName.isEmpty())
 	{
 		ClassFilter = QString("%1_%2 = %3").arg(MetaTable->Alias).arg(FieldName).arg(ParentObjectID);
 	}

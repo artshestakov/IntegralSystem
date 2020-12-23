@@ -820,8 +820,11 @@ bool ISListBaseForm::Update()
 	ToolBar->setEnabled(false);
 	SetEnabledPageNavigation(false);
 
-	//Запрашиваем данные
+	//Готовим запрос и исполняем
 	TcpQueryUpdate->BindValue("TableName", MetaTable->Name);
+	TcpQueryUpdate->BindValue("ParentFilterField", GetParentFilterField().isEmpty() ? QVariant() : GetParentFilterField());
+	TcpQueryUpdate->BindValue("ParentObjectID", GetParentObjectID() > 0 ? GetParentObjectID() : QVariant());
+	//QueryModel->SetParentFilter(GetParentObjectID(), GetParentFilterField());
 	bool Result = TcpQueryUpdate->Execute();
 
 	//Очередные операции с интерфейсом после загрузки
@@ -892,9 +895,6 @@ bool ISListBaseForm::Update()
 		ListIndicatorWidget->SetIcon(BUFFER_ICONS("ListIndicator.Error"));
 		ISMessageBox::ShowCritical(this, TcpQueryUpdate->GetErrorString());
 	}
-
-	//QueryModel->SetParentFilter(GetParentObjectID(), GetParentFilterField());
-	//ModelThreadQuery->Execute(QueryModel->GetQueryText(), QueryModel->GetConditions());
 
 	//if (SETTING_BOOL(CONST_UID_SETTING_TABLES_PAGE_NAVIGATION))
 	{

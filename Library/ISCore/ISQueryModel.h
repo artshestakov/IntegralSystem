@@ -18,7 +18,7 @@ public:
 
 	QString GetQueryText(); //Получить текст всего запроса
 
-	void SetParentFilter(int ParentObjectID, const QString &FieldName); //Изменить условие (идентификатор) фильтра для эскортной таблицы
+	void SetParentFilter(unsigned int ParentObjectID, const QString &FieldName); //Изменить условие (идентификатор) фильтра для эскортной таблицы
 
 	void SetClassFilter(const QString &class_filter); //Изменить фильтр
 	QString GetClassFilter() const; //Получить фильтр

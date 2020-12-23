@@ -1,8 +1,10 @@
 #include "ISInterfaceMetaForm.h"
 //-----------------------------------------------------------------------------
-ISInterfaceMetaForm::ISInterfaceMetaForm(QWidget *parent) : ISInterfaceForm(parent)
+ISInterfaceMetaForm::ISInterfaceMetaForm(QWidget *parent)
+	: ISInterfaceForm(parent),
+	ParentObjectID(0)
 {
-	ParentObjectID = 0;
+	
 }
 //-----------------------------------------------------------------------------
 ISInterfaceMetaForm::~ISInterfaceMetaForm()

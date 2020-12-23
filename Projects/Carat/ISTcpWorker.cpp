@@ -1948,9 +1948,19 @@ bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 		}
 	}
 
-	//Создаём объект модели
+	//Получаем родительские фильтры
+	QVariant ParentFilterField = TcpMessage->Parameters["ParentFilterField"],
+		ParentObjectID = TcpMessage->Parameters["ParentObjectID"];
+
+	//Создаём объект модели и устанавливаем её сортировку
 	ISQueryModel QueryModel(MetaTable, ISNamespace::QMT_List);
 	QueryModel.SetSorting(SortingField, SortingOrder);
+
+	//Если родительские фильтры указаны - устанавливаем
+	if (ParentObjectID.isValid() && ParentFilterField.isValid())
+	{
+		QueryModel.SetParentFilter(ParentObjectID.toUInt(), ParentFilterField.toString());
+	}
 
 	ISQuery qSelect(ISDatabase::Instance().GetDB(DBConnectionName), QueryModel.GetQueryText());
 	qSelect.SetShowLongQuery(false);
