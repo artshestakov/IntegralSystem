@@ -8,6 +8,7 @@
 #include "ISButtons.h"
 #include "ISCore.h"
 #include "ISGui.h"
+#include "ISTcpQuery.h"
 //-----------------------------------------------------------------------------
 ISFavoritesForm::ISFavoritesForm(QWidget *parent, const QString &table_name)
 	: ISInterfaceForm(parent),
@@ -67,26 +68,23 @@ ISFavoritesForm::~ISFavoritesForm()
 void ISFavoritesForm::LoadFavorites()
 {
 	ListWidget->Clear();
-	std::map<QString, ISVectorInt> Map;
-	if (TableName.isEmpty()) //Конкретная таблица не указана - показываем все объекты
+	ISTcpQuery qGetFavoritesNames(API_GET_FAVORITE_NAMES);
+	if (qGetFavoritesNames.Execute())
 	{
-		Map = ISFavorites::Instance().GetObjects();
-	}
-	else //Указана конкретная таблица - показываем избранные объекты только по ней
-	{
-		Map[TableName] = ISFavorites::Instance().GetObjects(TableName);
-	}
-
-	for (const auto &MapItem : Map)
-	{
-		for (int ObjectID : MapItem.second)
+		QVariantList NamesList = qGetFavoritesNames.TakeAnswer()["Names"].toList();
+		for (const QVariant &Variant : NamesList)
 		{
+			QVariantMap NameMap = Variant.toMap();
 			QListWidgetItem *ListWidgetItem = new QListWidgetItem(ListWidget);
-			ListWidgetItem->setText(ISMetaData::Instance().GetMetaTable(MapItem.first)->LocalListName + ": " + ISCore::GetObjectName(MapItem.first, ObjectID));
+			ListWidgetItem->setText(NameMap["TableLocalName"].toString() + ": " + NameMap["ObjectName"].toString());
 			ListWidgetItem->setSizeHint(QSize(ListWidgetItem->sizeHint().width(), 30));
-			ListWidgetItem->setData(Qt::UserRole, MapItem.first);
-			ListWidgetItem->setData(Qt::UserRole * 2, ObjectID);
+			ListWidgetItem->setData(Qt::UserRole, NameMap["TableName"].toString());
+			ListWidgetItem->setData(Qt::UserRole * 2, NameMap["ObjectID"].toUInt());
 		}
+	}
+	else
+	{
+		ISMessageBox::ShowCritical(this, qGetFavoritesNames.GetErrorString());
 	}
 }
 //-----------------------------------------------------------------------------

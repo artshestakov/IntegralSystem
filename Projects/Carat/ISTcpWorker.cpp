@@ -3076,6 +3076,7 @@ bool ISTcpWorker::GetFavoriteNames(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAns
 		//Добавляем в результирующий список
 		NamesList.append(QVariantMap
 		{
+			{ "TableName", MetaTable->Name },
 			{ "TableLocalName", MetaTable->LocalListName },
 			{ "ObjectID", ObjectID },
 			{ "ObjectName", ObjectName },
