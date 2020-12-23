@@ -322,6 +322,9 @@ static QString QS_FAVORITE_NAMES = PREPARE_QUERY("SELECT fvts_tablename, fvts_ob
 												 "WHERE fvts_user = :UserID "
 												 "ORDER BY fvts_tablename");
 //-----------------------------------------------------------------------------
+static QString QD_FAVORITES = PREPARE_QUERY("DELETE FROM _favorites "
+											"WHERE fvts_user = :UserID");
+//-----------------------------------------------------------------------------
 ISTcpWorker::ISTcpWorker(const QString &db_host, int db_port, const QString &db_name, const QString &db_user, const QString &db_password)
 	: QObject(),
 	ErrorString(NO_ERROR_STRING),
@@ -491,6 +494,7 @@ void ISTcpWorker::Process()
 					case ISNamespace::AMT_RecordFavoriteAdd: Result = RecordFavoriteAdd(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_RecordFavoriteDelete: Result = RecordFavoriteDelete(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_GetFavoriteNames: Result = GetFavoriteNames(tcp_message, TcpAnswer); break;
+					case ISNamespace::AMT_FavoritesDelete: Result = FavoritesDelete(tcp_message, TcpAnswer); break;
 					default:
 						ErrorString = LANG("Carat.Error.NotExistFunction").arg(tcp_message->TypeName);
 					}
@@ -3083,6 +3087,21 @@ bool ISTcpWorker::GetFavoriteNames(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAns
 		});
 	}
 	TcpAnswer->Parameters["Names"] = NamesList;
+	return true;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::FavoritesDelete(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+	Q_UNUSED(TcpAnswer);
+
+	//Удаляем избранные записи
+	ISQuery qDelete(ISDatabase::Instance().GetDB(DBConnectionName), QD_FAVORITES);
+	qDelete.BindValue(":UserID", TcpMessage->TcpSocket->GetUserID());
+	if (!qDelete.Execute()) //Ошибка запроса
+	{
+		ErrorString = LANG("Carat.Error.Query.FavoritesDelete.Delete").arg(qDelete.GetErrorString());
+		return false;
+	}
 	return true;
 }
 //-----------------------------------------------------------------------------

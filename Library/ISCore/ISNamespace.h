@@ -180,6 +180,7 @@ namespace ISNamespace
 		AMT_RecordFavoriteAdd, //Добавить запись в избранное
 		AMT_RecordFavoriteDelete, //Удалить запись из избранного
 		AMT_GetFavoriteNames, //Получить имена избранных записей
+		AMT_FavoritesDelete, //Удалить все избранные записи пользователя
 	};
 };
 //-----------------------------------------------------------------------------
