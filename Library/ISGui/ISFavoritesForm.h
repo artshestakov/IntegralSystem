@@ -16,7 +16,6 @@ private:
 	void LoadFavorites(); //Загрузка избранного
 	void ReloadFavorites(); //Перезагрузка изранного
 	void OpenFavorite(); //Открыть избранный обхект
-	void DeleteFavorite(); //Удалить избранный объект
 	void ClearFavorites(); //Очистить избранные объекты
 	void EscapeClicked() override;
 

@@ -152,7 +152,6 @@
   <Local Name="Message.Question.File.SavedToPath" Russian="Файл успешно сохранен по пути:&#10;%1&#10;Открыть его?"/>
   <Local Name="Message.Question.SaveObjectChanged" Russian="Карточка объекта &quot;%1&quot; была изменена, сохранить изменения?"/>
   <Local Name="Message.Question.ChangeSettingsToDefault" Russian="Установить все настройки по умолчанию?"/>
-  <Local Name="Message.Question.DeleteFavorite" Russian="Удалить выделенную запись из избранного?"/>
   <Local Name="Message.Question.DeleteFavorites" Russian="Удалить все избранные записи?"/>
   <Local Name="Message.Question.DeleteHistory" Russian="Очистить историю открытых записей?"/>
   <Local Name="Message.Question.CreateCopyFile" Russian="Создать копию файла &quot;%1&quot;?"/>

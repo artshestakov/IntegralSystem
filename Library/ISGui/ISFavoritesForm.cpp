@@ -31,14 +31,6 @@ ISFavoritesForm::ISFavoritesForm(QWidget *parent, const QString &table_name)
 	connect(ActionOpen, &QAction::triggered, this, &ISFavoritesForm::OpenFavorite);
 	ToolBar->addAction(ActionOpen);
 
-	QAction *ActionDelete = new QAction(ToolBar);
-	ActionDelete->setText(LANG("Delete"));
-	ActionDelete->setToolTip(LANG("Delete"));
-	ActionDelete->setIcon(BUFFER_ICONS("Delete"));
-	ActionDelete->setEnabled(false);
-	connect(ActionDelete, &QAction::triggered, this, &ISFavoritesForm::DeleteFavorite);
-	ToolBar->addAction(ActionDelete);
-
 	QAction *ActionClearFavorites = new QAction(ToolBar);
 	ActionClearFavorites->setText(LANG("ClearFavorites"));
 	ActionClearFavorites->setToolTip(LANG("ClearFavorites"));
@@ -48,7 +40,6 @@ ISFavoritesForm::ISFavoritesForm(QWidget *parent, const QString &table_name)
 
 	ListWidget = new ISListWidget(this);
 	ListWidget->AddAction(ActionOpen, true);
-	ListWidget->AddAction(ActionDelete, true);
 	ListWidget->AddAction(ActionClearFavorites, false);
 	connect(ListWidget, &QListWidget::itemDoubleClicked, this, &ISFavoritesForm::ListWidgetDoubleClicked);
 	GetMainLayout()->addWidget(ListWidget);
@@ -99,18 +90,6 @@ void ISFavoritesForm::OpenFavorite()
 	if (ListWidget->currentItem())
 	{
 		ISGui::ShowObjectForm(ISGui::CreateObjectForm(ISNamespace::OFT_Edit, ListWidget->currentItem()->data(Qt::UserRole).toString(), ListWidget->currentItem()->data(Qt::UserRole * 2).toInt()));
-	}
-}
-//-----------------------------------------------------------------------------
-void ISFavoritesForm::DeleteFavorite()
-{
-	if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.DeleteFavorite")))
-	{
-		if (ListWidget->currentItem())
-		{
-			ISFavorites::Instance().DeleteFavorite(ListWidget->currentItem()->data(Qt::UserRole).toString(), ListWidget->currentItem()->data(Qt::UserRole * 2).toInt());
-			ReloadFavorites();
-		}
 	}
 }
 //-----------------------------------------------------------------------------
