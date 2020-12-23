@@ -37,7 +37,6 @@ void ISStartup::Shutdown(ISSplashScreen *SplashScreen)
 	ISTcpQuery qSaveMetaData(API_SAVE_META_DATA);
 	qSaveMetaData.BindValue("ColumnSize", ISColumnSizer::Instance().GetColumnSize());
 	qSaveMetaData.BindValue("Settings", ISSettings::Instance().GetSettingsChanged());
-	qSaveMetaData.BindValue("Favorites", ISFavorites::Instance().GetFavorites());
 	if (!qSaveMetaData.Execute())
 	{
 		ISMessageBox::ShowCritical(SplashScreen, qSaveMetaData.GetErrorString());
