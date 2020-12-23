@@ -61,7 +61,7 @@ static QString QS_REPORT_FIELD = PREPARE_QUERY("SELECT rprt_replacevalue, rprt_s
 											   "FROM _report "
 											   "WHERE rprt_parent = :ParentUID");
 //-----------------------------------------------------------------------------
-static QString QS_FAVORITE = PREPARE_QUERY("SELECT fvts_tablename, array_to_string(fvts_objectsid, ',') AS fvts_objectsid "
+static QString QS_FAVORITE = PREPARE_QUERY("SELECT fvts_tablename, fvts_objectid "
 										   "FROM _favorites "
 										   "WHERE fvts_user = :UserID");
 //-----------------------------------------------------------------------------
@@ -1125,7 +1125,8 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 		while (qSelectFavorite.Next())
 		{
 			QString TableName = qSelectFavorite.ReadColumn("fvts_tablename").toString();
-			QStringList Objects = qSelectFavorite.ReadColumn("fvts_objectsid").toString().split(',');
+			QVariantList Objects = FavoriteMap[TableName].toList();
+			Objects.append(qSelectFavorite.ReadColumn("fvts_objectid"));
 			FavoriteMap[TableName] = Objects;
 		}
 	}
