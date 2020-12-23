@@ -862,13 +862,13 @@ void ISObjectFormBase::UpdateObjectActions()
 	{
 		SetEnabledActions(true);
 		ActionSave->setEnabled(false);
-		ActionFavorites->setChecked(ISFavorites::Instance().CheckExistFavoriteObject(MetaTable->Name, ObjectID));
+		ActionFavorites->setChecked(ISFavorites::Instance().Exist(MetaTable->Name, ObjectID));
 	}
 }
 //-----------------------------------------------------------------------------
 void ISObjectFormBase::FavoriteClicked()
 {
-	bool IsExist = ISFavorites::Instance().CheckExistFavoriteObject(MetaTable->Name, ObjectID);
+	bool IsExist = ISFavorites::Instance().Exist(MetaTable->Name, ObjectID);
 
 	ISTcpQuery qRecordFavorite(IsExist ? API_RECORD_FAVORITE_DELETE : API_RECORD_FAVORITE_ADD);
 	qRecordFavorite.BindValue("TableName", MetaTable->Name);
@@ -880,7 +880,7 @@ void ISObjectFormBase::FavoriteClicked()
 
 	if (Result)
 	{
-		IsExist ? ISFavorites::Instance().DeleteFavorite(MetaTable->Name, ObjectID) : ISFavorites::Instance().AddFavorite(MetaTable->Name, ObjectID);
+		IsExist ? ISFavorites::Instance().Delete(MetaTable->Name, ObjectID) : ISFavorites::Instance().Add(MetaTable->Name, ObjectID);
 		ActionFavorites->setChecked(!IsExist);
 		IsExist ? ISPopupMessage::ShowNotification(LANG("RecordRemoveFavorites").arg(ObjectName)) : ISPopupMessage::ShowNotification(LANG("RecordAddFavorites").arg(ObjectName));
 	}

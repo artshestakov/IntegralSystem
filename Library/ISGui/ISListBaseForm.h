@@ -6,13 +6,15 @@
 #include "ISInterfaceMetaForm.h"
 #include "PMetaClass.h"
 #include "ISQueryModel.h"
-#include "ISSqlModelCore.h"
-#include "ISModelThreadQuery.h"
+//#include "ISSqlModelCore.h"
+#include "ISTcpModel.h"
+//#include "ISModelThreadQuery.h"
 #include "ISBaseTableView.h"
 #include "ISListIndicatorWidget.h"
 #include "ISSearchForm.h"
 #include "ISPageNavigation.h"
 #include "ISFieldEdits.h"
+#include "ISTcpQuery.h"
 //-----------------------------------------------------------------------------
 //!Базовый класс формы списка
 class ISListBaseForm : public ISInterfaceMetaForm
@@ -31,7 +33,7 @@ public:
 	unsigned int GetObjectID(); //Получить идентификатор текущего объекта
 	unsigned int GetObjectID(int RowIndex); //Получить идентификатор объекта по индексу строки
 	int GetRowIndex(int object_id); //Получить индекс строки по идентификатору объекта
-	QSqlRecord GetCurrentRecord(); //Получить текущую запись
+	ISModelRecord GetCurrentRecord() /*const*/; //Получить текущую запись
 	QVariant GetCurrentRecordValue(const QString &FieldName); //Получить значение из столбца по текущей строке
 	QVariant GetCurrentRecordValueDB(const QString &FieldName); //Получить значение из столбца по текущей строке (значение будет взято из базы)
 	QVariant GetRecordValue(const QString &FieldName, int RowIndex); //Получить значение из столбца по индексу строки
@@ -43,14 +45,14 @@ public:
 	void SetSelectObjectAfterUpdate(unsigned int ObjectID); //Изменить код объекта, который будет выделен после операции (создание, создание копии, изменение) над ним 
 	void SetSelectObjectAfterUpdate(const ISVectorUInt &Objects); //Изменить код объекта, который будет выделен после операции (создание, создание копии, изменение) над ним 
 	PMetaTable* GetMetaTable(); //Получить указатель на мета-таблицу
-	ISSqlModelCore* GetSqlModel(); //Получить указатель на модель
+	ISTcpModel* GetTcpModel(); //Получить указатель на модель
 	QStatusBar* GetStatusBar(); //Получить указатель на статус-бар
 
 	virtual void Create(); //Создание объекта
 	virtual void CreateCopy(); //Создание копии объекта
 	virtual void Edit(); //Изменение объекта
 	virtual bool Delete(); //Удаление объекта
-	virtual void Update(); //Обновление данных
+	virtual bool Update(); //Обновление данных
 	virtual void Search(); //Поиск
 	virtual void SearchClear(); //Очистить результаты поиска
 	virtual void Export(); //Выгрузить таблицу
@@ -86,7 +88,6 @@ protected:
 	virtual void AfterShowEvent() override;
 	
 	bool CheckIsSystemObject(); //Проверка объекта на статус "Системный"
-	void ResizeColumnsToContents(); //Подгон ширины полей в соответствии с содержимым
 	void SelectRowObject(const ISVectorUInt &Objects); //Выделение строки по идентификатору объекта
 	void SelectRowIndex(int row_index); //Выделение строки по индексу
 	void SetEnabledActionObject(bool Enabled); //Изменить доступность действий над объектом
@@ -104,7 +105,6 @@ protected:
 	void FieldResized(int LogicalIndex, int WidthOld, int WidthNew);
 
 	void SortingChanged(int LogicalIndex, Qt::SortOrder Order);
-	void VisibleIndicatorWidget(); //Изменение видимости индикатора
 	void ShowSettingsForm();
 
 private:
@@ -114,20 +114,20 @@ private:
 
 private:
 	PMetaTable *MetaTable;
-	ISSqlModelCore *SqlModel;
+	//ISSqlModelCore *SqlModel;
+	ISTcpModel *TcpModel;
 	QLabel *LabelRowCount;
 	QLabel *LabelSelectedRow;
 	ISPageNavigation *PageNavigation;
 	QStatusBar *StatusBar;
 
-	ISModelThreadQuery *ModelThreadQuery;
+	//ISModelThreadQuery *ModelThreadQuery;
+	ISTcpQuery *TcpQueryUpdate;
 	ISQueryModel *QueryModel;
 	ISSearchForm *SearchForm;
 
 	ISVectorUInt SelectObjectAfterUpdate; //Вектор записей, которые нужно выделить после обновления таблицы
-	bool DelegatesCreated; //Индикатор указания созданы делегаты или нет
 	bool IsLoadingData; //Флаг загрузки данных
-	bool SearchFlag;
 	
 	QToolBar *ToolBar;
 	std::map<ISNamespace::ActionType, QAction*> Actions;

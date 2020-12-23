@@ -19,11 +19,14 @@ ISTcpModel::~ISTcpModel()
 //-----------------------------------------------------------------------------
 void ISTcpModel::Clear()
 {
-	beginResetModel();
-	Fields.clear();
-	Records.clear();
-	SortingColumnIndex = -1;
-	endResetModel();
+	if (!Records.empty())
+	{
+		beginResetModel();
+		Fields.clear();
+		Records.clear();
+		SortingColumnIndex = -1;
+		endResetModel();
+	}
 }
 //-----------------------------------------------------------------------------
 void ISTcpModel::SetSource(const QVariantList &fields, const QVariantList &records)
@@ -68,6 +71,22 @@ void ISTcpModel::RemoveRecord(unsigned int RowIndex)
 		Records.erase(Records.begin() + RowIndex);
 		endResetModel();
 	}
+}
+//-----------------------------------------------------------------------------
+ISModelRecord ISTcpModel::GetRecord(int Index) const
+{
+	ISStringToVariantMap RecordMap;
+	if (!Records.empty())
+	{
+		size_t ColumnCount = Fields.size();
+		ISVectorVariant VectorVariant = Records[Index];
+		
+		for (size_t i = 0; i < ColumnCount; ++i)
+		{
+			RecordMap[Fields[i].Name] = VectorVariant[i];
+		}
+	}
+	return RecordMap;
 }
 //-----------------------------------------------------------------------------
 int ISTcpModel::GetFieldIndex(const QString &FieldName) const

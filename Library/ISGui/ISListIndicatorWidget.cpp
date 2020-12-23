@@ -1,13 +1,9 @@
 #include "ISListIndicatorWidget.h"
 #include "ISDefinesGui.h"
-#include "ISConstants.h"
 #include "ISBuffer.h"
 //-----------------------------------------------------------------------------
 ISListIndicatorWidget::ISListIndicatorWidget(QWidget *parent) : QWidget(parent)
 {
-	setVisible(false);
-	setCursor(CURSOR_WAIT);
-
 	QHBoxLayout *Layout = new QHBoxLayout();
 	setLayout(Layout);
 
@@ -39,36 +35,21 @@ ISListIndicatorWidget::~ISListIndicatorWidget()
 void ISListIndicatorWidget::hideEvent(QHideEvent *e)
 {
 	QWidget::hideEvent(e);
-
 	WaitWidget->Stop();
+	LabelImage->setPixmap(QPixmap());
+	LabelText->clear();
 	setToolTip(QString());
 }
 //-----------------------------------------------------------------------------
 void ISListIndicatorWidget::SetVisibleAnimation(bool Visible)
 {
-	if (Visible)
-	{
-		WaitWidget->Start();
-	}
-	else
-	{
-		WaitWidget->Stop();
-	}
-
+	Visible ? WaitWidget->Start() : WaitWidget->Stop();
 	adjustSize();
 }
 //-----------------------------------------------------------------------------
-void ISListIndicatorWidget::SetPixmap(const QPixmap &Pixmap)
+void ISListIndicatorWidget::SetIcon(const QIcon &Icon)
 {
-	if (Pixmap.isNull())
-	{
-		LabelImage->setPixmap(Pixmap);
-	}
-	else
-	{
-		LabelImage->setPixmap(Pixmap.scaled(ISDefines::Gui::SIZE_32_32, Qt::KeepAspectRatio));
-	}
-	
+	LabelImage->setPixmap(Icon.isNull() ? QPixmap() : Icon.pixmap(ISDefines::Gui::SIZE_32_32));
 	adjustSize();
 }
 //-----------------------------------------------------------------------------

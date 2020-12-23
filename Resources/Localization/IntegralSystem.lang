@@ -342,7 +342,6 @@
   <Local Name="ClickToViewHelp" Russian="Нажмите, чтобы просмотреть дополнительную информацию."/>
   <Local Name="WhatDoYouWantToSay" Russian="Что Вы хотите сказать?"/>
   <Local Name="ClickRightButtonMouseForCallContextMenu" Russian="Кликните правой клавишей мыши чтобы вызвать контекстное меню."/>
-  <Local Name="ClickCreateFromCreateObject" Russian="Нажмите кнопку &quot;Создать&quot; чтобы добавить запись."/>
   <Local Name="SelectExportType" Russian="Выберите тип экспорта"/>
   <Local Name="ClickFromShowList" Russian="Нажмите, чтобы раскрыть справочник."/>
   <Local Name="RecordAddFavorites" Russian="Запись &quot;%1&quot; добавлена в избранное"/>
@@ -401,7 +400,6 @@
   <Local Name="Search.Operator.Less" Russian="Меньше"/>
   <Local Name="Search.Operator.MoreOrEqual" Russian="Больше или равно"/>
   <Local Name="Search.Operator.LessOrEqual" Russian="Меньше или равно"/>
-  <Local Name="Search.Results.Empty" Russian="К сожалению, ваш поисковый запрос не дал результатов."/>
   <Local Name="Search.ResultCount" Russian="Найдено записей"/>
 
   <!--Printing-->
@@ -690,5 +688,6 @@
   <Local Name="PlayRecordCall" Russian="Воспроизвести запись разговора"/>
   <Local Name="NotConnectToServer" Russian="Подключение к серверу отсутствует."/>
   <Local Name="RecordCallLoading" Russian="Запись разговора загружается..."/>
+  <Local Name="ErrorLoadingData" Russian="Ошибка загрузки данных"/>
 
 </LANG>

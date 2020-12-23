@@ -142,7 +142,7 @@ ISOilSphere::CounterpartyListForm::~CounterpartyListForm()
 void ISOilSphere::CounterpartyListForm::LoadDataAfterEvent()
 {
 	ISListBaseForm::LoadDataAfterEvent();
-	LabelTotal->setText(LANG("OilSphere.Counterparty.Total").arg(DOUBLE_PREPAREM(GetSqlModel()->GetFieldSum<double>("Debt", 0.0))));
+	//LabelTotal->setText(LANG("OilSphere.Counterparty.Total").arg(DOUBLE_PREPAREM(GetSqlModel()->GetFieldSum<double>("Debt", 0.0))));
 }
 //-----------------------------------------------------------------------------
 void ISOilSphere::CounterpartyListForm::ShowDebt()
@@ -368,14 +368,14 @@ ISOilSphere::ImplementationListForm::~ImplementationListForm()
 void ISOilSphere::ImplementationListForm::LoadDataAfterEvent()
 {
 	ISListBaseForm::LoadDataAfterEvent();
-	LabelTotal->setText(LANG("OilSphere.Implementation.Total")
+	/*LabelTotal->setText(LANG("OilSphere.Implementation.Total")
 		.arg(GetSqlModel()->GetFieldSum<int>("LoadCount", 0))
 		.arg(GetSqlModel()->GetFieldSum<int>("UnloadCount", 0))
 		.arg(DOUBLE_PREPARE(GetSqlModel()->GetFieldSum<double>("LoadWeightNet", 0.0)))
 		.arg(DOUBLE_PREPARE(GetSqlModel()->GetFieldSum<double>("UnloadWeightNet", 0.0)))
 		.arg(DOUBLE_PREPAREM(GetSqlModel()->GetFieldSum<double>("LoadCost", 0.0)))
 		.arg(DOUBLE_PREPAREM(GetSqlModel()->GetFieldSum<double>("UnloadCost", 0.0)))
-		.arg(DOUBLE_PREPARE(GetSqlModel()->GetFieldSum<double>("WeightDifference", 0.0))));
+		.arg(DOUBLE_PREPARE(GetSqlModel()->GetFieldSum<double>("WeightDifference", 0.0))));*/
 }
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
@@ -588,7 +588,7 @@ ISOilSphere::GasStationStatementListForm::~GasStationStatementListForm()
 void ISOilSphere::GasStationStatementListForm::LoadDataAfterEvent()
 {
 	ISListBaseForm::LoadDataAfterEvent();
-	LabelTotal->setText(LANG("OilSphere.GasStationStatement.Total")
+	/*LabelTotal->setText(LANG("OilSphere.GasStationStatement.Total")
 		.arg(DOUBLE_PREPAREM(GetSqlModel()->GetFieldSum<double>("BalanceBeginChange", 0.0)))
 		.arg(DOUBLE_PREPARE(GetSqlModel()->GetFieldSum<double>("VolumeIncome", 0.0)))
 		.arg(DOUBLE_PREPARE(GetSqlModel()->GetFieldSum<double>("VolumeHolidaysCounters", 0.0)))
@@ -610,7 +610,7 @@ void ISOilSphere::GasStationStatementListForm::LoadDataAfterEvent()
 		.arg(DOUBLE_PREPAREM(GetSqlModel()->GetFieldSum<double>("CashboxKKMTotal", 0.0)))
 		.arg(DOUBLE_PREPAREM(GetSqlModel()->GetFieldSum<double>("CashboxCollectionAmount", 0.0)))
 		.arg(DOUBLE_PREPAREM(GetSqlModel()->GetFieldSum<double>("CashboxCollectionAmountKKM", 0.0)))
-		.arg(DOUBLE_PREPAREM(GetSqlModel()->GetFieldSum<double>("CashboxAdministrativeExpenses", 0.0))));
+		.arg(DOUBLE_PREPAREM(GetSqlModel()->GetFieldSum<double>("CashboxAdministrativeExpenses", 0.0))));*/
 }
 //-----------------------------------------------------------------------------
 void ISOilSphere::GasStationStatementListForm::StockChanged(const QVariant &Value)
@@ -944,11 +944,11 @@ void ISOilSphere::Debet1ListForm::LoadDataAfterEvent()
 {
 	ISListBaseForm::LoadDataAfterEvent();
 	double Total = 0, Calculation = 0;
-	for (int Row = 0; Row < GetSqlModel()->rowCount(); ++Row)
+	for (int Row = 0; Row < /*GetSqlModel*/GetTcpModel()->rowCount(); ++Row)
 	{
-		QString Temp = GetSqlModel()->data(GetSqlModel()->index(Row, GetSqlModel()->GetFieldIndex("Total"))).toString();
+		QString Temp = /*GetSqlModel*/GetTcpModel()->data(/*GetSqlModel*/GetTcpModel()->index(Row, /*GetSqlModel*/GetTcpModel()->GetFieldIndex("Total"))).toString();
 		Total += Temp.replace(SYMBOL_COMMA, SYMBOL_POINT).toDouble();
-		Temp = GetSqlModel()->data(GetSqlModel()->index(Row, GetSqlModel()->GetFieldIndex("Calculation"))).toString();
+		Temp = /*GetSqlModel*/GetTcpModel()->data(/*GetSqlModel*/GetTcpModel()->index(Row, /*GetSqlModel*/GetTcpModel()->GetFieldIndex("Calculation"))).toString();
 		Calculation += Temp.replace(SYMBOL_COMMA, SYMBOL_POINT).toDouble();
 	}
 	Label->setText(LANG("OilSphere.Debet.Label").arg(DOUBLE_PREPARE(Total)).arg(DOUBLE_PREPARE(Calculation)).arg(DOUBLE_PREPARE(Total - Calculation)));
@@ -974,11 +974,11 @@ void ISOilSphere::Debet2ListForm::LoadDataAfterEvent()
 {
 	ISListBaseForm::LoadDataAfterEvent();
 	double Total = 0, Calculation = 0;
-	for (int Row = 0; Row < GetSqlModel()->rowCount(); ++Row)
+	for (int Row = 0; Row < /*GetSqlModel*/GetTcpModel()->rowCount(); ++Row)
 	{
-		QString Temp = GetSqlModel()->data(GetSqlModel()->index(Row, GetSqlModel()->GetFieldIndex("Total"))).toString();
+		QString Temp = /*GetSqlModel*/GetTcpModel()->data(/*GetSqlModel*/GetTcpModel()->index(Row, /*GetSqlModel*/GetTcpModel()->GetFieldIndex("Total"))).toString();
 		Total += Temp.replace(SYMBOL_COMMA, SYMBOL_POINT).toDouble();
-		Temp = GetSqlModel()->data(GetSqlModel()->index(Row, GetSqlModel()->GetFieldIndex("Calculation"))).toString();
+		Temp = /*GetSqlModel*/GetTcpModel()->data(/*GetSqlModel*/GetTcpModel()->index(Row, /*GetSqlModel*/GetTcpModel()->GetFieldIndex("Calculation"))).toString();
 		Calculation += Temp.replace(SYMBOL_COMMA, SYMBOL_POINT).toDouble();
 	}
 	Label->setText(LANG("OilSphere.Debet.Label").arg(DOUBLE_PREPARE(Total)).arg(DOUBLE_PREPARE(Calculation)).arg(DOUBLE_PREPARE(Total - Calculation)));
@@ -1004,11 +1004,11 @@ void ISOilSphere::Debet3ListForm::LoadDataAfterEvent()
 {
 	ISListBaseForm::LoadDataAfterEvent();
 	double Total = 0, Calculation = 0;
-	for (int Row = 0; Row < GetSqlModel()->rowCount(); ++Row)
+	for (int Row = 0; Row < /*GetSqlModel*/GetTcpModel()->rowCount(); ++Row)
 	{
-		QString Temp = GetSqlModel()->data(GetSqlModel()->index(Row, GetSqlModel()->GetFieldIndex("Total"))).toString();
+		QString Temp = /*GetSqlModel*/GetTcpModel()->data(/*GetSqlModel*/GetTcpModel()->index(Row, /*GetSqlModel*/GetTcpModel()->GetFieldIndex("Total"))).toString();
 		Total += Temp.replace(SYMBOL_COMMA, SYMBOL_POINT).toDouble();
-		Temp = GetSqlModel()->data(GetSqlModel()->index(Row, GetSqlModel()->GetFieldIndex("Calculation"))).toString();
+		Temp = /*GetSqlModel*/GetTcpModel()->data(/*GetSqlModel*/GetTcpModel()->index(Row, /*GetSqlModel*/GetTcpModel()->GetFieldIndex("Calculation"))).toString();
 		Calculation += Temp.replace(SYMBOL_COMMA, SYMBOL_POINT).toDouble();
 	}
 	Label->setText(LANG("OilSphere.Debet.Label").arg(DOUBLE_PREPARE(Total)).arg(DOUBLE_PREPARE(Calculation)).arg(DOUBLE_PREPARE(Total - Calculation)));
@@ -1034,11 +1034,11 @@ void ISOilSphere::Debet4ListForm::LoadDataAfterEvent()
 {
 	ISListBaseForm::LoadDataAfterEvent();
 	double Total = 0, Calculation = 0;
-	for (int Row = 0; Row < GetSqlModel()->rowCount(); ++Row)
+	for (int Row = 0; Row < /*GetSqlModel*/GetTcpModel()->rowCount(); ++Row)
 	{
-		QString Temp = GetSqlModel()->data(GetSqlModel()->index(Row, GetSqlModel()->GetFieldIndex("Total"))).toString();
+		QString Temp = /*GetSqlModel*/GetTcpModel()->data(/*GetSqlModel*/GetTcpModel()->index(Row, /*GetSqlModel*/GetTcpModel()->GetFieldIndex("Total"))).toString();
 		Total += Temp.replace(SYMBOL_COMMA, SYMBOL_POINT).toDouble();
-		Temp = GetSqlModel()->data(GetSqlModel()->index(Row, GetSqlModel()->GetFieldIndex("Calculation"))).toString();
+		Temp = /*GetSqlModel*/GetTcpModel()->data(/*GetSqlModel*/GetTcpModel()->index(Row, /*GetSqlModel*/GetTcpModel()->GetFieldIndex("Calculation"))).toString();
 		Calculation += Temp.replace(SYMBOL_COMMA, SYMBOL_POINT).toDouble();
 	}
 	Label->setText(LANG("OilSphere.Debet.Label").arg(DOUBLE_PREPARE(Total)).arg(DOUBLE_PREPARE(Calculation)).arg(DOUBLE_PREPARE(Total - Calculation)));
@@ -1064,11 +1064,11 @@ void ISOilSphere::Debet5ListForm::LoadDataAfterEvent()
 {
 	ISListBaseForm::LoadDataAfterEvent();
 	double Total = 0, Calculation = 0;
-	for (int Row = 0; Row < GetSqlModel()->rowCount(); ++Row)
+	for (int Row = 0; Row < /*GetSqlModel*/GetTcpModel()->rowCount(); ++Row)
 	{
-		QString Temp = GetSqlModel()->data(GetSqlModel()->index(Row, GetSqlModel()->GetFieldIndex("Total"))).toString();
+		QString Temp = /*GetSqlModel*/GetTcpModel()->data(/*GetSqlModel*/GetTcpModel()->index(Row, /*GetSqlModel*/GetTcpModel()->GetFieldIndex("Total"))).toString();
 		Total += Temp.replace(SYMBOL_COMMA, SYMBOL_POINT).toDouble();
-		Temp = GetSqlModel()->data(GetSqlModel()->index(Row, GetSqlModel()->GetFieldIndex("Calculation"))).toString();
+		Temp = /*GetSqlModel*/GetTcpModel()->data(/*GetSqlModel*/GetTcpModel()->index(Row, /*GetSqlModel*/GetTcpModel()->GetFieldIndex("Calculation"))).toString();
 		Calculation += Temp.replace(SYMBOL_COMMA, SYMBOL_POINT).toDouble();
 	}
 	Label->setText(LANG("OilSphere.Debet.Label").arg(DOUBLE_PREPARE(Total)).arg(DOUBLE_PREPARE(Calculation)).arg(DOUBLE_PREPARE(Total - Calculation)));
@@ -1095,10 +1095,10 @@ ISOilSphere::DriverCostListForm::~DriverCostListForm()
 void ISOilSphere::DriverCostListForm::LoadDataAfterEvent()
 {
 	ISListBaseForm::LoadDataAfterEvent();
-	LabelTotal->setText(LANG("OilSphere.DriverCost.Total")
+	/*LabelTotal->setText(LANG("OilSphere.DriverCost.Total")
 		.arg(DOUBLE_PREPAREM(GetSqlModel()->GetFieldSum<double>("Coming", 0.0)))
 		.arg(DOUBLE_PREPAREM(GetSqlModel()->GetFieldSum<double>("Consumption", 0.0)))
-		.arg(DOUBLE_PREPAREM(GetSqlModel()->GetFieldSum<double>("Remainder", 0.0))));
+		.arg(DOUBLE_PREPAREM(GetSqlModel()->GetFieldSum<double>("Remainder", 0.0))));*/
 }
 //-----------------------------------------------------------------------------
 void ISOilSphere::DriverCostListForm::CreateOnBased()
@@ -1195,7 +1195,7 @@ ISOilSphere::MoveWagonListForm::~MoveWagonListForm()
 void ISOilSphere::MoveWagonListForm::LoadDataAfterEvent()
 {
 	ISListBaseForm::LoadDataAfterEvent();
-	LabelTotal->setText(LANG("OilSphere.MoveWagon.Total")
+	/*LabelTotal->setText(LANG("OilSphere.MoveWagon.Total")
 		.arg(DOUBLE_PREPARE(GetSqlModel()->GetFieldSum<double>("Kilogram", 0.0)))
 		.arg(DOUBLE_PREPAREM(GetSqlModel()->GetFieldSum<double>("Price", 0.0)))
 		.arg(DOUBLE_PREPAREM(GetSqlModel()->GetFieldSum<double>("Sum", 0.0)))
@@ -1204,6 +1204,6 @@ void ISOilSphere::MoveWagonListForm::LoadDataAfterEvent()
 		.arg(DOUBLE_PREPAREM(GetSqlModel()->GetFieldSum<double>("Transshipment", 0.0)))
 		.arg(DOUBLE_PREPARE(GetSqlModel()->GetFieldSum<double>("TechnicalLossesWeight", 0.0)))
 		.arg(DOUBLE_PREPAREM(GetSqlModel()->GetFieldSum<double>("PriceFull", 0.0)))
-		.arg(DOUBLE_PREPAREM(GetSqlModel()->GetFieldSum<double>("TotalCost", 0.0))));
+		.arg(DOUBLE_PREPAREM(GetSqlModel()->GetFieldSum<double>("TotalCost", 0.0))));*/
 }
 //-----------------------------------------------------------------------------

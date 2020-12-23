@@ -14,7 +14,6 @@ ISProtocolObjectListForm::~ISProtocolObjectListForm()
 void ISProtocolObjectListForm::LoadDataAfterEvent()
 {
 	ISListBaseForm::LoadDataAfterEvent();
-
 	HideField("ObjectID");
 	HideField("TableLocalName");
 }

@@ -14,7 +14,7 @@ public:
 	void hideEvent(QHideEvent *e);
 
 	void SetVisibleAnimation(bool Visible); //Изменить анимацию и её видимость
-	void SetPixmap(const QPixmap &Pixmap); //Изменить картинку
+	void SetIcon(const QIcon &Icon); //Изменить картинку
 	void SetText(const QString &Text); //Изменить текст
 
 private:

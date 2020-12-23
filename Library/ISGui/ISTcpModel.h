@@ -17,6 +17,7 @@ public:
 	void SetSorting(const QString &sorting_field, Qt::SortOrder sorting_order);
 
 	void RemoveRecord(unsigned int RowIndex); //Удаление записи из модели
+	ISModelRecord GetRecord(int Index) const; //Получить строку по индексу
 	int GetFieldIndex(const QString &FieldName) const;
 
 	QVariant data(const QModelIndex &ModelIndex, int Role = Qt::DisplayRole) const override;

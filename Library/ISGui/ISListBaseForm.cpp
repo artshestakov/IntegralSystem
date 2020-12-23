@@ -39,14 +39,13 @@ ISListBaseForm::ISListBaseForm(const QString &TableName, QWidget *parent)
 	: ISInterfaceMetaForm(parent),
 	ActionObjectGroup(new QActionGroup(this)), //Группа действий, остосящихся только к одному объекту
 	MetaTable(ISMetaData::Instance().GetMetaTable(TableName)),
-	SqlModel(nullptr),
+	//SqlModel(nullptr),
+	TcpQueryUpdate(new ISTcpQuery(API_GET_TABLE_DATA)),
 	PageNavigation(nullptr),
 	QueryModel(nullptr),
 	SearchForm(nullptr),
 	SelectObjectAfterUpdate(0),
-	DelegatesCreated(false),
-	IsLoadingData(false),
-	SearchFlag(false)
+	IsLoadingData(false)
 {
 	{//Создание действий
 		//Создать
@@ -193,11 +192,11 @@ ISListBaseForm::ISListBaseForm(const QString &TableName, QWidget *parent)
 		TableView = new ISBaseTableView(this);
 		TableView->SetCornerText(LANG("Reduction.SerialNumber"));
 		TableView->SetCornerToolTip(LANG("OrdinalNumber"));
-		TableView->horizontalHeader()->setSortIndicator(0, Qt::AscendingOrder);
+		//TableView->horizontalHeader()->setSortIndicator(0, Qt::AscendingOrder);
 		connect(TableView, &ISBaseTableView::doubleClicked, this, &ISListBaseForm::DoubleClickedTable);
 		connect(TableView, &ISBaseTableView::customContextMenuRequested, this, &ISListBaseForm::ShowContextMenu);
 		connect(TableView, &ISBaseTableView::CornerClicked, this, &ISListBaseForm::CornerButtonClicked);
-		connect(TableView->horizontalHeader(), &QHeaderView::sortIndicatorChanged, this, &ISListBaseForm::SortingChanged);
+		//connect(TableView->horizontalHeader(), &QHeaderView::sortIndicatorChanged, this, &ISListBaseForm::SortingChanged);
 		FieldResized(true);
 		GetMainLayout()->addWidget(TableView);
 
@@ -220,23 +219,25 @@ ISListBaseForm::ISListBaseForm(const QString &TableName, QWidget *parent)
 	}
 
 	{//Создание моделей
-		SqlModel = new ISSqlModelCore(MetaTable, TableView);
-		TableView->setModel(SqlModel);
+		//SqlModel = new ISSqlModelCore(MetaTable, TableView);
+		TcpModel = new ISTcpModel(TableView);
 
+		TableView->setModel(/*SqlModel*/TcpModel);
+		
 		QueryModel = new ISQueryModel(MetaTable, ISNamespace::QMT_List, this);
 
 		//Это соединение обязательно должно быть после присваивания модели к QTableView
 		connect(TableView->selectionModel(), &QItemSelectionModel::selectionChanged, this, &ISListBaseForm::SelectedRowEvent);
 
 		//Создание потоковой модели
-		ModelThreadQuery = new ISModelThreadQuery(this);
-		connect(ModelThreadQuery, &ISModelThreadQuery::Started, this, &ISListBaseForm::ModelThreadStarted);
-		connect(ModelThreadQuery, &ISModelThreadQuery::Finished, this, &ISListBaseForm::ModelThreadFinished);
-		connect(ModelThreadQuery, &ISModelThreadQuery::ExecutedQuery, this, &ISListBaseForm::ModelThreadLoadingData);
-		connect(ModelThreadQuery, &ISModelThreadQuery::Results, SqlModel, &ISSqlModelCore::SetRecords);
-		connect(ModelThreadQuery, &ISModelThreadQuery::ErrorConnection, this, &ISListBaseForm::ModelThreadErrorConnection);
-		connect(ModelThreadQuery, &ISModelThreadQuery::ErrorQuery, this, &ISListBaseForm::ModelThreadErrorQuery);
-		ModelThreadQuery->start(QThread::TimeCriticalPriority); //Запуск потока
+		//ModelThreadQuery = new ISModelThreadQuery(this);
+		//connect(ModelThreadQuery, &ISModelThreadQuery::Started, this, &ISListBaseForm::ModelThreadStarted);
+		//connect(ModelThreadQuery, &ISModelThreadQuery::Finished, this, &ISListBaseForm::ModelThreadFinished);
+		//connect(ModelThreadQuery, &ISModelThreadQuery::ExecutedQuery, this, &ISListBaseForm::ModelThreadLoadingData);
+		//connect(ModelThreadQuery, &ISModelThreadQuery::Results, SqlModel, &ISSqlModelCore::SetRecords);
+		//connect(ModelThreadQuery, &ISModelThreadQuery::ErrorConnection, this, &ISListBaseForm::ModelThreadErrorConnection);
+		//connect(ModelThreadQuery, &ISModelThreadQuery::ErrorQuery, this, &ISListBaseForm::ModelThreadErrorQuery);
+		//ModelThreadQuery->start(QThread::TimeCriticalPriority); //Запуск потока
 	}
 	
 	{//Создание статус-бара
@@ -244,7 +245,7 @@ ISListBaseForm::ISListBaseForm(const QString &TableName, QWidget *parent)
 		StatusBar->setSizeGripEnabled(false);
 		GetMainLayout()->addWidget(StatusBar);
 
-		LabelRowCount = new QLabel(LANG("RecordsCount") + ": -", StatusBar);
+		LabelRowCount = new QLabel(LANG("RecordsCount") + ": 0", StatusBar);
 		LabelRowCount->setVisible(SETTING_BOOL(CONST_UID_SETTING_TABLES_SHOWCOUNTRECORD));
 		StatusBar->addWidget(LabelRowCount);
 
@@ -270,8 +271,8 @@ ISListBaseForm::ISListBaseForm(const QString &TableName, QWidget *parent)
 //-----------------------------------------------------------------------------
 ISListBaseForm::~ISListBaseForm()
 {
-	ModelThreadQuery->quit();
-	IS_ASSERT(ModelThreadQuery->wait(), "Not wait() thread");
+	//ModelThreadQuery->quit();
+	//IS_ASSERT(ModelThreadQuery->wait(), "Not wait() thread");
 
 	if (SearchForm)
 	{
@@ -297,14 +298,14 @@ unsigned int ISListBaseForm::GetObjectID()
 //-----------------------------------------------------------------------------
 unsigned int ISListBaseForm::GetObjectID(int RowIndex)
 {
-	return SqlModel->index(RowIndex, 0).data().toInt();
+	return /*SqlModel*/TcpModel->index(RowIndex, 0).data().toInt();
 }
 //-----------------------------------------------------------------------------
 int ISListBaseForm::GetRowIndex(int object_id)
 {
-	for (int i = 0; i < SqlModel->rowCount(); ++i)
+	for (int i = 0; i < TcpModel->rowCount(); ++i)
 	{
-		int RowIndex = SqlModel->data(SqlModel->index(i, 0)).toInt();
+		int RowIndex = TcpModel->data(TcpModel->index(i, 0)).toInt();
 		if (RowIndex == object_id)
 		{
 			return i;
@@ -313,14 +314,15 @@ int ISListBaseForm::GetRowIndex(int object_id)
 	return -1;
 }
 //-----------------------------------------------------------------------------
-QSqlRecord ISListBaseForm::GetCurrentRecord()
+ISModelRecord ISListBaseForm::GetCurrentRecord() /*const*/
 {
-	return SqlModel->GetRecord(GetCurrentRowIndex());
+	return TcpModel->GetRecord(GetCurrentRowIndex());
 }
 //-----------------------------------------------------------------------------
 QVariant ISListBaseForm::GetCurrentRecordValue(const QString &FieldName)
 {
-	return GetCurrentRecord().value(FieldName);
+	//return GetCurrentRecord().value(FieldName);
+	return GetCurrentRecord()[FieldName];
 }
 //-----------------------------------------------------------------------------
 QVariant ISListBaseForm::GetCurrentRecordValueDB(const QString &FieldName)
@@ -343,7 +345,8 @@ QVariant ISListBaseForm::GetCurrentRecordValueDB(const QString &FieldName)
 //-----------------------------------------------------------------------------
 QVariant ISListBaseForm::GetRecordValue(const QString &FieldName, int RowIndex)
 {
-	return SqlModel->GetRecord(RowIndex).value(FieldName);
+	//return SqlModel->GetRecord(RowIndex).value(FieldName);
+	return TcpModel->GetRecord(RowIndex)[FieldName];
 }
 //-----------------------------------------------------------------------------
 ISVectorUInt ISListBaseForm::GetSelectedIDs()
@@ -368,9 +371,9 @@ int ISListBaseForm::GetCountSelected()
 ISVectorInt ISListBaseForm::GetIDs() const
 {
 	ISVectorInt VectorInt;
-	for (int i = 0; i < SqlModel->rowCount(); ++i)
+	for (int i = 0; i < /*SqlModel*/TcpModel->rowCount(); ++i)
 	{
-		VectorInt.emplace_back(SqlModel->data(SqlModel->index(i, SqlModel->GetFieldIndex("ID"))).toInt());
+		VectorInt.emplace_back(/*SqlModel*/TcpModel->data(/*SqlModel*/TcpModel->index(i, /*SqlModel*/TcpModel->GetFieldIndex("ID"))).toInt());
 	}
 	return VectorInt;
 }
@@ -409,9 +412,9 @@ PMetaTable* ISListBaseForm::GetMetaTable()
 	return MetaTable;
 }
 //-----------------------------------------------------------------------------
-ISSqlModelCore* ISListBaseForm::GetSqlModel()
+ISTcpModel* ISListBaseForm::GetTcpModel()
 {
-	return SqlModel;
+	return TcpModel;
 }
 //-----------------------------------------------------------------------------
 QStatusBar* ISListBaseForm::GetStatusBar()
@@ -460,23 +463,13 @@ void ISListBaseForm::FieldResized(bool Include)
 void ISListBaseForm::FieldResized(int LogicalIndex, int WidthOld, int WidthNew)
 {
 	Q_UNUSED(WidthOld);
-	ISColumnSizer::Instance().SetColumnSizeNew(MetaTable->Name, SqlModel->headerData(LogicalIndex, Qt::Horizontal, Qt::UserRole).toString(), WidthNew);
+	ISColumnSizer::Instance().SetColumnSizeNew(MetaTable->Name, /*SqlModel*/TcpModel->headerData(LogicalIndex, Qt::Horizontal, Qt::UserRole).toString(), WidthNew);
 }
 //-----------------------------------------------------------------------------
 void ISListBaseForm::SortingChanged(int LogicalIndex, Qt::SortOrder Order)
 {
 	Q_UNUSED(LogicalIndex);
 	Q_UNUSED(Order);
-}
-//-----------------------------------------------------------------------------
-void ISListBaseForm::VisibleIndicatorWidget()
-{
-	bool is_visible = !SqlModel->rowCount();
-	ListIndicatorWidget->setVisible(is_visible);
-	ListIndicatorWidget->SetPixmap(is_visible ? BUFFER_ICONS("LabelNoDataTable").pixmap(ISDefines::Gui::SIZE_32_32) : QPixmap());
-	ListIndicatorWidget->SetText(is_visible ? LANG("NoData") : QString());
-	ListIndicatorWidget->setCursor(is_visible ? CURSOR_WHATS_THIS : CURSOR_WAIT);
-	ListIndicatorWidget->setToolTip(is_visible ? LANG("ClickCreateFromCreateObject") : QString());
 }
 //-----------------------------------------------------------------------------
 void ISListBaseForm::ShowSettingsForm()
@@ -516,12 +509,15 @@ void ISListBaseForm::SelectedRowEvent(const QItemSelection &ItemSelected, const 
 //-----------------------------------------------------------------------------
 void ISListBaseForm::LoadData()
 {
-	Update();
+	if (Update())
+	{
+		CreateDelegates();
+	}
 }
 //-----------------------------------------------------------------------------
 void ISListBaseForm::CornerButtonClicked()
 {
-	if (SqlModel->rowCount())
+	if (TcpModel->rowCount())
 	{
 		ISGui::SetWaitGlobalCursor(true);
 		TableView->selectAll();
@@ -532,20 +528,7 @@ void ISListBaseForm::CornerButtonClicked()
 //-----------------------------------------------------------------------------
 void ISListBaseForm::LoadDataAfterEvent()
 {
-	ResizeColumnsToContents();
-	LabelRowCount->setText(QString("%1: %2").arg(LANG("RecordsCount")).arg(SqlModel->rowCount()));
-
-	SetEnabledActionObject(false);
-	SelectRowObject(SelectObjectAfterUpdate);
-	VisibleIndicatorWidget();
-
-	//Если данных в модели нет и загрузка была после поиска - показываем соответствующую надпись и меняем флаг поиска
-	if (!SqlModel->rowCount() && SearchFlag)
-	{
-		SearchFlag = false;
-		ListIndicatorWidget->SetText(LANG("Search.Results.Empty"));
-	}
-	emit Updated();
+	
 }
 //-----------------------------------------------------------------------------
 void ISListBaseForm::AfterShowEvent()
@@ -627,14 +610,9 @@ QAction* ISListBaseForm::GetSpecialAction(ISNamespace::ActionSpecialType action_
 //-----------------------------------------------------------------------------
 void ISListBaseForm::CreateDelegates()
 {
-	if (DelegatesCreated) //Если делегаты уже созданы - выходить из метода
+	for (int i = 0; i < TcpModel->columnCount(); ++i) //Обход полей
 	{
-		return;
-	}
-
-	for (int i = 0; i < SqlModel->columnCount(); ++i) //Обход полей
-	{
-		QString HeaderData = SqlModel->headerData(i, Qt::Horizontal, Qt::UserRole).toString();
+		QString HeaderData = TcpModel->headerData(i, Qt::Horizontal, Qt::UserRole).toString();
 		PMetaField *MetaField = MetaTable->GetField(HeaderData);
 
 		QAbstractItemDelegate *AbstractItemDelegate = TableView->itemDelegateForColumn(i);
@@ -654,7 +632,6 @@ void ISListBaseForm::CreateDelegates()
 			}
 		}
 	}
-	DelegatesCreated = true;
 }
 //-----------------------------------------------------------------------------
 bool ISListBaseForm::CheckIsSystemObject()
@@ -665,30 +642,14 @@ bool ISListBaseForm::CheckIsSystemObject()
 void ISListBaseForm::HideField(const QString &FieldName)
 {
 	FieldResized(false);
-	TableView->hideColumn(SqlModel->GetFieldIndex(FieldName));
+	TableView->hideColumn(TcpModel->GetFieldIndex(FieldName));
 	FieldResized(true);
 }
 //-----------------------------------------------------------------------------
 void ISListBaseForm::ShowField(const QString &FieldName)
 {
 	FieldResized(false);
-	TableView->showColumn(SqlModel->GetFieldIndex(FieldName));
-	FieldResized(true);
-}
-//-----------------------------------------------------------------------------
-void ISListBaseForm::ResizeColumnsToContents()
-{
-	FieldResized(false);
-	for (int i = 0, c = SqlModel->columnCount(); i < c; ++i)
-	{
-		QString FieldName = SqlModel->headerData(i, Qt::Horizontal, Qt::UserRole).toString();
-		int ColumnSize = ISColumnSizer::Instance().GetColumnSize(MetaTable->Name, FieldName);
-		if (ColumnSize) //Если есть размер столбца в памяти, использовать его
-		{
-			TableView->setColumnWidth(i, ColumnSize);
-		}
-	}
-	TableView->resizeColumnToContents(SqlModel->GetFieldIndex("ID"));
+	TableView->showColumn(TcpModel->GetFieldIndex(FieldName));
 	FieldResized(true);
 }
 //-----------------------------------------------------------------------------
@@ -741,38 +702,38 @@ void ISListBaseForm::SetEnabledPageNavigation(bool Enabled)
 //-----------------------------------------------------------------------------
 void ISListBaseForm::ModelThreadStarted()
 {
-	ISGui::SetWaitGlobalCursor(true);
+	//ISGui::SetWaitGlobalCursor(true);
 
-	ListIndicatorWidget->SetPixmap(QPixmap());
+	/*ListIndicatorWidget->SetPixmap(QPixmap());
 	ListIndicatorWidget->SetVisibleAnimation(true);
 	ListIndicatorWidget->SetText(LANG("LoadDataPleceWait"));
-	ListIndicatorWidget->setVisible(true);
+	ListIndicatorWidget->setVisible(true);*/
 
 	LabelRowCount->setText(QString("%1: %2...").arg(LANG("RecordsCount")).arg(LANG("Calculated"))); //Изменение значения в надписе "Записей"
-	ToolBar->setEnabled(false);
-	SetEnabledPageNavigation(false);
+	//ToolBar->setEnabled(false);
+	//SetEnabledPageNavigation(false);
 }
 //-----------------------------------------------------------------------------
 void ISListBaseForm::ModelThreadLoadingData()
 {
-	ListIndicatorWidget->SetText(LANG("FillTableData"));
+	//ListIndicatorWidget->SetText(LANG("FillTableData"));
 }
 //-----------------------------------------------------------------------------
 void ISListBaseForm::ModelThreadFinished()
 {
 	IsLoadingData = false;
-	ISGui::SetWaitGlobalCursor(false);
+	//ISGui::SetWaitGlobalCursor(false);
 
-	ListIndicatorWidget->hide();
-	ToolBar->setEnabled(true);
-	SetEnabledPageNavigation(true);
+	//ListIndicatorWidget->hide();
+	//ToolBar->setEnabled(true);
+	//SetEnabledPageNavigation(true);
 
 	if (!SETTING_BOOL(CONST_UID_SETTING_TABLE_VISIBLE_FIELD_ID))
 	{
 		HideField("ID");
 	}
-	HideField("IsSystem");
-	CreateDelegates();
+	//HideField("IsSystem");
+	//CreateDelegates();
 	LoadDataAfterEvent();
 }
 //-----------------------------------------------------------------------------
@@ -861,22 +822,97 @@ void ISListBaseForm::Edit()
 	emit AddFormFromTab(ObjectFormBase);
 }
 //-----------------------------------------------------------------------------
-void ISListBaseForm::Update()
+bool ISListBaseForm::Update()
 {
-	SelectObjectAfterUpdate = GetSelectedIDs(); //Запоминаем выделенные записи перед обновлением таблицы
+	SetSelectObjectAfterUpdate(GetSelectedIDs()); //Запоминаем выделенные записи перед обновлением таблицы
 	IsLoadingData = true; //Устанавливаем флаг что сейчас происходит загрузка данных
-	SqlModel->Clear();	 //Чистим модель
+	TcpModel->Clear(); //Чистим модель
 
-	QueryModel->SetParentFilter(GetParentObjectID(), GetParentFilterField());
-	ModelThreadQuery->Execute(QueryModel->GetQueryText(), QueryModel->GetConditions());
+	//Проводим операции с интерфейсом перед загрузкой
+	ISGui::SetWaitGlobalCursor(true);
+	ListIndicatorWidget->SetIcon(QIcon());
+	ListIndicatorWidget->SetVisibleAnimation(true);
+	ListIndicatorWidget->SetText(LANG("LoadDataPleceWait"));
+	ListIndicatorWidget->show();
+	repaint(); //Нужно для корректной отрисовки виджета ListIndicatorWidget
+	ToolBar->setEnabled(false);
+	SetEnabledPageNavigation(false);
 
-	LabelSelectedRow->setVisible(false);
-	LabelSelectedRow->clear();
+	//Запрашиваем данные
+	TcpQueryUpdate->BindValue("TableName", MetaTable->Name);
+	bool Result = TcpQueryUpdate->Execute();
 
-	if (SETTING_BOOL(CONST_UID_SETTING_TABLES_PAGE_NAVIGATION))
+	//Очередные операции с интерфейсом после загрузки
+	ToolBar->setEnabled(true);
+	SetEnabledPageNavigation(true);
+	ISGui::SetWaitGlobalCursor(false);
+
+	if (Result) //Запрос прошёл успешно
 	{
-		PageNavigation->SetRowCount(ISDatabaseHelper::GetCountRows(MetaTable->Name));
+		//Забираем ответ и устанавливаем его в модель
+		ListIndicatorWidget->SetText(LANG("FillTableData"));
+		QVariantMap AnswerMap = TcpQueryUpdate->TakeAnswer();
+		TcpModel->SetSource(AnswerMap["FieldList"].toList(), AnswerMap["RecordList"].toList());
+
+		ListIndicatorWidget->SetVisibleAnimation(false); //Выключаем анимацию
+
+		QVariantMap ServiceInfo = AnswerMap["ServiceInfo"].toMap();
+		QString SortingField = ServiceInfo["SortingField"].toString();
+		Qt::SortOrder SortingOrder = static_cast<Qt::SortOrder>(ServiceInfo["SortingOrder"].toUInt());
+		TcpModel->SetSorting(SortingField, SortingOrder);
+
+		//Устанавливаем индикатор сортировки
+		disconnect(TableView->horizontalHeader(), &QHeaderView::sortIndicatorChanged, this, &ISListBaseForm::SortingChanged);
+		TableView->horizontalHeader()->setSortIndicator(TcpModel->GetFieldIndex(SortingField), SortingOrder);
+		connect(TableView->horizontalHeader(), &QHeaderView::sortIndicatorChanged, this, &ISListBaseForm::SortingChanged);
+
+		//Устанавливаем размеры полей
+		QVariantMap ColumnSizeMap = AnswerMap["ColumnSize"].toMap();
+		for (const auto &MapItem : ColumnSizeMap.toStdMap())
+		{
+			TableView->setColumnWidth(TcpModel->GetFieldIndex(MapItem.first), MapItem.second.toInt());
+		}
+
+		LabelRowCount->setText(QString("%1: %2").arg(LANG("RecordsCount")).arg(TcpModel->rowCount()));
+		
+		if (!SETTING_BOOL(CONST_UID_SETTING_TABLE_VISIBLE_FIELD_ID))
+		{
+			HideField("ID");
+		}
+		HideField("IsSystem");
+
+		SetEnabledActionObject(false);
+		SelectRowObject(SelectObjectAfterUpdate);
+		
+		if (!TcpModel->rowCount()) //Записей в таблице нет
+		{
+			ListIndicatorWidget->SetIcon(BUFFER_ICONS("LabelNoDataTable"));
+			ListIndicatorWidget->SetText(LANG("NoData"));
+		}
+		else //Записи есть - скрываем индикатор
+		{
+			ListIndicatorWidget->hide();
+		}
+
+		LoadDataAfterEvent();
+		emit Updated();
 	}
+	else //Не удалось получить данные - выключаем анимацию и выдаём окно с ошибкой
+	{
+		ListIndicatorWidget->SetVisibleAnimation(false);
+		ListIndicatorWidget->SetText(LANG("ErrorLoadingData"));
+		ListIndicatorWidget->SetIcon(BUFFER_ICONS("ListIndicator.Error"));
+		ISMessageBox::ShowCritical(this, TcpQueryUpdate->GetErrorString());
+	}
+
+	//QueryModel->SetParentFilter(GetParentObjectID(), GetParentFilterField());
+	//ModelThreadQuery->Execute(QueryModel->GetQueryText(), QueryModel->GetConditions());
+
+	//if (SETTING_BOOL(CONST_UID_SETTING_TABLES_PAGE_NAVIGATION))
+	{
+		//PageNavigation->SetRowCount(ISDatabaseHelper::GetCountRows(MetaTable->Name));
+	}
+	return Result;
 }
 //-----------------------------------------------------------------------------
 bool ISListBaseForm::Delete()
@@ -916,7 +952,6 @@ void ISListBaseForm::Search()
 		{
 			QueryModel->SetSearchFilter(SearchString);
 			QueryModel->SetCondition(VariantMap);
-			SearchFlag = true;
 			Update();
 
 			GetAction(ISNamespace::AT_SearchClear)->setEnabled(true);
@@ -942,7 +977,7 @@ void ISListBaseForm::Export()
 		return;
 	}
 
-	if (!SqlModel->rowCount())
+	if (!/*SqlModel*/TcpModel->rowCount())
 	{
 		ISMessageBox::ShowWarning(this, LANG("Export.NoData"));
 		return;
@@ -963,11 +998,11 @@ void ISListBaseForm::Export()
 	case ISNamespace::ET_XML: ExportWorker = new ISExportXML(MetaTable, this); break;
 	}
 	ExportWorker->SetFields(ExportForm.GetSelectedFields());
-	ExportWorker->SetModel(SqlModel);
+	//ExportWorker->SetModel(SqlModel);
 	ExportWorker->SetHeader(ExportForm.GetHeader());
 	ExportWorker->SetSelectedRows(GetSelectedRowIndexes());
 
-	ISProgressForm ProgressForm(SqlModel->rowCount(), LANG("Export.Process.Prepare"), this);
+	ISProgressForm ProgressForm(/*SqlModel*/TcpModel->rowCount(), LANG("Export.Process.Prepare"), this);
 	connect(&ProgressForm, &ISProgressForm::canceled, ExportWorker, &ISExportWorker::Cancel);
 	connect(ExportWorker, &ISExportWorker::ExportedRow, &ProgressForm, static_cast<void(ISProgressForm::*)(void)>(&ISProgressForm::IncrementValue));
 	ProgressForm.show();
@@ -1081,7 +1116,7 @@ void ISListBaseForm::ShowFavorites()
 //-----------------------------------------------------------------------------
 void ISListBaseForm::NavigationSelectBeginRecord()
 {
-	if (SqlModel->rowCount())
+	if (/*SqlModel*/TcpModel->rowCount())
 	{
 		TableView->selectRow(0);
 		TableView->verticalScrollBar()->setValue(TableView->verticalScrollBar()->minimum());
@@ -1090,7 +1125,7 @@ void ISListBaseForm::NavigationSelectBeginRecord()
 //-----------------------------------------------------------------------------
 void ISListBaseForm::NavigationSelectPreviousRecord()
 {
-	if (SqlModel->rowCount() || GetCurrentRowIndex())
+	if (/*SqlModel*/TcpModel->rowCount() || GetCurrentRowIndex())
 	{
 		TableView->selectRow(GetCurrentRowIndex() - 1);
 	}
@@ -1098,7 +1133,7 @@ void ISListBaseForm::NavigationSelectPreviousRecord()
 //-----------------------------------------------------------------------------
 void ISListBaseForm::NavigationSelectNextRecord()
 {
-	if (SqlModel->rowCount() || GetCurrentRowIndex() == SqlModel->rowCount() - 1)
+	if (/*SqlModel*/TcpModel->rowCount() || GetCurrentRowIndex() == /*SqlModel*/TcpModel->rowCount() - 1)
 	{
 		TableView->selectRow(GetCurrentRowIndex() + 1);
 	}
@@ -1106,9 +1141,9 @@ void ISListBaseForm::NavigationSelectNextRecord()
 //-----------------------------------------------------------------------------
 void ISListBaseForm::NavigationSelectLastRecord()
 {
-	if (SqlModel->rowCount())
+	if (/*SqlModel*/TcpModel->rowCount())
 	{
-		TableView->selectRow(SqlModel->rowCount() - 1);
+		TableView->selectRow(/*SqlModel*/TcpModel->rowCount() - 1);
 		TableView->verticalScrollBar()->setValue(TableView->verticalScrollBar()->maximum());
 	}
 }
@@ -1128,7 +1163,7 @@ void ISListBaseForm::AutoFitColumnWidth()
 void ISListBaseForm::ResetWidthColumn()
 {
 	ISGui::SetWaitGlobalCursor(true);
-	for (int i = 0; i < SqlModel->columnCount(); ++i)
+	for (int i = 0; i < /*SqlModel*/TcpModel->columnCount(); ++i)
 	{
 		TableView->setColumnWidth(i, 100);
 	}
