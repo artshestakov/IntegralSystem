@@ -72,7 +72,7 @@ protected:
 	void DataChanged(); //Собыие при изменении значения одного из полей
 	void SetModificationFlag(bool modification); //Изменить флаг модицикации данных
 	void UpdateObjectActions(); //Обновление видимости действий объекта
-	void FavoiteClicked(); //Добавить в избранное
+	void FavoriteClicked(); //Добавить в избранное
 	void Delete();
 	void CancelChanged(); //Отмена изменений
 	void NoteObject(); //Примечание записи

@@ -21,6 +21,7 @@
 #include "ISUserRoleEntity.h"
 #include "ISAlgorithm.h"
 #include "ISHistory.h"
+#include "ISTcpQuery.h"
 //-----------------------------------------------------------------------------
 ISObjectFormBase::ISObjectFormBase(ISNamespace::ObjectFormType form_type, PMetaTable *meta_table, QWidget *parent, int object_id)
 	: ISInterfaceForm(parent),
@@ -280,7 +281,7 @@ void ISObjectFormBase::CreateToolBar()
 	ActionFavorites = new QAction(BUFFER_ICONS("Favorites"), LANG("AddToFavorites"), ToolBar);
 	ActionFavorites->setPriority(QAction::LowPriority);
 	ActionFavorites->setCheckable(true);
-	connect(ActionFavorites, &QAction::triggered, this, &ISObjectFormBase::FavoiteClicked);
+	connect(ActionFavorites, &QAction::triggered, this, &ISObjectFormBase::FavoriteClicked);
 	AddActionToolBar(ActionFavorites);
 
 	//Удалить карточку
@@ -865,12 +866,28 @@ void ISObjectFormBase::UpdateObjectActions()
 	}
 }
 //-----------------------------------------------------------------------------
-void ISObjectFormBase::FavoiteClicked()
+void ISObjectFormBase::FavoriteClicked()
 {
 	bool IsExist = ISFavorites::Instance().CheckExistFavoriteObject(MetaTable->Name, ObjectID);
-	IsExist ? ISFavorites::Instance().DeleteFavorite(MetaTable->Name, ObjectID) : ISFavorites::Instance().AddFavorite(MetaTable->Name, ObjectID);
-	ActionFavorites->setChecked(!IsExist);
-	IsExist ? ISPopupMessage::ShowNotification(LANG("RecordRemoveFavorites").arg(ObjectName)) : ISPopupMessage::ShowNotification(LANG("RecordAddFavorites").arg(ObjectName));
+
+	ISTcpQuery qRecordFavorite(IsExist ? API_RECORD_FAVORITE_DELETE : API_RECORD_FAVORITE_ADD);
+	qRecordFavorite.BindValue("TableName", MetaTable->Name);
+	qRecordFavorite.BindValue("ObjectID", ObjectID);
+
+	ISGui::SetWaitGlobalCursor(true);
+	bool Result = qRecordFavorite.Execute();
+	ISGui::SetWaitGlobalCursor(false);
+
+	if (Result)
+	{
+		IsExist ? ISFavorites::Instance().DeleteFavorite(MetaTable->Name, ObjectID) : ISFavorites::Instance().AddFavorite(MetaTable->Name, ObjectID);
+		ActionFavorites->setChecked(!IsExist);
+		IsExist ? ISPopupMessage::ShowNotification(LANG("RecordRemoveFavorites").arg(ObjectName)) : ISPopupMessage::ShowNotification(LANG("RecordAddFavorites").arg(ObjectName));
+	}
+	else
+	{
+		ISMessageBox::ShowCritical(this, qRecordFavorite.GetErrorString());
+	}
 }
 //-----------------------------------------------------------------------------
 void ISObjectFormBase::Delete()
