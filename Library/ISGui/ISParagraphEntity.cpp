@@ -5,7 +5,6 @@
 #include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
 ISParagraphEntity::ISParagraphEntity()
-	: ErrorString(NO_ERROR_STRING)
 {
 	
 }
@@ -22,11 +21,6 @@ ISParagraphEntity& ISParagraphEntity::Instance()
 {
 	static ISParagraphEntity ParagraphEntity;
 	return ParagraphEntity;
-}
-//-----------------------------------------------------------------------------
-QString ISParagraphEntity::GetErrorString() const
-{
-	return ErrorString;
 }
 //-----------------------------------------------------------------------------
 void ISParagraphEntity::Initialize(const QVariantList &VariantList)

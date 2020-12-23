@@ -1,7 +1,6 @@
 #include "ISPrintingEntity.h"
 //-----------------------------------------------------------------------------
 ISPrintingEntity::ISPrintingEntity()
-	: ErrrorString(NO_ERROR_STRING)
 {
 	
 }
@@ -15,11 +14,6 @@ ISPrintingEntity& ISPrintingEntity::Instance()
 {
 	static ISPrintingEntity PrintingEntity;
 	return PrintingEntity;
-}
-//-----------------------------------------------------------------------------
-QString ISPrintingEntity::GetErrorString() const
-{
-	return ErrrorString;
 }
 //-----------------------------------------------------------------------------
 void ISPrintingEntity::Initialize(const QVariantList &VariantList)

@@ -9,8 +9,7 @@
 #include "ISOilSphere.h"
 //-----------------------------------------------------------------------------
 ISObjects::ISObjects()
-	: ErrorString(NO_ERROR_STRING),
-	ObjectInterface(nullptr)
+	: ObjectInterface(nullptr)
 {
 	qRegisterMetaType<ISEmpty::Object*>("ISEmpty::Object");
 	qRegisterMetaType<ISOilSphere::Object*>("ISOilSphere::Object");
@@ -28,11 +27,6 @@ ISObjects& ISObjects::Instance()
 {
 	static ISObjects Objects;
 	return Objects;
-}
-//-----------------------------------------------------------------------------
-QString ISObjects::GetErrorString() const
-{
-	return ErrorString;
 }
 //-----------------------------------------------------------------------------
 void ISObjects::Initialize(const QString &ConfigurationName)

@@ -10,7 +10,6 @@ class ISCORE_EXPORT ISSettings
 public:
 	static ISSettings& Instance();
 	
-	QString GetErrorString() const;
 	void Initialize(const QVariantList &VariantList);
 	QVariantMap GetSettingsChanged() const; //Получить измененные настройки
 
@@ -27,7 +26,6 @@ private:
 	ISSettings& operator=(ISSettings const&) { return *this; };
 
 private:
-	QString ErrorString;
 	std::vector<ISMetaSettingsGroup*> SettingGroups;
 	QVariantMap SettingsChanged; //Измененные в ходе работы программы настройки, нужно для сохранения
 };

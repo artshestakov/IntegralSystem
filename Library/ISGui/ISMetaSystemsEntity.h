@@ -8,7 +8,6 @@ class ISMetaSystemsEntity
 public:
 	static ISMetaSystemsEntity& Instance();
 
-	QString GetErrorString() const;
 	void Initialize(const QVariantList &VariantList);
 
 	std::vector<ISMetaSystem*> GetSystems(); //Получить список всех систем
@@ -25,7 +24,6 @@ private:
 	ISMetaSystemsEntity& operator=(ISMetaSystemsEntity const&) { return *this; };
 
 private:
-	QString ErrorString;
 	std::vector<ISMetaSystem*> Systems;
 };
 //-----------------------------------------------------------------------------

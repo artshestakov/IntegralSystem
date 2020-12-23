@@ -3,7 +3,6 @@
 #include "ISBuffer.h"
 //-----------------------------------------------------------------------------
 ISMetaSystemsEntity::ISMetaSystemsEntity()
-	: ErrorString(NO_ERROR_STRING)
 {
 	
 }
@@ -20,11 +19,6 @@ ISMetaSystemsEntity& ISMetaSystemsEntity::Instance()
 {
 	static ISMetaSystemsEntity MetaSystemsEntity;
 	return MetaSystemsEntity;
-}
-//-----------------------------------------------------------------------------
-QString ISMetaSystemsEntity::GetErrorString() const
-{
-	return ErrorString;
 }
 //-----------------------------------------------------------------------------
 void ISMetaSystemsEntity::Initialize(const QVariantList &VariantList)

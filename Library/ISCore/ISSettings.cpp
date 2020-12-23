@@ -5,7 +5,6 @@
 #include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
 ISSettings::ISSettings()
-	: ErrorString(NO_ERROR_STRING)
 {
 	
 }
@@ -22,11 +21,6 @@ ISSettings& ISSettings::Instance()
 {
 	static ISSettings Settings;
 	return Settings;
-}
-//-----------------------------------------------------------------------------
-QString ISSettings::GetErrorString() const
-{
-	return ErrorString;
 }
 //-----------------------------------------------------------------------------
 void ISSettings::Initialize(const QVariantList &VariantList)
