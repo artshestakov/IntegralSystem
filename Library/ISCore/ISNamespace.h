@@ -179,6 +179,7 @@ namespace ISNamespace
 		AMT_GetRecordValue, //Получить значение поля записи
 		AMT_RecordFavoriteAdd, //Добавить запись в избранное
 		AMT_RecordFavoriteDelete, //Удалить запись из избранного
+		AMT_GetFavoriteNames, //Получить имена избранных записей
 	};
 };
 //-----------------------------------------------------------------------------

@@ -657,7 +657,19 @@ def MapRecordFavoriteDelete =
 			ObjectID: vars.get(&quot;RecordFavoriteDelete_ObjectID&quot;)
 		]
 ];
-vars.put(&quot;QueryRecordFavoriteDelete&quot;, MapToString(MapRecordFavoriteDelete));</stringProp>
+vars.put(&quot;QueryRecordFavoriteDelete&quot;, MapToString(MapRecordFavoriteDelete));
+
+//Получаем имена избранных записей
+def MapGetFavoriteNames =
+[
+	Type: &quot;GetFavoriteNames&quot;,
+	/*Parameters:
+		[
+			TableName: vars.get(&quot;RecordFavoriteDelete_TableName&quot;),
+			ObjectID: vars.get(&quot;RecordFavoriteDelete_ObjectID&quot;)
+		]*/
+];
+vars.put(&quot;QueryGetFavoriteNames&quot;, MapToString(MapGetFavoriteNames));</stringProp>
           <stringProp name="scriptLanguage">groovy</stringProp>
         </JSR223Sampler>
         <hashTree/>
@@ -673,7 +685,7 @@ vars.put(&quot;QueryRecordFavoriteDelete&quot;, MapToString(MapRecordFavoriteDel
           <stringProp name="ConfigTestElement.password"></stringProp>
         </TCPSampler>
         <hashTree/>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: GetMetaData" enabled="true">
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: GetMetaData" enabled="false">
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
           <stringProp name="TCPSampler.port"></stringProp>
@@ -1009,25 +1021,37 @@ vars.put(&quot;QueryRecordFavoriteDelete&quot;, MapToString(MapRecordFavoriteDel
           <stringProp name="ConfigTestElement.password"></stringProp>
         </TCPSampler>
         <hashTree/>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: RecordFavoriteAdd" enabled="true">
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: RecordFavoriteAdd" enabled="false">
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
           <stringProp name="TCPSampler.port"></stringProp>
           <boolProp name="TCPSampler.nodelay">false</boolProp>
           <stringProp name="TCPSampler.timeout"></stringProp>
           <stringProp name="TCPSampler.request">${QueryRecordFavoriteAdd}</stringProp>
-          <boolProp name="TCPSampler.closeConnection">false</boolProp>
+          <boolProp name="TCPSampler.closeConnection">true</boolProp>
           <stringProp name="ConfigTestElement.username"></stringProp>
           <stringProp name="ConfigTestElement.password"></stringProp>
         </TCPSampler>
         <hashTree/>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: RecordFavoriteDelete" enabled="true">
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: RecordFavoriteDelete" enabled="false">
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
           <stringProp name="TCPSampler.port"></stringProp>
           <boolProp name="TCPSampler.nodelay">false</boolProp>
           <stringProp name="TCPSampler.timeout"></stringProp>
           <stringProp name="TCPSampler.request">${QueryRecordFavoriteDelete}</stringProp>
+          <boolProp name="TCPSampler.closeConnection">true</boolProp>
+          <stringProp name="ConfigTestElement.username"></stringProp>
+          <stringProp name="ConfigTestElement.password"></stringProp>
+        </TCPSampler>
+        <hashTree/>
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: GetFavoriteNames" enabled="true">
+          <stringProp name="TCPSampler.server"></stringProp>
+          <boolProp name="TCPSampler.reUseConnection">true</boolProp>
+          <stringProp name="TCPSampler.port"></stringProp>
+          <boolProp name="TCPSampler.nodelay">false</boolProp>
+          <stringProp name="TCPSampler.timeout"></stringProp>
+          <stringProp name="TCPSampler.request">${QueryGetFavoriteNames}</stringProp>
           <boolProp name="TCPSampler.closeConnection">true</boolProp>
           <stringProp name="ConfigTestElement.username"></stringProp>
           <stringProp name="ConfigTestElement.password"></stringProp>

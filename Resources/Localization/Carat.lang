@@ -168,4 +168,6 @@
   <Local Name="Carat.Error.Query.RecordFavoriteDelete.Delete" Russian="Не удалось удалить запись из избранного: %1"/>
   <Local Name="Carat.Error.Query.RecordFavoriteDelete.NotExist" Russian="Такая запись в избранном не существует."/>
 
+  <Local Name="Carat.Error.Query.GetFavoriteNames.Select" Russian="Не удалось получить изьранные записи: %1"/>
+
 </LANG>

@@ -184,6 +184,7 @@ const char API_GROUP_RIGHT_SPECIAL_DELETE[] = "GroupRightSpecialDelete"; //Удали
 const char API_GET_RECORD_VALUE[] = "GetRecordValue"; //Получить значение поля записи
 const char API_RECORD_FAVORITE_ADD[] = "RecordFavoriteAdd"; //Добавить запись в избранное
 const char API_RECORD_FAVORITE_DELETE[] = "RecordFavoriteDelete"; //Удалить запись из избранного
+const char API_GET_FAVORITE_NAMES[] = "GetFavoriteNames"; //Получить имена избранных записей
 //CARAT_LOCAL_API--------------------------------------------------------------
 const char	CARAT_LOCAL_API_SHUTDOWN[] = "shutdown"; //Завершение работы
 //-----------------------------------------------------------------------------

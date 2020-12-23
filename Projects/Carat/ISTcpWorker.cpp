@@ -317,6 +317,11 @@ static QString QD_FAVORITE = PREPARE_QUERY("DELETE FROM _favorites "
 										   "AND fvts_tablename = :TableName "
 										   "AND fvts_objectid = :ObjectID");
 //-----------------------------------------------------------------------------
+static QString QS_FAVORITE_NAMES = PREPARE_QUERY("SELECT fvts_tablename, fvts_objectid "
+												 "FROM _favorites "
+												 "WHERE fvts_user = :UserID "
+												 "ORDER BY fvts_tablename");
+//-----------------------------------------------------------------------------
 ISTcpWorker::ISTcpWorker(const QString &db_host, int db_port, const QString &db_name, const QString &db_user, const QString &db_password)
 	: QObject(),
 	ErrorString(NO_ERROR_STRING),
@@ -485,6 +490,7 @@ void ISTcpWorker::Process()
 					case ISNamespace::AMT_GetRecordValue: Result = GetRecordValue(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_RecordFavoriteAdd: Result = RecordFavoriteAdd(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_RecordFavoriteDelete: Result = RecordFavoriteDelete(tcp_message, TcpAnswer); break;
+					case ISNamespace::AMT_GetFavoriteNames: Result = GetFavoriteNames(tcp_message, TcpAnswer); break;
 					default:
 						ErrorString = LANG("Carat.Error.NotExistFunction").arg(tcp_message->TypeName);
 					}
@@ -3028,6 +3034,54 @@ bool ISTcpWorker::RecordFavoriteDelete(ISTcpMessage *TcpMessage, ISTcpAnswer *Tc
 		return false;
 	}
 	Protocol(TcpMessage->TcpSocket->GetUserID(), CONST_UID_PROTOCOL_RECORD_FAVORITE_DELETE, MetaTable->Name, MetaTable->LocalListName, ObjectID, ObjectName);
+	return true;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::GetFavoriteNames(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+	//Запрашиваем избранные записи
+	ISQuery qSelectObjects(ISDatabase::Instance().GetDB(DBConnectionName), QS_FAVORITE_NAMES);
+	qSelectObjects.BindValue(":UserID", TcpMessage->TcpSocket->GetUserID());
+	if (!qSelectObjects.Execute()) //Ошибка запроса
+	{
+		ErrorString = LANG("Carat.Error.Query.GetFavoriteNames.Select").arg(qSelectObjects.GetErrorString());
+		return false;
+	}
+
+	PMetaTable *MetaTable = nullptr;
+	QString ObjectName;
+
+	//Обходим
+	QVariantList NamesList;
+	while (qSelectObjects.Next())
+	{
+		QString TableName = qSelectObjects.ReadColumn("fvts_tablename").toString();
+		unsigned int ObjectID = qSelectObjects.ReadColumn("fvts_objectid").toUInt();
+
+		if (!MetaTable || MetaTable->Name != TableName) //Если мета-таблица ещё не получена - получаем её
+		{
+			MetaTable = GetMetaTable(TableName);
+			if (!MetaTable) //Не удалось получить мета-таблицу - выходим с ошибкой
+			{
+				return false;
+			}
+		}
+	
+		//Получаем имя записи
+		if (!GetObjectName(MetaTable, ObjectID, ObjectName))
+		{
+			return false;
+		}
+
+		//Добавляем в результирующий список
+		NamesList.append(QVariantMap
+		{
+			{ "TableLocalName", MetaTable->LocalListName },
+			{ "ObjectID", ObjectID },
+			{ "ObjectName", ObjectName },
+		});
+	}
+	TcpAnswer->Parameters["Names"] = NamesList;
 	return true;
 }
 //-----------------------------------------------------------------------------
