@@ -923,7 +923,10 @@ bool ISListBaseForm::Delete()
 		Result = ISGui::RecordsDelete(MetaTable->Name, VectorInt, ErrorString);
 		if (Result)
 		{
-			Update();
+			for (unsigned int ObjectID : VectorInt)
+			{
+				TcpModel->RemoveRecordID(ObjectID);
+			}
 		}
 		else
 		{

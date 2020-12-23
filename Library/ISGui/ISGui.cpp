@@ -383,6 +383,8 @@ QString ISGui::ConvertDateToString(const QDate &Date, const QString &DateFormat)
 //-----------------------------------------------------------------------------
 bool ISGui::RecordsDelete(const QString &TableName, const ISVectorUInt &ObjectsID, QString &ErrorString)
 {
+	ISGui::SetWaitGlobalCursor(true);
+
 	ISTcpQuery qDelete(API_RECORD_DELETE);
 	qDelete.BindValue("TableName", TableName);
 
@@ -392,12 +394,15 @@ bool ISGui::RecordsDelete(const QString &TableName, const ISVectorUInt &ObjectsI
 		Objects.push_back(ObjectID);
 	}
 	qDelete.BindValue("Objects", Objects);
-	if (!qDelete.Execute())
+
+	bool Result = qDelete.Execute();
+	ISGui::SetWaitGlobalCursor(false);
+
+	if (!Result)
 	{
 		ErrorString = qDelete.GetErrorString();
 		return false;
 	}
-
 	ISPopupMessage::ShowNotification(ObjectsID.size() == 1 ?
 		LANG("NotificationForm.Title.Deleted").arg(ObjectsID.front()) :
 		LANG("NotificationForm.Title.Deleteds"));

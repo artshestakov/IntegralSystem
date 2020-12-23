@@ -73,12 +73,29 @@ void ISTcpModel::SetSorting(const QString &sorting_field, Qt::SortOrder sorting_
 	SortingOrder = sorting_order;
 }
 //-----------------------------------------------------------------------------
-void ISTcpModel::RemoveRecord(unsigned int RowIndex)
+void ISTcpModel::RemoveRecordIndex(unsigned int RowIndex)
 {
 	if (!Records.empty())
 	{
 		beginResetModel();
 		Records.erase(Records.begin() + RowIndex);
+		endResetModel();
+	}
+}
+//-----------------------------------------------------------------------------
+void ISTcpModel::RemoveRecordID(unsigned int ObjectID)
+{
+	if (!Records.empty())
+	{
+		beginResetModel();
+		for (size_t i = 0, c = rowCount(); i < c; ++i) //Обходим все записи
+		{
+			if (Records[i].ID == ObjectID) //Нашли нужную нам запись
+			{
+				Records.erase(Records.begin() + i);
+				break;
+			}
+		}
 		endResetModel();
 	}
 }
