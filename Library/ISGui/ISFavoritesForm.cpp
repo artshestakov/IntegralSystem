@@ -108,7 +108,7 @@ void ISFavoritesForm::ClearFavorites()
 		}
 		if (qFavoritesDelete.Execute())
 		{
-			ISFavorites::Instance().DeleteAllFavorites();
+			ISFavorites::Instance().DeleteAll();
 			ListWidget->Clear();
 		}
 		else

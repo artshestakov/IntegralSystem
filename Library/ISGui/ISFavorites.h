@@ -10,13 +10,10 @@ public:
 
 	void Initialize(const QVariantMap &VariantMap);
 	QVariantMap GetFavorites();
-	bool Initialize();
-	void AddFavorite(const QString &TableName, unsigned int ObjectID); //Добавить объект в избранное
-	void DeleteFavorite(const QString &TableName, unsigned int ObjectID); //Удалить избранный объект
-	void DeleteAllFavorites(); //Удалить все избранные объекты
-	bool CheckExistFavoriteObject(const QString &TableName, unsigned int ObjectID); //Проверить наличие объекта в избранном
-	ISVectorInt& GetObjects(const QString &TableName); //Получить избранные объекты по таблице
-	std::map<QString, ISVectorInt>& GetObjects(); //Получить все избранные объекты
+	void Add(const QString &TableName, unsigned int ObjectID); //Добавить объект в избранное
+	void Delete(const QString &TableName, unsigned int ObjectID); //Удалить избранный объект
+	void DeleteAll(); //Удалить все избранные объекты
+	bool Exist(const QString &TableName, unsigned int ObjectID); //Проверить наличие объекта в избранном
 
 private:
 	ISFavorites();

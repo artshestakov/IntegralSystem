@@ -47,12 +47,12 @@ void ISFavorites::Initialize(const QVariantMap &VariantMap)
 	}
 }
 //-----------------------------------------------------------------------------
-void ISFavorites::AddFavorite(const QString &TableName, unsigned int ObjectID)
+void ISFavorites::Add(const QString &TableName, unsigned int ObjectID)
 {
 	Favorites[TableName].emplace_back(ObjectID);
 }
 //-----------------------------------------------------------------------------
-void ISFavorites::DeleteFavorite(const QString &TableName, unsigned int ObjectID)
+void ISFavorites::Delete(const QString &TableName, unsigned int ObjectID)
 {
 	ISAlgorithm::VectorRemoveAll(Favorites[TableName], ObjectID);
 	if (Favorites[TableName].empty())
@@ -61,12 +61,12 @@ void ISFavorites::DeleteFavorite(const QString &TableName, unsigned int ObjectID
 	}
 }
 //-----------------------------------------------------------------------------
-void ISFavorites::DeleteAllFavorites()
+void ISFavorites::DeleteAll()
 {
 	Favorites.clear();
 }
 //-----------------------------------------------------------------------------
-bool ISFavorites::CheckExistFavoriteObject(const QString &TableName, unsigned int ObjectID)
+bool ISFavorites::Exist(const QString &TableName, unsigned int ObjectID)
 {
 	std::map<QString, ISVectorUInt>::iterator It = Favorites.find(TableName);
 	if (It != Favorites.end())
@@ -74,15 +74,5 @@ bool ISFavorites::CheckExistFavoriteObject(const QString &TableName, unsigned in
 		return ISAlgorithm::VectorContains(It->second, ObjectID);
 	}
 	return false;
-}
-//-----------------------------------------------------------------------------
-ISVectorInt& ISFavorites::GetObjects(const QString &TableName)
-{
-	return ISVectorInt();
-}
-//-----------------------------------------------------------------------------
-std::map<QString, ISVectorInt>& ISFavorites::GetObjects()
-{
-	return std::map<QString, ISVectorInt>();
 }
 //-----------------------------------------------------------------------------
