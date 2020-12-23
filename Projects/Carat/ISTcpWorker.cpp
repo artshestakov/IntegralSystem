@@ -317,10 +317,16 @@ static QString QD_FAVORITE = PREPARE_QUERY("DELETE FROM _favorites "
 										   "AND fvts_tablename = :TableName "
 										   "AND fvts_objectid = :ObjectID");
 //-----------------------------------------------------------------------------
-static QString QS_FAVORITE_NAMES = PREPARE_QUERY("SELECT fvts_tablename, fvts_objectid "
-												 "FROM _favorites "
-												 "WHERE fvts_user = :UserID "
-												 "ORDER BY fvts_tablename");
+static QString QS_FAVORITE_NAMES_TABLE = PREPARE_QUERY("SELECT fvts_tablename, fvts_objectid "
+													   "FROM _favorites "
+													   "WHERE fvts_user = :UserID "
+													   "AND fvts_tablename = :TableName "
+													   "ORDER BY fvts_tablename");
+//-----------------------------------------------------------------------------
+static QString QS_FAVORITE_NAMES_ALL = PREPARE_QUERY("SELECT fvts_tablename, fvts_objectid "
+													 "FROM _favorites "
+													 "WHERE fvts_user = :UserID "
+													 "ORDER BY fvts_tablename");
 //-----------------------------------------------------------------------------
 static QString QD_FAVORITES = PREPARE_QUERY("DELETE FROM _favorites "
 											"WHERE fvts_user = :UserID");
@@ -3044,8 +3050,25 @@ bool ISTcpWorker::RecordFavoriteDelete(ISTcpMessage *TcpMessage, ISTcpAnswer *Tc
 bool ISTcpWorker::GetFavoriteNames(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
 	//Запрашиваем избранные записи
-	ISQuery qSelectObjects(ISDatabase::Instance().GetDB(DBConnectionName), QS_FAVORITE_NAMES);
-	qSelectObjects.BindValue(":UserID", TcpMessage->TcpSocket->GetUserID());
+	ISQuery qSelectObjects(ISDatabase::Instance().GetDB(DBConnectionName));
+	if (TcpMessage->Parameters.contains("TableName")) //Если таблица указана - один запрос
+	{
+		//Проверяем наличие такой таблицы в мета-данных
+		QString TableName = TcpMessage->Parameters["TableName"].toString();
+		if (!GetMetaTable(TableName))
+		{
+			return false;
+		}
+		qSelectObjects.Prepare(QS_FAVORITE_NAMES_TABLE);
+		qSelectObjects.BindValue(":UserID", TcpMessage->TcpSocket->GetUserID());
+		qSelectObjects.BindValue(":TableName", TableName);
+	}
+	else //Таблица не указана - другой запрос
+	{
+		qSelectObjects.Prepare(QS_FAVORITE_NAMES_ALL);
+		qSelectObjects.BindValue(":UserID", TcpMessage->TcpSocket->GetUserID());
+	}
+	
 	if (!qSelectObjects.Execute()) //Ошибка запроса
 	{
 		ErrorString = LANG("Carat.Error.Query.GetFavoriteNames.Select").arg(qSelectObjects.GetErrorString());

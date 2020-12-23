@@ -60,6 +60,12 @@ void ISFavoritesForm::LoadFavorites()
 {
 	ListWidget->Clear();
 	ISTcpQuery qGetFavoritesNames(API_GET_FAVORITE_NAMES);
+
+	if (!TableName.isEmpty())
+	{
+		qGetFavoritesNames.BindValue("TableName", TableName);
+	}
+
 	if (qGetFavoritesNames.Execute())
 	{
 		QVariantList NamesList = qGetFavoritesNames.TakeAnswer()["Names"].toList();

@@ -663,11 +663,6 @@ vars.put(&quot;QueryRecordFavoriteDelete&quot;, MapToString(MapRecordFavoriteDel
 def MapGetFavoriteNames =
 [
 	Type: &quot;GetFavoriteNames&quot;,
-	/*Parameters:
-		[
-			TableName: vars.get(&quot;RecordFavoriteDelete_TableName&quot;),
-			ObjectID: vars.get(&quot;RecordFavoriteDelete_ObjectID&quot;)
-		]*/
 ];
 vars.put(&quot;QueryGetFavoriteNames&quot;, MapToString(MapGetFavoriteNames));
 
@@ -1052,7 +1047,7 @@ vars.put(&quot;QueryFavoritesDelete&quot;, MapToString(MapFavoritesDelete));</st
           <stringProp name="ConfigTestElement.password"></stringProp>
         </TCPSampler>
         <hashTree/>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: GetFavoriteNames" enabled="false">
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: GetFavoriteNames" enabled="true">
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
           <stringProp name="TCPSampler.port"></stringProp>
@@ -1064,7 +1059,7 @@ vars.put(&quot;QueryFavoritesDelete&quot;, MapToString(MapFavoritesDelete));</st
           <stringProp name="ConfigTestElement.password"></stringProp>
         </TCPSampler>
         <hashTree/>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: FavoritesDelete" enabled="true">
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: FavoritesDelete" enabled="false">
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
           <stringProp name="TCPSampler.port"></stringProp>
