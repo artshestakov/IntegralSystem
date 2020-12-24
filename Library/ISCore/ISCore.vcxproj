@@ -218,7 +218,6 @@
     <ClCompile Include="ISLogger.cpp" />
     <ClCompile Include="ISMetaData.cpp" />
     <ClCompile Include="ISMetaDataHelper.cpp" />
-    <ClCompile Include="ISMetaUuidCheckeder.cpp" />
     <ClCompile Include="ISNetwork.cpp" />
     <ClCompile Include="ISProperty.cpp" />
     <ClCompile Include="ISQuery.cpp" />
@@ -275,7 +274,6 @@
     <ClInclude Include="ISDatabase.h" />
     <ClInclude Include="ISMetaData.h" />
     <ClInclude Include="ISMetaDataHelper.h" />
-    <ClInclude Include="ISMetaUuidCheckeder.h" />
     <ClInclude Include="ISQuery.h" />
     <ClInclude Include="ISQueryText.h" />
     <ClInclude Include="PMetaClass.h" />

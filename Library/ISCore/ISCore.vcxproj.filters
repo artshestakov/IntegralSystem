@@ -47,9 +47,6 @@
     <ClCompile Include="ISMetaDataHelper.cpp">
       <Filter>MetaData</Filter>
     </ClCompile>
-    <ClCompile Include="ISMetaUuidCheckeder.cpp">
-      <Filter>MetaData</Filter>
-    </ClCompile>
     <ClCompile Include="ISAuthConnector.cpp">
       <Filter>Network</Filter>
     </ClCompile>
@@ -134,9 +131,6 @@
       <Filter>MetaData</Filter>
     </ClInclude>
     <ClInclude Include="ISMetaDataHelper.h">
-      <Filter>MetaData</Filter>
-    </ClInclude>
-    <ClInclude Include="ISMetaUuidCheckeder.h">
       <Filter>MetaData</Filter>
     </ClInclude>
     <ClInclude Include="PMetaClass.h">

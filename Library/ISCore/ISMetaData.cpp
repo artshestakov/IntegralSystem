@@ -4,7 +4,6 @@
 #include "ISSystem.h"
 #include "ISMetaDataHelper.h"
 #include "ISUuid.h"
-#include "ISMetaUuidCheckeder.h"
 #include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
 ISMetaData::ISMetaData()
@@ -334,14 +333,36 @@ bool ISMetaData::CheckUniqueAllIdentifiers(bool InitXSR)
 		FileInfoList.append(QDir(":_" + ConfigurationName).entryInfoList(FilterXsnXsr, QDir::Files));
 	}
 
-	ISMetaUuidCheckeder MetaUuidCheckeder;
+	QRegExp RegExp(REG_EXP_UID);
+	ISVectorString VectorString;
 	for (const QFileInfo &FileInfo : FileInfoList) //Обход всех файлов мета-данных
 	{
-		Result = MetaUuidCheckeder.Search(FileInfo);
+		QFile File(FileInfo.filePath());
+		Result = File.open(QIODevice::ReadOnly);
 		if (!Result)
 		{
-			ErrorString = MetaUuidCheckeder.GetErrorString();
+			ErrorString = File.errorString();
 			break;
+		}
+
+		QString Content = File.readAll();
+		File.close();
+
+		int Pos = 0;
+		while ((Pos = RegExp.indexIn(Content, Pos)) != -1)
+		{
+			QString FindedUID = RegExp.cap(0);
+			FindedUID.remove(0, 5);
+			FindedUID.chop(1);
+
+			Result = !ISAlgorithm::VectorContains(VectorString, FindedUID);
+			if (!Result)
+			{
+				ErrorString = QString("UID \"%1\" already exist.").arg(FindedUID);
+				break;
+			}
+			VectorString.emplace_back(FindedUID);
+			Pos += RegExp.matchedLength();
 		}
 	}
 	return Result;
