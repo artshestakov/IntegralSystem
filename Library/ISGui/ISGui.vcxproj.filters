@@ -426,9 +426,6 @@
     <ClCompile Include="ISTcpModel.cpp">
       <Filter>Model</Filter>
     </ClCompile>
-    <ClCompile Include="ISTestModelForm.cpp">
-      <Filter>Forms</Filter>
-    </ClCompile>
     <ClCompile Include="ISProtocol.cpp">
       <Filter>System</Filter>
     </ClCompile>
@@ -724,9 +721,6 @@
     </QtMoc>
     <QtMoc Include="ISTcpModel.h">
       <Filter>Model</Filter>
-    </QtMoc>
-    <QtMoc Include="ISTestModelForm.h">
-      <Filter>Forms</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>
