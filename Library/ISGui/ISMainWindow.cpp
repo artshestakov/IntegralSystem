@@ -206,6 +206,12 @@ void ISMainWindow::Reconnect()
 		if (Result)
 		{
 			ISPopupMessage::ShowNotification(LANG("ReconnectingDone"));
+
+			//Сервер вероятнее всего обновился - предупреждаем об этом
+			if (qReAuth.GetAnswer()["IsNeedUpdate"].toBool())
+			{
+				ISMessageBox::ShowWarning(this, LANG("Message.Warning.NewVersion"));
+			}
 		}
 		else
 		{

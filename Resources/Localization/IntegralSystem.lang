@@ -143,6 +143,7 @@
   <Local Name="Message.Warning.PasswordVerification" Russian="Пароль слишком слабый."/>
   <Local Name="Message.Warning.PasswordVerification.Detailed" Russian="Обязательные требования к надёжному паролю:&#10;&#8226; Пароль должен содержать не менее 8 символов.&#10;&#8226; Пароль должен содержать заглавные и строчные буквы, цифры, и специальные символы. Например: oNQZnz$Hx2.&#10;&#10;Пароль не должен содержать:&#10;&#8226; Личную информацию, которую легко узнать. Например: имя, фамилию или дату рождения.&#10;&#8226; Очевидные и простые слова, фразы, устойчивые выражения и наборы символов, которые легко подобрать. Например: password, parol, abcd, qwerty asdfg, или 1234567."/>
   <Local Name="Message.Warning.UserPasswordNotCreated" Russian="ВНИМАНИЕ! Пользователь без пароля не сможет зайти в программу!"/>
+  <Local Name="Message.Warning.NewVersion" Russian="ВНИМАНИЕ! Появилась новая версия программы, рекомендуется перезапустить её для обновления."/>
   <Local Name="Message.Question.ChangeUser" Russian="Сменить пользователя?"/>
   <Local Name="Message.Question.ExitApplication" Russian="Вы действительно хотите выйти из программы?"/>
   <Local Name="Message.Question.File.SavedToPath" Russian="Файл успешно сохранен по пути:&#10;%1&#10;Открыть его?"/>
