@@ -30,10 +30,10 @@
 #include "ISDiscussionListForm.h"
 #include "ISStorageFilesListForm.h"
 #include "ISCalendarObjectForm.h"
-#include "ISDesktopForm.h"
-#include "ISWorkspaceForm.h"
-#include "ISCalendarForm.h"
-#include "ISTaskForm.h"
+#include "ISDesktopParagraph.h"
+#include "ISWorkspaceParagraph.h"
+#include "ISCalendarParagraph.h"
+#include "ISTaskParagraph.h"
 #include "ISProtocolListForm.h"
 #include "ISInternalDirectoriesForm.h"
 #include "ISUserGroupListForm.h"
@@ -628,10 +628,10 @@ void ISGui::RegisterMetaType()
 	qRegisterMetaType<ISDiscussionListForm*>("ISDiscussionListForm");
 	qRegisterMetaType<ISStorageFilesListForm*>("ISStorageFilesListForm");
 	qRegisterMetaType<ISCalendarObjectForm*>("ISCalendarObjectForm");
-	qRegisterMetaType<ISDesktopForm*>("ISDesktopForm");
-	qRegisterMetaType<ISWorkspaceForm*>("ISWorkspaceForm");
-	qRegisterMetaType<ISCalendarForm*>("ISCalendarForm");
-	qRegisterMetaType<ISTaskForm*>("ISTaskForm");
+	qRegisterMetaType<ISDesktopParagraph*>("ISDesktopForm");
+	qRegisterMetaType<ISWorkspaceParagraph*>("ISWorkspaceForm");
+	qRegisterMetaType<ISCalendarParagraph*>("ISCalendarForm");
+	qRegisterMetaType<ISTaskParagraph*>("ISTaskForm");
 	qRegisterMetaType<ISProtocolListForm*>("ISProtocolListForm");
 	qRegisterMetaType<ISInternalDirectoriesForm*>("ISInternalDirectoriesForm");
 	qRegisterMetaType<ISUserGroupListForm*>("ISUserGroupListForm");

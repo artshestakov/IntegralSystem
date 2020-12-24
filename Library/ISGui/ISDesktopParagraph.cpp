@@ -1,4 +1,4 @@
-#include "ISDesktopForm.h"
+#include "ISDesktopParagraph.h"
 #include "ISDefinesGui.h"
 #include "ISConstants.h"
 #include "ISLocalization.h"
@@ -9,7 +9,7 @@
 #include "ISAlgorithm.h"
 #include "ISVersionInfo.h"
 //-----------------------------------------------------------------------------
-ISDesktopForm::ISDesktopForm(QWidget *parent)
+ISDesktopParagraph::ISDesktopParagraph(QWidget *parent)
 	: ISParagraphBaseForm(parent),
 	DesktopWidget(nullptr)
 {
@@ -54,12 +54,12 @@ ISDesktopForm::ISDesktopForm(QWidget *parent)
 	}
 }
 //-----------------------------------------------------------------------------
-ISDesktopForm::~ISDesktopForm()
+ISDesktopParagraph::~ISDesktopParagraph()
 {
 
 }
 //-----------------------------------------------------------------------------
-void ISDesktopForm::Invoke()
+void ISDesktopParagraph::Invoke()
 {
 	ISParagraphBaseForm::Invoke();
 	if (DesktopWidget)

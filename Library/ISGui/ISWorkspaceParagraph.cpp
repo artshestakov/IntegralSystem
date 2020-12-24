@@ -1,4 +1,4 @@
-#include "ISWorkspaceForm.h"
+#include "ISWorkspaceParagraph.h"
 #include "ISDefinesGui.h"
 #include "ISMetaSystemsEntity.h"
 #include "ISUserRoleEntity.h"
@@ -14,7 +14,7 @@
 #include "ISAlgorithm.h"
 #include "ISLogger.h"
 //-----------------------------------------------------------------------------
-ISWorkspaceForm::ISWorkspaceForm(QWidget *parent)
+ISWorkspaceParagraph::ISWorkspaceParagraph(QWidget *parent)
 	: ISParagraphBaseForm(parent),
 	CentralForm(nullptr)
 {
@@ -24,7 +24,7 @@ ISWorkspaceForm::ISWorkspaceForm(QWidget *parent)
 	setLayout(Layout);
 
 	ISSystemsPanel *SystemsPanel = new ISSystemsPanel(this);
-	connect(SystemsPanel, &ISSystemsPanel::ClickedSubSystem, this, &ISWorkspaceForm::ClickedSubSystem);
+	connect(SystemsPanel, &ISSystemsPanel::ClickedSubSystem, this, &ISWorkspaceParagraph::ClickedSubSystem);
 	Layout->addWidget(SystemsPanel);
 
 	//Заполнение систем в виджете
@@ -35,7 +35,7 @@ ISWorkspaceForm::ISWorkspaceForm(QWidget *parent)
 
 	TabWidget = new ISTabWidgetMain(this);
 	TabWidget->setSizePolicy(QSizePolicy::Ignored, TabWidget->sizePolicy().verticalPolicy());
-	connect(TabWidget, &ISTabWidgetMain::Duplicate, this, &ISWorkspaceForm::AddObjectForm);
+	connect(TabWidget, &ISTabWidgetMain::Duplicate, this, &ISWorkspaceParagraph::AddObjectForm);
 	Layout->addWidget(TabWidget);
 
 	//Если у пользователя нет доступа ни к одной из систем
@@ -49,17 +49,17 @@ ISWorkspaceForm::ISWorkspaceForm(QWidget *parent)
 	}
 }
 //-----------------------------------------------------------------------------
-ISWorkspaceForm::~ISWorkspaceForm()
+ISWorkspaceParagraph::~ISWorkspaceParagraph()
 {
 
 }
 //-----------------------------------------------------------------------------
-void ISWorkspaceForm::Invoke()
+void ISWorkspaceParagraph::Invoke()
 {
 	ISParagraphBaseForm::Invoke();
 }
 //-----------------------------------------------------------------------------
-void ISWorkspaceForm::AddObjectForm(QWidget *ObjectForm)
+void ISWorkspaceParagraph::AddObjectForm(QWidget *ObjectForm)
 {
 	connect(ObjectForm, &ISObjectFormBase::windowTitleChanged, [=](const QString &WindowTitle)
 	{
@@ -77,7 +77,7 @@ void ISWorkspaceForm::AddObjectForm(QWidget *ObjectForm)
 	TabWidget->setCurrentWidget(ObjectForm);
 }
 //-----------------------------------------------------------------------------
-void ISWorkspaceForm::ClickedSubSystem(const QString &SubSystemUID, const QIcon &IconSubSystem)
+void ISWorkspaceParagraph::ClickedSubSystem(const QString &SubSystemUID, const QIcon &IconSubSystem)
 {
 	if (SubSystemUID == CurrentSubSystemUID)
 	{
@@ -100,7 +100,7 @@ void ISWorkspaceForm::ClickedSubSystem(const QString &SubSystemUID, const QIcon 
 		ISProtocol::OpenSubSystem(QString(), MetaSubSystem->LocalName);
 		CentralForm = ISAlgorithm::CreatePointer<ISInterfaceMetaForm *>(MetaSubSystem->ClassName, Q_ARG(QWidget *, this));
 	}
-	connect(CentralForm, &ISListBaseForm::AddFormFromTab, this, &ISWorkspaceForm::AddObjectForm);
+	connect(CentralForm, &ISListBaseForm::AddFormFromTab, this, &ISWorkspaceParagraph::AddObjectForm);
 	TabWidget->insertTab(0, CentralForm, IconSubSystem, MetaSubSystem->LocalName);
 	TabWidget->setCurrentIndex(0);
 	ISGui::SetWaitGlobalCursor(false);

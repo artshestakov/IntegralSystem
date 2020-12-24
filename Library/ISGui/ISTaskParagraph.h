@@ -4,13 +4,13 @@
 #include "ISParagraphBaseForm.h"
 #include "ISTaskListForm.h"
 //-----------------------------------------------------------------------------
-class ISTaskForm : public ISParagraphBaseForm
+class ISTaskParagraph : public ISParagraphBaseForm
 {
 	Q_OBJECT
 
 public:
-	Q_INVOKABLE ISTaskForm(QWidget *parent = 0);
-	virtual ~ISTaskForm();
+	Q_INVOKABLE ISTaskParagraph(QWidget *parent = 0);
+	virtual ~ISTaskParagraph();
 
 	void Invoke() override;
 

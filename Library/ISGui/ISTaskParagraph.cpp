@@ -1,4 +1,4 @@
-#include "ISTaskForm.h"
+#include "ISTaskParagraph.h"
 #include "ISDefinesGui.h"
 #include "ISConstants.h"
 #include "ISAssert.h"
@@ -14,7 +14,7 @@
 #include "ISTcpQuery.h"
 #include "ISUserRoleEntity.h"
 //-----------------------------------------------------------------------------
-ISTaskForm::ISTaskForm(QWidget *parent)
+ISTaskParagraph::ISTaskParagraph(QWidget *parent)
 	: ISParagraphBaseForm(parent),
 	ActionGroup(new QActionGroup(this)),
 	TaskListForm(nullptr)
@@ -27,12 +27,12 @@ ISTaskForm::ISTaskForm(QWidget *parent)
 	ToolBar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
 	MainLayout->addWidget(ToolBar);
 
-	QAction *ActionCreate = ToolBar->addAction(BUFFER_ICONS("Add"), LANG("Task.CreateTask"), this, &ISTaskForm::CreateTask);
+	QAction *ActionCreate = ToolBar->addAction(BUFFER_ICONS("Add"), LANG("Task.CreateTask"), this, &ISTaskParagraph::CreateTask);
 	dynamic_cast<QToolButton*>(ToolBar->widgetForAction(ActionCreate))->setPopupMode(QToolButton::MenuButtonPopup);
 	ISGui::SetFontWidgetUnderline(ToolBar->widgetForAction(ActionCreate), true);
 	ActionCreate->setMenu(new QMenu(ToolBar->widgetForAction(ActionCreate)));
-	ActionCreate->menu()->addAction(BUFFER_ICONS("Search"), LANG("Task.SearchByNumber"), this, &ISTaskForm::SearchByNumber);
-	ActionCreate->menu()->addAction(BUFFER_ICONS("Search"), LANG("Task.SearchByText"), this, &ISTaskForm::SearchByText);
+	ActionCreate->menu()->addAction(BUFFER_ICONS("Search"), LANG("Task.SearchByNumber"), this, &ISTaskParagraph::SearchByNumber);
+	ActionCreate->menu()->addAction(BUFFER_ICONS("Search"), LANG("Task.SearchByText"), this, &ISTaskParagraph::SearchByText);
 
 	ToolBar->addSeparator();
 
@@ -56,17 +56,17 @@ ISTaskForm::ISTaskForm(QWidget *parent)
 	CreateTempWidget();
 }
 //-----------------------------------------------------------------------------
-ISTaskForm::~ISTaskForm()
+ISTaskParagraph::~ISTaskParagraph()
 {
 
 }
 //-----------------------------------------------------------------------------
-void ISTaskForm::Invoke()
+void ISTaskParagraph::Invoke()
 {
 	ISParagraphBaseForm::Invoke();
 }
 //-----------------------------------------------------------------------------
-void ISTaskForm::CreateTempWidget()
+void ISTaskParagraph::CreateTempWidget()
 {
 	QVBoxLayout *Layout = new QVBoxLayout();
 	Layout->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_NULL);
@@ -97,16 +97,16 @@ void ISTaskForm::CreateTempWidget()
 	Layout->addStretch();
 }
 //-----------------------------------------------------------------------------
-void ISTaskForm::CreateActionFilter(const QString &Text, const QIcon &Icon, const QString &SqlFilter)
+void ISTaskParagraph::CreateActionFilter(const QString &Text, const QIcon &Icon, const QString &SqlFilter)
 {
-	QAction *ActionFilter = ToolBar->addAction(Icon, Text, this, &ISTaskForm::FilterClicked);
+	QAction *ActionFilter = ToolBar->addAction(Icon, Text, this, &ISTaskParagraph::FilterClicked);
 	ActionFilter->setProperty("SqlFilter", SqlFilter);
 	ActionFilter->setCheckable(true);
 	ToolBar->addAction(ActionFilter);
 	ActionGroup->addAction(ActionFilter);
 }
 //-----------------------------------------------------------------------------
-void ISTaskForm::FilterClicked()
+void ISTaskParagraph::FilterClicked()
 {
 	if (!TaskListForm)
 	{
@@ -139,12 +139,12 @@ void ISTaskForm::FilterClicked()
 	}
 }
 //-----------------------------------------------------------------------------
-void ISTaskForm::CreateTask()
+void ISTaskParagraph::CreateTask()
 {
 	ISGui::ShowObjectForm(ISGui::CreateObjectForm(ISNamespace::OFT_New, "_Task"));
 }
 //-----------------------------------------------------------------------------
-void ISTaskForm::SearchByNumber()
+void ISTaskParagraph::SearchByNumber()
 {
 	bool Ok = true;
 	while (true)
@@ -179,7 +179,7 @@ void ISTaskForm::SearchByNumber()
 	}
 }
 //-----------------------------------------------------------------------------
-void ISTaskForm::SearchByText()
+void ISTaskParagraph::SearchByText()
 {
 	(new ISTaskSearchByTextForm())->show();
 }

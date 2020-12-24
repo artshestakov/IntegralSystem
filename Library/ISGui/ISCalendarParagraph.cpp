@@ -1,4 +1,4 @@
-#include "ISCalendarForm.h"
+#include "ISCalendarParagraph.h"
 #include "ISConstants.h"
 #include "ISBuffer.h"
 #include "ISLocalization.h"
@@ -11,7 +11,7 @@
 #include "ISCore.h"
 #include "ISDefinesGui.h"
 //-----------------------------------------------------------------------------
-ISCalendarForm::ISCalendarForm(QWidget *parent)
+ISCalendarParagraph::ISCalendarParagraph(QWidget *parent)
 	: ISParagraphBaseForm(parent),
 	FirstUpdate(false)
 {
@@ -32,49 +32,49 @@ ISCalendarForm::ISCalendarForm(QWidget *parent)
 	QAction *ActionCreate = ISControls::CreateActionCreate(ToolBar);
 	ActionCreate->setText(LANG("CalendarForm.CreateEvent"));
 	ActionCreate->setToolTip(LANG("CalendarForm.CreateEvent.ToolTip"));
-	connect(ActionCreate, &QAction::triggered, this, &ISCalendarForm::Create);
+	connect(ActionCreate, &QAction::triggered, this, &ISCalendarParagraph::Create);
 	ToolBar->addAction(ActionCreate);
 
 	QAction *ActionDateTo = new QAction(ToolBar);
 	ActionDateTo->setText(LANG("CalendarForm.CalendarDateTo"));
 	ActionDateTo->setToolTip(LANG("CalendarForm.CalendarDateTo"));
 	ActionDateTo->setIcon(BUFFER_ICONS("CalendarMain.DateTo"));
-	connect(ActionDateTo, &QAction::triggered, this, &ISCalendarForm::DateTo);
+	connect(ActionDateTo, &QAction::triggered, this, &ISCalendarParagraph::DateTo);
 	ToolBar->addAction(ActionDateTo);
 
 	QAction *ActionToday = new QAction(ToolBar);
 	ActionToday->setText(LANG("Today"));
 	ActionToday->setToolTip(LANG("Today"));
 	ActionToday->setIcon(BUFFER_ICONS("CalendarMain.Today"));
-	connect(ActionToday, &QAction::triggered, this, &ISCalendarForm::ToCurrentDate);
+	connect(ActionToday, &QAction::triggered, this, &ISCalendarParagraph::ToCurrentDate);
 	ToolBar->addAction(ActionToday);
 
 	QAction *ActionSettings = new QAction(ToolBar);
 	ActionSettings->setText(LANG("Settings"));
 	ActionSettings->setToolTip(LANG("Settings"));
 	ActionSettings->setIcon(BUFFER_ICONS("Settings"));
-	connect(ActionSettings, &QAction::triggered, this, &ISCalendarForm::ShowSettingsForm);
+	connect(ActionSettings, &QAction::triggered, this, &ISCalendarParagraph::ShowSettingsForm);
 	ToolBar->addAction(ActionSettings);
 
 	ActionEdit = ISControls::CreateActionEdit(this);
 	ActionEdit->setEnabled(false);
-	connect(ActionEdit, &QAction::triggered, this, &ISCalendarForm::Edit);
+	connect(ActionEdit, &QAction::triggered, this, &ISCalendarParagraph::Edit);
 
 	ActionDelete = ISControls::CreateActionDelete(this);
 	ActionDelete->setText(LANG("CalendarForm.Delete"));
 	ActionDelete->setToolTip(LANG("CalendarForm.Delete"));
 	ActionDelete->setEnabled(false);
-	connect(ActionDelete, &QAction::triggered, this, &ISCalendarForm::Delete);
+	connect(ActionDelete, &QAction::triggered, this, &ISCalendarParagraph::Delete);
 
 	ActionCloseEvent = new QAction(this);
 	ActionCloseEvent->setText(LANG("CalendarCloseEvent"));
 	ActionCloseEvent->setIcon(BUFFER_ICONS("Close"));
 	ActionCloseEvent->setEnabled(false);
-	connect(ActionCloseEvent, &QAction::triggered, this, &ISCalendarForm::CloseEvent);
+	connect(ActionCloseEvent, &QAction::triggered, this, &ISCalendarParagraph::CloseEvent);
 
 	CalendarPanel = new ISCalendarPanel(this);
-	connect(CalendarPanel, &ISCalendarPanel::selectionChanged, this, &ISCalendarForm::SelectedDateChanged);
-	connect(CalendarPanel, &ISCalendarPanel::currentPageChanged, this, static_cast<void(ISCalendarForm::*)(int, int)>(&ISCalendarForm::ReloadEvents));
+	connect(CalendarPanel, &ISCalendarPanel::selectionChanged, this, &ISCalendarParagraph::SelectedDateChanged);
+	connect(CalendarPanel, &ISCalendarPanel::currentPageChanged, this, static_cast<void(ISCalendarParagraph::*)(int, int)>(&ISCalendarParagraph::ReloadEvents));
 	LayoutCentral->addWidget(CalendarPanel);
 
 	QVBoxLayout *LayoutRight = new QVBoxLayout();
@@ -113,8 +113,8 @@ ISCalendarForm::ISCalendarForm(QWidget *parent)
 	LayoutRight->addWidget(GroupBox);
 
 	ListWidget = new ISCalendarEventsWidget(GroupBox);
-	connect(ListWidget, &QListWidget::itemDoubleClicked, this, &ISCalendarForm::ItemDoubleClicked);
-	connect(ListWidget, &QListWidget::itemSelectionChanged, this, &ISCalendarForm::ItemSelectionChanged);
+	connect(ListWidget, &QListWidget::itemDoubleClicked, this, &ISCalendarParagraph::ItemDoubleClicked);
+	connect(ListWidget, &QListWidget::itemSelectionChanged, this, &ISCalendarParagraph::ItemSelectionChanged);
 	GroupBox->layout()->addWidget(ListWidget);
 
 	ListWidget->addAction(ActionEdit);
@@ -122,12 +122,12 @@ ISCalendarForm::ISCalendarForm(QWidget *parent)
 	ListWidget->addAction(ActionCloseEvent);
 }
 //-----------------------------------------------------------------------------
-ISCalendarForm::~ISCalendarForm()
+ISCalendarParagraph::~ISCalendarParagraph()
 {
 
 }
 //-----------------------------------------------------------------------------
-void ISCalendarForm::Invoke()
+void ISCalendarParagraph::Invoke()
 {
 	ISParagraphBaseForm::Invoke();
 	if (!FirstUpdate)
@@ -138,13 +138,13 @@ void ISCalendarForm::Invoke()
 	}
 }
 //-----------------------------------------------------------------------------
-void ISCalendarForm::ReloadEvents()
+void ISCalendarParagraph::ReloadEvents()
 {
 	QDate CurrentDate = QDate::currentDate();
 	ReloadEvents(CurrentDate.year(), CurrentDate.month());
 }
 //-----------------------------------------------------------------------------
-void ISCalendarForm::ReloadEvents(int Year, int Month)
+void ISCalendarParagraph::ReloadEvents(int Year, int Month)
 {
 	ISTcpQuery qGetCalendarEvents(API_GET_CALENDAR_EVENTS);
 	qGetCalendarEvents.BindValue("Month", Month);
@@ -173,7 +173,7 @@ void ISCalendarForm::ReloadEvents(int Year, int Month)
 	}
 }
 //-----------------------------------------------------------------------------
-void ISCalendarForm::SelectedDateChanged()
+void ISCalendarParagraph::SelectedDateChanged()
 {
 	QDate Date = CalendarPanel->selectedDate();
 	LabelDayNumber->setText(QString::number(Date.day()));
@@ -198,16 +198,16 @@ void ISCalendarForm::SelectedDateChanged()
 	}
 }
 //-----------------------------------------------------------------------------
-void ISCalendarForm::Create()
+void ISCalendarParagraph::Create()
 {
 	ISCalendarObjectForm *CalendarObjectForm = dynamic_cast<ISCalendarObjectForm*>(ISGui::CreateObjectForm(ISNamespace::OFT_New, "_Calendar"));
 	CalendarObjectForm->SetFieldValue("User", CURRENT_USER_ID);
 	CalendarObjectForm->SetFieldValue("Date", CalendarPanel->selectedDate());
-	connect(CalendarObjectForm, &ISCalendarObjectForm::UpdateList, this, static_cast<void(ISCalendarForm::*)()>(&ISCalendarForm::ReloadEvents));
+	connect(CalendarObjectForm, &ISCalendarObjectForm::UpdateList, this, static_cast<void(ISCalendarParagraph::*)()>(&ISCalendarParagraph::ReloadEvents));
 	ISGui::ShowObjectForm(CalendarObjectForm);
 }
 //-----------------------------------------------------------------------------
-void ISCalendarForm::DateTo()
+void ISCalendarParagraph::DateTo()
 {
 	QDate Date = ISInputDialog::GetDate(LANG("CalendarForm.CalendarDateTo"), LANG("SelectDate") + ':');
 	if (Date.isValid())
@@ -216,17 +216,17 @@ void ISCalendarForm::DateTo()
 	}
 }
 //-----------------------------------------------------------------------------
-void ISCalendarForm::ToCurrentDate()
+void ISCalendarParagraph::ToCurrentDate()
 {
 	CalendarPanel->Today();
 }
 //-----------------------------------------------------------------------------
-void ISCalendarForm::ShowSettingsForm()
+void ISCalendarParagraph::ShowSettingsForm()
 {
 	ISGui::ShowSettingsForm(CONST_UID_SETTING_GROUP_CALENDAR);
 }
 //-----------------------------------------------------------------------------
-void ISCalendarForm::Edit()
+void ISCalendarParagraph::Edit()
 {
 	ISCalendarEventItem *EventItem = dynamic_cast<ISCalendarEventItem*>(ListWidget->itemWidget(ListWidget->currentItem()));
 	if (EventItem)
@@ -238,7 +238,7 @@ void ISCalendarForm::Edit()
 	}
 }
 //-----------------------------------------------------------------------------
-void ISCalendarForm::Delete()
+void ISCalendarParagraph::Delete()
 {
 	ISCalendarEventItem *EventItem = dynamic_cast<ISCalendarEventItem*>(ListWidget->itemWidget(ListWidget->currentItem()));
 	if (EventItem)
@@ -247,7 +247,7 @@ void ISCalendarForm::Delete()
 	}
 }
 //-----------------------------------------------------------------------------
-void ISCalendarForm::CloseEvent()
+void ISCalendarParagraph::CloseEvent()
 {
 	ISCalendarEventItem *EventItem = dynamic_cast<ISCalendarEventItem*>(ListWidget->itemWidget(ListWidget->currentItem()));
 	if (EventItem)
@@ -268,7 +268,7 @@ void ISCalendarForm::CloseEvent()
 	}
 }
 //-----------------------------------------------------------------------------
-void ISCalendarForm::ItemDoubleClicked(QListWidgetItem *ListWidgetItem)
+void ISCalendarParagraph::ItemDoubleClicked(QListWidgetItem *ListWidgetItem)
 {
 	ISCalendarEventItem *EventItem = dynamic_cast<ISCalendarEventItem*>(ListWidget->itemWidget(ListWidgetItem));
 	if (!EventItem->GetClosed())
@@ -277,7 +277,7 @@ void ISCalendarForm::ItemDoubleClicked(QListWidgetItem *ListWidgetItem)
 	}
 }
 //-----------------------------------------------------------------------------
-void ISCalendarForm::ItemSelectionChanged()
+void ISCalendarParagraph::ItemSelectionChanged()
 {
 	ISCalendarEventItem *EventItem = dynamic_cast<ISCalendarEventItem*>(ListWidget->itemWidget(ListWidget->currentItem()));
 	if (EventItem)
@@ -294,14 +294,14 @@ void ISCalendarForm::ItemSelectionChanged()
 	}
 }
 //-----------------------------------------------------------------------------
-void ISCalendarForm::EditEvent(int CalendarID)
+void ISCalendarParagraph::EditEvent(int CalendarID)
 {
 	ISCalendarObjectForm *CalendarObjectForm = dynamic_cast<ISCalendarObjectForm*>(ISGui::CreateObjectForm(ISNamespace::OFT_Edit, "_Calendar", CalendarID));
-	connect(CalendarObjectForm, &ISCalendarObjectForm::UpdateList, this, &ISCalendarForm::SelectedDateChanged);
+	connect(CalendarObjectForm, &ISCalendarObjectForm::UpdateList, this, &ISCalendarParagraph::SelectedDateChanged);
 	ISGui::ShowObjectForm(CalendarObjectForm);
 }
 //-----------------------------------------------------------------------------
-void ISCalendarForm::DeleteEvent(int CalendarID)
+void ISCalendarParagraph::DeleteEvent(int CalendarID)
 {
 	if (ISMessageBox::ShowQuestion(CalendarPanel, LANG("Message.Question.DeleteCalendarEvent")))
 	{

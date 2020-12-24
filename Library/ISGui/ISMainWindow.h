@@ -4,10 +4,10 @@
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 #include "ISInterfaceForm.h"
-#include "ISDesktopForm.h"
+#include "ISDesktopParagraph.h"
 #include "ISMenuBar.h"
-#include "ISCalendarForm.h"
-#include "ISWorkspaceForm.h"
+#include "ISCalendarParagraph.h"
+#include "ISWorkspaceParagraph.h"
 //-----------------------------------------------------------------------------
 class ISGUI_EXPORT ISMainWindow : public ISInterfaceForm
 {
@@ -40,9 +40,9 @@ private:
 
 	std::map<ISUuid, int> Paragraphs;
 	QStackedWidget *StackedWidget; //Стек-главных виджетов
-	ISDesktopForm *WidgetDesktop; //Виджет рабочего стола
-	ISWorkspaceForm *WorkspaceForm; //Виджет рабочей области
-	ISCalendarForm *CalendarForm; //Виджет календаря
+	ISDesktopParagraph *WidgetDesktop; //Виджет рабочего стола
+	ISWorkspaceParagraph *WorkspaceForm; //Виджет рабочей области
+	ISCalendarParagraph *CalendarForm; //Виджет календаря
 	
 	QString CurrentParagraphUID;
 	bool ExitConfirm; //Флаг подтверждения выхода

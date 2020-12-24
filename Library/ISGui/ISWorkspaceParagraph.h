@@ -6,13 +6,13 @@
 #include "ISInterfaceMetaForm.h"
 #include "PMetaClass.h"
 //-----------------------------------------------------------------------------
-class ISWorkspaceForm : public ISParagraphBaseForm
+class ISWorkspaceParagraph : public ISParagraphBaseForm
 {
 	Q_OBJECT
 
 public:
-	Q_INVOKABLE ISWorkspaceForm(QWidget *parent = 0);
-	virtual ~ISWorkspaceForm();
+	Q_INVOKABLE ISWorkspaceParagraph(QWidget *parent = 0);
+	virtual ~ISWorkspaceParagraph();
 
 	void Invoke() override;
 

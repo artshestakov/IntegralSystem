@@ -73,6 +73,9 @@
     <Filter Include="Protocol">
       <UniqueIdentifier>{524b6c72-333a-41c1-8cec-44dba96b37b5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Paragraphs">
+      <UniqueIdentifier>{b6c20f43-c5cb-49da-afbd-9ef9b8ccce4d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ISExportForm.cpp">
@@ -225,16 +228,10 @@
     <ClCompile Include="ISAuthForm.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
-    <ClCompile Include="ISCalendarForm.cpp">
-      <Filter>Forms</Filter>
-    </ClCompile>
     <ClCompile Include="ISCalendarObjectForm.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
     <ClCompile Include="ISConnectionForm.cpp">
-      <Filter>Forms</Filter>
-    </ClCompile>
-    <ClCompile Include="ISDesktopForm.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
     <ClCompile Include="ISDiscussionListForm.cpp">
@@ -279,9 +276,6 @@
     <ClCompile Include="ISStorageFilesListForm.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
-    <ClCompile Include="ISTaskForm.cpp">
-      <Filter>Forms</Filter>
-    </ClCompile>
     <ClCompile Include="ISTaskViewForm.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
@@ -292,9 +286,6 @@
       <Filter>Forms</Filter>
     </ClCompile>
     <ClCompile Include="ISUserObjectForm.cpp">
-      <Filter>Forms</Filter>
-    </ClCompile>
-    <ClCompile Include="ISWorkspaceForm.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
     <ClCompile Include="ISListIndicatorWidget.cpp">
@@ -429,6 +420,18 @@
     <ClCompile Include="ISProtocol.cpp">
       <Filter>System</Filter>
     </ClCompile>
+    <ClCompile Include="ISTaskParagraph.cpp">
+      <Filter>Paragraphs</Filter>
+    </ClCompile>
+    <ClCompile Include="ISCalendarParagraph.cpp">
+      <Filter>Paragraphs</Filter>
+    </ClCompile>
+    <ClCompile Include="ISWorkspaceParagraph.cpp">
+      <Filter>Paragraphs</Filter>
+    </ClCompile>
+    <ClCompile Include="ISDesktopParagraph.cpp">
+      <Filter>Paragraphs</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ISExportForm.h">
@@ -536,16 +539,10 @@
     <QtMoc Include="ISAuthForm.h">
       <Filter>Forms</Filter>
     </QtMoc>
-    <QtMoc Include="ISCalendarForm.h">
-      <Filter>Forms</Filter>
-    </QtMoc>
     <QtMoc Include="ISCalendarObjectForm.h">
       <Filter>Forms</Filter>
     </QtMoc>
     <QtMoc Include="ISConnectionForm.h">
-      <Filter>Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISDesktopForm.h">
       <Filter>Forms</Filter>
     </QtMoc>
     <QtMoc Include="ISDiscussionListForm.h">
@@ -590,9 +587,6 @@
     <QtMoc Include="ISStorageFilesListForm.h">
       <Filter>Forms</Filter>
     </QtMoc>
-    <QtMoc Include="ISTaskForm.h">
-      <Filter>Forms</Filter>
-    </QtMoc>
     <QtMoc Include="ISTaskViewForm.h">
       <Filter>Forms</Filter>
     </QtMoc>
@@ -603,9 +597,6 @@
       <Filter>Forms</Filter>
     </QtMoc>
     <QtMoc Include="ISUserObjectForm.h">
-      <Filter>Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISWorkspaceForm.h">
       <Filter>Forms</Filter>
     </QtMoc>
     <QtMoc Include="ISListIndicatorWidget.h">
@@ -721,6 +712,18 @@
     </QtMoc>
     <QtMoc Include="ISTcpModel.h">
       <Filter>Model</Filter>
+    </QtMoc>
+    <QtMoc Include="ISTaskParagraph.h">
+      <Filter>Paragraphs</Filter>
+    </QtMoc>
+    <QtMoc Include="ISCalendarParagraph.h">
+      <Filter>Paragraphs</Filter>
+    </QtMoc>
+    <QtMoc Include="ISWorkspaceParagraph.h">
+      <Filter>Paragraphs</Filter>
+    </QtMoc>
+    <QtMoc Include="ISDesktopParagraph.h">
+      <Filter>Paragraphs</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>

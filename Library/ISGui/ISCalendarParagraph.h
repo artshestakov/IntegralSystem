@@ -7,13 +7,13 @@
 #include "ISCalendarEventsWidget.h"
 #include "ISFieldEdits.h"
 //-----------------------------------------------------------------------------
-class ISCalendarForm : public ISParagraphBaseForm
+class ISCalendarParagraph : public ISParagraphBaseForm
 {
 	Q_OBJECT
 
 public:
-	Q_INVOKABLE ISCalendarForm(QWidget *parent = 0);
-	virtual ~ISCalendarForm();
+	Q_INVOKABLE ISCalendarParagraph(QWidget *parent = 0);
+	virtual ~ISCalendarParagraph();
 
 	void Invoke() override;
 

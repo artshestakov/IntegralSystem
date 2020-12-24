@@ -183,7 +183,7 @@
     <ClCompile Include="ISButtons.cpp" />
     <ClCompile Include="ISCalendarEventItem.cpp" />
     <ClCompile Include="ISCalendarEventsWidget.cpp" />
-    <ClCompile Include="ISCalendarForm.cpp" />
+    <ClCompile Include="ISCalendarParagraph.cpp" />
     <ClCompile Include="ISCalendarObjectForm.cpp" />
     <ClCompile Include="ISCalendarPanel.cpp" />
     <ClCompile Include="ISCalendarPopup.cpp" />
@@ -198,7 +198,7 @@
     <ClCompile Include="ISDatabaseHelper.cpp" />
     <ClCompile Include="ISDefinesGui.cpp" />
     <ClCompile Include="ISDelegates.cpp" />
-    <ClCompile Include="ISDesktopForm.cpp" />
+    <ClCompile Include="ISDesktopParagraph.cpp" />
     <ClCompile Include="ISDiscussionListForm.cpp" />
     <ClCompile Include="ISEditsQT.cpp" />
     <ClCompile Include="ISEmpty.cpp" />
@@ -274,7 +274,7 @@
     <ClCompile Include="ISSystemsPanel.cpp" />
     <ClCompile Include="ISTabBarMain.cpp" />
     <ClCompile Include="ISTabWidgetMain.cpp" />
-    <ClCompile Include="ISTaskForm.cpp" />
+    <ClCompile Include="ISTaskParagraph.cpp" />
     <ClCompile Include="ISTaskListForm.cpp" />
     <ClCompile Include="ISTaskObjectForm.cpp" />
     <ClCompile Include="ISTaskSearchByTextForm.cpp" />
@@ -291,7 +291,7 @@
     <ClCompile Include="ISUserRoleEntity.cpp" />
     <ClCompile Include="ISValidators.cpp" />
     <ClCompile Include="ISWaitWidget.cpp" />
-    <ClCompile Include="ISWorkspaceForm.cpp" />
+    <ClCompile Include="ISWorkspaceParagraph.cpp" />
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ISExportForm.h" />
@@ -355,13 +355,13 @@
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ISValidators.h" />
-    <QtMoc Include="ISWorkspaceForm.h" />
+    <QtMoc Include="ISWorkspaceParagraph.h" />
     <QtMoc Include="ISAboutForm.h" />
     <QtMoc Include="ISAuthForm.h" />
-    <QtMoc Include="ISCalendarForm.h" />
+    <QtMoc Include="ISCalendarParagraph.h" />
     <QtMoc Include="ISCalendarObjectForm.h" />
     <QtMoc Include="ISConnectionForm.h" />
-    <QtMoc Include="ISDesktopForm.h" />
+    <QtMoc Include="ISDesktopParagraph.h" />
     <QtMoc Include="ISDiscussionListForm.h" />
     <QtMoc Include="ISFavoritesForm.h" />
     <QtMoc Include="ISFullTextSearchForm.h" />
@@ -376,7 +376,7 @@
     <QtMoc Include="ISSearchForm.h" />
     <QtMoc Include="ISSettingsForm.h" />
     <QtMoc Include="ISStorageFilesListForm.h" />
-    <QtMoc Include="ISTaskForm.h" />
+    <QtMoc Include="ISTaskParagraph.h" />
     <QtMoc Include="ISTaskViewForm.h" />
     <QtMoc Include="ISUserGroupListForm.h" />
     <QtMoc Include="ISUserListForm.h" />
