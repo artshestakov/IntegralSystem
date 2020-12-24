@@ -663,7 +663,6 @@
   <Local Name="AutoFillField" Russian="Уникальный код записи. Это поле заполняется автоматически после создания записи."/>
   <Local Name="ClosePreview" Russian="Закрыть предпросмотр"/>
   <Local Name="CancelChanged" Russian="Отменить изменения"/>
-  <Local Name="Calculated" Russian="вычисляется"/>
   <Local Name="OrdinalNumber" Russian="Порядковый номер"/>
   <Local Name="FileName" Russian="Имя файла"/>
   <Local Name="Overview" Russian="Обзор..."/>

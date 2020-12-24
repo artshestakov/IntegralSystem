@@ -236,8 +236,6 @@
     <ClCompile Include="ISMenuBar.cpp" />
     <ClCompile Include="ISMessageBox.cpp" />
     <ClCompile Include="ISMetaSystemsEntity.cpp" />
-    <ClCompile Include="ISModelThreadQuery.cpp" />
-    <ClCompile Include="ISModelThreadWorker.cpp" />
     <ClCompile Include="ISMonitorActivityForm.cpp" />
     <ClCompile Include="ISMonitorUserWidget.cpp" />
     <ClCompile Include="ISObjectFormBase.cpp" />
@@ -462,8 +460,6 @@
     <ClInclude Include="ISPrintingEntity.h" />
     <QtMoc Include="ISPrintingHtml.h" />
     <ClInclude Include="ISStartup.h" />
-    <QtMoc Include="ISModelThreadWorker.h" />
-    <QtMoc Include="ISModelThreadQuery.h" />
     <ClInclude Include="ISSqlModelHelper.h" />
   </ItemGroup>
   <ItemGroup>

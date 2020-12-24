@@ -26,9 +26,6 @@
     <Filter Include="Model">
       <UniqueIdentifier>{0b9a283c-8279-4a02-a1f4-8447f72fa80c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ModelThread">
-      <UniqueIdentifier>{50fc7d41-dc56-48a5-a96a-018e6d093dc8}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Widgets">
       <UniqueIdentifier>{5f6a732d-7467-49d5-a44a-7e386cb56364}</UniqueIdentifier>
     </Filter>
@@ -143,12 +140,6 @@
     </ClCompile>
     <ClCompile Include="ISSqlModelHelper.cpp">
       <Filter>Model</Filter>
-    </ClCompile>
-    <ClCompile Include="ISModelThreadQuery.cpp">
-      <Filter>ModelThread</Filter>
-    </ClCompile>
-    <ClCompile Include="ISModelThreadWorker.cpp">
-      <Filter>ModelThread</Filter>
     </ClCompile>
     <ClCompile Include="ISBaseTableView.cpp">
       <Filter>Widgets</Filter>
@@ -511,12 +502,6 @@
     </QtMoc>
     <QtMoc Include="ISSqlModelCore.h">
       <Filter>Model</Filter>
-    </QtMoc>
-    <QtMoc Include="ISModelThreadQuery.h">
-      <Filter>ModelThread</Filter>
-    </QtMoc>
-    <QtMoc Include="ISModelThreadWorker.h">
-      <Filter>ModelThread</Filter>
     </QtMoc>
     <QtMoc Include="ISBaseTableView.h">
       <Filter>Widgets</Filter>
