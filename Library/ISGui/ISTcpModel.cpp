@@ -19,14 +19,11 @@ ISTcpModel::~ISTcpModel()
 //-----------------------------------------------------------------------------
 void ISTcpModel::Clear()
 {
-	if (!Records.empty())
-	{
-		beginResetModel();
-		Fields.clear();
-		Records.clear();
-		SortingColumnIndex = -1;
-		endResetModel();
-	}
+	beginResetModel();
+	Fields.clear();
+	Records.clear();
+	SortingColumnIndex = -1;
+	endResetModel();
 }
 //-----------------------------------------------------------------------------
 void ISTcpModel::SetSource(const QVariantList &fields, const QVariantList &records)
