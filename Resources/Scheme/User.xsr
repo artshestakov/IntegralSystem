@@ -16,6 +16,7 @@
   <_GroupAccessSpecialType IsSystem="true" UID="{988106BE-292A-428A-A10D-5858C4DFE569}" Parent="{47115F72-C49E-4CB6-8AEF-A2648CF648E9}" Name="Редактирование задач" Order="3"/>
   <_GroupAccessSpecialType IsSystem="true" UID="{D7837403-15BA-4B50-8B9A-660602C24B98}" Parent="{47115F72-C49E-4CB6-8AEF-A2648CF648E9}" Name="Преобразование задач в подзадачи и наоборот" Order="4"/>
   <_GroupAccessSpecialType IsSystem="true" UID="{14B3E83D-56D4-4527-9C33-0770D38B78D5}" Parent="{47115F72-C49E-4CB6-8AEF-A2648CF648E9}" Name="Назначение исполнителей" Order="5"/>
+  <_GroupAccessSpecialType IsSystem="true" UID="{093E482F-C108-4939-A1D5-66377BA354AC}" Parent="{47115F72-C49E-4CB6-8AEF-A2648CF648E9}" Name="Просмотр всех задач" Order="6"/>
   
   <_GroupAccessSpecialType IsSystem="true" UID="{C84B3053-BBF0-4B2E-B1F4-32ABE9A817D4}" Name="Прочее" Order="3"/>
   <_GroupAccessSpecialType IsSystem="true" UID="{2C6AA9DB-0804-46A6-8095-D2A0D6011C03}" Parent="{C84B3053-BBF0-4B2E-B1F4-32ABE9A817D4}" Name="Редактирование печатных форм" Hint="Возможность редактировать печатные формы в режиме предпросмотра" Order="1"/>

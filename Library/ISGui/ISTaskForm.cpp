@@ -12,6 +12,7 @@
 #include "ISAlgorithm.h"
 #include "ISTaskSearchByTextForm.h"
 #include "ISTcpQuery.h"
+#include "ISUserRoleEntity.h"
 //-----------------------------------------------------------------------------
 ISTaskForm::ISTaskForm(QWidget *parent)
 	: ISParagraphBaseForm(parent),
@@ -34,7 +35,13 @@ ISTaskForm::ISTaskForm(QWidget *parent)
 	ActionCreate->menu()->addAction(BUFFER_ICONS("Search"), LANG("Task.SearchByText"), this, &ISTaskForm::SearchByText);
 
 	ToolBar->addSeparator();
-	CreateActionFilter(LANG("Task.Filter.All"), BUFFER_ICONS("Task.Filter.All"), QString());
+
+	//≈сли разрешено просматривать все задачи
+	if (ISUserRoleEntity::Instance().CheckAccessSpecial(CONST_UID_GROUP_ACCESS_SPECIAL_TASK_SHOW_ALL))
+	{
+		CreateActionFilter(LANG("Task.Filter.All"), BUFFER_ICONS("Task.Filter.All"), QString());
+	}
+
 	CreateActionFilter(LANG("Task.Filter.My"), BUFFER_ICONS("Task.Filter.My"), "task_executor = " + QString::number(CURRENT_USER_ID));
 	CreateActionFilter(LANG("Task.Filter.Open"), BUFFER_ICONS("Task.Status.Open"), "task_executor = " + QString::number(CURRENT_USER_ID) + " AND task_status = get_task_status_id_by_uid('{2FD27958-6EC9-4E78-88F4-0A2BFDFE4716}')");
 	CreateActionFilter(LANG("Task.Filter.InWork"), BUFFER_ICONS("Task.Status.InWork"), "task_executor = " + QString::number(CURRENT_USER_ID) + " AND task_status = get_task_status_id_by_uid('{72BEB1A3-0491-4932-AAA0-5725DA41A0A8}')");
