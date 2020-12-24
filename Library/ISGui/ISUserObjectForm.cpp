@@ -108,6 +108,12 @@ void ISUserObjectForm::PasswordManagement()
 //-----------------------------------------------------------------------------
 void ISUserObjectForm::PasswordReset()
 {
+	if (GetModificationFlag())
+	{
+		ISMessageBox::ShowWarning(this, LANG("Message.Warning.SaveObjectFromContinue"));
+		return;
+	}
+
 	if (ISMessageBox::ShowQuestion(nullptr, LANG("Message.Question.PasswordReset"), LANG("ThisActionIsNotReversible")))
 	{
 		ISTcpQuery qPasswordReset(API_USER_PASSWORD_RESET);
