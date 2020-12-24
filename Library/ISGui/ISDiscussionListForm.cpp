@@ -18,10 +18,8 @@ void ISDiscussionListForm::LoadData()
 {
 	if (GetParentObjectID())
 	{
-		QString ClassFilter;
-		ClassFilter += "dson_tablename = '" + GetParentTableName() + "' \n";
-		ClassFilter += "AND dson_objectid = " + QString::number(GetParentObjectID());
-		GetQueryModel()->SetClassFilter(ClassFilter);
+		GetTcpQuery()->AddFilter("TableName", GetParentTableName());
+		GetTcpQuery()->AddFilter("ObjectID", GetParentObjectID());
 	}
 	ISListBaseForm::LoadData();
 }
