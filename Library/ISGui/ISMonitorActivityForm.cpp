@@ -119,10 +119,9 @@ void ISMonitorActivityForm::ShowProtocol()
 		ISProtocolListForm *ProtocolBaseListForm = new ISProtocolListForm();
 		ProtocolBaseListForm->setWindowTitle(LANG("ProtocolUser") + ": " + MonitorUserWidget->property("UserName").toString());
 		ProtocolBaseListForm->setWindowIcon(BUFFER_ICONS("Protocol"));
-		ProtocolBaseListForm->GetQueryModel()->SetClassFilter("prtc_user = :UserID");
-		ProtocolBaseListForm->GetQueryModel()->AddCondition(":UserID", MonitorUserWidget->property("UserID"));
-		ProtocolBaseListForm->LoadData();
+		ProtocolBaseListForm->GetTcpQuery()->AddFilter("User", MonitorUserWidget->property("UserID"));
 		ProtocolBaseListForm->showMaximized();
+		QTimer::singleShot(WAIT_LOAD_DATA_LIST_FORM, ProtocolBaseListForm, &ISProtocolListForm::LoadData);
 	}
 }
 //-----------------------------------------------------------------------------
