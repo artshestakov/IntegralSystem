@@ -45,9 +45,9 @@ void ISTcpModel::SetSource(const QVariantList &fields, const QVariantList &recor
 	}
 
 	//Заполняем строки
-	int RecordCount = records.size();
+	size_t RecordCount = (size_t)records.size();
 	Records.resize(RecordCount);
-	for (int i = 0; i < RecordCount; ++i)
+	for (size_t i = 0; i < RecordCount; ++i)
 	{
 		QVariantList Values = records[i].toList();
 		size_t ValuesSize = Values.size();
