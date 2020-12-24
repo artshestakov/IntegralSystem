@@ -61,7 +61,6 @@ public:
 	virtual void NavigationSelectNextRecord(); //Выделение следующей записи
 	virtual void NavigationSelectLastRecord(); //Выделение последней записи
 	void NoteObject(); //Примечание объекта
-	void AutoFitColumnWidth(); //Автоподбор ширины
 	void ResetWidthColumn(); //Сброс ширины колонок
 	virtual void LoadData() override; //Загрузка данных в таблицу
 	virtual void CornerButtonClicked(); //Событие нажатия на cornerButton

@@ -104,7 +104,6 @@ namespace ISNamespace
     enum ActionSpecialType
     {
         AST_Note,
-        AST_ResizeFromContent,
         AST_ResetWidthColumn,
     };
 

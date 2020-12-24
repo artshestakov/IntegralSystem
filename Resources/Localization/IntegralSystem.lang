@@ -248,7 +248,6 @@
   <Local Name="ClearFavorites" Russian="Очистить избранное"/>
   <Local Name="ClearHistory" Russian="Очистить историю"/>
   <Local Name="History" Russian="История"/>
-  <Local Name="AutoFitColumnWidth" Russian="Автоподбор ширины колонок"/>
   <Local Name="ResetWidthColumn" Russian="Сброс ширины колонок"/>
   <Local Name="Creating" Russian="Создание"/>
   <Local Name="Coping" Russian="Создание копии"/>

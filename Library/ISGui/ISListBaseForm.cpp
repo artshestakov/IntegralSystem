@@ -135,14 +135,6 @@ ISListBaseForm::ISListBaseForm(const QString &TableName, QWidget *parent)
 		ActionsSpecial[ISNamespace::AST_Note] = ActionNoteObject;
 		ActionObjectGroup->addAction(ActionNoteObject);
 
-		//јвтоподбор ширины
-		QAction *ActionResizeFromContent = new QAction(this);
-		ActionResizeFromContent->setText(LANG("AutoFitColumnWidth"));
-		ActionResizeFromContent->setToolTip(LANG("AutoFitColumnWidth"));
-		ActionResizeFromContent->setIcon(BUFFER_ICONS("AutoFitColumnWidth"));
-		connect(ActionResizeFromContent, &QAction::triggered, this, &ISListBaseForm::AutoFitColumnWidth);
-		ActionsSpecial[ISNamespace::AST_ResizeFromContent] = ActionResizeFromContent;
-
 		//—брос ширины колонок
 		QAction *ActionResetWidthColumn = new QAction(this);
 		ActionResetWidthColumn->setText(LANG("ResetWidthColumn"));
@@ -172,7 +164,7 @@ ISListBaseForm::ISListBaseForm(const QString &TableName, QWidget *parent)
 		ActionAdditionally->setMenu(new QMenu(ToolBar));
 		ActionAdditionally->menu()->addAction(GetAction(ISNamespace::AT_Favorites));
 		ActionAdditionally->menu()->addAction(GetAction(ISNamespace::AT_Export));
-		ActionAdditionally->menu()->addAction(GetSpecialAction(ISNamespace::AST_ResizeFromContent));
+		//ActionAdditionally->menu()->addAction(GetSpecialAction(ISNamespace::AST_ResizeFromContent));
 		ActionAdditionally->menu()->addAction(GetSpecialAction(ISNamespace::AST_ResetWidthColumn));
 		ActionAdditionally->menu()->addAction(LANG("SettingsList"), this, &ISListBaseForm::ShowSettingsForm);
 
@@ -1075,13 +1067,6 @@ void ISListBaseForm::NavigationSelectLastRecord()
 void ISListBaseForm::NoteObject()
 {
 	ISGui::ShowNoteObject(this, MetaTable->Name, GetObjectID());
-}
-//-----------------------------------------------------------------------------
-void ISListBaseForm::AutoFitColumnWidth()
-{
-	ISGui::SetWaitGlobalCursor(true);
-	TableView->resizeColumnsToContents();
-	ISGui::SetWaitGlobalCursor(false);
 }
 //-----------------------------------------------------------------------------
 void ISListBaseForm::ResetWidthColumn()
