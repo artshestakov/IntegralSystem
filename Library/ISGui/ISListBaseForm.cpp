@@ -134,13 +134,6 @@ ISListBaseForm::ISListBaseForm(const QString &TableName, QWidget *parent)
 		connect(ActionNoteObject, &QAction::triggered, this, &ISListBaseForm::NoteObject);
 		ActionsSpecial[ISNamespace::AST_Note] = ActionNoteObject;
 		ActionObjectGroup->addAction(ActionNoteObject);
-
-		//Сброс ширины колонок
-		QAction *ActionResetWidthColumn = new QAction(this);
-		ActionResetWidthColumn->setText(LANG("ResetWidthColumn"));
-		ActionResetWidthColumn->setToolTip(LANG("ResetWidthColumn"));
-		connect(ActionResetWidthColumn, &QAction::triggered, this, &ISListBaseForm::ResetWidthColumn);
-		ActionsSpecial[ISNamespace::AST_ResetWidthColumn] = ActionResetWidthColumn;
 	}
 
 	{//Создание тулбара
@@ -164,8 +157,6 @@ ISListBaseForm::ISListBaseForm(const QString &TableName, QWidget *parent)
 		ActionAdditionally->setMenu(new QMenu(ToolBar));
 		ActionAdditionally->menu()->addAction(GetAction(ISNamespace::AT_Favorites));
 		ActionAdditionally->menu()->addAction(GetAction(ISNamespace::AT_Export));
-		//ActionAdditionally->menu()->addAction(GetSpecialAction(ISNamespace::AST_ResizeFromContent));
-		ActionAdditionally->menu()->addAction(GetSpecialAction(ISNamespace::AST_ResetWidthColumn));
 		ActionAdditionally->menu()->addAction(LANG("SettingsList"), this, &ISListBaseForm::ShowSettingsForm);
 
 		if (SETTING_BOOL(CONST_UID_SETTING_TABLES_SHOWNAVIGATION))
@@ -1067,16 +1058,6 @@ void ISListBaseForm::NavigationSelectLastRecord()
 void ISListBaseForm::NoteObject()
 {
 	ISGui::ShowNoteObject(this, MetaTable->Name, GetObjectID());
-}
-//-----------------------------------------------------------------------------
-void ISListBaseForm::ResetWidthColumn()
-{
-	ISGui::SetWaitGlobalCursor(true);
-	for (int i = 0; i < TcpModel->columnCount(); ++i)
-	{
-		TableView->setColumnWidth(i, 100);
-	}
-	ISGui::SetWaitGlobalCursor(false);
 }
 //-----------------------------------------------------------------------------
 void ISListBaseForm::ShowContextMenu(const QPoint &Point)

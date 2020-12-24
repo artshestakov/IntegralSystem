@@ -104,7 +104,6 @@ namespace ISNamespace
     enum ActionSpecialType
     {
         AST_Note,
-        AST_ResetWidthColumn,
     };
 
     enum ReportType
