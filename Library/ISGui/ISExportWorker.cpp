@@ -22,9 +22,9 @@ void ISExportWorker::Cancel()
 	Canceled = true;
 }
 //-----------------------------------------------------------------------------
-void ISExportWorker::SetModel(ISSqlModelCore *model)
+void ISExportWorker::SetModel(QObject *SqlModel)
 {
-	Model = model;
+	Model = SqlModel;
 }
 //-----------------------------------------------------------------------------
 void ISExportWorker::SetFields(const ISVectorString &fields)

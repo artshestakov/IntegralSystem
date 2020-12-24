@@ -67,13 +67,15 @@ bool ISExportHTML::Export()
 		{
 			if (ISAlgorithm::VectorContains(Fields, FieldName))
 			{
-				FileHTML->write("    <th>" + Model->GetFieldLocalName(FieldName).toUtf8() + "</th>\r\n");
+				//???
+				//FileHTML->write("    <th>" + Model->GetFieldLocalName(FieldName).toUtf8() + "</th>\r\n");
 			}
 		}
 		FileHTML->write("   </tr>\r\n");
 	}
 
-	for (int Row = 0; Row < Model->rowCount(); ++Row) //Обход строк
+	//???
+	for (int Row = 0; Row < /*Model->rowCount()*/0; ++Row) //Обход строк
 	{
 		if (Canceled) //Если была нажата кнопка "Остановить"
 		{
@@ -97,22 +99,24 @@ bool ISExportHTML::Export()
 			}
 		}
 
-		QSqlRecord SqlRecord = Model->GetRecord(Row); //Текущая строка
+		//???
+		//QSqlRecord SqlRecord = Model->GetRecord(Row); //Текущая строка
 		QString RowString;
 
 		RowString.append("    <tr>");
 		for (const QString &FieldName : Fields) //Обход колонок
 		{
-			QVariant Value = SqlRecord.value(FieldName).toString();
-			Value = PrepareValue(MetaTable->GetField(FieldName)->Type, Value);
-			RowString.append("<td>" + Value.toString().toUtf8() + "</td>");
+			//???
+			//QVariant Value = SqlRecord.value(FieldName).toString();
+			//Value = PrepareValue(MetaTable->GetField(FieldName)->Type, Value);
+			//RowString.append("<td>" + Value.toString().toUtf8() + "</td>");
 		}
 		RowString.append("</tr>\r\n");
 
 		FileHTML->write(RowString.toUtf8());
 
 		emit ExportedRow();
-		emit Message(LANG("Export.Process.Process").arg(Row + 1).arg(Model->rowCount()));
+		//emit Message(LANG("Export.Process.Process").arg(Row + 1).arg(Model->rowCount()));
 	}
 
 	FileHTML->write("  </table>\r\n");

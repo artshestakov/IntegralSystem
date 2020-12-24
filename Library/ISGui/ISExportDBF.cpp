@@ -59,7 +59,8 @@ bool ISExportDBF::Export()
 		return false;
 	}
 	
-	for (int Row = 0; Row < Model->rowCount(); ++Row) //Обход строк
+	//???
+	for (int Row = 0; Row < /*Model->rowCount()*/0; ++Row) //Обход строк
 	{
 		if (Canceled) //Если была нажата кнопка "Остановить"
 		{
@@ -81,7 +82,8 @@ bool ISExportDBF::Export()
 			}
 		}
 
-		QSqlRecord SqlRecord = Model->GetRecord(Row); //Текущая строка
+		//???
+		//QSqlRecord SqlRecord = Model->GetRecord(Row); //Текущая строка
 		ISStringMap Bind;
 		QString InsertFields = "INSERT INTO " + MetaTable->Name + '(';
 		QString ValuesField = "VALUES(";
@@ -90,7 +92,8 @@ bool ISExportDBF::Export()
 		{
 			InsertFields += FieldName + ", ";
 			ValuesField += ':' + FieldName + ", ";
-			Bind.emplace(':' + FieldName, SqlRecord.value(FieldName).toString());
+			//???
+			//Bind.emplace(':' + FieldName, SqlRecord.value(FieldName).toString());
 		}
 
 		InsertFields.chop(2);
@@ -117,7 +120,7 @@ bool ISExportDBF::Export()
 		}
 
 		emit ExportedRow();
-		emit Message(LANG("Export.Process.Process").arg(Row + 1).arg(Model->rowCount()));
+		//emit Message(LANG("Export.Process.Process").arg(Row + 1).arg(Model->rowCount()));
 	}
 
 	return true;

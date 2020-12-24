@@ -53,7 +53,8 @@ bool ISExportCSV::Export()
 		{
 			if (ISAlgorithm::VectorContains(Fields, FieldName))
 			{
-				HeaderString.append(Model->GetFieldLocalName(FieldName));
+				//???
+				//HeaderString.append(Model->GetFieldLocalName(FieldName));
 				HeaderString.append(';');
 			}
 		}
@@ -62,7 +63,7 @@ bool ISExportCSV::Export()
 		FileCSV->write(HeaderString.toLocal8Bit());
 	}
 
-	for (int Row = 0; Row < Model->rowCount(); ++Row) //Обход строк
+	for (int Row = 0; Row < /*Model->rowCount()*/0; ++Row) //Обход строк
 	{
 		if (Canceled) //Если была нажата кнопка "Остановить"
 		{
@@ -86,14 +87,16 @@ bool ISExportCSV::Export()
 			}
 		}
 
-		QSqlRecord SqlRecord = Model->GetRecord(Row); //Текущая строка
+		//???
+		//QSqlRecord SqlRecord = Model->GetRecord(Row); //Текущая строка
 		QString RowString;
 
 		for (const QString &FieldName : Fields) //Обход колонок
 		{
-			QVariant Value = SqlRecord.value(FieldName);
-			Value = PrepareValue(MetaTable->GetField(FieldName)->Type, Value);
-			RowString.append(Value.toString());
+			//???
+			//QVariant Value = SqlRecord.value(FieldName);
+			//Value = PrepareValue(MetaTable->GetField(FieldName)->Type, Value);
+			//RowString.append(Value.toString());
 			RowString.append(';');
 		}
 
@@ -102,7 +105,8 @@ bool ISExportCSV::Export()
 		FileCSV->write(RowString.toLocal8Bit());
 
 		emit ExportedRow();
-		emit Message(LANG("Export.Process.Process").arg(Row + 1).arg(Model->rowCount()));
+		//???
+		//emit Message(LANG("Export.Process.Process").arg(Row + 1).arg(Model->rowCount()));
 	}
 
 	FileCSV->close();

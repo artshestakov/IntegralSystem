@@ -269,8 +269,6 @@
     <ClCompile Include="ISSettingsForm.cpp" />
     <ClCompile Include="ISSplashScreen.cpp" />
     <ClCompile Include="ISSplashWidget.cpp" />
-    <ClCompile Include="ISSqlModelCore.cpp" />
-    <ClCompile Include="ISSqlModelHelper.cpp" />
     <ClCompile Include="ISStartup.cpp" />
     <ClCompile Include="ISStorageFilesListForm.cpp" />
     <ClCompile Include="ISSystemsPanel.cpp" />
@@ -355,9 +353,6 @@
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ISFlowLayout.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <QtMoc Include="ISSqlModelCore.h" />
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ISValidators.h" />
@@ -460,7 +455,6 @@
     <ClInclude Include="ISPrintingEntity.h" />
     <QtMoc Include="ISPrintingHtml.h" />
     <ClInclude Include="ISStartup.h" />
-    <ClInclude Include="ISSqlModelHelper.h" />
   </ItemGroup>
   <ItemGroup>
     <QtRcc Include="..\..\Resources\ISGui.qrc" />

@@ -44,7 +44,8 @@ bool ISExportXML::Export()
 	QDomDocument DomDocument(MetaTable->Name);
 	QDomElement DomElement = DomDocument.createElement(MetaTable->Name);
 	DomDocument.appendChild(DomElement);
-	for (int Row = 0; Row < Model->rowCount(); ++Row) //Обход строк
+	//???
+	for (int Row = 0; Row < /*Model->rowCount()*/0; ++Row) //Обход строк
 	{
 		if (Canceled) //Если была нажата кнопка "Остановить"
 		{
@@ -69,16 +70,18 @@ bool ISExportXML::Export()
 		}
 
 		QDomElement TagRow = DomDocument.createElement(MetaTable->Name);
-		QSqlRecord SqlRecord = Model->GetRecord(Row); //Текущая строка
+		//???
+		//QSqlRecord SqlRecord = Model->GetRecord(Row); //Текущая строка
 		for (const QString &FieldName : Fields) //Обход колонок
 		{
-			QVariant Value = SqlRecord.value(FieldName).toString();
-			Value = PrepareValue(MetaTable->GetField(FieldName)->Type, Value);
-			TagRow.setAttribute(FieldName, Value.toString());
-			DomElement.appendChild(TagRow);
+			//???
+			//QVariant Value = SqlRecord.value(FieldName).toString();
+			//Value = PrepareValue(MetaTable->GetField(FieldName)->Type, Value);
+			//TagRow.setAttribute(FieldName, Value.toString());
+			//DomElement.appendChild(TagRow);
 		}
 		emit ExportedRow();
-		emit Message(LANG("Export.Process.Process").arg(Row + 1).arg(Model->rowCount()));
+		//emit Message(LANG("Export.Process.Process").arg(Row + 1).arg(Model->rowCount()));
 	}
 	FileXML->write(DomDocument.toString().toUtf8());
 	FileXML->close();

@@ -1,7 +1,7 @@
 #pragma once
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
-#include "ISSqlModelCore.h"
+#include "PMetaClass.h"
 //-----------------------------------------------------------------------------
 class ISExportWorker : public QObject
 {
@@ -20,7 +20,7 @@ public:
 
 	void Cancel(); //Остановка
 
-	void SetModel(ISSqlModelCore *model);
+	void SetModel(QObject *SqlModel);
 	void SetFields(const ISVectorString &fields);
 	void SetHeader(bool header);
 	void SetSelectedRows(const ISVectorInt &selected_rows);
@@ -33,7 +33,7 @@ protected:
 protected:
 	QString ErrorString;
 	PMetaTable *MetaTable;
-	ISSqlModelCore *Model;
+	QObject *Model;
 	ISVectorString Fields;
 	bool Header;
 	ISVectorInt SelectedRows;
