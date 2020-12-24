@@ -2065,6 +2065,7 @@ bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	TcpAnswer->Parameters["ServiceInfo"] = ServiceInfoMap;
 	TcpAnswer->Parameters["FieldList"] = FieldList;
 	TcpAnswer->Parameters["RecordList"] = RecordList;
+	Protocol(TcpMessage->TcpSocket->GetUserID(), CONST_UID_PROTOCOL_GET_TABLE_DATA, MetaTable->Name, MetaTable->LocalListName);
 	return true;
 }
 //-----------------------------------------------------------------------------
