@@ -39,10 +39,12 @@ public:
 	virtual ~ISTcpQueryTable();
 
 	bool Execute() override;
+	void SetSorting(const QString &SortingField, Qt::SortOrder SortingOrder); //Изменить сортировку
 	void AddFilter(const QString &FieldName, const QVariant &Value); //Добавить фильтр
 
 private:
 	QVariantMap FilterMap;
+	QVariantMap SortingMap;
 };
 //-----------------------------------------------------------------------------
 #endif

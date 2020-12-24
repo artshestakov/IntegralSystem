@@ -418,8 +418,7 @@ void ISListBaseForm::FieldResized(int LogicalIndex, int WidthOld, int WidthNew)
 //-----------------------------------------------------------------------------
 void ISListBaseForm::SortingChanged(int LogicalIndex, Qt::SortOrder SortingOrder)
 {
-	TcpQuery->BindValue("SortingField", TcpModel->headerData(LogicalIndex, Qt::Horizontal, Qt::UserRole));
-	TcpQuery->BindValue("SortingOrder", SortingOrder);
+	TcpQuery->SetSorting(TcpModel->headerData(LogicalIndex, Qt::Horizontal, Qt::UserRole).toString(), SortingOrder);
 	Update();
 }
 //-----------------------------------------------------------------------------

@@ -218,7 +218,21 @@ bool ISTcpQueryTable::Execute()
 	{
 		BindValue("Filter", FilterMap);
 	}
+
+	if (!SortingMap.isEmpty())
+	{
+		BindValue("Sorting", SortingMap);
+	}
 	return ISTcpQuery::Execute();
+}
+//-----------------------------------------------------------------------------
+void ISTcpQueryTable::SetSorting(const QString &SortingField, Qt::SortOrder SortingOrder)
+{
+	SortingMap = QVariantMap
+	{
+		{ "Field", SortingField },
+		{ "Order", SortingOrder }
+	};
 }
 //-----------------------------------------------------------------------------
 void ISTcpQueryTable::AddFilter(const QString &FieldName, const QVariant &Value)

@@ -1905,29 +1905,26 @@ bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 
 		//Проверяем не указана ли сортировка в запросе
 		//Если указана - проверяем - не нужно ли обновить её в БД
-		bool NeedUpdateSorting = false;
-		QVariant SortingFieldQuery = TcpMessage->Parameters["SortingField"],
-			SortingOrderQuery = TcpMessage->Parameters["SortingOrder"];
-		if (SortingFieldQuery.isValid() && SortingOrderQuery.isValid())
+		QVariantMap SortingFieldQuery = TcpMessage->Parameters["Sorting"].toMap();
+		if (!SortingFieldQuery.isEmpty())
 		{
-			NeedUpdateSorting = SortingField != SortingFieldQuery.toString() ||
-				SortingOrder != static_cast<Qt::SortOrder>(SortingOrderQuery.toUInt());
-		}
-
-		if (NeedUpdateSorting) //Требуется обновление сортировки в БД
-		{
-			SortingField = SortingFieldQuery.toString();
-			SortingOrder = static_cast<Qt::SortOrder>(SortingOrderQuery.toUInt());
-
-			ISQuery qUpdateSorting(ISDatabase::Instance().GetDB(DBConnectionName), QU_SORTING);
-			qUpdateSorting.BindValue(":FieldName", SortingField);
-			qUpdateSorting.BindValue(":Sorting", SortingOrder);
-			qUpdateSorting.BindValue(":UserID", UserID);
-			qUpdateSorting.BindValue(":TableName", MetaTable->Name);
-			if (!qUpdateSorting.Execute())
+			//Если новая сортировка отличается от текущей - сохраняем её в БД
+			if (SortingField != SortingFieldQuery["Field"].toString() ||
+				SortingOrder != static_cast<Qt::SortOrder>(SortingFieldQuery["Order"].toUInt()))
 			{
-				ErrorString = LANG("Carat.Error.Query.GetTableData.UpdateSorting").arg(qUpdateSorting.GetErrorString());
-				return false;
+				SortingField = SortingFieldQuery["Field"].toString();
+				SortingOrder = static_cast<Qt::SortOrder>(SortingFieldQuery["Order"].toUInt());
+
+				ISQuery qUpdateSorting(ISDatabase::Instance().GetDB(DBConnectionName), QU_SORTING);
+				qUpdateSorting.BindValue(":FieldName", SortingField);
+				qUpdateSorting.BindValue(":Sorting", SortingOrder);
+				qUpdateSorting.BindValue(":UserID", UserID);
+				qUpdateSorting.BindValue(":TableName", MetaTable->Name);
+				if (!qUpdateSorting.Execute())
+				{
+					ErrorString = LANG("Carat.Error.Query.GetTableData.UpdateSorting").arg(qUpdateSorting.GetErrorString());
+					return false;
+				}
 			}
 		}
 	}
