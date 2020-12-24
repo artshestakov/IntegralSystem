@@ -93,6 +93,7 @@ bool ISExportCSV::Export()
 
 		for (const QString &FieldName : Fields) //Обход колонок
 		{
+			Q_UNUSED(FieldName);
 			//???
 			//QVariant Value = SqlRecord.value(FieldName);
 			//Value = PrepareValue(MetaTable->GetField(FieldName)->Type, Value);

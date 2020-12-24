@@ -106,6 +106,7 @@ bool ISExportHTML::Export()
 		RowString.append("    <tr>");
 		for (const QString &FieldName : Fields) //Обход колонок
 		{
+			Q_UNUSED(FieldName);
 			//???
 			//QVariant Value = SqlRecord.value(FieldName).toString();
 			//Value = PrepareValue(MetaTable->GetField(FieldName)->Type, Value);
