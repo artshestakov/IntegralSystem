@@ -19,11 +19,13 @@ ISPopupMessage::ISPopupMessage(const QString &Title, const QString &Message, QWi
 	LabelTitle->setVisible(false);
 	LabelTitle->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
 	LabelTitle->setStyleSheet(BUFFER_STYLE_SHEET("ISPopup"));
+	LabelTitle->setFont(ISDefines::Gui::FONT_TAHOMA_12_BOLD);
 	SetTitle(Title);
 	
 	LabelMessage = new QLabel(Message, this);
 	LabelMessage->setVisible(false);
 	LabelMessage->setStyleSheet(BUFFER_STYLE_SHEET("ISPopup"));
+	LabelMessage->setFont(ISDefines::Gui::FONT_TAHOMA_11);
 	SetMessage(Message);
 
 	GridLayout = new QGridLayout(this);

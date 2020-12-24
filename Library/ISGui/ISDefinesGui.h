@@ -57,6 +57,7 @@ namespace ISDefines
 		static QFont FONT_TAHOMA_14_BOLD;
 		static QFont FONT_TAHOMA_12;
 		static QFont FONT_TAHOMA_12_BOLD;
+		static QFont FONT_TAHOMA_11;
 		static QFont FONT_TAHOMA_10_BOLD;
 		static QFont FONT_TAHOMA_10;
 		static QFont FONT_TAHOMA_9;

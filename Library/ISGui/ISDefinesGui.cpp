@@ -47,6 +47,7 @@ QFont ISDefines::Gui::FONT_TAHOMA_14;
 QFont ISDefines::Gui::FONT_TAHOMA_14_BOLD;
 QFont ISDefines::Gui::FONT_TAHOMA_12;
 QFont ISDefines::Gui::FONT_TAHOMA_12_BOLD;
+QFont ISDefines::Gui::FONT_TAHOMA_11;
 QFont ISDefines::Gui::FONT_TAHOMA_10_BOLD;
 QFont ISDefines::Gui::FONT_TAHOMA_10;
 QFont ISDefines::Gui::FONT_TAHOMA_9;
@@ -104,6 +105,7 @@ void ISDefines::Gui::Init()
 	FONT_TAHOMA_14_BOLD = QFont("Tahoma", 14, QFont::Bold);
 	FONT_TAHOMA_12 = QFont("Tahoma", 12);
 	FONT_TAHOMA_12_BOLD = QFont("Tahoma", 12, QFont::Bold);
+	FONT_TAHOMA_11 = QFont("Tahoma", 11);
 	FONT_TAHOMA_10_BOLD = QFont("Tahoma", 10, QFont::Bold);
 	FONT_TAHOMA_10 = QFont("Tahoma", 10);
 	FONT_TAHOMA_9 = QFont("Tahoma", 9);
