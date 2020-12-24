@@ -93,6 +93,10 @@ static QString QS_PARAGRAPH = PREPARE_QUERY("SELECT prhs_uid, prhs_name, prhs_lo
 											"FROM _paragraphs "
 											"ORDER BY prhs_orderid");
 //-----------------------------------------------------------------------------
+static QString QS_TASK_PRIORITY = PREPARE_QUERY("SELECT tspr_id, tspr_name, tspr_tooltip, tspr_stylesheet, tspr_icon "
+												"FROM _taskpriority "
+												"ORDER BY tspr_order");
+//-----------------------------------------------------------------------------
 static QString QU_USER_HASH = PREPARE_QUERY("UPDATE _users SET "
 											"usrs_hash = :Hash, "
 											"usrs_salt = :Salt "
@@ -1294,6 +1298,29 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 		return false;
 	}
 
+	//Получаем приоритеты задач
+	QVariantList TaskPriorityList;
+	ISQuery qSelectTaskPriority(ISDatabase::Instance().GetDB(DBConnectionName), QS_TASK_PRIORITY);
+	if (qSelectTaskPriority.Execute())
+	{
+		while (qSelectTaskPriority.Next())
+		{
+			TaskPriorityList.append(QVariantMap
+			{
+				{ "ID", qSelectTaskPriority.ReadColumn("tspr_id") },
+				{ "LocalName", qSelectTaskPriority.ReadColumn("tspr_name") },
+				{ "ToolTip", qSelectTaskPriority.ReadColumn("tspr_tooltip") },
+				{ "StyleSheet", qSelectTaskPriority.ReadColumn("tspr_stylesheet") },
+				{ "Icon", qSelectTaskPriority.ReadColumn("tspr_icon") },
+			});
+		}
+	}
+	else
+	{
+		ErrorString = LANG("Carat.Error.Query.GetMetaData.TaskPriority").arg(qSelectTaskPriority.GetErrorString());
+		return false;
+	}
+
 	//Читаем мета-данные
 	QVariantList MetaDataList;
 	QStringList Filter("*.xsn"); //Фильтр
@@ -1322,6 +1349,7 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	TcpAnswer->Parameters["Settings"] = Settings;
 	TcpAnswer->Parameters["Paragraphs"] = ParagraphList;
 	TcpAnswer->Parameters["MetaData"] = MetaDataList;
+	TcpAnswer->Parameters["TaskPriority"] = TaskPriorityList;
 	return true;
 }
 //-----------------------------------------------------------------------------

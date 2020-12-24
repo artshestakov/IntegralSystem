@@ -119,6 +119,7 @@ bool ISStartup::StartupNew(ISSplashScreen *SplashScreen)
 	ISColumnSizer::Instance().Initialize(MetaData["ColumnSize"].toMap());
 	ISSettings::Instance().Initialize(MetaData["Settings"].toList());
 	ISParagraphEntity::Instance().Initialize(MetaData["Paragraphs"].toList());
+	ISBuffer::Instance().SetTaskPriority(MetaData["TaskPriority"].toList());
 	ISObjects::Instance().GetInterface()->BeforeShowMainWindow();
 	if (!ISMetaData::Instance().Initialize(MetaData["MetaData"].toList())) //Ќе удалось проинициализировать мета-данные
 	{

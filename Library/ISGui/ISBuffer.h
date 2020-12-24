@@ -13,6 +13,9 @@ public:
 public:
 	static ISBuffer& Instance();
 
+	QVariantList GetTaskPriority() const;
+	void SetTaskPriority(const QVariantList &task_priority);
+
 	void Initialize(); //Инициализация
 
 	QMovie* GetAnimation(const QString &AnimationName, QObject *parent, const char *SourceFile, int FileLine); //Получить указатель на анимацию
@@ -49,6 +52,8 @@ private:
 	ISStringMap Audios; //Звуки
 	ISStringMap StyleSheets; //CSS-стили
 	ISStringMap SqlQueryes; //SQL-запросы
+
+	QVariantList TaskPriority; //Список приоритетов задач
 };
 //-----------------------------------------------------------------------------
 #define CURRENT_USER_ID ISBuffer::Instance().CurrentUserInfo.ID

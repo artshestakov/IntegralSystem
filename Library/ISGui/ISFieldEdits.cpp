@@ -8,8 +8,8 @@
 #include "ISCore.h"
 #include "ISGui.h"
 #include "ISPopupMessage.h"
-#include "ISDefinesGui.h"
 #include "ISQuery.h"
+#include "ISDefinesGui.h"
 #include "ISSettingsDatabase.h"
 #include "ISSettings.h"
 #include "ISUserRoleEntity.h"
@@ -18,10 +18,6 @@
 #include "ISMetaData.h"
 #include "ISInputDialog.h"
 #include "ISDelegates.h"
-//-----------------------------------------------------------------------------
-static QString QS_TASK_PRIORITY = PREPARE_QUERY("SELECT tspr_id, tspr_name, tspr_tooltip, tspr_stylesheet, tspr_icon "
-												"FROM _taskpriority "
-												"ORDER BY tspr_order");
 //-----------------------------------------------------------------------------
 ISCheckEdit::ISCheckEdit(QWidget *parent) : ISFieldEditBase(parent)
 {
@@ -1228,22 +1224,20 @@ ISTaskPriorityEdit::ISTaskPriorityEdit(QWidget *parent) : ISRadioEdit(parent)
 {
 	QRadioButton *ButtonLow = nullptr;
 
-	ISQuery qSelect(QS_TASK_PRIORITY);
-	if (qSelect.Execute())
+	QVariantList TaskPriorityList = ISBuffer::Instance().GetTaskPriority();
+	for (const QVariant &Variant : TaskPriorityList)
 	{
-		while (qSelect.Next())
-		{
-			QRadioButton *ButtonPriority = new QRadioButton(qSelect.ReadColumn("tspr_name").toString(), this);
-			ButtonPriority->setToolTip(qSelect.ReadColumn("tspr_tooltip").toString());
-			ButtonPriority->setIcon(BUFFER_ICONS(qSelect.ReadColumn("tspr_icon").toString()));
-			ButtonPriority->setStyleSheet(BUFFER_STYLE_SHEET(qSelect.ReadColumn("tspr_stylesheet").toString()));
-			ButtonPriority->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
-			AddButton(ButtonPriority, qSelect.ReadColumn("tspr_id"));
+		QVariantMap TaskPriorityMap = Variant.toMap();
+		QRadioButton *ButtonPriority = new QRadioButton(TaskPriorityMap["LocalName"].toString(), this);
+		ButtonPriority->setToolTip(TaskPriorityMap["ToolTip"].toString());
+		ButtonPriority->setIcon(BUFFER_ICONS(TaskPriorityMap["Icon"].toString()));
+		ButtonPriority->setStyleSheet(BUFFER_STYLE_SHEET(TaskPriorityMap["StyleSheet"].toString()));
+		ButtonPriority->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
+		AddButton(ButtonPriority, TaskPriorityMap["ID"]);
 
-			if (!ButtonLow)
-			{
-				ButtonLow = ButtonPriority;
-			}
+		if (!ButtonLow)
+		{
+			ButtonLow = ButtonPriority;
 		}
 	}
 

@@ -17,6 +17,16 @@ ISBuffer& ISBuffer::Instance()
 	return Buffer;
 }
 //-----------------------------------------------------------------------------
+QVariantList ISBuffer::GetTaskPriority() const
+{
+	return TaskPriority;
+}
+//-----------------------------------------------------------------------------
+void ISBuffer::SetTaskPriority(const QVariantList &task_priority)
+{
+	TaskPriority = task_priority;
+}
+//-----------------------------------------------------------------------------
 void ISBuffer::Initialize()
 {
 	InitializeAnimations();
