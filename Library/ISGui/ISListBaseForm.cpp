@@ -318,14 +318,9 @@ int ISListBaseForm::GetCountSelected()
 	return GetTableView()->selectionModel()->selectedRows().count();
 }
 //-----------------------------------------------------------------------------
-ISVectorInt ISListBaseForm::GetIDs() const
+ISVectorUInt ISListBaseForm::GetIDs() const
 {
-	ISVectorInt VectorInt;
-	for (int i = 0; i < TcpModel->rowCount(); ++i)
-	{
-		VectorInt.emplace_back(TcpModel->data(TcpModel->index(i, TcpModel->GetFieldIndex("ID"))).toInt());
-	}
-	return VectorInt;
+	return TcpModel->GetIDs();
 }
 //-----------------------------------------------------------------------------
 ISVectorInt ISListBaseForm::GetSelectedRowIndexes()

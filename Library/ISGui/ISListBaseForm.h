@@ -36,7 +36,7 @@ public:
 	QVariant GetCurrentRecordValueDB(const QString &FieldName); //Получить значение из столбца по текущей строке (значение будет взято из базы)
 	ISVectorUInt GetSelectedIDs(); //Получить список идентификаторов выделенных строк
 	int GetCountSelected(); //Получить количество выделенных записей
-	ISVectorInt GetIDs() const; //Получить список идентификатор отображаемых строк в данный момент
+	ISVectorUInt GetIDs() const; //Получить список идентификатор отображаемых строк в данный момент
 	ISVectorInt GetSelectedRowIndexes(); //Получить список индексов выделенных строк
 	ISQueryModel* GetQueryModel(); //Получить указатель на модель запроса
 	void SetSelectObjectAfterUpdate(unsigned int ObjectID); //Изменить код объекта, который будет выделен после операции (создание, создание копии, изменение) над ним 

@@ -20,6 +20,7 @@ public:
 	void RemoveRecordID(unsigned int ObjectID); //Удаление записи по её идентификатору
 	ISModelRecord& GetRecord(int Index); //Получить строку по индексу
 	QVariant GetRecordValue(int Index, const QString &FieldName); //Получить значение строки
+	ISVectorUInt GetIDs() const; //Получить список всех индетификаторов записей
 	int GetFieldIndex(const QString &FieldName) const;
 
 	QVariant data(const QModelIndex &ModelIndex, int Role = Qt::DisplayRole) const override;

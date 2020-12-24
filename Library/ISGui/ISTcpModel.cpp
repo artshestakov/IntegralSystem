@@ -107,6 +107,18 @@ QVariant ISTcpModel::GetRecordValue(int Index, const QString &FieldName)
 	return GetRecord(Index).Values[GetFieldIndex(FieldName)];
 }
 //-----------------------------------------------------------------------------
+ISVectorUInt ISTcpModel::GetIDs() const
+{
+	size_t RowCount = (int)rowCount();
+	ISVectorUInt VectorID;
+	VectorID.resize(RowCount);
+	for (size_t i = 0; i < RowCount; ++i)
+	{
+		VectorID[i] = Records[i].ID;
+	}
+	return VectorID;
+}
+//-----------------------------------------------------------------------------
 int ISTcpModel::GetFieldIndex(const QString &FieldName) const
 {
 	for (size_t i = 0, c = Fields.size(); i < c; ++i)
