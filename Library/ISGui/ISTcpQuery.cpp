@@ -33,7 +33,7 @@ void ISTcpQuery::BindValue(const QString &ParamterName, const QVariant &Paramete
 bool ISTcpQuery::Execute(const QString &query_type)
 {
 	QueryType = query_type;
-	return Execute();
+	return ISTcpQuery::Execute();
 }
 //-----------------------------------------------------------------------------
 bool ISTcpQuery::Execute()
@@ -212,7 +212,7 @@ ISTcpQueryTable::~ISTcpQueryTable()
 
 }
 //-----------------------------------------------------------------------------
-bool ISTcpQueryTable::ExecuteEx()
+bool ISTcpQueryTable::Execute()
 {
 	if (!FilterMap.isEmpty())
 	{

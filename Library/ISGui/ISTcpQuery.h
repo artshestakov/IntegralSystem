@@ -12,8 +12,8 @@ public:
 
 	QString GetErrorString() const;
 	void BindValue(const QString &ParamterName, const QVariant &ParameterValue);
-	bool Execute(const QString &query_type);
-	bool Execute();
+	virtual bool Execute(const QString &query_type);
+	virtual bool Execute();
 	QVariantMap& GetAnswer();
 	QVariantMap TakeAnswer();
 
@@ -36,9 +36,9 @@ class ISTcpQueryTable : public ISTcpQuery
 {
 public:
 	ISTcpQueryTable();
-	~ISTcpQueryTable();
+	virtual ~ISTcpQueryTable();
 
-	bool ExecuteEx();
+	bool Execute() override;
 	void AddFilter(const QString &FieldName, const QVariant &Value); //Добавить фильтр
 
 private:

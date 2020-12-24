@@ -828,7 +828,7 @@ bool ISListBaseForm::Update()
 
 	//Готовим запрос и исполняем
 	TcpQuery->BindValue("TableName", MetaTable->Name);
-	bool Result = TcpQuery->ExecuteEx();
+	bool Result = TcpQuery->Execute();
 
 	//Очередные операции с интерфейсом после загрузки
 	ToolBar->setEnabled(true);
