@@ -37,14 +37,14 @@
 //-----------------------------------------------------------------------------
 ISListBaseForm::ISListBaseForm(const QString &TableName, QWidget *parent)
 	: ISInterfaceMetaForm(parent),
-	ActionObjectGroup(new QActionGroup(this)), //Группа действий, остосящихся только к одному объекту
 	MetaTable(ISMetaData::Instance().GetMetaTable(TableName)),
 	TcpQuery(new ISTcpQueryTable()),
-	PageNavigation(nullptr),
-	QueryModel(nullptr),
-	SearchForm(nullptr),
+	IsLoadingData(false),
 	SelectObjectAfterUpdate(0),
-	IsLoadingData(false)
+	ActionObjectGroup(new QActionGroup(this)), //Группа действий, остосящихся только к одному объекту
+	QueryModel(new ISQueryModel(MetaTable, ISNamespace::QMT_List, this)),
+	PageNavigation(nullptr),
+	SearchForm(nullptr)
 {
 	{//Создание действий
 		//Создать
@@ -57,16 +57,19 @@ ISListBaseForm::ISListBaseForm(const QString &TableName, QWidget *parent)
 		QAction *ActionCreateCopy = ISControls::CreateActionCreateCopy(this);
 		connect(ActionCreateCopy, &QAction::triggered, this, &ISListBaseForm::CreateCopy);
 		Actions[ISNamespace::AT_CreateCopy] = ActionCreateCopy;
-
+		ActionObjectGroup->addAction(ActionCreateCopy);
+		
 		//Изменить
 		QAction *ActionEdit = ISControls::CreateActionEdit(this);
 		connect(ActionEdit, &QAction::triggered, this, &ISListBaseForm::Edit);
 		Actions[ISNamespace::AT_Edit] = ActionEdit;
+		ActionObjectGroup->addAction(ActionEdit);
 
 		//Удалить
 		QAction *ActionDelete = ISControls::CreateActionDelete(this);
 		connect(ActionDelete, &QAction::triggered, this, &ISListBaseForm::Delete);
 		Actions[ISNamespace::AT_Delete] = ActionDelete;
+		ActionObjectGroup->addAction(ActionDelete);
 
 		//Обновить
 		QAction *ActionUpdate = ISControls::CreateActionUpdate(this);
@@ -95,6 +98,7 @@ ISListBaseForm::ISListBaseForm(const QString &TableName, QWidget *parent)
 		ActionPrint->setVisible(ISPrintingEntity::Instance().GetCountReports(MetaTable->Name));
 		connect(ActionPrint, &QAction::triggered, this, &ISListBaseForm::Print);
 		Actions[ISNamespace::AT_Print] = ActionPrint;
+		ActionObjectGroup->addAction(ActionPrint);
 
 		//Избранное
 		QAction *ActionFavorites = new QAction(BUFFER_ICONS("Favorites"), LANG("Favorites"), this);
@@ -128,7 +132,8 @@ ISListBaseForm::ISListBaseForm(const QString &TableName, QWidget *parent)
 		//Примечание
 		QAction *ActionNoteObject = ISControls::CreateActionNoteObject(this);
 		connect(ActionNoteObject, &QAction::triggered, this, &ISListBaseForm::NoteObject);
-		ActionsSpecial.emplace(ISNamespace::AST_Note, ActionNoteObject);
+		ActionsSpecial[ISNamespace::AST_Note] = ActionNoteObject;
+		ActionObjectGroup->addAction(ActionNoteObject);
 
 		//Автоподбор ширины
 		QAction *ActionResizeFromContent = new QAction(this);
@@ -136,16 +141,14 @@ ISListBaseForm::ISListBaseForm(const QString &TableName, QWidget *parent)
 		ActionResizeFromContent->setToolTip(LANG("AutoFitColumnWidth"));
 		ActionResizeFromContent->setIcon(BUFFER_ICONS("AutoFitColumnWidth"));
 		connect(ActionResizeFromContent, &QAction::triggered, this, &ISListBaseForm::AutoFitColumnWidth);
-		ActionsSpecial.emplace(ISNamespace::AST_ResizeFromContent, ActionResizeFromContent);
+		ActionsSpecial[ISNamespace::AST_ResizeFromContent] = ActionResizeFromContent;
 
 		//Сброс ширины колонок
 		QAction *ActionResetWidthColumn = new QAction(this);
 		ActionResetWidthColumn->setText(LANG("ResetWidthColumn"));
 		ActionResetWidthColumn->setToolTip(LANG("ResetWidthColumn"));
 		connect(ActionResetWidthColumn, &QAction::triggered, this, &ISListBaseForm::ResetWidthColumn);
-		ActionsSpecial.emplace(ISNamespace::AST_ResetWidthColumn, ActionResetWidthColumn);
-
-		ActionObjectGroup->addAction(ActionNoteObject);
+		ActionsSpecial[ISNamespace::AST_ResetWidthColumn] = ActionResetWidthColumn;
 	}
 
 	{//Создание тулбара
@@ -180,11 +183,6 @@ ISListBaseForm::ISListBaseForm(const QString &TableName, QWidget *parent)
 			ToolBar->addAction(GetAction(ISNamespace::AT_NavigationNext));
 			ToolBar->addAction(GetAction(ISNamespace::AT_NavigationLast));
 		}
-
-		if (GetAction(ISNamespace::AT_CreateCopy)) ActionObjectGroup->addAction(GetAction(ISNamespace::AT_CreateCopy));
-		if (GetAction(ISNamespace::AT_Edit)) ActionObjectGroup->addAction(GetAction(ISNamespace::AT_Edit));
-		if (GetAction(ISNamespace::AT_Delete)) ActionObjectGroup->addAction(GetAction(ISNamespace::AT_Delete));
-		if (GetAction(ISNamespace::AT_Print)) ActionObjectGroup->addAction(GetAction(ISNamespace::AT_Print));
 	}
 
 	{//Создание таблицы
@@ -205,35 +203,12 @@ ISListBaseForm::ISListBaseForm(const QString &TableName, QWidget *parent)
 		TableView->SetVisibleVerticalHeader(SETTING_BOOL(CONST_UID_SETTING_TABLES_SHOWVERTICALHEADER));
 	}
 
-	{//Создание контекстного меню
-		ContextMenu = new QMenu(this);
-		if (GetAction(ISNamespace::AT_Create)) ContextMenu->addAction(GetAction(ISNamespace::AT_Create));
-		if (GetAction(ISNamespace::AT_CreateCopy)) ContextMenu->addAction(GetAction(ISNamespace::AT_CreateCopy));
-		if (GetAction(ISNamespace::AT_Edit)) ContextMenu->addAction(GetAction(ISNamespace::AT_Edit));
-		if (GetAction(ISNamespace::AT_Delete)) ContextMenu->addAction(GetAction(ISNamespace::AT_Delete));
-		if (GetAction(ISNamespace::AT_Update)) ContextMenu->addAction(GetAction(ISNamespace::AT_Update));
-		ContextMenu->addAction(GetSpecialAction(ISNamespace::AST_Note));
-	}
-
 	{//Создание моделей
 		TcpModel = new ISTcpModel(TableView);
-
 		TableView->setModel(TcpModel);
-		
-		QueryModel = new ISQueryModel(MetaTable, ISNamespace::QMT_List, this);
 
 		//Это соединение обязательно должно быть после присваивания модели к QTableView
 		connect(TableView->selectionModel(), &QItemSelectionModel::selectionChanged, this, &ISListBaseForm::SelectedRowEvent);
-
-		//Создание потоковой модели
-		//ModelThreadQuery = new ISModelThreadQuery(this);
-		//connect(ModelThreadQuery, &ISModelThreadQuery::Started, this, &ISListBaseForm::ModelThreadStarted);
-		//connect(ModelThreadQuery, &ISModelThreadQuery::Finished, this, &ISListBaseForm::ModelThreadFinished);
-		//connect(ModelThreadQuery, &ISModelThreadQuery::ExecutedQuery, this, &ISListBaseForm::ModelThreadLoadingData);
-		//connect(ModelThreadQuery, &ISModelThreadQuery::Results, SqlModel, &ISSqlModelCore::SetRecords);
-		//connect(ModelThreadQuery, &ISModelThreadQuery::ErrorConnection, this, &ISListBaseForm::ModelThreadErrorConnection);
-		//connect(ModelThreadQuery, &ISModelThreadQuery::ErrorQuery, this, &ISListBaseForm::ModelThreadErrorQuery);
-		//ModelThreadQuery->start(QThread::TimeCriticalPriority); //Запуск потока
 	}
 	
 	{//Создание статус-бара
@@ -259,6 +234,16 @@ ISListBaseForm::ISListBaseForm(const QString &TableName, QWidget *parent)
 		LabelSelectedRow = new QLabel(StatusBar);
 		LabelSelectedRow->setVisible(false);
 		StatusBar->addWidget(LabelSelectedRow);
+	}
+
+	{//Создание контекстного меню
+		ContextMenu = new QMenu(this);
+		if (GetAction(ISNamespace::AT_Create)) ContextMenu->addAction(GetAction(ISNamespace::AT_Create));
+		if (GetAction(ISNamespace::AT_CreateCopy)) ContextMenu->addAction(GetAction(ISNamespace::AT_CreateCopy));
+		if (GetAction(ISNamespace::AT_Edit)) ContextMenu->addAction(GetAction(ISNamespace::AT_Edit));
+		if (GetAction(ISNamespace::AT_Delete)) ContextMenu->addAction(GetAction(ISNamespace::AT_Delete));
+		if (GetAction(ISNamespace::AT_Update)) ContextMenu->addAction(GetAction(ISNamespace::AT_Update));
+		ContextMenu->addAction(GetSpecialAction(ISNamespace::AST_Note));
 	}
 
 	//Создание этого виджета должно происходить после создания всех остальных
@@ -686,65 +671,6 @@ void ISListBaseForm::SetEnabledPageNavigation(bool Enabled)
 		PageNavigation->setEnabled(Enabled);
 		ISGui::RepaintWidget(PageNavigation);
 	}
-}
-//-----------------------------------------------------------------------------
-void ISListBaseForm::ModelThreadStarted()
-{
-	//ISGui::SetWaitGlobalCursor(true);
-
-	/*ListIndicatorWidget->SetPixmap(QPixmap());
-	ListIndicatorWidget->SetVisibleAnimation(true);
-	ListIndicatorWidget->SetText(LANG("LoadDataPleceWait"));
-	ListIndicatorWidget->setVisible(true);*/
-
-	LabelRowCount->setText(QString("%1: %2...").arg(LANG("RecordsCount")).arg(LANG("Calculated"))); //Изменение значения в надписе "Записей"
-	//ToolBar->setEnabled(false);
-	//SetEnabledPageNavigation(false);
-}
-//-----------------------------------------------------------------------------
-void ISListBaseForm::ModelThreadLoadingData()
-{
-	//ListIndicatorWidget->SetText(LANG("FillTableData"));
-}
-//-----------------------------------------------------------------------------
-void ISListBaseForm::ModelThreadFinished()
-{
-	IsLoadingData = false;
-	//ISGui::SetWaitGlobalCursor(false);
-
-	//ListIndicatorWidget->hide();
-	//ToolBar->setEnabled(true);
-	//SetEnabledPageNavigation(true);
-
-	if (!SETTING_BOOL(CONST_UID_SETTING_TABLE_VISIBLE_FIELD_ID))
-	{
-		HideField("ID");
-	}
-	//HideField("IsSystem");
-	//CreateDelegates();
-	LoadDataAfterEvent();
-}
-//-----------------------------------------------------------------------------
-void ISListBaseForm::ModelThreadErrorConnection(const QSqlError &SqlError)
-{
-	ISGui::SetWaitGlobalCursor(false);
-
-	ListIndicatorWidget->hide();
-	ToolBar->setEnabled(true);
-
-	ISLOGGER_W(__CLASS__, SqlError.text());
-	ISMessageBox::ShowCritical(this, LANG("Message.Error.ConnectionLoadingData") + "\n\n" + SqlError.text());
-}
-//-----------------------------------------------------------------------------
-void ISListBaseForm::ModelThreadErrorQuery(const QSqlError &SqlError, const QString &QueryText)
-{
-	ISGui::SetWaitGlobalCursor(false);
-
-	ListIndicatorWidget->hide();
-	ToolBar->setEnabled(true);
-
-	ISLOGGER_W(__CLASS__, SqlError.text());
-	ISMessageBox::ShowCritical(this, LANG("Message.Error.ConnectionLoadingData") + "\n\n" + SqlError.text(), QueryText);
 }
 //-----------------------------------------------------------------------------
 void ISListBaseForm::Create()

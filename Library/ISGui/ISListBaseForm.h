@@ -6,9 +6,7 @@
 #include "ISInterfaceMetaForm.h"
 #include "PMetaClass.h"
 #include "ISQueryModel.h"
-//#include "ISSqlModelCore.h"
 #include "ISTcpModel.h"
-//#include "ISModelThreadQuery.h"
 #include "ISBaseTableView.h"
 #include "ISListIndicatorWidget.h"
 #include "ISSearchForm.h"
@@ -93,12 +91,6 @@ protected:
 	void SetEnabledActionObject(bool Enabled); //Изменить доступность действий над объектом
 	void SetEnabledPageNavigation(bool Enabled); //Изменить доступность постраничной навигации
 
-	void ModelThreadStarted(); //Событие запуска запроса на загрузку данных
-	void ModelThreadLoadingData(); //Событие загрузки данных в память
-	void ModelThreadFinished(); //Событие завершения запроса на загрузку данных
-	void ModelThreadErrorConnection(const QSqlError &SqlError); //Событие при ошибке подключения к БД
-	void ModelThreadErrorQuery(const QSqlError &SqlError, const QString &QueryText); //Событие при ошибке в запросе
-
 	virtual void DoubleClickedTable(const QModelIndex &ModelIndex); //Обработчик события двойного нажатия на строку таблицы
 
 	void FieldResized(bool Include); //Включить/выключить сигнал изменения размера поля
@@ -114,30 +106,31 @@ private:
 
 private:
 	PMetaTable *MetaTable;
-	//ISSqlModelCore *SqlModel;
-	ISTcpModel *TcpModel;
-	QLabel *LabelRowCount;
-	QLabel *LabelSelectedRow;
-	ISPageNavigation *PageNavigation;
-	QStatusBar *StatusBar;
-
-	//ISModelThreadQuery *ModelThreadQuery;
 	ISTcpQueryTable *TcpQuery;
-	ISQueryModel *QueryModel;
-	ISSearchForm *SearchForm;
-
-	ISVectorUInt SelectObjectAfterUpdate; //Вектор записей, которые нужно выделить после обновления таблицы
 	bool IsLoadingData; //Флаг загрузки данных
-	
-	QToolBar *ToolBar;
+	ISVectorUInt SelectObjectAfterUpdate; //Вектор записей, которые нужно выделить после обновления таблицы
+
+private:
+	QActionGroup *ActionObjectGroup; //Группа действий для одного объекта
 	std::map<ISNamespace::ActionType, QAction*> Actions;
 	std::map<ISNamespace::ActionSpecialType, QAction *> ActionsSpecial;
-	QActionGroup *ActionObjectGroup; //Группа действий для одного объекта
 
-	QMenu *ContextMenu;
+	QToolBar *ToolBar; //Тулбар
 
-	ISBaseTableView *TableView;
-	ISListIndicatorWidget *ListIndicatorWidget;
+	ISBaseTableView *TableView; //Виджет таблицы
+
+	ISTcpModel *TcpModel; //Модель представления данных
+	ISQueryModel *QueryModel; //Модель для запросов
+
+	QStatusBar *StatusBar; //Статус-бар
+	QLabel *LabelRowCount; //Надпись с количеством строк
+	ISPageNavigation *PageNavigation; //Виджет постраничной навигации
+	QLabel *LabelSelectedRow; //Надпись с выделенными записями
+
+	QMenu *ContextMenu; //Контекстное меню
+	ISListIndicatorWidget *ListIndicatorWidget; //Индикатор
+
+	ISSearchForm *SearchForm; //Форма поиска
 };
 //-----------------------------------------------------------------------------
 #endif
