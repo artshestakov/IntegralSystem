@@ -46,6 +46,7 @@ public:
 	PMetaTable* GetMetaTable(); //Получить указатель на мета-таблицу
 	ISTcpModel* GetTcpModel(); //Получить указатель на модель
 	QStatusBar* GetStatusBar(); //Получить указатель на статус-бар
+	ISTcpQueryTable* GetTcpQuery(); //Получить указатель на объекта запроса
 
 	virtual void Create(); //Создание объекта
 	virtual void CreateCopy(); //Создание копии объекта
@@ -81,7 +82,6 @@ protected:
 	QToolBar* GetToolBar(); //Получить указатель на виджет тулбара
 	QAction* GetAction(ISNamespace::ActionType action_type);
 	QAction* GetSpecialAction(ISNamespace::ActionSpecialType action_special);
-	ISTcpQueryTable* GetTcpQuery(); //Получить указатель на объекта запроса
 
 	virtual void SelectedRowEvent(const QItemSelection &ItemSelected, const QItemSelection &ItemDeSelected); //Событие выбора строки в таблице
 	virtual void LoadDataAfterEvent(); //Событие происходящее после загрузки данных

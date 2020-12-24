@@ -586,14 +586,13 @@ void ISObjectFormBase::ToolBarClicked(QAction *ActionClicked)
 		ISInterfaceMetaForm *WidgetEscort = nullptr;
 		QString TableName = ActionClicked->property("TableName").toString(),
 			parent_filter_field = ActionClicked->property("FilterField").toString(),
-			ClassName = ActionClicked->property("ClassName").toString(),
-			ClassFilter = ActionClicked->property("ClassFilter").toString();
+			ClassName = ActionClicked->property("ClassName").toString();
 		if (ClassName.isEmpty()) //Открытие таблицы
 		{
 			ISListBaseForm *ListBaseForm = new ISListBaseForm(TableName, this);
-			if (!ClassFilter.isEmpty())
+			if (!parent_filter_field.isEmpty())
 			{
-				ListBaseForm->GetQueryModel()->SetClassFilter(ClassFilter);
+				ListBaseForm->GetTcpQuery()->AddFilter(parent_filter_field, ObjectID);
 			}
 			WidgetEscort = ListBaseForm;
 		}
@@ -606,8 +605,8 @@ void ISObjectFormBase::ToolBarClicked(QAction *ActionClicked)
 		WidgetEscort->SetParentTableName(MetaTable->Name);
 		connect(WidgetEscort, &ISInterfaceMetaForm::AddFormFromTab, &ISGui::ShowObjectForm);
 		GetMainLayout()->addWidget(WidgetEscort);
-		WidgetEscort->LoadData();
 		CentralWidget = WidgetEscort;
+		WidgetEscort->LoadData();
 	}
 	ISGui::SetWaitGlobalCursor(false);
 }

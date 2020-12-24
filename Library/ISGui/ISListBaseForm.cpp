@@ -404,6 +404,11 @@ QStatusBar* ISListBaseForm::GetStatusBar()
 	return StatusBar;
 }
 //-----------------------------------------------------------------------------
+ISTcpQueryTable* ISListBaseForm::GetTcpQuery()
+{
+	return TcpQuery;
+}
+//-----------------------------------------------------------------------------
 void ISListBaseForm::DoubleClickedTable(const QModelIndex &ModelIndex)
 {
 	Q_UNUSED(ModelIndex);
@@ -589,11 +594,6 @@ QAction* ISListBaseForm::GetAction(ISNamespace::ActionType action_type)
 QAction* ISListBaseForm::GetSpecialAction(ISNamespace::ActionSpecialType action_special)
 {
 	return ActionsSpecial[action_special];
-}
-//-----------------------------------------------------------------------------
-ISTcpQueryTable* ISListBaseForm::GetTcpQuery()
-{
-	return TcpQuery;
 }
 //-----------------------------------------------------------------------------
 void ISListBaseForm::CreateDelegates()
