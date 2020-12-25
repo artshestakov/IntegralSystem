@@ -21,6 +21,14 @@ static QString QU_SETTINGS_DATABASE = PREPARE_QUERY("UPDATE _settingsdatabase SE
 static QString QI_SETTINGS_DATABASE = PREPARE_QUERY("INSERT INTO _settingsdatabase(sgdb_uid, sgdb_issystem, sgdb_active, sgdb_settingname) "
 													"VALUES(:UID, true, true, :SettingName)");
 //-----------------------------------------------------------------------------
+static QString QS_PROTOCOL = PREPARE_QUERY("SELECT DISTINCT prtc_tablename "
+										   "FROM _protocol "
+										   "WHERE prtc_tablename IS NOT NULL "
+										   "ORDER BY prtc_tablename");
+//-----------------------------------------------------------------------------
+static QString QD_PROTOCOL = PREPARE_QUERY("DELETE FROM _protocol "
+										   "WHERE prtc_tablename = :TableName");
+//-----------------------------------------------------------------------------
 CGConfiguratorUpdate::CGConfiguratorUpdate() : CGConfiguratorBase()
 {
 
@@ -58,15 +66,15 @@ bool CGConfiguratorUpdate::database()
 	{
 		Result = resources();
 	}
-	
-	/*if (Result)
-	{
-		Result = systemuser();
-	}*/
 
 	if (Result)
 	{
 		Result = databasesettings();
+	}
+
+	if (Result)
+	{
+		Result = protocol();
 	}
 
 	return Result;
@@ -279,5 +287,45 @@ bool CGConfiguratorUpdate::databasesettings()
 		}
 	}
 	return Result;
+}
+//-----------------------------------------------------------------------------
+bool CGConfiguratorUpdate::protocol()
+{
+	ISQuery qSelect(QS_PROTOCOL);
+	if (!qSelect.Execute())
+	{
+		ISDEBUG_L("Error getting unique tables in protocol: " + qSelect.GetErrorString());
+		return false;
+	}
+	
+	//Обходим все таблицы
+	while (qSelect.Next())
+	{
+		//Получаем мета-таблицу
+		QString TableName = qSelect.ReadColumn("prtc_tablename").toString();
+		if (ISMetaData::Instance().GetMetaTable(TableName)) //Мета-таблица нашлась - переходим в следующей
+		{
+			continue;
+		}
+
+		//Мета-таблица не нашлась - предлагаем удалить
+		if (!ISConsole::Question(QString("Delete old record with table \"%1\"?").arg(TableName))) //Пользователь не согласился - идём дальше
+		{
+			continue;
+		}
+
+		//Пользователь согласился - удаляем
+		ISQuery qDelete(QD_PROTOCOL);
+		qDelete.BindValue(":TableName", TableName);
+		if (qDelete.Execute()) //Удаление прошло успешно
+		{
+			ISDEBUG_L(QString("Deleted success %1 records").arg(qDelete.GetCountAffected()));
+		}
+		else //Ошибка запроса
+		{
+			ISDEBUG_L("Error deleting records: " + qDelete.GetErrorString());
+		}
+	}
+	return true;
 }
 //-----------------------------------------------------------------------------

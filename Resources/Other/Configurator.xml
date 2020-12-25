@@ -16,6 +16,7 @@
     <Function Name="Foreigns" Description="Обновление внешних ключей базы данных"/>
     <Function Name="Resources" Description="Обновление ресурсов и справочников базы данных"/>
     <Function Name="DatabaseSettings" Description="Обновление системного профиля настроек базы данных"/>
+    <Function Name="Protocol" Description="Актуализация протокола (поиск и удаление устаревших записей)"/>
   </Section>
 
   <Section Name="Delete" ClassName="CGConfiguratorDelete">
