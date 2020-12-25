@@ -20,7 +20,6 @@
 #include "ISQueryPool.h"
 #include "ISProperty.h"
 #include "ISConfig.h"
-#include "ISHistory.h"
 #include "ISDatabase.h"
 #include "ISTcpQuery.h"
 #include "ISProperty.h"
@@ -115,7 +114,6 @@ bool ISStartup::StartupNew(ISSplashScreen *SplashScreen)
 	ISMetaSystemsEntity::Instance().Initialize(MetaData["SystemSubSystem"].toList());
 	ISPrintingEntity::Instance().Initialize(MetaData["Printing"].toList());
 	ISFavorites::Instance().Initialize(MetaData["Favorite"].toMap());
-	ISHistory::Instance().Initialize(MetaData["History"].toList());
 	ISColumnSizer::Instance().Initialize(MetaData["ColumnSize"].toMap());
 	ISSettings::Instance().Initialize(MetaData["Settings"].toList());
 	ISParagraphEntity::Instance().Initialize(MetaData["Paragraphs"].toList());

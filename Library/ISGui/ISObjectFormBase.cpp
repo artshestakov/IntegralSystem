@@ -20,7 +20,6 @@
 #include "ISCreatedObjectsEntity.h"
 #include "ISUserRoleEntity.h"
 #include "ISAlgorithm.h"
-#include "ISHistory.h"
 #include "ISTcpQuery.h"
 //-----------------------------------------------------------------------------
 ISObjectFormBase::ISObjectFormBase(ISNamespace::ObjectFormType form_type, PMetaTable *meta_table, QWidget *parent, int object_id)
@@ -425,7 +424,6 @@ void ISObjectFormBase::CreateWidgetObject()
 				//Получаем виджет поля по имени и если это справочное поле - получаем и устанавливаем ID, иначе - устаналиваем значение "как есть"
 				FieldsMap.at(FieldName)->SetValue(MetaTable->GetField(FieldName)->Foreign ? ISDatabaseHelper::GetObjectIDToList(MetaTable, MetaTable->GetField(FieldName), ObjectID) : Value);
 			}
-			ISHistory::Instance().AddObject(MetaTable->Name, ObjectID);
 		}
 		else
 		{

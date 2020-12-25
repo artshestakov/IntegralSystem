@@ -65,11 +65,6 @@ static QString QS_FAVORITE = PREPARE_QUERY("SELECT fvts_tablename, fvts_objectid
 										   "FROM _favorites "
 										   "WHERE fvts_user = :UserID");
 //-----------------------------------------------------------------------------
-static QString QS_HISTORY = PREPARE_QUERY("SELECT htry_datetime, htry_tablename, htry_objectid "
-										  "FROM _history "
-										  "WHERE htry_user = :UserID "
-										  "ORDER BY htry_id");
-//-----------------------------------------------------------------------------
 static QString QS_COLUMN_SIZE = PREPARE_QUERY("SELECT clsz_tablename, clsz_fieldname, clsz_size "
 											  "FROM _columnsize "
 											  "WHERE clsz_user = :UserID");
@@ -1180,28 +1175,6 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 		return false;
 	}
 
-	//Получаем историю
-	QVariantList HistoryList;
-	ISQuery qSelectHistory(ISDatabase::Instance().GetDB(DBConnectionName), QS_HISTORY);
-	qSelectHistory.BindValue(":UserID", TcpMessage->TcpSocket->GetUserID());
-	if (qSelectHistory.Execute())
-	{
-		while (qSelectHistory.Next())
-		{
-			HistoryList.append(QVariantMap
-			{
-				{ "Date", qSelectHistory.ReadColumn("htry_datetime") },
-				{ "Table", qSelectHistory.ReadColumn("htry_tablename") },
-				{ "ID", qSelectHistory.ReadColumn("htry_objectid") }
-			});
-		}
-	}
-	else
-	{
-		ErrorString = LANG("Carat.Error.Query.GetMetaData.History").arg(qSelectHistory.GetErrorString());
-		return false;
-	}
-
 	//Получаем размеры полей
 	QVariantMap ColumnSizeMap;
 	ISQuery qSelectColumnSize(ISDatabase::Instance().GetDB(DBConnectionName), QS_COLUMN_SIZE);
@@ -1363,7 +1336,6 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	TcpAnswer->Parameters["SystemSubSystem"] = SystemSubSystemList;
 	TcpAnswer->Parameters["Printing"] = PrintingList;
 	TcpAnswer->Parameters["Favorite"] = FavoriteMap;
-	TcpAnswer->Parameters["History"] = HistoryList;
 	TcpAnswer->Parameters["ColumnSize"] = ColumnSizeMap;
 	TcpAnswer->Parameters["Settings"] = Settings;
 	TcpAnswer->Parameters["Paragraphs"] = ParagraphList;

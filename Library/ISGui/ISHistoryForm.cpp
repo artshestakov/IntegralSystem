@@ -5,7 +5,6 @@
 #include "ISSettings.h"
 #include "ISConstants.h"
 #include "ISGui.h"
-#include "ISHistory.h"
 #include "ISMetaData.h"
 #include "ISCore.h"
 #include "ISMessageBox.h"
@@ -27,7 +26,7 @@ ISHistoryForm::ISHistoryForm(QWidget *parent) : ISInterfaceForm(parent)
 	connect(ListWidget, &QListWidget::itemDoubleClicked, this, &ISHistoryForm::Open);
 	GetMainLayout()->addWidget(ListWidget);
 
-	std::vector<ISHistoryObject> Stories = ISHistory::Instance().GetHistory();
+	/*std::vector<ISHistoryObject> Stories = ISHistory::Instance().GetHistory();
 	for (const ISHistoryObject &HistoryObject : Stories)
 	{
 		QListWidgetItem *ListWidgetItem = new QListWidgetItem(ListWidget);
@@ -38,7 +37,7 @@ ISHistoryForm::ISHistoryForm(QWidget *parent) : ISInterfaceForm(parent)
 		ListWidgetItem->setData(Qt::UserRole, HistoryObject.TableName);
 		ListWidgetItem->setData(Qt::UserRole * 2, HistoryObject.ObjectID);
 		ListWidgetItem->setSizeHint(QSize(ListWidgetItem->sizeHint().width(), 25));
-	}
+	}*/
 
 	ISCheckEdit *CheckEdit = new ISCheckEdit(this);
 	CheckEdit->SetText(LANG("EnableHistoryTracking"));
@@ -47,13 +46,8 @@ ISHistoryForm::ISHistoryForm(QWidget *parent) : ISInterfaceForm(parent)
 	GetMainLayout()->addWidget(CheckEdit, 0, Qt::AlignLeft);
 
 	QHBoxLayout *LayoutBottom = new QHBoxLayout();
-	GetMainLayout()->addLayout(LayoutBottom);
-
-	ISPushButton *ButtonClear = new ISPushButton(BUFFER_ICONS("Clear"), LANG("ClearHistory"), this);
-	connect(ButtonClear, &ISPushButton::clicked, this, &ISHistoryForm::Clear);
-	LayoutBottom->addWidget(ButtonClear);
-
 	LayoutBottom->addStretch();
+	GetMainLayout()->addLayout(LayoutBottom);
 
 	ISPushButton *ButtonClose = new ISPushButton(BUFFER_ICONS("Close"), LANG("Close"), this);
 	connect(ButtonClose, &ISPushButton::clicked, this, &ISHistoryForm::close);
@@ -96,16 +90,5 @@ void ISHistoryForm::Open(QListWidgetItem *ListWidgetItem)
 void ISHistoryForm::CheckEditChanged(const QVariant &Value)
 {
 	ISSettings::Instance().SetValue(CONST_UID_SETTING_OTHER_ENABLE_HISTORY_TRACKING, Value);
-}
-//-----------------------------------------------------------------------------
-void ISHistoryForm::Clear()
-{
-	if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.DeleteHistory")))
-	{
-		ISGui::SetWaitGlobalCursor(true);
-		ISHistory::Instance().Clear();
-		ListWidget->Clear();
-		ISGui::SetWaitGlobalCursor(false);
-	}
 }
 //-----------------------------------------------------------------------------

@@ -360,9 +360,6 @@
     <ClCompile Include="ISTaskSearchByTextForm.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
-    <ClCompile Include="ISHistory.cpp">
-      <Filter>System</Filter>
-    </ClCompile>
     <ClCompile Include="ISValidators.cpp">
       <Filter>Export</Filter>
     </ClCompile>
@@ -776,9 +773,6 @@
       <Filter>System</Filter>
     </ClInclude>
     <ClInclude Include="isgui_global.h" />
-    <ClInclude Include="ISHistory.h">
-      <Filter>System</Filter>
-    </ClInclude>
     <ClInclude Include="ISUserPhotoCreator.h">
       <Filter>System</Filter>
     </ClInclude>

@@ -150,7 +150,6 @@
   <Local Name="Message.Question.SaveObjectChanged" Russian="Карточка объекта &quot;%1&quot; была изменена, сохранить изменения?"/>
   <Local Name="Message.Question.ChangeSettingsToDefault" Russian="Установить все настройки по умолчанию?"/>
   <Local Name="Message.Question.DeleteFavorites" Russian="Удалить все избранные записи?"/>
-  <Local Name="Message.Question.DeleteHistory" Russian="Очистить историю открытых записей?"/>
   <Local Name="Message.Question.CreateCopyFile" Russian="Создать копию файла &quot;%1&quot;?"/>
   <Local Name="Message.Question.SaveFile" Russian="Сохранить файл &quot;%1&quot;?"/>
   <Local Name="Message.Question.ConnectionError.Reconnect" Russian="Не удалось подключиться к базе данных.&#10;Ошибка: %1&#10;&#10;Повторить попытку подключения?"/>
@@ -247,7 +246,6 @@
   <Local Name="FavoritesForTable" Russian="Избранные записи таблицы: %1"/>
   <Local Name="AddToFavorites" Russian="Добавить/удалить из избранного"/>
   <Local Name="ClearFavorites" Russian="Очистить избранное"/>
-  <Local Name="ClearHistory" Russian="Очистить историю"/>
   <Local Name="History" Russian="История"/>
   <Local Name="Creating" Russian="Создание"/>
   <Local Name="Coping" Russian="Создание копии"/>
