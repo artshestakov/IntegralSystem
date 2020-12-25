@@ -14,7 +14,7 @@
 #include "ISFail2Ban.h"
 #include "ISQueryModel.h"
 //-----------------------------------------------------------------------------
-static QString QS_USERS_HASH = PREPARE_QUERY("SELECT usrs_hash1, usrs_salt "
+static QString QS_USERS_HASH = PREPARE_QUERY("SELECT usrs_hash, usrs_salt "
 											 "FROM _users "
 											 "WHERE usrs_hash IS NOT NULL "
 											 "AND usrs_salt IS NOT NULL");
@@ -345,6 +345,9 @@ static QString QS_HISTORY = PREPARE_QUERY("SELECT prtc_datetime, prtc_tablename,
 										  "AND prtc_user = :UserID "
 										  "ORDER BY prtc_datetime DESC");
 //-----------------------------------------------------------------------------
+static QString QI_TASK_COMMENT = PREPARE_QUERY("INSERT INTO _taskcomment(tcom_owner, tcom_task, tcom_parent, tcom_comment) "
+											   "VALUES(:UserID, :TaskID, :ParentCommentID, :Comment)");
+//-----------------------------------------------------------------------------
 ISTcpWorker::ISTcpWorker(const QString &db_host, int db_port, const QString &db_name, const QString &db_user, const QString &db_password)
 	: QObject(),
 	ErrorString(NO_ERROR_STRING),
@@ -517,6 +520,7 @@ void ISTcpWorker::Process()
 					case ISNamespace::AMT_FavoritesDelete: Result = FavoritesDelete(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_CalendarClose: Result = CalendarClose(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_GetHistoryList: Result = GetHistoryList(tcp_message, TcpAnswer); break;
+					case ISNamespace::AMT_TaskCommentAdd: Result = TaskCommentAdd(tcp_message, TcpAnswer); break;
 					default:
 						ErrorString = LANG("Carat.Error.NotExistFunction").arg(tcp_message->TypeName);
 					}
@@ -1035,7 +1039,6 @@ bool ISTcpWorker::Sleep(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 		ErrorString = LANG("Carat.Error.Query.Sleep.TimeoutValueIsNegative");
 		return false;
 	}
-
 	ISSleep(TimeoutInt);
 	return true;
 }
@@ -3263,6 +3266,39 @@ bool ISTcpWorker::GetHistoryList(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
 		});
 	}
 	TcpAnswer->Parameters["History"] = HistoryList;
+	return true;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::TaskCommentAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+	QVariant TaskID = CheckNullField("TaskID", TcpMessage),
+		Comment = CheckNullField("Comment", TcpMessage);
+	if (!TaskID.isValid() || !Comment.isValid())
+	{
+		return false;
+	}
+
+	//Проверяем комментарий на пустоту
+	if (Comment.toString().isEmpty())
+	{
+		ErrorString = LANG("Carat.Error.Query.TaskCommentAdd.CommentIsEmpty");
+		return false;
+	}
+
+	//Идентификатор родительского комментария
+	QVariant ParentCommentID = TcpMessage->Parameters.contains("ParentCommentID") ?
+		TcpMessage->Parameters["ParentCommentID"] : QVariant();
+
+	//Добавляем комментарий
+	ISQuery qInsert(ISDatabase::Instance().GetDB(DBConnectionName), QI_TASK_COMMENT);
+	qInsert.BindValue(":UserID", TcpMessage->TcpSocket->GetUserID());
+	qInsert.BindValue(":TaskID", TaskID);
+	qInsert.BindValue(":ParentCommentID", ParentCommentID);
+	qInsert.BindValue(":Comment", Comment);
+	if (!qInsert.Execute()) //Ошибка запроса
+	{
+		return ErrorQuery(LANG("Carat.Error.Query.TaskCommentAdd.Insert"), qInsert);
+	}
 	return true;
 }
 //-----------------------------------------------------------------------------

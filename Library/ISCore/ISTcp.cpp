@@ -208,6 +208,10 @@ ISNamespace::ApiMessageType ISTcp::GetMessageTypeByName(const QString &Name)
 	{
 		return ISNamespace::AMT_GetHistoryList;
 	}
+	else if (Name == API_TASK_COMMENT_ADD)
+	{
+		return ISNamespace::AMT_TaskCommentAdd;
+	}
 	return ISNamespace::AMT_Unknown;
 }
 //-----------------------------------------------------------------------------

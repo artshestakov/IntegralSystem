@@ -75,7 +75,6 @@
   <Local Name="Message.Error.QueryRecord" Russian="Ошибка запроса данных."/>
   <Local Name="Message.Error.ConnectToServer" Russian="Ошибка подключения к серверу!"/>
   <Local Name="Message.Error.Auth" Russian="Ошибка авторизации!"/>
-  <Local Name="Message.Error.InsertTaskComment" Russian="Не удалось добавить комментарий к задаче!"/>
   <Local Name="Message.Error.UpdateTaskComment" Russian="Не удалось изменить комментарий к задаче!"/>
   <Local Name="Message.Error.DeleteTaskComment" Russian="Не удалось удалить комментарий!"/>
   <Local Name="Message.Error.OpenImageFile" Russian="Не удалось открыть файл с изображением!"/>

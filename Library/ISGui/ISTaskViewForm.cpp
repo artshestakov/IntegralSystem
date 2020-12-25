@@ -126,9 +126,6 @@ static QString QS_COMMENT = PREPARE_QUERY("SELECT "
 										  "WHERE tcom_task = :TaskID "
 										  "ORDER BY tcom_id");
 //-----------------------------------------------------------------------------
-static QString QI_COMMENT = PREPARE_QUERY("INSERT INTO _taskcomment(tcom_owner, tcom_task, tcom_parent, tcom_comment) "
-										  "VALUES(:UserID, :TaskID, :Parent, :Comment)");
-//-----------------------------------------------------------------------------
 static QString QU_COMMENT = PREPARE_QUERY("UPDATE _taskcomment SET "
 										  "tcom_comment = :Comment "
 										  "WHERE tcom_id = :CommentID");
@@ -1328,22 +1325,19 @@ void ISTaskViewForm::CommentAdd()
 	SetVisibleShadow(true);
 	QString Comment = ISInputDialog::GetText(LANG("Task.Comment"), LANG("Task.InputComment") + ':');
 	SetVisibleShadow(false);
-	if (!Comment.isEmpty())
+	
+	ISTcpQuery qTaskCommentAdd(API_TASK_COMMENT_ADD);
+	qTaskCommentAdd.BindValue("TaskID", TaskID);
+	qTaskCommentAdd.BindValue("Parent", sender()->property("ParentID"));
+	qTaskCommentAdd.BindValue("Comment", Comment);
+	if (qTaskCommentAdd.Execute())
 	{
-		ISQuery qInsertComment(QI_COMMENT);
-		qInsertComment.BindValue(":UserID", CURRENT_USER_ID);
-		qInsertComment.BindValue(":TaskID", TaskID);
-		qInsertComment.BindValue(":Parent", sender()->property("ParentID"));
-		qInsertComment.BindValue(":Comment", Comment);
-		if (qInsertComment.Execute())
-		{
-			CommentLoadList();
-			TreeWidgetComment->scrollToBottom();
-		}
-		else
-		{
-			ISMessageBox::ShowCritical(this, LANG("Message.Error.InsertTaskComment"), qInsertComment.GetErrorString());
-		}
+		CommentLoadList();
+		TreeWidgetComment->scrollToBottom();
+	}
+	else
+	{
+		ISMessageBox::ShowCritical(this, qTaskCommentAdd.GetErrorString());
 	}
 }
 //-----------------------------------------------------------------------------

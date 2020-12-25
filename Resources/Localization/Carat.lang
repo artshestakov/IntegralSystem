@@ -192,4 +192,7 @@
 
   <Local Name="Carat.Error.Query.GetHistoryList.Select" Russian="Не удалось получить список открытых записей: %1"/>
 
+  <Local Name="Carat.Error.Query.TaskCommentAdd.CommentIsEmpty" Russian="Комментарий не может быть пустым."/>
+  <Local Name="Carat.Error.Query.TaskCommentAdd.Insert" Russian="Не удалось добавить комментарий к задаче."/>
+
 </LANG>
