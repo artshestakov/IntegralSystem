@@ -247,6 +247,7 @@ const char CONST_UID_GROUP_ACCESS_TYPE_DELETE[] = "{48E0575C-31A0-4AE1-87D7-6450
 const char CONST_UID_GROUP_ACCESS_TYPE_EXPORT[] = "{E3DB5851-69A2-4D32-B4F4-0EB98C331B22}"; //Экспорт данных
 //-----------------------------------------------------------------------------
 const char CONST_UID_GROUP_ACCESS_SPECIAL_DESKTOP[] = "{6948884F-5F69-4F74-A230-A2D892A44A52}"; //Рабочий стол
+const char CONST_UID_GROUP_ACCESS_SPECIAL_SETTINGS_DB[] = "{E006A41A-465F-41AB-BA5D-2CBC41935B2C}"; //Рабочий стол
 const char CONST_UID_GROUP_ACCESS_SPECIAL_REPORT_FORM_EDIT[] = "{2C6AA9DB-0804-46A6-8095-D2A0D6011C03}"; //Редактирование печатных форм
 //-----------------------------------------------------------------------------
 const char CONST_UID_GROUP_ACCESS_SPECIAL_TASK_CLOSE[] = "{4FA7688B-E0B8-4018-B6EC-FD4BE898C90B}"; //Закрытие задач

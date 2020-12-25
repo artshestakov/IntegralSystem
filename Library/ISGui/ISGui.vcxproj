@@ -264,7 +264,7 @@
     <ClCompile Include="ISSelectDialogForm.cpp" />
     <ClCompile Include="ISSelectListForm.cpp" />
     <ClCompile Include="ISSettingFieldWidgets.cpp" />
-    <ClCompile Include="ISSettingsDatabaseListForm.cpp" />
+    <ClCompile Include="ISSettingsDatabaseObjectForm.cpp" />
     <ClCompile Include="ISSettingsForm.cpp" />
     <ClCompile Include="ISSplashScreen.cpp" />
     <ClCompile Include="ISSplashWidget.cpp" />
@@ -410,7 +410,7 @@
     <QtMoc Include="ISProgressForm.h" />
     <QtMoc Include="ISTaskListForm.h" />
     <QtMoc Include="ISTaskSearchByTextForm.h" />
-    <QtMoc Include="ISSettingsDatabaseListForm.h" />
+    <QtMoc Include="ISSettingsDatabaseObjectForm.h" />
     <QtMoc Include="ISTaskObjectForm.h" />
     <QtMoc Include="ISListViewForm.h" />
     <QtMoc Include="ISReconnectForm.h" />

@@ -13,13 +13,11 @@ static QString QS_SETTINGS_DATABASE = PREPARE_QUERY("SELECT COUNT(*) "
 													"WHERE sgdb_uid = :UID");
 //-----------------------------------------------------------------------------
 static QString QU_SETTINGS_DATABASE = PREPARE_QUERY("UPDATE _settingsdatabase SET "
-													"sgdb_issystem = true, "
-													"sgdb_active = true, "
-													"sgdb_settingname = :SettingName "
+													"sgdb_issystem = true "
 													"WHERE sgdb_uid = :UID");
 //-----------------------------------------------------------------------------
-static QString QI_SETTINGS_DATABASE = PREPARE_QUERY("INSERT INTO _settingsdatabase(sgdb_uid, sgdb_issystem, sgdb_active, sgdb_settingname) "
-													"VALUES(:UID, true, true, :SettingName)");
+static QString QI_SETTINGS_DATABASE = PREPARE_QUERY("INSERT INTO _settingsdatabase(sgdb_uid, sgdb_issystem) "
+													"VALUES(:UID, true)");
 //-----------------------------------------------------------------------------
 static QString QS_PROTOCOL = PREPARE_QUERY("SELECT DISTINCT prtc_tablename "
 										   "FROM _protocol "
@@ -274,7 +272,6 @@ bool CGConfiguratorUpdate::databasesettings()
 		bool IsExist = qSelect.ReadColumn("count").toInt() > 0;
 		ISQuery qUpsert(IsExist ? QU_SETTINGS_DATABASE : QI_SETTINGS_DATABASE);
 		qUpsert.BindValue(":UID", CONST_UID_SETTINGS_DATABASE);
-		qUpsert.BindValue(":SettingName", "System Profile");
 		qUpsert.SetShowLongQuery(false);
 		Result = qUpsert.Execute();
 		if (Result)

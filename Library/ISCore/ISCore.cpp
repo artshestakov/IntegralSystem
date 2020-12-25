@@ -7,8 +7,6 @@
 #include "ISQueryPool.h"
 #include "ISLogger.h"
 #include "ISSystem.h"
-#include "ISSettings.h"
-#include "ISSettingsDatabase.h"
 #include "ISDatabase.h"
 #include "ISMetaDataHelper.h"
 //-----------------------------------------------------------------------------

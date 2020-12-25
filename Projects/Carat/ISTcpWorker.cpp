@@ -20,7 +20,7 @@ static QString QS_USERS_HASH = PREPARE_QUERY("SELECT usrs_hash, usrs_salt "
 											 "AND usrs_salt IS NOT NULL");
 //-----------------------------------------------------------------------------
 static QString QS_USER_AUTH = PREPARE_QUERY("SELECT usrs_id, usrs_issystem, usrs_group, usrs_fio, usrs_accessallowed, usrs_accountlifetime, usrs_accountlifetimestart, usrs_accountlifetimeend, usgp_fullaccess, "
-											"(SELECT sgdb_useraccessdatabase FROM _settingsdatabase WHERE sgdb_active) "
+											"(SELECT sgdb_useraccessdatabase FROM _settingsdatabase WHERE sgdb_uid = :SettingUID) "
 											"FROM _users "
 											"LEFT JOIN _usergroup ON usgp_id = usrs_group "
 											"WHERE usrs_hash = :Hash");
@@ -28,9 +28,9 @@ static QString QS_USER_AUTH = PREPARE_QUERY("SELECT usrs_id, usrs_issystem, usrs
 static QString QI_PROTOCOL = PREPARE_QUERY("INSERT INTO _protocol(prtc_datetime, prtc_user, prtc_tablename, prtc_tablelocalname, prtc_type, prtc_objectid, prtc_information) "
 										   "VALUES(:DateTime, :UserID, :TableName, :TableLocalName, (SELECT prtp_id FROM _protocoltype WHERE prtp_uid = :TypeUID), :ObjectID, :Information)");
 //-----------------------------------------------------------------------------
-static QString QS_SETTINGS_DATABASE = PREPARE_QUERY("SELECT sgdb_settingname, sgdb_useraccessdatabase, sgdb_numbersimbolsaftercomma, sgdb_storagefilemaxsize "
+static QString QS_SETTINGS_DATABASE = PREPARE_QUERY("SELECT sgdb_useraccessdatabase, sgdb_numbersimbolsaftercomma, sgdb_storagefilemaxsize "
 													"FROM _settingsdatabase "
-													"WHERE sgdb_active");
+													"WHERE sgdb_uid = :SettingUID");
 //-----------------------------------------------------------------------------
 static QString QS_GROUP_ACCESS_TABLE = PREPARE_QUERY("SELECT gatb_table, gatt_uid "
 													 "FROM _groupaccesstable "
@@ -768,6 +768,36 @@ PMetaTable* ISTcpWorker::GetMetaTable(const QString &TableName)
 	return MetaTable;
 }
 //-----------------------------------------------------------------------------
+QVariant ISTcpWorker::GetSettingDB(const QString &SettingName)
+{
+	QVariant Value;
+	ISQuery qSelectSettingDB(ISDatabase::Instance().GetDB(DBConnectionName),
+		"SELECT sgdb_" + SettingName + " FROM _settingsdatabase WHERE sgdb_uid = :SettingUID");
+	qSelectSettingDB.BindValue(":SettingUID", CONST_UID_SETTINGS_DATABASE);
+	if (qSelectSettingDB.Execute()) //Запрос выполнен успешно
+	{
+		if (qSelectSettingDB.First()) //Настройка нашлась
+		{
+			Value = qSelectSettingDB.ReadColumn(0);
+		}
+		else //Такой настройки в БД нет
+		{
+			ISLOGGER_E(__CLASS__, "not found setting database. Use default value...");
+		}
+	}
+	else //Ошибка запроса
+	{
+		ISLOGGER_E(__CLASS__, "not getting setting database: " + qSelectSettingDB.GetErrorString());
+	}
+
+	//Если значение невалидное - используем указанное по умолчанию
+	if (!Value.isValid() || Value.isNull())
+	{
+		Value = ISMetaData::Instance().GetMetaTable("_SettingsDatabase")->GetField(SettingName)->DefaultValue;
+	}
+	return Value;
+}
+//-----------------------------------------------------------------------------
 bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
 	Q_UNUSED(TcpAnswer);
@@ -869,6 +899,7 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 
 	//Проверка пользователя
 	ISQuery qSelectAuth(ISDatabase::Instance().GetDB(DBConnectionName), QS_USER_AUTH);
+	qSelectAuth.BindValue(":SettingUID", CONST_UID_SETTINGS_DATABASE);
 	qSelectAuth.BindValue(":Hash", Hash);
 	if (!qSelectAuth.ExecuteFirst()) //Запрос выполнен с ошибкой
 	{
@@ -1013,11 +1044,11 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	//Получаем настройки БД
 	QVariantMap SettingsDBMap;
 	ISQuery qSelectSettingsDB(ISDatabase::Instance().GetDB(DBConnectionName), QS_SETTINGS_DATABASE);
+	qSelectSettingsDB.BindValue(":SettingUID", CONST_UID_SETTINGS_DATABASE);
 	if (qSelectSettingsDB.Execute())
 	{
 		if (qSelectSettingsDB.First())
 		{
-			SettingsDBMap["Name"] = qSelectSettingsDB.ReadColumn("sgdb_settingname");
 			SettingsDBMap["UserAccessDatabase"] = qSelectSettingsDB.ReadColumn("sgdb_useraccessdatabase");
 			SettingsDBMap["NumberSymbolsAfterComma"] = qSelectSettingsDB.ReadColumn("sgdb_numbersimbolsaftercomma");
 			SettingsDBMap["StirageFileMaxSize"] = qSelectSettingsDB.ReadColumn("sgdb_storagefilemaxsize");
@@ -2034,6 +2065,9 @@ bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 
 	if (qSelect.First()) //Данные есть
 	{
+		//Получаем необходимые настройки БД
+		int NumberSimbolsAfterComma = GetSettingDB(CONST_UID_DATABASE_SETTING_OTHER_NUMBERSIMBOLSAFTERCOMMA).toInt();
+
 		do
 		{
 			QVariantList Values; //Список значений
@@ -2079,7 +2113,7 @@ bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 				}
 				else if (Type == ISNamespace::FT_Double)
 				{
-					Value = QString::number(Value.toDouble(), 'f', 3); //??? Нужно использовать настройку из БД
+					Value = QString::number(Value.toDouble(), 'f', NumberSimbolsAfterComma);
 				}
 				else if (Type == ISNamespace::FT_Money)
 				{

@@ -2,8 +2,6 @@
 #include "ISTypedefs.h"
 #include "ISAlgorithm.h"
 #include "ISConstants.h"
-#include "ISSettingsDatabase.h"
-#include "ISSettings.h"
 //-----------------------------------------------------------------------------
 ISIntValidator::ISIntValidator(int Bottom, int Top, QObject *parent) : QIntValidator(Bottom, Top, parent)
 {

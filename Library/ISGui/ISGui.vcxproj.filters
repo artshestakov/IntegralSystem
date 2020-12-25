@@ -372,9 +372,6 @@
     <ClCompile Include="ISEmpty.cpp">
       <Filter>Objects\Empty</Filter>
     </ClCompile>
-    <ClCompile Include="ISSettingsDatabaseListForm.cpp">
-      <Filter>Forms</Filter>
-    </ClCompile>
     <ClCompile Include="ISUserPhotoCreator.cpp">
       <Filter>System</Filter>
     </ClCompile>
@@ -428,6 +425,9 @@
     </ClCompile>
     <ClCompile Include="ISDesktopParagraph.cpp">
       <Filter>Paragraphs</Filter>
+    </ClCompile>
+    <ClCompile Include="ISSettingsDatabaseObjectForm.cpp">
+      <Filter>Forms</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -677,9 +677,6 @@
     <QtMoc Include="ISEmpty.h">
       <Filter>Objects\Empty</Filter>
     </QtMoc>
-    <QtMoc Include="ISSettingsDatabaseListForm.h">
-      <Filter>Forms</Filter>
-    </QtMoc>
     <QtMoc Include="ISListWidget.h">
       <Filter>Widgets</Filter>
     </QtMoc>
@@ -721,6 +718,9 @@
     </QtMoc>
     <QtMoc Include="ISDesktopParagraph.h">
       <Filter>Paragraphs</Filter>
+    </QtMoc>
+    <QtMoc Include="ISSettingsDatabaseObjectForm.h">
+      <Filter>Forms</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>

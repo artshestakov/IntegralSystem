@@ -12,6 +12,7 @@ public:
 	void Initialize(const QVariantMap &VariantMap);
 	bool Initialize(); //Инициализация настроек базы данных
 	QVariant GetValue(const QString &SettingName); //Получить значение настройки
+	void SetValue(const QString &SettingName, const QVariant &Value); //Изменить значение настройки
 
 private:
 	ISSettingsDatabase();
@@ -22,6 +23,7 @@ private:
 private:
 	QString ErrorString;
 	ISStringToVariantMap Settings;
+	ISCriticalSection CriticalSection;
 };
 //-----------------------------------------------------------------------------
 #define SETTING_DATABASE_VALUE(SETTING_DATABASE_NAME) ISSettingsDatabase::Instance().GetValue(SETTING_DATABASE_NAME)

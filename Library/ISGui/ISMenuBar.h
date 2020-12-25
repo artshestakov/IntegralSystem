@@ -14,6 +14,7 @@ signals:
 	void Exit();
 	void Favorites();
 	void History();
+	void DatabaseSettings();
 	void ChangePassword();
 	void Settings();
 	void AboutApplication();

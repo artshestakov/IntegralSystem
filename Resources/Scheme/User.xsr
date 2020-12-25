@@ -9,6 +9,7 @@
 
   <_GroupAccessSpecialType IsSystem="true" UID="{1469B06A-9155-40A0-BED9-8CCFDBA89989}" Name="Основные" Order="1"/>
   <_GroupAccessSpecialType IsSystem="true" UID="{6948884F-5F69-4F74-A230-A2D892A44A52}" Parent="{1469B06A-9155-40A0-BED9-8CCFDBA89989}" Name="Рабочий стол" Hint="Доступ к рабочему столу программы" Order="1"/>
+  <_GroupAccessSpecialType IsSystem="true" UID="{E006A41A-465F-41AB-BA5D-2CBC41935B2C}" Parent="{1469B06A-9155-40A0-BED9-8CCFDBA89989}" Name="Управление настройками базы данных" Order="2"/>
 
   <_GroupAccessSpecialType IsSystem="true" UID="{47115F72-C49E-4CB6-8AEF-A2648CF648E9}" Name="Трекер задач" Order="2"/>
   <_GroupAccessSpecialType IsSystem="true" UID="{4FA7688B-E0B8-4018-B6EC-FD4BE898C90B}" Parent="{47115F72-C49E-4CB6-8AEF-A2648CF648E9}" Name="Закрытие задач" Order="1"/>

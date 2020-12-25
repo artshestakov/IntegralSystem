@@ -54,6 +54,7 @@
   <Local Name="Message.Information.AppliocationWillBeRestart" Russian="Настройки успешно сброшены, рекомендуется перезапустить программу."/>
   <Local Name="Message.Information.FoundNewAppVersion" Russian="Обнаружена новая версия программы. Нажмите ОК, чтобы начать её установку. После успешной установки новой версии программа автоматически запустится."/>
   <Local Name="Message.Information.InstallUpdate" Russian="Обновление было успешно загружено! Нажмите ОК, чтобы начать установку. После успешной установки новой версии программа автоматически запустится."/>
+  <Local Name="Message.Information.ResetSettingDB" Russian="Настройки были успешно сброшены!"/>
   <Local Name="Message.Error.ConnectionSetting.Input.ServerEmpty" Russian="В настройках подключения к базе данных не указан сервер."/>
   <Local Name="Message.Error.ConnectionSetting.Input.PortEmpty" Russian="В настройках подключения к базе данных не указан порт."/>
   <Local Name="Message.Error.ConnectionSetting.Input.DatabaseNameEmpty" Russian="В настройках подключения к базе данных не указано имя базы данных."/>
@@ -137,7 +138,6 @@
   <Local Name="Message.Warning.SelectedTaskIsSubTasks" Russian="Выбранная задача является подзадачей!"/>
   <Local Name="Message.Warning.SaveObjectFromContinue" Russian="Сохраните запись для продолжения."/>
   <Local Name="Message.Warning.StartInstallUpdate" Russian="Не удалось запустить установку обновление в автоматическом режиме. Вы можете установить обновление программы самостоятельно. Путь к установочному файлу:&#10;%1"/>
-  <Local Name="Message.Warning.ActiveSettingDatabase" Russian="Не удалось установить активный профиль настроек базы данных."/>
   <Local Name="Message.Warning.NotGettingMetaReport" Russian="Не удалось получить мета-отчёт."/>
   <Local Name="Message.Warning.OneFieldNotFill" Russian="Одно из полей не заполнено!"/>
   <Local Name="Message.Warning.PasswordVerification" Russian="Пароль слишком слабый."/>
@@ -172,6 +172,7 @@
   <Local Name="Message.Question.TaskCheckListDelete" Russian="Удалить пункт?"/>
   <Local Name="Message.Question.UpdateAvailable" Russian="Доступно обновление программы. Загрузить его?"/>
   <Local Name="Message.Question.PasswordReset" Russian="Вы уверены что хотите сбросить пароль?"/>
+  <Local Name="Message.Question.ResetSettingDB" Russian="Сбросить настройки на стандартные?"/>
 
   <!--DaData-->
   <Local Name="DaData.NotFound.Organization" Russian="Организация по таком ИНН не найдена"/>
@@ -649,6 +650,7 @@
   <Local Name="Settings" Russian="Настройки"/>
   <Local Name="SettingsList" Russian="Настройки списка"/>
   <Local Name="SettingsDefault" Russian="Настройки по умолчанию"/>
+  <Local Name="ResetSettingsDB" Russian="Сброс настроек"/>
   <Local Name="SavingProcess" Russian="Сохранение"/>
   <Local Name="Open" Russian="Открыть"/>
   <Local Name="Export" Russian="Экспорт"/>
@@ -678,10 +680,10 @@
   <Local Name="InputNote" Russian="Введите примечание"/>
   <Local Name="ExitApplication" Russian="Выход из программы"/>
   <Local Name="SettingsUser" Russian="Настройки пользователя"/>
-  <Local Name="ActiveProfile" Russian="Активный профиль"/>
   <Local Name="PlayRecordCall" Russian="Воспроизвести запись разговора"/>
   <Local Name="NotConnectToServer" Russian="Подключение к серверу отсутствует."/>
   <Local Name="RecordCallLoading" Russian="Запись разговора загружается..."/>
   <Local Name="ErrorLoadingData" Russian="Ошибка загрузки данных"/>
+  <Local Name="DatabaseSettings" Russian="Настройки базы данных"/>
 
 </LANG>

@@ -40,6 +40,7 @@ private:
 	QString ConvertDateToString(const QDate &Date); //Конвертировать дату в строку
 	bool GetObjectName(PMetaTable *MetaTable, unsigned int ObjectID, QString &ObjectName); //Получить наименование объекта
 	PMetaTable* GetMetaTable(const QString &TableName); //Получить указатель на мета-таблицу
+	QVariant GetSettingDB(const QString &SettingName); //Получить значение настройки БД
 
 private:
 	bool Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);

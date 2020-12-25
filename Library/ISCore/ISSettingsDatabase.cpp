@@ -10,12 +10,12 @@
 ISSettingsDatabase::ISSettingsDatabase()
 	: ErrorString(NO_ERROR_STRING)
 {
-	
+	CRITICAL_SECTION_INIT(&CriticalSection);
 }
 //-----------------------------------------------------------------------------
 ISSettingsDatabase::~ISSettingsDatabase()
 {
-
+	CRITICAL_SECTION_DESTROY(&CriticalSection);
 }
 //-----------------------------------------------------------------------------
 ISSettingsDatabase& ISSettingsDatabase::Instance()
@@ -61,6 +61,16 @@ bool ISSettingsDatabase::Initialize()
 //-----------------------------------------------------------------------------
 QVariant ISSettingsDatabase::GetValue(const QString &SettingName)
 {
-	return Settings[SettingName];
+	CRITICAL_SECTION_LOCK(&CriticalSection);
+	QVariant Value = Settings[SettingName];
+	CRITICAL_SECTION_UNLOCK(&CriticalSection);
+	return Value;
+}
+//-----------------------------------------------------------------------------
+void ISSettingsDatabase::SetValue(const QString &SettingName, const QVariant &Value)
+{
+	CRITICAL_SECTION_LOCK(&CriticalSection);
+	Settings[SettingName] = Value;
+	CRITICAL_SECTION_UNLOCK(&CriticalSection);
 }
 //-----------------------------------------------------------------------------

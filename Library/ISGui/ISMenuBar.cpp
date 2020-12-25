@@ -5,6 +5,7 @@
 #include "ISLocalization.h"
 #include "ISSettings.h"
 #include "ISParagraphEntity.h"
+#include "ISUserRoleEntity.h"
 //-----------------------------------------------------------------------------
 ISMenuBar::ISMenuBar(QWidget *parent) : QWidget(parent)
 {
@@ -43,6 +44,12 @@ ISMenuBar::ISMenuBar(QWidget *parent) : QWidget(parent)
 
 	//История
 	MenuService->addAction(BUFFER_ICONS("History"), LANG("History"), this, &ISMenuBar::History);
+
+	//Настройки БД (если есть права)
+	if (ISUserRoleEntity::Instance().CheckAccessSpecial(CONST_UID_GROUP_ACCESS_SPECIAL_SETTINGS_DB))
+	{
+		MenuService->addAction(BUFFER_ICONS("DatabaseSettings"), LANG("DatabaseSettings"), this, &ISMenuBar::DatabaseSettings);
+	}
 
 	MenuService->addSeparator();
 

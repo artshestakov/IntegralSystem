@@ -80,25 +80,6 @@
     COST 100;
   </Function>
 
-  <Function Name="set_setting_database_active(id bigint)" Comment="Установить активный профиль настроек БД">
-    CREATE OR REPLACE FUNCTION public.set_setting_database_active(id bigint)
-    RETURNS void AS
-    $body$
-    BEGIN
-    UPDATE _settingsdatabase SET
-    sgdb_active = false;
-    UPDATE _settingsdatabase SET
-    sgdb_active = true
-    WHERE sgdb_id = id;
-    END;
-    $body$
-    LANGUAGE 'plpgsql'
-    VOLATILE
-    CALLED ON NULL INPUT
-    SECURITY INVOKER
-    COST 100;
-  </Function>
-
   <Function Name="get_task_status_id_by_uid(status_uid uuid)" Comment="Получить идентификатор статуса задачи по его уникальному идентификатору">
     CREATE OR REPLACE FUNCTION public.get_task_status_id_by_uid(status_uid uuid)
     RETURNS bigint AS

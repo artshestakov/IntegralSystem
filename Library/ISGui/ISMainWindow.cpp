@@ -7,7 +7,6 @@
 #include "ISBuffer.h"
 #include "ISMessageBox.h"
 #include "ISAboutForm.h"
-#include "ISSettingsDatabase.h"
 #include "ISControls.h"
 #include "ISUserRoleEntity.h"
 #include "ISAssert.h"
@@ -49,6 +48,7 @@ ISMainWindow::ISMainWindow(QWidget *parent)
 	connect(MenuBar, &ISMenuBar::Exit, this, &ISMainWindow::close);
 	connect(MenuBar, &ISMenuBar::Favorites, this, &ISMainWindow::ShowFavoritesForm);
 	connect(MenuBar, &ISMenuBar::History, this, &ISMainWindow::ShowHistoryForm);
+	connect(MenuBar, &ISMenuBar::DatabaseSettings, this, &ISMainWindow::ShowDatabaseSettings);
 	connect(MenuBar, &ISMenuBar::ChangePassword, this, &ISMainWindow::ShowChangePasswordForm);
 	connect(MenuBar, &ISMenuBar::Settings, this, &ISMainWindow::ShowSettingsForm);
 	connect(MenuBar, &ISMenuBar::AboutApplication, this, &ISMainWindow::ShowAboutForm);
@@ -157,6 +157,11 @@ void ISMainWindow::ShowFavoritesForm()
 void ISMainWindow::ShowHistoryForm()
 {
 	ISGui::ShowHistoryForm();
+}
+//-----------------------------------------------------------------------------
+void ISMainWindow::ShowDatabaseSettings()
+{
+	ISGui::ShowObjectForm(ISGui::CreateObjectForm(ISNamespace::OFT_Edit, "_SettingsDatabase", 5));
 }
 //-----------------------------------------------------------------------------
 void ISMainWindow::ShowChangePasswordForm()
