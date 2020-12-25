@@ -38,8 +38,7 @@ HEADERS += \
     ISLocalization.h \
     ISLogger.h \
     ISMetaData.h \
-    ISMetaDataHelper.h \
-    ISMetaUuidCheckeder.h \
+	ISMetaDataHelper.h \
     ISNamespace.h \
     ISNetwork.h \
     ISProperty.h \
@@ -74,7 +73,6 @@ SOURCES += \
     ISLogger.cpp \
     ISMetaData.cpp \
     ISMetaDataHelper.cpp \
-    ISMetaUuidCheckeder.cpp \
     ISNetwork.cpp \
     ISProperty.cpp \
     ISQuery.cpp \
