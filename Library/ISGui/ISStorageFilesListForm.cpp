@@ -48,8 +48,16 @@ void ISStorageFilesListForm::Create()
 			}
 
 			//Читаем и закрываем
-			QByteArray ByteArray = File.readAll().toBase64();
+			QByteArray ByteArray = File.readAll();
 			File.close();
+
+			int MaxSize = SETTING_DATABASE_VALUE_INT(CONST_UID_DATABASE_SETTING_OTHER_STORAGEFILEMAXSIZE);
+			if (ByteArray.size() > MaxSize)
+			{
+				ISMessageBox::ShowWarning(this, LANG("Message.Warning.StorageFileBigSize").arg(FilePath).arg(MaxSize));
+				continue;
+			}
+			ByteArray = ByteArray.toBase64();
 			
 			ISTcpQuery qAddFileStorage(API_FILE_STORAGE_ADD);
 			qAddFileStorage.BindValue("FileName", QFileInfo(FilePath).fileName());

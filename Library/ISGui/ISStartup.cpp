@@ -3,7 +3,6 @@
 #include "ISLocalization.h"
 #include "ISMessageBox.h"
 #include "ISMetaData.h"
-#include "ISQuery.h"
 #include "ISFavorites.h"
 #include "ISColumnSizer.h"
 #include "ISUserRoleEntity.h"
@@ -15,15 +14,13 @@
 #include "ISPrintingEntity.h"
 #include "ISBuffer.h"
 #include "ISMetaSystemsEntity.h"
-#include "ISProperty.h"
 #include "ISObjects.h"
 #include "ISQueryPool.h"
-#include "ISProperty.h"
 #include "ISConfig.h"
 #include "ISDatabase.h"
 #include "ISTcpQuery.h"
-#include "ISProperty.h"
 #include "ISVersionInfo.h"
+#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 bool ISStartup::Startup(ISSplashScreen *SplashScreen)
 {
@@ -71,13 +68,6 @@ bool ISStartup::StartupOld(ISSplashScreen *SplashScreen)
 	if (!ISQueryText::Instance().CheckAllQueries())
 	{
 		ISMessageBox::ShowCritical(SplashScreen, LANG("Message.Error.CheckAllQuery"), ISQueryText::Instance().GetErrorString());
-		return false;
-	}
-
-	//Инициализация настроек базы данных
-	if (!ISSettingsDatabase::Instance().Initialize())
-	{
-		ISMessageBox::ShowCritical(SplashScreen, LANG("Message.Error.SelectSettingsDatabase"), ISSettingsDatabase::Instance().GetErrorString());
 		return false;
 	}
 

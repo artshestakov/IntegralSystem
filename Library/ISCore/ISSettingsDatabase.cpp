@@ -1,14 +1,7 @@
 #include "ISSettingsDatabase.h"
-#include "ISConstants.h"
-#include "ISQuery.h"
-#include "ISAssert.h"
-#include "ISMetaData.h"
-#include "ISLogger.h"
 #include "ISAlgorithm.h"
-#include "ISQueryModel.h"
 //-----------------------------------------------------------------------------
 ISSettingsDatabase::ISSettingsDatabase()
-	: ErrorString(NO_ERROR_STRING)
 {
 	CRITICAL_SECTION_INIT(&CriticalSection);
 }
@@ -24,39 +17,12 @@ ISSettingsDatabase& ISSettingsDatabase::Instance()
 	return SettingsDatabase;
 }
 //-----------------------------------------------------------------------------
-QString ISSettingsDatabase::GetErrorString() const
-{
-	return ErrorString;
-}
-//-----------------------------------------------------------------------------
 void ISSettingsDatabase::Initialize(const QVariantMap &VariantMap)
 {
 	for (const auto &MapItem : VariantMap.toStdMap())
 	{
 		Settings[MapItem.first] = MapItem.second;
 	}
-}
-//-----------------------------------------------------------------------------
-bool ISSettingsDatabase::Initialize()
-{
-	ISQueryModel QueryModel(ISMetaData::Instance().GetMetaTable("_SettingsDatabase"), ISNamespace::QMT_Object);
-	QueryModel.SetClassFilter("sgdb_active");
-
-	ISQuery qSelect(QueryModel.GetQueryText());
-	bool Result = qSelect.ExecuteFirst();
-	if (Result)
-	{
-		QSqlRecord SqlRecord = qSelect.GetRecord();
-		for (int i = 0, c = SqlRecord.count(); i < c; ++i)
-		{
-			Settings[SqlRecord.field(i).name()] = SqlRecord.field(i).value();
-		}
-	}
-	else
-	{
-		ErrorString = qSelect.GetErrorString();
-	}
-	return Result;
 }
 //-----------------------------------------------------------------------------
 QVariant ISSettingsDatabase::GetValue(const QString &SettingName)

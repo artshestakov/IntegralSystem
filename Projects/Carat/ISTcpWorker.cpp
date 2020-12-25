@@ -1051,7 +1051,7 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 		{
 			SettingsDBMap["UserAccessDatabase"] = qSelectSettingsDB.ReadColumn("sgdb_useraccessdatabase");
 			SettingsDBMap["NumberSymbolsAfterComma"] = qSelectSettingsDB.ReadColumn("sgdb_numbersimbolsaftercomma");
-			SettingsDBMap["StirageFileMaxSize"] = qSelectSettingsDB.ReadColumn("sgdb_storagefilemaxsize");
+			SettingsDBMap["StorageFileMaxSize"] = qSelectSettingsDB.ReadColumn("sgdb_storagefilemaxsize");
 		}
 		else
 		{
@@ -2258,7 +2258,7 @@ bool ISTcpWorker::FileStorageAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
 	QByteArray ByteArray = QByteArray::fromBase64(Data.toByteArray());
 
 	//Проверяем размер
-	int Size = ByteArray.size(), MaxSizeMB = 10; //??? Нужно использовать настройку из БД
+	int Size = ByteArray.size(), MaxSizeMB = GetSettingDB(CONST_UID_DATABASE_SETTING_OTHER_STORAGEFILEMAXSIZE).toInt();
 	if (Size > (((1000 * 1024) * MaxSizeMB)))
 	{
 		ErrorString = LANG("Carat.Error.Query.FileStorageAdd.Size").arg(Name).arg(MaxSizeMB);

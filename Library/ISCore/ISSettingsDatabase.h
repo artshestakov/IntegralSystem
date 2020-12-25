@@ -8,9 +8,7 @@ class ISCORE_EXPORT ISSettingsDatabase
 public:
 	static ISSettingsDatabase& Instance();
 
-	QString GetErrorString() const;
 	void Initialize(const QVariantMap &VariantMap);
-	bool Initialize(); //Инициализация настроек базы данных
 	QVariant GetValue(const QString &SettingName); //Получить значение настройки
 	void SetValue(const QString &SettingName, const QVariant &Value); //Изменить значение настройки
 
@@ -21,7 +19,6 @@ private:
 	ISSettingsDatabase& operator=(ISSettingsDatabase const&) { return *this; };
 
 private:
-	QString ErrorString;
 	ISStringToVariantMap Settings;
 	ISCriticalSection CriticalSection;
 };
