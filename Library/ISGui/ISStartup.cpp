@@ -46,6 +46,7 @@ void ISStartup::Shutdown(ISSplashScreen *SplashScreen)
 bool ISStartup::StartupOld(ISSplashScreen *SplashScreen)
 {
 	//Инициализация объекта конфигурации
+	//??? Что с этим делать
 	ISVersionInfo::Instance().SelectConfiguration("OilSphere");
 	ISObjects::Instance().Initialize(ISVersionInfo::Instance().ConfigurationInfo.Name);
 
