@@ -35,12 +35,12 @@ static QString QS_SETTINGS_DATABASE = PREPARE_QUERY("SELECT sgdb_useraccessdatab
 static QString QS_GROUP_ACCESS_TABLE = PREPARE_QUERY("SELECT gatb_table, gatt_uid "
 													 "FROM _groupaccesstable "
 													 "LEFT JOIN _groupaccesstabletype ON gatt_id = gatb_AccessType "
-													 "WHERE gatb_group = :GroupID");
+													 "WHERE gatb_group = (SELECT usrs_group FROM _users WHERE usrs_id = :UserID)");
 //-----------------------------------------------------------------------------
 static QString QS_GROUP_ACCESS_SPECIAL = PREPARE_QUERY("SELECT gast_uid "
 													   "FROM _groupaccessspecial "
 													   "LEFT JOIN _groupaccessspecialtype ON gast_id = gasp_specialaccess "
-													   "WHERE gasp_group = :GroupID");
+													   "WHERE gasp_group = (SELECT usrs_group FROM _users WHERE usrs_id = :UserID)");
 //-----------------------------------------------------------------------------
 static QString QS_SYSTEM = PREPARE_QUERY("SELECT stms_issystem, stms_uid, stms_localname, stms_icon, stms_hint "
 										 "FROM _systems "
@@ -958,7 +958,6 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	//Устанавливаем флаги сокету
 	TcpMessage->TcpSocket->SetAuthorized(true);
 	TcpMessage->TcpSocket->SetUserID(UserID);
-	TcpMessage->TcpSocket->SetUserGroupID(GroupID);
 	TcpMessage->TcpSocket->SetUserIsSystem(IsSystem);
 
 	//Проверяем версию клиента
@@ -1068,7 +1067,7 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	//Получаем права на таблицы
 	QVariantMap AccessTablesMap;
 	ISQuery qSelectAccessTables(ISDatabase::Instance().GetDB(DBConnectionName), QS_GROUP_ACCESS_TABLE);
-	qSelectAccessTables.BindValue(":GroupID", TcpMessage->TcpSocket->GetUserGroupID());
+	qSelectAccessTables.BindValue(":UserID", TcpMessage->TcpSocket->GetUserID());
 	if (qSelectAccessTables.Execute())
 	{
 		while (qSelectAccessTables.Next())
@@ -1096,12 +1095,12 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	//Получаем специальные права
 	QVariantList AccessSpecialList;
 	ISQuery qSelectAccessSpecial(ISDatabase::Instance().GetDB(DBConnectionName), QS_GROUP_ACCESS_SPECIAL);
-	qSelectAccessSpecial.BindValue(":GroupID", TcpMessage->TcpSocket->GetUserGroupID());
+	qSelectAccessSpecial.BindValue(":UserID", TcpMessage->TcpSocket->GetUserID());
 	if (qSelectAccessSpecial.Execute())
 	{
 		while (qSelectAccessSpecial.Next())
 		{
-			AccessSpecialList.append(qSelectAccessSpecial.ReadColumn("gast_uid"));
+			AccessSpecialList.append(ISUuid(qSelectAccessSpecial.ReadColumn("gast_uid")));
 		}
 	}
 	else
@@ -1128,7 +1127,7 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 				{
 					SubSystemsList.append(QVariantMap
 					{
-						{ "UID", qSelectSubSystem.ReadColumn("sbsm_uid") },
+						{ "UID", ISUuid(qSelectSubSystem.ReadColumn("sbsm_uid")) },
 						{ "Local", qSelectSubSystem.ReadColumn("sbsm_localname") },
 						{ "Icon", qSelectSubSystem.ReadColumn("sbsm_icon") },
 						{ "Class", qSelectSubSystem.ReadColumn("sbsm_classname") },
@@ -1148,7 +1147,7 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 			{
 				SystemSubSystemList.append(QVariantMap
 				{
-					{ "UID", qSelectSystem.ReadColumn("stms_uid") },
+					{ "UID", ISUuid(qSelectSystem.ReadColumn("stms_uid")) },
 					{ "IsSystem", qSelectSystem.ReadColumn("stms_issystem") },
 					{ "Local", qSelectSystem.ReadColumn("stms_localname") },
 					{ "Icon", qSelectSystem.ReadColumn("stms_icon") },
@@ -1322,7 +1321,7 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 		{
 			ParagraphList.append(QVariantMap
 			{
-				{ "UID", qSelectParagraph.ReadColumn("prhs_uid") },
+				{ "UID", ISUuid(qSelectParagraph.ReadColumn("prhs_uid")) },
 				{ "Name", qSelectParagraph.ReadColumn("prhs_name") },
 				{ "Local", qSelectParagraph.ReadColumn("prhs_localname") },
 				{ "ToolTip", qSelectParagraph.ReadColumn("prhs_tooltip") },

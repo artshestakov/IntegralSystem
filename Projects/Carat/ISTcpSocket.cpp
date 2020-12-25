@@ -15,7 +15,6 @@ ISTcpSocket::ISTcpSocket(qintptr socket_descriptor, QObject *parent)
 	ChunkCount(0),
 	IsAuthorized(false),
 	UserID(0),
-	UserGroupID(0),
 	UserIsSystem(false)
 {
 	setSocketDescriptor(SocketDescriptor);
@@ -67,16 +66,6 @@ void ISTcpSocket::SetUserID(unsigned int user_id)
 unsigned int ISTcpSocket::GetUserID() const
 {
 	return UserID;
-}
-//-----------------------------------------------------------------------------
-void ISTcpSocket::SetUserGroupID(int user_group_id)
-{
-	UserGroupID = user_group_id;
-}
-//-----------------------------------------------------------------------------
-int ISTcpSocket::GetUserGroupID() const
-{
-	return UserGroupID;
 }
 //-----------------------------------------------------------------------------
 void ISTcpSocket::SetUserIsSystem(bool user_is_system)

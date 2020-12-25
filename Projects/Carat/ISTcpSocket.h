@@ -21,9 +21,6 @@ public:
 	void SetUserID(unsigned int user_id);
 	unsigned int GetUserID() const;
 
-	void SetUserGroupID(int user_group_id);
-	int GetUserGroupID() const;
-
 	void SetUserIsSystem(bool user_is_system);
 	bool GetUserIsSystem() const;
 
@@ -43,7 +40,6 @@ private:
 
 	bool IsAuthorized; //Флаг авторизации клиента
 	unsigned int UserID; //Идентификатор пользователя
-	int UserGroupID; //Идентификатор группы пользователя
 	bool UserIsSystem; //Флаг системного пользователя
 };
 //-----------------------------------------------------------------------------
