@@ -5,6 +5,19 @@
   <Local Name="Carat.Today" Russian="Сегодня"/>
   <Local Name="Carat.Tomorrow" Russian="Завтра"/>
   <Local Name="Carat.In" Russian="в"/>
+
+  <Local Name="Carat.Month.January" Russian="Январь"/>
+  <Local Name="Carat.Month.February" Russian="Февраль"/>
+  <Local Name="Carat.Month.March" Russian="Март"/>
+  <Local Name="Carat.Month.April" Russian="Апрель"/>
+  <Local Name="Carat.Month.May" Russian="Май"/>
+  <Local Name="Carat.Month.June" Russian="Июнь"/>
+  <Local Name="Carat.Month.July" Russian="Июль"/>
+  <Local Name="Carat.Month.August" Russian="Август"/>
+  <Local Name="Carat.Month.September" Russian="Сентябрь"/>
+  <Local Name="Carat.Month.October" Russian="Октябрь"/>
+  <Local Name="Carat.Month.November" Russian="Ноябрь"/>
+  <Local Name="Carat.Month.December" Russian="Декабрь"/>
   
   <!--Общие ошибки-->
   <Local Name="Carat.Error.ParseMessage" Russian="Ошибка парсинга сообщения: %1"/>

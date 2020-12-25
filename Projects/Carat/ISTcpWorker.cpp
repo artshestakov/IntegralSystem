@@ -633,14 +633,14 @@ bool ISTcpWorker::UserIsSystem(const QVariant &UserID, bool &IsSystem)
 	return true;
 }
 //-----------------------------------------------------------------------------
-QString ISTcpWorker::ConvertDateTimeToString(const QDateTime &DateTime, const QString &DateFormat, const QString &TimeFormat)
+QString ISTcpWorker::ConvertDateTimeToString(const QDateTime &DateTime, const QString &TimeFormat)
 {
-	return DateTime.isValid() ?
-		ConvertDateToString(DateTime.date(), DateFormat) + SYMBOL_SPACE + LANG("Carat.In") + SYMBOL_SPACE + DateTime.time().toString(TimeFormat) :
+	return DateTime.isValid() ? ConvertDateToString(DateTime.date()) + SYMBOL_SPACE +
+		LANG("Carat.In") + SYMBOL_SPACE + DateTime.time().toString(TimeFormat) :
 		QString();
 }
 //-----------------------------------------------------------------------------
-QString ISTcpWorker::ConvertDateToString(const QDate &Date, const QString &DateFormat)
+QString ISTcpWorker::ConvertDateToString(const QDate &Date)
 {
 	QString Result;
 	if (Date == QDate::currentDate().addDays(-1)) //Вчера
@@ -657,7 +657,26 @@ QString ISTcpWorker::ConvertDateToString(const QDate &Date, const QString &DateF
 	}
 	else
 	{
-		Result = Date.toString(DateFormat);
+		switch (Date.month())
+		{
+		case 1: Result = LANG("Carat.Month.January"); break;
+		case 2: Result = LANG("Carat.Month.February"); break;
+		case 3: Result = LANG("Carat.Month.March"); break;
+		case 4: Result = LANG("Carat.Month.April"); break;
+		case 5: Result = LANG("Carat.Month.May"); break;
+		case 6: Result = LANG("Carat.Month.June"); break;
+		case 7: Result = LANG("Carat.Month.July"); break;
+		case 8: Result = LANG("Carat.Month.August"); break;
+		case 9: Result = LANG("Carat.Month.September"); break;
+		case 10: Result = LANG("Carat.Month.October"); break;
+		case 11: Result = LANG("Carat.Month.November"); break;
+		case 12: Result = LANG("Carat.Month.December"); break;
+		default:
+			break;
+		}
+		Result = QString::number(Date.day()) + SYMBOL_SPACE +
+			Result + SYMBOL_SPACE +
+			QString::number(Date.year());
 	}
 	return Result;
 }
@@ -2047,11 +2066,7 @@ bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 				//Значение не содержит NULL - анализируем
 				if (Type == ISNamespace::FT_Date)
 				{
-					Value = ConvertDateToString(Value.toDate(), FORMAT_DATE_V1);
-				}
-				else if (Type == ISNamespace::FT_Birthday)
-				{
-					Value = Value.toDate().toString(FORMAT_DATE_V1);
+					Value = ConvertDateToString(Value.toDate());
 				}
 				else if (Type == ISNamespace::FT_Time)
 				{
@@ -2059,7 +2074,11 @@ bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 				}
 				else if (Type == ISNamespace::FT_DateTime)
 				{
-					Value = ConvertDateTimeToString(Value.toDateTime(), FORMAT_DATE_V1, FORMAT_TIME_V1);
+					Value = ConvertDateTimeToString(Value.toDateTime(), FORMAT_TIME_V1);
+				}
+				else if (Type == ISNamespace::FT_Birthday)
+				{
+					Value = Value.toDate().toString(FORMAT_DATE_V1);
 				}
 				else if (Type == ISNamespace::FT_Phone)
 				{
