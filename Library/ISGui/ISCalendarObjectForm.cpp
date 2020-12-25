@@ -9,6 +9,7 @@ ISCalendarObjectForm::ISCalendarObjectForm(ISNamespace::ObjectFormType form_type
 	SetVisibleNavigationBar(false);
 	SetVisibleFavorites(false);
 	SetVisibleDelete(false);
+	SetVisibleNote(false);
 }
 //-----------------------------------------------------------------------------
 ISCalendarObjectForm::~ISCalendarObjectForm()
