@@ -76,6 +76,12 @@ int main(int argc, char **argv)
 		ISDEBUG_W("Not load translator: " + ISLocalization::Instance().GetErrorString());
 	}
 
+	//Загрузка локализации
+	if (!ISLocalization::Instance().LoadResourceFile(LOCALIZATION_FILE_CONFIGURATOR))
+	{
+		ISDEBUG_E("Not load localization: " + ISLocalization::Instance().GetErrorString());
+	}
+
 	QString ErrorString;
 	if (!InitConfiguratorScheme(ErrorString))
 	{

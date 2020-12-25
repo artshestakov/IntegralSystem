@@ -7,6 +7,7 @@
 #include "ISConsole.h"
 #include "ISSystem.h"
 #include "CGDatabase.h"
+#include "ISLocalization.h"
 //-----------------------------------------------------------------------------
 static QString QI_SYSTEM_USER = PREPARE_QUERY("INSERT INTO _users(usrs_uid, usrs_issystem, usrs_fio, usrs_login, usrs_accessallowed, usrs_photo) "
 											  "VALUES(:UID, true, :FIO, :Login, true, :Photo)");
@@ -43,7 +44,7 @@ bool CGConfiguratorCreate::adminaccount()
 
 	ISQuery qInsertAccount(QI_SYSTEM_USER);
 	qInsertAccount.BindValue(":UID", SYSTEM_USER_UID);
-	qInsertAccount.BindValue(":FIO", QString::fromLocal8Bit("Главный администратор системы"));
+	qInsertAccount.BindValue(":FIO", LANG("Configurator.AdminAccountFIO"));
 	qInsertAccount.BindValue(":Login", SYSTEM_USER_LOGIN);
 	qInsertAccount.BindValue(":Photo", ByteArray);
 	qInsertAccount.SetShowLongQuery(false);
@@ -74,6 +75,12 @@ bool CGConfiguratorCreate::adminpassword()
 	while (true)
 	{
 		Password = ISConsole::GetString("Create password for system administrator: ");
+		if (Password.isEmpty()) //Если пароль не был введён - выходим с ошибкой
+		{
+			ISDEBUG_L("Password was not entered!");
+			return false;
+		}
+
 		if (ISAlgorithm::PasswordVerification(Password))
 		{
 			ISDEBUG_L("WARNING! Keep password in a safe place.");

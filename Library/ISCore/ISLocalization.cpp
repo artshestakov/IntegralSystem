@@ -33,7 +33,6 @@ QString ISLocalization::GetString(const QString &ParameterName)
 	CRITICAL_SECTION_LOCK(&CriticalSection);
 	ISStringMap::const_iterator It = Dictionary.find(ParameterName);
 	CRITICAL_SECTION_UNLOCK(&CriticalSection);
-
 	if (It == Dictionary.end())
 	{
 		ISLOGGER_W(__CLASS__, "Not found key \"" + ParameterName + "\" in localization");
