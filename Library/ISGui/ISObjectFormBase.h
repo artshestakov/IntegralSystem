@@ -42,6 +42,7 @@ public:
 	void SetVisibleField(const QString &FieldName, bool Visible); //Изменить видимость у поля
 	void SetVisibleFavorites(bool Visible); //Изменить видимость кнопки "Избранное"
 	void SetVisibleDelete(bool Visible); //Изменить видимость кнопки "Удалить каскадом"
+	void SetVisibleNote(bool Visible); //Изменить видимость кнопки "Примечание"
 
 protected:
 	virtual void closeEvent(QCloseEvent *e);
@@ -106,6 +107,7 @@ private:
 	QAction *ActionFavorites;
 	QAction *ActionDelete;
 	QAction *ActionCancelChange;
+	QAction *ActionNoteObject;
 
 	ISLineEdit *EditObjectID; //Виджет отображения идентификатора объекта
 	ISFieldEditBase *BeginFieldEdit; //Указатель на первое поле редактирования информации

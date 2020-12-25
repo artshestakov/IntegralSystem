@@ -119,6 +119,14 @@ void ISObjectFormBase::SetVisibleDelete(bool Visible)
 	}
 }
 //-----------------------------------------------------------------------------
+void ISObjectFormBase::SetVisibleNote(bool Visible)
+{
+	if (ActionNoteObject)
+	{
+		ActionNoteObject->setVisible(Visible);
+	}
+}
+//-----------------------------------------------------------------------------
 void ISObjectFormBase::closeEvent(QCloseEvent *e)
 {
 	if (ModificationFlag)
@@ -296,7 +304,7 @@ void ISObjectFormBase::CreateToolBar()
 	AddActionMenu(ActionCancelChange);
 
 	//Примечание записи
-	QAction *ActionNoteObject = ISControls::CreateActionNoteObject(ToolBar);
+	ActionNoteObject = ISControls::CreateActionNoteObject(ToolBar);
 	ActionNoteObject->setPriority(QAction::LowPriority);
 	connect(ActionNoteObject, &QAction::triggered, this, &ISObjectFormBase::NoteObject);
 	AddActionMenu(ActionNoteObject);
