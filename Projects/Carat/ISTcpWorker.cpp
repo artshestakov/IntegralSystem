@@ -645,17 +645,26 @@ QString ISTcpWorker::ConvertDateTimeToString(const QDateTime &DateTime, const QS
 QString ISTcpWorker::ConvertDateToString(const QDate &Date)
 {
 	QString Result;
-	if (Date == QDate::currentDate().addDays(-1)) //Вчера
+	QDate CurrentDate = QDate::currentDate();
+	if (Date == CurrentDate.addDays(-2)) //Позавчера
+	{
+		Result = LANG("Carat.BeforeYesterday");
+	}
+	else if (Date == CurrentDate.addDays(-1)) //Вчера
 	{
 		Result = LANG("Carat.Yesterday");
 	}
-	else if (Date == QDate::currentDate()) //Сегодня
+	else if (Date == CurrentDate) //Сегодня
 	{
 		Result = LANG("Carat.Today");
 	}
-	else if (Date == QDate::currentDate().addDays(1)) //Завтра
+	else if (Date == CurrentDate.addDays(1)) //Завтра
 	{
 		Result = LANG("Carat.Tomorrow");
+	}
+	else if (Date == CurrentDate.addDays(2)) //Послезавтра
+	{
+		Result = LANG("Carat.AfterTomorrow");
 	}
 	else
 	{

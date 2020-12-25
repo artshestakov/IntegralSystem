@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LANG Name="Carat">
 
+  <Local Name="Carat.BeforeYesterday" Russian="Позавчера"/>
   <Local Name="Carat.Yesterday" Russian="Вчера"/>
   <Local Name="Carat.Today" Russian="Сегодня"/>
   <Local Name="Carat.Tomorrow" Russian="Завтра"/>
+  <Local Name="Carat.AfterTomorrow" Russian="Послезавтра"/>
   <Local Name="Carat.In" Russian="в"/>
 
   <Local Name="Carat.Month.January" Russian="Январь"/>
