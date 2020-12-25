@@ -359,7 +359,6 @@
   <Local Name="ClickFromSelectFile" Russian="Нажмите, чтобы выбрать файл"/>
   <Local Name="EnterFileName" Russian="Введите имя файла"/>
   <Local Name="EnterImageName" Russian="Введите имя изображения"/>
-  <Local Name="EnableHistoryTracking" Russian="Включить ведение истории"/>
   <Local Name="PasswordResetDone" Russian="Пароль был успешно сброшен"/>
   <Local Name="ThisActionIsNotReversible" Russian="Это действие не обратимо."/>
   <Local Name="ReconnectingDone" Russian="Связь с сервером восстановлена!"/>
