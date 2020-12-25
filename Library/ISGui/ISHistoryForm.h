@@ -13,6 +13,7 @@ public:
 	virtual ~ISHistoryForm();
 
 protected:
+	void AfterShowEvent() override;
 	void EscapeClicked();
 
 private:

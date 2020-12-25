@@ -8,6 +8,7 @@
 #include "ISMetaData.h"
 #include "ISCore.h"
 #include "ISMessageBox.h"
+#include "ISTcpQuery.h"
 //-----------------------------------------------------------------------------
 ISHistoryForm::ISHistoryForm(QWidget *parent) : ISInterfaceForm(parent)
 {
@@ -25,19 +26,6 @@ ISHistoryForm::ISHistoryForm(QWidget *parent) : ISInterfaceForm(parent)
 	ListWidget->setAlternatingRowColors(true);
 	connect(ListWidget, &QListWidget::itemDoubleClicked, this, &ISHistoryForm::Open);
 	GetMainLayout()->addWidget(ListWidget);
-
-	/*std::vector<ISHistoryObject> Stories = ISHistory::Instance().GetHistory();
-	for (const ISHistoryObject &HistoryObject : Stories)
-	{
-		QListWidgetItem *ListWidgetItem = new QListWidgetItem(ListWidget);
-		ListWidgetItem->setText(
-			ISMetaData::Instance().GetMetaTable(HistoryObject.TableName)->LocalListName + ": " +
-			ISCore::GetObjectName(HistoryObject.TableName, HistoryObject.ObjectID) +
-			" (" + HistoryObject.DateTime.toString(FORMAT_DATE_TIME_V10) + ')');
-		ListWidgetItem->setData(Qt::UserRole, HistoryObject.TableName);
-		ListWidgetItem->setData(Qt::UserRole * 2, HistoryObject.ObjectID);
-		ListWidgetItem->setSizeHint(QSize(ListWidgetItem->sizeHint().width(), 25));
-	}*/
 
 	ISCheckEdit *CheckEdit = new ISCheckEdit(this);
 	CheckEdit->SetText(LANG("EnableHistoryTracking"));
@@ -57,6 +45,32 @@ ISHistoryForm::ISHistoryForm(QWidget *parent) : ISInterfaceForm(parent)
 ISHistoryForm::~ISHistoryForm()
 {
 
+}
+//-----------------------------------------------------------------------------
+void ISHistoryForm::AfterShowEvent()
+{
+	ISInterfaceForm::AfterShowEvent();
+
+	ISTcpQuery qGetHistoryList(API_GET_HISTORY_LIST);
+	if (qGetHistoryList.Execute())
+	{
+		QVariantList VariantList = qGetHistoryList.TakeAnswer()["History"].toList();
+		for (const QVariant &Variant : VariantList)
+		{
+			QVariantMap HistoryMap = Variant.toMap();
+
+			QListWidgetItem *ListWidgetItem = new QListWidgetItem(ListWidget);
+			ListWidgetItem->setText(HistoryMap["TableLocalName"].toString() + ": " +
+				HistoryMap["ObjectName"].toString() + " (" + HistoryMap["DateTime"].toString() + ')');
+			ListWidgetItem->setData(Qt::UserRole, HistoryMap["TableName"]);
+			ListWidgetItem->setData(Qt::UserRole * 2, HistoryMap["ObjectID"]);
+			ListWidgetItem->setSizeHint(QSize(ListWidgetItem->sizeHint().width(), 25));
+		}
+	}
+	else
+	{
+		ISMessageBox::ShowCritical(this, qGetHistoryList.GetErrorString());
+	}
 }
 //-----------------------------------------------------------------------------
 void ISHistoryForm::EscapeClicked()
