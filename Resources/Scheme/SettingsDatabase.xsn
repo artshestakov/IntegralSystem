@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <XSN Name="SettingsDatabase.xsn">
 
-  <Table Name="_SettingsDatabase" UID="{55F13612-074A-493B-B948-50A23EAE9945}" Alias="sgdb" LocalName="Настройка базы данных" LocalListName="Настройки базы данных" TitleName="ID" IsSystem="true" ObjectForm="ISSettingsDatabaseObjectForm">
+  <Table Name="_SettingsDatabase" UID="{55F13612-074A-493B-B948-50A23EAE9945}" Alias="sgdb" LocalName="Настройка базы данных" LocalListName="Настройки базы данных" TitleName="ID" ObjectForm="ISSettingsDatabaseObjectForm" IsSystem="true">
     <Fields>
       <Field UID="{43D4DC65-3706-4D7E-86AA-31A952DF3FD0}" Name="UserAccessDatabase" Type="Bool" DefaultValue="true" LabelName="Доступ к базе данных" LocalListName="Доступ к базе данных" HideFromList="true" Hint="Закрывает доступ к подключению для всех пользователей кроме системного."/>
       <Field UID="{2878FEEB-F439-422C-A7B8-DA4684A6460F}" Name="NumberSimbolsAfterComma" Type="Int" DefaultValue="3" LabelName="Размер дробной части в дробных числах" LocalListName="Размер дробной части в дробных числах" HideFromList="true"/>

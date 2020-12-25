@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <XSN Name="Task.xsn">
 
-  <Table Name="_Task" UID="{0C4396AF-BD65-482C-BFE0-D46C072341AC}" Alias="task" LocalName="Задача" LocalListName="Задачи" TitleName="Name" ObjectForm="ISTaskObjectForm">
+  <Table Name="_Task" UID="{0C4396AF-BD65-482C-BFE0-D46C072341AC}" Alias="task" LocalName="Задача" LocalListName="Задачи" TitleName="Name" ObjectForm="ISTaskObjectForm" IsSystem="true">
     <Fields>
       <Field UID="{9142958F-8B24-479A-BD96-345E24B5B6DB}" Name="Parent" Type="Int" LabelName="Родительская задача" LocalListName="Родительская задача" HideFromList="true" HideFromObject="true" NotSearch="true"/>
       <Field UID="{9A1F7E8D-004D-4E4B-955C-5FCAFEDE2F32}" Name="Name" Type="String" LabelName="Заголовок" LocalListName="Заголовок" PlaceholderText="Что необходимо сделать?" NotNull="true" HideFromList="true"/>
@@ -36,7 +36,7 @@
     </Foreigns>
   </Table>
 
-  <Table Name="_TaskSpace" UID="{CDD1C478-A8EC-41EA-8E93-D19E87B7A740}" Alias="tspa" LocalName="Пространство задач" LocalListName="Пространства задач" TitleName="Name">
+  <Table Name="_TaskSpace" UID="{CDD1C478-A8EC-41EA-8E93-D19E87B7A740}" Alias="tspa" LocalName="Пространство задач" LocalListName="Пространства задач" TitleName="Name" IsSystem="true">
     <Fields>
       <Field UID="{25A0EE33-4571-41EF-8D2B-15B71BB99A25}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
     </Fields>
@@ -45,7 +45,7 @@
     </Indexes>
   </Table>
   
-  <Table Name="_TaskType" UID="{F108B63C-E175-44E7-A67E-C896BE348266}" Alias="tstp" LocalName="Тип задачи" LocalListName="Типы задач" TitleName="Name">
+  <Table Name="_TaskType" UID="{F108B63C-E175-44E7-A67E-C896BE348266}" Alias="tstp" LocalName="Тип задачи" LocalListName="Типы задач" TitleName="Name" IsSystem="true">
     <Fields>
       <Field UID="{04B778F8-8045-46EE-B387-71DDD1DB335C}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
     </Fields>

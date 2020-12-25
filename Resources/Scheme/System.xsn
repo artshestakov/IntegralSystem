@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <XSN Name="System.xsn">
 
-  <Table Name="_Test" UID="{F67231DA-9DFD-45FB-98D2-B2DA5DC8B804}" Alias="test" LocalName="Тест" LocalListName="Тесты" TitleName="String">
+  <Table Name="_Test" UID="{F67231DA-9DFD-45FB-98D2-B2DA5DC8B804}" Alias="test" LocalName="Тест" LocalListName="Тесты" TitleName="String" IsSystem="true">
     <Fields>
       <Field UID="{8C0C9204-DA75-46A2-AF76-6FCE6C59CD98}" Name="Int" Type="Int" LayoutName="Int"/>
       <Field UID="{88F9C933-01D0-4A91-A124-CABDA2339D47}" Name="BigInt" Type="BigInt" LayoutName="Int"/>
@@ -168,7 +168,7 @@
     </Foreigns>
   </Table>
 
-  <Table Name="_StorageFiles" UID="{48151E73-0ABB-4B50-9C6B-42B838F644B0}" Alias="sgfs" LocalName="Файл" LocalListName="Файлы" TitleName="Name">
+  <Table Name="_StorageFiles" UID="{48151E73-0ABB-4B50-9C6B-42B838F644B0}" Alias="sgfs" LocalName="Файл" LocalListName="Файлы" TitleName="Name" IsSystem="true">
     <Fields>
       <Field UID="{E8CBCF9A-D4AE-49E9-9D98-0CB5E9DD84D8}" Name="Owner" Type="BigInt" ReadOnly="true" LabelName="Добавил" LocalListName="Добавил" NotNull="true"/>
       <Field UID="{DF4FBDE0-3434-4DBC-8E1B-946E51002964}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
