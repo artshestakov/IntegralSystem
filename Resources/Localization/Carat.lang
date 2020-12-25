@@ -29,10 +29,10 @@
   <Local Name="Carat.Error.NotExistFunction" Russian="Функция-обработчик для сообщения &quot;%1&quot; не найдена."/>
   <Local Name="Carat.Error.FieldNotExist" Russian="Поле &quot;%1&quot; не указано."/>
   <Local Name="Carat.Error.FieldIsEmpty" Russian="Поле &quot;%1&quot; не заполнено."/>
-  <Local Name="Carat.Error.CheckExistUserPassword" Russian="Не удалось проверить наличие пароля у пользователя: %1"/>
+  <Local Name="Carat.Error.CheckExistUserPassword" Russian="Не удалось проверить наличие пароля у пользователя."/>
   <Local Name="Carat.Error.UserNotExist" Russian="Пользователь с идентификатором %1 не существует."/>
-  <Local Name="Carat.Error.CheckUserIsSystem" Russian="Не удалось проверить пользователя на системность: %1"/>
-  <Local Name="Carat.Error.GetObjectName" Russian="Не удалось получить имя объекта: %1"/>
+  <Local Name="Carat.Error.CheckUserIsSystem" Russian="Не удалось проверить пользователя на системность."/>
+  <Local Name="Carat.Error.GetObjectName" Russian="Не удалось получить имя объекта."/>
   <Local Name="Carat.Error.GetMetaTable" Russian="Таблица %1 не существует."/>
   
   <!--Ошибки протокола-->
@@ -40,11 +40,11 @@
   <Local Name="Carat.Error.Query.Auth.AuthDenied" Russian="Авторизация запрещена."/>
   <Local Name="Carat.Error.Query.Auth.InvalidHashSize" Russian="Неверный размер авторизационных данных!"/>
   <Local Name="Carat.Error.Query.Auth.InvalidHash" Russian="Невалидные авторизационные данные!"/>
-  <Local Name="Carat.Error.Query.Auth.SelectHash" Russian="Не удалось получить информацию о пользователе: %1"/>
+  <Local Name="Carat.Error.Query.Auth.SelectHash" Russian="Не удалось получить информацию о пользователе."/>
   <Local Name="Carat.Error.Query.Auth.NoUsers" Russian="Нет зарегистрированных пользователей."/>
   <Local Name="Carat.Error.Query.Auth.Fail2Ban" Russian="ВНИМАНИЕ! Ваш IP-адрес заблокирован до %1, для разблокировки обратитесь к системному администратору."/>
   <Local Name="Carat.Error.Query.Auth.InvalidLoginOrPassword" Russian="Неверный логин или пароль."/>
-  <Local Name="Carat.Error.Query.Auth.SelectLogin" Russian="Не удалось получить информацию о пользователе: %1"/>
+  <Local Name="Carat.Error.Query.Auth.SelectLogin" Russian="Не удалось получить информацию о пользователе."/>
   <Local Name="Carat.Error.Query.Auth.ConnectionBan" Russian="На подключение пользователей к базе данных наложен запрет."/>
   <Local Name="Carat.Error.Query.Auth.LoginNoAccess" Russian="У Вас нет доступа к базе данных."/>
   <Local Name="Carat.Error.Query.Auth.LoginLinkGroup" Russian="Ваша учётная запись не привязанна к группе."/>
@@ -55,20 +55,20 @@
   <Local Name="Carat.Error.Query.Sleep.TimeoutValueIsNull" Russian="Значение не должно быть нулевым"/>
   <Local Name="Carat.Error.Query.Sleep.TimeoutValueIsNegative" Russian="Значение не должно быть отрицательным"/>
 
-  <Local Name="Carat.Error.Query.GetMetaData.SettingsDB" Russian="Не удалось получить настройки базы данных: %1"/>
-  <Local Name="Carat.Error.Query.GetMetaData.UserGroupAccessTable" Russian="Не удалось получить права доступа на таблицы: %1"/>
-  <Local Name="Carat.Error.Query.GetMetaData.UserGroupAccessSpecial" Russian="Не удалось получить специальные права доступа: %1"/>
+  <Local Name="Carat.Error.Query.GetMetaData.SettingsDB" Russian="Не удалось получить настройки базы данных."/>
+  <Local Name="Carat.Error.Query.GetMetaData.UserGroupAccessTable" Russian="Не удалось получить права доступа на таблицы."/>
+  <Local Name="Carat.Error.Query.GetMetaData.UserGroupAccessSpecial" Russian="Не удалось получить специальные права доступа."/>
   <Local Name="Carat.Error.Query.GetMetaData.SettingsDBNotActive" Russian="Нет автивного профиля настроек базы данных."/>
-  <Local Name="Carat.Error.Query.GetMetaData.Systems" Russian="Не удалось получить информацию о системах: %1"/>
-  <Local Name="Carat.Error.Query.GetMetaData.SubSystems" Russian="Не удалось получить информацию о подсистемах: %1"/>
-  <Local Name="Carat.Error.Query.GetMetaData.Report" Russian="Не удалось получить данные по отчётам: %1"/>
-  <Local Name="Carat.Error.Query.GetMetaData.ReportField" Russian="Не удалось получить данные по отчётам: %1"/>
-  <Local Name="Carat.Error.Query.GetMetaData.Favorite" Russian="Не удалось получить избранные записи: %1"/>
-  <Local Name="Carat.Error.Query.GetMetaData.ColumnSize" Russian="Не удалось получить размеры полей: %1"/>
-  <Local Name="Carat.Error.Query.GetMetaData.SettingsGroup" Russian="Не удалось получить группы настроек: %1"/>
-  <Local Name="Carat.Error.Query.GetMetaData.SettingsUser" Russian="Не удалось получить настроки пользователя: %1"/>
-  <Local Name="Carat.Error.Query.GetMetaData.Paragraph" Russian="Не удалось получить параграфы: %1"/>
-  <Local Name="Carat.Error.Query.GetMetaData.TaskPriority" Russian="Не удалось получить приоритеты задач: %1"/>
+  <Local Name="Carat.Error.Query.GetMetaData.Systems" Russian="Не удалось получить информацию о системах."/>
+  <Local Name="Carat.Error.Query.GetMetaData.SubSystems" Russian="Не удалось получить информацию о подсистемах."/>
+  <Local Name="Carat.Error.Query.GetMetaData.Report" Russian="Не удалось получить данные по отчётам."/>
+  <Local Name="Carat.Error.Query.GetMetaData.ReportField" Russian="Не удалось получить данные по отчётам."/>
+  <Local Name="Carat.Error.Query.GetMetaData.Favorite" Russian="Не удалось получить избранные записи."/>
+  <Local Name="Carat.Error.Query.GetMetaData.ColumnSize" Russian="Не удалось получить размеры полей."/>
+  <Local Name="Carat.Error.Query.GetMetaData.SettingsGroup" Russian="Не удалось получить группы настроек."/>
+  <Local Name="Carat.Error.Query.GetMetaData.SettingsUser" Russian="Не удалось получить настроки пользователя."/>
+  <Local Name="Carat.Error.Query.GetMetaData.Paragraph" Russian="Не удалось получить параграфы."/>
+  <Local Name="Carat.Error.Query.GetMetaData.TaskPriority" Russian="Не удалось получить приоритеты задач."/>
   <Local Name="Carat.Error.Query.GetMetaData.FileXSN" Russian="Не удалось открыть файл мета-данных &quot;%1&quot;: %2"/>
 
   <Local Name="Carat.Error.Query.GetLastClient.PathIsEmpty" Russian="На сервере не настроена директория хранения обновлений."/>
@@ -76,21 +76,21 @@
 
   <Local Name="Carat.Error.Query.UserPasswordCreate.UserIsSystem" Russian="Пользователь является системным, создание пароля невозможно."/>
   <Local Name="Carat.Error.Query.UserPasswordCreate.AlreadyExist" Russian="Пароль уже установлен."/>
-  <Local Name="Carat.Error.Query.UserPasswordCreate.UpdateHash" Russian="Не удалось добавить пароль пользователю: %1"/>
+  <Local Name="Carat.Error.Query.UserPasswordCreate.UpdateHash" Russian="Не удалось добавить пароль пользователю."/>
 
-  <Local Name="Carat.Error.Query.UserLoginEdit.SelectHash" Russian="Не удалось получить данные пользователя: %1"/>
+  <Local Name="Carat.Error.Query.UserLoginEdit.SelectHash" Russian="Не удалось получить данные пользователя."/>
   <Local Name="Carat.Error.Query.UserLoginEdit.UserNotExist" Russian="Пользователь с идентификатором %1 не существует."/>
   <Local Name="Carat.Error.Query.UserLoginEdit.InvalidCurrentLoginOrPassword" Russian="Текущие логин или пароль указаны неверно."/>
-  <Local Name="Carat.Error.Query.UserLoginEdit.UpdateHash" Russian="Не удалось обновить пароль: %1"/>
+  <Local Name="Carat.Error.Query.UserLoginEdit.UpdateHash" Russian="Не удалось обновить пароль."/>
 
   <Local Name="Carat.Error.Query.UserLoginReset.UserIsSystem" Russian="Пользователь является системным, сброс пароля невозможен."/>
   <Local Name="Carat.Error.Query.UserLoginReset.PasswordIsNull" Russian="Пароль у пользователя не установлен, сброс пароля невозможен."/>
   <Local Name="Carat.Error.Query.UserLoginReset.Reset" Russian="Не удалось сбросить пароль пользователя."/>
 
-  <Local Name="Carat.Error.Query.UserSettingsReset.Update" Russian="Не удалось сбросить настройки: %1"/>
+  <Local Name="Carat.Error.Query.UserSettingsReset.Update" Russian="Не удалось сбросить настройки."/>
   
   <Local Name="Carat.Error.Query.GetRecordCall.RecordDirIsEmpty" Russian="На сервере не настроена директория хранения записей разговоров."/>
-  <Local Name="Carat.Error.Query.GetRecordCall.SelectUniqueID" Russian="Не удалось получить уникальный идентификатор записи разговора: %1"/>
+  <Local Name="Carat.Error.Query.GetRecordCall.SelectUniqueID" Russian="Не удалось получить уникальный идентификатор записи разговора."/>
   <Local Name="Carat.Error.Query.GetRecordCall.NotFoundUniqueID" Russian="Запись с кодом %1 не найдена."/>
   <Local Name="Carat.Error.Query.GetRecordCall.NotFoundRecordCall" Russian="Запись разговора не найдена на сервере."/>
   <Local Name="Carat.Error.Query.GetRecordCall.OpenRecordCall" Russian="Не удалось прочитать файл с записью разговора: %1"/>
@@ -100,97 +100,97 @@
 
   <Local Name="Carat.Error.Query.RecordDelete.NotSpecifiedID" Russian="Вы не указали список идентификаторов записей."/>
   <Local Name="Carat.Error.Query.RecordDelete.ToInt" Russian="Не удалось привести к целому числу один из идентификаторов."/>
-  <Local Name="Carat.Error.Query.RecordDelete.Select" Russian="Не удалось проверить системные записи: %1"/>
+  <Local Name="Carat.Error.Query.RecordDelete.Select" Russian="Не удалось проверить системные записи."/>
   <Local Name="Carat.Error.Query.RecordDelete.RecordIsSystem" Russian="Запись является системной! Удаление невозможно."/>
   <Local Name="Carat.Error.Query.RecordDelete.RecordsIsSystem" Russian="Одна или более записей являются системными! Удаление невозможно."/>
-  <Local Name="Carat.Error.Query.RecordDelete.Delete" Russian="Не удалось произвести удаление записей: %1"/>
+  <Local Name="Carat.Error.Query.RecordDelete.Delete" Russian="Не удалось произвести удаление записей."/>
 
-  <Local Name="Carat.Error.Query.DiscussionAdd.Insert" Russian="Не удалось добавить обсуждение: %1"/>
+  <Local Name="Carat.Error.Query.DiscussionAdd.Insert" Russian="Не удалось добавить обсуждение."/>
 
-  <Local Name="Carat.Error.Query.DiscussionEdit.Update" Russian="Не удалось изменить сообщение: %1"/>
+  <Local Name="Carat.Error.Query.DiscussionEdit.Update" Russian="Не удалось изменить сообщение."/>
 
-  <Local Name="Carat.Error.Query.DiscussionCopy.Insert" Russian="Не удалось скопировать сообщение: %1"/>
+  <Local Name="Carat.Error.Query.DiscussionCopy.Insert" Russian="Не удалось скопировать сообщение."/>
 
-  <Local Name="Carat.Error.Query.GetTableData.SelectSorting" Russian="Не удалось получить сортировку: %1"/>
-  <Local Name="Carat.Error.Query.GetTableData.UpdateSorting" Russian="Не удалось обновить сортировку: %1"/>
-  <Local Name="Carat.Error.Query.GetTableData.InsertSorting" Russian="Не удалось добавить сортировку: %1"/>
-  <Local Name="Carat.Error.Query.GetTableData.Select" Russian="Не удалось получить данные: %1"/>
+  <Local Name="Carat.Error.Query.GetTableData.SelectSorting" Russian="Не удалось получить сортировку."/>
+  <Local Name="Carat.Error.Query.GetTableData.UpdateSorting" Russian="Не удалось обновить сортировку."/>
+  <Local Name="Carat.Error.Query.GetTableData.InsertSorting" Russian="Не удалось добавить сортировку."/>
+  <Local Name="Carat.Error.Query.GetTableData.Select" Russian="Не удалось получить данные."/>
 
-  <Local Name="Carat.Error.Query.GetNoteRecord.Select" Russian="Не удалось получить примечание: %1"/>
+  <Local Name="Carat.Error.Query.GetNoteRecord.Select" Russian="Не удалось получить примечание."/>
   
-  <Local Name="Carat.Error.Query.SetNoteRecord.Delete" Russian="Не удалось удалить примечание: %1"/>
-  <Local Name="Carat.Error.Query.SetNoteRecord.Update" Russian="Не удалось изменить примечание: %1"/>
-  <Local Name="Carat.Error.Query.SetNoteRecord.Insert" Russian="Не удалось добавить примечание: %1"/>
+  <Local Name="Carat.Error.Query.SetNoteRecord.Delete" Russian="Не удалось удалить примечание."/>
+  <Local Name="Carat.Error.Query.SetNoteRecord.Update" Russian="Не удалось изменить примечание."/>
+  <Local Name="Carat.Error.Query.SetNoteRecord.Insert" Russian="Не удалось добавить примечание."/>
 
   <Local Name="Carat.Error.Query.FileStorageAdd.Size" Russian="Размер файла &quot;%1&quot; превышает ограничение в %2 MB. Файл не будет добавлен."/>
   <Local Name="Carat.Error.Query.FileStorageAdd.Insert" Russian="Не удалось добавить файл &quot;%1&quot; в хранилище: %2"/>
 
-  <Local Name="Carat.Error.Query.FileStorageCopy.Insert" Russian="Не удалось скопировать файл: %1"/>
+  <Local Name="Carat.Error.Query.FileStorageCopy.Insert" Russian="Не удалось скопировать файл."/>
   <Local Name="Carat.Error.Query.FileStorageCopy.NotExist" Russian="Файл с идентификатором %1 не существует."/>
 
-  <Local Name="Carat.Error.Query.FileStorageGet.Select" Russian="Не удалось получить файл: %1"/>
+  <Local Name="Carat.Error.Query.FileStorageGet.Select" Russian="Не удалось получить файл."/>
   <Local Name="Carat.Error.Query.FileStorageGet.NotExist" Russian="Файл с идентификатором %1 не существует."/>
 
-  <Local Name="Carat.Error.Query.SearchTaskText.Select" Russian="Не удалось выполнить поисковый запрос: %1"/>
+  <Local Name="Carat.Error.Query.SearchTaskText.Select" Russian="Не удалось выполнить поисковый запрос."/>
 
-  <Local Name="Carat.Error.Query.SearchTaskID.Select" Russian="Не удалось выполнить поисковый запрос: %1"/>
+  <Local Name="Carat.Error.Query.SearchTaskID.Select" Russian="Не удалось выполнить поисковый запрос."/>
 
-  <Local Name="Carat.Error.Query.SearchFullText.Select" Russian="Не удалось выполнить поисковый запрос: %1"/>
+  <Local Name="Carat.Error.Query.SearchFullText.Select" Russian="Не удалось выполнить поисковый запрос."/>
 
-  <Local Name="Carat.Error.Query.GetCalendarEvents.Select" Russian="Не удалось получить события календаря: %1"/>
+  <Local Name="Carat.Error.Query.GetCalendarEvents.Select" Russian="Не удалось получить события календаря."/>
 
-  <Local Name="Carat.Error.Query.CalendarDelete.Delete" Russian="Не удалось удалить событие календаря: %1"/>
+  <Local Name="Carat.Error.Query.CalendarDelete.Delete" Russian="Не удалось удалить событие календаря."/>
   <Local Name="Carat.Error.Query.CalendarDelete.NotExist" Russian="Событие с идентификатором &quot;%1&quot; не существует."/>
 
-  <Local Name="Carat.Error.Query.GetInternalLists.Select" Russian="Не удалось получить список справочников: %1"/>
+  <Local Name="Carat.Error.Query.GetInternalLists.Select" Russian="Не удалось получить список справочников."/>
 
-  <Local Name="Carat.Error.Query.SaveMetaData.UpdateColumnSize" Russian="Не удалось обновить размер поля: %1"/>
-  <Local Name="Carat.Error.Query.SaveMetaData.InsertColumnSize" Russian="Не удалось добавить размер поля: %1"/>
-  <Local Name="Carat.Error.Query.SaveMetaData.UpdateSetting" Russian="Не удалось обновить настройку: %1"/>
+  <Local Name="Carat.Error.Query.SaveMetaData.UpdateColumnSize" Russian="Не удалось обновить размер поля."/>
+  <Local Name="Carat.Error.Query.SaveMetaData.InsertColumnSize" Russian="Не удалось добавить размер поля."/>
+  <Local Name="Carat.Error.Query.SaveMetaData.UpdateSetting" Russian="Не удалось обновить настройку."/>
 
-  <Local Name="Carat.Error.Query.GetGroupRights.SelectSystems" Russian="Не удалось получить информацию о системах: %1"/>
-  <Local Name="Carat.Error.Query.GetGroupRights.SelectSubSystems" Russian="Не удалось получить информацию о подсистемах: %1"/>
-  <Local Name="Carat.Error.Query.GetGroupRights.RightTableType" Russian="Не удалось получить типа прав на таблицы: %1"/>
-  <Local Name="Carat.Error.Query.GetGroupRights.SelectTables" Russian="Не удалось получить информацию о таблицах: %1"/>
-  <Local Name="Carat.Error.Query.GetGroupRights.SelectSpecial" Russian="Не удалось получить информацию специальных правах: %1"/>
-  <Local Name="Carat.Error.Query.GetGroupRights.SelectSpecialGroup" Russian="Не удалось получить информацию о группах специальных прав: %1"/>
+  <Local Name="Carat.Error.Query.GetGroupRights.SelectSubSystems" Russian="Не удалось получить информацию о подсистемах."/>
+  <Local Name="Carat.Error.Query.GetGroupRights.SelectSystems" Russian="Не удалось получить информацию о системах."/>
+  <Local Name="Carat.Error.Query.GetGroupRights.RightTableType" Russian="Не удалось получить типа прав на таблицы."/>
+  <Local Name="Carat.Error.Query.GetGroupRights.SelectTables" Russian="Не удалось получить информацию о таблицах."/>
+  <Local Name="Carat.Error.Query.GetGroupRights.SelectSpecial" Russian="Не удалось получить информацию специальных правах."/>
+  <Local Name="Carat.Error.Query.GetGroupRights.SelectSpecialGroup" Russian="Не удалось получить информацию о группах специальных прав."/>
 
   <Local Name="Carat.Error.Query.GroupRightSubSystemAdd.AlreadyExist" Russian="Такое право уже есть."/>
-  <Local Name="Carat.Error.Query.GroupRightSubSystemAdd.Insert" Russian="Не удалось добавить право на подсистему: %1"/>
+  <Local Name="Carat.Error.Query.GroupRightSubSystemAdd.Insert" Russian="Не удалось добавить право на подсистему."/>
 
-  <Local Name="Carat.Error.Query.GroupRightSubSystemDelete.Delete" Russian="Не удалось удалить право на подсистему: %1"/>
+  <Local Name="Carat.Error.Query.GroupRightSubSystemDelete.Delete" Russian="Не удалось удалить право на подсистему."/>
   <Local Name="Carat.Error.Query.GroupRightSubSystemDelete.NotExist" Russian="Право на подсистему не существует."/>
 
   <Local Name="Carat.Error.Query.GroupRightTableAdd.AlreadyExist" Russian="Такое право уже есть."/>
-  <Local Name="Carat.Error.Query.GroupRightTableAdd.Insert" Russian="Не удалось добавить право на таблицу: %1"/>
+  <Local Name="Carat.Error.Query.GroupRightTableAdd.Insert" Russian="Не удалось добавить право на таблицу."/>
 
-  <Local Name="Carat.Error.Query.GroupRightTableDelete.Delete" Russian="Не удалось удалить право на таблицу: %1"/>
+  <Local Name="Carat.Error.Query.GroupRightTableDelete.Delete" Russian="Не удалось удалить право на таблицу."/>
   <Local Name="Carat.Error.Query.GroupRightTableDelete.NotExist" Russian="Право на таблицу не существует."/>
 
   <Local Name="Carat.Error.Query.GroupRightSpecialAdd.AlreadyExist" Russian="Такое право уже есть."/>
   <Local Name="Carat.Error.Query.GroupRightSpecialAdd.Insert" Russian="Такое право уже есть."/>
 
-  <Local Name="Carat.Error.Query.GroupRightSpecialDelete.Delete" Russian="Не удалось удалить специальное право: %1"/>
+  <Local Name="Carat.Error.Query.GroupRightSpecialDelete.Delete" Russian="Не удалось удалить специальное право."/>
   <Local Name="Carat.Error.Query.GroupRightSpecialDelete.NotExist" Russian="Специальное право не существует."/>
 
   <Local Name="Carat.Error.Query.GetRecordValue.InvalidFieldName" Russian="Поле &quot;%1&quot; не существует."/>
-  <Local Name="Carat.Error.Query.GetRecordValue.Select" Russian="Не удалось запросить значение: %1"/>
+  <Local Name="Carat.Error.Query.GetRecordValue.Select" Russian="Не удалось запросить значение."/>
   <Local Name="Carat.Error.Query.GetRecordValue.RecordNotFound" Russian="Запись с кодом &quot;%1&quot; не найдена."/>
 
   <Local Name="Carat.Error.Query.RecordFavoriteAdd.AlreadyExist" Russian="Такая запись уже есть в избранном."/>
-  <Local Name="Carat.Error.Query.RecordFavoriteAdd.Insert" Russian="Не удалось добавить запись в избранное: %1"/>
+  <Local Name="Carat.Error.Query.RecordFavoriteAdd.Insert" Russian="Не удалось добавить запись в избранное."/>
 
-  <Local Name="Carat.Error.Query.RecordFavoriteDelete.Delete" Russian="Не удалось удалить запись из избранного: %1"/>
+  <Local Name="Carat.Error.Query.RecordFavoriteDelete.Delete" Russian="Не удалось удалить запись из избранного."/>
   <Local Name="Carat.Error.Query.RecordFavoriteDelete.NotExist" Russian="Такая запись в избранном не существует."/>
 
-  <Local Name="Carat.Error.Query.GetFavoriteNames.Select" Russian="Не удалось получить избранные записи: %1"/>
+  <Local Name="Carat.Error.Query.GetFavoriteNames.Select" Russian="Не удалось получить избранные записи."/>
 
-  <Local Name="Carat.Error.Query.FavoritesDelete.Delete" Russian="Не удалось удалить избранные записи: %1"/>
+  <Local Name="Carat.Error.Query.FavoritesDelete.Delete" Russian="Не удалось удалить избранные записи."/>
 
-  <Local Name="Carat.Error.Query.CalendarClose.Update" Russian="Не удалось закрыть событие календаря: %1"/>
+  <Local Name="Carat.Error.Query.CalendarClose.Update" Russian="Не удалось закрыть событие календаря."/>
   <Local Name="Carat.Error.Query.CalendarClose.NotExist" Russian="Событие календаря не существует."/>
 
-  <Local Name="Carat.Error.Query.GetHistoryList.Select" Russian="Не удалось получить список открытых записей: %1"/>
+  <Local Name="Carat.Error.Query.GetHistoryList.Select" Russian="Не удалось получить список открытых записей."/>
 
   <Local Name="Carat.Error.Query.TaskCommentAdd.CommentIsEmpty" Russian="Комментарий не может быть пустым."/>
   <Local Name="Carat.Error.Query.TaskCommentAdd.Insert" Russian="Не удалось добавить комментарий к задаче."/>
