@@ -187,6 +187,7 @@ const char API_RECORD_FAVORITE_DELETE[] = "RecordFavoriteDelete"; //Удалить запи
 const char API_GET_FAVORITE_NAMES[] = "GetFavoriteNames"; //Получить имена избранных записей
 const char API_FAVORITES_DELETE[] = "FavoritesDelete"; //Удалить все избранные записи пользователя
 const char API_CALENDAR_CLOSE[] = "CalendarClose"; //Закрытие события календаря
+const char API_GET_HISTORY_LIST[] = "GetHistoryList"; //Получить список открытых записей
 //CARAT_LOCAL_API--------------------------------------------------------------
 const char	CARAT_LOCAL_API_SHUTDOWN[] = "shutdown"; //Завершение работы
 //-----------------------------------------------------------------------------

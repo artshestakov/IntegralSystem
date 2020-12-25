@@ -204,6 +204,10 @@ ISNamespace::ApiMessageType ISTcp::GetMessageTypeByName(const QString &Name)
 	{
 		return ISNamespace::AMT_CalendarClose;
 	}
+	else if (Name == API_GET_HISTORY_LIST)
+	{
+		return ISNamespace::AMT_GetHistoryList;
+	}
 	return ISNamespace::AMT_Unknown;
 }
 //-----------------------------------------------------------------------------

@@ -339,6 +339,12 @@ static QString QU_CALENDAR_CLOSE = PREPARE_QUERY("UPDATE _calendar SET "
 												 "WHERE cldr_id = :CalendarID "
 												 "RETURNING cldr_name");
 //-----------------------------------------------------------------------------
+static QString QS_HISTORY = PREPARE_QUERY("SELECT prtc_datetime, prtc_tablename, prtc_objectid "
+										  "FROM _protocol "
+										  "WHERE prtc_type = (SELECT prtp_id FROM _protocoltype WHERE prtp_uid = '{117E8972-97DC-4E72-93AC-DC3BB50D11CF}') "
+										  "AND prtc_user = :UserID "
+										  "ORDER BY prtc_datetime DESC");
+//-----------------------------------------------------------------------------
 ISTcpWorker::ISTcpWorker(const QString &db_host, int db_port, const QString &db_name, const QString &db_user, const QString &db_password)
 	: QObject(),
 	ErrorString(NO_ERROR_STRING),
@@ -510,6 +516,7 @@ void ISTcpWorker::Process()
 					case ISNamespace::AMT_GetFavoriteNames: Result = GetFavoriteNames(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_FavoritesDelete: Result = FavoritesDelete(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_CalendarClose: Result = CalendarClose(tcp_message, TcpAnswer); break;
+					case ISNamespace::AMT_GetHistoryList: Result = GetHistoryList(tcp_message, TcpAnswer); break;
 					default:
 						ErrorString = LANG("Carat.Error.NotExistFunction").arg(tcp_message->TypeName);
 					}
@@ -3126,9 +3133,7 @@ bool ISTcpWorker::GetFavoriteNames(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAns
 	while (qSelectObjects.Next())
 	{
 		QString TableName = qSelectObjects.ReadColumn("fvts_tablename").toString();
-		unsigned int ObjectID = qSelectObjects.ReadColumn("fvts_objectid").toUInt();
-
-		if (!MetaTable || MetaTable->Name != TableName) //Если мета-таблица ещё не получена - получаем её
+		if (!MetaTable || MetaTable->Name != TableName) //Если мета-таблица ещё не получена или её имя сменилось - получаем её
 		{
 			MetaTable = GetMetaTable(TableName);
 			if (!MetaTable) //Не удалось получить мета-таблицу - выходим с ошибкой
@@ -3138,6 +3143,7 @@ bool ISTcpWorker::GetFavoriteNames(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAns
 		}
 	
 		//Получаем имя записи
+		unsigned int ObjectID = qSelectObjects.ReadColumn("fvts_objectid").toUInt();
 		if (!GetObjectName(MetaTable, ObjectID, ObjectName))
 		{
 			return false;
@@ -3218,6 +3224,55 @@ bool ISTcpWorker::CalendarClose(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer
 		return false;
 	}
 	Protocol(TcpMessage->TcpSocket->GetUserID(), CONST_UID_PROTOCOL_CALENDAR_CLOSE, QVariant(), QVariant(), QVariant(), qUpdate.ReadColumn("cldr_name"));
+	return true;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::GetHistoryList(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+	//Получаем данные
+	ISQuery qSelect(ISDatabase::Instance().GetDB(DBConnectionName), QS_HISTORY);
+	qSelect.BindValue(":UserID", TcpMessage->TcpSocket->GetUserID());
+	if (!qSelect.Execute()) //Ошибка запроса
+	{
+		ErrorString = LANG("Carat.Error.Query.GetHistoryList.Select");
+		return false;
+	}
+
+	PMetaTable *MetaTable = nullptr;
+	QString ObjectName;
+
+	//Обходим выборку
+	QVariantList HistoryList;
+	while (qSelect.Next())
+	{
+		QString TableName = qSelect.ReadColumn("prtc_tablename").toString();
+		if (!MetaTable || MetaTable->Name != TableName) //Если мета-таблица ещё не получена или её имя сменилось - получаем её
+		{
+			MetaTable = GetMetaTable(TableName);
+			if (!MetaTable) //Не удалось получить мета-таблицу - выходим с ошибкой
+			{
+				return false;
+			}
+		}
+		
+		//Получаем имя записи
+		unsigned int ObjectID = qSelect.ReadColumn("prtc_objectid").toUInt();
+		if (!GetObjectName(MetaTable, ObjectID, ObjectName))
+		{
+			return false;
+		}
+
+		//Добавляем в результирующий список
+		HistoryList.append(QVariantMap
+		{
+			{ "DateTime", ConvertDateTimeToString(qSelect.ReadColumn("prtc_datetime").toDateTime(), FORMAT_TIME_V3) },
+			{ "TableLocalName", MetaTable->LocalListName },
+			{ "TableName", MetaTable->Name },
+			{ "ObjectID", ObjectID },
+			{ "ObjectName", ObjectName }
+		});
+	}
+	TcpAnswer->Parameters["History"] = HistoryList;
 	return true;
 }
 //-----------------------------------------------------------------------------

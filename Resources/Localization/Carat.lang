@@ -188,4 +188,6 @@
   <Local Name="Carat.Error.Query.CalendarClose.Update" Russian="Не удалось закрыть событие календаря: %1"/>
   <Local Name="Carat.Error.Query.CalendarClose.NotExist" Russian="Событие календаря не существует."/>
 
+  <Local Name="Carat.Error.Query.GetHistoryList.Select" Russian="Не удалось получить список открытых записей: %1"/>
+
 </LANG>
