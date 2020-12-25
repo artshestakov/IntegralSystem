@@ -14,7 +14,7 @@
 #include "ISFail2Ban.h"
 #include "ISQueryModel.h"
 //-----------------------------------------------------------------------------
-static QString QS_USERS_HASH = PREPARE_QUERY("SELECT usrs_hash, usrs_salt "
+static QString QS_USERS_HASH = PREPARE_QUERY("SELECT usrs_hash1, usrs_salt "
 											 "FROM _users "
 											 "WHERE usrs_hash IS NOT NULL "
 											 "AND usrs_salt IS NOT NULL");
@@ -603,8 +603,7 @@ bool ISTcpWorker::UserPasswordExist(const QVariant &UserID, bool &Exist)
 	qSelectHashIsNull.BindValue(":UserID", UserID);
 	if (!qSelectHashIsNull.Execute()) //Ошибка запроса
 	{
-		ErrorString = LANG("Carat.Error.CheckExistUserPassword").arg(qSelectHashIsNull.GetErrorString());
-		return false;
+		return ErrorQuery(LANG("Carat.Error.CheckExistUserPassword"), qSelectHashIsNull);
 	}
 
 	if (!qSelectHashIsNull.First()) //Не удалось перейти на первую строку, т.к. пользователя с таким UserID не существует
@@ -622,8 +621,7 @@ bool ISTcpWorker::UserIsSystem(const QVariant &UserID, bool &IsSystem)
 	qSelectIsSystem.BindValue(":UserID", UserID);
 	if (!qSelectIsSystem.Execute()) //Ошибка запроса
 	{
-		ErrorString = LANG("Carat.Error.CheckUserIsSystem").arg(qSelectIsSystem.GetErrorString());
-		return false;
+		return ErrorQuery(LANG("Carat.Error.CheckUserIsSystem"), qSelectIsSystem);
 	}
 
 	if (!qSelectIsSystem.First())
@@ -733,8 +731,7 @@ bool ISTcpWorker::GetObjectName(PMetaTable *MetaTable, unsigned int ObjectID, QS
 	qSelectName.BindValue(":ObjectID", ObjectID);
 	if (!qSelectName.Execute()) //Ошибка запроса
 	{
-		ErrorString = LANG("Carat.Error.GetObjectName").arg(qSelectName.GetErrorString());
-		return false;
+		return ErrorQuery(LANG("Carat.Error.GetObjectName"), qSelectName);
 	}
 
 	if (!qSelectName.First()) //Запись не найдена
@@ -798,6 +795,13 @@ QVariant ISTcpWorker::GetSettingDB(const QString &SettingName)
 	return Value;
 }
 //-----------------------------------------------------------------------------
+bool ISTcpWorker::ErrorQuery(const QString &LocalError, ISQuery &SqlQuery)
+{
+	ErrorString = LocalError;
+	ISLOGGER_E(__CLASS__, QString("Sql query:\n%1\n%2").arg(SqlQuery.GetSqlText()).arg(SqlQuery.GetErrorString()));
+	return false;
+}
+//-----------------------------------------------------------------------------
 bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
 	Q_UNUSED(TcpAnswer);
@@ -851,8 +855,7 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 		ISQuery qSelectHash(ISDatabase::Instance().GetDB(DBConnectionName), QS_USERS_HASH);
 		if (!qSelectHash.Execute()) //Ошибка запроса
 		{
-			ErrorString = LANG("Carat.Error.Query.Auth.SelectHash").arg(qSelectHash.GetErrorString());
-			return false;
+			return ErrorQuery(LANG("Carat.Error.Query.Auth.SelectHash"), qSelectHash);
 		}
 
 		//Если запрос ничего не вернул, значит в БД нет ни одного пользователя
@@ -903,8 +906,7 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	qSelectAuth.BindValue(":Hash", Hash);
 	if (!qSelectAuth.ExecuteFirst()) //Запрос выполнен с ошибкой
 	{
-		ErrorString = LANG("Carat.Error.Query.Auth.SelectLogin").arg(qSelectAuth.GetErrorString());
-		return false;
+		return ErrorQuery(LANG("Carat.Error.Query.Auth.SelectLogin"), qSelectAuth);
 	}
 
 	unsigned int UserID = qSelectAuth.ReadColumn("usrs_id").toUInt();
@@ -1060,8 +1062,7 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	}
 	else
 	{
-		ErrorString = LANG("Carat.Error.Query.GetMetaData.SettingsDB").arg(qSelectSettingsDB.GetErrorString());
-		return false;
+		return ErrorQuery(LANG("Carat.Error.Query.GetMetaData.SettingsDB"), qSelectSettingsDB);
 	}
 
 	//Получаем права на таблицы
@@ -1088,8 +1089,7 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	}
 	else
 	{
-		ErrorString = LANG("Carat.Error.Query.GetMetaData.UserGroupAccessTable").arg(qSelectAccessTables.GetErrorString());
-		return false;
+		return ErrorQuery(LANG("Carat.Error.Query.GetMetaData.UserGroupAccessTable"), qSelectAccessTables);
 	}
 
 	//Получаем специальные права
@@ -1105,8 +1105,7 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	}
 	else
 	{
-		ErrorString = LANG("Carat.Error.Query.GetMetaData.UserGroupAccessSpecial").arg(qSelectAccessSpecial.GetErrorString());
-		return false;
+		return ErrorQuery(LANG("Carat.Error.Query.GetMetaData.UserGroupAccessSpecial"), qSelectAccessSpecial);
 	}
 
 	//Получаем системы и подсистемы
@@ -1138,8 +1137,7 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 			}
 			else
 			{
-				ErrorString = LANG("Carat.Error.Query.GetMetaData.SubSystems").arg(qSelectSubSystem.GetErrorString());
-				return false;
+				return ErrorQuery(LANG("Carat.Error.Query.GetMetaData.SubSystems"), qSelectSubSystem);
 			}
 			
 			//Добавляем систему только если по ней разрешены какие-нибудь подсистемы
@@ -1159,8 +1157,7 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	}
 	else
 	{
-		ErrorString = LANG("Carat.Error.Query.GetMetaData.Systems").arg(qSelectSystem.GetErrorString());
-		return false;
+		return ErrorQuery(LANG("Carat.Error.Query.GetMetaData.Systems"), qSelectSystem);
 	}
 
 	//Получаем печать
@@ -1182,8 +1179,7 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 			}
 			else
 			{
-				ErrorString = LANG("Carat.Error.Query.GetMetaData.ReportField").arg(qSelectReportField.GetErrorString());
-				return false;
+				return ErrorQuery(LANG("Carat.Error.Query.GetMetaData.ReportField"), qSelectReportField);
 			}
 			PrintingList.append(QVariantMap
 			{
@@ -1197,8 +1193,7 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	}
 	else
 	{
-		ErrorString = LANG("Carat.Error.Query.GetMetaData.Report").arg(qSelectReport.GetErrorString());
-		return false;
+		return ErrorQuery(LANG("Carat.Error.Query.GetMetaData.Report"), qSelectReport);
 	}
 
 	//Получаем избранные объекты
@@ -1217,8 +1212,7 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	}
 	else
 	{
-		ErrorString = LANG("Carat.Error.Query.GetMetaData.Favorite").arg(qSelectFavorite.GetErrorString());
-		return false;
+		return ErrorQuery(LANG("Carat.Error.Query.GetMetaData.Favorite"), qSelectFavorite);
 	}
 
 	//Получаем размеры полей
@@ -1237,8 +1231,7 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	}
 	else
 	{
-		ErrorString = LANG("Carat.Error.Query.GetMetaData.ColumnSize").arg(qSelectColumnSize.GetErrorString());
-		return false;
+		return ErrorQuery(LANG("Carat.Error.Query.GetMetaData.ColumnSize"), qSelectColumnSize);
 	}
 
 	//Получаем пользовательские настройки
@@ -1282,6 +1275,7 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 						qInsertSetting.BindValue(":Value", SettingDefault);
 						if (!qInsertSetting.Execute())
 						{
+							//???
 							ErrorString = "Error inserting new user setting: " + qInsertSetting.GetErrorString();
 							return false;
 						}
@@ -1292,8 +1286,7 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 			}
 			else
 			{
-				ErrorString = LANG("Carat.Error.Query.GetMetaData.SettingsUser").arg(qSelectSettingUser.GetErrorString());
-				return false;
+				return ErrorQuery(LANG("Carat.Error.Query.GetMetaData.SettingsUser"), qSelectSettingUser);
 			}
 			Settings.append(QVariantMap
 			{
@@ -1308,8 +1301,7 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	}
 	else
 	{
-		ErrorString = LANG("Carat.Error.Query.GetMetaData.SettingsGroup").arg(qSelectSettingGroup.GetErrorString());
-		return false;
+		return ErrorQuery(LANG("Carat.Error.Query.GetMetaData.SettingsGroup"), qSelectSettingGroup);
 	}
 
 	//Получаем параграфы
@@ -1332,8 +1324,7 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	}
 	else
 	{
-		ErrorString = LANG("Carat.Error.Query.GetMetaData.Paragraph").arg(qSelectParagraph.GetErrorString());
-		return false;
+		return ErrorQuery(LANG("Carat.Error.Query.GetMetaData.Paragraph"), qSelectParagraph);
 	}
 
 	//Получаем приоритеты задач
@@ -1355,8 +1346,7 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	}
 	else
 	{
-		ErrorString = LANG("Carat.Error.Query.GetMetaData.TaskPriority").arg(qSelectTaskPriority.GetErrorString());
-		return false;
+		return ErrorQuery(LANG("Carat.Error.Query.GetMetaData.TaskPriority"), qSelectTaskPriority);
 	}
 
 	//Читаем мета-данные
@@ -1528,8 +1518,7 @@ bool ISTcpWorker::UserPasswordCreate(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpA
 	qUpdateHash.BindValue(":UserID", UserID);
 	if (!qUpdateHash.Execute())
 	{
-		ErrorString = LANG("Carat.Error.Query.UserPasswordCreate.UpdateHash").arg(qUpdateHash.GetErrorString());
-		return false;
+		return ErrorQuery(LANG("Carat.Error.Query.UserPasswordCreate.UpdateHash"), qUpdateHash);
 	}
 
 	//Фиксируем изменение пароля
@@ -1554,8 +1543,7 @@ bool ISTcpWorker::UserPasswordEdit(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAns
 	qSelectHash.BindValue(":UserID", UserID);
 	if (!qSelectHash.Execute()) //Ошибка запроса
 	{
-		ErrorString = LANG("Carat.Error.Query.UserLoginEdit.SelectHash").arg(qSelectHash.GetErrorString());
-		return false;
+		return ErrorQuery(LANG("Carat.Error.Query.UserLoginEdit.SelectHash"), qSelectHash);
 	}
 
 	if (!qSelectHash.First()) //Пользователя с таким UserID нет в БД
@@ -1589,8 +1577,7 @@ bool ISTcpWorker::UserPasswordEdit(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAns
 	qUpdateHash.BindValue(":UserID", UserID);
 	if (!qUpdateHash.Execute())
 	{
-		ErrorString = LANG("Carat.Error.Query.UserLoginEdit.UpdateHash").arg(qUpdateHash.GetErrorString());
-		return false;
+		return ErrorQuery(LANG("Carat.Error.Query.UserLoginEdit.UpdateHash"), qUpdateHash);
 	}
 
 	//Фиксируем изменение пароля
@@ -1655,8 +1642,7 @@ bool ISTcpWorker::UserSettingsReset(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAn
 	qUpdate.BindValue(":UserID", TcpMessage->TcpSocket->GetUserID());
 	if (!qUpdate.Execute()) //Ошибка запроса
 	{
-		ErrorString = LANG("Carat.Error.Query.UserSettingsReset.Update").arg(qUpdate.GetErrorString());
-		return false;
+		return ErrorQuery(LANG("Carat.Error.Query.UserSettingsReset.Update"), qUpdate);
 	}
 
 	//Обходим результат
@@ -1691,8 +1677,7 @@ bool ISTcpWorker::GetRecordCall(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer
 	qSelectRecord.BindValue(":RecordID", RecordID);
 	if (!qSelectRecord.Execute())
 	{
-		ErrorString = LANG("Carat.Error.Query.GetRecordCall.SelectUniqueID").arg(qSelectRecord.GetErrorString());
-		return false;
+		return ErrorQuery(LANG("Carat.Error.Query.GetRecordCall.SelectUniqueID"), qSelectRecord);
 	}
 	if (!qSelectRecord.First())
 	{
@@ -1821,8 +1806,7 @@ bool ISTcpWorker::RecordDelete(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	qSqlQuery.SetShowLongQuery(false);
 	if (!qSqlQuery.Execute()) //Ошибка запроса
 	{
-		ErrorString = LANG("Carat.Error.Query.RecordDelete.Select").arg(qSqlQuery.GetErrorString());
-		return false;
+		return ErrorQuery(LANG("Carat.Error.Query.RecordDelete.Select"), qSqlQuery);
 	}
 
 	if (!qSqlQuery.First())
@@ -1844,8 +1828,7 @@ bool ISTcpWorker::RecordDelete(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	qDelete.SetShowLongQuery(false);
 	if (!qDelete.Execute()) //Ошибка запроса
 	{
-		ErrorString = LANG("Carat.Error.Query.RecordDelete.Delete").arg(qDelete.GetErrorString());
-		return false;
+		return ErrorQuery(LANG("Carat.Error.Query.RecordDelete.Delete"), qDelete);
 	}
 
 	//Протоколируем
@@ -1874,8 +1857,7 @@ bool ISTcpWorker::DiscussionAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer
 	qInsert.BindValue(":Message", Message);
 	if (!qInsert.Execute()) //Ошибка вставки
 	{
-		ErrorString = LANG("Carat.Error.Query.DiscussionAdd.Insert").arg(qInsert.GetErrorString());
-		return false;
+		return ErrorQuery(LANG("Carat.Error.Query.DiscussionAdd.Insert"), qInsert);
 	}
 
 	if (!qInsert.First()) //Ошибка перехода к возвращаемому значению
@@ -1904,8 +1886,7 @@ bool ISTcpWorker::DiscussionEdit(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
 	qUpdate.BindValue(":DiscussionID", DiscussionID);
 	if (!qUpdate.Execute()) //Не удалось обновить запись
 	{
-		ErrorString = LANG("Carat.Error.Query.DiscussionEdit.Update").arg(qUpdate.GetErrorString());
-		return false;
+		return ErrorQuery(LANG("Carat.Error.Query.DiscussionEdit.Update"), qUpdate);
 	}
 	return true;
 }
@@ -1922,8 +1903,7 @@ bool ISTcpWorker::DiscussionCopy(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
 	qCopy.BindValue(":DiscussionID", DiscussionID);
 	if (!qCopy.Execute()) //Не удалось создать копию
 	{
-		ErrorString = LANG("Carat.Error.Query.DiscussionCopy.Insert").arg(qCopy.GetErrorString());
-		return false;
+		return ErrorQuery(LANG("Carat.Error.Query.DiscussionCopy.Insert"), qCopy);
 	}
 
 	if (!qCopy.First()) //Ошибка перехода к возвращаемому значению
@@ -1959,8 +1939,7 @@ bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	qSelectSorting.BindValue(":TableName", MetaTable->Name);
 	if (!qSelectSorting.Execute()) //Ошибка запроса
 	{
-		ErrorString = LANG("Carat.Error.Query.GetTableData.SelectSorting").arg(qSelectSorting.GetErrorString());
-		return false;
+		return ErrorQuery(LANG("Carat.Error.Query.GetTableData.SelectSorting"), qSelectSorting);
 	}
 
 	if (qSelectSorting.First()) //Сортирока есть - получаем её
@@ -1987,8 +1966,7 @@ bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 				qUpdateSorting.BindValue(":TableName", MetaTable->Name);
 				if (!qUpdateSorting.Execute())
 				{
-					ErrorString = LANG("Carat.Error.Query.GetTableData.UpdateSorting").arg(qUpdateSorting.GetErrorString());
-					return false;
+					return ErrorQuery(LANG("Carat.Error.Query.GetTableData.UpdateSorting"), qUpdateSorting);
 				}
 			}
 		}
@@ -2005,8 +1983,7 @@ bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 		qInsertSorting.BindValue(":Sorting", SortingOrder);
 		if (!qInsertSorting.Execute())
 		{
-			ErrorString = LANG("Carat.Error.Query.GetTableData.InsertSorting").arg(qInsertSorting.GetErrorString());
-			return false;
+			return ErrorQuery(LANG("Carat.Error.Query.GetTableData.InsertSorting"), qInsertSorting);
 		}
 	}
 
@@ -2032,8 +2009,7 @@ bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 
 	if (!qSelect.Execute()) //Запрос не отработал
 	{
-		ErrorString = LANG("Carat.Error.Query.GetTableData.Select").arg(qSelect.GetErrorString());
-		return false;
+		return ErrorQuery(LANG("Carat.Error.Query.GetTableData.Select"), qSelect);
 	}
 
 	QSqlRecord SqlRecord = qSelect.GetRecord();
@@ -2156,8 +2132,7 @@ bool ISTcpWorker::NoteRecordGet(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer
 	qSelect.BindValue(":ObjectID", ObjectID);
 	if (!qSelect.Execute()) //Ошибка запроса
 	{
-		ErrorString = LANG("Carat.Error.Query.GetNoteRecord.Select").arg(qSelect.GetErrorString());
-		return false;
+		return ErrorQuery(LANG("Carat.Error.Query.GetNoteRecord.Select"), qSelect);
 	}
 
 	QVariant Note;
@@ -2216,8 +2191,7 @@ bool ISTcpWorker::NoteRecordSet(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer
 		qDelete.BindValue(":ObjectID", ObjectID);
 		if (!qDelete.Execute())
 		{
-			ErrorString = LANG("Carat.Error.Query.SetNoteRecord.Delete").arg(qDelete.GetErrorString());
-			return false;
+			return ErrorQuery(LANG("Carat.Error.Query.SetNoteRecord.Delete"), qDelete);
 		}
 		Protocol(TcpMessage->TcpSocket->GetUserID(), CONST_UID_PROTOCOL_NOTE_RECORD_DELETE, MetaTable->Name, MetaTable->LocalListName, ObjectID);
 	}
@@ -2273,8 +2247,7 @@ bool ISTcpWorker::FileStorageAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
 	qInsert.BindValue(":Data", ByteArray);
 	if (!qInsert.ExecuteFirst())
 	{
-		ErrorString = LANG("Carat.Error.Query.FileStorageAdd.Insert").arg(Name).arg(qInsert.GetErrorString());
-		return false;
+		return ErrorQuery(LANG("Carat.Error.Query.FileStorageAdd.Insert"), qInsert);
 	}
 	Protocol(TcpMessage->TcpSocket->GetUserID(), CONST_UID_PROTOCOL_FILE_STORAGE_ADD, QVariant(), QVariant(), qInsert.ReadColumn("sgfs_id"), Name);
 	return true;
@@ -2296,8 +2269,7 @@ bool ISTcpWorker::FileStorageCopy(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnsw
 	qInsertCopy.BindValue(":ObjectID", ID);
 	if (!qInsertCopy.Execute()) //Ошибка запроса
 	{
-		ErrorString = LANG("Carat.Error.Query.FileStorageCopy.Insert").arg(qInsertCopy.GetErrorString());
-		return false;
+		return ErrorQuery(LANG("Carat.Error.Query.FileStorageCopy.Insert"), qInsertCopy);
 	}
 
 	//Если файл не был скопирован, значит его не существует - ошибка
@@ -2329,8 +2301,7 @@ bool ISTcpWorker::FileStorageGet(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
 	qSelect.BindValue(":ObjectID", ID);
 	if (!qSelect.Execute()) //Ошибка запроса
 	{
-		ErrorString = LANG("Carat.Error.Query.FileStorageGet.Select").arg(qSelect.GetErrorString());
-		return false;
+		return ErrorQuery(LANG("Carat.Error.Query.FileStorageGet.Select"), qSelect);
 	}
 
 	if (!qSelect.First()) //Такой файл не существует
@@ -2357,8 +2328,7 @@ bool ISTcpWorker::SearchTaskText(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
 	qSelect.BindValue(":Value", Value);
 	if (!qSelect.Execute())
 	{
-		ErrorString = LANG("Carat.Error.Query.SearchTaskText.Select").arg(qSelect.GetErrorString());
-		return false;
+		return ErrorQuery(LANG("Carat.Error.Query.SearchTaskText.Select"), qSelect);
 	}
 
 	//Обходим результаты поиска
@@ -2390,8 +2360,7 @@ bool ISTcpWorker::SearchTaskID(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	qSelect.BindValue(":ID", ID);
 	if (!qSelect.Execute())
 	{
-		ErrorString = LANG("Carat.Error.Query.SearchTaskID.Select").arg(qSelect.GetErrorString());
-		return false;
+		return ErrorQuery(LANG("Carat.Error.Query.SearchTaskID.Select"), qSelect);
 	}
 
 	if (!qSelect.First())
@@ -2443,8 +2412,7 @@ bool ISTcpWorker::SearchFullText(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
 	qSelect.BindValue(":Value", Value);
 	if (!qSelect.Execute())
 	{
-		ErrorString = LANG("Carat.Error.Query.SearchFullText.Select").arg(qSelect.GetErrorString());
-		return false;
+		return ErrorQuery(LANG("Carat.Error.Query.SearchFullText.Select"), qSelect);
 	}
 
 	//Анализируем ответ
@@ -2489,8 +2457,7 @@ bool ISTcpWorker::GetCalendarEvents(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAn
 	qSelect.BindValue(":Year", Year);
 	if (!qSelect.Execute()) //Ошибка запроса
 	{
-		ErrorString = LANG("Carat.Error.Query.GetCalendarEvents.Select").arg(qSelect.GetErrorString());
-		return false;
+		return ErrorQuery(LANG("Carat.Error.Query.GetCalendarEvents.Select"), qSelect);
 	}
 
 	//Обходим результаты
@@ -2526,8 +2493,7 @@ bool ISTcpWorker::CalendarDelete(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
 	qDelete.BindValue(":ObjectID", ID);
 	if (!qDelete.Execute()) //Ошибка запроса
 	{
-		ErrorString = LANG("Carat.Error.Query.CalendarDelete.Delete").arg(qDelete.GetErrorString());
-		return false;
+		return ErrorQuery(LANG("Carat.Error.Query.CalendarDelete.Delete"), qDelete);
 	}
 
 	//Если ни одна запись не была удалена - значит такой записи нет - ошибка
@@ -2554,8 +2520,7 @@ bool ISTcpWorker::GetInternalLists(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAns
 	ISQuery qSelect(ISDatabase::Instance().GetDB(DBConnectionName), QS_INTERNAL_LISTS);
 	if (!qSelect.Execute()) //Ошибка запроса
 	{
-		ErrorString = LANG("Carat.Error.Query.GetInternalLists.Select").arg(qSelect.GetErrorString());
-		return false;
+		return ErrorQuery(LANG("Carat.Error.Query.GetInternalLists.Select"), qSelect);
 	}
 
 	//Обходим результаты запроса
@@ -2600,14 +2565,12 @@ bool ISTcpWorker::SaveMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 					qUpdateColumnSize.BindValue(":FieldName", FieldItem.first);
 					if (!qUpdateColumnSize.Execute()) //Обновить не получилось
 					{
-						ErrorString = LANG("Carat.Error.Query.SaveMetaData.UpdateColumnSize").arg(qUpdateColumnSize.GetErrorString());
-						return false;
+						return ErrorQuery(LANG("Carat.Error.Query.SaveMetaData.UpdateColumnSize"), qUpdateColumnSize);
 					}
 				}
 				else //Вставка не удалась по другой причине
 				{
-					ErrorString = LANG("Carat.Error.Query.SaveMetaData.InsertColumnSize").arg(qInsertColumnSize.GetErrorString());
-					return false;
+					return ErrorQuery(LANG("Carat.Error.Query.SaveMetaData.InsertColumnSize"), qInsertColumnSize);
 				}
 			}
 		}
@@ -2627,8 +2590,7 @@ bool ISTcpWorker::SaveMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 			qUpdateSetting.BindValue(":SettingUID", MapItem.first);
 			if (!qUpdateSetting.Execute())
 			{
-				ErrorString = LANG("Carat.Error.Query.SaveMetaData.UpdateSetting").arg(qUpdateSetting.GetErrorString());
-				return false;
+				return ErrorQuery(LANG("Carat.Error.Query.SaveMetaData.UpdateSetting"), qUpdateSetting);
 			}
 		}
 	}
@@ -2672,16 +2634,14 @@ bool ISTcpWorker::GetGroupRights(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
 			}
 			else
 			{
-				ErrorString = LANG("Carat.Error.Query.GetGroupRights.SelectSubSystems").arg(qSelectSubSystems.GetErrorString());
-				return false;
+				return ErrorQuery(LANG("Carat.Error.Query.GetGroupRights.SelectSubSystems"), qSelectSubSystems);
 			}
 			SystemsList.append(SystemMap);
 		}
 	}
 	else //Ошибка запроса
 	{
-		ErrorString = LANG("Carat.Error.Query.GetGroupRights.SelectSystems").arg(qSelectSystems.GetErrorString());
-		return false;
+		return ErrorQuery(LANG("Carat.Error.Query.GetGroupRights.SelectSystems"), qSelectSystems);
 	}
 
 	//Получаем типы прав доступа на таблицы
@@ -2701,8 +2661,7 @@ bool ISTcpWorker::GetGroupRights(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
 	}
 	else
 	{
-		ErrorString = LANG("Carat.Error.Query.GetGroupRights.RightTableType").arg(qSelectAccessTablesType.GetErrorString());
-		return false;
+		return ErrorQuery(LANG("Carat.Error.Query.GetGroupRights.RightTableType"), qSelectAccessTablesType);
 	}
 
 	//Обходим таблицы
@@ -2729,8 +2688,7 @@ bool ISTcpWorker::GetGroupRights(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
 		}
 		else //Ошибка запроса
 		{
-			ErrorString = LANG("Carat.Error.Query.GetGroupRights.SelectTables").arg(qSelectTables.GetErrorString());
-			return false;
+			return ErrorQuery(LANG("Carat.Error.Query.GetGroupRights.SelectTables"), qSelectTables);
 		}
 		TablesList.append(TableMap);
 	}
@@ -2764,16 +2722,14 @@ bool ISTcpWorker::GetGroupRights(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
 			}
 			else //Ошибка запроса к спец. правам
 			{
-				ErrorString = LANG("Carat.Error.Query.GetGroupRights.SelectSpecial").arg(qSelectSpecial.GetErrorString());
-				return false;
+				return ErrorQuery(LANG("Carat.Error.Query.GetGroupRights.SelectSpecial"), qSelectSpecial);
 			}
 			SpecialList.append(SpecialGroupMap);
 		}
 	}
 	else //Ошибка запроса к группам спец. прав
 	{
-		ErrorString = LANG("Carat.Error.Query.GetGroupRights.SelectSpecialGroup").arg(qSelectSpecialParent.GetErrorString());
-		return false;
+		return ErrorQuery(LANG("Carat.Error.Query.GetGroupRights.SelectSpecialGroup"), qSelectSpecialParent);
 	}
 
 	TcpAnswer->Parameters["Systems"] = SystemsList;
@@ -2833,8 +2789,7 @@ bool ISTcpWorker::GroupRightSubSystemDelete(ISTcpMessage *TcpMessage, ISTcpAnswe
 	qDeleteSubSystemRight.BindValue(":SubSystemUID", SubSystemUID);
 	if (!qDeleteSubSystemRight.Execute()) //Ошибка запроса
 	{
-		ErrorString = LANG("Carat.Error.Query.GroupRightSubSystemDelete.Delete").arg(qDeleteSubSystemRight.GetErrorString());
-		return false;
+		return ErrorQuery(LANG("Carat.Error.Query.GroupRightSubSystemDelete.Delete"), qDeleteSubSystemRight);
 	}
 
 	//Если ни одна строка не была затронута, значит такого права нет - ошибка
@@ -2921,8 +2876,7 @@ bool ISTcpWorker::GroupRightTableDelete(ISTcpMessage *TcpMessage, ISTcpAnswer *T
 	qDeleteTableRight.BindValue(":AccessUID", AccessUID);
 	if (!qDeleteTableRight.Execute())
 	{
-		ErrorString = LANG("Carat.Error.Query.GroupRightTableDelete.Delete").arg(qDeleteTableRight.GetErrorString());
-		return false;
+		return ErrorQuery(LANG("Carat.Error.Query.GroupRightTableDelete.Delete"), qDeleteTableRight);
 	}
 
 	//Если ни одна строка не была затронута, значит такого права нет - ошибка
@@ -2991,8 +2945,7 @@ bool ISTcpWorker::GroupRightSpecialDelete(ISTcpMessage *TcpMessage, ISTcpAnswer 
 	qDeleteSpecialRight.BindValue(":SpecialRightUID", SpecialRightUID);
 	if (!qDeleteSpecialRight.Execute()) //Ошибка запроса
 	{
-		ErrorString = LANG("Carat.Error.Query.GroupRightSpecialDelete.Delete").arg(qDeleteSpecialRight.GetErrorString());
-		return false;
+		return ErrorQuery(LANG("Carat.Error.Query.GroupRightSpecialDelete.Delete"), qDeleteSpecialRight);
 	}
 
 	//Если ни одна строка не была затронута, значит такого права нет - ошибка
@@ -3040,8 +2993,7 @@ bool ISTcpWorker::GetRecordValue(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
 	qSelectValue.BindValue(":ObjectID", ObjectID);
 	if (!qSelectValue.Execute())
 	{
-		ErrorString = LANG("Carat.Error.Query.GetRecordValue.Select").arg(qSelectValue.GetErrorString());
-		return false;
+		return ErrorQuery(LANG("Carat.Error.Query.GetRecordValue.Select"), qSelectValue);
 	}
 
 	if (!qSelectValue.First())
@@ -3127,8 +3079,7 @@ bool ISTcpWorker::RecordFavoriteDelete(ISTcpMessage *TcpMessage, ISTcpAnswer *Tc
 	qDelete.BindValue(":ObjectID", ObjectID);
 	if (!qDelete.Execute()) //Не удалось удалить
 	{
-		ErrorString = LANG("Carat.Error.Query.RecordFavoriteDelete.Delete").arg(qDelete.GetErrorString());
-		return false;
+		return ErrorQuery(LANG("Carat.Error.Query.RecordFavoriteDelete.Delete"), qDelete);
 	}
 
 	//Если при удалении не была затронута ни одна строка - значит такой записи нет
@@ -3163,8 +3114,7 @@ bool ISTcpWorker::GetFavoriteNames(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAns
 	qSelectObjects.BindValue(":UserID", TcpMessage->TcpSocket->GetUserID());
 	if (!qSelectObjects.Execute()) //Ошибка запроса
 	{
-		ErrorString = LANG("Carat.Error.Query.GetFavoriteNames.Select").arg(qSelectObjects.GetErrorString());
-		return false;
+		return ErrorQuery(LANG("Carat.Error.Query.GetFavoriteNames.Select"), qSelectObjects);
 	}
 
 	PMetaTable *MetaTable = nullptr;
@@ -3228,8 +3178,7 @@ bool ISTcpWorker::FavoritesDelete(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnsw
 	qDelete.BindValue(":UserID", TcpMessage->TcpSocket->GetUserID());
 	if (!qDelete.Execute()) //Ошибка запроса
 	{
-		ErrorString = LANG("Carat.Error.Query.FavoritesDelete.Delete").arg(qDelete.GetErrorString());
-		return false;
+		return ErrorQuery(LANG("Carat.Error.Query.FavoritesDelete.Delete"), qDelete);
 	}
 	return true;
 }
@@ -3249,8 +3198,7 @@ bool ISTcpWorker::CalendarClose(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer
 	qUpdate.BindValue(":CalendarID", CalendarID);
 	if (!qUpdate.Execute()) //Ошибка запроса
 	{
-		ErrorString = LANG("Carat.Error.Query.CalendarClose.Update").arg(qUpdate.GetErrorString());
-		return false;
+		return ErrorQuery(LANG("Carat.Error.Query.CalendarClose.Update"), qUpdate);
 	}
 
 	//Ни одна запись не была затрону - значит её и нет - ошибка
