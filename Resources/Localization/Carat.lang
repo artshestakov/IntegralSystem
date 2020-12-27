@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LANG Name="Carat">
 
+  <!--Конфигурации-->
+  <Local Name="Configuration.OilSphere" Russian="ООО «Нефтесфера»"/>
+  <Local Name="Configuration.Empty" Russian="Пустая конфигурация"/>
+  
   <Local Name="Carat.BeforeYesterday" Russian="Позавчера"/>
   <Local Name="Carat.Yesterday" Russian="Вчера"/>
   <Local Name="Carat.Today" Russian="Сегодня"/>
