@@ -391,6 +391,9 @@
     <ClCompile Include="ISInternalDirectoriesSubSystem.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
+    <ClCompile Include="ISExportJSON.cpp">
+      <Filter>Export</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ISExportForm.h">
@@ -665,6 +668,9 @@
     </QtMoc>
     <QtMoc Include="ISInternalDirectoriesSubSystem.h">
       <Filter>Forms</Filter>
+    </QtMoc>
+    <QtMoc Include="ISExportJSON.h">
+      <Filter>Export</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>

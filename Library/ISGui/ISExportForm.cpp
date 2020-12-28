@@ -24,6 +24,7 @@ ISExportForm::ISExportForm(ISTcpModel *TcpModel)
 	ComboBoxType->AddItem(LANG("Export.Type.HTML"), ISNamespace::ET_HTML);
 	ComboBoxType->AddItem(LANG("Export.Type.DBF"), ISNamespace::ET_DBF);
 	ComboBoxType->AddItem(LANG("Export.Type.XML"), ISNamespace::ET_XML);
+	ComboBoxType->AddItem(LANG("Export.Type.JSON"), ISNamespace::ET_JSON);
 	connect(ComboBoxType, &ISComboEdit::ValueChange, this, &ISExportForm::TypeChanged);
 	GetMainLayout()->addWidget(ComboBoxType);
 

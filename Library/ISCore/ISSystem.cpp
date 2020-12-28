@@ -173,6 +173,11 @@ QByteArray ISSystem::VariantMapToJsonString(const QVariantMap &VariantMap, QJson
     return QJsonDocument(QJsonObject::fromVariantMap(VariantMap)).toJson(Format);
 }
 //-----------------------------------------------------------------------------
+QByteArray ISSystem::VariantListToJsonString(const QVariantList &VariantList, QJsonDocument::JsonFormat Format)
+{
+	return QJsonDocument(QJsonArray::fromVariantList(VariantList)).toJson(Format);
+}
+//-----------------------------------------------------------------------------
 QString ISSystem::StringToMD5(const QString &String)
 {
     QCryptographicHash CryptographicHash(QCryptographicHash::Md5);

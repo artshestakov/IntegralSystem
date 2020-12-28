@@ -26,6 +26,7 @@
 #include "ISExportHTML.h"
 #include "ISExportDBF.h"
 #include "ISExportXML.h"
+#include "ISExportJSON.h"
 #include "ISQueryPool.h"
 #include "ISGui.h"
 #include "ISAlgorithm.h"
@@ -883,6 +884,7 @@ void ISListBaseForm::Export()
 	case ISNamespace::ET_HTML: ExportWorker = new ISExportHTML(MetaTable, TcpModel, this); break;
 	case ISNamespace::ET_DBF: ExportWorker = new ISExportDBF(MetaTable, TcpModel, this); break;
 	case ISNamespace::ET_XML: ExportWorker = new ISExportXML(MetaTable, TcpModel, this); break;
+	case ISNamespace::ET_JSON: ExportWorker = new ISExportJSON(MetaTable, TcpModel, this); break;
 	}
 	ExportWorker->SetFields(ExportForm.GetSelectedFields());
 	ExportWorker->SetHeader(ExportForm.GetHeader());

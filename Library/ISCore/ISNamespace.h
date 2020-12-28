@@ -80,6 +80,7 @@ namespace ISNamespace
         ET_HTML,
         ET_DBF,
         ET_XML,
+		ET_JSON,
     };
 
     enum ActionType
