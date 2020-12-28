@@ -186,7 +186,6 @@ void ISMainWindow::ShowSettingsForm()
 void ISMainWindow::ShowAboutForm()
 {
 	SetVisibleShadow(true);
-	ISProtocol::Insert(true, CONST_UID_PROTOCOL_SHOW_ABOUT_FORM, QString(), QString(), QVariant());
 	ISAboutForm().Exec();
 	SetVisibleShadow(false);
 }

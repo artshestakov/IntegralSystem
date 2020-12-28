@@ -35,7 +35,6 @@
   <_ProtocolType IsSystem="true" UID="{662105B6-6671-46BE-8E1A-E57061C5C268}" Name="Добавление примечания к записи"/>
   <_ProtocolType IsSystem="true" UID="{C20634AF-EF58-4D96-9215-8085C2B8C416}" Name="Изменение примечания к записи"/>
   <_ProtocolType IsSystem="true" UID="{08904DF2-3785-4454-B5E5-2D83A9FAA231}" Name="Удаление примечания к записи"/>
-  <_ProtocolType IsSystem="true" UID="{A0115A19-05CC-4AFD-8568-F9AE970E7157}" Name="Просмотр информации о программе"/>
   <_ProtocolType IsSystem="true" UID="{CDCB7490-C975-4ECA-AC3A-4532A32ECC4D}" Name="Изменение пароля от своей учётной записи"/>
   <_ProtocolType IsSystem="true" UID="{EA765447-6811-43AD-8CFC-9B2E758A5B4E}" Name="Добавление права доступа на подсистему"/>
   <_ProtocolType IsSystem="true" UID="{5E5EC969-0D11-41FB-9652-7E2ADD466782}" Name="Удаление права доступа на подсистему"/>

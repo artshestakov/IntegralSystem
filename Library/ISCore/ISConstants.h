@@ -103,11 +103,13 @@ const char CONNECTION_ASTERISK[] = "AsteriskDB";
 //-----------------------------------------------------------------------------
 const char CONFIG_TEMPLATE_SERVER[] = "Server"; //Щаблон конфигурационного файла для сервера
 const char CONFIG_TEMPLATE_CLIENT[] = "Client"; //Щаблон конфигурационного файла для клиента
+//SQL_DRIVERS------------------------------------------------------------------
+const char SQL_DRIVER_QPSQL[] = "QPSQL";
+const char SQL_DRIVER_QODBC[] = "QODBC";
 //-----------------------------------------------------------------------------
 const char			SYSTEM_DATABASE_NAME[] = "postgres"; //Имя системной БД
 const char			SYSTEM_USER_LOGIN[] = "postgres"; //Логин системного пользователя
 const char			SYSTEM_USER_UID[] = "{F400ECFA-185E-4587-8961-8731DEAC3B5E}"; //Идентификатор главного пользователя
-const char			SQL_DRIVER_QPSQL[] = "QPSQL";
 const int			MAX_QUERY_TIME = 50; //Передельное время выполнения SQL-запроса (в миллисекундах)
 const int			CALENDAR_AUDIO_TIMEOUT = 20000;
 const char			CLASS_IS_LIST_EDIT[] = "ISListEdit";
@@ -217,7 +219,6 @@ const char CONST_UID_PROTOCOL_NOTE_RECORD_SHOW[] = "{0A6320B0-827B-4043-886A-1D7
 const char CONST_UID_PROTOCOL_NOTE_RECORD_ADD[] = "{662105B6-6671-46BE-8E1A-E57061C5C268}";
 const char CONST_UID_PROTOCOL_NOTE_RECORD_EDIT[] = "{C20634AF-EF58-4D96-9215-8085C2B8C416}";
 const char CONST_UID_PROTOCOL_NOTE_RECORD_DELETE[] = "{08904DF2-3785-4454-B5E5-2D83A9FAA231}";
-const char CONST_UID_PROTOCOL_SHOW_ABOUT_FORM[] = "{A0115A19-05CC-4AFD-8568-F9AE970E7157}";
 const char CONST_UID_PROTOCOL_CHANGE_PASSWORD[] = "{CDCB7490-C975-4ECA-AC3A-4532A32ECC4D}";
 const char CONST_UID_PROTOCOL_ADD_ACCESS_TO_SUBSYSTEM[] = "{EA765447-6811-43AD-8CFC-9B2E758A5B4E}";
 const char CONST_UID_PROTOCOL_DEL_ACCESS_TO_SUBSYSTEM[] = "{5E5EC969-0D11-41FB-9652-7E2ADD466782}";
