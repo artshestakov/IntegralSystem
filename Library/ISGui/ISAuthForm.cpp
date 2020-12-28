@@ -99,10 +99,6 @@ ISAuthForm::ISAuthForm()
 	connect(ButtonExit, &ISPushButton::clicked, this, &ISAuthForm::close);
 	LayoutBottom->addWidget(ButtonExit);
 
-	AuthConnector = new ISAuthConnector(this);
-	connect(AuthConnector, &ISAuthConnector::ConnectedToHost, this, &ISAuthForm::ConnectedDone);
-	connect(AuthConnector, &ISAuthConnector::ConnectedFailed, this, &ISAuthForm::ConnectedFailed);
-
 #ifdef DEBUG
 	EditLogin->SetValue(SYSTEM_USER_LOGIN);
 	EditPassword->SetValue("adm777");
@@ -186,19 +182,8 @@ void ISAuthForm::Input()
 		return;
 	}
 
-	//Если выбран вход по протоколу - используем новую функцию, иначе - старую (через БД)
-	CONFIG_BOOL("Protocol/Include") ? InputNew() : InputOld();
-}
-//-----------------------------------------------------------------------------
-void ISAuthForm::InputOld()
-{
-	SetConnecting(true);
-	AuthConnector->Connect();
-}
-//-----------------------------------------------------------------------------
-void ISAuthForm::InputNew()
-{
-	if (!ISDatabase::Instance().GetDB(CONNECTION_DEFAULT).isOpen()) //Если подключения ещё нет - подключаемся
+	//Если подключения ещё нет - подключаемся
+	if (!ISDatabase::Instance().GetDB(CONNECTION_DEFAULT).isOpen())
 	{
 		if (!ISDatabase::Instance().Connect(CONNECTION_DEFAULT,
 			CONFIG_STRING(CONST_CONFIG_CONNECTION_SERVER), CONFIG_INT(CONST_CONFIG_CONNECTION_PORT), CONFIG_STRING(CONST_CONFIG_CONNECTION_DATABASE),
@@ -209,9 +194,22 @@ void ISAuthForm::InputNew()
 		}
 	}
 
+	SetConnecting(true);
 	if (!ISTcpConnector::Instance().Connect(CONFIG_STRING(CONST_CONFIG_CONNECTION_SERVER), CONFIG_INT("Protocol/Port"))) //Ошибка подключения к карату
 	{
-		ISMessageBox::ShowCritical(this, LANG("Message.Error.ConnectToServer"), ISTcpConnector::Instance().GetErrorString());
+		SetConnecting(false);
+		ISMessageBox MessageBox(ISMessageBox::Question, LANG("Question"),
+			LANG("Message.Question.ConnectionError.Reconnect").arg(ISTcpConnector::Instance().GetErrorString()), QString(),
+			{
+				{ 1, LANG("Yes") },
+				{ 2, LANG("No"), true }, //Нажатие на эту кнопку не учитывается
+				{ 3, LANG("Exit") }
+			}, this);
+		switch (MessageBox.Exec())
+		{
+		case 1: Input(); break; //Выбрали повторить подключение
+		case 3: close(); break; //Выбрали выход из программы
+		}
 		return;
 	}
 
@@ -222,6 +220,7 @@ void ISAuthForm::InputNew()
 		QVariantMap AnswerMap = qAuth.GetAnswer();
 		if (AnswerMap["IsNeedUpdate"].toBool()) //Если требуется обновление - предлагаем скачать и установить
 		{
+			SetConnecting(false);
 			if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.UpdateAvailable"))) //Пользователь согласился
 			{
 				ISProcessForm ProcessForm(LANG("UploadingUpdate"), this);
@@ -246,11 +245,13 @@ void ISAuthForm::InputNew()
 					}
 					else //Не удалось сохранить обновление
 					{
+						SetConnecting(false);
 						ISMessageBox::ShowCritical(&ProcessForm, LANG("Message.Error.SaveUpdate"), File.errorString());
 					}
 				}
 				else //Ошибка запроса на обновление
 				{
+					SetConnecting(false);
 					ISMessageBox::ShowCritical(&ProcessForm, LANG("Message.Error.DownloadUpdate"), qAuth.GetErrorString());
 				}
 			}
@@ -267,56 +268,16 @@ void ISAuthForm::InputNew()
 		ISVersionInfo::Instance().ConfigurationInfo.LocalName = LANG(AnswerMap["Configuration"].toMap()["Local"].toString());
 		ISVersionInfo::Instance().ConfigurationInfo.DesktopForm = AnswerMap["Configuration"].toMap()["Desktop"].toString();
 		ISVersionInfo::Instance().ConfigurationInfo.LogoName = AnswerMap["Configuration"].toMap()["Logo"].toString();
+		SetConnecting(false);
 		SetResult(true);
 		hide();
 		close();
 	}
 	else //Ошибка авторизации
 	{
+		SetConnecting(false);
 		ISMessageBox::ShowCritical(this, LANG("Message.Error.Auth"), qAuth.GetErrorString());
 	}
-}
-//-----------------------------------------------------------------------------
-void ISAuthForm::ConnectedDone()
-{
-	AuthConnector->Disconnect();
-	SetConnecting(false);
-
-	if (ISDatabase::Instance().Connect(CONNECTION_DEFAULT,
-		CONFIG_STRING(CONST_CONFIG_CONNECTION_SERVER), CONFIG_INT(CONST_CONFIG_CONNECTION_PORT), CONFIG_STRING(CONST_CONFIG_CONNECTION_DATABASE),
-		EditLogin->GetValue().toString(), EditPassword->GetValue().toString())) //Если подключение к базе данных установлено
-	{
-		ISConfig::Instance().SetValue(CONST_CONFIG_REMEMBER_USER_INCLUDE, CheckRememberUser->GetValue());
-		CheckRememberUser->GetValue().toBool() ?
-			ISConfig::Instance().SetValue(CONST_CONFIG_REMEMBER_USER_LOGIN, EditLogin->GetValue()) :
-			ISConfig::Instance().SetValue(CONST_CONFIG_REMEMBER_USER_LOGIN, QString());
-		hide();
-		SetResult(true);
-		ISBuffer::Instance().CurrentUserInfo.Login = EditLogin->GetValue().toString();
-		ISBuffer::Instance().CurrentUserInfo.Password = EditPassword->GetValue().toString();
-		close();
-	}
-	else //Ошибка подключения к базе данных
-	{
-		ISMessageBox MessageBox(ISMessageBox::Question, LANG("Question"),
-			LANG("Message.Question.ConnectionError.Reconnect").arg(ISDatabase::Instance().GetErrorString()), QString(),
-		{
-			{ 1, LANG("Yes") },
-			{ 2, LANG("No"), true }, //Нажатие на эту кнопку не учитывается
-			{ 3, LANG("Exit") }
-		}, this);
-		switch (MessageBox.Exec())
-		{
-		case 1: Input(); break; //Выбрали повторить подключение
-		case 3: close(); break; //Выбрали выход из программы
-		}
-	}
-}
-//-----------------------------------------------------------------------------
-void ISAuthForm::ConnectedFailed()
-{
-	SetConnecting(false);
-	ISMessageBox::ShowWarning(this, LANG("Message.Warning.FailedConnectionToPostgreSQL").arg(AuthConnector->errorString().toLower()));
 }
 //-----------------------------------------------------------------------------
 void ISAuthForm::SetConnecting(bool Connecting)

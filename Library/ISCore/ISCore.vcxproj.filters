@@ -47,9 +47,6 @@
     <ClCompile Include="ISMetaDataHelper.cpp">
       <Filter>MetaData</Filter>
     </ClCompile>
-    <ClCompile Include="ISAuthConnector.cpp">
-      <Filter>Network</Filter>
-    </ClCompile>
     <ClCompile Include="ISNetwork.cpp">
       <Filter>Network</Filter>
     </ClCompile>
@@ -213,9 +210,6 @@
   <ItemGroup>
     <QtMoc Include="ISQueryModel.h">
       <Filter>Database</Filter>
-    </QtMoc>
-    <QtMoc Include="ISAuthConnector.h">
-      <Filter>Network</Filter>
     </QtMoc>
     <QtMoc Include="ISNetwork.h">
       <Filter>Network</Filter>

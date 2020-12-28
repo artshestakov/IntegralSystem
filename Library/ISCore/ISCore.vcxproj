@@ -208,7 +208,6 @@
   <ItemGroup>
     <ClCompile Include="ISAlgorithm.cpp" />
     <ClCompile Include="ISAssert.cpp" />
-    <ClCompile Include="ISAuthConnector.cpp" />
     <ClCompile Include="ISConfig.cpp" />
     <ClCompile Include="ISConsole.cpp" />
     <ClCompile Include="ISCore.cpp" />
@@ -270,7 +269,6 @@
     <ClInclude Include="ISSettingsDatabase.h" />
     <QtMoc Include="ISRestWorker.h" />
     <QtMoc Include="ISNetwork.h" />
-    <QtMoc Include="ISAuthConnector.h" />
     <ClInclude Include="ISDatabase.h" />
     <ClInclude Include="ISMetaData.h" />
     <ClInclude Include="ISMetaDataHelper.h" />

@@ -67,7 +67,6 @@
   <Local Name="Message.Error.InitializeMetaData" Russian="Не удалось иницилизировать мета-данные."/>
   <Local Name="Message.Error.ObjectDateExpired" Russian="Программа не может быть запущена."/>
   <Local Name="Message.Error.QueryRecord" Russian="Ошибка запроса данных."/>
-  <Local Name="Message.Error.ConnectToServer" Russian="Ошибка подключения к серверу!"/>
   <Local Name="Message.Error.Auth" Russian="Ошибка авторизации!"/>
   <Local Name="Message.Error.UpdateTaskComment" Russian="Не удалось изменить комментарий к задаче!"/>
   <Local Name="Message.Error.DeleteTaskComment" Russian="Не удалось удалить комментарий!"/>
@@ -106,7 +105,6 @@
   <Local Name="Message.Warning.NotChangeSystemUserPassword" Russian="Менять пароль для системного пользователя запрещено!"/>
   <Local Name="Message.Warning.SearchFieldNotValid" Russian="Поисковое поле &quot;%1&quot; не заполнено."/>
   <Local Name="Message.Warning.NotCreateCalendarEventPast" Russian="Создавать события в прошлом запрещено."/>
-  <Local Name="Message.Warning.FailedConnectionToPostgreSQL" Russian="Ошибка подключения к серверу базы данных: %1"/>
   <Local Name="Message.Warning.OpenUrl.Failed" Russian="Не удалось открыть интернет ссылку: %1"/>
   <Local Name="Message.Warning.OpenUrl.Empty" Russian="Ссылка не указана!"/>
   <Local Name="Message.Warning.EMailIsEmpty" Russian="Адрес электронной почты не указан, отправка невозможна."/>
@@ -143,7 +141,7 @@
   <Local Name="Message.Question.DeleteFavorites" Russian="Удалить все избранные записи?"/>
   <Local Name="Message.Question.CreateCopyFile" Russian="Создать копию файла &quot;%1&quot;?"/>
   <Local Name="Message.Question.SaveFile" Russian="Сохранить файл &quot;%1&quot;?"/>
-  <Local Name="Message.Question.ConnectionError.Reconnect" Russian="Не удалось подключиться к базе данных.&#10;Ошибка: %1&#10;&#10;Повторить попытку подключения?"/>
+  <Local Name="Message.Question.ConnectionError.Reconnect" Russian="Не удалось подключиться к серверу.&#10;Ошибка: %1&#10;&#10;Повторить попытку подключения?"/>
   <Local Name="Message.Question.CancelChanged" Russian="Отменить изменения?"/>
   <Local Name="Message.Question.DeleteCalendarEvent" Russian="Удалить это событие?"/>
   <Local Name="Message.Question.FileSaved" Russian="Файл успешно сохранен! Открыть его?"/>
