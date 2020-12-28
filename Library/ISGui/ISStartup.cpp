@@ -36,7 +36,6 @@ void ISStartup::Shutdown(ISSplashScreen *SplashScreen)
 		ISMessageBox::ShowCritical(SplashScreen, qSaveMetaData.GetErrorString());
 	}
 
-	ISProtocol::ExitApplication();
 	ISQueryPool::Instance().Shutdown();
 	ISDatabase::Instance().DisconnectAll();
 	ISGui::ExitApplication();

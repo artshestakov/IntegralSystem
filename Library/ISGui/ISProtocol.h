@@ -8,7 +8,6 @@ class ISProtocol
 {
 public:
 	static void EnterApplication(); //Вход в программу
-	static void ExitApplication(); //Выход из программы
 
 	static void OpenSubSystem(const QString &TableName, const QString &LocalListName); //Открытие подсистемы
 

@@ -15,11 +15,6 @@ void ISProtocol::EnterApplication()
 	Insert(true, CONST_UID_PROTOCOL_ENTER_APPLICATION, QString(), QString(), QVariant());
 }
 //-----------------------------------------------------------------------------
-void ISProtocol::ExitApplication()
-{
-	Insert(false, CONST_UID_PROTOCOL_EXIT_APPLICATION, QString(), QString(), QString());
-}
-//-----------------------------------------------------------------------------
 void ISProtocol::OpenSubSystem(const QString &TableName, const QString &LocalListName)
 {
 	Insert(true, CONST_UID_PROTOCOL_OPEN_SUB_SYSTEM, TableName, LocalListName, QVariant());
