@@ -17,6 +17,7 @@
 #include "ISProcessForm.h"
 #include "ISTcpConnector.h"
 #include "ISTcpQuery.h"
+#include "ISQueryPool.h"
 //-----------------------------------------------------------------------------
 ISAuthForm::ISAuthForm()
 	: ISInterfaceDialogForm(true),
@@ -145,27 +146,25 @@ void ISAuthForm::ShowAboutForm()
 //-----------------------------------------------------------------------------
 void ISAuthForm::Input()
 {
+	//Проверяем заполнение конфигурационного файла
 	if (CONFIG_STRING(CONST_CONFIG_CONNECTION_SERVER).isEmpty())
 	{
 		ISGui::SetWaitGlobalCursor(false);
 		ISMessageBox::ShowCritical(this, LANG("Message.Error.ConnectionSetting.Input.ServerEmpty"));
 		return;
 	}
-
 	if (CONFIG_STRING(CONST_CONFIG_CONNECTION_PORT).isEmpty())
 	{
 		ISGui::SetWaitGlobalCursor(false);
 		ISMessageBox::ShowCritical(this, LANG("Message.Error.ConnectionSetting.Input.PortEmpty"));
 		return;
 	}
-
 	if (CONFIG_STRING(CONST_CONFIG_CONNECTION_DATABASE).isEmpty())
 	{
 		ISGui::SetWaitGlobalCursor(false);
 		ISMessageBox::ShowCritical(this, LANG("Message.Error.ConnectionSetting.Input.DatabaseNameEmpty"));
 		return;
 	}
-
 	if (EditLogin->GetValue().toString().isEmpty())
 	{
 		ISGui::SetWaitGlobalCursor(false);
@@ -173,7 +172,6 @@ void ISAuthForm::Input()
 		EditLogin->BlinkRed();
 		return;
 	}
-
 	if (EditPassword->GetValue().toString().isEmpty())
 	{
 		ISGui::SetWaitGlobalCursor(false);
@@ -185,9 +183,18 @@ void ISAuthForm::Input()
 	//Если подключения ещё нет - подключаемся
 	if (!ISDatabase::Instance().GetDB(CONNECTION_DEFAULT).isOpen())
 	{
-		if (!ISDatabase::Instance().Connect(CONNECTION_DEFAULT,
+		if (ISDatabase::Instance().Connect(CONNECTION_DEFAULT,
 			CONFIG_STRING(CONST_CONFIG_CONNECTION_SERVER), CONFIG_INT(CONST_CONFIG_CONNECTION_PORT), CONFIG_STRING(CONST_CONFIG_CONNECTION_DATABASE),
 			EditLogin->GetValue().toString(), EditPassword->GetValue().toString())) //Если подключение к базе данных установлено
+		{
+			if (!ISQueryPool::Instance().Start(CONFIG_STRING(CONST_CONFIG_CONNECTION_SERVER), CONFIG_INT(CONST_CONFIG_CONNECTION_PORT), CONFIG_STRING(CONST_CONFIG_CONNECTION_DATABASE),
+				EditLogin->GetValue().toString(), EditPassword->GetValue().toString())) //Ошибка запуска пула запросов
+			{
+				ISMessageBox::ShowCritical(this, LANG("Message.Error.InitializeQueryPool"), ISQueryPool::Instance().GetErrorString());
+				return;
+			}
+		}
+		else //Ошибка подключения к базе данных
 		{
 			ISMessageBox::ShowCritical(this, ISDatabase::Instance().GetErrorString());
 			return;

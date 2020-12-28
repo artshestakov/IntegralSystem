@@ -63,9 +63,7 @@
   <Local Name="Message.Error.ErrorQuerySQL.Details" Russian="Текст ошибки:&#10;%1&#10;&#10;Текст запроса:&#10;%2"/>
   <Local Name="Message.Error.InitializeQueryPool" Russian="Не удалось запустить пул запросов."/>
   <Local Name="Message.Error.CreateCopyStorageFile" Russian="Не удалось создать копию файла &quot;%1&quot;."/>
-  <Local Name="Message.Error.CheckAllQuery" Russian="Ошибка в SQL-запросе!"/>
   <Local Name="Message.Error.InitializeMetaData" Russian="Не удалось иницилизировать мета-данные."/>
-  <Local Name="Message.Error.ObjectDateExpired" Russian="Программа не может быть запущена."/>
   <Local Name="Message.Error.QueryRecord" Russian="Ошибка запроса данных."/>
   <Local Name="Message.Error.Auth" Russian="Ошибка авторизации!"/>
   <Local Name="Message.Error.UpdateTaskComment" Russian="Не удалось изменить комментарий к задаче!"/>
@@ -118,7 +116,6 @@
   <Local Name="Message.Warning.NotAccess.Special.TaskEdit" Russian="У Вас нет прав на редактирование задачи."/>
   <Local Name="Message.Warning.NotAccess.Special.TaskTransformation" Russian="У Вас нет прав на преобразование задачи в подзадачу и наоборот."/>
   <Local Name="Message.Warning.NotAccess.Special.Appoint" Russian="У Вас нет прав на назначение исполнителя. Вы можете назначить исполнителем только себя."/>
-  <Local Name="Message.Warning.NotAccessToDatabase" Russian="На подключение пользователей к базе данных наложен запрет. Программа будет закрыта. Обратитесь к системному администратору за дополнительной информацией."/>
   <Local Name="Message.Warning.UserNotLinkedToGroup" Russian="ВНИМАНИЕ! Вы не заполнили поле &quot;Группа&quot;. Пользователи не привязанные к группе не смогут авторизоваться в программе."/>
   <Local Name="Message.Warning.InvalidAccountLifeTimeDatesUser" Russian="ВНИМАНИЕ! Установлен некорректный диапазон даты начала и окончания срока действия учётной записи."/>
   <Local Name="Message.Warning.TaskWithNumberNotFound" Russian="Задача с номером #%1 не найдена!"/>
