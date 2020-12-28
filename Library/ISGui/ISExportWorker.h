@@ -1,6 +1,7 @@
 #pragma once
+#ifndef _ISEXPORTWORKER_H_INCLUDED
+#define _ISEXPORTWORKER_H_INCLUDED
 //-----------------------------------------------------------------------------
-#include "StdAfx.h"
 #include "PMetaClass.h"
 #include "ISTcpModel.h"
 //-----------------------------------------------------------------------------
@@ -40,3 +41,91 @@ protected:
 	bool Canceled;
 };
 //-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+class ISExportCSV : public ISExportWorker
+{
+	Q_OBJECT
+
+public:
+	ISExportCSV(PMetaTable *meta_table, ISTcpModel *tcp_model, QObject *parent = 0);
+	virtual ~ISExportCSV();
+
+	bool Prepare() override;
+	bool Export() override;
+
+private:
+	QFile *FileCSV;
+};
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+class ISExportDBF : public ISExportWorker
+{
+	Q_OBJECT
+
+public:
+	ISExportDBF(PMetaTable *meta_table, ISTcpModel *tcp_model, QObject *parent = 0);
+	virtual ~ISExportDBF();
+
+	bool Prepare() override;
+	bool Export() override;
+
+private:
+	ISUuid ConnectionName;
+	QString PathFolder;
+	QString FileLocalName;
+};
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+class ISExportHTML : public ISExportWorker
+{
+	Q_OBJECT
+
+public:
+	ISExportHTML(PMetaTable *meta_table, ISTcpModel *tcp_model, QObject *parent = 0);
+	virtual ~ISExportHTML();
+
+	bool Prepare() override;
+	bool Export() override;
+
+private:
+	QFile *FileHTML;
+};
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+class ISExportJSON : public ISExportWorker
+{
+	Q_OBJECT
+
+public:
+	ISExportJSON(PMetaTable *meta_table, ISTcpModel *tcp_model, QObject *parent = 0);
+	virtual ~ISExportJSON();
+
+	bool Prepare() override;
+	bool Export() override;
+
+private:
+	QFile *FileJSON;
+};
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+class ISExportXML : public ISExportWorker
+{
+	Q_OBJECT
+
+public:
+	ISExportXML(PMetaTable *meta_table, ISTcpModel *tcp_model, QObject *parent = 0);
+	virtual ~ISExportXML();
+
+	bool Prepare() override;
+	bool Export() override;
+
+private:
+	QFile *FileXML;
+};
+//-----------------------------------------------------------------------------
+#endif

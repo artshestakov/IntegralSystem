@@ -202,13 +202,8 @@
     <ClCompile Include="ISDiscussionListForm.cpp" />
     <ClCompile Include="ISEditsQT.cpp" />
     <ClCompile Include="ISEmpty.cpp" />
-    <ClCompile Include="ISExportCSV.cpp" />
-    <ClCompile Include="ISExportDBF.cpp" />
     <ClCompile Include="ISExportForm.cpp" />
-    <ClCompile Include="ISExportHTML.cpp" />
-    <ClCompile Include="ISExportJSON.cpp" />
     <ClCompile Include="ISExportWorker.cpp" />
-    <ClCompile Include="ISExportXML.cpp" />
     <ClCompile Include="ISFavorites.cpp" />
     <ClCompile Include="ISFavoritesForm.cpp" />
     <ClCompile Include="ISFieldEditBase.cpp" />
@@ -326,19 +321,7 @@
     <QtMoc Include="ISFileDialog.h" />
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="ISExportCSV.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <QtMoc Include="ISExportDBF.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <QtMoc Include="ISExportHTML.h" />
-  </ItemGroup>
-  <ItemGroup>
     <QtMoc Include="ISExportWorker.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <QtMoc Include="ISExportXML.h" />
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ISFlowLayout.h" />
@@ -395,7 +378,6 @@
     <QtMoc Include="ISEmpty.h" />
     <QtMoc Include="ISAsteriskCallsSubSystem.h" />
     <QtMoc Include="ISAudioPlayerForm.h" />
-    <QtMoc Include="ISExportJSON.h" />
     <ClInclude Include="isgui_global.h" />
     <QtMoc Include="ISProgressForm.h" />
     <QtMoc Include="ISTaskListForm.h" />

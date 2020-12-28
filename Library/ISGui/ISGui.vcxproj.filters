@@ -109,19 +109,7 @@
     <ClCompile Include="ISFileDialog.cpp">
       <Filter>Dialogs</Filter>
     </ClCompile>
-    <ClCompile Include="ISExportCSV.cpp">
-      <Filter>Export</Filter>
-    </ClCompile>
-    <ClCompile Include="ISExportDBF.cpp">
-      <Filter>Export</Filter>
-    </ClCompile>
-    <ClCompile Include="ISExportHTML.cpp">
-      <Filter>Export</Filter>
-    </ClCompile>
     <ClCompile Include="ISExportWorker.cpp">
-      <Filter>Export</Filter>
-    </ClCompile>
-    <ClCompile Include="ISExportXML.cpp">
       <Filter>Export</Filter>
     </ClCompile>
     <ClCompile Include="ISFlowLayout.cpp">
@@ -391,9 +379,6 @@
     <ClCompile Include="ISInternalDirectoriesSubSystem.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
-    <ClCompile Include="ISExportJSON.cpp">
-      <Filter>Export</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ISExportForm.h">
@@ -435,19 +420,7 @@
     <QtMoc Include="ISFileDialog.h">
       <Filter>Dialogs</Filter>
     </QtMoc>
-    <QtMoc Include="ISExportCSV.h">
-      <Filter>Export</Filter>
-    </QtMoc>
-    <QtMoc Include="ISExportDBF.h">
-      <Filter>Export</Filter>
-    </QtMoc>
-    <QtMoc Include="ISExportHTML.h">
-      <Filter>Export</Filter>
-    </QtMoc>
     <QtMoc Include="ISExportWorker.h">
-      <Filter>Export</Filter>
-    </QtMoc>
-    <QtMoc Include="ISExportXML.h">
       <Filter>Export</Filter>
     </QtMoc>
     <QtMoc Include="ISFlowLayout.h">
@@ -668,9 +641,6 @@
     </QtMoc>
     <QtMoc Include="ISInternalDirectoriesSubSystem.h">
       <Filter>Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISExportJSON.h">
-      <Filter>Export</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>
