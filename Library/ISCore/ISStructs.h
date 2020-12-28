@@ -463,12 +463,18 @@ struct ISFailAuthInfo
 //-----------------------------------------------------------------------------
 struct ISCORE_EXPORT ISModelField
 {
-	ISModelField() : IsForeign(false) { }
+	ISModelField()
+		: Index(0),
+		Type(ISNamespace::FT_Unknown),
+		IsForeign(false),
+		IsSystem(false) { }
 
-	QString Name;
-	QString LocalName;
-	ISNamespace::FieldType Type;
-	bool IsForeign;
+	size_t Index; //Индекс
+	QString Name; //Имя
+	QString LocalName; //Локальное имя
+	ISNamespace::FieldType Type; //Тип
+	bool IsForeign; //Флаг внешнего ключа
+	bool IsSystem; //Флаг системного поля
 };
 //-----------------------------------------------------------------------------
 struct ISCORE_EXPORT ISModelRecord

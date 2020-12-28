@@ -22,6 +22,8 @@ public:
 	QVariant GetRecordValue(int Index, const QString &FieldName); //Получить значение строки
 	ISVectorUInt GetIDs() const; //Получить список всех индетификаторов записей
 	int GetFieldIndex(const QString &FieldName) const;
+	ISModelField GetField(const QString &FieldName); //Получить поле по имени
+	ISModelField GetField(unsigned int Index); //Получить поле по индексу
 
 	QVariant data(const QModelIndex &ModelIndex, int Role = Qt::DisplayRole) const override;
 	bool setData(const QModelIndex &ModelIndex, const QVariant &Value, int Role = Qt::EditRole) override;

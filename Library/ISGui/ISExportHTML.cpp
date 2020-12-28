@@ -4,9 +4,11 @@
 #include "ISMessageBox.h"
 #include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
-ISExportHTML::ISExportHTML(PMetaTable *meta_table, QObject *parent) : ISExportWorker(meta_table, parent)
+ISExportHTML::ISExportHTML(PMetaTable *meta_table, ISTcpModel *tcp_model, QObject *parent)
+	: ISExportWorker(meta_table, tcp_model, parent),
+	FileHTML(nullptr)
 {
-	FileHTML = nullptr;
+	
 }
 //-----------------------------------------------------------------------------
 ISExportHTML::~ISExportHTML()
@@ -63,19 +65,14 @@ bool ISExportHTML::Export()
 	if (Header) //Если в экспортируемый файл нужно добавить заголовки колонок
 	{
 		FileHTML->write("   <tr>\r\n");
-		for (const QString &FieldName : Fields) //Обход выбранных для экспорта полей
+		for (const unsigned int &Index : Fields) //Обход выбранных для экспорта полей
 		{
-			if (ISAlgorithm::VectorContains(Fields, FieldName))
-			{
-				//???
-				//FileHTML->write("    <th>" + Model->GetFieldLocalName(FieldName).toUtf8() + "</th>\r\n");
-			}
+			FileHTML->write("    <th>" + TcpModel->GetField(Index).LocalName.toUtf8() + "</th>\r\n");
 		}
 		FileHTML->write("   </tr>\r\n");
 	}
 
-	//???
-	for (int Row = 0; Row < /*Model->rowCount()*/0; ++Row) //Обход строк
+	for (int Row = 0; Row < TcpModel->rowCount(); ++Row) //Обход строк
 	{
 		if (Canceled) //Если была нажата кнопка "Остановить"
 		{
@@ -99,31 +96,26 @@ bool ISExportHTML::Export()
 			}
 		}
 
-		//???
-		//QSqlRecord SqlRecord = Model->GetRecord(Row); //Текущая строка
+		ISModelRecord Record = TcpModel->GetRecord(Row); //Текущая строка
 		QString RowString;
 
 		RowString.append("    <tr>");
-		for (const QString &FieldName : Fields) //Обход колонок
+		for (const unsigned int &Index : Fields) //Обход колонок
 		{
-			Q_UNUSED(FieldName);
-			//???
-			//QVariant Value = SqlRecord.value(FieldName).toString();
-			//Value = PrepareValue(MetaTable->GetField(FieldName)->Type, Value);
-			//RowString.append("<td>" + Value.toString().toUtf8() + "</td>");
+			QVariant Value = Record.Values[Index];
+			Value = PrepareValue(TcpModel->GetField(Index).Type, Value);
+			RowString.append("<td>" + Value.toString() + "</td>");
 		}
 		RowString.append("</tr>\r\n");
-
 		FileHTML->write(RowString.toUtf8());
 
 		emit ExportedRow();
-		//emit Message(LANG("Export.Process.Process").arg(Row + 1).arg(Model->rowCount()));
+		emit Message(LANG("Export.Process.Process").arg(Row + 1).arg(TcpModel->rowCount()));
 	}
-
 	FileHTML->write("  </table>\r\n");
 	FileHTML->write(" </body>\r\n");
 	FileHTML->write("</html>\r\n");
-
+	FileHTML->close();
 	return true;
 }
 //-----------------------------------------------------------------------------

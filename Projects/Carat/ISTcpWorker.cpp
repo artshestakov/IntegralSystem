@@ -2034,10 +2034,12 @@ bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 		VectorType[i] = MetaField->Type; //«аполн€ем типы сейчас, чтобы использовать их ниже
 		FieldList.append(QVariantMap
 		{
+			{ "Index", i },
 			{ "Name", MetaField->Name },
 			{ "LocalName", MetaField->LocalListName },
 			{ "Type", MetaField->Type },
-			{ "IsForeign", MetaField->Foreign ? true : false }
+			{ "IsForeign", MetaField->Foreign ? true : false },
+			{ "IsSysten", MetaField->IsSystem }
 		});
 	}
 
@@ -3271,6 +3273,8 @@ bool ISTcpWorker::GetHistoryList(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::TaskCommentAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
+	Q_UNUSED(TcpAnswer);
+
 	QVariant TaskID = CheckNullField("TaskID", TcpMessage),
 		Comment = CheckNullField("Comment", TcpMessage);
 	if (!TaskID.isValid() || !Comment.isValid())

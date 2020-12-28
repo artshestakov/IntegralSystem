@@ -37,10 +37,12 @@ void ISTcpModel::SetSource(const QVariantList &fields, const QVariantList &recor
 		QVariantMap FieldMap = Field.toMap();
 
 		ISModelField FieldModel;
+		FieldModel.Index = FieldMap["Index"].toUInt();
 		FieldModel.Name = FieldMap["Name"].toString();
 		FieldModel.LocalName = FieldMap["LocalName"].toString();
 		FieldModel.Type = static_cast<ISNamespace::FieldType>(FieldMap["Type"].toInt());
 		FieldModel.IsForeign = FieldMap["IsForeign"].toBool();
+		FieldModel.IsSystem = FieldMap["IsSystem"].toBool();
 		Fields.emplace_back(FieldModel);
 	}
 
@@ -129,6 +131,16 @@ int ISTcpModel::GetFieldIndex(const QString &FieldName) const
 		}
 	}
 	return -1;
+}
+//-----------------------------------------------------------------------------
+ISModelField ISTcpModel::GetField(const QString &FieldName)
+{
+	return GetField(GetFieldIndex(FieldName));
+}
+//-----------------------------------------------------------------------------
+ISModelField ISTcpModel::GetField(unsigned int Index)
+{
+	return Fields[Index];
 }
 //-----------------------------------------------------------------------------
 QVariant ISTcpModel::data(const QModelIndex &ModelIndex, int Role) const

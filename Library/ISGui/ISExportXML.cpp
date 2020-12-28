@@ -4,7 +4,8 @@
 #include "ISMessageBox.h"
 #include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
-ISExportXML::ISExportXML(PMetaTable *meta_table, QObject *parent) : ISExportWorker(meta_table, parent)
+ISExportXML::ISExportXML(PMetaTable *meta_table, ISTcpModel *tcp_model, QObject *parent)
+	: ISExportWorker(meta_table, tcp_model, parent)
 {
 
 }
@@ -44,8 +45,8 @@ bool ISExportXML::Export()
 	QDomDocument DomDocument(MetaTable->Name);
 	QDomElement DomElement = DomDocument.createElement(MetaTable->Name);
 	DomDocument.appendChild(DomElement);
-	//???
-	for (int Row = 0; Row < /*Model->rowCount()*/0; ++Row) //Обход строк
+
+	for (int Row = 0; Row < TcpModel->rowCount(); ++Row) //Обход строк
 	{
 		if (Canceled) //Если была нажата кнопка "Остановить"
 		{
@@ -70,19 +71,17 @@ bool ISExportXML::Export()
 		}
 
 		QDomElement TagRow = DomDocument.createElement(MetaTable->Name);
-		//???
-		//QSqlRecord SqlRecord = Model->GetRecord(Row); //Текущая строка
-		for (const QString &FieldName : Fields) //Обход колонок
+		ISModelRecord Record = TcpModel->GetRecord(Row); //Текущая строка
+		for (const unsigned int &Index : Fields) //Обход колонок
 		{
-			Q_UNUSED(FieldName);
-			//???
-			//QVariant Value = SqlRecord.value(FieldName).toString();
-			//Value = PrepareValue(MetaTable->GetField(FieldName)->Type, Value);
-			//TagRow.setAttribute(FieldName, Value.toString());
-			//DomElement.appendChild(TagRow);
+			ISModelField ModelField = TcpModel->GetField(Index);
+			QVariant Value = Record.Values[Index];
+			Value = PrepareValue(ModelField.Type, Value);
+			TagRow.setAttribute(ModelField.Name, Value.toString());
+			DomElement.appendChild(TagRow);
 		}
 		emit ExportedRow();
-		//emit Message(LANG("Export.Process.Process").arg(Row + 1).arg(Model->rowCount()));
+		emit Message(LANG("Export.Process.Process").arg(Row + 1).arg(TcpModel->rowCount()));
 	}
 	FileXML->write(DomDocument.toString().toUtf8());
 	FileXML->close();

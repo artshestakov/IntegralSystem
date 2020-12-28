@@ -5,8 +5,8 @@
 #include "ISConstants.h"
 #include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
-ISExportDBF::ISExportDBF(PMetaTable *meta_table, QObject *parent)
-	: ISExportWorker(meta_table, parent),
+ISExportDBF::ISExportDBF(PMetaTable *meta_table, ISTcpModel *tcp_model, QObject *parent)
+	: ISExportWorker(meta_table, tcp_model, parent),
 	ConnectionName(ISSystem::GenerateUuid())
 {
 	
@@ -27,22 +27,16 @@ bool ISExportDBF::Prepare()
 		ErrorString = Database.lastError().text();
 		return false;
 	}
-
 	return true;
 }
 //-----------------------------------------------------------------------------
 bool ISExportDBF::Export()
 {
 	QString CreateTableSql = "CREATE TABLE " + MetaTable->Name + " (";
-	
-	for (const QString &FieldName : Fields) //Обход выбранных для экспорта полей
+	for (const unsigned int &Index : Fields) //Обход выбранных для экспорта полей
 	{
-		if (ISAlgorithm::VectorContains(Fields, FieldName))
-		{
-			CreateTableSql += FieldName + " VARCHAR, ";
-		}
+		CreateTableSql += TcpModel->GetField(Index).Name + " VARCHAR, ";
 	}
-
 	CreateTableSql.chop(2);
 	CreateTableSql += ')';
 
@@ -59,8 +53,7 @@ bool ISExportDBF::Export()
 		return false;
 	}
 	
-	//???
-	for (int Row = 0; Row < /*Model->rowCount()*/0; ++Row) //Обход строк
+	for (int Row = 0; Row < TcpModel->rowCount(); ++Row) //Обход строк
 	{
 		if (Canceled) //Если была нажата кнопка "Остановить"
 		{
@@ -82,18 +75,17 @@ bool ISExportDBF::Export()
 			}
 		}
 
-		//???
-		//QSqlRecord SqlRecord = Model->GetRecord(Row); //Текущая строка
-		ISStringMap Bind;
-		QString InsertFields = "INSERT INTO " + MetaTable->Name + '(';
+		ISModelRecord Record = TcpModel->GetRecord(Row); //Текущая строка
+		ISStringToVariantMap Bind;
+		QString InsertFields = "INSERT INTO [" + MetaTable->Name + "](";
 		QString ValuesField = "VALUES(";
 
-		for (const QString &FieldName : Fields) //Обход колонок
+		for (const unsigned int &Index : Fields) //Обход колонок
 		{
-			InsertFields += FieldName + ", ";
+			QString FieldName = TcpModel->GetField(Index).Name;
+			InsertFields += "[" + FieldName + "], ";
 			ValuesField += ':' + FieldName + ", ";
-			//???
-			//Bind.emplace(':' + FieldName, SqlRecord.value(FieldName).toString());
+			Bind[':' + FieldName] = Record.Values[Index];
 		}
 
 		InsertFields.chop(2);
@@ -108,9 +100,9 @@ bool ISExportDBF::Export()
 			return false;
 		}
 
-		for (const auto &Item : Bind)
+		for (const auto &MapItem : Bind)
 		{
-			SqlQuery.bindValue(Item.first, Item.second);
+			SqlQuery.bindValue(MapItem.first, MapItem.second);
 		}
 
 		if (!SqlQuery.exec())
@@ -120,7 +112,7 @@ bool ISExportDBF::Export()
 		}
 
 		emit ExportedRow();
-		//emit Message(LANG("Export.Process.Process").arg(Row + 1).arg(Model->rowCount()));
+		emit Message(LANG("Export.Process.Process").arg(Row + 1).arg(TcpModel->rowCount()));
 	}
 
 	return true;

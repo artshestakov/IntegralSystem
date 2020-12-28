@@ -2,6 +2,7 @@
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 #include "PMetaClass.h"
+#include "ISTcpModel.h"
 //-----------------------------------------------------------------------------
 class ISExportWorker : public QObject
 {
@@ -12,7 +13,7 @@ signals:
 	void Message(const QString &Message);
 
 public:
-	ISExportWorker(PMetaTable *meta_table, QObject *parent = 0);
+	ISExportWorker(PMetaTable *meta_table, ISTcpModel *tcp_model, QObject *parent = 0);
 	virtual ~ISExportWorker();
 
 	virtual bool Prepare() = 0; //Подготовка экспорта
@@ -20,8 +21,7 @@ public:
 
 	void Cancel(); //Остановка
 
-	void SetModel(QObject *SqlModel);
-	void SetFields(const ISVectorString &fields);
+	void SetFields(const ISVectorUInt &fields);
 	void SetHeader(bool header);
 	void SetSelectedRows(const ISVectorInt &selected_rows);
 
@@ -33,8 +33,8 @@ protected:
 protected:
 	QString ErrorString;
 	PMetaTable *MetaTable;
-	QObject *Model;
-	ISVectorString Fields;
+	ISTcpModel *TcpModel;
+	ISVectorUInt Fields;
 	bool Header;
 	ISVectorInt SelectedRows;
 	bool Canceled;

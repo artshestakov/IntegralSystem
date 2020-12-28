@@ -6,36 +6,36 @@
 #include "ISNamespace.h"
 #include "ISListWidget.h"
 #include "ISFieldEdits.h"
+#include "ISTcpModel.h"
 //-----------------------------------------------------------------------------
 class ISExportForm : public ISInterfaceDialogForm
 {
 	Q_OBJECT
 
 public:
-	ISExportForm(PMetaTable *meta_table);
+	ISExportForm(ISTcpModel *TcpModel);
 	virtual ~ISExportForm();
 
 	ISNamespace::ExportType GetSelectedType();
 	QString GetSelectTypeName() const;
-	ISVectorString GetSelectedFields() const;
+	ISVectorUInt GetSelectedFields() const;
 	bool GetHeader() const;
 
 private:
 	void CreateTabSettings();
-	void CreateTabFields();
+	void CreateTabFields(ISTcpModel *TcpModel);
 	void Select();
 
-	void CreateFieldItem(PMetaField *MetaField);
+	void CreateFieldItem(const ISModelField &ModelField);
 	void FieldsPositionChanged();
-	void ItemDoubleClicked(QListWidgetItem *item);
+	void ItemDoubleClicked(QListWidgetItem *ListWidgetItem);
 
 	void EnterClicked();
 	void TypeChanged(const QVariant &Value);
 
 private:
 	ISNamespace::ExportType SelectedType;
-	PMetaTable *MetaTable;
-	ISVectorString SelectedFields;
+	ISVectorUInt SelectedFields;
 	ISComboEdit *ComboBoxType;
 	QTabWidget *TabWidget;
 	ISButtonDialog *ButtonDialog;

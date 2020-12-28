@@ -4,11 +4,11 @@
 #include "ISMessageBox.h"
 #include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
-ISExportCSV::ISExportCSV(PMetaTable *meta_table, QObject *parent)
-	: ISExportWorker(meta_table, parent),
+ISExportCSV::ISExportCSV(PMetaTable *meta_table, ISTcpModel *tcp_model, QObject *parent)
+	: ISExportWorker(meta_table, tcp_model, parent),
 	FileCSV(nullptr)
 {
-	FileCSV = nullptr;
+	
 }
 //-----------------------------------------------------------------------------
 ISExportCSV::~ISExportCSV()
@@ -49,21 +49,17 @@ bool ISExportCSV::Export()
 	if (Header) //Если в экспортируемый файл нужно добавить заголовки колонок
 	{
 		QString HeaderString;
-		for (const QString &FieldName : Fields) //Обход выбранных для экспорта полей
+		for (const unsigned int &Index : Fields) //Обход выбранных для экспорта полей
 		{
-			if (ISAlgorithm::VectorContains(Fields, FieldName))
-			{
-				//???
-				//HeaderString.append(Model->GetFieldLocalName(FieldName));
-				HeaderString.append(';');
-			}
+			HeaderString.append(TcpModel->GetField(Index).LocalName);
+			HeaderString.append(';');
 		}
 		HeaderString.chop(1);
 		HeaderString.append("\r\n");
 		FileCSV->write(HeaderString.toLocal8Bit());
 	}
 
-	for (int Row = 0; Row < /*Model->rowCount()*/0; ++Row) //Обход строк
+	for (int Row = 0; Row < TcpModel->rowCount(); ++Row) //Обход строк
 	{
 		if (Canceled) //Если была нажата кнопка "Остановить"
 		{
@@ -87,31 +83,23 @@ bool ISExportCSV::Export()
 			}
 		}
 
-		//???
-		//QSqlRecord SqlRecord = Model->GetRecord(Row); //Текущая строка
+		ISModelRecord Record = TcpModel->GetRecord(Row); //Текущая строка
 		QString RowString;
-
-		for (const QString &FieldName : Fields) //Обход колонок
+		for (const unsigned int &Index : Fields) //Обход колонок
 		{
-			Q_UNUSED(FieldName);
-			//???
-			//QVariant Value = SqlRecord.value(FieldName);
-			//Value = PrepareValue(MetaTable->GetField(FieldName)->Type, Value);
-			//RowString.append(Value.toString());
+			QVariant Value = Record.Values[Index];
+			Value = PrepareValue(TcpModel->GetField(Index).Type, Value);
+			RowString.append(Value.toString());
 			RowString.append(';');
 		}
-
 		RowString.chop(1);
 		RowString.append("\r\n");
 		FileCSV->write(RowString.toLocal8Bit());
 
 		emit ExportedRow();
-		//???
-		//emit Message(LANG("Export.Process.Process").arg(Row + 1).arg(Model->rowCount()));
+		emit Message(LANG("Export.Process.Process").arg(Row + 1).arg(TcpModel->rowCount()));
 	}
-
 	FileCSV->close();
-
 	return true;
 }
 //-----------------------------------------------------------------------------

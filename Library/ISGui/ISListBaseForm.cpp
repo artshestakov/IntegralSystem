@@ -882,7 +882,7 @@ void ISListBaseForm::Export()
 		return;
 	}
 
-	ISExportForm ExportForm(MetaTable);
+	ISExportForm ExportForm(TcpModel);
 	if (!ExportForm.Exec())
 	{
 		return;
@@ -891,13 +891,12 @@ void ISListBaseForm::Export()
 	ISExportWorker *ExportWorker = nullptr;
 	switch (ExportForm.GetSelectedType())
 	{
-	case ISNamespace::ET_CSV: ExportWorker = new ISExportCSV(MetaTable, this); break;
-	case ISNamespace::ET_HTML: ExportWorker = new ISExportHTML(MetaTable, this); break;
-	case ISNamespace::ET_DBF: ExportWorker = new ISExportDBF(MetaTable, this); break;
-	case ISNamespace::ET_XML: ExportWorker = new ISExportXML(MetaTable, this); break;
+	case ISNamespace::ET_CSV: ExportWorker = new ISExportCSV(MetaTable, TcpModel, this); break;
+	case ISNamespace::ET_HTML: ExportWorker = new ISExportHTML(MetaTable, TcpModel, this); break;
+	case ISNamespace::ET_DBF: ExportWorker = new ISExportDBF(MetaTable, TcpModel, this); break;
+	case ISNamespace::ET_XML: ExportWorker = new ISExportXML(MetaTable, TcpModel, this); break;
 	}
 	ExportWorker->SetFields(ExportForm.GetSelectedFields());
-	//ExportWorker->SetModel(SqlModel);
 	ExportWorker->SetHeader(ExportForm.GetHeader());
 	ExportWorker->SetSelectedRows(GetSelectedRowIndexes());
 

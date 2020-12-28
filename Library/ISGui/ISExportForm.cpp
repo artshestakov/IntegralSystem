@@ -4,9 +4,8 @@
 #include "ISBuffer.h"
 #include "ISMessageBox.h"
 //-----------------------------------------------------------------------------
-ISExportForm::ISExportForm(PMetaTable *meta_table)
+ISExportForm::ISExportForm(ISTcpModel *TcpModel)
 	: ISInterfaceDialogForm(),
-	MetaTable(meta_table),
 	SelectedType(ISNamespace::ET_Unknown)
 {
 	setWindowIcon(BUFFER_ICONS("ExportTable"));
@@ -32,7 +31,7 @@ ISExportForm::ISExportForm(PMetaTable *meta_table)
 	GetMainLayout()->addWidget(TabWidget);
 
 	CreateTabSettings();
-	CreateTabFields();
+	CreateTabFields(TcpModel);
 
 	ButtonDialog = new ISButtonDialog(this, LANG("Export"));
 	ButtonDialog->SetApplyEnabled(false);
@@ -56,7 +55,7 @@ QString ISExportForm::GetSelectTypeName() const
 	return ComboBoxType->GetCurrentText();
 }
 //-----------------------------------------------------------------------------
-ISVectorString ISExportForm::GetSelectedFields() const
+ISVectorUInt ISExportForm::GetSelectedFields() const
 {
 	return SelectedFields;
 }
@@ -79,7 +78,7 @@ void ISExportForm::CreateTabSettings()
 	FormLayout->addRow(LANG("Export.Setting.Header") + ':', CheckHeader);
 }
 //-----------------------------------------------------------------------------
-void ISExportForm::CreateTabFields()
+void ISExportForm::CreateTabFields(ISTcpModel *TcpModel)
 {
 	QVBoxLayout *LayoutFields = new QVBoxLayout();
 
@@ -107,16 +106,14 @@ void ISExportForm::CreateTabFields()
 	ListFields->setDefaultDropAction(Qt::MoveAction);
 	LayoutFields->addWidget(ListFields);
 
-	CreateFieldItem(MetaTable->GetFieldID());
-
-	for (PMetaField *MetaField : MetaTable->Fields)
+	for (size_t i = 0, c = TcpModel->columnCount(); i < c; ++i)
 	{
-		if (!MetaField->HideFromList)
+		ISModelField ModelField = TcpModel->GetField(i);
+		if (!ModelField.IsSystem)
 		{
-			CreateFieldItem(MetaField);
+			CreateFieldItem(TcpModel->GetField(i));
 		}
 	}
-
 	connect(ListFields, &QListWidget::itemChanged, this, &ISExportForm::FieldsPositionChanged);
 	connect(ListFields, &QListWidget::itemDoubleClicked, this, &ISExportForm::ItemDoubleClicked);
 	connect(ListFields->model(), &QAbstractListModel::rowsMoved, this, &ISExportForm::FieldsPositionChanged);
@@ -133,14 +130,14 @@ void ISExportForm::Select()
 	close();
 }
 //-----------------------------------------------------------------------------
-void ISExportForm::CreateFieldItem(PMetaField *MetaField)
+void ISExportForm::CreateFieldItem(const ISModelField &ModelField)
 {
 	QListWidgetItem *FieldItem = new QListWidgetItem(ListFields);
-	FieldItem->setText(MetaField->LabelName);
-	FieldItem->setData(Qt::UserRole, MetaField->Name);
+	FieldItem->setText(ModelField.LocalName);
+	FieldItem->setData(Qt::UserRole, ModelField.Index);
 	FieldItem->setCheckState(Qt::Checked);
 	FieldItem->setSizeHint(QSize(FieldItem->sizeHint().width(), 30));
-	SelectedFields.emplace_back(MetaField->Name);
+	SelectedFields.emplace_back(ModelField.Index);
 }
 //-----------------------------------------------------------------------------
 void ISExportForm::FieldsPositionChanged()
@@ -148,27 +145,22 @@ void ISExportForm::FieldsPositionChanged()
 	SelectedFields.clear();
 	for (int i = 0; i < ListFields->count(); ++i)
 	{
-		QListWidgetItem *Item = ListFields->item(i);
-		if (Item->text().length())
+		QListWidgetItem *ListWidgetItem = ListFields->item(i);
+		if (!ListWidgetItem->text().isEmpty())
 		{
-			if (Item->checkState() == Qt::Checked)
+			if (ListWidgetItem->checkState() == Qt::Checked)
 			{
-				SelectedFields.emplace_back(Item->data(Qt::UserRole).toString());
+				SelectedFields.emplace_back(ListWidgetItem->data(Qt::UserRole).toUInt());
 			}
 		}
 	}
 }
 //-----------------------------------------------------------------------------
-void ISExportForm::ItemDoubleClicked(QListWidgetItem *item)
+void ISExportForm::ItemDoubleClicked(QListWidgetItem *ListWidgetItem)
 {
-	if (item->checkState() == Qt::Checked)
-	{
-		item->setCheckState(Qt::Unchecked);
-	}
-	else
-	{
-		item->setCheckState(Qt::Checked);
-	}
+	ListWidgetItem->checkState() == Qt::Checked ?
+		ListWidgetItem->setCheckState(Qt::Unchecked) :
+		ListWidgetItem->setCheckState(Qt::Checked);
 }
 //-----------------------------------------------------------------------------
 void ISExportForm::EnterClicked()
@@ -178,6 +170,7 @@ void ISExportForm::EnterClicked()
 //-----------------------------------------------------------------------------
 void ISExportForm::TypeChanged(const QVariant &Value)
 {
+	SelectedType = static_cast<ISNamespace::ExportType>(Value.toInt());
 	ButtonDialog->SetApplyEnabled(Value.toInt() != ISNamespace::ET_Unknown);
 }
 //-----------------------------------------------------------------------------

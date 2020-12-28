@@ -1,11 +1,11 @@
 #include "ISExportWorker.h"
 #include "ISLocalization.h"
 //-----------------------------------------------------------------------------
-ISExportWorker::ISExportWorker(PMetaTable *meta_table, QObject *parent)
+ISExportWorker::ISExportWorker(PMetaTable *meta_table, ISTcpModel *tcp_model, QObject *parent)
 	: QObject(parent),
 	ErrorString(LANG("Export.Error.NoError")),
 	MetaTable(meta_table),
-	Model(nullptr),
+	TcpModel(tcp_model),
 	Header(false),
 	Canceled(false)
 {
@@ -22,12 +22,7 @@ void ISExportWorker::Cancel()
 	Canceled = true;
 }
 //-----------------------------------------------------------------------------
-void ISExportWorker::SetModel(QObject *SqlModel)
-{
-	Model = SqlModel;
-}
-//-----------------------------------------------------------------------------
-void ISExportWorker::SetFields(const ISVectorString &fields)
+void ISExportWorker::SetFields(const ISVectorUInt &fields)
 {
 	Fields = fields;
 }
@@ -49,19 +44,17 @@ QString ISExportWorker::GetErrorString() const
 //-----------------------------------------------------------------------------
 QVariant ISExportWorker::PrepareValue(ISNamespace::FieldType Type, const QVariant &Value) const
 {
-	if (Value.isNull())
-	{
-		return QVariant();
-	}
-
 	QVariant Result;
-	if (Type == ISNamespace::FT_Bool)
+	if (!Value.isNull())
 	{
-		Result = Value.toBool() ? LANG("Yes") : LANG("No");
-	}
-	else
-	{
-		Result = Value;
+		if (Type == ISNamespace::FT_Bool)
+		{
+			Result = Value.toBool() ? LANG("Yes") : LANG("No");
+		}
+		else
+		{
+			Result = Value;
+		}
 	}
 	return Result;
 }
