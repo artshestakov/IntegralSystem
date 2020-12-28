@@ -99,11 +99,6 @@ ISAuthForm::ISAuthForm()
 	connect(ButtonExit, &ISPushButton::clicked, this, &ISAuthForm::close);
 	LayoutBottom->addWidget(ButtonExit);
 
-	QAction *ActionClearFields = new QAction(this);
-	ActionClearFields->setShortcut(Qt::Key_F12);
-	connect(ActionClearFields, &QAction::triggered, this, &ISAuthForm::ClearFields);
-	addAction(ActionClearFields);
-
 	AuthConnector = new ISAuthConnector(this);
 	connect(AuthConnector, &ISAuthConnector::ConnectedToHost, this, &ISAuthForm::ConnectedDone);
 	connect(AuthConnector, &ISAuthConnector::ConnectedFailed, this, &ISAuthForm::ConnectedFailed);
@@ -351,13 +346,6 @@ bool ISAuthForm::Check()
 	}
 
 	return true;
-}
-//-----------------------------------------------------------------------------
-void ISAuthForm::ClearFields()
-{
-	EditLogin->Clear();
-	EditPassword->Clear();
-	EditLogin->SetFocus();
 }
 //-----------------------------------------------------------------------------
 bool ISAuthForm::CheckUpdate()

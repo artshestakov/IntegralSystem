@@ -33,7 +33,6 @@ private:
 
 	void SetConnecting(bool Connecting); //Изменить рисовку интерфейса
 	bool Check(); //Проверки
-	void ClearFields();
 	bool CheckUpdate();
 
 private:
