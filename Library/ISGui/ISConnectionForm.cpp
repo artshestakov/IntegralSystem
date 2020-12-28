@@ -27,10 +27,6 @@ ISConnectionForm::ISConnectionForm() : ISInterfaceDialogForm()
 	EditDatabase->SetValue(CONFIG_STRING(CONST_CONFIG_CONNECTION_DATABASE));
 	FormLayout->addRow(LANG("DatabaseName") + ':', EditDatabase);
 
-	EditUpdateDir = new ISPathEditDir(this);
-	EditUpdateDir->SetValue(CONFIG_STRING(CONST_CONFIG_CONNECTION_UPDATE_DIR));
-	FormLayout->addRow(LANG("UpdateDir") + ':', EditUpdateDir);
-
 	EditProtocolInclude = new ISCheckEdit(this);
 	EditProtocolInclude->SetValue(CONFIG_BOOL("Protocol/Include"));
 	FormLayout->addRow(LANG("Protocol.Use"), EditProtocolInclude);
@@ -44,7 +40,7 @@ ISConnectionForm::ISConnectionForm() : ISInterfaceDialogForm()
 	GetMainLayout()->addLayout(LayoutButtons);
 
 	ISPushButton *ButtonSave = new ISPushButton(BUFFER_ICONS("Save"), LANG("Save"), this);
-	connect(ButtonSave, &ISPushButton::clicked, this, &ISConnectionForm::SaveSettings);
+	connect(ButtonSave, &ISPushButton::clicked, this, &ISConnectionForm::Save);
 	LayoutButtons->addWidget(ButtonSave, 0, Qt::AlignRight);
 
 	ISPushButton *ButtonClose = new ISPushButton(BUFFER_ICONS("Close"), LANG("Close"), this);
@@ -64,40 +60,16 @@ void ISConnectionForm::AfterShowEvent()
 //-----------------------------------------------------------------------------
 void ISConnectionForm::EnterClicked()
 {
-	SaveSettings();
+	Save();
 }
 //-----------------------------------------------------------------------------
-void ISConnectionForm::SaveSettings()
+void ISConnectionForm::Save()
 {
-	if (CheckFields())
-	{
-		ISConfig::Instance().SetValue(CONST_CONFIG_CONNECTION_SERVER, EditServer->GetValue());
-		ISConfig::Instance().SetValue(CONST_CONFIG_CONNECTION_PORT, EditPort->GetValue());
-		ISConfig::Instance().SetValue(CONST_CONFIG_CONNECTION_DATABASE, EditDatabase->GetValue());
-		ISConfig::Instance().SetValue(CONST_CONFIG_CONNECTION_UPDATE_DIR, EditUpdateDir->GetValue());
-		ISConfig::Instance().SetValue("Protocol/Include", EditProtocolInclude->GetValue());
-		ISConfig::Instance().SetValue("Protocol/Port", EditProtocolPort->GetValue());
-		close();
-	}
-}
-//-----------------------------------------------------------------------------
-bool ISConnectionForm::CheckFields()
-{
-	if (EditServer->GetValue().toString().isEmpty())
-	{
-		ISMessageBox::ShowCritical(this, LANG("Message.Error.Field.NullValue").arg(LANG("Server")));
-		return false;
-	}
-	else if (EditPort->GetValue().toString().isEmpty())
-	{
-		ISMessageBox::ShowCritical(this, LANG("Message.Error.Field.NullValue").arg(LANG("Port")));
-		return false;
-	}
-	else if (EditDatabase->GetValue().toString().isEmpty())
-	{
-		ISMessageBox::ShowCritical(this, LANG("Message.Error.Field.NullValue").arg(LANG("DatabaseName")));
-		return false;
-	}
-	return true;
+	ISConfig::Instance().SetValue(CONST_CONFIG_CONNECTION_SERVER, EditServer->GetValue());
+	ISConfig::Instance().SetValue(CONST_CONFIG_CONNECTION_PORT, EditPort->GetValue());
+	ISConfig::Instance().SetValue(CONST_CONFIG_CONNECTION_DATABASE, EditDatabase->GetValue());
+	ISConfig::Instance().SetValue("Protocol/Include", EditProtocolInclude->GetValue());
+	ISConfig::Instance().SetValue("Protocol/Port", EditProtocolPort->GetValue());
+	close();
 }
 //-----------------------------------------------------------------------------

@@ -149,18 +149,45 @@ void ISAuthForm::ShowAboutForm()
 //-----------------------------------------------------------------------------
 void ISAuthForm::Input()
 {
-	//Проверяем наличие обновлений
-	if (CheckUpdate())
+	if (CONFIG_STRING(CONST_CONFIG_CONNECTION_SERVER).isEmpty())
 	{
-		close();
+		ISGui::SetWaitGlobalCursor(false);
+		ISMessageBox::ShowCritical(this, LANG("Message.Error.ConnectionSetting.Input.ServerEmpty"));
 		return;
 	}
 
-	if (Check())
+	if (CONFIG_STRING(CONST_CONFIG_CONNECTION_PORT).isEmpty())
 	{
-		//Если выбран вход по протоколу - используем новую функцию, иначе - старую (через БД)
-		CONFIG_BOOL("Protocol/Include") ? InputNew() : InputOld();
+		ISGui::SetWaitGlobalCursor(false);
+		ISMessageBox::ShowCritical(this, LANG("Message.Error.ConnectionSetting.Input.PortEmpty"));
+		return;
 	}
+
+	if (CONFIG_STRING(CONST_CONFIG_CONNECTION_DATABASE).isEmpty())
+	{
+		ISGui::SetWaitGlobalCursor(false);
+		ISMessageBox::ShowCritical(this, LANG("Message.Error.ConnectionSetting.Input.DatabaseNameEmpty"));
+		return;
+	}
+
+	if (EditLogin->GetValue().toString().isEmpty())
+	{
+		ISGui::SetWaitGlobalCursor(false);
+		ISMessageBox::ShowWarning(this, LANG("Message.Error.Input.LoginEmpty"));
+		EditLogin->BlinkRed();
+		return;
+	}
+
+	if (EditPassword->GetValue().toString().isEmpty())
+	{
+		ISGui::SetWaitGlobalCursor(false);
+		ISMessageBox::ShowWarning(this, LANG("Message.Error.Input.PasswordEmpty"));
+		EditPassword->BlinkRed();
+		return;
+	}
+
+	//Если выбран вход по протоколу - используем новую функцию, иначе - старую (через БД)
+	CONFIG_BOOL("Protocol/Include") ? InputNew() : InputOld();
 }
 //-----------------------------------------------------------------------------
 void ISAuthForm::InputOld()
@@ -304,81 +331,5 @@ void ISAuthForm::SetConnecting(bool Connecting)
 	ButtonMenu->setEnabled(!ConnectingState);
 	ButtonInput->setEnabled(!ConnectingState);
 	ButtonExit->setEnabled(!ConnectingState);
-}
-//-----------------------------------------------------------------------------
-bool ISAuthForm::Check()
-{
-	if (CONFIG_STRING(CONST_CONFIG_CONNECTION_SERVER).isEmpty())
-	{
-		ISGui::SetWaitGlobalCursor(false);
-		ISMessageBox::ShowCritical(this, LANG("Message.Error.ConnectionSetting.Input.ServerEmpty"));
-		return false;
-	}
-
-	if (CONFIG_STRING(CONST_CONFIG_CONNECTION_PORT).isEmpty())
-	{
-		ISGui::SetWaitGlobalCursor(false);
-		ISMessageBox::ShowCritical(this, LANG("Message.Error.ConnectionSetting.Input.PortEmpty"));
-		return false;
-	}
-
-	if (CONFIG_STRING(CONST_CONFIG_CONNECTION_DATABASE).isEmpty())
-	{
-		ISGui::SetWaitGlobalCursor(false);
-		ISMessageBox::ShowCritical(this, LANG("Message.Error.ConnectionSetting.Input.DatabaseNameEmpty"));
-		return false;
-	}
-
-	if (EditLogin->GetValue().toString().isEmpty())
-	{
-		ISGui::SetWaitGlobalCursor(false);
-		ISMessageBox::ShowWarning(this, LANG("Message.Error.Input.LoginEmpty"));
-		EditLogin->BlinkRed();
-		return false;
-	}
-
-	if (EditPassword->GetValue().toString().isEmpty())
-	{
-		ISGui::SetWaitGlobalCursor(false);
-		ISMessageBox::ShowWarning(this, LANG("Message.Error.Input.PasswordEmpty"));
-		EditPassword->BlinkRed();
-		return false;
-	}
-
-	return true;
-}
-//-----------------------------------------------------------------------------
-bool ISAuthForm::CheckUpdate()
-{
-	QString UpdateDir = CONFIG_STRING(CONST_CONFIG_CONNECTION_UPDATE_DIR);
-	bool result = !UpdateDir.isEmpty();
-	if (result) //Если путь к папке не пустой - проверяем обновления
-	{
-		//Получаем список файлов в папке и обходим каждый из них
-		QStringList StringList = QDir(UpdateDir).entryList(QDir::Files, QDir::Time);
-		result = !StringList.isEmpty();
-		if (result)
-		{
-			QFileInfo FileInfo(StringList.front());
-			StringList = FileInfo.fileName().split(SYMBOL_POINT);
-			result = StringList.size() == 4;
-			if (result)
-			{
-				result = StringList[2].toUInt() > ISVersionInfo::Instance().Info.Version.GetRevision();
-				if (result)
-				{
-					ISLOGGER_I(__CLASS__, QString("Founded update. This version: %1. Update file: %2").arg(ISVersionInfo::Instance().ToStringVersion()).arg(FileInfo.fileName()));
-					ISMessageBox::ShowInformation(this, LANG("Message.Information.FoundNewAppVersion"));
-					QString FilePath = UpdateDir + '/' + FileInfo.fileName();
-					result = QProcess::startDetached(FilePath, QStringList() << "/SILENT" << "/NOCANCEL" << "/NORESTART");
-					if (!result)
-					{
-						ISMessageBox::ShowWarning(this, LANG("Message.Warning.StartInstallUpdate").arg(FilePath));
-					}
-				}
-			}
-		}
-	}
-	return result;
 }
 //-----------------------------------------------------------------------------

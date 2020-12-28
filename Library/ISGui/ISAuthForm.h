@@ -32,8 +32,6 @@ private:
 	void ConnectedFailed();
 
 	void SetConnecting(bool Connecting); //Изменить рисовку интерфейса
-	bool Check(); //Проверки
-	bool CheckUpdate();
 
 private:
 	ISLineEdit *EditLogin;

@@ -299,7 +299,6 @@ const char CONST_UID_SETTING_GROUP_OTHER[] = "{0BAEF651-D749-4566-B682-F11D03C6D
 const char CONST_CONFIG_CONNECTION_SERVER[] = "Connection/Host";
 const char CONST_CONFIG_CONNECTION_PORT[] = "Connection/Port";
 const char CONST_CONFIG_CONNECTION_DATABASE[] = "Connection/Database";
-const char CONST_CONFIG_CONNECTION_UPDATE_DIR[] = "Connection/UpdateDir";
 const char CONST_CONFIG_CONNECTION_LOGIN[] = "Connection/Login";
 const char CONST_CONFIG_CONNECTION_PASSWORD[] = "Connection/Password";
 const char CONST_CONFIG_REMEMBER_USER_INCLUDE[] = "RememberUser/Include";

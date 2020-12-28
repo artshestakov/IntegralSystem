@@ -49,7 +49,6 @@
   <!--Messages-->
   <Local Name="Message.Information.NotSavedObjects" Russian="Есть несохранённые (%1 шт.) записи, сохраните или закройте их для выхода из программы."/>
   <Local Name="Message.Information.AppliocationWillBeRestart" Russian="Настройки успешно сброшены, рекомендуется перезапустить программу."/>
-  <Local Name="Message.Information.FoundNewAppVersion" Russian="Обнаружена новая версия программы. Нажмите ОК, чтобы начать её установку. После успешной установки новой версии программа автоматически запустится."/>
   <Local Name="Message.Information.InstallUpdate" Russian="Обновление было успешно загружено! Нажмите ОК, чтобы начать установку. После успешной установки новой версии программа автоматически запустится."/>
   <Local Name="Message.Information.ResetSettingDB" Russian="Настройки были успешно сброшены!"/>
   <Local Name="Message.Error.ConnectionSetting.Input.ServerEmpty" Russian="В настройках подключения к базе данных не указан сервер."/>
@@ -130,7 +129,6 @@
   <Local Name="Message.Warning.CurrentTaskHaveSubTasks" Russian="Вы не можете преобразовать эту задачу в подзадачу, т.к. она имеет подзадачи."/>
   <Local Name="Message.Warning.SelectedTaskIsSubTasks" Russian="Выбранная задача является подзадачей!"/>
   <Local Name="Message.Warning.SaveObjectFromContinue" Russian="Сохраните запись для продолжения."/>
-  <Local Name="Message.Warning.StartInstallUpdate" Russian="Не удалось запустить установку обновление в автоматическом режиме. Вы можете установить обновление программы самостоятельно. Путь к установочному файлу:&#10;%1"/>
   <Local Name="Message.Warning.OneFieldNotFill" Russian="Одно из полей не заполнено!"/>
   <Local Name="Message.Warning.PasswordVerification" Russian="Пароль слишком слабый."/>
   <Local Name="Message.Warning.PasswordVerification.Detailed" Russian="Обязательные требования к надёжному паролю:&#10;&#8226; Пароль должен содержать не менее 8 символов.&#10;&#8226; Пароль должен содержать заглавные и строчные буквы, цифры, и специальные символы. Например: oNQZnz$Hx2.&#10;&#10;Пароль не должен содержать:&#10;&#8226; Личную информацию, которую легко узнать. Например: имя, фамилию или дату рождения.&#10;&#8226; Очевидные и простые слова, фразы, устойчивые выражения и наборы символов, которые легко подобрать. Например: password, parol, abcd, qwerty asdfg, или 1234567."/>
@@ -612,7 +610,6 @@
   <Local Name="Server" Russian="Сервер"/>
   <Local Name="Port" Russian="Порт"/>
   <Local Name="DatabaseName" Russian="Имя базы данных"/>
-  <Local Name="UpdateDir" Russian="Путь к папке с обновлениями"/>
   <Local Name="Information" Russian="Информация"/>
   <Local Name="Warning" Russian="Предупреждение"/>
   <Local Name="Question" Russian="Вопрос"/>

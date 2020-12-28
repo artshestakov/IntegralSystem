@@ -15,15 +15,12 @@ public:
 private:
 	void AfterShowEvent() override;
 	void EnterClicked() override;
-	void SaveSettings(); //Программное сохранение настроек
-	bool CheckFields(); //Проверка на заполнение полей
+	void Save(); //Программное сохранение настроек
 
 private:
 	ISLineEdit *EditServer;
 	ISIntegerEdit *EditPort;
 	ISLineEdit *EditDatabase;
-	ISPathEditDir *EditUpdateDir;
-
 	ISCheckEdit *EditProtocolInclude;
 	ISIntegerEdit *EditProtocolPort;
 };

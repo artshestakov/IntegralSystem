@@ -36,7 +36,6 @@ ISConfig::ISConfig()
 		{ CONFIG_TEMPLATE_CLIENT, "Connection/Host",		QVariant::String,	true,	QVariant(),				0, 0 },
         { CONFIG_TEMPLATE_CLIENT, "Connection/Port",		QVariant::Int,		true,	QVariant(),				1, UINT16_MAX },
 		{ CONFIG_TEMPLATE_CLIENT, "Connection/Database",	QVariant::String,	true,	QVariant(),				0, 0 },
-		{ CONFIG_TEMPLATE_CLIENT, "Connection/UpdateDir",	QVariant::String,	true,	QVariant(),				0, 0 },
 		{ CONFIG_TEMPLATE_CLIENT, "RememberUser/Include",	QVariant::Bool,		true,	QVariant(),				0, 0 },
 		{ CONFIG_TEMPLATE_CLIENT, "RememberUser/Login",		QVariant::String,	true,	QVariant(),				0, 0 },
 		{ CONFIG_TEMPLATE_CLIENT, "Protocol/Include",		QVariant::Bool,		true,	false,					0, 0 },
