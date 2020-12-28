@@ -167,7 +167,7 @@ bool ISExportCSV::Export()
 //-----------------------------------------------------------------------------
 ISExportDBF::ISExportDBF(PMetaTable *meta_table, ISTcpModel *tcp_model, QObject *parent)
 	: ISExportWorker(meta_table, tcp_model, parent),
-	ConnectionName(ISSystem::GenerateUuid())
+	ConnectionName(GENERATE_UUID)
 {
 
 }
@@ -583,7 +583,7 @@ bool ISExportXML::Export()
 //-----------------------------------------------------------------------------
 ISExportSQLite::ISExportSQLite(PMetaTable *meta_table, ISTcpModel *tcp_model, QObject *parent)
 	: ISExportWorker(meta_table, tcp_model, parent),
-	ConnectionName(ISSystem::GenerateUuid())
+	ConnectionName(GENERATE_UUID)
 {
 
 }

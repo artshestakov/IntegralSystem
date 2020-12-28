@@ -63,11 +63,6 @@ void ISSystem::ClearDirRecursive(const QString &DirPath)
     Dir.rmdir(DirPath);
 }
 //-----------------------------------------------------------------------------
-ISUuid ISSystem::GenerateUuid()
-{
-    return QUuid::createUuid();
-}
-//-----------------------------------------------------------------------------
 void ISSystem::BeginSymbolToUpper(QString &String)
 {
     if (!String.isEmpty())

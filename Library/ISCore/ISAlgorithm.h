@@ -25,6 +25,9 @@ if (POINTER) \
 //Обработать события из очереди событий
 #define PROCESS_EVENTS qApp->processEvents
 
+//Сгенерировать уникальный идентификатор
+#define GENERATE_UUID ISUuid(QUuid::createUuid())
+
 #ifdef WIN32
 #define __CLASS__ ISAlgorithm::GetClassName(__FUNCTION__)
 #else
