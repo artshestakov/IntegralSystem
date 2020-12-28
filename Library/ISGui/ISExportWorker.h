@@ -128,4 +128,21 @@ private:
 	QFile *FileXML;
 };
 //-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+class ISExportSQLite : public ISExportWorker
+{
+	Q_OBJECT
+
+public:
+	ISExportSQLite(PMetaTable *meta_table, ISTcpModel *tcp_model, QObject *parent = 0);
+	virtual ~ISExportSQLite();
+
+	bool Prepare() override;
+	bool Export() override;
+
+private:
+	QString ConnectionName;
+};
+//-----------------------------------------------------------------------------
 #endif

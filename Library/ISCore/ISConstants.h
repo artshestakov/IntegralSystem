@@ -106,6 +106,7 @@ const char CONFIG_TEMPLATE_CLIENT[] = "Client"; //Щаблон конфигурационного файла
 //SQL_DRIVERS------------------------------------------------------------------
 const char SQL_DRIVER_QPSQL[] = "QPSQL";
 const char SQL_DRIVER_QODBC[] = "QODBC";
+const char SQL_DRIVER_QSQLITE[] = "QSQLITE";
 //-----------------------------------------------------------------------------
 const char			SYSTEM_DATABASE_NAME[] = "postgres"; //Имя системной БД
 const char			SYSTEM_USER_LOGIN[] = "postgres"; //Логин системного пользователя
