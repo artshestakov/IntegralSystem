@@ -17,5 +17,7 @@ public:
 
 private:
 	ISUuid ConnectionName;
+	QString PathFolder;
+	QString FileLocalName;
 };
 //-----------------------------------------------------------------------------

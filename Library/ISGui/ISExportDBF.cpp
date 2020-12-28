@@ -4,6 +4,7 @@
 #include "ISMessageBox.h"
 #include "ISConstants.h"
 #include "ISAlgorithm.h"
+#include "ISFileDialog.h"
 //-----------------------------------------------------------------------------
 ISExportDBF::ISExportDBF(PMetaTable *meta_table, ISTcpModel *tcp_model, QObject *parent)
 	: ISExportWorker(meta_table, tcp_model, parent),
@@ -20,8 +21,18 @@ ISExportDBF::~ISExportDBF()
 //-----------------------------------------------------------------------------
 bool ISExportDBF::Prepare()
 {
+	QString FilePath = ISFileDialog::GetSaveFileName(nullptr, LANG("File.Filter.Dbf"), MetaTable->LocalListName);
+	if (FilePath.isEmpty())
+	{
+		return false;
+	}
+
+	QFileInfo FileInfo(FilePath);
+	PathFolder = FileInfo.absolutePath().replace('/', '\\');
+	FileLocalName = FileInfo.fileName();
+
 	QSqlDatabase Database = QSqlDatabase::addDatabase("QODBC", ConnectionName);
-	Database.setDatabaseName("Driver={Microsoft dBase Driver (*.dbf)};SourceType=DBF;");
+	Database.setDatabaseName("Driver={Microsoft dBase Driver (*.dbf)};Data Source=" + PathFolder + ';');
 	if (!Database.open())
 	{
 		ErrorString = Database.lastError().text();
@@ -32,7 +43,7 @@ bool ISExportDBF::Prepare()
 //-----------------------------------------------------------------------------
 bool ISExportDBF::Export()
 {
-	QString CreateTableSql = "CREATE TABLE " + MetaTable->Name + " (";
+	QString CreateTableSql = "CREATE TABLE " + PathFolder + '\\' + MetaTable->Name + " (";
 	for (const unsigned int &Index : Fields) //Обход выбранных для экспорта полей
 	{
 		CreateTableSql += TcpModel->GetField(Index).Name + " VARCHAR, ";
@@ -77,7 +88,7 @@ bool ISExportDBF::Export()
 
 		ISModelRecord Record = TcpModel->GetRecord(Row); //Текущая строка
 		ISStringToVariantMap Bind;
-		QString InsertFields = "INSERT INTO [" + MetaTable->Name + "](";
+		QString InsertFields = "INSERT INTO " + PathFolder + '\\' + MetaTable->Name + "(";
 		QString ValuesField = "VALUES(";
 
 		for (const unsigned int &Index : Fields) //Обход колонок
@@ -115,6 +126,12 @@ bool ISExportDBF::Export()
 		emit Message(LANG("Export.Process.Process").arg(Row + 1).arg(TcpModel->rowCount()));
 	}
 
+	QFile File(PathFolder + '\\' + MetaTable->Name.toUpper() + ".dbf");
+	if (!File.rename(PathFolder + '\\' + FileLocalName))
+	{
+		ErrorString = File.errorString();
+		return false;
+	}
 	return true;
 }
 //-----------------------------------------------------------------------------

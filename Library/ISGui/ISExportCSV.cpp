@@ -19,7 +19,7 @@ ISExportCSV::~ISExportCSV()
 bool ISExportCSV::Prepare()
 {
 	QString FilePath = ISFileDialog::GetSaveFileName(nullptr, LANG("File.Filter.Csv"), MetaTable->LocalListName);
-	if (!FilePath.length())
+	if (FilePath.isEmpty())
 	{
 		return false;
 	}

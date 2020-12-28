@@ -523,6 +523,7 @@
   <Local Name="File.Filter.Pdf" Russian="Файлы Adobe PDF (*.pdf)"/>
   <Local Name="File.Filter.Html" Russian="Веб-страница (*.html)"/>
   <Local Name="File.Filter.Xml" Russian="Веб-страница (*.xml)"/>
+  <Local Name="File.Filter.Dbf" Russian="DBF-файл (*.dbf)"/>
   <Local Name="File.Filter.File" Russian="Файл (*.%1)"/>
 
   <!--Calendar-->

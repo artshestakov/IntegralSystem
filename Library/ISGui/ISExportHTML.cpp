@@ -19,7 +19,7 @@ ISExportHTML::~ISExportHTML()
 bool ISExportHTML::Prepare()
 {
 	QString FilePath = ISFileDialog::GetSaveFileName(nullptr, LANG("File.Filter.Html"), MetaTable->LocalListName);
-	if (!FilePath.length())
+	if (FilePath.isEmpty())
 	{
 		return false;
 	}
