@@ -6,13 +6,13 @@
 #include "ISMonitorUserWidget.h"
 #include "ISFieldEdits.h"
 //-----------------------------------------------------------------------------
-class ISMonitorActivityForm : public ISInterfaceMetaForm
+class ISMonitorActivitySubSystem : public ISInterfaceMetaForm
 {
 	Q_OBJECT
 
 public:
-	Q_INVOKABLE ISMonitorActivityForm(QWidget *parent = 0);
-	virtual ~ISMonitorActivityForm();
+	Q_INVOKABLE ISMonitorActivitySubSystem(QWidget *parent = 0);
+	virtual ~ISMonitorActivitySubSystem();
 
 	void LoadData() override;
 

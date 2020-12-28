@@ -1,4 +1,4 @@
-#include "ISInternalDirectoriesForm.h"
+#include "ISInternalDirectoriesSubSystem.h"
 #include "ISDefinesGui.h"
 #include "ISConstants.h"
 #include "ISLocalization.h"
@@ -8,7 +8,7 @@
 #include "ISBuffer.h"
 #include "ISMessageBox.h"
 //-----------------------------------------------------------------------------
-ISInternalDirectoriesForm::ISInternalDirectoriesForm(QWidget *parent)
+ISInternalDirectoriesSubSystem::ISInternalDirectoriesSubSystem(QWidget *parent)
 	: ISInterfaceMetaForm(parent),
 	ListBaseForm(nullptr)
 {
@@ -19,7 +19,7 @@ ISInternalDirectoriesForm::ISInternalDirectoriesForm(QWidget *parent)
 	ListWidget->setAlternatingRowColors(true);
 	ListWidget->setCursor(CURSOR_POINTING_HAND);
 	ListWidget->setSizePolicy(QSizePolicy::Maximum, ListWidget->sizePolicy().verticalPolicy());
-	connect(ListWidget, &ISListWidget::itemSelectionChanged, this, &ISInternalDirectoriesForm::ItemSelectionChanged);
+	connect(ListWidget, &ISListWidget::itemSelectionChanged, this, &ISInternalDirectoriesSubSystem::ItemSelectionChanged);
 	Layout->addWidget(ListWidget);
 
 	ISTcpQuery qGetInternalLists(API_GET_INTERNAL_LISTS);
@@ -48,17 +48,17 @@ ISInternalDirectoriesForm::ISInternalDirectoriesForm(QWidget *parent)
 	Layout->addWidget(Label, 0, Qt::AlignCenter);
 }
 //-----------------------------------------------------------------------------
-ISInternalDirectoriesForm::~ISInternalDirectoriesForm()
+ISInternalDirectoriesSubSystem::~ISInternalDirectoriesSubSystem()
 {
 
 }
 //-----------------------------------------------------------------------------
-void ISInternalDirectoriesForm::LoadData()
+void ISInternalDirectoriesSubSystem::LoadData()
 {
 
 }
 //-----------------------------------------------------------------------------
-void ISInternalDirectoriesForm::ItemSelectionChanged()
+void ISInternalDirectoriesSubSystem::ItemSelectionChanged()
 {
 	ISGui::SetWaitGlobalCursor(true);
 	POINTER_DELETE(Label);

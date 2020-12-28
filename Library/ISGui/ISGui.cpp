@@ -25,23 +25,23 @@
 #include "ISInputDialog.h"
 #include "ISFavoritesForm.h"
 #include "ISHistoryForm.h"
-#include "ISUserListForm.h"
+#include "ISUserSubSystem.h"
 #include "ISProtocolObjectListForm.h"
 #include "ISDiscussionListForm.h"
-#include "ISStorageFilesListForm.h"
+#include "ISStorageFilesSubSystem.h"
 #include "ISCalendarObjectForm.h"
 #include "ISDesktopParagraph.h"
 #include "ISWorkspaceParagraph.h"
 #include "ISCalendarParagraph.h"
 #include "ISTaskParagraph.h"
-#include "ISProtocolListForm.h"
-#include "ISInternalDirectoriesForm.h"
-#include "ISUserGroupListForm.h"
-#include "ISMonitorActivityForm.h"
-#include "ISFullTextSearchForm.h"
+#include "ISProtocolSubSystem.h"
+#include "ISInternalDirectoriesSubSystem.h"
+#include "ISUserGroupSubSystem.h"
+#include "ISMonitorActivitySubSystem.h"
+#include "ISFullTextSearchSubSystem.h"
 #include "ISSettingsDatabaseObjectForm.h"
 #include "ISTaskObjectForm.h"
-#include "ISAsteriskCallsListForm.h"
+#include "ISAsteriskCallsSubSystem.h"
 #include "ISDelegates.h"
 #include "ISFieldEdits.h"
 #include "ISComboSearchWidgets.h"
@@ -622,24 +622,24 @@ void ISGui::RegisterMetaType()
 	qRegisterMetaType<QSqlError>("QSqlError");
 	qRegisterMetaType<ISUuid>("ISUuid");
 
-	qRegisterMetaType<ISUserListForm*>("ISUserListForm");
+	qRegisterMetaType<ISUserSubSystem*>("ISUserListForm");
 	qRegisterMetaType<ISUserObjectForm*>("ISUserObjectForm");
 	qRegisterMetaType<ISProtocolObjectListForm*>("ISProtocolObjectListForm");
 	qRegisterMetaType<ISDiscussionListForm*>("ISDiscussionListForm");
-	qRegisterMetaType<ISStorageFilesListForm*>("ISStorageFilesListForm");
+	qRegisterMetaType<ISStorageFilesSubSystem*>("ISStorageFilesListForm");
 	qRegisterMetaType<ISCalendarObjectForm*>("ISCalendarObjectForm");
 	qRegisterMetaType<ISDesktopParagraph*>("ISDesktopForm");
 	qRegisterMetaType<ISWorkspaceParagraph*>("ISWorkspaceForm");
 	qRegisterMetaType<ISCalendarParagraph*>("ISCalendarForm");
 	qRegisterMetaType<ISTaskParagraph*>("ISTaskForm");
-	qRegisterMetaType<ISProtocolListForm*>("ISProtocolListForm");
-	qRegisterMetaType<ISInternalDirectoriesForm*>("ISInternalDirectoriesForm");
-	qRegisterMetaType<ISUserGroupListForm*>("ISUserGroupListForm");
-	qRegisterMetaType<ISMonitorActivityForm*>("ISMonitorActivityForm");
-	qRegisterMetaType<ISFullTextSearchForm*>("ISFullTextSearchForm");
+	qRegisterMetaType<ISProtocolSubSystem*>("ISProtocolListForm");
+	qRegisterMetaType<ISInternalDirectoriesSubSystem*>("ISInternalDirectoriesForm");
+	qRegisterMetaType<ISUserGroupSubSystem*>("ISUserGroupListForm");
+	qRegisterMetaType<ISMonitorActivitySubSystem*>("ISMonitorActivityForm");
+	qRegisterMetaType<ISFullTextSearchSubSystem*>("ISFullTextSearchForm");
 	qRegisterMetaType<ISSettingsDatabaseObjectForm*>("ISSettingsDatabaseObjectForm");
 	qRegisterMetaType<ISTaskObjectForm*>("ISTaskObjectForm");
-	qRegisterMetaType<ISAsteriskCallsListForm*>("ISAsteriskCallsListForm");
+	qRegisterMetaType<ISAsteriskCallsSubSystem*>("ISAsteriskCallsListForm");
 
 	qRegisterMetaType<ISDelegateBoolean*>("ISDelegateBoolean");
 	qRegisterMetaType<ISDelegateImage*>("ISDelegateImage");

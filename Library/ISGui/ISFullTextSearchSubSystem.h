@@ -8,13 +8,13 @@
 #include "ISFieldEdits.h"
 #include "ISWaitWidget.h"
 //-----------------------------------------------------------------------------
-class ISFullTextSearchForm : public ISInterfaceMetaForm
+class ISFullTextSearchSubSystem : public ISInterfaceMetaForm
 {
 	Q_OBJECT
 
 public:
-	Q_INVOKABLE ISFullTextSearchForm(QWidget *parent = 0);
-	virtual ~ISFullTextSearchForm();
+	Q_INVOKABLE ISFullTextSearchSubSystem(QWidget *parent = 0);
+	virtual ~ISFullTextSearchSubSystem();
 
 	void LoadData() override;
 

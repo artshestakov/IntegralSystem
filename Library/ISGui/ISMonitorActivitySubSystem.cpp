@@ -1,4 +1,4 @@
-#include "ISMonitorActivityForm.h"
+#include "ISMonitorActivitySubSystem.h"
 #include "ISDefinesGui.h"
 #include "ISConstants.h"
 #include "ISTcpQuery.h"
@@ -6,7 +6,7 @@
 #include "ISBuffer.h"
 #include "ISFlowLayout.h"
 #include "ISGui.h"
-#include "ISProtocolListForm.h"
+#include "ISProtocolSubSystem.h"
 #include "ISMessageBox.h"
 #include "ISDatabase.h"
 #include "ISProtocol.h"
@@ -15,7 +15,7 @@
 #include "ISQueryPool.h"
 #include "ISInputDialog.h"
 //-----------------------------------------------------------------------------
-ISMonitorActivityForm::ISMonitorActivityForm(QWidget *parent) : ISInterfaceMetaForm(parent)
+ISMonitorActivitySubSystem::ISMonitorActivitySubSystem(QWidget *parent) : ISInterfaceMetaForm(parent)
 {
 	GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);
 
@@ -25,7 +25,7 @@ ISMonitorActivityForm::ISMonitorActivityForm(QWidget *parent) : ISInterfaceMetaF
 	ISPushButton *ButtonUpdate = new ISPushButton(this);
 	ButtonUpdate->setText(LANG("Update"));
 	ButtonUpdate->setIcon(BUFFER_ICONS("Update"));
-	connect(ButtonUpdate, &ISPushButton::clicked, this, &ISMonitorActivityForm::LoadData);
+	connect(ButtonUpdate, &ISPushButton::clicked, this, &ISMonitorActivitySubSystem::LoadData);
 	LayoutTitle->addWidget(ButtonUpdate);
 
 	LayoutTitle->addStretch();
@@ -40,16 +40,16 @@ ISMonitorActivityForm::ISMonitorActivityForm(QWidget *parent) : ISInterfaceMetaF
 
 	QAction *ActionUpdate = new QAction(this);
 	ActionUpdate->setShortcut(Qt::Key_F5);
-	connect(ActionUpdate, &QAction::triggered, this, &ISMonitorActivityForm::LoadData);
+	connect(ActionUpdate, &QAction::triggered, this, &ISMonitorActivitySubSystem::LoadData);
 	addAction(ActionUpdate);
 }
 //-----------------------------------------------------------------------------
-ISMonitorActivityForm::~ISMonitorActivityForm()
+ISMonitorActivitySubSystem::~ISMonitorActivitySubSystem()
 {
 	
 }
 //-----------------------------------------------------------------------------
-void ISMonitorActivityForm::LoadData()
+void ISMonitorActivitySubSystem::LoadData()
 {
 	while (!VectorUsers.empty())
 	{
@@ -69,8 +69,8 @@ void ISMonitorActivityForm::LoadData()
 				ClientMap["ID"].toUInt(), ClientMap["FIO"].toString(),
 				ISGui::ByteArrayToPixmap(QByteArray::fromBase64(ClientMap["Photo"].toByteArray())).scaled(ISDefines::Gui::SIZE_32_32),
 				ScrollArea);
-			connect(MonitorUserWidget, &ISMonitorUserWidget::ShowUserCard, this, &ISMonitorActivityForm::ShowUserCard);
-			connect(MonitorUserWidget, &ISMonitorUserWidget::ShowProtocol, this, &ISMonitorActivityForm::ShowProtocol);
+			connect(MonitorUserWidget, &ISMonitorUserWidget::ShowUserCard, this, &ISMonitorActivitySubSystem::ShowUserCard);
+			connect(MonitorUserWidget, &ISMonitorUserWidget::ShowProtocol, this, &ISMonitorActivitySubSystem::ShowProtocol);
 			ScrollArea->widget()->layout()->addWidget(MonitorUserWidget);
 			MonitorUserWidget->adjustSize();
 
@@ -100,28 +100,28 @@ void ISMonitorActivityForm::LoadData()
 	}
 }
 //-----------------------------------------------------------------------------
-void ISMonitorActivityForm::ShowUserCard()
+void ISMonitorActivitySubSystem::ShowUserCard()
 {
 	ISMonitorUserWidget *MonitorUserWidget = dynamic_cast<ISMonitorUserWidget*>(sender());
 	if (MonitorUserWidget)
 	{
 		ISObjectFormBase *ObjectFormBase = ISGui::CreateObjectForm(ISNamespace::OFT_Edit, "_Users", MonitorUserWidget->property("UserID").toInt());
-		connect(ObjectFormBase, &ISObjectFormBase::UpdateList, this, &ISMonitorActivityForm::LoadData);
+		connect(ObjectFormBase, &ISObjectFormBase::UpdateList, this, &ISMonitorActivitySubSystem::LoadData);
 		ISGui::ShowObjectForm(ObjectFormBase);
 	}
 }
 //-----------------------------------------------------------------------------
-void ISMonitorActivityForm::ShowProtocol()
+void ISMonitorActivitySubSystem::ShowProtocol()
 {
 	ISMonitorUserWidget *MonitorUserWidget = dynamic_cast<ISMonitorUserWidget*>(sender());
 	if (MonitorUserWidget)
 	{
-		ISProtocolListForm *ProtocolBaseListForm = new ISProtocolListForm();
+		ISProtocolSubSystem *ProtocolBaseListForm = new ISProtocolSubSystem();
 		ProtocolBaseListForm->setWindowTitle(LANG("ProtocolUser") + ": " + MonitorUserWidget->property("UserName").toString());
 		ProtocolBaseListForm->setWindowIcon(BUFFER_ICONS("Protocol"));
 		ProtocolBaseListForm->GetTcpQuery()->AddFilter("User", MonitorUserWidget->property("UserID"));
 		ProtocolBaseListForm->showMaximized();
-		QTimer::singleShot(WAIT_LOAD_DATA_LIST_FORM, ProtocolBaseListForm, &ISProtocolListForm::LoadData);
+		QTimer::singleShot(WAIT_LOAD_DATA_LIST_FORM, ProtocolBaseListForm, &ISProtocolSubSystem::LoadData);
 	}
 }
 //-----------------------------------------------------------------------------

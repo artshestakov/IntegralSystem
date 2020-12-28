@@ -1,19 +1,17 @@
 #pragma once
-#ifndef _ISASTERISKCALLSLISTFORM_H_INCLUDED
-#define _ISASTERISKCALLSLISTFORM_H_INCLUDED
 //-----------------------------------------------------------------------------
+#include "StdAfx.h"
 #include "ISListBaseForm.h"
 //-----------------------------------------------------------------------------
-class ISAsteriskCallsListForm : public ISListBaseForm
+class ISProtocolSubSystem : public ISListBaseForm
 {
 	Q_OBJECT
 
 public:
-	Q_INVOKABLE ISAsteriskCallsListForm(QWidget *parent = 0);
-	virtual ~ISAsteriskCallsListForm();
+	Q_INVOKABLE ISProtocolSubSystem(QWidget *parent = 0);
+	virtual ~ISProtocolSubSystem();
 
-private:
-	void PlayRecordCall();
+protected:
+	void DoubleClickedTable(const QModelIndex &ModelIndex);
 };
 //-----------------------------------------------------------------------------
-#endif

@@ -1,24 +1,24 @@
-#include "ISUserGroupListForm.h"
+#include "ISUserGroupSubSystem.h"
 #include "ISLocalization.h"
 #include "ISGui.h"
 #include "ISUserGroupForm.h"
 #include "ISBuffer.h"
 //-----------------------------------------------------------------------------
-ISUserGroupListForm::ISUserGroupListForm(QWidget *parent) : ISListBaseForm("_UserGroup", parent)
+ISUserGroupSubSystem::ISUserGroupSubSystem(QWidget *parent) : ISListBaseForm("_UserGroup", parent)
 {
 	QAction *ActionAccess = new QAction(GetToolBar());
 	ActionAccess->setText(LANG("AccessRights"));
 	ActionAccess->setIcon(BUFFER_ICONS("AccessRights"));
-	connect(ActionAccess, &QAction::triggered, this, &ISUserGroupListForm::SelectedGroup);
+	connect(ActionAccess, &QAction::triggered, this, &ISUserGroupSubSystem::SelectedGroup);
 	AddAction(ActionAccess, true, true);
 }
 //-----------------------------------------------------------------------------
-ISUserGroupListForm::~ISUserGroupListForm()
+ISUserGroupSubSystem::~ISUserGroupSubSystem()
 {
 
 }
 //-----------------------------------------------------------------------------
-void ISUserGroupListForm::SelectedGroup()
+void ISUserGroupSubSystem::SelectedGroup()
 {
 	ISGui::SetWaitGlobalCursor(true);
 	ISUserGroupForm UserGroupForm(GetObjectID(), GetCurrentRecordValue("Name").toString());

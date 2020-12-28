@@ -4,13 +4,13 @@
 //-----------------------------------------------------------------------------
 #include "ISListBaseForm.h"
 //-----------------------------------------------------------------------------
-class ISStorageFilesListForm : public ISListBaseForm
+class ISStorageFilesSubSystem : public ISListBaseForm
 {
 	Q_OBJECT
 
 public:
-	Q_INVOKABLE ISStorageFilesListForm(QWidget *parent = 0);
-	virtual ~ISStorageFilesListForm();
+	Q_INVOKABLE ISStorageFilesSubSystem(QWidget *parent = 0);
+	virtual ~ISStorageFilesSubSystem();
 
 protected:
 	void Create() override;

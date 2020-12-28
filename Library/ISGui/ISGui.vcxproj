@@ -175,7 +175,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ISAboutForm.cpp" />
-    <ClCompile Include="ISAsteriskCallsListForm.cpp" />
+    <ClCompile Include="ISAsteriskCallsSubSystem.cpp" />
     <ClCompile Include="ISAudioPlayerForm.cpp" />
     <ClCompile Include="ISAuthForm.cpp" />
     <ClCompile Include="ISBaseTableView.cpp" />
@@ -214,7 +214,7 @@
     <ClCompile Include="ISFieldEdits.cpp" />
     <ClCompile Include="ISFileDialog.cpp" />
     <ClCompile Include="ISFlowLayout.cpp" />
-    <ClCompile Include="ISFullTextSearchForm.cpp" />
+    <ClCompile Include="ISFullTextSearchSubSystem.cpp" />
     <ClCompile Include="ISGui.cpp" />
     <ClCompile Include="ISHistoryForm.cpp" />
     <ClCompile Include="ISImageViewerForm.cpp" />
@@ -223,7 +223,7 @@
     <ClCompile Include="ISInterfaceDialogForm.cpp" />
     <ClCompile Include="ISInterfaceForm.cpp" />
     <ClCompile Include="ISInterfaceMetaForm.cpp" />
-    <ClCompile Include="ISInternalDirectoriesForm.cpp" />
+    <ClCompile Include="ISInternalDirectoriesSubSystem.cpp" />
     <ClCompile Include="ISLabels.cpp" />
     <ClCompile Include="ISListBaseForm.cpp" />
     <ClCompile Include="ISListIndicatorWidget.cpp" />
@@ -233,7 +233,7 @@
     <ClCompile Include="ISMenuBar.cpp" />
     <ClCompile Include="ISMessageBox.cpp" />
     <ClCompile Include="ISMetaSystemsEntity.cpp" />
-    <ClCompile Include="ISMonitorActivityForm.cpp" />
+    <ClCompile Include="ISMonitorActivitySubSystem.cpp" />
     <ClCompile Include="ISMonitorUserWidget.cpp" />
     <ClCompile Include="ISObjectFormBase.cpp" />
     <ClCompile Include="ISObjectInterface.cpp" />
@@ -246,7 +246,7 @@
     <ClCompile Include="ISProcessForm.cpp" />
     <ClCompile Include="ISProgressForm.cpp" />
     <ClCompile Include="ISProtocol.cpp" />
-    <ClCompile Include="ISProtocolListForm.cpp" />
+    <ClCompile Include="ISProtocolSubSystem.cpp" />
     <ClCompile Include="ISProtocolObjectListForm.cpp" />
     <ClCompile Include="ISReconnectForm.cpp" />
     <ClCompile Include="ISScrollArea.cpp" />
@@ -260,7 +260,7 @@
     <ClCompile Include="ISSplashScreen.cpp" />
     <ClCompile Include="ISSplashWidget.cpp" />
     <ClCompile Include="ISStartup.cpp" />
-    <ClCompile Include="ISStorageFilesListForm.cpp" />
+    <ClCompile Include="ISStorageFilesSubSystem.cpp" />
     <ClCompile Include="ISSystemsPanel.cpp" />
     <ClCompile Include="ISTabBarMain.cpp" />
     <ClCompile Include="ISTabWidgetMain.cpp" />
@@ -272,9 +272,9 @@
     <ClCompile Include="ISTcpConnector.cpp" />
     <ClCompile Include="ISTcpModel.cpp" />
     <ClCompile Include="ISTcpQuery.cpp" />
-    <ClCompile Include="ISUserGroupListForm.cpp" />
+    <ClCompile Include="ISUserGroupSubSystem.cpp" />
     <ClCompile Include="ISUserGroupForm.cpp" />
-    <ClCompile Include="ISUserListForm.cpp" />
+    <ClCompile Include="ISUserSubSystem.cpp" />
     <ClCompile Include="ISUserObjectForm.cpp" />
     <ClCompile Include="ISUserPasswordForm.cpp" />
     <ClCompile Include="ISUserPhotoCreator.cpp" />
@@ -314,7 +314,7 @@
     <QtMoc Include="ISObjectFormBase.h" />
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="ISProtocolListForm.h" />
+    <QtMoc Include="ISProtocolSubSystem.h" />
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ISSelectDialogForm.h" />
@@ -354,21 +354,21 @@
     <QtMoc Include="ISDesktopParagraph.h" />
     <QtMoc Include="ISDiscussionListForm.h" />
     <QtMoc Include="ISFavoritesForm.h" />
-    <QtMoc Include="ISFullTextSearchForm.h" />
+    <QtMoc Include="ISFullTextSearchSubSystem.h" />
     <QtMoc Include="ISHistoryForm.h" />
     <QtMoc Include="ISImageViewerForm.h" />
-    <QtMoc Include="ISInternalDirectoriesForm.h" />
+    <QtMoc Include="ISInternalDirectoriesSubSystem.h" />
     <QtMoc Include="ISMainWindow.h" />
-    <QtMoc Include="ISMonitorActivityForm.h" />
+    <QtMoc Include="ISMonitorActivitySubSystem.h" />
     <QtMoc Include="ISParagraphBaseForm.h" />
     <QtMoc Include="ISProtocolObjectListForm.h" />
     <QtMoc Include="ISSearchForm.h" />
     <QtMoc Include="ISSettingsForm.h" />
-    <QtMoc Include="ISStorageFilesListForm.h" />
+    <QtMoc Include="ISStorageFilesSubSystem.h" />
     <QtMoc Include="ISTaskParagraph.h" />
     <QtMoc Include="ISTaskViewForm.h" />
-    <QtMoc Include="ISUserGroupListForm.h" />
-    <QtMoc Include="ISUserListForm.h" />
+    <QtMoc Include="ISUserGroupSubSystem.h" />
+    <QtMoc Include="ISUserSubSystem.h" />
     <QtMoc Include="ISUserObjectForm.h" />
     <QtMoc Include="ISUserPasswordForm.h" />
     <QtMoc Include="ISListIndicatorWidget.h" />
@@ -394,7 +394,7 @@
     <QtMoc Include="ISSystemsPanel.h" />
     <QtMoc Include="ISUserGroupForm.h" />
     <QtMoc Include="ISEmpty.h" />
-    <QtMoc Include="ISAsteriskCallsListForm.h" />
+    <QtMoc Include="ISAsteriskCallsSubSystem.h" />
     <QtMoc Include="ISAudioPlayerForm.h" />
     <ClInclude Include="isgui_global.h" />
     <QtMoc Include="ISProgressForm.h" />

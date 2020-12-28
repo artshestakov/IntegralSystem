@@ -100,9 +100,6 @@
     <ClCompile Include="ISObjectFormBase.cpp">
       <Filter>Common Forms</Filter>
     </ClCompile>
-    <ClCompile Include="ISProtocolListForm.cpp">
-      <Filter>Common Forms</Filter>
-    </ClCompile>
     <ClCompile Include="ISSelectDialogForm.cpp">
       <Filter>Common Forms</Filter>
     </ClCompile>
@@ -208,22 +205,13 @@
     <ClCompile Include="ISFavoritesForm.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
-    <ClCompile Include="ISFullTextSearchForm.cpp">
-      <Filter>Forms</Filter>
-    </ClCompile>
     <ClCompile Include="ISHistoryForm.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
     <ClCompile Include="ISImageViewerForm.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
-    <ClCompile Include="ISInternalDirectoriesForm.cpp">
-      <Filter>Forms</Filter>
-    </ClCompile>
     <ClCompile Include="ISMainWindow.cpp">
-      <Filter>Forms</Filter>
-    </ClCompile>
-    <ClCompile Include="ISMonitorActivityForm.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
     <ClCompile Include="ISParagraphBaseForm.cpp">
@@ -238,16 +226,7 @@
     <ClCompile Include="ISSettingsForm.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
-    <ClCompile Include="ISStorageFilesListForm.cpp">
-      <Filter>Forms</Filter>
-    </ClCompile>
     <ClCompile Include="ISTaskViewForm.cpp">
-      <Filter>Forms</Filter>
-    </ClCompile>
-    <ClCompile Include="ISUserGroupListForm.cpp">
-      <Filter>Forms</Filter>
-    </ClCompile>
-    <ClCompile Include="ISUserListForm.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
     <ClCompile Include="ISUserObjectForm.cpp">
@@ -358,9 +337,6 @@
     <ClCompile Include="ISTcpQuery.cpp">
       <Filter>Protocol</Filter>
     </ClCompile>
-    <ClCompile Include="ISAsteriskCallsListForm.cpp">
-      <Filter>Forms</Filter>
-    </ClCompile>
     <ClCompile Include="ISAudioPlayerForm.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
@@ -394,6 +370,30 @@
     <ClCompile Include="ISValidators.cpp">
       <Filter>System</Filter>
     </ClCompile>
+    <ClCompile Include="ISUserSubSystem.cpp">
+      <Filter>Forms</Filter>
+    </ClCompile>
+    <ClCompile Include="ISUserGroupSubSystem.cpp">
+      <Filter>Forms</Filter>
+    </ClCompile>
+    <ClCompile Include="ISProtocolSubSystem.cpp">
+      <Filter>Common Forms</Filter>
+    </ClCompile>
+    <ClCompile Include="ISMonitorActivitySubSystem.cpp">
+      <Filter>Forms</Filter>
+    </ClCompile>
+    <ClCompile Include="ISAsteriskCallsSubSystem.cpp">
+      <Filter>Forms</Filter>
+    </ClCompile>
+    <ClCompile Include="ISStorageFilesSubSystem.cpp">
+      <Filter>Forms</Filter>
+    </ClCompile>
+    <ClCompile Include="ISFullTextSearchSubSystem.cpp">
+      <Filter>Forms</Filter>
+    </ClCompile>
+    <ClCompile Include="ISInternalDirectoriesSubSystem.cpp">
+      <Filter>Forms</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ISExportForm.h">
@@ -424,9 +424,6 @@
       <Filter>Common Forms</Filter>
     </QtMoc>
     <QtMoc Include="ISObjectFormBase.h">
-      <Filter>Common Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISProtocolListForm.h">
       <Filter>Common Forms</Filter>
     </QtMoc>
     <QtMoc Include="ISSelectDialogForm.h">
@@ -501,22 +498,13 @@
     <QtMoc Include="ISFavoritesForm.h">
       <Filter>Forms</Filter>
     </QtMoc>
-    <QtMoc Include="ISFullTextSearchForm.h">
-      <Filter>Forms</Filter>
-    </QtMoc>
     <QtMoc Include="ISHistoryForm.h">
       <Filter>Forms</Filter>
     </QtMoc>
     <QtMoc Include="ISImageViewerForm.h">
       <Filter>Forms</Filter>
     </QtMoc>
-    <QtMoc Include="ISInternalDirectoriesForm.h">
-      <Filter>Forms</Filter>
-    </QtMoc>
     <QtMoc Include="ISMainWindow.h">
-      <Filter>Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISMonitorActivityForm.h">
       <Filter>Forms</Filter>
     </QtMoc>
     <QtMoc Include="ISParagraphBaseForm.h">
@@ -531,16 +519,7 @@
     <QtMoc Include="ISSettingsForm.h">
       <Filter>Forms</Filter>
     </QtMoc>
-    <QtMoc Include="ISStorageFilesListForm.h">
-      <Filter>Forms</Filter>
-    </QtMoc>
     <QtMoc Include="ISTaskViewForm.h">
-      <Filter>Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISUserGroupListForm.h">
-      <Filter>Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISUserListForm.h">
       <Filter>Forms</Filter>
     </QtMoc>
     <QtMoc Include="ISUserObjectForm.h">
@@ -639,9 +618,6 @@
     <QtMoc Include="ISTcpConnector.h">
       <Filter>Protocol</Filter>
     </QtMoc>
-    <QtMoc Include="ISAsteriskCallsListForm.h">
-      <Filter>Forms</Filter>
-    </QtMoc>
     <QtMoc Include="ISAudioPlayerForm.h">
       <Filter>Forms</Filter>
     </QtMoc>
@@ -671,6 +647,30 @@
     </QtMoc>
     <QtMoc Include="ISValidators.h">
       <Filter>System</Filter>
+    </QtMoc>
+    <QtMoc Include="ISUserSubSystem.h">
+      <Filter>Forms</Filter>
+    </QtMoc>
+    <QtMoc Include="ISUserGroupSubSystem.h">
+      <Filter>Forms</Filter>
+    </QtMoc>
+    <QtMoc Include="ISProtocolSubSystem.h">
+      <Filter>Common Forms</Filter>
+    </QtMoc>
+    <QtMoc Include="ISMonitorActivitySubSystem.h">
+      <Filter>Forms</Filter>
+    </QtMoc>
+    <QtMoc Include="ISAsteriskCallsSubSystem.h">
+      <Filter>Forms</Filter>
+    </QtMoc>
+    <QtMoc Include="ISStorageFilesSubSystem.h">
+      <Filter>Forms</Filter>
+    </QtMoc>
+    <QtMoc Include="ISFullTextSearchSubSystem.h">
+      <Filter>Forms</Filter>
+    </QtMoc>
+    <QtMoc Include="ISInternalDirectoriesSubSystem.h">
+      <Filter>Forms</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>

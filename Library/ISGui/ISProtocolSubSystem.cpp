@@ -1,17 +1,17 @@
-#include "ISProtocolListForm.h"
+#include "ISProtocolSubSystem.h"
 #include "ISGui.h"
 //-----------------------------------------------------------------------------
-ISProtocolListForm::ISProtocolListForm(QWidget *parent) : ISListBaseForm("_Protocol", parent)
+ISProtocolSubSystem::ISProtocolSubSystem(QWidget *parent) : ISListBaseForm("_Protocol", parent)
 {
 
 }
 //-----------------------------------------------------------------------------
-ISProtocolListForm::~ISProtocolListForm()
+ISProtocolSubSystem::~ISProtocolSubSystem()
 {
 
 }
 //-----------------------------------------------------------------------------
-void ISProtocolListForm::DoubleClickedTable(const QModelIndex &ModelIndex)
+void ISProtocolSubSystem::DoubleClickedTable(const QModelIndex &ModelIndex)
 {
     Q_UNUSED(ModelIndex);
 	QVariant TableName = GetCurrentRecordValueDB("TableName");

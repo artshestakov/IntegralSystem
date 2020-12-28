@@ -1,4 +1,4 @@
-#include "ISFullTextSearchForm.h"
+#include "ISFullTextSearchSubSystem.h"
 #include "ISDefinesGui.h"
 #include "ISConstants.h"
 #include "ISLocalization.h"
@@ -13,7 +13,7 @@
 #include "ISProtocol.h"
 #include "ISQueryPool.h"
 //-----------------------------------------------------------------------------
-ISFullTextSearchForm::ISFullTextSearchForm(QWidget *parent) : ISInterfaceMetaForm(parent)
+ISFullTextSearchSubSystem::ISFullTextSearchSubSystem(QWidget *parent) : ISInterfaceMetaForm(parent)
 {
 	GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);
 
@@ -37,7 +37,7 @@ ISFullTextSearchForm::ISFullTextSearchForm(QWidget *parent) : ISInterfaceMetaFor
 
 	ButtonSearch = new ISPushButton(BUFFER_ICONS("Search"), LANG("Search"), this);
 	ButtonSearch->setCursor(CURSOR_POINTING_HAND);
-	connect(ButtonSearch, &ISPushButton::clicked, this, &ISFullTextSearchForm::Search);
+	connect(ButtonSearch, &ISPushButton::clicked, this, &ISFullTextSearchSubSystem::Search);
 	LayoutTitle->addWidget(ButtonSearch);
 
 	QHBoxLayout *LayoutLabels = new QHBoxLayout();
@@ -56,17 +56,17 @@ ISFullTextSearchForm::ISFullTextSearchForm(QWidget *parent) : ISInterfaceMetaFor
 	GetMainLayout()->addWidget(ScrollArea);
 }
 //-----------------------------------------------------------------------------
-ISFullTextSearchForm::~ISFullTextSearchForm()
+ISFullTextSearchSubSystem::~ISFullTextSearchSubSystem()
 {
 
 }
 //-----------------------------------------------------------------------------
-void ISFullTextSearchForm::LoadData()
+void ISFullTextSearchSubSystem::LoadData()
 {
 	EditSearch->SetFocus();
 }
 //-----------------------------------------------------------------------------
-void ISFullTextSearchForm::SetSearchInProgress(bool InProgress)
+void ISFullTextSearchSubSystem::SetSearchInProgress(bool InProgress)
 {
 	ISGui::SetWaitGlobalCursor(InProgress);
 	EditSearch->setEnabled(!InProgress);
@@ -89,7 +89,7 @@ void ISFullTextSearchForm::SetSearchInProgress(bool InProgress)
 	}
 }
 //-----------------------------------------------------------------------------
-void ISFullTextSearchForm::Search()
+void ISFullTextSearchSubSystem::Search()
 {
 	if (EditSearch->GetValue().toString().isEmpty())
 	{
@@ -128,7 +128,7 @@ void ISFullTextSearchForm::Search()
 			LabelLink->setSizePolicy(QSizePolicy::Maximum, LabelLink->sizePolicy().verticalPolicy());
 			LabelLink->setProperty("TableName", MetaTable->Name);
 			LabelLink->setProperty("ObjectID", ResultMap["ID"]);
-			connect(LabelLink, &ISQLabel::Clicked, this, &ISFullTextSearchForm::ClickedRecord);
+			connect(LabelLink, &ISQLabel::Clicked, this, &ISFullTextSearchSubSystem::ClickedRecord);
 			dynamic_cast<QVBoxLayout*>(ScrollArea->widget()->layout())->addWidget(LabelLink);
 			WidgetList.append(LabelLink);
 		}
@@ -145,7 +145,7 @@ void ISFullTextSearchForm::Search()
 	SetSearchInProgress(false);
 }
 //-----------------------------------------------------------------------------
-void ISFullTextSearchForm::ClickedRecord()
+void ISFullTextSearchSubSystem::ClickedRecord()
 {
 	ISGui::ShowObjectForm(ISGui::CreateObjectForm(ISNamespace::OFT_Edit, sender()->property("TableName").toString(), sender()->property("ObjectID").toInt()));
 }

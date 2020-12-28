@@ -26,13 +26,13 @@ namespace ISOilSphere
 	};
 
 	//Форма списка контрагентов
-	class CounterpartyListForm : public ISListBaseForm
+	class CounterpartySubSystem : public ISListBaseForm
 	{
 		Q_OBJECT
 
 	public:
-		Q_INVOKABLE CounterpartyListForm(QWidget *parent = 0);
-		virtual ~CounterpartyListForm();
+		Q_INVOKABLE CounterpartySubSystem(QWidget *parent = 0);
+		virtual ~CounterpartySubSystem();
 
 	protected:
 		void LoadDataAfterEvent() override;
@@ -89,13 +89,13 @@ namespace ISOilSphere
 	};
 
 	//Форма списка реализаций
-	class ImplementationListForm : public ISListBaseForm
+	class ImplementationSubSystem : public ISListBaseForm
 	{
 		Q_OBJECT
 
 	public:
-		Q_INVOKABLE ImplementationListForm(QWidget *parent = 0);
-		~ImplementationListForm();
+		Q_INVOKABLE ImplementationSubSystem(QWidget *parent = 0);
+		~ImplementationSubSystem();
 
 	protected:
 		void LoadDataAfterEvent() override;
@@ -135,13 +135,13 @@ namespace ISOilSphere
 	};
 
 	//Форма списка ведомости АЗС
-	class GasStationStatementListForm : public ISListBaseForm
+	class GasStationStatementSubSystem : public ISListBaseForm
 	{
 		Q_OBJECT
 
 	public:
-		Q_INVOKABLE GasStationStatementListForm(QWidget *parent = 0);
-		virtual ~GasStationStatementListForm();
+		Q_INVOKABLE GasStationStatementSubSystem(QWidget *parent = 0);
+		virtual ~GasStationStatementSubSystem();
 
 	protected:
 		void LoadDataAfterEvent() override;
@@ -257,13 +257,13 @@ namespace ISOilSphere
 	};
 
 	//Форма списка дебета 1
-	class Debet1ListForm : public ISListBaseForm
+	class Debet1SubSystem : public ISListBaseForm
 	{
 		Q_OBJECT
 
 	public:
-		Q_INVOKABLE Debet1ListForm(QWidget *parent = 0);
-		virtual ~Debet1ListForm();
+		Q_INVOKABLE Debet1SubSystem(QWidget *parent = 0);
+		virtual ~Debet1SubSystem();
 
 	protected:
 		void LoadDataAfterEvent() override;
@@ -273,13 +273,13 @@ namespace ISOilSphere
 	};
 
 	//Форма списка дебета 2
-	class Debet2ListForm : public ISListBaseForm
+	class Debet2SubSystem : public ISListBaseForm
 	{
 		Q_OBJECT
 
 	public:
-		Q_INVOKABLE Debet2ListForm(QWidget *parent = 0);
-		virtual ~Debet2ListForm();
+		Q_INVOKABLE Debet2SubSystem(QWidget *parent = 0);
+		virtual ~Debet2SubSystem();
 
 	protected:
 		void LoadDataAfterEvent() override;
@@ -289,13 +289,13 @@ namespace ISOilSphere
 	};
 
 	//Форма списка дебета 3
-	class Debet3ListForm : public ISListBaseForm
+	class Debet3SubSystem : public ISListBaseForm
 	{
 		Q_OBJECT
 
 	public:
-		Q_INVOKABLE Debet3ListForm(QWidget *parent = 0);
-		virtual ~Debet3ListForm();
+		Q_INVOKABLE Debet3SubSystem(QWidget *parent = 0);
+		virtual ~Debet3SubSystem();
 
 	protected:
 		void LoadDataAfterEvent() override;
@@ -305,13 +305,13 @@ namespace ISOilSphere
 	};
 
 	//Форма списка дебета 4
-	class Debet4ListForm : public ISListBaseForm
+	class Debet4SubSystem : public ISListBaseForm
 	{
 		Q_OBJECT
 
 	public:
-		Q_INVOKABLE Debet4ListForm(QWidget *parent = 0);
-		virtual ~Debet4ListForm();
+		Q_INVOKABLE Debet4SubSystem(QWidget *parent = 0);
+		virtual ~Debet4SubSystem();
 
 	protected:
 		void LoadDataAfterEvent() override;
@@ -321,13 +321,13 @@ namespace ISOilSphere
 	};
 
 	//Форма списка дебета 5
-	class Debet5ListForm : public ISListBaseForm
+	class Debet5SubSystem : public ISListBaseForm
 	{
 		Q_OBJECT
 
 	public:
-		Q_INVOKABLE Debet5ListForm(QWidget *parent = 0);
-		virtual ~Debet5ListForm();
+		Q_INVOKABLE Debet5SubSystem(QWidget *parent = 0);
+		virtual ~Debet5SubSystem();
 
 	protected:
 		void LoadDataAfterEvent() override;
@@ -337,13 +337,13 @@ namespace ISOilSphere
 	};
 
 	//Форма списка расходов водителей
-	class DriverCostListForm : public ISListBaseForm
+	class DriverCostSubSystem : public ISListBaseForm
 	{
 		Q_OBJECT
 
 	public:
-		Q_INVOKABLE DriverCostListForm(QWidget *parent = 0);
-		virtual ~DriverCostListForm();
+		Q_INVOKABLE DriverCostSubSystem(QWidget *parent = 0);
+		virtual ~DriverCostSubSystem();
 
 	protected:
 		void LoadDataAfterEvent() override;
@@ -401,13 +401,13 @@ namespace ISOilSphere
 	};
 
 	//Форма списка движения вагонов
-	class MoveWagonListForm : public ISListBaseForm
+	class MoveWagonSubSystem : public ISListBaseForm
 	{
 		Q_OBJECT
 
 	public:
-		Q_INVOKABLE MoveWagonListForm(QWidget *parent = 0);
-		virtual ~MoveWagonListForm();
+		Q_INVOKABLE MoveWagonSubSystem(QWidget *parent = 0);
+		virtual ~MoveWagonSubSystem();
 
 	protected:
 		void LoadDataAfterEvent() override;

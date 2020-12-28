@@ -1,4 +1,4 @@
-#include "ISStorageFilesListForm.h"
+#include "ISStorageFilesSubSystem.h"
 #include "ISSystem.h"
 #include "ISLocalization.h"
 #include "ISTcpQuery.h"
@@ -13,21 +13,21 @@
 #include "ISProgressForm.h"
 #include "ISDatabase.h"
 //-----------------------------------------------------------------------------
-ISStorageFilesListForm::ISStorageFilesListForm(QWidget *parent) : ISListBaseForm("_StorageFiles", parent)
+ISStorageFilesSubSystem::ISStorageFilesSubSystem(QWidget *parent) : ISListBaseForm("_StorageFiles", parent)
 {
 	GetAction(ISNamespace::AT_Create)->setToolTip(LANG("StorageFiles.Create"));
 	
 	QAction *ActionSave = ISControls::CreateActionSave(this);
-	connect(ActionSave, &QAction::triggered, this, &ISStorageFilesListForm::SaveFile);
+	connect(ActionSave, &QAction::triggered, this, &ISStorageFilesSubSystem::SaveFile);
 	AddAction(ActionSave, true, true);
 }
 //-----------------------------------------------------------------------------
-ISStorageFilesListForm::~ISStorageFilesListForm()
+ISStorageFilesSubSystem::~ISStorageFilesSubSystem()
 {
 
 }
 //-----------------------------------------------------------------------------
-void ISStorageFilesListForm::Create()
+void ISStorageFilesSubSystem::Create()
 {
 	QStringList StringList = ISFileDialog::GetOpenFileNames(this);
 	if (!StringList.isEmpty())
@@ -93,7 +93,7 @@ void ISStorageFilesListForm::Create()
 	}
 }
 //-----------------------------------------------------------------------------
-void ISStorageFilesListForm::CreateCopy()
+void ISStorageFilesSubSystem::CreateCopy()
 {
 	QString FileName = GetCurrentRecordValue("Name").toString();
 	if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.CreateCopyFile").arg(FileName)))
@@ -124,7 +124,7 @@ void ISStorageFilesListForm::CreateCopy()
 	}
 }
 //-----------------------------------------------------------------------------
-void ISStorageFilesListForm::SaveFile()
+void ISStorageFilesSubSystem::SaveFile()
 {
 	QString Expansion = GetCurrentRecordValue("Expansion").toString(),
 		Name = GetCurrentRecordValue("Name").toString();

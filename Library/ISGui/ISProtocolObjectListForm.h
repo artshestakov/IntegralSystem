@@ -1,9 +1,9 @@
 #pragma once
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
-#include "ISProtocolListForm.h"
+#include "ISProtocolSubSystem.h"
 //-----------------------------------------------------------------------------
-class ISProtocolObjectListForm : public ISProtocolListForm
+class ISProtocolObjectListForm : public ISProtocolSubSystem
 {
 	Q_OBJECT
 

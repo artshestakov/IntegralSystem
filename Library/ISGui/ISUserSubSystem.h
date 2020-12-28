@@ -1,17 +1,13 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "StdAfx.h"
 #include "ISListBaseForm.h"
 //-----------------------------------------------------------------------------
-class ISUserGroupListForm : public ISListBaseForm
+class ISUserSubSystem : public ISListBaseForm
 {
 	Q_OBJECT
 
 public:
-	Q_INVOKABLE ISUserGroupListForm(QWidget *parent = 0);
-	virtual ~ISUserGroupListForm();
-
-private:
-	void SelectedGroup();
+	Q_INVOKABLE ISUserSubSystem(QWidget *parent = 0);
+	virtual ~ISUserSubSystem();
 };
 //-----------------------------------------------------------------------------

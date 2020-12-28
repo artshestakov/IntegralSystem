@@ -5,13 +5,13 @@
 #include "ISListWidget.h"
 #include "ISListBaseForm.h"
 //-----------------------------------------------------------------------------
-class ISInternalDirectoriesForm : public ISInterfaceMetaForm
+class ISInternalDirectoriesSubSystem : public ISInterfaceMetaForm
 {
 	Q_OBJECT
 
 public:
-	Q_INVOKABLE ISInternalDirectoriesForm(QWidget *parent = 0);
-	virtual ~ISInternalDirectoriesForm();
+	Q_INVOKABLE ISInternalDirectoriesSubSystem(QWidget *parent = 0);
+	virtual ~ISInternalDirectoriesSubSystem();
 
 	void LoadData() override;
 

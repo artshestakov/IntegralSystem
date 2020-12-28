@@ -1,11 +1,11 @@
-#include "ISUserListForm.h"
+#include "ISUserSubSystem.h"
 //-----------------------------------------------------------------------------
-ISUserListForm::ISUserListForm(QWidget *parent) : ISListBaseForm("_Users", parent)
+ISUserSubSystem::ISUserSubSystem(QWidget *parent) : ISListBaseForm("_Users", parent)
 {
 	
 }
 //-----------------------------------------------------------------------------
-ISUserListForm::~ISUserListForm()
+ISUserSubSystem::~ISUserSubSystem()
 {
 
 }

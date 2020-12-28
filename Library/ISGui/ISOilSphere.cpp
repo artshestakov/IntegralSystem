@@ -69,28 +69,28 @@ ISOilSphere::Object::~Object()
 //-----------------------------------------------------------------------------
 void ISOilSphere::Object::RegisterMetaTypes() const
 {
-	qRegisterMetaType<ISOilSphere::CounterpartyListForm*>("ISOilSphere::CounterpartyListForm");
+	qRegisterMetaType<ISOilSphere::CounterpartySubSystem*>("ISOilSphere::CounterpartyListForm");
 	qRegisterMetaType<ISOilSphere::CounterpartyObjectForm*>("ISOilSphere::CounterpartyObjectForm");
-	qRegisterMetaType<ISOilSphere::ImplementationListForm*>("ISOilSphere::ImplementationListForm");
+	qRegisterMetaType<ISOilSphere::ImplementationSubSystem*>("ISOilSphere::ImplementationListForm");
 	qRegisterMetaType<ISOilSphere::ImplementationLoadObjectForm*>("ISOilSphere::ImplementationLoadObjectForm");
 	qRegisterMetaType<ISOilSphere::ImplementationUnloadObjectForm*>("ISOilSphere::ImplementationUnloadObjectForm");
-	qRegisterMetaType<ISOilSphere::GasStationStatementListForm*>("ISOilSphere::GasStationStatementListForm");
+	qRegisterMetaType<ISOilSphere::GasStationStatementSubSystem*>("ISOilSphere::GasStationStatementListForm");
 	qRegisterMetaType<ISOilSphere::GasStationStatementObjectForm*>("ISOilSphere::GasStationStatementObjectForm");
 	qRegisterMetaType<ISOilSphere::Debet1ObjectForm*>("ISOilSphere::Debet1ObjectForm");
 	qRegisterMetaType<ISOilSphere::Debet2ObjectForm*>("ISOilSphere::Debet2ObjectForm");
 	qRegisterMetaType<ISOilSphere::Debet3ObjectForm*>("ISOilSphere::Debet3ObjectForm");
 	qRegisterMetaType<ISOilSphere::Debet4ObjectForm*>("ISOilSphere::Debet4ObjectForm");
 	qRegisterMetaType<ISOilSphere::Debet5ObjectForm*>("ISOilSphere::Debet5ObjectForm");
-	qRegisterMetaType<ISOilSphere::Debet1ListForm*>("ISOilSphere::Debet1ListForm");
-	qRegisterMetaType<ISOilSphere::Debet2ListForm*>("ISOilSphere::Debet2ListForm");
-	qRegisterMetaType<ISOilSphere::Debet3ListForm*>("ISOilSphere::Debet3ListForm");
-	qRegisterMetaType<ISOilSphere::Debet4ListForm*>("ISOilSphere::Debet4ListForm");
-	qRegisterMetaType<ISOilSphere::Debet5ListForm*>("ISOilSphere::Debet5ListForm");
-	qRegisterMetaType<ISOilSphere::DriverCostListForm*>("ISOilSphere::DriverCostListForm");
+	qRegisterMetaType<ISOilSphere::Debet1SubSystem*>("ISOilSphere::Debet1ListForm");
+	qRegisterMetaType<ISOilSphere::Debet2SubSystem*>("ISOilSphere::Debet2ListForm");
+	qRegisterMetaType<ISOilSphere::Debet3SubSystem*>("ISOilSphere::Debet3ListForm");
+	qRegisterMetaType<ISOilSphere::Debet4SubSystem*>("ISOilSphere::Debet4ListForm");
+	qRegisterMetaType<ISOilSphere::Debet5SubSystem*>("ISOilSphere::Debet5ListForm");
+	qRegisterMetaType<ISOilSphere::DriverCostSubSystem*>("ISOilSphere::DriverCostListForm");
 	qRegisterMetaType<ISOilSphere::StockAdmissionTrain*>("ISOilSphere::StockAdmissionTrain");
 	qRegisterMetaType<ISOilSphere::StockAdmissionImplemetation*>("ISOilSphere::StockAdmissionImplemetation");
 	qRegisterMetaType<ISOilSphere::StockWriteOff*>("ISOilSphere::StockWriteOff");
-	qRegisterMetaType<ISOilSphere::MoveWagonListForm*>("ISOilSphere::MoveWagonListForm");
+	qRegisterMetaType<ISOilSphere::MoveWagonSubSystem*>("ISOilSphere::MoveWagonListForm");
 }
 //-----------------------------------------------------------------------------
 void ISOilSphere::Object::BeforeShowMainWindow() const
@@ -123,10 +123,10 @@ void ISOilSphere::Object::InitializePlugin() const
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-ISOilSphere::CounterpartyListForm::CounterpartyListForm(QWidget *parent) : ISListBaseForm("Counterparty", parent)
+ISOilSphere::CounterpartySubSystem::CounterpartySubSystem(QWidget *parent) : ISListBaseForm("Counterparty", parent)
 {
 	QAction *ActionDebt = new QAction(ISObjects::Instance().GetInterface()->GetIcon("Debt"), LANG("OilSphere.Debts"), this);
-	connect(ActionDebt, &QAction::triggered, this, &ISOilSphere::CounterpartyListForm::ShowDebt);
+	connect(ActionDebt, &QAction::triggered, this, &ISOilSphere::CounterpartySubSystem::ShowDebt);
 	AddAction(ActionDebt, true, true);
 
 	LabelTotal = new QLabel(GetStatusBar());
@@ -134,18 +134,18 @@ ISOilSphere::CounterpartyListForm::CounterpartyListForm(QWidget *parent) : ISLis
 	GetStatusBar()->addWidget(LabelTotal);
 }
 //-----------------------------------------------------------------------------
-ISOilSphere::CounterpartyListForm::~CounterpartyListForm()
+ISOilSphere::CounterpartySubSystem::~CounterpartySubSystem()
 {
 
 }
 //-----------------------------------------------------------------------------
-void ISOilSphere::CounterpartyListForm::LoadDataAfterEvent()
+void ISOilSphere::CounterpartySubSystem::LoadDataAfterEvent()
 {
 	ISListBaseForm::LoadDataAfterEvent();
 	//LabelTotal->setText(LANG("OilSphere.Counterparty.Total").arg(DOUBLE_PREPAREM(GetSqlModel()->GetFieldSum<double>("Debt", 0.0))));
 }
 //-----------------------------------------------------------------------------
-void ISOilSphere::CounterpartyListForm::ShowDebt()
+void ISOilSphere::CounterpartySubSystem::ShowDebt()
 {
 	ISGui::SetWaitGlobalCursor(true);
 	(new ISOilSphere::CounterpartyDebtForm(GetObjectID(), GetCurrentRecordValue("Name").toString()))->showMaximized();
@@ -353,19 +353,19 @@ void ISOilSphere::CounterpartyObjectForm::SearchFinished(const ISDaDataOrganizat
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-ISOilSphere::ImplementationListForm::ImplementationListForm(QWidget *parent) : ISListBaseForm("Implementation", parent)
+ISOilSphere::ImplementationSubSystem::ImplementationSubSystem(QWidget *parent) : ISListBaseForm("Implementation", parent)
 {
 	LabelTotal = new QLabel(GetStatusBar());
 	ISGui::SetFontWidgetBold(LabelTotal, true);
 	GetStatusBar()->addWidget(LabelTotal);
 }
 //-----------------------------------------------------------------------------
-ISOilSphere::ImplementationListForm::~ImplementationListForm()
+ISOilSphere::ImplementationSubSystem::~ImplementationSubSystem()
 {
 
 }
 //-----------------------------------------------------------------------------
-void ISOilSphere::ImplementationListForm::LoadDataAfterEvent()
+void ISOilSphere::ImplementationSubSystem::LoadDataAfterEvent()
 {
 	ISListBaseForm::LoadDataAfterEvent();
 	/*LabelTotal->setText(LANG("OilSphere.Implementation.Total")
@@ -556,14 +556,14 @@ void ISOilSphere::ImplementationUnloadObjectForm::Calculate()
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-ISOilSphere::GasStationStatementListForm::GasStationStatementListForm(QWidget *parent) : ISListBaseForm("GasStationStatement", parent)
+ISOilSphere::GasStationStatementSubSystem::GasStationStatementSubSystem(QWidget *parent) : ISListBaseForm("GasStationStatement", parent)
 {
 	GetToolBar()->addWidget(new QLabel(LANG("OilSphere.GasStationLabel"), GetToolBar()));
 
 	EditStock = new ISComboEdit(this);
 	EditStock->SetEditable(false);
 	EditStock->AddItem(LANG("All"));
-	connect(EditStock, &ISFieldEditBase::ValueChange, this, &ISOilSphere::GasStationStatementListForm::StockChanged);
+	connect(EditStock, &ISFieldEditBase::ValueChange, this, &ISOilSphere::GasStationStatementSubSystem::StockChanged);
 	GetToolBar()->addWidget(EditStock);
 
 	ISQuery qSelectStock(QS_STOCK);
@@ -580,12 +580,12 @@ ISOilSphere::GasStationStatementListForm::GasStationStatementListForm(QWidget *p
 	GetStatusBar()->addWidget(LabelTotal);
 }
 //-----------------------------------------------------------------------------
-ISOilSphere::GasStationStatementListForm::~GasStationStatementListForm()
+ISOilSphere::GasStationStatementSubSystem::~GasStationStatementSubSystem()
 {
 
 }
 //-----------------------------------------------------------------------------
-void ISOilSphere::GasStationStatementListForm::LoadDataAfterEvent()
+void ISOilSphere::GasStationStatementSubSystem::LoadDataAfterEvent()
 {
 	ISListBaseForm::LoadDataAfterEvent();
 	/*LabelTotal->setText(LANG("OilSphere.GasStationStatement.Total")
@@ -613,7 +613,7 @@ void ISOilSphere::GasStationStatementListForm::LoadDataAfterEvent()
 		.arg(DOUBLE_PREPAREM(GetSqlModel()->GetFieldSum<double>("CashboxAdministrativeExpenses", 0.0))));*/
 }
 //-----------------------------------------------------------------------------
-void ISOilSphere::GasStationStatementListForm::StockChanged(const QVariant &Value)
+void ISOilSphere::GasStationStatementSubSystem::StockChanged(const QVariant &Value)
 {
 	Value.isValid()
 		? GetQueryModel()->SetClassFilter("gsts_stock = " + Value.toString()) : 
@@ -926,7 +926,7 @@ void ISOilSphere::Debet5ObjectForm::CalculateRemainder()
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-ISOilSphere::Debet1ListForm::Debet1ListForm(QWidget *parent) : ISListBaseForm("Debet1", parent)
+ISOilSphere::Debet1SubSystem::Debet1SubSystem(QWidget *parent) : ISListBaseForm("Debet1", parent)
 {
 	GetToolBar()->addWidget(ISControls::CreateVerticalLine(GetToolBar()));
 
@@ -935,12 +935,12 @@ ISOilSphere::Debet1ListForm::Debet1ListForm(QWidget *parent) : ISListBaseForm("D
 	GetToolBar()->addWidget(Label);
 }
 //-----------------------------------------------------------------------------
-ISOilSphere::Debet1ListForm::~Debet1ListForm()
+ISOilSphere::Debet1SubSystem::~Debet1SubSystem()
 {
 
 }
 //-----------------------------------------------------------------------------
-void ISOilSphere::Debet1ListForm::LoadDataAfterEvent()
+void ISOilSphere::Debet1SubSystem::LoadDataAfterEvent()
 {
 	ISListBaseForm::LoadDataAfterEvent();
 	double Total = 0, Calculation = 0;
@@ -956,7 +956,7 @@ void ISOilSphere::Debet1ListForm::LoadDataAfterEvent()
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-ISOilSphere::Debet2ListForm::Debet2ListForm(QWidget *parent) : ISListBaseForm("Debet2", parent)
+ISOilSphere::Debet2SubSystem::Debet2SubSystem(QWidget *parent) : ISListBaseForm("Debet2", parent)
 {
 	GetToolBar()->addWidget(ISControls::CreateVerticalLine(GetToolBar()));
 
@@ -965,12 +965,12 @@ ISOilSphere::Debet2ListForm::Debet2ListForm(QWidget *parent) : ISListBaseForm("D
 	GetToolBar()->addWidget(Label);
 }
 //-----------------------------------------------------------------------------
-ISOilSphere::Debet2ListForm::~Debet2ListForm()
+ISOilSphere::Debet2SubSystem::~Debet2SubSystem()
 {
 
 }
 //-----------------------------------------------------------------------------
-void ISOilSphere::Debet2ListForm::LoadDataAfterEvent()
+void ISOilSphere::Debet2SubSystem::LoadDataAfterEvent()
 {
 	ISListBaseForm::LoadDataAfterEvent();
 	double Total = 0, Calculation = 0;
@@ -986,7 +986,7 @@ void ISOilSphere::Debet2ListForm::LoadDataAfterEvent()
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-ISOilSphere::Debet3ListForm::Debet3ListForm(QWidget *parent) : ISListBaseForm("Debet3", parent)
+ISOilSphere::Debet3SubSystem::Debet3SubSystem(QWidget *parent) : ISListBaseForm("Debet3", parent)
 {
 	GetToolBar()->addWidget(ISControls::CreateVerticalLine(GetToolBar()));
 
@@ -995,12 +995,12 @@ ISOilSphere::Debet3ListForm::Debet3ListForm(QWidget *parent) : ISListBaseForm("D
 	GetToolBar()->addWidget(Label);
 }
 //-----------------------------------------------------------------------------
-ISOilSphere::Debet3ListForm::~Debet3ListForm()
+ISOilSphere::Debet3SubSystem::~Debet3SubSystem()
 {
 
 }
 //-----------------------------------------------------------------------------
-void ISOilSphere::Debet3ListForm::LoadDataAfterEvent()
+void ISOilSphere::Debet3SubSystem::LoadDataAfterEvent()
 {
 	ISListBaseForm::LoadDataAfterEvent();
 	double Total = 0, Calculation = 0;
@@ -1016,7 +1016,7 @@ void ISOilSphere::Debet3ListForm::LoadDataAfterEvent()
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-ISOilSphere::Debet4ListForm::Debet4ListForm(QWidget *parent) : ISListBaseForm("Debet4", parent)
+ISOilSphere::Debet4SubSystem::Debet4SubSystem(QWidget *parent) : ISListBaseForm("Debet4", parent)
 {
 	GetToolBar()->addWidget(ISControls::CreateVerticalLine(GetToolBar()));
 
@@ -1025,12 +1025,12 @@ ISOilSphere::Debet4ListForm::Debet4ListForm(QWidget *parent) : ISListBaseForm("D
 	GetToolBar()->addWidget(Label);
 }
 //-----------------------------------------------------------------------------
-ISOilSphere::Debet4ListForm::~Debet4ListForm()
+ISOilSphere::Debet4SubSystem::~Debet4SubSystem()
 {
 
 }
 //-----------------------------------------------------------------------------
-void ISOilSphere::Debet4ListForm::LoadDataAfterEvent()
+void ISOilSphere::Debet4SubSystem::LoadDataAfterEvent()
 {
 	ISListBaseForm::LoadDataAfterEvent();
 	double Total = 0, Calculation = 0;
@@ -1046,7 +1046,7 @@ void ISOilSphere::Debet4ListForm::LoadDataAfterEvent()
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-ISOilSphere::Debet5ListForm::Debet5ListForm(QWidget *parent) : ISListBaseForm("Debet5", parent)
+ISOilSphere::Debet5SubSystem::Debet5SubSystem(QWidget *parent) : ISListBaseForm("Debet5", parent)
 {
 	GetToolBar()->addWidget(ISControls::CreateVerticalLine(GetToolBar()));
 
@@ -1055,12 +1055,12 @@ ISOilSphere::Debet5ListForm::Debet5ListForm(QWidget *parent) : ISListBaseForm("D
 	GetToolBar()->addWidget(Label);
 }
 //-----------------------------------------------------------------------------
-ISOilSphere::Debet5ListForm::~Debet5ListForm()
+ISOilSphere::Debet5SubSystem::~Debet5SubSystem()
 {
 
 }
 //-----------------------------------------------------------------------------
-void ISOilSphere::Debet5ListForm::LoadDataAfterEvent()
+void ISOilSphere::Debet5SubSystem::LoadDataAfterEvent()
 {
 	ISListBaseForm::LoadDataAfterEvent();
 	double Total = 0, Calculation = 0;
@@ -1076,10 +1076,10 @@ void ISOilSphere::Debet5ListForm::LoadDataAfterEvent()
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-ISOilSphere::DriverCostListForm::DriverCostListForm(QWidget *parent) : ISListBaseForm("DriverCost", parent)
+ISOilSphere::DriverCostSubSystem::DriverCostSubSystem(QWidget *parent) : ISListBaseForm("DriverCost", parent)
 {
 	QAction *ActionCreateInBased = new QAction(BUFFER_ICONS("Add.Green"), LANG("OilSphere.CreateInBased"), GetToolBar());
-	connect(ActionCreateInBased, &QAction::triggered, this, &ISOilSphere::DriverCostListForm::CreateOnBased);
+	connect(ActionCreateInBased, &QAction::triggered, this, &ISOilSphere::DriverCostSubSystem::CreateOnBased);
 	InsertAction(ActionCreateInBased, GetAction(ISNamespace::AT_Create), true, true);
 
 	LabelTotal = new QLabel(GetStatusBar());
@@ -1087,12 +1087,12 @@ ISOilSphere::DriverCostListForm::DriverCostListForm(QWidget *parent) : ISListBas
 	GetStatusBar()->addWidget(LabelTotal);
 }
 //-----------------------------------------------------------------------------
-ISOilSphere::DriverCostListForm::~DriverCostListForm()
+ISOilSphere::DriverCostSubSystem::~DriverCostSubSystem()
 {
 
 }
 //-----------------------------------------------------------------------------
-void ISOilSphere::DriverCostListForm::LoadDataAfterEvent()
+void ISOilSphere::DriverCostSubSystem::LoadDataAfterEvent()
 {
 	ISListBaseForm::LoadDataAfterEvent();
 	/*LabelTotal->setText(LANG("OilSphere.DriverCost.Total")
@@ -1101,7 +1101,7 @@ void ISOilSphere::DriverCostListForm::LoadDataAfterEvent()
 		.arg(DOUBLE_PREPAREM(GetSqlModel()->GetFieldSum<double>("Remainder", 0.0))));*/
 }
 //-----------------------------------------------------------------------------
-void ISOilSphere::DriverCostListForm::CreateOnBased()
+void ISOilSphere::DriverCostSubSystem::CreateOnBased()
 {
 	ISQuery qSelectRemainder("SELECT get_driver_cost_remainder(:DriverCostID, :DriverCostComing, :PreviousRemainder)");
 	qSelectRemainder.BindValue(":DriverCostID", GetSelectedIDs()[0]);
@@ -1180,19 +1180,19 @@ void ISOilSphere::StockWriteOff::LoadData()
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-ISOilSphere::MoveWagonListForm::MoveWagonListForm(QWidget *parent) : ISListBaseForm("MoveWagon", parent)
+ISOilSphere::MoveWagonSubSystem::MoveWagonSubSystem(QWidget *parent) : ISListBaseForm("MoveWagon", parent)
 {
 	LabelTotal = new QLabel(GetStatusBar());
 	ISGui::SetFontWidgetBold(LabelTotal, true);
 	GetStatusBar()->addWidget(LabelTotal);
 }
 //-----------------------------------------------------------------------------
-ISOilSphere::MoveWagonListForm::~MoveWagonListForm()
+ISOilSphere::MoveWagonSubSystem::~MoveWagonSubSystem()
 {
 
 }
 //-----------------------------------------------------------------------------
-void ISOilSphere::MoveWagonListForm::LoadDataAfterEvent()
+void ISOilSphere::MoveWagonSubSystem::LoadDataAfterEvent()
 {
 	ISListBaseForm::LoadDataAfterEvent();
 	/*LabelTotal->setText(LANG("OilSphere.MoveWagon.Total")

@@ -3,15 +3,15 @@
 #include "StdAfx.h"
 #include "ISListBaseForm.h"
 //-----------------------------------------------------------------------------
-class ISProtocolListForm : public ISListBaseForm
+class ISUserGroupSubSystem : public ISListBaseForm
 {
 	Q_OBJECT
 
 public:
-	Q_INVOKABLE ISProtocolListForm(QWidget *parent = 0);
-	virtual ~ISProtocolListForm();
+	Q_INVOKABLE ISUserGroupSubSystem(QWidget *parent = 0);
+	virtual ~ISUserGroupSubSystem();
 
-protected:
-	void DoubleClickedTable(const QModelIndex &ModelIndex);
+private:
+	void SelectedGroup();
 };
 //-----------------------------------------------------------------------------
