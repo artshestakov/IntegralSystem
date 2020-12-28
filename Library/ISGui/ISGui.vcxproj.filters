@@ -360,9 +360,6 @@
     <ClCompile Include="ISTaskSearchByTextForm.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
-    <ClCompile Include="ISValidators.cpp">
-      <Filter>Export</Filter>
-    </ClCompile>
     <ClCompile Include="ISEditsQT.cpp">
       <Filter>Fields</Filter>
     </ClCompile>
@@ -428,6 +425,9 @@
     </ClCompile>
     <ClCompile Include="ISSettingsDatabaseObjectForm.cpp">
       <Filter>Forms</Filter>
+    </ClCompile>
+    <ClCompile Include="ISValidators.cpp">
+      <Filter>System</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -665,9 +665,6 @@
     <QtMoc Include="ISTaskSearchByTextForm.h">
       <Filter>Forms</Filter>
     </QtMoc>
-    <QtMoc Include="ISValidators.h">
-      <Filter>Export</Filter>
-    </QtMoc>
     <QtMoc Include="ISEditsQT.h">
       <Filter>Fields</Filter>
     </QtMoc>
@@ -721,6 +718,9 @@
     </QtMoc>
     <QtMoc Include="ISSettingsDatabaseObjectForm.h">
       <Filter>Forms</Filter>
+    </QtMoc>
+    <QtMoc Include="ISValidators.h">
+      <Filter>System</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>
