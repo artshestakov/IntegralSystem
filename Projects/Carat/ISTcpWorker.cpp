@@ -139,6 +139,8 @@ static QString QI_DISCUSSION_COPY = PREPARE_QUERY("INSERT INTO _discussion(dson_
 												  "WHERE dson_id = :DiscussionID "
 												  "RETURNING dson_id");
 //-----------------------------------------------------------------------------
+static QString QS_RIGHT_SHOW_TABLE = PREPARE_QUERY("SELECT check_access_user_table(:UserID, :TableName, :AccessTypeUID)");
+//-----------------------------------------------------------------------------
 static QString QS_SORTING = PREPARE_QUERY("SELECT sgts_fieldname, sgts_sorting "
 										  "FROM _sortingtables "
 										  "WHERE sgts_user = :UserID "
@@ -1887,6 +1889,28 @@ bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 		return false;
 	}
 	unsigned int UserID = TcpMessage->TcpSocket->GetUserID();
+
+	//Проверяем наличие права на просмотр данных
+	ISQuery qSelectRight(ISDatabase::Instance().GetDB(DBConnectionName), QS_RIGHT_SHOW_TABLE);
+	qSelectRight.BindValue(":UserID", UserID);
+	qSelectRight.BindValue(":TableName", MetaTable->Name);
+	qSelectRight.BindValue(":AccessTypeUID", CONST_UID_GROUP_ACCESS_TYPE_SHOW);
+	if (!qSelectRight.Execute())
+	{
+		return ErrorQuery(LANG("Carat.Error.Query.GetTableData.SelectRightShow"), qSelectRight);
+	}
+	if (!qSelectRight.First())
+	{
+		ErrorString = qSelectRight.GetErrorString();
+		return false;
+	}
+
+	//Прав доступа на просмотр данных нет - ошибка
+	if (!qSelectRight.ReadColumn(0).toBool())
+	{
+		ErrorString = LANG("Carat.Error.Query.GetTableData.NoRightShow").arg(MetaTable->LocalListName);
+		return false;
+	}
 
 	//Получаем сортировку для этой таблицы
 	QString SortingField;

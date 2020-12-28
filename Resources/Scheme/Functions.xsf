@@ -111,9 +111,6 @@
     CALLED ON NULL INPUT
     SECURITY INVOKER
     COST 100;
-
-    ALTER FUNCTION public.get_user_setting_value (user_id bigint, setting_uid uuid)
-    OWNER TO postgres;
   </Function>
 
   <Function Name="check_access_user_subsystem(user_id bigint, user_is_system boolean, subsystem_uid uuid)" Comment="Проверить доступ пользователя к подсистеме">
@@ -160,9 +157,52 @@
     CALLED ON NULL INPUT
     SECURITY INVOKER
     COST 100;
+  </Function>
 
-    ALTER FUNCTION public.check_access_user_subsystem (user_id bigint, user_is_system boolean, subsystem_uid uuid)
-    OWNER TO postgres;
+  <Function Name="check_access_user_table(user_id bigint, table_name character varying, access_uid_type uuid)" Comment="Проверить наличие права на таблицу у пользователя">
+    CREATE OR REPLACE FUNCTION public.check_access_user_table(user_id bigint, table_name character varying, access_uid_type uuid)
+    RETURNS boolean AS
+    $body$
+    DECLARE
+    user_is_system BOOLEAN;
+    user_group_id BIGINT;
+    user_group_fullaccess BOOLEAN;
+    result BOOLEAN;
+
+    BEGIN
+    --Запрашиваем информацию по пользователю
+    SELECT usrs_issystem, usgp_id, usgp_fullaccess
+    INTO user_is_system, user_group_id, user_group_fullaccess
+    FROM _users
+    LEFT JOIN _usergroup ON usgp_id = usrs_group
+    WHERE usrs_id = user_id;
+
+    --Если пользователь системный - сразу возращаем true
+    IF user_is_system THEN
+    RETURN true;
+    END IF;
+
+    --Если у группы этого пользователя полный доступ - сразу возвращаем true
+    IF user_group_fullaccess THEN
+    RETURN true;
+    END IF;
+
+    --Проверяем наличие права
+    SELECT (COUNT(*) > 0)::BOOLEAN
+    INTO result
+    FROM _groupaccesstable
+    WHERE gatb_group = user_group_id
+    AND gatb_table = table_name
+    AND gatb_accesstype = (SELECT gatt_id FROM _groupaccesstabletype WHERE gatt_uid = access_uid_type);
+
+    RETURN result;
+    END;
+    $body$
+    LANGUAGE 'plpgsql'
+    VOLATILE
+    CALLED ON NULL INPUT
+    SECURITY INVOKER
+    COST 100;
   </Function>
 
 </XSF>

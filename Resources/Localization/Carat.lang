@@ -113,6 +113,8 @@
 
   <Local Name="Carat.Error.Query.DiscussionCopy.Insert" Russian="Не удалось скопировать сообщение."/>
 
+  <Local Name="Carat.Error.Query.GetTableData.SelectRightShow" Russian="Не удалось проверить наличие права на просмотр."/>
+  <Local Name="Carat.Error.Query.GetTableData.NoRightShow" Russian="У Вас нет права на просмотр данных в таблице &quot;%1&quot;."/>
   <Local Name="Carat.Error.Query.GetTableData.SelectSorting" Russian="Не удалось получить сортировку."/>
   <Local Name="Carat.Error.Query.GetTableData.UpdateSorting" Russian="Не удалось обновить сортировку."/>
   <Local Name="Carat.Error.Query.GetTableData.InsertSorting" Russian="Не удалось добавить сортировку."/>
