@@ -29,7 +29,6 @@
   <_ProtocolType IsSystem="true" UID="{5F3EBAED-0970-4E0E-883C-535E6F084133}" Name="Открытие подсистемы"/>
   <_ProtocolType IsSystem="true" UID="{B6EEFB63-8197-4F3A-8373-5C3B2FC409F3}" Name="Удаление записи"/>
   <_ProtocolType IsSystem="true" UID="{1C50A667-B1C4-4F2C-8F39-90106ABB6774}" Name="Выгрузка таблицы"/>
-  <_ProtocolType IsSystem="true" UID="{916A2119-5D8D-41C9-8358-AE587F365898}" Name="Печать"/>
   <_ProtocolType IsSystem="true" UID="{179F73BF-8983-4B52-B505-AF0EF4BF8093}" Name="Расширенный поиск"/>
   <_ProtocolType IsSystem="true" UID="{B0A1EF68-2AA4-4EB2-A5A9-F8E5604F864B}" Name="Полнотекстовый поиск"/>
   <_ProtocolType IsSystem="true" UID="{0A6320B0-827B-4043-886A-1D7FD5D9B6DE}" Name="Просмотр примечания записи"/>

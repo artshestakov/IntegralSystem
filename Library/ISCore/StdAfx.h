@@ -228,10 +228,6 @@
 #include <QtGui/QTextFrame>
 #include <QtGui/QBitmap>
 //-----------------------------------------------------------------------------
-#include <QtPrintSupport/QPrinter>
-#include <QtPrintSupport/QPrintPreviewDialog>
-#include <QtPrintSupport/QPrintDialog>
-//-----------------------------------------------------------------------------
 #include <QtMultimedia/QMediaPlayer>
 #include <QtMultimedia/QSound>
 //-----------------------------------------------------------------------------

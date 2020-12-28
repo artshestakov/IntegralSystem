@@ -20,6 +20,5 @@
   <_GroupAccessSpecialType IsSystem="true" UID="{093E482F-C108-4939-A1D5-66377BA354AC}" Parent="{47115F72-C49E-4CB6-8AEF-A2648CF648E9}" Name="Просмотр всех задач" Order="6"/>
   
   <_GroupAccessSpecialType IsSystem="true" UID="{C84B3053-BBF0-4B2E-B1F4-32ABE9A817D4}" Name="Прочее" Order="3"/>
-  <_GroupAccessSpecialType IsSystem="true" UID="{2C6AA9DB-0804-46A6-8095-D2A0D6011C03}" Parent="{C84B3053-BBF0-4B2E-B1F4-32ABE9A817D4}" Name="Редактирование печатных форм" Hint="Возможность редактировать печатные формы в режиме предпросмотра" Order="1"/>
 
 </XSR>

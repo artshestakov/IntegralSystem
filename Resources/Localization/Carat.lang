@@ -65,8 +65,6 @@
   <Local Name="Carat.Error.Query.GetMetaData.SettingsDBNotActive" Russian="Настройки БД отсутствуют."/>
   <Local Name="Carat.Error.Query.GetMetaData.Systems" Russian="Не удалось получить информацию о системах."/>
   <Local Name="Carat.Error.Query.GetMetaData.SubSystems" Russian="Не удалось получить информацию о подсистемах."/>
-  <Local Name="Carat.Error.Query.GetMetaData.Report" Russian="Не удалось получить данные по отчётам."/>
-  <Local Name="Carat.Error.Query.GetMetaData.ReportField" Russian="Не удалось получить данные по отчётам."/>
   <Local Name="Carat.Error.Query.GetMetaData.Favorite" Russian="Не удалось получить избранные записи."/>
   <Local Name="Carat.Error.Query.GetMetaData.ColumnSize" Russian="Не удалось получить размеры полей."/>
   <Local Name="Carat.Error.Query.GetMetaData.SettingsGroup" Russian="Не удалось получить группы настроек."/>

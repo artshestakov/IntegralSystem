@@ -52,7 +52,6 @@ Source: ${QTDIR}\bin\Qt5Core${IS_DEBUG}.dll; DestDir: {app}; Flags: ignoreversio
 Source: ${QTDIR}\bin\Qt5Gui${IS_DEBUG}.dll; DestDir: {app}; Flags: ignoreversion recursesubdirs;
 Source: ${QTDIR}\bin\Qt5Multimedia${IS_DEBUG}.dll; DestDir: {app}; Flags: ignoreversion recursesubdirs;
 Source: ${QTDIR}\bin\Qt5Network${IS_DEBUG}.dll; DestDir: {app}; Flags: ignoreversion recursesubdirs;
-Source: ${QTDIR}\bin\Qt5PrintSupport${IS_DEBUG}.dll; DestDir: {app}; Flags: ignoreversion recursesubdirs;
 Source: ${QTDIR}\bin\Qt5Sql${IS_DEBUG}.dll; DestDir: {app}; Flags: ignoreversion recursesubdirs;
 Source: ${QTDIR}\bin\Qt5Widgets${IS_DEBUG}.dll; DestDir: {app}; Flags: ignoreversion recursesubdirs;
 Source: ${QTDIR}\bin\Qt5Xml${IS_DEBUG}.dll; DestDir: {app}; Flags: ignoreversion recursesubdirs;

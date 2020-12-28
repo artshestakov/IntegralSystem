@@ -92,7 +92,6 @@ namespace ISNamespace
         AT_Search,
         AT_SearchClear,
         AT_Export,
-        AT_Print,
         AT_Favorites,
         AT_Reference,
         AT_NavigationBegin,

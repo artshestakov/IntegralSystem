@@ -60,8 +60,6 @@
   <Local Name="Message.Error.Field.NullValue" Russian="Поле &quot;%1&quot; обязательно для заполнения."/>
   <Local Name="Message.Error.NotOpenedFile" Russian="Не удалось открыть файл &quot;%1&quot;."/>
   <Local Name="Message.Error.ErrorOpenedFolderPath" Russian="Не удалось открыть директорию &quot;%1&quot;."/>
-  <Local Name="Message.Error.ErrorOpenedFileTemplatePrinting" Russian="Не удалось открыть файл шаблона печати."/>
-  <Local Name="Message.Error.ErrorFillTemplateData" Russian="Произошла ошибка при заполнении шаблона данными."/>
   <Local Name="Message.Error.ErrorQuerySQL" Russian="Произошла ошибка SQL-запроса!"/>
   <Local Name="Message.Error.ErrorQuerySQL.Details" Russian="Текст ошибки:&#10;%1&#10;&#10;Текст запроса:&#10;%2"/>
   <Local Name="Message.Error.InitializeQueryPool" Russian="Не удалось запустить пул запросов."/>
@@ -133,7 +131,6 @@
   <Local Name="Message.Warning.SelectedTaskIsSubTasks" Russian="Выбранная задача является подзадачей!"/>
   <Local Name="Message.Warning.SaveObjectFromContinue" Russian="Сохраните запись для продолжения."/>
   <Local Name="Message.Warning.StartInstallUpdate" Russian="Не удалось запустить установку обновление в автоматическом режиме. Вы можете установить обновление программы самостоятельно. Путь к установочному файлу:&#10;%1"/>
-  <Local Name="Message.Warning.NotGettingMetaReport" Russian="Не удалось получить мета-отчёт."/>
   <Local Name="Message.Warning.OneFieldNotFill" Russian="Одно из полей не заполнено!"/>
   <Local Name="Message.Warning.PasswordVerification" Russian="Пароль слишком слабый."/>
   <Local Name="Message.Warning.PasswordVerification.Detailed" Russian="Обязательные требования к надёжному паролю:&#10;&#8226; Пароль должен содержать не менее 8 символов.&#10;&#8226; Пароль должен содержать заглавные и строчные буквы, цифры, и специальные символы. Например: oNQZnz$Hx2.&#10;&#10;Пароль не должен содержать:&#10;&#8226; Личную информацию, которую легко узнать. Например: имя, фамилию или дату рождения.&#10;&#8226; Очевидные и простые слова, фразы, устойчивые выражения и наборы символов, которые легко подобрать. Например: password, parol, abcd, qwerty asdfg, или 1234567."/>
@@ -394,19 +391,6 @@
   <Local Name="Search.Operator.LessOrEqual" Russian="Меньше или равно"/>
   <Local Name="Search.ResultCount" Russian="Найдено записей"/>
 
-  <!--Printing-->
-  <Local Name="Print" Russian="Печать"/>
-  <Local Name="PrintForms" Russian="Печатные формы"/>
-  <Local Name="PreviewPrint" Russian="Просмотр перед печатью"/>
-  <Local Name="PreviewPrintWindow" Russian="Предварительный просмотр"/>
-  <Local Name="SelectPrinter" Russian="Выбор принтера"/>
-  <Local Name="PrintOutput.PDF" Russian="Вывод в файл (PDF)"/>
-  <Local Name="PrintProcess.Preapre" Russian="Подготовка"/>
-  <Local Name="PrintProcess.ReadFileTemplate" Russian="Чтение файла шаблона"/>
-  <Local Name="PrintProcess.FillTemplateData" Russian="Заполнение шаблона данными"/>
-  <Local Name="PrintProcess.Printing" Russian="Печать"/>
-  <Local Name="PrintProcess.SavedToPDF" Russian="Сохранение в PDF"/>
-
   <!--NotificationForm-->
   <Local Name="NotificationForm.Title.Created" Russian="Создана запись"/>
   <Local Name="NotificationForm.Title.CreatedCopy" Russian="Создана копия записи"/>
@@ -520,7 +504,6 @@
   <Local Name="File.Filter.Image.BMP" Russian="Bitmap Picture (*.bmp)"/>
   <Local Name="File.Filter.Image.WEBP" Russian="Weppy (*.webp)"/>
   <Local Name="File.Filter.Csv" Russian="CSV (разделитель - точка с запятой) (*.csv)"/>
-  <Local Name="File.Filter.Pdf" Russian="Файлы Adobe PDF (*.pdf)"/>
   <Local Name="File.Filter.Html" Russian="Веб-страница (*.html)"/>
   <Local Name="File.Filter.Xml" Russian="Веб-страница (*.xml)"/>
   <Local Name="File.Filter.Dbf" Russian="DBF-файл (*.dbf)"/>
@@ -656,7 +639,6 @@
   <Local Name="SelectColor" Russian="Выбрать цвет..."/>
   <Local Name="SelectedColor" Russian="Выбор цвета"/>
   <Local Name="AutoFillField" Russian="Уникальный код записи. Это поле заполняется автоматически после создания записи."/>
-  <Local Name="ClosePreview" Russian="Закрыть предпросмотр"/>
   <Local Name="CancelChanged" Russian="Отменить изменения"/>
   <Local Name="OrdinalNumber" Russian="Порядковый номер"/>
   <Local Name="FileName" Russian="Имя файла"/>

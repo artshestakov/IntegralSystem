@@ -32,14 +32,6 @@
     <Filter Include="Fields">
       <UniqueIdentifier>{58f40b29-3ff2-4056-b6ff-2c2b6b24ebce}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Printing">
-      <UniqueIdentifier>{D9D6E242-F8AF-46E4-B9FD-80ECBC20BA3E}</UniqueIdentifier>
-      <Extensions>qrc;*</Extensions>
-      <ParseFiles>false</ParseFiles>
-    </Filter>
-    <Filter Include="Printing\HTML">
-      <UniqueIdentifier>{2fd9ead3-6dad-4083-95fc-e2b7b9ec6f3c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Objects">
       <UniqueIdentifier>{a144289a-5f56-46d9-987e-11f5ddbde600}</UniqueIdentifier>
     </Filter>
@@ -141,12 +133,6 @@
     <ClCompile Include="ISBaseTableView.cpp">
       <Filter>Widgets</Filter>
     </ClCompile>
-    <ClCompile Include="ISPagesTextEdit.cpp">
-      <Filter>Widgets</Filter>
-    </ClCompile>
-    <ClCompile Include="ISPrintPreviewDialog.cpp">
-      <Filter>Widgets</Filter>
-    </ClCompile>
     <ClCompile Include="ISScrollArea.cpp">
       <Filter>Widgets</Filter>
     </ClCompile>
@@ -161,24 +147,6 @@
     </ClCompile>
     <ClCompile Include="ISMessageBox.cpp">
       <Filter>Dialogs</Filter>
-    </ClCompile>
-    <ClCompile Include="ISHTML.cpp">
-      <Filter>Printing\HTML</Filter>
-    </ClCompile>
-    <ClCompile Include="ISHtmlQuery.cpp">
-      <Filter>Printing\HTML</Filter>
-    </ClCompile>
-    <ClCompile Include="ISPageMetrics.cpp">
-      <Filter>Printing</Filter>
-    </ClCompile>
-    <ClCompile Include="ISPrintingBase.cpp">
-      <Filter>Printing</Filter>
-    </ClCompile>
-    <ClCompile Include="ISPrintingEntity.cpp">
-      <Filter>Printing</Filter>
-    </ClCompile>
-    <ClCompile Include="ISPrintingHtml.cpp">
-      <Filter>Printing</Filter>
     </ClCompile>
     <ClCompile Include="ISObjectInterface.cpp">
       <Filter>Objects</Filter>
@@ -259,9 +227,6 @@
       <Filter>Forms</Filter>
     </ClCompile>
     <ClCompile Include="ISParagraphBaseForm.cpp">
-      <Filter>Forms</Filter>
-    </ClCompile>
-    <ClCompile Include="ISPrintForm.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
     <ClCompile Include="ISProtocolObjectListForm.cpp">
@@ -494,12 +459,6 @@
     <QtMoc Include="ISBaseTableView.h">
       <Filter>Widgets</Filter>
     </QtMoc>
-    <QtMoc Include="ISPagesTextEdit.h">
-      <Filter>Widgets</Filter>
-    </QtMoc>
-    <QtMoc Include="ISPrintPreviewDialog.h">
-      <Filter>Widgets</Filter>
-    </QtMoc>
     <QtMoc Include="ISScrollArea.h">
       <Filter>Widgets</Filter>
     </QtMoc>
@@ -514,12 +473,6 @@
     </QtMoc>
     <QtMoc Include="ISMessageBox.h">
       <Filter>Dialogs</Filter>
-    </QtMoc>
-    <QtMoc Include="ISPrintingBase.h">
-      <Filter>Printing</Filter>
-    </QtMoc>
-    <QtMoc Include="ISPrintingHtml.h">
-      <Filter>Printing</Filter>
     </QtMoc>
     <QtMoc Include="ISObjectInterface.h">
       <Filter>Objects</Filter>
@@ -567,9 +520,6 @@
       <Filter>Forms</Filter>
     </QtMoc>
     <QtMoc Include="ISParagraphBaseForm.h">
-      <Filter>Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISPrintForm.h">
       <Filter>Forms</Filter>
     </QtMoc>
     <QtMoc Include="ISProtocolObjectListForm.h">
@@ -724,18 +674,6 @@
     </QtMoc>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ISHTML.h">
-      <Filter>Printing\HTML</Filter>
-    </ClInclude>
-    <ClInclude Include="ISHtmlQuery.h">
-      <Filter>Printing\HTML</Filter>
-    </ClInclude>
-    <ClInclude Include="ISPageMetrics.h">
-      <Filter>Printing</Filter>
-    </ClInclude>
-    <ClInclude Include="ISPrintingEntity.h">
-      <Filter>Printing</Filter>
-    </ClInclude>
     <ClInclude Include="ISObjects.h">
       <Filter>Objects</Filter>
     </ClInclude>

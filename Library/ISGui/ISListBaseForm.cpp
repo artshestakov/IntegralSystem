@@ -13,12 +13,8 @@
 #include "ISBuffer.h"
 #include "ISControls.h"
 #include "ISMessageBox.h"
-#include "ISPrintingBase.h"
-#include "ISPrintingHtml.h"
 #include "ISUserRoleEntity.h"
 #include "ISSystem.h"
-#include "ISPrintingEntity.h"
-#include "ISPrintForm.h"
 #include "ISDatabaseHelper.h"
 #include "ISDelegates.h"
 #include "ISMetaData.h"
@@ -93,13 +89,6 @@ ISListBaseForm::ISListBaseForm(const QString &TableName, QWidget *parent)
 		connect(ActionExport, &QAction::triggered, this, &ISListBaseForm::Export);
 		Actions[ISNamespace::AT_Export] = ActionExport;
 
-		//Печать
-		QAction *ActionPrint = ISControls::CreateActionPrint(this);
-		ActionPrint->setVisible(ISPrintingEntity::Instance().GetCountReports(MetaTable->Name));
-		connect(ActionPrint, &QAction::triggered, this, &ISListBaseForm::Print);
-		Actions[ISNamespace::AT_Print] = ActionPrint;
-		ActionObjectGroup->addAction(ActionPrint);
-
 		//Избранное
 		QAction *ActionFavorites = new QAction(BUFFER_ICONS("Favorites"), LANG("Favorites"), this);
 		connect(ActionFavorites, &QAction::triggered, this, &ISListBaseForm::ShowFavorites);
@@ -149,7 +138,6 @@ ISListBaseForm::ISListBaseForm(const QString &TableName, QWidget *parent)
 		ToolBar->addAction(GetAction(ISNamespace::AT_Update));
 		ToolBar->addAction(GetAction(ISNamespace::AT_Search));
 		ToolBar->addAction(GetAction(ISNamespace::AT_SearchClear));
-		ToolBar->addAction(GetAction(ISNamespace::AT_Print));
 
 		QAction *ActionAdditionally = ToolBar->addAction(BUFFER_ICONS("AdditionallyActions"), LANG("Additionally"));
 		dynamic_cast<QToolButton*>(ToolBar->widgetForAction(ActionAdditionally))->setPopupMode(QToolButton::InstantPopup);
@@ -925,86 +913,6 @@ void ISListBaseForm::Export()
 		ISMessageBox::ShowWarning(this, LANG("Export.Error.Prepare"), ExportWorker->GetErrorString());
 	}
 	POINTER_DELETE(ExportWorker);
-}
-//-----------------------------------------------------------------------------
-void ISListBaseForm::Print()
-{
-	ISGui::SetWaitGlobalCursor(true);
-	ISPrintForm PrintListForm(MetaTable->Name);
-	ISGui::SetWaitGlobalCursor(false);
-	PrintListForm.Exec();
-
-	ISPrintMetaReport *MetaReport = PrintListForm.GetMetaReport();
-	if (!MetaReport)
-	{
-		ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotGettingMetaReport"));
-		return;
-	}
-
-	ISProtocol::Insert(true, CONST_UID_PROTOCOL_PRINT, MetaTable->Name, MetaTable->LocalListName, GetObjectID(), MetaReport->LocalName);
-	ISGui::SetWaitGlobalCursor(true);
-
-	ISProcessForm ProcessForm;
-	ProcessForm.show();
-	ProcessForm.SetText(LANG("PrintProcess.Preapre"));
-
-	ISPrintingBase *PrintingBase = nullptr;
-	bool EditPrintForm = ISUserRoleEntity::Instance().CheckAccessSpecial(CONST_UID_GROUP_ACCESS_SPECIAL_REPORT_FORM_EDIT);
-
-	if (MetaReport->Type == ISNamespace::RT_Html)
-	{
-		PrintingBase = new ISPrintingHtml(MetaReport, GetObjectID(), this);
-		PrintingBase->setProperty("PDF", PrintListForm.GetPDF());
-		PrintingBase->setProperty("PathPDF", QDir::homePath() + '/' + MetaReport->LocalName);
-		PrintingBase->setProperty("EditPreview", EditPrintForm);
-	}
-
-	PrintingBase->SetReportLocalName(MetaReport->LocalName);
-	connect(PrintingBase, &ISPrintingBase::SetVisibleDialog, &ProcessForm, &ISProcessForm::setVisible);
-	connect(PrintingBase, &ISPrintingBase::Message, &ProcessForm, &ISProcessForm::SetText);
-
-	bool Result = false;
-
-	Result = PrintingBase->Prepare();
-	if (Result)
-	{
-		ProcessForm.SetText(LANG("PrintProcess.ReadFileTemplate"));
-		Result = PrintingBase->PrepareTempate();
-		if (Result)
-		{
-			ProcessForm.SetText(LANG("PrintProcess.FillTemplateData"));
-
-			Result = PrintingBase->FillTemplate(); //Заполнение шаблона данными
-			if (Result)
-			{
-				if (PrintListForm.GetPreview()) //Если выбран предварительный просмотр
-				{
-					Result = PrintingBase->PreviewDocument();
-				}
-
-				if (Result)
-				{
-					ProcessForm.SetText(LANG("PrintProcess.Printing"));
-					Result = PrintingBase->Print();
-				}
-			}
-			else
-			{
-				ISMessageBox::ShowCritical(this, LANG("Message.Error.ErrorFillTemplateData"), PrintingBase->GetErrorString());
-			}
-		}
-		else
-		{
-			ISMessageBox::ShowCritical(this, LANG("Message.Error.ErrorOpenedFileTemplatePrinting"), PrintingBase->GetErrorString());
-		}
-	}
-	else
-	{
-
-	}
-
-	ISGui::SetWaitGlobalCursor(false);
-	POINTER_DELETE(PrintingBase);
 }
 //-----------------------------------------------------------------------------
 void ISListBaseForm::ShowFavorites()

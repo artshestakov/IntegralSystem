@@ -11,7 +11,6 @@
 #include "ISProtocol.h"
 #include "ISGui.h"
 #include "ISParagraphEntity.h"
-#include "ISPrintingEntity.h"
 #include "ISBuffer.h"
 #include "ISMetaSystemsEntity.h"
 #include "ISObjects.h"
@@ -103,7 +102,6 @@ bool ISStartup::StartupNew(ISSplashScreen *SplashScreen)
 	ISUserRoleEntity::Instance().InitializeTables(MetaData["AccessTables"].toMap());
 	ISUserRoleEntity::Instance().InitializeSpecial(MetaData["AccessSpecial"].toList());
 	ISMetaSystemsEntity::Instance().Initialize(MetaData["SystemSubSystem"].toList());
-	ISPrintingEntity::Instance().Initialize(MetaData["Printing"].toList());
 	ISFavorites::Instance().Initialize(MetaData["Favorite"].toMap());
 	ISColumnSizer::Instance().Initialize(MetaData["ColumnSize"].toMap());
 	ISSettings::Instance().Initialize(MetaData["Settings"].toList());

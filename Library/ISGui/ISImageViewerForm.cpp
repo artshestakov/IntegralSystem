@@ -14,12 +14,6 @@ ISImageViewerForm::ISImageViewerForm(const QPixmap &Pixmap, QWidget *parent) : I
 	ToolBar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
 	GetMainLayout()->addWidget(ToolBar);
 
-	ActionPrint = ToolBar->addAction(BUFFER_ICONS("Print"), LANG("Print"), this, &ISImageViewerForm::Print);
-	ActionPrint->setShortcut(QKeySequence::Print);
-	ActionPrint->setEnabled(false);
-
-	ToolBar->addSeparator();
-
 	ActionCopy = ToolBar->addAction(BUFFER_ICONS("Copy"), LANG("Copy"), this, &ISImageViewerForm::Copy);
 	ActionCopy->setShortcut(QKeySequence::Copy);
 	ActionCopy->setEnabled(false);
@@ -120,22 +114,6 @@ void ISImageViewerForm::EscapeClicked()
 	close();
 }
 //-----------------------------------------------------------------------------
-void ISImageViewerForm::Print()
-{
-	QPrinter Printer;
-	QPrintDialog PrintDialog(&Printer, this);
-	if (PrintDialog.exec())
-	{
-		QPainter Painter(&Printer);
-		QRect Rect = Painter.viewport();
-		QSize Size = LabelImage->pixmap()->size();
-		Size.scale(Rect.size(), Qt::KeepAspectRatio);
-		Painter.setViewport(Rect.x(), Rect.y(), Size.width(), Size.height());
-		Painter.setWindow(LabelImage->pixmap()->rect());
-		Painter.drawPixmap(0, 0, *LabelImage->pixmap());
-	}
-}
-//-----------------------------------------------------------------------------
 void ISImageViewerForm::Copy()
 {
 	ISGui::SetWaitGlobalCursor(true);
@@ -191,7 +169,6 @@ void ISImageViewerForm::SetPixmap(const QPixmap &NewPixmap)
 	ScaleFactor = 1.0;
 
 	ScrollArea->setVisible(true);
-	ActionPrint->setEnabled(true);
 	ActionFitToWindow->setEnabled(true);
 	UpdateActions();
 

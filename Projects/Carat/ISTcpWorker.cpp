@@ -52,15 +52,6 @@ static QString QS_SUBSYSTEM = PREPARE_QUERY("SELECT sbsm_uid, sbsm_localname, sb
 											"AND check_access_user_subsystem(:UserID, :UserIsSystem, sbsm_uid) "
 											"ORDER BY sbsm_orderid");
 //-----------------------------------------------------------------------------
-static QString QS_REPORT = PREPARE_QUERY("SELECT rprt_uid, rprt_type, rprt_tablename, rprt_localname, rprt_filetemplate "
-										 "FROM _report "
-										 "WHERE rprt_parent IS NULL "
-										 "ORDER BY rprt_id");
-//-----------------------------------------------------------------------------
-static QString QS_REPORT_FIELD = PREPARE_QUERY("SELECT rprt_replacevalue, rprt_sqlquery "
-											   "FROM _report "
-											   "WHERE rprt_parent = :ParentUID");
-//-----------------------------------------------------------------------------
 static QString QS_FAVORITE = PREPARE_QUERY("SELECT fvts_tablename, fvts_objectid "
 										   "FROM _favorites "
 										   "WHERE fvts_user = :UserID");
@@ -1163,42 +1154,6 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 		return ErrorQuery(LANG("Carat.Error.Query.GetMetaData.Systems"), qSelectSystem);
 	}
 
-	//Получаем печать
-	QVariantList PrintingList;
-	ISQuery qSelectReport(ISDatabase::Instance().GetDB(DBConnectionName), QS_REPORT),
-		qSelectReportField(ISDatabase::Instance().GetDB(DBConnectionName), QS_REPORT_FIELD);
-	if (qSelectReport.Execute())
-	{
-		while (qSelectReport.Next())
-		{
-			QVariantMap ReportFieldMap;
-			qSelectReportField.BindValue(":ParentUID", qSelectReport.ReadColumn("rprt_uid"));
-			if (qSelectReportField.Execute())
-			{
-				while (qSelectReportField.Next())
-				{
-					ReportFieldMap.insert(qSelectReportField.ReadColumn("rprt_replacevalue").toString(), qSelectReportField.ReadColumn("rprt_sqlquery"));
-				}
-			}
-			else
-			{
-				return ErrorQuery(LANG("Carat.Error.Query.GetMetaData.ReportField"), qSelectReportField);
-			}
-			PrintingList.append(QVariantMap
-			{
-				{ "Type", qSelectReport.ReadColumn("rprt_type") },
-				{ "Table", qSelectReport.ReadColumn("rprt_tablename") },
-				{ "Local", qSelectReport.ReadColumn("rprt_localname") },
-				{ "File", qSelectReport.ReadColumn("rprt_filetemplate") },
-				{ "Fields", ReportFieldMap }
-			});
-		}
-	}
-	else
-	{
-		return ErrorQuery(LANG("Carat.Error.Query.GetMetaData.Report"), qSelectReport);
-	}
-
 	//Получаем избранные объекты
 	QVariantMap FavoriteMap;
 	ISQuery qSelectFavorite(ISDatabase::Instance().GetDB(DBConnectionName), QS_FAVORITE);
@@ -1373,7 +1328,6 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	TcpAnswer->Parameters["AccessTables"] = AccessTablesMap;
 	TcpAnswer->Parameters["AccessSpecial"] = AccessSpecialList;
 	TcpAnswer->Parameters["SystemSubSystem"] = SystemSubSystemList;
-	TcpAnswer->Parameters["Printing"] = PrintingList;
 	TcpAnswer->Parameters["Favorite"] = FavoriteMap;
 	TcpAnswer->Parameters["ColumnSize"] = ColumnSizeMap;
 	TcpAnswer->Parameters["Settings"] = Settings;

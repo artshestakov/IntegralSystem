@@ -54,7 +54,6 @@ public:
 	virtual void Search(); //Поиск
 	virtual void SearchClear(); //Очистить результаты поиска
 	virtual void Export(); //Выгрузить таблицу
-	virtual void Print(); //Печать
 	virtual void ShowFavorites(); //Показать форму с избранными объектами
 	virtual void NavigationSelectBeginRecord(); //Выделение первой записи в списке
 	virtual void NavigationSelectPreviousRecord(); //Выделение предыдущей записи

@@ -19,7 +19,6 @@ protected:
 	void wheelEvent(QWheelEvent *e);
 	void EscapeClicked() override;
 
-	void Print();
 	void Copy();
 	void ZoomIn();
 	void ZoomOut();
@@ -32,7 +31,6 @@ protected:
 	void AdjustScrollBar(QScrollBar *ScrollBar, double Factor);
 
 private:
-	QAction *ActionPrint;
 	QAction *ActionCopy;
 	QAction *ActionZoomIn;
 	QAction *ActionZoomOut;
