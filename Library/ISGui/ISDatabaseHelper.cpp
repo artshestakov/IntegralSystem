@@ -1,50 +1,6 @@
 #include "ISDatabaseHelper.h"
-#include "ISLocalization.h"
 #include "ISQuery.h"
 #include "ISAssert.h"
-#include "ISConstants.h"
-//-----------------------------------------------------------------------------
-void ISDatabaseHelper::CheckValue(QVariant &Value)
-{
-	QVariant::Type ValueType = Value.type();
-	if (ValueType == QVariant::Bool)
-	{
-		if (Value.toBool())
-		{
-			Value = LANG("Yes");
-		}
-		else
-		{
-			Value = LANG("No");
-		}
-	}
-	else if (ValueType == QVariant::Date)
-	{
-		if (!Value.isValid())
-		{
-			Value = QVariant();
-		}
-		else
-		{
-			Value = Value.toDate().toString(FORMAT_DATE_V1);
-		}
-	}
-	else if (ValueType == QVariant::DateTime)
-	{
-		if (!Value.toDateTime().isValid())
-		{
-			Value = QVariant();
-		}
-		else
-		{
-			Value = Value.toDateTime().toString(FORMAT_DATE_TIME_V3);
-		}
-	}
-	else if (!Value.isValid())
-	{
-		Value.clear();
-	}
-}
 //-----------------------------------------------------------------------------
 QVariant ISDatabaseHelper::GetObjectIDToList(PMetaTable *MetaTable, PMetaField *MetaField, int ObjectID)
 {
