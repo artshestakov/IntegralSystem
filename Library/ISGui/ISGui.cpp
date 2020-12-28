@@ -25,7 +25,6 @@
 #include "ISInputDialog.h"
 #include "ISFavoritesForm.h"
 #include "ISHistoryForm.h"
-#include "ISUserSubSystem.h"
 #include "ISProtocolObjectListForm.h"
 #include "ISDiscussionListForm.h"
 #include "ISStorageFilesSubSystem.h"
@@ -622,7 +621,6 @@ void ISGui::RegisterMetaType()
 	qRegisterMetaType<QSqlError>("QSqlError");
 	qRegisterMetaType<ISUuid>("ISUuid");
 
-	qRegisterMetaType<ISUserSubSystem*>("ISUserListForm");
 	qRegisterMetaType<ISUserObjectForm*>("ISUserObjectForm");
 	qRegisterMetaType<ISProtocolObjectListForm*>("ISProtocolObjectListForm");
 	qRegisterMetaType<ISDiscussionListForm*>("ISDiscussionListForm");

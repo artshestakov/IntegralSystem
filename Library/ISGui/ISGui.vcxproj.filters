@@ -370,9 +370,6 @@
     <ClCompile Include="ISValidators.cpp">
       <Filter>System</Filter>
     </ClCompile>
-    <ClCompile Include="ISUserSubSystem.cpp">
-      <Filter>Forms</Filter>
-    </ClCompile>
     <ClCompile Include="ISUserGroupSubSystem.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
@@ -647,9 +644,6 @@
     </QtMoc>
     <QtMoc Include="ISValidators.h">
       <Filter>System</Filter>
-    </QtMoc>
-    <QtMoc Include="ISUserSubSystem.h">
-      <Filter>Forms</Filter>
     </QtMoc>
     <QtMoc Include="ISUserGroupSubSystem.h">
       <Filter>Forms</Filter>
