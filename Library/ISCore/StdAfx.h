@@ -11,6 +11,8 @@
 #include <windows.h>
 #include <ShlObj.h>
 #include <wincrypt.h>
+#include <SetupAPI.h>
+#include <cfgmgr32.h>
 #else
 #include <pthread.h>
 #include <float.h>

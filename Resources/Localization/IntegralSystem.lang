@@ -660,5 +660,7 @@
   <Local Name="RecordCallLoading" Russian="Запись разговора загружается..."/>
   <Local Name="ErrorLoadingData" Russian="Ошибка загрузки данных"/>
   <Local Name="DatabaseSettings" Russian="Настройки базы данных"/>
+  <Local Name="SetupDiGetClassDevsError" Russian="Не удалось получить информацию об устройствах в системе: %1"/>
+  <Local Name="CM_Get_Device_IDError" Russian="Не удалось получить информацию об устройстве: %1"/>
 
 </LANG>

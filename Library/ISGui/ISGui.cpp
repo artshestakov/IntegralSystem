@@ -137,6 +137,34 @@ bool ISGui::CheckAdminRole()
 	return Result;
 }
 //-----------------------------------------------------------------------------
+bool ISGui::GetUSBDevice(std::vector<ISDeviceInfo> &Vector, QString &ErrorString)
+{
+	HDEVINFO DeviceInfo = SetupDiGetClassDevs(NULL, "USB", NULL, DIGCF_ALLCLASSES | DIGCF_PRESENT);
+	if (DeviceInfo == INVALID_HANDLE_VALUE)
+	{
+		ErrorString = LANG("SetupDiGetClassDevsError").arg(ISAlgorithm::GetLastErrorString());
+		return false;
+	}
+
+	for (unsigned i = 0; ; ++i)
+	{
+		SP_DEVINFO_DATA DeviceInfoData = { 0 };
+		DeviceInfoData.cbSize = sizeof(DeviceInfoData);
+		if (!SetupDiEnumDeviceInfo(DeviceInfo, i, &DeviceInfoData))
+		{
+			break;
+		}
+
+		char DeviceID[MAX_DEVICE_ID_LEN];
+		if (CM_Get_Device_ID(DeviceInfoData.DevInst, DeviceID, MAX_PATH, 0) != CR_SUCCESS)
+		{
+			ErrorString = LANG("CM_Get_Device_IDError").arg(ISAlgorithm::GetLastErrorString());
+			return false;
+		}
+	}
+	return true;
+}
+//-----------------------------------------------------------------------------
 void ISGui::RepaintWidget(QWidget *Widget, bool AdjustSize)
 {
 	if (Widget)

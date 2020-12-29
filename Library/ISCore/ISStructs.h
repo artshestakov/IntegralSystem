@@ -485,4 +485,11 @@ struct ISCORE_EXPORT ISModelRecord
 	ISVectorVariant Values; //Список значений
 };
 //-----------------------------------------------------------------------------
+struct ISCORE_EXPORT ISDeviceInfo
+{
+	QString VendorID;
+	QString ProductID;
+	QString SerialNumber;
+};
+//-----------------------------------------------------------------------------
 #endif
