@@ -693,6 +693,9 @@
     <ClInclude Include="ISProtocol.h">
       <Filter>System</Filter>
     </ClInclude>
+    <ClInclude Include="ISUSBSearcher.h">
+      <Filter>System</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <QtRcc Include="..\..\Resources\ISGui.qrc" />

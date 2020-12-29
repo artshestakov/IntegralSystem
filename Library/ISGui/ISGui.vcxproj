@@ -391,6 +391,7 @@
     <QtMoc Include="ISTcpConnector.h" />
     <QtMoc Include="ISTcpModel.h" />
     <ClInclude Include="ISTcpQuery.h" />
+    <ClInclude Include="ISUSBSearcher.h" />
     <ClInclude Include="ISUserPhotoCreator.h" />
     <ClInclude Include="ISUserRoleEntity.h" />
     <QtMoc Include="ISWaitWidget.h" />
