@@ -261,6 +261,8 @@ ISOilSphere::CounterpartyDebtForm::CounterpartyDebtForm(int counterparty_id, con
 	EntrollmentListForm = new ISListBaseForm("CounterpartyEnrollment", GroupBoxEnrollment);
 	EntrollmentListForm->SetParentFilterField("Counterparty");
 	EntrollmentListForm->SetParentObjectID(counterparty_id);
+	EntrollmentListForm->GetTcpQuery()->AddFilter("Counterparty", counterparty_id);
+	EntrollmentListForm->GetTcpQuery()->AddFilter("Counterparty", counterparty_id);
 	connect(EntrollmentListForm, &ISListBaseForm::AddFormFromTab, [=](QWidget *ObjectForm) { ISGui::ShowObjectForm(ObjectForm); });
 	connect(EntrollmentListForm, &ISListBaseForm::Updated, this, &ISOilSphere::CounterpartyDebtForm::UpdatedLists);
 	GroupBoxEnrollment->layout()->addWidget(EntrollmentListForm);
