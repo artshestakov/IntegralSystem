@@ -121,9 +121,10 @@ static QString QS_USER_IS_SYSTEM = PREPARE_QUERY("SELECT usrs_issystem "
 												 "FROM _users "
 												 "WHERE usrs_id = :UserID");
 //-----------------------------------------------------------------------------
-static QString QS_CLIENT = PREPARE_QUERY("SELECT usrs_fio, usrs_photo "
-										 "FROM _users "
-										 "WHERE usrs_id = :UserID");
+static QString QS_CLIENTS = PREPARE_QUERY("SELECT usrs_id, usrs_fio, usgp_name, usrs_photo "
+										  "FROM _users "
+										  "LEFT JOIN _usergroup ON usgp_id = usrs_group "
+										  "ORDER BY usrs_fio");
 //-----------------------------------------------------------------------------
 static QString QI_DISCUSSION = PREPARE_QUERY("INSERT INTO _discussion(dson_user, dson_tablename, dson_objectid, dson_message) "
 											 "VALUES(:UserID, :TableName, :ObjectID, :Message) "
@@ -455,7 +456,7 @@ void ISTcpWorker::Process()
 		if (tcp_message)
 		{
 			bool Result = false;
-			long long PerfomanceMsec = 0;
+			unsigned long long PerfomanceMsec = 0;
 			ISTcpAnswer *TcpAnswer = new ISTcpAnswer(tcp_message->TcpSocket); //Заранее формируем ответ
 
 			if (tcp_message->IsValid()) //Если сообщение валидное - переходим к выполнению
@@ -543,6 +544,7 @@ void ISTcpWorker::Process()
 			}
 
 			//Удаляем сообщение, логируемся, добавляем ответ в очередь ответов и завершаем работу
+			ISTcpClients::Instance().UpdateLastQuery(tcp_message->TcpSocket->GetSocketDescriptor(), tcp_message->Type, Result, PerfomanceMsec);
 			delete tcp_message;
 			Result ? ISLOGGER_I(__CLASS__, LogText) : ISLOGGER_E(__CLASS__, LogText);
 			emit Answer(TcpAnswer);
@@ -1668,43 +1670,53 @@ bool ISTcpWorker::GetClients(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
 	Q_UNUSED(TcpMessage);
 
-	//Получаем список подключенных клиентов, объявляем контейнер для них и запрос
-	std::vector<ISClientInfo> VectorClients = ISTcpClients::Instance().GetClients();
-	QVariantList VariantList;
-	ISQuery qSelectClient(ISDatabase::Instance().GetDB(DBConnectionName), QS_CLIENT);
-
-	//Обходим всех клиентов и получаем по каждому информацию
-	for (const ISClientInfo &ClientInfo : VectorClients)
+	//Запрашиваем список пользователей
+	QVariantList VariantList, VariantListOffline;
+	ISQuery qSelectClients(ISDatabase::Instance().GetDB(DBConnectionName), QS_CLIENTS);
+	if (!qSelectClients.Execute())
 	{
-		qSelectClient.BindValue(":UserID", ClientInfo.ID);
-		if (!qSelectClient.Execute()) //Ошибка в запросе
-		{
-			ErrorString = LANG("Carat.Error.Query.GetClients.Select").arg(ClientInfo.ID);
-			break;
-		}
-
-		if (!qSelectClient.First()) //Пользователь не найден
-		{
-			ErrorString = LANG("Carat.Error.Query.GetClients.UserNotExist").arg(ClientInfo.ID);
-			break;
-		}
-
-		//Добавляем информацию о пользователе в список
-		VariantList.push_back(QVariantMap
-		{
-			{ "Address", ClientInfo.Address },
-			{ "Port", ClientInfo.Port },
-			{ "ID", ClientInfo.ID },
-			{ "FIO", qSelectClient.ReadColumn("usrs_fio") },
-			{ "Photo", qSelectClient.ReadColumn("usrs_photo").toByteArray().toBase64() }
-		});
+		return ErrorQuery(LANG("Carat.Error.Query.GetClients.Select"), qSelectClients);
 	}
-	
-	//Если была ошибка - очищаем потенциально не пустой список и выходим
-	if (qSelectClient.GetErrorType() != QSqlError::NoError)
+
+	//Получаем список идентификаторов клиентов и обходим результаты запроса
+	ISVectorUInt VectorClientsID = ISTcpClients::Instance().GetClientsID();
+	while (qSelectClients.Next())
 	{
-		VariantList.clear();
-		return false;
+		//Получаем идентификатор текущего пользователя и проверяем, онлайн ли он
+		//ищем информацию по клиенту
+		unsigned int UserID = qSelectClients.ReadColumn("usrs_id").toUInt();
+		bool IsOnline = ISAlgorithm::VectorContains(VectorClientsID, UserID);
+		ISClientInfo ClientInfo = IsOnline ? ISTcpClients::Instance().GetClient(UserID) : ISClientInfo();
+		
+		//Если клиент в сети - посчитаем, сколько он находится в сети
+		unsigned int Days = 0, Hours = 0, Minutes = 0, Seconds = 0;
+		if (IsOnline)
+		{
+			ISAlgorithm::ConvertSecondToTime(ClientInfo.DTConnected.secsTo(QDateTime::currentDateTime()),
+				Days, Hours, Minutes, Seconds);
+		}
+
+		//Если клиент в сети - добавляем в один список, иначе - в другой
+		(IsOnline ? VariantList : VariantListOffline).push_back(QVariantMap
+		{
+			{ "IsOnline", IsOnline },
+			{ "Address", IsOnline ? ClientInfo.Address : QVariant() },
+			{ "Port", IsOnline ? ClientInfo.Port : QVariant() },
+			{ "ID", IsOnline ? ClientInfo.ID : QVariant() },
+			{ "DateTimeConnected", IsOnline ? ClientInfo.DTConnected.toString(FORMAT_DATE_TIME_V2) : QVariant() },
+			{ "DateTimeLastQuery", IsOnline ? ClientInfo.LastQueryDT : QVariant() },
+			{ "WorkingHours", IsOnline ? QVariantMap
+				{
+					{ "Days", Days },
+					{ "Hours", Hours },
+					{ "Minutes", Minutes },
+					{ "Seconds", Seconds }
+				} : QVariant()
+			},
+			{ "FIO", qSelectClients.ReadColumn("usrs_fio") },
+			{ "GroupName", qSelectClients.ReadColumn("usgp_name") },
+			{ "Photo", qSelectClients.ReadColumn("usrs_photo").toByteArray().toBase64() }
+		});
 	}
 	TcpAnswer->Parameters["Clients"] = VariantList;
 	return true;

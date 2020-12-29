@@ -11,7 +11,10 @@ public:
 
 	void Add(qintptr SocketDescriptor, unsigned int UserID, const QString &Address, unsigned short Port); //Добавить клиента
 	void Remove(qintptr SocketDescriptor); //Удалить клиента
-	std::vector<ISClientInfo> GetClients(); //Получить список клиентов
+	ISVectorUInt GetClientsID(); //Получить список идентификаторов клиентов
+	ISClientInfo GetClient(unsigned int UserID); //Получить информацию о клиенте по его идентификатору
+
+	void UpdateLastQuery(qintptr SocketDescriptor, ISNamespace::ApiMessageType MessageType, bool Result, unsigned long long MSec); //Одновить дату и результат последнего запроса
 
 private:
 	ISTcpClients();

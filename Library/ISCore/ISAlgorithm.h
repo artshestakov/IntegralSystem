@@ -76,7 +76,7 @@ namespace ISAlgorithm
 	//! \param TickA временная метка
 	//! \param TickB временная метка
 	//! \return возвращает разницу между двумя временными метками
-	ISCORE_EXPORT long long GetTickDiff(const ISTimePoint &T1, const ISTimePoint &T2);
+	ISCORE_EXPORT unsigned long long GetTickDiff(const ISTimePoint &T1, const ISTimePoint &T2);
 
 	//! \Получить имя класса
 	//! \param FunctionName в качестве этого параметра необходимо передавать макрос __FUNCTION__
@@ -115,6 +115,15 @@ namespace ISAlgorithm
 	//! \param Password строка, содержащая пароль
 	//! \return возвращает true в случае если пароль прошёл проверку, в противном случае - false
 	ISCORE_EXPORT bool PasswordVerification(const QString &Password);
+
+	//! \Конвертировать секунды в дни, минуты и секунды
+	//! \param Seconds секунды, которые нужно конвертировать
+	//! \param Day сюда помещается кол-во дней
+	//! \param Hour сюда помещается кол-во часов
+	//! \param Minute сюда помещается кол-во минут
+	//! \param Second сюда помещается кол-во секунд
+	//! \return функция ничего не возвращает
+	ISCORE_EXPORT void ConvertSecondToTime(unsigned int Seconds, unsigned int &Day, unsigned int &Hour, unsigned int &Minute, unsigned int &Second);
 
 	//Поиск значения в векторе
     template <typename T> bool VectorContains(const std::vector<T> &Vector, T Value)

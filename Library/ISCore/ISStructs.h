@@ -448,9 +448,23 @@ struct ISConfigParameter
 //-----------------------------------------------------------------------------
 struct ISClientInfo
 {
+	ISClientInfo()
+		: ID(0),
+		Port(0),
+		DTConnected(QDateTime::currentDateTime()),
+		LastQueryType(ISNamespace::AMT_Unknown),
+		LastQueryResult(false),
+		LastQueryMSec(0)
+		{ }
+
 	unsigned int ID; //Идентификатор в БД
 	QString Address; //IP-адрес
 	unsigned short Port; //Порт
+	QDateTime DTConnected; //Дата и время подключения
+	QDateTime LastQueryDT; //Дата и время последнего запроса
+	ISNamespace::ApiMessageType LastQueryType; //Тип последнего запроса
+	bool LastQueryResult; //Результат выполнения последнего запроса
+	unsigned long long LastQueryMSec; //Время выполнения последнего запроса
 };
 //-----------------------------------------------------------------------------
 struct ISFailAuthInfo

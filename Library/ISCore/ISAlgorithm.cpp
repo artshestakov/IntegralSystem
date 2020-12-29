@@ -39,7 +39,7 @@ ISTimePoint ISAlgorithm::GetTick()
 	return std::chrono::steady_clock::now();
 }
 //-----------------------------------------------------------------------------
-long long ISAlgorithm::GetTickDiff(const ISTimePoint &T1, const ISTimePoint &T2)
+unsigned long long ISAlgorithm::GetTickDiff(const ISTimePoint &T1, const ISTimePoint &T2)
 {
 	return std::chrono::duration_cast<std::chrono::milliseconds>(T1 - T2).count();
 }
@@ -175,7 +175,7 @@ bool ISAlgorithm::PasswordVerification(const QString &Password)
 		return false;
 	}
 
-	//»щЄм цифры
+	//»щем цифры
 	bool FoundDigit = false;
 	for (const QChar &Char : Password)
 	{
@@ -190,7 +190,7 @@ bool ISAlgorithm::PasswordVerification(const QString &Password)
 		return false;
 	}
 
-	//»щЄм буквы в верхнем регистре
+	//»щем буквы в верхнем регистре
 	bool FoundUpper = false;
 	for (const QChar &Char : Password)
 	{
@@ -205,7 +205,7 @@ bool ISAlgorithm::PasswordVerification(const QString &Password)
 		return false;
 	}
 
-	//»щЄм буквы в нижнем регистре
+	//»щем буквы в нижнем регистре
 	bool FoundLower = false;
 	for (const QChar &Char : Password)
 	{
@@ -220,7 +220,7 @@ bool ISAlgorithm::PasswordVerification(const QString &Password)
 		return false;
 	}
 
-	//»щЄм спец. символы
+	//»щем спец. символы
 	bool FoundSpecial = false;
 	for (const QChar &Symbol : QString(SYMBOL_SPECIAL_ARRAY))
 	{
@@ -235,5 +235,16 @@ bool ISAlgorithm::PasswordVerification(const QString &Password)
 		return false;
 	}
 	return true;
+}
+//-----------------------------------------------------------------------------
+void ISAlgorithm::ConvertSecondToTime(unsigned int Seconds, unsigned int &Day, unsigned int &Hour, unsigned int &Minute, unsigned int &Second)
+{
+	Day = Seconds / (24 * 3600);
+	Seconds = Seconds % (24 * 3600);
+	Hour = Seconds / 3600;
+	Seconds %= 3600;
+	Minute = Seconds / 60;
+	Seconds %= 60;
+	Second = Seconds;
 }
 //-----------------------------------------------------------------------------

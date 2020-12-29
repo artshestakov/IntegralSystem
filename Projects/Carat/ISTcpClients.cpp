@@ -20,7 +20,11 @@ ISTcpClients& ISTcpClients::Instance()
 void ISTcpClients::Add(qintptr SocketDescriptor, unsigned int UserID, const QString &Address, unsigned short Port)
 {
 	CRITICAL_SECTION_LOCK(&CriticalSection);
-	Clients.emplace(SocketDescriptor, ISClientInfo{ UserID, Address, Port });
+	ISClientInfo ClientInfo;
+	ClientInfo.ID = UserID;
+	ClientInfo.Address = Address;
+	ClientInfo.Port = Port;
+	Clients[SocketDescriptor] = ClientInfo;
 	CRITICAL_SECTION_UNLOCK(&CriticalSection);
 }
 //-----------------------------------------------------------------------------
@@ -35,11 +39,49 @@ void ISTcpClients::Remove(qintptr SocketDescriptor)
 	CRITICAL_SECTION_UNLOCK(&CriticalSection);
 }
 //-----------------------------------------------------------------------------
-std::vector<ISClientInfo> ISTcpClients::GetClients()
+ISVectorUInt ISTcpClients::GetClientsID()
+{
+	ISVectorUInt VectorUInt;
+	CRITICAL_SECTION_LOCK(&CriticalSection);
+	VectorUInt.resize(Clients.size());
+	size_t Index = 0;
+	for (const auto &MapItem : Clients)
+	{
+		VectorUInt[Index] = MapItem.second.ID;
+		++Index;
+	}
+	CRITICAL_SECTION_UNLOCK(&CriticalSection);
+	return VectorUInt;
+}
+//-----------------------------------------------------------------------------
+ISClientInfo ISTcpClients::GetClient(unsigned int UserID)
 {
 	CRITICAL_SECTION_LOCK(&CriticalSection);
-	std::vector<ISClientInfo> Vector = ISAlgorithm::ConvertMapToValues(Clients);
+	ISClientInfo ClientInfo;
+	for (const auto &MapItem : Clients) //Обходим список клиентов
+	{
+		if (MapItem.second.ID == UserID) //Если нашли нужного - выходим из цикла
+		{
+			ClientInfo = MapItem.second;
+			break;
+		}
+	}
 	CRITICAL_SECTION_UNLOCK(&CriticalSection);
-	return Vector;
+	return ClientInfo;
+}
+//-----------------------------------------------------------------------------
+void ISTcpClients::UpdateLastQuery(qintptr SocketDescriptor, ISNamespace::ApiMessageType MessageType, bool Result, unsigned long long MSec)
+{
+	CRITICAL_SECTION_LOCK(&CriticalSection);
+	std::map<qintptr, ISClientInfo>::const_iterator It = Clients.find(SocketDescriptor);
+	if (It != Clients.end())
+	{
+		Clients[SocketDescriptor].LastQueryDT = QDateTime::currentDateTime();
+		Clients[SocketDescriptor].LastQueryType = MessageType;
+		Clients[SocketDescriptor].LastQueryResult = Result;
+		Clients[SocketDescriptor].LastQueryMSec = MSec;
+
+	}
+	CRITICAL_SECTION_UNLOCK(&CriticalSection);
 }
 //-----------------------------------------------------------------------------
