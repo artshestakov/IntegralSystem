@@ -504,6 +504,7 @@ struct ISCORE_EXPORT ISDeviceInfo
 	QString VendorID;
 	QString ProductID;
 	QString SerialNumber;
+	QString Description;
 };
 //-----------------------------------------------------------------------------
 #endif

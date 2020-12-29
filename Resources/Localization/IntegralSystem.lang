@@ -603,6 +603,11 @@
   <Local Name="Field.Okpo.PlaceholderText" Russian="8 цифр"/>
   <Local Name="Field.EMail.PlaceholderText" Russian="Введите адрес электронной почты"/>
 
+  <!--GetUSBDevice-->
+  <Local Name="GetUSBDevice.Error.SetupClassDevs" Russian="Не удалось получить информацию об устройствах в системе: %1"/>
+  <Local Name="GetUSBDevice.Error.GettingDeviceID" Russian="Не удалось получить информацию об устройстве: %1"/>
+  <Local Name="GetUSBDevice.Error.GettingDescription" Russian="Не удалось получить описание устройства: %1"/>
+  
   <!--Other-->
   <Local Name="Yesterday" Russian="Вчера"/>
   <Local Name="Today" Russian="Сегодня"/>
@@ -674,8 +679,6 @@
   <Local Name="RecordCallLoading" Russian="Запись разговора загружается..."/>
   <Local Name="ErrorLoadingData" Russian="Ошибка загрузки данных"/>
   <Local Name="DatabaseSettings" Russian="Настройки базы данных"/>
-  <Local Name="SetupDiGetClassDevsError" Russian="Не удалось получить информацию об устройствах в системе: %1"/>
-  <Local Name="CM_Get_Device_IDError" Russian="Не удалось получить информацию об устройстве: %1"/>
   <Local Name="Online" Russian="В сети"/>
   <Local Name="Offline" Russian="Не в сети"/>
 

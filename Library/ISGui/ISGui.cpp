@@ -139,29 +139,54 @@ bool ISGui::CheckAdminRole()
 //-----------------------------------------------------------------------------
 bool ISGui::GetUSBDevice(std::vector<ISDeviceInfo> &Vector, QString &ErrorString)
 {
+	//Получаем объект классов
 	HDEVINFO DeviceInfo = SetupDiGetClassDevs(NULL, "USB", NULL, DIGCF_ALLCLASSES | DIGCF_PRESENT);
-	if (DeviceInfo == INVALID_HANDLE_VALUE)
+	if (DeviceInfo == INVALID_HANDLE_VALUE) //Ошибка - выходим
 	{
-		ErrorString = LANG("SetupDiGetClassDevsError").arg(ISAlgorithm::GetLastErrorString());
+		ErrorString = LANG("GetUSBDevice.Error.SetupClassDevs").arg(ISAlgorithm::GetLastErrorString());
 		return false;
 	}
 
+	//Обходим устройства пока не дойдём до конца
 	for (unsigned i = 0; ; ++i)
 	{
 		SP_DEVINFO_DATA DeviceInfoData = { 0 };
 		DeviceInfoData.cbSize = sizeof(DeviceInfoData);
-		if (!SetupDiEnumDeviceInfo(DeviceInfo, i, &DeviceInfoData))
+		if (!SetupDiEnumDeviceInfo(DeviceInfo, i, &DeviceInfoData)) //Дошли до конца - выходим из цикла
 		{
 			break;
+		}
+
+		//Если класс устройства не USB-носитель - идём дальше
+		char Buffer[39] = { 0 };
+		sprintf(Buffer, "{%08lX-%04hX-%04hX-%02hhX%02hhX-%02hhX%02hhX%02hhX%02hhX%02hhX%02hhX}",
+			DeviceInfoData.ClassGuid.Data1, DeviceInfoData.ClassGuid.Data2, DeviceInfoData.ClassGuid.Data3,
+			DeviceInfoData.ClassGuid.Data4[0], DeviceInfoData.ClassGuid.Data4[1], DeviceInfoData.ClassGuid.Data4[2], DeviceInfoData.ClassGuid.Data4[3],
+			DeviceInfoData.ClassGuid.Data4[4], DeviceInfoData.ClassGuid.Data4[5], DeviceInfoData.ClassGuid.Data4[6], DeviceInfoData.ClassGuid.Data4[7]);
+		if (strcmp(Buffer, DEVICE_CLASS_UID_USB) != 0)
+		{
+			continue;
 		}
 
 		char DeviceID[MAX_DEVICE_ID_LEN];
 		if (CM_Get_Device_ID(DeviceInfoData.DevInst, DeviceID, MAX_PATH, 0) != CR_SUCCESS)
 		{
-			ErrorString = LANG("CM_Get_Device_IDError").arg(ISAlgorithm::GetLastErrorString());
+			ErrorString = LANG("GetUSBDevice.Error.GettingDeviceID").arg(ISAlgorithm::GetLastErrorString());
+			return false;
+		}
+
+		//Получаем описание
+		unsigned long Size = 0,
+			PropertyRegDataType = 0;
+		unsigned char Description[1024] = { 0 };
+		if (!SetupDiGetDeviceRegistryProperty(DeviceInfo, &DeviceInfoData, SPDRP_DEVICEDESC,
+			&PropertyRegDataType, Description, sizeof(Description), &Size)) //Ошибка получения описания
+		{
+			ErrorString = LANG("GetUSBDevice.Error.GettingDescription").arg(ISAlgorithm::GetLastErrorString());
 			return false;
 		}
 	}
+	//SetupDiDestroyDeviceInfoList(DeviceInfo);
 	return true;
 }
 //-----------------------------------------------------------------------------

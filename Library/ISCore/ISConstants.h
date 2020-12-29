@@ -133,6 +133,7 @@ const size_t		MAX_INTEGER_LEN = 19; //Максимальная "длина" целого числа
 const char			SYMBOL_OBJECT_CHANGED[] = " {*}";
 const size_t		AUDIO_PLAYER_POS = 5000; //Перемотка в аудио-плеере
 const char			LOCAL_HOST_ADDRESS[] = "127.0.0.1";
+const char			DEVICE_CLASS_UID_USB[] = "{36FC9E60-C465-11CF-8056-444553540000}";
 //LOGGER-----------------------------------------------------------------------
 const size_t	LOGGER_ARRAY_SIZE = 20000; //Максимальный размер массива
 const size_t	LOGGER_TIMEOUT = 50; //Таймаут логгера
