@@ -7,45 +7,9 @@
 #include "ISMainWindow.h"
 #include "ISSettings.h"
 #include "ISProperty.h"
-
-#include <SetupAPI.h>
-#include <cfgmgr32.h>
-//-----------------------------------------------------------------------------
-bool Method(ISVectorString &Vector)
-{
-	HDEVINFO DeviceInfo = SetupDiGetClassDevs(NULL, "USB", NULL, DIGCF_ALLCLASSES | DIGCF_PRESENT);
-	if (DeviceInfo == INVALID_HANDLE_VALUE)
-	{
-		//Ошибка
-		return false;
-	}
-
-	std::vector<std::string> v;
-	for (unsigned i = 0; ; ++i)
-	{
-		SP_DEVINFO_DATA DeviceInfoData = { 0 };
-		DeviceInfoData.cbSize = sizeof(DeviceInfoData);
-		if (!SetupDiEnumDeviceInfo(DeviceInfo, i, &DeviceInfoData))
-		{
-			//устройства закончились
-			break;
-		}
-
-		char DeviceID[MAX_DEVICE_ID_LEN];
-		if (CM_Get_Device_ID(DeviceInfoData.DevInst, DeviceID, MAX_PATH, 0) != CR_SUCCESS)
-		{
-			//error
-			continue;
-		}
-		v.emplace_back(std::string(DeviceID));
-	}
-	return true;
-}
 //-----------------------------------------------------------------------------
 int main(int argc, char **argv)
 {
-	ISVectorString VectorString;
-	Method(VectorString);
 	QApplication Applicaton(argc, argv);
 	Applicaton.setEffectEnabled(Qt::UI_General);
 	Applicaton.setEffectEnabled(Qt::UI_AnimateMenu);
