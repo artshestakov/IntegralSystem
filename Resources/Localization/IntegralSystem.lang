@@ -572,6 +572,20 @@
   <Local Name="AudioPlayer.Mute.Enabled" Russian="Звук"/>
   <Local Name="AudioPlayer.Mute.Disabled" Russian="Без звука"/>
 
+  <!--ISMonitorUserWidget-->
+  <Local Name="ISMonitorUserWidget.Details" Russian="Подробности..."/>
+  <Local Name="ISMonitorUserWidget.SessionDetails" Russian="Подробности сеанса"/>
+  <Local Name="ISMonitorUserWidget.Status" Russian="Статус:"/>
+  <Local Name="ISMonitorUserWidget.Status.Online" Russian="В сети"/>
+  <Local Name="ISMonitorUserWidget.Status.Offline" Russian="Не в сети"/>
+  <Local Name="ISMonitorUserWidget.ID" Russian="Код пользователя:"/>
+  <Local Name="ISMonitorUserWidget.FIO" Russian="ФИО:"/>
+  <Local Name="ISMonitorUserWidget.Group" Russian="Группа пользователя:"/>
+  <Local Name="ISMonitorUserWidget.IPAddress" Russian="IP-адрес:"/>
+  <Local Name="ISMonitorUserWidget.Port" Russian="IP-адрес:"/>
+  <Local Name="ISMonitorUserWidget.DateTimeConnected" Russian="Дата и время подключения:"/>
+  <Local Name="ISMonitorUserWidget.DateTimeLastQuery" Russian="Дата и время последнего запроса:"/>
+
   <!--Reduction (сокращения)-->
   <Local Name="Reduction.SerialNumber" Russian="п/п"/>
 
@@ -662,5 +676,7 @@
   <Local Name="DatabaseSettings" Russian="Настройки базы данных"/>
   <Local Name="SetupDiGetClassDevsError" Russian="Не удалось получить информацию об устройствах в системе: %1"/>
   <Local Name="CM_Get_Device_IDError" Russian="Не удалось получить информацию об устройстве: %1"/>
+  <Local Name="Online" Russian="В сети"/>
+  <Local Name="Offline" Russian="Не в сети"/>
 
 </LANG>

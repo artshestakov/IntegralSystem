@@ -11,12 +11,26 @@ signals:
 	void ShowProtocol();
 
 public:
-	ISMonitorUserWidget(unsigned int user_id, const QString &user_name, const QPixmap &UserPhoto, QWidget *parent = 0);
+	ISMonitorUserWidget(const QVariantMap &VariantMap, QWidget *parent);
 	virtual ~ISMonitorUserWidget();
 
 protected:
 	void enterEvent(QEvent *e);
 	void leaveEvent(QEvent *e);
 	void mouseDoubleClickEvent(QMouseEvent *e);
+
+private:
+	void ServiceClicked();
+
+private:
+	bool IsOnline;
+	unsigned int UserID;
+	QString UserFIO;
+	QPixmap UserPhoto;
+	QString UserGroupName;
+	QString IPAddress;
+	int Port;
+	QString DateTimeConnected;
+	QString DateTimeLastQuery;
 };
 //-----------------------------------------------------------------------------

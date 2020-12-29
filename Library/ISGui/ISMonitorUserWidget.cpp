@@ -4,16 +4,28 @@
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISGui.h"
+#include "ISInterfaceDialogForm.h"
 //-----------------------------------------------------------------------------
-ISMonitorUserWidget::ISMonitorUserWidget(unsigned int user_id, const QString &user_name, const QPixmap &UserPhoto, QWidget *parent) : QFrame(parent)
+ISMonitorUserWidget::ISMonitorUserWidget(const QVariantMap &VariantMap, QWidget *parent) : QFrame(parent)
 {
 	setFrameShape(QFrame::Box);
 	setFrameShadow(QFrame::Plain);
 	setAutoFillBackground(true);
 	setCursor(CURSOR_POINTING_HAND);
 	setContextMenuPolicy(Qt::ActionsContextMenu);
-	setProperty("UserID", user_id);
-	setProperty("UserName", user_name);
+
+	IsOnline = VariantMap["IsOnline"].toBool();
+	UserID = VariantMap["UserID"].toUInt();
+	UserFIO = VariantMap["FIO"].toString();
+	UserPhoto = ISGui::ByteArrayToPixmap(QByteArray::fromBase64(VariantMap["Photo"].toByteArray())).scaled(ISDefines::Gui::SIZE_32_32);
+	UserGroupName = VariantMap["GroupName"].toString();
+	IPAddress = VariantMap["Address"].toString();
+	Port = VariantMap["Port"].toInt();
+	DateTimeConnected = VariantMap["DateTimeConnected"].toString();
+	DateTimeLastQuery = VariantMap["DateTimeLastQuery"].toString();
+
+	setProperty("UserID", UserID);
+	setProperty("UserName", UserFIO);
 
 	QPalette Palette(palette());
 	Palette.setColor(QPalette::Background, ISDefines::Gui::COLOR_MONITOR_USER);
@@ -27,24 +39,25 @@ ISMonitorUserWidget::ISMonitorUserWidget(unsigned int user_id, const QString &us
 	LabelIcon->setPixmap(UserPhoto.isNull() ? BUFFER_ICONS("User").pixmap(ISDefines::Gui::SIZE_32_32) : UserPhoto);
 	Layout->addWidget(LabelIcon, 0, Qt::AlignHCenter);
 
-	QLabel *LabelUserName = new QLabel(user_name, this);
-	LabelUserName->setText(user_id == CURRENT_USER_ID ? LabelUserName->text() + '\n' + '(' + LANG("You") + ')' : LabelUserName->text());
-	LabelUserName->setAlignment(Qt::AlignHCenter);
-	LabelUserName->setWordWrap(true);
-	Layout->addWidget(LabelUserName, 0, Qt::AlignHCenter);
-	ISGui::SetFontWidgetBold(LabelUserName, user_id == CURRENT_USER_ID);
+	QLabel *LabelUserFIO = new QLabel(UserFIO.split(SYMBOL_SPACE, QString::SkipEmptyParts).join('\n'), this);
+	LabelUserFIO->setText(UserID == CURRENT_USER_ID ? LabelUserFIO->text() + "\n(" + LANG("You") + ')' : LabelUserFIO->text() + "\n(" + (IsOnline ? LANG("Online") : LANG("Offline")) + ')');
+	LabelUserFIO->setAlignment(Qt::AlignHCenter);
+	LabelUserFIO->setWordWrap(true);
+	Layout->addWidget(LabelUserFIO, 0, Qt::AlignHCenter);
+	ISGui::SetFontWidgetBold(LabelUserFIO, UserID == CURRENT_USER_ID);
 
-	QAction *ActionUser = new QAction(user_name, this);
-	ActionUser->setIcon(BUFFER_ICONS("User"));
+	QAction *ActionUser = new QAction(BUFFER_ICONS("User"), UserFIO, this);
 	ActionUser->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
 	connect(ActionUser, &QAction::triggered, this, &ISMonitorUserWidget::ShowUserCard);
 	addAction(ActionUser);
 
-	QAction *ActionProtocol = new QAction(this);
-	ActionProtocol->setText(LANG("ProtocolUser"));
-	ActionProtocol->setIcon(BUFFER_ICONS("Protocol"));
+	QAction *ActionProtocol = new QAction(BUFFER_ICONS("Protocol"), LANG("ProtocolUser"), this);
 	connect(ActionProtocol, &QAction::triggered, this, &ISMonitorUserWidget::ShowProtocol);
 	addAction(ActionProtocol);
+
+	QAction *ActionDetails = new QAction(LANG("ISMonitorUserWidget.Details"), this);
+	connect(ActionDetails, &QAction::triggered, this, &ISMonitorUserWidget::ServiceClicked);
+	addAction(ActionDetails);
 }
 //-----------------------------------------------------------------------------
 ISMonitorUserWidget::~ISMonitorUserWidget()
@@ -68,5 +81,29 @@ void ISMonitorUserWidget::mouseDoubleClickEvent(QMouseEvent *e)
 {
 	QWidget::mouseDoubleClickEvent(e);
 	emit ShowUserCard();
+}
+//-----------------------------------------------------------------------------
+void ISMonitorUserWidget::ServiceClicked()
+{
+	ISInterfaceDialogForm InterfaceDialogForm;
+	InterfaceDialogForm.setWindowTitle(LANG("ISMonitorUserWidget.SessionDetails"));
+	dynamic_cast<QVBoxLayout*>(InterfaceDialogForm.layout())->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);
+	
+	QFormLayout FormLayout;
+	dynamic_cast<QVBoxLayout*>(InterfaceDialogForm.layout())->addLayout(&FormLayout);
+
+	FormLayout.addRow(LANG("ISMonitorUserWidget.Status"), new QLabel(IsOnline ? LANG("ISMonitorUserWidget.Status.Online") : LANG("ISMonitorUserWidget.Status.Offline"), &InterfaceDialogForm));
+	FormLayout.addRow(LANG("ISMonitorUserWidget.ID"), new QLabel(QString::number(UserID), &InterfaceDialogForm));
+	FormLayout.addRow(LANG("ISMonitorUserWidget.FIO"), new QLabel(UserFIO, &InterfaceDialogForm));
+	FormLayout.addRow(LANG("ISMonitorUserWidget.Group"), new QLabel(UserGroupName, &InterfaceDialogForm));
+	if (IsOnline)
+	{
+		FormLayout.addRow(LANG("ISMonitorUserWidget.IPAddress"), new QLabel(IPAddress, &InterfaceDialogForm));
+		FormLayout.addRow(LANG("ISMonitorUserWidget.Group"), new QLabel(QString::number(Port), &InterfaceDialogForm));
+		FormLayout.addRow(LANG("ISMonitorUserWidget.DateTimeConnected"), new QLabel(DateTimeConnected, &InterfaceDialogForm));
+		FormLayout.addRow(LANG("ISMonitorUserWidget.DateTimeLastQuery"), new QLabel(DateTimeLastQuery, &InterfaceDialogForm));
+	}
+
+	InterfaceDialogForm.Exec();
 }
 //-----------------------------------------------------------------------------

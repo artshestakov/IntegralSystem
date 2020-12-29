@@ -1702,9 +1702,9 @@ bool ISTcpWorker::GetClients(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 			{ "IsOnline", IsOnline },
 			{ "Address", IsOnline ? ClientInfo.Address : QVariant() },
 			{ "Port", IsOnline ? ClientInfo.Port : QVariant() },
-			{ "ID", IsOnline ? ClientInfo.ID : QVariant() },
+			{ "UserID", IsOnline ? ClientInfo.ID : QVariant() },
 			{ "DateTimeConnected", IsOnline ? ClientInfo.DTConnected.toString(FORMAT_DATE_TIME_V2) : QVariant() },
-			{ "DateTimeLastQuery", IsOnline ? ClientInfo.LastQueryDT : QVariant() },
+			{ "DateTimeLastQuery", IsOnline ? ClientInfo.LastQueryDT.toString(FORMAT_DATE_TIME_V2) : QVariant() },
 			{ "WorkingHours", IsOnline ? QVariantMap
 				{
 					{ "Days", Days },
@@ -1718,6 +1718,7 @@ bool ISTcpWorker::GetClients(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 			{ "Photo", qSelectClients.ReadColumn("usrs_photo").toByteArray().toBase64() }
 		});
 	}
+	VariantList.append(VariantListOffline);
 	TcpAnswer->Parameters["Clients"] = VariantList;
 	return true;
 }

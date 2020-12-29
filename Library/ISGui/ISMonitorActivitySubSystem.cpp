@@ -65,10 +65,7 @@ void ISMonitorActivitySubSystem::LoadData()
 		{
 			QVariantMap ClientMap = Variant.toMap();
 
-			ISMonitorUserWidget *MonitorUserWidget = new ISMonitorUserWidget(
-				ClientMap["ID"].toUInt(), ClientMap["FIO"].toString(),
-				ISGui::ByteArrayToPixmap(QByteArray::fromBase64(ClientMap["Photo"].toByteArray())).scaled(ISDefines::Gui::SIZE_32_32),
-				ScrollArea);
+			ISMonitorUserWidget *MonitorUserWidget = new ISMonitorUserWidget(ClientMap, ScrollArea);
 			connect(MonitorUserWidget, &ISMonitorUserWidget::ShowUserCard, this, &ISMonitorActivitySubSystem::ShowUserCard);
 			connect(MonitorUserWidget, &ISMonitorUserWidget::ShowProtocol, this, &ISMonitorActivitySubSystem::ShowProtocol);
 			ScrollArea->widget()->layout()->addWidget(MonitorUserWidget);
@@ -102,26 +99,18 @@ void ISMonitorActivitySubSystem::LoadData()
 //-----------------------------------------------------------------------------
 void ISMonitorActivitySubSystem::ShowUserCard()
 {
-	ISMonitorUserWidget *MonitorUserWidget = dynamic_cast<ISMonitorUserWidget*>(sender());
-	if (MonitorUserWidget)
-	{
-		ISObjectFormBase *ObjectFormBase = ISGui::CreateObjectForm(ISNamespace::OFT_Edit, "_Users", MonitorUserWidget->property("UserID").toInt());
-		connect(ObjectFormBase, &ISObjectFormBase::UpdateList, this, &ISMonitorActivitySubSystem::LoadData);
-		ISGui::ShowObjectForm(ObjectFormBase);
-	}
+	ISObjectFormBase *ObjectFormBase = ISGui::CreateObjectForm(ISNamespace::OFT_Edit, "_Users", sender()->property("UserID").toInt());
+	connect(ObjectFormBase, &ISObjectFormBase::UpdateList, this, &ISMonitorActivitySubSystem::LoadData);
+	ISGui::ShowObjectForm(ObjectFormBase);
 }
 //-----------------------------------------------------------------------------
 void ISMonitorActivitySubSystem::ShowProtocol()
 {
-	ISMonitorUserWidget *MonitorUserWidget = dynamic_cast<ISMonitorUserWidget*>(sender());
-	if (MonitorUserWidget)
-	{
-		ISProtocolSubSystem *ProtocolBaseListForm = new ISProtocolSubSystem();
-		ProtocolBaseListForm->setWindowTitle(LANG("ProtocolUser") + ": " + MonitorUserWidget->property("UserName").toString());
-		ProtocolBaseListForm->setWindowIcon(BUFFER_ICONS("Protocol"));
-		ProtocolBaseListForm->GetTcpQuery()->AddFilter("User", MonitorUserWidget->property("UserID"));
-		ProtocolBaseListForm->showMaximized();
-		QTimer::singleShot(WAIT_LOAD_DATA_LIST_FORM, ProtocolBaseListForm, &ISProtocolSubSystem::LoadData);
-	}
+	ISProtocolSubSystem *ProtocolBaseListForm = new ISProtocolSubSystem();
+	ProtocolBaseListForm->setWindowTitle(LANG("ProtocolUser") + ": " + sender()->property("UserName").toString());
+	ProtocolBaseListForm->setWindowIcon(BUFFER_ICONS("Protocol"));
+	ProtocolBaseListForm->GetTcpQuery()->AddFilter("User", sender()->property("UserID"));
+	ProtocolBaseListForm->showMaximized();
+	QTimer::singleShot(WAIT_LOAD_DATA_LIST_FORM, ProtocolBaseListForm, &ISProtocolSubSystem::LoadData);
 }
 //-----------------------------------------------------------------------------
