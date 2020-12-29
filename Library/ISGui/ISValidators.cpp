@@ -29,7 +29,7 @@ QIntValidator::State ISIntValidator::validate(QString &String, int &Pos) const
 	bool IsMinus = String.front() == '-';
 
 	ISVectorInt VectorInt;
-	for (int i = 0, c = String.size(); i < c; ++i) //Ищём индексы НЕ цифр
+	for (int i = 0, c = String.size(); i < c; ++i) //Ищем индексы НЕ цифр
 	{
 		QChar Symbol = String[i];
 		if (!Symbol.isDigit())
@@ -112,7 +112,7 @@ QDoubleValidator::State ISDoubleValidator::validate(QString &String, int &Pos) c
 	bool IsMinus = String.front() == '-';
 
 	ISVectorInt VectorInt;
-	for (int i = 0, c = String.size(); i < c; ++i) //Ищём индексы НЕ цифр
+	for (int i = 0, c = String.size(); i < c; ++i) //Ищем индексы НЕ цифр
 	{
 		QChar Symbol = String[i];
 		if (Symbol.isDigit() || Symbol == SYMBOL_POINT) //Если текущий символ является цифрой и настроенным разделителем - пропускаем
