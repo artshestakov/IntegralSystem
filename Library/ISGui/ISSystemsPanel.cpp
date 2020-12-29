@@ -4,7 +4,6 @@
 #include "ISBuffer.h"
 #include "ISControls.h"
 #include "ISMetaSystemsEntity.h"
-#include "ISProtocol.h"
 #include "ISObjects.h"
 #include "ISGui.h"
 //-----------------------------------------------------------------------------
@@ -82,7 +81,6 @@ void ISSystemsPanel::SystemClicked()
 	LineSubSystems->setVisible(true);
 
 	LoadSubSystemsBar(Systems.value(ActionClicked));
-	ISProtocol::Insert(true, CONST_UID_PROTOCOL_OPEN_SYSTEM, QString(), QString(), QVariant(), Systems.value(ActionClicked)->LocalName);
 	ISGui::SetWaitGlobalCursor(false);
 }
 //-----------------------------------------------------------------------------

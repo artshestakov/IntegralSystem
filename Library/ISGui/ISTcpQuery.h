@@ -10,24 +10,24 @@ public:
 	ISTcpQuery(const QString &query_type);
 	~ISTcpQuery();
 
-	QString GetErrorString() const;
-	void BindValue(const QString &ParamterName, const QVariant &ParameterValue);
-	virtual bool Execute(const QString &query_type);
-	virtual bool Execute();
-	QVariantMap& GetAnswer();
-	QVariantMap TakeAnswer();
+	QString GetErrorString() const; //Получить текстовое описание ошибки
+	void BindValue(const QString &ParamterName, const QVariant &ParameterValue); //Вставка параметра
+	virtual bool Execute(const QString &query_type); //Выполнить запрос по имени
+	virtual bool Execute(); //Выполнить запрос
+	QVariantMap& GetAnswer(); //Получить ссылку на ответ
+	QVariantMap TakeAnswer(); //Вытащить ответ из класса
 
 protected:
-	QVariant GetParamet(const QString &ParameterName) const;
+	QVariant GetParameter(const QString &ParameterName) const; //Получить параметр по имени
 
 private:
-	bool IsValidAnswer(const QByteArray &ByteArray, QVariantMap &VariantMap);
+	bool IsValidAnswer(const QByteArray &ByteArray, QVariantMap &VariantMap); //Проверка валидности ответа
 
 private:
-	QString ErrorString;
-	QString QueryType;
-	QVariantMap Parameters;
-	QVariantMap TcpAnswer;
+	QString ErrorString; //Тестовое описание ошибки
+	QString QueryType; //Тип запроса
+	QVariantMap Parameters; //Параметры запроса
+	QVariantMap TcpAnswer; //Ответ
 };
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------

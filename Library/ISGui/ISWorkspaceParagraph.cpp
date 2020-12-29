@@ -3,7 +3,6 @@
 #include "ISMetaSystemsEntity.h"
 #include "ISUserRoleEntity.h"
 #include "ISSystemsPanel.h"
-#include "ISProtocol.h"
 #include "ISAssert.h"
 #include "ISListBaseForm.h"
 #include "ISMetaData.h"
@@ -92,12 +91,10 @@ void ISWorkspaceParagraph::ClickedSubSystem(const QString &SubSystemUID, const Q
 	POINTER_DELETE(CentralForm);
 	if (!MetaSubSystem->TableName.isEmpty()) //Открытие таблицы
 	{
-		ISProtocol::OpenSubSystem(MetaSubSystem->TableName, ISMetaData::Instance().GetMetaTable(MetaSubSystem->TableName)->LocalListName);
 		CentralForm = new ISListBaseForm(MetaSubSystem->TableName, this);
 	}
 	else if (!MetaSubSystem->ClassName.isEmpty()) //Открытие класса (виджета)
 	{
-		ISProtocol::OpenSubSystem(QString(), MetaSubSystem->LocalName);
 		CentralForm = ISAlgorithm::CreatePointer<ISInterfaceMetaForm *>(MetaSubSystem->ClassName, Q_ARG(QWidget *, this));
 	}
 	connect(CentralForm, &ISListBaseForm::AddFormFromTab, this, &ISWorkspaceParagraph::AddObjectForm);

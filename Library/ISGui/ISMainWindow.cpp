@@ -3,7 +3,6 @@
 #include "ISCore.h"
 #include "ISGui.h"
 #include "ISLocalization.h"
-#include "ISProtocol.h"
 #include "ISBuffer.h"
 #include "ISMessageBox.h"
 #include "ISAboutForm.h"
@@ -117,7 +116,6 @@ void ISMainWindow::ParagraphClicked(const ISUuid &ParagraphUID)
 	ParagraphWidget->Invoke();
 	ParagraphWidget->setFocus();
 	CurrentParagraphUID = ParagraphUID;
-	ISProtocol::Insert(true, CONST_UID_PROTOCOL_OPEN_PARAGRAPH, QString(), QString(), QVariant(), ISParagraphEntity::Instance().GetParagraph(ParagraphUID)->LocalName);
 	ISGui::SetWaitGlobalCursor(false);
 }
 //-----------------------------------------------------------------------------

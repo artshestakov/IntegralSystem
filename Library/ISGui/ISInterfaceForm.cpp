@@ -11,7 +11,7 @@ ISInterfaceForm::ISInterfaceForm(QWidget *parent, Qt::WindowFlags Flags)
 	LabelShadow(nullptr),
 	FlashingTimer(nullptr),
 	ShowedFlag(false),
-	FormUID(ISSystem::GenerateUuid())
+	FormUID(GENERATE_UUID)
 {
 	setAttribute(Qt::WA_DeleteOnClose, true);
 	setAutoFillBackground(true);

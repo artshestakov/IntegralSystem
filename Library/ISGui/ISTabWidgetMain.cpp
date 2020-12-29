@@ -45,7 +45,7 @@ void ISTabWidgetMain::tabInserted(int Index)
 	QTabWidget::tabInserted(Index);
 	if (Index)
 	{
-		ISUuid ID = ISSystem::GenerateUuid();
+		ISUuid ID = GENERATE_UUID;
 		tabBar()->setTabData(Index, ID);
 
 		QToolButton *ButtonClose = new QToolButton(this);

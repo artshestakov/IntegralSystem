@@ -69,7 +69,7 @@ bool ISQueryText::CheckAllQueries()
 void ISQueryText::ErrorQuery(const ISSqlQuery &SqlQuery, const QString &error_string)
 {
 	ErrorString = QString("File: %1\nLine: %2\nSqlQuery: %3\n\n%4").arg(SqlQuery.FileName).arg(SqlQuery.Line).arg(SqlQuery.SqlText).arg(error_string);
-	QFile File(QCoreApplication::applicationDirPath() + "/Temp/" + ISSystem::GenerateUuid());
+	QFile File(QCoreApplication::applicationDirPath() + "/Temp/" + GENERATE_UUID);
 	if (File.open(QIODevice::WriteOnly))
 	{
 		File.write(ErrorString.toUtf8());

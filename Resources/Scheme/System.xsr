@@ -24,9 +24,6 @@
   <_ProtocolType IsSystem="true" UID="{EFA8FE45-1174-4D2E-BBE6-4940380961D4}" Name="Добавление копии существующей записи"/>
   <_ProtocolType IsSystem="true" UID="{0361643D-0A62-4F51-84BD-313F53115EFD}" Name="Изменение записи"/>
   <_ProtocolType IsSystem="true" UID="{117E8972-97DC-4E72-93AC-DC3BB50D11CF}" Name="Просмотр записи"/>
-  <_ProtocolType IsSystem="true" UID="{C9C18C76-AC52-4B3E-B89D-5040F06AE3CE}" Name="Открытие параграфа"/>
-  <_ProtocolType IsSystem="true" UID="{66E93262-02C6-49E3-B47E-FF20ED8DDDC5}" Name="Открытие системы"/>
-  <_ProtocolType IsSystem="true" UID="{5F3EBAED-0970-4E0E-883C-535E6F084133}" Name="Открытие подсистемы"/>
   <_ProtocolType IsSystem="true" UID="{B6EEFB63-8197-4F3A-8373-5C3B2FC409F3}" Name="Удаление записи"/>
   <_ProtocolType IsSystem="true" UID="{1C50A667-B1C4-4F2C-8F39-90106ABB6774}" Name="Выгрузка таблицы"/>
   <_ProtocolType IsSystem="true" UID="{179F73BF-8983-4B52-B505-AF0EF4BF8093}" Name="Расширенный поиск"/>
@@ -35,7 +32,6 @@
   <_ProtocolType IsSystem="true" UID="{662105B6-6671-46BE-8E1A-E57061C5C268}" Name="Добавление примечания к записи"/>
   <_ProtocolType IsSystem="true" UID="{C20634AF-EF58-4D96-9215-8085C2B8C416}" Name="Изменение примечания к записи"/>
   <_ProtocolType IsSystem="true" UID="{08904DF2-3785-4454-B5E5-2D83A9FAA231}" Name="Удаление примечания к записи"/>
-  <_ProtocolType IsSystem="true" UID="{CDCB7490-C975-4ECA-AC3A-4532A32ECC4D}" Name="Изменение пароля от своей учётной записи"/>
   <_ProtocolType IsSystem="true" UID="{EA765447-6811-43AD-8CFC-9B2E758A5B4E}" Name="Добавление права доступа на подсистему"/>
   <_ProtocolType IsSystem="true" UID="{5E5EC969-0D11-41FB-9652-7E2ADD466782}" Name="Удаление права доступа на подсистему"/>
   <_ProtocolType IsSystem="true" UID="{44FDDA11-9F7B-4006-8178-944DA65FB7AA}" Name="Добавление права доступа на таблицу"/>

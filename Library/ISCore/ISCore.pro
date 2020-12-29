@@ -26,7 +26,6 @@ INCLUDEPATH += .
 HEADERS += \
     ISAlgorithm.h \
     ISAssert.h \
-    ISAuthConnector.h \
     ISConfig.h \
     ISConsole.h \
     ISConstants.h \
@@ -63,7 +62,6 @@ HEADERS += \
 SOURCES += \
     ISAlgorithm.cpp \
     ISAssert.cpp \
-    ISAuthConnector.cpp \
     ISConfig.cpp \
     ISConsole.cpp \
     ISCore.cpp \

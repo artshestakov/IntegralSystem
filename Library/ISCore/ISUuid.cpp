@@ -2,7 +2,10 @@
 //-----------------------------------------------------------------------------
 ISUuid::ISUuid(const QString &UID) : QString()
 {
-	clear();
+	if (!isEmpty())
+	{
+		clear();
+	}
 
 	QUuid Uuid(UID);
 	if (!Uuid.isNull()) //Если UID не пустой после преобразования
@@ -16,7 +19,7 @@ ISUuid::ISUuid(const QVariant &UID) : ISUuid(UID.toString())
 
 }
 //-----------------------------------------------------------------------------
-ISUuid::ISUuid(const QUuid &UID) : ISUuid(UID.toString())
+ISUuid::ISUuid(const QUuid &UID) : QString(UID.toString())
 {
 
 }

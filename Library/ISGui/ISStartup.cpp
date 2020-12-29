@@ -23,73 +23,6 @@
 //-----------------------------------------------------------------------------
 bool ISStartup::Startup(ISSplashScreen *SplashScreen)
 {
-	return CONFIG_BOOL("Protocol/Include") ? StartupNew(SplashScreen) : StartupOld(SplashScreen);
-}
-//-----------------------------------------------------------------------------
-void ISStartup::Shutdown(ISSplashScreen *SplashScreen)
-{
-	ISTcpQuery qSaveMetaData(API_SAVE_META_DATA);
-	qSaveMetaData.BindValue("ColumnSize", ISColumnSizer::Instance().GetColumnSize());
-	qSaveMetaData.BindValue("Settings", ISSettings::Instance().GetSettingsChanged());
-	if (!qSaveMetaData.Execute())
-	{
-		ISMessageBox::ShowCritical(SplashScreen, qSaveMetaData.GetErrorString());
-	}
-
-	ISProtocol::ExitApplication();
-	ISQueryPool::Instance().Shutdown();
-	ISDatabase::Instance().DisconnectAll();
-	ISGui::ExitApplication();
-}
-//-----------------------------------------------------------------------------
-bool ISStartup::StartupOld(ISSplashScreen *SplashScreen)
-{
-	//Инициализация объекта конфигурации
-	//??? Что с этим делать
-	ISVersionInfo::Instance().SelectConfiguration("OilSphere");
-	ISObjects::Instance().Initialize(ISVersionInfo::Instance().ConfigurationInfo.Name);
-
-	//Если дата запрета меньше чем текущая - не даём зайти в программу
-	QDate DateExpired = ISVersionInfo::Instance().ConfigurationInfo.DateExpired;
-	if (DateExpired.isValid() && QDate::currentDate() > DateExpired)
-	{
-		ISMessageBox::ShowCritical(SplashScreen, LANG("Message.Error.ObjectDateExpired"));
-		return false;
-	}
-
-	//Инициализация мета-данных
-	if (!ISMetaData::Instance().Initialize(ISVersionInfo::Instance().ConfigurationInfo.Name, false, false))
-	{
-		ISMessageBox::ShowCritical(SplashScreen, LANG("Message.Error.InitializeMetaData"), ISMetaData::Instance().GetErrorString());
-		return false;
-	}
-
-	//Проверка всех запросов
-	if (!ISQueryText::Instance().CheckAllQueries())
-	{
-		ISMessageBox::ShowCritical(SplashScreen, LANG("Message.Error.CheckAllQuery"), ISQueryText::Instance().GetErrorString());
-		return false;
-	}
-
-	if (!CheckAccessDatabase(SplashScreen)) //Проверка разрешения доступа к базе пользователям
-	{
-		return false;
-	}
-
-	if (!ISQueryPool::Instance().Start(CONFIG_STRING(CONST_CONFIG_CONNECTION_SERVER), CONFIG_INT(CONST_CONFIG_CONNECTION_PORT), CONFIG_STRING(CONST_CONFIG_CONNECTION_DATABASE),
-		ISBuffer::Instance().CurrentUserInfo.Login, ISBuffer::Instance().CurrentUserInfo.Password))
-	{
-		ISMessageBox::ShowCritical(SplashScreen, LANG("Message.Error.InitializeQueryPool"), ISQueryPool::Instance().GetErrorString());
-		return false;
-	}
-
-	ISProtocol::EnterApplication();
-	ISObjects::Instance().GetInterface()->BeforeShowMainWindow();
-	return true;
-}
-//-----------------------------------------------------------------------------
-bool ISStartup::StartupNew(ISSplashScreen *SplashScreen)
-{
 	ISTcpQuery qAuth(API_GET_META_DATA);
 	if (!qAuth.Execute()) //Не удалось получить мета-данные - выходим с ошибкой
 	{
@@ -113,21 +46,21 @@ bool ISStartup::StartupNew(ISSplashScreen *SplashScreen)
 		ISMessageBox::ShowCritical(SplashScreen, LANG("Message.Error.InitializeMetaData"), ISMetaData::Instance().GetErrorString());
 		return false;
 	}
+	ISObjects::Instance().GetInterface()->BeforeShowMainWindow();
 	return true;
 }
 //-----------------------------------------------------------------------------
-bool ISStartup::CheckAccessDatabase(ISSplashScreen *SplashScreen)
+void ISStartup::Shutdown(ISSplashScreen *SplashScreen)
 {
-	if (ISBuffer::Instance().CurrentUserInfo.System)
+	ISTcpQuery qSaveMetaData(API_SAVE_META_DATA);
+	qSaveMetaData.BindValue("ColumnSize", ISColumnSizer::Instance().GetColumnSize());
+	qSaveMetaData.BindValue("Settings", ISSettings::Instance().GetSettingsChanged());
+	if (!qSaveMetaData.Execute())
 	{
-		return true;
+		ISMessageBox::ShowCritical(SplashScreen, qSaveMetaData.GetErrorString());
 	}
-
-	bool AccessDatabase = SETTING_DATABASE_VALUE_BOOL(CONST_UID_DATABASE_SETTING_GENERAL_ACCESSDATABASE);
-	if (!AccessDatabase)
-	{
-		ISMessageBox::ShowWarning(SplashScreen, LANG("Message.Warning.NotAccessToDatabase"));
-	}
-	return AccessDatabase;
+	ISQueryPool::Instance().Shutdown();
+	ISDatabase::Instance().DisconnectAll();
+	ISGui::ExitApplication();
 }
 //-----------------------------------------------------------------------------

@@ -152,7 +152,7 @@ QVariantMap ISTcpQuery::TakeAnswer()
 	return Answer;
 }
 //-----------------------------------------------------------------------------
-QVariant ISTcpQuery::GetParamet(const QString &ParameterName) const
+QVariant ISTcpQuery::GetParameter(const QString &ParameterName) const
 {
 	QVariant Value;
 	if (Parameters.contains(ParameterName))

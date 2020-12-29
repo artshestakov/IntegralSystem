@@ -54,4 +54,6 @@ MKDIR %DEPLOY_DIR%\translations
 
 REM Запуск сборки
 %INNO_SETUP% %SCRIPT_NAME%.iss.tmp
-ECHO copy ..\Output\IntegralSystem_%CONFIGURATION%_%PLATFORM%_%MAJOR%.%MINOR%.%REVISION%.exe C:\Users\%USERNAME%\YandexDisk\Client\
+
+REM Копируем дистрибутив в облако
+REM ECHO copy ..\Output\IntegralSystem_%CONFIGURATION%_%PLATFORM%_%MAJOR%.%MINOR%.%REVISION%.exe C:\Users\%USERNAME%\YandexDisk\Client\

@@ -838,7 +838,7 @@ void ISListBaseForm::Search()
 			Update();
 
 			GetAction(ISNamespace::AT_SearchClear)->setEnabled(true);
-			ISProtocol::Insert(true, CONST_UID_PROTOCOL_SEARCH, MetaTable->Name, MetaTable->LocalListName, QVariant());
+			ISProtocol::Insert(CONST_UID_PROTOCOL_SEARCH, MetaTable->Name, MetaTable->LocalListName, QVariant());
 		});
 	}
 	SearchForm->show();
@@ -898,7 +898,7 @@ void ISListBaseForm::Export()
 		if (Exported)
 		{
 			ProgressForm.close();
-			ISProtocol::Insert(true, CONST_UID_PROTOCOL_EXPORT_TABLE, MetaTable->Name, MetaTable->LocalListName, QVariant(), ExportForm.GetSelectTypeName());
+			ISProtocol::Insert(CONST_UID_PROTOCOL_EXPORT_TABLE, MetaTable->Name, MetaTable->LocalListName, QVariant(), ExportForm.GetSelectTypeName());
 			ISMessageBox::ShowInformation(this, LANG("Export.Completed").arg(MetaTable->LocalListName).arg(ExportForm.GetSelectTypeName()));
 		}
 		else
