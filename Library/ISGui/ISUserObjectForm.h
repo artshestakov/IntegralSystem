@@ -19,6 +19,7 @@ protected:
 private:
 	void PasswordManagement();
 	void PasswordReset();
+	void LinkDevice();
 	void AccountLifeTimeChanged();
 
 private:

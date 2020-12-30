@@ -160,7 +160,9 @@
   <Local Name="Message.Question.UpdateAvailable" Russian="Доступно обновление программы. Загрузить его?"/>
   <Local Name="Message.Question.PasswordReset" Russian="Вы уверены что хотите сбросить пароль?"/>
   <Local Name="Message.Question.ResetSettingDB" Russian="Сбросить настройки на стандартные?"/>
-
+  <Local Name="Message.Question.LinkDevice" Russian="Привязать устройство?"/>
+  <Local Name="Message.Question.LinkingDevice" Russian="Устройство обнаружено.&#10;&#10;Идентификатор поставщика: %1&#10;Идентификатор устройства: %2&#10;Серийный номер: %3&#10;Имя: %4&#10;&#10;Вы уверены что хотите привязать устройство к этой учётной записи?"/>
+  
   <!--DaData-->
   <Local Name="DaData.NotFound.Organization" Russian="Организация по таком ИНН не найдена"/>
   <Local Name="DaData.NotFound.Bank" Russian="Банк по такому БИК не найден"/>
@@ -689,5 +691,6 @@
   <Local Name="DatabaseSettings" Russian="Настройки базы данных"/>
   <Local Name="Online" Russian="В сети"/>
   <Local Name="Offline" Russian="Не в сети"/>
+  <Local Name="LinkDevice" Russian="Привязать устройство"/>
 
 </LANG>

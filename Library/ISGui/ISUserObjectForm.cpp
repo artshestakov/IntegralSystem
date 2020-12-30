@@ -10,6 +10,7 @@
 #include "ISTcpQuery.h"
 #include "ISBuffer.h"
 #include "ISPopupMessage.h"
+#include "ISDeviceConnectDialog.h"
 //-----------------------------------------------------------------------------
 ISUserObjectForm::ISUserObjectForm(ISNamespace::ObjectFormType form_type, PMetaTable *meta_table, QWidget *parent, int object_id) : ISObjectFormBase(form_type, meta_table, parent, object_id)
 {
@@ -29,6 +30,10 @@ ISUserObjectForm::ISUserObjectForm(ISNamespace::ObjectFormType form_type, PMetaT
 	QAction *ActionPasswordReset = new QAction(BUFFER_ICONS("User.Password.Reset"), LANG("PasswordReset"), this);
 	connect(ActionPasswordReset, &QAction::triggered, this, &ISUserObjectForm::PasswordReset);
 	AddActionToolBar(ActionPasswordReset, true);
+
+	QAction *ActionLinkDevice = new QAction(BUFFER_ICONS("USBDevice"), LANG("LinkDevice"), this);
+	connect(ActionLinkDevice, &QAction::triggered, this, &ISUserObjectForm::LinkDevice);
+	AddActionToolBar(ActionLinkDevice, true);
 }
 //-----------------------------------------------------------------------------
 ISUserObjectForm::~ISUserObjectForm()
@@ -125,6 +130,30 @@ void ISUserObjectForm::PasswordReset()
 		{
 			ISMessageBox::ShowCritical(nullptr, qPasswordReset.GetErrorString());
 		}
+	}
+}
+//-----------------------------------------------------------------------------
+void ISUserObjectForm::LinkDevice()
+{
+	if (!ISMessageBox::ShowQuestion(this, LANG("Message.Question.LinkDevice")))
+	{
+		return;
+	}
+
+	ISDeviceConnectDialog DeviceConnectDialog;
+	if (!DeviceConnectDialog.Exec())
+	{
+		return;
+	}
+	ISDeviceInfo DeviceInfo = DeviceConnectDialog.GetConnectedDevice();
+
+	if (!ISMessageBox::ShowQuestion(this, LANG("Message.Question.LinkingDevice")
+		.arg(DeviceInfo.VendorID)
+		.arg(DeviceInfo.ProductID)
+		.arg(DeviceInfo.SerialNumber)
+		.arg(DeviceInfo.Description)))
+	{
+		return;
 	}
 }
 //-----------------------------------------------------------------------------
