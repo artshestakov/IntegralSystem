@@ -130,6 +130,7 @@
   <Local Name="Message.Warning.UserPasswordNotCreated" Russian="ВНИМАНИЕ! Пользователь без пароля не сможет зайти в программу!"/>
   <Local Name="Message.Warning.NewVersion" Russian="ВНИМАНИЕ! Появилась новая версия программы, рекомендуется перезапустить её для обновления."/>
   <Local Name="Message.Warning.StorageFileBigSize" Russian="Размер файла &quot;%1&quot; превышает ограничение в %2 MB. Файл не будет добавлен."/>
+  <Local Name="Message.Warning.ConnectedMoreOneDevice" Russian="Подключено более одного устройства. Попробуйте ещё раз."/>
   <Local Name="Message.Question.ChangeUser" Russian="Сменить пользователя?"/>
   <Local Name="Message.Question.ExitApplication" Russian="Вы действительно хотите выйти из программы?"/>
   <Local Name="Message.Question.File.SavedToPath" Russian="Файл успешно сохранен по пути:&#10;%1&#10;Открыть его?"/>
@@ -203,7 +204,7 @@
 
   <!--ISDeviceConnectDialog-->
   <Local Name="ISDeviceConnectDialog.Title" Russian="Вставьте USB-устройство"/>
-  <Local Name="ISDeviceConnectDialog.LabelInfo" Russian="Вставьте USB-носитель в устройство чтения, чтобы привязать его к учётной записи пользователя.&#10;&#10;Примечание. Если USB-носитель уже вставлен в устройство чтения, извлеките его и вставьте снова."/>
+  <Local Name="ISDeviceConnectDialog.LabelInfo" Russian="Вставьте USB-устройство в устройство чтения, чтобы привязать его к учётной записи пользователя.&#10;&#10;Если USB-устройство уже вставлен в устройство чтения, извлеките его и вставьте снова."/>
   <Local Name="ISDeviceConnectDialog.Cancel" Russian="Отмена"/>
 
   <!--Other-->
@@ -587,7 +588,7 @@
   <Local Name="ISMonitorUserWidget.FIO" Russian="ФИО:"/>
   <Local Name="ISMonitorUserWidget.Group" Russian="Группа пользователя:"/>
   <Local Name="ISMonitorUserWidget.IPAddress" Russian="IP-адрес:"/>
-  <Local Name="ISMonitorUserWidget.Port" Russian="IP-адрес:"/>
+  <Local Name="ISMonitorUserWidget.Port" Russian="Порт:"/>
   <Local Name="ISMonitorUserWidget.DateTimeConnected" Russian="Дата и время подключения:"/>
   <Local Name="ISMonitorUserWidget.DateTimeLastQuery" Russian="Дата и время последнего запроса:"/>
 

@@ -164,7 +164,7 @@ bool ISGui::GetUSBDevice(std::vector<ISDeviceInfo> &Vector, QString &ErrorString
 			}
 
 			//Если класс устройства не USB-носитель - идём дальше
-			char Buffer[39] = { 0 };
+			char Buffer[MAX_DEVICE_ID_LEN] = { 0 };
 			sprintf(Buffer, "{%08lX-%04hX-%04hX-%02hhX%02hhX-%02hhX%02hhX%02hhX%02hhX%02hhX%02hhX}",
 				DeviceInfoData.ClassGuid.Data1, DeviceInfoData.ClassGuid.Data2, DeviceInfoData.ClassGuid.Data3,
 				DeviceInfoData.ClassGuid.Data4[0], DeviceInfoData.ClassGuid.Data4[1], DeviceInfoData.ClassGuid.Data4[2], DeviceInfoData.ClassGuid.Data4[3],
@@ -174,8 +174,7 @@ bool ISGui::GetUSBDevice(std::vector<ISDeviceInfo> &Vector, QString &ErrorString
 				continue;
 			}
 
-			char DeviceID[MAX_DEVICE_ID_LEN] = { 0 };
-			unsigned long Return = CM_Get_Device_ID(DeviceInfoData.DevInst, DeviceID, MAX_PATH, 0);
+			unsigned long Return = CM_Get_Device_ID(DeviceInfoData.DevInst, Buffer, MAX_PATH, 0);
 			Result = Return == CR_SUCCESS;
 			if (!Result)
 			{
@@ -184,30 +183,30 @@ bool ISGui::GetUSBDevice(std::vector<ISDeviceInfo> &Vector, QString &ErrorString
 					LANG("GetUSBDevice.Error.GettingDeviceID").arg(ISAlgorithm::GetLastErrorString());
 				break;
 			}
-			QString DeviceIDString((const char *)DeviceID);
+			QString DeviceID((const char *)Buffer);
 
 			//Проверяем, действительно ли это USB-накопитель
 			//Если идентификатор не содержит VID или PID - идём дальше
-			if (!DeviceIDString.contains("VID") || !DeviceIDString.contains("PID"))
+			if (!DeviceID.contains("VID") || !DeviceID.contains("PID"))
 			{
 				continue;
 			}
 
-			//Получаем описание
+			//Получаем описание устройства
 			unsigned long Size = 0,
 				PropertyRegDataType = 0;
-			unsigned char DescriptionDevice[1024] = { 0 };
+			unsigned char Description[1024] = { 0 };
 			Result = SetupDiGetDeviceRegistryProperty(HDeviceInfo, &DeviceInfoData, SPDRP_DEVICEDESC,
-				&PropertyRegDataType, DescriptionDevice, sizeof(DescriptionDevice), &Size) == TRUE;
-			if (!Result) //Ошибка получения описания
+				&PropertyRegDataType, Description, sizeof(Description), &Size) == TRUE;
+			if (!Result) //Не удалось получить описание устройства
 			{
 				ErrorString = LANG("GetUSBDevice.Error.GettingDescription").arg(ISAlgorithm::GetLastErrorString());
 				break;
 			}
 
 			//Парсим идентификатор устройства
-			QString VendorID, ProductID, SerialNumber, Description;
-			QStringList StringList = DeviceIDString.split('\\');
+			QString VendorID, ProductID, SerialNumber;
+			QStringList StringList = DeviceID.split('\\');
 			Result = StringList.size() == 3;
 			if (!Result)
 			{
@@ -215,7 +214,6 @@ bool ISGui::GetUSBDevice(std::vector<ISDeviceInfo> &Vector, QString &ErrorString
 				break;
 			}
 			SerialNumber = StringList.back();
-			Description = QString::fromLocal8Bit((const char *)DescriptionDevice, (int)Size);
 
 			StringList = StringList[1].split('_');
 			Result = StringList.size() == 3;
@@ -234,7 +232,7 @@ bool ISGui::GetUSBDevice(std::vector<ISDeviceInfo> &Vector, QString &ErrorString
 				break;
 			}
 			VendorID = StringList.front();
-			Vector.emplace_back(ISDeviceInfo{ VendorID, ProductID, SerialNumber, Description });
+			Vector.emplace_back(ISDeviceInfo{ VendorID, ProductID, SerialNumber, QString((const char *)Description) });
 		}
 	}
 	

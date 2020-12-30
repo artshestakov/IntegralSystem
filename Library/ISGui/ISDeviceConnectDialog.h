@@ -3,6 +3,7 @@
 #define _ISDEVICECONNECTDIALOG_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "ISInterfaceDialogForm.h"
+#include "ISStructs.h"
 //-----------------------------------------------------------------------------
 class ISGUI_EXPORT ISDeviceConnectDialog : public ISInterfaceDialogForm
 {
@@ -12,8 +13,15 @@ public:
 	ISDeviceConnectDialog();
 	virtual ~ISDeviceConnectDialog();
 
-protected:
-	void AfterShowEvent() override;
+	ISDeviceInfo& GetConnectedDevice();
+
+private:
+	void Timeout();
+
+private:
+	QTimer *Timer;
+	std::vector<ISDeviceInfo> LastVector;
+	ISDeviceInfo ConnectedDevice;
 };
 //-----------------------------------------------------------------------------
 #endif

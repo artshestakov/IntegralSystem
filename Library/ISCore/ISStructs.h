@@ -501,10 +501,10 @@ struct ISCORE_EXPORT ISModelRecord
 //-----------------------------------------------------------------------------
 struct ISCORE_EXPORT ISDeviceInfo
 {
-	QString VendorID;
-	QString ProductID;
-	QString SerialNumber;
-	QString Description;
+	QString VendorID; //Идентификатор поставщика
+	QString ProductID; //Идентификатор устройства
+	QString SerialNumber; //Серийный номер
+	QString Description; //Описание
 };
 //-----------------------------------------------------------------------------
 #endif
