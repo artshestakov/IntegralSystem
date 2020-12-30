@@ -379,6 +379,9 @@
     <ClCompile Include="ISInternalDirectoriesSubSystem.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
+    <ClCompile Include="ISDeviceConnectDialog.cpp">
+      <Filter>Forms</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ISExportForm.h">
@@ -640,6 +643,9 @@
       <Filter>Forms</Filter>
     </QtMoc>
     <QtMoc Include="ISInternalDirectoriesSubSystem.h">
+      <Filter>Forms</Filter>
+    </QtMoc>
+    <QtMoc Include="ISDeviceConnectDialog.h">
       <Filter>Forms</Filter>
     </QtMoc>
   </ItemGroup>

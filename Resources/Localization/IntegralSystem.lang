@@ -201,6 +201,11 @@
   <Local Name="ListForm.Search.ToolTip" Russian="Расширенный поиск по таблице (F7)"/>
   <Local Name="ListForm.ExportTable" Russian="Экспорт таблицы"/>
 
+  <!--ISDeviceConnectDialog-->
+  <Local Name="ISDeviceConnectDialog.Title" Russian="Вставьте USB-устройство"/>
+  <Local Name="ISDeviceConnectDialog.LabelInfo" Russian="Вставьте USB-носитель в устройство чтения, чтобы привязать его к учётной записи пользователя.&#10;&#10;Примечание. Если USB-носитель уже вставлен в устройство чтения, извлеките его и вставьте снова."/>
+  <Local Name="ISDeviceConnectDialog.Cancel" Russian="Отмена"/>
+
   <!--Other-->
   <Local Name="NoData" Russian="Данных нет"/>
   <Local Name="Delete" Russian="Удалить"/>

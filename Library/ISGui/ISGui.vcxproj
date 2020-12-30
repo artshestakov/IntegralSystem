@@ -199,6 +199,7 @@
     <ClCompile Include="ISDefinesGui.cpp" />
     <ClCompile Include="ISDelegates.cpp" />
     <ClCompile Include="ISDesktopParagraph.cpp" />
+    <ClCompile Include="ISDeviceConnectDialog.cpp" />
     <ClCompile Include="ISDiscussionListForm.cpp" />
     <ClCompile Include="ISEditsQT.cpp" />
     <ClCompile Include="ISEmpty.cpp" />
@@ -378,6 +379,7 @@
     <QtMoc Include="ISEmpty.h" />
     <QtMoc Include="ISAsteriskCallsSubSystem.h" />
     <QtMoc Include="ISAudioPlayerForm.h" />
+    <QtMoc Include="ISDeviceConnectDialog.h" />
     <ClInclude Include="isgui_global.h" />
     <QtMoc Include="ISProgressForm.h" />
     <QtMoc Include="ISTaskListForm.h" />
