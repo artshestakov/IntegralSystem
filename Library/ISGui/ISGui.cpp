@@ -139,54 +139,116 @@ bool ISGui::CheckAdminRole()
 //-----------------------------------------------------------------------------
 bool ISGui::GetUSBDevice(std::vector<ISDeviceInfo> &Vector, QString &ErrorString)
 {
+	//Очищаем вектор и ошибку
+	Vector.clear();
+	ErrorString.clear();
+
 	//Получаем объект классов
-	HDEVINFO DeviceInfo = SetupDiGetClassDevs(NULL, "USB", NULL, DIGCF_ALLCLASSES | DIGCF_PRESENT);
-	if (DeviceInfo == INVALID_HANDLE_VALUE) //Ошибка - выходим
+	HDEVINFO HDeviceInfo = SetupDiGetClassDevs(NULL, "USB", NULL, DIGCF_ALLCLASSES | DIGCF_PRESENT);
+	bool ResultInit = HDeviceInfo != INVALID_HANDLE_VALUE, Result = true;
+	if (!ResultInit)
 	{
 		ErrorString = LANG("GetUSBDevice.Error.SetupClassDevs").arg(ISAlgorithm::GetLastErrorString());
-		return false;
 	}
 
-	//Обходим устройства пока не дойдём до конца
-	for (unsigned i = 0; ; ++i)
+	if (ResultInit)
 	{
-		SP_DEVINFO_DATA DeviceInfoData = { 0 };
-		DeviceInfoData.cbSize = sizeof(DeviceInfoData);
-		if (!SetupDiEnumDeviceInfo(DeviceInfo, i, &DeviceInfoData)) //Дошли до конца - выходим из цикла
+		//Обходим устройства пока не дойдём до конца
+		for (unsigned i = 0; ; ++i)
 		{
-			break;
-		}
+			SP_DEVINFO_DATA DeviceInfoData = { 0 };
+			DeviceInfoData.cbSize = sizeof(DeviceInfoData);
+			if (!SetupDiEnumDeviceInfo(HDeviceInfo, i, &DeviceInfoData)) //Дошли до конца - выходим из цикла
+			{
+				break;
+			}
 
-		//Если класс устройства не USB-носитель - идём дальше
-		char Buffer[39] = { 0 };
-		sprintf(Buffer, "{%08lX-%04hX-%04hX-%02hhX%02hhX-%02hhX%02hhX%02hhX%02hhX%02hhX%02hhX}",
-			DeviceInfoData.ClassGuid.Data1, DeviceInfoData.ClassGuid.Data2, DeviceInfoData.ClassGuid.Data3,
-			DeviceInfoData.ClassGuid.Data4[0], DeviceInfoData.ClassGuid.Data4[1], DeviceInfoData.ClassGuid.Data4[2], DeviceInfoData.ClassGuid.Data4[3],
-			DeviceInfoData.ClassGuid.Data4[4], DeviceInfoData.ClassGuid.Data4[5], DeviceInfoData.ClassGuid.Data4[6], DeviceInfoData.ClassGuid.Data4[7]);
-		if (strcmp(Buffer, DEVICE_CLASS_UID_USB) != 0)
-		{
-			continue;
-		}
+			//Если класс устройства не USB-носитель - идём дальше
+			char Buffer[39] = { 0 };
+			sprintf(Buffer, "{%08lX-%04hX-%04hX-%02hhX%02hhX-%02hhX%02hhX%02hhX%02hhX%02hhX%02hhX}",
+				DeviceInfoData.ClassGuid.Data1, DeviceInfoData.ClassGuid.Data2, DeviceInfoData.ClassGuid.Data3,
+				DeviceInfoData.ClassGuid.Data4[0], DeviceInfoData.ClassGuid.Data4[1], DeviceInfoData.ClassGuid.Data4[2], DeviceInfoData.ClassGuid.Data4[3],
+				DeviceInfoData.ClassGuid.Data4[4], DeviceInfoData.ClassGuid.Data4[5], DeviceInfoData.ClassGuid.Data4[6], DeviceInfoData.ClassGuid.Data4[7]);
+			if (strcmp(Buffer, DEVICE_CLASS_UID_USB) != 0)
+			{
+				continue;
+			}
 
-		char DeviceID[MAX_DEVICE_ID_LEN];
-		if (CM_Get_Device_ID(DeviceInfoData.DevInst, DeviceID, MAX_PATH, 0) != CR_SUCCESS)
-		{
-			ErrorString = LANG("GetUSBDevice.Error.GettingDeviceID").arg(ISAlgorithm::GetLastErrorString());
-			return false;
-		}
+			char DeviceID[MAX_DEVICE_ID_LEN] = { 0 };
+			unsigned long Return = CM_Get_Device_ID(DeviceInfoData.DevInst, DeviceID, MAX_PATH, 0);
+			Result = Return == CR_SUCCESS;
+			if (!Result)
+			{
+				ErrorString = Return == CR_BUFFER_SMALL ?
+					LANG("GetUSBDevice.Error.GettingDeviceID.BufferSmall") :
+					LANG("GetUSBDevice.Error.GettingDeviceID").arg(ISAlgorithm::GetLastErrorString());
+				break;
+			}
+			QString DeviceIDString((const char *)DeviceID);
 
-		//Получаем описание
-		unsigned long Size = 0,
-			PropertyRegDataType = 0;
-		unsigned char Description[1024] = { 0 };
-		if (!SetupDiGetDeviceRegistryProperty(DeviceInfo, &DeviceInfoData, SPDRP_DEVICEDESC,
-			&PropertyRegDataType, Description, sizeof(Description), &Size)) //Ошибка получения описания
-		{
-			ErrorString = LANG("GetUSBDevice.Error.GettingDescription").arg(ISAlgorithm::GetLastErrorString());
-			return false;
+			//Проверяем, действительно ли это USB-накопитель
+			//Если идентификатор не содержит VID или PID - идём дальше
+			if (!DeviceIDString.contains("VID") || !DeviceIDString.contains("PID"))
+			{
+				continue;
+			}
+
+			//Получаем описание
+			unsigned long Size = 0,
+				PropertyRegDataType = 0;
+			unsigned char DescriptionDevice[1024] = { 0 };
+			Result = SetupDiGetDeviceRegistryProperty(HDeviceInfo, &DeviceInfoData, SPDRP_DEVICEDESC,
+				&PropertyRegDataType, DescriptionDevice, sizeof(DescriptionDevice), &Size) == TRUE;
+			if (!Result) //Ошибка получения описания
+			{
+				ErrorString = LANG("GetUSBDevice.Error.GettingDescription").arg(ISAlgorithm::GetLastErrorString());
+				break;
+			}
+
+			//Парсим идентификатор устройства
+			QString VendorID, ProductID, SerialNumber, Description;
+			QStringList StringList = DeviceIDString.split('\\');
+			Result = StringList.size() == 3;
+			if (!Result)
+			{
+				ErrorString = LANG("GetUSBDevice.Error.InvalidFormat");
+				break;
+			}
+			SerialNumber = StringList.back();
+			Description = QString::fromLocal8Bit((const char *)DescriptionDevice, (int)Size);
+
+			StringList = StringList[1].split('_');
+			Result = StringList.size() == 3;
+			if (!Result)
+			{
+				ErrorString = LANG("GetUSBDevice.Error.InvalidFormat");
+				break;
+			}
+			ProductID = StringList.back();
+
+			StringList = StringList[1].split('&');
+			Result = StringList.size() == 2;
+			if (!Result)
+			{
+				ErrorString = LANG("GetUSBDevice.Error.InvalidFormat");
+				break;
+			}
+			VendorID = StringList.front();
+			Vector.emplace_back(ISDeviceInfo{ VendorID, ProductID, SerialNumber, Description });
 		}
 	}
-	//SetupDiDestroyDeviceInfoList(DeviceInfo);
+	
+	//Если инициализация выше была успешной - разрушаем HDEVINFO
+	if (ResultInit)
+	{
+		SetupDiDestroyDeviceInfoList(HDeviceInfo);
+	}
+
+	//Если результат отрицательный - чистим вектор
+	if (!Result)
+	{
+		Vector.clear();
+	}
 	return true;
 }
 //-----------------------------------------------------------------------------

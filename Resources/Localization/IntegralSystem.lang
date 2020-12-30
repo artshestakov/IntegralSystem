@@ -605,8 +605,10 @@
 
   <!--GetUSBDevice-->
   <Local Name="GetUSBDevice.Error.SetupClassDevs" Russian="Не удалось получить информацию об устройствах в системе: %1"/>
+  <Local Name="GetUSBDevice.Error.GettingDeviceID.BufferSmall" Russian="Буффер слишком мал."/>
   <Local Name="GetUSBDevice.Error.GettingDeviceID" Russian="Не удалось получить информацию об устройстве: %1"/>
   <Local Name="GetUSBDevice.Error.GettingDescription" Russian="Не удалось получить описание устройства: %1"/>
+  <Local Name="GetUSBDevice.Error.InvalidFormat" Russian="Невалидный формат устройства."/>
   
   <!--Other-->
   <Local Name="Yesterday" Russian="Вчера"/>
