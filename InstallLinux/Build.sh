@@ -36,9 +36,9 @@ then
 	rm -f ./IntegralSystem.spec.tmp
 fi
 cp -f ./IntegralSystem.spec ./IntegralSystem.spec.tmp
-../Components/Replacer/Release-Linux64/Replacer ./IntegralSystem.spec.tmp %{CONFIGURATION} $CONFIGURATION
-../Components/Replacer/Release-Linux64/Replacer ./IntegralSystem.spec.tmp %{PLATFORM} $PLATFORM
-../Components/Replacer/Release-Linux64/Replacer ./IntegralSystem.spec.tmp %{VERSION} $MAJOR.$MINOR.$REVISION
+../Components/Replacer/$CONFIGURATION-Linux64/Replacer ./IntegralSystem.spec.tmp %{CONFIGURATION} $CONFIGURATION
+../Components/Replacer/$CONFIGURATION-Linux64/Replacer ./IntegralSystem.spec.tmp %{PLATFORM} $PLATFORM
+../Components/Replacer/$CONFIGURATION-Linux64/Replacer ./IntegralSystem.spec.tmp %{VERSION} $MAJOR.$MINOR.$REVISION
 
 #Генерируем трансляции (создаём папку для них и генерируем)
 mkdir $DEPLOY_DIR/translations

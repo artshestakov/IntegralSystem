@@ -42,11 +42,11 @@ CALL BuildItem.cmd Projects IntegralSystem %CONFIGURATION% %PLATFORM%
 REM Формируем шаблон скрипта сборки (удаляем предыдущий, генерируем новый и производим замены)
 IF EXIST %SCRIPT_NAME%.iss.tmp (DEL %SCRIPT_NAME%.iss.tmp)
 COPY %SCRIPT_NAME%.iss %SCRIPT_NAME%.iss.tmp
-..\Components\Replacer\Release-Win32\Replacer.exe %SCRIPT_NAME%.iss.tmp ${CONFIGURATION} %CONFIGURATION%
-..\Components\Replacer\Release-Win32\Replacer.exe %SCRIPT_NAME%.iss.tmp ${PLATFORM} %PLATFORM%
-..\Components\Replacer\Release-Win32\Replacer.exe %SCRIPT_NAME%.iss.tmp ${VERSION} %MAJOR%.%MINOR%.%REVISION%
-..\Components\Replacer\Release-Win32\Replacer.exe %SCRIPT_NAME%.iss.tmp ${QTDIR} %QT_PATH%
-..\Components\Replacer\Release-Win32\Replacer.exe %SCRIPT_NAME%.iss.tmp ${IS_DEBUG} %IS_DEBUG%
+..\Components\Replacer\%CONFIGURATION%-%PLATFORM%\Replacer.exe %SCRIPT_NAME%.iss.tmp ${CONFIGURATION} %CONFIGURATION%
+..\Components\Replacer\%CONFIGURATION%-%PLATFORM%\Replacer.exe %SCRIPT_NAME%.iss.tmp ${PLATFORM} %PLATFORM%
+..\Components\Replacer\%CONFIGURATION%-%PLATFORM%\Replacer.exe %SCRIPT_NAME%.iss.tmp ${VERSION} %MAJOR%.%MINOR%.%REVISION%
+..\Components\Replacer\%CONFIGURATION%-%PLATFORM%\Replacer.exe %SCRIPT_NAME%.iss.tmp ${QTDIR} %QT_PATH%
+..\Components\Replacer\%CONFIGURATION%-%PLATFORM%\Replacer.exe %SCRIPT_NAME%.iss.tmp ${IS_DEBUG} %IS_DEBUG%
 
 REM Генерируем трансляции (создаём папку для них и генерируем)
 MKDIR %DEPLOY_DIR%\translations
@@ -56,4 +56,4 @@ REM Запуск сборки
 %INNO_SETUP% %SCRIPT_NAME%.iss.tmp
 
 REM Копируем дистрибутив в облако
-REM ECHO copy ..\Output\IntegralSystem_%CONFIGURATION%_%PLATFORM%_%MAJOR%.%MINOR%.%REVISION%.exe C:\Users\%USERNAME%\YandexDisk\Client\
+copy ..\Output\IntegralSystem_%CONFIGURATION%_%PLATFORM%_%MAJOR%.%MINOR%.%REVISION%.exe C:\Users\%USERNAME%\YandexDisk\Client\IntegralSystem_%CONFIGURATION%_%PLATFORM%_%MAJOR%.%MINOR%.%REVISION%.exe
