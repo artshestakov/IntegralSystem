@@ -99,7 +99,7 @@ void ISMonitorUserWidget::ServiceClicked()
 	if (IsOnline)
 	{
 		FormLayout.addRow(LANG("ISMonitorUserWidget.IPAddress"), new QLabel(IPAddress, &InterfaceDialogForm));
-		FormLayout.addRow(LANG("ISMonitorUserWidget.Group"), new QLabel(QString::number(Port), &InterfaceDialogForm));
+		FormLayout.addRow(LANG("ISMonitorUserWidget.Port"), new QLabel(QString::number(Port), &InterfaceDialogForm));
 		FormLayout.addRow(LANG("ISMonitorUserWidget.DateTimeConnected"), new QLabel(DateTimeConnected, &InterfaceDialogForm));
 		FormLayout.addRow(LANG("ISMonitorUserWidget.DateTimeLastQuery"), new QLabel(DateTimeLastQuery, &InterfaceDialogForm));
 	}
