@@ -20,7 +20,7 @@ fi
 mkdir $DEPLOY_DIR
 
 #Получаем номер ревизии (количество комитов) и генерируем файл информации о сборке
-REVISION=$(git rev-list --all --count)
+REVISION=$(git rev-list --count HEAD)
 ./GenerateBuildInfo.sh $CONFIGURATION $PLATFORM $MAJOR $MINOR $REVISION
 
 #Компиляция библиотек
