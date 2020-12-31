@@ -1,4 +1,4 @@
-#include "ISUserPasswordForm.h"
+#include "ISUserPasswordDialog.h"
 #include "ISDefinesGui.h"
 #include "ISConstants.h"
 #include "ISLocalization.h"
@@ -10,7 +10,7 @@
 #include "ISTcpQuery.h"
 #include "ISPopupMessage.h"
 //-----------------------------------------------------------------------------
-ISUserPasswordForm::ISUserPasswordForm(unsigned int user_id, const QString &user_fio, const QString &user_login)
+ISUserPasswordDialog::ISUserPasswordDialog(unsigned int user_id, const QString &user_fio, const QString &user_login)
 	: ISInterfaceDialogForm(),
 	EditPasswordCurrent(nullptr),
 	UserID(user_id),
@@ -57,28 +57,28 @@ ISUserPasswordForm::ISUserPasswordForm(unsigned int user_id, const QString &user
 	GetMainLayout()->addWidget(EditPasswordCheck);
 
 	ButtonDialog = new ISButtonDialog(this);
-	connect(ButtonDialog, &ISButtonDialog::Apply, this, &ISUserPasswordForm::Apply);
-	connect(ButtonDialog, &ISButtonDialog::Close, this, &ISUserPasswordForm::close);
+	connect(ButtonDialog, &ISButtonDialog::Apply, this, &ISUserPasswordDialog::Apply);
+	connect(ButtonDialog, &ISButtonDialog::Close, this, &ISUserPasswordDialog::close);
 	GetMainLayout()->addWidget(ButtonDialog);
 }
 //-----------------------------------------------------------------------------
-ISUserPasswordForm::~ISUserPasswordForm()
+ISUserPasswordDialog::~ISUserPasswordDialog()
 {
 
 }
 //-----------------------------------------------------------------------------
-void ISUserPasswordForm::AfterShowEvent()
+void ISUserPasswordDialog::AfterShowEvent()
 {
 	ISInterfaceDialogForm::AfterShowEvent();
 	PasswordExist ? EditPasswordCurrent->SetFocus() : EditPassword->SetFocus();
 }
 //-----------------------------------------------------------------------------
-void ISUserPasswordForm::EnterClicked()
+void ISUserPasswordDialog::EnterClicked()
 {
 	Apply();
 }
 //-----------------------------------------------------------------------------
-void ISUserPasswordForm::Apply()
+void ISUserPasswordDialog::Apply()
 {
 	QString PasswordCurrent, Password, PasswordCheck;
 	if (PasswordExist)

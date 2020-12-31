@@ -14,9 +14,6 @@
       <Extensions>qrc;*</Extensions>
       <ParseFiles>false</ParseFiles>
     </Filter>
-    <Filter Include="Dialogs">
-      <UniqueIdentifier>{dffb62ef-e48f-49d7-93f7-e1f2348ff642}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Export">
       <UniqueIdentifier>{669282a0-fe6a-4a93-b950-e4c2add420bc}</UniqueIdentifier>
     </Filter>
@@ -71,14 +68,14 @@
     <Filter Include="SubSystem">
       <UniqueIdentifier>{462ff294-a08b-43b8-9bbf-0c16d083eaed}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Dialog Forms">
+      <UniqueIdentifier>{3546b8d5-31bc-4936-b050-706634b1317f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dialog">
+      <UniqueIdentifier>{dffb62ef-e48f-49d7-93f7-e1f2348ff642}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ISExportForm.cpp">
-      <Filter>AdditionalForms</Filter>
-    </ClCompile>
-    <ClCompile Include="ISInputDialog.cpp">
-      <Filter>AdditionalForms</Filter>
-    </ClCompile>
     <ClCompile Include="ISProcessForm.cpp">
       <Filter>AdditionalForms</Filter>
     </ClCompile>
@@ -103,14 +100,11 @@
     <ClCompile Include="ISObjectFormBase.cpp">
       <Filter>Common Forms</Filter>
     </ClCompile>
-    <ClCompile Include="ISSelectDialogForm.cpp">
-      <Filter>Common Forms</Filter>
-    </ClCompile>
     <ClCompile Include="ISSelectListForm.cpp">
       <Filter>Common Forms</Filter>
     </ClCompile>
     <ClCompile Include="ISFileDialog.cpp">
-      <Filter>Dialogs</Filter>
+      <Filter>Dialog</Filter>
     </ClCompile>
     <ClCompile Include="ISExportWorker.cpp">
       <Filter>Export</Filter>
@@ -134,7 +128,7 @@
       <Filter>Fields</Filter>
     </ClCompile>
     <ClCompile Include="ISMessageBox.cpp">
-      <Filter>Dialogs</Filter>
+      <Filter>Dialog</Filter>
     </ClCompile>
     <ClCompile Include="ISObjectInterface.cpp">
       <Filter>Objects</Filter>
@@ -181,13 +175,7 @@
     <ClCompile Include="ISUserRoleEntity.cpp">
       <Filter>System</Filter>
     </ClCompile>
-    <ClCompile Include="ISAuthForm.cpp">
-      <Filter>Forms</Filter>
-    </ClCompile>
     <ClCompile Include="ISCalendarObjectForm.cpp">
-      <Filter>Forms</Filter>
-    </ClCompile>
-    <ClCompile Include="ISConnectionForm.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
     <ClCompile Include="ISDiscussionListForm.cpp">
@@ -212,9 +200,6 @@
       <Filter>Forms</Filter>
     </ClCompile>
     <ClCompile Include="ISSearchForm.cpp">
-      <Filter>Forms</Filter>
-    </ClCompile>
-    <ClCompile Include="ISSettingsForm.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
     <ClCompile Include="ISTaskViewForm.cpp">
@@ -283,9 +268,6 @@
     <ClCompile Include="ISProgressForm.cpp">
       <Filter>AdditionalForms</Filter>
     </ClCompile>
-    <ClCompile Include="ISAboutForm.cpp">
-      <Filter>Forms</Filter>
-    </ClCompile>
     <ClCompile Include="ISOilSphere.cpp">
       <Filter>Objects\OilSphere</Filter>
     </ClCompile>
@@ -310,9 +292,6 @@
     <ClCompile Include="ISListWidget.cpp">
       <Filter>Widgets</Filter>
     </ClCompile>
-    <ClCompile Include="ISUserGroupForm.cpp">
-      <Filter>Controls</Filter>
-    </ClCompile>
     <ClCompile Include="ISTaskObjectForm.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
@@ -330,15 +309,6 @@
     </ClCompile>
     <ClCompile Include="ISAudioPlayerForm.cpp">
       <Filter>Forms</Filter>
-    </ClCompile>
-    <ClCompile Include="ISUserPasswordForm.cpp">
-      <Filter>Forms</Filter>
-    </ClCompile>
-    <ClCompile Include="ISReconnectForm.cpp">
-      <Filter>Forms</Filter>
-    </ClCompile>
-    <ClCompile Include="ISTcpModel.cpp">
-      <Filter>Model</Filter>
     </ClCompile>
     <ClCompile Include="ISProtocol.cpp">
       <Filter>System</Filter>
@@ -361,9 +331,6 @@
     <ClCompile Include="ISValidators.cpp">
       <Filter>System</Filter>
     </ClCompile>
-    <ClCompile Include="ISDeviceConnectDialog.cpp">
-      <Filter>Forms</Filter>
-    </ClCompile>
     <ClCompile Include="ISAsteriskCallsSubSystem.cpp">
       <Filter>SubSystem</Filter>
     </ClCompile>
@@ -385,14 +352,44 @@
     <ClCompile Include="ISUserGroupSubSystem.cpp">
       <Filter>SubSystem</Filter>
     </ClCompile>
+    <ClCompile Include="ISExportDialog.cpp">
+      <Filter>Dialog Forms</Filter>
+    </ClCompile>
+    <ClCompile Include="ISInputDialog.cpp">
+      <Filter>Dialog</Filter>
+    </ClCompile>
+    <ClCompile Include="ISSelectListDialog.cpp">
+      <Filter>Dialog Forms</Filter>
+    </ClCompile>
+    <ClCompile Include="ISUserGroupRightDialog.cpp">
+      <Filter>Dialog Forms</Filter>
+    </ClCompile>
+    <ClCompile Include="ISAboutDialog.cpp">
+      <Filter>Dialog Forms</Filter>
+    </ClCompile>
+    <ClCompile Include="ISAuthDialog.cpp">
+      <Filter>Dialog Forms</Filter>
+    </ClCompile>
+    <ClCompile Include="ISConnectSettingDialog.cpp">
+      <Filter>Dialog Forms</Filter>
+    </ClCompile>
+    <ClCompile Include="ISDeviceConnectDialog.cpp">
+      <Filter>Dialog Forms</Filter>
+    </ClCompile>
+    <ClCompile Include="ISReconnectDialog.cpp">
+      <Filter>Dialog Forms</Filter>
+    </ClCompile>
+    <ClCompile Include="ISSettingsDialog.cpp">
+      <Filter>Dialog Forms</Filter>
+    </ClCompile>
+    <ClCompile Include="ISUserPasswordDialog.cpp">
+      <Filter>Dialog Forms</Filter>
+    </ClCompile>
+    <ClCompile Include="ISTcpModel.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="ISExportForm.h">
-      <Filter>AdditionalForms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISInputDialog.h">
-      <Filter>AdditionalForms</Filter>
-    </QtMoc>
     <QtMoc Include="ISProcessForm.h">
       <Filter>AdditionalForms</Filter>
     </QtMoc>
@@ -417,14 +414,11 @@
     <QtMoc Include="ISObjectFormBase.h">
       <Filter>Common Forms</Filter>
     </QtMoc>
-    <QtMoc Include="ISSelectDialogForm.h">
-      <Filter>Common Forms</Filter>
-    </QtMoc>
     <QtMoc Include="ISSelectListForm.h">
       <Filter>Common Forms</Filter>
     </QtMoc>
     <QtMoc Include="ISFileDialog.h">
-      <Filter>Dialogs</Filter>
+      <Filter>Dialog</Filter>
     </QtMoc>
     <QtMoc Include="ISExportWorker.h">
       <Filter>Export</Filter>
@@ -448,7 +442,7 @@
       <Filter>Fields</Filter>
     </QtMoc>
     <QtMoc Include="ISMessageBox.h">
-      <Filter>Dialogs</Filter>
+      <Filter>Dialog</Filter>
     </QtMoc>
     <QtMoc Include="ISObjectInterface.h">
       <Filter>Objects</Filter>
@@ -459,16 +453,7 @@
     <QtMoc Include="ISDaDataService.h">
       <Filter>System</Filter>
     </QtMoc>
-    <QtMoc Include="ISAboutForm.h">
-      <Filter>Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISAuthForm.h">
-      <Filter>Forms</Filter>
-    </QtMoc>
     <QtMoc Include="ISCalendarObjectForm.h">
-      <Filter>Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISConnectionForm.h">
       <Filter>Forms</Filter>
     </QtMoc>
     <QtMoc Include="ISDiscussionListForm.h">
@@ -493,9 +478,6 @@
       <Filter>Forms</Filter>
     </QtMoc>
     <QtMoc Include="ISSearchForm.h">
-      <Filter>Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISSettingsForm.h">
       <Filter>Forms</Filter>
     </QtMoc>
     <QtMoc Include="ISTaskViewForm.h">
@@ -585,9 +567,6 @@
     <QtMoc Include="ISListWidget.h">
       <Filter>Widgets</Filter>
     </QtMoc>
-    <QtMoc Include="ISUserGroupForm.h">
-      <Filter>Controls</Filter>
-    </QtMoc>
     <QtMoc Include="ISTaskObjectForm.h">
       <Filter>Forms</Filter>
     </QtMoc>
@@ -599,15 +578,6 @@
     </QtMoc>
     <QtMoc Include="ISAudioPlayerForm.h">
       <Filter>Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISUserPasswordForm.h">
-      <Filter>Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISReconnectForm.h">
-      <Filter>Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISTcpModel.h">
-      <Filter>Model</Filter>
     </QtMoc>
     <QtMoc Include="ISTaskParagraph.h">
       <Filter>Paragraphs</Filter>
@@ -626,9 +596,6 @@
     </QtMoc>
     <QtMoc Include="ISValidators.h">
       <Filter>System</Filter>
-    </QtMoc>
-    <QtMoc Include="ISDeviceConnectDialog.h">
-      <Filter>Forms</Filter>
     </QtMoc>
     <QtMoc Include="ISAsteriskCallsSubSystem.h">
       <Filter>SubSystem</Filter>
@@ -650,6 +617,42 @@
     </QtMoc>
     <QtMoc Include="ISUserGroupSubSystem.h">
       <Filter>SubSystem</Filter>
+    </QtMoc>
+    <QtMoc Include="ISExportDialog.h">
+      <Filter>Dialog Forms</Filter>
+    </QtMoc>
+    <QtMoc Include="ISInputDialog.h">
+      <Filter>Dialog</Filter>
+    </QtMoc>
+    <QtMoc Include="ISSelectListDialog.h">
+      <Filter>Dialog Forms</Filter>
+    </QtMoc>
+    <QtMoc Include="ISUserGroupRightDialog.h">
+      <Filter>Dialog Forms</Filter>
+    </QtMoc>
+    <QtMoc Include="ISAboutDialog.h">
+      <Filter>Dialog Forms</Filter>
+    </QtMoc>
+    <QtMoc Include="ISAuthDialog.h">
+      <Filter>Dialog Forms</Filter>
+    </QtMoc>
+    <QtMoc Include="ISConnectSettingDialog.h">
+      <Filter>Dialog Forms</Filter>
+    </QtMoc>
+    <QtMoc Include="ISDeviceConnectDialog.h">
+      <Filter>Dialog Forms</Filter>
+    </QtMoc>
+    <QtMoc Include="ISReconnectDialog.h">
+      <Filter>Dialog Forms</Filter>
+    </QtMoc>
+    <QtMoc Include="ISSettingsDialog.h">
+      <Filter>Dialog Forms</Filter>
+    </QtMoc>
+    <QtMoc Include="ISUserPasswordDialog.h">
+      <Filter>Dialog Forms</Filter>
+    </QtMoc>
+    <QtMoc Include="ISTcpModel.h">
+      <Filter>System</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>

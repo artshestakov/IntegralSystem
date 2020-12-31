@@ -1,4 +1,4 @@
-#include "ISSettingsForm.h"
+#include "ISSettingsDialog.h"
 #include "ISDefinesGui.h"
 #include "ISBuffer.h"
 #include "ISAssert.h"
@@ -13,7 +13,7 @@
 #include "ISGui.h"
 #include "ISConstants.h"
 //-----------------------------------------------------------------------------
-ISSettingsForm::ISSettingsForm(const QString &SettingGroupUID) : ISInterfaceDialogForm()
+ISSettingsDialog::ISSettingsDialog(const QString &SettingGroupUID) : ISInterfaceDialogForm()
 {
 	setWindowIcon(BUFFER_ICONS("Settings"));
 	setWindowTitle(LANG("Settings"));
@@ -28,7 +28,7 @@ ISSettingsForm::ISSettingsForm(const QString &SettingGroupUID) : ISInterfaceDial
 	ListWidget->setCursor(CURSOR_POINTING_HAND);
 	ListWidget->setTabKeyNavigation(false);
 	ListWidget->setTabKeyNavigation(false);
-	connect(ListWidget, &QListWidget::itemSelectionChanged, this, &ISSettingsForm::ItemSelectionChanged);
+	connect(ListWidget, &QListWidget::itemSelectionChanged, this, &ISSettingsDialog::ItemSelectionChanged);
 	Layout->addWidget(ListWidget);
 
 	CreateCentralPanel();
@@ -43,7 +43,7 @@ ISSettingsForm::ISSettingsForm(const QString &SettingGroupUID) : ISInterfaceDial
 	ISPushButton *ButtonDefault = new ISPushButton(this);
 	ButtonDefault->setText(LANG("SettingsDefault"));
 	ButtonDefault->setIcon(BUFFER_ICONS("SettingsDefault"));
-	connect(ButtonDefault, &ISPushButton::clicked, this, &ISSettingsForm::DefaultSettings);
+	connect(ButtonDefault, &ISPushButton::clicked, this, &ISSettingsDialog::DefaultSettings);
 	LayoutBottom->addWidget(ButtonDefault);
 
 	LayoutBottom->addStretch();
@@ -51,8 +51,8 @@ ISSettingsForm::ISSettingsForm(const QString &SettingGroupUID) : ISInterfaceDial
 	ButtonDialog = new ISButtonDialog(this);
 	ButtonDialog->SetApplyEnabled(false);
 	ButtonDialog->layout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_NULL);
-	connect(ButtonDialog, &ISButtonDialog::Apply, this, &ISSettingsForm::Save);
-	connect(ButtonDialog, &ISButtonDialog::Close, this, &ISSettingsForm::close);
+	connect(ButtonDialog, &ISButtonDialog::Apply, this, &ISSettingsDialog::Save);
+	connect(ButtonDialog, &ISButtonDialog::Close, this, &ISSettingsDialog::close);
 	LayoutBottom->addWidget(ButtonDialog, 0, Qt::AlignRight);
 
 	if (!SettingGroupUID.isEmpty())
@@ -68,12 +68,12 @@ ISSettingsForm::ISSettingsForm(const QString &SettingGroupUID) : ISInterfaceDial
 	}
 }
 //-----------------------------------------------------------------------------
-ISSettingsForm::~ISSettingsForm()
+ISSettingsDialog::~ISSettingsDialog()
 {
 
 }
 //-----------------------------------------------------------------------------
-void ISSettingsForm::CreateCentralPanel()
+void ISSettingsDialog::CreateCentralPanel()
 {
 	LayoutCentral = new QVBoxLayout();
 	Layout->addLayout(LayoutCentral);
@@ -101,7 +101,7 @@ void ISSettingsForm::CreateCentralPanel()
 	LayoutCentral->addWidget(TabWidget);
 }
 //-----------------------------------------------------------------------------
-void ISSettingsForm::CreateSettings()
+void ISSettingsDialog::CreateSettings()
 {
 	for (ISMetaSettingsGroup *MetaGroup : ISSettings::Instance().GetSettingGroups())
 	{
@@ -125,7 +125,7 @@ void ISSettingsForm::CreateSettings()
 			ISFieldEditBase *FieldEditBase = ISGui::CreateColumnForField(ScrollArea, MetaSetting->Type, MetaSetting->WidgetEditName);
 			FieldEditBase->SetValue(SETTING_VALUE(MetaSetting->UID));
 			FieldEditBase->SetModificationFlag(false);
-			connect(FieldEditBase, &ISFieldEditBase::ValueChange, this, &ISSettingsForm::DataChanged);
+			connect(FieldEditBase, &ISFieldEditBase::ValueChange, this, &ISSettingsDialog::DataChanged);
 			FormLayout->addRow(LabelRow, FieldEditBase);
 			Fields.emplace(MetaSetting->UID, FieldEditBase);
 		}
@@ -138,7 +138,7 @@ void ISSettingsForm::CreateSettings()
 	}
 }
 //-----------------------------------------------------------------------------
-void ISSettingsForm::Save()
+void ISSettingsDialog::Save()
 {
 	for (const auto &MapItem : Fields) //Обходим все поля настроек
 	{
@@ -150,7 +150,7 @@ void ISSettingsForm::Save()
 	close();
 }
 //-----------------------------------------------------------------------------
-void ISSettingsForm::DefaultSettings()
+void ISSettingsDialog::DefaultSettings()
 {
 	if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.ChangeSettingsToDefault"), LANG("ThisActionCanNotUndone")))
 	{
@@ -172,7 +172,7 @@ void ISSettingsForm::DefaultSettings()
 	}
 }
 //-----------------------------------------------------------------------------
-QListWidgetItem* ISSettingsForm::CreateItemGroup(ISMetaSettingsGroup *MetaGroup)
+QListWidgetItem* ISSettingsDialog::CreateItemGroup(ISMetaSettingsGroup *MetaGroup)
 {
 	QListWidgetItem *ListWidgetItem = new QListWidgetItem(ListWidget);
 	ListWidgetItem->setText(MetaGroup->LocalName);
@@ -186,7 +186,7 @@ QListWidgetItem* ISSettingsForm::CreateItemGroup(ISMetaSettingsGroup *MetaGroup)
 	return ListWidgetItem;
 }
 //-----------------------------------------------------------------------------
-void ISSettingsForm::ItemSelectionChanged()
+void ISSettingsDialog::ItemSelectionChanged()
 {
 	ListWidget->SetFontItems(ISDefines::Gui::FONT_TAHOMA_9);
 	QListWidgetItem *ClickedItem = ListWidget->currentItem();
@@ -199,7 +199,7 @@ void ISSettingsForm::ItemSelectionChanged()
 	LabelCurrentGroupHint->setVisible(!GroupHint.isEmpty());
 }
 //-----------------------------------------------------------------------------
-void ISSettingsForm::DataChanged()
+void ISSettingsDialog::DataChanged()
 {
 	ButtonDialog->SetApplyEnabled(true);
 }

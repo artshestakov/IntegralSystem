@@ -5,13 +5,13 @@
 #include "ISInterfaceDialogForm.h"
 #include "ISFieldEdits.h"
 //-----------------------------------------------------------------------------
-class ISUserPasswordForm : public ISInterfaceDialogForm
+class ISUserPasswordDialog : public ISInterfaceDialogForm
 {
 	Q_OBJECT
 
 public:
-	ISUserPasswordForm(unsigned int user_id, const QString &user_fio, const QString &user_login);
-	virtual ~ISUserPasswordForm();
+	ISUserPasswordDialog(unsigned int user_id, const QString &user_fio, const QString &user_login);
+	virtual ~ISUserPasswordDialog();
 
 protected:
 	void AfterShowEvent() override;

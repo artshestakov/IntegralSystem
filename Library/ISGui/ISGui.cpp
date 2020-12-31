@@ -3,14 +3,14 @@
 #include "ISConstants.h"
 #include "ISAssert.h"
 #include "ISLocalization.h"
-#include "ISSettingsForm.h"
-#include "ISUserPasswordForm.h"
+#include "ISSettingsDialog.h"
+#include "ISUserPasswordDialog.h"
 #include "ISMetaData.h"
 #include "ISMessageBox.h"
 #include "ISPopupMessage.h"
 #include "ISCore.h"
 #include "ISProtocol.h"
-#include "ISSelectDialogForm.h"
+#include "ISSelectListDialog.h"
 #include "ISTaskViewForm.h"
 #include "ISSplashWidget.h"
 #include "ISConfig.h"
@@ -565,7 +565,7 @@ ISComboSearchBase* ISGui::CreateSearchOperator(QWidget *parent, ISNamespace::Fie
 unsigned int ISGui::SelectObject(const QString &TableName, int SelectObjectID)
 {
 	SetWaitGlobalCursor(true);
-	ISSelectDialogForm SelectDialogForm(ISNamespace::SLM_Single, TableName, SelectObjectID);
+	ISSelectListDialog SelectDialogForm(ISNamespace::SLM_Single, TableName, SelectObjectID);
 	SetWaitGlobalCursor(false);
 	return SelectDialogForm.Exec() ? SelectDialogForm.GetSelectedObject() : 0;
 }
@@ -574,7 +574,7 @@ ISVectorUInt ISGui::SelectObjects(const QString &TableName)
 {
 	ISVectorUInt VectorInt;
 	SetWaitGlobalCursor(true);
-	ISSelectDialogForm SelectDialogForm(ISNamespace::SLM_Multi, TableName, 0);
+	ISSelectListDialog SelectDialogForm(ISNamespace::SLM_Multi, TableName, 0);
 	SetWaitGlobalCursor(false);
 	if (SelectDialogForm.Exec())
 	{
@@ -586,7 +586,7 @@ ISVectorUInt ISGui::SelectObjects(const QString &TableName)
 void ISGui::ShowSettingsForm(const QString &SettingGroupUID)
 {
 	SetWaitGlobalCursor(true);
-	ISSettingsForm SettingsForm(SettingGroupUID);
+	ISSettingsDialog SettingsForm(SettingGroupUID);
 	SetWaitGlobalCursor(false);
 	SettingsForm.Exec();
 }
@@ -600,7 +600,7 @@ void ISGui::ShowUserPasswordForm(unsigned int UserID, const QString &UserFIO, co
 void ISGui::ShowUserPasswordForm(unsigned int UserID, const QString &UserFIO, const QString &UserLogin, bool &Result)
 {
 	SetWaitGlobalCursor(true);
-	ISUserPasswordForm UserPasswordForm(UserID, UserFIO, UserLogin);
+	ISUserPasswordDialog UserPasswordForm(UserID, UserFIO, UserLogin);
 	SetWaitGlobalCursor(false);
 	Result = UserPasswordForm.Exec();
 }

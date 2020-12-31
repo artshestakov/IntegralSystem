@@ -1,7 +1,7 @@
 #include "ISUserGroupSubSystem.h"
 #include "ISLocalization.h"
 #include "ISGui.h"
-#include "ISUserGroupForm.h"
+#include "ISUserGroupRightDialog.h"
 #include "ISBuffer.h"
 //-----------------------------------------------------------------------------
 ISUserGroupSubSystem::ISUserGroupSubSystem(QWidget *parent) : ISListBaseForm("_UserGroup", parent)
@@ -21,7 +21,7 @@ ISUserGroupSubSystem::~ISUserGroupSubSystem()
 void ISUserGroupSubSystem::SelectedGroup()
 {
 	ISGui::SetWaitGlobalCursor(true);
-	ISUserGroupForm UserGroupForm(GetObjectID(), GetCurrentRecordValue("Name").toString());
+	ISUserGroupRightDialog UserGroupForm(GetObjectID(), GetCurrentRecordValue("Name").toString());
 	ISGui::SetWaitGlobalCursor(false);
 	UserGroupForm.Exec();
 }

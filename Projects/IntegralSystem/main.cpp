@@ -1,7 +1,7 @@
 #include "ISLocalization.h"
 #include "ISGui.h"
 #include "ISSplashScreen.h"
-#include "ISAuthForm.h"
+#include "ISAuthDialog.h"
 #include "ISStartup.h"
 #include "ISLogger.h"
 #include "ISMainWindow.h"
@@ -28,7 +28,7 @@ int main(int argc, char **argv)
 	}
 	PROPERTY_SET("PathLastDirectory", QDir::homePath());
 
-	ISAuthForm AuthForm;
+	ISAuthDialog AuthForm;
 	Result = AuthForm.Exec();
 	if (Result) //Форма авторизации была закрыта при успешном входе в программу
 	{

@@ -1,4 +1,4 @@
-#include "ISConnectionForm.h"
+#include "ISConnectSettingDialog.h"
 #include "ISDefinesGui.h"
 #include "ISConstants.h"
 #include "ISLocalization.h"
@@ -6,7 +6,7 @@
 #include "ISMessageBox.h"
 #include "ISConfig.h"
 //-----------------------------------------------------------------------------
-ISConnectionForm::ISConnectionForm() : ISInterfaceDialogForm()
+ISConnectSettingDialog::ISConnectSettingDialog() : ISInterfaceDialogForm()
 {
 	setWindowTitle(LANG("ConnectionSettings"));
 	GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);
@@ -40,30 +40,30 @@ ISConnectionForm::ISConnectionForm() : ISInterfaceDialogForm()
 	GetMainLayout()->addLayout(LayoutButtons);
 
 	ISPushButton *ButtonSave = new ISPushButton(BUFFER_ICONS("Save"), LANG("Save"), this);
-	connect(ButtonSave, &ISPushButton::clicked, this, &ISConnectionForm::Save);
+	connect(ButtonSave, &ISPushButton::clicked, this, &ISConnectSettingDialog::Save);
 	LayoutButtons->addWidget(ButtonSave, 0, Qt::AlignRight);
 
 	ISPushButton *ButtonClose = new ISPushButton(BUFFER_ICONS("Close"), LANG("Close"), this);
-	connect(ButtonClose, &ISPushButton::clicked, this, &ISConnectionForm::close);
+	connect(ButtonClose, &ISPushButton::clicked, this, &ISConnectSettingDialog::close);
 	LayoutButtons->addWidget(ButtonClose);
 }
 //-----------------------------------------------------------------------------
-ISConnectionForm::~ISConnectionForm()
+ISConnectSettingDialog::~ISConnectSettingDialog()
 {
 
 }
 //-----------------------------------------------------------------------------
-void ISConnectionForm::AfterShowEvent()
+void ISConnectSettingDialog::AfterShowEvent()
 {
 	EditServer->SetFocus();
 }
 //-----------------------------------------------------------------------------
-void ISConnectionForm::EnterClicked()
+void ISConnectSettingDialog::EnterClicked()
 {
 	Save();
 }
 //-----------------------------------------------------------------------------
-void ISConnectionForm::Save()
+void ISConnectSettingDialog::Save()
 {
 	ISConfig::Instance().SetValue(CONST_CONFIG_CONNECTION_SERVER, EditServer->GetValue());
 	ISConfig::Instance().SetValue(CONST_CONFIG_CONNECTION_PORT, EditPort->GetValue());

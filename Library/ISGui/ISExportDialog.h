@@ -8,13 +8,13 @@
 #include "ISFieldEdits.h"
 #include "ISTcpModel.h"
 //-----------------------------------------------------------------------------
-class ISExportForm : public ISInterfaceDialogForm
+class ISExportDialog : public ISInterfaceDialogForm
 {
 	Q_OBJECT
 
 public:
-	ISExportForm(ISTcpModel *TcpModel);
-	virtual ~ISExportForm();
+	ISExportDialog(ISTcpModel *TcpModel);
+	virtual ~ISExportDialog();
 
 	ISNamespace::ExportType GetSelectedType();
 	QString GetSelectTypeName() const;

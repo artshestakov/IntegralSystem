@@ -4,13 +4,13 @@
 #include "ISInterfaceDialogForm.h"
 #include "ISSelectListForm.h"
 //-----------------------------------------------------------------------------
-class ISSelectDialogForm : public ISInterfaceDialogForm
+class ISSelectListDialog : public ISInterfaceDialogForm
 {
 	Q_OBJECT
 
 public:
-	ISSelectDialogForm(ISNamespace::SelectListMode SelectMode, const QString &TableName, int SelectObjectID);
-	virtual ~ISSelectDialogForm();
+	ISSelectListDialog(ISNamespace::SelectListMode SelectMode, const QString &TableName, int SelectObjectID);
+	virtual ~ISSelectListDialog();
 
 	bool Exec() override;
 	unsigned int GetSelectedObject() const;

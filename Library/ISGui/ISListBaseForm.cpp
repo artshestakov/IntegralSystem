@@ -6,7 +6,7 @@
 #include "ISLocalization.h"
 #include "ISProtocol.h"
 #include "ISPopupMessage.h"
-#include "ISExportForm.h"
+#include "ISExportDialog.h"
 #include "ISProgressForm.h"
 #include "ISLogger.h"
 #include "ISProcessForm.h"
@@ -866,7 +866,7 @@ void ISListBaseForm::Export()
 		return;
 	}
 
-	ISExportForm ExportForm(TcpModel);
+	ISExportDialog ExportForm(TcpModel);
 	if (!ExportForm.Exec())
 	{
 		return;

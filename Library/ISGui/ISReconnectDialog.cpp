@@ -1,4 +1,4 @@
-#include "ISReconnectForm.h"
+#include "ISReconnectDialog.h"
 #include "ISBuffer.h"
 #include "ISLocalization.h"
 #include "ISDefinesGui.h"
@@ -7,7 +7,7 @@
 #include "ISButtons.h"
 #include "ISMessageBox.h"
 //-----------------------------------------------------------------------------
-ISReconnectForm::ISReconnectForm()
+ISReconnectDialog::ISReconnectDialog()
 	: ISInterfaceDialogForm(true),
 	Attempts(0)
 {
@@ -31,7 +31,7 @@ ISReconnectForm::ISReconnectForm()
 	GetMainLayout()->addWidget(ProgressBar);
 
 	Timer = new QTimer(this);
-	connect(Timer, &QTimer::timeout, this, &ISReconnectForm::Timeout);
+	connect(Timer, &QTimer::timeout, this, &ISReconnectDialog::Timeout);
 	Timer->setInterval(CARAT_RECONNECT_TIMEOUT);
 	Timer->setSingleShot(true);
 	Timer->start();
@@ -43,16 +43,16 @@ ISReconnectForm::ISReconnectForm()
 	GetMainLayout()->addLayout(LayoutBottom);
 
 	ISPushButton *ButtonExit = new ISPushButton(BUFFER_ICONS("Exit"), LANG("ExitApplication"), this);
-	connect(ButtonExit, &ISPushButton::clicked, this, &ISReconnectForm::close);
+	connect(ButtonExit, &ISPushButton::clicked, this, &ISReconnectDialog::close);
 	LayoutBottom->addWidget(ButtonExit);
 }
 //-----------------------------------------------------------------------------
-ISReconnectForm::~ISReconnectForm()
+ISReconnectDialog::~ISReconnectDialog()
 {
 
 }
 //-----------------------------------------------------------------------------
-void ISReconnectForm::Timeout()
+void ISReconnectDialog::Timeout()
 {
 	if (ISTcpConnector::Instance().Connect(CONFIG_STRING(CONST_CONFIG_CONNECTION_SERVER), CONFIG_INT("Protocol/Port")))
 	{

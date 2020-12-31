@@ -5,21 +5,19 @@
 #include "ISWaitWidget.h"
 #include "ISFieldEdits.h"
 //-----------------------------------------------------------------------------
-class ISGUI_EXPORT	ISAuthForm : public ISInterfaceDialogForm
+class ISGUI_EXPORT	ISAuthDialog : public ISInterfaceDialogForm
 {
 	Q_OBJECT
 
 public:
-	ISAuthForm();
-	virtual ~ISAuthForm();
+	ISAuthDialog();
+	virtual ~ISAuthDialog();
 
 protected:
 	void closeEvent(QCloseEvent *CloseEvent);
+	void EnterClicked() override;
 
 private:
-	void EnterClicked() override;
-	void TimeoutCapsLook();
-
 	void ShowConnectionForm(); //Открытие формы настроек подключения
 	void ShowAboutForm(); //Открыть форму "О программе"
 

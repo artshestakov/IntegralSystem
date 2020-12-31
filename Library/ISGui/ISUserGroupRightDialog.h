@@ -3,13 +3,13 @@
 #include "ISInterfaceDialogForm.h"
 #include "ISTypedefs.h"
 //-----------------------------------------------------------------------------
-class ISUserGroupForm : public ISInterfaceDialogForm
+class ISUserGroupRightDialog : public ISInterfaceDialogForm
 {
 	Q_OBJECT
 
 public:
-	ISUserGroupForm(int group_id, const QString &group_name);
-	virtual ~ISUserGroupForm();
+	ISUserGroupRightDialog(int group_id, const QString &group_name);
+	virtual ~ISUserGroupRightDialog();
 
 protected:
 	void AfterShowEvent() override;

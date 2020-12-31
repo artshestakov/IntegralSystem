@@ -3,13 +3,13 @@
 #include "StdAfx.h"
 #include "ISInterfaceDialogForm.h"
 //-----------------------------------------------------------------------------
-class ISAboutForm : public ISInterfaceDialogForm
+class ISAboutDialog : public ISInterfaceDialogForm
 {
 	Q_OBJECT
 
 public:
-	ISAboutForm();
-	virtual ~ISAboutForm();
+	ISAboutDialog();
+	virtual ~ISAboutDialog();
 
 protected:
 	void CreateCommonTab(); //Общие

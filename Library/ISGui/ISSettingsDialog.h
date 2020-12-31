@@ -6,13 +6,13 @@
 #include "ISFieldEditBase.h"
 #include "ISListWidget.h"
 //-----------------------------------------------------------------------------
-class ISSettingsForm : public ISInterfaceDialogForm
+class ISSettingsDialog : public ISInterfaceDialogForm
 {
 	Q_OBJECT
 
 public:
-	ISSettingsForm(const QString &SettingGroupUID);
-	virtual ~ISSettingsForm();
+	ISSettingsDialog(const QString &SettingGroupUID);
+	virtual ~ISSettingsDialog();
 
 protected:
 	void CreateCentralPanel(); //Создание центральной панели

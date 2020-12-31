@@ -4,13 +4,13 @@
 //-----------------------------------------------------------------------------
 #include "ISInterfaceDialogForm.h"
 //-----------------------------------------------------------------------------
-class ISReconnectForm : public ISInterfaceDialogForm
+class ISReconnectDialog : public ISInterfaceDialogForm
 {
 	Q_OBJECT
 
 public:
-	ISReconnectForm();
-	~ISReconnectForm();
+	ISReconnectDialog();
+	~ISReconnectDialog();
 
 private:
 	void Timeout();

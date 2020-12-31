@@ -1,10 +1,10 @@
-#include "ISSelectDialogForm.h"
+#include "ISSelectListDialog.h"
 #include "ISDefinesGui.h"
 #include "ISLocalization.h"
 #include "ISGui.h"
 #include "ISMetaData.h"
 //-----------------------------------------------------------------------------
-ISSelectDialogForm::ISSelectDialogForm(ISNamespace::SelectListMode SelectMode, const QString &TableName, int SelectObjectID) : ISInterfaceDialogForm()
+ISSelectListDialog::ISSelectListDialog(ISNamespace::SelectListMode SelectMode, const QString &TableName, int SelectObjectID) : ISInterfaceDialogForm()
 {
 	setWindowTitle(ISMetaData::Instance().GetMetaTable(TableName)->LocalListName);
 	GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);
@@ -15,7 +15,7 @@ ISSelectDialogForm::ISSelectDialogForm(ISNamespace::SelectListMode SelectMode, c
 	GetMainLayout()->addWidget(LabelInfo);
 
 	SelectListForm = new ISSelectListForm(SelectMode, TableName, this);
-	connect(SelectListForm, &ISSelectListForm::Select, this, &ISSelectDialogForm::Selected);
+	connect(SelectListForm, &ISSelectListForm::Select, this, &ISSelectListDialog::Selected);
 	GetMainLayout()->addWidget(SelectListForm);
 
 	if (SelectObjectID > 0)
@@ -26,28 +26,28 @@ ISSelectDialogForm::ISSelectDialogForm(ISNamespace::SelectListMode SelectMode, c
 	LabelInfo->setText(SelectMode == ISNamespace::SLM_Single ? LANG("SelectDialog.Title.Single") : LANG("SelectDialog.Title.Multi") + ':');
 }
 //-----------------------------------------------------------------------------
-ISSelectDialogForm::~ISSelectDialogForm()
+ISSelectListDialog::~ISSelectListDialog()
 {
 
 }
 //-----------------------------------------------------------------------------
-bool ISSelectDialogForm::Exec()
+bool ISSelectListDialog::Exec()
 {
 	SelectListForm->LoadData();
 	return ISInterfaceDialogForm::Exec();
 }
 //-----------------------------------------------------------------------------
-unsigned int ISSelectDialogForm::GetSelectedObject() const
+unsigned int ISSelectListDialog::GetSelectedObject() const
 {
 	return SelectListForm->GetObjectID();
 }
 //-----------------------------------------------------------------------------
-ISVectorUInt ISSelectDialogForm::GetSelectedObjects() const
+ISVectorUInt ISSelectListDialog::GetSelectedObjects() const
 {
 	return SelectListForm->GetSelectedIDs();
 }
 //-----------------------------------------------------------------------------
-void ISSelectDialogForm::AfterShowEvent()
+void ISSelectListDialog::AfterShowEvent()
 {
 	ISInterfaceDialogForm::AfterShowEvent();
 
@@ -56,7 +56,7 @@ void ISSelectDialogForm::AfterShowEvent()
 	ISGui::MoveWidgetToDesktop(this, ISNamespace::MWD_Center);
 }
 //-----------------------------------------------------------------------------
-void ISSelectDialogForm::Selected()
+void ISSelectListDialog::Selected()
 {
 	SetResult(true);
 	close();

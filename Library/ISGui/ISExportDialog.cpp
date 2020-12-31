@@ -1,10 +1,10 @@
-#include "ISExportForm.h"
+#include "ISExportDialog.h"
 #include "ISDefinesGui.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISMessageBox.h"
 //-----------------------------------------------------------------------------
-ISExportForm::ISExportForm(ISTcpModel *TcpModel)
+ISExportDialog::ISExportDialog(ISTcpModel *TcpModel)
 	: ISInterfaceDialogForm(),
 	SelectedType(ISNamespace::ET_Unknown)
 {
@@ -26,7 +26,7 @@ ISExportForm::ISExportForm(ISTcpModel *TcpModel)
 	ComboBoxType->AddItem(LANG("Export.Type.XML"), ISNamespace::ET_XML);
 	ComboBoxType->AddItem(LANG("Export.Type.JSON"), ISNamespace::ET_JSON);
 	ComboBoxType->AddItem(LANG("Export.Type.SQLITE"), ISNamespace::ET_SQLITE);
-	connect(ComboBoxType, &ISComboEdit::ValueChange, this, &ISExportForm::TypeChanged);
+	connect(ComboBoxType, &ISComboEdit::ValueChange, this, &ISExportDialog::TypeChanged);
 	GetMainLayout()->addWidget(ComboBoxType);
 
 	TabWidget = new QTabWidget(this);
@@ -37,37 +37,37 @@ ISExportForm::ISExportForm(ISTcpModel *TcpModel)
 
 	ButtonDialog = new ISButtonDialog(this, LANG("Export"));
 	ButtonDialog->SetApplyEnabled(false);
-	connect(ButtonDialog, &ISButtonDialog::Apply, this, &ISExportForm::Select);
-	connect(ButtonDialog, &ISButtonDialog::Close, this, &ISExportForm::close);
+	connect(ButtonDialog, &ISButtonDialog::Apply, this, &ISExportDialog::Select);
+	connect(ButtonDialog, &ISButtonDialog::Close, this, &ISExportDialog::close);
 	GetMainLayout()->addWidget(ButtonDialog);
 }
 //-----------------------------------------------------------------------------
-ISExportForm::~ISExportForm()
+ISExportDialog::~ISExportDialog()
 {
 
 }
 //-----------------------------------------------------------------------------
-ISNamespace::ExportType ISExportForm::GetSelectedType()
+ISNamespace::ExportType ISExportDialog::GetSelectedType()
 {
 	return SelectedType;
 }
 //-----------------------------------------------------------------------------
-QString ISExportForm::GetSelectTypeName() const
+QString ISExportDialog::GetSelectTypeName() const
 {
 	return ComboBoxType->GetCurrentText();
 }
 //-----------------------------------------------------------------------------
-ISVectorUInt ISExportForm::GetSelectedFields() const
+ISVectorUInt ISExportDialog::GetSelectedFields() const
 {
 	return SelectedFields;
 }
 //-----------------------------------------------------------------------------
-bool ISExportForm::GetHeader() const
+bool ISExportDialog::GetHeader() const
 {
 	return CheckHeader->GetValue().toBool();
 }
 //-----------------------------------------------------------------------------
-void ISExportForm::CreateTabSettings()
+void ISExportDialog::CreateTabSettings()
 {
 	QFormLayout *FormLayout = new QFormLayout();
 
@@ -80,7 +80,7 @@ void ISExportForm::CreateTabSettings()
 	FormLayout->addRow(LANG("Export.Setting.Header") + ':', CheckHeader);
 }
 //-----------------------------------------------------------------------------
-void ISExportForm::CreateTabFields(ISTcpModel *TcpModel)
+void ISExportDialog::CreateTabFields(ISTcpModel *TcpModel)
 {
 	QVBoxLayout *LayoutFields = new QVBoxLayout();
 
@@ -116,12 +116,12 @@ void ISExportForm::CreateTabFields(ISTcpModel *TcpModel)
 			CreateFieldItem(TcpModel->GetField(i));
 		}
 	}
-	connect(ListFields, &QListWidget::itemChanged, this, &ISExportForm::FieldsPositionChanged);
-	connect(ListFields, &QListWidget::itemDoubleClicked, this, &ISExportForm::ItemDoubleClicked);
-	connect(ListFields->model(), &QAbstractListModel::rowsMoved, this, &ISExportForm::FieldsPositionChanged);
+	connect(ListFields, &QListWidget::itemChanged, this, &ISExportDialog::FieldsPositionChanged);
+	connect(ListFields, &QListWidget::itemDoubleClicked, this, &ISExportDialog::ItemDoubleClicked);
+	connect(ListFields->model(), &QAbstractListModel::rowsMoved, this, &ISExportDialog::FieldsPositionChanged);
 }
 //-----------------------------------------------------------------------------
-void ISExportForm::Select()
+void ISExportDialog::Select()
 {
 	if (SelectedFields.empty())
 	{
@@ -132,7 +132,7 @@ void ISExportForm::Select()
 	close();
 }
 //-----------------------------------------------------------------------------
-void ISExportForm::CreateFieldItem(const ISModelField &ModelField)
+void ISExportDialog::CreateFieldItem(const ISModelField &ModelField)
 {
 	QListWidgetItem *FieldItem = new QListWidgetItem(ListFields);
 	FieldItem->setText(ModelField.LocalName);
@@ -142,7 +142,7 @@ void ISExportForm::CreateFieldItem(const ISModelField &ModelField)
 	SelectedFields.emplace_back(ModelField.Index);
 }
 //-----------------------------------------------------------------------------
-void ISExportForm::FieldsPositionChanged()
+void ISExportDialog::FieldsPositionChanged()
 {
 	SelectedFields.clear();
 	for (int i = 0; i < ListFields->count(); ++i)
@@ -158,19 +158,19 @@ void ISExportForm::FieldsPositionChanged()
 	}
 }
 //-----------------------------------------------------------------------------
-void ISExportForm::ItemDoubleClicked(QListWidgetItem *ListWidgetItem)
+void ISExportDialog::ItemDoubleClicked(QListWidgetItem *ListWidgetItem)
 {
 	ListWidgetItem->checkState() == Qt::Checked ?
 		ListWidgetItem->setCheckState(Qt::Unchecked) :
 		ListWidgetItem->setCheckState(Qt::Checked);
 }
 //-----------------------------------------------------------------------------
-void ISExportForm::EnterClicked()
+void ISExportDialog::EnterClicked()
 {
 	Select();
 }
 //-----------------------------------------------------------------------------
-void ISExportForm::TypeChanged(const QVariant &Value)
+void ISExportDialog::TypeChanged(const QVariant &Value)
 {
 	SelectedType = static_cast<ISNamespace::ExportType>(Value.toInt());
 	ButtonDialog->SetApplyEnabled(Value.toInt() != ISNamespace::ET_Unknown);

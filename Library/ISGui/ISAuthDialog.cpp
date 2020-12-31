@@ -1,13 +1,13 @@
-﻿#include "ISAuthForm.h"
+﻿#include "ISAuthDialog.h"
 #include "ISDefinesGui.h"
 #include "ISCore.h"
 #include "ISConstants.h"
 #include "ISDatabase.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
-#include "ISAboutForm.h"
+#include "ISAboutDialog.h"
 #include "ISConfig.h"
-#include "ISConnectionForm.h"
+#include "ISConnectSettingDialog.h"
 #include "ISMessageBox.h"
 #include "ISGui.h"
 #include "ISVersionInfo.h"
@@ -19,7 +19,7 @@
 #include "ISTcpQuery.h"
 #include "ISQueryPool.h"
 //-----------------------------------------------------------------------------
-ISAuthForm::ISAuthForm()
+ISAuthDialog::ISAuthDialog()
 	: ISInterfaceDialogForm(true),
 	ConnectingState(false)
 {
@@ -83,21 +83,21 @@ ISAuthForm::ISAuthForm()
 	ButtonMenu->setMenu(new QMenu(ButtonMenu));
 	LayoutBottom->addWidget(ButtonMenu);
 
-	ButtonMenu->menu()->addAction(BUFFER_ICONS("DatabaseConnection"), LANG("Form.Authorization.ConnectionSettings"), this, &ISAuthForm::ShowConnectionForm, Qt::Key_F9);
-	ButtonMenu->menu()->addAction(BUFFER_ICONS("About"), LANG("Form.Authorization.About"), this, &ISAuthForm::ShowAboutForm, Qt::Key_F1);
+	ButtonMenu->menu()->addAction(BUFFER_ICONS("DatabaseConnection"), LANG("Form.Authorization.ConnectionSettings"), this, &ISAuthDialog::ShowConnectionForm, Qt::Key_F9);
+	ButtonMenu->menu()->addAction(BUFFER_ICONS("About"), LANG("Form.Authorization.About"), this, &ISAuthDialog::ShowAboutForm, Qt::Key_F1);
 
 	LayoutBottom->addStretch();
 
 	ButtonInput = new ISPushButton(BUFFER_ICONS("Apply.Blue"), LANG("Input"), this);
 	ButtonInput->setToolTip(LANG("Input.ToolTip"));
 	ButtonInput->setCursor(CURSOR_POINTING_HAND);
-	connect(ButtonInput, &ISPushButton::clicked, this, &ISAuthForm::Input);
+	connect(ButtonInput, &ISPushButton::clicked, this, &ISAuthDialog::Input);
 	LayoutBottom->addWidget(ButtonInput);
 
 	ButtonExit = new ISPushButton(BUFFER_ICONS("Auth.Exit"), LANG("Exit"), this);
 	ButtonExit->setCursor(CURSOR_POINTING_HAND);
 	ButtonExit->setToolTip(LANG("Exit.ToolTip"));
-	connect(ButtonExit, &ISPushButton::clicked, this, &ISAuthForm::close);
+	connect(ButtonExit, &ISPushButton::clicked, this, &ISAuthDialog::close);
 	LayoutBottom->addWidget(ButtonExit);
 
 #ifdef DEBUG
@@ -112,12 +112,12 @@ ISAuthForm::ISAuthForm()
 #endif
 }
 //-----------------------------------------------------------------------------
-ISAuthForm::~ISAuthForm()
+ISAuthDialog::~ISAuthDialog()
 {
 
 }
 //-----------------------------------------------------------------------------
-void ISAuthForm::closeEvent(QCloseEvent *CloseEvent)
+void ISAuthDialog::closeEvent(QCloseEvent *CloseEvent)
 {
 	if (ConnectingState)
 	{
@@ -129,22 +129,22 @@ void ISAuthForm::closeEvent(QCloseEvent *CloseEvent)
 	}
 }
 //-----------------------------------------------------------------------------
-void ISAuthForm::EnterClicked()
+void ISAuthDialog::EnterClicked()
 {
 	Input();
 }
 //-----------------------------------------------------------------------------
-void ISAuthForm::ShowConnectionForm()
+void ISAuthDialog::ShowConnectionForm()
 {
-	ISConnectionForm().Exec();
+	ISConnectSettingDialog().Exec();
 }
 //-----------------------------------------------------------------------------
-void ISAuthForm::ShowAboutForm()
+void ISAuthDialog::ShowAboutForm()
 {
-	ISAboutForm().Exec();
+	ISAboutDialog().Exec();
 }
 //-----------------------------------------------------------------------------
-void ISAuthForm::Input()
+void ISAuthDialog::Input()
 {
 	//Проверяем заполнение конфигурационного файла
 	if (CONFIG_STRING(CONST_CONFIG_CONNECTION_SERVER).isEmpty())
@@ -287,7 +287,7 @@ void ISAuthForm::Input()
 	}
 }
 //-----------------------------------------------------------------------------
-void ISAuthForm::SetConnecting(bool Connecting)
+void ISAuthDialog::SetConnecting(bool Connecting)
 {
 	ConnectingState = Connecting;
 	ConnectingState ? WaitWidget->Start() : WaitWidget->Stop();

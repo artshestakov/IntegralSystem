@@ -1,4 +1,4 @@
-#include "ISAboutForm.h"
+#include "ISAboutDialog.h"
 #include "ISDefinesGui.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
@@ -12,7 +12,7 @@
 #include "ISConfig.h"
 #include "ISFieldEdits.h"
 //-----------------------------------------------------------------------------
-ISAboutForm::ISAboutForm() : ISInterfaceDialogForm()
+ISAboutDialog::ISAboutDialog() : ISInterfaceDialogForm()
 {
 	setWindowTitle(LANG("AboutForm.AboutApplication"));
 	setMinimumSize(ISDefines::Gui::SIZE_MAIN_WINDOW_MINIMUM);
@@ -36,7 +36,7 @@ ISAboutForm::ISAboutForm() : ISInterfaceDialogForm()
 	LayoutRight->addWidget(TabWidget);
 
 	ISPushButton *ButtonClose = new ISPushButton(BUFFER_ICONS("Close"), LANG("Close"), this);
-	connect(ButtonClose, &ISPushButton::clicked, this, &ISAboutForm::close);
+	connect(ButtonClose, &ISPushButton::clicked, this, &ISAboutDialog::close);
 	LayoutRight->addWidget(ButtonClose, 0, Qt::AlignRight);
 
 	CreateCommonTab();
@@ -47,12 +47,12 @@ ISAboutForm::ISAboutForm() : ISInterfaceDialogForm()
 	CreateOtherTab();
 }
 //-----------------------------------------------------------------------------
-ISAboutForm::~ISAboutForm()
+ISAboutDialog::~ISAboutDialog()
 {
 
 }
 //-----------------------------------------------------------------------------
-void ISAboutForm::CreateCommonTab()
+void ISAboutDialog::CreateCommonTab()
 {
 	QVBoxLayout *LayoutCommon = new QVBoxLayout();
 
@@ -77,7 +77,7 @@ void ISAboutForm::CreateCommonTab()
 	LayoutCommon->addStretch();
 }
 //-----------------------------------------------------------------------------
-void ISAboutForm::CreateContactsTab()
+void ISAboutDialog::CreateContactsTab()
 {
 	QVBoxLayout *LayoutContacts = new QVBoxLayout();
 
@@ -94,7 +94,7 @@ void ISAboutForm::CreateContactsTab()
 	LayoutContacts->addStretch();
 }
 //-----------------------------------------------------------------------------
-void ISAboutForm::CreateModuleTab()
+void ISAboutDialog::CreateModuleTab()
 {
 	if (ISVersionInfo::Instance().ConfigurationInfo.Name.isEmpty())
 	{
@@ -114,7 +114,7 @@ void ISAboutForm::CreateModuleTab()
 	LayoutModule->addStretch();
 }
 //-----------------------------------------------------------------------------
-void ISAboutForm::CreateDescriptionTab()
+void ISAboutDialog::CreateDescriptionTab()
 {
 	QVBoxLayout *LayoutDescription = new QVBoxLayout();
 
@@ -129,7 +129,7 @@ void ISAboutForm::CreateDescriptionTab()
 	TabDescription->layout()->addWidget(TextEdit);
 }
 //-----------------------------------------------------------------------------
-void ISAboutForm::CreateLicenseTab()
+void ISAboutDialog::CreateLicenseTab()
 {
 	QVBoxLayout *LayoutLicense = new QVBoxLayout();
 
@@ -150,7 +150,7 @@ void ISAboutForm::CreateLicenseTab()
 	}
 }
 //-----------------------------------------------------------------------------
-void ISAboutForm::CreateOtherTab()
+void ISAboutDialog::CreateOtherTab()
 {
 	QVBoxLayout *LayoutOther = new QVBoxLayout();
 
@@ -165,7 +165,7 @@ void ISAboutForm::CreateOtherTab()
 	LayoutOther->addStretch();
 }
 //-----------------------------------------------------------------------------
-void ISAboutForm::AddLabel(QWidget *parent, const QString &LabelText, const QString &Text)
+void ISAboutDialog::AddLabel(QWidget *parent, const QString &LabelText, const QString &Text)
 {
 	QHBoxLayout *LayoutRow = new QHBoxLayout();
 	LayoutRow->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_NULL);

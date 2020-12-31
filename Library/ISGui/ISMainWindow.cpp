@@ -5,7 +5,7 @@
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISMessageBox.h"
-#include "ISAboutForm.h"
+#include "ISAboutDialog.h"
 #include "ISControls.h"
 #include "ISUserRoleEntity.h"
 #include "ISAssert.h"
@@ -19,7 +19,7 @@
 #include "ISVersionInfo.h"
 #include "ISConfig.h"
 #include "ISTcpConnector.h"
-#include "ISReconnectForm.h"
+#include "ISReconnectDialog.h"
 #include "ISPopupMessage.h"
 #include "ISTcpQuery.h"
 #include "ISSystem.h"
@@ -184,7 +184,7 @@ void ISMainWindow::ShowSettingsForm()
 void ISMainWindow::ShowAboutForm()
 {
 	SetVisibleShadow(true);
-	ISAboutForm().Exec();
+	ISAboutDialog().Exec();
 	SetVisibleShadow(false);
 }
 //-----------------------------------------------------------------------------
@@ -198,7 +198,7 @@ void ISMainWindow::ShowAboutQt()
 void ISMainWindow::Reconnect()
 {
 	SetVisibleShadow(true);
-	ISReconnectForm ReconnectForm;
+	ISReconnectDialog ReconnectForm;
 	bool Result = ReconnectForm.Exec();
 	if (Result) //Переподключение прошло успешно - посылаем запрос на авторизацию
 	{

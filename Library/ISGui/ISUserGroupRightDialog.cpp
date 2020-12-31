@@ -1,4 +1,4 @@
-#include "ISUserGroupForm.h"
+#include "ISUserGroupRightDialog.h"
 #include "ISDefinesGui.h"
 #include "ISConstants.h"
 #include "ISLocalization.h"
@@ -13,7 +13,7 @@
 #include "ISTcpQuery.h"
 #include "ISMessageBox.h"
 //-----------------------------------------------------------------------------
-ISUserGroupForm::ISUserGroupForm(int group_id, const QString &group_name)
+ISUserGroupRightDialog::ISUserGroupRightDialog(int group_id, const QString &group_name)
 	: ISInterfaceDialogForm(),
 	GroupID(group_id)
 {
@@ -25,12 +25,12 @@ ISUserGroupForm::ISUserGroupForm(int group_id, const QString &group_name)
 	GetMainLayout()->addWidget(TabWidget);
 }
 //-----------------------------------------------------------------------------
-ISUserGroupForm::~ISUserGroupForm()
+ISUserGroupRightDialog::~ISUserGroupRightDialog()
 {
 
 }
 //-----------------------------------------------------------------------------
-void ISUserGroupForm::AfterShowEvent()
+void ISUserGroupRightDialog::AfterShowEvent()
 {
 	ISInterfaceDialogForm::AfterShowEvent();
 	ISGui::SetWaitGlobalCursor(true);
@@ -53,7 +53,7 @@ void ISUserGroupForm::AfterShowEvent()
 	}
 }
 //-----------------------------------------------------------------------------
-void ISUserGroupForm::CreateSubSystems(const QVariantList &Systems)
+void ISUserGroupRightDialog::CreateSubSystems(const QVariantList &Systems)
 {
 	ISScrollArea *ScrollArea = new ISScrollArea(TabWidget);
 	ScrollArea->widget()->setLayout(new QVBoxLayout());
@@ -77,13 +77,13 @@ void ISUserGroupForm::CreateSubSystems(const QVariantList &Systems)
 			CheckEdit->SetText(SubSystemMap["LocalName"].toString());
 			CheckEdit->setProperty("SubSystemUID", SubSystemMap["UID"]);
 			CheckEdit->SetToolTip(LANG("AccessRights.ClickedToGiveAccessFromSubSystem"));
-			connect(CheckEdit, &ISCheckEdit::ValueChange, this, &ISUserGroupForm::SubSystemClicked);
+			connect(CheckEdit, &ISCheckEdit::ValueChange, this, &ISUserGroupRightDialog::SubSystemClicked);
 			GroupBox->layout()->addWidget(CheckEdit);
 		}
 	}
 }
 //-----------------------------------------------------------------------------
-void ISUserGroupForm::CreateTables(const QVariantList &RightTableType, const QVariantList &Tables)
+void ISUserGroupRightDialog::CreateTables(const QVariantList &RightTableType, const QVariantList &Tables)
 {
 	QFormLayout *FormLayout = new QFormLayout();
 	ISScrollArea *ScrollArea = new ISScrollArea(TabWidget);
@@ -98,7 +98,7 @@ void ISUserGroupForm::CreateTables(const QVariantList &RightTableType, const QVa
 		QToolBar *ToolBar = new QToolBar(ScrollArea);
 		ToolBar->setToolButtonStyle(Qt::ToolButtonIconOnly);
 		ToolBar->setIconSize(ISDefines::Gui::SIZE_20_20);
-		connect(ToolBar, &QToolBar::actionTriggered, this, &ISUserGroupForm::TableClicked);
+		connect(ToolBar, &QToolBar::actionTriggered, this, &ISUserGroupRightDialog::TableClicked);
 		FormLayout->addRow(TableMap["LocalName"].toString() + ':', ToolBar);
 
 		for (const QVariant &VariantRight : RightTableType) //Обходим типы прав
@@ -115,7 +115,7 @@ void ISUserGroupForm::CreateTables(const QVariantList &RightTableType, const QVa
 	}
 }
 //-----------------------------------------------------------------------------
-void ISUserGroupForm::CreateSpecial(const QVariantList &SpecialRights)
+void ISUserGroupRightDialog::CreateSpecial(const QVariantList &SpecialRights)
 {
 	ISScrollArea *ScrollArea = new ISScrollArea(TabWidget);
 	ScrollArea->widget()->setLayout(new QVBoxLayout());
@@ -141,14 +141,14 @@ void ISUserGroupForm::CreateSpecial(const QVariantList &SpecialRights)
 			CheckEdit->SetText(SpecialRightMap["LocalName"].toString());
 			CheckEdit->CreateHint(SpecialRightMap["Hint"].toString());
 			CheckEdit->setProperty("UID", SpecialRightMap["UID"]);
-			connect(CheckEdit, &ISCheckEdit::ValueChange, this, &ISUserGroupForm::SpecialClicked);
+			connect(CheckEdit, &ISCheckEdit::ValueChange, this, &ISUserGroupRightDialog::SpecialClicked);
 			GroupBox->layout()->addWidget(CheckEdit);
 		}
 		dynamic_cast<QVBoxLayout*>(GroupBox->layout())->addStretch();
 	}
 }
 //-----------------------------------------------------------------------------
-void ISUserGroupForm::SubSystemClicked(const QVariant &value)
+void ISUserGroupRightDialog::SubSystemClicked(const QVariant &value)
 {
 	ISGui::SetWaitGlobalCursor(true);
 	ISTcpQuery qAlterAccess(value.toBool() ? API_GROUP_RIGHT_SUBSYSTEM_ADD : API_GROUP_RIGHT_SUBSYSTEM_DELETE);
@@ -162,7 +162,7 @@ void ISUserGroupForm::SubSystemClicked(const QVariant &value)
 	ISGui::SetWaitGlobalCursor(false);
 }
 //-----------------------------------------------------------------------------
-void ISUserGroupForm::TableClicked(QAction *Action)
+void ISUserGroupRightDialog::TableClicked(QAction *Action)
 {
 	ISGui::SetWaitGlobalCursor(true);
 	ISTcpQuery qAlterAccess(Action->isChecked() ? API_GROUP_RIGHT_TABLE_ADD : API_GROUP_RIGHT_TABLE_DELETE);
@@ -177,7 +177,7 @@ void ISUserGroupForm::TableClicked(QAction *Action)
 	ISGui::SetWaitGlobalCursor(false);
 }
 //-----------------------------------------------------------------------------
-void ISUserGroupForm::SpecialClicked(const QVariant &value)
+void ISUserGroupRightDialog::SpecialClicked(const QVariant &value)
 {
 	ISGui::SetWaitGlobalCursor(true);
 	ISTcpQuery qGroupRightSpecial(value.toBool() ? API_GROUP_RIGHT_SPECIAL_ADD : API_GROUP_RIGHT_SPECIAL_DELETE);

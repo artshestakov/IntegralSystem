@@ -4,17 +4,19 @@
 #include "ISInterfaceDialogForm.h"
 #include "ISFieldEdits.h"
 //-----------------------------------------------------------------------------
-class ISConnectionForm : public ISInterfaceDialogForm
+class ISConnectSettingDialog : public ISInterfaceDialogForm
 {
 	Q_OBJECT
 
 public:
-	ISConnectionForm();
-	virtual ~ISConnectionForm();
+	ISConnectSettingDialog();
+	virtual ~ISConnectSettingDialog();
 
-private:
+protected:
 	void AfterShowEvent() override;
 	void EnterClicked() override;
+
+private:
 	void Save(); //Программное сохранение настроек
 
 private:
