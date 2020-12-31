@@ -68,6 +68,9 @@
     <Filter Include="Paragraphs">
       <UniqueIdentifier>{b6c20f43-c5cb-49da-afbd-9ef9b8ccce4d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="SubSystem">
+      <UniqueIdentifier>{462ff294-a08b-43b8-9bbf-0c16d083eaed}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ISExportForm.cpp">
@@ -358,29 +361,29 @@
     <ClCompile Include="ISValidators.cpp">
       <Filter>System</Filter>
     </ClCompile>
-    <ClCompile Include="ISUserGroupSubSystem.cpp">
-      <Filter>Forms</Filter>
-    </ClCompile>
-    <ClCompile Include="ISProtocolSubSystem.cpp">
-      <Filter>Common Forms</Filter>
-    </ClCompile>
-    <ClCompile Include="ISMonitorActivitySubSystem.cpp">
+    <ClCompile Include="ISDeviceConnectDialog.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
     <ClCompile Include="ISAsteriskCallsSubSystem.cpp">
-      <Filter>Forms</Filter>
-    </ClCompile>
-    <ClCompile Include="ISStorageFilesSubSystem.cpp">
-      <Filter>Forms</Filter>
+      <Filter>SubSystem</Filter>
     </ClCompile>
     <ClCompile Include="ISFullTextSearchSubSystem.cpp">
-      <Filter>Forms</Filter>
+      <Filter>SubSystem</Filter>
     </ClCompile>
     <ClCompile Include="ISInternalDirectoriesSubSystem.cpp">
-      <Filter>Forms</Filter>
+      <Filter>SubSystem</Filter>
     </ClCompile>
-    <ClCompile Include="ISDeviceConnectDialog.cpp">
-      <Filter>Forms</Filter>
+    <ClCompile Include="ISMonitorActivitySubSystem.cpp">
+      <Filter>SubSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="ISProtocolSubSystem.cpp">
+      <Filter>SubSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="ISStorageFilesSubSystem.cpp">
+      <Filter>SubSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="ISUserGroupSubSystem.cpp">
+      <Filter>SubSystem</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -624,29 +627,29 @@
     <QtMoc Include="ISValidators.h">
       <Filter>System</Filter>
     </QtMoc>
-    <QtMoc Include="ISUserGroupSubSystem.h">
-      <Filter>Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISProtocolSubSystem.h">
-      <Filter>Common Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISMonitorActivitySubSystem.h">
+    <QtMoc Include="ISDeviceConnectDialog.h">
       <Filter>Forms</Filter>
     </QtMoc>
     <QtMoc Include="ISAsteriskCallsSubSystem.h">
-      <Filter>Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISStorageFilesSubSystem.h">
-      <Filter>Forms</Filter>
+      <Filter>SubSystem</Filter>
     </QtMoc>
     <QtMoc Include="ISFullTextSearchSubSystem.h">
-      <Filter>Forms</Filter>
+      <Filter>SubSystem</Filter>
     </QtMoc>
     <QtMoc Include="ISInternalDirectoriesSubSystem.h">
-      <Filter>Forms</Filter>
+      <Filter>SubSystem</Filter>
     </QtMoc>
-    <QtMoc Include="ISDeviceConnectDialog.h">
-      <Filter>Forms</Filter>
+    <QtMoc Include="ISMonitorActivitySubSystem.h">
+      <Filter>SubSystem</Filter>
+    </QtMoc>
+    <QtMoc Include="ISProtocolSubSystem.h">
+      <Filter>SubSystem</Filter>
+    </QtMoc>
+    <QtMoc Include="ISStorageFilesSubSystem.h">
+      <Filter>SubSystem</Filter>
+    </QtMoc>
+    <QtMoc Include="ISUserGroupSubSystem.h">
+      <Filter>SubSystem</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>
