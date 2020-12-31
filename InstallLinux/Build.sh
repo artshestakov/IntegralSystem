@@ -48,4 +48,4 @@ $QT_DIR/bin/lconvert -o ../Deploy/$CONFIGURATION-$PLATFORM/translations/qt_ru.qm
 rpmbuild -bb IntegralSystem.spec.tmp --define "_rpmdir $INTEGRAL_SYSTEM_DIR"
 
 #Копируем в облако
-#cp ../x86_64/IntegralSystem-$MAJOR.$MINOR.$REVISION-1.x86_64.rpm ../../Yandex.Disk/Server/
+cp ../x86_64/IntegralSystem-$MAJOR.$MINOR.$REVISION-1.x86_64.rpm ../../Yandex.Disk/Server/
