@@ -25,7 +25,7 @@ IF EXIST %DEPLOY_DIR% (RMDIR /S /Q %DEPLOY_DIR%)
 MKDIR %DEPLOY_DIR%
 
 REM Получаем номер ревизии (количество комитов) и генерируем файл информации о сборке
-git rev-list --all --count > revision.tmp
+git rev-list --count HEAD > revision.tmp
 SET /p REVISION=< revision.tmp
 DEL revision.tmp
 CALL GenerateBuildInfo.cmd %CONFIGURATION% %PLATFORM% %MAJOR% %MINOR% %REVISION%
