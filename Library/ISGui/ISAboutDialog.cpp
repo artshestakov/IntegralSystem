@@ -64,8 +64,8 @@ void ISAboutDialog::CreateCommonTab()
 	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.Cofiguration"), ISVersionInfo::Instance().Info.Configuration);
 	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.Platform"), ISVersionInfo::Instance().Info.Platform);
 	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.Version"), QString::number(ISVersionInfo::Instance().Info.Version));
-	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.ReleaseDate"), ISVersionInfo::Instance().Info.Date);
-	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.ReleaseTime"), ISVersionInfo::Instance().Info.Time);
+	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.ReleaseDateTime"),
+		ISVersionInfo::Instance().Info.Date + " " + LANG("In") + " " + ISVersionInfo::Instance().Info.Time);
 	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.Hash"), ISVersionInfo::Instance().Info.Hash);
 	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.Branch"), ISVersionInfo::Instance().Info.BranchName);
 	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.QtVersion"), qVersion());

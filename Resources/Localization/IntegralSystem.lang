@@ -19,8 +19,7 @@
   <Local Name="AboutForm.Tab.Common.QtVersion" Russian="Версия Qt"/>
   <Local Name="AboutForm.Tab.Common.Server" Russian="Сервер"/>
   <Local Name="AboutForm.Tab.Common.Port" Russian="Порт"/>
-  <Local Name="AboutForm.Tab.Common.ReleaseDate" Russian="Дата релиза"/>
-  <Local Name="AboutForm.Tab.Common.ReleaseTime" Russian="Время сборки"/>
+  <Local Name="AboutForm.Tab.Common.ReleaseDateTime" Russian="Дата и время релиза"/>
   <Local Name="AboutForm.Tab.Common.Hash" Russian="Хеш"/>
   <Local Name="AboutForm.Tab.Common.Branch" Russian="Ветка"/>
   <Local Name="AboutForm.Tab.Contacts" Russian="Контакты"/>
@@ -688,5 +687,6 @@
   <Local Name="Online" Russian="В сети"/>
   <Local Name="Offline" Russian="Не в сети"/>
   <Local Name="LinkDevice" Russian="Привязать устройство"/>
+  <Local Name="In" Russian="в"/>
 
 </LANG>
