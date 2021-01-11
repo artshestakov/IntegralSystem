@@ -11,6 +11,7 @@
 #include "ISObjects.h"
 #include "ISConfig.h"
 #include "ISFieldEdits.h"
+#include "ISTrace.h"
 //-----------------------------------------------------------------------------
 ISAboutDialog::ISAboutDialog() : ISInterfaceDialogForm()
 {
@@ -54,6 +55,7 @@ ISAboutDialog::~ISAboutDialog()
 //-----------------------------------------------------------------------------
 void ISAboutDialog::CreateCommonTab()
 {
+	ISTRACE();
 	QVBoxLayout *LayoutCommon = new QVBoxLayout();
 
 	QWidget *TabCommon = new QWidget(TabWidget);
@@ -78,6 +80,7 @@ void ISAboutDialog::CreateCommonTab()
 //-----------------------------------------------------------------------------
 void ISAboutDialog::CreateContactsTab()
 {
+	ISTRACE();
 	QVBoxLayout *LayoutContacts = new QVBoxLayout();
 
 	QWidget *TabContacts = new QWidget(TabWidget);
@@ -95,6 +98,7 @@ void ISAboutDialog::CreateContactsTab()
 //-----------------------------------------------------------------------------
 void ISAboutDialog::CreateModuleTab()
 {
+	ISTRACE();
 	if (ISVersionInfo::Instance().ConfigurationInfo.Name.isEmpty())
 	{
 		return;
@@ -115,6 +119,7 @@ void ISAboutDialog::CreateModuleTab()
 //-----------------------------------------------------------------------------
 void ISAboutDialog::CreateDescriptionTab()
 {
+	ISTRACE();
 	QVBoxLayout *LayoutDescription = new QVBoxLayout();
 
 	QWidget *TabDescription = new QWidget(TabWidget);
@@ -130,6 +135,7 @@ void ISAboutDialog::CreateDescriptionTab()
 //-----------------------------------------------------------------------------
 void ISAboutDialog::CreateLicenseTab()
 {
+	ISTRACE();
 	QVBoxLayout *LayoutLicense = new QVBoxLayout();
 
 	QWidget *TabLicense = new QWidget(TabWidget);
@@ -151,14 +157,13 @@ void ISAboutDialog::CreateLicenseTab()
 //-----------------------------------------------------------------------------
 void ISAboutDialog::CreateOtherTab()
 {
+	ISTRACE();
 	QVBoxLayout *LayoutOther = new QVBoxLayout();
 
 	QWidget *TabOther = new QWidget(TabWidget);
 	TabOther->setLayout(LayoutOther);
 	TabWidget->addTab(TabOther, LANG("AboutForm.Tab.Other"));
 
-	AddLabel(TabOther, LANG("AboutForm.Tab.Other.SizeTemp"), ISSystem::GetSizeDir(QCoreApplication::applicationDirPath() + "/Temp"));
-	AddLabel(TabOther, LANG("AboutForm.Tab.Other.SizeLogger"), ISSystem::GetSizeDir(QCoreApplication::applicationDirPath() + "/Logs"));
 	AddLabel(TabOther, LANG("AboutForm.Tab.Other.ApplicationDir"), QCoreApplication::applicationDirPath());
 
 	LayoutOther->addStretch();

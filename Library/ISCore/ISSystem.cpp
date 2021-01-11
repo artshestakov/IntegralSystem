@@ -18,17 +18,6 @@ QDomElement ISSystem::GetDomElement(const QString &Content)
     return DomElement;
 }
 //-----------------------------------------------------------------------------
-QString ISSystem::GetSizeDir(const QString &DirPath)
-{
-    qint64 Size = 0;
-    QFileInfoList FileInfoList = QDir(DirPath).entryInfoList(QDir::Files);
-    for (const QFileInfo &FileInfo : FileInfoList)
-    {
-        Size += ISAlgorithm::GetFileSize(FileInfo.absoluteFilePath().toStdString());
-    }
-    return FileSizeFromString(Size);
-}
-//-----------------------------------------------------------------------------
 QString ISSystem::GetDayOfWeekName(Qt::DayOfWeek Day)
 {
     QString DayOfWeekName = QDate::longDayName(Day);

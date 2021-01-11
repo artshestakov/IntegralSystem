@@ -14,7 +14,6 @@ public:
 //ОСНОВНЫЕ
     static QDomElement GetDomElement(QFile &File); //Получить элемент файла схемы из файла
 	static QDomElement GetDomElement(const QString &Content); //Получить элемент файла схемы из контента
-	static QString GetSizeDir(const QString &DirPath); //Получить размер файлов в папке
 	static QString GetDayOfWeekName(Qt::DayOfWeek Day); //Получить название дня
 	static void ClearDirRecursive(const QString &DirPath); //Очистить папку рекурсивно (с подпапками)
 	static void BeginSymbolToUpper(QString &String); //Преобразование первого символа строки в верхний регистр
