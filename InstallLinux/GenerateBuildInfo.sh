@@ -25,15 +25,13 @@ BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)
 
 #Пишем информацию в файл
 echo [Version] >> $FILE_PATH
-echo Major="$3">> $FILE_PATH
-echo Minor="$4">> $FILE_PATH
-echo Revision="$5">> $FILE_PATH
+echo Number="$3">> $FILE_PATH
 echo >> $FILE_PATH
 echo [Build]>> $FILE_PATH
 echo Date="$CURRENT_DATE">> $FILE_PATH
 echo Time="$CURRENT_TIME">> $FILE_PATH
 echo Hash="$HASH">> $FILE_PATH
-echo Branch="$BRANCH_NAME">> $FILE_PATH
+echo BranchName="$BRANCH_NAME">> $FILE_PATH
 echo Configuration="$1">> $FILE_PATH
 echo Platform="$2">> $FILE_PATH
 

@@ -54,7 +54,6 @@ HEADERS += \
     ISTrace.h \
     ISTypedefs.h \
     ISUuid.h \
-    ISVersion.h \
     ISVersionInfo.h \
     PMetaClass.h \
     StdAfx.h
@@ -85,7 +84,6 @@ SOURCES += \
     ISTcp.cpp \
     ISTrace.cpp \
     ISUuid.cpp \
-    ISVersion.cpp \
     ISVersionInfo.cpp \
     StdAfx.cpp
 
