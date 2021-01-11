@@ -33,7 +33,6 @@ private:
 	void ShowChangePasswordForm(); //Открыть форму смены пароля
 	void ShowSettingsForm(); //Открыть форму "Настройки"
 	void ShowAboutForm(); //Открыть форму "О программе"
-	void ShowAboutQt(); //Открыть форму "О Qt"
 	void Reconnect(); //Вызов формы переподключения
 
 private:

@@ -62,10 +62,6 @@ ISMenuBar::ISMenuBar(QWidget *parent) : QWidget(parent)
 	//О программе
 	MenuHelp->addAction(BUFFER_ICONS("About"), LANG("AboutForm.AboutApplication"), this, &ISMenuBar::AboutApplication);
 
-	//Qt
-	MenuHelp->addAction(BUFFER_ICONS("Qt"), LANG("AboutFrameworkDeveloped"), this, &ISMenuBar::AboutQt);
-	MenuHelp->addSeparator();
-
 	//Выход
 	ButtonMenu->menu()->addSeparator();
 	ButtonMenu->menu()->addAction(BUFFER_ICONS("PowerOff"), LANG("Exit"), this, &ISMenuBar::Exit, QKeySequence(Qt::AltModifier + Qt::Key_F4));

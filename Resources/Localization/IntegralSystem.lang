@@ -6,8 +6,6 @@
   <Local Name="Form.Authorization.ConnectionSettings" Russian="Настройки подключения (F9)"/>
   <Local Name="Form.Authorization.About" Russian="О программе (F1)"/>
 
-  <Local Name="AboutFrameworkDeveloped" Russian="О фреймворке разработки"/>
-
   <Local Name="SplashWidget.Buffer" Russian="Загрузка буфера..."/>
   <Local Name="SplashWidget.AdminRoles" Russian="Проверка прав..."/>
 

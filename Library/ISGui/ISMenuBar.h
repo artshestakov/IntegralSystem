@@ -18,7 +18,6 @@ signals:
 	void ChangePassword();
 	void Settings();
 	void AboutApplication();
-	void AboutQt();
 
 public:
 	ISMenuBar(QWidget *parent = 0);

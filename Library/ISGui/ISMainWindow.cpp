@@ -51,7 +51,6 @@ ISMainWindow::ISMainWindow(QWidget *parent)
 	connect(MenuBar, &ISMenuBar::ChangePassword, this, &ISMainWindow::ShowChangePasswordForm);
 	connect(MenuBar, &ISMenuBar::Settings, this, &ISMainWindow::ShowSettingsForm);
 	connect(MenuBar, &ISMenuBar::AboutApplication, this, &ISMainWindow::ShowAboutForm);
-	connect(MenuBar, &ISMenuBar::AboutQt, this, &ISMainWindow::ShowAboutQt);
 	GetMainLayout()->addWidget(MenuBar);
 
 	StackedWidget = new QStackedWidget(this);
@@ -185,13 +184,6 @@ void ISMainWindow::ShowAboutForm()
 {
 	SetVisibleShadow(true);
 	ISAboutDialog().Exec();
-	SetVisibleShadow(false);
-}
-//-----------------------------------------------------------------------------
-void ISMainWindow::ShowAboutQt()
-{
-	SetVisibleShadow(true);
-	QApplication::aboutQt();
 	SetVisibleShadow(false);
 }
 //-----------------------------------------------------------------------------
