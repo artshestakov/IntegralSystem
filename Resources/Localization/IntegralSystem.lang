@@ -19,7 +19,6 @@
   <Local Name="AboutForm.Tab.Common.QtVersion" Russian="Версия Qt"/>
   <Local Name="AboutForm.Tab.Common.Server" Russian="Сервер"/>
   <Local Name="AboutForm.Tab.Common.Port" Russian="Порт"/>
-  <Local Name="AboutForm.Tab.Common.Database" Russian="База данных"/>
   <Local Name="AboutForm.Tab.Common.ProductVersionRevision" Russian="Ревизия"/>
   <Local Name="AboutForm.Tab.Common.ReleaseDate" Russian="Дата релиза"/>
   <Local Name="AboutForm.Tab.Common.ReleaseTime" Russian="Время сборки"/>

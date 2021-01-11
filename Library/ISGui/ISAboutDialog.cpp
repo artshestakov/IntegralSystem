@@ -72,7 +72,6 @@ void ISAboutDialog::CreateCommonTab()
 	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.QtVersion"), qVersion());
 	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.Server"), CONFIG_STRING(CONST_CONFIG_CONNECTION_SERVER));
 	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.Port"), CONFIG_STRING(CONST_CONFIG_CONNECTION_PORT));
-	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.Database"), CONFIG_STRING(CONST_CONFIG_CONNECTION_DATABASE));
 
 	LayoutCommon->addStretch();
 }
