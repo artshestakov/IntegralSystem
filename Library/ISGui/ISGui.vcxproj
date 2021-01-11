@@ -261,11 +261,6 @@
     <ClCompile Include="ISSystemsPanel.cpp" />
     <ClCompile Include="ISTabBarMain.cpp" />
     <ClCompile Include="ISTabWidgetMain.cpp" />
-    <ClCompile Include="ISTaskParagraph.cpp" />
-    <ClCompile Include="ISTaskListForm.cpp" />
-    <ClCompile Include="ISTaskObjectForm.cpp" />
-    <ClCompile Include="ISTaskSearchByTextForm.cpp" />
-    <ClCompile Include="ISTaskViewForm.cpp" />
     <ClCompile Include="ISTcpConnector.cpp" />
     <ClCompile Include="ISTcpModel.cpp" />
     <ClCompile Include="ISTcpQuery.cpp" />
@@ -349,8 +344,6 @@
     <QtMoc Include="ISSearchForm.h" />
     <QtMoc Include="ISSettingsDialog.h" />
     <QtMoc Include="ISStorageFilesSubSystem.h" />
-    <QtMoc Include="ISTaskParagraph.h" />
-    <QtMoc Include="ISTaskViewForm.h" />
     <QtMoc Include="ISUserGroupSubSystem.h" />
     <QtMoc Include="ISUserObjectForm.h" />
     <QtMoc Include="ISUserPasswordDialog.h" />
@@ -382,10 +375,7 @@
     <QtMoc Include="ISDeviceConnectDialog.h" />
     <ClInclude Include="isgui_global.h" />
     <QtMoc Include="ISProgressForm.h" />
-    <QtMoc Include="ISTaskListForm.h" />
-    <QtMoc Include="ISTaskSearchByTextForm.h" />
     <QtMoc Include="ISSettingsDatabaseObjectForm.h" />
-    <QtMoc Include="ISTaskObjectForm.h" />
     <QtMoc Include="ISListViewForm.h" />
     <QtMoc Include="ISReconnectDialog.h" />
     <ClInclude Include="ISProtocol.h" />

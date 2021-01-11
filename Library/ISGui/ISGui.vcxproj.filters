@@ -202,9 +202,6 @@
     <ClCompile Include="ISSearchForm.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
-    <ClCompile Include="ISTaskViewForm.cpp">
-      <Filter>Forms</Filter>
-    </ClCompile>
     <ClCompile Include="ISUserObjectForm.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
@@ -271,12 +268,6 @@
     <ClCompile Include="ISOilSphere.cpp">
       <Filter>Objects\OilSphere</Filter>
     </ClCompile>
-    <ClCompile Include="ISTaskListForm.cpp">
-      <Filter>Forms</Filter>
-    </ClCompile>
-    <ClCompile Include="ISTaskSearchByTextForm.cpp">
-      <Filter>Forms</Filter>
-    </ClCompile>
     <ClCompile Include="ISEditsQT.cpp">
       <Filter>Fields</Filter>
     </ClCompile>
@@ -291,9 +282,6 @@
     </ClCompile>
     <ClCompile Include="ISListWidget.cpp">
       <Filter>Widgets</Filter>
-    </ClCompile>
-    <ClCompile Include="ISTaskObjectForm.cpp">
-      <Filter>Forms</Filter>
     </ClCompile>
     <ClCompile Include="ISSearchModel.cpp">
       <Filter>Model</Filter>
@@ -312,9 +300,6 @@
     </ClCompile>
     <ClCompile Include="ISProtocol.cpp">
       <Filter>System</Filter>
-    </ClCompile>
-    <ClCompile Include="ISTaskParagraph.cpp">
-      <Filter>Paragraphs</Filter>
     </ClCompile>
     <ClCompile Include="ISCalendarParagraph.cpp">
       <Filter>Paragraphs</Filter>
@@ -480,9 +465,6 @@
     <QtMoc Include="ISSearchForm.h">
       <Filter>Forms</Filter>
     </QtMoc>
-    <QtMoc Include="ISTaskViewForm.h">
-      <Filter>Forms</Filter>
-    </QtMoc>
     <QtMoc Include="ISUserObjectForm.h">
       <Filter>Forms</Filter>
     </QtMoc>
@@ -549,12 +531,6 @@
     <QtMoc Include="ISOilSphere.h">
       <Filter>Objects\OilSphere</Filter>
     </QtMoc>
-    <QtMoc Include="ISTaskListForm.h">
-      <Filter>Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISTaskSearchByTextForm.h">
-      <Filter>Forms</Filter>
-    </QtMoc>
     <QtMoc Include="ISEditsQT.h">
       <Filter>Fields</Filter>
     </QtMoc>
@@ -567,9 +543,6 @@
     <QtMoc Include="ISListWidget.h">
       <Filter>Widgets</Filter>
     </QtMoc>
-    <QtMoc Include="ISTaskObjectForm.h">
-      <Filter>Forms</Filter>
-    </QtMoc>
     <QtMoc Include="ISListViewForm.h">
       <Filter>Common Forms</Filter>
     </QtMoc>
@@ -578,9 +551,6 @@
     </QtMoc>
     <QtMoc Include="ISAudioPlayerForm.h">
       <Filter>Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISTaskParagraph.h">
-      <Filter>Paragraphs</Filter>
     </QtMoc>
     <QtMoc Include="ISCalendarParagraph.h">
       <Filter>Paragraphs</Filter>

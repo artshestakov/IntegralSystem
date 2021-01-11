@@ -11,7 +11,7 @@
 #include "ISCore.h"
 #include "ISProtocol.h"
 #include "ISSelectListDialog.h"
-#include "ISTaskViewForm.h"
+//#include "ISTaskViewForm.h"
 #include "ISSplashWidget.h"
 #include "ISConfig.h"
 #include "ISBuffer.h"
@@ -32,14 +32,14 @@
 #include "ISDesktopParagraph.h"
 #include "ISWorkspaceParagraph.h"
 #include "ISCalendarParagraph.h"
-#include "ISTaskParagraph.h"
+//#include "ISTaskParagraph.h"
 #include "ISProtocolSubSystem.h"
 #include "ISInternalDirectoriesSubSystem.h"
 #include "ISUserGroupSubSystem.h"
 #include "ISMonitorActivitySubSystem.h"
 #include "ISFullTextSearchSubSystem.h"
 #include "ISSettingsDatabaseObjectForm.h"
-#include "ISTaskObjectForm.h"
+//#include "ISTaskObjectForm.h"
 #include "ISAsteriskCallsSubSystem.h"
 #include "ISDelegates.h"
 #include "ISFieldEdits.h"
@@ -679,18 +679,18 @@ void ISGui::ShowHistoryForm()
 	ISGui::SetWaitGlobalCursor(false);
 }
 //-----------------------------------------------------------------------------
-void ISGui::ShowTaskViewForm(int TaskID)
+/*void ISGui::ShowTaskViewForm(int TaskID)
 {
 	ShowTaskViewForm(new ISTaskViewForm(TaskID));
-}
+}*/
 //-----------------------------------------------------------------------------
-void ISGui::ShowTaskViewForm(QWidget *TaskViewForm)
+/*void ISGui::ShowTaskViewForm(QWidget *TaskViewForm)
 {
 	if (TaskViewForm)
 	{
 		TaskViewForm->showMaximized();
 	}
-}
+}*/
 //-----------------------------------------------------------------------------
 ISFieldEditBase* ISGui::CreateFieldEditBase(QWidget *ParentWidget, PMetaField *MetaField, ISNamespace::FieldType DataType, const QString &ControlWidget)
 {
@@ -742,14 +742,14 @@ void ISGui::RegisterMetaType()
 	qRegisterMetaType<ISDesktopParagraph*>("ISDesktopForm");
 	qRegisterMetaType<ISWorkspaceParagraph*>("ISWorkspaceForm");
 	qRegisterMetaType<ISCalendarParagraph*>("ISCalendarForm");
-	qRegisterMetaType<ISTaskParagraph*>("ISTaskForm");
+	//qRegisterMetaType<ISTaskParagraph*>("ISTaskForm");
 	qRegisterMetaType<ISProtocolSubSystem*>("ISProtocolListForm");
 	qRegisterMetaType<ISInternalDirectoriesSubSystem*>("ISInternalDirectoriesForm");
 	qRegisterMetaType<ISUserGroupSubSystem*>("ISUserGroupListForm");
 	qRegisterMetaType<ISMonitorActivitySubSystem*>("ISMonitorActivityForm");
 	qRegisterMetaType<ISFullTextSearchSubSystem*>("ISFullTextSearchForm");
 	qRegisterMetaType<ISSettingsDatabaseObjectForm*>("ISSettingsDatabaseObjectForm");
-	qRegisterMetaType<ISTaskObjectForm*>("ISTaskObjectForm");
+	//qRegisterMetaType<ISTaskObjectForm*>("ISTaskObjectForm");
 	qRegisterMetaType<ISAsteriskCallsSubSystem*>("ISAsteriskCallsListForm");
 
 	qRegisterMetaType<ISDelegateBoolean*>("ISDelegateBoolean");
