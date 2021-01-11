@@ -101,9 +101,6 @@
     <ClCompile Include="ISVersionInfo.cpp">
       <Filter>System</Filter>
     </ClCompile>
-    <ClCompile Include="ISVersion.cpp">
-      <Filter>System</Filter>
-    </ClCompile>
     <ClCompile Include="ISDebug.cpp">
       <Filter>System</Filter>
     </ClCompile>
@@ -192,9 +189,6 @@
       <Filter>Settings</Filter>
     </ClInclude>
     <ClInclude Include="ISVersionInfo.h">
-      <Filter>System</Filter>
-    </ClInclude>
-    <ClInclude Include="ISVersion.h">
       <Filter>System</Filter>
     </ClInclude>
     <ClInclude Include="ISDebug.h">

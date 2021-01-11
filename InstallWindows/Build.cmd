@@ -11,8 +11,6 @@ SET CONFIGURATION=%1
 SET PLATFORM=%2
 SET SCRIPT_NAME=%3
 SET QT_PATH=%4
-SET MAJOR=4
-SET MINOR=9
 SET DEPLOY_DIR=..\Deploy\%CONFIGURATION%-%PLATFORM%
 SET IS_DEBUG=""
 SET /a CPU_CORE_COUNT=%NUMBER_OF_PROCESSORS% * 2
@@ -28,7 +26,7 @@ REM Получаем номер ревизии (количество комитов) и генерируем файл информации о с
 git rev-list --count HEAD > revision.tmp
 SET /p REVISION=< revision.tmp
 DEL revision.tmp
-CALL GenerateBuildInfo.cmd %CONFIGURATION% %PLATFORM% %MAJOR% %MINOR% %REVISION%
+CALL GenerateBuildInfo.cmd %CONFIGURATION% %PLATFORM% %REVISION%
 
 REM Компиляция библиотек
 CALL BuildItem.cmd Library ISCore %CONFIGURATION% %PLATFORM%
@@ -44,7 +42,7 @@ IF EXIST %SCRIPT_NAME%.iss.tmp (DEL %SCRIPT_NAME%.iss.tmp)
 COPY %SCRIPT_NAME%.iss %SCRIPT_NAME%.iss.tmp
 ..\Components\Replacer\%CONFIGURATION%-%PLATFORM%\Replacer.exe %SCRIPT_NAME%.iss.tmp ${CONFIGURATION} %CONFIGURATION%
 ..\Components\Replacer\%CONFIGURATION%-%PLATFORM%\Replacer.exe %SCRIPT_NAME%.iss.tmp ${PLATFORM} %PLATFORM%
-..\Components\Replacer\%CONFIGURATION%-%PLATFORM%\Replacer.exe %SCRIPT_NAME%.iss.tmp ${VERSION} %MAJOR%.%MINOR%.%REVISION%
+..\Components\Replacer\%CONFIGURATION%-%PLATFORM%\Replacer.exe %SCRIPT_NAME%.iss.tmp ${VERSION} %REVISION%
 ..\Components\Replacer\%CONFIGURATION%-%PLATFORM%\Replacer.exe %SCRIPT_NAME%.iss.tmp ${QTDIR} %QT_PATH%
 ..\Components\Replacer\%CONFIGURATION%-%PLATFORM%\Replacer.exe %SCRIPT_NAME%.iss.tmp ${IS_DEBUG} %IS_DEBUG%
 
@@ -56,4 +54,4 @@ REM Запуск сборки
 %INNO_SETUP% %SCRIPT_NAME%.iss.tmp
 
 REM Копируем дистрибутив в облако
-copy ..\Output\IntegralSystem_%CONFIGURATION%_%PLATFORM%_%MAJOR%.%MINOR%.%REVISION%.exe C:\Users\%USERNAME%\YandexDisk\Client\IntegralSystem_%CONFIGURATION%_%PLATFORM%_%MAJOR%.%MINOR%.%REVISION%.exe
+copy ..\Output\IntegralSystem_%CONFIGURATION%_%PLATFORM%_%REVISION%.exe C:\Users\%USERNAME%\YandexDisk\Client\IntegralSystem_%CONFIGURATION%_%PLATFORM%_%REVISION%.exe

@@ -105,7 +105,7 @@ int main(int argc, char **argv)
 	ArgumentsCMD.erase(ArgumentsCMD.begin());
 	if (ArgumentsCMD.size() == 0)
 	{
-		ISDEBUG_L(QString("Configurator [Version %1] %2 %3").arg(ISVersionInfo::Instance().ToStringVersion()).arg(ISVersionInfo::Instance().Info.Configuration).arg(ISVersionInfo::Instance().Info.Platform));
+		ISDEBUG_L(QString("Configurator [Version %1] %2 %3").arg(ISVersionInfo::Instance().Info.Version).arg(ISVersionInfo::Instance().Info.Configuration).arg(ISVersionInfo::Instance().Info.Platform));
 		ISDEBUG_L("Welcome to the Configurator.");
 		ISDEBUG_L("DBHost: " + DBHost);
 		ISDEBUG_L("DBName: " + DBName);

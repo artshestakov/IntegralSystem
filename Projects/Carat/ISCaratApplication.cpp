@@ -132,10 +132,10 @@ bool ISCaratApplication::Run()
 		"PID: %9\n"
 		"Configuration: %10\n"
 		"Database: %11").
-		arg(ISVersionInfo::Instance().ToStringVersion()).
+		arg(ISVersionInfo::Instance().Info.Version).
 		arg(ISVersionInfo::Instance().Info.Configuration).
 		arg(ISVersionInfo::Instance().Info.Platform).
-		arg(ISVersionInfo::Instance().Info.Branch).
+		arg(ISVersionInfo::Instance().Info.BranchName).
 		arg(ISVersionInfo::Instance().Info.Hash).
 		arg(QSysInfo::machineHostName()).
 		arg(QSysInfo::prettyProductName()).
@@ -230,7 +230,7 @@ bool ISCaratApplication::Help()
 //-----------------------------------------------------------------------------
 bool ISCaratApplication::Version()
 {
-	ISDEBUG_L("Carat (" + ISVersionInfo::Instance().ToStringVersion() + ") " + ISVersionInfo::Instance().Info.Configuration + " " + ISVersionInfo::Instance().Info.Platform);
+	ISDEBUG_L(QString("Carat (%1) %2 %3").arg(ISVersionInfo::Instance().Info.Version).arg(ISVersionInfo::Instance().Info.Configuration).arg(ISVersionInfo::Instance().Info.Platform));
     return true;
 }
 //-----------------------------------------------------------------------------

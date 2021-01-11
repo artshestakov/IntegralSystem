@@ -956,28 +956,67 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 		}
 	}
 
+	//Проверяем версию клиента
+	bool IsNeedUpdate = false, VersionIsValid = false; //По умолчанию флаг обновления должен быть false (вдруг клиент отправил невалидную версию)
+	if (TcpMessage->Parameters.contains("Version")) //Если версия указана
+	{
+		//Проверяем его версию на валидность
+		QVariant Version = TcpMessage->Parameters["Version"];
+		unsigned int VersionClient = Version.toUInt(&VersionIsValid);
+		if (VersionIsValid) //Версия валидна - ищем последний файл
+		{
+			//Получаем директорию с обновлениями
+			QString UpdateClientDir = CONFIG_STRING(CONST_CONFIG_OTHER_UPDATE_CLIENT_DIR);
+			if (UpdateClientDir.isEmpty())
+			{
+				ErrorString = LANG("Carat.Error.Query.Auth.UpdatePathIsEmpty");
+				return false;
+			}
+
+			//Проверяем существование директории с обновлениями
+			QDir Dir(UpdateClientDir);
+			if (!Dir.exists())
+			{
+				ISLOGGER_W(__CLASS__, "Folder \"" + UpdateClientDir + "\" not exist. Check config parameter \"" + CONST_CONFIG_OTHER_UPDATE_CLIENT_DIR + "\"");
+				ErrorString = LANG("Carat.Error.Query.Auth.UpdatePathNotExist");
+				return false;
+			}
+
+			//Получаем отсортированный (по дате) список файлов и проверяем его на пустоту
+			QStringList StringList = Dir.entryList(QDir::Files, QDir::Time);
+			if (!StringList.isEmpty()) //Если обновления есть - вытаскиваем версию последнего файла
+			{
+				QString FilePath = StringList.front();
+				StringList = QFileInfo(FilePath).completeBaseName().split('_');
+				if (StringList.size() == 4) //Формат имени вроде валиден
+				{
+					unsigned int VersionLast = StringList.back().toUInt(&VersionIsValid);
+					if (VersionIsValid) //Версия последнего дистрибутива успешно вытащена - сравниваем
+					{
+						IsNeedUpdate = VersionLast > VersionClient;
+					}
+					else //Имя файла последнего дистрибутива не валидное
+					{
+						ISLOGGER_W(__CLASS__, "Invalid file name last update: " + FilePath);
+					}
+				}
+				else //Формат имени не валиден
+				{
+					ISLOGGER_W(__CLASS__, "Invalid format update file name: " + FilePath);
+				}
+			}
+			//Обновлений нет - идём дальше
+		}
+		else //Версия невалидна
+		{
+			ISLOGGER_W(__CLASS__, "Client version invalid: " + Version.toString());
+		}
+	}
+
 	//Устанавливаем флаги сокету
 	TcpMessage->TcpSocket->SetAuthorized(true);
 	TcpMessage->TcpSocket->SetUserID(UserID);
 	TcpMessage->TcpSocket->SetUserIsSystem(IsSystem);
-
-	//Проверяем версию клиента
-	bool IsNeedUpdate = false; //По умолчанию флаг обновления должен быть false (вдруг клиент отправил невалидную версию)
-	QVariant Version = TcpMessage->SystemParameters["Version"];
-	if (Version.isValid()) //Если версия указана
-	{
-		//Проверяем его версию на валидность
-		QString VersionClientString = Version.toString();
-		ISVersion VersionClient(VersionClientString);
-		if (VersionClient.IsValid()) //Версия валидна
-		{
-			IsNeedUpdate = VersionClient < ISVersionInfo::Instance().Info.Version;
-		}
-		else //Версия невалидна
-		{
-			ISLOGGER_W(__CLASS__, "Client version invalid: " + VersionClientString);
-		}
-	}
 
 	//Отдаём информацию о пользователе и конфигурации
 	TcpAnswer->Parameters["UserID"] = UserID;
@@ -1345,23 +1384,9 @@ bool ISTcpWorker::GetLastClient(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer
 {
 	Q_UNUSED(TcpMessage);
 
-	//Получаем директорию с дистрибутивами
-	QString UpdateClientDir = CONFIG_STRING(CONST_CONFIG_OTHER_UPDATE_CLIENT_DIR);
-	if (UpdateClientDir.isEmpty())
-	{
-		ErrorString = LANG("Carat.Error.Query.GetLastClient.PathIsEmpty");
-		return false;
-	}
-
-	QDir Dir(UpdateClientDir);
-	if (!Dir.exists())
-	{
-		ISLOGGER_W(__CLASS__, "Folder \"" + UpdateClientDir + "\" not exist. Check config parameter \"" + CONST_CONFIG_OTHER_UPDATE_CLIENT_DIR + "\"");
-		ErrorString = LANG("Carat.Error.Query.GetLastClient.Other");
-		return false;
-	}
-
-	//Получаем отсортированный (по дате) список файлов и проверяем его на пустоту
+	//Получаем отсортированный (по дате) список файлов
+	//в настроенной директории и проверяем его на пустоту
+	QDir Dir(CONFIG_STRING(CONST_CONFIG_OTHER_UPDATE_CLIENT_DIR));
 	QStringList StringList = Dir.entryList(QDir::Files, QDir::Time);
 	if (StringList.isEmpty()) //Если обновлений нет - выходим
 	{

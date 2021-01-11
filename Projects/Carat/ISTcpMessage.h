@@ -18,7 +18,6 @@ public:
 	ISNamespace::ApiMessageType Type; //Тип сообщения
 	QString TypeName; //Имя типа сообщения
 	QVariantMap Parameters; //Параметры
-	QVariantMap SystemParameters; //Системные параметры
 	ISTcpSocket *TcpSocket; //Указатель на клиента
 
 	long long ParseMSec; //Время парсинга

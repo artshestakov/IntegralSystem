@@ -8,12 +8,11 @@
 class ISCORE_EXPORT ISVersionInfo
 {
 public:
-	ISVersionStruct Info; //Информация о версии
+	ISBuildInfoStruct Info; //Информация о версии
 	ISConfigurationInfo ConfigurationInfo; //Инфромации о конфигурации
 
 public:
 	static ISVersionInfo& Instance();
-	QString ToStringVersion() const; //Получить версию строкой
 	void SelectConfiguration(const QString &ConfigurationName); //Выбрать конфигурацию по имени
 
 private:

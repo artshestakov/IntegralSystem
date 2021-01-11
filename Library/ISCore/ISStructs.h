@@ -9,7 +9,6 @@
 #include "ISAssert.h"
 #include "ISTypedefs.h"
 #include "ISAlgorithm.h"
-#include "ISVersion.h"
 //-----------------------------------------------------------------------------
 struct ISMetaDataType
 {
@@ -187,16 +186,16 @@ struct ISCORE_EXPORT ISSqlQuery
     QString SqlText; //SQL-запрос
 };
 //-----------------------------------------------------------------------------
-struct ISCORE_EXPORT ISVersionStruct
+struct ISCORE_EXPORT ISBuildInfoStruct
 {
-    ISVersion Version;
+	unsigned int Version; //Версия
 
-	QString Date;
-	QString Time;
-	QString Hash;
-	QString Branch;
-    QString Configuration;
-	QString Platform;
+	QString Date; //Дата сборки
+	QString Time; //Время сборки
+	QString Hash; //Хэш коммита
+	QString BranchName; //Имя ветки
+    QString Configuration; //Конфигурация
+	QString Platform; //Платформа
 };
 //-----------------------------------------------------------------------------
 struct ISCORE_EXPORT ISDaDataOrganizationBranch

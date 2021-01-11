@@ -112,7 +112,7 @@ bool ISGui::Startup(QString &ErrorString)
 	qApp->setStyleSheet(BUFFER_STYLE_SHEET("QToolTip"));
 	qApp->setWindowIcon(BUFFER_ICONS("Logo"));
 	qApp->setApplicationName("IntegralSystem");
-	qApp->setApplicationVersion(ISVersionInfo::Instance().ToStringVersion());
+	qApp->setApplicationVersion(QString::number(ISVersionInfo::Instance().Info.Version));
 	qApp->setFont(ISDefines::Gui::FONT_APPLICATION);
 	QToolTip::setFont(ISDefines::Gui::FONT_APPLICATION);
 	return true;

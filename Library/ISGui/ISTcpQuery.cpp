@@ -4,7 +4,6 @@
 #include "ISSystem.h"
 #include "ISConstants.h"
 #include "ISAlgorithm.h"
-#include "ISVersionInfo.h"
 #include "ISLocalization.h"
 #include "ISLogger.h"
 //-----------------------------------------------------------------------------
@@ -43,13 +42,7 @@ bool ISTcpQuery::Execute()
 	QByteArray ByteArray = ISSystem::VariantMapToJsonString(
 	{
 		{ "Type", QueryType },
-		{ "Parameters", Parameters },
-		{
-			"System", QVariantMap
-			{
-				{ "Version", ISVersionInfo::Instance().ToStringVersion() }
-			}
-		}
+		{ "Parameters", Parameters }
 	}, QJsonDocument::Compact) + SYMBOL_NULL_TERM;
 	ByteArray.insert(0, QString::number(ByteArray.size()) + '.');
 

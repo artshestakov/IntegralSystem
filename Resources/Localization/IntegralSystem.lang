@@ -15,14 +15,13 @@
   <Local Name="AboutForm.Tab.Common.ProductName" Russian="Название продукта"/>
   <Local Name="AboutForm.Tab.Common.Cofiguration" Russian="Конфигурация"/>
   <Local Name="AboutForm.Tab.Common.Platform" Russian="Целевая платформа"/>
-  <Local Name="AboutForm.Tab.Common.ProductVersion" Russian="Версия продукта"/>
+  <Local Name="AboutForm.Tab.Common.Version" Russian="Версия"/>
   <Local Name="AboutForm.Tab.Common.QtVersion" Russian="Версия Qt"/>
   <Local Name="AboutForm.Tab.Common.Server" Russian="Сервер"/>
   <Local Name="AboutForm.Tab.Common.Port" Russian="Порт"/>
-  <Local Name="AboutForm.Tab.Common.ProductVersionRevision" Russian="Ревизия"/>
   <Local Name="AboutForm.Tab.Common.ReleaseDate" Russian="Дата релиза"/>
   <Local Name="AboutForm.Tab.Common.ReleaseTime" Russian="Время сборки"/>
-  <Local Name="AboutForm.Tab.Common.ProductVersionHash" Russian="Хеш"/>
+  <Local Name="AboutForm.Tab.Common.Hash" Russian="Хеш"/>
   <Local Name="AboutForm.Tab.Common.Branch" Russian="Ветка"/>
   <Local Name="AboutForm.Tab.Contacts" Russian="Контакты"/>
   <Local Name="AboutForm.Tab.Contacts.ProductAuthor" Russian="Разработчик"/>

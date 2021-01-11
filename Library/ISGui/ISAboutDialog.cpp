@@ -11,7 +11,6 @@
 #include "ISObjects.h"
 #include "ISConfig.h"
 #include "ISFieldEdits.h"
-#include "ISTrace.h"
 //-----------------------------------------------------------------------------
 ISAboutDialog::ISAboutDialog() : ISInterfaceDialogForm()
 {
@@ -55,7 +54,6 @@ ISAboutDialog::~ISAboutDialog()
 //-----------------------------------------------------------------------------
 void ISAboutDialog::CreateCommonTab()
 {
-	ISTRACE();
 	QVBoxLayout *LayoutCommon = new QVBoxLayout();
 
 	QWidget *TabCommon = new QWidget(TabWidget);
@@ -65,12 +63,11 @@ void ISAboutDialog::CreateCommonTab()
 	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.ProductName"), QCoreApplication::applicationName());
 	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.Cofiguration"), ISVersionInfo::Instance().Info.Configuration);
 	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.Platform"), ISVersionInfo::Instance().Info.Platform);
-	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.ProductVersion"), ISVersionInfo::Instance().ToStringVersion());
-	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.ProductVersionRevision"), QString::number(ISVersionInfo::Instance().Info.Version.GetRevision()));
+	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.Version"), QString::number(ISVersionInfo::Instance().Info.Version));
 	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.ReleaseDate"), ISVersionInfo::Instance().Info.Date);
 	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.ReleaseTime"), ISVersionInfo::Instance().Info.Time);
-	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.ProductVersionHash"), ISVersionInfo::Instance().Info.Hash);
-	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.Branch"), ISVersionInfo::Instance().Info.Branch);
+	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.Hash"), ISVersionInfo::Instance().Info.Hash);
+	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.Branch"), ISVersionInfo::Instance().Info.BranchName);
 	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.QtVersion"), qVersion());
 	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.Server"), CONFIG_STRING(CONST_CONFIG_CONNECTION_SERVER));
 	AddLabel(TabCommon, LANG("AboutForm.Tab.Common.Port"), CONFIG_STRING(CONST_CONFIG_CONNECTION_PORT));
@@ -80,7 +77,6 @@ void ISAboutDialog::CreateCommonTab()
 //-----------------------------------------------------------------------------
 void ISAboutDialog::CreateContactsTab()
 {
-	ISTRACE();
 	QVBoxLayout *LayoutContacts = new QVBoxLayout();
 
 	QWidget *TabContacts = new QWidget(TabWidget);
@@ -98,7 +94,6 @@ void ISAboutDialog::CreateContactsTab()
 //-----------------------------------------------------------------------------
 void ISAboutDialog::CreateModuleTab()
 {
-	ISTRACE();
 	if (ISVersionInfo::Instance().ConfigurationInfo.Name.isEmpty())
 	{
 		return;
@@ -119,7 +114,6 @@ void ISAboutDialog::CreateModuleTab()
 //-----------------------------------------------------------------------------
 void ISAboutDialog::CreateDescriptionTab()
 {
-	ISTRACE();
 	QVBoxLayout *LayoutDescription = new QVBoxLayout();
 
 	QWidget *TabDescription = new QWidget(TabWidget);
@@ -135,7 +129,6 @@ void ISAboutDialog::CreateDescriptionTab()
 //-----------------------------------------------------------------------------
 void ISAboutDialog::CreateLicenseTab()
 {
-	ISTRACE();
 	QVBoxLayout *LayoutLicense = new QVBoxLayout();
 
 	QWidget *TabLicense = new QWidget(TabWidget);
@@ -157,7 +150,6 @@ void ISAboutDialog::CreateLicenseTab()
 //-----------------------------------------------------------------------------
 void ISAboutDialog::CreateOtherTab()
 {
-	ISTRACE();
 	QVBoxLayout *LayoutOther = new QVBoxLayout();
 
 	QWidget *TabOther = new QWidget(TabWidget);

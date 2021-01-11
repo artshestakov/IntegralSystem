@@ -143,7 +143,6 @@ void ISTcpSocket::ReadyRead()
 				{
 					TcpMessage->Type = MessageType;
 					TcpMessage->Parameters = VariantMap["Parameters"].toMap();
-					TcpMessage->SystemParameters = VariantMap["System"].toMap();
 				}
 				else //Тип сообщения не известный
 				{

@@ -32,14 +32,12 @@ DEL temp.tmp
 
 REM Пишем информацию в файл
 ECHO [Version]>> %FILE_PATH%
-ECHO Major="%3">> %FILE_PATH%
-ECHO Minor="%4">> %FILE_PATH%
-ECHO Revision="%5">> %FILE_PATH%
+ECHO Number="%3">> %FILE_PATH%
 ECHO.>> %FILE_PATH%
 ECHO [Build]>> %FILE_PATH%
 ECHO Date="%CURRENT_DATE%">> %FILE_PATH%
 ECHO Time="%CURRENT_TIME%">> %FILE_PATH%
 ECHO Hash="%HASH%">> %FILE_PATH%
-ECHO Branch="%BRANCH_NAME%">> %FILE_PATH%
+ECHO BranchName="%BRANCH_NAME%">> %FILE_PATH%
 ECHO Configuration="%1">> %FILE_PATH%
 ECHO Platform="%2">> %FILE_PATH%

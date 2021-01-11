@@ -149,32 +149,27 @@ void ISAuthDialog::Input()
 	//Проверяем заполнение конфигурационного файла
 	if (CONFIG_STRING(CONST_CONFIG_CONNECTION_SERVER).isEmpty())
 	{
-		ISGui::SetWaitGlobalCursor(false);
 		ISMessageBox::ShowCritical(this, LANG("Message.Error.ConnectionSetting.Input.ServerEmpty"));
 		return;
 	}
 	if (CONFIG_STRING(CONST_CONFIG_CONNECTION_PORT).isEmpty())
 	{
-		ISGui::SetWaitGlobalCursor(false);
 		ISMessageBox::ShowCritical(this, LANG("Message.Error.ConnectionSetting.Input.PortEmpty"));
 		return;
 	}
 	if (CONFIG_STRING(CONST_CONFIG_CONNECTION_DATABASE).isEmpty())
 	{
-		ISGui::SetWaitGlobalCursor(false);
 		ISMessageBox::ShowCritical(this, LANG("Message.Error.ConnectionSetting.Input.DatabaseNameEmpty"));
 		return;
 	}
 	if (EditLogin->GetValue().toString().isEmpty())
 	{
-		ISGui::SetWaitGlobalCursor(false);
 		ISMessageBox::ShowWarning(this, LANG("Message.Error.Input.LoginEmpty"));
 		EditLogin->BlinkRed();
 		return;
 	}
 	if (EditPassword->GetValue().toString().isEmpty())
 	{
-		ISGui::SetWaitGlobalCursor(false);
 		ISMessageBox::ShowWarning(this, LANG("Message.Error.Input.PasswordEmpty"));
 		EditPassword->BlinkRed();
 		return;
@@ -222,6 +217,7 @@ void ISAuthDialog::Input()
 
 	ISTcpQuery qAuth(API_AUTH);
 	qAuth.BindValue("Hash", ISSystem::StringToSha256(EditLogin->GetValue().toString() + EditPassword->GetValue().toString()));
+	qAuth.BindValue("Version", ISVersionInfo::Instance().Info.Version);
 	if (qAuth.Execute()) //Авторизация прошла успешно
 	{
 		QVariantMap AnswerMap = qAuth.GetAnswer();

@@ -54,6 +54,8 @@
   <Local Name="Carat.Error.Query.Auth.LoginLinkGroup" Russian="Ваша учётная запись не привязанна к группе."/>
   <Local Name="Carat.Error.Query.Auth.LoginLifetimeNotStarted" Russian="Срок действия вашей учётной записи начнется %1."/>
   <Local Name="Carat.Error.Query.Auth.LoginLifetimeEnded" Russian="Срок действия вашей учётной записи закончился."/>
+  <Local Name="Carat.Error.Query.Auth.UpdatePathIsEmpty" Russian="На сервере не настроена директория хранения обновлений."/>
+  <Local Name="Carat.Error.Query.Auth.UpdatePathNotExist" Russian="Не удалось проверить наличие обновлений."/>
 
   <Local Name="Carat.Error.Query.Sleep.TimeoutValueInvalid" Russian="Неправильное значение"/>
   <Local Name="Carat.Error.Query.Sleep.TimeoutValueIsNull" Russian="Значение не должно быть нулевым"/>
@@ -72,9 +74,6 @@
   <Local Name="Carat.Error.Query.GetMetaData.Paragraph" Russian="Не удалось получить параграфы."/>
   <Local Name="Carat.Error.Query.GetMetaData.TaskPriority" Russian="Не удалось получить приоритеты задач."/>
   <Local Name="Carat.Error.Query.GetMetaData.FileXSN" Russian="Не удалось открыть файл мета-данных &quot;%1&quot;: %2"/>
-
-  <Local Name="Carat.Error.Query.GetLastClient.PathIsEmpty" Russian="На сервере не настроена директория хранения обновлений."/>
-  <Local Name="Carat.Error.Query.GetLastClient.Other" Russian="Не удалось проверить наличие обновлений."/>
 
   <Local Name="Carat.Error.Query.UserPasswordCreate.UserIsSystem" Russian="Пользователь является системным, создание пароля невозможно."/>
   <Local Name="Carat.Error.Query.UserPasswordCreate.AlreadyExist" Russian="Пароль уже установлен."/>
