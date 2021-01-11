@@ -46,7 +46,7 @@ BEGIN
             VALUE "CompanyName", "Shestakov Artem"
             VALUE "FileDescription", "Система управления данными «IntegralSystem»"
             VALUE "InternalName", "IntegralSystem.exe"
-            VALUE "LegalCopyright", "Copyright © 2015-2020"
+            VALUE "LegalCopyright", "Copyright © 2015-2021"
             VALUE "OriginalFilename", "IntegralSystem"
             VALUE "ProductName", "Система управления данными «IntegralSystem»"
         END
