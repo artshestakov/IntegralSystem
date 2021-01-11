@@ -11,6 +11,7 @@
 
   <!--About Form-->
   <Local Name="AboutForm.AboutApplication" Russian="О программе"/>
+  <Local Name="AboutForm.Feedback" Russian="Оставить отзыв"/>
   <Local Name="AboutForm.Tab.Common" Russian="Общие"/>
   <Local Name="AboutForm.Tab.Common.ProductName" Russian="Название продукта"/>
   <Local Name="AboutForm.Tab.Common.Cofiguration" Russian="Конфигурация"/>
@@ -126,6 +127,7 @@
   <Local Name="Message.Warning.NewVersion" Russian="ВНИМАНИЕ! Появилась новая версия программы, рекомендуется перезапустить её для обновления."/>
   <Local Name="Message.Warning.StorageFileBigSize" Russian="Размер файла &quot;%1&quot; превышает ограничение в %2 MB. Файл не будет добавлен."/>
   <Local Name="Message.Warning.ConnectedMoreOneDevice" Russian="Подключено более одного устройства. Попробуйте ещё раз."/>
+  <Local Name="Message.Warning.NotOpenFeedbackLink" Russian="Не удалось открыть ссылку!"/>
   <Local Name="Message.Question.ChangeUser" Russian="Сменить пользователя?"/>
   <Local Name="Message.Question.ExitApplication" Russian="Вы действительно хотите выйти из программы?"/>
   <Local Name="Message.Question.File.SavedToPath" Russian="Файл успешно сохранен по пути:&#10;%1&#10;Открыть его?"/>

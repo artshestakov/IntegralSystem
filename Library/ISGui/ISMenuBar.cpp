@@ -56,11 +56,8 @@ ISMenuBar::ISMenuBar(QWidget *parent) : QWidget(parent)
 	//Смена пароля
 	MenuService->addAction(LANG("PasswordManagement"), this, &ISMenuBar::ChangePassword);
 
-	//Меню "Помощь"
-	QMenu *MenuHelp = ButtonMenu->menu()->addMenu(BUFFER_ICONS("MainMenuItem"), LANG("Help"));
-
 	//О программе
-	MenuHelp->addAction(BUFFER_ICONS("About"), LANG("AboutForm.AboutApplication"), this, &ISMenuBar::AboutApplication);
+	ButtonMenu->menu()->addAction(BUFFER_ICONS("About"), LANG("AboutForm.AboutApplication"), this, &ISMenuBar::AboutApplication);
 
 	//Выход
 	ButtonMenu->menu()->addSeparator();

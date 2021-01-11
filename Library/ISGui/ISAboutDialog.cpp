@@ -11,12 +11,13 @@
 #include "ISObjects.h"
 #include "ISConfig.h"
 #include "ISFieldEdits.h"
+#include "ISGui.h"
 //-----------------------------------------------------------------------------
 ISAboutDialog::ISAboutDialog() : ISInterfaceDialogForm()
 {
 	setWindowTitle(LANG("AboutForm.AboutApplication"));
 	setMinimumSize(ISDefines::Gui::SIZE_MAIN_WINDOW_MINIMUM);
-	GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_5_PX);
+	GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);
 
 	QHBoxLayout *Layout = new QHBoxLayout();
 	GetMainLayout()->addLayout(Layout);
@@ -29,15 +30,23 @@ ISAboutDialog::ISAboutDialog() : ISInterfaceDialogForm()
 	Layout->addWidget(LabelImage);
 
 	LayoutRight = new QVBoxLayout();
-	LayoutRight->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);
 	Layout->addLayout(LayoutRight);
 
 	TabWidget = new QTabWidget(this);
 	LayoutRight->addWidget(TabWidget);
 
+	QHBoxLayout *LayoutBottom = new QHBoxLayout();
+	GetMainLayout()->addLayout(LayoutBottom);
+
+	ISPushButton *ButtonFeedback = new ISPushButton(BUFFER_ICONS("Feedback"), LANG("AboutForm.Feedback"), this);
+	connect(ButtonFeedback, &ISPushButton::clicked, this, &ISAboutDialog::Feedback);
+	LayoutBottom->addWidget(ButtonFeedback);
+
+	LayoutBottom->addStretch();
+
 	ISPushButton *ButtonClose = new ISPushButton(BUFFER_ICONS("Close"), LANG("Close"), this);
 	connect(ButtonClose, &ISPushButton::clicked, this, &ISAboutDialog::close);
-	LayoutRight->addWidget(ButtonClose, 0, Qt::AlignRight);
+	LayoutBottom->addWidget(ButtonClose);
 
 	CreateCommonTab();
 	CreateContactsTab();
@@ -182,5 +191,16 @@ void ISAboutDialog::AddLabel(QWidget *parent, const QString &LabelText, const QS
 	LayoutRow->addStretch();
 
 	parent->layout()->addWidget(WidgetRow);
+}
+//-----------------------------------------------------------------------------
+void ISAboutDialog::Feedback()
+{
+	ISGui::SetWaitGlobalCursor(true);
+	bool Opened = QDesktopServices::openUrl(QUrl(LINK_FEEDBACK));
+	ISGui::SetWaitGlobalCursor(false);
+	if (!Opened)
+	{
+		ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotOpenFeedbackLink"), LINK_FEEDBACK);
+	}
 }
 //-----------------------------------------------------------------------------

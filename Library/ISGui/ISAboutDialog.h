@@ -11,7 +11,7 @@ public:
 	ISAboutDialog();
 	virtual ~ISAboutDialog();
 
-protected:
+private:
 	void CreateCommonTab(); //Общие
 	void CreateContactsTab(); //Контакты
 	void CreateModuleTab(); //Текущий модуль
@@ -20,6 +20,7 @@ protected:
 	void CreateOtherTab(); //Прочее
 
 	void AddLabel(QWidget *parent, const QString &LabelText, const QString &Text);
+	void Feedback();
 
 private:
 	QVBoxLayout *LayoutRight;
