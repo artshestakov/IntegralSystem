@@ -18,6 +18,7 @@
 #include "ISMetaData.h"
 #include "ISInputDialog.h"
 #include "ISDelegates.h"
+#include "ISTcpQuery.h"
 //-----------------------------------------------------------------------------
 ISCheckEdit::ISCheckEdit(QWidget *parent) : ISFieldEditBase(parent)
 {
@@ -1905,21 +1906,6 @@ void ISListEditPopup::SetCurrentValue(const QVariant &current_value)
 	CurrentValue = current_value;
 }
 //-----------------------------------------------------------------------------
-QString ISListEditPopup::GetSqlFilter() const
-{
-	return SqlFilter;
-}
-//-----------------------------------------------------------------------------
-void ISListEditPopup::SetSqlFilter(const QString &sql_filter)
-{
-	SqlFilter = sql_filter;
-}
-//-----------------------------------------------------------------------------
-void ISListEditPopup::ClearSqlFilter()
-{
-	SqlFilter.clear();
-}
-//-----------------------------------------------------------------------------
 void ISListEditPopup::Search(const QVariant &value)
 {
 	ISGui::SetWaitGlobalCursor(true);
@@ -1975,20 +1961,18 @@ void ISListEditPopup::Add()
 //-----------------------------------------------------------------------------
 void ISListEditPopup::LoadDataFromQuery()
 {
-	QString QueryText = MetaForeign->SqlQuery;
-	if (SqlFilter.isEmpty())
-	{
-		QueryText = ISMetaDataHelper::GenerateSqlQueryFromForeign(MetaForeign, SqlFilter);
-	}
-
-	ISQuery qSelect(QueryText);
-	if (qSelect.Execute())
+	ISTcpQuery qGetForeignList(API_GET_FOREIGN_LIST);
+	qGetForeignList.BindValue("TableName", MetaForeign->TableName);
+	qGetForeignList.BindValue("FieldName", MetaForeign->Field);
+	if (qGetForeignList.Execute())
 	{
 		QListWidgetItem *CurrentItem = nullptr;
-		while (qSelect.Next())
+		QVariantList AnswerList = qGetForeignList.TakeAnswer()["List"].toList();
+		for (const QVariant &Variant : AnswerList)
 		{
-			QVariant ID = qSelect.ReadColumn("ID");
-			QString Value = qSelect.ReadColumn("Value").toString();
+			QVariantMap VariantMap = Variant.toMap();
+			QVariant ID = VariantMap["ID"];
+			QString Value = VariantMap["Value"].toString();
 
 			QListWidgetItem *ListWidgetItem = new QListWidgetItem(ListWidget);
 			ListWidgetItem->setText(Value);
@@ -2005,8 +1989,12 @@ void ISListEditPopup::LoadDataFromQuery()
 			CurrentItem->setSelected(true);
 		}
 		LabelCountRow->setText(LANG("RecordsCount") + ": " + QString::number(ListWidget->count()));
+		LabelEmpty->setVisible(!ListWidget->count());
 	}
-	LabelEmpty->setVisible(!ListWidget->count());
+	else
+	{
+		ISMessageBox::ShowCritical(this, qGetForeignList.GetErrorString());
+	}
 }
 //-----------------------------------------------------------------------------
 void ISListEditPopup::EnterClicked()
@@ -2153,16 +2141,6 @@ void ISListEdit::SetEnabled(bool Enabled)
 {
 	ButtonMain->setEnabled(Enabled);
 	ButtonList->setEnabled(Enabled);
-}
-//-----------------------------------------------------------------------------
-void ISListEdit::SetSqlFilter(const QString &sql_filter)
-{
-	ListEditPopup->SetSqlFilter(sql_filter);
-}
-//-----------------------------------------------------------------------------
-void ISListEdit::ClearSqlFilter()
-{
-	ListEditPopup->ClearSqlFilter();
 }
 //-----------------------------------------------------------------------------
 void ISListEdit::SelectedValue(const QVariant &id, const QString &text)

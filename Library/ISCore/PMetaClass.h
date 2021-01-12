@@ -64,7 +64,6 @@ struct PMetaForeign : public PMetaBase
 	QString OrderField; //Поле по которому будет происходить сортировка
 
 	QString TableName; //Таблица, содержащая поле, на которое устанавливается внешний ключ
-	QString SqlQuery; //Запрос на выбору по внешнему ключу
 };
 //-----------------------------------------------------------------------------
 struct PMetaEscort : public PMetaBase

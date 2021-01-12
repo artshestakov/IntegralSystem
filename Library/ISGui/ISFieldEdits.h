@@ -744,10 +744,6 @@ public:
 
 	void SetCurrentValue(const QVariant &current_value);
 
-	QString GetSqlFilter() const; //Получить фильтр
-	void SetSqlFilter(const QString &sql_filter); //Изменить фильтр
-	void ClearSqlFilter(); //Очистить фильтр
-
 protected:
 	void Search(const QVariant &value); //Поиск
 	void ItemClicked(QListWidgetItem *ListWidgetItem); //Выбор позиции
@@ -764,7 +760,6 @@ private:
 	QLabel *LabelSearch;
 	QLabel *LabelEmpty;
 
-	QString SqlFilter;
 	PMetaForeign *MetaForeign;
 	PMetaTable *MetaTableForeign;
 	QVariant CurrentValue;
@@ -790,9 +785,6 @@ public:
 
 	QString GetCurrentText() const; //Получить локальное наименование объекта
 	void SetEnabled(bool Enabled);
-
-	void SetSqlFilter(const QString &sql_filter); //Изменить фильтр
-	void ClearSqlFilter(); //Очистить SQL-фильтр
 
 protected:
 	void SelectedValue(const QVariant &id, const QString &text);

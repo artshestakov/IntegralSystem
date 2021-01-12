@@ -2,7 +2,6 @@
 #include "ISAssert.h"
 #include "ISConstants.h"
 #include "ISSystem.h"
-#include "ISMetaDataHelper.h"
 #include "ISUuid.h"
 #include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
@@ -437,15 +436,6 @@ bool ISMetaData::GenerateSqlFromForeigns()
 					break;
 				}
 			}
-		}
-
-		if (Result)
-		{
-			MetaForeign->SqlQuery = ISMetaDataHelper::GenerateSqlQueryFromForeign(MetaForeign); //Генерация SQL-запроса для внешнего ключа
-		}
-		else
-		{
-			break;
 		}
 	}
 	return Result;
