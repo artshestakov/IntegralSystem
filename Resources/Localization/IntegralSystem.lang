@@ -60,7 +60,6 @@
   <Local Name="Message.Error.InitializeQueryPool" Russian="Не удалось запустить пул запросов."/>
   <Local Name="Message.Error.CreateCopyStorageFile" Russian="Не удалось создать копию файла &quot;%1&quot;."/>
   <Local Name="Message.Error.InitializeMetaData" Russian="Не удалось иницилизировать мета-данные."/>
-  <Local Name="Message.Error.QueryRecord" Russian="Ошибка запроса данных."/>
   <Local Name="Message.Error.Auth" Russian="Ошибка авторизации!"/>
   <Local Name="Message.Error.UpdateTaskComment" Russian="Не удалось изменить комментарий к задаче!"/>
   <Local Name="Message.Error.DeleteTaskComment" Russian="Не удалось удалить комментарий!"/>
@@ -515,6 +514,7 @@
   <!--Calendar-->
   <Local Name="Date" Russian="Дата"/>
   <Local Name="Everyday" Russian="Каждый день"/>
+  <Local Name="Month.NotSelected" Russian="Не выбран"/>
   <Local Name="Month.January" Russian="Январь"/>
   <Local Name="Month.February" Russian="Февраль"/>
   <Local Name="Month.March" Russian="Март"/>

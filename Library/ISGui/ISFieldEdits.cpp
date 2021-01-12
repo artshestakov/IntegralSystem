@@ -1142,6 +1142,7 @@ ISMonthEdit::ISMonthEdit(QWidget *parent) : ISComboEdit(parent)
 	SetSizePolicyHorizontal(QSizePolicy::Maximum);
 	SetEditable(false);
 
+	AddItem(LANG("Month.NotSelected"), QVariant());
 	AddItem(LANG("Month.January"), 1);
 	AddItem(LANG("Month.February"), 2);
 	AddItem(LANG("Month.March"), 3);
