@@ -107,6 +107,7 @@
 
   <Local Name="Carat.Error.Query.RecordGet.Select" Russian="Не удалось получить запись."/>
   <Local Name="Carat.Error.Query.RecordGet.NotExist" Russian="Запись с идентификатором %1 не существует."/>
+  <Local Name="Carat.Error.Query.RecordGet.IsSystem" Russian="Запись с идентификатором %1 является системной."/>
 
   <Local Name="Carat.Error.Query.DiscussionAdd.Insert" Russian="Не удалось добавить обсуждение."/>
 

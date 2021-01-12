@@ -1852,9 +1852,16 @@ bool ISTcpWorker::RecordGet(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 		return false;
 	}
 
-	//Получаем запись и обходим её поля
-	QVariantMap Values;
+	//Получаем запись и проверяем, не системная ли она
 	QSqlRecord SqlRecord = qSelect.GetRecord();
+	if (SqlRecord.value("IsSystem").toBool())
+	{
+		ErrorString = LANG("Carat.Error.Query.RecordGet.IsSystem").arg(ObjectID.toUInt());
+		return false;
+	}
+
+	//Обходим поля записи
+	QVariantMap Values;
 	for (int i = 0, c = SqlRecord.count(); i < c; ++i)
 	{
 		QSqlField SqlField = SqlRecord.field(i);
