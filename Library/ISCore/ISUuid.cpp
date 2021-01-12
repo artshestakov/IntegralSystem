@@ -19,7 +19,7 @@ ISUuid::ISUuid(const QVariant &UID) : ISUuid(UID.toString())
 
 }
 //-----------------------------------------------------------------------------
-ISUuid::ISUuid(const QUuid &UID) : QString(UID.toString())
+ISUuid::ISUuid(const QUuid &UID) : ISUuid(UID.toString())
 {
 
 }
