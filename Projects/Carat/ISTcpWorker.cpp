@@ -484,6 +484,7 @@ void ISTcpWorker::Process()
 					case ISNamespace::AMT_GetRecordCall: Result = GetRecordCall(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_GetClients: Result = GetClients(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_RecordDelete: Result = RecordDelete(tcp_message, TcpAnswer); break;
+					case ISNamespace::AMT_RecordGet: Result = RecordGet(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_DiscussionAdd: Result = DiscussionAdd(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_DiscussionEdit: Result = DiscussionEdit(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_DiscussionCopy: Result = DiscussionCopy(tcp_message, TcpAnswer); break;
@@ -1814,6 +1815,63 @@ bool ISTcpWorker::RecordDelete(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	{
 		Protocol(UserID, CONST_UID_PROTOCOL_DELETE_OBJECT, MetaTable->Name, MetaTable->LocalListName, ObjectID, ObjectNameMap[ObjectID.toString()]);
 	}
+	return true;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::RecordGet(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+	QVariant TableName = CheckNullField("TableName", TcpMessage),
+		ObjectID = CheckNullField("ObjectID", TcpMessage);
+	if (!TableName.isValid() || !ObjectID.isValid())
+	{
+		return false;
+	}
+
+	//Получаем мета-таблицу
+	PMetaTable *MetaTable = GetMetaTable(TableName.toString());
+	if (!MetaTable)
+	{
+		return false;
+	}
+
+	//Подготовка и выполнение запроса
+	ISQueryModel QueryModel(MetaTable, ISNamespace::QMT_Object);
+	QueryModel.AddCondition("ID", ObjectID);
+
+	ISQuery qSelect(ISDatabase::Instance().GetDB(DBConnectionName), QueryModel.GetQueryText());
+	qSelect.BindValue(":ID", ObjectID);
+	if (!qSelect.Execute()) //Ошибка запроса
+	{
+		return ErrorQuery(LANG("Carat.Error.Query.RecordGet.Select"), qSelect);
+	}
+
+	//Если переход на первую строку не удался - такая запись не существует
+	if (!qSelect.First())
+	{
+		ErrorString = LANG("Carat.Error.Query.RecordGet.NotExist").arg(ObjectID.toUInt());
+		return false;
+	}
+
+	//Получаем запись и обходим её поля
+	QVariantMap Values;
+	QSqlRecord SqlRecord = qSelect.GetRecord();
+	for (int i = 0, c = SqlRecord.count(); i < c; ++i)
+	{
+		QSqlField SqlField = SqlRecord.field(i);
+		QVariant Value = SqlField.value();
+		Values[SqlField.name()] = Value.isNull() ? QVariant() : Value;
+	}
+
+	//Получаем имя объекта
+	QString ObjectName;
+	if (!GetObjectName(MetaTable, ObjectID.toUInt(), ObjectName))
+	{
+		return false;
+	}
+
+	TcpAnswer->Parameters["Values"] = Values;
+	TcpAnswer->Parameters["ObjectName"] = ObjectName;
+	Protocol(TcpMessage->TcpSocket->GetUserID(), CONST_UID_PROTOCOL_SHOW_OBJECT, MetaTable->Name, MetaTable->LocalListName, ObjectID, ObjectName);
 	return true;
 }
 //-----------------------------------------------------------------------------

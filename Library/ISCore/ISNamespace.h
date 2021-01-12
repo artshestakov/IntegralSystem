@@ -152,6 +152,7 @@ namespace ISNamespace
 		AMT_GetRecordCall, //Получить запись разговора
 		AMT_GetClients, //Получить список подключенных клиентов
 		AMT_RecordDelete, //Удаление записи
+		AMT_RecordGet, //Получить запись
 		AMT_DiscussionAdd, //Добавить обсуждение
 		AMT_DiscussionEdit, //Изменить обсуждение
 		AMT_DiscussionCopy, //Скопировать обсуждение
