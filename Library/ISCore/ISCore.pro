@@ -42,7 +42,6 @@ HEADERS += \
     ISNetwork.h \
     ISProperty.h \
     ISQuery.h \
-    ISQueryModel.h \
     ISQueryPool.h \
     ISQueryText.h \
     ISRandom.h \
@@ -73,7 +72,6 @@ SOURCES += \
     ISNetwork.cpp \
     ISProperty.cpp \
     ISQuery.cpp \
-    ISQueryModel.cpp \
     ISQueryPool.cpp \
     ISQueryText.cpp \
     ISRandom.cpp \

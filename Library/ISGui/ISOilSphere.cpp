@@ -617,9 +617,11 @@ void ISOilSphere::GasStationStatementSubSystem::LoadDataAfterEvent()
 //-----------------------------------------------------------------------------
 void ISOilSphere::GasStationStatementSubSystem::StockChanged(const QVariant &Value)
 {
-	Value.isValid()
+	//???
+	Q_UNUSED(Value);
+	/*Value.isValid()
 		? GetQueryModel()->SetClassFilter("gsts_stock = " + Value.toString()) : 
-		GetQueryModel()->ClearClassFilter();
+		GetQueryModel()->ClearClassFilter();*/
 	Update();
 }
 //-----------------------------------------------------------------------------

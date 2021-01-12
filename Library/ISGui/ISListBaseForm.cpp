@@ -34,7 +34,6 @@ ISListBaseForm::ISListBaseForm(const QString &TableName, QWidget *parent)
 	IsLoadingData(false),
 	SelectObjectAfterUpdate(0),
 	ActionObjectGroup(new QActionGroup(this)), //Группа действий, остосящихся только к одному объекту
-	QueryModel(new ISQueryModel(MetaTable, ISNamespace::QMT_List, this)),
 	PageNavigation(nullptr),
 	SearchForm(nullptr)
 {
@@ -189,11 +188,11 @@ ISListBaseForm::ISListBaseForm(const QString &TableName, QWidget *parent)
 
 		if (SETTING_BOOL(CONST_UID_SETTING_TABLES_PAGE_NAVIGATION))
 		{
-			QueryModel->SetLimit(SETTING_INT(CONST_UID_SETTING_TABLES_PAGE_NAVIGATION_LIMIT));
+			//QueryModel->SetLimit(SETTING_INT(CONST_UID_SETTING_TABLES_PAGE_NAVIGATION_LIMIT));
 
 			PageNavigation = new ISPageNavigation(StatusBar);
 			PageNavigation->SetLimit(SETTING_INT(CONST_UID_SETTING_TABLES_PAGE_NAVIGATION_LIMIT));
-			connect(PageNavigation, &ISPageNavigation::OffsetSignal, QueryModel, &ISQueryModel::SetOffset);
+			//connect(PageNavigation, &ISPageNavigation::OffsetSignal, QueryModel, &ISQueryModel::SetOffset);
 			connect(PageNavigation, &ISPageNavigation::Update, this, &ISListBaseForm::Update);
 			StatusBar->addWidget(PageNavigation);
 		}
@@ -319,11 +318,6 @@ ISVectorInt ISListBaseForm::GetSelectedRowIndexes()
 		}
 	}
 	return VectorInt;
-}
-//-----------------------------------------------------------------------------
-ISQueryModel* ISListBaseForm::GetQueryModel()
-{
-	return QueryModel;
 }
 //-----------------------------------------------------------------------------
 void ISListBaseForm::SetSelectObjectAfterUpdate(unsigned int ObjectID)
@@ -833,8 +827,11 @@ void ISListBaseForm::Search()
 		SearchForm = new ISSearchForm(MetaTable);
 		connect(SearchForm, &ISSearchForm::StartSearch, [=](const QString &SearchString, const QVariantMap &VariantMap)
 		{
-			QueryModel->SetSearchFilter(SearchString);
-			QueryModel->SetCondition(VariantMap);
+			//???
+			Q_UNUSED(SearchString);
+			Q_UNUSED(VariantMap);
+			//QueryModel->SetSearchFilter(SearchString);
+			//QueryModel->SetCondition(VariantMap);
 			Update();
 
 			GetAction(ISNamespace::AT_SearchClear)->setEnabled(true);
@@ -846,8 +843,8 @@ void ISListBaseForm::Search()
 //-----------------------------------------------------------------------------
 void ISListBaseForm::SearchClear()
 {
-	GetQueryModel()->ClearConditions();
-	GetQueryModel()->ClearSearchFilter();
+	//GetQueryModel()->ClearConditions();
+	//GetQueryModel()->ClearSearchFilter();
 	Update();
 	GetAction(ISNamespace::AT_SearchClear)->setEnabled(false);
 }

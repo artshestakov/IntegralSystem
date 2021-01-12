@@ -5,7 +5,6 @@
 #include "StdAfx.h"
 #include "ISInterfaceMetaForm.h"
 #include "PMetaClass.h"
-#include "ISQueryModel.h"
 #include "ISTcpModel.h"
 #include "ISBaseTableView.h"
 #include "ISListIndicatorWidget.h"
@@ -38,7 +37,6 @@ public:
 	int GetCountSelected(); //Получить количество выделенных записей
 	ISVectorUInt GetIDs() const; //Получить список идентификатор отображаемых строк в данный момент
 	ISVectorInt GetSelectedRowIndexes(); //Получить список индексов выделенных строк
-	ISQueryModel* GetQueryModel(); //Получить указатель на модель запроса
 	void SetSelectObjectAfterUpdate(unsigned int ObjectID); //Изменить код объекта, который будет выделен после операции (создание, создание копии, изменение) над ним 
 	void SetSelectObjectAfterUpdate(const ISVectorUInt &Objects); //Изменить код объекта, который будет выделен после операции (создание, создание копии, изменение) над ним 
 	PMetaTable* GetMetaTable(); //Получить указатель на мета-таблицу
@@ -117,7 +115,6 @@ private:
 	ISBaseTableView *TableView; //Виджет таблицы
 
 	ISTcpModel *TcpModel; //Модель представления данных
-	ISQueryModel *QueryModel; //Модель для запросов
 
 	QStatusBar *StatusBar; //Статус-бар
 	QLabel *LabelRowCount; //Надпись с количеством строк

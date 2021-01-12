@@ -1,9 +1,8 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "iscore_global.h"
 #include "PMetaClass.h"
 //-----------------------------------------------------------------------------
-class ISCORE_EXPORT ISQueryModel : public QObject
+class ISQueryModel : public QObject
 {
 	Q_OBJECT
 

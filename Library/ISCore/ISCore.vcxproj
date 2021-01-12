@@ -220,7 +220,6 @@
     <ClCompile Include="ISNetwork.cpp" />
     <ClCompile Include="ISProperty.cpp" />
     <ClCompile Include="ISQuery.cpp" />
-    <ClCompile Include="ISQueryModel.cpp" />
     <ClCompile Include="ISQueryPool.cpp" />
     <ClCompile Include="ISQueryText.cpp" />
     <ClCompile Include="ISRandom.cpp" />
@@ -273,7 +272,6 @@
     <ClInclude Include="ISQuery.h" />
     <ClInclude Include="ISQueryText.h" />
     <ClInclude Include="PMetaClass.h" />
-    <QtMoc Include="ISQueryModel.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Resources\_OilSphere\OilSphere.xsf" />

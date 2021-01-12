@@ -35,9 +35,6 @@
     <ClCompile Include="ISQuery.cpp">
       <Filter>Database</Filter>
     </ClCompile>
-    <ClCompile Include="ISQueryModel.cpp">
-      <Filter>Database</Filter>
-    </ClCompile>
     <ClCompile Include="ISQueryText.cpp">
       <Filter>Database</Filter>
     </ClCompile>
@@ -202,9 +199,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="ISQueryModel.h">
-      <Filter>Database</Filter>
-    </QtMoc>
     <QtMoc Include="ISNetwork.h">
       <Filter>Network</Filter>
     </QtMoc>
