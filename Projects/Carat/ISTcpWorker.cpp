@@ -516,6 +516,7 @@ void ISTcpWorker::Process()
 					case ISNamespace::AMT_CalendarClose: Result = CalendarClose(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_GetHistoryList: Result = GetHistoryList(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_TaskCommentAdd: Result = TaskCommentAdd(tcp_message, TcpAnswer); break;
+					case ISNamespace::AMT_GetForeignList: Result = GetForeignList(tcp_message, TcpAnswer); break;
 					default:
 						ErrorString = LANG("Carat.Error.NotExistFunction").arg(tcp_message->TypeName);
 					}
@@ -3370,6 +3371,60 @@ bool ISTcpWorker::TaskCommentAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
 	{
 		return ErrorQuery(LANG("Carat.Error.Query.TaskCommentAdd.Insert"), qInsert);
 	}
+	return true;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::GetForeignList(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+	QVariant TableName = CheckNullField("TableName", TcpMessage),
+		FieldName = CheckNullField("FieldName", TcpMessage);
+	if (!TableName.isValid() || !FieldName.isValid())
+	{
+		return false;
+	}
+	
+	//Получаем мета-таблицу
+	PMetaTable *MetaTable = GetMetaTable(TableName.toString());
+	if (!MetaTable)
+	{
+		return false;
+	}
+
+	//Получаем мета-поле
+	PMetaField *MetaField = MetaTable->GetField(FieldName.toString());
+	if (!MetaField)
+	{
+		ErrorString = LANG("Carat.Error.Query.GetForeignList.FieldNotExist").arg(FieldName.toString()).arg(MetaTable->Name);
+		return false;
+	}
+
+	//Проверяем наличие внешнего ключа по поле
+	if (!MetaField->Foreign)
+	{
+		ErrorString = LANG("Carat.Error.Query.GetForeignList.FieldNotForeign").arg(FieldName.toString());
+		return false;
+	}
+
+	//Формируем запрос и выполняем его
+	QString SqlText = ISMetaDataHelper::GenerateSqlQueryFromForeign(MetaField->Foreign);
+	ISQuery qSelect(ISDatabase::Instance().GetDB(DBConnectionName), SqlText);
+	if (!qSelect.Execute()) //Ошибка запроса
+	{
+		return ErrorQuery(LANG("Carat.Error.Query.GetForeignList.Select"), qSelect);
+	}
+
+	//Обходим результаты запроса
+	QVariantList VariantList;
+	while (qSelect.Next())
+	{
+		VariantList.append(QVariantMap
+		{
+			{ "ID", qSelect.ReadColumn("ID") },
+			{ "Value", qSelect.ReadColumn("Value") },
+		});
+	}
+
+	TcpAnswer->Parameters["List"] = VariantList;
 	return true;
 }
 //-----------------------------------------------------------------------------

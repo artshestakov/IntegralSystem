@@ -216,6 +216,10 @@ ISNamespace::ApiMessageType ISTcp::GetMessageTypeByName(const QString &Name)
 	{
 		return ISNamespace::AMT_TaskCommentAdd;
 	}
+	else if (Name == API_GET_FOREIGN_LIST)
+	{
+		return ISNamespace::AMT_GetForeignList;
+	}
 	return ISNamespace::AMT_Unknown;
 }
 //-----------------------------------------------------------------------------
