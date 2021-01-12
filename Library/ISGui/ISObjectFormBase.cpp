@@ -185,11 +185,6 @@ void ISObjectFormBase::AfterShowEvent()
 		ToolBarEscort->actions()[i]->setEnabled(!(FormType == ISNamespace::OFT_New || FormType == ISNamespace::OFT_Copy));
 	}
 
-	if (FormType == ISNamespace::OFT_Edit)
-	{
-		ISProtocol::ShowObject(MetaTable->Name, MetaTable->LocalListName, ObjectID, ObjectName);
-	}
-
 	if (BeginFieldEdit)
 	{
 		BeginFieldEdit->SetFocus();
@@ -397,45 +392,46 @@ void ISObjectFormBase::CreateWidgetObject()
 	//Заполняем поля
 	if (FormType == ISNamespace::OFT_Edit || FormType == ISNamespace::OFT_Copy)
 	{
-		ObjectName = ISCore::GetObjectName(MetaTable, ObjectID);
-
-		//Подготовка запроса
-		ISQueryModel QueryModel(MetaTable, ISNamespace::QMT_Object);
-		QueryModel.AddCondition("ID", ObjectID);
-
-		//Выполнение запроса
-		ISQuery qSelect(QueryModel.GetQueryText());
-		qSelect.BindValue(":ID", ObjectID);
-		if (qSelect.ExecuteFirst())
+		ISTcpQuery qRecordGet(API_RECORD_GET);
+		qRecordGet.BindValue("TableName", MetaTable->Name);
+		qRecordGet.BindValue("ObjectID", ObjectID);
+		if (qRecordGet.Execute())
 		{
-			QSqlRecord SqlRecord = qSelect.GetRecord();
-
-			if (FormType == ISNamespace::OFT_Edit)
+			//Если форма открыта на изменение - устанавливаем код в виджет
+			if (FormType == ISNamespace::AT_Edit)
 			{
 				SetValueFieldID(ObjectID);
 			}
 
-			for (int i = 0, c = SqlRecord.count(); i < c; ++i) //Обход полей записи
+			//Анализируем ответ
+			QVariantMap AnswerMap = qRecordGet.GetAnswer();
+			ObjectName = AnswerMap["ObjectName"].toString();
+			AnswerMap = AnswerMap["Values"].toMap();
+
+			//Обходим карту значений
+			for (const auto &MapItem : AnswerMap.toStdMap())
 			{
-				QString FieldName = SqlRecord.fieldName(i);
-				QVariant Value = SqlRecord.value(FieldName);
-				if (Value.isNull()) //Если значение пустое, перейти на следующий шаг цикла
+				//Если значение невалидное - перехолим к следующему
+				if (!MapItem.second.isValid())
 				{
 					continue;
 				}
 
-				if (!FieldsMap.count(FieldName)) //Если такого поля нет (возможно это поле ID и т.д.) - переходим к следующему
+				//Если такого поля нет (возможно это поле ID и т.д.) - переходим к следующему
+				if (!FieldsMap.count(MapItem.first))
 				{
 					continue;
 				}
 
 				//Получаем виджет поля по имени и если это справочное поле - получаем и устанавливаем ID, иначе - устаналиваем значение "как есть"
-				FieldsMap.at(FieldName)->SetValue(MetaTable->GetField(FieldName)->Foreign ? ISDatabaseHelper::GetObjectIDToList(MetaTable, MetaTable->GetField(FieldName), ObjectID) : Value);
+				FieldsMap.at(MapItem.first)->SetValue(MetaTable->GetField(MapItem.first)->Foreign ?
+					ISDatabaseHelper::GetObjectIDToList(MetaTable, MetaTable->GetField(MapItem.first), ObjectID) :
+					MapItem.second);
 			}
 		}
 		else
 		{
-			ISMessageBox::ShowCritical(this, LANG("Message.Error.QueryRecord"), qSelect.GetErrorString());
+			ISMessageBox::ShowCritical(this, qRecordGet.GetErrorString());
 		}
 	}
 
