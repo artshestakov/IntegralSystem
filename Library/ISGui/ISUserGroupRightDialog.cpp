@@ -5,7 +5,6 @@
 #include "ISBuffer.h"
 #include "ISScrollArea.h"
 #include "ISMetaSystemsEntity.h"
-#include "ISMetaData.h"
 #include "ISUserRoleEntity.h"
 #include "ISControls.h"
 #include "ISProtocol.h"
@@ -90,7 +89,6 @@ void ISUserGroupRightDialog::CreateTables(const QVariantList &RightTableType, co
 	ScrollArea->widget()->setLayout(FormLayout);
 	TabWidget->addTab(ScrollArea, LANG("AccessRights.Tables"));
 
-	//Вытаскиваем из мета-данных все НЕ системные таблицы
 	for (const QVariant &VariantTable : Tables)
 	{
 		QVariantMap TableMap = VariantTable.toMap();

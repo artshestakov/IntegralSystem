@@ -2670,6 +2670,12 @@ bool ISTcpWorker::GetGroupRights(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
 	ISQuery qSelectTables(ISDatabase::Instance().GetDB(DBConnectionName), QS_GROUP_RIGHT_TABLE);
 	for (PMetaTable *MetaTable : ISMetaData::Instance().GetTables())
 	{
+		//Если таблица является системной - идём дальше
+		if (MetaTable->IsSystem)
+		{
+			continue;
+		}
+
 		QVariantMap TableMap =
 		{
 			{ "TableName", MetaTable->Name },
