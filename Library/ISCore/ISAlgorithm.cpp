@@ -248,3 +248,16 @@ void ISAlgorithm::ConvertSecondToTime(unsigned int Seconds, unsigned int &Day, u
 	Second = Seconds;
 }
 //-----------------------------------------------------------------------------
+unsigned int ISAlgorithm::ExtractVersionFile(const QString &FilePath)
+{
+	unsigned int Version = 0;
+	QStringList StringList = QFileInfo(FilePath).completeBaseName().split('_');
+	if (StringList.size() == 4) //Формат вроде валиден
+	{
+		bool Converted = false;
+		Version = StringList.back().toUInt(&Converted);
+		Version = Converted ? Version : 0; //Дополнительная проверка
+	}
+	return Version;
+}
+//-----------------------------------------------------------------------------

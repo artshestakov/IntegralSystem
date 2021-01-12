@@ -125,6 +125,11 @@ namespace ISAlgorithm
 	//! \return функция ничего не возвращает
 	ISCORE_EXPORT void ConvertSecondToTime(unsigned int Seconds, unsigned int &Day, unsigned int &Hour, unsigned int &Minute, unsigned int &Second);
 
+	//! \Извлечь версию файла дистрибутива
+	//! \param FilePath путь к файлу дистрибутива
+	//! \return возвращает версию. Если вернулся ноль - версия не была извлечена
+	ISCORE_EXPORT unsigned int ExtractVersionFile(const QString &FilePath);
+
 	//Поиск значения в векторе
     template <typename T> bool VectorContains(const std::vector<T> &Vector, T Value)
     {

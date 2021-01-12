@@ -986,21 +986,13 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 			QStringList StringList = Dir.entryList(QDir::Files, QDir::Time);
 			if (!StringList.isEmpty()) //Если обновления есть - вытаскиваем версию последнего файла
 			{
-				QString FilePath = StringList.front();
-				StringList = QFileInfo(FilePath).completeBaseName().split('_');
-				if (StringList.size() == 4) //Формат имени вроде валиден
+				QString FilePath = Dir.absolutePath() + '/' + StringList.front();
+				unsigned int VersionLast = ISAlgorithm::ExtractVersionFile(FilePath);
+				if (VersionLast > 0) //Формат имени файла валиден
 				{
-					unsigned int VersionLast = StringList.back().toUInt(&VersionIsValid);
-					if (VersionIsValid) //Версия последнего дистрибутива успешно вытащена - сравниваем
-					{
-						IsNeedUpdate = VersionLast > VersionClient;
-					}
-					else //Имя файла последнего дистрибутива не валидное
-					{
-						ISLOGGER_W(__CLASS__, "Invalid file name last update: " + FilePath);
-					}
+					IsNeedUpdate = VersionLast > VersionClient;
 				}
-				else //Формат имени не валиден
+				else //Невалидный формат имени файла
 				{
 					ISLOGGER_W(__CLASS__, "Invalid format update file name: " + FilePath);
 				}
@@ -1394,27 +1386,8 @@ bool ISTcpWorker::GetLastClient(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer
 		return true;
 	}
 
-	//Обходим список файлов и ищем самый последний
-	QString FilePath;
-	for (const QString &FileName : StringList)
-	{
-		QStringList FileNameList = FileName.split(SYMBOL_POINT);
-		if (FileNameList.size() != 4) //Если имя файла невалидное - пропускаем его
-		{
-			continue;
-		}
-		FilePath = Dir.absolutePath() + '/' + FileName;
-		break;
-	}
-
-	//Файл не найден - выходим
-	if (FilePath.isEmpty())
-	{
-		TcpAnswer->Parameters["Found"] = false;
-		return true;
-	}
-
 	//Открываем файл
+	QString FilePath = Dir.absolutePath() + '/' + StringList.front();
 	QFile File(FilePath);
 	if (!File.open(QIODevice::ReadOnly)) //Не удалось открыть файл
 	{
