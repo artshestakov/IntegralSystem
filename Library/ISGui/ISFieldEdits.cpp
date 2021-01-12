@@ -1693,13 +1693,13 @@ ISImageEdit::~ISImageEdit()
 //-----------------------------------------------------------------------------
 void ISImageEdit::SetValue(const QVariant &value)
 {
-	value.isValid() ? ImageWidget->SetByteArray(value.toByteArray()) : ImageWidget->Clear();
+	value.isValid() ? ImageWidget->SetByteArray(QByteArray::fromBase64(value.toByteArray())) : ImageWidget->Clear();
 }
 //-----------------------------------------------------------------------------
 QVariant ISImageEdit::GetValue() const
 {
 	QByteArray ByteArray = ImageWidget->GetImage();
-	return ByteArray.isEmpty() ? QVariant() : ByteArray;
+	return ByteArray.isEmpty() ? QVariant() : ByteArray.toBase64();
 }
 //-----------------------------------------------------------------------------
 void ISImageEdit::Clear()
