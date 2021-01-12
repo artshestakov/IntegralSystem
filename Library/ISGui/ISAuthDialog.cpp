@@ -224,7 +224,8 @@ void ISAuthDialog::Input()
 		if (AnswerMap["IsNeedUpdate"].toBool()) //Если требуется обновление - предлагаем скачать и установить
 		{
 			SetConnecting(false);
-			if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.UpdateAvailable"))) //Пользователь согласился
+			if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.UpdateAvailable"), LANG("Message.Question.UpdateAvailable.DetailedText")
+				.arg(ISVersionInfo::Instance().Info.Version).arg(AnswerMap["IsNeedUpdateVersion"].toUInt()))) //Пользователь согласился
 			{
 				ISProcessForm ProcessForm(LANG("UploadingUpdate"), this);
 				ProcessForm.show();

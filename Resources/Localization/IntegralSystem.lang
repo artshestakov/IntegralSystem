@@ -155,6 +155,7 @@
   <Local Name="Message.Question.CloseInsetingTaskFile.DetailedText" Russian="Добавлено: %1&#10;Осталось добавить: %2&#10;Всего: %3"/>
   <Local Name="Message.Question.TaskCheckListDelete" Russian="Удалить пункт?"/>
   <Local Name="Message.Question.UpdateAvailable" Russian="Доступно обновление программы. Загрузить его?"/>
+  <Local Name="Message.Question.UpdateAvailable.DetailedText" Russian="Текущая версия: %1&#10;Новая версия: %2"/>
   <Local Name="Message.Question.PasswordReset" Russian="Вы уверены что хотите сбросить пароль?"/>
   <Local Name="Message.Question.ResetSettingDB" Russian="Сбросить настройки на стандартные?"/>
   <Local Name="Message.Question.LinkDevice" Russian="Привязать устройство?"/>

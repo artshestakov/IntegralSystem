@@ -958,6 +958,7 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 
 	//Проверяем версию клиента
 	bool IsNeedUpdate = false, VersionIsValid = false; //По умолчанию флаг обновления должен быть false (вдруг клиент отправил невалидную версию)
+	unsigned int VersionLast = 0;
 	if (TcpMessage->Parameters.contains("Version")) //Если версия указана
 	{
 		//Проверяем его версию на валидность
@@ -987,7 +988,7 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 			if (!StringList.isEmpty()) //Если обновления есть - вытаскиваем версию последнего файла
 			{
 				QString FilePath = Dir.absolutePath() + '/' + StringList.front();
-				unsigned int VersionLast = ISAlgorithm::ExtractVersionFile(FilePath);
+				VersionLast = ISAlgorithm::ExtractVersionFile(FilePath);
 				if (VersionLast > 0) //Формат имени файла валиден
 				{
 					IsNeedUpdate = VersionLast > VersionClient;
@@ -1017,6 +1018,12 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	TcpAnswer->Parameters["UserGroupID"] = GroupID;
 	TcpAnswer->Parameters["UserGroupFullAccess"] = GroupFullAccess;
 	TcpAnswer->Parameters["IsNeedUpdate"] = IsNeedUpdate;
+	TcpAnswer->Parameters["IsNeedUpdateVersion"] = IsNeedUpdate ? VersionLast : QVariant();
+	TcpAnswer->Parameters["UpdateClient"] = QVariantMap
+	{
+		{ "IsNeed", IsNeedUpdate },
+		{ "NewVersion", IsNeedUpdate ? VersionLast : QVariant() },
+	};
 	TcpAnswer->Parameters["Configuration"] = QVariantMap
 	{
 		{ "UID", ISVersionInfo::Instance().ConfigurationInfo.UID },
