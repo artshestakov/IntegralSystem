@@ -22,11 +22,6 @@ void ISProtocol::EditObject(const QString &TableName, const QString &LocalListNa
 	Insert(CONST_UID_PROTOCOL_EDIT_OBJECT, TableName, LocalListName, ObjectID, ObjectName);
 }
 //-----------------------------------------------------------------------------
-void ISProtocol::ShowObject(const QString &TableName, const QString &LocalListName, const QVariant &ObjectID, const QString &ObjectName)
-{
-	Insert(CONST_UID_PROTOCOL_SHOW_OBJECT, TableName, LocalListName, ObjectID, ObjectName);
-}
-//-----------------------------------------------------------------------------
 void ISProtocol::Insert(const QString &TypeUID, const QString &TableName, const QString &LocalListName, const QVariant &ObjectID, const QString &Information)
 {
 	ISQueryPool::Instance().AddQuery(QI_PROTOCOL,
