@@ -27,19 +27,19 @@
         <collectionProp name="Arguments.arguments">
           <elementProp name="Auth_Login" elementType="Argument">
             <stringProp name="Argument.name">Auth_Login</stringProp>
-            <stringProp name="Argument.value">shestakov</stringProp>
+            <stringProp name="Argument.value">postgres</stringProp>
             <stringProp name="Argument.desc">Логин пользователя для авторизации</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="Auth_Password" elementType="Argument">
             <stringProp name="Argument.name">Auth_Password</stringProp>
-            <stringProp name="Argument.value">454Trendy_</stringProp>
+            <stringProp name="Argument.value">adm777</stringProp>
             <stringProp name="Argument.desc">Пароль пользователя для авторизации</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="Auth_Version" elementType="Argument">
             <stringProp name="Argument.name">Auth_Version</stringProp>
-            <stringProp name="Argument.value">1.0.0</stringProp>
+            <stringProp name="Argument.value">425</stringProp>
             <stringProp name="Argument.desc">Версия клиента</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
@@ -100,10 +100,35 @@
             <stringProp name="Argument.metadata">=</stringProp>
             <stringProp name="Argument.desc">Код записи разговора из статистики</stringProp>
           </elementProp>
+          <elementProp name="RecordAdd_TableName" elementType="Argument">
+            <stringProp name="Argument.name">RecordAdd_TableName</stringProp>
+            <stringProp name="Argument.value">_UserGroup</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="RecordEdit_TableName" elementType="Argument">
+            <stringProp name="Argument.name">RecordEdit_TableName</stringProp>
+            <stringProp name="Argument.value">_UserGroup</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="RecordEdit_ObjectID" elementType="Argument">
+            <stringProp name="Argument.name">RecordEdit_ObjectID</stringProp>
+            <stringProp name="Argument.value">50011</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
           <elementProp name="RecordDelete_TableName" elementType="Argument">
             <stringProp name="Argument.name">RecordDelete_TableName</stringProp>
             <stringProp name="Argument.value">_UserGroup</stringProp>
             <stringProp name="Argument.desc">Имя таблицы из которой будет происходить удаление</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="RecordGet_TableName" elementType="Argument">
+            <stringProp name="Argument.name">RecordGet_TableName</stringProp>
+            <stringProp name="Argument.value">Counterparty</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="RecordGet_ObjectID" elementType="Argument">
+            <stringProp name="Argument.name">RecordGet_ObjectID</stringProp>
+            <stringProp name="Argument.value">1</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="DiscussionAdd_TableName" elementType="Argument">
@@ -276,6 +301,16 @@
             <stringProp name="Argument.value">50</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
+          <elementProp name="GetForeignList_TableName" elementType="Argument">
+            <stringProp name="Argument.name">GetForeignList_TableName</stringProp>
+            <stringProp name="Argument.value">_Users</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="GetForeignList_FieldName" elementType="Argument">
+            <stringProp name="Argument.name">GetForeignList_FieldName</stringProp>
+            <stringProp name="Argument.value">Group</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
         </collectionProp>
       </Arguments>
       <hashTree/>
@@ -432,7 +467,38 @@ def MapGetClients =
 ];
 vars.put(&quot;QueryGetClients&quot;, MapToString(MapGetClients));
 
-//Удаление записей
+//Добавление записи
+def MapRecordAdd =
+[
+	Type: &quot;RecordAdd&quot;,
+	Parameters:
+		[
+			TableName: vars.get(&quot;RecordAdd_TableName&quot;),
+			Values:
+				[
+					Name: &quot;testing1&quot;
+				]
+		]
+];
+vars.put(&quot;QueryRecordAdd&quot;, MapToString(MapRecordAdd));
+
+//Изменение записи
+def MapRecordEdit =
+[
+	Type: &quot;RecordEdit&quot;,
+	Parameters:
+		[
+			TableName: vars.get(&quot;RecordEdit_TableName&quot;),
+			ObjectID: vars.get(&quot;RecordEdit_ObjectID&quot;),
+			Values:
+				[
+					Name: &quot;testing15&quot;
+				]
+		]
+];
+vars.put(&quot;QueryRecordEdit&quot;, MapToString(MapRecordEdit));
+
+//Удаление записи
 def MapRecordDelete =
 [
 	Type: &quot;RecordDelete&quot;,
@@ -443,6 +509,18 @@ def MapRecordDelete =
 		]
 ];
 vars.put(&quot;QueryRecordDelete&quot;, MapToString(MapRecordDelete));
+
+//Получить запись
+def MapRecordGet =
+[
+	Type: &quot;RecordGet&quot;,
+	Parameters:
+		[
+			TableName: vars.get(&quot;RecordGet_TableName&quot;),
+			ObjectID: vars.get(&quot;RecordGet_ObjectID&quot;)
+		]
+];
+vars.put(&quot;QueryRecordGet&quot;, MapToString(MapRecordGet));
 
 //Добавить обсуждение
 def MapDiscussionAdd =
@@ -687,7 +765,19 @@ def MapCalendarClose =
 			CalendarID: vars.get(&quot;CalendarClose_CalendarID&quot;)
 		]
 ];
-vars.put(&quot;QueryCalendarClose&quot;, MapToString(MapCalendarClose));</stringProp>
+vars.put(&quot;QueryCalendarClose&quot;, MapToString(MapCalendarClose));
+
+//Получить значения справочника для поля
+def MapGetForeignList =
+[
+	Type: &quot;GetForeignList&quot;,
+	Parameters:
+		[
+			TableName: vars.get(&quot;GetForeignList_TableName&quot;),
+			FieldName: vars.get(&quot;GetForeignList_FieldName&quot;)
+		]
+];
+vars.put(&quot;QueryGetForeignList&quot;, MapToString(MapGetForeignList));</stringProp>
           <stringProp name="scriptLanguage">groovy</stringProp>
         </JSR223Sampler>
         <hashTree/>
@@ -739,6 +829,30 @@ vars.put(&quot;QueryCalendarClose&quot;, MapToString(MapCalendarClose));</string
           <stringProp name="ConfigTestElement.password"></stringProp>
         </TCPSampler>
         <hashTree/>
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: RecordAdd" enabled="false">
+          <stringProp name="TCPSampler.server"></stringProp>
+          <boolProp name="TCPSampler.reUseConnection">true</boolProp>
+          <stringProp name="TCPSampler.port"></stringProp>
+          <boolProp name="TCPSampler.nodelay">false</boolProp>
+          <stringProp name="TCPSampler.timeout"></stringProp>
+          <stringProp name="TCPSampler.request">${QueryRecordAdd}</stringProp>
+          <boolProp name="TCPSampler.closeConnection">true</boolProp>
+          <stringProp name="ConfigTestElement.username"></stringProp>
+          <stringProp name="ConfigTestElement.password"></stringProp>
+        </TCPSampler>
+        <hashTree/>
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: RecordEdit" enabled="true">
+          <stringProp name="TCPSampler.server"></stringProp>
+          <boolProp name="TCPSampler.reUseConnection">true</boolProp>
+          <stringProp name="TCPSampler.port"></stringProp>
+          <boolProp name="TCPSampler.nodelay">false</boolProp>
+          <stringProp name="TCPSampler.timeout"></stringProp>
+          <stringProp name="TCPSampler.request">${QueryRecordEdit}</stringProp>
+          <boolProp name="TCPSampler.closeConnection">true</boolProp>
+          <stringProp name="ConfigTestElement.username"></stringProp>
+          <stringProp name="ConfigTestElement.password"></stringProp>
+        </TCPSampler>
+        <hashTree/>
         <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: RecordDelete" enabled="false">
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
@@ -746,6 +860,18 @@ vars.put(&quot;QueryCalendarClose&quot;, MapToString(MapCalendarClose));</string
           <boolProp name="TCPSampler.nodelay">false</boolProp>
           <stringProp name="TCPSampler.timeout"></stringProp>
           <stringProp name="TCPSampler.request">${QueryRecordDelete}</stringProp>
+          <boolProp name="TCPSampler.closeConnection">true</boolProp>
+          <stringProp name="ConfigTestElement.username"></stringProp>
+          <stringProp name="ConfigTestElement.password"></stringProp>
+        </TCPSampler>
+        <hashTree/>
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: RecordGet" enabled="false">
+          <stringProp name="TCPSampler.server"></stringProp>
+          <boolProp name="TCPSampler.reUseConnection">true</boolProp>
+          <stringProp name="TCPSampler.port"></stringProp>
+          <boolProp name="TCPSampler.nodelay">false</boolProp>
+          <stringProp name="TCPSampler.timeout"></stringProp>
+          <stringProp name="TCPSampler.request">${QueryRecordGet}</stringProp>
           <boolProp name="TCPSampler.closeConnection">true</boolProp>
           <stringProp name="ConfigTestElement.username"></stringProp>
           <stringProp name="ConfigTestElement.password"></stringProp>
@@ -883,7 +1009,7 @@ vars.put(&quot;QueryCalendarClose&quot;, MapToString(MapCalendarClose));</string
           <stringProp name="ConfigTestElement.password"></stringProp>
         </TCPSampler>
         <hashTree/>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: Sleep" enabled="true">
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: Sleep" enabled="false">
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
           <stringProp name="TCPSampler.port"></stringProp>
@@ -1094,6 +1220,18 @@ vars.put(&quot;QueryCalendarClose&quot;, MapToString(MapCalendarClose));</string
           <boolProp name="TCPSampler.nodelay">false</boolProp>
           <stringProp name="TCPSampler.timeout"></stringProp>
           <stringProp name="TCPSampler.request">${QueryCalendarClose}</stringProp>
+          <boolProp name="TCPSampler.closeConnection">true</boolProp>
+          <stringProp name="ConfigTestElement.username"></stringProp>
+          <stringProp name="ConfigTestElement.password"></stringProp>
+        </TCPSampler>
+        <hashTree/>
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: GetForeignList" enabled="false">
+          <stringProp name="TCPSampler.server"></stringProp>
+          <boolProp name="TCPSampler.reUseConnection">true</boolProp>
+          <stringProp name="TCPSampler.port"></stringProp>
+          <boolProp name="TCPSampler.nodelay">false</boolProp>
+          <stringProp name="TCPSampler.timeout"></stringProp>
+          <stringProp name="TCPSampler.request">${QueryGetForeignList}</stringProp>
           <boolProp name="TCPSampler.closeConnection">true</boolProp>
           <stringProp name="ConfigTestElement.username"></stringProp>
           <stringProp name="ConfigTestElement.password"></stringProp>
