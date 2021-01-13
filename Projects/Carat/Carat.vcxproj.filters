@@ -52,9 +52,6 @@
     <ClCompile Include="ISFail2Ban.cpp">
       <Filter>System</Filter>
     </ClCompile>
-    <ClCompile Include="ISQueryModel.cpp">
-      <Filter>System</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Carat.rc">
@@ -96,9 +93,6 @@
     </QtMoc>
     <QtMoc Include="ISAsterisk.h">
       <Filter>Asterisk</Filter>
-    </QtMoc>
-    <QtMoc Include="ISQueryModel.h">
-      <Filter>System</Filter>
     </QtMoc>
   </ItemGroup>
 </Project>

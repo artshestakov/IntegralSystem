@@ -113,12 +113,6 @@ namespace ISNamespace
         RT_Html,
     };
 
-    enum QueryModelType
-    {
-        QMT_Object,
-        QMT_List,
-    };
-
     enum MoveWidgetDesktop //Тип перемещения виджета
     {
         MWD_LeftUp, //Левый верхний угол
@@ -195,7 +189,6 @@ Q_DECLARE_METATYPE(ISNamespace::ExportType);
 Q_DECLARE_METATYPE(ISNamespace::ActionType);
 Q_DECLARE_METATYPE(ISNamespace::ActionSpecialType);
 Q_DECLARE_METATYPE(ISNamespace::ReportType);
-Q_DECLARE_METATYPE(ISNamespace::QueryModelType);
 Q_DECLARE_METATYPE(ISNamespace::MoveWidgetDesktop);
 Q_DECLARE_METATYPE(ISNamespace::DebugMessageType);
 Q_DECLARE_METATYPE(ISNamespace::ApiMessageType);

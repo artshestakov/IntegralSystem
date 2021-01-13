@@ -12,7 +12,6 @@
 #include "ISMetaData.h"
 #include "ISMetaDataHelper.h"
 #include "ISFail2Ban.h"
-#include "ISQueryModel.h"
 //-----------------------------------------------------------------------------
 static QString QS_USERS_HASH = PREPARE_QUERY("SELECT usrs_hash, usrs_salt "
 											 "FROM _users "

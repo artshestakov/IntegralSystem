@@ -23,7 +23,6 @@
     <ClCompile Include="ISCaratApplication.cpp" />
     <ClCompile Include="ISCaratController.cpp" />
     <ClCompile Include="ISFail2Ban.cpp" />
-    <ClCompile Include="ISQueryModel.cpp" />
     <ClCompile Include="ISTcpAnswer.cpp" />
     <ClCompile Include="ISTcpClients.cpp" />
     <ClCompile Include="ISTcpMessage.cpp" />
@@ -41,7 +40,6 @@
     <QtMoc Include="ISCaratController.h" />
     <QtMoc Include="ISAsterisk.h" />
     <ClInclude Include="ISFail2Ban.h" />
-    <QtMoc Include="ISQueryModel.h" />
     <ClInclude Include="ISTcpAnswer.h" />
     <ClInclude Include="ISTcpClients.h" />
     <ClInclude Include="ISTcpMessage.h" />
