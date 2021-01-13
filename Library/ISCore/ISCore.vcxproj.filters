@@ -44,9 +44,6 @@
     <ClCompile Include="ISMetaDataHelper.cpp">
       <Filter>MetaData</Filter>
     </ClCompile>
-    <ClCompile Include="ISNetwork.cpp">
-      <Filter>Network</Filter>
-    </ClCompile>
     <ClCompile Include="ISRestWorker.cpp">
       <Filter>Network</Filter>
     </ClCompile>
@@ -199,9 +196,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="ISNetwork.h">
-      <Filter>Network</Filter>
-    </QtMoc>
     <QtMoc Include="ISRestWorker.h">
       <Filter>Network</Filter>
     </QtMoc>

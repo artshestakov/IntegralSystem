@@ -39,7 +39,6 @@ HEADERS += \
     ISMetaData.h \
 	ISMetaDataHelper.h \
     ISNamespace.h \
-    ISNetwork.h \
     ISProperty.h \
     ISQuery.h \
     ISQueryPool.h \
@@ -69,7 +68,6 @@ SOURCES += \
     ISLogger.cpp \
     ISMetaData.cpp \
     ISMetaDataHelper.cpp \
-    ISNetwork.cpp \
     ISProperty.cpp \
     ISQuery.cpp \
     ISQueryPool.cpp \

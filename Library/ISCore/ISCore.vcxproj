@@ -217,7 +217,6 @@
     <ClCompile Include="ISLogger.cpp" />
     <ClCompile Include="ISMetaData.cpp" />
     <ClCompile Include="ISMetaDataHelper.cpp" />
-    <ClCompile Include="ISNetwork.cpp" />
     <ClCompile Include="ISProperty.cpp" />
     <ClCompile Include="ISQuery.cpp" />
     <ClCompile Include="ISQueryPool.cpp" />
@@ -265,7 +264,6 @@
     <ClInclude Include="ISSettings.h" />
     <ClInclude Include="ISSettingsDatabase.h" />
     <QtMoc Include="ISRestWorker.h" />
-    <QtMoc Include="ISNetwork.h" />
     <ClInclude Include="ISDatabase.h" />
     <ClInclude Include="ISMetaData.h" />
     <ClInclude Include="ISMetaDataHelper.h" />

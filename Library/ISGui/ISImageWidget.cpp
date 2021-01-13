@@ -5,7 +5,6 @@
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISImageViewerForm.h"
-#include "ISNetwork.h"
 #include "ISMessageBox.h"
 #include "ISProcessForm.h"
 #include "ISGui.h"
