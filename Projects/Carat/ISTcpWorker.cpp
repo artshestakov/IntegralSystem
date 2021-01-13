@@ -2104,18 +2104,96 @@ bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 		}
 	}
 
-	//Создаём объект модели и устанавливаем её сортировку
-	ISQueryModel QueryModel(MetaTable, ISNamespace::QMT_List);
-	QueryModel.SetSorting(SortingField, SortingOrder);
+	//Заполняем служебную информацию
+	QVariantMap ServiceInfoMap =
+	{
+		{ "SortingField", SortingField },
+		{ "SortingOrder", SortingOrder }
+	};
+
+	//Формируем запрос на выборку
+	QString SqlText = "SELECT\n",
+		SqlTextJoins;
+	size_t Index = 0;
+	ISStringMap ForeignFields;
+
+	//Обходим поля мета-таблицы
+	for (PMetaField *MetaField : MetaTable->Fields)
+	{
+		//Если поле скрыто в таблице - пропускаем его
+		if (MetaField->HideFromList)
+		{
+			continue;
+		}
+
+		if (MetaField->Foreign) //Если на поле установлен внешний ключ
+		{
+			PMetaTable *MetaTableFK = ISMetaData::Instance().GetMetaTable(MetaField->Foreign->ForeignClass);
+			QString RandomAlias = MetaTableFK->Alias + QString::number(++Index);
+			SqlTextJoins += "LEFT JOIN " + MetaTableFK->Name.toLower() + ' ' + RandomAlias + " ON " + MetaTable->Alias + '.' + MetaTable->Alias + '_' + MetaField->Name.toLower() + " = " + RandomAlias + '.' + MetaTableFK->Alias + '_' + MetaField->Foreign->ForeignField.toLower() + "\n";
+
+			QString Temp;
+			QStringList StringList = MetaField->Foreign->ForeignViewNameField.split(';');
+			Temp += "concat(";
+			for (const QString &FieldName : StringList)
+			{
+				Temp += RandomAlias + '.' + MetaTableFK->Alias + '_' + FieldName.toLower() + ", ' ',";
+			}
+			Temp.chop(6);
+			Temp += ')';
+			SqlText += Temp;
+			ForeignFields.emplace(MetaField->Name, Temp);
+		}
+		else //Поле стандартное
+		{
+			if (MetaField->QueryText.isEmpty()) //Поле не виртуальное
+			{
+				SqlText += MetaTable->Alias + SYMBOL_POINT + MetaTable->Alias + '_' + MetaField->Name.toLower();
+			}
+			else //Поле является виртуальным
+			{
+				SqlText += '(' + MetaField->QueryText + ')';
+			}
+		}
+		SqlText += " AS \"" + MetaField->Name + "\",\n";
+	}
+	SqlText.chop(2);
+	SqlTextJoins.chop(1);
+
+	SqlText += "\nFROM " + MetaTable->Name.toLower() + ' ' + MetaTable->Alias + '\n';
+	SqlText += SqlTextJoins;
 
 	//Если фильтрация указана - устанавливаем
 	QVariantMap FilterMap = TcpMessage->Parameters.contains("Filter") ? TcpMessage->Parameters["Filter"].toMap() : QVariantMap();
-	for (const auto &MapItem : FilterMap.toStdMap())
+	if (!FilterMap.isEmpty())
 	{
-		QueryModel.AddCondition(MapItem.first, MapItem.second);
+		SqlText += "\nWHERE ";
+		for (const auto &MapItem : FilterMap.toStdMap())
+		{
+			SqlText += MetaTable->Alias + '_' + MapItem.first + " = :" + MapItem.first + "\nAND ";
+		}
+		SqlText.chop(5);
 	}
 
-	ISQuery qSelect(ISDatabase::Instance().GetDB(DBConnectionName), QueryModel.GetQueryText());
+	//Анализируем сортировку
+	PMetaField *MetaFieldSorting = MetaTable->GetField(SortingField);
+	bool SortingIsVirtual = !MetaFieldSorting->QueryText.isEmpty(),
+		SortingIsForeign = MetaFieldSorting->Foreign;
+	if (SortingIsVirtual) //Если поле является виртуальным - в качестве сортировки будет выступать запрос
+	{
+		SortingField = '(' + MetaFieldSorting->QueryText + ')';
+	}
+	else //Поле не виртуальное: если на поле установлен внешний ключ - используем сформированное имя - иначе просто имя поля
+	{
+		SortingField = SortingIsForeign ? ForeignFields[MetaFieldSorting->Name] : MetaFieldSorting->Name;
+	}
+
+	//Учитываем сортировку и её направление
+	SqlText += "\nORDER BY " + (SortingIsVirtual || SortingIsForeign ? SortingField :
+		MetaTable->Alias + '.' + MetaTable->Alias + '_' + SortingField) + ' ' +
+		(SortingOrder == Qt::AscendingOrder ? "ASC" : "DESC");
+
+	ISQuery qSelect(ISDatabase::Instance().GetDB(DBConnectionName), SqlText);
 	qSelect.SetShowLongQuery(false);
 
 	//заполняем параметры запроса
@@ -2133,13 +2211,6 @@ bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	int FieldCount = SqlRecord.count();
 	QVariantList FieldList, RecordList;
 	std::vector<ISNamespace::FieldType> VectorType(FieldCount, ISNamespace::FT_Unknown);
-
-	//Заполняем служебную информацию
-	QVariantMap ServiceInfoMap = 
-	{
-		{ "SortingField", SortingField },
-		{ "SortingOrder", SortingOrder }
-	};
 
 	//Заполняем описание полей
 	for (int i = 0; i < FieldCount; ++i)
