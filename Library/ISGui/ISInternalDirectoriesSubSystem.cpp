@@ -69,6 +69,7 @@ void ISInternalDirectoriesSubSystem::ItemSelectionChanged()
 	CurrentItem->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
 
 	ListBaseForm = new ISListBaseForm(CurrentItem->data(Qt::UserRole).toString(), this);
+	connect(ListBaseForm, &ISListBaseForm::AddFormFromTab, [=](QWidget *ObjectForm) { ISGui::ShowObjectForm(ObjectForm); });
 	ListBaseForm->LoadData();
 	Layout->addWidget(ListBaseForm);
 	ISGui::SetWaitGlobalCursor(false);
