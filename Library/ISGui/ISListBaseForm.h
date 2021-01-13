@@ -85,6 +85,7 @@ protected:
 	void SelectRowObject(const ISVectorUInt &Objects); //Выделение строки по идентификатору объекта
 	void SelectRowIndex(int row_index); //Выделение строки по индексу
 	void SetEnabledActionObject(bool Enabled); //Изменить доступность действий над объектом
+	void SetEnabledActions(bool Enabled); //Изменить доступность всех действий на тулбаре
 	void SetEnabledPageNavigation(bool Enabled); //Изменить доступность постраничной навигации
 
 	virtual void DoubleClickedTable(const QModelIndex &ModelIndex); //Обработчик события двойного нажатия на строку таблицы
@@ -97,7 +98,6 @@ protected:
 
 private:
 	void CreateDelegates(); //Создание делегатов
-	
 	void ShowContextMenu(const QPoint &Point); //Отображение контекстного меню
 
 private:

@@ -122,7 +122,6 @@ ISListBaseForm::ISListBaseForm(const QString &TableName, QWidget *parent)
 	{//Создание тулбара
 		ToolBar = new QToolBar(this);
 		ToolBar->setToolButtonStyle(Qt::ToolButtonIconOnly);
-		ToolBar->setEnabled(false);
 		GetMainLayout()->addWidget(ToolBar);
 
 		ToolBar->addAction(GetAction(ISNamespace::AT_Create));
@@ -631,6 +630,15 @@ void ISListBaseForm::SetEnabledActionObject(bool Enabled)
 	}
 }
 //-----------------------------------------------------------------------------
+void ISListBaseForm::SetEnabledActions(bool Enabled)
+{
+	QList<QAction*> List = ToolBar->actions() + ContextMenu->actions();
+	for (QAction *Action : List)
+	{
+		Action->setEnabled(Enabled);
+	}
+}
+//-----------------------------------------------------------------------------
 void ISListBaseForm::SetEnabledPageNavigation(bool Enabled)
 {
 	if (PageNavigation)
@@ -716,7 +724,6 @@ bool ISListBaseForm::Update()
 	ListIndicatorWidget->SetText(LANG("LoadDataPleceWait"));
 	ListIndicatorWidget->show();
 	repaint(); //Нужно для корректной отрисовки виджета ListIndicatorWidget
-	ToolBar->setEnabled(false);
 	SetEnabledPageNavigation(false);
 
 	//Готовим запрос и исполняем
@@ -724,7 +731,8 @@ bool ISListBaseForm::Update()
 	bool Result = TcpQuery->Execute();
 
 	//Очередные операции с интерфейсом после загрузки
-	ToolBar->setEnabled(true);
+	SetEnabledActions(Result);
+	GetAction(ISNamespace::AT_Update)->setEnabled(true); //Включаем только для обновления списка
 	SetEnabledPageNavigation(true);
 	ISGui::SetWaitGlobalCursor(false);
 
