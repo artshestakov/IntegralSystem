@@ -37,6 +37,9 @@ bool ISTcpQuery::Execute(const QString &query_type)
 //-----------------------------------------------------------------------------
 bool ISTcpQuery::Execute()
 {
+	//«апоминаем текущее врем€
+	ISTimePoint TimePoint = ISAlgorithm::GetTick();
+
 	//‘ормируем запрос (тип запроса, его параметры и системные пол€)
 	ISLOGGER_I(__CLASS__, QString("Build \"%1\"").arg(QueryType));
 	QByteArray ByteArray = ISSystem::VariantMapToJsonString(
@@ -115,7 +118,7 @@ bool ISTcpQuery::Execute()
 		if (Result)
 		{
 			TcpAnswer = TcpAnswer["Parameters"].toMap();
-			ISLOGGER_I(__CLASS__, "Query success");
+			ISLOGGER_I(__CLASS__, QString("Query success (%1 msec)").arg(ISAlgorithm::GetTickDiff(ISAlgorithm::GetTick(), TimePoint)));
 		}
 		else
 		{
