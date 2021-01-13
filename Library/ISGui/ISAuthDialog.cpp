@@ -119,14 +119,7 @@ ISAuthDialog::~ISAuthDialog()
 //-----------------------------------------------------------------------------
 void ISAuthDialog::closeEvent(QCloseEvent *CloseEvent)
 {
-	if (ConnectingState)
-	{
-		CloseEvent->ignore();
-	}
-	else
-	{
-		ISInterfaceDialogForm::closeEvent(CloseEvent);
-	}
+	ConnectingState ? CloseEvent->ignore() : ISInterfaceDialogForm::closeEvent(CloseEvent);
 }
 //-----------------------------------------------------------------------------
 void ISAuthDialog::EnterClicked()
