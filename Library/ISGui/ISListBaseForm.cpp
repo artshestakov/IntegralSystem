@@ -677,7 +677,17 @@ void ISListBaseForm::Edit()
 	connect(ObjectFormBase, &ISObjectFormBase::SavedObject, this, &ISListBaseForm::Updated);
 	connect(ObjectFormBase, &ISObjectFormBase::UpdateList, this, &ISListBaseForm::Update);
 	connect(ObjectFormBase, &ISObjectFormBase::Close, TableView, static_cast<void(ISBaseTableView::*)(void)>(&ISBaseTableView::setFocus));
-	emit AddFormFromTab(ObjectFormBase);
+
+	//Учитываем настройку ""
+	QString EventName = SETTING_STRING(CONST_UID_SETTING_TABLES_DOUBLECLICKEVENT);
+	if (EventName == "Window")
+	{
+		ISGui::ShowObjectForm(ObjectFormBase);
+	}
+	else if (EventName == "Tab")
+	{
+		emit AddFormFromTab(ObjectFormBase);
+	}
 }
 //-----------------------------------------------------------------------------
 bool ISListBaseForm::Update()

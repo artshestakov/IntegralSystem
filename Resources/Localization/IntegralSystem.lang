@@ -404,8 +404,8 @@
   <Local Name="NotificationForm.Title.Deleteds" Russian="Выбраннеые записи успешно удалены"/>
 
   <!--Settings-->
-  <Local Name="Settings.Table.DoubleClickEvent.Window" Russian="Открывать запись в отдельном окне"/>
-  <Local Name="Settings.Table.DoubleClickEvent.Tab" Russian="Открывать запись в режиме вкладки"/>
+  <Local Name="Settings.Table.DoubleClickEvent.Window" Russian="В отдельном окне"/>
+  <Local Name="Settings.Table.DoubleClickEvent.Tab" Russian="Вкладка"/>
   <Local Name="Settings.CalendarEvents.NoteView.ToolTip" Russian="Всплывающая панель"/>
   <Local Name="Settings.CalendarEvents.NoteView.List" Russian="В списке"/>
   <Local Name="Settings.TabBar.SelectionBehavior.SelectLeftTab" Russian="Выбрать первую вкладку слева"/>

@@ -7,7 +7,7 @@
   
   <_SettingsGroup IsSystem="true" UID="{12B776E9-CE2E-44A8-855D-67EDB4E58CD2}" Name="Tables" LocalName="Таблицы" IconName="Settings.Tables" Order="3" System="true"/>
   <_Settings IsSystem="true" UID="{77BA2566-D78D-467A-92CE-DFD987F21C03}" Group="{12B776E9-CE2E-44A8-855D-67EDB4E58CD2}" Order="1" Name="MinimizeHeightRows" Type="Bool" LocalName="Минимизировать высоту строк" Hint="Высота всех строк в таблицах будет минимальной." DefaultValue="false"/>
-  <_Settings IsSystem="true" UID="{E0B5EED0-947E-408E-9666-944CC31C5D1A}" Group="{12B776E9-CE2E-44A8-855D-67EDB4E58CD2}" Order="2" Name="DoubleClickEvent" Type="String" WidgetEditName="ISComboTableDoubleClickEvent" LocalName="Действие при двойном нажатии" DefaultValue="Tab"/>
+  <_Settings IsSystem="true" UID="{E0B5EED0-947E-408E-9666-944CC31C5D1A}" Group="{12B776E9-CE2E-44A8-855D-67EDB4E58CD2}" Order="2" Name="DoubleClickEvent" Type="String" WidgetEditName="ISComboTableDoubleClickEvent" LocalName="Тип открытия записей" DefaultValue="Tab"/>
   <_Settings IsSystem="true" UID="{22C5FF3B-83DE-4C8D-BC2B-8A456C8C57D4}" Group="{12B776E9-CE2E-44A8-855D-67EDB4E58CD2}" Order="3" Name="ShowHorizontalHeader" Type="Bool" LocalName="Показывать заголовоки столбцов" DefaultValue="true"/>
   <_Settings IsSystem="true" UID="{6D14F262-B98E-4FBD-B9CC-A1A8E7B52D9F}" Group="{12B776E9-CE2E-44A8-855D-67EDB4E58CD2}" Order="4" Name="ShowVerticalHeader" Type="Bool" LocalName="Показывать заголовоки строк" DefaultValue="true"/>
   <_Settings IsSystem="true" UID="{EFD021B1-5267-4DFA-8D11-A4FF4A419536}" Group="{12B776E9-CE2E-44A8-855D-67EDB4E58CD2}" Order="5" Name="ShowCountRecord" Type="Bool" LocalName="Показывать количество записей" Hint="Под таблицей будет надпись, отображающая количество строк в таблице." DefaultValue="true"/>
