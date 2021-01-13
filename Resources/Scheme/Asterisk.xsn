@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <XSN Name="Asterisk.xsn">
 
-  <Table Name="_AsteriskCalls" UID="{D7F7E074-5E66-441D-9C0C-DB9ACCB7C4B2}" Alias="ascl" LocalName="Звонок" LocalListName="Звонки" TitleName="UniqueID" IsSystem="true">
+  <Table Name="_AsteriskCalls" UID="{D7F7E074-5E66-441D-9C0C-DB9ACCB7C4B2}" Alias="ascl" LocalName="Звонок" LocalListName="Звонки" TitleName="UniqueID" IsSystem="true" ShowOnly="true">
     <Fields>
       <Field UID="{8A0E4977-6513-42C3-A8E5-36894EDB735B}" Name="Source" Type="String" LabelName="Кто звонил" LocalListName="Кто звонил"/>
       <Field UID="{031C924C-47D6-4256-8D20-C0E6C0407D74}" Name="Destination" Type="String" LabelName="Куда звонили" LocalListName="Куда звонили"/>
