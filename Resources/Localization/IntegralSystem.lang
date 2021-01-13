@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LANG Name="IntegralSystem">
 
+  <!--Конфигурации-->
+  <Local Name="Configuration.OilSphere" Russian="ООО «Нефтесфера»"/>
+  <Local Name="Configuration.Empty" Russian="Пустая конфигурация"/>
+
   <Local Name="DescriptionApplication" Russian="Система учёта данных IntegralSystem — это современный инструмент для ведения учёта базы данных любого предприятия. IntegralSystem позволяет в комплексе автоматизировать задачи оперативного и управленческого учёта, анализа и отчетных операций."/>
 
   <Local Name="Form.Authorization.ConnectionSettings" Russian="Настройки подключения (F9)"/>
