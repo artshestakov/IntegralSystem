@@ -84,7 +84,6 @@
   <Local Name="Carat.Error.Query.UserPasswordEdit.UserNotExist" Russian="Пользователь с идентификатором %1 не существует."/>
   <Local Name="Carat.Error.Query.UserPasswordEdit.InvalidCurrentLoginOrPassword" Russian="Текущие логин или пароль указаны неверно."/>
   <Local Name="Carat.Error.Query.UserPasswordEdit.UpdateHash" Russian="Не удалось обновить пароль."/>
-  <Local Name="Carat.Error.Query.UserPasswordEdit.UserNotExist" Russian="Пользователь с идентификатором %1 не существует."/>
 
   <Local Name="Carat.Error.Query.UserPasswordReset.UserIsSystem" Russian="Пользователь является системным, сброс пароля невозможен."/>
   <Local Name="Carat.Error.Query.UserPasswordReset.PasswordIsNull" Russian="Пароль у пользователя не установлен, сброс пароля невозможен."/>

@@ -86,10 +86,9 @@ static QString QS_TASK_PRIORITY = PREPARE_QUERY("SELECT tspr_id, tspr_name, tspr
 static QString QU_USER_HASH = PREPARE_QUERY("UPDATE _users SET "
 											"usrs_hash = :Hash, "
 											"usrs_salt = :Salt "
-											"WHERE usrs_id = :UserID "
-											"RETURNING usrs_fio");
+											"WHERE usrs_id = :UserID");
 //-----------------------------------------------------------------------------
-static QString QS_USER_PASSWORD = PREPARE_QUERY("SELECT usrs_hash, usrs_salt "
+static QString QS_USER_PASSWORD = PREPARE_QUERY("SELECT usrs_hash, usrs_salt, usrs_fio "
 												"FROM _users "
 												"WHERE usrs_id = :UserID");
 //-----------------------------------------------------------------------------
@@ -1556,14 +1555,8 @@ bool ISTcpWorker::UserPasswordEdit(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAns
 		return ErrorQuery(LANG("Carat.Error.Query.UserPasswordEdit.UpdateHash"), qUpdateHash);
 	}
 
-	if (!qUpdateHash.First()) //Нет такого пользователя
-	{
-		ErrorString = LANG("Carat.Error.Query.UserPasswordEdit.UserNotExist").arg(UserID.toUInt());
-		return false;
-	}
-
 	//Фиксируем изменение пароля
-	Protocol(TcpMessage->TcpSocket->GetUserID(), CONST_UID_PROTOCOL_USER_PASSWORD_UPDATE, "_Users", ISMetaData::Instance().GetMetaTable("_Users")->LocalListName, UserID, qUpdateHash.ReadColumn("usrs_fio"));
+	Protocol(TcpMessage->TcpSocket->GetUserID(), CONST_UID_PROTOCOL_USER_PASSWORD_UPDATE, "_Users", ISMetaData::Instance().GetMetaTable("_Users")->LocalListName, UserID, qSelectHash.ReadColumn("usrs_fio"));
 	return true;
 }
 //-----------------------------------------------------------------------------
