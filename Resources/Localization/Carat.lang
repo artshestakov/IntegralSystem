@@ -99,6 +99,14 @@
 
   <Local Name="Carat.Error.Query.GetClients.Select" Russian="Не удалось получить список пользователей."/>
 
+  <Local Name="Carat.Error.Query.RecordAdd.ValuesNotExist" Russian="Список значений не указан."/>
+  <Local Name="Carat.Error.Query.RecordAdd.EmptyValues" Russian="Список значений пустой."/>
+  <Local Name="Carat.Error.Query.RecordAdd.FieldNotFound" Russian="Поле &quot;%1&quot; не существует."/>
+  <Local Name="Carat.Error.Query.RecordAdd.BindValue" Russian="Ошибка в параметрах запроса."/>
+  <Local Name="Carat.Error.Query.RecordAdd.Insert.23505" Russian="Не удалось добавить запись в базу данных: нарушение уникальности."/>
+  <Local Name="Carat.Error.Query.RecordAdd.Insert" Russian="Не удалось добавить запись в базу данных."/>
+  <Local Name="Carat.Error.Query.RecordAdd.First" Russian="Запись была добавлена, но сервер не вернул идентификатор и имя."/>
+
   <Local Name="Carat.Error.Query.RecordDelete.NotSpecifiedID" Russian="Вы не указали список идентификаторов записей."/>
   <Local Name="Carat.Error.Query.RecordDelete.ToInt" Russian="Не удалось привести к целому числу один из идентификаторов."/>
   <Local Name="Carat.Error.Query.RecordDelete.Select" Russian="Не удалось проверить системные записи."/>

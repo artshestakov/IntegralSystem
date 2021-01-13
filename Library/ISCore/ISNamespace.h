@@ -145,6 +145,7 @@ namespace ISNamespace
 		AMT_UserSettingsReset, //Сброс пользовательских настроек
 		AMT_GetRecordCall, //Получить запись разговора
 		AMT_GetClients, //Получить список подключенных клиентов
+		AMT_RecordAdd, //Добавление записи
 		AMT_RecordDelete, //Удаление записи
 		AMT_RecordGet, //Получить запись
 		AMT_DiscussionAdd, //Добавить обсуждение

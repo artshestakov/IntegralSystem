@@ -484,6 +484,7 @@ void ISTcpWorker::Process()
 					case ISNamespace::AMT_UserSettingsReset: Result = UserSettingsReset(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_GetRecordCall: Result = GetRecordCall(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_GetClients: Result = GetClients(tcp_message, TcpAnswer); break;
+					case ISNamespace::AMT_RecordAdd: Result = RecordAdd(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_RecordDelete: Result = RecordDelete(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_RecordGet: Result = RecordGet(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_DiscussionAdd: Result = DiscussionAdd(tcp_message, TcpAnswer); break;
@@ -1727,6 +1728,102 @@ bool ISTcpWorker::GetClients(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	}
 	VariantList.append(VariantListOffline);
 	TcpAnswer->Parameters["Clients"] = VariantList;
+	return true;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::RecordAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+	QVariant TableName = CheckNullField("TableName", TcpMessage);
+	if (!TableName.isValid())
+	{
+		return false;
+	}
+
+	//Получаем указатель на мета-таблицу
+	PMetaTable *MetaTable = GetMetaTable(TableName.toString());
+	if (!MetaTable)
+	{
+		return false;
+	}
+
+	//Проверяем наличие списка значений
+	if (!TcpMessage->Parameters.contains("Values"))
+	{
+		ErrorString = LANG("Carat.Error.Query.RecordAdd.ValuesNotExist");
+		return false;
+	}
+
+	//Проверяем список значений на пустоту
+	QVariantMap Values = TcpMessage->Parameters["Values"].toMap();
+	if (Values.isEmpty())
+	{
+		ErrorString = LANG("Carat.Error.Query.RecordAdd.EmptyValues");
+		return false;
+	}
+
+	//Обходим значения и готовим запрос
+	QString InsertText = "INSERT INTO " + MetaTable->Name.toLower() + '(',
+		ValuesText = "VALUES(";
+	for (const auto &MapItem : Values.toStdMap())
+	{
+		//Получаем мета-поле соответствующее значению
+		PMetaField *MetaField = MetaTable->GetField(MapItem.first);
+		if (!MetaField) //Такого поля нет - ошибка
+		{
+			ErrorString = LANG("Carat.Error.Query.RecordAdd.FieldNotFound");
+			return false;
+		}
+
+		InsertText += MetaTable->Alias + '_' + MetaField->Name.toLower() + ',';
+		ValuesText += ':' + MetaField->Name + ',';
+	}
+	InsertText.chop(1);
+	ValuesText.chop(1);
+
+	//Создаём объект запроса
+	ISQuery qInsert(ISDatabase::Instance().GetDB(DBConnectionName),
+		InsertText + ")\n" + ValuesText + ")\nRETURNING " + MetaTable->Alias + "_id");
+	qInsert.SetShowLongQuery(false);
+
+	//Заполняем параметры запроса
+	for (const auto &MapItem : Values.toStdMap())
+	{
+		if (!qInsert.BindValue(':' + MapItem.first, MapItem.second))
+		{
+			return ErrorQuery(LANG("Carat.Error.Query.RecordAdd.BindValue"), qInsert);
+		}
+	}
+
+	//Выполняем запрос
+	if (!qInsert.Execute())
+	{
+		switch (qInsert.GetErrorNumber())
+		{
+		case 23505: return ErrorQuery(LANG("Carat.Error.Query.RecordAdd.Insert.23505"), qInsert);
+		default:
+			return ErrorQuery(LANG("Carat.Error.Query.RecordAdd.Insert"), qInsert);
+		}
+	}
+
+	//Переходим на первую запись
+	if (!qInsert.First())
+	{
+		ErrorString = LANG("Carat.Error.Query.RecordAdd.First");
+		return false;
+	}
+
+	//Вытаскиваем новый идентификатор и получаем имя записи
+	QVariant ObjectID = qInsert.ReadColumn(0);
+	QString ObjectName;
+	if (!GetObjectName(MetaTable, ObjectID.toUInt(), ObjectName))
+	{
+		return false;
+	}
+
+	//Протоколируем и записываем ответ
+	Protocol(TcpMessage->TcpSocket->GetUserID(), CONST_UID_PROTOCOL_CREATE_OBJECT, MetaTable->Name, MetaTable->LocalListName, ObjectID, ObjectName);
+	TcpAnswer->Parameters["ObjectID"] = ObjectID;
+	TcpAnswer->Parameters["ObjectName"] = ObjectName;
 	return true;
 }
 //-----------------------------------------------------------------------------
