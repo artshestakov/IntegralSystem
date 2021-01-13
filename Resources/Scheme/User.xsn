@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <XSN Name="User.xsn">
   
-  <Table Name="_Users" UID="{6027E727-3704-43FA-BA13-CF7A209ACDA8}" Alias="usrs" LocalName="Пользователь" LocalListName="Пользователи" TitleName="FIO" ObjectForm="ISUserObjectForm" IsSystem="true">
+  <Table Name="_Users" UID="{6027E727-3704-43FA-BA13-CF7A209ACDA8}" Alias="usrs" LocalName="Пользователь" LocalListName="Пользователи" TitleName="FIO" ObjectForm="ISUserObjectForm">
     <Fields>
       <Field UID="{DBE02AFE-2215-471F-825C-9670CEAAC908}" Name="Group" Type="BigInt" LabelName="Группа" LocalListName="Группа"/>
       <Field UID="{79E27A03-6412-4236-B9A2-761DA41E80E6}" Name="FIO" Type="String" LabelName="ФИО" LocalListName="ФИО" NotNull="true"/>
@@ -30,7 +30,7 @@
     </Foreigns>
   </Table>
 
-  <Table Name="_UserGroup" UID="{5E25B938-7938-402D-A60B-6D8AAB1DF513}" Alias="usgp" LocalName="Группа пользователей" LocalListName="Группы пользователей" TitleName="Name" IsSystem="true">
+  <Table Name="_UserGroup" UID="{5E25B938-7938-402D-A60B-6D8AAB1DF513}" Alias="usgp" LocalName="Группа пользователей" LocalListName="Группы пользователей" TitleName="Name">
     <Fields>
       <Field UID="{E4F2FE6C-DFA4-4B8A-AD38-1D39410DC14D}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
       <Field UID="{0E544427-A9C1-4CC6-9741-DEA81321E9B5}" Name="FullAccess" Type="Bool" DefaultValue="false" LabelName="Полный доступ" LocalListName="Полный доступ"/>
