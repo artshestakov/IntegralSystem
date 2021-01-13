@@ -164,6 +164,7 @@ const char API_USER_SETTINGS_RESET[] = "UserSettingsReset"; //Сброс пользователь
 const char API_GET_RECORD_CALL[] = "GetRecordCall"; //Получить запись разговора
 const char API_GET_CLIENTS[] = "GetClients"; //Получить список подключенных клиентов
 const char API_RECORD_ADD[] = "RecordAdd"; //Добавить запись
+const char API_RECORD_EDIT[] = "RecordEdit"; //Добавить запись
 const char API_RECORD_DELETE[] = "RecordDelete"; //Удалить запись
 const char API_RECORD_GET[] = "RecordGet"; //Удалить запись
 const char API_DISCUSSION_ADD[] = "DiscussionAdd"; //Добавить обсуждение

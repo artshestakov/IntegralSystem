@@ -88,6 +88,10 @@ ISNamespace::ApiMessageType ISTcp::GetMessageTypeByName(const QString &Name)
 	{
 		return ISNamespace::AMT_RecordAdd;
 	}
+	else if (Name == API_RECORD_EDIT)
+	{
+		return ISNamespace::AMT_RecordEdit;
+	}
 	else if (Name == API_RECORD_DELETE)
 	{
 		return ISNamespace::AMT_RecordDelete;

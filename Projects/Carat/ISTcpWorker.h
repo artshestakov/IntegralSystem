@@ -56,6 +56,7 @@ private:
 	bool GetRecordCall(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
 	bool GetClients(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
 	bool RecordAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
+	bool RecordEdit(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
 	bool RecordDelete(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
 	bool RecordGet(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
 	bool DiscussionAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);

@@ -485,6 +485,7 @@ void ISTcpWorker::Process()
 					case ISNamespace::AMT_GetRecordCall: Result = GetRecordCall(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_GetClients: Result = GetClients(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_RecordAdd: Result = RecordAdd(tcp_message, TcpAnswer); break;
+					case ISNamespace::AMT_RecordEdit: Result = RecordEdit(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_RecordDelete: Result = RecordDelete(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_RecordGet: Result = RecordGet(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_DiscussionAdd: Result = DiscussionAdd(tcp_message, TcpAnswer); break;
@@ -1766,26 +1767,21 @@ bool ISTcpWorker::RecordAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 		ValuesText = "VALUES(";
 	for (const auto &MapItem : Values.toStdMap())
 	{
-		//Получаем мета-поле соответствующее значению
-		PMetaField *MetaField = MetaTable->GetField(MapItem.first);
-		if (!MetaField) //Такого поля нет - ошибка
+		if (!MetaTable->GetField(MapItem.first)) //Такого поля нет - ошибка
 		{
 			ErrorString = LANG("Carat.Error.Query.RecordAdd.FieldNotFound");
 			return false;
 		}
-
-		InsertText += MetaTable->Alias + '_' + MetaField->Name.toLower() + ',';
-		ValuesText += ':' + MetaField->Name + ',';
+		InsertText += MetaTable->Alias + '_' + MapItem.first.toLower() + ',';
+		ValuesText += ':' + MapItem.first + ',';
 	}
 	InsertText.chop(1);
 	ValuesText.chop(1);
 
-	//Создаём объект запроса
+	//Создаём объект запроса и заполняем его параметрами
 	ISQuery qInsert(ISDatabase::Instance().GetDB(DBConnectionName),
 		InsertText + ")\n" + ValuesText + ")\nRETURNING " + MetaTable->Alias + "_id");
 	qInsert.SetShowLongQuery(false);
-
-	//Заполняем параметры запроса
 	for (const auto &MapItem : Values.toStdMap())
 	{
 		if (!qInsert.BindValue(':' + MapItem.first, MapItem.second))
@@ -1823,6 +1819,86 @@ bool ISTcpWorker::RecordAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	//Протоколируем и записываем ответ
 	Protocol(TcpMessage->TcpSocket->GetUserID(), CONST_UID_PROTOCOL_CREATE_OBJECT, MetaTable->Name, MetaTable->LocalListName, ObjectID, ObjectName);
 	TcpAnswer->Parameters["ObjectID"] = ObjectID;
+	TcpAnswer->Parameters["ObjectName"] = ObjectName;
+	return true;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::RecordEdit(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+	QVariant TableName = CheckNullField("TableName", TcpMessage),
+		ObjectID = CheckNullField("ObjectID", TcpMessage);
+	if (!TableName.isValid() || !ObjectID.isValid())
+	{
+		return false;
+	}
+
+	//Получаем указатель на мета-таблицу
+	PMetaTable *MetaTable = GetMetaTable(TableName.toString());
+	if (!MetaTable)
+	{
+		return false;
+	}
+
+	//Проверяем наличие списка значений
+	if (!TcpMessage->Parameters.contains("Values"))
+	{
+		ErrorString = LANG("Carat.Error.Query.RecordEdit.ValuesNotExist");
+		return false;
+	}
+
+	//Проверяем список значений на пустоту
+	QVariantMap Values = TcpMessage->Parameters["Values"].toMap();
+	if (Values.isEmpty())
+	{
+		ErrorString = LANG("Carat.Error.Query.RecordEdit.EmptyValues");
+		return false;
+	}
+
+	//Обходим значения и готовим запрос
+	QString SqlText = "UPDATE " + MetaTable->Name.toLower() + " SET\n";
+	for (const auto &MapItem : Values.toStdMap())
+	{
+		if (!MetaTable->GetField(MapItem.first)) //Такого поля нет - ошибка
+		{
+			ErrorString = LANG("Carat.Error.Query.RecordEdit.FieldNotFound");
+			return false;
+		}
+		SqlText += MetaTable->Alias + '_' + MapItem.first.toLower() + " = :" + MapItem.first + ",\n";
+	}
+	SqlText.chop(2);
+	SqlText += "\nWHERE " + MetaTable->Alias + "_id = :ObjectID";
+
+	//Создаём объекта запроса и заполняем его параметрами
+	ISQuery qUpdate(ISDatabase::Instance().GetDB(DBConnectionName), SqlText);
+	qUpdate.BindValue(":ObjectID", ObjectID);
+	for (const auto &MapItem : Values.toStdMap())
+	{
+		if (!qUpdate.BindValue(':' + MapItem.first, MapItem.second))
+		{
+			return ErrorQuery(LANG("Carat.Error.Query.RecordEdit.BindValue"), qUpdate);
+		}
+	}
+
+	//Выполняем запрос
+	if (!qUpdate.Execute())
+	{
+		switch (qUpdate.GetErrorNumber())
+		{
+		case 23505: return ErrorQuery(LANG("Carat.Error.Query.RecordEdit.Update.23505"), qUpdate);
+		default:
+			return ErrorQuery(LANG("Carat.Error.Query.RecordEdit.Update"), qUpdate);
+		}
+	}
+
+	//Получаем имя объекта
+	QString ObjectName;
+	if (!GetObjectName(MetaTable, ObjectID.toUInt(), ObjectName))
+	{
+		return false;
+	}
+
+	//Протоколируем и записываем ответ
+	Protocol(TcpMessage->TcpSocket->GetUserID(), CONST_UID_PROTOCOL_EDIT_OBJECT, MetaTable->Name, MetaTable->LocalListName, ObjectID, ObjectName);
 	TcpAnswer->Parameters["ObjectName"] = ObjectName;
 	return true;
 }
