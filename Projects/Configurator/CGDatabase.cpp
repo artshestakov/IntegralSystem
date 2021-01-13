@@ -61,7 +61,7 @@ static QString QS_SEQUENCES = PREPARE_QUERY("SELECT COUNT(*) "
 //-----------------------------------------------------------------------------
 static QString QC_SEQUENCE = "CREATE SEQUENCE public.%1 "
 							 "INCREMENT 1 MINVALUE 1 "
-							 "MAXVALUE 2147483647 START 1 "
+							 "START 1 "
 							 "CACHE 1";
 //-----------------------------------------------------------------------------
 static QString QS_TABLE = PREPARE_QUERY("SELECT COUNT(*) FROM pg_tables WHERE schemaname = current_schema() AND tablename = :TableName");
