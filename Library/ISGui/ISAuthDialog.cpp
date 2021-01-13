@@ -221,11 +221,13 @@ void ISAuthDialog::Input()
 	if (qAuth.Execute()) //Авторизация прошла успешно
 	{
 		QVariantMap AnswerMap = qAuth.GetAnswer();
-		if (AnswerMap["IsNeedUpdate"].toBool()) //Если требуется обновление - предлагаем скачать и установить
+		QVariantMap UpdateClientMap = AnswerMap["UpdateClient"].toMap();
+
+		if (UpdateClientMap["IsNeed"].toBool()) //Если требуется обновление - предлагаем скачать и установить
 		{
 			SetConnecting(false);
 			if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.UpdateAvailable"), LANG("Message.Question.UpdateAvailable.DetailedText")
-				.arg(ISVersionInfo::Instance().Info.Version).arg(AnswerMap["IsNeedUpdateVersion"].toUInt()))) //Пользователь согласился
+				.arg(ISVersionInfo::Instance().Info.Version).arg(UpdateClientMap["NewVersion"].toUInt()))) //Пользователь согласился
 			{
 				ISProcessForm ProcessForm(LANG("UploadingUpdate"), this);
 				ProcessForm.show();
