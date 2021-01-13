@@ -1854,11 +1854,51 @@ bool ISTcpWorker::RecordGet(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 		return false;
 	}
 
-	//Подготовка и выполнение запроса
-	ISQueryModel QueryModel(MetaTable, ISNamespace::QMT_Object);
-	QueryModel.AddCondition("ID", ObjectID);
+	//Формируем SQL-Запрос
+	QString SqlText = "SELECT\n";
+	for (PMetaField *MetaField : MetaTable->Fields) //Обходим поля мета-таблицы
+	{
+		//Если поле является идентификатором или оно скрыто на форме объекта - пропускаем
+		if (MetaField->IsFieldID() || MetaField->HideFromObject)
+		{
+			continue;
+		}
 
-	ISQuery qSelect(ISDatabase::Instance().GetDB(DBConnectionName), QueryModel.GetQueryText());
+		if (MetaField->Foreign) //Если поле ссылается на справочник
+		{
+			//Получаем мета-таблицу, на которую ссылается внешний ключ
+			PMetaTable *MetaTableForeign = ISMetaData::Instance().GetMetaTable(MetaField->Foreign->ForeignClass);
+
+			//Формируем подзапрос
+			SqlText += "(SELECT " + MetaTableForeign->Alias + "_id || ',' || concat(";
+			QStringList StringList = MetaField->Foreign->ForeignViewNameField.split(';');
+			for (const QString &FieldName : StringList)
+			{
+				SqlText += MetaTableForeign->Alias + '_' + FieldName.toLower() + ',';
+			}
+			SqlText.chop(1);
+			SqlText += ") FROM " + MetaTableForeign->Name.toLower() +
+				" WHERE " + MetaTableForeign->Alias + "_id = " + MetaTable->Alias + '_' + MetaField->Name.toLower() + ") AS \"" + MetaField->Name + "\",\n";
+		}
+		else //Поле стандартное
+		{
+			if (MetaField->QueryText.isEmpty()) //Поле не является виртуальным
+			{
+				SqlText += MetaTable->Alias + '_' + MetaField->Name.toLower();
+			}
+			else //Поле является виртуальным
+			{
+				SqlText += '(' + MetaField->QueryText + ')';
+			}
+			SqlText += " AS \"" + MetaField->Name + "\",\n"; //Дополняем именование поля в выборке
+		}
+	}
+	SqlText.chop(2);
+	SqlText += "\nFROM " + MetaTable->Name.toLower() + "\n";
+	SqlText += "WHERE " + MetaTable->Alias + "_id = :ID";
+
+	//Выполняем запрос
+	ISQuery qSelect(ISDatabase::Instance().GetDB(DBConnectionName), SqlText);
 	qSelect.BindValue(":ID", ObjectID);
 	if (!qSelect.Execute()) //Ошибка запроса
 	{

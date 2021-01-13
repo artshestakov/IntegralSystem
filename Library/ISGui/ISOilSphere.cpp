@@ -693,17 +693,17 @@ void ISOilSphere::GasStationStatementObjectForm::AfterShowEvent()
 //-----------------------------------------------------------------------------
 void ISOilSphere::GasStationStatementObjectForm::FillInBased()
 {
-	unsigned int SelectedID = ISGui::SelectObject("GasStationStatement");
-	if (SelectedID) //Если запись была выбрана - заполняем
+	ISObjectPair SelectedObject = ISGui::SelectObject("GasStationStatement");
+	if (SelectedObject.first) //Если запись была выбрана - заполняем
 	{
-		if (SelectedID == GetObjectID())
+		if (SelectedObject.first == GetObjectID())
 		{
 			ISMessageBox::ShowWarning(this, LANG("OilSphere.Message.Warning.FillInBased"));
 		}
 		else
 		{
 			ISQuery qSelect(QS_FILL_IN_BASED);
-			qSelect.BindValue(":StatementID", SelectedID);
+			qSelect.BindValue(":StatementID", SelectedObject.first);
 			if (qSelect.ExecuteFirst())
 			{
 				SetFieldValue("BalanceBeginChange", qSelect.ReadColumn("gsts_balanceendchange").toDouble());

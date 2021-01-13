@@ -13,7 +13,7 @@ public:
 	virtual ~ISSelectListDialog();
 
 	bool Exec() override;
-	unsigned int GetSelectedObject() const;
+	ISObjectPair GetSelectedObject() const;
 	ISVectorUInt GetSelectedObjects() const;
 
 protected:

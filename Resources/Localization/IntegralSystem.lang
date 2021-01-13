@@ -90,6 +90,7 @@
   <Local Name="Message.Error.PasswordsNotEqual" Russian="Пароли не совпадают!"/>
   <Local Name="Message.Error.DownloadUpdate" Russian="Не удалось загрузить обновление!"/>
   <Local Name="Message.Error.SaveUpdate" Russian="Не удалось сохранить файл обновления!"/>
+  <Local Name="Message.Error.InvalidListValue" Russian="Невалидное значение!"/>
   <Local Name="Message.Object.Delete" Russian="Вы действительно хотите удалить выбранную запись?"/>
   <Local Name="Message.Objects.Delete" Russian="Вы действительно удалить выбранные записи (%1 шт.)?"/>
   <Local Name="Message.Warning.SystemObject.NotEdit" Russian="Запрещено редактировать системные записи."/>

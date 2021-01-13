@@ -15,7 +15,6 @@
 #include "ISMessageBox.h"
 #include "ISUserRoleEntity.h"
 #include "ISSystem.h"
-#include "ISDatabaseHelper.h"
 #include "ISDelegates.h"
 #include "ISMetaData.h"
 #include "ISConstants.h"
@@ -229,6 +228,19 @@ ISListBaseForm::~ISListBaseForm()
 int ISListBaseForm::GetCurrentRowIndex()
 {
 	return TableView->selectionModel()->currentIndex().row();
+}
+//-----------------------------------------------------------------------------
+ISObjectPair ISListBaseForm::GetObject()
+{
+	ISModelRecord CurrentRecord = GetCurrentRecord();
+	QString ObjectName;
+	QStringList TitleNameFields = MetaTable->TitleName.split(';');
+	for (const QString &FieldName : TitleNameFields)
+	{
+		ObjectName += TcpModel->data(TcpModel->index(GetCurrentRowIndex(), TcpModel->GetFieldIndex(FieldName))).toString() + " ";
+	}
+	ObjectName.chop(1);
+	return ISObjectPair(CurrentRecord.ID, ObjectName);
 }
 //-----------------------------------------------------------------------------
 unsigned int ISListBaseForm::GetObjectID()

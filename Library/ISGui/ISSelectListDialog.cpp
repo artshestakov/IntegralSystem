@@ -37,9 +37,9 @@ bool ISSelectListDialog::Exec()
 	return ISInterfaceDialogForm::Exec();
 }
 //-----------------------------------------------------------------------------
-unsigned int ISSelectListDialog::GetSelectedObject() const
+ISObjectPair ISSelectListDialog::GetSelectedObject() const
 {
-	return SelectListForm->GetObjectID();
+	return SelectListForm->GetObject();
 }
 //-----------------------------------------------------------------------------
 ISVectorUInt ISSelectListDialog::GetSelectedObjects() const

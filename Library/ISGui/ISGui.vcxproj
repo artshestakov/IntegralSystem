@@ -195,7 +195,6 @@
     <ClCompile Include="ISControls.cpp" />
     <ClCompile Include="ISCreatedObjectsEntity.cpp" />
     <ClCompile Include="ISDaDataService.cpp" />
-    <ClCompile Include="ISDatabaseHelper.cpp" />
     <ClCompile Include="ISDefinesGui.cpp" />
     <ClCompile Include="ISDelegates.cpp" />
     <ClCompile Include="ISDesktopParagraph.cpp" />
@@ -397,7 +396,6 @@
     <ClInclude Include="ISControls.h" />
     <QtMoc Include="ISCreatedObjectsEntity.h" />
     <QtMoc Include="ISDaDataService.h" />
-    <ClInclude Include="ISDatabaseHelper.h" />
     <ClInclude Include="ISDefinesGui.h" />
     <ClInclude Include="ISFavorites.h" />
     <ClInclude Include="ISGui.h" />

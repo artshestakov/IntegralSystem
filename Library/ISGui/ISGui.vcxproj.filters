@@ -151,9 +151,6 @@
     <ClCompile Include="ISDaDataService.cpp">
       <Filter>System</Filter>
     </ClCompile>
-    <ClCompile Include="ISDatabaseHelper.cpp">
-      <Filter>System</Filter>
-    </ClCompile>
     <ClCompile Include="ISDefinesGui.cpp">
       <Filter>System</Filter>
     </ClCompile>
@@ -636,9 +633,6 @@
       <Filter>System</Filter>
     </ClInclude>
     <ClInclude Include="ISControls.h">
-      <Filter>System</Filter>
-    </ClInclude>
-    <ClInclude Include="ISDatabaseHelper.h">
       <Filter>System</Filter>
     </ClInclude>
     <ClInclude Include="ISDefinesGui.h">

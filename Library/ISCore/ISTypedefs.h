@@ -21,5 +21,6 @@ typedef std::vector<QVariant> ISVectorVariant;
 typedef std::vector<QByteArray> ISVectorByteArray;
 typedef std::vector<QVariantMap> ISVectorMap;
 typedef std::chrono::time_point<std::chrono::steady_clock> ISTimePoint;
+typedef std::pair<unsigned int, QString> ISObjectPair;
 //-----------------------------------------------------------------------------
 #endif

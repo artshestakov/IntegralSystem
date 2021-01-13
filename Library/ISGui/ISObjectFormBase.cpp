@@ -15,7 +15,6 @@
 #include "ISPopupMessage.h"
 #include "ISProtocol.h"
 #include "ISListBaseForm.h"
-#include "ISDatabaseHelper.h"
 #include "ISFavorites.h"
 #include "ISCreatedObjectsEntity.h"
 #include "ISUserRoleEntity.h"
@@ -422,11 +421,7 @@ void ISObjectFormBase::CreateWidgetObject()
 				{
 					continue;
 				}
-
-				//Получаем виджет поля по имени и если это справочное поле - получаем и устанавливаем ID, иначе - устаналиваем значение "как есть"
-				FieldsMap.at(MapItem.first)->SetValue(MetaTable->GetField(MapItem.first)->Foreign ?
-					ISDatabaseHelper::GetObjectIDToList(MetaTable, MetaTable->GetField(MapItem.first), ObjectID) :
-					MapItem.second);
+				FieldsMap.at(MapItem.first)->SetValue(MapItem.second);
 			}
 		}
 		else

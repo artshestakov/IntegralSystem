@@ -27,6 +27,7 @@ public:
 	virtual ~ISListBaseForm();
 
 	int GetCurrentRowIndex(); //Получить индекс текущей строки
+	ISObjectPair GetObject(); //Получить объект
 	unsigned int GetObjectID(); //Получить идентификатор текущего объекта
 	unsigned int GetObjectID(int RowIndex); //Получить идентификатор объекта по индексу строки
 	int GetRowIndex(int object_id); //Получить индекс строки по идентификатору объекта

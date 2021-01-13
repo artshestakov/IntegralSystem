@@ -562,12 +562,12 @@ ISComboSearchBase* ISGui::CreateSearchOperator(QWidget *parent, ISNamespace::Fie
 	return ComboSearchBase;
 }
 //-----------------------------------------------------------------------------
-unsigned int ISGui::SelectObject(const QString &TableName, int SelectObjectID)
+ISObjectPair ISGui::SelectObject(const QString &TableName, int SelectObjectID)
 {
 	SetWaitGlobalCursor(true);
 	ISSelectListDialog SelectDialogForm(ISNamespace::SLM_Single, TableName, SelectObjectID);
 	SetWaitGlobalCursor(false);
-	return SelectDialogForm.Exec() ? SelectDialogForm.GetSelectedObject() : 0;
+	return SelectDialogForm.Exec() ? SelectDialogForm.GetSelectedObject() : ISObjectPair();
 }
 //-----------------------------------------------------------------------------
 ISVectorUInt ISGui::SelectObjects(const QString &TableName)

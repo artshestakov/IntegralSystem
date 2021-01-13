@@ -8,13 +8,11 @@
 #include "ISCore.h"
 #include "ISGui.h"
 #include "ISPopupMessage.h"
-#include "ISQuery.h"
 #include "ISDefinesGui.h"
 #include "ISSettingsDatabase.h"
 #include "ISSettings.h"
 #include "ISUserRoleEntity.h"
 #include "ISControls.h"
-#include "ISMetaDataHelper.h"
 #include "ISMetaData.h"
 #include "ISInputDialog.h"
 #include "ISDelegates.h"
@@ -2046,22 +2044,18 @@ ISListEdit::~ISListEdit()
 //-----------------------------------------------------------------------------
 void ISListEdit::SetValue(const QVariant &value)
 {
-	ID = value;
-
-	if (!value.isValid())
+	//Анализируем значение от сервера
+	QString String = value.toString();
+	int Pos = String.indexOf(','); //Ищем первую запятую
+	if (Pos == -1) //Запятая не найдена - ошибка
 	{
-		Clear();
+		ISMessageBox::ShowCritical(this, LANG("Message.Error.InvalidListValue"));
 		return;
 	}
-
-	ISQuery qSelect(ISMetaDataHelper::GenerateSqlQueryFromForeign(MetaForeign, QString(), ID));
-	qSelect.BindValue(":ObjectID", ID);
-	if (qSelect.ExecuteFirst())
-	{
-		QString Name = qSelect.ReadColumn(1).toString();
-		ButtonMain->setText(Name);
-		ValueChanged();
-	}
+	
+	//Запятая найдена - устанавливаем ID и имя объекта на кнопке
+	ID = String.mid(0, Pos);
+	ButtonMain->setText(String.mid(Pos + 1, String.size() - Pos - 1));
 
 	if (ActionEdit)
 	{
@@ -2193,10 +2187,10 @@ void ISListEdit::HidedPopup()
 //-----------------------------------------------------------------------------
 void ISListEdit::ShowListForm()
 {
-	int SelectedID = ISGui::SelectObject(MetaTable->Name, GetValue().toInt());
-	if (SelectedID)
+	ISObjectPair SelectedObject = ISGui::SelectObject(MetaTable->Name, GetValue().toInt());
+	//if (SelectedID)
 	{
-		SetValue(SelectedID);
+		SetValue(QString("%1,%2").arg(SelectedObject.first).arg(SelectedObject.second));
 	}
 }
 //-----------------------------------------------------------------------------
@@ -2205,7 +2199,6 @@ void ISListEdit::CreateObject()
 	if (ISUserRoleEntity::Instance().CheckAccessTable(MetaTable->Name, CONST_UID_GROUP_ACCESS_TYPE_CREATE))
 	{
 		ISObjectFormBase*ObjectFormBase = ISGui::CreateObjectForm(ISNamespace::OFT_New, MetaTable->Name);
-		connect(ObjectFormBase, &ISObjectFormBase::SavedObject, this, &ISListEdit::SetValue);
 		ISGui::ShowObjectForm(ObjectFormBase);
 	}
 	else
@@ -2219,7 +2212,6 @@ void ISListEdit::EditObject()
 	if (ISUserRoleEntity::Instance().CheckAccessTable(MetaTable->Name, CONST_UID_GROUP_ACCESS_TYPE_EDIT))
 	{
 		ISObjectFormBase *ObjectFormBase = ISGui::CreateObjectForm(ISNamespace::OFT_Edit, MetaTable->Name, GetValue().toInt());
-		connect(ObjectFormBase, &ISObjectFormBase::SavedObject, this, &ISListEdit::SetValue);
 		ISGui::ShowObjectForm(ObjectFormBase);
 	}
 	else
