@@ -117,6 +117,7 @@ private:
 	std::map<QString, QVariant> VirtualFields; //Виртуальные поля
 
 	bool ModificationFlag;
+	bool RightEdit; //Флаг наличия права на изменение записи
 	QString ObjectName;
 };
 //-----------------------------------------------------------------------------

@@ -364,32 +364,7 @@ ISTcpQueryTable* ISListBaseForm::GetTcpQuery()
 void ISListBaseForm::DoubleClickedTable(const QModelIndex &ModelIndex)
 {
 	Q_UNUSED(ModelIndex);
-	if (MetaTable->ShowOnly)
-	{
-		return;
-	}
-	
-	if (!ISUserRoleEntity::Instance().CheckAccessTable(MetaTable->Name, CONST_UID_GROUP_ACCESS_TYPE_EDIT))
-	{
-		ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.Edit").arg(MetaTable->LocalListName));
-		return;
-	}
-
-	QString EventName = SETTING_STRING(CONST_UID_SETTING_TABLES_DOUBLECLICKEVENT);
-	if (EventName == "Window")
-	{
-		ISObjectFormBase *ObjectFormBase = ISGui::CreateObjectForm(ISNamespace::OFT_Edit, MetaTable->Name, GetObjectID());
-		ObjectFormBase->SetParentObjectID(GetParentObjectID(), GetParentFilterField());
-		connect(ObjectFormBase, &ISObjectFormBase::SavedObject, this, static_cast<void(ISListBaseForm::*)(unsigned int)>(&ISListBaseForm::SetSelectObjectAfterUpdate));
-		connect(ObjectFormBase, &ISObjectFormBase::SavedObject, this, &ISListBaseForm::Updated);
-		connect(ObjectFormBase, &ISObjectFormBase::UpdateList, this, &ISListBaseForm::Update);
-		connect(ObjectFormBase, &ISObjectFormBase::Close, TableView, static_cast<void(ISBaseTableView::*)(void)>(&ISBaseTableView::setFocus));
-		ISGui::ShowObjectForm(ObjectFormBase);
-	}
-	else if (EventName == "Tab")
-	{
-		Edit();
-	}
+	Edit();
 }
 //-----------------------------------------------------------------------------
 void ISListBaseForm::FieldResized(bool Include)
@@ -693,12 +668,6 @@ void ISListBaseForm::Edit()
 	if (CheckIsSystemObject())
 	{
 		ISMessageBox::ShowWarning(this, LANG("Message.Warning.SystemObject.NotEdit"));
-		return;
-	}
-
-	if (!ISUserRoleEntity::Instance().CheckAccessTable(MetaTable->Name, CONST_UID_GROUP_ACCESS_TYPE_EDIT))
-	{
-		ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.Edit").arg(MetaTable->LocalListName));
 		return;
 	}
 

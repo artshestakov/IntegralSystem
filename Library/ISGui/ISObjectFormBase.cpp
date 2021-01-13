@@ -30,6 +30,7 @@ ISObjectFormBase::ISObjectFormBase(ISNamespace::ObjectFormType form_type, PMetaT
 	EditObjectID(nullptr),
 	BeginFieldEdit(nullptr),
 	ModificationFlag(false),
+	RightEdit(ISUserRoleEntity::Instance().CheckAccessTable(MetaTable->Name, CONST_UID_GROUP_ACCESS_TYPE_EDIT)),
 	CentralWidget(nullptr),
 	ActionGroup(new QActionGroup(this))
 {
@@ -250,12 +251,14 @@ void ISObjectFormBase::CreateToolBar()
 	//Сохранить и закрыть карточку
 	ActionSaveClose = ISControls::CreateActionSaveAndClose(ToolBar);
 	ActionSaveClose->setToolTip(LANG("SaveChangeClose"));
+	ActionSaveClose->setVisible(RightEdit);
 	connect(ActionSaveClose, &QAction::triggered, this, &ISObjectFormBase::SaveClose);
 	ToolBar->addAction(ActionSaveClose);
 
 	//Сохранить карточку
 	ActionSave = ISControls::CreateActionSave(ToolBar);
 	ActionSave->setToolTip(LANG("SaveChange"));
+	ActionSave->setVisible(RightEdit);
 	connect(ActionSave, &QAction::triggered, this, &ISObjectFormBase::Save);
 	ToolBar->addAction(ActionSave);
 
@@ -455,13 +458,13 @@ void ISObjectFormBase::AddColumnForField(PMetaField *MetaField, ISFieldEditBase 
 		FieldEditBase->SetValue(MetaField->DefaultValueWidget);
 	}
 
-	if (MetaField->ReadOnly) //Если доступно только для просмотра
+	if (MetaField->ReadOnly || !RightEdit) //Если доступно только для просмотра или прав на изменение нет
 	{
 		LabelField->setTextFormat(Qt::RichText);
 		LabelField->setText(QString("<font>%1:</font><font color=#3D77B2 size=4>*</font>").arg(MetaField->LabelName));
 		LabelField->setToolTip(LANG("FieldReadOnly"));
 		LabelField->setCursor(CURSOR_WHATS_THIS);
-		FieldEditBase->SetReadOnly(MetaField->ReadOnly);
+		FieldEditBase->SetReadOnly(true);
 	}
 	else if (MetaField->NotNull) //Если поле обязательно для заполнения
 	{
@@ -495,7 +498,7 @@ void ISObjectFormBase::AddColumnForField(PMetaField *MetaField, ISFieldEditBase 
 		SetVisibleField(MetaField->Name, false);
 		return;
 	}
-	
+
 	if (!BeginFieldEdit && !MetaField->ReadOnly)
 	{
 		BeginFieldEdit = FieldEditBase;
