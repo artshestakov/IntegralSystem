@@ -85,9 +85,10 @@ static QString QS_TASK_PRIORITY = PREPARE_QUERY("SELECT tspr_id, tspr_name, tspr
 static QString QU_USER_HASH = PREPARE_QUERY("UPDATE _users SET "
 											"usrs_hash = :Hash, "
 											"usrs_salt = :Salt "
-											"WHERE usrs_id = :UserID");
+											"WHERE usrs_id = :UserID "
+											"RETURNING usrs_fio");
 //-----------------------------------------------------------------------------
-static QString QS_USER_PASSWORD = PREPARE_QUERY("SELECT usrs_hash, usrs_salt, usrs_fio "
+static QString QS_USER_PASSWORD = PREPARE_QUERY("SELECT usrs_hash, usrs_salt "
 												"FROM _users "
 												"WHERE usrs_id = :UserID");
 //-----------------------------------------------------------------------------
@@ -1489,12 +1490,6 @@ bool ISTcpWorker::UserPasswordCreate(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpA
 		return ErrorQuery(LANG("Carat.Error.Query.UserPasswordCreate.UpdateHash"), qUpdateHash);
 	}
 
-	if (!qUpdateHash.First()) //Нет такого пользователя
-	{
-		ErrorString = LANG("Carat.Error.Query.UserPasswordCreate.UserNotExist").arg(UserID.toUInt());
-		return false;
-	}
-
 	//Фиксируем создание пароля
 	Protocol(TcpMessage->TcpSocket->GetUserID(), CONST_UID_PROTOCOL_USER_PASSWORD_CREATE, "_Users", ISMetaData::Instance().GetMetaTable("_Users")->LocalListName, UserID, qUpdateHash.ReadColumn("usrs_fio"));
 	return true;
@@ -1555,7 +1550,7 @@ bool ISTcpWorker::UserPasswordEdit(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAns
 	}
 
 	//Фиксируем изменение пароля
-	Protocol(TcpMessage->TcpSocket->GetUserID(), CONST_UID_PROTOCOL_USER_PASSWORD_UPDATE, "_Users", ISMetaData::Instance().GetMetaTable("_Users")->LocalListName, UserID, qSelectHash.ReadColumn("usrs_fio"));
+	Protocol(TcpMessage->TcpSocket->GetUserID(), CONST_UID_PROTOCOL_USER_PASSWORD_UPDATE, "_Users", ISMetaData::Instance().GetMetaTable("_Users")->LocalListName, UserID, qUpdateHash.ReadColumn("usrs_fio"));
 	return true;
 }
 //-----------------------------------------------------------------------------
@@ -1601,12 +1596,6 @@ bool ISTcpWorker::UserPasswordReset(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAn
 	if (!qUpdateHashReset.Execute()) //Не удалось сбросить пароль
 	{
 		return ErrorQuery(LANG("Carat.Error.Query.UserPasswordReset.Reset"), qUpdateHashReset);
-	}
-
-	if (!qUpdateHashReset.First()) //Нет такого пользователя
-	{
-		ErrorString = LANG("Carat.Error.Query.UserPasswordReset.UserNotExist").arg(UserID.toUInt());
-		return false;
 	}
 
 	//Фиксируем сброс пароля
