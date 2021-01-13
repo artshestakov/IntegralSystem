@@ -26,6 +26,7 @@ ISTabWidgetMain::ISTabWidgetMain(QWidget *parent) : QTabWidget(parent)
 
 	ButtonMenu = new QToolButton(this);
 	ButtonMenu->setVisible(false);
+	ButtonMenu->setCheckable(true);
 	ButtonMenu->setAutoRaise(true);
 	ButtonMenu->setToolTip(LANG("AllTabs"));
 	ButtonMenu->setIcon(BUFFER_ICONS("AllTabs"));
@@ -74,6 +75,7 @@ void ISTabWidgetMain::tabRemoved(int index)
 void ISTabWidgetMain::MenuClicked()
 {
 	ISGui::SetWaitGlobalCursor(true);
+	ButtonMenu->setChecked(true);
 	QMenu Menu;
 	for (int i = 0, c = count(); i < c; ++i)
 	{
@@ -92,6 +94,7 @@ void ISTabWidgetMain::MenuClicked()
 	Point.setY(Point.y() + ButtonMenu->height());
 	ISGui::SetWaitGlobalCursor(false);
 	Menu.exec(Point);
+	ButtonMenu->setChecked(false);
 }
 //-----------------------------------------------------------------------------
 void ISTabWidgetMain::ReCreateMenu()
