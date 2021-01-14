@@ -21,6 +21,7 @@ mkdir -p $RPM_BUILD_ROOT/opt/IntegralSystem
 mkdir -p $RPM_BUILD_ROOT/opt/IntegralSystem/sqldrivers
 mkdir -p $RPM_BUILD_ROOT/opt/IntegralSystem/translations
 mkdir -p $RPM_BUILD_ROOT/opt/IntegralSystem/Licenses
+mkdir -p $RPM_BUILD_ROOT/etc/systemd/system
 
 cp $QT_DIR/plugins/sqldrivers/libqsqlpsql.so $RPM_BUILD_ROOT/opt/IntegralSystem/sqldrivers
 cp $QT_DIR/lib/libicudata.so.56 $RPM_BUILD_ROOT/opt/IntegralSystem
@@ -36,29 +37,19 @@ cp $INTEGRAL_SYSTEM_DIR/Bin/%{CONFIGURATION}-%{PLATFORM}/*.so* $RPM_BUILD_ROOT/o
 cp $INTEGRAL_SYSTEM_DIR/Bin/%{CONFIGURATION}-%{PLATFORM}/Carat $RPM_BUILD_ROOT/opt/IntegralSystem
 cp $INTEGRAL_SYSTEM_DIR/Bin/%{CONFIGURATION}-%{PLATFORM}/Configurator $RPM_BUILD_ROOT/opt/IntegralSystem
 cp $INTEGRAL_SYSTEM_DIR/Components/BackuperDB/%{CONFIGURATION}-%{PLATFORM}/BackuperDB $RPM_BUILD_ROOT/opt/IntegralSystem
-cp $INTEGRAL_SYSTEM_DIR/InstallLinux/Carat.service $RPM_BUILD_ROOT/opt/IntegralSystem
+cp $INTEGRAL_SYSTEM_DIR/InstallLinux/Carat.service $RPM_BUILD_ROOT/etc/systemd/system
 cp $INTEGRAL_SYSTEM_DIR/Scripts/RemoveOldBackups.sh $RPM_BUILD_ROOT/opt/IntegralSystem
 cp $INTEGRAL_SYSTEM_DIR/Scripts/WatchTodayLog.sh $RPM_BUILD_ROOT/opt/IntegralSystem
 cp $INTEGRAL_SYSTEM_DIR/Resources/Licenses/* $RPM_BUILD_ROOT/opt/IntegralSystem/Licenses
 
 %files
 /opt/IntegralSystem/*
-
-%postun
-if [[ -f /etc/systemd/system/Carat.service ]]
-then
-	service Carat stop
-	systemctl disable Carat
-	rm -f /etc/systemd/system/Carat.service
-fi
-systemctl daemon-reload
-systemctl reset-failed
+/etc/systemd/system/Carat.service
 
 %post
-if [[ ! -f /etc/systemd/system/Carat.service ]]
-then
-	cp --force /opt/IntegralSystem/Carat.service /etc/systemd/system/Carat.service
-	systemctl enable Carat
-fi
 systemctl daemon-reload
 /opt/IntegralSystem/Carat --conf-create
+
+%postun
+systemctl daemon-reload
+systemctl reset-failed
