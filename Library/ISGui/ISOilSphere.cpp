@@ -10,14 +10,6 @@
 #include "ISDatabase.h"
 #include "ISObjects.h"
 //-----------------------------------------------------------------------------
-static QString QS_FILL_IN_BASED = PREPARE_QUERY("SELECT "
-												 "COALESCE(gsts_balanceendchange, 0) AS gsts_balanceendchange, "
-												 "COALESCE(gsts_cashboxtotalpayment, 0) AS gsts_cashboxtotalpayment, "
-												 "COALESCE(gsts_cashboxtotalactually, 0) AS gsts_cashboxtotalactually, "
-												 "COALESCE(gsts_cashboxkkmtotal, 0) AS gsts_cashboxkkmtotal "
-												 "FROM gasstationstatement "
-												 "WHERE gsts_id = :StatementID");
-//-----------------------------------------------------------------------------
 static QString QS_IMPLEMENTATION_UNLOAD = PREPARE_QUERY("SELECT true AS is_load, ilod_implementation AS implementation_id, ilod_id AS id, impl_date AS date, ilod_cost AS cost "
 														 "FROM implementationload "
 														 "LEFT JOIN implementation ON ilod_implementation = impl_id "
@@ -678,18 +670,20 @@ void ISOilSphere::GasStationStatementObjectForm::FillInBased()
 		}
 		else
 		{
-			ISQuery qSelect(QS_FILL_IN_BASED);
-			qSelect.BindValue(":StatementID", SelectedObject.first);
-			if (qSelect.ExecuteFirst())
+			ISTcpQuery qGetGasStation(API_GET_GAST_STATION);
+			qGetGasStation.BindValue("StatementID", SelectedObject.first);
+			if (qGetGasStation.Execute())
 			{
-				SetFieldValue("BalanceBeginChange", qSelect.ReadColumn("gsts_balanceendchange").toDouble());
-				SetFieldValue("CashboxTotalPayment", qSelect.ReadColumn("gsts_cashboxtotalpayment").toDouble());
-				SetFieldValue("CashboxTotalActually", qSelect.ReadColumn("gsts_cashboxtotalactually").toDouble());
-				SetFieldValue("CashboxKKMTotal", qSelect.ReadColumn("gsts_cashboxkkmtotal").toDouble());
+				QVariantMap AnswerMap = qGetGasStation.GetAnswer();
+				SetFieldValue("BalanceBeginChange", AnswerMap["BalanceEndChange"].toDouble());
+				SetFieldValue("CashboxTotalPayment", AnswerMap["CashboxTotalPayment"].toDouble());
+				SetFieldValue("CashboxTotalActually", AnswerMap["CashboxTotalActually"].toDouble());
+				SetFieldValue("CashboxKKMTotal", AnswerMap["CashboxKKMTotal"].toDouble());
+				SetModificationFlag(false);
 			}
 			else
 			{
-				ISMessageBox::ShowWarning(this, qSelect.GetErrorString());
+				ISMessageBox::ShowWarning(this, qGetGasStation.GetErrorString());
 			}
 		}
 	}

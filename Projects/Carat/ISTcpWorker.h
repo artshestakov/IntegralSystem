@@ -97,6 +97,7 @@ private:
 	bool PeriodContains(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
 	bool GetStockList(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
 	bool StatementAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
+	bool GetGasStation(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
 
 private:
     QString ErrorString; //Текстовое описание ошибки запроса

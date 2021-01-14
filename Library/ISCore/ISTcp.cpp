@@ -240,6 +240,10 @@ ISNamespace::ApiMessageType ISTcp::GetMessageTypeByName(const QString &Name)
 	{
 		return ISNamespace::AMT_StatementAdd;
 	}
+	else if (Name == API_GET_GAST_STATION)
+	{
+		return ISNamespace::AMT_GetGasStation;
+	}
 	return ISNamespace::AMT_Unknown;
 }
 //-----------------------------------------------------------------------------

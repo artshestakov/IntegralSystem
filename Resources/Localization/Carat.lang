@@ -227,4 +227,6 @@
   <Local Name="Carat.Error.Query.StatementAdd.Select" Russian="Не удалось проверить наличие выгрузки."/>
   <Local Name="Carat.Error.Query.StatementAdd.Insert" Russian="Не удалось зафиксировать приход на склад."/>
 
+  <Local Name="Carat.Error.Query.GetGasStation.Select" Russian="Не удалось получить данные."/>
+
 </LANG>

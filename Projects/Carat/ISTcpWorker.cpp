@@ -359,6 +359,14 @@ static QString QI_STATEMENT = PREPARE_QUERY("INSERT INTO gasstationstatement(gst
 											"(SELECT impl_date FROM implementation WHERE impl_id = (SELECT iunl_implementation FROM implementationunload WHERE iunl_id = :ImplementationUnload)), "
 											":VolumeIncome)");
 //-----------------------------------------------------------------------------
+static QString QS_FILL_IN_BASED = PREPARE_QUERY("SELECT "
+												"COALESCE(gsts_balanceendchange, 0) AS gsts_balanceendchange, "
+												"COALESCE(gsts_cashboxtotalpayment, 0) AS gsts_cashboxtotalpayment, "
+												"COALESCE(gsts_cashboxtotalactually, 0) AS gsts_cashboxtotalactually, "
+												"COALESCE(gsts_cashboxkkmtotal, 0) AS gsts_cashboxkkmtotal "
+												"FROM gasstationstatement "
+												"WHERE gsts_id = :StatementID");
+//-----------------------------------------------------------------------------
 ISTcpWorker::ISTcpWorker(const QString &db_host, int db_port, const QString &db_name, const QString &db_user, const QString &db_password)
 	: QObject(),
 	ErrorString(NO_ERROR_STRING),
@@ -539,6 +547,7 @@ void ISTcpWorker::Process()
 					case ISNamespace::AMT_PeriodContains: Result = PeriodContains(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_GetStockList: Result = GetStockList(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_StatementAdd: Result = StatementAdd(tcp_message, TcpAnswer); break;
+					case ISNamespace::AMT_GetGasStation: Result = GetGasStation(tcp_message, TcpAnswer); break;
 					default:
 						ErrorString = LANG("Carat.Error.NotExistFunction").arg(tcp_message->TypeName);
 					}
@@ -3810,7 +3819,7 @@ bool ISTcpWorker::StatementAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	QVariant ImplementationUnload = CheckNullField("ImplementationUnload", TcpMessage),
 		UnloadStock = CheckNullField("UnloadStock", TcpMessage),
 		ValumeIncome = CheckNullField("ValumeIncome", TcpMessage);
-	if (!ImplementationUnload.isValid())
+	if (!ImplementationUnload.isValid() || !UnloadStock.isValid() || !ValumeIncome.isValid())
 	{
 		return false;
 	}
@@ -3843,6 +3852,34 @@ bool ISTcpWorker::StatementAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	}
 
 	//Выгрузка уже существует - все окей
+	return true;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::GetGasStation(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+	QVariant StatementID = CheckNullField("StatementID", TcpMessage);
+	if (!StatementID.isValid())
+	{
+		return false;
+	}
+
+	ISQuery qSelect(ISDatabase::Instance().GetDB(DBConnectionName), QS_FILL_IN_BASED);
+	qSelect.BindValue(":StatementID", StatementID);
+	if (!qSelect.Execute())
+	{
+		return ErrorQuery(LANG("Carat.Error.Query.GetGasStation.Select"), qSelect);
+	}
+
+	if (!qSelect.First())
+	{
+		ErrorString = qSelect.GetErrorString();
+		return false;
+	}
+
+	TcpAnswer->Parameters["BalanceEndChange"] = qSelect.ReadColumn("gsts_balanceendchange");
+	TcpAnswer->Parameters["CashboxTotalPayment"] = qSelect.ReadColumn("gsts_cashboxtotalpayment");
+	TcpAnswer->Parameters["CashboxTotalActually"] = qSelect.ReadColumn("gsts_cashboxtotalactually");
+	TcpAnswer->Parameters["CashboxKKMTotal"] = qSelect.ReadColumn("gsts_cashboxkkmtotal");
 	return true;
 }
 //-----------------------------------------------------------------------------
