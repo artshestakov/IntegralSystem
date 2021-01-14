@@ -3,7 +3,6 @@ AppId={{757D746C-0676-404E-BC4C-40246AB5E38}
 AppName=IntegralSystem
 AppVerName=IntegralSystem
 AppVersion=${VERSION}
-VersionInfoVersion=${VERSION}
 DefaultDirName={sd}\IntegralSystem
 DefaultGroupName=IntegralSystem
 OutputDir=..\Output

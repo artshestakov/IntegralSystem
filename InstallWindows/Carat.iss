@@ -3,7 +3,6 @@ AppId={{952CCC6B-DBA2-431A-94B5-FA4BF434CB4D}
 AppName=Carat
 AppVerName=Carat
 AppVersion=${VERSION}
-VersionInfoVersion=${VERSION}
 DefaultDirName={sd}\Carat
 DefaultGroupName=Carat
 OutputDir=..\Output
