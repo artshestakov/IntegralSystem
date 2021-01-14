@@ -41,7 +41,6 @@ HEADERS += \
     ISNamespace.h \
     ISProperty.h \
     ISQuery.h \
-    ISQueryPool.h \
     ISQueryText.h \
     ISRandom.h \
     ISRestWorker.h \
@@ -70,7 +69,6 @@ SOURCES += \
     ISMetaDataHelper.cpp \
     ISProperty.cpp \
     ISQuery.cpp \
-    ISQueryPool.cpp \
     ISQueryText.cpp \
     ISRandom.cpp \
     ISRestWorker.cpp \
