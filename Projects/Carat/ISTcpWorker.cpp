@@ -3017,6 +3017,7 @@ bool ISTcpWorker::GetGroupRights(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
 
 	//Обходим таблицы
 	QVariantList TablesList;
+	QVariantMap TablesMap; //Этот контейнер нужен для сортировки списка таблиц по алфавиту
 	ISQuery qSelectTables(ISDatabase::Instance().GetDB(DBConnectionName), QS_GROUP_RIGHT_TABLE);
 	for (PMetaTable *MetaTable : ISMetaData::Instance().GetTables())
 	{
@@ -3029,7 +3030,6 @@ bool ISTcpWorker::GetGroupRights(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
 		QVariantMap TableMap =
 		{
 			{ "TableName", MetaTable->Name },
-			{ "LocalName", MetaTable->LocalListName },
 			{ "Rights", QVariantList() }
 		};
 		qSelectTables.BindValue(":GroupID", GroupID);
@@ -3047,7 +3047,14 @@ bool ISTcpWorker::GetGroupRights(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
 		{
 			return ErrorQuery(LANG("Carat.Error.Query.GetGroupRights.SelectTables"), qSelectTables);
 		}
-		TablesList.append(TableMap);
+		TablesMap[MetaTable->LocalListName] = TableMap;
+	}
+
+	for (const auto &MapItem : TablesMap.toStdMap())
+	{
+		QVariantMap TempMap = MapItem.second.toMap();
+		TempMap["LocalName"] = MapItem.first;
+		TablesList.append(TempMap);
 	}
 
 	//Получаем спец. права
