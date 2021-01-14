@@ -3725,17 +3725,7 @@ bool ISTcpWorker::GetForeignList(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
 	SqlText += ") ";
 	SqlText += "AS Value\n";
 	SqlText += "FROM " + MetaTableForeign->Name + "\n";
-
-	SqlText += "ORDER BY ";
-
-	if (!MetaField->Foreign->OrderField.isEmpty()) //Если указано поле для сортировки
-	{
-		SqlText += MetaTableForeign->Alias + '_' + MetaField->Foreign->OrderField + " ASC";
-	}
-	else
-	{
-		SqlText += "2 ASC";
-	}
+	SqlText += "ORDER BY 2 ASC";
 
 	//Выполняем запрос
 	ISQuery qSelect(ISDatabase::Instance().GetDB(DBConnectionName), SqlText);

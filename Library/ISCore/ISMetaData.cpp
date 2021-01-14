@@ -853,7 +853,6 @@ bool ISMetaData::InitializeXSNTableForeigns(PMetaTable *MetaTable, const QDomNod
 				DomNamedNodeMap.namedItem("ForeignClass").nodeValue(),
 				DomNamedNodeMap.namedItem("ForeignField").nodeValue(),
 				DomNamedNodeMap.namedItem("ForeignViewNameField").nodeValue(),
-				DomNamedNodeMap.namedItem("OrderField").nodeValue(),
 				MetaTable->Name);
 			MetaField->Foreign = MetaForeign;
 		}

@@ -48,9 +48,9 @@ struct PMetaIndex : public PMetaBase
 //-----------------------------------------------------------------------------
 struct PMetaForeign : public PMetaBase
 {
-	PMetaForeign(const QString &field, const QString &foreign_class, const QString &foreign_field, const QString &foreign_view_name_field, const QString &order_field = QString(), const QString &table_name = QString())
+	PMetaForeign(const QString &field, const QString &foreign_class, const QString &foreign_field, const QString &foreign_view_name_field, const QString &table_name = QString())
 		: PMetaBase("Foreign"),
-		Field(field), ForeignClass(foreign_class), ForeignField(foreign_field), ForeignViewNameField(foreign_view_name_field), OrderField(order_field), TableName(table_name) { }
+		Field(field), ForeignClass(foreign_class), ForeignField(foreign_field), ForeignViewNameField(foreign_view_name_field), TableName(table_name) { }
 
 	QString GetName() const //Получить имя внешнего ключа
 	{
@@ -61,7 +61,6 @@ struct PMetaForeign : public PMetaBase
 	QString ForeignClass; //На какую таблицу ссылкается внешний ключ
 	QString ForeignField; //На какое поле ссылается внешний ключ
 	QString ForeignViewNameField; //Какое поле (поля) отображать в запросе на выборку
-	QString OrderField; //Поле по которому будет происходить сортировка
 
 	QString TableName; //Таблица, содержащая поле, на которое устанавливается внешний ключ
 };
