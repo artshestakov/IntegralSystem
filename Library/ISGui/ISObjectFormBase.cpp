@@ -5,7 +5,6 @@
 #include "ISBuffer.h"
 #include "ISMetaData.h"
 #include "ISSettings.h"
-#include "ISCore.h"
 #include "ISGui.h"
 #include "ISControls.h"
 #include "ISMessageBox.h"

@@ -4,7 +4,6 @@
 #include "ISAssert.h"
 #include "ISMessageBox.h"
 #include "ISLocalization.h"
-#include "ISCore.h"
 #include "ISSettings.h"
 #include "ISTcpQuery.h"
 #include "ISLabels.h"

@@ -1,6 +1,5 @@
 #include "ISCaratApplication.h"
 #include "ISConstants.h"
-#include "ISCore.h"
 #include "ISLogger.h"
 #include "ISLocalization.h"
 #include "ISConfig.h"

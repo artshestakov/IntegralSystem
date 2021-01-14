@@ -210,7 +210,6 @@
     <ClCompile Include="ISAssert.cpp" />
     <ClCompile Include="ISConfig.cpp" />
     <ClCompile Include="ISConsole.cpp" />
-    <ClCompile Include="ISCore.cpp" />
     <ClCompile Include="ISDatabase.cpp" />
     <ClCompile Include="ISDebug.cpp" />
     <ClCompile Include="ISLocalization.cpp" />
@@ -242,7 +241,6 @@
     <ClInclude Include="ISConfig.h" />
     <ClInclude Include="ISConsole.h" />
     <ClInclude Include="ISConstants.h" />
-    <ClInclude Include="ISCore.h" />
     <ClInclude Include="iscore_global.h" />
     <ClInclude Include="ISDebug.h" />
     <ClInclude Include="ISLocalization.h" />

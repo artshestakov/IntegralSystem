@@ -8,7 +8,6 @@
 #include "ISMetaData.h"
 #include "ISMessageBox.h"
 #include "ISPopupMessage.h"
-#include "ISCore.h"
 #include "ISSelectListDialog.h"
 //#include "ISTaskViewForm.h"
 #include "ISSplashWidget.h"

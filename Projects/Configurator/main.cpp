@@ -3,7 +3,6 @@
 #include "ISMetaData.h"
 #include "ISConsole.h"
 #include "ISDatabase.h"
-#include "ISCore.h"
 #include "ISSystem.h"
 #include "ISDebug.h"
 #include "ISMetaDataHelper.h"

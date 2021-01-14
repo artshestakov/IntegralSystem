@@ -6,7 +6,6 @@
 #include "ISConstants.h"
 #include "ISGui.h"
 #include "ISMetaData.h"
-#include "ISCore.h"
 #include "ISMessageBox.h"
 #include "ISTcpQuery.h"
 //-----------------------------------------------------------------------------

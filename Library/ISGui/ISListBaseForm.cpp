@@ -1,7 +1,6 @@
 #include "ISListBaseForm.h"
 #include "ISDefinesGui.h"
 #include "ISAssert.h"
-#include "ISCore.h"
 #include "ISSettings.h"
 #include "ISLocalization.h"
 #include "ISPopupMessage.h"

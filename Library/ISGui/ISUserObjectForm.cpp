@@ -3,7 +3,6 @@
 #include "ISControls.h"
 #include "ISLocalization.h"
 #include "ISMessageBox.h"
-#include "ISCore.h"
 #include "ISGui.h"
 #include "ISSystem.h"
 #include "ISUserPhotoCreator.h"

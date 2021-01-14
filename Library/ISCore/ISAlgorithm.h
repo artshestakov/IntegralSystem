@@ -130,6 +130,10 @@ namespace ISAlgorithm
 	//! \return возвращает версию. Если вернулся ноль - версия не была извлечена
 	ISCORE_EXPORT unsigned int ExtractVersionFile(const QString &FilePath);
 
+	//! \Подготовить номер телефона (удалить все кроме цифр)
+	//! \param PhoneNumber строка, которая содержит номер телефона
+	ISCORE_EXPORT void PhoneNumberPrepare(QString &PhoneNumber);
+
 	//Поиск значения в векторе
     template <typename T> bool VectorContains(const std::vector<T> &Vector, T Value)
     {

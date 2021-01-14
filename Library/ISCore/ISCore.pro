@@ -29,7 +29,6 @@ HEADERS += \
     ISConfig.h \
     ISConsole.h \
     ISConstants.h \
-    ISCore.h \
     ISDebug.h \
     ISTcp.h \
     iscore_global.h \
@@ -60,7 +59,6 @@ SOURCES += \
     ISAssert.cpp \
     ISConfig.cpp \
     ISConsole.cpp \
-    ISCore.cpp \
     ISDatabase.cpp \
     ISDebug.cpp \
     ISLocalization.cpp \

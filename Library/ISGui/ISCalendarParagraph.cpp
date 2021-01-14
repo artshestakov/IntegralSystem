@@ -8,7 +8,6 @@
 #include "ISTcpQuery.h"
 #include "ISMessageBox.h"
 #include "ISInputDialog.h"
-#include "ISCore.h"
 #include "ISDefinesGui.h"
 //-----------------------------------------------------------------------------
 ISCalendarParagraph::ISCalendarParagraph(QWidget *parent)

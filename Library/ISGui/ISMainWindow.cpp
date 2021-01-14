@@ -1,6 +1,5 @@
 #include "ISMainWindow.h"
 #include "ISDefinesGui.h"
-#include "ISCore.h"
 #include "ISGui.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"

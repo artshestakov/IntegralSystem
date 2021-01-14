@@ -261,3 +261,15 @@ unsigned int ISAlgorithm::ExtractVersionFile(const QString &FilePath)
 	return Version;
 }
 //-----------------------------------------------------------------------------
+void ISAlgorithm::PhoneNumberPrepare(QString &PhoneNumber)
+{
+	for (int i = 0; i < PhoneNumber.size(); ++i) //Обходим строку с номером телефона
+	{
+		if (!PhoneNumber[i].isDigit()) //Если текущий символ не является цифрой
+		{
+			PhoneNumber.remove(i, 1); //Удаляем этот символ
+			--i; //И уменьшаем индекс
+		}
+	}
+}
+//-----------------------------------------------------------------------------

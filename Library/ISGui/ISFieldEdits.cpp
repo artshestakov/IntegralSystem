@@ -5,7 +5,6 @@
 #include "ISSystem.h"
 #include "ISMessageBox.h"
 #include "ISFileDialog.h"
-#include "ISCore.h"
 #include "ISGui.h"
 #include "ISPopupMessage.h"
 #include "ISDefinesGui.h"
@@ -1436,7 +1435,7 @@ ISPhoneEdit::~ISPhoneEdit()
 QVariant ISPhoneEdit::GetValue() const
 {
 	QString String = ISLineEdit::GetValue().toString();
-	ISCore::PhoneNumberPrepare(String);
+	ISAlgorithm::PhoneNumberPrepare(String);
 	return String.isEmpty() ? QVariant() : String;
 }
 //-----------------------------------------------------------------------------
