@@ -702,6 +702,7 @@ bool ISObjectFormBase::Save()
 		? API_RECORD_ADD : API_RECORD_EDIT);
 	TcpQuery.BindValue("TableName", MetaTable->Name);
 	TcpQuery.BindValue("Values", ValuesMap);
+	TcpQuery.BindValue("IsCopy", FormType == ISNamespace::OFT_Copy);
 
 	//≈сли форма открыта на редактирование - дополн€ем запрос идентификатором
 	if (FormType == ISNamespace::OFT_Edit)

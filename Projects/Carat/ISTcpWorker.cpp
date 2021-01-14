@@ -1734,8 +1734,9 @@ bool ISTcpWorker::GetClients(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::RecordAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
-	QVariant TableName = CheckNullField("TableName", TcpMessage);
-	if (!TableName.isValid())
+	QVariant TableName = CheckNullField("TableName", TcpMessage),
+		IsCopy = CheckNullField("IsCopy", TcpMessage);
+	if (!TableName.isValid() || !IsCopy.isValid())
 	{
 		return false;
 	}
@@ -1817,7 +1818,9 @@ bool ISTcpWorker::RecordAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	}
 
 	//Протоколируем и записываем ответ
-	Protocol(TcpMessage->TcpSocket->GetUserID(), CONST_UID_PROTOCOL_CREATE_OBJECT, MetaTable->Name, MetaTable->LocalListName, ObjectID, ObjectName);
+	Protocol(TcpMessage->TcpSocket->GetUserID(),
+		IsCopy.toBool() ? CONST_UID_PROTOCOL_CREATE_COPY_OBJECT: CONST_UID_PROTOCOL_CREATE_OBJECT,
+		MetaTable->Name, MetaTable->LocalListName, ObjectID, ObjectName);
 	TcpAnswer->Parameters["ObjectID"] = ObjectID;
 	TcpAnswer->Parameters["ObjectName"] = ObjectName;
 	return true;
