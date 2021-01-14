@@ -44,15 +44,6 @@ cp $INTEGRAL_SYSTEM_DIR/Resources/Licenses/* $RPM_BUILD_ROOT/opt/IntegralSystem/
 %files
 /opt/IntegralSystem/*
 
-%post
-if [[ ! -f /etc/systemd/system/Carat.service ]]
-then
-	cp --force /opt/IntegralSystem/Carat.service /etc/systemd/system/Carat.service
-	systemctl enable Carat
-fi
-systemctl daemon-reload
-/opt/IntegralSystem/Carat --conf-create
-
 %postun
 if [[ -f /etc/systemd/system/Carat.service ]]
 then
@@ -63,3 +54,11 @@ fi
 systemctl daemon-reload
 systemctl reset-failed
 
+%post
+if [[ ! -f /etc/systemd/system/Carat.service ]]
+then
+	cp --force /opt/IntegralSystem/Carat.service /etc/systemd/system/Carat.service
+	systemctl enable Carat
+fi
+systemctl daemon-reload
+/opt/IntegralSystem/Carat --conf-create
