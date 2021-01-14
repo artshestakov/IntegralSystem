@@ -38,7 +38,6 @@
   <Local Name="AboutForm.Tab.Description" Russian="Описание"/>
   <Local Name="AboutForm.Tab.License" Russian="Лицензионное соглашение"/>
   <Local Name="AboutForm.Tab.Other" Russian="Прочее"/>
-  <Local Name="AboutForm.Tab.Other.SizeTemp" Russian="Размер временных файлов"/>
 
   <!--Messages-->
   <Local Name="Message.Information.NotSavedObjects" Russian="Есть несохранённые (%1 шт.) записи, сохраните или закройте их для выхода из программы."/>
@@ -56,32 +55,10 @@
   <Local Name="Message.Error.CreateCopyStorageFile" Russian="Не удалось создать копию файла &quot;%1&quot;."/>
   <Local Name="Message.Error.InitializeMetaData" Russian="Не удалось иницилизировать мета-данные."/>
   <Local Name="Message.Error.Auth" Russian="Ошибка авторизации!"/>
-  <Local Name="Message.Error.UpdateTaskComment" Russian="Не удалось изменить комментарий к задаче!"/>
-  <Local Name="Message.Error.DeleteTaskComment" Russian="Не удалось удалить комментарий!"/>
   <Local Name="Message.Error.OpenImageFile" Russian="Не удалось открыть файл с изображением!"/>
   <Local Name="Message.Error.SaveImageFile" Russian="Не удалось открыть файл для записи изображения!"/>
   <Local Name="Message.Error.LoadPixmapFromBuffer" Russian="Не удалось прочитать изображение!"/>
-  <Local Name="Message.Error.LoadTaskComments" Russian="Не удалось загрузить комментарии к этой задаче!"/>
-  <Local Name="Message.Error.LoadTaskCheckList" Russian="Не удалось загрузить чек-лист этой задачи!"/>
-  <Local Name="Message.Error.InsertTaskLink" Russian="Не удалось создать связь!"/>
-  <Local Name="Message.Error.DeleteTaskLink" Russian="Не удалось удалить связь!"/>
-  <Local Name="Message.Error.LoadTaskLink" Russian="Не удалось загрузить список связей!"/>
-  <Local Name="Message.Error.InsertTaskFile" Russian="При добавлении файла &quot;%1&quot; произошла ошибка!"/>
-  <Local Name="Message.Error.SelectTaskFileData" Russian="Не удалось получить данные файла!"/>
-  <Local Name="Message.Error.DeleteTaskFile" Russian="Не удалось удалить файл!"/>
-  <Local Name="Message.Error.SelectTaskStatuses" Russian="Не удалось получить статусы задачи!"/>
-  <Local Name="Message.Error.UpdateTaskStatus" Russian="Не удалось изменить статус задачи!"/>
-  <Local Name="Message.Error.InsertTaskStatusHistory" Russian="Не удалось зафиксировать изменение статуса задачи!"/>
   <Local Name="Message.Error.DeleteObject" Russian="Не удалось удалить запись!"/>
-  <Local Name="Message.Error.SelectSubTaskCount" Russian="Не удалось получить количество подзадач!"/>
-  <Local Name="Message.Error.ConvertToSubTask" Russian="Не удалось преобразовать задачу в подзадачу!"/>
-  <Local Name="Message.Error.ConvertToTask" Russian="Не удалось преобразовать подзадачу в задачу!"/>
-  <Local Name="Message.Error.SelectTask" Russian="Не удалось загрузить информацию о задаче %1!"/>
-  <Local Name="Message.Error.PasteImageToTask" Russian="Не удалось прикрепить изображение к задаче!"/>
-  <Local Name="Message.Error.InsertTaskCheckList" Russian="Не удалось добавить элемент чек-листа!"/>
-  <Local Name="Message.Error.UpdateTaskCheckList" Russian="Не удалось переименовать элемент чек-листа!"/>
-  <Local Name="Message.Error.UpdateDoneTaskCheckList" Russian="Не удалось изменить состояние пункта!"/>
-  <Local Name="Message.Error.DeleteTaskCheckList" Russian="Не удалось удалить пункт!"/>
   <Local Name="Message.Error.PasswordsNotEqual" Russian="Пароли не совпадают!"/>
   <Local Name="Message.Error.DownloadUpdate" Russian="Не удалось загрузить обновление!"/>
   <Local Name="Message.Error.SaveUpdate" Russian="Не удалось сохранить файл обновления!"/>
@@ -102,18 +79,8 @@
   <Local Name="Message.Warning.NotAccess.Edit" Russian="У Вас нет прав на изменение данных в таблице &quot;%1&quot;."/>
   <Local Name="Message.Warning.NotAccess.Delete" Russian="У Вас нет прав на удаление данных в таблице &quot;%1&quot;."/>
   <Local Name="Message.Warning.NotAccess.Export" Russian="У Вас нет прав на экспорт данных из таблицы &quot;%1&quot;."/>
-  <Local Name="Message.Warning.NotAccess.Special.TaskClose" Russian="У Вас нет прав на закрытие задачи."/>
-  <Local Name="Message.Warning.NotAccess.Special.TaskReopen" Russian="У Вас нет прав на переоткрытие задачи."/>
-  <Local Name="Message.Warning.NotAccess.Special.TaskEdit" Russian="У Вас нет прав на редактирование задачи."/>
-  <Local Name="Message.Warning.NotAccess.Special.TaskTransformation" Russian="У Вас нет прав на преобразование задачи в подзадачу и наоборот."/>
-  <Local Name="Message.Warning.NotAccess.Special.Appoint" Russian="У Вас нет прав на назначение исполнителя. Вы можете назначить исполнителем только себя."/>
   <Local Name="Message.Warning.UserNotLinkedToGroup" Russian="ВНИМАНИЕ! Вы не заполнили поле &quot;Группа&quot;. Пользователи не привязанные к группе не смогут авторизоваться в программе."/>
   <Local Name="Message.Warning.InvalidAccountLifeTimeDatesUser" Russian="ВНИМАНИЕ! Установлен некорректный диапазон даты начала и окончания срока действия учётной записи."/>
-  <Local Name="Message.Warning.TaskWithNumberNotFound" Russian="Задача с номером #%1 не найдена!"/>
-  <Local Name="Message.Warning.TaskLinkToByMyself" Russian="Связывание задачи с самой собой запрещено!"/>
-  <Local Name="Message.Warning.TaskLinkAlreadyExist" Russian="Связь с выбранной задачей уже существует!"/>
-  <Local Name="Message.Warning.CurrentTaskHaveSubTasks" Russian="Вы не можете преобразовать эту задачу в подзадачу, т.к. она имеет подзадачи."/>
-  <Local Name="Message.Warning.SelectedTaskIsSubTasks" Russian="Выбранная задача является подзадачей!"/>
   <Local Name="Message.Warning.SaveObjectFromContinue" Russian="Сохраните запись для продолжения."/>
   <Local Name="Message.Warning.OneFieldNotFill" Russian="Одно из полей не заполнено!"/>
   <Local Name="Message.Warning.PasswordVerification" Russian="Пароль слишком слабый."/>
@@ -137,18 +104,7 @@
   <Local Name="Message.Question.FileSaved" Russian="Файл успешно сохранен! Открыть его?"/>
   <Local Name="Message.Question.CalendarCloseEvent" Russian="Завершить событие?"/>
   <Local Name="Message.Question.StopInsertingToStorage" Russian="Остановить добавление файлов?"/>
-  <Local Name="Message.Question.DeleteTaskComment" Russian="Удалить комментарий? Это действие нельзя отменить."/>
-  <Local Name="Message.Question.DeleteTaskLink" Russian="Удалить связь? Это действие нельзя отменить."/>
-  <Local Name="Message.Question.TaskFileSave" Russian="Сохранить файл?"/>
-  <Local Name="Message.Question.DeleteTaskFile" Russian="Удалить файл? Это действие нельзя отменить."/>
-  <Local Name="Message.Question.CloneTask" Russian="Клонировать задачу?"/>
-  <Local Name="Message.Question.CloneSubTask" Russian="Клонировать подзадачу?"/>
-  <Local Name="Message.Question.ConvertToTask" Russian="Преобразовать в задачу?"/>
   <Local Name="Message.Question.CopyDiscussion" Russian="Скопировать запись?"/>
-  <Local Name="Message.Question.PasteImageToTask" Russian="В буфере обмена обнаружено изображение, прикрепить его к задаче?"/>
-  <Local Name="Message.Question.CloseInsetingTaskFile" Russian="Остановить прикрепление файлов к задаче?"/>
-  <Local Name="Message.Question.CloseInsetingTaskFile.DetailedText" Russian="Добавлено: %1&#10;Осталось добавить: %2&#10;Всего: %3"/>
-  <Local Name="Message.Question.TaskCheckListDelete" Russian="Удалить пункт?"/>
   <Local Name="Message.Question.UpdateAvailable" Russian="Доступно обновление программы. Загрузить его?"/>
   <Local Name="Message.Question.UpdateAvailable.DetailedText" Russian="Текущая версия: %1&#10;Новая версия: %2"/>
   <Local Name="Message.Question.PasswordReset" Russian="Вы уверены что хотите сбросить пароль?"/>
@@ -204,7 +160,6 @@
 
   <!--Other-->
   <Local Name="NoData" Russian="Данных нет"/>
-  <Local Name="Delete" Russian="Удалить"/>
   <Local Name="RecordsCount" Russian="Записей"/>
   <Local Name="Input" Russian="Вход"/>
   <Local Name="Input.ToolTip" Russian="Вход (Enter)"/>
@@ -273,7 +228,6 @@
   <Local Name="AgeNotSelected" Russian="Не указан"/>
   <Local Name="TimeAlert" Russian="Время уведомления"/>
   <Local Name="EnteringSearchQuery" Russian="Введите поисковый запрос"/>
-  <Local Name="Edit" Russian="Изменить"/>
   <Local Name="ListIsEmpty" Russian="Справочник пуст"/>
   <Local Name="OpenUrlLink" Russian="Посетить ссылку"/>
   <Local Name="Rename" Russian="Переименовать"/>
@@ -348,7 +302,6 @@
   <Local Name="FullSearchTextNotResult" Russian="Полнотекстовый поиск не дал результатов."/>
   <Local Name="ClickFromSelectFile" Russian="Нажмите, чтобы выбрать файл"/>
   <Local Name="EnterFileName" Russian="Введите имя файла"/>
-  <Local Name="EnterImageName" Russian="Введите имя изображения"/>
   <Local Name="PasswordResetDone" Russian="Пароль был успешно сброшен"/>
   <Local Name="ThisActionIsNotReversible" Russian="Это действие не обратимо."/>
   <Local Name="ReconnectingDone" Russian="Связь с сервером восстановлена!"/>
@@ -402,79 +355,6 @@
   <Local Name="Settings.TabBar.SelectionBehavior.SelectLeftTab" Russian="Выбрать первую вкладку слева"/>
   <Local Name="Settings.TabBar.SelectionBehavior.SelectRightTab" Russian="Выбрать первую вкладку справа"/>
   <Local Name="Settings.TabBar.SelectionBehavior.SelectPreviousTab" Russian="Выбрать предыдущую вкладку"/>
-
-  <!--Task-->
-  <Local Name="Task.LabelCentral" Russian="Чтобы отобразить список задач, выберите фильтр сверху."/>
-  <Local Name="Task.DesignateMe" Russian="Назначить меня"/>
-  <Local Name="Task.Actions" Russian="Действия"/>
-  <Local Name="Task.ReopenStatus" Russian="Переоткрыть"/>
-  <Local Name="Task.Filter.All" Russian="Все задачи"/>
-  <Local Name="Task.Filter.My" Russian="Мои задачи"/>
-  <Local Name="Task.Filter.Open" Russian="Открытые"/>
-  <Local Name="Task.Filter.InWork" Russian="В работе"/>
-  <Local Name="Task.Filter.Done" Russian="Выполненные"/>
-  <Local Name="Task.Filter.NotDone" Russian="Не будут закрыты"/>
-  <Local Name="Task.Filter.Close" Russian="Закрытые"/>
-  <Local Name="Task.Filter.Today" Russian="Срок сегодня"/>
-  <Local Name="Task.Filter.Tomorrow" Russian="Срок завтра"/>
-  <Local Name="Task.Filter.Expired" Russian="Просрочено"/>
-  <Local Name="Task.CreateTask" Russian="Создать задачу"/>
-  <Local Name="Task.SearchByNumber" Russian="Поиск по номеру задачи"/>
-  <Local Name="Task.SearchByText" Russian="Поиск по тексту"/>
-  <Local Name="Task.SearchByText.Title" Russian="Поиск задач по тексту"/>
-  <Local Name="Task.SearchByText.PlaceholderText" Russian="Поиск по названию, описанию, комментариям и файлам"/>
-  <Local Name="Task.SearchByText.ResultLabel" Russian="Найдено: %1"/>
-  <Local Name="Task.Search" Russian="Поиск задачи"/>
-  <Local Name="Task.InputTaskNumber" Russian="Введите номер задачи"/>
-  <Local Name="Task.ViewFormTitle.Task" Russian="Задача #%1: %2"/>
-  <Local Name="Task.ViewFormTitle.SubTask" Russian="Подзадача #%1: %2"/>
-  <Local Name="Task.Description" Russian="Описание задачи"/>
-  <Local Name="Task.Description.Empty" Russian="Описание отсутствует"/>
-  <Local Name="Task.SubTask.List" Russian="Подзадачи: выполнено %1 из %2"/>
-  <Local Name="Task.SubTask.List.Empty" Russian="Подзадачи: (0)"/>
-  <Local Name="Task.SubTask.ToolTip" Russian="Родительская задача: %1"/>
-  <Local Name="Task.Files" Russian="Файлы (%1)"/>
-  <Local Name="Task.LinkTask" Russian="Связанные задачи (%1)"/>
-  <Local Name="Task.Comments" Russian="Комментарии (%1)"/>
-  <Local Name="Task.CheckList" Russian="Чек-лист (%1)"/>
-  <Local Name="Task.Comment" Russian="Комментарий"/>
-  <Local Name="Task.AddFile" Russian="Добавить файл"/>
-  <Local Name="Task.AddFile.LabelText" Russian="Добавление файла: %1"/>
-  <Local Name="Task.File.Name.File" Russian="Файл: %1"/>
-  <Local Name="Task.File.Name.Image" Russian="Изображение: %1"/>
-  <Local Name="Task.File.Size" Russian="Размер файла: %1"/>
-  <Local Name="Task.File.UserFullName" Russian="Добавил: %1"/>
-  <Local Name="Task.File.CreationDate" Russian="Дата добавления: %1"/>
-  <Local Name="Task.CreateSubTask" Russian="Создать подзадачу"/>
-  <Local Name="Task.AddLink" Russian="Добавить связанную задачу"/>
-  <Local Name="Task.AddComment" Russian="Добавить комментарий"/>
-  <Local Name="Task.InputComment" Russian="Введите комментарий"/>
-  <Local Name="Task.Comment.Answer" Russian="Ответить"/>
-  <Local Name="Task.Comment.DateTime" Russian="Добавлен: %1"/>
-  <Local Name="Task.AddCheck" Russian="Добавить пункт"/>
-  <Local Name="Task.Check" Russian="Пункт"/>
-  <Local Name="Task.Check.InputName" Russian="Введите название:"/>
-  <Local Name="Task.LinkToolTip" Russian="Статус:&#10;%1&#10;&#10;Описание задачи:&#10;%2&#10;&#10;Связал:&#10;%3&#10;&#10;Связь создана:&#10;%4"/>
-  <Local Name="Task.Link.Delete" Russian="Удалить связь"/>
-  <Local Name="Task.Details" Russian="Подробности"/>
-  <Local Name="Task.Right.Executor" Russian="Исполнитель"/>
-  <Local Name="Task.Right.Executor.Empty" Russian="Не назначен"/>
-  <Local Name="Task.Right.Deadline" Russian="Срок выполнения"/>
-  <Local Name="Task.Right.Deadline.Empty" Russian="Дата не указана"/>
-  <Local Name="Task.Right.Owner" Russian="Автор задачи"/>
-  <Local Name="Task.Right.Type" Russian="Тип задачи"/>
-  <Local Name="Task.Right.Type.Empty" Russian="Не выбран"/>
-  <Local Name="Task.Right.Priority" Russian="Приоритет"/>
-  <Local Name="Task.ThisIsImportantTask" Russian="Это важная задача"/>
-  <Local Name="Task.ReopenTaskViewForm" Russian="Перечитать"/>
-  <Local Name="Task.EditTask" Russian="Редактировать"/>
-  <Local Name="Task.CloneTask" Russian="Клонировать задачу"/>
-  <Local Name="Task.CloneSubTask" Russian="Клонировать подзадачу"/>
-  <Local Name="Task.ConvertToTask" Russian="Преобразовать в задачу"/>
-  <Local Name="Task.ConvertToSubTask" Russian="Преобразовать в подзадачу"/>
-  <Local Name="Task.Process.History" Russian="История статусов"/>
-  <Local Name="Task.Process.History.Title" Russian="История изменения статуса задачи: %1"/>
-  <Local Name="Task.Setting.ShowTaskViewFormAfterCreate" Russian="Открыть задачу после создания"/>
 
   <!--File Dialog-->
   <Local Name="FileDialog.Image.Select.Title" Russian="Выбор изображения"/>
@@ -645,7 +525,6 @@
   <Local Name="OpenFolder" Russian="Открыть папку..."/>
   <Local Name="Note" Russian="Примечание"/>
   <Local Name="SelectFile" Russian="Выбрать файл"/>
-  <Local Name="Help" Russian="Помощь"/>
   <Local Name="Settings" Russian="Настройки"/>
   <Local Name="SettingsList" Russian="Настройки списка"/>
   <Local Name="SettingsDefault" Russian="Настройки по умолчанию"/>
