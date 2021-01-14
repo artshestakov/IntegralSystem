@@ -78,7 +78,6 @@ namespace ISNamespace
         ET_Unknown,
         ET_CSV,
         ET_HTML,
-        ET_DBF,
         ET_XML,
 		ET_JSON,
 		ET_SQLITE,

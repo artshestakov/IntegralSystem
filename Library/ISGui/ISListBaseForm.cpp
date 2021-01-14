@@ -869,7 +869,6 @@ void ISListBaseForm::Export()
 	{
 	case ISNamespace::ET_CSV: ExportWorker = new ISExportCSV(MetaTable, TcpModel, this); break;
 	case ISNamespace::ET_HTML: ExportWorker = new ISExportHTML(MetaTable, TcpModel, this); break;
-	case ISNamespace::ET_DBF: ExportWorker = new ISExportDBF(MetaTable, TcpModel, this); break;
 	case ISNamespace::ET_XML: ExportWorker = new ISExportXML(MetaTable, TcpModel, this); break;
 	case ISNamespace::ET_JSON: ExportWorker = new ISExportJSON(MetaTable, TcpModel, this); break;
 	case ISNamespace::ET_SQLITE: ExportWorker = new ISExportSQLite(MetaTable, TcpModel, this); break;

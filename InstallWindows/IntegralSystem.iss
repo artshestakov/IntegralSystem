@@ -76,7 +76,6 @@ Source: ${QTDIR}\plugins\platforms\qwindows${IS_DEBUG}.dll; DestDir: {app}\platf
 Source: ${QTDIR}\plugins\playlistformats\qtmultimedia_m3u${IS_DEBUG}.dll; DestDir: {app}\playlistformats; Flags: ignoreversion recursesubdirs;
 Source: ${QTDIR}\plugins\printsupport\windowsprintersupport${IS_DEBUG}.dll; DestDir: {app}\printsupport; Flags: ignoreversion recursesubdirs;
 Source: ${QTDIR}\plugins\sqldrivers\qsqlpsql${IS_DEBUG}.dll; DestDir: {app}\sqldrivers; Flags: ignoreversion recursesubdirs;
-Source: ${QTDIR}\plugins\sqldrivers\qsqlodbc${IS_DEBUG}.dll; DestDir: {app}\sqldrivers; Flags: ignoreversion recursesubdirs;
 Source: ${QTDIR}\plugins\styles\qwindowsvistastyle${IS_DEBUG}.dll; DestDir: {app}\styles; Flags: ignoreversion recursesubdirs;
 
 Source: ..\Components\PostgreSQL\9.4\Bin-${PLATFORM}\*; DestDir: {app}; Flags: ignoreversion recursesubdirs;

@@ -262,7 +262,6 @@
   <Local Name="Export.Table" Russian="Экспорт таблицы"/>
   <Local Name="Export.Type.CSV" Russian="CSV"/>
   <Local Name="Export.Type.HTML" Russian="HTML"/>
-  <Local Name="Export.Type.DBF" Russian="DBF"/>
   <Local Name="Export.Type.XML" Russian="XML"/>
   <Local Name="Export.Type.JSON" Russian="JSON"/>
   <Local Name="Export.Type.SQLITE" Russian="SQLite"/>
@@ -383,7 +382,6 @@
   <Local Name="File.Filter.Html" Russian="Веб-страница (*.html)"/>
   <Local Name="File.Filter.Xml" Russian="Язык разметки (*.xml)"/>
   <Local Name="File.Filter.Json" Russian="Формат обмена данными (*.json)"/>
-  <Local Name="File.Filter.Dbf" Russian="DBF-файл (*.dbf)"/>
   <Local Name="File.Filter.SQLite" Russian="База данных SQLite (*.sqlite)"/>
   <Local Name="File.Filter.File" Russian="Файл (*.%1)"/>
 
