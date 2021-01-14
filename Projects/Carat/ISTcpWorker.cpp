@@ -3699,8 +3699,32 @@ bool ISTcpWorker::GetForeignList(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
 		return false;
 	}
 
-	//Формируем запрос и выполняем его
-	QString SqlText = ISMetaDataHelper::GenerateSqlQueryFromForeign(MetaField->Foreign);
+	//Формируем запрос
+	PMetaTable *MetaTableForeign = ISMetaData::Instance().GetMetaTable(MetaField->Foreign->ForeignClass); //Таблица на которую ссылается внешний ключ
+	QStringList FieldList = MetaField->Foreign->ForeignViewNameField.split(';');
+
+	QString SqlText = "SELECT " + MetaTableForeign->Alias + '_' + MetaField->Foreign->ForeignField.toLower() + " AS ID, concat(";
+	for (const QString &String : FieldList) //Обход полей (которые должны быть отображены)
+	{
+		SqlText += MetaTableForeign->Alias + '_' + String.toLower() + ", ' ',";
+	}
+	SqlText.chop(6);
+	SqlText += ") ";
+	SqlText += "AS Value\n";
+	SqlText += "FROM " + MetaTableForeign->Name + "\n";
+
+	SqlText += "ORDER BY ";
+
+	if (!MetaField->Foreign->OrderField.isEmpty()) //Если указано поле для сортировки
+	{
+		SqlText += MetaTableForeign->Alias + '_' + MetaField->Foreign->OrderField + " ASC";
+	}
+	else
+	{
+		SqlText += "2 ASC";
+	}
+
+	//Выполняем запрос
 	ISQuery qSelect(ISDatabase::Instance().GetDB(DBConnectionName), SqlText);
 	if (!qSelect.Execute()) //Ошибка запроса
 	{
