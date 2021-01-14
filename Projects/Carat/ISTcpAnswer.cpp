@@ -1,5 +1,6 @@
 #include "ISTcpAnswer.h"
 #include "ISConstants.h"
+#include "ISSystem.h"
 //-----------------------------------------------------------------------------
 ISTcpAnswer::ISTcpAnswer(ISTcpSocket *tcp_socket)
 	: ErrorString(NO_ERROR_STRING),
