@@ -10,10 +10,6 @@
 #include "ISDatabase.h"
 #include "ISObjects.h"
 //-----------------------------------------------------------------------------
-static QString QS_PERIOD = PREPARE_QUERY("SELECT COUNT(*) "
-										  "FROM period "
-										  "WHERE CURRENT_DATE BETWEEN prod_datestart AND prod_dateend");
-//-----------------------------------------------------------------------------
 static QString QS_STATEMENT = PREPARE_QUERY("SELECT COUNT(*) "
 											 "FROM gasstationstatement "
 											 "WHERE gsts_implementationunload = :ImplementationUnload");
@@ -25,10 +21,6 @@ static QString QS_STOCK = PREPARE_QUERY("SELECT stck_id, stck_name "
 										 "FROM stock "
 										 "ORDER BY stck_name");
 //-----------------------------------------------------------------------------
-static QString QS_CONSTANT = PREPARE_QUERY("SELECT prod_constant "
-											"FROM period "
-											"WHERE CURRENT_DATE BETWEEN prod_datestart AND prod_dateend");
-//-----------------------------------------------------------------------------
 static QString QS_FILL_IN_BASED = PREPARE_QUERY("SELECT "
 												 "COALESCE(gsts_balanceendchange, 0) AS gsts_balanceendchange, "
 												 "COALESCE(gsts_cashboxtotalpayment, 0) AS gsts_cashboxtotalpayment, "
@@ -36,11 +28,6 @@ static QString QS_FILL_IN_BASED = PREPARE_QUERY("SELECT "
 												 "COALESCE(gsts_cashboxkkmtotal, 0) AS gsts_cashboxkkmtotal "
 												 "FROM gasstationstatement "
 												 "WHERE gsts_id = :StatementID");
-//-----------------------------------------------------------------------------
-static QString QS_CASHBOX_TOTAL_PAYMENT = PREPARE_QUERY("SELECT gsts_cashboxtotalpayment "
-														 "FROM gasstationstatement "
-														 "WHERE gsts_gasstation = :GasStation "
-														 "AND gsts_date = :Date - INTERVAL '1 day'");
 //-----------------------------------------------------------------------------
 static QString QS_IMPLEMENTATION_UNLOAD = PREPARE_QUERY("SELECT true AS is_load, ilod_implementation AS implementation_id, ilod_id AS id, impl_date AS date, ilod_cost AS cost "
 														 "FROM implementationload "
@@ -101,10 +88,11 @@ void ISOilSphere::Object::BeforeShowMainWindow() const
 void ISOilSphere::Object::InitializePlugin() const
 {
 	//Проверяем наличие константы за текущий период
-	ISQuery qSelectPeriod(QS_PERIOD);
-	if (qSelectPeriod.ExecuteFirst())
+	ISTcpQuery qPeriodContains(API_PERIOD_CONTAINS);
+	if (qPeriodContains.Execute())
 	{
-		if (qSelectPeriod.ReadColumn("count") == 0) //Константа отсутствует - предлагаем создать её
+		QVariantMap AnswerMap = qPeriodContains.GetAnswer();
+		if (!AnswerMap["Exist"].toBool()) //Константа отсутствует - предлагаем создать её
 		{
 			if (ISMessageBox::ShowQuestion(nullptr, LANG("OilSphere.Message.Question.CreateCurrentConstant")))
 			{
@@ -117,7 +105,7 @@ void ISOilSphere::Object::InitializePlugin() const
 	}
 	else
 	{
-		ISMessageBox::ShowCritical(nullptr, LANG("OilSphere.Message.Critical.SelectCurrentConstant"), qSelectPeriod.GetErrorString());
+		ISMessageBox::ShowWarning(nullptr, qPeriodContains.GetErrorString());
 	}
 }
 //-----------------------------------------------------------------------------
@@ -479,14 +467,20 @@ bool ISOilSphere::ImplementationUnloadObjectForm::Save()
 	double ValumeIncome = 0;
 	if (UnloadStock.isValid()) //Если заполнено поле склад - проверяем наличие константы
 	{
-		ISQuery qSelectConstant(QS_CONSTANT);
-		if (qSelectConstant.ExecuteFirst())
+		ISTcpQuery qPeriodConstant(API_PERIOD_CONTAINS);
+		if (qPeriodConstant.Execute())
 		{
-			ValumeIncome = qSelectConstant.ReadColumn("prod_constant").toDouble() * GetFieldValue("WeightNet").toDouble();
+			QVariantMap AnswerMap = qPeriodConstant.GetAnswer();
+			if (!AnswerMap["Exist"].toBool())
+			{
+				ISMessageBox::ShowCritical(this, LANG("OilSphere.Message.Warning.NotFoundCurrentConstant"));
+				return false;
+			}
+			ValumeIncome = AnswerMap["Value"].toInt();
 		}
 		else
 		{
-			ISMessageBox::ShowCritical(this, LANG("OilSphere.Message.Warning.NotFoundCurrentConstant"));
+			ISMessageBox::ShowCritical(this, qPeriodConstant.GetErrorString());
 			return false;
 		}
 	}

@@ -198,6 +198,7 @@ const char API_CALENDAR_CLOSE[] = "CalendarClose"; //Закрытие события календаря
 const char API_GET_HISTORY_LIST[] = "GetHistoryList"; //Получить список открытых записей
 const char API_TASK_COMMENT_ADD[] = "TaskCommentAdd"; //Добавить комментарий к задаче
 const char API_GET_FOREIGN_LIST[] = "GetForeignList"; //Получить список значений по внешнему ключу
+const char API_PERIOD_CONTAINS[] = "PeriodContains"; //Проверка наличия текущего периода
 //CARAT_LOCAL_API--------------------------------------------------------------
 const char	CARAT_LOCAL_API_SHUTDOWN[] = "shutdown"; //Завершение работы
 //-----------------------------------------------------------------------------

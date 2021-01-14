@@ -220,4 +220,6 @@
   <Local Name="Carat.Error.Query.GetForeignList.FieldNotForeign" Russian="Поле &quot;%1&quot; не имеет внешнего ключа."/>
   <Local Name="Carat.Error.Query.GetForeignList.Select" Russian="Не удалось получить данные справочника."/>
 
+  <Local Name="Carat.Error.Query.PeriodContains.Select" Russian="Не удалось получить константу."/>
+
 </LANG>

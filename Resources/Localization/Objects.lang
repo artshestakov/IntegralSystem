@@ -32,6 +32,5 @@
   <Local Name="OilSphere.Message.Warning.NotFoundCurrentConstant" Russian="Плотность на текущий период отсутствует."/>
   <Local Name="OilSphere.Message.Warning.FillInBased" Russian="Заполнение возможно на основании записи отличной от текущей."/>
   <Local Name="OilSphere.Message.Critical.InsertGasStatment" Russian="Не удалось зафиксировать приход на склад."/>
-  <Local Name="OilSphere.Message.Critical.SelectCurrentConstant" Russian="Не удалось проверить наличие константы за текущий период."/>
 	
 </LANG>

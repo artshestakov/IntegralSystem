@@ -93,6 +93,9 @@ private:
 	bool TaskCommentAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
 	bool GetForeignList(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
 
+	//Временные функции для Нефтесферы
+	bool PeriodContains(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
+
 private:
     QString ErrorString; //Текстовое описание ошибки запроса
 	QString DBConnectionName;

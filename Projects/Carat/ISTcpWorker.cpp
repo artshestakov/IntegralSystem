@@ -342,6 +342,10 @@ static QString QS_HISTORY = PREPARE_QUERY("SELECT prtc_datetime, prtc_tablename,
 static QString QI_TASK_COMMENT = PREPARE_QUERY("INSERT INTO _taskcomment(tcom_owner, tcom_task, tcom_parent, tcom_comment) "
 											   "VALUES(:UserID, :TaskID, :ParentCommentID, :Comment)");
 //-----------------------------------------------------------------------------
+static QString QS_PERIOD = PREPARE_QUERY("SELECT prod_constant "
+										 "FROM period "
+										 "WHERE CURRENT_DATE BETWEEN prod_datestart AND prod_dateend");
+//-----------------------------------------------------------------------------
 ISTcpWorker::ISTcpWorker(const QString &db_host, int db_port, const QString &db_name, const QString &db_user, const QString &db_password)
 	: QObject(),
 	ErrorString(NO_ERROR_STRING),
@@ -519,6 +523,7 @@ void ISTcpWorker::Process()
 					case ISNamespace::AMT_GetHistoryList: Result = GetHistoryList(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_TaskCommentAdd: Result = TaskCommentAdd(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_GetForeignList: Result = GetForeignList(tcp_message, TcpAnswer); break;
+					case ISNamespace::AMT_PeriodContains: Result = PeriodContains(tcp_message, TcpAnswer); break;
 					default:
 						ErrorString = LANG("Carat.Error.NotExistFunction").arg(tcp_message->TypeName);
 					}
@@ -3751,6 +3756,22 @@ bool ISTcpWorker::GetForeignList(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
 	}
 
 	TcpAnswer->Parameters["List"] = VariantList;
+	return true;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::PeriodContains(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+	Q_UNUSED(TcpMessage);
+
+	ISQuery qSelect(ISDatabase::Instance().GetDB(DBConnectionName), QS_PERIOD);
+	if (!qSelect.Execute()) //Ошибка запроса
+	{
+		return ErrorQuery(LANG("Carat.Error.Query.PeriodContains.Select"), qSelect);
+	}
+
+	bool IsExist = qSelect.First();
+	TcpAnswer->Parameters["Exist"] = IsExist;
+	TcpAnswer->Parameters["Value"] = IsExist ? qSelect.ReadColumn("prod_constant") : QVariant();
 	return true;
 }
 //-----------------------------------------------------------------------------
