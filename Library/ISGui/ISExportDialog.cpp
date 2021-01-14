@@ -108,7 +108,7 @@ void ISExportDialog::CreateTabFields(ISTcpModel *TcpModel)
 	ListFields->setDefaultDropAction(Qt::MoveAction);
 	LayoutFields->addWidget(ListFields);
 
-	for (size_t i = 0, c = TcpModel->columnCount(); i < c; ++i)
+	for (unsigned int i = 0, c = TcpModel->columnCount(); i < c; ++i)
 	{
 		ISModelField ModelField = TcpModel->GetField(i);
 		if (!ModelField.IsSystem)

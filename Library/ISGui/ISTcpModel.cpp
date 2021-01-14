@@ -47,17 +47,17 @@ void ISTcpModel::SetSource(const QVariantList &fields, const QVariantList &recor
 	}
 
 	//Заполняем строки
-	size_t RecordCount = (size_t)records.size();
+	unsigned int RecordCount = (unsigned int)records.size();
 	Records.resize(RecordCount);
-	for (size_t i = 0; i < RecordCount; ++i)
+	for (unsigned int i = 0; i < RecordCount; ++i)
 	{
 		QVariantList Values = records[i].toList();
-		size_t ValuesSize = Values.size();
+		unsigned int ValuesSize = Values.size();
 
 		ISModelRecord Record;
 		Record.ID = Values[0].toUInt();
 		Record.Values.resize(ValuesSize);
-		for (size_t j = 0; j < ValuesSize; ++j) //Обходим значения записи
+		for (unsigned int j = 0; j < ValuesSize; ++j) //Обходим значения записи
 		{
 			Record.Values[j] = Values[j];
 		}
