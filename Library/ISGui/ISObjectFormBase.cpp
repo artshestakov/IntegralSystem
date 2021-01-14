@@ -10,7 +10,6 @@
 #include "ISControls.h"
 #include "ISMessageBox.h"
 #include "ISDatabase.h"
-#include "ISQuery.h"
 #include "ISAssert.h"
 #include "ISPopupMessage.h"
 #include "ISProtocol.h"
@@ -642,7 +641,7 @@ void ISObjectFormBase::SaveBefore()
 bool ISObjectFormBase::Save()
 {
 	SaveBefore();
-	ISStringToVariantMap ValuesMap;
+	QVariantMap ValuesMap;
 	ISVectorString FieldsVector;
 	QString QueryText;
 
@@ -699,75 +698,43 @@ bool ISObjectFormBase::Save()
 	}
 
 	//Формирование запроса на добавление/изменение/копирование
-	if (FormType == ISNamespace::OFT_New || FormType == ISNamespace::OFT_Copy)
+	ISTcpQuery TcpQuery(FormType == ISNamespace::OFT_New || FormType == ISNamespace::OFT_Copy
+		? API_RECORD_ADD : API_RECORD_EDIT);
+	TcpQuery.BindValue("TableName", MetaTable->Name);
+	TcpQuery.BindValue("Values", ValuesMap);
+
+	//Если форма открыта на редактирование - дополняем запрос идентификатором
+	if (FormType == ISNamespace::OFT_Edit)
 	{
-		QString InsertFields = "INSERT INTO " + MetaTable->Name + " (";
-		QString InsertValues = "VALUES (";
-
-		for (const QString &String : FieldsVector)
-		{
-			InsertFields += MetaTable->Alias + '_' + String + ", ";
-			InsertValues += ':' + String + ", ";
-		}
-
-		InsertFields.chop(2);
-		InsertValues.chop(2);
-
-		QueryText += InsertFields + ") \n";
-		QueryText += InsertValues + ") \n";
-		QueryText += "RETURNING " + MetaTable->Alias + "_id";
-	}
-	else if (FormType == ISNamespace::OFT_Edit)
-	{
-		QueryText += "UPDATE " + MetaTable->Name + " SET \n";
-		for (const QString &String : FieldsVector)
-		{
-			QueryText += MetaTable->Alias + '_' + String + " = :" + String + ", \n";
-		}
-		QueryText.chop(3);
-		QueryText += " \n";
-		QueryText += "WHERE " + MetaTable->Alias + "_id = " + QString::number(ObjectID);
+		TcpQuery.BindValue("ObjectID", ObjectID);
 	}
 
-	ISDatabase::Instance().GetDB(CONNECTION_DEFAULT).transaction(); //Открытие транзакции
 	SavedEvent();
 
-	//Заполнение запроса значениями
-	ISQuery SqlQuery(QueryText);
-	for (const auto &Value : ValuesMap)
+	if (!TcpQuery.Execute()) //Запрос выполнен с ошибкой
 	{
-		IS_ASSERT(SqlQuery.BindValue(':' + Value.first, Value.second), "Not bind value");
-	}
-
-	if (!SqlQuery.Execute()) //Запрос выполнен успешно
-	{
-		ISDatabase::Instance().GetDB(CONNECTION_DEFAULT).rollback(); //Откат транзакции
-		ISMessageBox::ShowCritical(this, LANG("Message.Error.ErrorQuerySQL"), LANG("Message.Error.ErrorQuerySQL.Details").arg(SqlQuery.GetErrorString()).arg(SqlQuery.GetSqlText()));
+		ISMessageBox::ShowCritical(this, TcpQuery.GetErrorString());
 		return false;
 	}
+	QVariantMap AnswerMap = TcpQuery.GetAnswer();
 
-	ISDatabase::Instance().GetDB(CONNECTION_DEFAULT).commit(); //Коммит транзакции
 	if (FormType == ISNamespace::OFT_New || FormType == ISNamespace::OFT_Copy)
 	{
-		IS_ASSERT(SqlQuery.First(), "Not first SqlQuery");
-		ObjectID = SqlQuery.ReadColumn(MetaTable->Alias + "_id").toInt();
+		ObjectID = AnswerMap["ObjectID"].toUInt();
 	}
 
-	ObjectName = ISCore::GetObjectName(MetaTable, ObjectID);
+	ObjectName = AnswerMap["ObjectName"].toString();
 	switch (FormType)
 	{
 	case ISNamespace::OFT_New:
 		FormType = ISNamespace::OFT_Edit;
-		ISProtocol::CreateObject(MetaTable->Name, MetaTable->LocalListName, ObjectID, ObjectName);
 		ISPopupMessage::ShowNotification(LANG("NotificationForm.Title.Created") + " - " + MetaTable->LocalName.toLower() + ':', ObjectName);
 		break;
 	case ISNamespace::OFT_Copy:
 		FormType = ISNamespace::OFT_Edit;
-		ISProtocol::CreateCopyObject(MetaTable->Name, MetaTable->LocalListName, ObjectID, ObjectName);
 		ISPopupMessage::ShowNotification(LANG("NotificationForm.Title.CreatedCopy") + " - " + MetaTable->LocalName.toLower() + ':', ObjectName);
 		break;
 	case ISNamespace::OFT_Edit:
-		ISProtocol::EditObject(MetaTable->Name, MetaTable->LocalListName, ObjectID, ObjectName);
 		ISPopupMessage::ShowNotification(LANG("NotificationForm.Title.Edited") + " - " + MetaTable->LocalName.toLower() + ':', ObjectName);
 		break;
 	}
