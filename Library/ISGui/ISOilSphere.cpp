@@ -1,5 +1,4 @@
 #include "ISOilSphere.h"
-#include "ISQuery.h"
 #include "ISGui.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
@@ -9,21 +8,6 @@
 #include "ISControls.h"
 #include "ISDatabase.h"
 #include "ISObjects.h"
-//-----------------------------------------------------------------------------
-static QString QS_IMPLEMENTATION_UNLOAD = PREPARE_QUERY("SELECT true AS is_load, ilod_implementation AS implementation_id, ilod_id AS id, impl_date AS date, ilod_cost AS cost "
-														 "FROM implementationload "
-														 "LEFT JOIN implementation ON ilod_implementation = impl_id "
-														 "WHERE ilod_counterparty = :CounterpartyID "
-														 ""
-														 "UNION "
-														 ""
-														 "SELECT false AS is_load, iunl_implementation AS implementation_id, iunl_id AS id, impl_date AS date, iunl_cost AS cost "
-														 "FROM implementationunload "
-														 "LEFT JOIN implementation ON iunl_implementation = impl_id "
-														 "WHERE iunl_counterparty = :CounterpartyID "
-														 "ORDER BY is_load, date DESC");
-//-----------------------------------------------------------------------------
-static QString QS_COUNTERPARTY_DEBT = PREPARE_QUERY("SELECT get_counterparty_unload(:CounterpartyID), get_counterparty_load(:CounterpartyID), get_counterparty_entrollment(:CounterpartyID), get_counterparty_move_wagon(:CounterpartyID)");
 //-----------------------------------------------------------------------------
 ISOilSphere::Object::Object() : ISObjectInterface()
 {
@@ -166,17 +150,20 @@ ISOilSphere::CounterpartyDebtForm::CounterpartyDebtForm(int counterparty_id, con
 	ScrollAreaUnload->widget()->setLayout(LayoutScrollUnload);
 	GroupBoxUnload->layout()->addWidget(ScrollAreaUnload);
 
-	ISQuery qSelectUnload(QS_IMPLEMENTATION_UNLOAD);
-	qSelectUnload.BindValue(":CounterpartyID", counterparty_id);
-	if (qSelectUnload.Execute())
+	ISTcpQuery qGetDebtImplementation(API_GET_DEBT_IMPLEMENTATION);
+	qGetDebtImplementation.BindValue("CounterpartyID", counterparty_id);
+	if (qGetDebtImplementation.Execute())
 	{
-		while (qSelectUnload.Next())
+		QVariantList LoadUnloadList = qGetDebtImplementation.GetAnswer()["LoadUnload"].toList();
+		for (const QVariant &Variant : LoadUnloadList)
 		{
-			bool IsLoad = qSelectUnload.ReadColumn("is_load").toBool();
-			int ImplementationID = qSelectUnload.ReadColumn("implementation_id").toInt();
-			int LoadUnloadID = qSelectUnload.ReadColumn("id").toInt();
-			QDate DateLoad = qSelectUnload.ReadColumn("date").toDate();
-			double Cost = qSelectUnload.ReadColumn("cost").toDouble();
+			QVariantMap LoadUnloadMap = Variant.toMap();
+
+			bool IsLoad = LoadUnloadMap["IsLoad"].toBool();
+			int ImplementationID = LoadUnloadMap["ImplementationID"].toInt();
+			int LoadUnloadID = LoadUnloadMap["LoadUnloadID"].toInt();
+			QString Date = LoadUnloadMap["Date"].toString();
+			double Cost = LoadUnloadMap["Cost"].toDouble();
 
 			QHBoxLayout *LayoutWidget = new QHBoxLayout();
 			LayoutWidget->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_5_PX);
@@ -186,7 +173,7 @@ ISOilSphere::CounterpartyDebtForm::CounterpartyDebtForm(int counterparty_id, con
 
 			QVBoxLayout *LayoutLabels = new QVBoxLayout();
 
-			QLabel *LabelDateLoad = new QLabel(LANG("OilSphere.DateLoad").arg(DateLoad.toString(FORMAT_DATE_V2)), WidgetLoadUnload);
+			QLabel *LabelDateLoad = new QLabel(LANG("OilSphere.DateLoad").arg(Date), WidgetLoadUnload);
 			ISGui::SetFontWidgetBold(LabelDateLoad, true);
 			LayoutLabels->addWidget(LabelDateLoad);
 
@@ -217,7 +204,7 @@ ISOilSphere::CounterpartyDebtForm::CounterpartyDebtForm(int counterparty_id, con
 	}
 	else
 	{
-		ISMessageBox::ShowCritical(this, qSelectUnload.GetErrorString());
+		ISMessageBox::ShowCritical(this, qGetDebtImplementation.GetErrorString());
 	}
 
 	QVBoxLayout *LayoutRight = new QVBoxLayout();
@@ -243,7 +230,6 @@ ISOilSphere::CounterpartyDebtForm::CounterpartyDebtForm(int counterparty_id, con
 
 	MoveWagonViewForm = new ISListViewForm("SelectCounterpartyMoveWagon", GroupBoxMoveWagon);
 	MoveWagonViewForm->BindValue(":CounterpartyID", counterparty_id);
-	connect(MoveWagonViewForm, &ISListViewForm::Updated, this, &ISOilSphere::CounterpartyDebtForm::UpdatedLists);
 	GroupBoxMoveWagon->layout()->addWidget(MoveWagonViewForm);
 	MoveWagonViewForm->LoadData();
 }
@@ -260,14 +246,15 @@ void ISOilSphere::CounterpartyDebtForm::EscapeClicked()
 //-----------------------------------------------------------------------------
 void ISOilSphere::CounterpartyDebtForm::UpdatedLists()
 {
-	ISQuery qSelectTitle(QS_COUNTERPARTY_DEBT);
-	qSelectTitle.BindValue(":CounterpartyID", CounterpartyID);
-	if (qSelectTitle.ExecuteFirst())
+	ISTcpQuery qGetDebtCounterparty(API_GET_DEBT_COUNTERPARTY);
+	qGetDebtCounterparty.BindValue("CounterpartyID", CounterpartyID);
+	if (qGetDebtCounterparty.Execute())
 	{
-		double TotalUnload = qSelectTitle.ReadColumn("get_counterparty_unload").toDouble();
-		double TotalLoad = qSelectTitle.ReadColumn("get_counterparty_load").toDouble();
-		double TotalEntrollment = qSelectTitle.ReadColumn("get_counterparty_entrollment").toDouble();
-		double MoveWagonSum = qSelectTitle.ReadColumn("get_counterparty_move_wagon").toDouble();
+		QVariantMap AnswerMap = qGetDebtCounterparty.GetAnswer();
+		double TotalUnload = AnswerMap["TotalUnload"].toDouble();
+		double TotalLoad = AnswerMap["TotalLoad"].toDouble();
+		double TotalEntrollment = AnswerMap["TotalEntrollment"].toDouble();
+		double MoveWagonSum = AnswerMap["MoveWagonSum"].toDouble();
 		LabelTotal->setText(LANG("OilSphere.Debts.Label")
 			.arg(DOUBLE_PREPARE(TotalLoad))
 			.arg(DOUBLE_PREPARE(TotalUnload))
@@ -276,7 +263,7 @@ void ISOilSphere::CounterpartyDebtForm::UpdatedLists()
 	}
 	else
 	{
-		LabelTotal->setText(qSelectTitle.GetErrorString());
+		LabelTotal->setText(qGetDebtCounterparty.GetErrorString());
 	}
 }
 //-----------------------------------------------------------------------------
@@ -1077,7 +1064,8 @@ void ISOilSphere::DriverCostSubSystem::LoadDataAfterEvent()
 //-----------------------------------------------------------------------------
 void ISOilSphere::DriverCostSubSystem::CreateOnBased()
 {
-	ISQuery qSelectRemainder("SELECT get_driver_cost_remainder(:DriverCostID, :DriverCostComing, :PreviousRemainder)");
+	///???
+	/*ISQuery qSelectRemainder("SELECT get_driver_cost_remainder(:DriverCostID, :DriverCostComing, :PreviousRemainder)");
 	qSelectRemainder.BindValue(":DriverCostID", GetSelectedIDs()[0]);
 	qSelectRemainder.BindValue(":DriverCostComing", GetCurrentRecordValue("Coming"));
 	qSelectRemainder.BindValue(":PreviousRemainder", GetCurrentRecordValue("PreviousRemainder"));
@@ -1092,7 +1080,7 @@ void ISOilSphere::DriverCostSubSystem::CreateOnBased()
 	else
 	{
 		ISMessageBox::ShowWarning(this, qSelectRemainder.GetErrorString());
-	}
+	}*/
 }
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------

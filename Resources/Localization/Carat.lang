@@ -228,5 +228,11 @@
   <Local Name="Carat.Error.Query.StatementAdd.Insert" Russian="Не удалось зафиксировать приход на склад."/>
 
   <Local Name="Carat.Error.Query.GetGasStation.Select" Russian="Не удалось получить данные."/>
+  <Local Name="Carat.Error.Query.GetGasStation.NotExist" Russian="Такая запись не существует."/>
+
+  <Local Name="Carat.Error.Query.GetDebtImplementation.Select" Russian="Не удалось получить данные."/>
+
+  <Local Name="Carat.Error.Query.GetDebtCounterparty.Select" Russian="Не удалось получить данные."/>
+  <Local Name="Carat.Error.Query.GetDebtCounterparty.NotExist" Russian="Такая запись не существует."/>
 
 </LANG>

@@ -244,6 +244,14 @@ ISNamespace::ApiMessageType ISTcp::GetMessageTypeByName(const QString &Name)
 	{
 		return ISNamespace::AMT_GetGasStation;
 	}
+	else if (Name == API_GET_DEBT_IMPLEMENTATION)
+	{
+		return ISNamespace::AMT_GetDebtImplementation;
+	}
+	else if (Name == API_GET_DEBT_COUNTERPARTY)
+	{
+		return ISNamespace::AMT_GetDebtCounterparty;
+	}
 	return ISNamespace::AMT_Unknown;
 }
 //-----------------------------------------------------------------------------

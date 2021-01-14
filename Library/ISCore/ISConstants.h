@@ -202,6 +202,8 @@ const char API_PERIOD_CONTAINS[] = "PeriodContains"; //Проверка наличия текущего
 const char API_GET_STOCK_LIST[] = "GetStockList"; //Получить список складов
 const char API_STATEMENT_ADD[] = "StatementAdd"; //Добавить выгрузку в ведомости азс
 const char API_GET_GAST_STATION[] = "GetGatStation"; //Заполнить на основании
+const char API_GET_DEBT_IMPLEMENTATION[] = "GetDebtImplementation"; //Получить загрузки и выгрузки
+const char API_GET_DEBT_COUNTERPARTY[] = "GetDebtCounterparty"; //Получить долги контрагента
 //CARAT_LOCAL_API--------------------------------------------------------------
 const char	CARAT_LOCAL_API_SHUTDOWN[] = "shutdown"; //Завершение работы
 //-----------------------------------------------------------------------------

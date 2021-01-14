@@ -185,6 +185,8 @@ namespace ISNamespace
 		AMT_GetStockList, //Получить список складов
 		AMT_StatementAdd, //Добавить выгрузку в ведомости азс
 		AMT_GetGasStation, //Заполнить на основании
+		AMT_GetDebtImplementation, //Получить загрузки и выгрузки
+		AMT_GetDebtCounterparty, //Получить долги контргаента
 	};
 };
 //-----------------------------------------------------------------------------

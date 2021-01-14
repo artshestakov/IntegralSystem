@@ -367,6 +367,21 @@ static QString QS_FILL_IN_BASED = PREPARE_QUERY("SELECT "
 												"FROM gasstationstatement "
 												"WHERE gsts_id = :StatementID");
 //-----------------------------------------------------------------------------
+static QString QS_IMPLEMENTATION_UNLOAD = PREPARE_QUERY("SELECT true AS is_load, ilod_implementation AS implementation_id, ilod_id AS id, impl_date AS date, ilod_cost AS cost "
+														"FROM implementationload "
+														"LEFT JOIN implementation ON ilod_implementation = impl_id "
+														"WHERE ilod_counterparty = :CounterpartyID "
+														""
+														"UNION "
+														""
+														"SELECT false AS is_load, iunl_implementation AS implementation_id, iunl_id AS id, impl_date AS date, iunl_cost AS cost "
+														"FROM implementationunload "
+														"LEFT JOIN implementation ON iunl_implementation = impl_id "
+														"WHERE iunl_counterparty = :CounterpartyID "
+														"ORDER BY is_load, date DESC");
+//-----------------------------------------------------------------------------
+static QString QS_COUNTERPARTY_DEBT = PREPARE_QUERY("SELECT get_counterparty_unload(:CounterpartyID), get_counterparty_load(:CounterpartyID), get_counterparty_entrollment(:CounterpartyID), get_counterparty_move_wagon(:CounterpartyID)");
+//-----------------------------------------------------------------------------
 ISTcpWorker::ISTcpWorker(const QString &db_host, int db_port, const QString &db_name, const QString &db_user, const QString &db_password)
 	: QObject(),
 	ErrorString(NO_ERROR_STRING),
@@ -548,6 +563,8 @@ void ISTcpWorker::Process()
 					case ISNamespace::AMT_GetStockList: Result = GetStockList(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_StatementAdd: Result = StatementAdd(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_GetGasStation: Result = GetGasStation(tcp_message, TcpAnswer); break;
+					case ISNamespace::AMT_GetDebtImplementation: Result = GetDebtImplementation(tcp_message, TcpAnswer); break;
+					case ISNamespace::AMT_GetDebtCounterparty: Result = GetDebtCounterparty(tcp_message, TcpAnswer); break;
 					default:
 						ErrorString = LANG("Carat.Error.NotExistFunction").arg(tcp_message->TypeName);
 					}
@@ -3863,16 +3880,17 @@ bool ISTcpWorker::GetGasStation(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer
 		return false;
 	}
 
+	//Вытаскиваем значения
 	ISQuery qSelect(ISDatabase::Instance().GetDB(DBConnectionName), QS_FILL_IN_BASED);
 	qSelect.BindValue(":StatementID", StatementID);
-	if (!qSelect.Execute())
+	if (!qSelect.Execute()) //Ошибка запроса
 	{
 		return ErrorQuery(LANG("Carat.Error.Query.GetGasStation.Select"), qSelect);
 	}
 
-	if (!qSelect.First())
+	if (!qSelect.First()) //Такая запись не существует
 	{
-		ErrorString = qSelect.GetErrorString();
+		ErrorString = LANG("Carat.Error.Query.GetGasStation.NotExist");
 		return false;
 	}
 
@@ -3880,6 +3898,67 @@ bool ISTcpWorker::GetGasStation(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer
 	TcpAnswer->Parameters["CashboxTotalPayment"] = qSelect.ReadColumn("gsts_cashboxtotalpayment");
 	TcpAnswer->Parameters["CashboxTotalActually"] = qSelect.ReadColumn("gsts_cashboxtotalactually");
 	TcpAnswer->Parameters["CashboxKKMTotal"] = qSelect.ReadColumn("gsts_cashboxkkmtotal");
+	return true;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::GetDebtImplementation(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+	QVariant CounterpartyID = CheckNullField("CounterpartyID", TcpMessage);
+	if (!CounterpartyID.isValid())
+	{
+		return false;
+	}
+
+	//Вытаскиваем загрузки и выгрузки
+	ISQuery qSelectLoadUnload(ISDatabase::Instance().GetDB(DBConnectionName), QS_IMPLEMENTATION_UNLOAD);
+	qSelectLoadUnload.BindValue(":CounterpartyID", CounterpartyID);
+	if (!qSelectLoadUnload.Execute()) //Ошибка запроса
+	{
+		return ErrorQuery(LANG("Carat.Error.Query.GetDebtImplementation.Select"), qSelectLoadUnload);
+	}
+
+	//Обходим результаты выборки
+	QVariantList LoadUnloadList;
+	while (qSelectLoadUnload.Next())
+	{
+		LoadUnloadList.append(QVariantMap
+		{
+			{ "IsLoad", qSelectLoadUnload.ReadColumn("is_load") },
+			{ "ImplementationID", qSelectLoadUnload.ReadColumn("implementation_id") },
+			{ "LoadUnloadID", qSelectLoadUnload.ReadColumn("id") },
+			{ "Date", qSelectLoadUnload.ReadColumn("date").toDate().toString(FORMAT_DATE_V2) },
+			{ "Cost", qSelectLoadUnload.ReadColumn("cost") }
+		});
+	}
+	TcpAnswer->Parameters["LoadUnload"] = LoadUnloadList;
+	return true;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::GetDebtCounterparty(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+	QVariant CounterpartyID = CheckNullField("CounterpartyID", TcpMessage);
+	if (!CounterpartyID.isValid())
+	{
+		return false;
+	}
+
+	//Запрашиваем итоговые цифры
+	ISQuery qSelectTitle(ISDatabase::Instance().GetDB(DBConnectionName), QS_COUNTERPARTY_DEBT);
+	qSelectTitle.BindValue(":CounterpartyID", CounterpartyID);
+	if (!qSelectTitle.Execute()) //Ошибка запроса
+	{
+		return ErrorQuery(LANG("Carat.Error.Query.GetDebtCounterparty.Select"), qSelectTitle);
+	}
+
+	if (!qSelectTitle.First()) //Такая запись не существует
+	{
+		ErrorString = LANG("Carat.Error.Query.GetDebtCounterparty.NotExist");
+		return false;
+	}
+	TcpAnswer->Parameters["TotalUnload"] = qSelectTitle.ReadColumn("get_counterparty_unload").toDouble();
+	TcpAnswer->Parameters["TotalLoad"] = qSelectTitle.ReadColumn("get_counterparty_load").toDouble();
+	TcpAnswer->Parameters["TotalEntrollment"] = qSelectTitle.ReadColumn("get_counterparty_entrollment").toDouble();
+	TcpAnswer->Parameters["MoveWagonSum"] = qSelectTitle.ReadColumn("get_counterparty_move_wagon").toDouble();
 	return true;
 }
 //-----------------------------------------------------------------------------
