@@ -2046,6 +2046,11 @@ void ISListEdit::SetValue(const QVariant &value)
 {
 	//Анализируем значение от сервера
 	QString String = value.toString();
+	if (String.isEmpty()) //Если значение пустое - выходим
+	{
+		return;
+	}
+
 	int Pos = String.indexOf(','); //Ищем первую запятую
 	if (Pos == -1) //Запятая не найдена - ошибка
 	{
