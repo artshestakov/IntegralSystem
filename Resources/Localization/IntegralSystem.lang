@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LANG Name="IntegralSystem">
 
-  <!--Конфигурации-->
-  <Local Name="Configuration.OilSphere" Russian="ООО «Нефтесфера»"/>
-  <Local Name="Configuration.Empty" Russian="Пустая конфигурация"/>
-
   <Local Name="DescriptionApplication" Russian="Система учёта данных IntegralSystem — это современный инструмент для ведения учёта базы данных любого предприятия. IntegralSystem позволяет в комплексе автоматизировать задачи оперативного и управленческого учёта, анализа и отчетных операций."/>
 
   <Local Name="Form.Authorization.ConnectionSettings" Russian="Настройки подключения (F9)"/>
@@ -43,8 +39,6 @@
   <Local Name="AboutForm.Tab.License" Russian="Лицензионное соглашение"/>
   <Local Name="AboutForm.Tab.Other" Russian="Прочее"/>
   <Local Name="AboutForm.Tab.Other.SizeTemp" Russian="Размер временных файлов"/>
-  <Local Name="AboutForm.Tab.Other.SizeLogger" Russian="Размер логов"/>
-  <Local Name="AboutForm.Tab.Other.ApplicationDir" Russian="Папка программы"/>
 
   <!--Messages-->
   <Local Name="Message.Information.NotSavedObjects" Russian="Есть несохранённые (%1 шт.) записи, сохраните или закройте их для выхода из программы."/>
@@ -59,9 +53,6 @@
   <Local Name="Message.Error.Field.NullValue" Russian="Поле &quot;%1&quot; обязательно для заполнения."/>
   <Local Name="Message.Error.NotOpenedFile" Russian="Не удалось открыть файл &quot;%1&quot;."/>
   <Local Name="Message.Error.ErrorOpenedFolderPath" Russian="Не удалось открыть директорию &quot;%1&quot;."/>
-  <Local Name="Message.Error.ErrorQuerySQL" Russian="Произошла ошибка SQL-запроса!"/>
-  <Local Name="Message.Error.ErrorQuerySQL.Details" Russian="Текст ошибки:&#10;%1&#10;&#10;Текст запроса:&#10;%2"/>
-  <Local Name="Message.Error.InitializeQueryPool" Russian="Не удалось запустить пул запросов."/>
   <Local Name="Message.Error.CreateCopyStorageFile" Russian="Не удалось создать копию файла &quot;%1&quot;."/>
   <Local Name="Message.Error.InitializeMetaData" Russian="Не удалось иницилизировать мета-данные."/>
   <Local Name="Message.Error.Auth" Russian="Ошибка авторизации!"/>
