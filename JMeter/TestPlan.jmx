@@ -258,7 +258,7 @@
           </elementProp>
           <elementProp name="GetGroupRights_GroupID" elementType="Argument">
             <stringProp name="Argument.name">GetGroupRights_GroupID</stringProp>
-            <stringProp name="Argument.value">50005</stringProp>
+            <stringProp name="Argument.value">2</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="GetRecordValue_TableName" elementType="Argument">
@@ -841,7 +841,7 @@ vars.put(&quot;QueryGetForeignList&quot;, MapToString(MapGetForeignList));</stri
           <stringProp name="ConfigTestElement.password"></stringProp>
         </TCPSampler>
         <hashTree/>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: RecordEdit" enabled="true">
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: RecordEdit" enabled="false">
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
           <stringProp name="TCPSampler.port"></stringProp>
@@ -1141,7 +1141,7 @@ vars.put(&quot;QueryGetForeignList&quot;, MapToString(MapGetForeignList));</stri
           <stringProp name="ConfigTestElement.password"></stringProp>
         </TCPSampler>
         <hashTree/>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: GetGroupRights" enabled="false">
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: GetGroupRights" enabled="true">
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
           <stringProp name="TCPSampler.port"></stringProp>

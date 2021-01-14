@@ -7,7 +7,6 @@
 #include "ISMetaSystemsEntity.h"
 #include "ISUserRoleEntity.h"
 #include "ISControls.h"
-#include "ISProtocol.h"
 #include "ISGui.h"
 #include "ISTcpQuery.h"
 #include "ISMessageBox.h"

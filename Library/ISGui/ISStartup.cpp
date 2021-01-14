@@ -8,7 +8,6 @@
 #include "ISUserRoleEntity.h"
 #include "ISSettingsDatabase.h"
 #include "ISSettings.h"
-#include "ISProtocol.h"
 #include "ISGui.h"
 #include "ISParagraphEntity.h"
 #include "ISBuffer.h"

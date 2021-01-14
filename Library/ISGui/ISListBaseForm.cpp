@@ -4,7 +4,6 @@
 #include "ISCore.h"
 #include "ISSettings.h"
 #include "ISLocalization.h"
-#include "ISProtocol.h"
 #include "ISPopupMessage.h"
 #include "ISExportDialog.h"
 #include "ISProgressForm.h"
@@ -834,7 +833,6 @@ void ISListBaseForm::Search()
 			Update();
 
 			GetAction(ISNamespace::AT_SearchClear)->setEnabled(true);
-			ISProtocol::Insert(CONST_UID_PROTOCOL_SEARCH, MetaTable->Name, MetaTable->LocalListName, QVariant());
 		});
 	}
 	SearchForm->show();
@@ -894,7 +892,7 @@ void ISListBaseForm::Export()
 		if (Exported)
 		{
 			ProgressForm.close();
-			ISProtocol::Insert(CONST_UID_PROTOCOL_EXPORT_TABLE, MetaTable->Name, MetaTable->LocalListName, QVariant(), ExportForm.GetSelectTypeName());
+			//ISProtocol::Insert(CONST_UID_PROTOCOL_EXPORT_TABLE, MetaTable->Name, MetaTable->LocalListName, QVariant(), ExportForm.GetSelectTypeName());
 			ISMessageBox::ShowInformation(this, LANG("Export.Completed").arg(MetaTable->LocalListName).arg(ExportForm.GetSelectTypeName()));
 		}
 		else

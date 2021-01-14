@@ -12,7 +12,6 @@
 #include "ISDatabase.h"
 #include "ISAssert.h"
 #include "ISPopupMessage.h"
-#include "ISProtocol.h"
 #include "ISListBaseForm.h"
 #include "ISFavorites.h"
 #include "ISCreatedObjectsEntity.h"

@@ -10,7 +10,6 @@
 #include "ISGui.h"
 #include "ISControls.h"
 #include "ISMessageBox.h"
-#include "ISProtocol.h"
 #include "ISQueryPool.h"
 //-----------------------------------------------------------------------------
 ISFullTextSearchSubSystem::ISFullTextSearchSubSystem(QWidget *parent) : ISInterfaceMetaForm(parent)

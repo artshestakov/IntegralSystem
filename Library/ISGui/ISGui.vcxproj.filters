@@ -295,9 +295,6 @@
     <ClCompile Include="ISAudioPlayerForm.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
-    <ClCompile Include="ISProtocol.cpp">
-      <Filter>System</Filter>
-    </ClCompile>
     <ClCompile Include="ISCalendarParagraph.cpp">
       <Filter>Paragraphs</Filter>
     </ClCompile>
@@ -665,9 +662,6 @@
     </ClInclude>
     <ClInclude Include="ISTcpQuery.h">
       <Filter>Protocol</Filter>
-    </ClInclude>
-    <ClInclude Include="ISProtocol.h">
-      <Filter>System</Filter>
     </ClInclude>
     <ClInclude Include="ISUSBSearcher.h">
       <Filter>System</Filter>

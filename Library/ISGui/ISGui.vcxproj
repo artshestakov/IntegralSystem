@@ -241,7 +241,6 @@
     <ClCompile Include="ISPopupMessage.cpp" />
     <ClCompile Include="ISProcessForm.cpp" />
     <ClCompile Include="ISProgressForm.cpp" />
-    <ClCompile Include="ISProtocol.cpp" />
     <ClCompile Include="ISProtocolSubSystem.cpp" />
     <ClCompile Include="ISProtocolObjectListForm.cpp" />
     <ClCompile Include="ISReconnectDialog.cpp" />
@@ -377,7 +376,6 @@
     <QtMoc Include="ISSettingsDatabaseObjectForm.h" />
     <QtMoc Include="ISListViewForm.h" />
     <QtMoc Include="ISReconnectDialog.h" />
-    <ClInclude Include="ISProtocol.h" />
     <ClInclude Include="ISSearchModel.h" />
     <QtMoc Include="ISTcpConnector.h" />
     <QtMoc Include="ISTcpModel.h" />
