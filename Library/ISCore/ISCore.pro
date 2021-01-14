@@ -36,7 +36,6 @@ HEADERS += \
     ISLocalization.h \
     ISLogger.h \
     ISMetaData.h \
-	ISMetaDataHelper.h \
     ISNamespace.h \
     ISProperty.h \
     ISQuery.h \
@@ -64,7 +63,6 @@ SOURCES += \
     ISLocalization.cpp \
     ISLogger.cpp \
     ISMetaData.cpp \
-    ISMetaDataHelper.cpp \
     ISProperty.cpp \
     ISQuery.cpp \
     ISQueryText.cpp \

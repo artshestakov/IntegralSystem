@@ -41,9 +41,6 @@
     <ClCompile Include="ISMetaData.cpp">
       <Filter>MetaData</Filter>
     </ClCompile>
-    <ClCompile Include="ISMetaDataHelper.cpp">
-      <Filter>MetaData</Filter>
-    </ClCompile>
     <ClCompile Include="ISRestWorker.cpp">
       <Filter>Network</Filter>
     </ClCompile>
@@ -110,9 +107,6 @@
       <Filter>Database</Filter>
     </ClInclude>
     <ClInclude Include="ISMetaData.h">
-      <Filter>MetaData</Filter>
-    </ClInclude>
-    <ClInclude Include="ISMetaDataHelper.h">
       <Filter>MetaData</Filter>
     </ClInclude>
     <ClInclude Include="PMetaClass.h">

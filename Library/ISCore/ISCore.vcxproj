@@ -215,7 +215,6 @@
     <ClCompile Include="ISLocalization.cpp" />
     <ClCompile Include="ISLogger.cpp" />
     <ClCompile Include="ISMetaData.cpp" />
-    <ClCompile Include="ISMetaDataHelper.cpp" />
     <ClCompile Include="ISProperty.cpp" />
     <ClCompile Include="ISQuery.cpp" />
     <ClCompile Include="ISQueryText.cpp" />
@@ -262,7 +261,6 @@
     <QtMoc Include="ISRestWorker.h" />
     <ClInclude Include="ISDatabase.h" />
     <ClInclude Include="ISMetaData.h" />
-    <ClInclude Include="ISMetaDataHelper.h" />
     <ClInclude Include="ISQuery.h" />
     <ClInclude Include="ISQueryText.h" />
     <ClInclude Include="PMetaClass.h" />

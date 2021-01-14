@@ -5,7 +5,6 @@
 #include "ISDatabase.h"
 #include "ISSystem.h"
 #include "ISDebug.h"
-#include "ISMetaDataHelper.h"
 #include "ISVersionInfo.h"
 #include "ISQuery.h"
 #include "ISAlgorithm.h"

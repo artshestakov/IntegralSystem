@@ -10,7 +10,6 @@
 #include "ISConfig.h"
 #include "ISTcpClients.h"
 #include "ISMetaData.h"
-#include "ISMetaDataHelper.h"
 #include "ISFail2Ban.h"
 //-----------------------------------------------------------------------------
 static QString QS_USERS_HASH = PREPARE_QUERY("SELECT usrs_hash, usrs_salt "
@@ -694,6 +693,15 @@ QString ISTcpWorker::ConvertDateToString(const QDate &Date)
 	return Result;
 }
 //-----------------------------------------------------------------------------
+QString ISTcpWorker::GenerateSqlQueryFromTitleName(PMetaForeign *MetaForeign, const QString &Alias, const QString &FieldName)
+{
+	PMetaTable *MetaTableForeign = ISMetaData::Instance().GetMetaTable(MetaForeign->ForeignClass);
+	QString SqlQuery = "SELECT " + MetaTableForeign->Alias + '_' + MetaForeign->ForeignViewNameField + "\n" +
+		"FROM " + MetaTableForeign->Name + "\n" +
+		"WHERE " + MetaTableForeign->Alias + "_id = " + Alias + '_' + FieldName;
+	return SqlQuery;
+}
+//-----------------------------------------------------------------------------
 bool ISTcpWorker::GetObjectName(PMetaTable *MetaTable, unsigned int ObjectID, QString &ObjectName)
 {
 	//Если TitleName у мета-таблицы не заполнен - возвращаем идентификатор объекта
@@ -713,7 +721,7 @@ bool ISTcpWorker::GetObjectName(PMetaTable *MetaTable, unsigned int ObjectID, QS
 		{
 			PMetaForeign *MetaForeign = MetaTable->GetField(FieldName)->Foreign;
 			QueryText += MetaForeign ?
-				("(" + ISMetaDataHelper::GenerateSqlQueryFromTitleName(MetaForeign, MetaTable->Alias, FieldName) + "), ' ', ") :
+				("(" + GenerateSqlQueryFromTitleName(MetaForeign, MetaTable->Alias, FieldName) + "), ' ', ") :
 				(MetaTable->Alias + '_' + FieldName + ", ' ', ");
 		}
 		QueryText.chop(7);
@@ -723,7 +731,7 @@ bool ISTcpWorker::GetObjectName(PMetaTable *MetaTable, unsigned int ObjectID, QS
 	{
 		PMetaForeign *MetaForeign = MetaTable->GetField(MetaTable->TitleName)->Foreign;
 		QueryText += MetaForeign ?
-			("(" + ISMetaDataHelper::GenerateSqlQueryFromTitleName(MetaForeign, MetaTable->Alias, MetaTable->TitleName) + ") \n") :
+			("(" + GenerateSqlQueryFromTitleName(MetaForeign, MetaTable->Alias, MetaTable->TitleName) + ") \n") :
 			(MetaTable->Alias + '_' + MetaTable->TitleName + " \n");
 	}
 	QueryText += "FROM " + MetaTable->Name + " \n";
