@@ -264,7 +264,6 @@
   <Local Name="Export.Type.HTML" Russian="HTML"/>
   <Local Name="Export.Type.XML" Russian="XML"/>
   <Local Name="Export.Type.JSON" Russian="JSON"/>
-  <Local Name="Export.Type.SQLITE" Russian="SQLite"/>
   <Local Name="Export.Error.NoError" Russian="Ошибок нет"/>
   <Local Name="Export.Error.Prepare" Russian="При подготовке экспорта произошла ошибка."/>
   <Local Name="Export.Error.Export" Russian="В процессе экспорта произошла ошибка."/>
@@ -382,7 +381,6 @@
   <Local Name="File.Filter.Html" Russian="Веб-страница (*.html)"/>
   <Local Name="File.Filter.Xml" Russian="Язык разметки (*.xml)"/>
   <Local Name="File.Filter.Json" Russian="Формат обмена данными (*.json)"/>
-  <Local Name="File.Filter.SQLite" Russian="База данных SQLite (*.sqlite)"/>
   <Local Name="File.Filter.File" Russian="Файл (*.%1)"/>
 
   <!--Calendar-->

@@ -24,7 +24,6 @@ ISExportDialog::ISExportDialog(ISTcpModel *TcpModel)
 	ComboBoxType->AddItem(LANG("Export.Type.HTML"), ISNamespace::ET_HTML);
 	ComboBoxType->AddItem(LANG("Export.Type.XML"), ISNamespace::ET_XML);
 	ComboBoxType->AddItem(LANG("Export.Type.JSON"), ISNamespace::ET_JSON);
-	ComboBoxType->AddItem(LANG("Export.Type.SQLITE"), ISNamespace::ET_SQLITE);
 	connect(ComboBoxType, &ISComboEdit::ValueChange, this, &ISExportDialog::TypeChanged);
 	GetMainLayout()->addWidget(ComboBoxType);
 
