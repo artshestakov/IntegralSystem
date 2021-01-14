@@ -98,11 +98,6 @@ bool ISMetaData::Initialize(const QString &configuration_name, bool InitXSR, boo
 				{
 					Result = CheckUniqueAllAliases();
 				}
-
-				if (Result)
-				{
-					Result = GenerateSqlFromForeigns();
-				}
 			}
 			Initialized = Result;
 		}
@@ -391,51 +386,6 @@ bool ISMetaData::CheckUniqueAllAliases()
 		{
 			ErrorString = QString("Duplicate alias: %1. Table: %2.").arg(Alias).arg(MetaTable->Name);
 			break;
-		}
-	}
-	return Result;
-}
-//-----------------------------------------------------------------------------
-bool ISMetaData::GenerateSqlFromForeigns()
-{
-	bool Result = true;
-	std::vector<PMetaForeign*> Foreigns = GetForeigns();
-	for (PMetaForeign *MetaForeign : Foreigns) //Обходим все внешние ключи
-	{
-		//Внешняя сущность
-		PMetaTable *MetaTableExtern = GetMetaTable(MetaForeign->ForeignClass);
-
-		//Проверка наличия сущности, на которую будет ссылаться внешний ключ
-		Result = MetaTableExtern ? true : false;
-		if (!Result)
-		{
-			ErrorString = QString("Not found table \"%1\"").arg(MetaForeign->ForeignClass);
-			break;
-		}
-
-		//Проверка наличия поля во внешней сущности
-		Result = MetaTableExtern->ContainsField(MetaForeign->ForeignField);
-		if (!Result)
-		{
-			ErrorString = QString("Not found field \"%1\" in table \"%2\"").arg(MetaForeign->ForeignField).arg(MetaForeign->ForeignClass);
-			break;
-		}
-
-		//Проверка наличия видимых полей
-		QStringList ViewFields = MetaForeign->ForeignViewNameField.split(';');
-		for (const QString &ViewField : ViewFields)
-		{
-			//Если поле не пустое - проверяем. Поле в данном месте может быть пустым,
-			//если "ForeignViewNameField" вообще не заполнено ничем (это нормально)
-			if (!ViewField.isEmpty())
-			{
-				Result = MetaTableExtern->ContainsField(ViewField);
-				if (!Result)
-				{
-					ErrorString = QString("Not found field \"%1\" in table \"%2\"").arg(ViewField).arg(MetaForeign->ForeignClass);
-					break;
-				}
-			}
 		}
 	}
 	return Result;
