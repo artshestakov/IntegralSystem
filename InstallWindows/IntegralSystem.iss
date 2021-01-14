@@ -55,10 +55,10 @@ Source: ${QTDIR}\bin\Qt5Sql${IS_DEBUG}.dll; DestDir: {app}; Flags: ignoreversion
 Source: ${QTDIR}\bin\Qt5Widgets${IS_DEBUG}.dll; DestDir: {app}; Flags: ignoreversion recursesubdirs;
 Source: ${QTDIR}\bin\Qt5Xml${IS_DEBUG}.dll; DestDir: {app}; Flags: ignoreversion recursesubdirs;
 
-Source: ${QTDIR}\plugins\audio\qtaudio_wasapi${IS_DEBUG}.dll; DestDir: {app}\audio; Flags: ignoreversion recursesubdirs;
-Source: ${QTDIR}\plugins\audio\qtaudio_windows${IS_DEBUG}.dll; DestDir: {app}\audio; Flags: ignoreversion recursesubdirs;
-Source: ${QTDIR}\plugins\bearer\qgenericbearer${IS_DEBUG}.dll; DestDir: {app}\bearer; Flags: ignoreversion recursesubdirs;
-Source: ${QTDIR}\plugins\iconengines\qsvgicon${IS_DEBUG}.dll; DestDir: {app}\iconengines; Flags: ignoreversion recursesubdirs;
+;Source: ${QTDIR}\plugins\audio\qtaudio_wasapi${IS_DEBUG}.dll; DestDir: {app}\audio; Flags: ignoreversion recursesubdirs;
+;Source: ${QTDIR}\plugins\audio\qtaudio_windows${IS_DEBUG}.dll; DestDir: {app}\audio; Flags: ignoreversion recursesubdirs;
+;Source: ${QTDIR}\plugins\bearer\qgenericbearer${IS_DEBUG}.dll; DestDir: {app}\bearer; Flags: ignoreversion recursesubdirs;
+;Source: ${QTDIR}\plugins\iconengines\qsvgicon${IS_DEBUG}.dll; DestDir: {app}\iconengines; Flags: ignoreversion recursesubdirs;
 Source: ${QTDIR}\plugins\imageformats\qgif${IS_DEBUG}.dll; DestDir: {app}\imageformats; Flags: ignoreversion recursesubdirs;
 Source: ${QTDIR}\plugins\imageformats\qicns${IS_DEBUG}.dll; DestDir: {app}\imageformats; Flags: ignoreversion recursesubdirs;
 Source: ${QTDIR}\plugins\imageformats\qico${IS_DEBUG}.dll; DestDir: {app}\imageformats; Flags: ignoreversion recursesubdirs;
@@ -73,7 +73,7 @@ Source: ${QTDIR}\plugins\mediaservice\qtmedia_audioengine${IS_DEBUG}.dll; DestDi
 Source: ${QTDIR}\plugins\mediaservice\wmfengine${IS_DEBUG}.dll; DestDir: {app}\mediaservice; Flags: ignoreversion recursesubdirs;
 Source: ${QTDIR}\plugins\platforms\qwindows${IS_DEBUG}.dll; DestDir: {app}\platforms; Flags: ignoreversion recursesubdirs;
 Source: ${QTDIR}\plugins\playlistformats\qtmultimedia_m3u${IS_DEBUG}.dll; DestDir: {app}\playlistformats; Flags: ignoreversion recursesubdirs;
-Source: ${QTDIR}\plugins\printsupport\windowsprintersupport${IS_DEBUG}.dll; DestDir: {app}\printsupport; Flags: ignoreversion recursesubdirs;
+;Source: ${QTDIR}\plugins\printsupport\windowsprintersupport${IS_DEBUG}.dll; DestDir: {app}\printsupport; Flags: ignoreversion recursesubdirs;
 Source: ${QTDIR}\plugins\sqldrivers\qsqlpsql${IS_DEBUG}.dll; DestDir: {app}\sqldrivers; Flags: ignoreversion recursesubdirs;
 Source: ${QTDIR}\plugins\styles\qwindowsvistastyle${IS_DEBUG}.dll; DestDir: {app}\styles; Flags: ignoreversion recursesubdirs;
 
