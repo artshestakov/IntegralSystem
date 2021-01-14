@@ -17,7 +17,6 @@
 #include "ISDatabase.h"
 #include "ISTcpQuery.h"
 #include "ISVersionInfo.h"
-#include "ISQueryText.h"
 //-----------------------------------------------------------------------------
 bool ISStartup::Startup(ISSplashScreen *SplashScreen)
 {

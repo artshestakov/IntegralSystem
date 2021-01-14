@@ -28,6 +28,9 @@ if (POINTER) \
 //Сгенерировать уникальный идентификатор
 #define GENERATE_UUID ISUuid(QUuid::createUuid())
 
+//Заглушка для SQL-запросов
+#define PREPARE_QUERY(x) x
+
 #ifdef WIN32
 #define __CLASS__ ISAlgorithm::GetClassName(__FUNCTION__)
 #else

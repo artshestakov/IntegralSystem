@@ -179,13 +179,6 @@ struct ISCORE_EXPORT ISConfigurationInfo
 	QString LogoName;
 };
 //-----------------------------------------------------------------------------
-struct ISCORE_EXPORT ISSqlQuery
-{
-    QString FileName; //Имя файла
-    int Line; //Номер строки
-    QString SqlText; //SQL-запрос
-};
-//-----------------------------------------------------------------------------
 struct ISCORE_EXPORT ISBuildInfoStruct
 {
 	unsigned int Version; //Версия

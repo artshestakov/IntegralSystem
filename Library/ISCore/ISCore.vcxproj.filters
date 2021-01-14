@@ -35,9 +35,6 @@
     <ClCompile Include="ISQuery.cpp">
       <Filter>Database</Filter>
     </ClCompile>
-    <ClCompile Include="ISQueryText.cpp">
-      <Filter>Database</Filter>
-    </ClCompile>
     <ClCompile Include="ISMetaData.cpp">
       <Filter>MetaData</Filter>
     </ClCompile>
@@ -101,9 +98,6 @@
       <Filter>Database</Filter>
     </ClInclude>
     <ClInclude Include="ISQuery.h">
-      <Filter>Database</Filter>
-    </ClInclude>
-    <ClInclude Include="ISQueryText.h">
       <Filter>Database</Filter>
     </ClInclude>
     <ClInclude Include="ISMetaData.h">

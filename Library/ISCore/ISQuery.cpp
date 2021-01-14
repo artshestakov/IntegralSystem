@@ -210,11 +210,6 @@ QSqlRecord ISQuery::GetRecord()
     return QSqlRecord();
 }
 //-----------------------------------------------------------------------------
-QSqlQuery ISQuery::GetSqlQuery() const
-{
-    return SqlQuery;
-}
-//-----------------------------------------------------------------------------
 bool ISQuery::IsValid() const
 {
     return SqlQuery.isValid();

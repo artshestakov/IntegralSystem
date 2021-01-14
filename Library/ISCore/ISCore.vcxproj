@@ -217,7 +217,6 @@
     <ClCompile Include="ISMetaData.cpp" />
     <ClCompile Include="ISProperty.cpp" />
     <ClCompile Include="ISQuery.cpp" />
-    <ClCompile Include="ISQueryText.cpp" />
     <ClCompile Include="ISRandom.cpp" />
     <ClCompile Include="ISRestWorker.cpp" />
     <ClCompile Include="ISSettings.cpp" />
@@ -262,7 +261,6 @@
     <ClInclude Include="ISDatabase.h" />
     <ClInclude Include="ISMetaData.h" />
     <ClInclude Include="ISQuery.h" />
-    <ClInclude Include="ISQueryText.h" />
     <ClInclude Include="PMetaClass.h" />
   </ItemGroup>
   <ItemGroup>

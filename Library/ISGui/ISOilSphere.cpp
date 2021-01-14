@@ -10,26 +10,26 @@
 #include "ISDatabase.h"
 #include "ISObjects.h"
 //-----------------------------------------------------------------------------
-static QString QS_PERIOD = PREPARE_QUERY2("SELECT COUNT(*) "
+static QString QS_PERIOD = PREPARE_QUERY("SELECT COUNT(*) "
 										  "FROM period "
 										  "WHERE CURRENT_DATE BETWEEN prod_datestart AND prod_dateend");
 //-----------------------------------------------------------------------------
-static QString QS_STATEMENT = PREPARE_QUERY2("SELECT COUNT(*) "
+static QString QS_STATEMENT = PREPARE_QUERY("SELECT COUNT(*) "
 											 "FROM gasstationstatement "
 											 "WHERE gsts_implementationunload = :ImplementationUnload");
 //-----------------------------------------------------------------------------
-static QString QI_STATEMENT = PREPARE_QUERY2("INSERT INTO gasstationstatement(gsts_implementationunload, gsts_stock, gsts_date, gsts_volumeincome) "
+static QString QI_STATEMENT = PREPARE_QUERY("INSERT INTO gasstationstatement(gsts_implementationunload, gsts_stock, gsts_date, gsts_volumeincome) "
 											 "VALUES(:ImplementationUnload, :StockID, (SELECT impl_date FROM implementation WHERE impl_id = (SELECT iunl_implementation FROM implementationunload WHERE iunl_id = :ImplementationUnload)), :VolumeIncome)");
 //-----------------------------------------------------------------------------
-static QString QS_STOCK = PREPARE_QUERY2("SELECT stck_id, stck_name "
+static QString QS_STOCK = PREPARE_QUERY("SELECT stck_id, stck_name "
 										 "FROM stock "
 										 "ORDER BY stck_name");
 //-----------------------------------------------------------------------------
-static QString QS_CONSTANT = PREPARE_QUERY2("SELECT prod_constant "
+static QString QS_CONSTANT = PREPARE_QUERY("SELECT prod_constant "
 											"FROM period "
 											"WHERE CURRENT_DATE BETWEEN prod_datestart AND prod_dateend");
 //-----------------------------------------------------------------------------
-static QString QS_FILL_IN_BASED = PREPARE_QUERY2("SELECT "
+static QString QS_FILL_IN_BASED = PREPARE_QUERY("SELECT "
 												 "COALESCE(gsts_balanceendchange, 0) AS gsts_balanceendchange, "
 												 "COALESCE(gsts_cashboxtotalpayment, 0) AS gsts_cashboxtotalpayment, "
 												 "COALESCE(gsts_cashboxtotalactually, 0) AS gsts_cashboxtotalactually, "
@@ -37,12 +37,12 @@ static QString QS_FILL_IN_BASED = PREPARE_QUERY2("SELECT "
 												 "FROM gasstationstatement "
 												 "WHERE gsts_id = :StatementID");
 //-----------------------------------------------------------------------------
-static QString QS_CASHBOX_TOTAL_PAYMENT = PREPARE_QUERY2("SELECT gsts_cashboxtotalpayment "
+static QString QS_CASHBOX_TOTAL_PAYMENT = PREPARE_QUERY("SELECT gsts_cashboxtotalpayment "
 														 "FROM gasstationstatement "
 														 "WHERE gsts_gasstation = :GasStation "
 														 "AND gsts_date = :Date - INTERVAL '1 day'");
 //-----------------------------------------------------------------------------
-static QString QS_IMPLEMENTATION_UNLOAD = PREPARE_QUERY2("SELECT true AS is_load, ilod_implementation AS implementation_id, ilod_id AS id, impl_date AS date, ilod_cost AS cost "
+static QString QS_IMPLEMENTATION_UNLOAD = PREPARE_QUERY("SELECT true AS is_load, ilod_implementation AS implementation_id, ilod_id AS id, impl_date AS date, ilod_cost AS cost "
 														 "FROM implementationload "
 														 "LEFT JOIN implementation ON ilod_implementation = impl_id "
 														 "WHERE ilod_counterparty = :CounterpartyID "
@@ -55,7 +55,7 @@ static QString QS_IMPLEMENTATION_UNLOAD = PREPARE_QUERY2("SELECT true AS is_load
 														 "WHERE iunl_counterparty = :CounterpartyID "
 														 "ORDER BY is_load, date DESC");
 //-----------------------------------------------------------------------------
-static QString QS_COUNTERPARTY_DEBT = PREPARE_QUERY2("SELECT get_counterparty_unload(:CounterpartyID), get_counterparty_load(:CounterpartyID), get_counterparty_entrollment(:CounterpartyID), get_counterparty_move_wagon(:CounterpartyID)");
+static QString QS_COUNTERPARTY_DEBT = PREPARE_QUERY("SELECT get_counterparty_unload(:CounterpartyID), get_counterparty_load(:CounterpartyID), get_counterparty_entrollment(:CounterpartyID), get_counterparty_move_wagon(:CounterpartyID)");
 //-----------------------------------------------------------------------------
 ISOilSphere::Object::Object() : ISObjectInterface()
 {

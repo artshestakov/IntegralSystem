@@ -3,7 +3,6 @@
 #define _ISQUERY_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "iscore_global.h"
-#include "ISQueryText.h"
 #include "ISTypedefs.h"
 //-----------------------------------------------------------------------------
 class ISCORE_EXPORT ISQuery
@@ -32,7 +31,6 @@ public:
     bool First();
 
     QSqlRecord GetRecord();
-    QSqlQuery GetSqlQuery() const;
 
     bool IsValid() const;
     bool IsSelect() const;
