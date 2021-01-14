@@ -17,7 +17,6 @@
 #include "ISProcessForm.h"
 #include "ISTcpConnector.h"
 #include "ISTcpQuery.h"
-#include "ISQueryPool.h"
 //-----------------------------------------------------------------------------
 ISAuthDialog::ISAuthDialog()
 	: ISInterfaceDialogForm(true),
@@ -171,18 +170,9 @@ void ISAuthDialog::Input()
 	//Если подключения ещё нет - подключаемся
 	if (!ISDatabase::Instance().GetDB(CONNECTION_DEFAULT).isOpen())
 	{
-		if (ISDatabase::Instance().Connect(CONNECTION_DEFAULT,
+		if (!ISDatabase::Instance().Connect(CONNECTION_DEFAULT,
 			CONFIG_STRING(CONST_CONFIG_CONNECTION_SERVER), CONFIG_INT(CONST_CONFIG_CONNECTION_PORT), CONFIG_STRING(CONST_CONFIG_CONNECTION_DATABASE),
-			EditLogin->GetValue().toString(), EditPassword->GetValue().toString())) //Если подключение к базе данных установлено
-		{
-			if (!ISQueryPool::Instance().Start(CONFIG_STRING(CONST_CONFIG_CONNECTION_SERVER), CONFIG_INT(CONST_CONFIG_CONNECTION_PORT), CONFIG_STRING(CONST_CONFIG_CONNECTION_DATABASE),
-				EditLogin->GetValue().toString(), EditPassword->GetValue().toString())) //Ошибка запуска пула запросов
-			{
-				ISMessageBox::ShowCritical(this, LANG("Message.Error.InitializeQueryPool"), ISQueryPool::Instance().GetErrorString());
-				return;
-			}
-		}
-		else //Ошибка подключения к базе данных
+			EditLogin->GetValue().toString(), EditPassword->GetValue().toString())) //Ошибка подключения к базе данных
 		{
 			ISMessageBox::ShowCritical(this, ISDatabase::Instance().GetErrorString());
 			return;

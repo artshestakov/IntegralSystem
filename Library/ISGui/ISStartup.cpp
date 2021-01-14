@@ -13,7 +13,6 @@
 #include "ISBuffer.h"
 #include "ISMetaSystemsEntity.h"
 #include "ISObjects.h"
-#include "ISQueryPool.h"
 #include "ISConfig.h"
 #include "ISDatabase.h"
 #include "ISTcpQuery.h"

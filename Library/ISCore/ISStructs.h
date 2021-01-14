@@ -406,15 +406,6 @@ struct ISCORE_EXPORT ISConnectOptionDB
     QString Password; //Пароль
 };
 //-----------------------------------------------------------------------------
-struct ISQueryPoolObject
-{
-    ISQueryPoolObject(const QString &sql_text) : SqlText(sql_text) { }
-    ISQueryPoolObject(const QString &sql_text, const ISStringToVariantMap &parameters) : SqlText(sql_text), Parameters(parameters) { }
-
-    QString SqlText;
-    ISStringToVariantMap Parameters;
-};
-//-----------------------------------------------------------------------------
 struct ISHistoryObject
 {
 	QDateTime DateTime; //Дата и время открытия

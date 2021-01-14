@@ -9,10 +9,8 @@
 #include "ISProtocolSubSystem.h"
 #include "ISMessageBox.h"
 #include "ISDatabase.h"
-#include "ISProtocol.h"
 #include "ISUserRoleEntity.h"
 #include "ISSettings.h"
-#include "ISQueryPool.h"
 #include "ISInputDialog.h"
 //-----------------------------------------------------------------------------
 ISMonitorActivitySubSystem::ISMonitorActivitySubSystem(QWidget *parent) : ISInterfaceMetaForm(parent)

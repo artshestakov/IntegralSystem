@@ -15,7 +15,6 @@
 #include "ISConfig.h"
 #include "ISBuffer.h"
 #include "ISVersionInfo.h"
-#include "ISQueryPool.h"
 #include "ISSettings.h"
 #include "ISLogger.h"
 #include "ISUserObjectForm.h"
@@ -522,7 +521,6 @@ bool ISGui::RecordsDelete(const QString &TableName, const ISVectorUInt &ObjectsI
 void ISGui::ExitApplication()
 {
 	ISTcpConnector::Instance().Disconnect();
-	ISQueryPool::Instance().Shutdown();
 	ISLogger::Instance().Shutdown();
 	qApp->closeAllWindows();
 }

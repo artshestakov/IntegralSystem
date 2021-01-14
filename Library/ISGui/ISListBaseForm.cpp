@@ -20,7 +20,6 @@
 #include "ISColumnSizer.h"
 #include "ISInputDialog.h"
 #include "ISExportWorker.h"
-#include "ISQueryPool.h"
 #include "ISGui.h"
 #include "ISAlgorithm.h"
 #include "ISTcpQuery.h"

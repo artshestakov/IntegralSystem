@@ -4,7 +4,6 @@
 #include "ISMetaData.h"
 #include "ISQuery.h"
 #include "ISConfig.h"
-#include "ISQueryPool.h"
 #include "ISLogger.h"
 #include "ISSystem.h"
 #include "ISDatabase.h"

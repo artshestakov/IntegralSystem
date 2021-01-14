@@ -219,7 +219,6 @@
     <ClCompile Include="ISMetaDataHelper.cpp" />
     <ClCompile Include="ISProperty.cpp" />
     <ClCompile Include="ISQuery.cpp" />
-    <ClCompile Include="ISQueryPool.cpp" />
     <ClCompile Include="ISQueryText.cpp" />
     <ClCompile Include="ISRandom.cpp" />
     <ClCompile Include="ISRestWorker.cpp" />
@@ -250,7 +249,6 @@
     <ClInclude Include="ISLogger.h" />
     <ClInclude Include="ISNamespace.h" />
     <ClInclude Include="ISProperty.h" />
-    <QtMoc Include="ISQueryPool.h" />
     <ClInclude Include="ISRandom.h" />
     <ClInclude Include="ISSingleton.h" />
     <ClInclude Include="ISStructs.h" />

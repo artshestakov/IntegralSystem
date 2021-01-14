@@ -101,9 +101,6 @@
     <ClCompile Include="ISConsole.cpp">
       <Filter>System</Filter>
     </ClCompile>
-    <ClCompile Include="ISQueryPool.cpp">
-      <Filter>System</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ISDatabase.h">
@@ -198,9 +195,6 @@
   <ItemGroup>
     <QtMoc Include="ISRestWorker.h">
       <Filter>Network</Filter>
-    </QtMoc>
-    <QtMoc Include="ISQueryPool.h">
-      <Filter>System</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>
