@@ -3,7 +3,6 @@
 #include "ISBuffer.h"
 #include "ISLocalization.h"
 #include "ISControls.h"
-#include "ISSystem.h"
 #include "ISButtons.h"
 //-----------------------------------------------------------------------------
 ISProgressForm::ISProgressForm(int Maximum, const QString &LabelText, QWidget *parent, const QString &TitleText)

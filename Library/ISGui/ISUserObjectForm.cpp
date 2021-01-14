@@ -4,7 +4,6 @@
 #include "ISLocalization.h"
 #include "ISMessageBox.h"
 #include "ISGui.h"
-#include "ISSystem.h"
 #include "ISUserPhotoCreator.h"
 #include "ISTcpQuery.h"
 #include "ISBuffer.h"

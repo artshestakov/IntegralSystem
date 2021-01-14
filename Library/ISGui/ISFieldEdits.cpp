@@ -973,15 +973,14 @@ void ISINNEdit::TextChanged(const QString &Text)
 ISWeekDayEdit::ISWeekDayEdit(QWidget *parent) : ISComboEdit(parent)
 {
 	SetEditable(false);
-
-	AddItem(LANG("Everyday"), 0);
-	AddItem(ISSystem::GetDayOfWeekName(Qt::Monday), Qt::Monday);
-	AddItem(ISSystem::GetDayOfWeekName(Qt::Tuesday), Qt::Tuesday);
-	AddItem(ISSystem::GetDayOfWeekName(Qt::Wednesday), Qt::Wednesday);
-	AddItem(ISSystem::GetDayOfWeekName(Qt::Thursday), Qt::Thursday);
-	AddItem(ISSystem::GetDayOfWeekName(Qt::Friday), Qt::Friday);
-	AddItem(ISSystem::GetDayOfWeekName(Qt::Saturday), Qt::Saturday);
-	AddItem(ISSystem::GetDayOfWeekName(Qt::Sunday), Qt::Sunday);
+	AddItem(LANG("DayOfWeek.Everyday"), QVariant());
+	AddItem(LANG("DayOfWeek.Monday"), Qt::Monday);
+	AddItem(LANG("DayOfWeek.Tuesday"), Qt::Tuesday);
+	AddItem(LANG("DayOfWeek.Wednesday"), Qt::Wednesday);
+	AddItem(LANG("DayOfWeek.Thursday"), Qt::Thursday);
+	AddItem(LANG("DayOfWeek.Friday"), Qt::Friday);
+	AddItem(LANG("DayOfWeek.Saturday"), Qt::Saturday);
+	AddItem(LANG("DayOfWeek.Sunday"), Qt::Sunday);
 }
 //-----------------------------------------------------------------------------
 ISWeekDayEdit::~ISWeekDayEdit()

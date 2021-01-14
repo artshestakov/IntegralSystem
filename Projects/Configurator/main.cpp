@@ -31,6 +31,7 @@ bool Execute(const QString &Argument); //Выполнить одиночную команду
 bool Execute(const QString &Argument, const QString &SubArgument); //Выполнить двойную команду
 QString GetClassName(const QString &Argument); //Получить имя класса
 QStringList ParseInputCommand(const QString &Command); //Парсинг введенной команды
+bool CheckExistSlot(QObject *Object, const QString &SlotName); //Проверить наличие слота в объекте
 //-----------------------------------------------------------------------------
 int main(int argc, char **argv)
 {
@@ -255,7 +256,7 @@ void InterpreterMode(bool &IsRunning)
 bool Execute(const QString &Argument)
 {
 	CGConfigurator Configurator(Arguments);
-	bool Result = ISSystem::CheckExistSlot(&Configurator, Argument);
+	bool Result = CheckExistSlot(&Configurator, Argument);
 	if (Result)
 	{
 		bool ReturnValue = true;
@@ -290,7 +291,7 @@ bool Execute(const QString &Argument, const QString &SubArgument)
 	}
 
 	CGConfiguratorBase *CommandBase = ISAlgorithm::CreatePointer<CGConfiguratorBase *>(ClassName);
-	bool Result = ISSystem::CheckExistSlot(CommandBase, SubArgument);
+	bool Result = CheckExistSlot(CommandBase, SubArgument);
 	if (Result)
 	{
 		bool ReturnValue = true;
@@ -344,5 +345,19 @@ QStringList ParseInputCommand(const QString &Command)
 		}
 	}
 	return StringList;
+}
+//-----------------------------------------------------------------------------
+bool CheckExistSlot(QObject *Object, const QString &SlotName)
+{
+	bool Result = false;
+	for (int i = 0; i < Object->metaObject()->methodCount(); ++i)
+	{
+		Result = Object->metaObject()->method(i).name() == SlotName;
+		if (Result)
+		{
+			break;
+		}
+	}
+	return Result;
 }
 //-----------------------------------------------------------------------------

@@ -2,7 +2,6 @@
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISConstants.h"
-#include "ISSystem.h"
 #include "ISGui.h"
 #include "ISControls.h"
 //-----------------------------------------------------------------------------

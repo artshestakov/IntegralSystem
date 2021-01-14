@@ -385,7 +385,14 @@
 
   <!--Calendar-->
   <Local Name="Date" Russian="Дата"/>
-  <Local Name="Everyday" Russian="Каждый день"/>
+  <Local Name="DayOfWeek.Everyday" Russian="Каждый день"/>
+  <Local Name="DayOfWeek.Monday" Russian="Понедельник"/>
+  <Local Name="DayOfWeek.Tuesday" Russian="Вторник"/>
+  <Local Name="DayOfWeek.Wednesday" Russian="Среда"/>
+  <Local Name="DayOfWeek.Thursday" Russian="Четверг"/>
+  <Local Name="DayOfWeek.Friday" Russian="Пятница"/>
+  <Local Name="DayOfWeek.Saturday" Russian="Суббота"/>
+  <Local Name="DayOfWeek.Sunday" Russian="Воскресенье"/>
   <Local Name="Month.NotSelected" Russian="Не выбран"/>
   <Local Name="Month.January" Russian="Январь"/>
   <Local Name="Month.February" Russian="Февраль"/>

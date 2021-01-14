@@ -6,7 +6,6 @@
 #include "ISDebug.h"
 #include "ISLocalization.h"
 #include "ISConsole.h"
-#include "ISSystem.h"
 //-----------------------------------------------------------------------------
 static QString QS_SETTINGS_DATABASE = PREPARE_QUERY("SELECT COUNT(*) "
 													"FROM _settingsdatabase "

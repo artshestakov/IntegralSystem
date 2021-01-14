@@ -1,5 +1,4 @@
 #include "ISTcp.h"
-#include "ISSystem.h"
 #include "ISConstants.h"
 #include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------

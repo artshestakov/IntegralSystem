@@ -1,6 +1,5 @@
 #include "ISObjects.h"
 #include "ISAssert.h"
-#include "ISSystem.h"
 #include "ISConstants.h"
 #include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------

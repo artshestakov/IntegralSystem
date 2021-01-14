@@ -3,7 +3,6 @@
 #include "ISConfig.h"
 #include "ISLogger.h"
 #include "ISAlgorithm.h"
-#include "ISSystem.h"
 //-----------------------------------------------------------------------------
 ISCaratController::ISCaratController(QObject *parent)
 	: QThread(parent),

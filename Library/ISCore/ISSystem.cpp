@@ -18,60 +18,12 @@ QDomElement ISSystem::GetDomElement(const QString &Content)
     return DomElement;
 }
 //-----------------------------------------------------------------------------
-QString ISSystem::GetDayOfWeekName(Qt::DayOfWeek Day)
-{
-    QString DayOfWeekName = QDate::longDayName(Day);
-    BeginSymbolToUpper(DayOfWeekName);
-    return DayOfWeekName;
-}
-//-----------------------------------------------------------------------------
-void ISSystem::ClearDirRecursive(const QString &DirPath)
-{
-    QDir Dir(DirPath);
-    QStringList Files = Dir.entryList(QDir::Files);
-
-    QStringList::Iterator FileIterator = Files.begin();
-    while (FileIterator != Files.end())
-    {
-        QFile File(DirPath + '/' + *FileIterator);
-        File.remove();
-        ++FileIterator;
-    }
-
-    QStringList Dirs = Dir.entryList(QDir::Dirs);
-    QStringList::Iterator DirIterator = Dirs.begin();
-    while (DirIterator != Dirs.end())
-    {
-        if (*DirIterator != SYMBOL_POINT && *DirIterator != "..")
-        {
-            ClearDirRecursive(DirPath + '/' + *DirIterator);
-        }
-        ++DirIterator;
-    }
-
-    Dir.rmdir(DirPath);
-}
-//-----------------------------------------------------------------------------
 void ISSystem::BeginSymbolToUpper(QString &String)
 {
     if (!String.isEmpty())
     {
         String[0] = String[0].toUpper();
     }
-}
-//-----------------------------------------------------------------------------
-bool ISSystem::CheckExistSlot(QObject *Object, const QString &SlotName)
-{
-    bool Result = false;
-    for (int i = 0; i < Object->metaObject()->methodCount(); ++i)
-    {
-        Result = Object->metaObject()->method(i).name() == SlotName;
-        if (Result)
-        {
-            break;
-        }
-    }
-    return Result;
 }
 //-----------------------------------------------------------------------------
 void ISSystem::ExecLoop(unsigned long Milliseconds)
@@ -100,42 +52,6 @@ bool ISSystem::CreateDir(const QString &DirPath, QString &ErrorString)
         }
     }
     return Result;
-}
-//-----------------------------------------------------------------------------
-int ISSystem::TimeFromMinutes(const QTime &Time)
-{
-    int Minute = 0;
-    if (Time.hour())
-    {
-        Minute += Time.hour() * 60;
-    }
-    if (Time.minute())
-    {
-        Minute += Time.minute();
-    }
-    return Minute;
-}
-//-----------------------------------------------------------------------------
-QString ISSystem::MillisecondsToString(int Milliseconds)
-{
-    int hours = Milliseconds / (1000 * 60 * 60);
-    int minutes = (Milliseconds - (hours * 1000 * 60 * 60)) / (1000 * 60);
-    int seconds = (Milliseconds - (minutes * 1000 * 60) - (hours * 1000 * 60 * 60)) / 1000;
-    int milliseconds = Milliseconds - (seconds * 1000) - (minutes * 1000 * 60) - (hours * 1000 * 60 * 60);
-    return QString().append(QString("%1").arg(hours, 2, 10, QLatin1Char('0')) + ':' + QString("%1").arg(minutes, 2, 10, QLatin1Char('0')) + ':' + QString("%1").arg(seconds, 2, 10, QLatin1Char('0')) + ':' + QString("%1").arg(milliseconds, 3, 10, QLatin1Char('0')));
-}
-//-----------------------------------------------------------------------------
-QString ISSystem::StringToBase64(const QString &String)
-{
-    QByteArray ByteArray = String.toUtf8();
-    QByteArray StringBase64 = ByteArray.toBase64();
-    return QString(StringBase64);
-}
-//-----------------------------------------------------------------------------
-QString ISSystem::Base64ToString(const QString &Base64)
-{
-    QString String = QByteArray::fromBase64(Base64.toUtf8());
-    return String;
 }
 //-----------------------------------------------------------------------------
 QVariantMap ISSystem::JsonStringToVariantMap(const QString &JsonString, QJsonParseError &JsonParseError)

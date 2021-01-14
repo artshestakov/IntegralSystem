@@ -2,7 +2,6 @@
 #include "ISDefinesGui.h"
 #include "ISGui.h"
 #include "ISConstants.h"
-#include "ISSystem.h"
 //-----------------------------------------------------------------------------
 ISSplashWidget::ISSplashWidget(QWidget *parent) : QFrame(parent)
 {

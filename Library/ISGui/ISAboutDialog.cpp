@@ -2,7 +2,6 @@
 #include "ISDefinesGui.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
-#include "ISSystem.h"
 #include "ISMessageBox.h"
 #include "ISFileDialog.h"
 #include "ISButtons.h"
