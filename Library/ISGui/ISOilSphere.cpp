@@ -10,13 +10,6 @@
 #include "ISDatabase.h"
 #include "ISObjects.h"
 //-----------------------------------------------------------------------------
-static QString QS_STATEMENT = PREPARE_QUERY("SELECT COUNT(*) "
-											 "FROM gasstationstatement "
-											 "WHERE gsts_implementationunload = :ImplementationUnload");
-//-----------------------------------------------------------------------------
-static QString QI_STATEMENT = PREPARE_QUERY("INSERT INTO gasstationstatement(gsts_implementationunload, gsts_stock, gsts_date, gsts_volumeincome) "
-											 "VALUES(:ImplementationUnload, :StockID, (SELECT impl_date FROM implementation WHERE impl_id = (SELECT iunl_implementation FROM implementationunload WHERE iunl_id = :ImplementationUnload)), :VolumeIncome)");
-//-----------------------------------------------------------------------------
 static QString QS_FILL_IN_BASED = PREPARE_QUERY("SELECT "
 												 "COALESCE(gsts_balanceendchange, 0) AS gsts_balanceendchange, "
 												 "COALESCE(gsts_cashboxtotalpayment, 0) AS gsts_cashboxtotalpayment, "
@@ -484,27 +477,14 @@ bool ISOilSphere::ImplementationUnloadObjectForm::Save()
 	bool Result = ISObjectFormBase::Save();
 	if (Result && UnloadStock.isValid()) //Если сохранение прошло успешно и поле "Склад" заполнено - производим добавление в ведомомсть АЗС
 	{
-		//Проверяем наличие такой записи
-		ISQuery qSelect(QS_STATEMENT);
-		qSelect.BindValue(":ImplementationUnload", GetObjectID());
-		if (qSelect.ExecuteFirst())
+		ISTcpQuery qStatementAdd(API_STATEMENT_ADD);
+		qStatementAdd.BindValue("ImplementationUnload", GetObjectID());
+		qStatementAdd.BindValue("UnloadStock", UnloadStock);
+		qStatementAdd.BindValue("ValumeIncome", ValumeIncome);
+		Result = qStatementAdd.Execute();
+		if (!Result)
 		{
-			if (qSelect.ReadColumn("count").toInt() == 0)
-			{
-				ISQuery qInsert(QI_STATEMENT);
-				qInsert.BindValue(":ImplementationUnload", GetObjectID());
-				qInsert.BindValue(":StockID", UnloadStock);
-				qInsert.BindValue(":VolumeIncome", ValumeIncome);
-				Result = qInsert.Execute();
-				if (!Result)
-				{
-					ISMessageBox::ShowCritical(this, LANG("OilSphere.Message.Critical.InsertGasStatment"), qInsert.GetErrorString());
-				}
-			}
-		}
-		else
-		{
-			ISMessageBox::ShowCritical(this, qSelect.GetErrorString());
+			ISMessageBox::ShowCritical(this, qStatementAdd.GetErrorString());
 		}
 	}
 	return Result;

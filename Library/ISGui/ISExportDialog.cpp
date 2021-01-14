@@ -139,7 +139,7 @@ void ISExportDialog::CreateFieldItem(const ISModelField &ModelField)
 	FieldItem->setData(Qt::UserRole, ModelField.Index);
 	FieldItem->setCheckState(Qt::Checked);
 	FieldItem->setSizeHint(QSize(FieldItem->sizeHint().width(), 30));
-	SelectedFields.emplace_back(ModelField.Index);
+	SelectedFields.emplace_back((unsigned int)ModelField.Index);
 }
 //-----------------------------------------------------------------------------
 void ISExportDialog::FieldsPositionChanged()

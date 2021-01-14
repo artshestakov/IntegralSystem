@@ -31,6 +31,5 @@
   <Local Name="OilSphere.Message.Warning.UnloadCounterpartyAndStockNotIsEmpty" Russian="Нужно выбрать только одно место выгрузки."/>
   <Local Name="OilSphere.Message.Warning.NotFoundCurrentConstant" Russian="Плотность на текущий период отсутствует."/>
   <Local Name="OilSphere.Message.Warning.FillInBased" Russian="Заполнение возможно на основании записи отличной от текущей."/>
-  <Local Name="OilSphere.Message.Critical.InsertGasStatment" Russian="Не удалось зафиксировать приход на склад."/>
 	
 </LANG>

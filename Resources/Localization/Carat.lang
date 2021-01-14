@@ -223,5 +223,8 @@
   <Local Name="Carat.Error.Query.PeriodContains.Select" Russian="Не удалось получить константу."/>
 
   <Local Name="Carat.Error.Query.GetStockList.Select" Russian="Не удалось получить список складов."/>
+  
+  <Local Name="Carat.Error.Query.StatementAdd.Select" Russian="Не удалось проверить наличие выгрузки."/>
+  <Local Name="Carat.Error.Query.StatementAdd.Insert" Russian="Не удалось зафиксировать приход на склад."/>
 
 </LANG>

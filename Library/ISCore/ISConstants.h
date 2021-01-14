@@ -200,6 +200,7 @@ const char API_TASK_COMMENT_ADD[] = "TaskCommentAdd"; //Добавить комментарий к з
 const char API_GET_FOREIGN_LIST[] = "GetForeignList"; //Получить список значений по внешнему ключу
 const char API_PERIOD_CONTAINS[] = "PeriodContains"; //Проверка наличия текущего периода
 const char API_GET_STOCK_LIST[] = "GetStockList"; //Получить список складов
+const char API_STATEMENT_ADD[] = "StatementAdd"; //Добавить выгрузку в ведомости азс
 //CARAT_LOCAL_API--------------------------------------------------------------
 const char	CARAT_LOCAL_API_SHUTDOWN[] = "shutdown"; //Завершение работы
 //-----------------------------------------------------------------------------

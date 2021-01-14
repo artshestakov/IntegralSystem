@@ -350,6 +350,15 @@ static QString QS_STOCK = PREPARE_QUERY("SELECT stck_id, stck_name "
 										"FROM stock "
 										"ORDER BY stck_name");
 //-----------------------------------------------------------------------------
+static QString QS_STATEMENT = PREPARE_QUERY("SELECT COUNT(*) "
+											"FROM gasstationstatement "
+											"WHERE gsts_implementationunload = :ImplementationUnload");
+//-----------------------------------------------------------------------------
+static QString QI_STATEMENT = PREPARE_QUERY("INSERT INTO gasstationstatement(gsts_implementationunload, gsts_stock, gsts_date, gsts_volumeincome) "
+											"VALUES(:ImplementationUnload, :StockID, "
+											"(SELECT impl_date FROM implementation WHERE impl_id = (SELECT iunl_implementation FROM implementationunload WHERE iunl_id = :ImplementationUnload)), "
+											":VolumeIncome)");
+//-----------------------------------------------------------------------------
 ISTcpWorker::ISTcpWorker(const QString &db_host, int db_port, const QString &db_name, const QString &db_user, const QString &db_password)
 	: QObject(),
 	ErrorString(NO_ERROR_STRING),
@@ -529,6 +538,7 @@ void ISTcpWorker::Process()
 					case ISNamespace::AMT_GetForeignList: Result = GetForeignList(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_PeriodContains: Result = PeriodContains(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_GetStockList: Result = GetStockList(tcp_message, TcpAnswer); break;
+					case ISNamespace::AMT_StatementAdd: Result = StatementAdd(tcp_message, TcpAnswer); break;
 					default:
 						ErrorString = LANG("Carat.Error.NotExistFunction").arg(tcp_message->TypeName);
 					}
@@ -3790,6 +3800,49 @@ bool ISTcpWorker::GetStockList(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 		});
 	}
 	TcpAnswer->Parameters["List"] = StockList;
+	return true;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::StatementAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+	Q_UNUSED(TcpAnswer);
+
+	QVariant ImplementationUnload = CheckNullField("ImplementationUnload", TcpMessage),
+		UnloadStock = CheckNullField("UnloadStock", TcpMessage),
+		ValumeIncome = CheckNullField("ValumeIncome", TcpMessage);
+	if (!ImplementationUnload.isValid())
+	{
+		return false;
+	}
+
+	//Проверяем наличие такой записи
+	ISQuery qSelectUnload(ISDatabase::Instance().GetDB(DBConnectionName), QS_STATEMENT);
+	qSelectUnload.BindValue(":ImplementationUnload", ImplementationUnload);
+	if (!qSelectUnload.Execute()) //Ошибка запроса
+	{
+		return ErrorQuery(LANG("Carat.Error.Query.StatementAdd.Select"), qSelectUnload);
+	}
+
+	if (!qSelectUnload.First()) //Не удалось перейти на первую запись
+	{
+		ErrorString = qSelectUnload.GetErrorString();
+		return false;
+	}
+
+	//Если выгрузки в ведомостях АЗС нет - добавляем
+	if (qSelectUnload.ReadColumn("count").toInt() == 0)
+	{
+		ISQuery qInsert(ISDatabase::Instance().GetDB(DBConnectionName), QI_STATEMENT);
+		qInsert.BindValue(":ImplementationUnload", ImplementationUnload);
+		qInsert.BindValue(":StockID", UnloadStock);
+		qInsert.BindValue(":VolumeIncome", ValumeIncome);
+		if (!qInsert.Execute()) //Не удалось добавить
+		{
+			return ErrorQuery(LANG("Carat.Error.Query.StatementAdd.Insert"), qInsert);
+		}
+	}
+
+	//Выгрузка уже существует - все окей
 	return true;
 }
 //-----------------------------------------------------------------------------

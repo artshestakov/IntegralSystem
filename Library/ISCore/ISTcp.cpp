@@ -236,6 +236,10 @@ ISNamespace::ApiMessageType ISTcp::GetMessageTypeByName(const QString &Name)
 	{
 		return ISNamespace::AMT_GetStockList;
 	}
+	else if (Name == API_STATEMENT_ADD)
+	{
+		return ISNamespace::AMT_StatementAdd;
+	}
 	return ISNamespace::AMT_Unknown;
 }
 //-----------------------------------------------------------------------------
