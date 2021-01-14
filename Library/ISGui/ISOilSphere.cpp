@@ -17,10 +17,6 @@ static QString QS_STATEMENT = PREPARE_QUERY("SELECT COUNT(*) "
 static QString QI_STATEMENT = PREPARE_QUERY("INSERT INTO gasstationstatement(gsts_implementationunload, gsts_stock, gsts_date, gsts_volumeincome) "
 											 "VALUES(:ImplementationUnload, :StockID, (SELECT impl_date FROM implementation WHERE impl_id = (SELECT iunl_implementation FROM implementationunload WHERE iunl_id = :ImplementationUnload)), :VolumeIncome)");
 //-----------------------------------------------------------------------------
-static QString QS_STOCK = PREPARE_QUERY("SELECT stck_id, stck_name "
-										 "FROM stock "
-										 "ORDER BY stck_name");
-//-----------------------------------------------------------------------------
 static QString QS_FILL_IN_BASED = PREPARE_QUERY("SELECT "
 												 "COALESCE(gsts_balanceendchange, 0) AS gsts_balanceendchange, "
 												 "COALESCE(gsts_cashboxtotalpayment, 0) AS gsts_cashboxtotalpayment, "
@@ -562,13 +558,19 @@ ISOilSphere::GasStationStatementSubSystem::GasStationStatementSubSystem(QWidget 
 	connect(EditStock, &ISFieldEditBase::ValueChange, this, &ISOilSphere::GasStationStatementSubSystem::StockChanged);
 	GetToolBar()->addWidget(EditStock);
 
-	ISQuery qSelectStock(QS_STOCK);
-	if (qSelectStock.Execute())
+	ISTcpQuery qGetStockList(API_GET_STOCK_LIST);
+	if (qGetStockList.Execute())
 	{
-		while (qSelectStock.Next())
+		QVariantList StockList = qGetStockList.GetAnswer()["List"].toList();
+		for (const QVariant &Variant : StockList)
 		{
-			EditStock->AddItem(qSelectStock.ReadColumn("stck_name").toString(), qSelectStock.ReadColumn("stck_id"));
+			QVariantMap StockMap = Variant.toMap();
+			EditStock->AddItem(StockMap["Name"].toString(), StockMap["ID"]);
 		}
+	}
+	else
+	{
+		ISMessageBox::ShowCritical(this, qGetStockList.GetErrorString());
 	}
 
 	LabelTotal = new QLabel(GetStatusBar());

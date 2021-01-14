@@ -346,6 +346,10 @@ static QString QS_PERIOD = PREPARE_QUERY("SELECT prod_constant "
 										 "FROM period "
 										 "WHERE CURRENT_DATE BETWEEN prod_datestart AND prod_dateend");
 //-----------------------------------------------------------------------------
+static QString QS_STOCK = PREPARE_QUERY("SELECT stck_id, stck_name "
+										"FROM stock "
+										"ORDER BY stck_name");
+//-----------------------------------------------------------------------------
 ISTcpWorker::ISTcpWorker(const QString &db_host, int db_port, const QString &db_name, const QString &db_user, const QString &db_password)
 	: QObject(),
 	ErrorString(NO_ERROR_STRING),
@@ -524,6 +528,7 @@ void ISTcpWorker::Process()
 					case ISNamespace::AMT_TaskCommentAdd: Result = TaskCommentAdd(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_GetForeignList: Result = GetForeignList(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_PeriodContains: Result = PeriodContains(tcp_message, TcpAnswer); break;
+					case ISNamespace::AMT_GetStockList: Result = GetStockList(tcp_message, TcpAnswer); break;
 					default:
 						ErrorString = LANG("Carat.Error.NotExistFunction").arg(tcp_message->TypeName);
 					}
@@ -3758,10 +3763,33 @@ bool ISTcpWorker::PeriodContains(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
 	{
 		return ErrorQuery(LANG("Carat.Error.Query.PeriodContains.Select"), qSelect);
 	}
-
 	bool IsExist = qSelect.First();
 	TcpAnswer->Parameters["Exist"] = IsExist;
 	TcpAnswer->Parameters["Value"] = IsExist ? qSelect.ReadColumn("prod_constant") : QVariant();
+	return true;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::GetStockList(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+	Q_UNUSED(TcpMessage);
+
+	ISQuery qSelect(ISDatabase::Instance().GetDB(DBConnectionName), QS_STOCK);
+	if (!qSelect.Execute()) //Ошибка запроса
+	{
+		return ErrorQuery(LANG("Carat.Error.Query.GetStockList.Select"), qSelect);
+	}
+
+	//Обходим результаты выборки
+	QVariantList StockList;
+	while (qSelect.Next())
+	{
+		StockList.append(QVariantMap
+		{
+			{ "ID", qSelect.ReadColumn("stck_id") },
+			{ "Name", qSelect.ReadColumn("stck_name") },
+		});
+	}
+	TcpAnswer->Parameters["List"] = StockList;
 	return true;
 }
 //-----------------------------------------------------------------------------
