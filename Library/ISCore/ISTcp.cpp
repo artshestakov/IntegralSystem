@@ -115,6 +115,10 @@ ISNamespace::ApiMessageType ISTcp::GetMessageTypeByName(const QString &Name)
 	{
 		return ISNamespace::AMT_GetTableData;
 	}
+	else if (Name == API_GET_TABLE_QUERY)
+	{
+		return ISNamespace::AMT_GetTableQuery;
+	}
 	else if (Name == API_NOTE_RECORD_GET)
 	{
 		return ISNamespace::AMT_NoteRecordGet;

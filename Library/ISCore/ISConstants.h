@@ -168,6 +168,7 @@ const char API_DISCUSSION_ADD[] = "DiscussionAdd"; //Добавить обсуждение
 const char API_DISCUSSION_EDIT[] = "DiscussionEdit"; //Изменить обсуждение
 const char API_DISCUSSION_COPY[] = "DiscussionCopy"; //Скопировать обсуждение
 const char API_GET_TABLE_DATA[] = "GetTableData"; //Получить данные из таблицы
+const char API_GET_TABLE_QUERY[] = "GetTableQuery"; //Получить данные по запросу
 const char API_NOTE_RECORD_GET[] = "GetNoteRecord"; //Получить примечание записи
 const char API_NOTE_RECORD_SET[] = "SetNoteRecord"; //Изменить примечание записи
 const char API_FILE_STORAGE_ADD[] = "FileStorageAdd"; //Добавить файл в хранилище

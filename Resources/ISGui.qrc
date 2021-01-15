@@ -9,7 +9,6 @@
     <file>ImageIcons/</file>
     <file>Images/</file>
     <file>Licenses/</file>
-    <file>SQL/</file>
 
   </qresource>
 </RCC>

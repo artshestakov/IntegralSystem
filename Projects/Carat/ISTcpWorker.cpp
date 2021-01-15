@@ -531,6 +531,7 @@ void ISTcpWorker::Process()
 					case ISNamespace::AMT_DiscussionEdit: Result = DiscussionEdit(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_DiscussionCopy: Result = DiscussionCopy(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_GetTableData: Result = GetTableData(tcp_message, TcpAnswer); break;
+					case ISNamespace::AMT_GetTableQuery: Result = GetTableQuery(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_NoteRecordGet: Result = NoteRecordGet(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_NoteRecordSet: Result = NoteRecordSet(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_FileStorageAdd: Result = FileStorageAdd(tcp_message, TcpAnswer); break;
@@ -2515,6 +2516,86 @@ bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	TcpAnswer->Parameters["FieldList"] = FieldList;
 	TcpAnswer->Parameters["RecordList"] = RecordList;
 	Protocol(TcpMessage->TcpSocket->GetUserID(), CONST_UID_PROTOCOL_GET_TABLE_DATA, MetaTable->Name, MetaTable->LocalListName);
+	return true;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::GetTableQuery(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+	QVariant QueryName = CheckNullField("QueryName", TcpMessage);
+	if (!QueryName.isValid())
+	{
+		return false;
+	}
+
+	//Получаем все SQL-запросы из памяти
+	QString SqlText;
+	QFileInfoList FileInfoList = QDir(":SQL").entryInfoList(QStringList() << "*.sql");
+	for (const QFileInfo &FileInfo : FileInfoList)
+	{
+		QString s = FileInfo.completeBaseName();
+		if (s == QueryName) //Нашли запрос - читаем его
+		{
+			QFile FileSQL(FileInfo.filePath());
+			if (!FileSQL.open(QIODevice::ReadOnly)) //Не удалось открыть файл - ошибка
+			{
+				ErrorString = LANG("Carat.Error.Query.GetTableQuery.FileOpen").arg(FileSQL.errorString());
+				return false;
+			}
+
+			//Читаем, закрываем и выходим из цикла
+			SqlText = FileSQL.readAll();
+			FileSQL.close();
+			break;
+		}
+	}
+
+	//Если запрос не найден - ошибка
+	if (SqlText.isEmpty())
+	{
+		ErrorString = LANG("Carat.Error.Query.GetTableQuery.NotFound");
+		return false;
+	}
+
+	//Формируем объект запроса, обходим параметры и выполняем
+	QVariantMap ParametersMap = TcpMessage->Parameters["Parameters"].toMap();
+	ISQuery qSelect(ISDatabase::Instance().GetDB(DBConnectionName), SqlText);
+	for (const auto &MapItem : ParametersMap.toStdMap())
+	{
+		qSelect.BindValue(':' + MapItem.first, MapItem.second);
+	}
+	if (!qSelect.Execute()) //Ошибка запроса
+	{
+		return ErrorQuery(LANG("Carat.Error.Query.GetTableQuery.Select"), qSelect);
+	}
+
+	//Обходим поля
+	QVariantList FieldList;
+	QSqlRecord SqlRecord = qSelect.GetRecord();
+	int FieldCount = SqlRecord.count();
+	for (int i = 0; i < FieldCount; ++i)
+	{
+		FieldList.append(SqlRecord.fieldName(i));
+	}
+
+	QVariantList RecordList;
+	if (qSelect.First()) //Данные есть - обходим записи
+	{
+		do
+		{
+			//Получаем очередную строку
+			SqlRecord = qSelect.GetRecord();
+
+			//Наполняем список значениями и складываем в список записей
+			QStringList Values;
+			for (int i = 0; i < FieldCount; ++i)
+			{
+				Values.append(SqlRecord.value(i).toString());
+			}
+			RecordList.append(Values);
+		} while (qSelect.Next());
+	}
+	TcpAnswer->Parameters["FieldList"] = FieldList;
+	TcpAnswer->Parameters["RecordList"] = RecordList;
 	return true;
 }
 //-----------------------------------------------------------------------------
