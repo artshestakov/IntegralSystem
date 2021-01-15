@@ -8,7 +8,6 @@
 #include "ISGui.h"
 #include "ISProtocolSubSystem.h"
 #include "ISMessageBox.h"
-#include "ISDatabase.h"
 #include "ISUserRoleEntity.h"
 #include "ISSettings.h"
 #include "ISInputDialog.h"

@@ -10,7 +10,6 @@
 #include "ISBuffer.h"
 #include "ISGui.h"
 #include "ISProgressForm.h"
-#include "ISDatabase.h"
 //-----------------------------------------------------------------------------
 ISStorageFilesSubSystem::ISStorageFilesSubSystem(QWidget *parent) : ISListBaseForm("_StorageFiles", parent)
 {

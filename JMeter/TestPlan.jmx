@@ -176,6 +176,11 @@
             <stringProp name="Argument.value"></stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
+          <elementProp name="GetTableQuery_QueryName" elementType="Argument">
+            <stringProp name="Argument.name">GetTableQuery_QueryName</stringProp>
+            <stringProp name="Argument.value">test</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
           <elementProp name="GetNoteRecord_TableName" elementType="Argument">
             <stringProp name="Argument.name">GetNoteRecord_TableName</stringProp>
             <stringProp name="Argument.value">_Users</stringProp>
@@ -570,6 +575,21 @@ def MapGetTableData =
 		]
 ];
 vars.put(&quot;QueryGetTableData&quot;, MapToString(MapGetTableData));
+
+//Получить данные запроса
+def MapGetTableQuery =
+[
+	Type: &quot;GetTableQuery&quot;,
+	Parameters:
+		[
+			QueryName: vars.get(&quot;GetTableQuery_QueryName&quot;),
+			Parameters:
+				[
+
+				]
+		]
+];
+vars.put(&quot;QueryGetTableQuery&quot;, MapToString(MapGetTableQuery));
 
 //Получить примечание записи
 def MapGetNoteRecord =
@@ -997,6 +1017,18 @@ vars.put(&quot;QueryGetForeignList&quot;, MapToString(MapGetForeignList));</stri
           <stringProp name="ConfigTestElement.password"></stringProp>
         </TCPSampler>
         <hashTree/>
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: GetTableQuery" enabled="true">
+          <stringProp name="TCPSampler.server"></stringProp>
+          <boolProp name="TCPSampler.reUseConnection">true</boolProp>
+          <stringProp name="TCPSampler.port"></stringProp>
+          <boolProp name="TCPSampler.nodelay">false</boolProp>
+          <stringProp name="TCPSampler.timeout"></stringProp>
+          <stringProp name="TCPSampler.request">${QueryGetTableQuery}</stringProp>
+          <boolProp name="TCPSampler.closeConnection">true</boolProp>
+          <stringProp name="ConfigTestElement.username"></stringProp>
+          <stringProp name="ConfigTestElement.password"></stringProp>
+        </TCPSampler>
+        <hashTree/>
         <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: GetLastClient" enabled="false">
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
@@ -1141,7 +1173,7 @@ vars.put(&quot;QueryGetForeignList&quot;, MapToString(MapGetForeignList));</stri
           <stringProp name="ConfigTestElement.password"></stringProp>
         </TCPSampler>
         <hashTree/>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: GetGroupRights" enabled="true">
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: GetGroupRights" enabled="false">
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
           <stringProp name="TCPSampler.port"></stringProp>

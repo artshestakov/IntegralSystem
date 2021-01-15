@@ -1,7 +1,6 @@
 ﻿#include "ISAuthDialog.h"
 #include "ISDefinesGui.h"
 #include "ISConstants.h"
-#include "ISDatabase.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISAboutDialog.h"
@@ -164,18 +163,6 @@ void ISAuthDialog::Input()
 		ISMessageBox::ShowWarning(this, LANG("Message.Error.Input.PasswordEmpty"));
 		EditPassword->BlinkRed();
 		return;
-	}
-
-	//Если подключения ещё нет - подключаемся
-	if (!ISDatabase::Instance().GetDB(CONNECTION_DEFAULT).isOpen())
-	{
-		if (!ISDatabase::Instance().Connect(CONNECTION_DEFAULT,
-			CONFIG_STRING(CONST_CONFIG_CONNECTION_SERVER), CONFIG_INT(CONST_CONFIG_CONNECTION_PORT), CONFIG_STRING(CONST_CONFIG_CONNECTION_DATABASE),
-			EditLogin->GetValue().toString(), EditPassword->GetValue().toString())) //Ошибка подключения к базе данных
-		{
-			ISMessageBox::ShowCritical(this, ISDatabase::Instance().GetErrorString());
-			return;
-		}
 	}
 
 	SetConnecting(true);

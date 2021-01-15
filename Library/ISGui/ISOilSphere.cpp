@@ -6,7 +6,6 @@
 #include "ISInputDialog.h"
 #include "ISDefinesGui.h"
 #include "ISControls.h"
-#include "ISDatabase.h"
 #include "ISObjects.h"
 //-----------------------------------------------------------------------------
 ISOilSphere::Object::Object() : ISObjectInterface()

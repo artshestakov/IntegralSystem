@@ -14,7 +14,6 @@
 #include "ISMetaSystemsEntity.h"
 #include "ISObjects.h"
 #include "ISConfig.h"
-#include "ISDatabase.h"
 #include "ISTcpQuery.h"
 #include "ISVersionInfo.h"
 //-----------------------------------------------------------------------------
@@ -56,7 +55,6 @@ void ISStartup::Shutdown(ISSplashScreen *SplashScreen)
 	{
 		ISMessageBox::ShowCritical(SplashScreen, qSaveMetaData.GetErrorString());
 	}
-	ISDatabase::Instance().DisconnectAll();
 	ISGui::ExitApplication();
 }
 //-----------------------------------------------------------------------------
