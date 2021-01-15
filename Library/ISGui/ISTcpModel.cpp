@@ -187,14 +187,6 @@ QVariant ISTcpModel::data(const QModelIndex &ModelIndex, int Role) const
 	return Value;
 }
 //-----------------------------------------------------------------------------
-bool ISTcpModel::setData(const QModelIndex &ModelIndex, const QVariant &Value, int Role)
-{
-	Q_UNUSED(ModelIndex);
-	Q_UNUSED(Value);
-	Q_UNUSED(Role);
-	return true;
-}
-//-----------------------------------------------------------------------------
 QVariant ISTcpModel::headerData(int Section, Qt::Orientation Orientation, int Role) const
 {
 	QVariant Value;
