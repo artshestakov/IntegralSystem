@@ -269,6 +269,7 @@
     <ClCompile Include="ISUserPhotoCreator.cpp" />
     <ClCompile Include="ISUserRoleEntity.cpp" />
     <ClCompile Include="ISValidators.cpp" />
+    <ClCompile Include="ISViewModel.cpp" />
     <ClCompile Include="ISWaitWidget.cpp" />
     <ClCompile Include="ISWorkspaceParagraph.cpp" />
   </ItemGroup>
@@ -321,6 +322,7 @@
     <QtMoc Include="ISFlowLayout.h" />
   </ItemGroup>
   <ItemGroup>
+    <QtMoc Include="ISViewModel.h" />
     <QtMoc Include="ISValidators.h" />
     <QtMoc Include="ISWorkspaceParagraph.h" />
     <QtMoc Include="ISAboutDialog.h" />

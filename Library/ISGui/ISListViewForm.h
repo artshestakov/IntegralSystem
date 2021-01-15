@@ -4,6 +4,7 @@
 //-----------------------------------------------------------------------------
 #include "ISInterfaceMetaForm.h"
 #include "ISBaseTableView.h"
+#include "ISViewModel.h"
 //-----------------------------------------------------------------------------
 class ISListViewForm : public ISInterfaceMetaForm
 {
@@ -18,16 +19,14 @@ public:
 
 	void BindValue(const QString &ParameterName, const QVariant &Value);
 	void LoadData() override;
-	QSqlQueryModel* GetSqlModel();
 
 private:
 	ISBaseTableView *TableView;
-	QSqlQueryModel *SqlModel;
+	ISViewModel *ViewModel;
 
 private:
 	QString QueryName;
-	QString SqlText;
-	ISStringToVariantMap Paramters;
+	QVariantMap Parameters;
 };
 //-----------------------------------------------------------------------------
 #endif

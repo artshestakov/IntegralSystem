@@ -1,13 +1,12 @@
 #include "ISListViewForm.h"
 #include "ISBuffer.h"
 #include "ISLocalization.h"
-#include "ISDatabase.h"
 #include "ISMessageBox.h"
+#include "ISTcpQuery.h"
 //-----------------------------------------------------------------------------
 ISListViewForm::ISListViewForm(const QString &query_name, QWidget *parent)
 	: ISInterfaceMetaForm(parent),
-	QueryName(query_name),
-	SqlText(BUFFER_SQL(QueryName))
+	QueryName(query_name)
 {
 	QToolBar *ToolBar = new QToolBar(this);
 	ToolBar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
@@ -17,8 +16,8 @@ ISListViewForm::ISListViewForm(const QString &query_name, QWidget *parent)
 	TableView = new ISBaseTableView(this);
 	GetMainLayout()->addWidget(TableView);
 
-	SqlModel = new QSqlQueryModel(this);
-	TableView->setModel(SqlModel);
+	ViewModel = new ISViewModel(this);
+	TableView->setModel(ViewModel);
 }
 //-----------------------------------------------------------------------------
 ISListViewForm::~ISListViewForm()
@@ -28,38 +27,28 @@ ISListViewForm::~ISListViewForm()
 //-----------------------------------------------------------------------------
 void ISListViewForm::BindValue(const QString &ParameterName, const QVariant &Value)
 {
-	Paramters.emplace(ParameterName, Value);
+	Parameters[ParameterName] = Value;
 }
 //-----------------------------------------------------------------------------
 void ISListViewForm::LoadData()
 {
-	QSqlQuery SqlQuery(ISDatabase::Instance().GetDB(CONNECTION_DEFAULT));
-	if (SqlQuery.prepare(SqlText))
+	ViewModel->Clear();
+
+	ISTcpQuery qGetTableQuery(API_GET_TABLE_QUERY);
+	qGetTableQuery.BindValue("QueryName", QueryName);
+	qGetTableQuery.BindValue("Parameters", Parameters);
+	if (qGetTableQuery.Execute())
 	{
-		for (const auto &MapItem : Paramters)
-		{
-			SqlQuery.bindValue(MapItem.first, MapItem.second);
-		}
-		
-		if (SqlQuery.exec())
-		{
-			SqlModel->setQuery(SqlQuery);
-			TableView->resizeColumnsToContents();
-			emit Updated();
-		}
-		else
-		{
-			ISMessageBox::ShowWarning(this, SqlQuery.lastError().text(), SqlText);
-		}
+		QVariantMap AnswerMap = qGetTableQuery.TakeAnswer();
+		QStringList FieldList = AnswerMap["FieldList"].toStringList();
+		QVariantList RecordList = AnswerMap["RecordList"].toList();
+		ViewModel->SetSource(FieldList, RecordList);
+		TableView->resizeColumnsToContents();
+		emit Updated();
 	}
 	else
 	{
-		ISMessageBox::ShowWarning(this, SqlQuery.lastError().text(), SqlText);
+		ISMessageBox::ShowWarning(this, qGetTableQuery.GetErrorString());
 	}
-}
-//-----------------------------------------------------------------------------
-QSqlQueryModel* ISListViewForm::GetSqlModel()
-{
-	return SqlModel;
 }
 //-----------------------------------------------------------------------------

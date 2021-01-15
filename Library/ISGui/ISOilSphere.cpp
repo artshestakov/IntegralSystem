@@ -229,7 +229,7 @@ ISOilSphere::CounterpartyDebtForm::CounterpartyDebtForm(int counterparty_id, con
 	LayoutRight->addWidget(GroupBoxMoveWagon);
 
 	MoveWagonViewForm = new ISListViewForm("SelectCounterpartyMoveWagon", GroupBoxMoveWagon);
-	MoveWagonViewForm->BindValue(":CounterpartyID", counterparty_id);
+	MoveWagonViewForm->BindValue("CounterpartyID", counterparty_id);
 	GroupBoxMoveWagon->layout()->addWidget(MoveWagonViewForm);
 	MoveWagonViewForm->LoadData();
 }

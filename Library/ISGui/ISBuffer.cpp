@@ -34,7 +34,6 @@ void ISBuffer::Initialize()
 	InitializePixmaps();
 	InitializeAudios();
 	InitializeStyleSheets();
-	InitializeSqlQueryes();
 }
 //-----------------------------------------------------------------------------
 QMovie* ISBuffer::GetAnimation(const QString &AnimationName, QObject *parent, const char *SourceFile, int FileLine)
@@ -82,16 +81,6 @@ QString ISBuffer::GetStyle(const QString &StyleName, const char *SourceFile, int
 	return Iterator->second;
 }
 //-----------------------------------------------------------------------------
-QString ISBuffer::GetSQL(const QString &QueryName, const char *SourceFile, int FileLine) const
-{
-	ISStringMap::const_iterator Iterator = SqlQueryes.find(QueryName);
-	if (Iterator == SqlQueryes.end())
-	{
-		IS_ASSERT(false, QString("SQL query \"%1\" not found. File: %2; Line: %3").arg(QueryName).arg(SourceFile).arg(FileLine));
-	}
-	return Iterator->second;
-}
-//-----------------------------------------------------------------------------
 void ISBuffer::InitializeAnimations()
 {
 	QFileInfoList FileInfoList = QDir(":Animation").entryInfoList(QDir::NoFilter);
@@ -134,15 +123,6 @@ void ISBuffer::InitializeStyleSheets()
 	for (const QFileInfo &FileInfo : FileInfoList)
 	{
 		AddStyle(FileInfo.completeBaseName(), FileInfo.filePath());
-	}
-}
-//-----------------------------------------------------------------------------
-void ISBuffer::InitializeSqlQueryes()
-{
-	QFileInfoList FileInfoList = QDir(":SQL").entryInfoList(QDir::NoFilter);
-	for (const QFileInfo &FileInfo : FileInfoList)
-	{
-		AddSQL(FileInfo.completeBaseName(), FileInfo.filePath());
 	}
 }
 //-----------------------------------------------------------------------------
@@ -212,32 +192,6 @@ void ISBuffer::AddStyle(const QString &FileName, const QString &FilePath)
 		else
 		{
 			IS_ASSERT(false, QString("File %1 style sheet not open. Error: %2").arg(FileName).arg(FileStyle.errorString()));
-		}
-	}
-	else
-	{
-		IS_ASSERT(false, "File " + FileName + " not exist");
-	}
-}
-//-----------------------------------------------------------------------------
-void ISBuffer::AddSQL(const QString &FileName, const QString &FilePath)
-{
-	if (SqlQueryes.count(FileName))
-	{
-		IS_ASSERT(false, "SQL query '" + FileName + "' already exist in buffer");
-	}
-
-	QFile FileSQL(FilePath);
-	if (FileSQL.exists())
-	{
-		if (FileSQL.open(QIODevice::ReadOnly))
-		{
-			SqlQueryes.emplace(FileName, FileSQL.readAll());
-			FileSQL.close();
-		}
-		else
-		{
-			IS_ASSERT(false, QString("File %1 sql query not open. Error: %2").arg(FileName).arg(FileSQL.errorString()));
 		}
 	}
 	else

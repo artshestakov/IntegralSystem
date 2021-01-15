@@ -365,7 +365,10 @@
       <Filter>Dialog Forms</Filter>
     </ClCompile>
     <ClCompile Include="ISTcpModel.cpp">
-      <Filter>System</Filter>
+      <Filter>Protocol</Filter>
+    </ClCompile>
+    <ClCompile Include="ISViewModel.cpp">
+      <Filter>Protocol</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -616,7 +619,10 @@
       <Filter>Dialog Forms</Filter>
     </QtMoc>
     <QtMoc Include="ISTcpModel.h">
-      <Filter>System</Filter>
+      <Filter>Protocol</Filter>
+    </QtMoc>
+    <QtMoc Include="ISViewModel.h">
+      <Filter>Protocol</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>

@@ -23,7 +23,6 @@ public:
 	QPixmap GetPixmap(const QString &PixmapName, const char *SourceFile, int FileLine); //Получить изображение
 	QString GetAudio(const QString &AudioName); //Получить аудио
 	QString GetStyle(const QString &StyleName, const char *SourceFile, int FileLine) const; //Получить стиль
-	QString GetSQL(const QString &QueryName, const char *SourceFile, int FileLine) const; //Получить запрос
 
 private:
 	void InitializeAnimations(); //Инициализация анимаций
@@ -31,14 +30,12 @@ private:
 	void InitializePixmaps(); //Инициализация изображений
 	void InitializeAudios(); //Инициализация аудио ресурсов
 	void InitializeStyleSheets(); //Инициализация CSS-стилей
-	void InitializeSqlQueryes(); //Инициализация SQL-запросов
 
 	void AddAnimations(const QString &AnimationName, const QString &AnimationPath); //Добавление анимации в буфер
 	void AddImageIcon(const QString &IconName, const QString &IconPath); //Добавление иконки в буфер
 	void AddImage(const QString &PixmapName, const QString &PixmapPath); //Добавление изображения в буфер
 	void AddAudio(const QString &AudioName, const QString &AudioPath); //Добавление аудио файла в буфер
 	void AddStyle(const QString &FileName, const QString &FilePath); //Добавление стиля в буфер
-	void AddSQL(const QString &FileName, const QString &FilePath); //Добавление запроса в буфер
 
 private:
 	ISBuffer();
@@ -51,7 +48,6 @@ private:
 	std::map<QString, QPixmap> Pixmaps; //Изображения
 	ISStringMap Audios; //Звуки
 	ISStringMap StyleSheets; //CSS-стили
-	ISStringMap SqlQueryes; //SQL-запросы
 
 	QVariantList TaskPriority; //Список приоритетов задач
 };
@@ -63,6 +59,5 @@ private:
 #define BUFFER_PIXMAPS(PIXMAP_NAME) ISBuffer::Instance().GetPixmap(PIXMAP_NAME, __FILE__, __LINE__)
 #define BUFFER_AUDIO(AUDIO_NAME) ISBuffer::Instance().GetAudio(AUDIO_NAME)
 #define BUFFER_STYLE_SHEET(STYLE_NAME) ISBuffer::Instance().GetStyle(STYLE_NAME, __FILE__, __LINE__)
-#define BUFFER_SQL(QUERY_NAME) ISBuffer::Instance().GetSQL(QUERY_NAME, __FILE__, __LINE__)
 //-----------------------------------------------------------------------------
 #endif

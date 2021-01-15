@@ -2569,7 +2569,7 @@ bool ISTcpWorker::GetTableQuery(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer
 	}
 
 	//Обходим поля
-	QVariantList FieldList;
+	QStringList FieldList;
 	QSqlRecord SqlRecord = qSelect.GetRecord();
 	int FieldCount = SqlRecord.count();
 	for (int i = 0; i < FieldCount; ++i)
