@@ -468,15 +468,6 @@
     </Escorts>
   </Table>
 
-  <Table Name="Station" UID="{2455675E-EB7E-4D52-A348-0832BB759059}" Alias="stat" LocalName="Станция" LocalListName="Станции" TitleName="Name">
-    <Fields>
-      <Field UID="{FBB6152E-E215-4D17-8BCF-DECFE807E7B7}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
-    </Fields>
-    <Indexes>
-      <Index Field="Name" Unique="true"/>
-    </Indexes>
-  </Table>
-
   <Table Name="MoveWagon" UID="{C8417E41-30A5-46AC-A7C6-05E2C3520E60}" Alias="mwag" LocalName="Движения вагонов" LocalListName="Движения вагонов" TitleName="DateShipping">
     <Fields>
       <Field UID="{BDC812BD-2136-450D-AD39-FC986774DBC2}" Name="DateShipping" Type="Date" LabelName="Дата отгрузки" LocalListName="Дата отгрузки" NotNull="true"/>
