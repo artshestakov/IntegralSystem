@@ -1,0 +1,8 @@
+<RCC>
+  <qresource>
+
+    <file>Scheme/</file>
+	<file>SQL/</file>
+
+  </qresource>
+</RCC>
