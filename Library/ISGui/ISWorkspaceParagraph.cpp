@@ -11,7 +11,6 @@
 #include "ISLocalization.h"
 #include "ISConstants.h"
 #include "ISAlgorithm.h"
-#include "ISLogger.h"
 //-----------------------------------------------------------------------------
 ISWorkspaceParagraph::ISWorkspaceParagraph(QWidget *parent)
 	: ISParagraphBaseForm(parent),
@@ -84,7 +83,6 @@ void ISWorkspaceParagraph::ClickedSubSystem(const QString &SubSystemUID, const Q
 		return;
 	}
 	CurrentSubSystemUID = SubSystemUID;
-	ISLOGGER_I(__CLASS__, "Open subsystem " + CurrentSubSystemUID);
 
 	ISGui::SetWaitGlobalCursor(true);
 	ISMetaSubSystem *MetaSubSystem = ISMetaSystemsEntity::Instance().GetSubSystem(SubSystemUID);

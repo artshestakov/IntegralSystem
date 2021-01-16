@@ -294,7 +294,6 @@
   <Local Name="NotEventsWithSelectedDay" Russian="События на выбранный день отсутствуют"/>
   <Local Name="ClickFromSelectCurrentDay" Russian="Нажмите, чтобы выбрать сегодняшний день"/>
   <Local Name="ClickFromGenerateNewUID" Russian="Нажмите, чтобы сгенерировать новый UID"/>
-  <Local Name="ClickFromAddNewrecordInList" Russian="Нажмите, чтобы добавить новую запись в справочник"/>
   <Local Name="OpeningUrl" Russian="Открытие ссылки..."/>
   <Local Name="NoAdministratorRights" Russian="Недостаточно прав, запустите программу от имени администратора."/>
   <Local Name="FullSearchTextNotResult" Russian="Полнотекстовый поиск не дал результатов."/>
@@ -569,5 +568,6 @@
   <Local Name="Offline" Russian="Не в сети"/>
   <Local Name="LinkDevice" Russian="Привязать устройство"/>
   <Local Name="In" Russian="в"/>
+  <Local Name="AddRecord" Russian="Добавить запись"/>
 
 </LANG>

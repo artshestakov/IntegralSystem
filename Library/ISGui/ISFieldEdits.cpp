@@ -1842,8 +1842,7 @@ ISListEditPopup::ISListEditPopup(PMetaForeign *meta_foreign, QWidget *ComboBox)
 
 	if (!MetaTableForeign->ShowOnly)
 	{
-		ISServiceButton *ButtonAdd = new ISServiceButton(BUFFER_ICONS("Add"), LANG("ClickFromAddNewrecordInList"), this);
-		ButtonAdd->setFlat(true);
+		ISPushButton *ButtonAdd = new ISPushButton(BUFFER_ICONS("Add"), LANG("AddRecord"), this);
 		connect(ButtonAdd, &ISServiceButton::clicked, this, &ISListEditPopup::Add);
 		StatusBar->addWidget(ButtonAdd);
 	}
