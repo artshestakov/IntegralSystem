@@ -106,7 +106,7 @@
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
       <PreprocessorDefinitions>WIN32;DEBUG;ISCORE_LIBRARY;_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(QTDIR)\include\QtCore\;$(QTDIR)\include\QtNetwork\;$(QTDIR)\include\QtSql\;$(QTDIR)\include\QtXml\;$(QTDIR)\include\;.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(QTDIR)\include\QtCore\;$(QTDIR)\include\QtNetwork\;$(QTDIR)\include\QtXml\;$(QTDIR)\include\;.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <WarningLevel>Level4</WarningLevel>
     </ClCompile>
     <Link>
@@ -114,7 +114,7 @@
       <OutputFile>$(OutDir)\$(ProjectName).dll</OutputFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(QTDIR)\lib\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>qtmaind.lib;Qt5Cored.lib;Qt5Networkd.lib;Qt5Sqld.lib;Qt5Xmld.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>qtmaind.lib;Qt5Cored.lib;Qt5Networkd.lib;Qt5Xmld.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <QtRcc>
       <QtRccDir>$(IntDir)rcc\%(RelativeDir)</QtRccDir>
@@ -133,7 +133,7 @@
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
       <PreprocessorDefinitions>WIN32;DEBUG;ISCORE_LIBRARY;_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(QTDIR64)\include\QtCore\;$(QTDIR64)\include\QtNetwork\;$(QTDIR64)\include\QtSql\;$(QTDIR64)\include\QtXml\;$(QTDIR64)\include\;.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(QTDIR64)\include\QtCore\;$(QTDIR64)\include\QtNetwork\;$(QTDIR64)\include\QtXml\;$(QTDIR64)\include\;.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <WarningLevel>Level4</WarningLevel>
     </ClCompile>
     <Link>
@@ -141,7 +141,7 @@
       <OutputFile>$(OutDir)\$(ProjectName).dll</OutputFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(QTDIR64)\lib\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>qtmaind.lib;Qt5Cored.lib;Qt5Networkd.lib;Qt5Sqld.lib;Qt5Xmld.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>qtmaind.lib;Qt5Cored.lib;Qt5Networkd.lib;Qt5Xmld.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <QtRcc>
       <QtRccDir>$(IntDir)rcc\%(RelativeDir)</QtRccDir>
@@ -159,7 +159,7 @@
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
       <PreprocessorDefinitions>WIN32;ISCORE_LIBRARY;_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(QTDIR)\include\QtCore\;$(QTDIR)\include\QtNetwork\;$(QTDIR)\include\QtSql\;$(QTDIR)\include\QtXml\;$(QTDIR)\include\;.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(QTDIR)\include\QtCore\;$(QTDIR)\include\QtNetwork\;$(QTDIR)\include\QtXml\;$(QTDIR)\include\;.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <WarningLevel>Level4</WarningLevel>
     </ClCompile>
     <Link>
@@ -167,7 +167,7 @@
       <OutputFile>$(OutDir)\$(ProjectName).dll</OutputFile>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(QTDIR)\lib\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>qtmain.lib;Qt5Core.lib;Qt5Network.lib;Qt5Sql.lib;Qt5Xml.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>qtmain.lib;Qt5Core.lib;Qt5Network.lib;Qt5Xml.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <QtRcc>
       <QtRccDir>$(IntDir)rcc\%(RelativeDir)</QtRccDir>
@@ -186,7 +186,7 @@
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
       <PreprocessorDefinitions>WIN32;ISCORE_LIBRARY;_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(QTDIR64)\include\QtCore\;$(QTDIR64)\include\QtNetwork\;$(QTDIR64)\include\QtSql\;$(QTDIR64)\include\QtXml\;$(QTDIR64)\include\;.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(QTDIR64)\include\QtCore\;$(QTDIR64)\include\QtNetwork\;$(QTDIR64)\include\QtXml\;$(QTDIR64)\include\;.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <WarningLevel>Level4</WarningLevel>
     </ClCompile>
     <Link>
@@ -194,7 +194,7 @@
       <OutputFile>$(OutDir)\$(ProjectName).dll</OutputFile>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(QTDIR64)\lib\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>qtmain.lib;Qt5Core.lib;Qt5Network.lib;Qt5Sql.lib;Qt5Xml.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>qtmain.lib;Qt5Core.lib;Qt5Network.lib;Qt5Xml.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <QtRcc>
       <QtRccDir>$(IntDir)rcc\%(RelativeDir)</QtRccDir>
@@ -210,13 +210,11 @@
     <ClCompile Include="ISAssert.cpp" />
     <ClCompile Include="ISConfig.cpp" />
     <ClCompile Include="ISConsole.cpp" />
-    <ClCompile Include="ISDatabase.cpp" />
     <ClCompile Include="ISDebug.cpp" />
     <ClCompile Include="ISLocalization.cpp" />
     <ClCompile Include="ISLogger.cpp" />
     <ClCompile Include="ISMetaData.cpp" />
     <ClCompile Include="ISProperty.cpp" />
-    <ClCompile Include="ISQuery.cpp" />
     <ClCompile Include="ISRandom.cpp" />
     <ClCompile Include="ISRestWorker.cpp" />
     <ClCompile Include="ISSettings.cpp" />
@@ -258,9 +256,7 @@
     <ClInclude Include="ISSettings.h" />
     <ClInclude Include="ISSettingsDatabase.h" />
     <QtMoc Include="ISRestWorker.h" />
-    <ClInclude Include="ISDatabase.h" />
     <ClInclude Include="ISMetaData.h" />
-    <ClInclude Include="ISQuery.h" />
     <ClInclude Include="PMetaClass.h" />
   </ItemGroup>
   <ItemGroup>

@@ -19,6 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Library\ISCore\ISDatabase.cpp" />
+    <ClCompile Include="..\..\Library\ISCore\ISQuery.cpp" />
     <ClCompile Include="ISAsterisk.cpp" />
     <ClCompile Include="ISCaratApplication.cpp" />
     <ClCompile Include="ISCaratController.cpp" />
@@ -39,6 +41,8 @@
     <QtMoc Include="ISCaratApplication.h" />
     <QtMoc Include="ISCaratController.h" />
     <QtMoc Include="ISAsterisk.h" />
+    <ClInclude Include="..\..\Library\ISCore\ISDatabase.h" />
+    <ClInclude Include="..\..\Library\ISCore\ISQuery.h" />
     <ClInclude Include="ISFail2Ban.h" />
     <ClInclude Include="ISTcpAnswer.h" />
     <ClInclude Include="ISTcpClients.h" />

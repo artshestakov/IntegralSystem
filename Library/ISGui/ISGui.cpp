@@ -724,10 +724,8 @@ ISFieldEditBase* ISGui::CreateFieldEditBase(QWidget *ParentWidget, PMetaField *M
 //-----------------------------------------------------------------------------
 void ISGui::RegisterMetaType()
 {
-	qRegisterMetaType<std::vector<QSqlRecord>>("std::vector<QSqlRecord>");
 	qRegisterMetaType<std::vector<QString>>("std::vector<QString>");
 	qRegisterMetaType<ISVectorString>("ISVectorString");
-	qRegisterMetaType<QSqlError>("QSqlError");
 	qRegisterMetaType<ISUuid>("ISUuid");
 
 	qRegisterMetaType<ISUserObjectForm*>("ISUserObjectForm");

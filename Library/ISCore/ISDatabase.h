@@ -1,9 +1,10 @@
 #pragma once
+#ifndef _ISDATABASE_H_INCLUDED
+#define _ISDATABASE_H_INCLUDED
 //-----------------------------------------------------------------------------
-#include "iscore_global.h"
 #include "ISStructs.h"
 //-----------------------------------------------------------------------------
-class ISCORE_EXPORT ISDatabase
+class ISDatabase
 {
 public:
 	static ISDatabase& Instance();
@@ -33,3 +34,4 @@ private:
 	ISCriticalSection CriticalSection; //Критическая секция для синхронизации
 };
 //-----------------------------------------------------------------------------
+#endif

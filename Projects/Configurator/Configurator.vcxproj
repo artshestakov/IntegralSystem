@@ -22,6 +22,8 @@
     <ResourceCompile Include="Configurator.rc" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Library\ISCore\ISDatabase.cpp" />
+    <ClCompile Include="..\..\Library\ISCore\ISQuery.cpp" />
     <ClCompile Include="CGConfigurator.cpp" />
     <ClCompile Include="CGConfiguratorBase.cpp" />
     <ClCompile Include="CGConfiguratorCreate.cpp" />
@@ -54,6 +56,8 @@
     <QtMoc Include="CGConfiguratorUpdate.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Library\ISCore\ISDatabase.h" />
+    <ClInclude Include="..\..\Library\ISCore\ISQuery.h" />
     <ClInclude Include="CGDatabase.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
