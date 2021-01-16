@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <XSN Name="System.xsn">
 
-  <Table Name="_Test" UID="{F67231DA-9DFD-45FB-98D2-B2DA5DC8B804}" Alias="test" LocalName="Тест" LocalListName="Тесты" TitleName="String" IsSystem="true">
+  <Table Name="_Test" UID="{F67231DA-9DFD-45FB-98D2-B2DA5DC8B804}" Alias="test" LocalName="Тест" LocalListName="Тесты" TitleName="String">
     <Fields>
       <Field UID="{8C0C9204-DA75-46A2-AF76-6FCE6C59CD98}" Name="Int" Type="Int" LayoutName="Int"/>
       <Field UID="{88F9C933-01D0-4A91-A124-CABDA2339D47}" Name="BigInt" Type="BigInt" LayoutName="Int"/>
