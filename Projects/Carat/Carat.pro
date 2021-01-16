@@ -52,3 +52,5 @@ SOURCES += \
     ISTcpSocket.cpp \
     ISTcpWorker.cpp \
     main.cpp
+
+RESOURCES += $$PWD/../../Resources/Carat.qrc

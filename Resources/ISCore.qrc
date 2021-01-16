@@ -6,8 +6,6 @@
     <file>Build/</file>
     <file>Localization/</file>
     <file>Other/</file>
-    <file>Scheme/</file>
-	<file>SQL/</file>
 
   </qresource>
 </RCC>

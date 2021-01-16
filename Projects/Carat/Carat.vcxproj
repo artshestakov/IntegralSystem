@@ -52,6 +52,9 @@
     <QtMoc Include="ISTcpSocket.h" />
     <QtMoc Include="ISTcpServer.h" />
   </ItemGroup>
+  <ItemGroup>
+    <QtRcc Include="..\..\Resources\Carat.qrc" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{0E5C4046-F164-4AEA-91E1-E0B899A28F3D}</ProjectGuid>
     <Keyword>QtVS_v302</Keyword>
