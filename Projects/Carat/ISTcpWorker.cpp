@@ -1028,37 +1028,36 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 		{
 			//Получаем директорию с обновлениями
 			QString UpdateClientDir = CONFIG_STRING(CONST_CONFIG_OTHER_UPDATE_CLIENT_DIR);
-			if (UpdateClientDir.isEmpty())
+			if (!UpdateClientDir.isEmpty()) //Если директория настроена - идём дальше
 			{
-				ErrorString = LANG("Carat.Error.Query.Auth.UpdatePathIsEmpty");
-				return false;
-			}
-
-			//Проверяем существование директории с обновлениями
-			QDir Dir(UpdateClientDir);
-			if (!Dir.exists())
-			{
-				ISLOGGER_W(__CLASS__, "Folder \"" + UpdateClientDir + "\" not exist. Check config parameter \"" + CONST_CONFIG_OTHER_UPDATE_CLIENT_DIR + "\"");
-				ErrorString = LANG("Carat.Error.Query.Auth.UpdatePathNotExist");
-				return false;
-			}
-
-			//Получаем отсортированный (по дате) список файлов и проверяем его на пустоту
-			QStringList StringList = Dir.entryList(QDir::Files, QDir::Time);
-			if (!StringList.isEmpty()) //Если обновления есть - вытаскиваем версию последнего файла
-			{
-				QString FilePath = Dir.absolutePath() + '/' + StringList.front();
-				VersionLast = ISAlgorithm::ExtractVersionFile(FilePath);
-				if (VersionLast > 0) //Формат имени файла валиден
+				//Проверяем существование директории с обновлениями
+				QDir Dir(UpdateClientDir);
+				if (!Dir.exists())
 				{
-					IsNeedUpdate = VersionLast > VersionClient;
+					ISLOGGER_W(__CLASS__, "Folder \"" + UpdateClientDir + "\" not exist. Check config parameter \"" + CONST_CONFIG_OTHER_UPDATE_CLIENT_DIR + "\"");
+					ErrorString = LANG("Carat.Error.Query.Auth.UpdatePathNotExist");
+					return false;
 				}
-				else //Невалидный формат имени файла
+
+				//Получаем отсортированный (по дате) список файлов и проверяем его на пустоту
+				QStringList StringList = Dir.entryList(QDir::Files, QDir::Time);
+				if (!StringList.isEmpty()) //Если обновления есть - вытаскиваем версию последнего файла
 				{
-					ISLOGGER_W(__CLASS__, "Invalid format update file name: " + FilePath);
+					QString FilePath = Dir.absolutePath() + '/' + StringList.front();
+					VersionLast = ISAlgorithm::ExtractVersionFile(FilePath);
+					if (VersionLast > 0) //Формат имени файла валиден
+					{
+						IsNeedUpdate = VersionLast > VersionClient;
+					}
+					else //Невалидный формат имени файла
+					{
+						ISLOGGER_W(__CLASS__, "Invalid format update file name: " + FilePath);
+					}
 				}
+				//Обновлений нет - идём дальше
 			}
-			//Обновлений нет - идём дальше
+			//Директория не настроена - логируем предупреждение и идём дальше
+			ISLOGGER_W(__CLASS__, "Not setting directory updates");
 		}
 		else //Версия невалидна
 		{
@@ -1077,8 +1076,6 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	TcpAnswer->Parameters["UserFIO"] = UserFIO;
 	TcpAnswer->Parameters["UserGroupID"] = GroupID;
 	TcpAnswer->Parameters["UserGroupFullAccess"] = GroupFullAccess;
-	TcpAnswer->Parameters["IsNeedUpdate"] = IsNeedUpdate;
-	TcpAnswer->Parameters["IsNeedUpdateVersion"] = IsNeedUpdate ? VersionLast : QVariant();
 	TcpAnswer->Parameters["UpdateClient"] = QVariantMap
 	{
 		{ "IsNeed", IsNeedUpdate },

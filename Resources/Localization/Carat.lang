@@ -54,7 +54,6 @@
   <Local Name="Carat.Error.Query.Auth.LoginLinkGroup" Russian="Ваша учётная запись не привязанна к группе."/>
   <Local Name="Carat.Error.Query.Auth.LoginLifetimeNotStarted" Russian="Срок действия вашей учётной записи начнется %1."/>
   <Local Name="Carat.Error.Query.Auth.LoginLifetimeEnded" Russian="Срок действия вашей учётной записи закончился."/>
-  <Local Name="Carat.Error.Query.Auth.UpdatePathIsEmpty" Russian="На сервере не настроена директория хранения обновлений."/>
   <Local Name="Carat.Error.Query.Auth.UpdatePathNotExist" Russian="Не удалось проверить наличие обновлений."/>
 
   <Local Name="Carat.Error.Query.Sleep.TimeoutValueInvalid" Russian="Неправильное значение"/>
