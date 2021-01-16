@@ -13,7 +13,6 @@ public:
 	virtual ~ISUserObjectForm();
 	
 protected:
-	void AfterShowEvent() override;
 	bool Save() override;
 
 private:

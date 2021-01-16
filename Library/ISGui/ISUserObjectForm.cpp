@@ -16,10 +16,7 @@ ISUserObjectForm::ISUserObjectForm(ISNamespace::ObjectFormType form_type, PMetaT
 	connect(EditAccountLifeTime, &ISFieldEditBase::DataChanged, this, &ISUserObjectForm::AccountLifeTimeChanged);
 
 	EditAccountLifeTimeStart = GetFieldWidget("AccountLifeTimeStart");
-	EditAccountLifeTimeStart->setEnabled(false);
-
 	EditAccountLifeTimeEnd = GetFieldWidget("AccountLifeTimeEnd");
-	EditAccountLifeTimeEnd->setEnabled(false);
 
 	QAction *ActionPassword = new QAction(BUFFER_ICONS("User.Password"), LANG("PasswordManagement"), this);
 	connect(ActionPassword, &QAction::triggered, this, &ISUserObjectForm::PasswordManagement);
@@ -39,16 +36,6 @@ ISUserObjectForm::~ISUserObjectForm()
 
 }
 //-----------------------------------------------------------------------------
-void ISUserObjectForm::AfterShowEvent()
-{
-	ISObjectFormBase::AfterShowEvent();
-	if (GetFormType() == ISNamespace::OFT_Edit && EditAccountLifeTime->GetValue().toBool())
-	{
-		EditAccountLifeTimeStart->setEnabled(true);
-		EditAccountLifeTimeEnd->setEnabled(true);
-	}
-}
-//-----------------------------------------------------------------------------
 bool ISUserObjectForm::Save()
 {
 	//Проверка привязки учётной записи к группе
@@ -63,13 +50,14 @@ bool ISUserObjectForm::Save()
 	//Проверка корректности ввода диапазона срока действия учётной записи
 	if (EditAccountLifeTime->GetValue().toBool())
 	{
-		QDate DateStart = EditAccountLifeTimeStart->GetValue().toDate();
-		QDate DateEnd = EditAccountLifeTimeEnd->GetValue().toDate();
+		QDate DateStart = EditAccountLifeTimeStart->GetValue().toDate(),
+			DateEnd = EditAccountLifeTimeEnd->GetValue().toDate();
 		if (DateStart > DateEnd || DateEnd < DateStart || !DateStart.isValid() || !DateEnd.isValid())
 		{
 			ISMessageBox::ShowWarning(this, LANG("Message.Warning.InvalidAccountLifeTimeDatesUser"));
 			EditAccountLifeTimeStart->BlinkRed();
 			EditAccountLifeTimeEnd->BlinkRed();
+			return false;
 		}
 	}
 
@@ -157,10 +145,7 @@ void ISUserObjectForm::LinkDevice()
 //-----------------------------------------------------------------------------
 void ISUserObjectForm::AccountLifeTimeChanged()
 {
-	bool Enabled = EditAccountLifeTime->GetValue().toBool();
-	EditAccountLifeTimeStart->setEnabled(Enabled);
-	EditAccountLifeTimeEnd->setEnabled(Enabled);
-	if (!Enabled)
+	if (!EditAccountLifeTime->GetValue().toBool())
 	{
 		EditAccountLifeTimeStart->Clear();
 		EditAccountLifeTimeEnd->Clear();
