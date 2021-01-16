@@ -190,7 +190,7 @@
     <ClCompile Include="ISCalendarWidget.cpp" />
     <ClCompile Include="ISColumnSizer.cpp" />
     <ClCompile Include="ISComboSearchWidgets.cpp" />
-    <ClCompile Include="ISConnectSettingDialog.cpp" />
+    <ClCompile Include="ISConnectDialog.cpp" />
     <ClCompile Include="ISContextMenu.cpp" />
     <ClCompile Include="ISControls.cpp" />
     <ClCompile Include="ISCreatedObjectsEntity.cpp" />
@@ -329,7 +329,7 @@
     <QtMoc Include="ISAuthDialog.h" />
     <QtMoc Include="ISCalendarParagraph.h" />
     <QtMoc Include="ISCalendarObjectForm.h" />
-    <QtMoc Include="ISConnectSettingDialog.h" />
+    <QtMoc Include="ISConnectDialog.h" />
     <QtMoc Include="ISDesktopParagraph.h" />
     <QtMoc Include="ISDiscussionListForm.h" />
     <QtMoc Include="ISFavoritesForm.h" />

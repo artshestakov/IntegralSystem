@@ -46,7 +46,6 @@
   <Local Name="Message.Information.ResetSettingDB" Russian="Настройки были успешно сброшены!"/>
   <Local Name="Message.Error.ConnectionSetting.Input.ServerEmpty" Russian="В настройках подключения к базе данных не указан сервер."/>
   <Local Name="Message.Error.ConnectionSetting.Input.PortEmpty" Russian="В настройках подключения к базе данных не указан порт."/>
-  <Local Name="Message.Error.ConnectionSetting.Input.DatabaseNameEmpty" Russian="В настройках подключения к базе данных не указано имя базы данных."/>
   <Local Name="Message.Error.Input.LoginEmpty" Russian="Введите логин!"/>
   <Local Name="Message.Error.Input.PasswordEmpty" Russian="Введите пароль!"/>
   <Local Name="Message.Error.Field.NullValue" Russian="Поле &quot;%1&quot; обязательно для заполнения."/>
@@ -243,8 +242,6 @@
   <Local Name="FileNotSelected" Russian="Файл не выбран"/>
   <Local Name="SaveToDisk" Russian="Сохранить на диск"/>
   <Local Name="You" Russian="Вы"/>
-  <Local Name="Protocol.Use" Russian="Использовать протокол"/>
-  <Local Name="Protocol.Port" Russian="Порт"/>
   <Local Name="TcpConnector.Timeout" Russian="Время на ожидание подключения истекло."/>
 
   <!--Access rights-->
@@ -513,7 +510,6 @@
   <Local Name="Error" Russian="Ошибка"/>
   <Local Name="Server" Russian="Сервер"/>
   <Local Name="Port" Russian="Порт"/>
-  <Local Name="DatabaseName" Russian="Имя базы данных"/>
   <Local Name="Information" Russian="Информация"/>
   <Local Name="Warning" Russian="Предупреждение"/>
   <Local Name="Question" Russian="Вопрос"/>

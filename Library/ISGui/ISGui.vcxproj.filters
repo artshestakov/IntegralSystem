@@ -349,9 +349,6 @@
     <ClCompile Include="ISAuthDialog.cpp">
       <Filter>Dialog Forms</Filter>
     </ClCompile>
-    <ClCompile Include="ISConnectSettingDialog.cpp">
-      <Filter>Dialog Forms</Filter>
-    </ClCompile>
     <ClCompile Include="ISDeviceConnectDialog.cpp">
       <Filter>Dialog Forms</Filter>
     </ClCompile>
@@ -369,6 +366,9 @@
     </ClCompile>
     <ClCompile Include="ISViewModel.cpp">
       <Filter>Protocol</Filter>
+    </ClCompile>
+    <ClCompile Include="ISConnectDialog.cpp">
+      <Filter>Dialog Forms</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -603,9 +603,6 @@
     <QtMoc Include="ISAuthDialog.h">
       <Filter>Dialog Forms</Filter>
     </QtMoc>
-    <QtMoc Include="ISConnectSettingDialog.h">
-      <Filter>Dialog Forms</Filter>
-    </QtMoc>
     <QtMoc Include="ISDeviceConnectDialog.h">
       <Filter>Dialog Forms</Filter>
     </QtMoc>
@@ -623,6 +620,9 @@
     </QtMoc>
     <QtMoc Include="ISViewModel.h">
       <Filter>Protocol</Filter>
+    </QtMoc>
+    <QtMoc Include="ISConnectDialog.h">
+      <Filter>Dialog Forms</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>

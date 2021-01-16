@@ -5,7 +5,7 @@
 #include "ISBuffer.h"
 #include "ISAboutDialog.h"
 #include "ISConfig.h"
-#include "ISConnectSettingDialog.h"
+#include "ISConnectDialog.h"
 #include "ISMessageBox.h"
 #include "ISGui.h"
 #include "ISVersionInfo.h"
@@ -126,7 +126,7 @@ void ISAuthDialog::EnterClicked()
 //-----------------------------------------------------------------------------
 void ISAuthDialog::ShowConnectionForm()
 {
-	ISConnectSettingDialog().Exec();
+	ISConnectDialog().Exec();
 }
 //-----------------------------------------------------------------------------
 void ISAuthDialog::ShowAboutForm()
@@ -147,11 +147,6 @@ void ISAuthDialog::Input()
 		ISMessageBox::ShowCritical(this, LANG("Message.Error.ConnectionSetting.Input.PortEmpty"));
 		return;
 	}
-	if (CONFIG_STRING(CONST_CONFIG_CONNECTION_DATABASE).isEmpty())
-	{
-		ISMessageBox::ShowCritical(this, LANG("Message.Error.ConnectionSetting.Input.DatabaseNameEmpty"));
-		return;
-	}
 	if (EditLogin->GetValue().toString().isEmpty())
 	{
 		ISMessageBox::ShowWarning(this, LANG("Message.Error.Input.LoginEmpty"));
@@ -166,7 +161,7 @@ void ISAuthDialog::Input()
 	}
 
 	SetConnecting(true);
-	if (!ISTcpConnector::Instance().Connect(CONFIG_STRING(CONST_CONFIG_CONNECTION_SERVER), CONFIG_INT("Protocol/Port"))) //Ошибка подключения к карату
+	if (!ISTcpConnector::Instance().Connect(CONFIG_STRING(CONST_CONFIG_CONNECTION_SERVER), CONFIG_INT(CONST_CONFIG_CONNECTION_PORT))) //Ошибка подключения к карату
 	{
 		SetConnecting(false);
 		ISMessageBox MessageBox(ISMessageBox::Question, LANG("Question"),

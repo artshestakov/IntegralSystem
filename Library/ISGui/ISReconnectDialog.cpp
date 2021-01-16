@@ -54,7 +54,7 @@ ISReconnectDialog::~ISReconnectDialog()
 //-----------------------------------------------------------------------------
 void ISReconnectDialog::Timeout()
 {
-	if (ISTcpConnector::Instance().Connect(CONFIG_STRING(CONST_CONFIG_CONNECTION_SERVER), CONFIG_INT("Protocol/Port")))
+	if (ISTcpConnector::Instance().Connect(CONFIG_STRING(CONST_CONFIG_CONNECTION_SERVER),CONFIG_INT(CONST_CONFIG_CONNECTION_PORT)))
 	{
 		SetResult(true);
 		close();

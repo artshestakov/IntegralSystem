@@ -4,13 +4,13 @@
 #include "ISInterfaceDialogForm.h"
 #include "ISFieldEdits.h"
 //-----------------------------------------------------------------------------
-class ISConnectSettingDialog : public ISInterfaceDialogForm
+class ISConnectDialog : public ISInterfaceDialogForm
 {
 	Q_OBJECT
 
 public:
-	ISConnectSettingDialog();
-	virtual ~ISConnectSettingDialog();
+	ISConnectDialog();
+	virtual ~ISConnectDialog();
 
 protected:
 	void AfterShowEvent() override;
@@ -22,8 +22,5 @@ private:
 private:
 	ISLineEdit *EditServer;
 	ISIntegerEdit *EditPort;
-	ISLineEdit *EditDatabase;
-	ISCheckEdit *EditProtocolInclude;
-	ISIntegerEdit *EditProtocolPort;
 };
 //-----------------------------------------------------------------------------

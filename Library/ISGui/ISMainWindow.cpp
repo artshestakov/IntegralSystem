@@ -59,10 +59,7 @@ ISMainWindow::ISMainWindow(QWidget *parent)
 		Paragraphs[MetaParagraph->UID] = StackedWidget->addWidget(ISAlgorithm::CreatePointer<ISParagraphBaseForm *>(MetaParagraph->ClassName, Q_ARG(QWidget *, this)));
 	}
 
-	if (CONFIG_BOOL("Protocol/Include"))
-	{
-		connect(&ISTcpConnector::Instance(), &ISTcpConnector::Reconnect, this, &ISMainWindow::Reconnect);
-	}
+	connect(&ISTcpConnector::Instance(), &ISTcpConnector::Reconnect, this, &ISMainWindow::Reconnect);
 }
 //-----------------------------------------------------------------------------
 ISMainWindow::~ISMainWindow()
