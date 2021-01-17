@@ -26,10 +26,6 @@ static QString QS_USER_AUTH = PREPARE_QUERY("SELECT usrs_id, usrs_issystem, usrs
 static QString QI_PROTOCOL = PREPARE_QUERY("INSERT INTO _protocol(prtc_datetime, prtc_user, prtc_tablename, prtc_tablelocalname, prtc_type, prtc_objectid, prtc_information) "
 										   "VALUES(:DateTime, :UserID, :TableName, :TableLocalName, (SELECT prtp_id FROM _protocoltype WHERE prtp_uid = :TypeUID), :ObjectID, :Information)");
 //-----------------------------------------------------------------------------
-static QString QS_SETTINGS_DATABASE = PREPARE_QUERY("SELECT sgdb_useraccessdatabase, sgdb_numbersimbolsaftercomma, sgdb_storagefilemaxsize "
-													"FROM _settingsdatabase "
-													"WHERE sgdb_uid = :SettingUID");
-//-----------------------------------------------------------------------------
 static QString QS_GROUP_ACCESS_TABLE = PREPARE_QUERY("SELECT gatb_table, gatt_uid "
 													 "FROM _groupaccesstable "
 													 "LEFT JOIN _groupaccesstabletype ON gatt_id = gatb_AccessType "
@@ -1135,17 +1131,33 @@ bool ISTcpWorker::Sleep(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
+	//Готовим запрос для получения настроек БД
+	PMetaTable *MetaTable = GetMetaTable("_SettingsDatabase");
+	QString SqlText = "SELECT sgdb_id AS \"ID\",";
+	for (PMetaField *MetaField : MetaTable->Fields)
+	{
+		if (!MetaField->IsSystem)
+		{
+			SqlText += MetaTable->Alias + '_' + MetaField->Name.toLower() + " AS \"" + MetaField->Name + "\",";
+		}
+	}
+	SqlText.chop(1);
+	SqlText += " FROM _settingsdatabase WHERE sgdb_uid = :SettingUID";
+
 	//Получаем настройки БД
 	QVariantMap SettingsDBMap;
-	ISQuery qSelectSettingsDB(ISDatabase::Instance().GetDB(DBConnectionName), QS_SETTINGS_DATABASE);
+	ISQuery qSelectSettingsDB(ISDatabase::Instance().GetDB(DBConnectionName), SqlText);
 	qSelectSettingsDB.BindValue(":SettingUID", CONST_UID_SETTINGS_DATABASE);
 	if (qSelectSettingsDB.Execute())
 	{
 		if (qSelectSettingsDB.First())
 		{
-			SettingsDBMap["UserAccessDatabase"] = qSelectSettingsDB.ReadColumn("sgdb_useraccessdatabase");
-			SettingsDBMap["NumberSymbolsAfterComma"] = qSelectSettingsDB.ReadColumn("sgdb_numbersimbolsaftercomma");
-			SettingsDBMap["StorageFileMaxSize"] = qSelectSettingsDB.ReadColumn("sgdb_storagefilemaxsize");
+			QSqlRecord SqlRecord = qSelectSettingsDB.GetRecord();
+			for (int i = 0, c = SqlRecord.count(); i < c; ++i)
+			{
+				QSqlField SqlField = SqlRecord.field(i);
+				SettingsDBMap[SqlField.name()] = SqlField.value();
+			}
 		}
 		else
 		{

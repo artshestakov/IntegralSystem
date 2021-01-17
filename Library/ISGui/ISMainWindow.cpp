@@ -154,7 +154,7 @@ void ISMainWindow::ShowHistoryForm()
 //-----------------------------------------------------------------------------
 void ISMainWindow::ShowDatabaseSettings()
 {
-	ISGui::ShowObjectForm(ISGui::CreateObjectForm(ISNamespace::OFT_Edit, "_SettingsDatabase", 5));
+	ISGui::ShowObjectForm(ISGui::CreateObjectForm(ISNamespace::OFT_Edit, "_SettingsDatabase", SETTING_DATABASE_VALUE_INT("ID")));
 }
 //-----------------------------------------------------------------------------
 void ISMainWindow::ShowChangePasswordForm()
