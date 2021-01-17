@@ -2154,7 +2154,13 @@ bool ISTcpWorker::RecordGet(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	{
 		QSqlField SqlField = SqlRecord.field(i);
 		QVariant Value = SqlField.value();
-		Values[SqlField.name()] = Value.isNull() ? QVariant() : Value;
+
+		PMetaField *MetaField = MetaTable->GetField(SqlField.name());
+		if (MetaField->Type == ISNamespace::FT_Image) //Если поле является изображением, приводим его к base64
+		{
+			Value = Value.toByteArray().toBase64();
+		}
+		Values[MetaField->Name] = Value.isNull() ? QVariant() : Value;
 	}
 
 	//Получаем имя объекта
