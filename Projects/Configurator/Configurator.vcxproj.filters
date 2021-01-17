@@ -96,4 +96,9 @@
       <Filter>Database</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <QtRcc Include="..\..\Resources\Configurator.qrc">
+      <Filter>Resource Files</Filter>
+    </QtRcc>
+  </ItemGroup>
 </Project>

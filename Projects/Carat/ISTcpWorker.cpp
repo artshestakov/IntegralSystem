@@ -1561,6 +1561,7 @@ bool ISTcpWorker::UserPasswordCreate(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpA
 	{
 		return ErrorQuery(LANG("Carat.Error.Query.UserPasswordCreate.UpdateHash"), qUpdateHash);
 	}
+	qUpdateHash.First(); //Проверка не требуется, она выполняется выше
 
 	//Фиксируем создание пароля
 	Protocol(TcpMessage->TcpSocket->GetUserID(), CONST_UID_PROTOCOL_USER_PASSWORD_CREATE, "_Users", ISMetaData::Instance().GetMetaTable("_Users")->LocalListName, UserID, qUpdateHash.ReadColumn("usrs_fio"));
