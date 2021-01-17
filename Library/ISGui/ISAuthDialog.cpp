@@ -55,23 +55,8 @@ ISAuthDialog::ISAuthDialog()
 
 	LayoutFields->addSpacerItem(new QSpacerItem(0, 55));
 
-	QHBoxLayout *LayoutIndicator = new QHBoxLayout();
-	LayoutIndicator->addStretch();
-	LayoutFields->addLayout(LayoutIndicator);
-
-	WaitWidget = new ISWaitWidget(this, false, false);
-	WaitWidget->SetRoundness(70);
-	WaitWidget->SetMinimumTrailOpacity(15);
-	WaitWidget->SetTrailFadePercentage(70);
-	WaitWidget->SetNumberOfLines(9);
-	WaitWidget->SetLineLength(7);
-	WaitWidget->SetLineWidth(2);
-	WaitWidget->SetInnerRadius(4);
-	WaitWidget->SetRevolutionsPerSecond(2);
-	LayoutIndicator->addWidget(WaitWidget);
-
 	LabelIndicator = new QLabel(this);
-	LayoutIndicator->addWidget(LabelIndicator);
+	LayoutFields->addWidget(LabelIndicator, 0, Qt::AlignRight);
 
 	QHBoxLayout *LayoutBottom = new QHBoxLayout();
 	LayoutFields->addLayout(LayoutBottom);
@@ -84,6 +69,17 @@ ISAuthDialog::ISAuthDialog()
 	ButtonMenu->menu()->addAction(BUFFER_ICONS("About"), LANG("Form.Authorization.About"), this, &ISAuthDialog::ShowAboutForm, Qt::Key_F1);
 
 	LayoutBottom->addStretch();
+
+	WaitWidget = new ISWaitWidget(this, false, false);
+	WaitWidget->SetRoundness(70);
+	WaitWidget->SetMinimumTrailOpacity(15);
+	WaitWidget->SetTrailFadePercentage(70);
+	WaitWidget->SetNumberOfLines(9);
+	WaitWidget->SetLineLength(7);
+	WaitWidget->SetLineWidth(2);
+	WaitWidget->SetInnerRadius(4);
+	WaitWidget->SetRevolutionsPerSecond(2);
+	LayoutBottom->addWidget(WaitWidget);
 
 	ButtonInput = new ISPushButton(BUFFER_ICONS("Apply.Blue"), LANG("Input"), this);
 	ButtonInput->setToolTip(LANG("Input.ToolTip"));
