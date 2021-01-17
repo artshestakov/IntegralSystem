@@ -43,6 +43,7 @@
     <QtMoc Include="ISAsterisk.h" />
     <ClInclude Include="..\..\Library\ISCore\ISDatabase.h" />
     <ClInclude Include="..\..\Library\ISCore\ISQuery.h" />
+    <ClInclude Include="ISController.h" />
     <ClInclude Include="ISFail2Ban.h" />
     <ClInclude Include="ISTcpAnswer.h" />
     <ClInclude Include="ISTcpClients.h" />

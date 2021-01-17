@@ -89,6 +89,9 @@
     <ClInclude Include="..\..\Library\ISCore\ISQuery.h">
       <Filter>Database</Filter>
     </ClInclude>
+    <ClInclude Include="ISController.h">
+      <Filter>System</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ISTcpServer.h">

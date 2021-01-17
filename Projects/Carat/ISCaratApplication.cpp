@@ -8,6 +8,7 @@
 #include "ISSystem.h"
 #include "ISMetaData.h"
 #include "ISConsole.h"
+#include "ISController.h"
 //-----------------------------------------------------------------------------
 ISCaratApplication::ISCaratApplication(int &argc, char **argv)
 	: QCoreApplication(argc, argv),
@@ -16,7 +17,7 @@ ISCaratApplication::ISCaratApplication(int &argc, char **argv)
 	TcpServer(nullptr),
 	Asterisk(nullptr)
 {
-    connect(this, &ISCaratApplication::Quit, this, &ISCaratApplication::quit, Qt::QueuedConnection);
+	connect(this, &ISCaratApplication::aboutToQuit, this, &ISCaratApplication::Shutdown);
 }
 //-----------------------------------------------------------------------------
 ISCaratApplication::~ISCaratApplication()
@@ -42,6 +43,12 @@ bool ISCaratApplication::Initialize()
 	if (!ISConsole::InstallEncoding(65001))
 	{
 		ISLOGGER_W("Startup", "Error changed console encoding");
+	}
+
+	//Установим отлов сигналов
+	if (!InstallController(ErrorString))
+	{
+		ISLOGGER_W("Startup", "Not set console control hadnler: " + ErrorString);
 	}
 
 	//Загрузка локализации ядра
@@ -200,7 +207,6 @@ void ISCaratApplication::Shutdown()
 	{
 		Asterisk->quit();
 	}
-	emit Quit();
 }
 //-----------------------------------------------------------------------------
 bool ISCaratApplication::Help()

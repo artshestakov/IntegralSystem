@@ -10,9 +10,6 @@ class ISCaratApplication : public QCoreApplication
 {
 	Q_OBJECT
 
-signals:
-	void Quit();
-
 public:
     ISCaratApplication(int &argc, char **argv);
 	virtual ~ISCaratApplication();
