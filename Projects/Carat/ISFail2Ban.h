@@ -10,9 +10,10 @@ class ISFail2Ban : public QObject
 public:
 	static ISFail2Ban& Instance();
 
+	void Start(); //Запуск службы
 	bool IsLock(const QString &IPAddress); //Проверка блокировки адреса
 	QDateTime GetUnlockDateTime(const QString &IPAddress); //Получить дату и время разблокировки адреса
-	void Add(const QString &IPAddress); //Добавить адрес в список блокировки
+	bool Add(const QString &IPAddress); //Добавить адрес в список блокировки
 	void Remove(const QString &IPAddress); //Удалить адрес из списка
 
 private:

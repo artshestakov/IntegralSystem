@@ -6,8 +6,7 @@ ISFail2Ban::ISFail2Ban() : QObject()
 {
 	Timer = new QTimer(this);
 	connect(Timer, &QTimer::timeout, this, &ISFail2Ban::Timeout);
-	Timer->start(30000);
-
+	
 	CRITICAL_SECTION_INIT(&CriticalSection);
 }
 //-----------------------------------------------------------------------------
@@ -22,6 +21,11 @@ ISFail2Ban& ISFail2Ban::Instance()
 	return Fail2Ban;
 }
 //-----------------------------------------------------------------------------
+void ISFail2Ban::Start()
+{
+	Timer->start(30000);
+}
+//-----------------------------------------------------------------------------
 bool ISFail2Ban::IsLock(const QString &IPAddress)
 {
 	CRITICAL_SECTION_LOCK(&CriticalSection);
@@ -31,6 +35,7 @@ bool ISFail2Ban::IsLock(const QString &IPAddress)
 		if (FailAuthInfo.IPAddress == IPAddress)
 		{
 			Result = FailAuthInfo.IsLock;
+			break;
 		}
 	}
 	CRITICAL_SECTION_UNLOCK(&CriticalSection);
@@ -52,10 +57,10 @@ QDateTime ISFail2Ban::GetUnlockDateTime(const QString &IPAddress)
 	return DateTime;
 }
 //-----------------------------------------------------------------------------
-void ISFail2Ban::Add(const QString &IPAddress)
+bool ISFail2Ban::Add(const QString &IPAddress)
 {
 	CRITICAL_SECTION_LOCK(&CriticalSection);
-	bool is_found = false;
+	bool is_found = false, is_lock = false;
 	for (ISFailAuthInfo &FailAuthInfo : Vector) //»щем такой адрес в списке
 	{
 		if (FailAuthInfo.IPAddress == IPAddress && !FailAuthInfo.IsLock) //Ќашли - регистрируем временную метку
@@ -65,11 +70,11 @@ void ISFail2Ban::Add(const QString &IPAddress)
 			QDateTime current_date_time = QDateTime::currentDateTime();
 			FailAuthInfo.DTPoints.emplace_back(current_date_time);
 
-			bool is_lock = FailAuthInfo.DTPoints.size() == CARAT_BAN_ATTEMPT_COUNT;
+			is_lock = FailAuthInfo.DTPoints.size() == CARAT_BAN_ATTEMPT_COUNT;
 			FailAuthInfo.IsLock = is_lock;
 			if (is_lock) //≈сли адрес заблокирован - рассчитываем дата и врем€ разблокировки
 			{
-				FailAuthInfo.DTUnlock = current_date_time.addSecs(60);
+				FailAuthInfo.DTUnlock = current_date_time.addSecs(3600);
 			}
 			break;
 		}
@@ -77,9 +82,10 @@ void ISFail2Ban::Add(const QString &IPAddress)
 	
 	if (!is_found) //Ќе нашли - добавл€ем
 	{
-		Vector.emplace_back(ISFailAuthInfo{ IPAddress, false, { QDateTime::currentDateTime() }, QDateTime() });
+		Vector.emplace_back(ISFailAuthInfo{ IPAddress, false, { QDateTime::currentDateTime() } });
 	}
 	CRITICAL_SECTION_UNLOCK(&CriticalSection);
+	return is_lock;
 }
 //-----------------------------------------------------------------------------
 void ISFail2Ban::Remove(const QString &IPAddress)

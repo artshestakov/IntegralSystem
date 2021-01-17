@@ -69,6 +69,9 @@ bool ISTcpServer::Run()
 	//Инициализируем очередь
 	ISTcpQueue::Instance().ReadMessageID();
 
+	//Запускаем ISFail2Ban
+	ISFail2Ban::Instance().Start();
+
 	//Запускаем балансировщик
 	if (!QtConcurrent::run(this, &ISTcpServer::QueueBalancerMessage).isStarted())
 	{
@@ -125,16 +128,7 @@ void ISTcpServer::incomingConnection(qintptr SocketDescriptor)
 	//Создаём сокет и подключаем все нобходимые сигналы
 	ISTcpSocket *TcpSocket = new ISTcpSocket(SocketDescriptor, this);
 	connect(TcpSocket, &ISTcpSocket::disconnected, this, &ISTcpServer::ClientDisconnected, Qt::QueuedConnection);
-
-	QString IPAddress = TcpSocket->GetAddress();
-	ISLOGGER_I(__CLASS__, "Connect " + IPAddress);
-
-	//Проверяем, не заблокирован ли адрес
-	if (ISFail2Ban::Instance().IsLock(IPAddress))
-	{
-		ISLOGGER_I(__CLASS__, "Address " + IPAddress + " blocked");
-		TcpSocket->abort();
-	}
+	ISLOGGER_I(__CLASS__, "Connect " + TcpSocket->GetAddress());
 }
 //-----------------------------------------------------------------------------
 void ISTcpServer::ClientDisconnected()
