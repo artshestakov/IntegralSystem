@@ -472,7 +472,7 @@ void ISTcpWorker::Process()
 		CRITICAL_SECTION_UNLOCK(&CriticalSection);
 		if (is_stopped) //Если флаг остановки установлен - выходим из цикла
 		{
-			ISLOGGER_I(__CLASS__, QString("Stopping %1...").arg(DBConnectionName));
+			ISLOGGER_I(__CLASS__, "Stopping ...");
 			delete qProtocol;
 			ISDatabase::Instance().Disconnect(DBConnectionName);
 			break;
