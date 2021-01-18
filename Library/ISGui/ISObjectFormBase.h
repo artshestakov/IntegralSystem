@@ -18,6 +18,7 @@ class ISObjectFormBase : public ISInterfaceForm
 
 signals:
 	void SavedObject(unsigned int ObjectID);
+	void DeletedObject(unsigned int ObjectID);
 	void UpdateList();
 	void CurrentObjectTab(); //—игнал дл€ вкладки (установление текущей вкладки)
 	void Close();

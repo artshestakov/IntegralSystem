@@ -631,6 +631,7 @@ void ISListBaseForm::Create()
 	ObjectFormBase->SetParentObjectID(GetParentObjectID(), GetParentFilterField());
 	connect(ObjectFormBase, &ISObjectFormBase::SavedObject, this, static_cast<void(ISListBaseForm::*)(unsigned int)>(&ISListBaseForm::SetSelectObjectAfterUpdate));
 	connect(ObjectFormBase, &ISObjectFormBase::SavedObject, this, &ISListBaseForm::Updated);
+	connect(ObjectFormBase, &ISObjectFormBase::DeletedObject, TcpModel, &ISTcpModel::RemoveRecordID);
 	connect(ObjectFormBase, &ISObjectFormBase::UpdateList, this, &ISListBaseForm::Update);
 	connect(ObjectFormBase, &ISObjectFormBase::Close, TableView, static_cast<void(ISBaseTableView::*)(void)>(&ISBaseTableView::setFocus));
 	emit AddFormFromTab(ObjectFormBase);
@@ -654,6 +655,7 @@ void ISListBaseForm::CreateCopy()
 	ObjectFormBase->SetParentObjectID(GetParentObjectID(), GetParentFilterField());
 	connect(ObjectFormBase, &ISObjectFormBase::SavedObject, this, static_cast<void(ISListBaseForm::*)(unsigned int)>(&ISListBaseForm::SetSelectObjectAfterUpdate));
 	connect(ObjectFormBase, &ISObjectFormBase::SavedObject, this, &ISListBaseForm::Updated);
+	connect(ObjectFormBase, &ISObjectFormBase::DeletedObject, TcpModel, &ISTcpModel::RemoveRecordID);
 	connect(ObjectFormBase, &ISObjectFormBase::UpdateList, this, &ISListBaseForm::Update);
 	connect(ObjectFormBase, &ISObjectFormBase::Close, TableView, static_cast<void(ISBaseTableView::*)(void)>(&ISBaseTableView::setFocus));
 	emit AddFormFromTab(ObjectFormBase);
@@ -671,6 +673,7 @@ void ISListBaseForm::Edit()
 	ObjectFormBase->SetParentObjectID(GetParentObjectID(), GetParentFilterField());
 	connect(ObjectFormBase, &ISObjectFormBase::SavedObject, this, static_cast<void(ISListBaseForm::*)(unsigned int)>(&ISListBaseForm::SetSelectObjectAfterUpdate));
 	connect(ObjectFormBase, &ISObjectFormBase::SavedObject, this, &ISListBaseForm::Updated);
+	connect(ObjectFormBase, &ISObjectFormBase::DeletedObject, TcpModel, &ISTcpModel::RemoveRecordID);
 	connect(ObjectFormBase, &ISObjectFormBase::UpdateList, this, &ISListBaseForm::Update);
 	connect(ObjectFormBase, &ISObjectFormBase::Close, TableView, static_cast<void(ISBaseTableView::*)(void)>(&ISBaseTableView::setFocus));
 

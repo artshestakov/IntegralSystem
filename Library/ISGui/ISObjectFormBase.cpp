@@ -868,7 +868,7 @@ void ISObjectFormBase::Delete()
 		QString ErrorString;
 		if (ISGui::RecordsDelete(MetaTable->Name, { GetObjectID() }, ErrorString))
 		{
-			emit UpdateList();
+			emit DeletedObject(GetObjectID());
 			close();
 		}
 		else
