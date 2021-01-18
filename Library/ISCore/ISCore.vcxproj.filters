@@ -154,9 +154,6 @@
     <ClInclude Include="ISConsole.h">
       <Filter>System</Filter>
     </ClInclude>
-    <ClInclude Include="ISSingleton.h">
-      <Filter>System</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ISRestWorker.h">
