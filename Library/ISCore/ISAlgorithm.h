@@ -142,6 +142,11 @@ namespace ISAlgorithm
 	//! \return возвращает форматированное число
 	ISCORE_EXPORT QString FormatNumber(long long Number, char Separator = ' ');
 
+	//! \Форматирование дробного числа. Например, число 1024,965 примет вид 1 024,965
+	//! \Number дробное число
+	//! \return возвращает форматированное число
+	ISCORE_EXPORT QString FormatNumber(double Number, char Separator = ' ');
+
 	//Поиск значения в векторе
     template <typename T> bool VectorContains(const std::vector<T> &Vector, T Value)
     {

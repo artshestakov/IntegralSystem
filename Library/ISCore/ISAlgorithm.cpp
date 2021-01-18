@@ -296,3 +296,19 @@ QString ISAlgorithm::FormatNumber(long long Number, char Separator)
 	return Result;
 }
 //-----------------------------------------------------------------------------
+QString ISAlgorithm::FormatNumber(double Number, char Separator)
+{
+	QString Result = QString::number(Number, 'f', 3); //???
+	int PosPoint = Result.indexOf('.');
+	if (PosPoint != -1)
+	{
+		bool Ok = true;
+		long long Left = Result.mid(0, PosPoint).toInt(&Ok);
+		if (Ok)
+		{
+			Result.replace(0, PosPoint, FormatNumber(Left));
+		}
+	}
+	return Result;
+}
+//-----------------------------------------------------------------------------
