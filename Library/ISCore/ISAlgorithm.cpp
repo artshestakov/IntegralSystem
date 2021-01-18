@@ -306,7 +306,7 @@ QString ISAlgorithm::FormatNumber(double Number, char Separator)
 		long long Left = Result.mid(0, PosPoint).toInt(&Ok);
 		if (Ok)
 		{
-			Result.replace(0, PosPoint, FormatNumber(Left));
+            Result.replace(0, PosPoint, FormatNumber(Left, Separator));
 		}
 	}
 	return Result;
