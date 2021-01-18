@@ -298,7 +298,7 @@ QString ISAlgorithm::FormatNumber(long long Number, char Separator)
 //-----------------------------------------------------------------------------
 QString ISAlgorithm::FormatNumber(double Number, char Separator)
 {
-	QString Result = QString::number(Number, 'f', 3); //???
+    QString Result = DOUBLE_PREPARE(Number);
 	int PosPoint = Result.indexOf('.');
 	if (PosPoint != -1)
 	{
