@@ -11,7 +11,7 @@
 //-----------------------------------------------------------------------------
 ISHistoryForm::ISHistoryForm(QWidget *parent) : ISInterfaceForm(parent)
 {
-	setWindowTitle(LANG("History"));
+	setWindowTitle(LANG("ISHistoryForm.Title"));
 	setWindowIcon(BUFFER_ICONS("History"));
 	resize(ISDefines::Gui::SIZE_640_480);
 	GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);
@@ -27,10 +27,14 @@ ISHistoryForm::ISHistoryForm(QWidget *parent) : ISInterfaceForm(parent)
 	GetMainLayout()->addWidget(ListWidget);
 
 	QHBoxLayout *LayoutBottom = new QHBoxLayout();
-	LayoutBottom->addStretch();
 	GetMainLayout()->addLayout(LayoutBottom);
 
-	ISPushButton *ButtonClose = new ISPushButton(BUFFER_ICONS("Close"), LANG("Close"), this);
+	LabelRowCount = new QLabel(LANG("ISHistoryForm.RowCount").arg(0), this);
+	LayoutBottom->addWidget(LabelRowCount);
+
+	LayoutBottom->addStretch();
+
+	ISPushButton *ButtonClose = new ISPushButton(BUFFER_ICONS("Close"), LANG("ISHistoryForm.Close"), this);
 	connect(ButtonClose, &ISPushButton::clicked, this, &ISHistoryForm::close);
 	LayoutBottom->addWidget(ButtonClose);
 }
@@ -59,6 +63,7 @@ void ISHistoryForm::AfterShowEvent()
 			ListWidgetItem->setData(Qt::UserRole * 2, HistoryMap["ObjectID"]);
 			ListWidgetItem->setSizeHint(QSize(ListWidgetItem->sizeHint().width(), 25));
 		}
+		LabelRowCount->setText(LANG("ISHistoryForm.RowCount").arg(VariantList.size()));
 	}
 	else
 	{

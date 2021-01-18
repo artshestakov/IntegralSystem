@@ -22,5 +22,6 @@ private:
 
 private:
 	ISListWidget *ListWidget;
+	QLabel *LabelRowCount;
 };
 //-----------------------------------------------------------------------------

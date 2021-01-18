@@ -156,6 +156,11 @@
   <Local Name="ISDeviceConnectDialog.Title" Russian="Вставьте USB-устройство"/>
   <Local Name="ISDeviceConnectDialog.LabelInfo" Russian="Вставьте USB-устройство в устройство чтения, чтобы привязать его к учётной записи пользователя.&#10;&#10;Если USB-устройство уже вставлен в устройство чтения, извлеките его и вставьте снова."/>
   <Local Name="ISDeviceConnectDialog.Cancel" Russian="Отмена"/>
+  
+  <!--ISHistoryForm-->
+  <Local Name="ISHistoryForm.Title" Russian="История"/>
+  <Local Name="ISHistoryForm.RowCount" Russian="Записей: %1"/>
+  <Local Name="ISHistoryForm.Close" Russian="Закрыть"/>
 
   <!--Other-->
   <Local Name="NoData" Russian="Данных нет"/>
@@ -167,6 +172,7 @@
   <Local Name="ConnectionSettings" Russian="Настройки подключения"/>
   <Local Name="OpenList" Russian="Открыть справочник"/>
   <Local Name="ChangeUser" Russian="Сменить пользователя"/>
+  <Local Name="History" Russian="История"/>
   <Local Name="TableNavigationSelectBegin" Russian="Выбрать первую запись"/>
   <Local Name="TableNavigationSelectPrevious" Russian="Выбрать предыдущую запись"/>
   <Local Name="TableNavigationSelectNext" Russian="Выбрать следующую запись"/>
@@ -188,7 +194,6 @@
   <Local Name="FavoritesForTable" Russian="Избранные записи таблицы: %1"/>
   <Local Name="AddToFavorites" Russian="Добавить/удалить из избранного"/>
   <Local Name="ClearFavorites" Russian="Очистить избранное"/>
-  <Local Name="History" Russian="История"/>
   <Local Name="Creating" Russian="Создание"/>
   <Local Name="Coping" Russian="Создание копии"/>
   <Local Name="Additionally" Russian="Дополнительно"/>
