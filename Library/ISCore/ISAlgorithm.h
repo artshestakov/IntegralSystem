@@ -64,63 +64,68 @@ namespace ISAlgorithm
 	//! Получить размер файла
 	//! \param FilePath путь к файлу
 	//! \return возвращает размер файла в байтах. В случае ошибки возвращается -1
-    ISCORE_EXPORT qint64 GetFileSize(const std::string &FilePath);
+    //ISCORE_EXPORT qint64 GetFileSize(const std::string &FilePath);
 
 	//! Получить размер файла
 	//! \param FilePath путь к файлу
 	//! \param ErrorString текстовое описание ошибки
 	//! \return возвращает размер файла в байтах. В случае ошибки возвращается -1, а ErrorString заполняется описанием ошибки
-    ISCORE_EXPORT qint64 GetFileSize(const std::string &FilePath, std::string &ErrorString);
+    //ISCORE_EXPORT qint64 GetFileSize(const std::string &FilePath, std::string &ErrorString);
 
-	//! \Получить временную метку
+	//! Конвертировать размер файла в строку
+	//! \param FileSize размер файла в байтах
+	//! \return размер файла строкой
+	ISCORE_EXPORT QString FileSizeFromString(qint64 FileSize);
+
+	//! Получить временную метку
 	//! \return возвращает временную метку
 	ISCORE_EXPORT ISTimePoint GetTick();
 
-	//! \Получить разницу временных меток
+	//! Получить разницу временных меток
 	//! \param TickA временная метка
 	//! \param TickB временная метка
 	//! \return возвращает разницу между двумя временными метками
 	ISCORE_EXPORT unsigned long long GetTickDiff(const ISTimePoint &T1, const ISTimePoint &T2);
 
-	//! \Получить имя класса
+	//! Получить имя класса
 	//! \param FunctionName в качестве этого параметра необходимо передавать макрос __FUNCTION__
 	//! \return возвращает имя класса в случае успеха, иначе пустую строку
     ISCORE_EXPORT std::string GetClassName(const std::string &FunctionName);
 
-	//! \Удалить первый символ из строки
+	//! Удалить первый символ из строки
 	//! \param String строка, из которой будет происходить удаление символа
 	//! \param Char символ, который будет удаляться из строки
 	//! \return функция ничего не возвращает
 	ISCORE_EXPORT void RemoveBeginSymbolLoop(QString &String, char Char);
 
-	//! \Удалить последний символ из строки
+	//! Удалить последний символ из строки
 	//! \param String строка, из которой будет происходить удаление символа
 	//! \param Char символ, который будет удаляться из строки
 	//! \return функция ничего не возвращает
 	ISCORE_EXPORT void RemoveLastSymbolLoop(QString &String, char Char);
 
-	//! \Получить последнюю ошибку на текущей системе
+	//! Получить последнюю ошибку на текущей системе
 	//! \return возвращает строку с ошибкой
 	ISCORE_EXPORT QString GetLastErrorString();
 
-	//! \Сгенерировать соль
+	//! Сгенерировать соль
 	//! \param Salt строка, в которую будет помещена сгенерированная соль
 	//! \param ErrorString строка, в которую будет помещено описание ошибки
 	//! \return возвращает true в случае успешное генерации, в противном случае - false
 	ISCORE_EXPORT bool GenerateSalt(QString &Salt, QString &ErrorString);
 
-	//! \Соление пароля
+	//! Соление пароля
 	//! \param HashPassword строка, которая должна содержать хэш логина и пароля (sha256(Login + Password))
 	//! \param Salt строка, которая должна содержать соль (sha256(Login + Password))
 	//! \return возвращает солёный пароль
 	ISCORE_EXPORT QString SaltPassword(const QString &HashPassword, const QString &Salt); //Посолить пароль
 
-	//! \Проверка пароля на соответствие требованиям сложности
+	//! Проверка пароля на соответствие требованиям сложности
 	//! \param Password строка, содержащая пароль
 	//! \return возвращает true в случае если пароль прошёл проверку, в противном случае - false
 	ISCORE_EXPORT bool PasswordVerification(const QString &Password);
 
-	//! \Конвертировать секунды в дни, минуты и секунды
+	//! Конвертировать секунды в дни, минуты и секунды
 	//! \param Seconds секунды, которые нужно конвертировать
 	//! \param Day сюда помещается кол-во дней
 	//! \param Hour сюда помещается кол-во часов
@@ -129,21 +134,21 @@ namespace ISAlgorithm
 	//! \return функция ничего не возвращает
 	ISCORE_EXPORT void ConvertSecondToTime(unsigned int Seconds, unsigned int &Day, unsigned int &Hour, unsigned int &Minute, unsigned int &Second);
 
-	//! \Извлечь версию файла дистрибутива
+	//! Извлечь версию файла дистрибутива
 	//! \param FilePath путь к файлу дистрибутива
 	//! \return возвращает версию. Если вернулся ноль - версия не была извлечена
 	ISCORE_EXPORT unsigned int ExtractVersionFile(const QString &FilePath);
 
-	//! \Подготовить номер телефона (удалить все кроме цифр)
+	//! Подготовить номер телефона (удалить все кроме цифр)
 	//! \param PhoneNumber строка, которая содержит номер телефона
 	ISCORE_EXPORT void FormatPhoneNumber(QString &PhoneNumber);
 
-	//! \Форматирование целого числа. Например, число 6985473 примет вид 6 985 473
+	//! Форматирование целого числа. Например, число 6985473 примет вид 6 985 473
 	//! \Number целое число
 	//! \return возвращает форматированное число
 	ISCORE_EXPORT QString FormatNumber(long long Number, char Separator = ' ');
 
-	//! \Форматирование дробного числа. Например, число 1024,965 примет вид 1 024,965
+	//! Форматирование дробного числа. Например, число 1024,965 примет вид 1 024,965
 	//! \Number дробное число
 	//! \return возвращает форматированное число
 	ISCORE_EXPORT QString FormatNumber(double Number, char Separator = ' ', unsigned int Precision = 0);

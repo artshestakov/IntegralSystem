@@ -90,34 +90,3 @@ QString ISSystem::StringToSha256(const QString &String)
     return QCryptographicHash::hash(String.toUtf8(), QCryptographicHash::Sha256).toHex().toUpper();
 }
 //-----------------------------------------------------------------------------
-QString ISSystem::FileSizeFromString(qint64 FileSize)
-{
-    qint64 Size = FileSize;
-    int i = 0;
-    for (; Size > 1023; Size /= 1024, ++i) { }
-    QString String = QString().setNum(Size) + "BKMGT"[i];
-
-    if (String.contains("B"))
-    {
-        String.replace("B", " B");
-    }
-    else if (String.contains("K"))
-    {
-        String.replace("K", " Kb");
-    }
-    else if (String.contains("M"))
-    {
-        String.replace("M", " Mb");
-    }
-    else if (String.contains("G"))
-    {
-        String.replace("G", " Gb");
-    }
-    else if (String.contains("T"))
-    {
-        String.replace("T", " Tb");
-    }
-
-    return String;
-}
-//-----------------------------------------------------------------------------

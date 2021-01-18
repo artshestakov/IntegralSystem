@@ -2766,7 +2766,7 @@ bool ISTcpWorker::FileStorageAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
 	qInsert.BindValue(":Owner", TcpMessage->TcpSocket->GetUserID());
 	qInsert.BindValue(":Name", Name);
 	qInsert.BindValue(":Expansion", Expansion);
-	qInsert.BindValue(":Size", ISSystem::FileSizeFromString(Size));
+	qInsert.BindValue(":Size", ISAlgorithm::FileSizeFromString(Size));
 	qInsert.BindValue(":Data", ByteArray);
 	if (!qInsert.ExecuteFirst())
 	{

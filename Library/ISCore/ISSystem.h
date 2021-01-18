@@ -25,9 +25,6 @@ public:
 	static QByteArray VariantListToJsonString(const QVariantList &VariantList, QJsonDocument::JsonFormat Format = QJsonDocument::Indented); //Конвертация списка в JSON-строку
 	static QString StringToMD5(const QString &String); //Получить MD5 строки
 	static QString StringToSha256(const QString &String); //Получить sha256 строки
-
-//ФАЙЛЫ
-	static QString FileSizeFromString(qint64 FileSize); //Получить размер файла
 };
 //-----------------------------------------------------------------------------
 #endif

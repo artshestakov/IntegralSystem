@@ -49,7 +49,7 @@ void ISStorageFilesSubSystem::Create()
 			QByteArray ByteArray = File.readAll();
 			File.close();
 
-			int MaxSize = SETTING_DATABASE_VALUE_INT(CONST_UID_DATABASE_SETTING_OTHER_STORAGEFILEMAXSIZE);
+			int MaxSize = SETTING_DATABASE_VALUE_INT(CONST_UID_DATABASE_SETTING_OTHER_STORAGEFILEMAXSIZE) * 1000 * 1024;
 			if (ByteArray.size() > MaxSize)
 			{
 				ISMessageBox::ShowWarning(this, LANG("Message.Warning.StorageFileBigSize").arg(FilePath).arg(MaxSize));

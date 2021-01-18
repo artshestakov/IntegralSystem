@@ -11,13 +11,13 @@ std::string ISAlgorithm::GetFileNameFromPath(const std::string &FilePath)
 	return FilePath;
 }
 //-----------------------------------------------------------------------------
-qint64 ISAlgorithm::GetFileSize(const std::string &FilePath)
+/*qint64 ISAlgorithm::GetFileSize(const std::string &FilePath)
 {
 	std::string ErrorString;
 	return ISAlgorithm::GetFileSize(FilePath, ErrorString);
-}
+}*/
 //-----------------------------------------------------------------------------
-qint64 ISAlgorithm::GetFileSize(const std::string &FilePath, std::string &ErrorString)
+/*qint64 ISAlgorithm::GetFileSize(const std::string &FilePath, std::string &ErrorString)
 {
 	FILE *File = fopen(FilePath.c_str(), "r");
 	if (File)
@@ -32,6 +32,35 @@ qint64 ISAlgorithm::GetFileSize(const std::string &FilePath, std::string &ErrorS
 		ErrorString = strerror(errno);
 	}
 	return -1;
+}*/
+//-----------------------------------------------------------------------------
+QString ISAlgorithm::FileSizeFromString(qint64 FileSize)
+{
+	//qint64 Size = FileSize;
+	int i = 0;
+	for (; FileSize > 1023; FileSize /= 1024, ++i) {}
+	QString String = ISAlgorithm::FormatNumber(FileSize) + "BKMGT"[i];
+	if (String.contains("B"))
+	{
+		String.replace("B", " B");
+	}
+	else if (String.contains("K"))
+	{
+		String.replace("K", " Kb");
+	}
+	else if (String.contains("M"))
+	{
+		String.replace("M", " Mb");
+	}
+	else if (String.contains("G"))
+	{
+		String.replace("G", " Gb");
+	}
+	else if (String.contains("T"))
+	{
+		String.replace("T", " Tb");
+	}
+	return String;
 }
 //-----------------------------------------------------------------------------
 ISTimePoint ISAlgorithm::GetTick()
