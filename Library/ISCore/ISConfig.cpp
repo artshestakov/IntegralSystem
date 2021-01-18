@@ -17,8 +17,6 @@ ISConfig::ISConfig()
 		{ CONFIG_TEMPLATE_SERVER, "Connection/Database",	QVariant::String,	true,	QVariant(),				0, 0 },
 		{ CONFIG_TEMPLATE_SERVER, "Connection/Login",		QVariant::String,	true,	QVariant(),				0, 0 },
 		{ CONFIG_TEMPLATE_SERVER, "Connection/Password",	QVariant::String,	true,	QVariant(),				0, 0 },
-		{ CONFIG_TEMPLATE_SERVER, "Controller/Include",		QVariant::Bool,		true,	true,					0, 0 },
-        { CONFIG_TEMPLATE_SERVER, "Controller/Port",		QVariant::Int,		true,	CARAT_CONTROLLER_PORT,	1, UINT16_MAX },
 		{ CONFIG_TEMPLATE_SERVER, "TCPServer/Include",		QVariant::Bool,		true,	false,					0, 0 },
         { CONFIG_TEMPLATE_SERVER, "TCPServer/Port",			QVariant::Int,		true,	CARAT_TCP_PORT,			1, UINT16_MAX },
 		{ CONFIG_TEMPLATE_SERVER, "TCPServer/WorkerCount",	QVariant::Int,		true,	1,						1, (int)std::thread::hardware_concurrency() * 2 },

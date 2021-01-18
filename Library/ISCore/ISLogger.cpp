@@ -27,14 +27,6 @@ QString ISLogger::GetErrorString() const
 	return ErrorString;
 }
 //-----------------------------------------------------------------------------
-bool ISLogger::GetRunning()
-{
-    CRITICAL_SECTION_LOCK(&CriticalSection);
-    bool is_running = IsRunning;
-    CRITICAL_SECTION_UNLOCK(&CriticalSection);
-    return is_running;
-}
-//-----------------------------------------------------------------------------
 bool ISLogger::Initialize()
 {
 	//Получаем текущую дату и время и запоминаем текущий день
@@ -60,7 +52,7 @@ bool ISLogger::Initialize()
 //-----------------------------------------------------------------------------
 void ISLogger::Shutdown()
 {
-    if (IsRunning)
+    if (IsRunning) //Если логгер был запущен - останавливаем
     {
         //Останавливаем логгер
         CRITICAL_SECTION_LOCK(&CriticalSection);

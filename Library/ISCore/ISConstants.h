@@ -203,8 +203,6 @@ const char API_STATEMENT_ADD[] = "StatementAdd"; //Добавить выгрузку в ведомости
 const char API_GET_GAST_STATION[] = "GetGatStation"; //Заполнить на основании
 const char API_GET_DEBT_IMPLEMENTATION[] = "GetDebtImplementation"; //Получить загрузки и выгрузки
 const char API_GET_DEBT_COUNTERPARTY[] = "GetDebtCounterparty"; //Получить долги контрагента
-//CARAT_LOCAL_API--------------------------------------------------------------
-const char	CARAT_LOCAL_API_SHUTDOWN[] = "shutdown"; //Завершение работы
 //-----------------------------------------------------------------------------
 const char CONST_UID_SETTINGS_DATABASE[] = "{1DE3449C-C700-4EFC-A455-E99E38063D9B}"; //Идентификатор настроек базы данных
 //-----------------------------------------------------------------------------
@@ -314,8 +312,6 @@ const char CONST_CONFIG_REMEMBER_USER_LOGIN[] = "RememberUser/Login";
 const char CONST_CONFIG_TCPSERVER_INCLUDE[] = "TCPServer/Include";
 const char CONST_CONFIG_TCPSERVER_PORT[] = "TCPServer/Port";
 const char CONST_CONFIG_TCPSERVER_WORKERS[] = "TCPServer/WorkerCount";
-const char CONST_CONFIG_CONTROLLER_INCLUDE[] = "Controller/Include";
-const char CONST_CONFIG_CONTROLLER_PORT[] = "Controller/Port";
 const char CONST_CONFIG_AMI_INCLUDE[] = "AMI/Include";
 const char CONST_CONFIG_AMI_SERVER[] = "AMI/Host";
 const char CONST_CONFIG_AMI_PORT[] = "AMI/Port";

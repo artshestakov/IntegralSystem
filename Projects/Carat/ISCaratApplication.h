@@ -2,13 +2,15 @@
 #ifndef _ISCARATAPPLICATION_H_INCLUDED
 #define _ISCARATAPPLICATION_H_INCLUDED
 //-----------------------------------------------------------------------------
-#include "ISCaratController.h"
 #include "ISTcpServer.h"
 #include "ISAsterisk.h"
 //-----------------------------------------------------------------------------
 class ISCaratApplication : public QCoreApplication
 {
 	Q_OBJECT
+
+signals:
+    void Stopped();
 
 public:
     ISCaratApplication(int &argc, char **argv);
@@ -21,6 +23,7 @@ public:
 	void Shutdown(); //Остановка приложения
 
 private:
+    void StopController();
     bool Help();
     bool Version();
     bool SendShutdown();
@@ -28,13 +31,11 @@ private:
     bool ConfigReset();
 
 private:
-    bool SendCommand(const QByteArray &ByteArray);
-
-private:
 	QString ErrorString;
-	ISCaratController *Controller;
 	ISTcpServer *TcpServer;
 	ISAsterisk *Asterisk;
+
+    QString PathFileStop;
 };
 //-----------------------------------------------------------------------------
 #endif

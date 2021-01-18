@@ -1,11 +1,13 @@
 [Unit]
 Description=Carat
 After=network.target postgresql-9.5.service
-WantedBy=multi-user.target
 
 [Service]
 Type=simple
 User=root
 ExecStart=/opt/IntegralSystem/Carat
-ExecStop=/bin/kill $(pidof Carat)
+ExecStop=/opt/IntegralSystem/Carat --shutdown
 Restart=no
+
+[Install]
+WantedBy=multi-user.target

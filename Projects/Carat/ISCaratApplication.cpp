@@ -8,16 +8,15 @@
 #include "ISSystem.h"
 #include "ISMetaData.h"
 #include "ISConsole.h"
-#include "ISController.h"
 //-----------------------------------------------------------------------------
 ISCaratApplication::ISCaratApplication(int &argc, char **argv)
 	: QCoreApplication(argc, argv),
 	ErrorString(NO_ERROR_STRING),
-	Controller(nullptr),
 	TcpServer(nullptr),
-	Asterisk(nullptr)
+    Asterisk(nullptr),
+    PathFileStop(QCoreApplication::applicationDirPath() + "/Temp/Carat.stop")
 {
-	connect(this, &ISCaratApplication::aboutToQuit, this, &ISCaratApplication::Shutdown);
+    connect(this, &ISCaratApplication::Stopped, this, &ISCaratApplication::Shutdown);
 }
 //-----------------------------------------------------------------------------
 ISCaratApplication::~ISCaratApplication()
@@ -45,12 +44,6 @@ bool ISCaratApplication::Initialize()
 		ISLOGGER_W("Startup", "Error changed console encoding");
 	}
 
-	//Установим отлов сигналов
-	if (!InstallController(ErrorString))
-	{
-		ISLOGGER_W("Startup", "Not set console control hadnler: " + ErrorString);
-	}
-
 	//Загрузка локализации ядра
 	if (!ISLocalization::Instance().LoadResourceFile(LOCALIZATION_FILE_CARAT))
 	{
@@ -64,6 +57,16 @@ bool ISCaratApplication::Initialize()
 		ISLOGGER_E("Startup", "Not create temp dir: " + ErrorString);
 		return false;
 	}
+
+    QFile File(PathFileStop);
+    if (File.exists(PathFileStop))
+    {
+        if (!File.remove())
+        {
+            ISLOGGER_E(__CLASS__, "Not remove stop file: " + File.errorString());
+            return false;
+        }
+    }
 
 	//Инициализируем конфигурационный файл
 	if (!ISConfig::Instance().Initialize(CONFIG_TEMPLATE_SERVER))
@@ -150,21 +153,6 @@ bool ISCaratApplication::Run()
 		arg(CONFIG_STRING(CONST_CONFIG_OTHER_CONFIGURATION)).
 		arg(CONFIG_STRING(CONST_CONFIG_CONNECTION_DATABASE)));
 
-	//Если контроллер включен - запускаем его
-	if (CONFIG_BOOL(CONST_CONFIG_CONTROLLER_INCLUDE))
-	{
-		Controller = new ISCaratController(this);
-		if (Controller->Start())
-		{
-			connect(Controller, &ISCaratController::Shutdown, this, &ISCaratApplication::Shutdown);
-		}
-		else
-		{
-			ISLOGGER_E("ISCaratController", "starting failed");
-			return false;
-		}
-	}
-	
 	//Если TCP-сервер включен - запускаем его
 	if (CONFIG_BOOL(CONST_CONFIG_TCPSERVER_INCLUDE))
 	{
@@ -186,17 +174,19 @@ bool ISCaratApplication::Run()
 			return false;
 		}
 	}
+
+    //Запускаем контроллер остановки сервиса
+    if (!QtConcurrent::run(this, &ISCaratApplication::StopController).isStarted())
+    {
+        ISLOGGER_E(__CLASS__, "Not starting stop controller");
+        return false;
+    }
 	return true;
 }
 //-----------------------------------------------------------------------------
 void ISCaratApplication::Shutdown()
 {
 	ISLOGGER_I(__CLASS__, "Shutdown...");
-
-	if (CONFIG_BOOL(CONST_CONFIG_CONTROLLER_INCLUDE) && Controller)
-	{
-		Controller->Stop();
-	}
 
 	if (CONFIG_BOOL(CONST_CONFIG_TCPSERVER_INCLUDE) && TcpServer)
 	{
@@ -207,6 +197,21 @@ void ISCaratApplication::Shutdown()
 	{
 		Asterisk->quit();
 	}
+    quit(); //В конце вызываем остановку приложения
+}
+//-----------------------------------------------------------------------------
+void ISCaratApplication::StopController()
+{
+    QFile File(PathFileStop);
+    while (true)
+    {
+        ISSleep(1000);
+        if (File.exists())
+        {
+            emit Stopped();
+            break;
+        }
+    }
 }
 //-----------------------------------------------------------------------------
 bool ISCaratApplication::Help()
@@ -246,7 +251,18 @@ bool ISCaratApplication::SendShutdown()
         ISDEBUG_E("Not created config: " + ISConfig::Instance().GetErrorString());
         return false;
     }
-    return SendCommand(CARAT_LOCAL_API_SHUTDOWN);
+
+    QFile File(PathFileStop);
+    bool Result = File.open(QIODevice::WriteOnly);
+    if (Result)
+    {
+        File.close();
+    }
+    else
+    {
+        ISDEBUG_E("Not created stop file: " + File.errorString());
+    }
+    return Result;
 }
 //-----------------------------------------------------------------------------
 bool ISCaratApplication::ConfigCreate()
@@ -306,50 +322,6 @@ bool ISCaratApplication::ConfigReset()
 	{
 		ISDEBUG_L("Error init new file: " + ISConfig::Instance().GetErrorString());
         return false;
-	}
-    return true;
-}
-//-----------------------------------------------------------------------------
-bool ISCaratApplication::SendCommand(const QByteArray &ByteArray)
-{
-	QTcpSocket TcpSocket;
-
-	//Подключаемся к Карату
-	ISDEBUG_L("Connecting...");
-	TcpSocket.connectToHost(QHostAddress::LocalHost, CONFIG_INT(CONST_CONFIG_CONTROLLER_PORT));
-	if (!TcpSocket.waitForConnected(1000))
-	{
-		ISDEBUG_L("Error: " + TcpSocket.errorString());
-        return false;
-	}
-
-	//Посылаем данные
-	ISDEBUG_L("Send: " + ByteArray);
-    if (TcpSocket.write(ByteArray) == -1) //Не удалось послать данные
-    {
-		ISDEBUG_L("Error sending: " + TcpSocket.errorString());
-        return false;
-    }
-
-    if (!TcpSocket.flush())
-    {
-		ISDEBUG_L("Error flushing: " + TcpSocket.errorString());
-        return false;
-    }
-
-	//Ждём ответа
-	ISDEBUG_L("Wait answer...");
-	while (true)
-	{
-		ISSleep(1);
-		PROCESS_EVENTS();
-		if (TcpSocket.bytesAvailable() > 0) //Дождались ответа - выводим в консоль и выходим из функции
-		{
-			QString Answer = TcpSocket.readAll();
-			ISAlgorithm::RemoveLastSymbolLoop(Answer, '\n');
-			ISDEBUG_L("Answer: " + Answer);
-			break;
-		}
 	}
     return true;
 }

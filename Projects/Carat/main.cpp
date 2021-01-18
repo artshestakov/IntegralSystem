@@ -29,11 +29,8 @@ int main(int argc, char **argv)
 
 	//Останавливаем служебные сервисы и завершаем программу
 	ISDatabase::Instance().DisconnectAll();
-    if (ISLogger::Instance().GetRunning())
-    {
-        ISLOGGER_I("", "Stopped application");
-        ISLogger::Instance().Shutdown();
-    }
+    ISLOGGER_I("", "Stopped application");
+    ISLogger::Instance().Shutdown();
     return ResultCode;
 }
 //-----------------------------------------------------------------------------
