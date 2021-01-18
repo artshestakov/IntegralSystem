@@ -149,25 +149,6 @@
     </Foreigns>
   </Table>
 
-  <Table Name="_History" UID="{BF61E8B0-56A5-4EF7-A178-C22072B3F318}" Alias="htry" LocalName="История" LocalListName="История" TitleName="ObjectID" IsSystem="true">
-    <Fields>
-      <Field UID="{905F9FC1-B791-4B6D-A8E2-FB24635133F1}" Name="User" Type="BigInt" LabelName="Пользователь" LocalListName="Пользователь" NotNull="true"/>
-      <Field UID="{BA3803D8-D35C-4659-809D-28F7AF62E9D0}" Name="DateTime" Type="DateTime" DefaultValue="now()" LabelName="Дата и время" LocalListName="Дата и время" NotNull="true"/>
-      <Field UID="{689A53DD-3873-43CE-9265-85854AA15BB6}" Name="TableName" Type="String" LabelName="Имя таблицы" LocalListName="Имя таблицы" NotNull="true"/>
-      <Field UID="{CD7B1881-AE3E-4F1B-80A2-E6C93FB00588}" Name="ObjectID" Type="Int" LabelName="Идентификатор объекта" LocalListName="Идентификатор объекта" NotNull="true"/>
-    </Fields>
-    <Indexes>
-      <Index Field="User"/>
-      <Index Field="DateTime"/>
-      <Index Field="TableName"/>
-      <Index Field="ObjectID"/>
-      <Index Field="ID;User"/>
-    </Indexes>
-    <Foreigns>
-      <Foreign Field="User" ForeignClass="_Users" ForeignField="ID" ForeignViewNameField="FIO"/>
-    </Foreigns>
-  </Table>
-
   <Table Name="_StorageFiles" UID="{48151E73-0ABB-4B50-9C6B-42B838F644B0}" Alias="sgfs" LocalName="Файл" LocalListName="Файлы" TitleName="Name" IsSystem="true">
     <Fields>
       <Field UID="{E8CBCF9A-D4AE-49E9-9D98-0CB5E9DD84D8}" Name="Owner" Type="BigInt" ReadOnly="true" LabelName="Добавил" LocalListName="Добавил" NotNull="true"/>
