@@ -4,6 +4,7 @@
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 #include "ISAlgorithm.h"
+#include "ISCaratApplication.h"
 //-----------------------------------------------------------------------------
 #ifdef WIN32
 BOOL WINAPI ControlHandler(DWORD SignalType)
@@ -17,6 +18,11 @@ BOOL WINAPI ControlHandler(DWORD SignalType)
 	return TRUE;
 }
 #else
+void ControlHandler(int SignalType)
+{
+    Q_UNUSED(SignalType);
+    ISCaratApplication::quit();
+}
 #endif
 //-----------------------------------------------------------------------------
 bool InstallController(QString &ErrorString)
@@ -29,6 +35,9 @@ bool InstallController(QString &ErrorString)
 		ErrorString = ISAlgorithm::GetLastErrorString();
 	}
 #else
+    Q_UNUSED(ErrorString);
+    signal(SIGTERM, ControlHandler);
+    signal(SIGHUP, ControlHandler);
 #endif
 	return Result;
 }
