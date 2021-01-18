@@ -14,7 +14,8 @@ if (POINTER) \
 }
 
 //ќбработка дробного значени€
-#define DOUBLE_PREPARE(d) QString::number(d, 'f', SETTING_DATABASE_VALUE_INT(CONST_UID_DATABASE_SETTING_OTHER_NUMBERSIMBOLSAFTERCOMMA))
+#define DOUBLE_PREPAREN(d, n) QString::number(d, 'f', n)
+#define DOUBLE_PREPARE(d) DOUBLE_PREPAREN(d, SETTING_DATABASE_VALUE_INT(CONST_UID_DATABASE_SETTING_OTHER_NUMBERSIMBOLSAFTERCOMMA))
 
 //ќбработка денежного значени€ (кол-во знаков после зап€той должно быть 2)
 #define DOUBLE_PREPAREM(d) QString::number(d, 'f', 2)
@@ -145,7 +146,7 @@ namespace ISAlgorithm
 	//! \‘орматирование дробного числа. Ќапример, число 1024,965 примет вид 1 024,965
 	//! \Number дробное число
 	//! \return возвращает форматированное число
-	ISCORE_EXPORT QString FormatNumber(double Number, char Separator = ' ');
+	ISCORE_EXPORT QString FormatNumber(double Number, char Separator = ' ', unsigned int Precision = 0);
 
 	//ѕоиск значени€ в векторе
     template <typename T> bool VectorContains(const std::vector<T> &Vector, T Value)

@@ -9,6 +9,7 @@ namespace ISNamespace
     enum FieldType //Типы данных поля
     {
         FT_Unknown, //Неизвестный
+		FT_ID, //Идентификатор записи
         FT_Int, //Целое число
 		FT_IntArray, //Массив целых чисел
         FT_BigInt, //Большое целое число

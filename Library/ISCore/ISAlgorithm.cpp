@@ -296,9 +296,9 @@ QString ISAlgorithm::FormatNumber(long long Number, char Separator)
 	return Result;
 }
 //-----------------------------------------------------------------------------
-QString ISAlgorithm::FormatNumber(double Number, char Separator)
+QString ISAlgorithm::FormatNumber(double Number, char Separator, unsigned int Precision)
 {
-    QString Result = DOUBLE_PREPARE(Number);
+    QString Result = DOUBLE_PREPAREN(Number, Precision); //Переводим число в строку
 	int PosPoint = Result.indexOf('.');
 	if (PosPoint != -1)
 	{

@@ -2452,12 +2452,14 @@ bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	int FieldCount = SqlRecord.count();
 	QVariantList FieldList, RecordList;
 	std::vector<ISNamespace::FieldType> VectorType(FieldCount, ISNamespace::FT_Unknown);
+	std::vector<bool> VectorForeign(FieldCount, false);
 
 	//Заполняем описание полей
 	for (int i = 0; i < FieldCount; ++i)
 	{
 		PMetaField *MetaField = MetaTable->GetField(SqlRecord.fieldName(i));
 		VectorType[i] = MetaField->Type; //Заполняем типы сейчас, чтобы использовать их ниже
+		VectorForeign[i] = MetaField->Foreign ? true : false;
 		FieldList.append(QVariantMap
 		{
 			{ "Index", i },
@@ -2472,7 +2474,7 @@ bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	if (qSelect.First()) //Данные есть
 	{
 		//Получаем необходимые настройки БД
-		int NumberSimbolsAfterComma = GetSettingDB(CONST_UID_DATABASE_SETTING_OTHER_NUMBERSIMBOLSAFTERCOMMA).toInt();
+		unsigned int Precision = GetSettingDB(CONST_UID_DATABASE_SETTING_OTHER_NUMBERSIMBOLSAFTERCOMMA).toInt();
 
 		do
 		{
@@ -2483,6 +2485,9 @@ bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 				//Получаем тип поля
 				ISNamespace::FieldType Type = VectorType[i];
 
+				//Получаем наличие внешнего ключа на поле
+				bool IsForeign = VectorForeign[i];
+
 				//Если значение содержит NULL - добавляем пустое и переходим к следующему
 				QVariant Value = SqlRecord.value(i);
 				if (Value.isNull())
@@ -2492,7 +2497,14 @@ bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 				}
 				
 				//Значение не содержит NULL - анализируем
-				if (Type == ISNamespace::FT_Date)
+				if (Type == ISNamespace::FT_Int || Type == ISNamespace::FT_BigInt)
+				{
+					if (!IsForeign)
+					{
+						Value = ISAlgorithm::FormatNumber(Value.toLongLong());
+					}
+				}
+				else if (Type == ISNamespace::FT_Date)
 				{
 					Value = ConvertDateToString(Value.toDate());
 				}
@@ -2519,11 +2531,11 @@ bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 				}
 				else if (Type == ISNamespace::FT_Double)
 				{
-					Value = QString::number(Value.toDouble(), 'f', NumberSimbolsAfterComma);
+					Value = ISAlgorithm::FormatNumber(Value.toDouble(), ' ', Precision);
 				}
 				else if (Type == ISNamespace::FT_Money)
 				{
-					Value = QString::number(Value.toDouble(), 'f', 2);
+					Value = ISAlgorithm::FormatNumber(Value.toDouble(), ' ', 2);
 				}
 				else if (Type == ISNamespace::FT_UID)
 				{
