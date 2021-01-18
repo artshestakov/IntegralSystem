@@ -46,10 +46,27 @@ cp $INTEGRAL_SYSTEM_DIR/Resources/Licenses/* $RPM_BUILD_ROOT/opt/IntegralSystem/
 /opt/IntegralSystem/*
 /etc/systemd/system/Carat.service
 
+#Сценарий перед установкой пакета
+%pre
+
+#Если сервис запущен - останавливаем его
+Status=$(systemctl is-active Carat)
+if [ $Status = "active" ]; then
+	service Carat stop
+fi
+
+#Сценарий после установки пакета
 %post
 systemctl daemon-reload
 /opt/IntegralSystem/Carat --conf-create
 
+#Если сервис не запущен - запускаем его
+Status=$(systemctl is-active Carat)
+if [ $Status = "unknown" ]; then
+	service Carat start
+fi
+
+#Сценарий после удаления пакета
 %postun
 systemctl daemon-reload
 systemctl reset-failed
