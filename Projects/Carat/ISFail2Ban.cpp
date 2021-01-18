@@ -82,7 +82,7 @@ bool ISFail2Ban::Add(const QString &IPAddress)
 	
 	if (!is_found) //Не нашли - добавляем
 	{
-		Vector.emplace_back(ISFailAuthInfo{ IPAddress, false, { QDateTime::currentDateTime() } });
+        Vector.emplace_back(ISFailAuthInfo{ IPAddress, false, { QDateTime::currentDateTime() }, QDateTime() });
 	}
 	CRITICAL_SECTION_UNLOCK(&CriticalSection);
 	return is_lock;
