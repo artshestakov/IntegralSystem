@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 #include "ISInterfaceMetaForm.h"
 #include "ISBaseTableView.h"
-#include "ISViewModel.h"
+#include "ISTcpModels.h"
 //-----------------------------------------------------------------------------
 class ISListViewForm : public ISInterfaceMetaForm
 {

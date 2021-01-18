@@ -3,7 +3,7 @@
 #define _ISEXPORTWORKER_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "PMetaClass.h"
-#include "ISTcpModel.h"
+#include "ISTcpModels.h"
 //-----------------------------------------------------------------------------
 class ISExportWorker : public QObject
 {

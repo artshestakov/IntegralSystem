@@ -5,7 +5,7 @@
 #include "StdAfx.h"
 #include "ISInterfaceMetaForm.h"
 #include "PMetaClass.h"
-#include "ISTcpModel.h"
+#include "ISTcpModels.h"
 #include "ISBaseTableView.h"
 #include "ISListIndicatorWidget.h"
 #include "ISSearchForm.h"

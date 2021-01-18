@@ -6,7 +6,7 @@
 #include "ISNamespace.h"
 #include "ISListWidget.h"
 #include "ISFieldEdits.h"
-#include "ISTcpModel.h"
+#include "ISTcpModels.h"
 //-----------------------------------------------------------------------------
 class ISExportDialog : public ISInterfaceDialogForm
 {

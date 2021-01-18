@@ -260,7 +260,7 @@
     <ClCompile Include="ISTabBarMain.cpp" />
     <ClCompile Include="ISTabWidgetMain.cpp" />
     <ClCompile Include="ISTcpConnector.cpp" />
-    <ClCompile Include="ISTcpModel.cpp" />
+    <ClCompile Include="ISTcpModels.cpp" />
     <ClCompile Include="ISTcpQuery.cpp" />
     <ClCompile Include="ISUserGroupSubSystem.cpp" />
     <ClCompile Include="ISUserGroupRightDialog.cpp" />
@@ -269,7 +269,6 @@
     <ClCompile Include="ISUserPhotoCreator.cpp" />
     <ClCompile Include="ISUserRoleEntity.cpp" />
     <ClCompile Include="ISValidators.cpp" />
-    <ClCompile Include="ISViewModel.cpp" />
     <ClCompile Include="ISWaitWidget.cpp" />
     <ClCompile Include="ISWorkspaceParagraph.cpp" />
   </ItemGroup>
@@ -322,7 +321,6 @@
     <QtMoc Include="ISFlowLayout.h" />
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="ISViewModel.h" />
     <QtMoc Include="ISValidators.h" />
     <QtMoc Include="ISWorkspaceParagraph.h" />
     <QtMoc Include="ISAboutDialog.h" />
@@ -380,7 +378,7 @@
     <QtMoc Include="ISReconnectDialog.h" />
     <ClInclude Include="ISSearchModel.h" />
     <QtMoc Include="ISTcpConnector.h" />
-    <QtMoc Include="ISTcpModel.h" />
+    <QtMoc Include="ISTcpModels.h" />
     <ClInclude Include="ISTcpQuery.h" />
     <ClInclude Include="ISUSBSearcher.h" />
     <ClInclude Include="ISUserPhotoCreator.h" />

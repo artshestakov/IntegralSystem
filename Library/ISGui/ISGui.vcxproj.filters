@@ -361,14 +361,11 @@
     <ClCompile Include="ISUserPasswordDialog.cpp">
       <Filter>Dialog Forms</Filter>
     </ClCompile>
-    <ClCompile Include="ISTcpModel.cpp">
-      <Filter>Protocol</Filter>
-    </ClCompile>
-    <ClCompile Include="ISViewModel.cpp">
-      <Filter>Protocol</Filter>
-    </ClCompile>
     <ClCompile Include="ISConnectDialog.cpp">
       <Filter>Dialog Forms</Filter>
+    </ClCompile>
+    <ClCompile Include="ISTcpModels.cpp">
+      <Filter>Protocol</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -615,14 +612,11 @@
     <QtMoc Include="ISUserPasswordDialog.h">
       <Filter>Dialog Forms</Filter>
     </QtMoc>
-    <QtMoc Include="ISTcpModel.h">
-      <Filter>Protocol</Filter>
-    </QtMoc>
-    <QtMoc Include="ISViewModel.h">
-      <Filter>Protocol</Filter>
-    </QtMoc>
     <QtMoc Include="ISConnectDialog.h">
       <Filter>Dialog Forms</Filter>
+    </QtMoc>
+    <QtMoc Include="ISTcpModels.h">
+      <Filter>Protocol</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>
