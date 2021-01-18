@@ -1434,7 +1434,7 @@ ISPhoneEdit::~ISPhoneEdit()
 QVariant ISPhoneEdit::GetValue() const
 {
 	QString String = ISLineEdit::GetValue().toString();
-	ISAlgorithm::PhoneNumberPrepare(String);
+	ISAlgorithm::FormatPhoneNumber(String);
 	return String.isEmpty() ? QVariant() : String;
 }
 //-----------------------------------------------------------------------------

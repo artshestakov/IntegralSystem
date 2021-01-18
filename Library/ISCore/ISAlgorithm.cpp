@@ -261,7 +261,7 @@ unsigned int ISAlgorithm::ExtractVersionFile(const QString &FilePath)
 	return Version;
 }
 //-----------------------------------------------------------------------------
-void ISAlgorithm::PhoneNumberPrepare(QString &PhoneNumber)
+void ISAlgorithm::FormatPhoneNumber(QString &PhoneNumber)
 {
 	for (int i = 0; i < PhoneNumber.size(); ++i) //Обходим строку с номером телефона
 	{
@@ -271,5 +271,28 @@ void ISAlgorithm::PhoneNumberPrepare(QString &PhoneNumber)
 			--i; //И уменьшаем индекс
 		}
 	}
+}
+//-----------------------------------------------------------------------------
+QString ISAlgorithm::FormatNumber(long long Number, char Separator)
+{
+	QString Result = QString::number(Number); //Переводим число в строку
+
+	//Если число входит в диапазон [-999;999] - обходим строку
+	if ((Number > 0 && Number > 999) || (Number < 0 && Number < -999))
+	{	
+		int ResultSize = Result.size(); //Получаем размер
+		for (int i = ResultSize - 1, j = 1; i >= 0; --i, ++j)
+		{
+			if (j == 3) //Если мы прошли цикл трижды (в очередной раз) - вставляем символ
+			{
+				Result.insert(i, Separator);
+				++ResultSize;
+				j = 0; //Сбрасываем счётчик проходов
+			}
+		}
+	}
+
+	//Число не вошло в диапазон - возвращаем его как есть
+	return Result;
 }
 //-----------------------------------------------------------------------------

@@ -135,7 +135,12 @@ namespace ISAlgorithm
 
 	//! \Подготовить номер телефона (удалить все кроме цифр)
 	//! \param PhoneNumber строка, которая содержит номер телефона
-	ISCORE_EXPORT void PhoneNumberPrepare(QString &PhoneNumber);
+	ISCORE_EXPORT void FormatPhoneNumber(QString &PhoneNumber);
+
+	//! \Форматирование целого числа. Например, число 6985473 примет вид 6 985 473
+	//! \Number целое число
+	//! \return возвращает форматированное число
+	ISCORE_EXPORT QString FormatNumber(long long Number, char Separator = ' ');
 
 	//Поиск значения в векторе
     template <typename T> bool VectorContains(const std::vector<T> &Vector, T Value)
