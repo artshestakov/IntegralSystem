@@ -16,6 +16,11 @@ int main(int argc, char **argv)
         {
             ISLOGGER_I("", "Started application");
             ResultCode = CaratApplication.exec();
+
+			//Останавливаем служебные сервисы и завершаем программу
+			ISDatabase::Instance().DisconnectAll();
+			ISLOGGER_I("", "Stopped application");
+			ISLogger::Instance().Shutdown();
         }
         else
         {
@@ -26,11 +31,6 @@ int main(int argc, char **argv)
     {
         ResultCode = CaratApplication.Run(Arguments) ? EXIT_SUCCESS : EXIT_FAILURE;
     }
-
-	//Останавливаем служебные сервисы и завершаем программу
-	ISDatabase::Instance().DisconnectAll();
-    ISLOGGER_I("", "Stopped application");
-    ISLogger::Instance().Shutdown();
     return ResultCode;
 }
 //-----------------------------------------------------------------------------

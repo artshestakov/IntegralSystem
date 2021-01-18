@@ -23,7 +23,6 @@
     <ClCompile Include="..\..\Library\ISCore\ISQuery.cpp" />
     <ClCompile Include="ISAsterisk.cpp" />
     <ClCompile Include="ISCaratApplication.cpp" />
-    <ClCompile Include="ISCaratController.cpp" />
     <ClCompile Include="ISFail2Ban.cpp" />
     <ClCompile Include="ISTcpAnswer.cpp" />
     <ClCompile Include="ISTcpClients.cpp" />
@@ -39,11 +38,9 @@
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ISCaratApplication.h" />
-    <QtMoc Include="ISCaratController.h" />
     <QtMoc Include="ISAsterisk.h" />
     <ClInclude Include="..\..\Library\ISCore\ISDatabase.h" />
     <ClInclude Include="..\..\Library\ISCore\ISQuery.h" />
-    <ClInclude Include="ISController.h" />
     <ClInclude Include="ISFail2Ban.h" />
     <ClInclude Include="ISTcpAnswer.h" />
     <ClInclude Include="ISTcpClients.h" />
