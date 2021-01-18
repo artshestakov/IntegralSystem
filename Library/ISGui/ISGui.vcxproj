@@ -254,7 +254,6 @@
     <ClCompile Include="ISSettingsDialog.cpp" />
     <ClCompile Include="ISSplashScreen.cpp" />
     <ClCompile Include="ISSplashWidget.cpp" />
-    <ClCompile Include="ISStartup.cpp" />
     <ClCompile Include="ISStorageFilesSubSystem.cpp" />
     <ClCompile Include="ISSystemsPanel.cpp" />
     <ClCompile Include="ISTabBarMain.cpp" />
@@ -403,7 +402,6 @@
     <QtMoc Include="ISOilSphere.h" />
     <ClInclude Include="ISObjects.h" />
     <ClInclude Include="ISParagraphEntity.h" />
-    <ClInclude Include="ISStartup.h" />
   </ItemGroup>
   <ItemGroup>
     <QtRcc Include="..\..\Resources\ISGui.qrc" />

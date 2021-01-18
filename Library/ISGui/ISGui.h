@@ -7,11 +7,14 @@
 #include "ISObjectFormBase.h"
 #include "ISComboSearchWidgets.h"
 #include "ISImageViewerForm.h"
+#include "ISSplashScreen.h"
 //-----------------------------------------------------------------------------
 class ISGUI_EXPORT ISGui
 {
 public:
 	static bool Startup(QString &ErrorString);
+	static bool Startup(ISSplashScreen *SplashScreen);
+	static void Shutdown(ISSplashScreen *SplashScreen);
 
 	static bool CheckAdminRole(); //Проверка наличия прав администратора
 	static bool GetUSBDevice(std::vector<ISDeviceInfo> &Vector, QString &ErrorString);

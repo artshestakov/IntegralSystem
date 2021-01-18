@@ -2,7 +2,6 @@
 #include "ISGui.h"
 #include "ISSplashScreen.h"
 #include "ISAuthDialog.h"
-#include "ISStartup.h"
 #include "ISLogger.h"
 #include "ISMainWindow.h"
 #include "ISSettings.h"
@@ -34,7 +33,7 @@ int main(int argc, char **argv)
 	{
 		ISSplashScreen SplashScreen(LANG("Banner.StartupSystem"));
 		SplashScreen.show();
-		Result = ISStartup::Startup(&SplashScreen);
+		Result = ISGui::Startup(&SplashScreen);
 		SplashScreen.hide();
 
 		if (Result) //Запуск прошёл успешно - создаём главное окно и ставим программу на exec()
@@ -45,7 +44,7 @@ int main(int argc, char **argv)
 
 			SplashScreen.SetMessage(LANG("Banner.ShutdownSystem"));
 			SplashScreen.show();
-			ISStartup::Shutdown(&SplashScreen);
+			ISGui::Shutdown(&SplashScreen);
 
 			//Если была смена пользователя - запускаем программу
 			if (PROPERTY_GET("is_change_user").toBool())
