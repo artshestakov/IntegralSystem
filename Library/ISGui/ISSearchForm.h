@@ -21,11 +21,11 @@ protected:
 	void closeEvent(QCloseEvent *e) override;
 	void EscapeClicked() override;
 	void EnterClicked() override;
-	void AfterShowEvent() override;
 
 private:
-	void AddField(PMetaField *MetaField, int Index = 0);
+	void AddField(PMetaField *MetaField, int Index = -1);
 	void AddClicked();
+	void DeleteClicked();
 
 	void Search();
 
@@ -33,10 +33,10 @@ private:
 private:
 	PMetaTable *MetaTable;
 	
-	ISScrollArea *ScrollArea;
-	QVBoxLayout *LayoutScroll;
+	QTreeWidget *TreeWidget;
 	ISPushButton *ButtonSearch;
 	ISPushButton *ButtonHide;
-	std::vector<QLabel*> VectorLabels;
+	std::vector<QWidget*> VectorLabels;
+	std::vector<QWidget*> VectorOperators;
 };
 //-----------------------------------------------------------------------------

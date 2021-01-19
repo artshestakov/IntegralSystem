@@ -233,7 +233,7 @@ ISDelegateSearchField::~ISDelegateSearchField()
 QSize ISDelegateSearchField::sizeHint(const QStyleOptionViewItem &Option, const QModelIndex &ModelIndex) const
 {
 	QSize Size = QStyledItemDelegate::sizeHint(Option, ModelIndex);
-	Size.setHeight(30);
+	Size.setHeight(50);
 	return Size;
 }
 //-----------------------------------------------------------------------------

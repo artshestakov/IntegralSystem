@@ -2190,10 +2190,7 @@ void ISListEdit::HidedPopup()
 void ISListEdit::ShowListForm()
 {
 	ISObjectPair SelectedObject = ISGui::SelectObject(MetaTable->Name, GetValue().toInt());
-	//if (SelectedID)
-	{
-		SetValue(QString("%1,%2").arg(SelectedObject.first).arg(SelectedObject.second));
-	}
+	SetValue(QString("%1,%2").arg(SelectedObject.first).arg(SelectedObject.second));
 }
 //-----------------------------------------------------------------------------
 void ISListEdit::CreateObject()
