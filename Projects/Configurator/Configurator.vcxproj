@@ -56,9 +56,6 @@
   <ItemGroup>
     <ClInclude Include="CGDatabase.h" />
   </ItemGroup>
-  <ItemGroup>
-    <QtRcc Include="..\..\Resources\Configurator.qrc" />
-  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{641EC90D-70E1-42F5-9F2F-22C5238F1D02}</ProjectGuid>
     <Keyword>QtVS_v302</Keyword>

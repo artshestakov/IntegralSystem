@@ -214,6 +214,9 @@
     <ClCompile Include="ISDatabase.cpp" />
     <ClCompile Include="ISQuery.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <QtRcc Include="..\..\Resources\ISServer.qrc" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
     <Import Project="$(QtMsBuild)\qt.targets" />

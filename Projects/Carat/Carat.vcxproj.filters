@@ -89,9 +89,4 @@
       <Filter>Asterisk</Filter>
     </QtMoc>
   </ItemGroup>
-  <ItemGroup>
-    <QtRcc Include="..\..\Resources\Carat.qrc">
-      <Filter>Resource Files</Filter>
-    </QtRcc>
-  </ItemGroup>
 </Project>
