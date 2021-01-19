@@ -222,6 +222,8 @@ void ISAuthDialog::Input()
 				}
 			}
 		}
+
+		//Получаем информацию о текущем пользователе
 		ISBuffer::Instance().CurrentUserInfo.System = AnswerMap["UserIsSystem"].toBool();
 		ISBuffer::Instance().CurrentUserInfo.ID = AnswerMap["UserID"].toUInt();
 		ISBuffer::Instance().CurrentUserInfo.FIO = AnswerMap["UserFIO"].toString();
@@ -229,11 +231,16 @@ void ISAuthDialog::Input()
 		ISBuffer::Instance().CurrentUserInfo.Password = EditPassword->GetValue().toString();
 		ISBuffer::Instance().CurrentUserInfo.GroupID = AnswerMap["UserGroupID"].toUInt();
 		ISBuffer::Instance().CurrentUserInfo.GroupFullAccess = AnswerMap["UserGroupFullAccess"].toBool();
-		ISVersionInfo::Instance().ConfigurationInfo.UID = AnswerMap["Configuration"].toMap()["UID"];
-		ISVersionInfo::Instance().ConfigurationInfo.Name = AnswerMap["Configuration"].toMap()["Name"].toString();
-		ISVersionInfo::Instance().ConfigurationInfo.LocalName = LANG(AnswerMap["Configuration"].toMap()["Local"].toString());
-		ISVersionInfo::Instance().ConfigurationInfo.DesktopForm = AnswerMap["Configuration"].toMap()["Desktop"].toString();
-		ISVersionInfo::Instance().ConfigurationInfo.LogoName = AnswerMap["Configuration"].toMap()["Logo"].toString();
+		
+		//Получаем информацию о конфигурации
+		QVariantMap ConfigurationInfo = AnswerMap["Configuration"].toMap();
+		ISBuffer::Instance().ConfigurationInfo.Name = ConfigurationInfo["Name"].toString();
+		ISBuffer::Instance().ConfigurationInfo.UID = ConfigurationInfo["UID"];
+		ISBuffer::Instance().ConfigurationInfo.LocalName = ConfigurationInfo["LocalName"].toString();
+		ISBuffer::Instance().ConfigurationInfo.DesktopForm = ConfigurationInfo["DesktopForm"].toString();
+		ISBuffer::Instance().ConfigurationInfo.DateExpired = QDate::fromString(ConfigurationInfo["DateExpired"].toString(), FORMAT_DATE_V2);
+		ISBuffer::Instance().ConfigurationInfo.LogoName = ConfigurationInfo["LogoName"].toString();
+
 		SetConnecting(false);
 		SetResult(true);
 		hide();

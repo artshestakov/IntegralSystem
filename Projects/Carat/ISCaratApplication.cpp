@@ -8,6 +8,7 @@
 #include "ISSystem.h"
 #include "ISMetaData.h"
 #include "ISConsole.h"
+#include "ISConfigurations.h"
 //-----------------------------------------------------------------------------
 ISCaratApplication::ISCaratApplication(int &argc, char **argv)
 	: QCoreApplication(argc, argv),
@@ -83,10 +84,15 @@ bool ISCaratApplication::Initialize()
 	}
 
 	//Выбираем активную конфигурацию
-	ISVersionInfo::Instance().SelectConfiguration(CONFIG_STRING(CONST_CONFIG_OTHER_CONFIGURATION));
+	QString ConfigurationName = CONFIG_STRING(CONST_CONFIG_OTHER_CONFIGURATION);
+	if (!ISConfigurations::Instance().Set(ConfigurationName))
+	{
+		ISLOGGER_E(__CLASS__, "Not found configuration \"" + ConfigurationName + "\"");
+		return false;
+	}
 
 	//Инициализируем мета-данные
-	if (!ISMetaData::Instance().Initialize(ISVersionInfo::Instance().ConfigurationInfo.Name, false, false))
+	if (!ISMetaData::Instance().Initialize(ConfigurationName, false, false))
 	{
 		ISLOGGER_E("ISMetaData", "Not init meta data: " + ISMetaData::Instance().GetErrorString());
 		return false;

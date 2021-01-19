@@ -7,7 +7,6 @@
 #include "ISAssert.h"
 #include "ISObjects.h"
 #include "ISAlgorithm.h"
-#include "ISVersionInfo.h"
 //-----------------------------------------------------------------------------
 ISDesktopParagraph::ISDesktopParagraph(QWidget *parent)
 	: ISParagraphBaseForm(parent),
@@ -16,21 +15,21 @@ ISDesktopParagraph::ISDesktopParagraph(QWidget *parent)
 	MainLayout = new QVBoxLayout();
 	setLayout(MainLayout);
 	
-	QString DesktopFormName = ISVersionInfo::Instance().ConfigurationInfo.DesktopForm;
+	QString DesktopFormName = ISBuffer::Instance().ConfigurationInfo.DesktopForm;
 	if (DesktopFormName.isEmpty())
 	{
 		MainLayout->addStretch();
 		
 		QLabel *LabelLogo = new QLabel(this);
-		LabelLogo->setPixmap(ISVersionInfo::Instance().ConfigurationInfo.LogoName.isEmpty() ?
+		LabelLogo->setPixmap(ISBuffer::Instance().ConfigurationInfo.LogoName.isEmpty() ?
 			BUFFER_PIXMAPS("DesktopLogo") :
-			QPixmap(":_" + ISVersionInfo::Instance().ConfigurationInfo.Name + '/' + ISVersionInfo::Instance().ConfigurationInfo.LogoName));
+			QPixmap(":_" + ISBuffer::Instance().ConfigurationInfo.Name + '/' + ISBuffer::Instance().ConfigurationInfo.LogoName));
 		MainLayout->addWidget(LabelLogo, 0, Qt::AlignCenter);
 
-		if (!ISVersionInfo::Instance().ConfigurationInfo.LocalName.isEmpty())
+		if (!ISBuffer::Instance().ConfigurationInfo.LocalName.isEmpty())
 		{
 			QLabel *LabelLocalName = new QLabel(this);
-			LabelLocalName->setText(ISVersionInfo::Instance().ConfigurationInfo.LocalName);
+			LabelLocalName->setText(ISBuffer::Instance().ConfigurationInfo.LocalName);
 			LabelLocalName->setFont(ISDefines::Gui::FONT_TAHOMA_15_BOLD);
 			LabelLocalName->setStyleSheet(BUFFER_STYLE_SHEET("QLabel.Color.Gray"));
 			MainLayout->addWidget(LabelLocalName, 0, Qt::AlignCenter);

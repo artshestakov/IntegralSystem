@@ -171,8 +171,8 @@ struct PMetaUserPermission
 //-----------------------------------------------------------------------------
 struct ISCORE_EXPORT ISConfigurationInfo
 {
-    ISUuid UID; //Идентификатор
     QString Name; //Наименование
+    ISUuid UID; //Идентификатор
     QString LocalName; //Локальное наименование
     QString DesktopForm; //Имя класса рабочего стола
 	QDate DateExpired; //Дата, после которой программа запускаться не должна

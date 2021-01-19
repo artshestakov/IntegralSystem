@@ -129,7 +129,7 @@ bool ISGui::Startup(ISSplashScreen *SplashScreen)
 		return false;
 	}
 	QVariantMap MetaData = qAuth.TakeAnswer();
-	ISObjects::Instance().Initialize(ISVersionInfo::Instance().ConfigurationInfo.Name);
+	ISObjects::Instance().Initialize(ISBuffer::Instance().ConfigurationInfo.Name);
 	ISSettingsDatabase::Instance().Initialize(MetaData["SettingsDB"].toMap());
 	ISUserRoleEntity::Instance().InitializeTables(MetaData["AccessTables"].toMap());
 	ISUserRoleEntity::Instance().InitializeSpecial(MetaData["AccessSpecial"].toList());

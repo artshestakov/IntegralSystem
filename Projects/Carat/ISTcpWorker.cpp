@@ -6,11 +6,11 @@
 #include "ISSystem.h"
 #include "ISTrace.h"
 #include "ISTcpQueue.h"
-#include "ISVersionInfo.h"
 #include "ISConfig.h"
 #include "ISTcpClients.h"
 #include "ISMetaData.h"
 #include "ISFail2Ban.h"
+#include "ISConfigurations.h"
 //-----------------------------------------------------------------------------
 static QString QS_USERS_HASH = PREPARE_QUERY("SELECT usrs_hash, usrs_salt "
 											 "FROM _users "
@@ -869,8 +869,8 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	}
 
 	//Если дата запрета меньше чем текущая - не даём зайти в программу
-	if (ISVersionInfo::Instance().ConfigurationInfo.DateExpired.isValid() &&
-		QDate::currentDate() > ISVersionInfo::Instance().ConfigurationInfo.DateExpired)
+	if (ISConfigurations::Instance().Get().DateExpired.isValid() &&
+		QDate::currentDate() > ISConfigurations::Instance().Get().DateExpired)
 	{
 		ErrorString = LANG("Carat.Error.Query.Auth.AuthDenied");
 		return false;
@@ -1085,12 +1085,12 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	};
 	TcpAnswer->Parameters["Configuration"] = QVariantMap
 	{
-		{ "UID", ISVersionInfo::Instance().ConfigurationInfo.UID },
-		{ "Name", ISVersionInfo::Instance().ConfigurationInfo.Name },
-		{ "Local", ISVersionInfo::Instance().ConfigurationInfo.LocalName },
-		{ "Desktop", ISVersionInfo::Instance().ConfigurationInfo.DesktopForm },
-		{ "DateExpired", ISVersionInfo::Instance().ConfigurationInfo.DateExpired },
-		{ "Logo", ISVersionInfo::Instance().ConfigurationInfo.LogoName }
+		{ "Name", ISConfigurations::Instance().Get().Name },
+		{ "UID", ISConfigurations::Instance().Get().UID },
+		{ "LocalName", ISConfigurations::Instance().Get().LocalName },
+		{ "DesktopForm", ISConfigurations::Instance().Get().DesktopForm },
+		{ "DateExpired", ISConfigurations::Instance().Get().DateExpired.toString(FORMAT_DATE_V2) },
+		{ "LogoName", ISConfigurations::Instance().Get().LogoName }
 	};
 
     //Регистрируем пользователя в "онлайн", протоколируем и выходим
@@ -1428,7 +1428,7 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	QVariantList MetaDataList;
 	QStringList Filter("*.xsn"); //Фильтр
 	QFileInfoList FileInfoList = QDir(":Scheme").entryInfoList(Filter, QDir::NoFilter, QDir::Name); //Загрузка мета-данных движка
-	FileInfoList.append(QDir(":_" + ISVersionInfo::Instance().ConfigurationInfo.Name).entryInfoList(Filter, QDir::NoFilter, QDir::Name)); //Загрузка мета-данных конфигурации
+	FileInfoList.append(QDir(":_" + ISConfigurations::Instance().Get().Name).entryInfoList(Filter, QDir::NoFilter, QDir::Name)); //Загрузка мета-данных конфигурации
 	for (const QFileInfo &FileInfo : FileInfoList) //Обход всех XSN файлов
 	{
 		QFile FileXSN(FileInfo.filePath());

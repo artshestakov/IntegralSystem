@@ -26,6 +26,9 @@
     <ClInclude Include="ISConsole.h">
       <Filter>System</Filter>
     </ClInclude>
+    <ClInclude Include="ISConfigurations.h">
+      <Filter>System</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ISDatabase.cpp">
@@ -35,6 +38,9 @@
       <Filter>Database</Filter>
     </ClCompile>
     <ClCompile Include="ISConsole.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="ISConfigurations.cpp">
       <Filter>System</Filter>
     </ClCompile>
   </ItemGroup>

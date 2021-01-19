@@ -5,7 +5,6 @@
 #include "ISTcpQueue.h"
 #include "ISTcp.h"
 #include "ISTcpClients.h"
-#include "ISVersionInfo.h"
 #include "ISFail2Ban.h"
 //-----------------------------------------------------------------------------
 ISTcpServer::ISTcpServer(QObject *parent)

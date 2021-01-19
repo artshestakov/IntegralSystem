@@ -9,6 +9,7 @@ class ISGUI_EXPORT ISBuffer
 {
 public:
 	ISCurrentUserInfo CurrentUserInfo; //Информация о текущем пользователе
+	ISConfigurationInfo ConfigurationInfo; //Информация о конфигурации
 
 public:
 	static ISBuffer& Instance();
@@ -43,6 +44,7 @@ private:
 	ISBuffer(ISBuffer const &) {};
 	ISBuffer& operator=(ISBuffer const&) { return *this; };
 
+private:
 	ISStringMap Animations; //Анимации
 	std::map<QString, QIcon> Icons; //Иконки
 	std::map<QString, QPixmap> Pixmaps; //Изображения

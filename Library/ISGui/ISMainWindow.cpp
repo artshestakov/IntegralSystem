@@ -15,7 +15,6 @@
 #include "ISObjects.h"
 #include "ISAlgorithm.h"
 #include "ISProperty.h"
-#include "ISVersionInfo.h"
 #include "ISConfig.h"
 #include "ISTcpConnector.h"
 #include "ISReconnectDialog.h"
@@ -31,9 +30,9 @@ ISMainWindow::ISMainWindow(QWidget *parent)
 {
 	connect(&ISCreatedObjectsEntity::Instance(), &ISCreatedObjectsEntity::Existed, this, &ISMainWindow::ActivateWorkspace);
 
-	ISVersionInfo::Instance().ConfigurationInfo.LocalName.isEmpty() ?
+	ISBuffer::Instance().ConfigurationInfo.LocalName.isEmpty() ?
 		setWindowTitle("IntegralSystem: " + ISBuffer::Instance().CurrentUserInfo.FIO) :
-		setWindowTitle("IntegralSystem - " + ISVersionInfo::Instance().ConfigurationInfo.LocalName + " : " + ISBuffer::Instance().CurrentUserInfo.FIO);
+		setWindowTitle("IntegralSystem - " + ISBuffer::Instance().ConfigurationInfo.LocalName + " : " + ISBuffer::Instance().CurrentUserInfo.FIO);
 	setAttribute(Qt::WA_DeleteOnClose, false);
 	setWindowIcon(BUFFER_ICONS("Logo"));
 	resize(ISDefines::Gui::SIZE_MAIN_WINDOW);
