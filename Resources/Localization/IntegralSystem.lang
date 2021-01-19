@@ -38,6 +38,7 @@
   <Local Name="AboutForm.Tab.Description" Russian="Описание"/>
   <Local Name="AboutForm.Tab.License" Russian="Лицензионное соглашение"/>
   <Local Name="AboutForm.Tab.Other" Russian="Прочее"/>
+  <Local Name="AboutForm.Tab.Other.ApplicationDir" Russian="Рабочая папка"/>
 
   <!--Messages-->
   <Local Name="Message.Information.NotSavedObjects" Russian="Есть несохранённые (%1 шт.) записи, сохраните или закройте их для выхода из программы."/>

@@ -102,7 +102,7 @@ void ISAboutDialog::CreateContactsTab()
 //-----------------------------------------------------------------------------
 void ISAboutDialog::CreateModuleTab()
 {
-	if (ISVersionInfo::Instance().ConfigurationInfo.Name.isEmpty())
+	if (ISBuffer::Instance().ConfigurationInfo.Name.isEmpty())
 	{
 		return;
 	}
@@ -113,9 +113,9 @@ void ISAboutDialog::CreateModuleTab()
 	TabModule->setLayout(LayoutModule);
 	TabWidget->addTab(TabModule, LANG("AboutForm.Tab.Configuration"));
 
-	AddLabel(TabModule, LANG("AboutForm.Tab.Configuration.Name"), ISVersionInfo::Instance().ConfigurationInfo.Name);
-	AddLabel(TabModule, LANG("AboutForm.Tab.Configuration.LocalName"), ISVersionInfo::Instance().ConfigurationInfo.LocalName);
-	AddLabel(TabModule, LANG("AboutForm.Tab.Configuration.UID"), ISVersionInfo::Instance().ConfigurationInfo.UID);
+	AddLabel(TabModule, LANG("AboutForm.Tab.Configuration.Name"), ISBuffer::Instance().ConfigurationInfo.Name);
+	AddLabel(TabModule, LANG("AboutForm.Tab.Configuration.LocalName"), ISBuffer::Instance().ConfigurationInfo.LocalName);
+	AddLabel(TabModule, LANG("AboutForm.Tab.Configuration.UID"), ISBuffer::Instance().ConfigurationInfo.UID);
 
 	LayoutModule->addStretch();
 }
