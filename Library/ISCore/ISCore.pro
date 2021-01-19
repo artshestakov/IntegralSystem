@@ -1,4 +1,4 @@
-QT += core network xml sql
+QT += core network xml
 QT -= gui
 
 TARGET = ISCore
@@ -27,18 +27,15 @@ HEADERS += \
     ISAlgorithm.h \
     ISAssert.h \
     ISConfig.h \
-    ISConsole.h \
     ISConstants.h \
     ISDebug.h \
     ISTcp.h \
     iscore_global.h \
-    ISDatabase.h \
     ISLocalization.h \
     ISLogger.h \
     ISMetaData.h \
     ISNamespace.h \
     ISProperty.h \
-    ISQuery.h \
     ISRandom.h \
     ISRestWorker.h \
     ISSettings.h \
@@ -56,14 +53,11 @@ SOURCES += \
     ISAlgorithm.cpp \
     ISAssert.cpp \
     ISConfig.cpp \
-    ISConsole.cpp \
-    ISDatabase.cpp \
     ISDebug.cpp \
     ISLocalization.cpp \
     ISLogger.cpp \
     ISMetaData.cpp \
     ISProperty.cpp \
-    ISQuery.cpp \
     ISRandom.cpp \
     ISRestWorker.cpp \
     ISSettings.cpp \

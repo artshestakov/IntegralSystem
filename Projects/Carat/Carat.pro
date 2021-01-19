@@ -21,10 +21,12 @@ MOC_DIR = $$PWD/$${CONFIGURATION}-$${PLATFORM}/$${TARGET}
 OBJECTS_DIR = $$PWD/$${CONFIGURATION}-$${PLATFORM}/$${TARGET}
 
 INCLUDEPATH += $$PWD/../../Library/ISCore
+INCLUDEPATH += $$PWD/../../Library/ISServer
 INCLUDEPATH += .
 
 LIBS += -L$$DESTDIR -Wl,-rpath="'\$$ORIGIN'",-rpath-link="'\$$ORIGIN'" \
-    -lISCore
+    -lISCore \
+	-lISServer
 
 HEADERS += \
     ISAsterisk.h \
