@@ -28,12 +28,14 @@ LIBS += -L$$DESTDIR -Wl,-rpath="'\$$ORIGIN'",-rpath-link="'\$$ORIGIN'" \
     -lISCore
 
 HEADERS += \
+    ISConfigurations.h \
     ISConsole.h \
     ISDatabase.h \
     ISQuery.h \
     isserver_global.h
 
 SOURCES += \
+    ISConfigurations.cpp \
     ISConsole.cpp \
     ISDatabase.cpp \
     ISQuery.cpp
