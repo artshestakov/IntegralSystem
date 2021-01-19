@@ -13,7 +13,7 @@ ISFavoritesForm::ISFavoritesForm(QWidget *parent, const QString &table_name)
 	: ISInterfaceForm(parent),
 	TableName(table_name)
 {
-	setWindowTitle(table_name.isEmpty() ? LANG("Favorites") : LANG("FavoritesForTable").arg(ISMetaData::Instance().GetMetaTable(TableName)->LocalListName));
+	setWindowTitle(table_name.isEmpty() ? LANG("ISFavoritesForm.Title") : LANG("ISFavoritesForm.Title.Table").arg(ISMetaData::Instance().GetMetaTable(TableName)->LocalListName));
 	setWindowIcon(BUFFER_ICONS("Favorites"));
 	resize(ISDefines::Gui::SIZE_640_480);
 	GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);
@@ -22,20 +22,10 @@ ISFavoritesForm::ISFavoritesForm(QWidget *parent, const QString &table_name)
 	ToolBar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
 	GetMainLayout()->addWidget(ToolBar);
 
-	QAction *ActionOpen = new QAction(ToolBar);
-	ActionOpen->setText(LANG("Open"));
-	ActionOpen->setToolTip(LANG("Open"));
-	ActionOpen->setIcon(BUFFER_ICONS("Select"));
+	QAction *ActionOpen = ToolBar->addAction(BUFFER_ICONS("Select"), LANG("ISFavoritesForm.Open"), this, &ISFavoritesForm::Open);
 	ActionOpen->setEnabled(false);
-	connect(ActionOpen, &QAction::triggered, this, &ISFavoritesForm::OpenFavorite);
-	ToolBar->addAction(ActionOpen);
 
-	QAction *ActionClearFavorites = new QAction(ToolBar);
-	ActionClearFavorites->setText(LANG("ClearFavorites"));
-	ActionClearFavorites->setToolTip(LANG("ClearFavorites"));
-	ActionClearFavorites->setIcon(BUFFER_ICONS("Clear"));
-	connect(ActionClearFavorites, &QAction::triggered, this, &ISFavoritesForm::ClearFavorites);
-	ToolBar->addAction(ActionClearFavorites);
+	QAction *ActionClearFavorites = ToolBar->addAction(BUFFER_ICONS("Clear"), LANG("ISFavoritesForm.Clear"), this, &ISFavoritesForm::Clear);
 
 	ListWidget = new ISListWidget(this);
 	ListWidget->AddAction(ActionOpen, true);
@@ -43,21 +33,18 @@ ISFavoritesForm::ISFavoritesForm(QWidget *parent, const QString &table_name)
 	connect(ListWidget, &QListWidget::itemDoubleClicked, this, &ISFavoritesForm::ListWidgetDoubleClicked);
 	GetMainLayout()->addWidget(ListWidget);
 
-	LoadFavorites();
+	QHBoxLayout *LayoutBottom = new QHBoxLayout();
+	GetMainLayout()->addLayout(LayoutBottom);
 
-	ISPushButton *ButtonClose = new ISPushButton(BUFFER_ICONS("Close"), LANG("Close"), this);
+	LabelRowCount = new QLabel(this);
+	LayoutBottom->addWidget(LabelRowCount);
+
+	LayoutBottom->addStretch();
+
+	ISPushButton *ButtonClose = new ISPushButton(BUFFER_ICONS("Close"), LANG("ISFavoritesForm.Close"), this);
 	connect(ButtonClose, &ISPushButton::clicked, this, &ISFavoritesForm::close);
-	GetMainLayout()->addWidget(ButtonClose, 0, Qt::AlignRight);
-}
-//-----------------------------------------------------------------------------
-ISFavoritesForm::~ISFavoritesForm()
-{
+	LayoutBottom->addWidget(ButtonClose);
 
-}
-//-----------------------------------------------------------------------------
-void ISFavoritesForm::LoadFavorites()
-{
-	ListWidget->Clear();
 	ISTcpQuery qGetFavoritesNames(API_GET_FAVORITE_NAMES);
 	if (!TableName.isEmpty()) //Если таблица указана - подставляем её в запрос
 	{
@@ -75,6 +62,8 @@ void ISFavoritesForm::LoadFavorites()
 			ListWidgetItem->setData(Qt::UserRole, NameMap["TableName"].toString());
 			ListWidgetItem->setData(Qt::UserRole * 2, NameMap["ObjectID"].toUInt());
 		}
+		ActionClearFavorites->setEnabled(!NamesList.isEmpty());
+		LabelRowCount->setText(LANG("ISFavoritesForm.RecordCount").arg(NamesList.size()));
 	}
 	else
 	{
@@ -82,13 +71,12 @@ void ISFavoritesForm::LoadFavorites()
 	}
 }
 //-----------------------------------------------------------------------------
-void ISFavoritesForm::ReloadFavorites()
+ISFavoritesForm::~ISFavoritesForm()
 {
-	ListWidget->Clear();
-	LoadFavorites();
+
 }
 //-----------------------------------------------------------------------------
-void ISFavoritesForm::OpenFavorite()
+void ISFavoritesForm::Open()
 {
 	if (ListWidget->currentItem())
 	{
@@ -96,7 +84,7 @@ void ISFavoritesForm::OpenFavorite()
 	}
 }
 //-----------------------------------------------------------------------------
-void ISFavoritesForm::ClearFavorites()
+void ISFavoritesForm::Clear()
 {
 	if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.DeleteFavorites")))
 	{
@@ -109,6 +97,7 @@ void ISFavoritesForm::ClearFavorites()
 		{
 			ISFavorites::Instance().DeleteAll();
 			ListWidget->Clear();
+			LabelRowCount->setText(LANG("ISFavoritesForm.RecordCount").arg(0));
 		}
 		else
 		{
@@ -125,6 +114,6 @@ void ISFavoritesForm::EscapeClicked()
 void ISFavoritesForm::ListWidgetDoubleClicked(QListWidgetItem *Item)
 {
     Q_UNUSED(Item);
-	OpenFavorite();
+	Open();
 }
 //-----------------------------------------------------------------------------

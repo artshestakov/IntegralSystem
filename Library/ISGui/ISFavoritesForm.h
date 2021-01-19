@@ -13,10 +13,8 @@ public:
 	virtual ~ISFavoritesForm();
 
 private:
-	void LoadFavorites(); //Загрузка избранного
-	void ReloadFavorites(); //Перезагрузка изранного
-	void OpenFavorite(); //Открыть избранный обхект
-	void ClearFavorites(); //Очистить избранные объекты
+	void Open(); //Открыть избранный обхект
+	void Clear(); //Очистить избранные объекты
 	void EscapeClicked() override;
 
 private:
@@ -24,6 +22,7 @@ private:
 
 private:
 	QString TableName;
+	QLabel *LabelRowCount;
 	ISListWidget *ListWidget;
 };
 //-----------------------------------------------------------------------------

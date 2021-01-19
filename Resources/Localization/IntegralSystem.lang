@@ -163,6 +163,14 @@
   <Local Name="ISHistoryForm.RowCount" Russian="Записей: %1"/>
   <Local Name="ISHistoryForm.Close" Russian="Закрыть"/>
 
+  <!--ISFavoritesForm-->
+  <Local Name="ISFavoritesForm.Title" Russian="Избранные записи"/>
+  <Local Name="ISFavoritesForm.Title.Table" Russian="Избранные записи таблицы: %1"/>
+  <Local Name="ISFavoritesForm.Open" Russian="Открыть запись"/>
+  <Local Name="ISFavoritesForm.Clear" Russian="Очистить избранное"/>
+  <Local Name="ISFavoritesForm.RecordCount" Russian="Записей: %1"/>
+  <Local Name="ISFavoritesForm.Close" Russian="Закрыть"/>
+
   <!--Other-->
   <Local Name="NoData" Russian="Данных нет"/>
   <Local Name="RecordsCount" Russian="Записей"/>
@@ -192,9 +200,7 @@
   <Local Name="NotSelected" Russian="Не выбрано"/>
   <Local Name="Discussion" Russian="Обсуждение"/>
   <Local Name="Favorites" Russian="Избранные записи"/>
-  <Local Name="FavoritesForTable" Russian="Избранные записи таблицы: %1"/>
   <Local Name="AddToFavorites" Russian="Добавить/удалить из избранного"/>
-  <Local Name="ClearFavorites" Russian="Очистить избранное"/>
   <Local Name="Creating" Russian="Создание"/>
   <Local Name="Coping" Russian="Создание копии"/>
   <Local Name="Additionally" Russian="Дополнительно"/>
