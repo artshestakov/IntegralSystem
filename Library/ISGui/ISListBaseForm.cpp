@@ -64,7 +64,7 @@ ISListBaseForm::ISListBaseForm(const QString &TableName, QWidget *parent)
 
 		//Поиск
 		QAction *ActionSearch = ISControls::CreateActionSearch(this);
-		connect(ActionSearch, &QAction::triggered, this, &ISListBaseForm::Search);
+		connect(ActionSearch, &QAction::triggered, this, &ISListBaseForm::SearchShow);
 		Actions[ISNamespace::AT_Search] = ActionSearch;
 
 		//Очистка результатов поиска
@@ -182,11 +182,8 @@ ISListBaseForm::ISListBaseForm(const QString &TableName, QWidget *parent)
 
 		if (SETTING_BOOL(CONST_UID_SETTING_TABLES_PAGE_NAVIGATION))
 		{
-			//QueryModel->SetLimit(SETTING_INT(CONST_UID_SETTING_TABLES_PAGE_NAVIGATION_LIMIT));
-
 			PageNavigation = new ISPageNavigation(StatusBar);
 			PageNavigation->SetLimit(SETTING_INT(CONST_UID_SETTING_TABLES_PAGE_NAVIGATION_LIMIT));
-			//connect(PageNavigation, &ISPageNavigation::OffsetSignal, QueryModel, &ISQueryModel::SetOffset);
 			connect(PageNavigation, &ISPageNavigation::Update, this, &ISListBaseForm::Update);
 			StatusBar->addWidget(PageNavigation);
 		}
@@ -518,6 +515,11 @@ QAction* ISListBaseForm::GetSpecialAction(ISNamespace::ActionSpecialType action_
 	return ActionsSpecial[action_special];
 }
 //-----------------------------------------------------------------------------
+void ISListBaseForm::Search(const QVariantList &VariantList)
+{
+	Q_UNUSED(VariantList);
+}
+//-----------------------------------------------------------------------------
 void ISListBaseForm::CreateDelegates()
 {
 	for (int i = 0; i < TcpModel->columnCount(); ++i) //Обход полей
@@ -818,31 +820,18 @@ bool ISListBaseForm::Delete()
 	return Result;
 }
 //-----------------------------------------------------------------------------
-void ISListBaseForm::Search()
+void ISListBaseForm::SearchShow()
 {
 	if (!SearchForm)
 	{
 		SearchForm = new ISSearchForm(MetaTable);
-		connect(SearchForm, &ISSearchForm::StartSearch, [=](const QString &SearchString, const QVariantMap &VariantMap)
-		{
-			//???
-			Q_UNUSED(SearchString);
-			Q_UNUSED(VariantMap);
-			//QueryModel->SetSearchFilter(SearchString);
-			//QueryModel->SetCondition(VariantMap);
-			Update();
-
-			GetAction(ISNamespace::AT_SearchClear)->setEnabled(true);
-		});
+		connect(SearchForm, static_cast<void(ISSearchForm::*)(const QVariantList &)>(&ISSearchForm::Search), this, &ISListBaseForm::Search);
 	}
 	SearchForm->show();
 }
 //-----------------------------------------------------------------------------
 void ISListBaseForm::SearchClear()
 {
-	//GetQueryModel()->ClearConditions();
-	//GetQueryModel()->ClearSearchFilter();
-	Update();
 	GetAction(ISNamespace::AT_SearchClear)->setEnabled(false);
 }
 //-----------------------------------------------------------------------------

@@ -11,7 +11,7 @@ class ISSearchForm : public ISInterfaceForm
 	Q_OBJECT
 
 signals:
-	void StartSearch(const QString &SearchString, const QVariantMap &VariantMap);
+	void Search(const QVariantList &VariantList);
 
 public:
 	ISSearchForm(PMetaTable *meta_table, QWidget *parent = 0);
@@ -28,7 +28,6 @@ private:
 	void DeleteClicked();
 
 	void Search();
-
 	
 private:
 	PMetaTable *MetaTable;

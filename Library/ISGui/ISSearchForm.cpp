@@ -50,7 +50,7 @@ ISSearchForm::ISSearchForm(PMetaTable *meta_table, QWidget *parent)
 	ButtonSearch->setEnabled(false);
 	ButtonSearch->setText(LANG("Search"));
 	ButtonSearch->setIcon(BUFFER_ICONS("Search"));
-	connect(ButtonSearch, &ISPushButton::clicked, this, &ISSearchForm::Search);
+	connect(ButtonSearch, &ISPushButton::clicked, this, static_cast<void(ISSearchForm::*)(void)>(&ISSearchForm::Search));
 	LayoutBottom->addWidget(ButtonSearch);
 
 	ButtonHide = new ISPushButton(this);
@@ -150,6 +150,6 @@ void ISSearchForm::DeleteClicked()
 //-----------------------------------------------------------------------------
 void ISSearchForm::Search()
 {
-
+	
 }
 //-----------------------------------------------------------------------------

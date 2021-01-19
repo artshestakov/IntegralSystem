@@ -50,7 +50,7 @@ public:
 	virtual void Edit(); //Изменение объекта
 	virtual bool Delete(); //Удаление объекта
 	virtual bool Update(); //Обновление данных
-	virtual void Search(); //Поиск
+	virtual void SearchShow(); //Поиск
 	virtual void SearchClear(); //Очистить результаты поиска
 	virtual void Export(); //Выгрузить таблицу
 	virtual void ShowFavorites(); //Показать форму с избранными объектами
@@ -97,6 +97,7 @@ protected:
 	void ShowSettingsForm();
 
 private:
+	void Search(const QVariantList &VariantList);
 	void CreateDelegates(); //Создание делегатов
 	void ShowContextMenu(const QPoint &Point); //Отображение контекстного меню
 
