@@ -48,5 +48,3 @@ HEADERS += \
     CGConfiguratorShow.h \
     CGConfiguratorUpdate.h \
     CGDatabase.h
-
-RESOURCES += $$PWD/../../Resources/Configurator.qrc

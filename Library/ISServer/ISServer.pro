@@ -37,3 +37,5 @@ SOURCES += \
     ISConsole.cpp \
     ISDatabase.cpp \
     ISQuery.cpp
+
+RESOURCES += $$PWD/../../Resources/ISServer.qrc
