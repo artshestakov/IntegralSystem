@@ -11,7 +11,7 @@ class ISComboSearchBase : public ISComboEdit
 	Q_OBJECT
 
 public:
-	Q_INVOKABLE ISComboSearchBase(QWidget *parent = 0);
+	Q_INVOKABLE ISComboSearchBase(QWidget *parent);
 	virtual ~ISComboSearchBase();
 
 	ISNamespace::SearchOperatorType GetOperator();
@@ -24,7 +24,7 @@ class ISComboSearchNumber : public ISComboSearchBase
 	Q_OBJECT
 
 public:
-	Q_INVOKABLE ISComboSearchNumber(QWidget *parent = 0);
+	Q_INVOKABLE ISComboSearchNumber(QWidget *parent);
 	virtual ~ISComboSearchNumber();
 };
 //-----------------------------------------------------------------------------
@@ -35,7 +35,7 @@ class ISComboSearchString : public ISComboSearchBase
 	Q_OBJECT
 
 public:
-	Q_INVOKABLE ISComboSearchString(QWidget *parent = 0);
+	Q_INVOKABLE ISComboSearchString(QWidget *parent);
 	virtual ~ISComboSearchString();
 };
 //-----------------------------------------------------------------------------

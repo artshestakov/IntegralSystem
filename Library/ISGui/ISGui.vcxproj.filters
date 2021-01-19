@@ -20,9 +20,6 @@
     <Filter Include="Layouts">
       <UniqueIdentifier>{b38e0153-0912-4dfa-bf6b-214af0afdedc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Model">
-      <UniqueIdentifier>{0b9a283c-8279-4a02-a1f4-8447f72fa80c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Widgets">
       <UniqueIdentifier>{5f6a732d-7467-49d5-a44a-7e386cb56364}</UniqueIdentifier>
     </Filter>
@@ -276,9 +273,6 @@
     </ClCompile>
     <ClCompile Include="ISListWidget.cpp">
       <Filter>Widgets</Filter>
-    </ClCompile>
-    <ClCompile Include="ISSearchModel.cpp">
-      <Filter>Model</Filter>
     </ClCompile>
     <ClCompile Include="ISListViewForm.cpp">
       <Filter>Common Forms</Filter>
@@ -650,9 +644,6 @@
     <ClInclude Include="isgui_global.h" />
     <ClInclude Include="ISUserPhotoCreator.h">
       <Filter>System</Filter>
-    </ClInclude>
-    <ClInclude Include="ISSearchModel.h">
-      <Filter>Model</Filter>
     </ClInclude>
     <ClInclude Include="ISTcpQuery.h">
       <Filter>Protocol</Filter>

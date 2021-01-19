@@ -47,7 +47,6 @@ public:
 	static ISFieldEditBase* CreateColumnForField(QWidget *ParentWidget, PMetaField *MetaField);
 	static ISFieldEditBase* CreateColumnForField(QWidget *ParentWidget, ISNamespace::FieldType DataType, const QString &ControlWidget = QString());
 	static ISObjectFormBase* CreateObjectForm(ISNamespace::ObjectFormType FormType, const QString &TableName, int ObjectID = 0, QWidget *parent = 0);
-	static ISComboSearchBase* CreateSearchOperator(QWidget *parent, ISNamespace::FieldType DataType, PMetaForeign *MetaForeign);
 
 	static ISObjectPair SelectObject(const QString &TableName, int SelectObjectID = 0); //Выбор одной записи из таблицы
 	static ISVectorUInt SelectObjects(const QString &TableName); //Выбор нескольких записей из таблицы

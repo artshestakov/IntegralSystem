@@ -4,7 +4,7 @@
 #include "ISInterfaceForm.h"
 #include "PMetaClass.h"
 #include "ISButtons.h"
-#include "ISSearchModel.h"
+#include "ISScrollArea.h"
 //-----------------------------------------------------------------------------
 class ISSearchForm : public ISInterfaceForm
 {
@@ -21,29 +21,22 @@ protected:
 	void closeEvent(QCloseEvent *e) override;
 	void EscapeClicked() override;
 	void EnterClicked() override;
-	
-	bool CheckExistField(const QString &FieldName) const;
-	void LoadFields(); //Загрузка доступных полей для поиск в список
-	void AddFieldFromList(const QString &FieldLocalName, const QString &FieldName); //Добавить поле в список полей для поиска
-
-	void AddFilter(); //Добавить поисковой фильтр
-	void Search(); //Поиск
-	void SearchFromField(ISSearchModel &SearchModel, QTreeWidgetItem *TreeWidgetItem);
-
-	void DeleteFieldClicked();
-	void DeleteAllFields(); //Удалить все поля
-	void DeleteField(QTreeWidgetItem *TreeWidgetItem); //Удалить поле
-	void UpdateInterface(); //Обновление интерфейса
+	void AfterShowEvent() override;
 
 private:
-	PMetaTable *MetaTable;
-	QTreeWidget *TreeWidget;
+	void AddField(PMetaField *MetaField, int Index = 0);
+	void AddClicked();
 
-	ISPushButton *ButtonAddFilter;
-	ISPushButton *ButtonClear;
+	void Search();
+
+	
+private:
+	PMetaTable *MetaTable;
+	
+	ISScrollArea *ScrollArea;
+	QVBoxLayout *LayoutScroll;
 	ISPushButton *ButtonSearch;
 	ISPushButton *ButtonHide;
-
-	QMap<ISServiceButton*, QTreeWidgetItem*> MapItems;
+	std::vector<QLabel*> VectorLabels;
 };
 //-----------------------------------------------------------------------------

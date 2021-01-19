@@ -597,13 +597,6 @@ ISObjectFormBase* ISGui::CreateObjectForm(ISNamespace::ObjectFormType FormType, 
 	return ObjectForm;
 }
 //-----------------------------------------------------------------------------
-ISComboSearchBase* ISGui::CreateSearchOperator(QWidget *parent, ISNamespace::FieldType DataType, PMetaForeign *MetaForeign)
-{
-	QString SearchOperatorWidget = DataType == ISNamespace::FT_Int && MetaForeign ? "ISComboSearchBase" : ISMetaData::Instance().GetSearchWidget(DataType);
-	ISComboSearchBase *ComboSearchBase = ISAlgorithm::CreatePointer<ISComboSearchBase *>(SearchOperatorWidget, Q_ARG(QWidget *, parent));
-	return ComboSearchBase;
-}
-//-----------------------------------------------------------------------------
 ISObjectPair ISGui::SelectObject(const QString &TableName, int SelectObjectID)
 {
 	SetWaitGlobalCursor(true);

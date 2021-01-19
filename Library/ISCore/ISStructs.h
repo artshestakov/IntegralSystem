@@ -20,14 +20,6 @@ struct ISMetaDataType
     bool Search; //Возможность поиска по полю
 };
 //-----------------------------------------------------------------------------
-struct StructModelItem
-{
-    QString FieldName;
-    ISVectorVariant Values;
-    ISNamespace::SearchOperatorType Operator;
-    ISNamespace::FieldType FieldType;
-};
-//-----------------------------------------------------------------------------
 struct ISCORE_EXPORT ISCurrentUserInfo
 {
     ISCurrentUserInfo() : System(false), ID(0), GroupID(0), GroupFullAccess(false) { }

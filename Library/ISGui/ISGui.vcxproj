@@ -246,7 +246,6 @@
     <ClCompile Include="ISReconnectDialog.cpp" />
     <ClCompile Include="ISScrollArea.cpp" />
     <ClCompile Include="ISSearchForm.cpp" />
-    <ClCompile Include="ISSearchModel.cpp" />
     <ClCompile Include="ISSelectListDialog.cpp" />
     <ClCompile Include="ISSelectListForm.cpp" />
     <ClCompile Include="ISSettingFieldWidgets.cpp" />
@@ -375,7 +374,6 @@
     <QtMoc Include="ISSettingsDatabaseObjectForm.h" />
     <QtMoc Include="ISListViewForm.h" />
     <QtMoc Include="ISReconnectDialog.h" />
-    <ClInclude Include="ISSearchModel.h" />
     <QtMoc Include="ISTcpConnector.h" />
     <QtMoc Include="ISTcpModels.h" />
     <ClInclude Include="ISTcpQuery.h" />

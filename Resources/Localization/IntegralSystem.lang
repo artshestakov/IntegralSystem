@@ -69,7 +69,6 @@
   <Local Name="Message.Warning.SystemObject.Copy" Russian="Запрещено создавать копии системных записей."/>
   <Local Name="Message.Warning.ValueFieldEditInvalid" Russian="Значение в поле &quot;%1&quot; введено некорректно!"/>
   <Local Name="Message.Warning.NotChangeSystemUserPassword" Russian="Менять пароль для системного пользователя запрещено!"/>
-  <Local Name="Message.Warning.SearchFieldNotValid" Russian="Поисковое поле &quot;%1&quot; не заполнено."/>
   <Local Name="Message.Warning.NotCreateCalendarEventPast" Russian="Создавать события в прошлом запрещено."/>
   <Local Name="Message.Warning.OpenUrl.Failed" Russian="Не удалось открыть интернет ссылку: %1"/>
   <Local Name="Message.Warning.OpenUrl.Empty" Russian="Ссылка не указана!"/>
@@ -170,6 +169,10 @@
   <Local Name="ISFavoritesForm.Clear" Russian="Очистить избранное"/>
   <Local Name="ISFavoritesForm.RecordCount" Russian="Записей: %1"/>
   <Local Name="ISFavoritesForm.Close" Russian="Закрыть"/>
+
+  <!--ISSearchForm-->
+  <Local Name="ISSearchForm.Title" Russian="Расширенный поиск"/>
+  <Local Name="ISSearchForm.AddValue" Russian="Добавить значение"/>
 
   <!--Other-->
   <Local Name="NoData" Russian="Данных нет"/>
@@ -326,15 +329,9 @@
 
   <!--Search-->
   <Local Name="Search" Russian="Поиск"/>
-  <Local Name="Search.Advanced" Russian="Расширенный поиск"/>
-  <Local Name="Search.Title.Field" Russian="Поле"/>
-  <Local Name="Search.Title.Conditiion" Russian="Условие"/>
-  <Local Name="Search.Title.Value" Russian="Значение"/>
-  <Local Name="Search.AddFilter" Russian="Добавить фильтр"/>
   <Local Name="Search.HideForm" Russian="Скрыть"/>
   <Local Name="Search.Cancel" Russian="Отменить поиск"/>
   <Local Name="Search.Or" Russian="или"/>
-  <Local Name="Search.DeleteField" Russian="Удалить поле"/>
   <Local Name="Search.Operator.Equally" Russian="Равно"/>
   <Local Name="Search.Operator.NotEqually" Russian="Не равно"/>
   <Local Name="Search.Operator.Begin" Russian="Начинается"/>
