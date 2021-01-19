@@ -209,7 +209,6 @@
     <ClCompile Include="ISAlgorithm.cpp" />
     <ClCompile Include="ISAssert.cpp" />
     <ClCompile Include="ISConfig.cpp" />
-    <ClCompile Include="ISConsole.cpp" />
     <ClCompile Include="ISDebug.cpp" />
     <ClCompile Include="ISLocalization.cpp" />
     <ClCompile Include="ISLogger.cpp" />
@@ -235,7 +234,6 @@
     <ClInclude Include="ISAlgorithm.h" />
     <ClInclude Include="ISAssert.h" />
     <ClInclude Include="ISConfig.h" />
-    <ClInclude Include="ISConsole.h" />
     <ClInclude Include="ISConstants.h" />
     <ClInclude Include="iscore_global.h" />
     <ClInclude Include="ISDebug.h" />

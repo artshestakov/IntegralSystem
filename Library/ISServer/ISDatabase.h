@@ -2,9 +2,10 @@
 #ifndef _ISDATABASE_H_INCLUDED
 #define _ISDATABASE_H_INCLUDED
 //-----------------------------------------------------------------------------
+#include "isserver_global.h"
 #include "ISStructs.h"
 //-----------------------------------------------------------------------------
-class ISDatabase
+class ISSERVER_EXPORT ISDatabase
 {
 public:
 	static ISDatabase& Instance();

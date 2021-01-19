@@ -2,9 +2,9 @@
 #ifndef _ISCONSOLE_H_INCLUDED
 #define _ISCONSOLE_H_INCLUDED
 //-----------------------------------------------------------------------------
-#include "iscore_global.h"
+#include "isserver_global.h"
 //-----------------------------------------------------------------------------
-class ISCORE_EXPORT ISConsole
+class ISSERVER_EXPORT ISConsole
 {
 public:
 	static bool Question(const QString &QuestionText); //Задать вопрос пользователю

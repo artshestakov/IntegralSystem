@@ -14,9 +14,6 @@
     <Filter Include="Asterisk">
       <UniqueIdentifier>{f267233e-4f66-422b-8971-9bbc11066398}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Database">
-      <UniqueIdentifier>{910871e4-b340-43c1-8fbd-94ade5139312}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ISTcpQueue.cpp">
@@ -52,12 +49,6 @@
     <ClCompile Include="ISFail2Ban.cpp">
       <Filter>System</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Library\ISCore\ISDatabase.cpp">
-      <Filter>Database</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Library\ISCore\ISQuery.cpp">
-      <Filter>Database</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Carat.rc">
@@ -79,12 +70,6 @@
     </ClInclude>
     <ClInclude Include="ISFail2Ban.h">
       <Filter>System</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Library\ISCore\ISDatabase.h">
-      <Filter>Database</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Library\ISCore\ISQuery.h">
-      <Filter>Database</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

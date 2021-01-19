@@ -2,9 +2,10 @@
 #ifndef _ISQUERY_H_INCLUDED
 #define _ISQUERY_H_INCLUDED
 //-----------------------------------------------------------------------------
+#include "isserver_global.h"
 #include "ISTypedefs.h"
 //-----------------------------------------------------------------------------
-class ISQuery
+class ISSERVER_EXPORT ISQuery
 {
 public:
     ISQuery(const QString &sql_text = QString(), bool prepare = true);

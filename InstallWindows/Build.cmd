@@ -30,6 +30,7 @@ CALL GenerateBuildInfo.cmd %CONFIGURATION% %PLATFORM% %REVISION%
 
 REM Компиляция библиотек
 CALL BuildItem.cmd Library ISCore %CONFIGURATION% %PLATFORM%
+CALL BuildItem.cmd Library ISServer %CONFIGURATION% %PLATFORM%
 CALL BuildItem.cmd Library ISGui %CONFIGURATION% %PLATFORM%
 
 REM Компиляция проектов
