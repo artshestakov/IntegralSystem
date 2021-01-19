@@ -61,17 +61,6 @@ namespace ISAlgorithm
 	//! \return возвращаем имя файла
 	ISCORE_EXPORT std::string GetFileNameFromPath(const std::string &FilePath);
 
-	//! Получить размер файла
-	//! \param FilePath путь к файлу
-	//! \return возвращает размер файла в байтах. В случае ошибки возвращается -1
-    //ISCORE_EXPORT qint64 GetFileSize(const std::string &FilePath);
-
-	//! Получить размер файла
-	//! \param FilePath путь к файлу
-	//! \param ErrorString текстовое описание ошибки
-	//! \return возвращает размер файла в байтах. В случае ошибки возвращается -1, а ErrorString заполняется описанием ошибки
-    //ISCORE_EXPORT qint64 GetFileSize(const std::string &FilePath, std::string &ErrorString);
-
 	//! Конвертировать размер файла в строку
 	//! \param FileSize размер файла в байтах
 	//! \return размер файла строкой

@@ -11,35 +11,11 @@ std::string ISAlgorithm::GetFileNameFromPath(const std::string &FilePath)
 	return FilePath;
 }
 //-----------------------------------------------------------------------------
-/*qint64 ISAlgorithm::GetFileSize(const std::string &FilePath)
-{
-	std::string ErrorString;
-	return ISAlgorithm::GetFileSize(FilePath, ErrorString);
-}*/
-//-----------------------------------------------------------------------------
-/*qint64 ISAlgorithm::GetFileSize(const std::string &FilePath, std::string &ErrorString)
-{
-	FILE *File = fopen(FilePath.c_str(), "r");
-	if (File)
-	{
-		fseek(File, 0L, SEEK_END);
-        qint64 FileSize = ftell(File);
-		fclose(File);
-		return FileSize;
-	}
-	else
-	{
-		ErrorString = strerror(errno);
-	}
-	return -1;
-}*/
-//-----------------------------------------------------------------------------
 QString ISAlgorithm::FileSizeFromString(qint64 FileSize)
 {
-	//qint64 Size = FileSize;
-	int i = 0;
-	for (; FileSize > 1023; FileSize /= 1024, ++i) {}
-	QString String = ISAlgorithm::FormatNumber(FileSize) + "BKMGT"[i];
+    int Index = 0;
+    for (; FileSize > 1023; FileSize /= 1024, ++Index) {}
+    QString String = ISAlgorithm::FormatNumber(FileSize) + "BKMGT"[Index];
 	if (String.contains("B"))
 	{
 		String.replace("B", " B");
@@ -79,6 +55,12 @@ std::string ISAlgorithm::GetClassName(const std::string &FunctionName)
     size_t Index = 0;
 
 #ifndef WIN32 //Если работаем сейчас под Linux - исключаем имя типа
+    Index = Result.find('('); //Ищем открывающуюся скобку
+    if (Index != NPOS) //Если скобку нашли - удаляем все что после неё
+    {
+        Result.erase(Index, Result.size() - Index);
+    }
+
     while ((Index = Result.find(SYMBOL_SPACE)) != NPOS)
     {
         Result.erase(0, ++Index);
