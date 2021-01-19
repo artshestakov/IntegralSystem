@@ -380,7 +380,7 @@ void ISObjectFormBase::CreateWidgetObject()
 		}
 
 		ISFieldEditBase *FieldEditBase = CreateColumnForField(MetaField);
-		if (dynamic_cast<ISListEdit*>(FieldEditBase))
+		if (MetaField->Foreign) //≈сли поле €вл€етс€ справочным - инициализируем его
 		{
 			dynamic_cast<ISListEdit*>(FieldEditBase)->InvokeList(MetaField->Foreign);
 		}
