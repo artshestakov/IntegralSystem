@@ -6,16 +6,6 @@
 #include "ISButtons.h"
 #include "ISScrollArea.h"
 //-----------------------------------------------------------------------------
-/*struct ISSearchWidgetItem
-{
-	QTreeWidgetItem *ParentItem;
-	QTreeWidgetItem *TreeWidgetItem;
-	QLabel *Label;
-	ISComboSearchBase *ComboOperator;
-	ISFieldEditBase *FieldEditBase;
-	ISServiceButton *Button;
-};*/
-//-----------------------------------------------------------------------------
 class ISSearchForm : public ISInterfaceForm
 {
 	Q_OBJECT

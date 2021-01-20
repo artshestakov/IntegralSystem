@@ -25,6 +25,7 @@ ISSearchForm::ISSearchForm(PMetaTable *meta_table, QWidget *parent)
 	TreeWidget->setHeaderHidden(true);
 	TreeWidget->setItemDelegate(new ISDelegateSearchField(TreeWidget));
 	TreeWidget->setFrameShape(QFrame::NoFrame);
+	TreeWidget->setFocusPolicy(Qt::NoFocus);
 	GetMainLayout()->addWidget(TreeWidget);
 
 	for (PMetaField *MetaField : MetaTable->Fields)
@@ -77,7 +78,7 @@ void ISSearchForm::EscapeClicked()
 //-----------------------------------------------------------------------------
 void ISSearchForm::EnterClicked()
 {
-	
+	Search();
 }
 //-----------------------------------------------------------------------------
 void ISSearchForm::AddField(PMetaField *MetaField, QTreeWidgetItem *ParentItem)
@@ -93,19 +94,34 @@ void ISSearchForm::AddField(PMetaField *MetaField, QTreeWidgetItem *ParentItem)
 		TreeWidgetItem = new QTreeWidgetItem(TreeWidget);
 	}
 
+	//Панель для кнопки добавления/удаления (нужна для правильного центрирования за счёт Layout)
+	QWidget *Widget = new QWidget(TreeWidget);
+	Widget->setLayout(new QVBoxLayout());
+	Widget->layout()->setContentsMargins(0, 0, 20, 0);
+	TreeWidget->setItemWidget(TreeWidgetItem, 0, Widget);
+
+	ISServiceButton *ButtonAction = new ISServiceButton(ParentItem ? BUFFER_ICONS("Delete") : BUFFER_ICONS("Add"),
+		ParentItem ? LANG("ISSearchForm.DeleteField") : LANG("ISSearchForm.AddField"), Widget);
+	ParentItem ?
+		connect(ButtonAction, &ISServiceButton::clicked, this, &ISSearchForm::DeleteClicked) :
+		connect(ButtonAction, &ISServiceButton::clicked, this, &ISSearchForm::AddClicked);
+	ButtonAction->setFlat(true);
+	ButtonAction->setFocusPolicy(Qt::NoFocus);
+	ButtonAction->setProperty("FieldName", ParentItem ? QVariant() : MetaField->Name);
+	Widget->layout()->addWidget(ButtonAction);
+
 	if (!ParentItem)
 	{
 		//Заголовок поискового поля
 		QLabel *LabelName = new QLabel(MetaField->LabelName + ':', TreeWidget);
-		LabelName->setContentsMargins(0, 0, 25, 0);
-		TreeWidget->setItemWidget(TreeWidgetItem, 0, LabelName);
+		TreeWidget->setItemWidget(TreeWidgetItem, 1, LabelName);
 
 		//Виджет с выбором оператора
 		QString SearchOperatorWidget = MetaField->Type == ISNamespace::FT_Int && MetaField->Foreign
 			? "ISComboSearchBase" :
 			ISMetaData::Instance().GetSearchWidget(MetaField->Type);
 		ISComboSearchBase *ComboSearchOperator = ISAlgorithm::CreatePointer<ISComboSearchBase *>(SearchOperatorWidget, Q_ARG(QWidget *, TreeWidget));
-		TreeWidget->setItemWidget(TreeWidgetItem, 1, ComboSearchOperator);
+		TreeWidget->setItemWidget(TreeWidgetItem, 2, ComboSearchOperator);
 	}
 
 	//Поле редактирования
@@ -115,21 +131,7 @@ void ISSearchForm::AddField(PMetaField *MetaField, QTreeWidgetItem *ParentItem)
 	{
 		dynamic_cast<ISListEdit*>(FieldEditBase)->InvokeList(MetaField->Foreign);
 	}
-	TreeWidget->setItemWidget(TreeWidgetItem, 2, FieldEditBase);
-
-	//Панель для кнопки добавления/удаления (нужна для правильного центрирования за счёт Layout)
-	QWidget *Widget = new QWidget(TreeWidget);
-	Widget->setLayout(new QVBoxLayout());
-	TreeWidget->setItemWidget(TreeWidgetItem, 3, Widget);
-
-	ISServiceButton *ButtonAction = new ISServiceButton(ParentItem ? BUFFER_ICONS("Delete") : BUFFER_ICONS("Add"),
-		ParentItem ? LANG("ISSearchForm.DeleteField") : LANG("ISSearchForm.AddField"), Widget);
-	ParentItem ?
-		connect(ButtonAction, &ISServiceButton::clicked, this, &ISSearchForm::DeleteClicked) :
-		connect(ButtonAction, &ISServiceButton::clicked, this, &ISSearchForm::AddClicked);
-	ButtonAction->setFlat(true);
-	ButtonAction->setProperty("FieldName", ParentItem ? QVariant() : MetaField->Name);
-	Widget->layout()->addWidget(ButtonAction);
+	TreeWidget->setItemWidget(TreeWidgetItem, 3, FieldEditBase);
 
 	Map.emplace(ButtonAction, TreeWidgetItem);
 }
@@ -146,13 +148,14 @@ void ISSearchForm::DeleteClicked()
 	QTreeWidgetItem *TreeWidgetItem = Map[sender()];
 
 	//Удаляем виджеты
-	TreeWidget->removeItemWidget(TreeWidgetItem, 2);
+	TreeWidget->removeItemWidget(TreeWidgetItem, 0);
 	TreeWidget->removeItemWidget(TreeWidgetItem, 3);
 
 	//Удаляем элемент
 	QTreeWidgetItem *ParentItem = TreeWidgetItem->parent();
 	delete ParentItem->takeChild(ParentItem->indexOfChild(TreeWidgetItem));
 
+	//Удаляем элемент из массива
 	std::map<QObject*, QTreeWidgetItem*>::iterator It = Map.find(sender());
 	if (It != Map.end())
 	{
