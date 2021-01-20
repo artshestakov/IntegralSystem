@@ -306,7 +306,11 @@ ISQTimeEdit::~ISQTimeEdit()
 //-----------------------------------------------------------------------------
 QTime ISQTimeEdit::GetTime() const
 {
-	return QTime(EditHour->text().toInt(), EditMinute->text().toInt(), EditSecond->text().toInt());
+	bool HourOk = true, MinuteOk = true, SecondOk = true;
+	int Hour = EditHour->text().toInt(&HourOk),
+		Minute = EditMinute->text().toInt(&MinuteOk),
+		Second = EditSecond->text().toInt(&SecondOk);
+	return HourOk && MinuteOk && SecondOk ? QTime(Hour, Minute, Second) : QTime();
 }
 //-----------------------------------------------------------------------------
 void ISQTimeEdit::SetTime(const QTime &Time)

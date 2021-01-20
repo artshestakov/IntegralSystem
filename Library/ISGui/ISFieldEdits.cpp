@@ -314,12 +314,7 @@ void ISComboEdit::SetValue(const QVariant &value)
 QVariant ISComboEdit::GetValue() const
 {
 	QVariant UserData = ComboBox->itemData(ComboBox->currentIndex());
-	if (UserData.isNull())
-	{
-		return QVariant();
-	}
-
-	return UserData;
+	return UserData.isNull() ? QVariant() : UserData;
 }
 //-----------------------------------------------------------------------------
 void ISComboEdit::Clear()
@@ -778,7 +773,9 @@ void ISDateTimeEdit::SetValue(const QVariant &value)
 //-----------------------------------------------------------------------------
 QVariant ISDateTimeEdit::GetValue() const
 {
-	return QDateTime(DateEdit->GetDate(), TimeEdit->GetTime());
+	QDate Date = DateEdit->GetDate();
+	QTime Time = TimeEdit->GetTime();
+	return !Date.isValid() && !Time.isValid() ? QVariant() : QDateTime(DateEdit->GetDate(), TimeEdit->GetTime());
 }
 //-----------------------------------------------------------------------------
 void ISDateTimeEdit::Clear()
@@ -848,7 +845,8 @@ void ISDateEdit::SetValue(const QVariant &value)
 //-----------------------------------------------------------------------------
 QVariant ISDateEdit::GetValue() const
 {
-	return ISDateTimeEdit::GetValue().toDate();
+	QDate Date = ISDateTimeEdit::GetValue().toDate();
+	return Date.isValid() ? Date : QVariant();
 }
 //-----------------------------------------------------------------------------
 void ISDateEdit::SetMinimumDate(const QDate &Date)
@@ -880,7 +878,8 @@ void ISTimeEdit::SetValue(const QVariant &value)
 //-----------------------------------------------------------------------------
 QVariant ISTimeEdit::GetValue() const
 {
-	return ISDateTimeEdit::GetValue().toTime();
+	QTime Time = ISDateTimeEdit::GetValue().toTime();
+	return Time.isValid() ? Time : QVariant();
 }
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
@@ -1500,8 +1499,7 @@ void ISColorEdit::SetValue(const QVariant &value)
 //-----------------------------------------------------------------------------
 QVariant ISColorEdit::GetValue() const
 {
-	QColor Color = WidgetColor->palette().color(QPalette::Background);
-	return Color.name();
+	return WidgetColor->palette().color(QPalette::Background);
 }
 //-----------------------------------------------------------------------------
 void ISColorEdit::Clear()
