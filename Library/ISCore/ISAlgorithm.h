@@ -29,6 +29,9 @@ if (POINTER) \
 //Сгенерировать уникальный идентификатор
 #define GENERATE_UUID ISUuid(QUuid::createUuid())
 
+//Сгенерировать упрощенный уникальный идентификатор
+#define GENERATE_UUID_LITE ISAlgorithm::GenerateUuidLite();
+
 //Заглушка для SQL-запросов
 #define PREPARE_QUERY(x) x
 
@@ -141,6 +144,10 @@ namespace ISAlgorithm
 	//! \Number дробное число
 	//! \return возвращает форматированное число
 	ISCORE_EXPORT QString FormatNumber(double Number, char Separator = ' ', unsigned int Precision = 0);
+
+	//! Генерация упрощённого уникального идентификатора в формате BE285BCC8A0046C5A46183A8A3390774
+	//! \return возвращает упрощённый уникальный идентификатор
+	ISCORE_EXPORT QString GenerateUuidLite();
 
 	//Поиск значения в векторе
     template <typename T> bool VectorContains(const std::vector<T> &Vector, T Value)

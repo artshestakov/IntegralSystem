@@ -5,8 +5,8 @@
 #include "ISGui.h"
 #include "ISMetaData.h"
 #include "ISComboSearchWidgets.h"
-
 #include "ISDelegates.h"
+#include "ISMessageBox.h"
 //-----------------------------------------------------------------------------
 ISSearchForm::ISSearchForm(PMetaTable *meta_table, QWidget *parent)
 	: ISInterfaceForm(parent),
@@ -96,7 +96,7 @@ void ISSearchForm::AddField(PMetaField *MetaField, QTreeWidgetItem *ParentItem)
 	//Панель для кнопки добавления/удаления (нужна для правильного центрирования за счёт Layout)
 	QWidget *Widget = new QWidget(TreeWidget);
 	Widget->setLayout(new QVBoxLayout());
-	Widget->layout()->setContentsMargins(0, 0, 20, 0);
+	Widget->layout()->setContentsMargins(0, 0, 25, 0);
 	TreeWidget->setItemWidget(TreeWidgetItem, 0, Widget);
 
 	ISServiceButton *ButtonAction = new ISServiceButton(ParentItem ? BUFFER_ICONS("Delete") : BUFFER_ICONS("Add"),
@@ -133,6 +133,11 @@ void ISSearchForm::AddField(PMetaField *MetaField, QTreeWidgetItem *ParentItem)
 	TreeWidget->setItemWidget(TreeWidgetItem, 3, FieldEditBase);
 
 	Map.emplace(ButtonAction, TreeWidgetItem);
+
+	if (ParentItem)
+	{
+		FieldEditBase->SetFocus();
+	}
 }
 //-----------------------------------------------------------------------------
 void ISSearchForm::AddClicked()
@@ -164,18 +169,73 @@ void ISSearchForm::DeleteClicked()
 //-----------------------------------------------------------------------------
 void ISSearchForm::Search()
 {
-	std::map<QString, ISVectorVariant> Values;
+	QVariantList VariantList;
 	for (const auto &MapItem : Map)
 	{
+		//Получаем имя поля
 		QString FieldName = MapItem.first->property("FieldName").toString();
 
+		//Получаем виджеты
 		QTreeWidgetItem *TreeWidgetItem = MapItem.second;
+		ISComboSearchBase *ComboSearchBase = dynamic_cast<ISComboSearchBase *>(TreeWidget->itemWidget(TreeWidgetItem, 2));
 		ISFieldEditBase *FieldEditBase = dynamic_cast<ISFieldEditBase *>(TreeWidget->itemWidget(TreeWidgetItem, 3));
-		if (FieldEditBase->GetModificationFlag())
+
+		//Если поле не изменялось - пропускаем его
+		QVariant Value = FieldEditBase->GetValue();
+		if (!FieldEditBase->GetModificationFlag() || !Value.isValid())
 		{
-			Values[FieldName].emplace_back(FieldEditBase->GetValue());
+			continue;
+		}
+
+		if (ExistField(VariantList, FieldName)) //Если поле в списке уже есть, добавляем к нему значение
+		{
+			for (int i = 0; i < VariantList.size(); ++i)
+			{
+				QVariantMap VariantMap = VariantList[i].toMap();
+				if (VariantMap["FieldName"].toString() == FieldName)
+				{
+					QVariantList Values = VariantMap["Values"].toList();
+					Values.append(Value);
+					VariantMap["Values"] = Values;
+					VariantList[i] = VariantMap;
+					break;
+				}
+			}
+		}
+		else //Поля в списке нет - добавляем
+		{
+			VariantList.append(QVariantMap
+			{
+				{ "FieldName", FieldName },
+				{ "Operator", ComboSearchBase->GetOperator() },
+				{ "Values", QVariantList() << Value }
+			});
 		}
 	}
-	emit Search(Values);
+
+	if (!VariantList.isEmpty()) //Если значения для поиска есть: виджеты-редакторы заполнена
+	{
+		emit Search(VariantList);
+		hide();
+	}
+	else //Виджеты-редакторы не заполнены
+	{
+		ISMessageBox::ShowWarning(this, LANG("Message.Warning.SearchFieldsIsEmpty"));
+	}
+}
+//-----------------------------------------------------------------------------
+bool ISSearchForm::ExistField(const QVariantList &VariantList, const QString &FieldName)
+{
+	bool Result = false;
+	for (const QVariant &Variant : VariantList)
+	{
+		QVariantMap VariantMap = Variant.toMap();
+		Result = VariantMap["FieldName"].toString() == FieldName;
+		if (Result)
+		{
+			break;
+		}
+	}
+	return Result;
 }
 //-----------------------------------------------------------------------------

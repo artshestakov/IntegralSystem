@@ -2416,6 +2416,42 @@ bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 		SqlText.chop(5);
 	}
 
+	//Если указаны поисковые параметры
+	QVariantList SearchList = TcpMessage->Parameters.contains("Search") ? TcpMessage->Parameters["Search"].toList() : QVariantList();
+	if (!SearchList.isEmpty())
+	{
+		SqlText += "\nWHERE\n";
+		for (const QVariant &Variant : SearchList) //Обходим поисковые условия
+		{
+			QVariantMap Map = Variant.toMap();
+			QString FieldName = Map["FieldName"].toString();
+			ISNamespace::SearchOperatorType OperatorType = static_cast<ISNamespace::SearchOperatorType>(Map["Operator"].toUInt());
+			QVariantList ValueList = Map["Values"].toList();
+
+			SqlText += MetaTable->Alias + '_' + MetaTable->GetField(FieldName)->Name.toLower();			
+			if (ValueList.size() > 1) //Если значений поиска несколько - используем оператор "IN"
+			{
+				SqlText += " IN(";
+				for (const QVariant &Value : ValueList) //Обходим список значений
+				{
+					QString UIDLite = GENERATE_UUID_LITE;
+					SqlText += ':' + UIDLite + ',';
+					FilterMap[UIDLite] = Value;
+				}
+				SqlText.chop(1);
+				SqlText += ')';
+			}
+			else //Одно значение для поиска - используем обычный оператор "="
+			{
+				QString UIDLite = GENERATE_UUID_LITE;
+				SqlText += " = :" + UIDLite;
+				FilterMap[UIDLite] = ValueList.front();
+			}
+			SqlText += "\nAND ";
+		}
+		SqlText.chop(5);
+	}
+
 	//Анализируем сортировку
 	PMetaField *MetaFieldSorting = MetaTable->GetField(SortingField);
 	bool SortingIsVirtual = !MetaFieldSorting->QueryText.isEmpty(),

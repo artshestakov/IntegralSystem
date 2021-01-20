@@ -11,7 +11,7 @@ class ISSearchForm : public ISInterfaceForm
 	Q_OBJECT
 
 signals:
-	void Search(const std::map<QString, ISVectorVariant> &);
+	void Search(const QVariantList &VariantList);
 
 public:
 	ISSearchForm(PMetaTable *meta_table, QWidget *parent = 0);
@@ -28,6 +28,7 @@ private:
 	void DeleteClicked();
 
 	void Search();
+	bool ExistField(const QVariantList &VariantList, const QString &FieldName);
 	
 private:
 	PMetaTable *MetaTable;

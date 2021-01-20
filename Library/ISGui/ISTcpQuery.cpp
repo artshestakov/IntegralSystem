@@ -231,7 +231,7 @@ void ISTcpQueryTable::SetSorting(const QString &SortingField, Qt::SortOrder Sort
 	};
 }
 //-----------------------------------------------------------------------------
-void ISTcpQueryTable::SetSearch(const QVariantMap &VariantMap)
+void ISTcpQueryTable::SetSearch(const QVariantList &VariantMap)
 {
 	BindValue("Search", VariantMap);
 }

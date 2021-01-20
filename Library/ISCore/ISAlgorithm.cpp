@@ -323,3 +323,12 @@ QString ISAlgorithm::FormatNumber(double Number, char Separator, unsigned int Pr
 	return Result;
 }
 //-----------------------------------------------------------------------------
+QString ISAlgorithm::GenerateUuidLite()
+{
+	ISUuid UID = GENERATE_UUID;
+	UID.remove('-'); //Удаляем все тирэ
+	UID.remove(0, 1); //Удаляем первую фигурную скобку
+	UID.chop(1); //Удаляем последнюю фигурную скобку
+	return UID;
+}
+//-----------------------------------------------------------------------------

@@ -69,7 +69,6 @@ ISListBaseForm::ISListBaseForm(const QString &TableName, QWidget *parent)
 
 		//Очистка результатов поиска
 		QAction *ActionSearchClearResult = ISControls::CreateActionSearchClearResults(this);
-		ActionSearchClearResult->setEnabled(false);
 		connect(ActionSearchClearResult, &QAction::triggered, this, &ISListBaseForm::SearchClear);
 		Actions[ISNamespace::AT_SearchClear] = ActionSearchClearResult;
 
@@ -515,20 +514,17 @@ QAction* ISListBaseForm::GetSpecialAction(ISNamespace::ActionSpecialType action_
 	return ActionsSpecial[action_special];
 }
 //-----------------------------------------------------------------------------
-void ISListBaseForm::Search(const std::map<QString, ISVectorVariant> &Map)
+void ISListBaseForm::Search(const QVariantList &VariantList)
 {
-	QVariantMap VariantMap;
-	for (const auto &MapItem : Map)
-	{
-		QVariantList VariantList;
-		for (const QVariant &Value : MapItem.second)
-		{
-			VariantList.append(Value);
-		}
-		VariantMap[MapItem.first] = VariantList;
-	}
-	TcpQuery->SetSearch(VariantMap);
+	TcpQuery->SetSearch(VariantList);
 	Update();
+	GetAction(ISNamespace::AT_SearchClear)->setEnabled(true);
+	
+	if (!TcpModel->rowCount()) //Поиск не дал результатов
+	{
+		ListIndicatorWidget->SetIcon(BUFFER_ICONS("Search.EmptyResult"));
+		ListIndicatorWidget->SetText(LANG("Search.EmptyResult"));
+	}
 }
 //-----------------------------------------------------------------------------
 void ISListBaseForm::CreateDelegates()
@@ -724,6 +720,7 @@ bool ISListBaseForm::Update()
 	//Очередные операции с интерфейсом после загрузки
 	SetEnabledActions(Result);
 	GetAction(ISNamespace::AT_Update)->setEnabled(true); //Включаем только для обновления списка
+	GetAction(ISNamespace::AT_SearchClear)->setEnabled(false);
 	SetEnabledPageNavigation(true);
 	ISGui::SetWaitGlobalCursor(false);
 
@@ -810,8 +807,8 @@ bool ISListBaseForm::Delete()
 
 	ISVectorUInt VectorInt = GetSelectedIDs();
 	bool Result = VectorInt.size() == 1 ?
-		ISMessageBox::ShowQuestion(this, LANG("Message.Object.Delete")) :
-		ISMessageBox::ShowQuestion(this, LANG("Message.Objects.Delete").arg(VectorInt.size()));
+		ISMessageBox::ShowQuestion(this, LANG("Message.Object.Delete"), LANG("Message.Object.Delete.DetailedText")) :
+		ISMessageBox::ShowQuestion(this, LANG("Message.Objects.Delete").arg(VectorInt.size()), LANG("Message.Objects.Delete.DetailedText"));
 	if (Result) //Получили подтверждение от пользователя
 	{
 		QString ErrorString;
@@ -836,7 +833,7 @@ void ISListBaseForm::SearchShow()
 	if (!SearchForm)
 	{
 		SearchForm = new ISSearchForm(MetaTable);
-		connect(SearchForm, static_cast<void(ISSearchForm::*)(const std::map<QString, ISVectorVariant> &)>(&ISSearchForm::Search), this, &ISListBaseForm::Search);
+		connect(SearchForm, static_cast<void(ISSearchForm::*)(const QVariantList &)>(&ISSearchForm::Search), this, &ISListBaseForm::Search);
 	}
 	SearchForm->show();
 }
@@ -844,6 +841,8 @@ void ISListBaseForm::SearchShow()
 void ISListBaseForm::SearchClear()
 {
 	GetAction(ISNamespace::AT_SearchClear)->setEnabled(false);
+	TcpQuery->SetSearch(QVariantList());
+	Update();
 }
 //-----------------------------------------------------------------------------
 void ISListBaseForm::Export()
