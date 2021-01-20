@@ -11,7 +11,7 @@ class ISSearchForm : public ISInterfaceForm
 	Q_OBJECT
 
 signals:
-	void Search(const QVariantList &VariantList);
+	void Search(const std::map<QString, ISVectorVariant> &);
 
 public:
 	ISSearchForm(PMetaTable *meta_table, QWidget *parent = 0);

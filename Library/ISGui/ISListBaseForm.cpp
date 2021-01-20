@@ -515,9 +515,20 @@ QAction* ISListBaseForm::GetSpecialAction(ISNamespace::ActionSpecialType action_
 	return ActionsSpecial[action_special];
 }
 //-----------------------------------------------------------------------------
-void ISListBaseForm::Search(const QVariantList &VariantList)
+void ISListBaseForm::Search(const std::map<QString, ISVectorVariant> &Map)
 {
-	Q_UNUSED(VariantList);
+	QVariantMap VariantMap;
+	for (const auto &MapItem : Map)
+	{
+		QVariantList VariantList;
+		for (const QVariant &Value : MapItem.second)
+		{
+			VariantList.append(Value);
+		}
+		VariantMap[MapItem.first] = VariantList;
+	}
+	TcpQuery->SetSearch(VariantMap);
+	Update();
 }
 //-----------------------------------------------------------------------------
 void ISListBaseForm::CreateDelegates()
@@ -825,7 +836,7 @@ void ISListBaseForm::SearchShow()
 	if (!SearchForm)
 	{
 		SearchForm = new ISSearchForm(MetaTable);
-		connect(SearchForm, static_cast<void(ISSearchForm::*)(const QVariantList &)>(&ISSearchForm::Search), this, &ISListBaseForm::Search);
+		connect(SearchForm, static_cast<void(ISSearchForm::*)(const std::map<QString, ISVectorVariant> &)>(&ISSearchForm::Search), this, &ISListBaseForm::Search);
 	}
 	SearchForm->show();
 }

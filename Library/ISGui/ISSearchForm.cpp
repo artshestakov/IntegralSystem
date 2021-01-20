@@ -48,7 +48,6 @@ ISSearchForm::ISSearchForm(PMetaTable *meta_table, QWidget *parent)
 	GetMainLayout()->addLayout(LayoutBottom);
 
 	ButtonSearch = new ISPushButton(this);
-	ButtonSearch->setEnabled(false);
 	ButtonSearch->setText(LANG("Search"));
 	ButtonSearch->setIcon(BUFFER_ICONS("Search"));
 	connect(ButtonSearch, &ISPushButton::clicked, this, static_cast<void(ISSearchForm::*)(void)>(&ISSearchForm::Search));
@@ -107,7 +106,7 @@ void ISSearchForm::AddField(PMetaField *MetaField, QTreeWidgetItem *ParentItem)
 		connect(ButtonAction, &ISServiceButton::clicked, this, &ISSearchForm::AddClicked);
 	ButtonAction->setFlat(true);
 	ButtonAction->setFocusPolicy(Qt::NoFocus);
-	ButtonAction->setProperty("FieldName", ParentItem ? QVariant() : MetaField->Name);
+	ButtonAction->setProperty("FieldName", MetaField->Name);
 	Widget->layout()->addWidget(ButtonAction);
 
 	if (!ParentItem)
@@ -165,6 +164,18 @@ void ISSearchForm::DeleteClicked()
 //-----------------------------------------------------------------------------
 void ISSearchForm::Search()
 {
-	
+	std::map<QString, ISVectorVariant> Values;
+	for (const auto &MapItem : Map)
+	{
+		QString FieldName = MapItem.first->property("FieldName").toString();
+
+		QTreeWidgetItem *TreeWidgetItem = MapItem.second;
+		ISFieldEditBase *FieldEditBase = dynamic_cast<ISFieldEditBase *>(TreeWidget->itemWidget(TreeWidgetItem, 3));
+		if (FieldEditBase->GetModificationFlag())
+		{
+			Values[FieldName].emplace_back(FieldEditBase->GetValue());
+		}
+	}
+	emit Search(Values);
 }
 //-----------------------------------------------------------------------------

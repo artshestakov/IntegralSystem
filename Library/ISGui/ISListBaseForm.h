@@ -97,7 +97,7 @@ protected:
 	void ShowSettingsForm();
 
 private:
-	void Search(const QVariantList &VariantList);
+	void Search(const std::map<QString, ISVectorVariant> &Map);
 	void CreateDelegates(); //Создание делегатов
 	void ShowContextMenu(const QPoint &Point); //Отображение контекстного меню
 

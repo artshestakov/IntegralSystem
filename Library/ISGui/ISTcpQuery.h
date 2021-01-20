@@ -40,6 +40,7 @@ public:
 
 	bool Execute() override;
 	void SetSorting(const QString &SortingField, Qt::SortOrder SortingOrder); //Изменить сортировку
+	void SetSearch(const QVariantMap &VariantMap); //Изменяем поисковые условия
 	void AddFilter(const QString &FieldName, const QVariant &Value); //Добавить фильтр
 
 private:
