@@ -6,6 +6,16 @@
 #include "ISButtons.h"
 #include "ISScrollArea.h"
 //-----------------------------------------------------------------------------
+/*struct ISSearchWidgetItem
+{
+	QTreeWidgetItem *ParentItem;
+	QTreeWidgetItem *TreeWidgetItem;
+	QLabel *Label;
+	ISComboSearchBase *ComboOperator;
+	ISFieldEditBase *FieldEditBase;
+	ISServiceButton *Button;
+};*/
+//-----------------------------------------------------------------------------
 class ISSearchForm : public ISInterfaceForm
 {
 	Q_OBJECT
@@ -23,7 +33,7 @@ protected:
 	void EnterClicked() override;
 
 private:
-	void AddField(PMetaField *MetaField, int Index = -1);
+	void AddField(PMetaField *MetaField, QTreeWidgetItem *ParentItem = nullptr);
 	void AddClicked();
 	void DeleteClicked();
 
@@ -35,7 +45,6 @@ private:
 	QTreeWidget *TreeWidget;
 	ISPushButton *ButtonSearch;
 	ISPushButton *ButtonHide;
-	std::vector<QWidget*> VectorLabels;
-	std::vector<QWidget*> VectorOperators;
+	std::map<QObject*, QTreeWidgetItem*> Map;
 };
 //-----------------------------------------------------------------------------

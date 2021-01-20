@@ -80,23 +80,20 @@ void ISSearchForm::EnterClicked()
 	
 }
 //-----------------------------------------------------------------------------
-void ISSearchForm::AddField(PMetaField *MetaField, int Index)
+void ISSearchForm::AddField(PMetaField *MetaField, QTreeWidgetItem *ParentItem)
 {
-	bool IsTopItem = Index == -1;
-
 	QTreeWidgetItem *TreeWidgetItem = nullptr;
-	if (IsTopItem)
+	if (ParentItem)
 	{
-		TreeWidgetItem = new QTreeWidgetItem(TreeWidget);
-	}
-	else
-	{
-		QTreeWidgetItem *ParentItem = TreeWidget->topLevelItem(Index);
 		TreeWidgetItem = new QTreeWidgetItem(ParentItem);
 		TreeWidget->expandItem(ParentItem);
 	}
+	else
+	{
+		TreeWidgetItem = new QTreeWidgetItem(TreeWidget);
+	}
 
-	if (IsTopItem)
+	if (!ParentItem)
 	{
 		//Заголовок поискового поля
 		QLabel *LabelName = new QLabel(MetaField->LabelName + ':', TreeWidget);
@@ -125,27 +122,42 @@ void ISSearchForm::AddField(PMetaField *MetaField, int Index)
 	Widget->setLayout(new QVBoxLayout());
 	TreeWidget->setItemWidget(TreeWidgetItem, 3, Widget);
 
-	ISServiceButton *ButtonAction = new ISServiceButton(IsTopItem ? BUFFER_ICONS("Add") : BUFFER_ICONS("Delete"),
-		IsTopItem ? LANG("ISSearchForm.AddField") : LANG("ISSearchForm.DeleteField"), Widget);
-	IsTopItem ?
-		connect(ButtonAction, &ISServiceButton::clicked, this, &ISSearchForm::AddClicked) :
-		connect(ButtonAction, &ISServiceButton::clicked, this, &ISSearchForm::DeleteClicked);
+	ISServiceButton *ButtonAction = new ISServiceButton(ParentItem ? BUFFER_ICONS("Delete") : BUFFER_ICONS("Add"),
+		ParentItem ? LANG("ISSearchForm.DeleteField") : LANG("ISSearchForm.AddField"), Widget);
+	ParentItem ?
+		connect(ButtonAction, &ISServiceButton::clicked, this, &ISSearchForm::DeleteClicked) :
+		connect(ButtonAction, &ISServiceButton::clicked, this, &ISSearchForm::AddClicked);
 	ButtonAction->setFlat(true);
-	ButtonAction->setProperty("Index", IsTopItem ? TreeWidget->indexOfTopLevelItem(TreeWidgetItem) : QVariant());
-	ButtonAction->setProperty("FieldName", IsTopItem ? MetaField->Name : QVariant());
+	ButtonAction->setProperty("FieldName", ParentItem ? QVariant() : MetaField->Name);
 	Widget->layout()->addWidget(ButtonAction);
+
+	Map.emplace(ButtonAction, TreeWidgetItem);
 }
 //-----------------------------------------------------------------------------
 void ISSearchForm::AddClicked()
 {
-	int Index = sender()->property("Index").toInt();
 	PMetaField *MetaField = MetaTable->GetField(sender()->property("FieldName").toString());
-	AddField(MetaField, Index);
+	AddField(MetaField, Map[sender()]);
 }
 //-----------------------------------------------------------------------------
 void ISSearchForm::DeleteClicked()
 {
+	//Получаем элементы
+	QTreeWidgetItem *TreeWidgetItem = Map[sender()];
 
+	//Удаляем виджеты
+	TreeWidget->removeItemWidget(TreeWidgetItem, 2);
+	TreeWidget->removeItemWidget(TreeWidgetItem, 3);
+
+	//Удаляем элемент
+	QTreeWidgetItem *ParentItem = TreeWidgetItem->parent();
+	delete ParentItem->takeChild(ParentItem->indexOfChild(TreeWidgetItem));
+
+	std::map<QObject*, QTreeWidgetItem*>::iterator It = Map.find(sender());
+	if (It != Map.end())
+	{
+		Map.erase(It);
+	}
 }
 //-----------------------------------------------------------------------------
 void ISSearchForm::Search()
