@@ -225,7 +225,7 @@
   <Table Name="_Protocol" UID="{F7194787-0AB7-4D59-AEA4-9632FF560374}" Alias="prtc" ShowOnly="true" LocalName="Протокол работы" LocalListName="Протокол работы" TitleName="TableName" IsSystem="true">
     <Fields>
       <Field UID="{D866D169-50F3-402F-BDBC-BA373F0D2815}" Name="User" Type="BigInt" LabelName="Пользователь" LocalListName="Пользователь" NotNull="true"/>
-      <Field UID="{126DB61E-A617-4AD8-80AB-DBE227E9C12B}" Name="DateTime" Type="DateTime" DefaultValue="now()" LabelName="Дата и время" LocalListName="Дата и время события" NotNull="true"/>
+      <Field UID="{126DB61E-A617-4AD8-80AB-DBE227E9C12B}" Name="DateTime" Type="ProtocolDT" DefaultValue="now()" LabelName="Дата и время" LocalListName="Дата и время события" NotNull="true"/>
       <Field UID="{F8881FC1-E7E8-468E-9DEF-358C12F6F625}" Name="Type" Type="BigInt" LabelName="Действие" LocalListName="Действие" NotNull="true"/>
       <Field UID="{A0C19CBE-8426-456D-A37A-76ACA9D97231}" Name="TableName" Type="String" LabelName="Таблица / Подсистема" LocalListName="Таблица / Подсистема" HideFromList="true" NotSearch="true"/>
       <Field UID="{C2143C81-9045-43B5-BCFC-F2EB4E0C00EE}" Name="TableLocalName" Type="String" LabelName="Таблица" LocalListName="Таблица"/>

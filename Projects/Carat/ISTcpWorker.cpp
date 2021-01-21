@@ -2693,6 +2693,10 @@ bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 				{
 					Value = ISUuid(Value);
 				}
+				else if (Type == ISNamespace::FT_ProtocolDT)
+				{
+					Value = ConvertDateTimeToString(Value.toDateTime(), FORMAT_TIME_V3);
+				}
 				Values.push_back(Value);
 			}
 			RecordList.push_back(Values); //ƒобавл€ем список значений в список записей

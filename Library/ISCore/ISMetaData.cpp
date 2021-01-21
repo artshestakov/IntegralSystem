@@ -41,42 +41,8 @@ ISMetaData::ISMetaData()
 	VectorTypes.emplace_back(ISMetaType("Url",			ISNamespace::FT_Url,			"CHARACTER VARYING",			"ISUrlEdit",			"ISComboSearchString",	true));
 	VectorTypes.emplace_back(ISMetaType("File",			ISNamespace::FT_File,			"CHARACTER VARYING",			"ISFileEdit",			QString(),				false));
 	VectorTypes.emplace_back(ISMetaType("TaskImportant",ISNamespace::FT_TaskImportant,	"BOOLEAN",						"ISTaskImportantEdit",	"ISComboSearchBase",	true));
+	VectorTypes.emplace_back(ISMetaType("ProtocolDT",	ISNamespace::FT_ProtocolDT,		"TIMESTAMP WITHOUT TIME ZONE",	"ISDateTimeEdit",		"ISComboSearchNumber",	true));
 
-	/*VectorTypes = std::vector<ISMetaDataType>
-	{
-		{ "ID", ISNamespace::FT_ID, "BIGINT", "ISIntegerEdit", "ISComboSearchNumber", true },
-		{ "Int", ISNamespace::FT_Int, "INTEGER", "ISIntegerEdit", "ISComboSearchNumber", true },
-		{ "IntArray", ISNamespace::FT_IntArray, "INTEGER[]", "ISIntegerEdit", "ISComboSearchNumber", true },
-		{ "BigInt", ISNamespace::FT_BigInt, "BIGINT", "ISIntegerEdit", "ISComboSearchNumber", true },
-		{ "String", ISNamespace::FT_String, "CHARACTER VARYING", "ISLineEdit", "ISComboSearchString", true },
-		{ "Text", ISNamespace::FT_Text, "TEXT", "ISTextEdit", "ISComboSearchString", true },
-		{ "UID", ISNamespace::FT_UID, "UUID", "ISUuidEdit", "ISComboSearchString", true },
-		{ "Bool", ISNamespace::FT_Bool, "BOOLEAN", "ISCheckEdit", "ISComboSearchBase", true },
-		{ "Double", ISNamespace::FT_Double, "NUMERIC", "ISDoubleEdit", "ISComboSearchNumber", true },
-		{ "Money", ISNamespace::FT_Money, "NUMERIC", "ISMoneyEdit", "ISComboSearchNumber", true },
-		{ "ByteArray", ISNamespace::FT_ByteArray, "BYTEA", "ISLineEdit", QString(), false },
-		{ "Date", ISNamespace::FT_Date, "DATE", "ISDateEdit", "ISComboSearchNumber", true },
-		{ "Time", ISNamespace::FT_Time, "TIME WITHOUT TIME ZONE", "ISTimeEdit", "ISComboSearchNumber", true },
-		{ "DateTime", ISNamespace::FT_DateTime, "TIMESTAMP WITHOUT TIME ZONE", "ISDateTimeEdit", "ISComboSearchNumber", true },
-		{ "Inn", ISNamespace::FT_Inn, "CHARACTER VARYING", "ISINNEdit", "ISComboSearchString", true },
-		{ "Kpp", ISNamespace::FT_Kpp, "CHARACTER VARYING", "ISKPPEdit", "ISComboSearchString", true },
-		{ "Ogrn", ISNamespace::FT_Ogrn, "CHARACTER VARYING", "ISOGRNEdit", "ISComboSearchString", true },
-		{ "Okpo", ISNamespace::FT_Okpo, "CHARACTER VARYING", "ISOKPOEdit", "ISComboSearchString", true },
-		{ "Bik", ISNamespace::FT_Bik, "CHARACTER VARYING", "ISBIKEdit", "ISComboSearchString", true },
-		{ "Vin", ISNamespace::FT_Vin, "CHARACTER VARYING", "ISVINEdit", "ISComboSearchString", true },
-		{ "Year", ISNamespace::FT_Year, "INTEGER", "ISYearEdit", "ISComboSearchNumber", true },
-		{ "Phone", ISNamespace::FT_Phone, "CHARACTER VARYING", "ISPhoneEdit", "ISComboSearchString", true },
-		{ "Image", ISNamespace::FT_Image, "BYTEA", "ISImageEdit", QString(), false },
-		{ "Color", ISNamespace::FT_Color, "CHARACTER VARYING", "ISColorEdit", QString(), false },
-		{ "EMail", ISNamespace::FT_EMail, "CHARACTER VARYING", "ISEMailEdit", "ISComboSearchString", true },
-		{ "Volume", ISNamespace::FT_Volume, "INTEGER", "ISVolumeEdit", QString(), false },
-		{ "Birthday", ISNamespace::FT_Birthday, "DATE", "ISBirthdayEdit", "ISComboSearchNumber", true },
-		{ "Seconds", ISNamespace::FT_Seconds, "INTEGER", "ISIntegerEdit", "ISComboSearchNumber", false },
-		{ "Month", ISNamespace::FT_Month, "INTEGER", "ISMonthEdit", "ISComboSearchNumber", false },
-		{ "Url", ISNamespace::FT_Url, "CHARACTER VARYING", "ISUrlEdit", "ISComboSearchString", true },
-		{ "File", ISNamespace::FT_File, "CHARACTER VARYING", "ISFileEdit", QString(), false },
-		{ "TaskImportant", ISNamespace::FT_TaskImportant, "BOOLEAN", "ISTaskImportantEdit", "ISComboSearchBase", true }
-	};*/
 	CRITICAL_SECTION_INIT(&CriticalSection);
 }
 //-----------------------------------------------------------------------------
