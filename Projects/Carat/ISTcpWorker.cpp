@@ -2418,14 +2418,15 @@ bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 
 	//Если указаны поисковые параметры
 	QVariantList SearchList = TcpMessage->Parameters.contains("Search") ? TcpMessage->Parameters["Search"].toList() : QVariantList();
-	if (!SearchList.isEmpty())
+	bool IsSearch = !SearchList.isEmpty();
+	if (IsSearch)
 	{
 		SqlText += "\nWHERE\n";
 		for (const QVariant &Variant : SearchList) //Обходим поисковые условия
 		{
 			QVariantMap Map = Variant.toMap();
 			QString FieldName = Map["FieldName"].toString();
-			ISNamespace::SearchOperatorType OperatorType = static_cast<ISNamespace::SearchOperatorType>(Map["Operator"].toUInt());
+			//ISNamespace::SearchOperatorType OperatorType = static_cast<ISNamespace::SearchOperatorType>(Map["Operator"].toUInt());
 			QVariantList ValueList = Map["Values"].toList();
 
 			SqlText += MetaTable->Alias + '_' + MetaTable->GetField(FieldName)->Name.toLower();			
@@ -2585,7 +2586,7 @@ bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	TcpAnswer->Parameters["ServiceInfo"] = ServiceInfoMap;
 	TcpAnswer->Parameters["FieldList"] = FieldList;
 	TcpAnswer->Parameters["RecordList"] = RecordList;
-	Protocol(TcpMessage->TcpSocket->GetUserID(), CONST_UID_PROTOCOL_GET_TABLE_DATA, MetaTable->Name, MetaTable->LocalListName);
+	Protocol(TcpMessage->TcpSocket->GetUserID(), IsSearch ? CONST_UID_PROTOCOL_SEARCH : CONST_UID_PROTOCOL_GET_TABLE_DATA, MetaTable->Name, MetaTable->LocalListName);
 	return true;
 }
 //-----------------------------------------------------------------------------
