@@ -903,11 +903,11 @@ void ISOilSphere::Debet1SubSystem::LoadDataAfterEvent()
 {
 	ISListBaseForm::LoadDataAfterEvent();
 	double Total = 0, Calculation = 0;
-	for (int Row = 0; Row < /*GetSqlModel*/GetTcpModel()->rowCount(); ++Row)
+	for (int Row = 0; Row < GetTcpModel()->rowCount(); ++Row)
 	{
-		QString Temp = /*GetSqlModel*/GetTcpModel()->data(/*GetSqlModel*/GetTcpModel()->index(Row, /*GetSqlModel*/GetTcpModel()->GetFieldIndex("Total"))).toString();
-		Total += Temp.replace(SYMBOL_COMMA, SYMBOL_POINT).toDouble();
-		Temp = /*GetSqlModel*/GetTcpModel()->data(/*GetSqlModel*/GetTcpModel()->index(Row, /*GetSqlModel*/GetTcpModel()->GetFieldIndex("Calculation"))).toString();
+		QString Temp = GetTcpModel()->data(GetTcpModel()->index(Row, GetTcpModel()->GetFieldIndex("Total"))).toString();
+		Total += Temp.replace(SYMBOL_COMMA, SYMBOL_POINT).remove(' ').toDouble();
+		Temp = GetTcpModel()->data(GetTcpModel()->index(Row, GetTcpModel()->GetFieldIndex("Calculation"))).toString();
 		Calculation += Temp.replace(SYMBOL_COMMA, SYMBOL_POINT).toDouble();
 	}
 	Label->setText(LANG("OilSphere.Debet.Label").arg(DOUBLE_PREPARE(Total)).arg(DOUBLE_PREPARE(Calculation)).arg(DOUBLE_PREPARE(Total - Calculation)));
@@ -933,11 +933,11 @@ void ISOilSphere::Debet2SubSystem::LoadDataAfterEvent()
 {
 	ISListBaseForm::LoadDataAfterEvent();
 	double Total = 0, Calculation = 0;
-	for (int Row = 0; Row < /*GetSqlModel*/GetTcpModel()->rowCount(); ++Row)
+	for (int Row = 0; Row < GetTcpModel()->rowCount(); ++Row)
 	{
-		QString Temp = /*GetSqlModel*/GetTcpModel()->data(/*GetSqlModel*/GetTcpModel()->index(Row, /*GetSqlModel*/GetTcpModel()->GetFieldIndex("Total"))).toString();
-		Total += Temp.replace(SYMBOL_COMMA, SYMBOL_POINT).toDouble();
-		Temp = /*GetSqlModel*/GetTcpModel()->data(/*GetSqlModel*/GetTcpModel()->index(Row, /*GetSqlModel*/GetTcpModel()->GetFieldIndex("Calculation"))).toString();
+		QString Temp = GetTcpModel()->data(GetTcpModel()->index(Row, GetTcpModel()->GetFieldIndex("Total"))).toString();
+		Total += Temp.replace(SYMBOL_COMMA, SYMBOL_POINT).remove(' ').toDouble();
+		Temp = GetTcpModel()->data(GetTcpModel()->index(Row, GetTcpModel()->GetFieldIndex("Calculation"))).toString();
 		Calculation += Temp.replace(SYMBOL_COMMA, SYMBOL_POINT).toDouble();
 	}
 	Label->setText(LANG("OilSphere.Debet.Label").arg(DOUBLE_PREPARE(Total)).arg(DOUBLE_PREPARE(Calculation)).arg(DOUBLE_PREPARE(Total - Calculation)));
@@ -963,11 +963,11 @@ void ISOilSphere::Debet3SubSystem::LoadDataAfterEvent()
 {
 	ISListBaseForm::LoadDataAfterEvent();
 	double Total = 0, Calculation = 0;
-	for (int Row = 0; Row < /*GetSqlModel*/GetTcpModel()->rowCount(); ++Row)
+	for (int Row = 0; Row < GetTcpModel()->rowCount(); ++Row)
 	{
-		QString Temp = /*GetSqlModel*/GetTcpModel()->data(/*GetSqlModel*/GetTcpModel()->index(Row, /*GetSqlModel*/GetTcpModel()->GetFieldIndex("Total"))).toString();
-		Total += Temp.replace(SYMBOL_COMMA, SYMBOL_POINT).toDouble();
-		Temp = /*GetSqlModel*/GetTcpModel()->data(/*GetSqlModel*/GetTcpModel()->index(Row, /*GetSqlModel*/GetTcpModel()->GetFieldIndex("Calculation"))).toString();
+		QString Temp = GetTcpModel()->data(GetTcpModel()->index(Row, GetTcpModel()->GetFieldIndex("Total"))).toString();
+		Total += Temp.replace(SYMBOL_COMMA, SYMBOL_POINT).remove(' ').toDouble();
+		Temp = GetTcpModel()->data(GetTcpModel()->index(Row, GetTcpModel()->GetFieldIndex("Calculation"))).toString();
 		Calculation += Temp.replace(SYMBOL_COMMA, SYMBOL_POINT).toDouble();
 	}
 	Label->setText(LANG("OilSphere.Debet.Label").arg(DOUBLE_PREPARE(Total)).arg(DOUBLE_PREPARE(Calculation)).arg(DOUBLE_PREPARE(Total - Calculation)));
@@ -993,11 +993,11 @@ void ISOilSphere::Debet4SubSystem::LoadDataAfterEvent()
 {
 	ISListBaseForm::LoadDataAfterEvent();
 	double Total = 0, Calculation = 0;
-	for (int Row = 0; Row < /*GetSqlModel*/GetTcpModel()->rowCount(); ++Row)
+	for (int Row = 0; Row < GetTcpModel()->rowCount(); ++Row)
 	{
-		QString Temp = /*GetSqlModel*/GetTcpModel()->data(/*GetSqlModel*/GetTcpModel()->index(Row, /*GetSqlModel*/GetTcpModel()->GetFieldIndex("Total"))).toString();
-		Total += Temp.replace(SYMBOL_COMMA, SYMBOL_POINT).toDouble();
-		Temp = /*GetSqlModel*/GetTcpModel()->data(/*GetSqlModel*/GetTcpModel()->index(Row, /*GetSqlModel*/GetTcpModel()->GetFieldIndex("Calculation"))).toString();
+		QString Temp = GetTcpModel()->data(GetTcpModel()->index(Row, GetTcpModel()->GetFieldIndex("Total"))).toString();
+		Total += Temp.replace(SYMBOL_COMMA, SYMBOL_POINT).remove(' ').toDouble();
+		Temp = GetTcpModel()->data(GetTcpModel()->index(Row, GetTcpModel()->GetFieldIndex("Calculation"))).toString();
 		Calculation += Temp.replace(SYMBOL_COMMA, SYMBOL_POINT).toDouble();
 	}
 	Label->setText(LANG("OilSphere.Debet.Label").arg(DOUBLE_PREPARE(Total)).arg(DOUBLE_PREPARE(Calculation)).arg(DOUBLE_PREPARE(Total - Calculation)));
@@ -1023,11 +1023,11 @@ void ISOilSphere::Debet5SubSystem::LoadDataAfterEvent()
 {
 	ISListBaseForm::LoadDataAfterEvent();
 	double Total = 0, Calculation = 0;
-	for (int Row = 0; Row < /*GetSqlModel*/GetTcpModel()->rowCount(); ++Row)
+	for (int Row = 0; Row < GetTcpModel()->rowCount(); ++Row)
 	{
-		QString Temp = /*GetSqlModel*/GetTcpModel()->data(/*GetSqlModel*/GetTcpModel()->index(Row, /*GetSqlModel*/GetTcpModel()->GetFieldIndex("Total"))).toString();
-		Total += Temp.replace(SYMBOL_COMMA, SYMBOL_POINT).toDouble();
-		Temp = /*GetSqlModel*/GetTcpModel()->data(/*GetSqlModel*/GetTcpModel()->index(Row, /*GetSqlModel*/GetTcpModel()->GetFieldIndex("Calculation"))).toString();
+		QString Temp = GetTcpModel()->data(GetTcpModel()->index(Row, GetTcpModel()->GetFieldIndex("Total"))).toString();
+		Total += Temp.replace(SYMBOL_COMMA, SYMBOL_POINT).remove(' ').toDouble();
+		Temp = GetTcpModel()->data(GetTcpModel()->index(Row, GetTcpModel()->GetFieldIndex("Calculation"))).toString();
 		Calculation += Temp.replace(SYMBOL_COMMA, SYMBOL_POINT).toDouble();
 	}
 	Label->setText(LANG("OilSphere.Debet.Label").arg(DOUBLE_PREPARE(Total)).arg(DOUBLE_PREPARE(Calculation)).arg(DOUBLE_PREPARE(Total - Calculation)));
