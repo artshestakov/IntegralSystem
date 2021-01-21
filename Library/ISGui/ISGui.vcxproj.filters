@@ -65,11 +65,8 @@
     <Filter Include="SubSystem">
       <UniqueIdentifier>{462ff294-a08b-43b8-9bbf-0c16d083eaed}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Dialog Forms">
+    <Filter Include="Dialogs">
       <UniqueIdentifier>{3546b8d5-31bc-4936-b050-706634b1317f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Dialog">
-      <UniqueIdentifier>{dffb62ef-e48f-49d7-93f7-e1f2348ff642}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -316,41 +313,14 @@
     <ClCompile Include="ISUserGroupSubSystem.cpp">
       <Filter>SubSystem</Filter>
     </ClCompile>
-    <ClCompile Include="ISExportDialog.cpp">
-      <Filter>Dialog Forms</Filter>
-    </ClCompile>
-    <ClCompile Include="ISSelectListDialog.cpp">
-      <Filter>Dialog Forms</Filter>
-    </ClCompile>
-    <ClCompile Include="ISUserGroupRightDialog.cpp">
-      <Filter>Dialog Forms</Filter>
-    </ClCompile>
-    <ClCompile Include="ISAboutDialog.cpp">
-      <Filter>Dialog Forms</Filter>
-    </ClCompile>
-    <ClCompile Include="ISAuthDialog.cpp">
-      <Filter>Dialog Forms</Filter>
-    </ClCompile>
-    <ClCompile Include="ISDeviceConnectDialog.cpp">
-      <Filter>Dialog Forms</Filter>
-    </ClCompile>
-    <ClCompile Include="ISReconnectDialog.cpp">
-      <Filter>Dialog Forms</Filter>
-    </ClCompile>
-    <ClCompile Include="ISSettingsDialog.cpp">
-      <Filter>Dialog Forms</Filter>
-    </ClCompile>
-    <ClCompile Include="ISUserPasswordDialog.cpp">
-      <Filter>Dialog Forms</Filter>
-    </ClCompile>
-    <ClCompile Include="ISConnectDialog.cpp">
-      <Filter>Dialog Forms</Filter>
-    </ClCompile>
     <ClCompile Include="ISTcpModels.cpp">
       <Filter>Protocol</Filter>
     </ClCompile>
+    <ClCompile Include="ISDialogsForm.cpp">
+      <Filter>Dialogs</Filter>
+    </ClCompile>
     <ClCompile Include="ISDialogsCommon.cpp">
-      <Filter>Dialog</Filter>
+      <Filter>Dialogs</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -561,41 +531,14 @@
     <QtMoc Include="ISUserGroupSubSystem.h">
       <Filter>SubSystem</Filter>
     </QtMoc>
-    <QtMoc Include="ISExportDialog.h">
-      <Filter>Dialog Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISSelectListDialog.h">
-      <Filter>Dialog Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISUserGroupRightDialog.h">
-      <Filter>Dialog Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISAboutDialog.h">
-      <Filter>Dialog Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISAuthDialog.h">
-      <Filter>Dialog Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISDeviceConnectDialog.h">
-      <Filter>Dialog Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISReconnectDialog.h">
-      <Filter>Dialog Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISSettingsDialog.h">
-      <Filter>Dialog Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISUserPasswordDialog.h">
-      <Filter>Dialog Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISConnectDialog.h">
-      <Filter>Dialog Forms</Filter>
-    </QtMoc>
     <QtMoc Include="ISTcpModels.h">
       <Filter>Protocol</Filter>
     </QtMoc>
     <QtMoc Include="ISDialogsCommon.h">
-      <Filter>Dialog</Filter>
+      <Filter>Dialogs</Filter>
+    </QtMoc>
+    <QtMoc Include="ISDialogsForm.h">
+      <Filter>Dialogs</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>

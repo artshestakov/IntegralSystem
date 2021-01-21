@@ -1,8 +1,8 @@
 #include "ISUserGroupSubSystem.h"
 #include "ISLocalization.h"
 #include "ISGui.h"
-#include "ISUserGroupRightDialog.h"
 #include "ISBuffer.h"
+#include "ISDialogsForm.h"
 //-----------------------------------------------------------------------------
 ISUserGroupSubSystem::ISUserGroupSubSystem(QWidget *parent) : ISListBaseForm("_UserGroup", parent)
 {

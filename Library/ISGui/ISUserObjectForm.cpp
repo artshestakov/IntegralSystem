@@ -8,7 +8,7 @@
 #include "ISTcpQuery.h"
 #include "ISBuffer.h"
 #include "ISPopupMessage.h"
-#include "ISDeviceConnectDialog.h"
+#include "ISDialogsForm.h"
 //-----------------------------------------------------------------------------
 ISUserObjectForm::ISUserObjectForm(ISNamespace::ObjectFormType form_type, PMetaTable *meta_table, QWidget *parent, int object_id) : ISObjectFormBase(form_type, meta_table, parent, object_id)
 {

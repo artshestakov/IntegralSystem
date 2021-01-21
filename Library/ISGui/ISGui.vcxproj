@@ -174,10 +174,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="ISAboutDialog.cpp" />
     <ClCompile Include="ISAsteriskCallsSubSystem.cpp" />
     <ClCompile Include="ISAudioPlayerForm.cpp" />
-    <ClCompile Include="ISAuthDialog.cpp" />
     <ClCompile Include="ISBaseTableView.cpp" />
     <ClCompile Include="ISBuffer.cpp" />
     <ClCompile Include="ISButtons.cpp" />
@@ -190,7 +188,6 @@
     <ClCompile Include="ISCalendarWidget.cpp" />
     <ClCompile Include="ISColumnSizer.cpp" />
     <ClCompile Include="ISComboSearchWidgets.cpp" />
-    <ClCompile Include="ISConnectDialog.cpp" />
     <ClCompile Include="ISContextMenu.cpp" />
     <ClCompile Include="ISControls.cpp" />
     <ClCompile Include="ISCreatedObjectsEntity.cpp" />
@@ -198,12 +195,11 @@
     <ClCompile Include="ISDefinesGui.cpp" />
     <ClCompile Include="ISDelegates.cpp" />
     <ClCompile Include="ISDesktopParagraph.cpp" />
-    <ClCompile Include="ISDeviceConnectDialog.cpp" />
     <ClCompile Include="ISDialogsCommon.cpp" />
+    <ClCompile Include="ISDialogsForm.cpp" />
     <ClCompile Include="ISDiscussionListForm.cpp" />
     <ClCompile Include="ISEditsQT.cpp" />
     <ClCompile Include="ISEmpty.cpp" />
-    <ClCompile Include="ISExportDialog.cpp" />
     <ClCompile Include="ISExportWorker.cpp" />
     <ClCompile Include="ISFavorites.cpp" />
     <ClCompile Include="ISFavoritesForm.cpp" />
@@ -241,14 +237,11 @@
     <ClCompile Include="ISProgressForm.cpp" />
     <ClCompile Include="ISProtocolSubSystem.cpp" />
     <ClCompile Include="ISProtocolObjectListForm.cpp" />
-    <ClCompile Include="ISReconnectDialog.cpp" />
     <ClCompile Include="ISScrollArea.cpp" />
     <ClCompile Include="ISSearchForm.cpp" />
-    <ClCompile Include="ISSelectListDialog.cpp" />
     <ClCompile Include="ISSelectListForm.cpp" />
     <ClCompile Include="ISSettingFieldWidgets.cpp" />
     <ClCompile Include="ISSettingsDatabaseObjectForm.cpp" />
-    <ClCompile Include="ISSettingsDialog.cpp" />
     <ClCompile Include="ISSplashScreen.cpp" />
     <ClCompile Include="ISSplashWidget.cpp" />
     <ClCompile Include="ISStorageFilesSubSystem.cpp" />
@@ -259,17 +252,12 @@
     <ClCompile Include="ISTcpModels.cpp" />
     <ClCompile Include="ISTcpQuery.cpp" />
     <ClCompile Include="ISUserGroupSubSystem.cpp" />
-    <ClCompile Include="ISUserGroupRightDialog.cpp" />
     <ClCompile Include="ISUserObjectForm.cpp" />
-    <ClCompile Include="ISUserPasswordDialog.cpp" />
     <ClCompile Include="ISUserPhotoCreator.cpp" />
     <ClCompile Include="ISUserRoleEntity.cpp" />
     <ClCompile Include="ISValidators.cpp" />
     <ClCompile Include="ISWaitWidget.cpp" />
     <ClCompile Include="ISWorkspaceParagraph.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <QtMoc Include="ISExportDialog.h" />
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ISProcessForm.h" />
@@ -299,9 +287,6 @@
     <QtMoc Include="ISProtocolSubSystem.h" />
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="ISSelectListDialog.h" />
-  </ItemGroup>
-  <ItemGroup>
     <QtMoc Include="ISSelectListForm.h" />
   </ItemGroup>
   <ItemGroup>
@@ -313,11 +298,8 @@
   <ItemGroup>
     <QtMoc Include="ISValidators.h" />
     <QtMoc Include="ISWorkspaceParagraph.h" />
-    <QtMoc Include="ISAboutDialog.h" />
-    <QtMoc Include="ISAuthDialog.h" />
     <QtMoc Include="ISCalendarParagraph.h" />
     <QtMoc Include="ISCalendarObjectForm.h" />
-    <QtMoc Include="ISConnectDialog.h" />
     <QtMoc Include="ISDesktopParagraph.h" />
     <QtMoc Include="ISDiscussionListForm.h" />
     <QtMoc Include="ISFavoritesForm.h" />
@@ -330,11 +312,9 @@
     <QtMoc Include="ISParagraphBaseForm.h" />
     <QtMoc Include="ISProtocolObjectListForm.h" />
     <QtMoc Include="ISSearchForm.h" />
-    <QtMoc Include="ISSettingsDialog.h" />
     <QtMoc Include="ISStorageFilesSubSystem.h" />
     <QtMoc Include="ISUserGroupSubSystem.h" />
     <QtMoc Include="ISUserObjectForm.h" />
-    <QtMoc Include="ISUserPasswordDialog.h" />
     <QtMoc Include="ISListIndicatorWidget.h" />
     <QtMoc Include="ISCalendarEventItem.h" />
     <QtMoc Include="ISCalendarEventsWidget.h" />
@@ -356,17 +336,15 @@
     <QtMoc Include="ISSplashScreen.h" />
     <QtMoc Include="ISSplashWidget.h" />
     <QtMoc Include="ISSystemsPanel.h" />
-    <QtMoc Include="ISUserGroupRightDialog.h" />
     <QtMoc Include="ISEmpty.h" />
     <QtMoc Include="ISAsteriskCallsSubSystem.h" />
     <QtMoc Include="ISAudioPlayerForm.h" />
-    <QtMoc Include="ISDeviceConnectDialog.h" />
     <QtMoc Include="ISDialogsCommon.h" />
+    <QtMoc Include="ISDialogsForm.h" />
     <ClInclude Include="isgui_global.h" />
     <QtMoc Include="ISProgressForm.h" />
     <QtMoc Include="ISSettingsDatabaseObjectForm.h" />
     <QtMoc Include="ISListViewForm.h" />
-    <QtMoc Include="ISReconnectDialog.h" />
     <QtMoc Include="ISTcpConnector.h" />
     <QtMoc Include="ISTcpModels.h" />
     <ClInclude Include="ISTcpQuery.h" />

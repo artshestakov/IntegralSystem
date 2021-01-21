@@ -4,7 +4,6 @@
 #include "ISSettings.h"
 #include "ISLocalization.h"
 #include "ISPopupMessage.h"
-#include "ISExportDialog.h"
 #include "ISProgressForm.h"
 #include "ISLogger.h"
 #include "ISProcessForm.h"
@@ -20,6 +19,7 @@
 #include "ISGui.h"
 #include "ISAlgorithm.h"
 #include "ISTcpQuery.h"
+#include "ISDialogsForm.h"
 //-----------------------------------------------------------------------------
 ISListBaseForm::ISListBaseForm(const QString &TableName, QWidget *parent)
 	: ISInterfaceMetaForm(parent),

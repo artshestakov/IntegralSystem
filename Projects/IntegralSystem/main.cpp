@@ -1,11 +1,11 @@
 #include "ISLocalization.h"
 #include "ISGui.h"
 #include "ISSplashScreen.h"
-#include "ISAuthDialog.h"
 #include "ISLogger.h"
 #include "ISMainWindow.h"
 #include "ISSettings.h"
 #include "ISProperty.h"
+#include "ISDialogsForm.h"
 //-----------------------------------------------------------------------------
 int main(int argc, char **argv)
 {
