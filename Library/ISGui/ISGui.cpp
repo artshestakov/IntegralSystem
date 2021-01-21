@@ -151,12 +151,17 @@ bool ISGui::Startup(ISSplashScreen *SplashScreen)
 //-----------------------------------------------------------------------------
 void ISGui::Shutdown(ISSplashScreen *SplashScreen)
 {
-	ISTcpQuery qSaveMetaData(API_SAVE_META_DATA);
-	qSaveMetaData.BindValue("ColumnSize", ISColumnSizer::Instance().GetColumnSize());
-	qSaveMetaData.BindValue("Settings", ISSettings::Instance().GetSettingsChanged());
-	if (!qSaveMetaData.Execute())
+	//Если связь с сервером есть - отправляем запрос на сохранение мета-данных
+	//Нужно на случай если пользователь решил закрыть программу после обрыва соединения с сервером
+	if (ISTcpConnector::Instance().IsConnected())
 	{
-		ISMessageBox::ShowCritical(SplashScreen, qSaveMetaData.GetErrorString());
+		ISTcpQuery qSaveMetaData(API_SAVE_META_DATA);
+		qSaveMetaData.BindValue("ColumnSize", ISColumnSizer::Instance().GetColumnSize());
+		qSaveMetaData.BindValue("Settings", ISSettings::Instance().GetSettingsChanged());
+		if (!qSaveMetaData.Execute())
+		{
+			ISMessageBox::ShowCritical(SplashScreen, qSaveMetaData.GetErrorString());
+		}
 	}
 	ISGui::ExitApplication();
 }
