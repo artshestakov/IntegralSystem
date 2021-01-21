@@ -58,6 +58,7 @@ public:
 	virtual void NavigationSelectPreviousRecord(); //Выделение предыдущей записи
 	virtual void NavigationSelectNextRecord(); //Выделение следующей записи
 	virtual void NavigationSelectLastRecord(); //Выделение последней записи
+	void RecordInfo(); //Информация о записи
 	void NoteObject(); //Примечание объекта
 	virtual void LoadData() override; //Загрузка данных в таблицу
 	virtual void CornerButtonClicked(); //Событие нажатия на cornerButton

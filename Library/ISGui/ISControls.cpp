@@ -201,6 +201,11 @@ QAction* ISControls::CreateActionSearchClearResults(QObject *ParentObject)
 	return ActionSearchFullTextClear;
 }
 //-----------------------------------------------------------------------------
+QAction* ISControls::CreateActionRecordInfo(QObject *ParentObject)
+{
+	return new QAction(BUFFER_ICONS("RecordInfo"), LANG("ISRecordInfoDialog.Title"), ParentObject);
+}
+//-----------------------------------------------------------------------------
 QAction* ISControls::CreateActionNoteObject(QObject *ParentObject)
 {
 	return new QAction(BUFFER_ICONS("NoteObject"), LANG("NoteObject"), ParentObject);

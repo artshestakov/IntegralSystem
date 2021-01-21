@@ -77,6 +77,7 @@ protected:
 	void FavoriteClicked(); //Добавить в избранное
 	void Delete();
 	void CancelChanged(); //Отмена изменений
+	void RecordInfo(); //Информация о записи
 	void NoteObject(); //Примечание записи
 
 	void AddActionToolBar(QAction *Action, bool AddingToActionGroup = true); //Добавить кнопку-действие на тулбар
@@ -108,6 +109,7 @@ private:
 	QAction *ActionFavorites;
 	QAction *ActionDelete;
 	QAction *ActionCancelChange;
+	QAction *ActionRecordInfo;
 	QAction *ActionNoteObject;
 
 	ISLineEdit *EditObjectID; //Виджет отображения идентификатора объекта

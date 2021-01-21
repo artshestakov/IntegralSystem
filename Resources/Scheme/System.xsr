@@ -26,6 +26,7 @@
   <_ProtocolType IsSystem="true" UID="{0361643D-0A62-4F51-84BD-313F53115EFD}" Name="Изменение записи"/>
   <_ProtocolType IsSystem="true" UID="{117E8972-97DC-4E72-93AC-DC3BB50D11CF}" Name="Просмотр записи"/>
   <_ProtocolType IsSystem="true" UID="{B6EEFB63-8197-4F3A-8373-5C3B2FC409F3}" Name="Удаление записи"/>
+  <_ProtocolType IsSystem="true" UID="{FD98685E-D6DD-41E3-9F62-389567F58971}" Name="Просмотр информации о записи"/>
   <_ProtocolType IsSystem="true" UID="{1C50A667-B1C4-4F2C-8F39-90106ABB6774}" Name="Выгрузка таблицы"/>
   <_ProtocolType IsSystem="true" UID="{179F73BF-8983-4B52-B505-AF0EF4BF8093}" Name="Расширенный поиск"/>
   <_ProtocolType IsSystem="true" UID="{B0A1EF68-2AA4-4EB2-A5A9-F8E5604F864B}" Name="Полнотекстовый поиск"/>

@@ -281,4 +281,15 @@ private:
 	QString UserLogin;
 };
 //-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+class ISRecordInfoDialog : public ISInterfaceDialogForm
+{
+	Q_OBJECT
+
+public:
+	ISRecordInfoDialog(QWidget *parent, const QString &TableName, unsigned int ObjectID);
+	virtual ~ISRecordInfoDialog();
+};
+//-----------------------------------------------------------------------------
 #endif

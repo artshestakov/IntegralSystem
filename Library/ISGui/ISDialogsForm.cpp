@@ -1393,3 +1393,74 @@ void ISUserPasswordDialog::Apply()
 	}
 }
 //-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+ISRecordInfoDialog::ISRecordInfoDialog(QWidget *parent, const QString &TableName, unsigned int ObjectID) : ISInterfaceDialogForm(parent)
+{
+	setWindowTitle(LANG("ISRecordInfoDialog.Title"));
+	setWindowIcon(BUFFER_ICONS("RecordInfo"));
+	GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);
+
+	QFormLayout *FormLayout = new QFormLayout();
+	GetMainLayout()->addLayout(FormLayout);
+
+	ISTcpQuery qRecordGetInfo(API_RECORD_GET_INFO);
+	qRecordGetInfo.BindValue("TableName", TableName);
+	qRecordGetInfo.BindValue("ObjectID", ObjectID);
+	if (qRecordGetInfo.Execute())
+	{
+		QVariantMap AnswerMap = qRecordGetInfo.GetAnswer();
+
+		QLabel *LabelName = new QLabel(LANG("ISRecordInfoDialog.Field.Name"), this);
+		ISGui::SetFontWidgetBold(LabelName, true);
+		FormLayout->addRow(LabelName, new QLabel(AnswerMap["ObjectName"].toString(), this));
+
+		FormLayout->addWidget(ISControls::CreateHorizontalLine(this));
+
+		QLabel *LabelCreateDate = new QLabel(LANG("ISRecordInfoDialog.Field.CreateDate"), this);
+		ISGui::SetFontWidgetBold(LabelCreateDate, true);
+		FormLayout->addRow(LabelCreateDate, new QLabel(AnswerMap["CreateDate"].toString(), this));
+
+		QLabel *LabelCreateUser = new QLabel(LANG("ISRecordInfoDialog.Field.CreateUser"), this);
+		ISGui::SetFontWidgetBold(LabelCreateUser, true);
+		FormLayout->addRow(LabelCreateUser, new QLabel(AnswerMap["CreateUser"].toString(), this));
+
+		QLabel *LabelEditDate = new QLabel(LANG("ISRecordInfoDialog.Field.EditDate"), this);
+		ISGui::SetFontWidgetBold(LabelEditDate, true);
+		FormLayout->addRow(LabelEditDate, new QLabel(AnswerMap["EditDate"].toString(), this));
+
+		QLabel *LabelEditUser = new QLabel(LANG("ISRecordInfoDialog.Field.EditUser"), this);
+		ISGui::SetFontWidgetBold(LabelEditUser, true);
+		FormLayout->addRow(LabelEditUser, new QLabel(AnswerMap["EditUser"].toString(), this));
+
+		QLabel *LabelCopyCount = new QLabel(LANG("ISRecordInfoDialog.Field.CopyCount"), this);
+		ISGui::SetFontWidgetBold(LabelCopyCount, true);
+		FormLayout->addRow(LabelCopyCount, new QLabel(QString::number(AnswerMap["CopyCount"].toInt()), this));
+
+		QLabel *LabelEditCount = new QLabel(LANG("ISRecordInfoDialog.Field.EditCount"), this);
+		ISGui::SetFontWidgetBold(LabelEditCount, true);
+		FormLayout->addRow(LabelEditCount, new QLabel(QString::number(AnswerMap["EditCount"].toInt()), this));
+
+		QLabel *LabelShowCount = new QLabel(LANG("ISRecordInfoDialog.Field.ShowCount"), this);
+		ISGui::SetFontWidgetBold(LabelShowCount, true);
+		FormLayout->addRow(LabelShowCount, new QLabel(QString::number(AnswerMap["ShowCount"].toInt()), this));
+
+		QLabel *LabelFavoriteCount = new QLabel(LANG("ISRecordInfoDialog.Field.FavoriteCount"), this);
+		ISGui::SetFontWidgetBold(LabelFavoriteCount, true);
+		FormLayout->addRow(LabelFavoriteCount, new QLabel(QString::number(AnswerMap["FavoriteCount"].toInt()), this));
+	}
+	else
+	{
+		ISMessageBox::ShowCritical(this, qRecordGetInfo.GetErrorString());
+	}
+
+	ISPushButton *ButtonClose = new ISPushButton(BUFFER_ICONS("Close"), LANG("Close"), this);
+	connect(ButtonClose, &ISPushButton::clicked, this, &ISRecordInfoDialog::close);
+	GetMainLayout()->addWidget(ButtonClose, 0, Qt::AlignRight);
+}
+//-----------------------------------------------------------------------------
+ISRecordInfoDialog::~ISRecordInfoDialog()
+{
+
+}
+//-----------------------------------------------------------------------------

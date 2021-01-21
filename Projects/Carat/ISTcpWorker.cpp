@@ -122,6 +122,78 @@ static QString QS_CLIENTS = PREPARE_QUERY("SELECT usrs_id, usrs_fio, usgp_name, 
 										  "LEFT JOIN _usergroup ON usgp_id = usrs_group "
 										  "ORDER BY usrs_fio");
 //-----------------------------------------------------------------------------
+static QString QS_RECORD_INFO = PREPARE_QUERY("SELECT "
+											  "( "
+											  "SELECT prtc_datetime AS create_date "
+											  "FROM _protocol "
+											  "LEFT JOIN _users ON usrs_id = prtc_user "
+											  "WHERE prtc_tablename = :TableName "
+											  "AND prtc_objectid = :ObjectID "
+											  "AND prtc_type = (SELECT prtp_id FROM _protocoltype WHERE prtp_uid = '{D1348312-298F-4A7C-B584-9BA8C4952CD3}') "
+											  "ORDER BY prtc_datetime ASC "
+											  "LIMIT 1 "
+											  "), "
+											  "( "
+											  "SELECT usrs_fio AS create_user "
+											  "FROM _protocol "
+											  "LEFT JOIN _users ON usrs_id = prtc_user "
+											  "WHERE prtc_tablename = :TableName "
+											  "AND prtc_objectid = :ObjectID "
+											  "AND prtc_type = (SELECT prtp_id FROM _protocoltype WHERE prtp_uid = '{D1348312-298F-4A7C-B584-9BA8C4952CD3}') "
+											  "ORDER BY prtc_datetime ASC "
+											  "LIMIT 1 "
+											  "), "
+											  "( "
+											  "SELECT prtc_datetime AS edit_date "
+											  "FROM _protocol "
+											  "LEFT JOIN _users ON usrs_id = prtc_user "
+											  "WHERE prtc_tablename = :TableName "
+											  "AND prtc_objectid = :ObjectID "
+											  "AND prtc_type = (SELECT prtp_id FROM _protocoltype WHERE prtp_uid = '{0361643D-0A62-4F51-84BD-313F53115EFD}') "
+											  "ORDER BY prtc_datetime DESC "
+											  "LIMIT 1 "
+											  "), "
+											  "( "
+											  "SELECT usrs_fio AS edit_user "
+											  "FROM _protocol "
+											  "LEFT JOIN _users ON usrs_id = prtc_user "
+											  "WHERE prtc_tablename = :TableName "
+											  "AND prtc_objectid = :ObjectID "
+											  "AND prtc_type = (SELECT prtp_id FROM _protocoltype WHERE prtp_uid = '{0361643D-0A62-4F51-84BD-313F53115EFD}') "
+											  "ORDER BY prtc_datetime DESC "
+											  "LIMIT 1 "
+											  "), "
+											  "( "
+											  "SELECT COUNT(*) AS copy_count "
+											  "FROM _protocol "
+											  "LEFT JOIN _users ON usrs_id = prtc_user "
+											  "WHERE prtc_tablename = :TableName "
+											  "AND prtc_objectid = :ObjectID "
+											  "AND prtc_type = (SELECT prtp_id FROM _protocoltype WHERE prtp_uid = '{EFA8FE45-1174-4D2E-BBE6-4940380961D4}') "
+											  "), "
+											  "( "
+											  "SELECT COUNT(*) AS edit_count "
+											  "FROM _protocol "
+											  "LEFT JOIN _users ON usrs_id = prtc_user "
+											  "WHERE prtc_tablename = :TableName "
+											  "AND prtc_objectid = :ObjectID "
+											  "AND prtc_type = (SELECT prtp_id FROM _protocoltype WHERE prtp_uid = '{0361643D-0A62-4F51-84BD-313F53115EFD}') "
+											  "), "
+											  "( "
+											  "SELECT COUNT(*) AS show_count "
+											  "FROM _protocol "
+											  "LEFT JOIN _users ON usrs_id = prtc_user "
+											  "WHERE prtc_tablename = :TableName "
+											  "AND prtc_objectid = :ObjectID "
+											  "AND prtc_type = (SELECT prtp_id FROM _protocoltype WHERE prtp_uid = '{117E8972-97DC-4E72-93AC-DC3BB50D11CF}') "
+											  "), "
+											  "( "
+											  "SELECT COUNT(*) favorite_count "
+											  "FROM _favorites "
+											  "WHERE fvts_tablename = :TableName "
+											  "AND fvts_objectid = :ObjectID "
+											  ") ");
+//-----------------------------------------------------------------------------
 static QString QI_DISCUSSION = PREPARE_QUERY("INSERT INTO _discussion(dson_user, dson_tablename, dson_objectid, dson_message) "
 											 "VALUES(:UserID, :TableName, :ObjectID, :Message) "
 											 "RETURNING dson_id");
@@ -523,6 +595,7 @@ void ISTcpWorker::Process()
 					case ISNamespace::AMT_RecordEdit: Result = RecordEdit(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_RecordDelete: Result = RecordDelete(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_RecordGet: Result = RecordGet(tcp_message, TcpAnswer); break;
+					case ISNamespace::AMT_RecordGetInfo: Result = RecordGetInfo(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_DiscussionAdd: Result = DiscussionAdd(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_DiscussionEdit: Result = DiscussionEdit(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_DiscussionCopy: Result = DiscussionCopy(tcp_message, TcpAnswer); break;
@@ -2163,10 +2236,58 @@ bool ISTcpWorker::RecordGet(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	{
 		return false;
 	}
-
 	TcpAnswer->Parameters["Values"] = Values;
 	TcpAnswer->Parameters["ObjectName"] = ObjectName;
 	Protocol(TcpMessage->TcpSocket->GetUserID(), CONST_UID_PROTOCOL_SHOW_OBJECT, MetaTable->Name, MetaTable->LocalListName, ObjectID, ObjectName);
+	return true;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::RecordGetInfo(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+	QVariant TableName = CheckNullField("TableName", TcpMessage),
+		ObjectID = CheckNullField("ObjectID", TcpMessage);
+	if (!TableName.isValid() || !ObjectID.isValid())
+	{
+		return false;
+	}
+
+	//Получаем мета-таблицу
+	PMetaTable *MetaTable = GetMetaTable(TableName.toString());
+	if (!MetaTable)
+	{
+		return false;
+	}
+
+	ISQuery qSelect(ISDatabase::Instance().GetDB(DBConnectionName), QS_RECORD_INFO);
+	qSelect.BindValue(":TableName", TableName);
+	qSelect.BindValue(":ObjectID", ObjectID);
+	if (!qSelect.Execute())
+	{
+		return ErrorQuery(LANG("Carat.Error.Query.RecordGetInfo.Select"), qSelect);
+	}
+
+	if (!qSelect.First())
+	{
+		ErrorString = LANG("Carat.Error.Query.RecordGetInfo.NotExist");
+		return false;
+	}
+
+	//Получаем имя объекта
+	QString ObjectName;
+	if (!GetObjectName(MetaTable, ObjectID.toUInt(), ObjectName))
+	{
+		return false;
+	}
+	TcpAnswer->Parameters["ObjectName"] = ObjectName;
+	TcpAnswer->Parameters["CreateDate"] = qSelect.ReadColumn("create_date").toDateTime().toString(FORMAT_DATE_TIME_V3);
+	TcpAnswer->Parameters["CreateUser"] = qSelect.ReadColumn("create_user");
+	TcpAnswer->Parameters["EditDate"] = qSelect.ReadColumn("edit_date").toDateTime().toString(FORMAT_DATE_TIME_V3);
+	TcpAnswer->Parameters["EditUser"] = qSelect.ReadColumn("edit_user");
+	TcpAnswer->Parameters["CopyCount"] = qSelect.ReadColumn("copy_count");
+	TcpAnswer->Parameters["EditCount"] = qSelect.ReadColumn("edit_count");
+	TcpAnswer->Parameters["ShowCount"] = qSelect.ReadColumn("show_count");
+	TcpAnswer->Parameters["FavoriteCount"] = qSelect.ReadColumn("favorite_count");
+	Protocol(TcpMessage->TcpSocket->GetUserID(), CONST_UID_PROTOCOL_RECORD_INFO, MetaTable->Name, MetaTable->LocalListName, ObjectID, ObjectName);
 	return true;
 }
 //-----------------------------------------------------------------------------

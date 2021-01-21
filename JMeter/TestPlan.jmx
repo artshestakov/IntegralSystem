@@ -131,6 +131,16 @@
             <stringProp name="Argument.value">1</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
+          <elementProp name="RecordGetInfo_TableName" elementType="Argument">
+            <stringProp name="Argument.name">RecordGetInfo_TableName</stringProp>
+            <stringProp name="Argument.value">_Users</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="RecordGetInfo_ObjectID" elementType="Argument">
+            <stringProp name="Argument.name">RecordGetInfo_ObjectID</stringProp>
+            <stringProp name="Argument.value">2</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
           <elementProp name="DiscussionAdd_TableName" elementType="Argument">
             <stringProp name="Argument.name">DiscussionAdd_TableName</stringProp>
             <stringProp name="Argument.value">_Users</stringProp>
@@ -527,6 +537,18 @@ def MapRecordGet =
 ];
 vars.put(&quot;QueryRecordGet&quot;, MapToString(MapRecordGet));
 
+//Получить информацию о записи
+def MapRecordGetInfo =
+[
+	Type: &quot;RecordGetInfo&quot;,
+	Parameters:
+		[
+			TableName: vars.get(&quot;RecordGetInfo_TableName&quot;),
+			ObjectID: vars.get(&quot;RecordGetInfo_ObjectID&quot;)
+		]
+];
+vars.put(&quot;QueryRecordGetInfo&quot;, MapToString(MapRecordGetInfo));
+
 //Добавить обсуждение
 def MapDiscussionAdd =
 [
@@ -897,6 +919,18 @@ vars.put(&quot;QueryGetForeignList&quot;, MapToString(MapGetForeignList));</stri
           <stringProp name="ConfigTestElement.password"></stringProp>
         </TCPSampler>
         <hashTree/>
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: RecordGetInfo" enabled="true">
+          <stringProp name="TCPSampler.server"></stringProp>
+          <boolProp name="TCPSampler.reUseConnection">true</boolProp>
+          <stringProp name="TCPSampler.port"></stringProp>
+          <boolProp name="TCPSampler.nodelay">false</boolProp>
+          <stringProp name="TCPSampler.timeout"></stringProp>
+          <stringProp name="TCPSampler.request">${QueryRecordGetInfo}</stringProp>
+          <boolProp name="TCPSampler.closeConnection">true</boolProp>
+          <stringProp name="ConfigTestElement.username"></stringProp>
+          <stringProp name="ConfigTestElement.password"></stringProp>
+        </TCPSampler>
+        <hashTree/>
         <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: DiscussionAdd" enabled="false">
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
@@ -1041,7 +1075,7 @@ vars.put(&quot;QueryGetForeignList&quot;, MapToString(MapGetForeignList));</stri
           <stringProp name="ConfigTestElement.password"></stringProp>
         </TCPSampler>
         <hashTree/>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: Sleep" enabled="true">
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: Sleep" enabled="false">
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
           <stringProp name="TCPSampler.port"></stringProp>

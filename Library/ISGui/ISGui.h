@@ -55,6 +55,7 @@ public:
 	static void ShowUserPasswordForm(unsigned int UserID, const QString &UserFIO, const QString &UserLogin); //Открыть форму изменения пароля для пользователя
 	static void ShowUserPasswordForm(unsigned int UserID, const QString &UserFIO, const QString &UserLogin, bool &Result); //Открыть форму изменения пароля для пользователя
 	static void ShowObjectForm(QWidget *ObjectForm); //Показать форму объекта
+	static void ShowRecordInfoForm(QWidget *parent, const QString &TableName, unsigned int ObjectID); //ПОказать форму информации о записи
 	
 	static ISImageViewerForm* ShowImageForm(const QPixmap &Pixmap); //Показать изображение
 	static ISImageViewerForm* ShowImageForm(const QString &FilePath); //Показать изображение

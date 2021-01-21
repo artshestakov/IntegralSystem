@@ -40,6 +40,18 @@
   <Local Name="AboutForm.Tab.Other" Russian="Прочее"/>
   <Local Name="AboutForm.Tab.Other.ApplicationDir" Russian="Рабочая папка"/>
 
+  <!--ISRecordInfoDialog-->
+  <Local Name="ISRecordInfoDialog.Title" Russian="Информация о записи"/>
+  <Local Name="ISRecordInfoDialog.Field.Name" Russian="Имя:"/>
+  <Local Name="ISRecordInfoDialog.Field.CreateDate" Russian="Дата создания:"/>
+  <Local Name="ISRecordInfoDialog.Field.CreateUser" Russian="Создал:"/>
+  <Local Name="ISRecordInfoDialog.Field.EditDate" Russian="Дата последнего изменения:"/>
+  <Local Name="ISRecordInfoDialog.Field.EditUser" Russian="Последний изменивший:"/>
+  <Local Name="ISRecordInfoDialog.Field.CopyCount" Russian="Копий:"/>
+  <Local Name="ISRecordInfoDialog.Field.EditCount" Russian="Изменений:"/>
+  <Local Name="ISRecordInfoDialog.Field.ShowCount" Russian="Просмотров:"/>
+  <Local Name="ISRecordInfoDialog.Field.FavoriteCount" Russian="В избранном:"/>
+
   <!--Messages-->
   <Local Name="Message.Information.NotSavedObjects" Russian="Есть несохранённые (%1 шт.) записи, сохраните или закройте их для выхода из программы."/>
   <Local Name="Message.Information.AppliocationWillBeRestart" Russian="Настройки успешно сброшены, рекомендуется перезапустить программу."/>

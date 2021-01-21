@@ -99,6 +99,10 @@ ISNamespace::ApiMessageType ISTcp::GetMessageTypeByName(const QString &Name)
 	{
 		return ISNamespace::AMT_RecordGet;
 	}
+	else if (Name == API_RECORD_GET_INFO)
+	{
+		return ISNamespace::AMT_RecordGetInfo;
+	}
 	else if (Name == API_DISCUSSION_ADD)
 	{
 		return ISNamespace::AMT_DiscussionAdd;

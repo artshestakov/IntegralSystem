@@ -106,6 +106,12 @@ ISListBaseForm::ISListBaseForm(const QString &TableName, QWidget *parent)
 	}
 
 	{//Создание специальных действий
+		//Информация о записи
+		QAction *ActionRecordInfo = ISControls::CreateActionRecordInfo(this);
+		connect(ActionRecordInfo, &QAction::triggered, this, &ISListBaseForm::RecordInfo);
+		ActionsSpecial[ISNamespace::AST_RecordInfo] = ActionRecordInfo;
+		ActionObjectGroup->addAction(ActionRecordInfo);
+
 		//Примечание
 		QAction *ActionNoteObject = ISControls::CreateActionNoteObject(this);
 		connect(ActionNoteObject, &QAction::triggered, this, &ISListBaseForm::NoteObject);
@@ -198,6 +204,7 @@ ISListBaseForm::ISListBaseForm(const QString &TableName, QWidget *parent)
 		if (GetAction(ISNamespace::AT_Edit)) ContextMenu->addAction(GetAction(ISNamespace::AT_Edit));
 		if (GetAction(ISNamespace::AT_Delete)) ContextMenu->addAction(GetAction(ISNamespace::AT_Delete));
 		if (GetAction(ISNamespace::AT_Update)) ContextMenu->addAction(GetAction(ISNamespace::AT_Update));
+		ContextMenu->addAction(GetSpecialAction(ISNamespace::AST_RecordInfo));
 		ContextMenu->addAction(GetSpecialAction(ISNamespace::AST_Note));
 	}
 
@@ -942,6 +949,11 @@ void ISListBaseForm::NavigationSelectLastRecord()
 		TableView->selectRow(RowCount - 1);
 		TableView->verticalScrollBar()->setValue(TableView->verticalScrollBar()->maximum());
 	}
+}
+//-----------------------------------------------------------------------------
+void ISListBaseForm::RecordInfo()
+{
+	ISGui::ShowRecordInfoForm(this, MetaTable->Name, GetObjectID());
 }
 //-----------------------------------------------------------------------------
 void ISListBaseForm::NoteObject()

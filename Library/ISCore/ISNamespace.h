@@ -103,6 +103,7 @@ namespace ISNamespace
 
     enum ActionSpecialType
     {
+		AST_RecordInfo,
         AST_Note,
     };
 
@@ -148,6 +149,7 @@ namespace ISNamespace
 		AMT_RecordEdit, //Изменение записи
 		AMT_RecordDelete, //Удаление записи
 		AMT_RecordGet, //Получить запись
+		AMT_RecordGetInfo, //Получить информацию о записи
 		AMT_DiscussionAdd, //Добавить обсуждение
 		AMT_DiscussionEdit, //Изменить обсуждение
 		AMT_DiscussionCopy, //Скопировать обсуждение

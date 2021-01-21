@@ -651,6 +651,14 @@ void ISGui::ShowObjectForm(QWidget *ObjectForm)
 	ObjectForm->show();
 }
 //-----------------------------------------------------------------------------
+void ISGui::ShowRecordInfoForm(QWidget *parent, const QString &TableName, unsigned int ObjectID)
+{
+	ISGui::SetWaitGlobalCursor(true);
+	ISRecordInfoDialog RecordInfoDialog(parent, TableName, ObjectID);
+	ISGui::SetWaitGlobalCursor(false);
+	RecordInfoDialog.Exec();
+}
+//-----------------------------------------------------------------------------
 ISImageViewerForm* ISGui::ShowImageForm(const QPixmap &Pixmap)
 {
 	SetWaitGlobalCursor(true);

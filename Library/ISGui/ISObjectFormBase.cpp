@@ -296,6 +296,12 @@ void ISObjectFormBase::CreateToolBar()
 	connect(ActionCancelChange, &QAction::triggered, this, &ISObjectFormBase::CancelChanged);
 	AddActionMenu(ActionCancelChange);
 
+	//Информация о записи
+	ActionRecordInfo = ISControls::CreateActionRecordInfo(ToolBar);
+	ActionRecordInfo->setPriority(QAction::LowPriority);
+	connect(ActionRecordInfo, &QAction::triggered, this, &ISObjectFormBase::RecordInfo);
+	AddActionMenu(ActionRecordInfo);
+
 	//Примечание записи
 	ActionNoteObject = ISControls::CreateActionNoteObject(ToolBar);
 	ActionNoteObject->setPriority(QAction::LowPriority);
@@ -888,6 +894,11 @@ void ISObjectFormBase::CancelChanged()
 		BeginFieldEdit->SetFocus();
 		ISGui::SetWaitGlobalCursor(false);
 	}
+}
+//-----------------------------------------------------------------------------
+void ISObjectFormBase::RecordInfo()
+{
+	ISGui::ShowRecordInfoForm(this, MetaTable->Name, ObjectID);
 }
 //-----------------------------------------------------------------------------
 void ISObjectFormBase::NoteObject()
