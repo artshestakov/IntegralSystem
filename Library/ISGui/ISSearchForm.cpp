@@ -30,6 +30,12 @@ ISSearchForm::ISSearchForm(PMetaTable *meta_table, QWidget *parent)
 
 	for (PMetaField *MetaField : MetaTable->Fields)
 	{
+		//Проверяем возможность поиска в движке
+		if (!ISMetaData::Instance().GetType(MetaField->Type).SearchAllowed)
+		{
+			continue;
+		}
+
 		//Пропускаем системные поля и поля по которым поиск зарещён
 		if (MetaField->IsSystem || MetaField->NotSearch)
 		{
@@ -93,12 +99,13 @@ void ISSearchForm::AddField(PMetaField *MetaField, QTreeWidgetItem *ParentItem)
 		TreeWidgetItem = new QTreeWidgetItem(TreeWidget);
 	}
 
-	//Панель для кнопки добавления/удаления (нужна для правильного центрирования за счёт Layout)
+	//Панель для кнопки (нужна для правильного центрирования за счёт Layout)
 	QWidget *Widget = new QWidget(TreeWidget);
 	Widget->setLayout(new QVBoxLayout());
 	Widget->layout()->setContentsMargins(0, 0, 25, 0);
 	TreeWidget->setItemWidget(TreeWidgetItem, 0, Widget);
 
+	//Кнопка добавления/удаления полей
 	ISServiceButton *ButtonAction = new ISServiceButton(ParentItem ? BUFFER_ICONS("Delete") : BUFFER_ICONS("Add"),
 		ParentItem ? LANG("ISSearchForm.DeleteField") : LANG("ISSearchForm.AddField"), Widget);
 	ParentItem ?
@@ -123,20 +130,25 @@ void ISSearchForm::AddField(PMetaField *MetaField, QTreeWidgetItem *ParentItem)
 		TreeWidget->setItemWidget(TreeWidgetItem, 2, ComboSearchOperator);
 	}
 
+	//Панель для поля редактирования (нужна для отображения виджетов редактирования слева)
+	//QWidget *PanelFieldEdit = new QWidget(TreeWidget);
+	//PanelFieldEdit->setLayout(new QVBoxLayout());
+	//TreeWidget->setItemWidget(TreeWidgetItem, 3, PanelFieldEdit);
+
 	//Поле редактирования
-	ISFieldEditBase *FieldEditBase = ISGui::CreateColumnForField(TreeWidget, MetaField);
-	FieldEditBase->SetSizePolicyHorizontal(QSizePolicy::Minimum);
+	ISFieldEditBase *FieldEdit = ISGui::CreateColumnForField(TreeWidget, MetaField);
+	FieldEdit->SetSizePolicyHorizontal(QSizePolicy::Minimum);
 	if (MetaField->Foreign) //Если поле является справочным - инициализируем его
 	{
-		dynamic_cast<ISListEdit*>(FieldEditBase)->InvokeList(MetaField->Foreign);
+		dynamic_cast<ISListEdit*>(FieldEdit)->InvokeList(MetaField->Foreign);
 	}
-	TreeWidget->setItemWidget(TreeWidgetItem, 3, FieldEditBase);
+	//dynamic_cast<QVBoxLayout*>(PanelFieldEdit->layout())->addWidget(FieldEdit, 0, Qt::AlignLeft);
+	TreeWidget->setItemWidget(TreeWidgetItem, 3, FieldEdit);
 
 	Map.emplace(ButtonAction, TreeWidgetItem);
-
 	if (ParentItem)
 	{
-		FieldEditBase->SetFocus();
+		FieldEdit->SetFocus();
 	}
 }
 //-----------------------------------------------------------------------------
@@ -177,7 +189,7 @@ void ISSearchForm::Search()
 
 		//Получаем виджеты
 		QTreeWidgetItem *TreeWidgetItem = MapItem.second;
-		ISComboSearchBase *ComboSearchBase = dynamic_cast<ISComboSearchBase *>(TreeWidget->itemWidget(TreeWidgetItem, 2));
+		ISComboSearchBase *ComboSearchBase = dynamic_cast<ISComboSearchBase *>(TreeWidget->itemWidget(TreeWidgetItem->parent() ? TreeWidgetItem->parent() : TreeWidgetItem, 2));
 		ISFieldEditBase *FieldEditBase = dynamic_cast<ISFieldEditBase *>(TreeWidget->itemWidget(TreeWidgetItem, 3));
 
 		//Если поле не изменялось - пропускаем его
