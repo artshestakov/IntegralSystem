@@ -29,6 +29,9 @@ public:
 	//Получить описание ошибки
 	QString GetErrorString() const;
 
+	//Получить папку с логами
+	QString GetPathLogsDir() const;
+
 	//Инициализировать логгер
 	bool Initialize();
 

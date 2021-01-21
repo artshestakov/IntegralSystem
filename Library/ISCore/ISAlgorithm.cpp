@@ -332,3 +332,10 @@ QString ISAlgorithm::GenerateUuidLite()
 	return UID;
 }
 //-----------------------------------------------------------------------------
+QString ISAlgorithm::StringTake(QString &String, int Pos, int N)
+{
+	QString Result = String.mid(Pos, N);
+	String.remove(Pos, N);
+	return Result;
+}
+//-----------------------------------------------------------------------------

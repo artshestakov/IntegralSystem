@@ -149,6 +149,13 @@ namespace ISAlgorithm
 	//! \return возвращает упрощённый уникальный идентификатор
 	ISCORE_EXPORT QString GenerateUuidLite();
 
+	//! Извлечь подстроку из строки
+	//! \param String строка, из которой будет происходить извлечение
+	//! \param Pos позиция, с которой начнется извлечение
+	//! \param Size количество извлекаемых символов
+	//! \return возвращает извлеченную строку
+	ISCORE_EXPORT QString StringTake(QString &String, int Pos, int N);
+
 	//Поиск значения в векторе
     template <typename T> bool VectorContains(const std::vector<T> &Vector, T Value)
     {

@@ -625,6 +625,7 @@ void ISTcpWorker::Process()
 					case ISNamespace::AMT_RecordFavoriteDelete: Result = RecordFavoriteDelete(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_GetFavoriteNames: Result = GetFavoriteNames(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_FavoritesDelete: Result = FavoritesDelete(tcp_message, TcpAnswer); break;
+					case ISNamespace::AMT_LogGet: Result = LogGet(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_CalendarClose: Result = CalendarClose(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_GetHistoryList: Result = GetHistoryList(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_TaskCommentAdd: Result = TaskCommentAdd(tcp_message, TcpAnswer); break;
@@ -3872,6 +3873,93 @@ bool ISTcpWorker::FavoritesDelete(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnsw
 	{
 		return ErrorQuery(LANG("Carat.Error.Query.FavoritesDelete.Delete"), qDelete);
 	}
+	return true;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::LogGet(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+	QVariant Date = CheckNullField("Date", TcpMessage);
+	if (!Date.isValid())
+	{
+		return false;
+	}
+
+	//Формируем путь к файлу и пытаемся его открыть
+	QFile File(ISLogger::Instance().GetPathLogsDir() + QCoreApplication::applicationName() + '_' + Date.toString() + ".log");
+	if (!File.open(QIODevice::ReadOnly)) //Не удалось открыть файл
+	{
+		ISLOGGER_W(__CLASS__, "Not open file \"" + File.fileName() + "\": " + File.errorString());
+		ErrorString = LANG("Carat.Error.Query.LogGet.Open");
+		return false;
+	}
+
+	//Читаем, закрываем и формируем список
+	QString Content = File.readAll();
+	File.close();
+	QStringList StringList = Content.split('\n');
+
+	//Обходим строки лог-файла
+	QVariantList VariantList;
+	for (const QString &Line : StringList)
+	{
+		//Ищем первый символ табуляции
+		int Pos = Line.indexOf('\t');
+		if (Pos == -1) //Не нашли символ - пропускаем строку
+		{
+			continue;
+		}
+
+		QString String = Line;
+
+		//Вытаскиваем время
+		QString Time = ISAlgorithm::StringTake(String, 0, ++Pos);
+		Pos = Time.indexOf(' ');
+		if (Pos == -1)
+		{
+			continue;
+		}
+		Time = ISAlgorithm::StringTake(Time, Pos + 1, Time.size() - Pos - 2);
+
+		//Вытаскиваем номер потока
+		Pos = String.indexOf('\t');
+		if (Pos == -1)
+		{
+			continue;
+		}
+		QString ThreadID = ISAlgorithm::StringTake(String, 0, ++Pos);
+		ThreadID.chop(1);
+
+		//Вытаскиваем уровень сообщения
+		Pos = String.indexOf(']');
+		if (Pos == -1)
+		{
+			continue;
+		}
+		QString Severity = ISAlgorithm::StringTake(String, 0, ++Pos);
+		Severity = Severity.mid(1, Severity.size() - 2);
+
+		//Вытаскиваем имя компонента
+		Pos = String.indexOf(']');
+		if (Pos == -1)
+		{
+			continue;
+		}
+		QString ModuleName = ISAlgorithm::StringTake(String, 0, ++Pos);
+		ModuleName = ModuleName.mid(1, ModuleName.size() - 2);
+
+		//Удаляем пробел в начале строки и символ переноса строки
+		String = String.mid(1, String.size() - 2);
+
+		VariantList.append(QVariantMap
+		{
+			{ "Time", Time },
+			{ "ThreadID", ThreadID },
+			{ "Severity", Severity },
+			{ "ModuleName", ModuleName },
+			{ "Message", String },
+		});
+	}
+	TcpAnswer->Parameters["Log"] = VariantList;
 	return true;
 }
 //-----------------------------------------------------------------------------

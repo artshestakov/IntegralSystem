@@ -194,6 +194,7 @@ const char API_RECORD_FAVORITE_ADD[] = "RecordFavoriteAdd"; //Добавить запись в 
 const char API_RECORD_FAVORITE_DELETE[] = "RecordFavoriteDelete"; //Удалить запись из избранного
 const char API_GET_FAVORITE_NAMES[] = "GetFavoriteNames"; //Получить имена избранных записей
 const char API_FAVORITES_DELETE[] = "FavoritesDelete"; //Удалить все избранные записи пользователя
+const char API_LOG_GET[] = "LogGet"; //Получить содержимое лог-файла
 const char API_CALENDAR_CLOSE[] = "CalendarClose"; //Закрытие события календаря
 const char API_GET_HISTORY_LIST[] = "GetHistoryList"; //Получить список открытых записей
 const char API_TASK_COMMENT_ADD[] = "TaskCommentAdd"; //Добавить комментарий к задаче
