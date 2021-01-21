@@ -2,7 +2,7 @@
 #include "ISDefinesGui.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
-#include "ISMessageBox.h"
+#include "ISDialogsCommon.h"
 //-----------------------------------------------------------------------------
 ISExportDialog::ISExportDialog(ISTcpModel *TcpModel)
 	: ISInterfaceDialogForm(),

@@ -2,7 +2,7 @@
 #include "ISGui.h"
 #include "ISLocalization.h"
 #include "ISControls.h"
-#include "ISMessageBox.h"
+#include "ISDialogsCommon.h"
 #include "ISBuffer.h"
 //-----------------------------------------------------------------------------
 ISContextMenuBase::ISContextMenuBase(QWidget *ParentEdit, bool ReadOnly, bool UndoAvailable, bool RedoAvailable, bool HasSelectedText, QLineEdit::EchoMode EchoMode, bool Empty) : QMenu(ParentEdit)

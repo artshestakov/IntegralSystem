@@ -1,7 +1,7 @@
 #include "ISListViewForm.h"
 #include "ISBuffer.h"
 #include "ISLocalization.h"
-#include "ISMessageBox.h"
+#include "ISDialogsCommon.h"
 #include "ISTcpQuery.h"
 //-----------------------------------------------------------------------------
 ISListViewForm::ISListViewForm(const QString &query_name, QWidget *parent)

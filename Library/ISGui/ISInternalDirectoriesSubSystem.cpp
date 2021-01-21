@@ -6,7 +6,7 @@
 #include "ISMetaData.h"
 #include "ISGui.h"
 #include "ISBuffer.h"
-#include "ISMessageBox.h"
+#include "ISDialogsCommon.h"
 //-----------------------------------------------------------------------------
 ISInternalDirectoriesSubSystem::ISInternalDirectoriesSubSystem(QWidget *parent)
 	: ISInterfaceMetaForm(parent),

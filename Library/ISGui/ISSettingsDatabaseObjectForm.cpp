@@ -2,7 +2,7 @@
 #include "ISSettingsDatabase.h"
 #include "ISBuffer.h"
 #include "ISLocalization.h"
-#include "ISMessageBox.h"
+#include "ISDialogsCommon.h"
 //-----------------------------------------------------------------------------
 ISSettingsDatabaseObjectForm::ISSettingsDatabaseObjectForm(ISNamespace::ObjectFormType form_type, PMetaTable *meta_table, QWidget *parent, int object_id) :
 	ISObjectFormBase(form_type, meta_table, parent, object_id)

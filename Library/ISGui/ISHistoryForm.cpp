@@ -6,7 +6,7 @@
 #include "ISConstants.h"
 #include "ISGui.h"
 #include "ISMetaData.h"
-#include "ISMessageBox.h"
+#include "ISDialogsCommon.h"
 #include "ISTcpQuery.h"
 //-----------------------------------------------------------------------------
 ISHistoryForm::ISHistoryForm(QWidget *parent) : ISInterfaceForm(parent)

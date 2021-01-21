@@ -2,7 +2,7 @@
 #include "ISConstants.h"
 #include "ISControls.h"
 #include "ISLocalization.h"
-#include "ISMessageBox.h"
+#include "ISDialogsCommon.h"
 #include "ISGui.h"
 #include "ISUserPhotoCreator.h"
 #include "ISTcpQuery.h"

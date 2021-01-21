@@ -1,5 +1,5 @@
 #include "ISCreatedObjectsEntity.h"
-#include "ISMessageBox.h"
+#include "ISDialogsCommon.h"
 #include "ISLocalization.h"
 #include "ISInterfaceForm.h"
 #include "ISConstants.h"

@@ -1,11 +1,10 @@
 #include "ISImageWidget.h"
 #include "ISDefinesGui.h"
 #include "ISContextMenu.h"
-#include "ISFileDialog.h"
+#include "ISDialogsCommon.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISImageViewerForm.h"
-#include "ISMessageBox.h"
 #include "ISProcessForm.h"
 #include "ISGui.h"
 //-----------------------------------------------------------------------------

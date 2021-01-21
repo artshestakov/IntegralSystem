@@ -7,7 +7,7 @@
 #include "ISSettings.h"
 #include "ISGui.h"
 #include "ISControls.h"
-#include "ISMessageBox.h"
+#include "ISDialogsCommon.h"
 #include "ISAssert.h"
 #include "ISPopupMessage.h"
 #include "ISListBaseForm.h"

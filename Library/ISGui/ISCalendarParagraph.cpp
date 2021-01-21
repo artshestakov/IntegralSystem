@@ -6,8 +6,7 @@
 #include "ISGui.h"
 #include "ISCalendarObjectForm.h"
 #include "ISTcpQuery.h"
-#include "ISMessageBox.h"
-#include "ISInputDialog.h"
+#include "ISDialogsCommon.h"
 #include "ISDefinesGui.h"
 //-----------------------------------------------------------------------------
 ISCalendarParagraph::ISCalendarParagraph(QWidget *parent)

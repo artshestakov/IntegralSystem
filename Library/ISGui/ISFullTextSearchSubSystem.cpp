@@ -8,7 +8,7 @@
 #include "ISLabels.h"
 #include "ISGui.h"
 #include "ISControls.h"
-#include "ISMessageBox.h"
+#include "ISDialogsCommon.h"
 //-----------------------------------------------------------------------------
 ISFullTextSearchSubSystem::ISFullTextSearchSubSystem(QWidget *parent) : ISInterfaceMetaForm(parent)
 {

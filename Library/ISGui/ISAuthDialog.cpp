@@ -6,7 +6,7 @@
 #include "ISAboutDialog.h"
 #include "ISConfig.h"
 #include "ISConnectDialog.h"
-#include "ISMessageBox.h"
+#include "ISDialogsCommon.h"
 #include "ISGui.h"
 #include "ISVersionInfo.h"
 #include "ISLogger.h"

@@ -199,6 +199,7 @@
     <ClCompile Include="ISDelegates.cpp" />
     <ClCompile Include="ISDesktopParagraph.cpp" />
     <ClCompile Include="ISDeviceConnectDialog.cpp" />
+    <ClCompile Include="ISDialogsCommon.cpp" />
     <ClCompile Include="ISDiscussionListForm.cpp" />
     <ClCompile Include="ISEditsQT.cpp" />
     <ClCompile Include="ISEmpty.cpp" />
@@ -208,14 +209,12 @@
     <ClCompile Include="ISFavoritesForm.cpp" />
     <ClCompile Include="ISFieldEditBase.cpp" />
     <ClCompile Include="ISFieldEdits.cpp" />
-    <ClCompile Include="ISFileDialog.cpp" />
     <ClCompile Include="ISFlowLayout.cpp" />
     <ClCompile Include="ISFullTextSearchSubSystem.cpp" />
     <ClCompile Include="ISGui.cpp" />
     <ClCompile Include="ISHistoryForm.cpp" />
     <ClCompile Include="ISImageViewerForm.cpp" />
     <ClCompile Include="ISImageWidget.cpp" />
-    <ClCompile Include="ISInputDialog.cpp" />
     <ClCompile Include="ISInterfaceDialogForm.cpp" />
     <ClCompile Include="ISInterfaceForm.cpp" />
     <ClCompile Include="ISInterfaceMetaForm.cpp" />
@@ -227,7 +226,6 @@
     <ClCompile Include="ISListWidget.cpp" />
     <ClCompile Include="ISMainWindow.cpp" />
     <ClCompile Include="ISMenuBar.cpp" />
-    <ClCompile Include="ISMessageBox.cpp" />
     <ClCompile Include="ISMetaSystemsEntity.cpp" />
     <ClCompile Include="ISMonitorActivitySubSystem.cpp" />
     <ClCompile Include="ISMonitorUserWidget.cpp" />
@@ -274,9 +272,6 @@
     <QtMoc Include="ISExportDialog.h" />
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="ISInputDialog.h" />
-  </ItemGroup>
-  <ItemGroup>
     <QtMoc Include="ISProcessForm.h" />
   </ItemGroup>
   <ItemGroup>
@@ -308,9 +303,6 @@
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ISSelectListForm.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <QtMoc Include="ISFileDialog.h" />
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ISExportWorker.h" />
@@ -369,6 +361,7 @@
     <QtMoc Include="ISAsteriskCallsSubSystem.h" />
     <QtMoc Include="ISAudioPlayerForm.h" />
     <QtMoc Include="ISDeviceConnectDialog.h" />
+    <QtMoc Include="ISDialogsCommon.h" />
     <ClInclude Include="isgui_global.h" />
     <QtMoc Include="ISProgressForm.h" />
     <QtMoc Include="ISSettingsDatabaseObjectForm.h" />
@@ -385,7 +378,6 @@
     <QtMoc Include="ISBaseTableView.h" />
     <QtMoc Include="ISFieldEditBase.h" />
     <QtMoc Include="ISFieldEdits.h" />
-    <QtMoc Include="ISMessageBox.h" />
     <ClInclude Include="ISBuffer.h" />
     <ClInclude Include="ISColumnSizer.h" />
     <ClInclude Include="ISControls.h" />

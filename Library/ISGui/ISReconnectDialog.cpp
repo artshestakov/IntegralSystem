@@ -5,7 +5,7 @@
 #include "ISConfig.h"
 #include "ISTcpConnector.h"
 #include "ISButtons.h"
-#include "ISMessageBox.h"
+#include "ISDialogsCommon.h"
 //-----------------------------------------------------------------------------
 ISReconnectDialog::ISReconnectDialog()
 	: ISInterfaceDialogForm(true),

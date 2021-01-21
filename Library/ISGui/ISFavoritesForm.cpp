@@ -3,7 +3,7 @@
 #include "ISLocalization.h"
 #include "ISFavorites.h"
 #include "ISBuffer.h"
-#include "ISMessageBox.h"
+#include "ISDialogsCommon.h"
 #include "ISMetaData.h"
 #include "ISButtons.h"
 #include "ISGui.h"

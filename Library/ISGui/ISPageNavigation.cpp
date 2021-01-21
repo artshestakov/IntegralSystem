@@ -3,7 +3,7 @@
 #include "ISConstants.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
-#include "ISInputDialog.h"
+#include "ISDialogsCommon.h"
 //-----------------------------------------------------------------------------
 ISPageNavigation::ISPageNavigation(QWidget *parent)
 	: QWidget(parent),

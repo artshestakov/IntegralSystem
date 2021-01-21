@@ -2,7 +2,7 @@
 #include "ISBuffer.h"
 #include "ISDefinesGui.h"
 #include "ISLocalization.h"
-#include "ISMessageBox.h"
+#include "ISDialogsCommon.h"
 #include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
 ISAudioPlayerForm::ISAudioPlayerForm()

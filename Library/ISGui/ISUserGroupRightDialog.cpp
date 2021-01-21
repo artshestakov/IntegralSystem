@@ -9,7 +9,7 @@
 #include "ISControls.h"
 #include "ISGui.h"
 #include "ISTcpQuery.h"
-#include "ISMessageBox.h"
+#include "ISDialogsCommon.h"
 //-----------------------------------------------------------------------------
 ISUserGroupRightDialog::ISUserGroupRightDialog(int group_id, const QString &group_name)
 	: ISInterfaceDialogForm(),

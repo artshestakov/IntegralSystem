@@ -7,10 +7,9 @@
 #include "ISFlowLayout.h"
 #include "ISGui.h"
 #include "ISProtocolSubSystem.h"
-#include "ISMessageBox.h"
+#include "ISDialogsCommon.h"
 #include "ISUserRoleEntity.h"
 #include "ISSettings.h"
-#include "ISInputDialog.h"
 //-----------------------------------------------------------------------------
 ISMonitorActivitySubSystem::ISMonitorActivitySubSystem(QWidget *parent) : ISInterfaceMetaForm(parent)
 {

@@ -6,7 +6,7 @@
 #include "ISMetaData.h"
 #include "ISComboSearchWidgets.h"
 #include "ISDelegates.h"
-#include "ISMessageBox.h"
+#include "ISDialogsCommon.h"
 //-----------------------------------------------------------------------------
 ISSearchForm::ISSearchForm(PMetaTable *meta_table, QWidget *parent)
 	: ISInterfaceForm(parent),

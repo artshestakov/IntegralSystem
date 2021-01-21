@@ -5,7 +5,7 @@
 #include "ISConstants.h"
 #include "ISObjectFormBase.h"
 #include "ISGui.h"
-#include "ISMessageBox.h"
+#include "ISDialogsCommon.h"
 //-----------------------------------------------------------------------------
 ISTabWidgetMain::ISTabWidgetMain(QWidget *parent) : QTabWidget(parent)
 {

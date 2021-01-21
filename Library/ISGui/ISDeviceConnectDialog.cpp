@@ -4,7 +4,7 @@
 #include "ISBuffer.h"
 #include "ISButtons.h"
 #include "ISGui.h"
-#include "ISMessageBox.h"
+#include "ISDialogsCommon.h"
 //-----------------------------------------------------------------------------
 ISDeviceConnectDialog::ISDeviceConnectDialog() : ISInterfaceDialogForm()
 {

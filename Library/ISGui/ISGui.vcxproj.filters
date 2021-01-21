@@ -100,9 +100,6 @@
     <ClCompile Include="ISSelectListForm.cpp">
       <Filter>Common Forms</Filter>
     </ClCompile>
-    <ClCompile Include="ISFileDialog.cpp">
-      <Filter>Dialog</Filter>
-    </ClCompile>
     <ClCompile Include="ISExportWorker.cpp">
       <Filter>Export</Filter>
     </ClCompile>
@@ -123,9 +120,6 @@
     </ClCompile>
     <ClCompile Include="ISFieldEdits.cpp">
       <Filter>Fields</Filter>
-    </ClCompile>
-    <ClCompile Include="ISMessageBox.cpp">
-      <Filter>Dialog</Filter>
     </ClCompile>
     <ClCompile Include="ISObjectInterface.cpp">
       <Filter>Objects</Filter>
@@ -325,9 +319,6 @@
     <ClCompile Include="ISExportDialog.cpp">
       <Filter>Dialog Forms</Filter>
     </ClCompile>
-    <ClCompile Include="ISInputDialog.cpp">
-      <Filter>Dialog</Filter>
-    </ClCompile>
     <ClCompile Include="ISSelectListDialog.cpp">
       <Filter>Dialog Forms</Filter>
     </ClCompile>
@@ -358,6 +349,9 @@
     <ClCompile Include="ISTcpModels.cpp">
       <Filter>Protocol</Filter>
     </ClCompile>
+    <ClCompile Include="ISDialogsCommon.cpp">
+      <Filter>Dialog</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ISProcessForm.h">
@@ -387,9 +381,6 @@
     <QtMoc Include="ISSelectListForm.h">
       <Filter>Common Forms</Filter>
     </QtMoc>
-    <QtMoc Include="ISFileDialog.h">
-      <Filter>Dialog</Filter>
-    </QtMoc>
     <QtMoc Include="ISExportWorker.h">
       <Filter>Export</Filter>
     </QtMoc>
@@ -410,9 +401,6 @@
     </QtMoc>
     <QtMoc Include="ISFieldEdits.h">
       <Filter>Fields</Filter>
-    </QtMoc>
-    <QtMoc Include="ISMessageBox.h">
-      <Filter>Dialog</Filter>
     </QtMoc>
     <QtMoc Include="ISObjectInterface.h">
       <Filter>Objects</Filter>
@@ -576,9 +564,6 @@
     <QtMoc Include="ISExportDialog.h">
       <Filter>Dialog Forms</Filter>
     </QtMoc>
-    <QtMoc Include="ISInputDialog.h">
-      <Filter>Dialog</Filter>
-    </QtMoc>
     <QtMoc Include="ISSelectListDialog.h">
       <Filter>Dialog Forms</Filter>
     </QtMoc>
@@ -608,6 +593,9 @@
     </QtMoc>
     <QtMoc Include="ISTcpModels.h">
       <Filter>Protocol</Filter>
+    </QtMoc>
+    <QtMoc Include="ISDialogsCommon.h">
+      <Filter>Dialog</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>

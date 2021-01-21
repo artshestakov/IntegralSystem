@@ -1,7 +1,6 @@
 #include "ISExportWorker.h"
 #include "ISLocalization.h"
-#include "ISFileDialog.h"
-#include "ISMessageBox.h"
+#include "ISDialogsCommon.h"
 #include "ISSystem.h"
 //-----------------------------------------------------------------------------
 ISExportWorker::ISExportWorker(PMetaTable *meta_table, ISTcpModel *tcp_model, QObject *parent)

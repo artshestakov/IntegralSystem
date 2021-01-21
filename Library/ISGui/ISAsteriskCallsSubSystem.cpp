@@ -3,7 +3,7 @@
 #include "ISLocalization.h"
 #include "ISTcpQuery.h"
 #include "ISAudioPlayerForm.h"
-#include "ISMessageBox.h"
+#include "ISDialogsCommon.h"
 #include "ISProcessForm.h"
 //-----------------------------------------------------------------------------
 ISAsteriskCallsSubSystem::ISAsteriskCallsSubSystem(QWidget *parent) : ISListBaseForm("_AsteriskCalls", parent)

@@ -3,8 +3,7 @@
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISSystem.h"
-#include "ISMessageBox.h"
-#include "ISFileDialog.h"
+#include "ISDialogsCommon.h"
 #include "ISGui.h"
 #include "ISPopupMessage.h"
 #include "ISDefinesGui.h"
@@ -13,7 +12,6 @@
 #include "ISUserRoleEntity.h"
 #include "ISControls.h"
 #include "ISMetaData.h"
-#include "ISInputDialog.h"
 #include "ISDelegates.h"
 #include "ISTcpQuery.h"
 //-----------------------------------------------------------------------------
