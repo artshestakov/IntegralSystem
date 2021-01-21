@@ -59,7 +59,6 @@
 
   <Local Name="Carat.Error.Query.Sleep.TimeoutValueInvalid" Russian="Неправильное значение"/>
   <Local Name="Carat.Error.Query.Sleep.TimeoutValueIsNull" Russian="Значение не должно быть нулевым"/>
-  <Local Name="Carat.Error.Query.Sleep.TimeoutValueIsNegative" Russian="Значение не должно быть отрицательным"/>
 
   <Local Name="Carat.Error.Query.GetMetaData.SettingsDB" Russian="Не удалось получить настройки базы данных."/>
   <Local Name="Carat.Error.Query.GetMetaData.UserGroupAccessTable" Russian="Не удалось получить права доступа на таблицы."/>
