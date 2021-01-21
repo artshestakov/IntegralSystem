@@ -513,7 +513,7 @@ bool CGDatabase::Table_Create(PMetaTable *MetaTable, QString &ErrorString)
 		QString FieldDefalutValue = MetaField->DefaultValue.toString(); //Значение по умолчанию для поля
 		bool FieldNotNull = MetaField->NotNull; //Статус обязательного заполнения поля
 
-		SqlText += "\t" + TableAlias + '_' + FieldName.toLower() + SYMBOL_SPACE + ISMetaData::Instance().GetTypeDB(FieldType);
+		SqlText += "\t" + TableAlias + '_' + FieldName.toLower() + SYMBOL_SPACE + ISMetaData::Instance().GetType(FieldType).TypeDB;
 
 		if (FieldSize > 0) //Если указан размер поля
 		{
@@ -612,7 +612,7 @@ bool CGDatabase::Table_AlterFields(PMetaTable *MetaTable, QString &ErrorString)
 			}
 
 			PMetaField *MetaField = ISMetaData::Instance().GetMetaField(MetaTable, ColumnName);
-			QString MetaType = ISMetaData::Instance().GetTypeDB(MetaField->Type);
+			QString MetaType = ISMetaData::Instance().GetType(MetaField->Type).TypeDB;
 			QString MetaDefaultValue = MetaField->DefaultValue.toString();
 			bool MetaNotNull = MetaField->NotNull;
 			int MetaSize = MetaField->Size;
@@ -704,7 +704,7 @@ bool CGDatabase::Table_CreateFields(PMetaTable *MetaTable, QString &ErrorString)
 			if (!Exist)//Если поле не существует
 			{
 				QString AddColumn = "ALTER TABLE public." + MetaTable->Name + " \n" +
-					"ADD COLUMN \"" + FieldName + "\" " + ISMetaData::Instance().GetTypeDB(MetaField->Type);
+					"ADD COLUMN \"" + FieldName + "\" " + ISMetaData::Instance().GetType(MetaField->Type).TypeDB;
 
 				if (MetaField->Size) //Если указан размер поля
 				{
@@ -840,7 +840,7 @@ bool CGDatabase::Helper_CommentField(PMetaTable *MetaTable, PMetaField *MetaFiel
 	{
 		{ "UID", MetaField->UID },
 		{ "Name", MetaField->Name },
-		{ "Type", ISMetaData::Instance().GetTypeDB(MetaField->Type) },
+		{ "Type", ISMetaData::Instance().GetType(MetaField->Type).TypeDB },
 		{ "Size", MetaField->Size },
 		{ "LabelName", MetaField->LabelName },
 		{ "LocalListName", MetaField->LocalListName },

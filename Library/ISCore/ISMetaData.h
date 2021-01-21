@@ -35,12 +35,8 @@ public:
     bool CheckExitField(PMetaTable *MetaTable, const QString &FieldName) const; //Проверить наличие указанного поля в указанной таблице
 	bool CheckExistResource(const ISUuid &ResourceUID) const; //Проверить наличие ресурса по его идентификатору
 
-    ISNamespace::FieldType GetTypeField(const QString &type_name); //Получить тип данных по мета-имени
-    QString GetTypeDB(ISNamespace::FieldType field_type) const; //Получить наименование типа в базе данных
-    QString GetTypeDB(const QString &type_name) const; //Получить наименование типа в базе данных по имени типа в системе
-    QString GetNameFieldEdit(ISNamespace::FieldType field_type) const; //Получить наименование класса поля редактирования для типа данных
-    QString GetSearchWidget(ISNamespace::FieldType field_type) const; //Получить имя поискового виджета
-    bool GetSearch(ISNamespace::FieldType field_type) const; //Получить факт разрешение на поиск для типа данных
+	const ISMetaType& GetType(const QString &type_name); //Получить тип по имени
+	const ISMetaType& GetType(ISNamespace::FieldType type); //Получить тип по типа
 
 protected:
     bool CheckUniqueAllIdentifiers(bool InitXSR); //Проверка уникальности всех идентификаторов
@@ -79,7 +75,7 @@ private:
     QString CurrentXSR; //Текущий обрабатываемый XSR
     QString CurrentXSF; //Текущий обрабатываемый XSF
     bool Initialized; //Флаг инициализации
-    std::vector<ISMetaDataType> VectorTypes; //Перечисление типов системы
+    std::vector<ISMetaType> VectorTypes; //Перечисление типов системы
 
 	ISCriticalSection CriticalSection;
 };

@@ -749,12 +749,12 @@ ISFieldEditBase* ISGui::CreateFieldEditBase(QWidget *ParentWidget, PMetaField *M
 			}
 			else
 			{
-				Temp = ISMetaData::Instance().GetNameFieldEdit(MetaField->Type);
+				Temp = ISMetaData::Instance().GetType(MetaField->Type).ControlWidget;
 			}
 		}
 		else
 		{
-			Temp = ISMetaData::Instance().GetNameFieldEdit(DataType);
+			Temp = ISMetaData::Instance().GetType(DataType).ControlWidget;
 		}
 		FieldEditBase = CreateFieldEditBase(ParentWidget, MetaField, DataType, Temp);
 	}

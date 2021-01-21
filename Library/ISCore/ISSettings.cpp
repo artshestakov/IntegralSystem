@@ -41,7 +41,7 @@ void ISSettings::Initialize(const QVariantList &VariantList)
 			ISMetaSetting *MetaSetting = new ISMetaSetting();
 			MetaSetting->UID = SettingMap["UID"];
 			MetaSetting->Name = SettingMap["Name"].toString();
-			MetaSetting->Type = ISMetaData::Instance().GetTypeField(SettingMap["Type"].toString());
+			MetaSetting->Type = ISMetaData::Instance().GetType(SettingMap["Type"].toString()).TypeField;
 			MetaSetting->WidgetEditName = SettingMap["WidgetEditName"].toString();
 			MetaSetting->LocalName = SettingMap["Local"].toString();
 			MetaSetting->Hint = SettingMap["Hint"].toString();

@@ -8,7 +8,41 @@
 ISMetaData::ISMetaData()
 	: ErrorString(NO_ERROR_STRING)
 {
-	VectorTypes = std::vector<ISMetaDataType>
+	VectorTypes.emplace_back(ISMetaType("Unknown",		ISNamespace::FT_Unknown,		QString(),						QString(),				QString(),				false));
+	VectorTypes.emplace_back(ISMetaType("ID",			ISNamespace::FT_ID,				"BIGINT",						"ISIntegerEdit",		"ISComboSearchNumber",	true));
+	VectorTypes.emplace_back(ISMetaType("Int",			ISNamespace::FT_Int,			"INTEGER",						"ISIntegerEdit",		"ISComboSearchNumber",	true));
+	VectorTypes.emplace_back(ISMetaType("IntArray",		ISNamespace::FT_IntArray,		"INTEGER[]",					"ISIntegerEdit",		"ISComboSearchNumber",	true));
+	VectorTypes.emplace_back(ISMetaType("BigInt",		ISNamespace::FT_BigInt,			"BIGINT",						"ISIntegerEdit",		"ISComboSearchNumber",	true));
+	VectorTypes.emplace_back(ISMetaType("String",		ISNamespace::FT_String,			"CHARACTER VARYING",			"ISLineEdit",			"ISComboSearchString",	true));
+	VectorTypes.emplace_back(ISMetaType("Text",			ISNamespace::FT_Text,			"TEXT",							"ISTextEdit",			"ISComboSearchString",	true));
+	VectorTypes.emplace_back(ISMetaType("UID",			ISNamespace::FT_UID,			"UUID",							"ISUuidEdit",			"ISComboSearchString",	true));
+	VectorTypes.emplace_back(ISMetaType("Bool",			ISNamespace::FT_Bool,			"BOOLEAN",						"ISCheckEdit",			"ISComboSearchBase",	true));
+	VectorTypes.emplace_back(ISMetaType("Double",		ISNamespace::FT_Double,			"NUMERIC",						"ISDoubleEdit",			"ISComboSearchNumber",	true));
+	VectorTypes.emplace_back(ISMetaType("Money",		ISNamespace::FT_Money,			"NUMERIC",						"ISMoneyEdit",			"ISComboSearchNumber",	true));
+	VectorTypes.emplace_back(ISMetaType("ByteArray",	ISNamespace::FT_ByteArray,		"BYTEA",						"ISLineEdit",			QString(),				false));
+	VectorTypes.emplace_back(ISMetaType("Date",			ISNamespace::FT_Date,			"DATE",							"ISDateEdit",			"ISComboSearchNumber",	true));
+	VectorTypes.emplace_back(ISMetaType("Time",			ISNamespace::FT_Time,			"TIME WITHOUT TIME ZONE",		"ISTimeEdit",			"ISComboSearchNumber",	true));
+	VectorTypes.emplace_back(ISMetaType("DateTime",		ISNamespace::FT_DateTime,		"TIMESTAMP WITHOUT TIME ZONE",	"ISDateTimeEdit",		"ISComboSearchNumber",	true));
+	VectorTypes.emplace_back(ISMetaType("Inn",			ISNamespace::FT_Inn,			"CHARACTER VARYING",			"ISINNEdit",			"ISComboSearchString",	true));
+	VectorTypes.emplace_back(ISMetaType("Kpp",			ISNamespace::FT_Kpp,			"CHARACTER VARYING",			"ISKPPEdit",			"ISComboSearchString",	true));
+	VectorTypes.emplace_back(ISMetaType("Ogrn",			ISNamespace::FT_Ogrn,			"CHARACTER VARYING",			"ISOGRNEdit",			"ISComboSearchString",	true));
+	VectorTypes.emplace_back(ISMetaType("Okpo",			ISNamespace::FT_Okpo,			"CHARACTER VARYING",			"ISOKPOEdit",			"ISComboSearchString",	true));
+	VectorTypes.emplace_back(ISMetaType("Bik",			ISNamespace::FT_Bik,			"CHARACTER VARYING",			"ISBIKEdit",			"ISComboSearchString",	true));
+	VectorTypes.emplace_back(ISMetaType("Vin",			ISNamespace::FT_Vin,			"CHARACTER VARYING",			"ISVINEdit",			"ISComboSearchString",	true));
+	VectorTypes.emplace_back(ISMetaType("Year",			ISNamespace::FT_Year,			"INTEGER",						"ISYearEdit",			"ISComboSearchNumber",	true));
+	VectorTypes.emplace_back(ISMetaType("Phone",		ISNamespace::FT_Phone,			"CHARACTER VARYING",			"ISPhoneEdit",			"ISComboSearchString",	true));
+	VectorTypes.emplace_back(ISMetaType("Image",		ISNamespace::FT_Image,			"BYTEA",						"ISImageEdit",			QString(),				false));
+	VectorTypes.emplace_back(ISMetaType("Color",		ISNamespace::FT_Color,			"CHARACTER VARYING",			"ISColorEdit",			QString(),				false));
+	VectorTypes.emplace_back(ISMetaType("EMail",		ISNamespace::FT_EMail,			"CHARACTER VARYING",			"ISEMailEdit",			"ISComboSearchString",	true));
+	VectorTypes.emplace_back(ISMetaType("Volume",		ISNamespace::FT_Volume,			"INTEGER",						"ISVolumeEdit",			QString(),				false));
+	VectorTypes.emplace_back(ISMetaType("Birthday",		ISNamespace::FT_Birthday,		"DATE",							"ISBirthdayEdit",		"ISComboSearchNumber",	true));
+	VectorTypes.emplace_back(ISMetaType("Seconds",		ISNamespace::FT_Seconds,		"INTEGER",						"ISIntegerEdit",		"ISComboSearchNumber",	false));
+	VectorTypes.emplace_back(ISMetaType("Month",		ISNamespace::FT_Month,			"INTEGER",						"ISMonthEdit",			"ISComboSearchNumber",	false));
+	VectorTypes.emplace_back(ISMetaType("Url",			ISNamespace::FT_Url,			"CHARACTER VARYING",			"ISUrlEdit",			"ISComboSearchString",	true));
+	VectorTypes.emplace_back(ISMetaType("File",			ISNamespace::FT_File,			"CHARACTER VARYING",			"ISFileEdit",			QString(),				false));
+	VectorTypes.emplace_back(ISMetaType("TaskImportant",ISNamespace::FT_TaskImportant,	"BOOLEAN",						"ISTaskImportantEdit",	"ISComboSearchBase",	true));
+
+	/*VectorTypes = std::vector<ISMetaDataType>
 	{
 		{ "ID", ISNamespace::FT_ID, "BIGINT", "ISIntegerEdit", "ISComboSearchNumber", true },
 		{ "Int", ISNamespace::FT_Int, "INTEGER", "ISIntegerEdit", "ISComboSearchNumber", true },
@@ -42,7 +76,7 @@ ISMetaData::ISMetaData()
 		{ "Url", ISNamespace::FT_Url, "CHARACTER VARYING", "ISUrlEdit", "ISComboSearchString", true },
 		{ "File", ISNamespace::FT_File, "CHARACTER VARYING", "ISFileEdit", QString(), false },
 		{ "TaskImportant", ISNamespace::FT_TaskImportant, "BOOLEAN", "ISTaskImportantEdit", "ISComboSearchBase", true }
-	};
+	};*/
 	CRITICAL_SECTION_INIT(&CriticalSection);
 }
 //-----------------------------------------------------------------------------
@@ -231,82 +265,30 @@ bool ISMetaData::CheckExistResource(const ISUuid &ResourceUID) const
 	return false;
 }
 //-----------------------------------------------------------------------------
-ISNamespace::FieldType ISMetaData::GetTypeField(const QString &type_name)
+const ISMetaType& ISMetaData::GetType(const QString &type_name)
 {
-	for (const ISMetaDataType &Type : VectorTypes)
+	for (const ISMetaType &MetaType : VectorTypes)
 	{
-		if (Type.TypeName == type_name)
+		if (MetaType.TypeName == type_name)
 		{
-			return Type.TypeField;
+			return MetaType;
 		}
 	}
-	IS_ASSERT(false, "Not found field type from string: " + type_name);
-	return ISNamespace::FT_Unknown;
+	IS_ASSERT(false, "Not found meta type with name \"" + type_name + "\"");
+	return GetType("Unknown");
 }
 //-----------------------------------------------------------------------------
-QString ISMetaData::GetTypeDB(ISNamespace::FieldType field_type) const
+const ISMetaType& ISMetaData::GetType(ISNamespace::FieldType type)
 {
-	for (const ISMetaDataType &Type : VectorTypes)
+	for (const ISMetaType &MetaType : VectorTypes)
 	{
-		if (Type.TypeField == field_type)
+		if (MetaType.TypeField == type)
 		{
-			return Type.TypeDB;
+			return MetaType;
 		}
 	}
-	IS_ASSERT(false, "Not found type db.");
-	return QString();
-}
-//-----------------------------------------------------------------------------
-QString ISMetaData::GetTypeDB(const QString &type_name) const
-{
-	for (const ISMetaDataType &Type : VectorTypes)
-	{
-		if (Type.TypeName == type_name)
-		{
-			return Type.TypeDB;
-		}
-	}
-	IS_ASSERT(false, "Not found type db: " + type_name);
-	return QString();
-}
-//-----------------------------------------------------------------------------
-QString ISMetaData::GetNameFieldEdit(ISNamespace::FieldType field_type) const
-{
-	for (const ISMetaDataType &Type : VectorTypes)
-	{
-		if (Type.TypeField == field_type)
-		{
-			return Type.ControlWidget;
-		}
-	}
-	IS_ASSERT(false, "Not found control widget from field type.");
-	return QString();
-}
-//-----------------------------------------------------------------------------
-QString ISMetaData::GetSearchWidget(ISNamespace::FieldType field_type) const
-{
-	for (const ISMetaDataType &Type : VectorTypes)
-	{
-		if (Type.TypeField == field_type)
-		{
-			return Type.SearchOperatorWidget;
-		}
-	}
-	IS_ASSERT(false, "Not found search operator widget from field type.");
-	return QString();
-}
-//-----------------------------------------------------------------------------
-bool ISMetaData::GetSearch(ISNamespace::FieldType field_type) const
-{
-	for (const ISMetaDataType &Type : VectorTypes)
-	{
-		if (Type.TypeField == field_type)
-		{
-			return Type.Search;
-		}
-	}
-	IS_ASSERT(false, "Not found search permission from field type.");
-	return false;
+	IS_ASSERT(false, "Not found meta type with field type: " + QString::number(type));
+	return GetType(ISNamespace::FT_Unknown);
 }
 //-----------------------------------------------------------------------------
 bool ISMetaData::CheckUniqueAllIdentifiers(bool InitXSR)
@@ -674,7 +656,7 @@ bool ISMetaData::InitializeXSNTableFields(PMetaTable *MetaTable, const QDomNode 
 			PMetaField *MetaField = new PMetaField();
 			MetaField->UID = DomNamedNodeMap.namedItem("UID").nodeValue();
 			MetaField->Name = FieldName;
-			MetaField->Type = ISMetaData::Instance().GetTypeField(DomNamedNodeMap.namedItem("Type").nodeValue());
+			MetaField->Type = ISMetaData::Instance().GetType(DomNamedNodeMap.namedItem("Type").nodeValue()).TypeField;
 			MetaField->Size = DomNamedNodeMap.namedItem("Size").nodeValue().toInt();
 			MetaField->Upper = QVariant(DomNamedNodeMap.namedItem("Upper").nodeValue()).toBool();
 			MetaField->Lower = QVariant(DomNamedNodeMap.namedItem("Lover").nodeValue()).toBool();

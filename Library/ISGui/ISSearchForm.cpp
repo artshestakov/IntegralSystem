@@ -118,7 +118,7 @@ void ISSearchForm::AddField(PMetaField *MetaField, QTreeWidgetItem *ParentItem)
 		//Виджет с выбором оператора
 		QString SearchOperatorWidget = MetaField->Type == ISNamespace::FT_Int && MetaField->Foreign
 			? "ISComboSearchBase" :
-			ISMetaData::Instance().GetSearchWidget(MetaField->Type);
+			ISMetaData::Instance().GetType(MetaField->Type).SearchConditionWidget;
 		ISComboSearchBase *ComboSearchOperator = ISAlgorithm::CreatePointer<ISComboSearchBase *>(SearchOperatorWidget, Q_ARG(QWidget *, TreeWidget));
 		TreeWidget->setItemWidget(TreeWidgetItem, 2, ComboSearchOperator);
 	}
