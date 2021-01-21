@@ -185,22 +185,33 @@ void ISTcpServer::QueueBalancerMessage()
 //-----------------------------------------------------------------------------
 void ISTcpServer::SendAnswer(ISTcpAnswer *TcpAnswer)
 {
-	ISTcpSocket *TcpSocket = TcpAnswer->GetSocket();
-	if (TcpSocket->state() == ISTcpSocket::ConnectedState) //Если сокет не отключался
+	//Если такой клиент ещё подключен - отправляем ответ
+	if (ISTcpClients::Instance().Exist(TcpAnswer->GetSocketDescriptor()))
 	{
-		//Записываем в него ответ и ждём отправки
-		TcpSocket->write(TcpAnswer->ToByteArray());
-		while (TcpSocket->state() == ISTcpSocket::ConnectedState)
+		//Получаем указатель на сокет
+		ISTcpSocket *TcpSocket = TcpAnswer->GetSocket();
+
+		//Делаем дополнительную проверку наличия подключения
+		if (TcpSocket->state() == ISTcpSocket::ConnectedState) //Если сокет не отключался
 		{
-			if (TcpSocket->bytesToWrite() > 0) //Если есть баты доступные для записи - пишем
+			//Записываем в него ответ и ждём отправки
+			TcpSocket->write(TcpAnswer->ToByteArray());
+			while (TcpSocket->state() == ISTcpSocket::ConnectedState)
 			{
-				PROCESS_EVENTS();
-				ISSleep(1);
+				if (TcpSocket->bytesToWrite() > 0) //Если есть баты доступные для записи - пишем
+				{
+					PROCESS_EVENTS();
+					ISSleep(1);
+				}
+				else //Записали все - выходим из цикла
+				{
+					break;
+				}
 			}
-			else //Записали все - выходим из цикла
-			{
-				break;
-			}
+		}
+		else //Кажется, проблемы...
+		{
+			ISLOGGER_W(__CLASS__, "Client not connected");
 		}
 	}
 	delete TcpAnswer; //Удаляем указатель на объект ответа

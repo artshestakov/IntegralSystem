@@ -5,7 +5,8 @@
 ISTcpAnswer::ISTcpAnswer(ISTcpSocket *tcp_socket)
 	: ErrorString(NO_ERROR_STRING),
 	Error(false),
-	TcpSocket(tcp_socket)
+	TcpSocket(tcp_socket),
+	SocketDescriptor(tcp_socket->GetSocketDescriptor())
 {
 	
 }
@@ -37,6 +38,11 @@ void ISTcpAnswer::SetError(const QString &error_string)
 ISTcpSocket* ISTcpAnswer::GetSocket()
 {
 	return TcpSocket;
+}
+//-----------------------------------------------------------------------------
+qintptr ISTcpAnswer::GetSocketDescriptor() const
+{
+	return SocketDescriptor;
 }
 //-----------------------------------------------------------------------------
 QByteArray ISTcpAnswer::ToByteArray() const

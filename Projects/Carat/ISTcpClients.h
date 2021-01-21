@@ -13,6 +13,7 @@ public:
 	void Remove(qintptr SocketDescriptor); //Удалить клиента
 	ISVectorUInt GetClientsID(); //Получить список идентификаторов клиентов
 	ISClientInfo GetClient(unsigned int UserID); //Получить информацию о клиенте по его идентификатору
+	bool Exist(qintptr SocketDescription); //Проверить наличие такого дескриптора
 
 	void UpdateLastQuery(qintptr SocketDescriptor, ISNamespace::ApiMessageType MessageType, bool Result, unsigned long long MSec); //Одновить дату и результат последнего запроса
 

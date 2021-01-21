@@ -15,6 +15,7 @@ public:
 	QString GetErrorString() const;
 	void SetError(const QString &error_string);
 	ISTcpSocket* GetSocket();
+	qintptr GetSocketDescriptor() const;
 	QByteArray ToByteArray() const;
 
 public:
@@ -24,6 +25,7 @@ private:
 	QString ErrorString;
 	bool Error;
 	ISTcpSocket *TcpSocket;
+	qintptr SocketDescriptor;
 };
 //-----------------------------------------------------------------------------
 #endif

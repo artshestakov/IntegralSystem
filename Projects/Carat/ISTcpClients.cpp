@@ -70,6 +70,14 @@ ISClientInfo ISTcpClients::GetClient(unsigned int UserID)
 	return ClientInfo;
 }
 //-----------------------------------------------------------------------------
+bool ISTcpClients::Exist(qintptr SocketDescription)
+{
+	CRITICAL_SECTION_LOCK(&CriticalSection);
+	bool Result = Clients.count(SocketDescription) > 0;
+	CRITICAL_SECTION_UNLOCK(&CriticalSection);
+	return Result;
+}
+//-----------------------------------------------------------------------------
 void ISTcpClients::UpdateLastQuery(qintptr SocketDescriptor, ISNamespace::ApiMessageType MessageType, bool Result, unsigned long long MSec)
 {
 	CRITICAL_SECTION_LOCK(&CriticalSection);
