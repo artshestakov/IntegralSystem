@@ -76,12 +76,10 @@ void ISQLineEdit::SetEnabled(bool Enabled)
 		if (Enabled)
 		{
 			PixmapCurrent = PixmapEnabled;
-			PixmapEnabled = QPixmap();
 		}
 		else
 		{
-			PixmapEnabled = PixmapCurrent;
-			QImage Image = PixmapEnabled.toImage();
+			QImage Image = PixmapCurrent.toImage();
 			for (int y = 0, Height = Image.height(); y < Height; ++y)
 			{
 				for (int x = 0, Width = Image.width(); x < Width; ++x)
@@ -101,6 +99,7 @@ void ISQLineEdit::SetEnabled(bool Enabled)
 void ISQLineEdit::SetIcon(const QIcon &icon)
 {
 	PixmapCurrent = icon.pixmap(height() - 3, width() - 3);
+	PixmapEnabled = PixmapCurrent;
 	setTextMargins(PixmapCurrent.isNull() ? 0 : height() + 2, 0, 0, 0);
 }
 //-----------------------------------------------------------------------------
@@ -185,6 +184,7 @@ ISQDateEdit::ISQDateEdit(QWidget *parent)
 
 	CalendarWidget = new ISCalendarPopup(this);
 	CalendarWidget->setVisible(false);
+	CalendarWidget->setMaximumDate(QDate::currentDate());
 	connect(CalendarWidget, &ISCalendarWidget::clicked, this, &ISQDateEdit::SetDate);
 	connect(CalendarWidget, &ISCalendarWidget::Hide, this, &ISQDateEdit::HideCalendar);
 }
