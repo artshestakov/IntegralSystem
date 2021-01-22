@@ -147,7 +147,7 @@ namespace ISAlgorithm
 
 	//! Генерация упрощённого уникального идентификатора в формате BE285BCC8A0046C5A46183A8A3390774
 	//! \return возвращает упрощённый уникальный идентификатор
-	ISCORE_EXPORT QString GenerateUuidLite();
+    ISCORE_EXPORT ISUuid GenerateUuidLite();
 
 	//! Извлечь подстроку из строки
 	//! \param String строка, из которой будет происходить извлечение
@@ -155,6 +155,18 @@ namespace ISAlgorithm
 	//! \param Size количество извлекаемых символов
 	//! \return возвращает извлеченную строку
 	ISCORE_EXPORT QString StringTake(QString &String, int Pos, int N);
+
+    //! Конвертация DEC в HEX
+    //! \param N число
+    //! \return возвращает число в HEX-формате
+    ISCORE_EXPORT QString DecToHex(int N);
+
+    //! Конвертация RGB в HEX
+    //! \param R уровень красного
+    //! \param G уровень зелёного
+    //! \param B уровень синего
+    //! \return возвращает цвет в HEX-формате
+    ISCORE_EXPORT QString RGBToHEX(int R, int G, int B);
 
 	//Поиск значения в векторе
     template <typename T> bool VectorContains(const std::vector<T> &Vector, T Value)

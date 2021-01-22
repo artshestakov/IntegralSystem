@@ -927,35 +927,27 @@ QVariant ISTcpWorker::GetSettingDB(const QString &SettingName)
 //-----------------------------------------------------------------------------
 QString ISTcpWorker::GetColorForLogMessage(const QString &Severity) const
 {
-	if (Severity == LOGGER_SEVERITY_DEBUG)
+    if (Severity == LOGGER_SEVERITY_DEBUG)
 	{
-		return QColor(Qt::blue).name();
+        return ISAlgorithm::RGBToHEX(0, 0, 255); //Синий
 	}
 	else if (Severity == LOGGER_SEVERITY_INFO)
 	{
-		return QColor(Qt::darkGreen).name();
+        return ISAlgorithm::RGBToHEX(0, 128, 0); //Тёмно-зелёный
 	}
 	else if (Severity == LOGGER_SEVERITY_WARNING)
 	{
-		return QColor(255, 106, 0).name();
+        return ISAlgorithm::RGBToHEX(226, 132, 0); //Оранжевый
 	}
-	else if (Severity == LOGGER_SEVERITY_ERROR)
+    else if (Severity == LOGGER_SEVERITY_ERROR || Severity == LOGGER_SEVERITY_CRITICAL)
 	{
-		return QColor(Qt::red).name();
+        return ISAlgorithm::RGBToHEX(255, 0, 0); //Красный
 	}
-	else if (Severity == LOGGER_SEVERITY_CRITICAL)
+    else if (Severity == LOGGER_SEVERITY_TRACE || Severity == LOGGER_SEVERITY_ASSERT)
 	{
-		return QColor(Qt::red).name();
+        return ISAlgorithm::RGBToHEX(128, 0, 128); //Фиолетовый
 	}
-	else if (Severity == LOGGER_SEVERITY_TRACE)
-	{
-		return QColor(Qt::darkMagenta).name();
-	}
-	else if (Severity == LOGGER_SEVERITY_ASSERT)
-	{
-		return QColor(Qt::darkMagenta).name();
-	}
-	return QColor(Qt::black).name();
+    return ISAlgorithm::RGBToHEX(0, 0, 0); //Чёрный
 }
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::ErrorQuery(const QString &LocalError, ISQuery &SqlQuery)
