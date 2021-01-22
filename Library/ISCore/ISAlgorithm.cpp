@@ -11,7 +11,7 @@ std::string ISAlgorithm::GetFileNameFromPath(const std::string &FilePath)
 	return FilePath;
 }
 //-----------------------------------------------------------------------------
-QString ISAlgorithm::FileSizeFromString(qint64 FileSize)
+QString ISAlgorithm::StringFromSize(qint64 FileSize)
 {
     int Index = 0;
     for (; FileSize > 1023; FileSize /= 1024, ++Index) {}
@@ -37,6 +37,18 @@ QString ISAlgorithm::FileSizeFromString(qint64 FileSize)
 		String.replace("T", " Tb");
 	}
 	return String;
+}
+//-----------------------------------------------------------------------------
+quint64 ISAlgorithm::DirSize(const QString &PathDir, const QStringList &Filter)
+{
+	quint64 Size = 0;
+	QDirIterator DirIterator(PathDir, Filter, QDir::Files, QDirIterator::Subdirectories);
+	while (DirIterator.hasNext())
+	{
+		QFile File(DirIterator.next());
+		Size += File.size();
+	}
+	return Size;
 }
 //-----------------------------------------------------------------------------
 ISTimePoint ISAlgorithm::GetTick()

@@ -1,6 +1,7 @@
 #include "ISCaratApplication.h"
 #include "ISDatabase.h"
 #include "ISLogger.h"
+#include "ISProperty.h"
 //-----------------------------------------------------------------------------
 int main(int argc, char **argv)
 {
@@ -15,6 +16,7 @@ int main(int argc, char **argv)
         if (CaratApplication.Run())
         {
             ISLOGGER_I("", "Started application");
+			PROPERTY_SET("Uptime", QDateTime::currentDateTime());
             ResultCode = CaratApplication.exec();
 
 			//Останавливаем служебные сервисы и завершаем программу

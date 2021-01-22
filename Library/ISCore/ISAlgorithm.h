@@ -66,8 +66,13 @@ namespace ISAlgorithm
 
 	//! Конвертировать размер файла в строку
 	//! \param FileSize размер файла в байтах
-	//! \return размер файла строкой
-	ISCORE_EXPORT QString FileSizeFromString(qint64 FileSize);
+	//! \return размер файла строкой. В случае ошибки вернётся -1
+	ISCORE_EXPORT QString StringFromSize(qint64 FileSize);
+
+	//! Получить размер директории
+	//! \param PathDir путь к директории
+	//! \return размер директории
+	ISCORE_EXPORT quint64 DirSize(const QString &PathDir, const QStringList &Filter = QStringList());
 
 	//! Получить временную метку
 	//! \return возвращает временную метку

@@ -185,6 +185,7 @@ namespace ISNamespace
 		AMT_GetHistoryList, //Получить список открытых записей
 		AMT_TaskCommentAdd, //Добавить комментарий к задаче
 		AMT_GetForeignList, //Получить список значений по внешнему ключу
+		AMT_GetServerInfo, //Получить информацию о сервере
 		AMT_PeriodContains, //Проверка наличия текущего периода
 		AMT_GetStockList, //Получить список складов
 		AMT_StatementAdd, //Добавить выгрузку в ведомости азс

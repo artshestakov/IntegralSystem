@@ -835,7 +835,14 @@ def MapLogGet =
 			Date: vars.get(&quot;LogGet_Date&quot;)
 		]
 ];
-vars.put(&quot;QueryLogGet&quot;, MapToString(MapLogGet));</stringProp>
+vars.put(&quot;QueryLogGet&quot;, MapToString(MapLogGet));
+
+//Получить значения справочника для поля
+def MapGetServerInfo =
+[
+	Type: &quot;GetServerInfo&quot;
+];
+vars.put(&quot;QueryGetServerInfo&quot;, MapToString(MapGetServerInfo));</stringProp>
           <stringProp name="scriptLanguage">groovy</stringProp>
         </JSR223Sampler>
         <hashTree/>
@@ -1307,7 +1314,7 @@ vars.put(&quot;QueryLogGet&quot;, MapToString(MapLogGet));</stringProp>
           <stringProp name="ConfigTestElement.password"></stringProp>
         </TCPSampler>
         <hashTree/>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: LogGet" enabled="true">
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: LogGet" enabled="false">
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
           <stringProp name="TCPSampler.port"></stringProp>
@@ -1326,6 +1333,18 @@ vars.put(&quot;QueryLogGet&quot;, MapToString(MapLogGet));</stringProp>
           <boolProp name="TCPSampler.nodelay">false</boolProp>
           <stringProp name="TCPSampler.timeout"></stringProp>
           <stringProp name="TCPSampler.request">${QueryGetForeignList}</stringProp>
+          <boolProp name="TCPSampler.closeConnection">true</boolProp>
+          <stringProp name="ConfigTestElement.username"></stringProp>
+          <stringProp name="ConfigTestElement.password"></stringProp>
+        </TCPSampler>
+        <hashTree/>
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: GetServerInfo" enabled="true">
+          <stringProp name="TCPSampler.server"></stringProp>
+          <boolProp name="TCPSampler.reUseConnection">true</boolProp>
+          <stringProp name="TCPSampler.port"></stringProp>
+          <boolProp name="TCPSampler.nodelay">false</boolProp>
+          <stringProp name="TCPSampler.timeout"></stringProp>
+          <stringProp name="TCPSampler.request">${QueryGetServerInfo}</stringProp>
           <boolProp name="TCPSampler.closeConnection">true</boolProp>
           <stringProp name="ConfigTestElement.username"></stringProp>
           <stringProp name="ConfigTestElement.password"></stringProp>

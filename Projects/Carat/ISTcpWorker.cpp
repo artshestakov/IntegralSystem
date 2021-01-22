@@ -12,6 +12,7 @@
 #include "ISFail2Ban.h"
 #include "ISConfigurations.h"
 #include "ISVersionInfo.h"
+#include "ISProperty.h"
 //-----------------------------------------------------------------------------
 static QString QS_USERS_HASH = PREPARE_QUERY("SELECT usrs_hash, usrs_salt "
 											 "FROM _users "
@@ -411,6 +412,22 @@ static QString QS_HISTORY = PREPARE_QUERY("SELECT prtc_datetime, prtc_tablename,
 static QString QI_TASK_COMMENT = PREPARE_QUERY("INSERT INTO _taskcomment(tcom_owner, tcom_task, tcom_parent, tcom_comment) "
 											   "VALUES(:UserID, :TaskID, :ParentCommentID, :Comment)");
 //-----------------------------------------------------------------------------
+static QString QS_SERVER_INFO = PREPARE_QUERY("SELECT "
+											  "(SELECT pg_size_pretty(pg_database_size(current_database()))) AS database_size, "
+											  "(SELECT pg_catalog.pg_get_userbyid(datdba) AS database_owner FROM pg_catalog.pg_database WHERE datname = current_database()), "
+											  "(SELECT pg_encoding_to_char(encoding) AS database_encoding FROM pg_database WHERE datname = current_database()), "
+											  "(SELECT now() - pg_postmaster_start_time() AS database_uptime), "
+											  "(SELECT pg_backend_pid() AS database_backend_pid), "
+											  "(SELECT version()) AS database_version, "
+											  "(SELECT setting AS database_cluster_path FROM pg_settings WHERE name = 'data_directory'), "
+											  "(SELECT COUNT(*) AS table_count FROM information_schema.tables WHERE table_catalog = current_database() AND table_schema = current_schema()), "
+											  "(SELECT COUNT(*) AS field_count FROM information_schema.columns WHERE table_catalog = current_database() AND table_schema = current_schema()), "
+											  "(SELECT COUNT(*) AS sequence_count FROM information_schema.sequences WHERE sequence_catalog = current_database() AND sequence_schema = current_schema()), "
+											  "(SELECT COUNT(*) AS index_count FROM pg_indexes WHERE schemaname = current_schema()), "
+											  "(SELECT COUNT(*) AS foreign_count FROM information_schema.constraint_table_usage WHERE constraint_catalog = current_database() AND constraint_schema = current_schema()), "
+											  "(SELECT get_rows_count() AS rows_count), "
+											  "(SELECT COUNT(*) AS users_count FROM _users)");
+//-----------------------------------------------------------------------------
 static QString QS_PERIOD = PREPARE_QUERY("SELECT prod_constant "
 										 "FROM period "
 										 "WHERE CURRENT_DATE BETWEEN prod_datestart AND prod_dateend");
@@ -631,6 +648,7 @@ void ISTcpWorker::Process()
 					case ISNamespace::AMT_GetHistoryList: Result = GetHistoryList(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_TaskCommentAdd: Result = TaskCommentAdd(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_GetForeignList: Result = GetForeignList(tcp_message, TcpAnswer); break;
+					case ISNamespace::AMT_GetServerInfo: Result = GetServerInfo(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_PeriodContains: Result = PeriodContains(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_GetStockList: Result = GetStockList(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_StatementAdd: Result = StatementAdd(tcp_message, TcpAnswer); break;
@@ -2953,7 +2971,7 @@ bool ISTcpWorker::FileStorageAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
 	qInsert.BindValue(":Owner", TcpMessage->TcpSocket->GetUserID());
 	qInsert.BindValue(":Name", Name);
 	qInsert.BindValue(":Expansion", Expansion);
-	qInsert.BindValue(":Size", ISAlgorithm::FileSizeFromString(Size));
+	qInsert.BindValue(":Size", ISAlgorithm::StringFromSize(Size));
 	qInsert.BindValue(":Data", ByteArray);
 	if (!qInsert.ExecuteFirst())
 	{
@@ -4191,6 +4209,64 @@ bool ISTcpWorker::GetForeignList(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
 	}
 
 	TcpAnswer->Parameters["List"] = VariantList;
+	return true;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::GetServerInfo(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+	Q_UNUSED(TcpMessage);
+
+	//Делаем запрос к БД
+	ISQuery qSelect(ISDatabase::Instance().GetDB(DBConnectionName), QS_SERVER_INFO);
+	if (!qSelect.Execute())
+	{
+		return ErrorQuery(LANG("Carat.Error.Query.GetServerInfo.SelectInfo"), qSelect);
+	}
+
+	if (!qSelect.First())
+	{
+		ErrorString = qSelect.GetErrorString();
+		return false;
+	}
+
+	QString DatabaseSizeData = qSelect.ReadColumn("database_size").toString();
+	QString DatabaseOwner = qSelect.ReadColumn("database_owner").toString();
+	QString DatabaseEncoding = qSelect.ReadColumn("database_encoding").toString();
+	QString DatabaseUptime = qSelect.ReadColumn("database_uptime").toString();
+	unsigned int DatabasePID = qSelect.ReadColumn("database_backend_pid").toUInt();
+	QString DatabaseVersion = qSelect.ReadColumn("database_version").toString();
+	QString DatabaseClusterPath = qSelect.ReadColumn("database_cluster_path").toString();
+	QString DatabaseSizeLogs = ISAlgorithm::StringFromSize(ISAlgorithm::DirSize(DatabaseClusterPath + "/pg_log", QStringList() << "*.log"));
+	unsigned int DatabaseCountTable = qSelect.ReadColumn("table_count").toUInt();
+	unsigned int DatabaseCountField = qSelect.ReadColumn("field_count").toUInt();
+	unsigned int DatabaseCountSequence = qSelect.ReadColumn("sequence_count").toUInt();
+	unsigned int DatabaseCountForeign = qSelect.ReadColumn("foreign_count").toUInt();
+	unsigned int DatabaseRowsCount = qSelect.ReadColumn("rows_count").toUInt();
+	unsigned int DatabaseUsersCount = qSelect.ReadColumn("users_count").toUInt();
+
+	TcpAnswer->Parameters["Carat"] = QVariantMap
+	{
+		{ "Version", ISVersionInfo::Instance().Info.Version },
+		{ "StartedDateTime", ConvertDateTimeToString(PROPERTY_GET("Uptime").toDateTime(), FORMAT_TIME_V3) },
+		{ "SizeLogs", ISAlgorithm::StringFromSize(ISAlgorithm::DirSize(QCoreApplication::applicationDirPath() + "/Logs", QStringList() << "*.log")) }
+	};
+	TcpAnswer->Parameters["Database"] = QVariantMap
+	{
+		{ "SizeData", DatabaseSizeData },
+		{ "Owner", DatabaseOwner },
+		{ "Encoding", DatabaseEncoding },
+		{ "Uptime", DatabaseUptime },
+		{ "PID", DatabasePID },
+		{ "Version", DatabaseVersion },
+		{ "ClusterPath", DatabaseClusterPath },
+		{ "SizeLogs", DatabaseSizeLogs },
+		{ "CountTable", DatabaseCountTable },
+		{ "CountField", DatabaseCountField },
+		{ "CountSequence", DatabaseCountSequence },
+		{ "CountForeign", DatabaseCountForeign },
+		{ "RowsCount", DatabaseRowsCount },
+		{ "UsersCount", DatabaseUsersCount }
+	};
 	return true;
 }
 //-----------------------------------------------------------------------------

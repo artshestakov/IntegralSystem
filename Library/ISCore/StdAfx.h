@@ -103,6 +103,7 @@
 #include <QtCore/QAbstractItemModel>
 #include <QtCore/QItemSelectionModel>
 #include <QtCore/QSysInfo>
+#include <QtCore/QDirIterator>
 //-----------------------------------------------------------------------------
 #include <QtSql/QSqlDatabase>
 #include <QtSql/QSqlQueryModel>

@@ -239,6 +239,10 @@ ISNamespace::ApiMessageType ISTcp::GetMessageTypeByName(const QString &Name)
 	{
 		return ISNamespace::AMT_GetForeignList;
 	}
+	else if (Name == API_GET_SERVER_INFO)
+	{
+		return ISNamespace::AMT_GetServerInfo;
+	}
 	else if (Name == API_PERIOD_CONTAINS)
 	{
 		return ISNamespace::AMT_PeriodContains;
