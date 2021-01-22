@@ -5,6 +5,7 @@
 #include "ISInterfaceMetaForm.h"
 #include "ISBaseTableView.h"
 #include "ISTcpModels.h"
+#include "ISFieldEdits.h"
 //-----------------------------------------------------------------------------
 class ISServerSubSystem : public ISInterfaceMetaForm
 {
@@ -19,9 +20,11 @@ public:
 private:
 	void CreateTabLog(); //Вкладка "Протокол событий"
 	void TabLogDateChanged(const QVariant &Date);
+	void Search(const QVariant &String);
 
 private:
 	QTabWidget *TabWidget;
+	ISSearchEdit *EditSearch;
 	ISBaseTableView *TableView;
 	ISLogModel *LogModel;
 	QLabel *LabelBottom;

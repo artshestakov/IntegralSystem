@@ -1,7 +1,6 @@
 #include "ISServerSubSystem.h"
 #include "ISLocalization.h"
 #include "ISTcpQuery.h"
-#include "ISFieldEdits.h"
 #include "ISDialogsCommon.h"
 #include "ISGui.h"
 //-----------------------------------------------------------------------------
@@ -39,6 +38,11 @@ void ISServerSubSystem::CreateTabLog()
 	connect(DateEdit, &ISDateEdit::ValueChange, this, &ISServerSubSystem::TabLogDateChanged);
 	LayoutTitle->addWidget(DateEdit);
 
+	EditSearch = new ISSearchEdit(Widget);
+	EditSearch->SetEnabled(false);
+	connect(EditSearch, &ISSearchEdit::ValueChange, this, &ISServerSubSystem::Search);
+	LayoutTitle->addWidget(EditSearch);
+
 	LayoutTitle->addStretch();
 
 	TableView = new ISBaseTableView(Widget);
@@ -48,28 +52,38 @@ void ISServerSubSystem::CreateTabLog()
 	LogModel = new ISLogModel(TableView);
 	TableView->setModel(LogModel);
 
-	LabelBottom = new QLabel(LANG("ISServerSubSystem.LogView.RowCount").arg(0), Widget);
+	LabelBottom = new QLabel(Widget);
 	LayoutWidget->addWidget(LabelBottom, 0, Qt::AlignLeft);
 }
 //-----------------------------------------------------------------------------
 void ISServerSubSystem::TabLogDateChanged(const QVariant &Date)
 {
-	ISTcpQuery qLogGet(API_LOG_GET);
-	qLogGet.BindValue("Date", Date.toDate().toString(FORMAT_DATE_V2));
-
-	ISGui::SetWaitGlobalCursor(true);
-	if (qLogGet.Execute())
+	if (Date.isValid())
 	{
-		QVariantMap AnswerMap = qLogGet.TakeAnswer();
-		LogModel->SetSource(AnswerMap["FieldList"].toStringList(), AnswerMap["RecordList"].toList());
-		TableView->resizeColumnsToContents();
-		ISGui::SetWaitGlobalCursor(false);
+		ISGui::SetWaitGlobalCursor(true);
+
+		ISTcpQuery qLogGet(API_LOG_GET);
+		qLogGet.BindValue("Date", Date.toDate().toString(FORMAT_DATE_V2));
+		if (qLogGet.Execute())
+		{
+			QVariantMap AnswerMap = qLogGet.TakeAnswer();
+			LogModel->SetSource(AnswerMap["FieldList"].toStringList(), AnswerMap["RecordList"].toList());
+			TableView->resizeColumnsToContents();
+			ISGui::SetWaitGlobalCursor(false);
+		}
+		else
+		{
+			ISGui::SetWaitGlobalCursor(false);
+			ISMessageBox::ShowCritical(this, qLogGet.GetErrorString());
+		}
 	}
 	else
 	{
-		ISGui::SetWaitGlobalCursor(false);
-		ISMessageBox::ShowCritical(this, qLogGet.GetErrorString());
+		LogModel->Clear();
 	}
+	
+	EditSearch->SetEnabled(Date.isValid());
+	EditSearch->Clear();
 	LabelBottom->setText(LANG("ISServerSubSystem.LogView.RowCount")
 		.arg(LogModel->rowCount())
 		.arg(LogModel->GetCountDebug())
@@ -79,5 +93,24 @@ void ISServerSubSystem::TabLogDateChanged(const QVariant &Date)
 		.arg(LogModel->GetCountCritical())
 		.arg(LogModel->GetCountTrace())
 		.arg(LogModel->GetCountAssert()));
+}
+//-----------------------------------------------------------------------------
+void ISServerSubSystem::Search(const QVariant &String)
+{
+	if (!String.isValid())
+	{
+		TableView->ShowRows();
+		return;
+	}
+	TableView->ShowRows();
+
+	ISVectorUInt VectorUInt = LogModel->Search(String.toString());
+	for (size_t i = 0, c = LogModel->rowCount(); i < c; ++i)
+	{
+		if (!ISAlgorithm::VectorContains(VectorUInt, i))
+		{
+			TableView->hideRow(i);
+		}
+	}
 }
 //-----------------------------------------------------------------------------

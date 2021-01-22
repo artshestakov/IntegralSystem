@@ -22,6 +22,8 @@ public:
 	void SetVisibleVerticalHeader(bool visible);
 	void SetVisibleHorizontalHeader(bool visible);
 
+	void ShowRows(); //Отобразить все скрытые строки
+
 protected:
 	void keyPressEvent(QKeyEvent *e);
 	void keyReleaseEvent(QKeyEvent *e);

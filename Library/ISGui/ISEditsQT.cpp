@@ -68,10 +68,40 @@ ISQLineEdit::~ISQLineEdit()
 
 }
 //-----------------------------------------------------------------------------
+void ISQLineEdit::SetEnabled(bool Enabled)
+{
+	setEnabled(Enabled);
+	if (!PixmapCurrent.isNull())
+	{
+		if (Enabled)
+		{
+			PixmapCurrent = PixmapEnabled;
+			PixmapEnabled = QPixmap();
+		}
+		else
+		{
+			PixmapEnabled = PixmapCurrent;
+			QImage Image = PixmapEnabled.toImage();
+			for (int y = 0, Height = Image.height(); y < Height; ++y)
+			{
+				for (int x = 0, Width = Image.width(); x < Width; ++x)
+				{
+					QRgb Rgb = Image.pixel(x, y);
+					if (Rgb > 0)
+					{
+						Image.setPixelColor(x, y, Qt::gray);
+					}
+				}
+			}
+			PixmapCurrent = QPixmap::fromImage(Image);
+		}
+	}
+}
+//-----------------------------------------------------------------------------
 void ISQLineEdit::SetIcon(const QIcon &icon)
 {
-	Pixmap = icon.pixmap(height() - 3, width() - 3);
-	setTextMargins(Pixmap.isNull() ? 0 : height() + 2, 0, 0, 0);
+	PixmapCurrent = icon.pixmap(height() - 3, width() - 3);
+	setTextMargins(PixmapCurrent.isNull() ? 0 : height() + 2, 0, 0, 0);
 }
 //-----------------------------------------------------------------------------
 void ISQLineEdit::SetVisibleClear(bool visible)
@@ -129,11 +159,11 @@ void ISQLineEdit::mousePressEvent(QMouseEvent *e)
 void ISQLineEdit::paintEvent(QPaintEvent *e)
 {
 	QLineEdit::paintEvent(e);
-	if (!Pixmap.isNull())
+	if (!PixmapCurrent.isNull())
 	{
 		int x = height();
 		QPainter Painter(this);
-		Painter.drawPixmap(1, 1, Pixmap);
+		Painter.drawPixmap(1, 1, PixmapCurrent);
 		Painter.setPen(Qt::lightGray);
 		Painter.drawLine(x + 2, 3, x + 2, height() - 4);
 	}
@@ -189,6 +219,9 @@ void ISQDateEdit::SetDate(const QDate &Date)
 //-----------------------------------------------------------------------------
 void ISQDateEdit::Clear()
 {
+	disconnect(CalendarWidget, &ISCalendarWidget::clicked, this, &ISQDateEdit::SetDate);
+	CalendarWidget->setSelectedDate(QDate::currentDate());
+	connect(CalendarWidget, &ISCalendarWidget::clicked, this, &ISQDateEdit::SetDate);
 	clear();
 }
 //-----------------------------------------------------------------------------

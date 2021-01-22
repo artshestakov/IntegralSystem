@@ -93,6 +93,8 @@ public:
 	unsigned int GetCountTrace() const;
 	unsigned int GetCountAssert() const;
 
+	ISVectorUInt Search(const QString &String);
+
 	QVariant data(const QModelIndex &ModelIndex, int Role = Qt::DisplayRole) const override;
 	QVariant headerData(int Section, Qt::Orientation Orientation, int Role = Qt::DisplayRole) const override;
 	int rowCount(const QModelIndex &Parent = QModelIndex()) const override;

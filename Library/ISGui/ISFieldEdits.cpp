@@ -211,6 +211,12 @@ void ISLineEdit::SetReadOnly(bool read_only)
 	LineEdit->SetVisibleClear(!read_only);
 }
 //-----------------------------------------------------------------------------
+void ISLineEdit::SetEnabled(bool Enabled)
+{
+	ISFieldEditBase::SetEnabled(Enabled);
+	LineEdit->SetEnabled(Enabled);
+}
+//-----------------------------------------------------------------------------
 void ISLineEdit::SetPlaceholderText(const QString &placeholder_text)
 {
 	LineEdit->setPlaceholderText(placeholder_text);
@@ -780,6 +786,7 @@ void ISDateTimeEdit::Clear()
 {
 	DateEdit->Clear();
 	TimeEdit->Clear();
+	emit ValueChange(QVariant());
 }
 //-----------------------------------------------------------------------------
 void ISDateTimeEdit::SetReadOnly(bool read_only)

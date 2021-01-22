@@ -26,6 +26,7 @@ public:
 	virtual bool IsValid() const; //Проверка корректности поля
 	virtual void SetFont(const QFont &Font);
 	virtual void SetReadOnly(bool read_only);
+	virtual void SetEnabled(bool Enabled);
 	virtual void SetPlaceholderText(const QString &placeholder_text);
 	virtual void SetFrameShape(QFrame::Shape FrameShape);
 	virtual void SetRegExp(const QString &RegExp);

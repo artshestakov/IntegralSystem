@@ -59,6 +59,17 @@ void ISBaseTableView::SetVisibleHorizontalHeader(bool visible)
 	ButtonCorner->setVisible(visible);
 }
 //-----------------------------------------------------------------------------
+void ISBaseTableView::ShowRows()
+{
+	if (model())
+	{
+		for (int i = 0, c = model()->rowCount(); i < c; ++i)
+		{
+			showRow(i);
+		}
+	}
+}
+//-----------------------------------------------------------------------------
 void ISBaseTableView::keyPressEvent(QKeyEvent *e)
 {
 	QTableView::keyPressEvent(e);

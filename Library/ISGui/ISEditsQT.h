@@ -42,6 +42,7 @@ public:
 	ISQLineEdit(QWidget *parent = 0);
 	virtual ~ISQLineEdit();
 
+	void SetEnabled(bool Enabled);
 	void SetIcon(const QIcon &icon);
 	void SetVisibleClear(bool visible);
 	void AddAction(QAction *Action, QLineEdit::ActionPosition Position);
@@ -52,7 +53,8 @@ protected:
 	virtual void paintEvent(QPaintEvent *e);
 
 private:
-	QPixmap Pixmap;
+	QPixmap PixmapEnabled;
+	QPixmap PixmapCurrent;
 	QAction *ActionClear;
 };
 //-----------------------------------------------------------------------------

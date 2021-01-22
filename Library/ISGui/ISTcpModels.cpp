@@ -432,6 +432,21 @@ unsigned int ISLogModel::GetCountAssert() const
 	return GetCount(LOGGER_SEVERITY_ASSERT);
 }
 //-----------------------------------------------------------------------------
+ISVectorUInt ISLogModel::Search(const QString &String)
+{
+	QString SearchValue = String.toLower();
+	ISVectorUInt VectorUInt;
+	for (size_t i = 0, c = Records.size(); i < c; ++i)
+	{
+		QString Message = Records[i].Values.back().toLower();
+		if (Message.contains(SearchValue))
+		{
+			VectorUInt.emplace_back(i);
+		}
+	}
+	return VectorUInt;
+}
+//-----------------------------------------------------------------------------
 QVariant ISLogModel::data(const QModelIndex &ModelIndex, int Role) const
 {
 	if (!ModelIndex.isValid())
