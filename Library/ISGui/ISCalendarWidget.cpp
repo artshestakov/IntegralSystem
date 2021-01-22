@@ -139,6 +139,11 @@ void ISCalendarWidget::CurrentPageChanged(int Year, int Month)
 //-----------------------------------------------------------------------------
 void ISCalendarWidget::paintCell(QPainter *Painter, const QRect &Rect, const QDate &Date) const
 {
+	if (Date < minimumDate() || Date > maximumDate()) //≈сли рисуема€ дата не попадает в допустимый диапазон - выходим
+	{
+		return;
+	}
+
 	Painter->save();
 	if (Date == QDate::currentDate()) //≈сли рисуетс€ текуща€ дата
 	{

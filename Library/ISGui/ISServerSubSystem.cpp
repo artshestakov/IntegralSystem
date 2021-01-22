@@ -35,6 +35,7 @@ void ISServerSubSystem::CreateTabLog()
 	LayoutTitle->addWidget(new QLabel(LANG("ISServerSubSystem.LogView.Date"), Widget));
 
 	ISDateEdit *DateEdit = new ISDateEdit(Widget);
+	DateEdit->SetMaximumDate(QDate::currentDate());
 	connect(DateEdit, &ISDateEdit::ValueChange, this, &ISServerSubSystem::TabLogDateChanged);
 	LayoutTitle->addWidget(DateEdit);
 
@@ -58,6 +59,7 @@ void ISServerSubSystem::CreateTabLog()
 //-----------------------------------------------------------------------------
 void ISServerSubSystem::TabLogDateChanged(const QVariant &Date)
 {
+	bool EnabledSearch = false;
 	if (Date.isValid())
 	{
 		ISGui::SetWaitGlobalCursor(true);
@@ -70,11 +72,13 @@ void ISServerSubSystem::TabLogDateChanged(const QVariant &Date)
 			LogModel->SetSource(AnswerMap["FieldList"].toStringList(), AnswerMap["RecordList"].toList());
 			TableView->resizeColumnsToContents();
 			ISGui::SetWaitGlobalCursor(false);
+			EnabledSearch = true;
 		}
 		else
 		{
 			ISGui::SetWaitGlobalCursor(false);
 			ISMessageBox::ShowCritical(this, qLogGet.GetErrorString());
+			LogModel->Clear();
 		}
 	}
 	else
@@ -82,7 +86,7 @@ void ISServerSubSystem::TabLogDateChanged(const QVariant &Date)
 		LogModel->Clear();
 	}
 	
-	EditSearch->SetEnabled(Date.isValid());
+	EditSearch->SetEnabled(EnabledSearch);
 	EditSearch->Clear();
 	LabelBottom->setText(LANG("ISServerSubSystem.LogView.RowCount")
 		.arg(LogModel->rowCount())

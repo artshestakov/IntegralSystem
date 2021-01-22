@@ -184,7 +184,6 @@ ISQDateEdit::ISQDateEdit(QWidget *parent)
 
 	CalendarWidget = new ISCalendarPopup(this);
 	CalendarWidget->setVisible(false);
-	CalendarWidget->setMaximumDate(QDate::currentDate());
 	connect(CalendarWidget, &ISCalendarWidget::clicked, this, &ISQDateEdit::SetDate);
 	connect(CalendarWidget, &ISCalendarWidget::Hide, this, &ISQDateEdit::HideCalendar);
 }
