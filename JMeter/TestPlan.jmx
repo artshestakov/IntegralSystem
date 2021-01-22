@@ -311,6 +311,11 @@
             <stringProp name="Argument.value">2</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
+          <elementProp name="LogGet_Date" elementType="Argument">
+            <stringProp name="Argument.name">LogGet_Date</stringProp>
+            <stringProp name="Argument.value">20.01.2021</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
           <elementProp name="CalendarClose_CalendarID" elementType="Argument">
             <stringProp name="Argument.name">CalendarClose_CalendarID</stringProp>
             <stringProp name="Argument.value">50</stringProp>
@@ -819,7 +824,18 @@ def MapGetForeignList =
 			FieldName: vars.get(&quot;GetForeignList_FieldName&quot;)
 		]
 ];
-vars.put(&quot;QueryGetForeignList&quot;, MapToString(MapGetForeignList));</stringProp>
+vars.put(&quot;QueryGetForeignList&quot;, MapToString(MapGetForeignList));
+
+//Получить значения справочника для поля
+def MapLogGet =
+[
+	Type: &quot;LogGet&quot;,
+	Parameters:
+		[
+			Date: vars.get(&quot;LogGet_Date&quot;)
+		]
+];
+vars.put(&quot;QueryLogGet&quot;, MapToString(MapLogGet));</stringProp>
           <stringProp name="scriptLanguage">groovy</stringProp>
         </JSR223Sampler>
         <hashTree/>
@@ -919,7 +935,7 @@ vars.put(&quot;QueryGetForeignList&quot;, MapToString(MapGetForeignList));</stri
           <stringProp name="ConfigTestElement.password"></stringProp>
         </TCPSampler>
         <hashTree/>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: RecordGetInfo" enabled="true">
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: RecordGetInfo" enabled="false">
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
           <stringProp name="TCPSampler.port"></stringProp>
@@ -1286,6 +1302,18 @@ vars.put(&quot;QueryGetForeignList&quot;, MapToString(MapGetForeignList));</stri
           <boolProp name="TCPSampler.nodelay">false</boolProp>
           <stringProp name="TCPSampler.timeout"></stringProp>
           <stringProp name="TCPSampler.request">${QueryCalendarClose}</stringProp>
+          <boolProp name="TCPSampler.closeConnection">true</boolProp>
+          <stringProp name="ConfigTestElement.username"></stringProp>
+          <stringProp name="ConfigTestElement.password"></stringProp>
+        </TCPSampler>
+        <hashTree/>
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: LogGet" enabled="true">
+          <stringProp name="TCPSampler.server"></stringProp>
+          <boolProp name="TCPSampler.reUseConnection">true</boolProp>
+          <stringProp name="TCPSampler.port"></stringProp>
+          <boolProp name="TCPSampler.nodelay">false</boolProp>
+          <stringProp name="TCPSampler.timeout"></stringProp>
+          <stringProp name="TCPSampler.request">${QueryLogGet}</stringProp>
           <boolProp name="TCPSampler.closeConnection">true</boolProp>
           <stringProp name="ConfigTestElement.username"></stringProp>
           <stringProp name="ConfigTestElement.password"></stringProp>

@@ -42,6 +42,7 @@ private:
 	bool GetObjectName(PMetaTable *MetaTable, unsigned int ObjectID, QString &ObjectName); //Получить наименование объекта
 	PMetaTable* GetMetaTable(const QString &TableName); //Получить указатель на мета-таблицу
 	QVariant GetSettingDB(const QString &SettingName); //Получить значение настройки БД
+	QString GetColorForLogMessage(const QString &Severity) const; //Получить цвет для типа лог-сообщения
 	bool ErrorQuery(const QString &LocalError, ISQuery &SqlQuery); //Вернуть ошибку запроса
 
 private:

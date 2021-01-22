@@ -924,6 +924,39 @@ QVariant ISTcpWorker::GetSettingDB(const QString &SettingName)
 	return Value;
 }
 //-----------------------------------------------------------------------------
+QString ISTcpWorker::GetColorForLogMessage(const QString &Severity) const
+{
+	if (Severity == "Debug")
+	{
+		return QColor(Qt::blue).name();
+	}
+	else if (Severity == "Info")
+	{
+		return QColor(Qt::darkGreen).name();
+	}
+	else if (Severity == "Warning")
+	{
+		return QColor(255, 106, 0).name();
+	}
+	else if (Severity == "Error")
+	{
+		return QColor(Qt::red).name();
+	}
+	else if (Severity == "Critical")
+	{
+		return QColor(Qt::red).name();
+	}
+	else if (Severity == "Trace")
+	{
+		return QColor(Qt::darkMagenta).name();
+	}
+	else if (Severity == "Assert")
+	{
+		return QColor(Qt::darkMagenta).name();
+	}
+	return QColor(Qt::black).name();
+}
+//-----------------------------------------------------------------------------
 bool ISTcpWorker::ErrorQuery(const QString &LocalError, ISQuery &SqlQuery)
 {
 	ErrorString = LocalError;
@@ -3898,8 +3931,18 @@ bool ISTcpWorker::LogGet(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	File.close();
 	QStringList StringList = Content.split('\n');
 
+	//‘ормируем список полей
+	QStringList FieldList =
+	{
+		LANG("Carat.Log.Field.Time"),
+		LANG("Carat.Log.Field.ThreadID"),
+		LANG("Carat.Log.Field.Severity"),
+		LANG("Carat.Log.Field.ModuleName"),
+		LANG("Carat.Log.Field.Message")
+	};
+
 	//ќбходим строки лог-файла
-	QVariantList VariantList;
+	QVariantList RecordList;
 	for (const QString &Line : StringList)
 	{
 		//»щем первый символ табул€ции
@@ -3950,16 +3993,14 @@ bool ISTcpWorker::LogGet(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 		//”дал€ем пробел в начале строки и символ переноса строки
 		String = String.mid(1, String.size() - 2);
 
-		VariantList.append(QVariantMap
+		RecordList.append(QVariantMap
 		{
-			{ "Time", Time },
-			{ "ThreadID", ThreadID },
-			{ "Severity", Severity },
-			{ "ModuleName", ModuleName },
-			{ "Message", String },
+			{ "Color", GetColorForLogMessage(Severity) },
+			{ "Values", QStringList() << Time << ThreadID << Severity << ModuleName << String }
 		});
 	}
-	TcpAnswer->Parameters["Log"] = VariantList;
+	TcpAnswer->Parameters["FieldList"] = FieldList;
+	TcpAnswer->Parameters["RecordList"] = RecordList;
 	return true;
 }
 //-----------------------------------------------------------------------------

@@ -322,6 +322,9 @@
     <ClCompile Include="ISDialogsCommon.cpp">
       <Filter>Dialogs</Filter>
     </ClCompile>
+    <ClCompile Include="ISServerSubSystem.cpp">
+      <Filter>SubSystem</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ISProcessForm.h">
@@ -539,6 +542,9 @@
     </QtMoc>
     <QtMoc Include="ISDialogsForm.h">
       <Filter>Dialogs</Filter>
+    </QtMoc>
+    <QtMoc Include="ISServerSubSystem.h">
+      <Filter>SubSystem</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>

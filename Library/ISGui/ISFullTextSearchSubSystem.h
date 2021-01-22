@@ -1,6 +1,5 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "StdAfx.h"
 #include "ISInterfaceMetaForm.h"
 #include "PMetaClass.h"
 #include "ISScrollArea.h"

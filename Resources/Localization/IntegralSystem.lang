@@ -52,6 +52,11 @@
   <Local Name="ISRecordInfoDialog.Field.ShowCount" Russian="Просмотров:"/>
   <Local Name="ISRecordInfoDialog.Field.FavoriteCount" Russian="В избранном:"/>
 
+  <!--ISServerSubSystem-->
+  <Local Name="ISServerSubSystem.Title" Russian="Протокол событий"/>
+  <Local Name="ISServerSubSystem.LogView.Date" Russian="Дата:"/>
+  <Local Name="ISServerSubSystem.LogView.RowCount" Russian="Записей: %1"/>
+
   <!--Messages-->
   <Local Name="Message.Information.NotSavedObjects" Russian="Есть несохранённые (%1 шт.) записи, сохраните или закройте их для выхода из программы."/>
   <Local Name="Message.Information.AppliocationWillBeRestart" Russian="Настройки успешно сброшены, рекомендуется перезапустить программу."/>

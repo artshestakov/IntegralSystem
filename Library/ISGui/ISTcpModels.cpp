@@ -355,3 +355,107 @@ QModelIndex ISViewModel::parent(const QModelIndex &Index) const
 	return QModelIndex();
 }
 //-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+ISLogModel::ISLogModel(QObject *parent) : QAbstractItemModel(parent)
+{
+
+}
+//-----------------------------------------------------------------------------
+ISLogModel::~ISLogModel()
+{
+
+}
+//-----------------------------------------------------------------------------
+void ISLogModel::Clear()
+{
+	beginResetModel();
+	Fields.clear();
+	Records.clear();
+	endResetModel();
+}
+//-----------------------------------------------------------------------------
+void ISLogModel::SetSource(const QStringList &fields, const QVariantList &records)
+{
+	Clear();
+	beginResetModel();
+
+	//Заполняем поля
+	for (const QString &FieldName : fields)
+	{
+		Fields.emplace_back(FieldName);
+	}
+
+	//Заполняем строки
+	unsigned int RecordCount = (unsigned int)records.size();
+	Records.resize(RecordCount);
+	for (unsigned int i = 0; i < RecordCount; ++i) //Обходим строки
+	{
+		QVariantMap RecordMap = records[i].toMap();
+		Records[i] = ISModelLogRecord{ RecordMap["Color"].toString(), RecordMap["Values"].toStringList() };
+	}
+	endResetModel();
+}
+//-----------------------------------------------------------------------------
+QVariant ISLogModel::data(const QModelIndex &ModelIndex, int Role) const
+{
+	if (!ModelIndex.isValid())
+	{
+		return QVariant();
+	}
+
+	QVariant Value;
+	if (Role == Qt::DisplayRole)
+	{
+		Value = Records[ModelIndex.row()].Values[ModelIndex.column()];
+	}
+	else if (Role == Qt::TextColorRole)
+	{
+		Value = QColor(Records[ModelIndex.row()].Color);
+	}
+	return Value;
+}
+//-----------------------------------------------------------------------------
+QVariant ISLogModel::headerData(int Section, Qt::Orientation Orientation, int Role) const
+{
+	QVariant Value;
+	if (Orientation == Qt::Horizontal) //Горизонтальный заголовок
+	{
+		if (Role == Qt::DisplayRole) //Отображение локального наименование столбца
+		{
+			Value = Fields[Section];
+		}
+		else if (Role == Qt::ToolTipRole) //Всплывающий текст заголовка поля
+		{
+			Value = Fields[Section];
+		}
+	}
+	return Value;
+}
+//-----------------------------------------------------------------------------
+int ISLogModel::rowCount(const QModelIndex &Parent) const
+{
+	Q_UNUSED(Parent);
+	return (int)Records.size();
+}
+//-----------------------------------------------------------------------------
+int ISLogModel::columnCount(const QModelIndex &Parent) const
+{
+	Q_UNUSED(Parent);
+	return (int)Fields.size();
+}
+//-----------------------------------------------------------------------------
+QModelIndex ISLogModel::index(int Row, int Column, const QModelIndex &Parent) const
+{
+	Q_UNUSED(Row);
+	Q_UNUSED(Column);
+	Q_UNUSED(Parent);
+	return createIndex(Row, Column);
+}
+//-----------------------------------------------------------------------------
+QModelIndex ISLogModel::parent(const QModelIndex &Index) const
+{
+	Q_UNUSED(Index);
+	return QModelIndex();
+}
+//-----------------------------------------------------------------------------

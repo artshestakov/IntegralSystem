@@ -1,6 +1,6 @@
 #pragma once
-#ifndef _ISASTERISKCALLSLISTFORM_H_INCLUDED
-#define _ISASTERISKCALLSLISTFORM_H_INCLUDED
+#ifndef _ISASTERISKCALLSSUBSYSTEM_H_INCLUDED
+#define _ISASTERISKCALLSSUBSYSTEM_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "ISListBaseForm.h"
 //-----------------------------------------------------------------------------

@@ -1,6 +1,6 @@
 #pragma once
-#ifndef _ISSTORAGEFILESLISTFORM_H_INCLUDED
-#define _ISSTORAGEFILESLISTFORM_H_INCLUDED
+#ifndef _ISSTORAGEFILESSUBSYSTEM_H_INCLUDED
+#define _ISSTORAGEFILESSUBSYSTEM_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "ISListBaseForm.h"
 //-----------------------------------------------------------------------------

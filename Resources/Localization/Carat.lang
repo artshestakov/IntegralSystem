@@ -24,6 +24,12 @@
   <Local Name="Carat.Month.October" Russian="Октябрь"/>
   <Local Name="Carat.Month.November" Russian="Ноябрь"/>
   <Local Name="Carat.Month.December" Russian="Декабрь"/>
+
+  <Local Name="Carat.Log.Field.Time" Russian="Время события"/>
+  <Local Name="Carat.Log.Field.ThreadID" Russian="Поток"/>
+  <Local Name="Carat.Log.Field.Severity" Russian="Уровень"/>
+  <Local Name="Carat.Log.Field.ModuleName" Russian="Модуль"/>
+  <Local Name="Carat.Log.Field.Message" Russian="Сообщение"/>
   
   <!--Общие ошибки-->
   <Local Name="Carat.Error.ParseMessage" Russian="Ошибка парсинга сообщения: %1"/>

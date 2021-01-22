@@ -240,6 +240,7 @@
     <ClCompile Include="ISScrollArea.cpp" />
     <ClCompile Include="ISSearchForm.cpp" />
     <ClCompile Include="ISSelectListForm.cpp" />
+    <ClCompile Include="ISServerSubSystem.cpp" />
     <ClCompile Include="ISSettingFieldWidgets.cpp" />
     <ClCompile Include="ISSettingsDatabaseObjectForm.cpp" />
     <ClCompile Include="ISSplashScreen.cpp" />
@@ -347,6 +348,7 @@
     <QtMoc Include="ISListViewForm.h" />
     <QtMoc Include="ISTcpConnector.h" />
     <QtMoc Include="ISTcpModels.h" />
+    <QtMoc Include="ISServerSubSystem.h" />
     <ClInclude Include="ISTcpQuery.h" />
     <ClInclude Include="ISUSBSearcher.h" />
     <ClInclude Include="ISUserPhotoCreator.h" />
