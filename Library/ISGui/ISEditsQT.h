@@ -76,6 +76,7 @@ public:
 	QDate GetDate() const;
 	void SetDate(const QDate &Date);
 	void Clear();
+	void SetEnabled(bool Enabled);
 	void SetReadOnly(bool ReadOnly);
 
 	void SetRange(const QDate &Minimum, const QDate &Maximum);

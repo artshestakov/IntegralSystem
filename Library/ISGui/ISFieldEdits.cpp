@@ -789,6 +789,13 @@ void ISDateTimeEdit::Clear()
 	emit ValueChange(QVariant());
 }
 //-----------------------------------------------------------------------------
+void ISDateTimeEdit::SetEnabled(bool Enabled)
+{
+	ISFieldEditBase::SetEnabled(Enabled);
+	DateEdit->SetEnabled(Enabled);
+	TimeEdit->setEnabled(Enabled);
+}
+//-----------------------------------------------------------------------------
 void ISDateTimeEdit::SetReadOnly(bool read_only)
 {
 	ISFieldEditBase::SetReadOnly(read_only);

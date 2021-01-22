@@ -225,6 +225,12 @@ void ISQDateEdit::Clear()
 	clear();
 }
 //-----------------------------------------------------------------------------
+void ISQDateEdit::SetEnabled(bool Enabled)
+{
+	ISQLineEdit::SetEnabled(Enabled);
+	ButtonCalendar->setEnabled(Enabled);
+}
+//-----------------------------------------------------------------------------
 void ISQDateEdit::SetReadOnly(bool ReadOnly)
 {
 	setAlignment(ReadOnly ? Qt::AlignHCenter : Qt::AlignLeft);

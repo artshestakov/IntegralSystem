@@ -295,6 +295,7 @@ public:
 	virtual void SetValue(const QVariant &value) override;
 	virtual QVariant GetValue() const override;
 	virtual void Clear() override;
+	virtual void SetEnabled(bool Enabled) override;
 	virtual void SetReadOnly(bool read_only) override;
 
 	void SetDate(const QDate &Date);
