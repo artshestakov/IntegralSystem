@@ -49,22 +49,17 @@ cp $INTEGRAL_SYSTEM_DIR/Resources/Licenses/* $RPM_BUILD_ROOT/opt/IntegralSystem/
 #Сценарий перед установкой пакета
 %pre
 
-#Если сервис запущен - останавливаем его
+#Если сервис запущен - выходим с ошибкой
 Status=$(systemctl is-active Carat)
 if [ $Status = "active" ]; then
-	service Carat stop
+	echo "ERROR: Carat service is running! You need to stop it and proceed with the installation. Example stop command: \"service Carat stop\"."
+	exit 1
 fi
 
 #Сценарий после установки пакета
 %post
 systemctl daemon-reload
-/opt/IntegralSystem/Carat --conf-create
-
-#Если сервис не запущен - запускаем его
-Status=$(systemctl is-active Carat)
-if [ $Status = "unknown" ]; then
-	service Carat start
-fi
+systemctl reset-failed
 
 #Сценарий после удаления пакета
 %postun
