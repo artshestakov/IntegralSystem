@@ -475,10 +475,6 @@ QVariant ISLogModel::headerData(int Section, Qt::Orientation Orientation, int Ro
 		{
 			Value = Fields[Section];
 		}
-		else if (Role == Qt::ToolTipRole) //Всплывающий текст заголовка поля
-		{
-			Value = Fields[Section];
-		}
 	}
 	return Value;
 }

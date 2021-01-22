@@ -188,6 +188,8 @@ void ISMainWindow::Reconnect()
 	bool Result = ReconnectForm.Exec();
 	if (Result) //Переподключение прошло успешно - посылаем запрос на авторизацию
 	{
+		ISGui::SetWaitGlobalCursor(false);
+
 		ISTcpQuery qReAuth(API_AUTH);
 		qReAuth.BindValue("Hash", ISSystem::StringToSha256(ISBuffer::Instance().CurrentUserInfo.Login + ISBuffer::Instance().CurrentUserInfo.Password));
 		Result = qReAuth.Execute();
