@@ -397,6 +397,41 @@ void ISLogModel::SetSource(const QStringList &fields, const QVariantList &record
 	endResetModel();
 }
 //-----------------------------------------------------------------------------
+unsigned int ISLogModel::GetCountDebug() const
+{
+	return GetCount(LOGGER_SEVERITY_DEBUG);
+}
+//-----------------------------------------------------------------------------
+unsigned int ISLogModel::GetCountInfo() const
+{
+	return GetCount(LOGGER_SEVERITY_INFO);
+}
+//-----------------------------------------------------------------------------
+unsigned int ISLogModel::GetCountWarning() const
+{
+	return GetCount(LOGGER_SEVERITY_WARNING);
+}
+//-----------------------------------------------------------------------------
+unsigned int ISLogModel::GetCountError() const
+{
+	return GetCount(LOGGER_SEVERITY_ERROR);
+}
+//-----------------------------------------------------------------------------
+unsigned int ISLogModel::GetCountCritical() const
+{
+	return GetCount(LOGGER_SEVERITY_CRITICAL);
+}
+//-----------------------------------------------------------------------------
+unsigned int ISLogModel::GetCountTrace() const
+{
+	return GetCount(LOGGER_SEVERITY_TRACE);
+}
+//-----------------------------------------------------------------------------
+unsigned int ISLogModel::GetCountAssert() const
+{
+	return GetCount(LOGGER_SEVERITY_ASSERT);
+}
+//-----------------------------------------------------------------------------
 QVariant ISLogModel::data(const QModelIndex &ModelIndex, int Role) const
 {
 	if (!ModelIndex.isValid())
@@ -457,5 +492,18 @@ QModelIndex ISLogModel::parent(const QModelIndex &Index) const
 {
 	Q_UNUSED(Index);
 	return QModelIndex();
+}
+//-----------------------------------------------------------------------------
+unsigned int ISLogModel::GetCount(const QString &Severity) const
+{
+	unsigned int Result = 0;
+	for (size_t i = 0, c = Records.size(); i < c; ++i)
+	{
+		if (Records[i].Values.contains(Severity))
+		{
+			++Result;
+		}
+	}
+	return Result;
 }
 //-----------------------------------------------------------------------------

@@ -24,7 +24,7 @@ private:
 	QTabWidget *TabWidget;
 	ISBaseTableView *TableView;
 	ISLogModel *LogModel;
-	QLabel *LabelRowCount;
+	QLabel *LabelBottom;
 };
 //-----------------------------------------------------------------------------
 #endif

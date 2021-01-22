@@ -926,31 +926,31 @@ QVariant ISTcpWorker::GetSettingDB(const QString &SettingName)
 //-----------------------------------------------------------------------------
 QString ISTcpWorker::GetColorForLogMessage(const QString &Severity) const
 {
-	if (Severity == "Debug")
+	if (Severity == LOGGER_SEVERITY_DEBUG)
 	{
 		return QColor(Qt::blue).name();
 	}
-	else if (Severity == "Info")
+	else if (Severity == LOGGER_SEVERITY_INFO)
 	{
 		return QColor(Qt::darkGreen).name();
 	}
-	else if (Severity == "Warning")
+	else if (Severity == LOGGER_SEVERITY_WARNING)
 	{
 		return QColor(255, 106, 0).name();
 	}
-	else if (Severity == "Error")
+	else if (Severity == LOGGER_SEVERITY_ERROR)
 	{
 		return QColor(Qt::red).name();
 	}
-	else if (Severity == "Critical")
+	else if (Severity == LOGGER_SEVERITY_CRITICAL)
 	{
 		return QColor(Qt::red).name();
 	}
-	else if (Severity == "Trace")
+	else if (Severity == LOGGER_SEVERITY_TRACE)
 	{
 		return QColor(Qt::darkMagenta).name();
 	}
-	else if (Severity == "Assert")
+	else if (Severity == LOGGER_SEVERITY_ASSERT)
 	{
 		return QColor(Qt::darkMagenta).name();
 	}

@@ -89,13 +89,13 @@ void ISLogger::Log(bool is_format, MessageType message_type, const std::string &
 		switch (message_type)
 		{
 		case MessageType::MT_Unknown: break;
-		case MessageType::MT_Debug: message_type_string = "Debug"; break;
-		case MessageType::MT_Info: message_type_string = "Info"; break;
-		case MessageType::MT_Warning: message_type_string = "Warning"; break;
-		case MessageType::MT_Error: message_type_string = "Error"; break;
-		case MessageType::MT_Critical: message_type_string = "Critical"; break;
-		case MessageType::MT_Trace: message_type_string = "Trace"; break;
-		case MessageType::MT_Assert: message_type_string = "Assert"; break;
+		case MessageType::MT_Debug: message_type_string = LOGGER_SEVERITY_DEBUG; break;
+		case MessageType::MT_Info: message_type_string = LOGGER_SEVERITY_INFO; break;
+		case MessageType::MT_Warning: message_type_string = LOGGER_SEVERITY_WARNING; break;
+		case MessageType::MT_Error: message_type_string = LOGGER_SEVERITY_ERROR; break;
+		case MessageType::MT_Critical: message_type_string = LOGGER_SEVERITY_CRITICAL; break;
+		case MessageType::MT_Trace: message_type_string = LOGGER_SEVERITY_TRACE; break;
+		case MessageType::MT_Assert: message_type_string = LOGGER_SEVERITY_ASSERT; break;
 		}
 
         //Получаем текущую дату и время

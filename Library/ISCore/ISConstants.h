@@ -136,6 +136,13 @@ const char			LINK_FEEDBACK[] = "https://docs.google.com/forms/d/e/1FAIpQLSc8ekBV
 const size_t	LOGGER_ARRAY_SIZE = 20000; //Максимальный размер массива
 const size_t	LOGGER_TIMEOUT = 50; //Таймаут логгера
 const size_t	LOGGER_MESSAGE_SIZE = 4098; //Максимальный размер строки логгера
+const char		LOGGER_SEVERITY_DEBUG[] = "Debug"; //Отладочное сообщение
+const char		LOGGER_SEVERITY_INFO[] = "Info"; //Информационное сообщение
+const char		LOGGER_SEVERITY_WARNING[] = "Warning"; //Предупреждение
+const char		LOGGER_SEVERITY_ERROR[] = "Error"; //Ошибка
+const char		LOGGER_SEVERITY_CRITICAL[] = "Critical"; //Критическая ошибка
+const char		LOGGER_SEVERITY_TRACE[] = "Trace"; //Трассировка
+const char		LOGGER_SEVERITY_ASSERT[] = "Assert";
 //CARAT------------------------------------------------------------------------
 const unsigned short	CARAT_TCP_PORT = 50000; //Стандартный порт TCP-сервера
 const unsigned short	CARAT_CONTROLLER_PORT = 50001; //Стандартный порт контроллера

@@ -48,8 +48,8 @@ void ISServerSubSystem::CreateTabLog()
 	LogModel = new ISLogModel(TableView);
 	TableView->setModel(LogModel);
 
-	LabelRowCount = new QLabel(LANG("ISServerSubSystem.LogView.RowCount").arg(0), Widget);
-	LayoutWidget->addWidget(LabelRowCount, 0, Qt::AlignLeft);
+	LabelBottom = new QLabel(LANG("ISServerSubSystem.LogView.RowCount").arg(0), Widget);
+	LayoutWidget->addWidget(LabelBottom, 0, Qt::AlignLeft);
 }
 //-----------------------------------------------------------------------------
 void ISServerSubSystem::TabLogDateChanged(const QVariant &Date)
@@ -70,6 +70,14 @@ void ISServerSubSystem::TabLogDateChanged(const QVariant &Date)
 		ISGui::SetWaitGlobalCursor(false);
 		ISMessageBox::ShowCritical(this, qLogGet.GetErrorString());
 	}
-	LabelRowCount->setText(LANG("ISServerSubSystem.LogView.RowCount").arg(LogModel->rowCount()));
+	LabelBottom->setText(LANG("ISServerSubSystem.LogView.RowCount")
+		.arg(LogModel->rowCount())
+		.arg(LogModel->GetCountDebug())
+		.arg(LogModel->GetCountInfo())
+		.arg(LogModel->GetCountWarning())
+		.arg(LogModel->GetCountError())
+		.arg(LogModel->GetCountCritical())
+		.arg(LogModel->GetCountTrace())
+		.arg(LogModel->GetCountAssert()));
 }
 //-----------------------------------------------------------------------------
