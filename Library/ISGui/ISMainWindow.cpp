@@ -194,6 +194,12 @@ void ISMainWindow::Reconnect()
 		if (Result)
 		{
 			ISPopupMessage::ShowNotification(LANG("ReconnectingDone"));
+
+			//ѕровер€ем, не повысилась ли верси€ сервера
+			if (qReAuth.GetAnswer()["Server"].toMap()["Version"].toUInt() > PROPERTY_GET("ServerVersion").toUInt())
+			{
+				ISMessageBox::ShowInformation(this, LANG("Message.Information.RestartAfterReconnect"));
+			}
 		}
 		else
 		{

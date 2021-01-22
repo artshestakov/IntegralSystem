@@ -11,6 +11,7 @@
 #include "ISMetaData.h"
 #include "ISFail2Ban.h"
 #include "ISConfigurations.h"
+#include "ISVersionInfo.h"
 //-----------------------------------------------------------------------------
 static QString QS_USERS_HASH = PREPARE_QUERY("SELECT usrs_hash, usrs_salt "
 											 "FROM _users "
@@ -1185,6 +1186,10 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	TcpAnswer->Parameters["UserFIO"] = UserFIO;
 	TcpAnswer->Parameters["UserGroupID"] = GroupID;
 	TcpAnswer->Parameters["UserGroupFullAccess"] = GroupFullAccess;
+	TcpAnswer->Parameters["Server"] = QVariantMap
+	{
+		{ "Version", ISVersionInfo::Instance().Info.Version }
+	};
 	TcpAnswer->Parameters["UpdateClient"] = QVariantMap
 	{
 		{ "IsNeed", IsNeedUpdate },

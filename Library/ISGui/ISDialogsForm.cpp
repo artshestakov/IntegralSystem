@@ -13,6 +13,7 @@
 #include "ISPopupMessage.h"
 #include "ISMetaData.h"
 #include "ISProcessForm.h"
+#include "ISProperty.h"
 //-----------------------------------------------------------------------------
 ISAboutDialog::ISAboutDialog() : ISInterfaceDialogForm()
 {
@@ -373,6 +374,7 @@ void ISAuthDialog::Input()
 	{
 		QVariantMap AnswerMap = qAuth.GetAnswer();
 		QVariantMap UpdateClientMap = AnswerMap["UpdateClient"].toMap();
+		PROPERTY_SET("ServerVersion", AnswerMap["Server"].toMap()["Version"].toUInt());
 
 		if (UpdateClientMap["IsNeed"].toBool()) //Если требуется обновление - предлагаем скачать и установить
 		{
