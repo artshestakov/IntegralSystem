@@ -220,6 +220,7 @@
 
   <Local Name="Carat.Error.Query.FavoritesDelete.Delete" Russian="Не удалось удалить избранные записи."/>
 
+  <Local Name="Carat.Error.Query.LogGet.NotExist" Russian="Файл за этот день не существует."/>
   <Local Name="Carat.Error.Query.LogGet.Open" Russian="Не удалось открыть лог-файл."/>
 
   <Local Name="Carat.Error.Query.CalendarClose.Update" Russian="Не удалось закрыть событие календаря."/>

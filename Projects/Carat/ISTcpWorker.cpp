@@ -3917,8 +3917,15 @@ bool ISTcpWorker::LogGet(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 		return false;
 	}
 
-	//Формируем путь к файлу и пытаемся его открыть
+	//Формируем путь к файлу
 	QFile File(ISLogger::Instance().GetPathLogsDir() + QCoreApplication::applicationName() + '_' + Date.toString() + ".log");
+
+	if (!File.exists()) //Файл за такой день не существует - ошибка
+	{
+		ErrorString = LANG("Carat.Error.Query.LogGet.NotExist");
+		return false;
+	}
+
 	if (!File.open(QIODevice::ReadOnly)) //Не удалось открыть файл
 	{
 		ISLOGGER_W(__CLASS__, "Not open file \"" + File.fileName() + "\": " + File.errorString());
