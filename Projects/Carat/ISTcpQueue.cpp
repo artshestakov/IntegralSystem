@@ -2,11 +2,18 @@
 #include "ISConstants.h"
 #include "ISAlgorithm.h"
 #include "ISLogger.h"
+#include "ISQuery.h"
+//-----------------------------------------------------------------------------
+static QString QS_MESSAGE_ID = PREPARE_QUERY("SELECT sgdb_tcpmessageid "
+											 "FROM _settingsdatabase "
+											 "WHERE sgdb_uid = :SettingUID");
+//-----------------------------------------------------------------------------
+static QString QU_MESSAGE_ID = PREPARE_QUERY("UPDATE _settingsdatabase SET "
+											 "sgdb_tcpmessageid = :MessageID "
+											 "WHERE sgdb_uid = :SettingUID");
 //-----------------------------------------------------------------------------
 ISTcpQueue::ISTcpQueue()
-	: FilePath(QCoreApplication::applicationDirPath() + "/Temp/MessageID"),
-	File(FilePath),
-	MessageID(0),
+	: MessageID(0),
 	IsActive(true)
 {
 	CRITICAL_SECTION_INIT(&CriticalSection);
@@ -25,47 +32,38 @@ ISTcpQueue& ISTcpQueue::Instance()
 //-----------------------------------------------------------------------------
 void ISTcpQueue::ReadMessageID()
 {
-	if (File.exists()) //Если файл MessageID существует - читаем его
+	ISQuery qSelectMessageID(QS_MESSAGE_ID);
+	qSelectMessageID.BindValue(":SettingUID", CONST_UID_SETTINGS_DATABASE);
+	if (qSelectMessageID.Execute())
 	{
-		if (File.open(QIODevice::ReadOnly)) //Файл успешно открылся
+		if (qSelectMessageID.First())
 		{
-			//Читаем и закрываем
-			QString Content = File.readAll();
-			File.close();
-
-			bool Ok = true;
-			MessageID = Content.toUInt(&Ok);
-			if (!Ok) //Не удалось привести данные файла к числу
+			bool Ok = false;
+			MessageID = qSelectMessageID.ReadColumn("sgdb_tcpmessageid").toUInt(&Ok);
+			if (!Ok)
 			{
-				ISLOGGER_W(__CLASS__, QString("Invalid content with MessageID file (%1): %2").arg(FilePath).arg(Content));
+				ISLOGGER_E(__CLASS__, "Invalid reading message id");
 			}
 		}
-		else //Файл не открылся
+		else
 		{
-			ISLOGGER_W(__CLASS__, "Not open file: " + File.errorString());
+			ISLOGGER_E(__CLASS__, "Not exist setting database");
 		}
+	}
+	else
+	{
+		ISLOGGER_E(__CLASS__, "Not getting message id from database");
 	}
 }
 //-----------------------------------------------------------------------------
 void ISTcpQueue::WriteMessageID()
 {
-	if (File.open(QIODevice::WriteOnly | QIODevice::Truncate))
+	ISQuery qUpdateMessageID(QU_MESSAGE_ID);
+	qUpdateMessageID.BindValue(":MessageID", MessageID);
+	qUpdateMessageID.BindValue(":SettingUID", CONST_UID_SETTINGS_DATABASE);
+	if (!qUpdateMessageID.Execute())
 	{
-		std::stringstream StringStream;
-		StringStream << MessageID;
-		std::string String = StringStream.str();
-		if (File.write(StringStream.str().c_str()) == (qint64)String.size())
-		{
-			File.close();
-		}
-		else
-		{
-			ISLOGGER_W(__CLASS__, "Not write MessageID: " + File.errorString());
-		}
-	}
-	else
-	{
-		ISLOGGER_W(__CLASS__, "Not open file: " + File.fileName());
+		ISLOGGER_E(__CLASS__, "Not save message id: " + qUpdateMessageID.GetErrorString());
 	}
 }
 //-----------------------------------------------------------------------------

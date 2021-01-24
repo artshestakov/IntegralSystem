@@ -26,8 +26,6 @@ private:
 	ISTcpQueue& operator=(ISTcpQueue const&) { return *this; };
 
 private:
-	QString FilePath; //Путь к файлу с последним MessageID
-	QFile File;
 	std::queue<ISTcpMessage *> Queue;
 	qint64 MessageID;
 	bool IsActive; //Флаг активности очереди

@@ -516,15 +516,17 @@ void ISTcpWorker::Run()
 
 	//Формируем имя подключения к БД
 	DBConnectionName = QString::number(CURRENT_THREAD_ID());
-	
+
 	//Пытаемся подключиться к БД
 	IsStarted = ISDatabase::Instance().Connect(DBConnectionName, DBHost, DBPort, DBName, DBUser, DBPassword);
-	if (!IsStarted)
+	if (IsStarted)
+	{
+		qProtocol = new ISQuery(ISDatabase::Instance().GetDB(DBConnectionName), QI_PROTOCOL);
+	}
+	else
 	{
 		ISLOGGER_E(__CLASS__, "Not connected to database: " + ISDatabase::Instance().GetErrorString());
 	}
-
-	qProtocol = new ISQuery(ISDatabase::Instance().GetDB(DBConnectionName), QI_PROTOCOL);
 
 	//Сигналим об успехе или ошибке
 	emit IsStarted ? StartedDone() : StartedFailed();

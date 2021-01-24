@@ -9,6 +9,7 @@
 #include "ISMetaData.h"
 #include "ISConsole.h"
 #include "ISConfigurations.h"
+#include "ISDatabase.h"
 //-----------------------------------------------------------------------------
 ISCaratApplication::ISCaratApplication(int &argc, char **argv)
 	: QCoreApplication(argc, argv),
@@ -159,6 +160,15 @@ bool ISCaratApplication::Run()
 		arg(CONFIG_STRING(CONST_CONFIG_OTHER_CONFIGURATION)).
 		arg(CONFIG_STRING(CONST_CONFIG_CONNECTION_DATABASE)));
 
+	//Подключаемся к БД
+	if (!ISDatabase::Instance().Connect(CONNECTION_DEFAULT,
+		CONFIG_STRING(CONST_CONFIG_CONNECTION_SERVER), CONFIG_INT(CONST_CONFIG_CONNECTION_PORT), CONFIG_STRING(CONST_CONFIG_CONNECTION_DATABASE),
+		CONFIG_STRING(CONST_CONFIG_CONNECTION_LOGIN), CONFIG_STRING(CONST_CONFIG_CONNECTION_PASSWORD)))
+	{
+		ISLOGGER_E(__CLASS__, "Not connected to db: " + ISDatabase::Instance().GetErrorString());
+		return false;
+	}
+
 	//Если TCP-сервер включен - запускаем его
 	if (CONFIG_BOOL(CONST_CONFIG_TCPSERVER_INCLUDE))
 	{
@@ -194,15 +204,20 @@ void ISCaratApplication::Shutdown()
 {
 	ISLOGGER_I(__CLASS__, "Shutdown...");
 
+	//Останавливаем TCP-сервер, если запущен
 	if (CONFIG_BOOL(CONST_CONFIG_TCPSERVER_INCLUDE) && TcpServer)
 	{
 		TcpServer->Stop();
 	}
 
+	//Останавливаем модуль Asterisk, если запущен
 	if (CONFIG_BOOL(CONST_CONFIG_AMI_INCLUDE) && Asterisk)
 	{
 		Asterisk->quit();
 	}
+
+	//Отключаемся от БД
+	ISDatabase::Instance().Disconnect(CONNECTION_DEFAULT);
     quit(); //В конце вызываем остановку приложения
 }
 //-----------------------------------------------------------------------------
