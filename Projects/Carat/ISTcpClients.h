@@ -14,6 +14,7 @@ public:
 	ISVectorUInt GetClientsID(); //Получить список идентификаторов клиентов
 	ISClientInfo GetClient(unsigned int UserID); //Получить информацию о клиенте по его идентификатору
 	bool Exist(qintptr SocketDescription); //Проверить наличие такого дескриптора
+	unsigned int GetCount(); //Получить количество клиентов
 
 	void UpdateLastQuery(qintptr SocketDescriptor, ISNamespace::ApiMessageType MessageType, bool Result, unsigned long long MSec); //Одновить дату и результат последнего запроса
 

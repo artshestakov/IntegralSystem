@@ -4250,7 +4250,8 @@ bool ISTcpWorker::GetServerInfo(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer
 	{
 		{ "Version", ISVersionInfo::Instance().Info.Version },
 		{ "StartedDateTime", ConvertDateTimeToString(PROPERTY_GET("Uptime").toDateTime(), FORMAT_TIME_V3) },
-		{ "SizeLogs", ISAlgorithm::StringFromSize(ISAlgorithm::DirSize(QCoreApplication::applicationDirPath() + "/Logs", QStringList() << "*.log")) }
+		{ "SizeLogs", ISAlgorithm::StringFromSize(ISAlgorithm::DirSize(QCoreApplication::applicationDirPath() + "/Logs", QStringList() << "*.log")) },
+		{ "CountClients", ISTcpClients::Instance().GetCount() }
 	};
 	TcpAnswer->Parameters["Database"] = QVariantMap
 	{

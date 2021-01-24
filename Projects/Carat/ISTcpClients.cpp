@@ -78,6 +78,14 @@ bool ISTcpClients::Exist(qintptr SocketDescription)
 	return Result;
 }
 //-----------------------------------------------------------------------------
+unsigned int ISTcpClients::GetCount()
+{
+	CRITICAL_SECTION_LOCK(&CriticalSection);
+	unsigned int Result = Clients.size();
+	CRITICAL_SECTION_UNLOCK(&CriticalSection);
+	return Result;
+}
+//-----------------------------------------------------------------------------
 void ISTcpClients::UpdateLastQuery(qintptr SocketDescriptor, ISNamespace::ApiMessageType MessageType, bool Result, unsigned long long MSec)
 {
 	CRITICAL_SECTION_LOCK(&CriticalSection);
