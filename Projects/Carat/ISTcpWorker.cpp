@@ -970,6 +970,18 @@ QString ISTcpWorker::GetColorForLogMessage(const QString &Severity) const
     return ISAlgorithm::RGBToHEX(0, 0, 0); //Чёрный
 }
 //-----------------------------------------------------------------------------
+QString ISTcpWorker::GetUptime() const
+{
+	qint64 Seconds = PROPERTY_GET("Uptime").toDateTime().secsTo(QDateTime::currentDateTime()),
+		Days = 0;
+	while (Seconds > DAY_IN_SECONDS)
+	{
+		++Days;
+		Seconds -= DAY_IN_SECONDS;
+	}
+	return LANG("Carat.Uptime").arg(Days).arg(QTime(0, 0).addSecs(Seconds).toString(FORMAT_TIME_V3));
+}
+//-----------------------------------------------------------------------------
 bool ISTcpWorker::ErrorQuery(const QString &LocalError, ISQuery &SqlQuery)
 {
 	ErrorString = LocalError;
@@ -4250,6 +4262,7 @@ bool ISTcpWorker::GetServerInfo(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer
 	{
 		{ "Version", ISVersionInfo::Instance().Info.Version },
 		{ "StartedDateTime", ConvertDateTimeToString(PROPERTY_GET("Uptime").toDateTime(), FORMAT_TIME_V3) },
+		{ "Uptime", GetUptime() },
 		{ "SizeLogs", ISAlgorithm::StringFromSize(ISAlgorithm::DirSize(QCoreApplication::applicationDirPath() + "/Logs", QStringList() << "*.log")) },
 		{ "CountClients", ISTcpClients::Instance().GetCount() }
 	};

@@ -132,6 +132,7 @@ const size_t		AUDIO_PLAYER_POS = 5000; //Перемотка в аудио-плеере
 const char			LOCAL_HOST_ADDRESS[] = "127.0.0.1";
 const char			DEVICE_CLASS_UID_USB[] = "{36FC9E60-C465-11CF-8056-444553540000}";
 const char			LINK_FEEDBACK[] = "https://docs.google.com/forms/d/e/1FAIpQLSc8ekBVvTxTftuASk2zz-ZmLcziow_mndrkFRrI2k9av656QQ/viewform";
+const size_t		DAY_IN_SECONDS = 86400;
 //LOGGER-----------------------------------------------------------------------
 const size_t	LOGGER_ARRAY_SIZE = 20000; //Максимальный размер массива
 const size_t	LOGGER_TIMEOUT = 50; //Таймаут логгера
