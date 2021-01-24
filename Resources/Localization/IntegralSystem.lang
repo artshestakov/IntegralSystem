@@ -175,7 +175,7 @@
 
   <!--ISDeviceConnectDialog-->
   <Local Name="ISDeviceConnectDialog.Title" Russian="Вставьте USB-устройство"/>
-  <Local Name="ISDeviceConnectDialog.LabelInfo" Russian="Вставьте USB-устройство в устройство чтения, чтобы привязать его к учётной записи пользователя.&#10;&#10;Если USB-устройство уже вставлен в устройство чтения, извлеките его и вставьте снова."/>
+  <Local Name="ISDeviceConnectDialog.LabelInfo" Russian="Вставьте USB-устройство в устройство чтения, чтобы привязать его к учётной записи пользователя.&#10;&#10;Если USB-устройство уже вставлено в устройство чтения, извлеките его и вставьте снова."/>
   <Local Name="ISDeviceConnectDialog.Cancel" Russian="Отмена"/>
   
   <!--ISHistoryForm-->

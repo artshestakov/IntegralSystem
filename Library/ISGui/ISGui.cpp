@@ -278,7 +278,7 @@ bool ISGui::GetUSBDevice(std::vector<ISDeviceInfo> &Vector, QString &ErrorString
 				break;
 			}
 			VendorID = StringList.front();
-			Vector.emplace_back(ISDeviceInfo{ VendorID, ProductID, SerialNumber, QString((const char *)Description) });
+			Vector.emplace_back(ISDeviceInfo{ VendorID, ProductID, SerialNumber, QString::fromLocal8Bit((const char *)Description, Size) });
 		}
 	}
 	
