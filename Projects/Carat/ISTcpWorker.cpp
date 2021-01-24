@@ -414,6 +414,7 @@ static QString QI_TASK_COMMENT = PREPARE_QUERY("INSERT INTO _taskcomment(tcom_ow
 //-----------------------------------------------------------------------------
 static QString QS_SERVER_INFO = PREPARE_QUERY("SELECT "
 											  "(SELECT pg_size_pretty(pg_database_size(current_database()))) AS database_size, "
+											  "(SELECT pg_size_pretty(sum(pg_indexes_size(tablename::VARCHAR))) AS database_size_indexes FROM pg_tables WHERE schemaname = current_schema()), "
 											  "(SELECT pg_catalog.pg_get_userbyid(datdba) AS database_owner FROM pg_catalog.pg_database WHERE datname = current_database()), "
 											  "(SELECT pg_encoding_to_char(encoding) AS database_encoding FROM pg_database WHERE datname = current_database()), "
 											  "(SELECT now() - pg_postmaster_start_time() AS database_uptime), "
@@ -4244,6 +4245,7 @@ bool ISTcpWorker::GetServerInfo(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer
 	}
 
 	QString DatabaseSizeData = qSelect.ReadColumn("database_size").toString();
+	QString DatabaseSizeIndexes = qSelect.ReadColumn("database_size_indexes").toString();
 	QString DatabaseOwner = qSelect.ReadColumn("database_owner").toString();
 	QString DatabaseEncoding = qSelect.ReadColumn("database_encoding").toString();
 	QString DatabaseUptime = qSelect.ReadColumn("database_uptime").toString();
@@ -4269,6 +4271,7 @@ bool ISTcpWorker::GetServerInfo(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer
 	TcpAnswer->Parameters["Database"] = QVariantMap
 	{
 		{ "SizeData", DatabaseSizeData },
+		{ "SizeIndexes", DatabaseSizeIndexes },
 		{ "Owner", DatabaseOwner },
 		{ "Encoding", DatabaseEncoding },
 		{ "Uptime", DatabaseUptime },
