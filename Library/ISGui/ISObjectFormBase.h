@@ -18,6 +18,7 @@ class ISObjectFormBase : public ISInterfaceForm
 
 signals:
 	void SavedObject(unsigned int ObjectID);
+	void SavedWithListEdit(unsigned int ObjectID, const QString &ObjectName); //??? Для поля редактирования справочника.
 	void DeletedObject(unsigned int ObjectID);
 	void UpdateList();
 	void CurrentObjectTab(); //Сигнал для вкладки (установление текущей вкладки)

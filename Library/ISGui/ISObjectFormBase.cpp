@@ -756,6 +756,7 @@ bool ISObjectFormBase::Save()
 
 	SaveAfter();
 	emit SavedObject(ObjectID);
+	emit SavedWithListEdit(ObjectID, ObjectName);
 	emit UpdateList();
 	return true;
 }

@@ -2200,14 +2200,18 @@ void ISListEdit::HidedPopup()
 void ISListEdit::ShowListForm()
 {
 	ISObjectPair SelectedObject = ISGui::SelectObject(MetaTable->Name, GetValue().toInt());
-	SetValue(QString("%1,%2").arg(SelectedObject.first).arg(SelectedObject.second));
+	if (SelectedObject.first != 0) //Если запись была выбрана
+	{
+		SetValue(QString("%1,%2").arg(SelectedObject.first).arg(SelectedObject.second));
+	}
 }
 //-----------------------------------------------------------------------------
 void ISListEdit::CreateObject()
 {
 	if (ISUserRoleEntity::Instance().CheckAccessTable(MetaTable->Name, CONST_UID_GROUP_ACCESS_TYPE_CREATE))
 	{
-		ISObjectFormBase*ObjectFormBase = ISGui::CreateObjectForm(ISNamespace::OFT_New, MetaTable->Name);
+		ISObjectFormBase *ObjectFormBase = ISGui::CreateObjectForm(ISNamespace::OFT_New, MetaTable->Name);
+		connect(ObjectFormBase, &ISObjectFormBase::SavedWithListEdit, this, &ISListEdit::SelectedValue);
 		ISGui::ShowObjectForm(ObjectFormBase);
 	}
 	else
@@ -2221,6 +2225,7 @@ void ISListEdit::EditObject()
 	if (ISUserRoleEntity::Instance().CheckAccessTable(MetaTable->Name, CONST_UID_GROUP_ACCESS_TYPE_EDIT))
 	{
 		ISObjectFormBase *ObjectFormBase = ISGui::CreateObjectForm(ISNamespace::OFT_Edit, MetaTable->Name, GetValue().toInt());
+		connect(ObjectFormBase, &ISObjectFormBase::SavedWithListEdit, this, &ISListEdit::SelectedValue);
 		ISGui::ShowObjectForm(ObjectFormBase);
 	}
 	else
