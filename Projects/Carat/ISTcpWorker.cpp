@@ -2474,13 +2474,19 @@ bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 		{
 			QVariantMap Map = Variant.toMap();
 			QString FieldName = Map["FieldName"].toString();
-			//ISNamespace::SearchOperatorType OperatorType = static_cast<ISNamespace::SearchOperatorType>(Map["Operator"].toUInt());
+			ISNamespace::SearchOperatorType OperatorType = static_cast<ISNamespace::SearchOperatorType>(Map["Operator"].toUInt());
 			QVariantList ValueList = Map["Values"].toList();
 
 			SqlText += MetaTable->Alias + '_' + MetaTable->GetField(FieldName)->Name.toLower();			
 			if (ValueList.size() > 1) //Если значений поиска несколько - используем оператор "IN"
 			{
-				SqlText += " IN(";
+				switch (OperatorType)
+				{
+				case ISNamespace::SOT_Equally: SqlText += " IN("; break;
+				case ISNamespace::SOT_NotEqually: SqlText += " NOT IN("; break;
+				default:
+					break;
+				}
 				for (const QVariant &Value : ValueList) //Обходим список значений
 				{
 					QString UIDLite = GENERATE_UUID_LITE;
@@ -2493,7 +2499,16 @@ bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 			else //Одно значение для поиска - используем обычный оператор "="
 			{
 				QString UIDLite = GENERATE_UUID_LITE;
-				SqlText += " = :" + UIDLite;
+				switch (OperatorType)
+				{
+				case ISNamespace::SOT_Equally: SqlText += " = :" + UIDLite; break;
+				case ISNamespace::SOT_NotEqually: SqlText += " != :" + UIDLite; break;
+				case ISNamespace::SOT_Begins: SqlText += " LIKE :" + UIDLite + " || '%'"; break;
+				case ISNamespace::SOT_Ends: SqlText += " LIKE '%' || :" + UIDLite; break;
+				case ISNamespace::SOT_Contains: SqlText += " LIKE '%' || :" + UIDLite + " || '%'"; break;
+				default:
+					break;
+				}
 				FilterMap[UIDLite] = ValueList.front();
 			}
 			SqlText += "\nAND ";

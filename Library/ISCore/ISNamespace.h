@@ -66,13 +66,10 @@ namespace ISNamespace
         SOT_Begins, //Начинается
         SOT_Ends, //Заканчивается
         SOT_Contains, //Содержит
-        SOT_Null, //Пусто
-        SOT_NotNull, //Не пусто
         SOT_More, //Больше
         SOT_Less, //Меньше
         SOT_MoreOrEqual, //Больше или равно
         SOT_LessOrEqual, //Меньше или равно
-        SOT_Range, //Диапазон
     };
 
     enum ExportType //Типы базового экспорта данных
