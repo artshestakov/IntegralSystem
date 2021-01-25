@@ -36,14 +36,8 @@ private:
 	void Protocol(unsigned int UserID, const ISUuid &ActionTypeUID, const QVariant &TableName = QVariant(), const QVariant &TableLocalName = QVariant(), const QVariant &ObjectID = QVariant(), const QVariant &Information = QVariant()); //Протоколирование действия
 	bool UserPasswordExist(const QVariant &UserID, bool &Exist); //Проверка наличия пароля у пользователя
 	bool UserIsSystem(const QVariant &UserID, bool &IsSystem); //Проверка пользователя на системность
-	QString ConvertDateTimeToString(const QDateTime &DateTime, const QString &TimeFormat); //Конвертировать дату и время в строку
-	QString ConvertDateToString(const QDate &Date); //Конвертировать дату в строку
-	QString GenerateSqlQueryFromTitleName(PMetaForeign *MetaForeign, const QString &Alias, const QString &FieldName); //Генерация SQL-запроса для получения имени эскортной ссылки
 	bool GetObjectName(PMetaTable *MetaTable, unsigned int ObjectID, QString &ObjectName); //Получить наименование объекта
 	PMetaTable* GetMetaTable(const QString &TableName); //Получить указатель на мета-таблицу
-	QVariant GetSettingDB(const QString &SettingName); //Получить значение настройки БД
-	QString GetColorForLogMessage(const QString &Severity) const; //Получить цвет для типа лог-сообщения
-	QString GetUptime() const; //Получить Uptime сервера
 	bool ErrorQuery(const QString &LocalError, ISQuery &SqlQuery); //Вернуть ошибку запроса
 
 private:

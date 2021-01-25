@@ -13,6 +13,7 @@
 #include "ISConfigurations.h"
 #include "ISVersionInfo.h"
 #include "ISProperty.h"
+#include "ISTcpWorkerHelper.h"
 //-----------------------------------------------------------------------------
 static QString QS_USERS_HASH = PREPARE_QUERY("SELECT usrs_hash, usrs_salt "
 											 "FROM _users "
@@ -776,72 +777,6 @@ bool ISTcpWorker::UserIsSystem(const QVariant &UserID, bool &IsSystem)
 	return true;
 }
 //-----------------------------------------------------------------------------
-QString ISTcpWorker::ConvertDateTimeToString(const QDateTime &DateTime, const QString &TimeFormat)
-{
-	return DateTime.isValid() ? ConvertDateToString(DateTime.date()) + SYMBOL_SPACE +
-		LANG("Carat.In") + SYMBOL_SPACE + DateTime.time().toString(TimeFormat) :
-		QString();
-}
-//-----------------------------------------------------------------------------
-QString ISTcpWorker::ConvertDateToString(const QDate &Date)
-{
-	QString Result;
-	QDate CurrentDate = QDate::currentDate();
-	if (Date == CurrentDate.addDays(-2)) //Позавчера
-	{
-		Result = LANG("Carat.BeforeYesterday");
-	}
-	else if (Date == CurrentDate.addDays(-1)) //Вчера
-	{
-		Result = LANG("Carat.Yesterday");
-	}
-	else if (Date == CurrentDate) //Сегодня
-	{
-		Result = LANG("Carat.Today");
-	}
-	else if (Date == CurrentDate.addDays(1)) //Завтра
-	{
-		Result = LANG("Carat.Tomorrow");
-	}
-	else if (Date == CurrentDate.addDays(2)) //Послезавтра
-	{
-		Result = LANG("Carat.AfterTomorrow");
-	}
-	else
-	{
-		switch (Date.month())
-		{
-		case 1: Result = LANG("Carat.Month.January"); break;
-		case 2: Result = LANG("Carat.Month.February"); break;
-		case 3: Result = LANG("Carat.Month.March"); break;
-		case 4: Result = LANG("Carat.Month.April"); break;
-		case 5: Result = LANG("Carat.Month.May"); break;
-		case 6: Result = LANG("Carat.Month.June"); break;
-		case 7: Result = LANG("Carat.Month.July"); break;
-		case 8: Result = LANG("Carat.Month.August"); break;
-		case 9: Result = LANG("Carat.Month.September"); break;
-		case 10: Result = LANG("Carat.Month.October"); break;
-		case 11: Result = LANG("Carat.Month.November"); break;
-		case 12: Result = LANG("Carat.Month.December"); break;
-		default:
-			break;
-		}
-		Result = QString::number(Date.day()) + SYMBOL_SPACE +
-			Result + SYMBOL_SPACE +
-			QString::number(Date.year());
-	}
-	return Result;
-}
-//-----------------------------------------------------------------------------
-QString ISTcpWorker::GenerateSqlQueryFromTitleName(PMetaForeign *MetaForeign, const QString &Alias, const QString &FieldName)
-{
-	PMetaTable *MetaTableForeign = ISMetaData::Instance().GetMetaTable(MetaForeign->ForeignClass);
-	QString SqlQuery = "SELECT " + MetaTableForeign->Alias + '_' + MetaForeign->ForeignViewNameField + "\n" +
-		"FROM " + MetaTableForeign->Name + "\n" +
-		"WHERE " + MetaTableForeign->Alias + "_id = " + Alias + '_' + FieldName;
-	return SqlQuery;
-}
-//-----------------------------------------------------------------------------
 bool ISTcpWorker::GetObjectName(PMetaTable *MetaTable, unsigned int ObjectID, QString &ObjectName)
 {
 	//Если TitleName у мета-таблицы не заполнен - возвращаем идентификатор объекта
@@ -861,7 +796,7 @@ bool ISTcpWorker::GetObjectName(PMetaTable *MetaTable, unsigned int ObjectID, QS
 		{
 			PMetaForeign *MetaForeign = MetaTable->GetField(FieldName)->Foreign;
 			QueryText += MetaForeign ?
-				("(" + GenerateSqlQueryFromTitleName(MetaForeign, MetaTable->Alias, FieldName) + "), ' ', ") :
+				("(" + ISTcpWorkerHelper::GenerateSqlQueryFromTitleName(MetaForeign, MetaTable->Alias, FieldName) + "), ' ', ") :
 				(MetaTable->Alias + '_' + FieldName + ", ' ', ");
 		}
 		QueryText.chop(7);
@@ -871,7 +806,7 @@ bool ISTcpWorker::GetObjectName(PMetaTable *MetaTable, unsigned int ObjectID, QS
 	{
 		PMetaForeign *MetaForeign = MetaTable->GetField(MetaTable->TitleName)->Foreign;
 		QueryText += MetaForeign ?
-			("(" + GenerateSqlQueryFromTitleName(MetaForeign, MetaTable->Alias, MetaTable->TitleName) + ") \n") :
+			("(" + ISTcpWorkerHelper::GenerateSqlQueryFromTitleName(MetaForeign, MetaTable->Alias, MetaTable->TitleName) + ") \n") :
 			(MetaTable->Alias + '_' + MetaTable->TitleName + " \n");
 	}
 	QueryText += "FROM " + MetaTable->Name + " \n";
@@ -915,73 +850,6 @@ PMetaTable* ISTcpWorker::GetMetaTable(const QString &TableName)
 		ErrorString = LANG("Carat.Error.GetMetaTable").arg(TableName);
 	}
 	return MetaTable;
-}
-//-----------------------------------------------------------------------------
-QVariant ISTcpWorker::GetSettingDB(const QString &SettingName)
-{
-	QVariant Value;
-	ISQuery qSelectSettingDB(ISDatabase::Instance().GetDB(DBConnectionName),
-		"SELECT sgdb_" + SettingName + " FROM _settingsdatabase WHERE sgdb_uid = :SettingUID");
-	qSelectSettingDB.BindValue(":SettingUID", CONST_UID_SETTINGS_DATABASE);
-	if (qSelectSettingDB.Execute()) //Запрос выполнен успешно
-	{
-		if (qSelectSettingDB.First()) //Настройка нашлась
-		{
-			Value = qSelectSettingDB.ReadColumn(0);
-		}
-		else //Такой настройки в БД нет
-		{
-			ISLOGGER_E(__CLASS__, "not found setting database. Use default value...");
-		}
-	}
-	else //Ошибка запроса
-	{
-		ISLOGGER_E(__CLASS__, "not getting setting database: " + qSelectSettingDB.GetErrorString());
-	}
-
-	//Если значение невалидное - используем указанное по умолчанию
-	if (!Value.isValid() || Value.isNull())
-	{
-		Value = ISMetaData::Instance().GetMetaTable("_SettingsDatabase")->GetField(SettingName)->DefaultValue;
-	}
-	return Value;
-}
-//-----------------------------------------------------------------------------
-QString ISTcpWorker::GetColorForLogMessage(const QString &Severity) const
-{
-    if (Severity == LOGGER_SEVERITY_DEBUG)
-	{
-        return ISAlgorithm::RGBToHEX(0, 0, 255); //Синий
-	}
-	else if (Severity == LOGGER_SEVERITY_INFO)
-	{
-        return ISAlgorithm::RGBToHEX(0, 128, 0); //Тёмно-зелёный
-	}
-	else if (Severity == LOGGER_SEVERITY_WARNING)
-	{
-        return ISAlgorithm::RGBToHEX(226, 132, 0); //Оранжевый
-	}
-    else if (Severity == LOGGER_SEVERITY_ERROR || Severity == LOGGER_SEVERITY_CRITICAL)
-	{
-        return ISAlgorithm::RGBToHEX(255, 0, 0); //Красный
-	}
-    else if (Severity == LOGGER_SEVERITY_TRACE || Severity == LOGGER_SEVERITY_ASSERT)
-	{
-        return ISAlgorithm::RGBToHEX(128, 0, 128); //Фиолетовый
-	}
-    return ISAlgorithm::RGBToHEX(0, 0, 0); //Чёрный
-}
-//-----------------------------------------------------------------------------
-QString ISTcpWorker::GetUptime() const
-{
-	qint64 Seconds = PROPERTY_GET("Uptime").toDateTime().secsTo(QDateTime::currentDateTime()),
-		Days = 0;
-	while (Seconds > DAY_IN_SECONDS)
-	{
-		++Days;
-		Seconds -= DAY_IN_SECONDS;
-	}
-	return LANG("Carat.Uptime").arg(Days).arg(QTime(0, 0).addSecs(Seconds).toString(FORMAT_TIME_V3));
 }
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::ErrorQuery(const QString &LocalError, ISQuery &SqlQuery)
@@ -2691,7 +2559,7 @@ bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	if (qSelect.First()) //Данные есть
 	{
 		//Получаем необходимые настройки БД
-		unsigned int Precision = GetSettingDB(CONST_UID_DATABASE_SETTING_OTHER_NUMBERSIMBOLSAFTERCOMMA).toInt();
+		unsigned int Precision = ISTcpWorkerHelper::GetSettingDB(DBConnectionName, CONST_UID_DATABASE_SETTING_OTHER_NUMBERSIMBOLSAFTERCOMMA).toInt();
 
 		do
 		{
@@ -2723,7 +2591,7 @@ bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 				}
 				else if (Type == ISNamespace::FT_Date)
 				{
-					Value = ConvertDateToString(Value.toDate());
+					Value = ISTcpWorkerHelper::ConvertDateToString(Value.toDate());
 				}
 				else if (Type == ISNamespace::FT_Time)
 				{
@@ -2731,7 +2599,7 @@ bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 				}
 				else if (Type == ISNamespace::FT_DateTime)
 				{
-					Value = ConvertDateTimeToString(Value.toDateTime(), FORMAT_TIME_V1);
+					Value = ISTcpWorkerHelper::ConvertDateTimeToString(Value.toDateTime(), FORMAT_TIME_V1);
 				}
 				else if (Type == ISNamespace::FT_Birthday)
 				{
@@ -2760,7 +2628,7 @@ bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 				}
 				else if (Type == ISNamespace::FT_ProtocolDT)
 				{
-					Value = ConvertDateTimeToString(Value.toDateTime(), FORMAT_TIME_V3);
+					Value = ISTcpWorkerHelper::ConvertDateTimeToString(Value.toDateTime(), FORMAT_TIME_V3);
 				}
 				Values.push_back(Value);
 			}
@@ -2975,7 +2843,7 @@ bool ISTcpWorker::FileStorageAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
 	QByteArray ByteArray = QByteArray::fromBase64(Data.toByteArray());
 
 	//Проверяем размер
-	int Size = ByteArray.size(), MaxSizeMB = GetSettingDB(CONST_UID_DATABASE_SETTING_OTHER_STORAGEFILEMAXSIZE).toInt();
+	int Size = ByteArray.size(), MaxSizeMB = ISTcpWorkerHelper::GetSettingDB(DBConnectionName, CONST_UID_DATABASE_SETTING_OTHER_STORAGEFILEMAXSIZE).toInt();
 	if (Size > (((1000 * 1024) * MaxSizeMB)))
 	{
 		ErrorString = LANG("Carat.Error.Query.FileStorageAdd.Size").arg(Name).arg(MaxSizeMB);
@@ -4033,7 +3901,7 @@ bool ISTcpWorker::LogGet(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 
 		RecordList.append(QVariantMap
 		{
-			{ "Color", GetColorForLogMessage(Severity) },
+			{ "Color", ISTcpWorkerHelper::GetColorForLogMessage(Severity) },
 			{ "Values", QStringList() << Time << ThreadID << Severity << ModuleName << String }
 		});
 	}
@@ -4114,7 +3982,7 @@ bool ISTcpWorker::GetHistoryList(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
 		//Добавляем в результирующий список
 		HistoryList.append(QVariantMap
 		{
-			{ "DateTime", ConvertDateTimeToString(qSelect.ReadColumn("prtc_datetime").toDateTime(), FORMAT_TIME_V3) },
+			{ "DateTime", ISTcpWorkerHelper::ConvertDateTimeToString(qSelect.ReadColumn("prtc_datetime").toDateTime(), FORMAT_TIME_V3) },
 			{ "TableLocalName", MetaTable->LocalListName },
 			{ "TableName", MetaTable->Name },
 			{ "ObjectID", ObjectID },
@@ -4265,8 +4133,8 @@ bool ISTcpWorker::GetServerInfo(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer
 	TcpAnswer->Parameters["Carat"] = QVariantMap
 	{
 		{ "Version", ISVersionInfo::Instance().Info.Version },
-		{ "StartedDateTime", ConvertDateTimeToString(PROPERTY_GET("Uptime").toDateTime(), FORMAT_TIME_V3) },
-		{ "Uptime", GetUptime() },
+		{ "StartedDateTime", ISTcpWorkerHelper::ConvertDateTimeToString(PROPERTY_GET("Uptime").toDateTime(), FORMAT_TIME_V3) },
+		{ "Uptime", ISTcpWorkerHelper::GetUptime() },
 		{ "SizeLogs", ISAlgorithm::StringFromSize(ISAlgorithm::DirSize(QCoreApplication::applicationDirPath() + "/Logs", QStringList() << "*.log")) },
 		{ "CountClients", ISTcpClients::Instance().GetCount() }
 	};
