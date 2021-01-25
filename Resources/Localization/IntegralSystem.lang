@@ -55,6 +55,7 @@
   <!--ISServerSubSystem-->
   <Local Name="ISServerSubSystem.Title" Russian="Протокол событий"/>
   <Local Name="ISServerSubSystem.LogView.Date" Russian="Дата:"/>
+  <Local Name="ISServerSubSystem.LogView.RowCountNull" Russian="События за выбранный день отсутствуют."/>
   <Local Name="ISServerSubSystem.LogView.RowCount" Russian="Записей: %1 Отладочные сообщения: %2 Информационные: %3 Предупреждения: %4 Ошибки: %5 Критические ошибки: %6 Трассировка: %7 Assert's: %8"/>
 
   <!--Messages-->

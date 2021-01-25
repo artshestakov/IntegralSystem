@@ -88,7 +88,7 @@ void ISServerSubSystem::TabLogDateChanged(const QVariant &Date)
 	
 	EditSearch->SetEnabled(EnabledSearch);
 	EditSearch->Clear();
-	LabelBottom->setText(LANG("ISServerSubSystem.LogView.RowCount")
+	LabelBottom->setText(!LogModel->rowCount() ? LANG("ISServerSubSystem.LogView.RowCountNull") : LANG("ISServerSubSystem.LogView.RowCount")
 		.arg(LogModel->rowCount())
 		.arg(LogModel->GetCountDebug())
 		.arg(LogModel->GetCountInfo())
