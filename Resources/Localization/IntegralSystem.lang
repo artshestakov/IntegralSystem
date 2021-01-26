@@ -58,6 +58,31 @@
   <Local Name="ISServerSubSystem.LogView.RowCountNull" Russian="События за выбранный день отсутствуют."/>
   <Local Name="ISServerSubSystem.LogView.RowCount" Russian="Записей: %1 Отладочные сообщения: %2 Информационные: %3 Предупреждения: %4 Ошибки: %5 Критические ошибки: %6 Трассировка: %7 Assert's: %8"/>
 
+  <!--ISServerInfoSubSystem-->
+  <Local Name="ISServerInfoSubSystem.Carat.Title" Russian="Сервер"/>
+  <Local Name="ISServerInfoSubSystem.Carat.Version" Russian="Версия:"/>
+  <Local Name="ISServerInfoSubSystem.Carat.StartDateTime" Russian="Дата и время запуска:"/>
+  <Local Name="ISServerInfoSubSystem.Carat.Uptime" Russian="В работе:"/>
+  <Local Name="ISServerInfoSubSystem.Carat.SizeLogs" Russian="Размер логов:"/>
+  <Local Name="ISServerInfoSubSystem.Carat.CountClients" Russian="Подключенных клиентов:"/>
+  <Local Name="ISServerInfoSubSystem.Database.Title" Russian="База данных"/>
+  <Local Name="ISServerInfoSubSystem.Database.SizeFull" Russian="Общий размер:"/>
+  <Local Name="ISServerInfoSubSystem.Database.SizeIndexes" Russian="Размер индексов:"/>
+  <Local Name="ISServerInfoSubSystem.Database.SizeData" Russian="Размер данных:"/>
+  <Local Name="ISServerInfoSubSystem.Database.Owner" Russian="Владелец:"/>
+  <Local Name="ISServerInfoSubSystem.Database.Encoding" Russian="Кодировка:"/>
+  <Local Name="ISServerInfoSubSystem.Database.Uptime" Russian="В работе:"/>
+  <Local Name="ISServerInfoSubSystem.Database.PID" Russian="Идентификатор процесса:"/>
+  <Local Name="ISServerInfoSubSystem.Database.Version" Russian="Версия:"/>
+  <Local Name="ISServerInfoSubSystem.Database.ClusterPath" Russian="Путь к кластеру:"/>
+  <Local Name="ISServerInfoSubSystem.Database.SizeLogs" Russian="Размер логов:"/>
+  <Local Name="ISServerInfoSubSystem.Database.CountTable" Russian="Количество таблиц:"/>
+  <Local Name="ISServerInfoSubSystem.Database.CountField" Russian="Количество полей:"/>
+  <Local Name="ISServerInfoSubSystem.Database.CountSequence" Russian="Количество последовательностей:"/>
+  <Local Name="ISServerInfoSubSystem.Database.CountForeign" Russian="Количество внешних ключей:"/>
+  <Local Name="ISServerInfoSubSystem.Database.RowsCount" Russian="Количество строк:"/>
+  <Local Name="ISServerInfoSubSystem.Database.UsersCount" Russian="Количество пользователей:"/>
+
   <!--Messages-->
   <Local Name="Message.Information.NotSavedObjects" Russian="Есть несохранённые (%1 шт.) записи, сохраните или закройте их для выхода из программы."/>
   <Local Name="Message.Information.AppliocationWillBeRestart" Russian="Настройки успешно сброшены, рекомендуется перезапустить программу."/>

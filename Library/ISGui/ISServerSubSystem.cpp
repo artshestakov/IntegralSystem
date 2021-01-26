@@ -113,7 +113,7 @@ void ISServerSubSystem::Search(const QVariant &String)
 	{
 		if (!ISAlgorithm::VectorContains(VectorUInt, i))
 		{
-			TableView->hideRow(i);
+			TableView->hideRow((int)i);
 		}
 	}
 }

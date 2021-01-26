@@ -36,6 +36,7 @@
 //#include "ISTaskObjectForm.h"
 #include "ISAsteriskCallsSubSystem.h"
 #include "ISServerSubSystem.h"
+#include "ISServerInfoSubSystem.h"
 #include "ISDelegates.h"
 #include "ISFieldEdits.h"
 #include "ISComboSearchWidgets.h"
@@ -796,6 +797,7 @@ void ISGui::RegisterMetaType()
 	//qRegisterMetaType<ISTaskObjectForm*>("ISTaskObjectForm");
 	qRegisterMetaType<ISAsteriskCallsSubSystem*>("ISAsteriskCallsListForm");
 	qRegisterMetaType<ISServerSubSystem*>("ISServerSubSystem");
+	qRegisterMetaType<ISServerInfoSubSystem*>("ISServerInfoSubSystem");
 
 	qRegisterMetaType<ISDelegateBoolean*>("ISDelegateBoolean");
 	qRegisterMetaType<ISDelegateImage*>("ISDelegateImage");
