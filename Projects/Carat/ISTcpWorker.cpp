@@ -195,6 +195,18 @@ static QString QS_RECORD_INFO = PREPARE_QUERY("SELECT "
 											  "FROM _favorites "
 											  "WHERE fvts_tablename = :TableName "
 											  "AND fvts_objectid = :ObjectID "
+											  "), "
+											  "( "
+											  "SELECT COUNT(*) AS protocol_count "
+											  "FROM _protocol "
+											  "WHERE prtc_tablename = :TableName "
+											  "AND prtc_objectid = :ObjectID "
+											  "), "
+											  "( "
+											  "SELECT COUNT(*) AS discussion_count "
+											  "FROM _discussion "
+											  "WHERE dson_tablename = :TableName "
+											  "AND dson_objectid = :ObjectID "
 											  ") ");
 //-----------------------------------------------------------------------------
 static QString QI_DISCUSSION = PREPARE_QUERY("INSERT INTO _discussion(dson_user, dson_tablename, dson_objectid, dson_message) "
@@ -2211,15 +2223,24 @@ bool ISTcpWorker::RecordGetInfo(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer
 	{
 		return false;
 	}
+
+	QVariant CreateDate = qSelect.ReadColumn("create_date"),
+		CreateUser = qSelect.ReadColumn("create_user"),
+		EditUser = qSelect.ReadColumn("edit_user"),
+		EditDate = qSelect.ReadColumn("edit_date");
+
+	TcpAnswer->Parameters["TableName"] = MetaTable->LocalListName;
 	TcpAnswer->Parameters["ObjectName"] = ObjectName;
-	TcpAnswer->Parameters["CreateDate"] = qSelect.ReadColumn("create_date").toDateTime().toString(FORMAT_DATE_TIME_V3);
-	TcpAnswer->Parameters["CreateUser"] = qSelect.ReadColumn("create_user");
-	TcpAnswer->Parameters["EditDate"] = qSelect.ReadColumn("edit_date").toDateTime().toString(FORMAT_DATE_TIME_V3);
-	TcpAnswer->Parameters["EditUser"] = qSelect.ReadColumn("edit_user");
+	TcpAnswer->Parameters["CreateDate"] = CreateDate.isNull() ? LANG("Carat.NoData") : ISTcpWorkerHelper::ConvertDateTimeToString(CreateDate.toDateTime(), FORMAT_TIME_V3);
+	TcpAnswer->Parameters["CreateUser"] = CreateUser.isNull() ? LANG("Carat.NoData") : CreateUser;
+	TcpAnswer->Parameters["EditDate"] = EditDate.isNull() ? LANG("Carat.NoData") : ISTcpWorkerHelper::ConvertDateTimeToString(EditDate.toDateTime(), FORMAT_TIME_V3);
+	TcpAnswer->Parameters["EditUser"] = EditUser.isNull() ? LANG("Carat.NoData") : EditUser;
 	TcpAnswer->Parameters["CopyCount"] = qSelect.ReadColumn("copy_count");
 	TcpAnswer->Parameters["EditCount"] = qSelect.ReadColumn("edit_count");
 	TcpAnswer->Parameters["ShowCount"] = qSelect.ReadColumn("show_count");
 	TcpAnswer->Parameters["FavoriteCount"] = qSelect.ReadColumn("favorite_count");
+	TcpAnswer->Parameters["ProtocolCount"] = qSelect.ReadColumn("protocol_count");
+	TcpAnswer->Parameters["DiscussionCount"] = qSelect.ReadColumn("discussion_count");
 	Protocol(TcpMessage->TcpSocket->GetUserID(), CONST_UID_PROTOCOL_RECORD_INFO, MetaTable->Name, MetaTable->LocalListName, ObjectID, ObjectName);
 	return true;
 }

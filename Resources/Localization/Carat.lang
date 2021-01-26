@@ -12,6 +12,7 @@
   <Local Name="Carat.AfterTomorrow" Russian="Послезавтра"/>
   <Local Name="Carat.In" Russian="в"/>
   <Local Name="Carat.Uptime" Russian="%1 дней %2"/>
+  <Local Name="Carat.NoData" Russian="Данных нет"/>
 
   <Local Name="Carat.Month.January" Russian="Январь"/>
   <Local Name="Carat.Month.February" Russian="Февраль"/>

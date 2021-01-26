@@ -42,7 +42,8 @@
 
   <!--ISRecordInfoDialog-->
   <Local Name="ISRecordInfoDialog.Title" Russian="Информация о записи"/>
-  <Local Name="ISRecordInfoDialog.Field.Name" Russian="Имя:"/>
+  <Local Name="ISRecordInfoDialog.Field.TableName" Russian="Таблица:"/>
+  <Local Name="ISRecordInfoDialog.Field.Name" Russian="Название:"/>
   <Local Name="ISRecordInfoDialog.Field.CreateDate" Russian="Дата создания:"/>
   <Local Name="ISRecordInfoDialog.Field.CreateUser" Russian="Создал:"/>
   <Local Name="ISRecordInfoDialog.Field.EditDate" Russian="Дата последнего изменения:"/>
@@ -51,6 +52,8 @@
   <Local Name="ISRecordInfoDialog.Field.EditCount" Russian="Изменений:"/>
   <Local Name="ISRecordInfoDialog.Field.ShowCount" Russian="Просмотров:"/>
   <Local Name="ISRecordInfoDialog.Field.FavoriteCount" Russian="В избранном:"/>
+  <Local Name="ISRecordInfoDialog.Field.ProtocolCount" Russian="Событий:"/>
+  <Local Name="ISRecordInfoDialog.Field.DiscussionCount" Russian="Обсуждений:"/>
 
   <!--ISServerSubSystem-->
   <Local Name="ISServerSubSystem.Title" Russian="Протокол событий"/>
