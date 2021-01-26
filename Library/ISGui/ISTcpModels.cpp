@@ -436,7 +436,7 @@ ISVectorUInt ISLogModel::Search(const QString &String)
 {
 	QString SearchValue = String.toLower();
 	ISVectorUInt VectorUInt;
-	for (size_t i = 0, c = Records.size(); i < c; ++i)
+	for (unsigned int i = 0, c = Records.size(); i < c; ++i)
 	{
 		QString Message = Records[i].Values.back().toLower();
 		if (Message.contains(SearchValue))
