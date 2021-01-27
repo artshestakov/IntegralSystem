@@ -10,6 +10,7 @@
 //-----------------------------------------------------------------------------
 ISImageWidget::ISImageWidget(QWidget *parent) : QLabel(parent)
 {
+	setFocusPolicy(Qt::StrongFocus);
 	setStyleSheet(BUFFER_STYLE_SHEET("ISLabelImage"));
 	setAlignment(Qt::AlignCenter);
 	setMouseTracking(true);

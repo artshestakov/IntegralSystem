@@ -1983,7 +1983,11 @@ void ISListEditPopup::LoadDataFromQuery()
 			ListWidgetItem->setText(Value);
 			ListWidgetItem->setData(Qt::UserRole, ID);
 			ListWidgetItem->setSizeHint(QSize(ListWidgetItem->sizeHint().width(), 25));
-			CurrentItem = CurrentValue == ID ? ListWidgetItem : nullptr;
+			
+			if (CurrentValue == ID)
+			{
+				CurrentItem = ListWidgetItem;
+			}
 		}
 
 		if (CurrentItem)

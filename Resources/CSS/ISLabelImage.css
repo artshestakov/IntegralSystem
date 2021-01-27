@@ -10,5 +10,5 @@ QLabel:hover
 
 QLabel:focus
 {
-    border: 2px solid rgb(42, 141, 212);
+    border: 2px groove rgb(42, 141, 212);
 }
