@@ -6,7 +6,6 @@
 #include "ISObjectInterface.h"
 #include "ISObjectFormBase.h"
 #include "ISFieldEdits.h"
-#include "ISDaDataService.h"
 #include "ISListBaseForm.h"
 #include "ISListViewForm.h"
 //-----------------------------------------------------------------------------
@@ -81,11 +80,9 @@ namespace ISOilSphere
 
 	private:
 		void SearchFromINN();
-		void SearchFinished(const ISDaDataOrganization &OrganizationStruct);
 
 	private:
 		ISINNEdit *INNEdit;
-		ISDaDataService *DaDataService;
 	};
 
 	//Форма списка реализаций

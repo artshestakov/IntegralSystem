@@ -280,9 +280,6 @@ void ISOilSphere::CounterpartyDebtForm::ShowLoadUnload()
 ISOilSphere::CounterpartyObjectForm::CounterpartyObjectForm(ISNamespace::ObjectFormType form_type, PMetaTable *meta_table, QWidget *parent, int object_id)
 	: ISObjectFormBase(form_type, meta_table, parent, object_id)
 {
-	DaDataService = new ISDaDataService(this);
-	connect(DaDataService, &ISDaDataService::FoundedOgranization, this, &ISOilSphere::CounterpartyObjectForm::SearchFinished);
-
 	INNEdit = dynamic_cast<ISINNEdit*>(GetFieldWidget("Inn"));
 	INNEdit->SetEnabledSearch(true);
 	connect(INNEdit, &ISINNEdit::SearchFromINN, this, &ISOilSphere::CounterpartyObjectForm::SearchFromINN);
@@ -295,16 +292,24 @@ ISOilSphere::CounterpartyObjectForm::~CounterpartyObjectForm()
 //-----------------------------------------------------------------------------
 void ISOilSphere::CounterpartyObjectForm::SearchFromINN()
 {
-	DaDataService->OrganizationFromINN(INNEdit->GetValue().toString());
-}
-//-----------------------------------------------------------------------------
-void ISOilSphere::CounterpartyObjectForm::SearchFinished(const ISDaDataOrganization &OrganizationStruct)
-{
-	GetFieldWidget("Name")->SetValue(OrganizationStruct.Name.ShortWithOPF);
-	GetFieldWidget("Address")->SetValue(OrganizationStruct.Address);
-	GetFieldWidget("Director")->SetValue(OrganizationStruct.Management.FIO);
-	GetFieldWidget("Kpp")->SetValue(OrganizationStruct.Kpp);
-	GetFieldWidget("Ogrn")->SetValue(OrganizationStruct.Ogrn);
+	ISTcpQuery qOrganizationFromINN(API_ORGANIZATION_FROM_INN);
+	qOrganizationFromINN.BindValue("INN", INNEdit->GetValue());
+
+	ISGui::SetWaitGlobalCursor(true);
+	bool Result = qOrganizationFromINN.Execute();
+	ISGui::SetWaitGlobalCursor(false);
+	if (!Result)
+	{
+		ISMessageBox::ShowCritical(this, qOrganizationFromINN.GetErrorString());
+		return;
+	}
+
+	QVariantMap AnswerMap = qOrganizationFromINN.TakeAnswer()["Reply"].toMap();
+	GetFieldWidget("Name")->SetValue(AnswerMap["data"].toMap()["name"].toMap()["short_with_opf"].toString());
+	GetFieldWidget("Address")->SetValue(AnswerMap["data"].toMap()["address"].toMap()["value"].toString());
+	GetFieldWidget("Director")->SetValue(AnswerMap["data"].toMap()["management"].toMap()["name"].toString());
+	GetFieldWidget("Kpp")->SetValue(AnswerMap["data"].toMap()["kpp"].toString());
+	GetFieldWidget("Ogrn")->SetValue(AnswerMap["data"].toMap()["ogrn"].toString());
 }
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------

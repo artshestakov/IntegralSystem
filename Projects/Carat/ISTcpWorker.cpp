@@ -4197,11 +4197,13 @@ bool ISTcpWorker::OrganizationFormINN(ISTcpMessage *TcpMessage, ISTcpAnswer *Tcp
 		return false;
 	}
 
+	//Формируем запрос
 	QNetworkRequest NetworkRequest;
 	NetworkRequest.setUrl(QUrl("https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/party"));
 	NetworkRequest.setRawHeader("Content-Type", "application/json");
 	NetworkRequest.setRawHeader("Authorization", QString("token %1").arg(TOKEN_DA_DATA_TOKEN).toUtf8());
 
+	//Отправляем его
 	QNetworkAccessManager NetworkAccessManager;
 	QEventLoop EventLoop;
 	QNetworkReply *NetworkReply = NetworkAccessManager.post(NetworkRequest, ISSystem::VariantMapToJsonString(QVariantMap
@@ -4212,11 +4214,15 @@ bool ISTcpWorker::OrganizationFormINN(ISTcpMessage *TcpMessage, ISTcpAnswer *Tcp
 		{ "query", INN }
 	}));
 	connect(NetworkReply, &QNetworkReply::finished, &EventLoop, &QEventLoop::quit);
-	EventLoop.exec();
+	EventLoop.exec(); //Ждём ответа
 
+	//Парсим ответ и указатель на ответ удаляем
 	QJsonParseError JsonParseError;
 	QVariantMap ReplyMap = ISSystem::JsonStringToVariantMap(NetworkReply->readAll(), JsonParseError);
-	if (JsonParseError.error != QJsonParseError::NoError)
+	NetworkReply->close();
+	NetworkReply->deleteLater();
+
+	if (JsonParseError.error != QJsonParseError::NoError) //Ответ невалидный
 	{
 		ISLOGGER_E(__CLASS__, "Not parse reply from DaData: " + JsonParseError.errorString());
 		ErrorString = LANG("Carat.Error.Query.OrganizationFormINN.Parse");
@@ -4224,7 +4230,7 @@ bool ISTcpWorker::OrganizationFormINN(ISTcpMessage *TcpMessage, ISTcpAnswer *Tcp
 	}
 	
 	QVariantList ReplyList = ReplyMap["suggestions"].toList();
-	if(ReplyList.isEmpty())
+	if(ReplyList.isEmpty()) //Ничего не найдено
 	{
 		ErrorString = LANG("Carat.Error.Query.OrganizationFormINN.NotFound");
 		return false;
