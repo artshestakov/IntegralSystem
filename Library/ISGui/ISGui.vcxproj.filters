@@ -226,9 +226,6 @@
     <ClCompile Include="ISMonitorUserWidget.cpp">
       <Filter>Controls</Filter>
     </ClCompile>
-    <ClCompile Include="ISPageNavigation.cpp">
-      <Filter>Controls</Filter>
-    </ClCompile>
     <ClCompile Include="ISPopupMessage.cpp">
       <Filter>Controls</Filter>
     </ClCompile>
@@ -451,9 +448,6 @@
       <Filter>Controls</Filter>
     </QtMoc>
     <QtMoc Include="ISMonitorUserWidget.h">
-      <Filter>Controls</Filter>
-    </QtMoc>
-    <QtMoc Include="ISPageNavigation.h">
       <Filter>Controls</Filter>
     </QtMoc>
     <QtMoc Include="ISPopupMessage.h">

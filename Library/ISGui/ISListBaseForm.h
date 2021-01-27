@@ -9,7 +9,6 @@
 #include "ISBaseTableView.h"
 #include "ISListIndicatorWidget.h"
 #include "ISSearchForm.h"
-#include "ISPageNavigation.h"
 #include "ISFieldEdits.h"
 #include "ISTcpQuery.h"
 //-----------------------------------------------------------------------------
@@ -121,7 +120,6 @@ private:
 
 	QStatusBar *StatusBar; //Статус-бар
 	QLabel *LabelRowCount; //Надпись с количеством строк
-	ISPageNavigation *PageNavigation; //Виджет постраничной навигации
 	QLabel *LabelSelectedRow; //Надпись с выделенными записями
 
 	QMenu *ContextMenu; //Контекстное меню

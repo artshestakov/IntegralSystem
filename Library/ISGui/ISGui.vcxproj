@@ -228,7 +228,6 @@
     <ClCompile Include="ISObjectInterface.cpp" />
     <ClCompile Include="ISObjects.cpp" />
     <ClCompile Include="ISOilSphere.cpp" />
-    <ClCompile Include="ISPageNavigation.cpp" />
     <ClCompile Include="ISParagraphBaseForm.cpp" />
     <ClCompile Include="ISParagraphEntity.cpp" />
     <ClCompile Include="ISPopupMessage.cpp" />
@@ -332,7 +331,6 @@
     <QtMoc Include="ISListWidget.h" />
     <QtMoc Include="ISMenuBar.h" />
     <QtMoc Include="ISMonitorUserWidget.h" />
-    <QtMoc Include="ISPageNavigation.h" />
     <QtMoc Include="ISPopupMessage.h" />
     <QtMoc Include="ISSplashScreen.h" />
     <QtMoc Include="ISSplashWidget.h" />

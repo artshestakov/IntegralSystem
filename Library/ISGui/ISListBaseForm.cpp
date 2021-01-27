@@ -28,7 +28,6 @@ ISListBaseForm::ISListBaseForm(const QString &TableName, QWidget *parent)
 	IsLoadingData(false),
 	SelectObjectAfterUpdate(0),
 	ActionObjectGroup(new QActionGroup(this)), //Группа действий, остосящихся только к одному объекту
-	PageNavigation(nullptr),
 	SearchForm(nullptr)
 {
 	{//Создание действий
@@ -186,10 +185,10 @@ ISListBaseForm::ISListBaseForm(const QString &TableName, QWidget *parent)
 
 		if (SETTING_BOOL(CONST_UID_SETTING_TABLES_PAGE_NAVIGATION))
 		{
-			PageNavigation = new ISPageNavigation(StatusBar);
-			PageNavigation->SetLimit(SETTING_INT(CONST_UID_SETTING_TABLES_PAGE_NAVIGATION_LIMIT));
-			connect(PageNavigation, &ISPageNavigation::Update, this, &ISListBaseForm::Update);
-			StatusBar->addWidget(PageNavigation);
+			//PageNavigation = new ISPageNavigation(StatusBar);
+			//PageNavigation->SetLimit(SETTING_INT(CONST_UID_SETTING_TABLES_PAGE_NAVIGATION_LIMIT));
+			//connect(PageNavigation, &ISPageNavigation::Update, this, &ISListBaseForm::Update);
+			//StatusBar->addWidget(PageNavigation);
 		}
 
 		LabelSelectedRow = new QLabel(StatusBar);
@@ -627,10 +626,10 @@ void ISListBaseForm::SetEnabledActions(bool Enabled)
 //-----------------------------------------------------------------------------
 void ISListBaseForm::SetEnabledPageNavigation(bool Enabled)
 {
-	if (PageNavigation)
+	//if (PageNavigation)
 	{
-		PageNavigation->setEnabled(Enabled);
-		ISGui::RepaintWidget(PageNavigation);
+		//PageNavigation->setEnabled(Enabled);
+		//ISGui::RepaintWidget(PageNavigation);
 	}
 }
 //-----------------------------------------------------------------------------
@@ -717,7 +716,7 @@ bool ISListBaseForm::Update()
 	ListIndicatorWidget->SetText(LANG("LoadDataPleceWait"));
 	ListIndicatorWidget->show();
 	repaint(); //Нужно для корректной отрисовки виджета ListIndicatorWidget
-	SetEnabledPageNavigation(false);
+	//SetEnabledPageNavigation(false);
 
 	//Готовим запрос и исполняем
 	TcpQuery->BindValue("TableName", MetaTable->Name);
@@ -727,7 +726,7 @@ bool ISListBaseForm::Update()
 	SetEnabledActions(Result);
 	GetAction(ISNamespace::AT_Update)->setEnabled(true); //Включаем только для обновления списка
 	GetAction(ISNamespace::AT_SearchClear)->setEnabled(false);
-	SetEnabledPageNavigation(true);
+	//SetEnabledPageNavigation(true);
 	ISGui::SetWaitGlobalCursor(false);
 
 	if (Result) //Запрос прошёл успешно
