@@ -667,6 +667,7 @@ void ISTcpWorker::Process()
 					case ISNamespace::AMT_TaskCommentAdd: Result = TaskCommentAdd(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_GetForeignList: Result = GetForeignList(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_GetServerInfo: Result = GetServerInfo(tcp_message, TcpAnswer); break;
+					case ISNamespace::AMT_OrganizationFromINN: Result = OrganizationFormINN(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_PeriodContains: Result = PeriodContains(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_GetStockList: Result = GetStockList(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_StatementAdd: Result = StatementAdd(tcp_message, TcpAnswer); break;
@@ -4185,6 +4186,50 @@ bool ISTcpWorker::GetServerInfo(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer
 		{ "RowsCount", DatabaseRowsCount },
 		{ "UsersCount", DatabaseUsersCount }
 	};
+	return true;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::OrganizationFormINN(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+	QVariant INN = CheckNullField("INN", TcpMessage);
+	if (!INN.isValid())
+	{
+		return false;
+	}
+
+	QNetworkRequest NetworkRequest;
+	NetworkRequest.setUrl(QUrl("https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/party"));
+	NetworkRequest.setRawHeader("Content-Type", "application/json");
+	NetworkRequest.setRawHeader("Authorization", QString("token %1").arg(TOKEN_DA_DATA_TOKEN).toUtf8());
+
+	QNetworkAccessManager NetworkAccessManager;
+	QEventLoop EventLoop;
+	QNetworkReply *NetworkReply = NetworkAccessManager.post(NetworkRequest, ISSystem::VariantMapToJsonString(QVariantMap
+	{
+		{ "Content-Type", "appliaction/json" },
+		{ "Accept", "appliaction/json" },
+		{ "Authorization", QString("Token ") + TOKEN_DA_DATA_TOKEN },
+		{ "query", INN }
+	}));
+	connect(NetworkReply, &QNetworkReply::finished, &EventLoop, &QEventLoop::quit);
+	EventLoop.exec();
+
+	QJsonParseError JsonParseError;
+	QVariantMap ReplyMap = ISSystem::JsonStringToVariantMap(NetworkReply->readAll(), JsonParseError);
+	if (JsonParseError.error != QJsonParseError::NoError)
+	{
+		ISLOGGER_E(__CLASS__, "Not parse reply from DaData: " + JsonParseError.errorString());
+		ErrorString = LANG("Carat.Error.Query.OrganizationFormINN.Parse");
+		return false;
+	}
+	
+	QVariantList ReplyList = ReplyMap["suggestions"].toList();
+	if(ReplyList.isEmpty())
+	{
+		ErrorString = LANG("Carat.Error.Query.OrganizationFormINN.NotFound");
+		return false;
+	}
+	TcpAnswer->Parameters["Reply"] = ReplyList.front().toMap();
 	return true;
 }
 //-----------------------------------------------------------------------------

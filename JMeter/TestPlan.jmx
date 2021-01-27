@@ -341,6 +341,11 @@
             <stringProp name="Argument.value">Group</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
+          <elementProp name="OrganizationFromINN_INN" elementType="Argument">
+            <stringProp name="Argument.name">OrganizationFromINN_INN</stringProp>
+            <stringProp name="Argument.value">2634100802</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
         </collectionProp>
       </Arguments>
       <hashTree/>
@@ -348,7 +353,7 @@
         <stringProp name="ThreadGroup.on_sample_error">stoptest</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
-          <intProp name="LoopController.loops">-1</intProp>
+          <stringProp name="LoopController.loops">1</stringProp>
         </elementProp>
         <stringProp name="ThreadGroup.num_threads">1</stringProp>
         <stringProp name="ThreadGroup.ramp_time">1</stringProp>
@@ -861,7 +866,18 @@ def MapGetServerInfo =
 [
 	Type: &quot;GetServerInfo&quot;
 ];
-vars.put(&quot;QueryGetServerInfo&quot;, MapToString(MapGetServerInfo));</stringProp>
+vars.put(&quot;QueryGetServerInfo&quot;, MapToString(MapGetServerInfo));
+
+//Получить организацию по ИНН
+def MapOrganizationFromINN =
+[
+	Type: &quot;OrganizationFromINN&quot;,
+	Parameters:
+		[
+			INN: vars.get(&quot;OrganizationFromINN_INN&quot;)
+		]
+];
+vars.put(&quot;QueryOrganizationFromINN&quot;, MapToString(MapOrganizationFromINN));</stringProp>
           <stringProp name="scriptLanguage">groovy</stringProp>
         </JSR223Sampler>
         <hashTree/>
@@ -1345,7 +1361,7 @@ vars.put(&quot;QueryGetServerInfo&quot;, MapToString(MapGetServerInfo));</string
           <stringProp name="ConfigTestElement.password"></stringProp>
         </TCPSampler>
         <hashTree/>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: LogGetContent" enabled="true">
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: LogGetContent" enabled="false">
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
           <stringProp name="TCPSampler.port"></stringProp>
@@ -1376,6 +1392,18 @@ vars.put(&quot;QueryGetServerInfo&quot;, MapToString(MapGetServerInfo));</string
           <boolProp name="TCPSampler.nodelay">false</boolProp>
           <stringProp name="TCPSampler.timeout"></stringProp>
           <stringProp name="TCPSampler.request">${QueryGetServerInfo}</stringProp>
+          <boolProp name="TCPSampler.closeConnection">true</boolProp>
+          <stringProp name="ConfigTestElement.username"></stringProp>
+          <stringProp name="ConfigTestElement.password"></stringProp>
+        </TCPSampler>
+        <hashTree/>
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: OrganizationFromINN" enabled="true">
+          <stringProp name="TCPSampler.server"></stringProp>
+          <boolProp name="TCPSampler.reUseConnection">true</boolProp>
+          <stringProp name="TCPSampler.port"></stringProp>
+          <boolProp name="TCPSampler.nodelay">false</boolProp>
+          <stringProp name="TCPSampler.timeout"></stringProp>
+          <stringProp name="TCPSampler.request">${QueryOrganizationFromINN}</stringProp>
           <boolProp name="TCPSampler.closeConnection">true</boolProp>
           <stringProp name="ConfigTestElement.username"></stringProp>
           <stringProp name="ConfigTestElement.password"></stringProp>

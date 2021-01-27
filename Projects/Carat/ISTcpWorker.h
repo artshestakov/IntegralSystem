@@ -93,6 +93,7 @@ private:
 	bool TaskCommentAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
 	bool GetForeignList(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
 	bool GetServerInfo(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
+	bool OrganizationFormINN(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
 
 	//Временные функции для Нефтесферы
 	bool PeriodContains(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
