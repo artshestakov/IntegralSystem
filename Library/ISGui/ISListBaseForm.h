@@ -53,6 +53,10 @@ public:
 	virtual void SearchClear(); //Очистить результаты поиска
 	virtual void Export(); //Выгрузить таблицу
 	virtual void ShowFavorites(); //Показать форму с избранными объектами
+	void PageBegin(); //К первой странице
+	void PagePrevious(); //К предыдущей странице
+	void PageNext(); //К следующей странице
+	void PageEnd(); //К последней странице
 	virtual void NavigationSelectBeginRecord(); //Выделение первой записи в списке
 	virtual void NavigationSelectPreviousRecord(); //Выделение предыдущей записи
 	virtual void NavigationSelectNextRecord(); //Выделение следующей записи
@@ -86,7 +90,6 @@ protected:
 	void SelectRowIndex(int row_index); //Выделение строки по индексу
 	void SetEnabledActionObject(bool Enabled); //Изменить доступность действий над объектом
 	void SetEnabledActions(bool Enabled); //Изменить доступность всех действий на тулбаре
-	void SetEnabledPageNavigation(bool Enabled); //Изменить доступность постраничной навигации
 
 	virtual void DoubleClickedTable(const QModelIndex &ModelIndex); //Обработчик события двойного нажатия на строку таблицы
 
@@ -109,6 +112,7 @@ private:
 
 private:
 	QActionGroup *ActionObjectGroup; //Группа действий для одного объекта
+	QActionGroup *ActionGroupPageNavigation; //Группа действий для постраничной навигации
 	std::map<ISNamespace::ActionType, QAction*> Actions;
 	std::map<ISNamespace::ActionSpecialType, QAction *> ActionsSpecial;
 

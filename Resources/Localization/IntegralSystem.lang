@@ -256,9 +256,9 @@
   <Local Name="InputLoginAndPassword" Russian="Введите логин и пароль"/>
   <Local Name="Page.Begin" Russian="Первая страница"/>
   <Local Name="Page.Previous" Russian="Предыдущая страница"/>
+  <Local Name="Page.Select" Russian="Страница: %1 из %2"/>
   <Local Name="Page.Next" Russian="Следующая страница"/>
   <Local Name="Page.End" Russian="Последняя страница"/>
-  <Local Name="Page.Select" Russian="Страница: %1 из %2"/>
   <Local Name="Page" Russian="Страница"/>
   <Local Name="InputNumberPage" Russian="Введите номер страницы"/>
   <Local Name="Send" Russian="Отправить"/>
