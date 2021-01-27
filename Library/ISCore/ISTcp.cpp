@@ -219,9 +219,13 @@ ISNamespace::ApiMessageType ISTcp::GetMessageTypeByName(const QString &Name)
 	{
 		return ISNamespace::AMT_FavoritesDelete;
 	}
-	else if (Name == API_LOG_GET)
+	else if (Name == API_LOG_GET_STRUCTURE)
 	{
-		return ISNamespace::AMT_LogGet;
+		return ISNamespace::AMT_LogGetStructure;
+	}
+	else if (Name == API_LOG_GET_CONTENT)
+	{
+		return ISNamespace::AMT_LogGetContent;
 	}
 	else if (Name == API_CALENDAR_CLOSE)
 	{
@@ -242,6 +246,10 @@ ISNamespace::ApiMessageType ISTcp::GetMessageTypeByName(const QString &Name)
 	else if (Name == API_GET_SERVER_INFO)
 	{
 		return ISNamespace::AMT_GetServerInfo;
+	}
+	else if (Name == API_ORGANIZATION_FROM_INN)
+	{
+		return ISNamespace::AMT_OrganizationFromINN;
 	}
 	else if (Name == API_PERIOD_CONTAINS)
 	{

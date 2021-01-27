@@ -177,12 +177,14 @@ namespace ISNamespace
 		AMT_RecordFavoriteDelete, //Удалить запись из избранного
 		AMT_GetFavoriteNames, //Получить имена избранных записей
 		AMT_FavoritesDelete, //Удалить все избранные записи пользователя
-		AMT_LogGet, //Удалить все избранные записи пользователя
+		AMT_LogGetStructure, //Получить структуру лог-файлов
+		AMT_LogGetContent, //Получить содержимое лог-файла
 		AMT_CalendarClose, //Закрытие события календаря
 		AMT_GetHistoryList, //Получить список открытых записей
 		AMT_TaskCommentAdd, //Добавить комментарий к задаче
 		AMT_GetForeignList, //Получить список значений по внешнему ключу
 		AMT_GetServerInfo, //Получить информацию о сервере
+		AMT_OrganizationFromINN, //Поиск организации по ИНН
 		AMT_PeriodContains, //Проверка наличия текущего периода
 		AMT_GetStockList, //Получить список складов
 		AMT_StatementAdd, //Добавить выгрузку в ведомости азс

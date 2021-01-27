@@ -9,7 +9,6 @@
 #include "ISBaseTableView.h"
 #include "ISListIndicatorWidget.h"
 #include "ISSearchForm.h"
-#include "ISPageNavigation.h"
 #include "ISFieldEdits.h"
 #include "ISTcpQuery.h"
 //-----------------------------------------------------------------------------
@@ -87,7 +86,6 @@ protected:
 	void SelectRowIndex(int row_index); //Выделение строки по индексу
 	void SetEnabledActionObject(bool Enabled); //Изменить доступность действий над объектом
 	void SetEnabledActions(bool Enabled); //Изменить доступность всех действий на тулбаре
-	void SetEnabledPageNavigation(bool Enabled); //Изменить доступность постраничной навигации
 
 	virtual void DoubleClickedTable(const QModelIndex &ModelIndex); //Обработчик события двойного нажатия на строку таблицы
 
@@ -110,23 +108,18 @@ private:
 
 private:
 	QActionGroup *ActionObjectGroup; //Группа действий для одного объекта
+	QActionGroup *ActionGroupPageNavigation; //Группа действий для постраничной навигации
 	std::map<ISNamespace::ActionType, QAction*> Actions;
 	std::map<ISNamespace::ActionSpecialType, QAction *> ActionsSpecial;
 
 	QToolBar *ToolBar; //Тулбар
-
 	ISBaseTableView *TableView; //Виджет таблицы
-
 	ISTcpModel *TcpModel; //Модель представления данных
-
 	QStatusBar *StatusBar; //Статус-бар
 	QLabel *LabelRowCount; //Надпись с количеством строк
-	ISPageNavigation *PageNavigation; //Виджет постраничной навигации
 	QLabel *LabelSelectedRow; //Надпись с выделенными записями
-
 	QMenu *ContextMenu; //Контекстное меню
 	ISListIndicatorWidget *ListIndicatorWidget; //Индикатор
-
 	ISSearchForm *SearchForm; //Форма поиска
 };
 //-----------------------------------------------------------------------------

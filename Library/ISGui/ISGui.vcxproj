@@ -191,7 +191,6 @@
     <ClCompile Include="ISContextMenu.cpp" />
     <ClCompile Include="ISControls.cpp" />
     <ClCompile Include="ISCreatedObjectsEntity.cpp" />
-    <ClCompile Include="ISDaDataService.cpp" />
     <ClCompile Include="ISDefinesGui.cpp" />
     <ClCompile Include="ISDelegates.cpp" />
     <ClCompile Include="ISDesktopParagraph.cpp" />
@@ -229,7 +228,6 @@
     <ClCompile Include="ISObjectInterface.cpp" />
     <ClCompile Include="ISObjects.cpp" />
     <ClCompile Include="ISOilSphere.cpp" />
-    <ClCompile Include="ISPageNavigation.cpp" />
     <ClCompile Include="ISParagraphBaseForm.cpp" />
     <ClCompile Include="ISParagraphEntity.cpp" />
     <ClCompile Include="ISPopupMessage.cpp" />
@@ -240,7 +238,8 @@
     <ClCompile Include="ISScrollArea.cpp" />
     <ClCompile Include="ISSearchForm.cpp" />
     <ClCompile Include="ISSelectListForm.cpp" />
-    <ClCompile Include="ISServerSubSystem.cpp" />
+    <ClCompile Include="ISServerInfoSubSystem.cpp" />
+    <ClCompile Include="ISServerLogsSubSystem.cpp" />
     <ClCompile Include="ISSettingFieldWidgets.cpp" />
     <ClCompile Include="ISSettingsDatabaseObjectForm.cpp" />
     <ClCompile Include="ISSplashScreen.cpp" />
@@ -332,7 +331,6 @@
     <QtMoc Include="ISListWidget.h" />
     <QtMoc Include="ISMenuBar.h" />
     <QtMoc Include="ISMonitorUserWidget.h" />
-    <QtMoc Include="ISPageNavigation.h" />
     <QtMoc Include="ISPopupMessage.h" />
     <QtMoc Include="ISSplashScreen.h" />
     <QtMoc Include="ISSplashWidget.h" />
@@ -348,7 +346,8 @@
     <QtMoc Include="ISListViewForm.h" />
     <QtMoc Include="ISTcpConnector.h" />
     <QtMoc Include="ISTcpModels.h" />
-    <QtMoc Include="ISServerSubSystem.h" />
+    <QtMoc Include="ISServerLogsSubSystem.h" />
+    <QtMoc Include="ISServerInfoSubSystem.h" />
     <ClInclude Include="ISTcpQuery.h" />
     <ClInclude Include="ISUSBSearcher.h" />
     <ClInclude Include="ISUserPhotoCreator.h" />
@@ -362,7 +361,6 @@
     <ClInclude Include="ISColumnSizer.h" />
     <ClInclude Include="ISControls.h" />
     <QtMoc Include="ISCreatedObjectsEntity.h" />
-    <QtMoc Include="ISDaDataService.h" />
     <ClInclude Include="ISDefinesGui.h" />
     <ClInclude Include="ISFavorites.h" />
     <ClInclude Include="ISGui.h" />

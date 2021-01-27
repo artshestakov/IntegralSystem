@@ -27,8 +27,8 @@ ISListBaseForm::ISListBaseForm(const QString &TableName, QWidget *parent)
 	TcpQuery(new ISTcpQueryTable()),
 	IsLoadingData(false),
 	SelectObjectAfterUpdate(0),
-	ActionObjectGroup(new QActionGroup(this)), //Группа действий, остосящихся только к одному объекту
-	PageNavigation(nullptr),
+	ActionObjectGroup(new QActionGroup(this)),
+	ActionGroupPageNavigation(new QActionGroup(this)),
 	SearchForm(nullptr)
 {
 	{//Создание действий
@@ -183,14 +183,6 @@ ISListBaseForm::ISListBaseForm(const QString &TableName, QWidget *parent)
 		LabelRowCount = new QLabel(LANG("RecordsCount") + ": 0", StatusBar);
 		LabelRowCount->setVisible(SETTING_BOOL(CONST_UID_SETTING_TABLES_SHOWCOUNTRECORD));
 		StatusBar->addWidget(LabelRowCount);
-
-		if (SETTING_BOOL(CONST_UID_SETTING_TABLES_PAGE_NAVIGATION))
-		{
-			PageNavigation = new ISPageNavigation(StatusBar);
-			PageNavigation->SetLimit(SETTING_INT(CONST_UID_SETTING_TABLES_PAGE_NAVIGATION_LIMIT));
-			connect(PageNavigation, &ISPageNavigation::Update, this, &ISListBaseForm::Update);
-			StatusBar->addWidget(PageNavigation);
-		}
 
 		LabelSelectedRow = new QLabel(StatusBar);
 		LabelSelectedRow->setVisible(false);
@@ -625,15 +617,6 @@ void ISListBaseForm::SetEnabledActions(bool Enabled)
 	}
 }
 //-----------------------------------------------------------------------------
-void ISListBaseForm::SetEnabledPageNavigation(bool Enabled)
-{
-	if (PageNavigation)
-	{
-		PageNavigation->setEnabled(Enabled);
-		ISGui::RepaintWidget(PageNavigation);
-	}
-}
-//-----------------------------------------------------------------------------
 void ISListBaseForm::Create()
 {
 	if (!ISUserRoleEntity::Instance().CheckAccessTable(MetaTable->Name, CONST_UID_GROUP_ACCESS_TYPE_CREATE))
@@ -717,7 +700,7 @@ bool ISListBaseForm::Update()
 	ListIndicatorWidget->SetText(LANG("LoadDataPleceWait"));
 	ListIndicatorWidget->show();
 	repaint(); //Нужно для корректной отрисовки виджета ListIndicatorWidget
-	SetEnabledPageNavigation(false);
+	SetEnabledActions(false);
 
 	//Готовим запрос и исполняем
 	TcpQuery->BindValue("TableName", MetaTable->Name);
@@ -727,7 +710,6 @@ bool ISListBaseForm::Update()
 	SetEnabledActions(Result);
 	GetAction(ISNamespace::AT_Update)->setEnabled(true); //Включаем только для обновления списка
 	GetAction(ISNamespace::AT_SearchClear)->setEnabled(false);
-	SetEnabledPageNavigation(true);
 	ISGui::SetWaitGlobalCursor(false);
 
 	if (Result) //Запрос прошёл успешно
@@ -794,11 +776,7 @@ bool ISListBaseForm::Update()
 		ISMessageBox::ShowCritical(this, TcpQuery->GetErrorString());
 	}
 
-	//if (SETTING_BOOL(CONST_UID_SETTING_TABLES_PAGE_NAVIGATION))
-	{
-		//PageNavigation->SetRowCount(ISDatabaseHelper::GetCountRows(MetaTable->Name));
-	}
-
+	ActionGroupPageNavigation->setEnabled(TcpModel->rowCount() > 0);
 	IsLoadingData = false;
 	return Result;
 }

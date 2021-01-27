@@ -1413,6 +1413,10 @@ ISRecordInfoDialog::ISRecordInfoDialog(QWidget *parent, const QString &TableName
 	{
 		QVariantMap AnswerMap = qRecordGetInfo.GetAnswer();
 
+		QLabel *LabelTableName = new QLabel(LANG("ISRecordInfoDialog.Field.TableName"), this);
+		ISGui::SetFontWidgetBold(LabelTableName, true);
+		FormLayout->addRow(LabelTableName, new QLabel(AnswerMap["TableName"].toString(), this));
+
 		QLabel *LabelName = new QLabel(LANG("ISRecordInfoDialog.Field.Name"), this);
 		ISGui::SetFontWidgetBold(LabelName, true);
 		FormLayout->addRow(LabelName, new QLabel(AnswerMap["ObjectName"].toString(), this));
@@ -1450,6 +1454,14 @@ ISRecordInfoDialog::ISRecordInfoDialog(QWidget *parent, const QString &TableName
 		QLabel *LabelFavoriteCount = new QLabel(LANG("ISRecordInfoDialog.Field.FavoriteCount"), this);
 		ISGui::SetFontWidgetBold(LabelFavoriteCount, true);
 		FormLayout->addRow(LabelFavoriteCount, new QLabel(QString::number(AnswerMap["FavoriteCount"].toInt()), this));
+
+		QLabel *LabelProtocolCount = new QLabel(LANG("ISRecordInfoDialog.Field.ProtocolCount"), this);
+		ISGui::SetFontWidgetBold(LabelProtocolCount, true);
+		FormLayout->addRow(LabelProtocolCount, new QLabel(QString::number(AnswerMap["ProtocolCount"].toInt()), this));
+
+		QLabel *LabelDiscussionCount = new QLabel(LANG("ISRecordInfoDialog.Field.DiscussionCount"), this);
+		ISGui::SetFontWidgetBold(LabelDiscussionCount, true);
+		FormLayout->addRow(LabelDiscussionCount, new QLabel(QString::number(AnswerMap["DiscussionCount"].toInt()), this));
 	}
 	else
 	{

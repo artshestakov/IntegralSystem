@@ -136,9 +136,6 @@
     <ClCompile Include="ISCreatedObjectsEntity.cpp">
       <Filter>System</Filter>
     </ClCompile>
-    <ClCompile Include="ISDaDataService.cpp">
-      <Filter>System</Filter>
-    </ClCompile>
     <ClCompile Include="ISDefinesGui.cpp">
       <Filter>System</Filter>
     </ClCompile>
@@ -227,9 +224,6 @@
       <Filter>Controls</Filter>
     </ClCompile>
     <ClCompile Include="ISMonitorUserWidget.cpp">
-      <Filter>Controls</Filter>
-    </ClCompile>
-    <ClCompile Include="ISPageNavigation.cpp">
       <Filter>Controls</Filter>
     </ClCompile>
     <ClCompile Include="ISPopupMessage.cpp">
@@ -322,7 +316,10 @@
     <ClCompile Include="ISDialogsCommon.cpp">
       <Filter>Dialogs</Filter>
     </ClCompile>
-    <ClCompile Include="ISServerSubSystem.cpp">
+    <ClCompile Include="ISServerInfoSubSystem.cpp">
+      <Filter>SubSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="ISServerLogsSubSystem.cpp">
       <Filter>SubSystem</Filter>
     </ClCompile>
   </ItemGroup>
@@ -379,9 +376,6 @@
       <Filter>Objects</Filter>
     </QtMoc>
     <QtMoc Include="ISCreatedObjectsEntity.h">
-      <Filter>System</Filter>
-    </QtMoc>
-    <QtMoc Include="ISDaDataService.h">
       <Filter>System</Filter>
     </QtMoc>
     <QtMoc Include="ISCalendarObjectForm.h">
@@ -454,9 +448,6 @@
       <Filter>Controls</Filter>
     </QtMoc>
     <QtMoc Include="ISMonitorUserWidget.h">
-      <Filter>Controls</Filter>
-    </QtMoc>
-    <QtMoc Include="ISPageNavigation.h">
       <Filter>Controls</Filter>
     </QtMoc>
     <QtMoc Include="ISPopupMessage.h">
@@ -543,7 +534,10 @@
     <QtMoc Include="ISDialogsForm.h">
       <Filter>Dialogs</Filter>
     </QtMoc>
-    <QtMoc Include="ISServerSubSystem.h">
+    <QtMoc Include="ISServerInfoSubSystem.h">
+      <Filter>SubSystem</Filter>
+    </QtMoc>
+    <QtMoc Include="ISServerLogsSubSystem.h">
       <Filter>SubSystem</Filter>
     </QtMoc>
   </ItemGroup>

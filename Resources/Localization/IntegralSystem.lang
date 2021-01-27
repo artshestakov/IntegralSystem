@@ -42,7 +42,8 @@
 
   <!--ISRecordInfoDialog-->
   <Local Name="ISRecordInfoDialog.Title" Russian="Информация о записи"/>
-  <Local Name="ISRecordInfoDialog.Field.Name" Russian="Имя:"/>
+  <Local Name="ISRecordInfoDialog.Field.TableName" Russian="Таблица:"/>
+  <Local Name="ISRecordInfoDialog.Field.Name" Russian="Название:"/>
   <Local Name="ISRecordInfoDialog.Field.CreateDate" Russian="Дата создания:"/>
   <Local Name="ISRecordInfoDialog.Field.CreateUser" Russian="Создал:"/>
   <Local Name="ISRecordInfoDialog.Field.EditDate" Russian="Дата последнего изменения:"/>
@@ -51,12 +52,36 @@
   <Local Name="ISRecordInfoDialog.Field.EditCount" Russian="Изменений:"/>
   <Local Name="ISRecordInfoDialog.Field.ShowCount" Russian="Просмотров:"/>
   <Local Name="ISRecordInfoDialog.Field.FavoriteCount" Russian="В избранном:"/>
+  <Local Name="ISRecordInfoDialog.Field.ProtocolCount" Russian="Событий:"/>
+  <Local Name="ISRecordInfoDialog.Field.DiscussionCount" Russian="Обсуждений:"/>
 
-  <!--ISServerSubSystem-->
-  <Local Name="ISServerSubSystem.Title" Russian="Протокол событий"/>
-  <Local Name="ISServerSubSystem.LogView.Date" Russian="Дата:"/>
-  <Local Name="ISServerSubSystem.LogView.RowCountNull" Russian="События за выбранный день отсутствуют."/>
-  <Local Name="ISServerSubSystem.LogView.RowCount" Russian="Записей: %1 Отладочные сообщения: %2 Информационные: %3 Предупреждения: %4 Ошибки: %5 Критические ошибки: %6 Трассировка: %7 Assert's: %8"/>
+  <!--ISServerLogsSubSystem-->
+  <Local Name="ISServerLogsSubSystem.Content" Russian="Содержимое"/>
+
+  <!--ISServerInfoSubSystem-->
+  <Local Name="ISServerInfoSubSystem.Carat.Title" Russian="Сервер"/>
+  <Local Name="ISServerInfoSubSystem.Carat.Version" Russian="Версия:"/>
+  <Local Name="ISServerInfoSubSystem.Carat.StartDateTime" Russian="Дата и время запуска:"/>
+  <Local Name="ISServerInfoSubSystem.Carat.Uptime" Russian="В работе:"/>
+  <Local Name="ISServerInfoSubSystem.Carat.SizeLogs" Russian="Размер логов:"/>
+  <Local Name="ISServerInfoSubSystem.Carat.CountClients" Russian="Подключенных клиентов:"/>
+  <Local Name="ISServerInfoSubSystem.Database.Title" Russian="База данных"/>
+  <Local Name="ISServerInfoSubSystem.Database.SizeFull" Russian="Общий размер:"/>
+  <Local Name="ISServerInfoSubSystem.Database.SizeIndexes" Russian="Размер индексов:"/>
+  <Local Name="ISServerInfoSubSystem.Database.SizeData" Russian="Размер данных:"/>
+  <Local Name="ISServerInfoSubSystem.Database.Owner" Russian="Владелец:"/>
+  <Local Name="ISServerInfoSubSystem.Database.Encoding" Russian="Кодировка:"/>
+  <Local Name="ISServerInfoSubSystem.Database.Uptime" Russian="В работе:"/>
+  <Local Name="ISServerInfoSubSystem.Database.PID" Russian="Идентификатор процесса:"/>
+  <Local Name="ISServerInfoSubSystem.Database.Version" Russian="Версия:"/>
+  <Local Name="ISServerInfoSubSystem.Database.ClusterPath" Russian="Путь к кластеру:"/>
+  <Local Name="ISServerInfoSubSystem.Database.SizeLogs" Russian="Размер логов:"/>
+  <Local Name="ISServerInfoSubSystem.Database.CountTable" Russian="Количество таблиц:"/>
+  <Local Name="ISServerInfoSubSystem.Database.CountField" Russian="Количество полей:"/>
+  <Local Name="ISServerInfoSubSystem.Database.CountSequence" Russian="Количество последовательностей:"/>
+  <Local Name="ISServerInfoSubSystem.Database.CountForeign" Russian="Количество внешних ключей:"/>
+  <Local Name="ISServerInfoSubSystem.Database.RowsCount" Russian="Количество строк:"/>
+  <Local Name="ISServerInfoSubSystem.Database.UsersCount" Russian="Количество пользователей:"/>
 
   <!--Messages-->
   <Local Name="Message.Information.NotSavedObjects" Russian="Есть несохранённые (%1 шт.) записи, сохраните или закройте их для выхода из программы."/>
@@ -106,7 +131,6 @@
   <Local Name="Message.Warning.PasswordVerification" Russian="Пароль слишком слабый."/>
   <Local Name="Message.Warning.PasswordVerification.Detailed" Russian="Обязательные требования к надёжному паролю:&#10;&#8226; Пароль должен содержать не менее 8 символов.&#10;&#8226; Пароль должен содержать заглавные и строчные буквы, цифры, и специальные символы. Например: oNQZnz$Hx2.&#10;&#10;Пароль не должен содержать:&#10;&#8226; Личную информацию, которую легко узнать. Например: имя, фамилию или дату рождения.&#10;&#8226; Очевидные и простые слова, фразы, устойчивые выражения и наборы символов, которые легко подобрать. Например: password, parol, abcd, qwerty asdfg, или 1234567."/>
   <Local Name="Message.Warning.UserPasswordNotCreated" Russian="ВНИМАНИЕ! Пользователь без пароля не сможет зайти в программу!"/>
-  <Local Name="Message.Warning.NewVersion" Russian="ВНИМАНИЕ! Появилась новая версия программы, рекомендуется перезапустить её для обновления."/>
   <Local Name="Message.Warning.StorageFileBigSize" Russian="Размер файла &quot;%1&quot; превышает ограничение в %2 MB. Файл не будет добавлен."/>
   <Local Name="Message.Warning.ConnectedMoreOneDevice" Russian="Подключено более одного устройства. Попробуйте ещё раз."/>
   <Local Name="Message.Warning.NotOpenFeedbackLink" Russian="Не удалось открыть ссылку!"/>
@@ -133,28 +157,6 @@
   <Local Name="Message.Question.LinkDevice" Russian="Привязать устройство?"/>
   <Local Name="Message.Question.LinkingDevice" Russian="Устройство обнаружено.&#10;&#10;Идентификатор поставщика: %1&#10;Идентификатор устройства: %2&#10;Серийный номер: %3&#10;Имя: %4&#10;&#10;Вы уверены что хотите привязать устройство к этой учётной записи?"/>
   
-  <!--DaData-->
-  <Local Name="DaData.NotFound.Organization" Russian="Организация по таком ИНН не найдена"/>
-  <Local Name="DaData.NotFound.Bank" Russian="Банк по такому БИК не найден"/>
-  <Local Name="DaData.NotFound.IPAddress" Russian="IP-адрес не найден"/>
-  <Local Name="DaData.Organization.BranchType.Main" Russian="Головная огранизация"/>
-  <Local Name="DaData.Organization.BranchType.Branch" Russian="Филиал"/>
-  <Local Name="DaData.Organization.State.Active" Russian="Действующая"/>
-  <Local Name="DaData.Organization.State.Liquidating" Russian="Ликвидируется"/>
-  <Local Name="DaData.Organization.State.Liquidated" Russian="Ликвидирована"/>
-  <Local Name="DaData.Organization.State.Reorganizing" Russian="В процессе присоединения к другому юрлицу, с последующей ликвидацией"/>
-  <Local Name="DaData.Organization.Type.Legal" Russian="Юридическое лицо"/>
-  <Local Name="DaData.Organization.Type.Individual" Russian="Индивидуальный предприниматель"/>
-  <Local Name="DaData.Bank.OPF.Type.Bank" Russian="Банк"/>
-  <Local Name="DaData.Bank.OPF.Type.BankBranch" Russian="Филиал банка"/>
-  <Local Name="DaData.Bank.OPF.Type.Nko" Russian="Небанковская кредитная организация (НКО)"/>
-  <Local Name="DaData.Bank.OPF.Type.NkoBranch" Russian="Филиал НКО"/>
-  <Local Name="DaData.Bank.OPF.Type.Rkc" Russian="Расчётно-кассовый центр"/>
-  <Local Name="DaData.Bank.OPF.Type.Other" Russian="Другой"/>
-  <Local Name="DaData.Bank.State.Active" Russian="Действующая"/>
-  <Local Name="DaData.Bank.State.Liquidating" Russian="Ликвидируется"/>
-  <Local Name="DaData.Bank.State.Liquidated" Russian="Ликвидирована"/>
-
   <!--System Fields-->
   <Local Name="SystemField.ID" Russian="Код"/>
   <Local Name="SystemField.ID.NotAssigned" Russian="Не присвоен"/>
@@ -252,13 +254,6 @@
   <Local Name="EnterThePassword" Russian="Введите пароль"/>
   <Local Name="InputInSystem" Russian="Вход в систему"/>
   <Local Name="InputLoginAndPassword" Russian="Введите логин и пароль"/>
-  <Local Name="Page.Begin" Russian="Первая страница"/>
-  <Local Name="Page.Previous" Russian="Предыдущая страница"/>
-  <Local Name="Page.Next" Russian="Следующая страница"/>
-  <Local Name="Page.End" Russian="Последняя страница"/>
-  <Local Name="Page.Select" Russian="Страница: %1 из %2"/>
-  <Local Name="Page" Russian="Страница"/>
-  <Local Name="InputNumberPage" Russian="Введите номер страницы"/>
   <Local Name="Send" Russian="Отправить"/>
   <Local Name="SelectedRecords" Russian="Выбрано записей"/>
   <Local Name="Age" Russian="Возраст"/>
@@ -319,7 +314,6 @@
   <Local Name="ClickFromShowList" Russian="Нажмите, чтобы раскрыть справочник."/>
   <Local Name="RecordAddFavorites" Russian="Запись &quot;%1&quot; добавлена в избранное"/>
   <Local Name="RecordRemoveFavorites" Russian="Запись &quot;%1&quot; удалена из избранного"/>
-  <Local Name="ClickFromSelectNumberPage" Russian="Нажмите, чтобы выбрать номер страницы и перейти на неё."/>
   <Local Name="NotAccessSpecialDesktop" Russian="Доступ к рабочему столу закрыт, обратитесь к системному администратору."/>
   <Local Name="NotAccessSystems" Russian="У Вас нет доступа ни к одной из подсистем."/>
   <Local Name="ClickFromCheckLevelVolume" Russian="Нажмите, чтобы проверить уровень громкости"/>
@@ -354,7 +348,6 @@
   <Local Name="Search" Russian="Поиск"/>
   <Local Name="Search.HideForm" Russian="Скрыть"/>
   <Local Name="Search.Cancel" Russian="Отменить поиск"/>
-  <Local Name="Search.Or" Russian="или"/>
   <Local Name="Search.Operator.Equally" Russian="Равно"/>
   <Local Name="Search.Operator.NotEqually" Russian="Не равно"/>
   <Local Name="Search.Operator.Begin" Russian="Начинается"/>
@@ -533,7 +526,6 @@
   <Local Name="SaveChange" Russian="Сохранить изменения"/>
   <Local Name="SaveChangeClose" Russian="Сохранить изменения и закрыть карточку"/>
   <Local Name="Close" Russian="Закрыть"/>
-  <Local Name="Clear" Russian="Очистить"/>
   <Local Name="Clear.Field" Russian="Очистить поле"/>
   <Local Name="Yes" Russian="Да"/>
   <Local Name="No" Russian="Нет"/>
@@ -561,7 +553,6 @@
   <Local Name="SettingsDefault" Russian="Настройки по умолчанию"/>
   <Local Name="ResetSettingsDB" Russian="Сброс настроек"/>
   <Local Name="SavingProcess" Russian="Сохранение"/>
-  <Local Name="Open" Russian="Открыть"/>
   <Local Name="Export" Russian="Экспорт"/>
   <Local Name="OtherActions" Russian="Другие действия"/>
   <Local Name="ViewImage" Russian="Просмотр изображения"/>

@@ -215,7 +215,6 @@
     <ClCompile Include="ISMetaData.cpp" />
     <ClCompile Include="ISProperty.cpp" />
     <ClCompile Include="ISRandom.cpp" />
-    <ClCompile Include="ISRestWorker.cpp" />
     <ClCompile Include="ISSettings.cpp" />
     <ClCompile Include="ISSettingsDatabase.cpp" />
     <ClCompile Include="ISSystem.cpp" />
@@ -252,7 +251,6 @@
     <ClInclude Include="StdAfx.h" />
     <ClInclude Include="ISSettings.h" />
     <ClInclude Include="ISSettingsDatabase.h" />
-    <QtMoc Include="ISRestWorker.h" />
     <ClInclude Include="ISMetaData.h" />
     <ClInclude Include="PMetaClass.h" />
   </ItemGroup>

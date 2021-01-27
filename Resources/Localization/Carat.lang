@@ -12,6 +12,7 @@
   <Local Name="Carat.AfterTomorrow" Russian="Послезавтра"/>
   <Local Name="Carat.In" Russian="в"/>
   <Local Name="Carat.Uptime" Russian="%1 дней %2"/>
+  <Local Name="Carat.NoData" Russian="Данных нет"/>
 
   <Local Name="Carat.Month.January" Russian="Январь"/>
   <Local Name="Carat.Month.February" Russian="Февраль"/>
@@ -25,12 +26,6 @@
   <Local Name="Carat.Month.October" Russian="Октябрь"/>
   <Local Name="Carat.Month.November" Russian="Ноябрь"/>
   <Local Name="Carat.Month.December" Russian="Декабрь"/>
-
-  <Local Name="Carat.Log.Field.Time" Russian="Время события"/>
-  <Local Name="Carat.Log.Field.ThreadID" Russian="Поток"/>
-  <Local Name="Carat.Log.Field.Severity" Russian="Уровень"/>
-  <Local Name="Carat.Log.Field.ModuleName" Russian="Модуль"/>
-  <Local Name="Carat.Log.Field.Message" Russian="Сообщение"/>
   
   <!--Общие ошибки-->
   <Local Name="Carat.Error.ParseMessage" Russian="Ошибка парсинга сообщения: %1"/>
@@ -221,8 +216,8 @@
 
   <Local Name="Carat.Error.Query.FavoritesDelete.Delete" Russian="Не удалось удалить избранные записи."/>
 
-  <Local Name="Carat.Error.Query.LogGet.NotExist" Russian="Файл за этот день не существует."/>
-  <Local Name="Carat.Error.Query.LogGet.Open" Russian="Не удалось открыть лог-файл."/>
+  <Local Name="Carat.Error.Query.LogGetContent.NotExist" Russian="Файл не существует."/>
+  <Local Name="Carat.Error.Query.LogGetContent.NotOpen" Russian="Не удалось прочитать данные."/>
 
   <Local Name="Carat.Error.Query.CalendarClose.Update" Russian="Не удалось закрыть событие календаря."/>
   <Local Name="Carat.Error.Query.CalendarClose.NotExist" Russian="Событие календаря не существует."/>
@@ -237,6 +232,9 @@
   <Local Name="Carat.Error.Query.GetForeignList.Select" Russian="Не удалось получить данные справочника."/>
 
   <Local Name="Carat.Error.Query.GetServerInfo.SelectInfo" Russian="Не удалось получить информацию о базе данных."/>
+  
+  <Local Name="Carat.Error.Query.OrganizationFormINN.Parse" Russian="Неверный ответ."/>
+  <Local Name="Carat.Error.Query.OrganizationFormINN.NotFound" Russian="Огранизация не найдена."/>
   
   <Local Name="Carat.Error.Query.PeriodContains.Select" Russian="Не удалось получить константу."/>
 
