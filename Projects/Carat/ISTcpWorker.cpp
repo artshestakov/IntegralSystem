@@ -458,7 +458,7 @@ static QString QS_STATEMENT = PREPARE_QUERY("SELECT COUNT(*) "
 static QString QI_STATEMENT = PREPARE_QUERY("INSERT INTO gasstationstatement(gsts_implementationunload, gsts_stock, gsts_date, gsts_volumeincome) "
 											"VALUES(:ImplementationUnload, :StockID, "
 											"(SELECT impl_date FROM implementation WHERE impl_id = (SELECT iunl_implementation FROM implementationunload WHERE iunl_id = :ImplementationUnload)), "
-											":VolumeIncome)");
+											"(SELECT iunl_weightnet * :VolumeIncome FROM implementationunload WHERE iunl_id = :ImplementationUnload))");
 //-----------------------------------------------------------------------------
 static QString QS_FILL_IN_BASED = PREPARE_QUERY("SELECT "
 												"COALESCE(gsts_balanceendchange, 0) AS gsts_balanceendchange, "
