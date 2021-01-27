@@ -38,7 +38,8 @@ HEADERS += \
     ISTcpQueue.h \
     ISTcpServer.h \
     ISTcpSocket.h \
-    ISTcpWorker.h
+    ISTcpWorker.h \
+    ISTcpWorkerHelper.h
 
 SOURCES += \
     ISAsterisk.cpp \
@@ -51,4 +52,5 @@ SOURCES += \
     ISTcpServer.cpp \
     ISTcpSocket.cpp \
     ISTcpWorker.cpp \
+    ISTcpWorkerHelper.cpp \
 	main.cpp
