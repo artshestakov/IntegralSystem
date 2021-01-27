@@ -53,10 +53,6 @@ public:
 	virtual void SearchClear(); //Очистить результаты поиска
 	virtual void Export(); //Выгрузить таблицу
 	virtual void ShowFavorites(); //Показать форму с избранными объектами
-	void PageBegin(); //К первой странице
-	void PagePrevious(); //К предыдущей странице
-	void PageNext(); //К следующей странице
-	void PageEnd(); //К последней странице
 	virtual void NavigationSelectBeginRecord(); //Выделение первой записи в списке
 	virtual void NavigationSelectPreviousRecord(); //Выделение предыдущей записи
 	virtual void NavigationSelectNextRecord(); //Выделение следующей записи
@@ -117,18 +113,13 @@ private:
 	std::map<ISNamespace::ActionSpecialType, QAction *> ActionsSpecial;
 
 	QToolBar *ToolBar; //Тулбар
-
 	ISBaseTableView *TableView; //Виджет таблицы
-
 	ISTcpModel *TcpModel; //Модель представления данных
-
 	QStatusBar *StatusBar; //Статус-бар
 	QLabel *LabelRowCount; //Надпись с количеством строк
 	QLabel *LabelSelectedRow; //Надпись с выделенными записями
-
 	QMenu *ContextMenu; //Контекстное меню
 	ISListIndicatorWidget *ListIndicatorWidget; //Индикатор
-
 	ISSearchForm *SearchForm; //Форма поиска
 };
 //-----------------------------------------------------------------------------

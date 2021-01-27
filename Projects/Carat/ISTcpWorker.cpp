@@ -2673,6 +2673,7 @@ bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 			RecordList.push_back(Values); //Добавляем список значений в список записей
 		} while (qSelect.Next()); //Обходим выборку	
 	}
+
 	TcpAnswer->Parameters["ServiceInfo"] = ServiceInfoMap;
 	TcpAnswer->Parameters["FieldList"] = FieldList;
 	TcpAnswer->Parameters["RecordList"] = RecordList;
