@@ -45,7 +45,7 @@
           </elementProp>
           <elementProp name="Sleep_Timeout" elementType="Argument">
             <stringProp name="Argument.name">Sleep_Timeout</stringProp>
-            <stringProp name="Argument.value">10000</stringProp>
+            <stringProp name="Argument.value">5000</stringProp>
             <stringProp name="Argument.desc">Таймаут сна (мсек.)</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
@@ -311,9 +311,19 @@
             <stringProp name="Argument.value">2</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
-          <elementProp name="LogGet_Date" elementType="Argument">
-            <stringProp name="Argument.name">LogGet_Date</stringProp>
-            <stringProp name="Argument.value">20.01.2021</stringProp>
+          <elementProp name="LogGetContent_Year" elementType="Argument">
+            <stringProp name="Argument.name">LogGetContent_Year</stringProp>
+            <stringProp name="Argument.value">2021</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="LogGetContent_Month" elementType="Argument">
+            <stringProp name="Argument.name">LogGetContent_Month</stringProp>
+            <stringProp name="Argument.value">1</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="LogGetContent_Day" elementType="Argument">
+            <stringProp name="Argument.name">LogGetContent_Day</stringProp>
+            <stringProp name="Argument.value">27</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="CalendarClose_CalendarID" elementType="Argument">
@@ -338,7 +348,7 @@
         <stringProp name="ThreadGroup.on_sample_error">stoptest</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
-          <stringProp name="LoopController.loops">1</stringProp>
+          <intProp name="LoopController.loops">-1</intProp>
         </elementProp>
         <stringProp name="ThreadGroup.num_threads">1</stringProp>
         <stringProp name="ThreadGroup.ramp_time">1</stringProp>
@@ -826,16 +836,25 @@ def MapGetForeignList =
 ];
 vars.put(&quot;QueryGetForeignList&quot;, MapToString(MapGetForeignList));
 
-//Получить значения справочника для поля
-def MapLogGet =
+//Получить структуру лог-файлов
+def MapLogGetStructure =
 [
-	Type: &quot;LogGet&quot;,
+	Type: &quot;LogGetStructure&quot;
+];
+vars.put(&quot;QueryLogGetStructure&quot;, MapToString(MapLogGetStructure));
+
+//Получить содержимое лог-файла
+def MapLogGetContent =
+[
+	Type: &quot;LogGetContent&quot;,
 	Parameters:
 		[
-			Date: vars.get(&quot;LogGet_Date&quot;)
+			Year: vars.get(&quot;LogGetContent_Year&quot;),
+			Month: vars.get(&quot;LogGetContent_Month&quot;),
+			Day: vars.get(&quot;LogGetContent_Day&quot;)
 		]
 ];
-vars.put(&quot;QueryLogGet&quot;, MapToString(MapLogGet));
+vars.put(&quot;QueryLogGetContent&quot;, MapToString(MapLogGetContent));
 
 //Получить значения справочника для поля
 def MapGetServerInfo =
@@ -1314,13 +1333,25 @@ vars.put(&quot;QueryGetServerInfo&quot;, MapToString(MapGetServerInfo));</string
           <stringProp name="ConfigTestElement.password"></stringProp>
         </TCPSampler>
         <hashTree/>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: LogGet" enabled="false">
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: LogGetStructure" enabled="false">
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
           <stringProp name="TCPSampler.port"></stringProp>
           <boolProp name="TCPSampler.nodelay">false</boolProp>
           <stringProp name="TCPSampler.timeout"></stringProp>
-          <stringProp name="TCPSampler.request">${QueryLogGet}</stringProp>
+          <stringProp name="TCPSampler.request">${QueryLogGetStructure}</stringProp>
+          <boolProp name="TCPSampler.closeConnection">true</boolProp>
+          <stringProp name="ConfigTestElement.username"></stringProp>
+          <stringProp name="ConfigTestElement.password"></stringProp>
+        </TCPSampler>
+        <hashTree/>
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: LogGetContent" enabled="true">
+          <stringProp name="TCPSampler.server"></stringProp>
+          <boolProp name="TCPSampler.reUseConnection">true</boolProp>
+          <stringProp name="TCPSampler.port"></stringProp>
+          <boolProp name="TCPSampler.nodelay">false</boolProp>
+          <stringProp name="TCPSampler.timeout"></stringProp>
+          <stringProp name="TCPSampler.request">${QueryLogGetContent}</stringProp>
           <boolProp name="TCPSampler.closeConnection">true</boolProp>
           <stringProp name="ConfigTestElement.username"></stringProp>
           <stringProp name="ConfigTestElement.password"></stringProp>
@@ -1338,7 +1369,7 @@ vars.put(&quot;QueryGetServerInfo&quot;, MapToString(MapGetServerInfo));</string
           <stringProp name="ConfigTestElement.password"></stringProp>
         </TCPSampler>
         <hashTree/>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: GetServerInfo" enabled="true">
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: GetServerInfo" enabled="false">
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
           <stringProp name="TCPSampler.port"></stringProp>

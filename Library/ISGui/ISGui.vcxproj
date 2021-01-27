@@ -241,7 +241,7 @@
     <ClCompile Include="ISSearchForm.cpp" />
     <ClCompile Include="ISSelectListForm.cpp" />
     <ClCompile Include="ISServerInfoSubSystem.cpp" />
-    <ClCompile Include="ISServerSubSystem.cpp" />
+    <ClCompile Include="ISServerLogsSubSystem.cpp" />
     <ClCompile Include="ISSettingFieldWidgets.cpp" />
     <ClCompile Include="ISSettingsDatabaseObjectForm.cpp" />
     <ClCompile Include="ISSplashScreen.cpp" />
@@ -349,7 +349,7 @@
     <QtMoc Include="ISListViewForm.h" />
     <QtMoc Include="ISTcpConnector.h" />
     <QtMoc Include="ISTcpModels.h" />
-    <QtMoc Include="ISServerSubSystem.h" />
+    <QtMoc Include="ISServerLogsSubSystem.h" />
     <QtMoc Include="ISServerInfoSubSystem.h" />
     <ClInclude Include="ISTcpQuery.h" />
     <ClInclude Include="ISUSBSearcher.h" />

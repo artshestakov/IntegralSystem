@@ -55,11 +55,8 @@
   <Local Name="ISRecordInfoDialog.Field.ProtocolCount" Russian="Событий:"/>
   <Local Name="ISRecordInfoDialog.Field.DiscussionCount" Russian="Обсуждений:"/>
 
-  <!--ISServerSubSystem-->
-  <Local Name="ISServerSubSystem.Title" Russian="Протокол событий"/>
-  <Local Name="ISServerSubSystem.LogView.Date" Russian="Дата:"/>
-  <Local Name="ISServerSubSystem.LogView.RowCountNull" Russian="События за выбранный день отсутствуют."/>
-  <Local Name="ISServerSubSystem.LogView.RowCount" Russian="Записей: %1 Отладочные сообщения: %2 Информационные: %3 Предупреждения: %4 Ошибки: %5 Критические ошибки: %6 Трассировка: %7 Assert's: %8"/>
+  <!--ISServerLogsSubSystem-->
+  <Local Name="ISServerLogsSubSystem.Content" Russian="Содержимое"/>
 
   <!--ISServerInfoSubSystem-->
   <Local Name="ISServerInfoSubSystem.Carat.Title" Russian="Сервер"/>
@@ -134,7 +131,6 @@
   <Local Name="Message.Warning.PasswordVerification" Russian="Пароль слишком слабый."/>
   <Local Name="Message.Warning.PasswordVerification.Detailed" Russian="Обязательные требования к надёжному паролю:&#10;&#8226; Пароль должен содержать не менее 8 символов.&#10;&#8226; Пароль должен содержать заглавные и строчные буквы, цифры, и специальные символы. Например: oNQZnz$Hx2.&#10;&#10;Пароль не должен содержать:&#10;&#8226; Личную информацию, которую легко узнать. Например: имя, фамилию или дату рождения.&#10;&#8226; Очевидные и простые слова, фразы, устойчивые выражения и наборы символов, которые легко подобрать. Например: password, parol, abcd, qwerty asdfg, или 1234567."/>
   <Local Name="Message.Warning.UserPasswordNotCreated" Russian="ВНИМАНИЕ! Пользователь без пароля не сможет зайти в программу!"/>
-  <Local Name="Message.Warning.NewVersion" Russian="ВНИМАНИЕ! Появилась новая версия программы, рекомендуется перезапустить её для обновления."/>
   <Local Name="Message.Warning.StorageFileBigSize" Russian="Размер файла &quot;%1&quot; превышает ограничение в %2 MB. Файл не будет добавлен."/>
   <Local Name="Message.Warning.ConnectedMoreOneDevice" Russian="Подключено более одного устройства. Попробуйте ещё раз."/>
   <Local Name="Message.Warning.NotOpenFeedbackLink" Russian="Не удалось открыть ссылку!"/>
@@ -382,7 +378,6 @@
   <Local Name="Search" Russian="Поиск"/>
   <Local Name="Search.HideForm" Russian="Скрыть"/>
   <Local Name="Search.Cancel" Russian="Отменить поиск"/>
-  <Local Name="Search.Or" Russian="или"/>
   <Local Name="Search.Operator.Equally" Russian="Равно"/>
   <Local Name="Search.Operator.NotEqually" Russian="Не равно"/>
   <Local Name="Search.Operator.Begin" Russian="Начинается"/>
@@ -561,7 +556,6 @@
   <Local Name="SaveChange" Russian="Сохранить изменения"/>
   <Local Name="SaveChangeClose" Russian="Сохранить изменения и закрыть карточку"/>
   <Local Name="Close" Russian="Закрыть"/>
-  <Local Name="Clear" Russian="Очистить"/>
   <Local Name="Clear.Field" Russian="Очистить поле"/>
   <Local Name="Yes" Russian="Да"/>
   <Local Name="No" Russian="Нет"/>
@@ -589,7 +583,6 @@
   <Local Name="SettingsDefault" Russian="Настройки по умолчанию"/>
   <Local Name="ResetSettingsDB" Russian="Сброс настроек"/>
   <Local Name="SavingProcess" Russian="Сохранение"/>
-  <Local Name="Open" Russian="Открыть"/>
   <Local Name="Export" Russian="Экспорт"/>
   <Local Name="OtherActions" Russian="Другие действия"/>
   <Local Name="ViewImage" Russian="Просмотр изображения"/>

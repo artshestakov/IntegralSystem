@@ -660,7 +660,8 @@ void ISTcpWorker::Process()
 					case ISNamespace::AMT_RecordFavoriteDelete: Result = RecordFavoriteDelete(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_GetFavoriteNames: Result = GetFavoriteNames(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_FavoritesDelete: Result = FavoritesDelete(tcp_message, TcpAnswer); break;
-					case ISNamespace::AMT_LogGet: Result = LogGet(tcp_message, TcpAnswer); break;
+					case ISNamespace::AMT_LogGetStructure: Result = LogGetStructure(tcp_message, TcpAnswer); break;
+					case ISNamespace::AMT_LogGetContent: Result = LogGetContent(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_CalendarClose: Result = CalendarClose(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_GetHistoryList: Result = GetHistoryList(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_TaskCommentAdd: Result = TaskCommentAdd(tcp_message, TcpAnswer); break;
@@ -3844,105 +3845,96 @@ bool ISTcpWorker::FavoritesDelete(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnsw
 	return true;
 }
 //-----------------------------------------------------------------------------
-bool ISTcpWorker::LogGet(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+bool ISTcpWorker::LogGetStructure(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
-	QVariant Date = CheckNullField("Date", TcpMessage);
-	if (!Date.isValid())
+	Q_UNUSED(TcpMessage);
+
+	//Формируем объект папки с логами и получаем список папок-годов
+	QDir DirYear(QCoreApplication::applicationDirPath() + "/Logs");
+	QStringList YearDirList = DirYear.entryList(QDir::AllDirs, QDir::Name);
+
+	//Обходим папки с годами
+	bool Ok = false;
+	QVariantMap VariantYearMap;
+	for (const QString &YearDirName : YearDirList)
+	{
+		(void)YearDirName.toUInt(&Ok);
+		if (!Ok) //Имя папки невалидное - идём дальше
+		{
+			continue;
+		}
+
+		//Формируем объект папки с месяцами
+		QVariantMap VariantMonthMap;
+		QDir DirMonth(DirYear.path() + "/" + YearDirName);
+		QStringList MonthDirList = DirMonth.entryList(QDir::AllDirs, QDir::Name);
+		for (const QString &MonthDirName : MonthDirList)
+		{
+			(void)MonthDirName.toUInt(&Ok);
+			if (!Ok) //Имя месяца невалидное
+			{
+				continue;
+			}
+
+			//Формируем объект папки с днями
+			QVariantList VariantDaysList;
+			QDir DirDays(DirMonth.path() + "/" + MonthDirName);
+			QStringList DayFileList = DirDays.entryList(QDir::Files, QDir::Name);
+			for (QString &FileName : DayFileList)
+			{
+				//Получаем название файла
+				int Pos = FileName.indexOf('_');
+				if (Pos == -1 || FileName.left(Pos) != QCoreApplication::applicationName()) //Имя файла невалидное
+				{
+					continue;
+				}
+				FileName.remove(0, ++Pos); //Убираем имя приложения из имени файла
+				std::reverse(FileName.begin(), FileName.end()); //Реверсируем строку
+				FileName.remove(0, FileName.indexOf('.') + 1); //Ищем и удаляем расширение в имени файла
+				std::reverse(FileName.begin(), FileName.end()); //Реверсируем обратно
+				VariantDaysList.append(FileName);
+			}
+			VariantMonthMap[MonthDirName] = VariantDaysList;
+		}
+		VariantYearMap[YearDirName] = VariantMonthMap;
+	}
+	TcpAnswer->Parameters["Years"] = VariantYearMap;
+	return true;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::LogGetContent(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+	QVariant Year = CheckNullField("Year", TcpMessage),
+		Month = CheckNullField("Month", TcpMessage),
+		Day = CheckNullField("Day", TcpMessage);
+	if (!Year.isValid() || !Month.isValid() || !Day.isValid())
 	{
 		return false;
 	}
 
-	//Формируем путь к файлу
-	QFile File(ISLogger::Instance().GetPathLogsDir() + QCoreApplication::applicationName() + '_' + Date.toString() + ".log");
-
-	if (!File.exists()) //Файл за такой день не существует - ошибка
+	//Формируем путь к файлу и проверяем его наличие
+	QFile File(QString("%1/Logs/%2/%3/%4_%5.%3.%2.log").arg(QCoreApplication::applicationDirPath())
+		.arg(Year.toString())
+		.arg(Month.toUInt() < 10 ? "0" + Month.toString() : Month.toString())
+		.arg(QCoreApplication::applicationName())
+		.arg(Day.toString()));
+	if (!File.exists()) //Файл не существует
 	{
-		ErrorString = LANG("Carat.Error.Query.LogGet.NotExist");
+		ErrorString = LANG("Carat.Error.Query.LogGetContent.NotExist");
 		return false;
 	}
 
-	if (!File.open(QIODevice::ReadOnly)) //Не удалось открыть файл
+	if (!File.open(QIODevice::ReadOnly)) //Файл не открывается
 	{
-		ISLOGGER_W(__CLASS__, "Not open file \"" + File.fileName() + "\": " + File.errorString());
-		ErrorString = LANG("Carat.Error.Query.LogGet.Open");
+		ISLOGGER_E(__CLASS__, QString("Error open file \"%1\": %2").arg(File.fileName()).arg(File.errorString()));
+		ErrorString = LANG("Carat.Error.Query.LogGetContent.NotOpen");
 		return false;
 	}
 
-	//Читаем, закрываем и формируем список
+	//Читаем и закрываем файл
 	QString Content = File.readAll();
 	File.close();
-	QStringList StringList = Content.split('\n');
-
-	//Формируем список полей
-	QStringList FieldList =
-	{
-		LANG("Carat.Log.Field.Time"),
-		LANG("Carat.Log.Field.ThreadID"),
-		LANG("Carat.Log.Field.Severity"),
-		LANG("Carat.Log.Field.ModuleName"),
-		LANG("Carat.Log.Field.Message")
-	};
-
-	//Обходим строки лог-файла
-	QVariantList RecordList;
-	for (const QString &Line : StringList)
-	{
-		//Ищем первый символ табуляции
-		int Pos = Line.indexOf('\t');
-		if (Pos == -1) //Не нашли символ - пропускаем строку
-		{
-			continue;
-		}
-
-		QString String = Line;
-
-		//Вытаскиваем время
-		QString Time = ISAlgorithm::StringTake(String, 0, ++Pos);
-		Pos = Time.indexOf(' ');
-		if (Pos == -1)
-		{
-			continue;
-		}
-		Time = ISAlgorithm::StringTake(Time, Pos + 1, Time.size() - Pos - 2);
-
-		//Вытаскиваем номер потока
-		Pos = String.indexOf('\t');
-		if (Pos == -1)
-		{
-			continue;
-		}
-		QString ThreadID = ISAlgorithm::StringTake(String, 0, ++Pos);
-		ThreadID.chop(1);
-
-		//Вытаскиваем уровень сообщения
-		Pos = String.indexOf(']');
-		if (Pos == -1)
-		{
-			continue;
-		}
-		QString Severity = ISAlgorithm::StringTake(String, 0, ++Pos);
-		Severity = Severity.mid(1, Severity.size() - 2);
-
-		//Вытаскиваем имя компонента
-		Pos = String.indexOf(']');
-		if (Pos == -1)
-		{
-			continue;
-		}
-		QString ModuleName = ISAlgorithm::StringTake(String, 0, ++Pos);
-		ModuleName = ModuleName.mid(1, ModuleName.size() - 2);
-
-		//Удаляем пробел в начале строки и символ переноса строки
-		String = String.mid(1, String.size() - 2);
-
-		RecordList.append(QVariantMap
-		{
-			{ "Color", ISTcpWorkerHelper::GetColorForLogMessage(Severity) },
-			{ "Values", QStringList() << Time << ThreadID << Severity << ModuleName << String }
-		});
-	}
-	TcpAnswer->Parameters["FieldList"] = FieldList;
-	TcpAnswer->Parameters["RecordList"] = RecordList;
+	TcpAnswer->Parameters["Content"] = Content;
 	return true;
 }
 //-----------------------------------------------------------------------------

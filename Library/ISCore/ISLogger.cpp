@@ -27,11 +27,6 @@ QString ISLogger::GetErrorString() const
 	return ErrorString;
 }
 //-----------------------------------------------------------------------------
-QString ISLogger::GetPathLogsDir() const
-{
-	return PathLogsDir;
-}
-//-----------------------------------------------------------------------------
 bool ISLogger::Initialize()
 {
 	//Получаем текущую дату и время и запоминаем текущий день

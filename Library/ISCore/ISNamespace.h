@@ -177,7 +177,8 @@ namespace ISNamespace
 		AMT_RecordFavoriteDelete, //Удалить запись из избранного
 		AMT_GetFavoriteNames, //Получить имена избранных записей
 		AMT_FavoritesDelete, //Удалить все избранные записи пользователя
-		AMT_LogGet, //Удалить все избранные записи пользователя
+		AMT_LogGetStructure, //Получить структуру лог-файлов
+		AMT_LogGetContent, //Получить содержимое лог-файла
 		AMT_CalendarClose, //Закрытие события календаря
 		AMT_GetHistoryList, //Получить список открытых записей
 		AMT_TaskCommentAdd, //Добавить комментарий к задаче
