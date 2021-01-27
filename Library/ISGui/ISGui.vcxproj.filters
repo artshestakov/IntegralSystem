@@ -136,9 +136,6 @@
     <ClCompile Include="ISCreatedObjectsEntity.cpp">
       <Filter>System</Filter>
     </ClCompile>
-    <ClCompile Include="ISDaDataService.cpp">
-      <Filter>System</Filter>
-    </ClCompile>
     <ClCompile Include="ISDefinesGui.cpp">
       <Filter>System</Filter>
     </ClCompile>
@@ -382,9 +379,6 @@
       <Filter>Objects</Filter>
     </QtMoc>
     <QtMoc Include="ISCreatedObjectsEntity.h">
-      <Filter>System</Filter>
-    </QtMoc>
-    <QtMoc Include="ISDaDataService.h">
       <Filter>System</Filter>
     </QtMoc>
     <QtMoc Include="ISCalendarObjectForm.h">

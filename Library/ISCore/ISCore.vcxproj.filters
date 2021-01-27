@@ -5,9 +5,6 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="Network">
-      <UniqueIdentifier>{e4784d47-59e4-4c39-956f-f5725430d28f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Resources">
       <UniqueIdentifier>{3c8bb7e9-794e-4dbf-a0c9-e51c3f514b88}</UniqueIdentifier>
     </Filter>
@@ -27,9 +24,6 @@
   <ItemGroup>
     <ClCompile Include="ISMetaData.cpp">
       <Filter>MetaData</Filter>
-    </ClCompile>
-    <ClCompile Include="ISRestWorker.cpp">
-      <Filter>Network</Filter>
     </ClCompile>
     <ClCompile Include="ISSettings.cpp">
       <Filter>Settings</Filter>
@@ -148,11 +142,6 @@
     <ClInclude Include="ISDebug.h">
       <Filter>System</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <QtMoc Include="ISRestWorker.h">
-      <Filter>Network</Filter>
-    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Resources\_OilSphere\OilSphere.xsn">

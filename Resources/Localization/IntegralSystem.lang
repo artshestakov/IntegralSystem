@@ -157,28 +157,6 @@
   <Local Name="Message.Question.LinkDevice" Russian="Привязать устройство?"/>
   <Local Name="Message.Question.LinkingDevice" Russian="Устройство обнаружено.&#10;&#10;Идентификатор поставщика: %1&#10;Идентификатор устройства: %2&#10;Серийный номер: %3&#10;Имя: %4&#10;&#10;Вы уверены что хотите привязать устройство к этой учётной записи?"/>
   
-  <!--DaData-->
-  <Local Name="DaData.NotFound.Organization" Russian="Организация по таком ИНН не найдена"/>
-  <Local Name="DaData.NotFound.Bank" Russian="Банк по такому БИК не найден"/>
-  <Local Name="DaData.NotFound.IPAddress" Russian="IP-адрес не найден"/>
-  <Local Name="DaData.Organization.BranchType.Main" Russian="Головная огранизация"/>
-  <Local Name="DaData.Organization.BranchType.Branch" Russian="Филиал"/>
-  <Local Name="DaData.Organization.State.Active" Russian="Действующая"/>
-  <Local Name="DaData.Organization.State.Liquidating" Russian="Ликвидируется"/>
-  <Local Name="DaData.Organization.State.Liquidated" Russian="Ликвидирована"/>
-  <Local Name="DaData.Organization.State.Reorganizing" Russian="В процессе присоединения к другому юрлицу, с последующей ликвидацией"/>
-  <Local Name="DaData.Organization.Type.Legal" Russian="Юридическое лицо"/>
-  <Local Name="DaData.Organization.Type.Individual" Russian="Индивидуальный предприниматель"/>
-  <Local Name="DaData.Bank.OPF.Type.Bank" Russian="Банк"/>
-  <Local Name="DaData.Bank.OPF.Type.BankBranch" Russian="Филиал банка"/>
-  <Local Name="DaData.Bank.OPF.Type.Nko" Russian="Небанковская кредитная организация (НКО)"/>
-  <Local Name="DaData.Bank.OPF.Type.NkoBranch" Russian="Филиал НКО"/>
-  <Local Name="DaData.Bank.OPF.Type.Rkc" Russian="Расчётно-кассовый центр"/>
-  <Local Name="DaData.Bank.OPF.Type.Other" Russian="Другой"/>
-  <Local Name="DaData.Bank.State.Active" Russian="Действующая"/>
-  <Local Name="DaData.Bank.State.Liquidating" Russian="Ликвидируется"/>
-  <Local Name="DaData.Bank.State.Liquidated" Russian="Ликвидирована"/>
-
   <!--System Fields-->
   <Local Name="SystemField.ID" Russian="Код"/>
   <Local Name="SystemField.ID.NotAssigned" Russian="Не присвоен"/>
