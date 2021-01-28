@@ -210,10 +210,6 @@
   <Local Name="OpenList" Russian="Открыть справочник"/>
   <Local Name="ChangeUser" Russian="Сменить пользователя"/>
   <Local Name="History" Russian="История"/>
-  <Local Name="TableNavigationSelectBegin" Russian="Выбрать первую запись"/>
-  <Local Name="TableNavigationSelectPrevious" Russian="Выбрать предыдущую запись"/>
-  <Local Name="TableNavigationSelectNext" Russian="Выбрать следующую запись"/>
-  <Local Name="TableNavigationSelectLast" Russian="Выбрать последнюю запись"/>
   <Local Name="FillTableData" Russian="Заполнение таблицы данными..."/>
   <Local Name="ProtocolCard" Russian="Протокол карточки"/>
   <Local Name="ProtocolUser" Russian="Протокол пользователя"/>

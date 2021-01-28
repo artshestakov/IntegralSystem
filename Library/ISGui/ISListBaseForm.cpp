@@ -81,28 +81,6 @@ ISListBaseForm::ISListBaseForm(const QString &TableName, QWidget *parent)
 		QAction *ActionFavorites = new QAction(BUFFER_ICONS("Favorites"), LANG("Favorites"), this);
 		connect(ActionFavorites, &QAction::triggered, this, &ISListBaseForm::ShowFavorites);
 		Actions[ISNamespace::AT_Favorites] = ActionFavorites;
-
-		//Первая запись
-		QAction *ActionNavigationBegin = new QAction(BUFFER_ICONS("TableNavigationBegin"), LANG("TableNavigationSelectBegin"), this);
-		ActionNavigationBegin->setShortcut(QKeySequence(Qt::Key_Home));
-		connect(ActionNavigationBegin, &QAction::triggered, this, &ISListBaseForm::NavigationSelectBeginRecord);
-		Actions[ISNamespace::AT_NavigationBegin] = ActionNavigationBegin;
-
-		//Предыдущая запись
-		QAction *ActionNavigationPrevious = new QAction(BUFFER_ICONS("TableNavigationPrevious"), LANG("TableNavigationSelectPrevious"), this);
-		connect(ActionNavigationPrevious, &QAction::triggered, this, &ISListBaseForm::NavigationSelectPreviousRecord);
-		Actions[ISNamespace::AT_NavigationPrevious] = ActionNavigationPrevious;
-
-		//Следующая запись
-		QAction *ActionNavigationNext = new QAction(BUFFER_ICONS("TableNavigationNext"), LANG("TableNavigationSelectNext"), this);
-		connect(ActionNavigationNext, &QAction::triggered, this, &ISListBaseForm::NavigationSelectNextRecord);
-		Actions[ISNamespace::AT_NavigationNext] = ActionNavigationNext;
-
-		//Последняя запись
-		QAction *ActionNavigationLast = new QAction(BUFFER_ICONS("TableNavigationLast"), LANG("TableNavigationSelectLast"), this);
-		ActionNavigationLast->setShortcut(QKeySequence(Qt::Key_End));
-		connect(ActionNavigationLast, &QAction::triggered, this, &ISListBaseForm::NavigationSelectLastRecord);
-		Actions[ISNamespace::AT_NavigationLast] = ActionNavigationLast;
 	}
 
 	{//Создание специальных действий
@@ -139,14 +117,6 @@ ISListBaseForm::ISListBaseForm(const QString &TableName, QWidget *parent)
 		ActionAdditionally->menu()->addAction(GetAction(ISNamespace::AT_Favorites));
 		ActionAdditionally->menu()->addAction(GetAction(ISNamespace::AT_Export));
 		ActionAdditionally->menu()->addAction(LANG("SettingsList"), this, &ISListBaseForm::ShowSettingsForm);
-
-		if (SETTING_BOOL(CONST_UID_SETTING_TABLES_SHOWNAVIGATION))
-		{
-			ToolBar->addAction(GetAction(ISNamespace::AT_NavigationBegin));
-			ToolBar->addAction(GetAction(ISNamespace::AT_NavigationPrevious));
-			ToolBar->addAction(GetAction(ISNamespace::AT_NavigationNext));
-			ToolBar->addAction(GetAction(ISNamespace::AT_NavigationLast));
-		}
 	}
 
 	{//Создание таблицы
@@ -895,42 +865,6 @@ void ISListBaseForm::Export()
 void ISListBaseForm::ShowFavorites()
 {
 	ISGui::ShowFavoritesForm(MetaTable->Name);
-}
-//-----------------------------------------------------------------------------
-void ISListBaseForm::NavigationSelectBeginRecord()
-{
-	if (TcpModel->rowCount())
-	{
-		TableView->selectRow(0);
-		TableView->verticalScrollBar()->setValue(TableView->verticalScrollBar()->minimum());
-	}
-}
-//-----------------------------------------------------------------------------
-void ISListBaseForm::NavigationSelectPreviousRecord()
-{
-	if (TcpModel->rowCount() || GetCurrentRowIndex())
-	{
-		TableView->selectRow(GetCurrentRowIndex() - 1);
-	}
-}
-//-----------------------------------------------------------------------------
-void ISListBaseForm::NavigationSelectNextRecord()
-{
-	int RowCount = TcpModel->rowCount();
-	if (RowCount || GetCurrentRowIndex() == RowCount - 1)
-	{
-		TableView->selectRow(GetCurrentRowIndex() + 1);
-	}
-}
-//-----------------------------------------------------------------------------
-void ISListBaseForm::NavigationSelectLastRecord()
-{
-	int RowCount = TcpModel->rowCount();
-	if (RowCount)
-	{
-		TableView->selectRow(RowCount - 1);
-		TableView->verticalScrollBar()->setValue(TableView->verticalScrollBar()->maximum());
-	}
 }
 //-----------------------------------------------------------------------------
 void ISListBaseForm::RecordInfo()

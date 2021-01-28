@@ -53,10 +53,6 @@ public:
 	virtual void SearchClear(); //Очистить результаты поиска
 	virtual void Export(); //Выгрузить таблицу
 	virtual void ShowFavorites(); //Показать форму с избранными объектами
-	virtual void NavigationSelectBeginRecord(); //Выделение первой записи в списке
-	virtual void NavigationSelectPreviousRecord(); //Выделение предыдущей записи
-	virtual void NavigationSelectNextRecord(); //Выделение следующей записи
-	virtual void NavigationSelectLastRecord(); //Выделение последней записи
 	void RecordInfo(); //Информация о записи
 	void NoteObject(); //Примечание объекта
 	virtual void LoadData() override; //Загрузка данных в таблицу

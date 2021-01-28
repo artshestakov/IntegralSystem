@@ -93,10 +93,6 @@ namespace ISNamespace
         AT_Export,
         AT_Favorites,
         AT_Reference,
-        AT_NavigationBegin,
-        AT_NavigationPrevious,
-        AT_NavigationNext,
-        AT_NavigationLast,
     };
 
     enum ActionSpecialType
