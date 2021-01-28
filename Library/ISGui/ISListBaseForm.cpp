@@ -714,8 +714,12 @@ bool ISListBaseForm::Update()
 
 	if (Result) //Запрос прошёл успешно
 	{
-		//Забираем ответ и устанавливаем его в модель
+		//Устанавливаем надпись "Заполнение таблицы"
 		ListIndicatorWidget->SetText(LANG("FillTableData"));
+		ISSleep(1);
+		PROCESS_EVENTS();
+
+		//Забираем ответ и устанавливаем его в модель
 		QVariantMap AnswerMap = TcpQuery->TakeAnswer();
 		TcpModel->SetSource(AnswerMap["FieldList"].toList(), AnswerMap["RecordList"].toList());
 

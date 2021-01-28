@@ -366,6 +366,7 @@ void ISAuthDialog::Input()
 		}
 		return;
 	}
+	LabelIndicator->setText(LANG("AuthProcess"));
 
 	ISTcpQuery qAuth(API_AUTH);
 	qAuth.BindValue("Hash", ISSystem::StringToSha256(EditLogin->GetValue().toString() + EditPassword->GetValue().toString()));
