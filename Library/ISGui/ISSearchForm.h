@@ -27,6 +27,7 @@ private:
 	void AddClicked();
 	void DeleteClicked();
 
+	void Clear();
 	void Search();
 	bool ExistField(const QVariantList &VariantList, const QString &FieldName);
 	
@@ -34,8 +35,6 @@ private:
 	PMetaTable *MetaTable;
 	
 	QTreeWidget *TreeWidget;
-	ISPushButton *ButtonSearch;
-	ISPushButton *ButtonHide;
 	std::map<QObject*, QTreeWidgetItem*> Map;
 };
 //-----------------------------------------------------------------------------

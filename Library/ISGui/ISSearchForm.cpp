@@ -50,16 +50,21 @@ ISSearchForm::ISSearchForm(PMetaTable *meta_table, QWidget *parent)
 	}
 
 	QHBoxLayout *LayoutBottom = new QHBoxLayout();
-	LayoutBottom->addStretch();
 	GetMainLayout()->addLayout(LayoutBottom);
 
-	ButtonSearch = new ISPushButton(this);
+	ISPushButton *ButtonClear = new ISPushButton(LANG("Search.Clear"), this);
+	connect(ButtonClear, &ISPushButton::clicked, this, &ISSearchForm::Clear);
+	LayoutBottom->addWidget(ButtonClear);
+
+	LayoutBottom->addStretch();
+
+	ISPushButton *ButtonSearch = new ISPushButton(this);
 	ButtonSearch->setText(LANG("Search"));
 	ButtonSearch->setIcon(BUFFER_ICONS("Search"));
 	connect(ButtonSearch, &ISPushButton::clicked, this, static_cast<void(ISSearchForm::*)(void)>(&ISSearchForm::Search));
 	LayoutBottom->addWidget(ButtonSearch);
 
-	ButtonHide = new ISPushButton(this);
+	ISPushButton *ButtonHide = new ISPushButton(this);
 	ButtonHide->setText(LANG("Search.HideForm"));
 	connect(ButtonHide, &ISPushButton::clicked, this, &ISSearchForm::hide);
 	LayoutBottom->addWidget(ButtonHide);
@@ -176,6 +181,23 @@ void ISSearchForm::DeleteClicked()
 	if (It != Map.end())
 	{
 		Map.erase(It);
+	}
+}
+//-----------------------------------------------------------------------------
+void ISSearchForm::Clear()
+{
+	for (int i = 0; i < TreeWidget->topLevelItemCount(); ++i)
+	{
+		QTreeWidgetItem *TopLevelItem = TreeWidget->topLevelItem(i);
+		ISFieldEditBase *FieldEditBase = dynamic_cast<ISFieldEditBase*>(TreeWidget->itemWidget(TopLevelItem, 3));
+		FieldEditBase->Clear();
+
+		for (int j = 0; j < TopLevelItem->childCount(); ++j)
+		{
+			QTreeWidgetItem *ChildItem = TopLevelItem->child(j);
+			FieldEditBase = dynamic_cast<ISFieldEditBase*>(TreeWidget->itemWidget(ChildItem, 3));
+			FieldEditBase->Clear();
+		}
 	}
 }
 //-----------------------------------------------------------------------------
