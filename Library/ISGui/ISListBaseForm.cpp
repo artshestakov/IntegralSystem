@@ -30,7 +30,6 @@ ISListBaseForm::ISListBaseForm(const QString &TableName, QWidget *parent)
 	SelectObjectAfterUpdate(0),
 	ActionObjectGroup(new QActionGroup(this)),
 	ActionGroupPageNavigation(new QActionGroup(this)),
-	ListIndicatorWidget(new ISListIndicatorWidget(this)),
 	SearchForm(nullptr)
 {
 	{//Создание действий
@@ -179,6 +178,7 @@ ISListBaseForm::ISListBaseForm(const QString &TableName, QWidget *parent)
 		ContextMenu->addAction(GetSpecialAction(ISNamespace::AST_Favorite));
 		ContextMenu->addAction(GetSpecialAction(ISNamespace::AST_Note));
 	}
+	ListIndicatorWidget = new ISListIndicatorWidget(this);
 }
 //-----------------------------------------------------------------------------
 ISListBaseForm::~ISListBaseForm()
