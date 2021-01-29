@@ -26,8 +26,7 @@ static QString QS_USER_AUTH = PREPARE_QUERY("SELECT usrs_id, usrs_issystem, usrs
 											"LEFT JOIN _usergroup ON usgp_id = usrs_group "
 											"WHERE usrs_hash = :Hash");
 //-----------------------------------------------------------------------------
-static QString QI_PROTOCOL = PREPARE_QUERY("INSERT INTO _protocol(prtc_datetime, prtc_user, prtc_tablename, prtc_tablelocalname, prtc_type, prtc_objectid, prtc_information) "
-										   "VALUES(:DateTime, :UserID, :TableName, :TableLocalName, (SELECT prtp_id FROM _protocoltype WHERE prtp_uid = :TypeUID), :ObjectID, :Information)");
+static QString QI_PROTOCOL = PREPARE_QUERY("SELECT protocol_user(:UserID, :TableName, :TableLocalName, :TypeUID, :ObjectID, :Information)");
 //-----------------------------------------------------------------------------
 static QString QS_GROUP_ACCESS_TABLE = PREPARE_QUERY("SELECT gatb_table, gatt_uid "
 													 "FROM _groupaccesstable "
@@ -742,7 +741,6 @@ QVariant ISTcpWorker::CheckNullField(const QString &FieldName, ISTcpMessage *Tcp
 //-----------------------------------------------------------------------------
 void ISTcpWorker::Protocol(unsigned int UserID, const ISUuid &ActionTypeUID, const QVariant &TableName, const QVariant &TableLocalName, const QVariant &ObjectID, const QVariant &Information)
 {
-	qProtocol->BindValue(":DateTime", QDateTime::currentDateTime());
 	qProtocol->BindValue(":UserID", UserID);
 	qProtocol->BindValue(":TableName", TableName);
 	qProtocol->BindValue(":TypeUID", ActionTypeUID);

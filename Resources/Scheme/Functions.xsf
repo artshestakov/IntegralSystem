@@ -209,4 +209,20 @@
     COST 100;
   </Function>
 
+  <Function Name="protocol_user(user_id bigint, table_name character varying, table_local_name character varying, type_uid uuid, object_id bigint, information character varying)" Comment="Добавить запись в протокол">
+    CREATE OR REPLACE FUNCTION public.protocol_user(user_id bigint, table_name character varying, table_local_name character varying, type_uid uuid, object_id bigint, information character varying)
+    RETURNS void AS
+    $body$
+    BEGIN
+    INSERT INTO _protocol(prtc_user, prtc_tablename, prtc_tablelocalname, prtc_type, prtc_objectid, prtc_information)
+    VALUES(user_id, table_name, table_local_name, (SELECT prtp_id FROM _protocoltype WHERE prtp_uid = type_uid), object_id, information);
+    END;
+    $body$
+    LANGUAGE 'plpgsql'
+    VOLATILE
+    CALLED ON NULL INPUT
+    SECURITY INVOKER
+    COST 100;
+  </Function>
+
 </XSF>
