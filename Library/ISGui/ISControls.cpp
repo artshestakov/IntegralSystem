@@ -201,6 +201,11 @@ QAction* ISControls::CreateActionSearchClearResults(QObject *ParentObject)
 	return ActionSearchFullTextClear;
 }
 //-----------------------------------------------------------------------------
+QAction* ISControls::CreateActionFavorite(QObject *ParentObject)
+{
+	return new QAction(BUFFER_ICONS("Favorites"), LANG("AddToFavorites"), ParentObject);
+}
+//-----------------------------------------------------------------------------
 QAction* ISControls::CreateActionRecordInfo(QObject *ParentObject)
 {
 	return new QAction(BUFFER_ICONS("RecordInfo"), LANG("ISRecordInfoDialog.Title"), ParentObject);

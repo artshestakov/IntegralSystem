@@ -41,6 +41,7 @@ public:
 	static QString ConvertDateTimeToString(const QDateTime &DateTime, const QString &DateFormat, const QString &TimeFormat); //Конвертировать дату и время в строку
 	static QString ConvertDateToString(const QDate &Date, const QString &DateFormat); //Конвертировать дату в строку
 	static bool RecordsDelete(const QString &TableName, const ISVectorUInt &ObjectsID, QString &ErrorString); //Удалить записи
+	static void FavoriteObject(const QString &TableName, unsigned int ObjectID, bool &IsExist); //Добавить/удалить объект из избранного
 
 	static void ExitApplication(); //Выход из программы
 

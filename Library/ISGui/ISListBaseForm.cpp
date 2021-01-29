@@ -20,6 +20,7 @@
 #include "ISAlgorithm.h"
 #include "ISTcpQuery.h"
 #include "ISDialogsForm.h"
+#include "ISFavorites.h"
 //-----------------------------------------------------------------------------
 ISListBaseForm::ISListBaseForm(const QString &TableName, QWidget *parent)
 	: ISInterfaceMetaForm(parent),
@@ -29,6 +30,7 @@ ISListBaseForm::ISListBaseForm(const QString &TableName, QWidget *parent)
 	SelectObjectAfterUpdate(0),
 	ActionObjectGroup(new QActionGroup(this)),
 	ActionGroupPageNavigation(new QActionGroup(this)),
+	ListIndicatorWidget(new ISListIndicatorWidget(this)),
 	SearchForm(nullptr)
 {
 	{//Создание действий
@@ -89,6 +91,13 @@ ISListBaseForm::ISListBaseForm(const QString &TableName, QWidget *parent)
 		connect(ActionRecordInfo, &QAction::triggered, this, &ISListBaseForm::RecordInfo);
 		ActionsSpecial[ISNamespace::AST_RecordInfo] = ActionRecordInfo;
 		ActionObjectGroup->addAction(ActionRecordInfo);
+
+		//Избранное
+		QAction *ActionFavorite = ISControls::CreateActionFavorite(this);
+		ActionFavorite->setCheckable(true);
+		connect(ActionFavorite, &QAction::triggered, this, &ISListBaseForm::FavoriteObject);
+		ActionsSpecial[ISNamespace::AST_Favorite] = ActionFavorite;
+		ActionObjectGroup->addAction(ActionFavorite);
 
 		//Примечание
 		QAction *ActionNoteObject = ISControls::CreateActionNoteObject(this);
@@ -167,11 +176,9 @@ ISListBaseForm::ISListBaseForm(const QString &TableName, QWidget *parent)
 		if (GetAction(ISNamespace::AT_Delete)) ContextMenu->addAction(GetAction(ISNamespace::AT_Delete));
 		if (GetAction(ISNamespace::AT_Update)) ContextMenu->addAction(GetAction(ISNamespace::AT_Update));
 		ContextMenu->addAction(GetSpecialAction(ISNamespace::AST_RecordInfo));
+		ContextMenu->addAction(GetSpecialAction(ISNamespace::AST_Favorite));
 		ContextMenu->addAction(GetSpecialAction(ISNamespace::AST_Note));
 	}
-
-	//Создание этого виджета должно происходить после создания всех остальных
-	ListIndicatorWidget = new ISListIndicatorWidget(this);
 }
 //-----------------------------------------------------------------------------
 ISListBaseForm::~ISListBaseForm()
@@ -872,6 +879,12 @@ void ISListBaseForm::RecordInfo()
 	ISGui::ShowRecordInfoForm(this, MetaTable->Name, GetObjectID());
 }
 //-----------------------------------------------------------------------------
+void ISListBaseForm::FavoriteObject()
+{
+	bool IsExist = true;
+	ISGui::FavoriteObject(MetaTable->Name, GetObjectID(), IsExist);
+}
+//-----------------------------------------------------------------------------
 void ISListBaseForm::NoteObject()
 {
 	ISGui::ShowNoteObject(this, MetaTable->Name, GetObjectID());
@@ -881,6 +894,7 @@ void ISListBaseForm::ShowContextMenu(const QPoint &Point)
 {
 	if (!IsLoadingData)
 	{
+		GetSpecialAction(ISNamespace::AST_Favorite)->setChecked(ISFavorites::Instance().Exist(MetaTable->Name, GetObjectID()));
 		ContextMenu->exec(TableView->viewport()->mapToGlobal(Point));
 	}
 }

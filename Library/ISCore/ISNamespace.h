@@ -98,6 +98,7 @@ namespace ISNamespace
     enum ActionSpecialType
     {
 		AST_RecordInfo,
+		AST_Favorite,
         AST_Note,
     };
 

@@ -278,7 +278,7 @@ void ISObjectFormBase::CreateToolBar()
 	ButtonAdditionally->setStyleSheet(BUFFER_STYLE_SHEET("QToolButtonMenu"));
 
 	//Избранное
-	ActionFavorites = new QAction(BUFFER_ICONS("Favorites"), LANG("AddToFavorites"), ToolBar);
+	ActionFavorites = ISControls::CreateActionFavorite(ToolBar);
 	ActionFavorites->setPriority(QAction::LowPriority);
 	ActionFavorites->setCheckable(true);
 	connect(ActionFavorites, &QAction::triggered, this, &ISObjectFormBase::FavoriteClicked);
@@ -840,26 +840,9 @@ void ISObjectFormBase::UpdateObjectActions()
 //-----------------------------------------------------------------------------
 void ISObjectFormBase::FavoriteClicked()
 {
-	bool IsExist = ISFavorites::Instance().Exist(MetaTable->Name, ObjectID);
-
-	ISTcpQuery qRecordFavorite(IsExist ? API_RECORD_FAVORITE_DELETE : API_RECORD_FAVORITE_ADD);
-	qRecordFavorite.BindValue("TableName", MetaTable->Name);
-	qRecordFavorite.BindValue("ObjectID", ObjectID);
-
-	ISGui::SetWaitGlobalCursor(true);
-	bool Result = qRecordFavorite.Execute();
-	ISGui::SetWaitGlobalCursor(false);
-
-	if (Result)
-	{
-		IsExist ? ISFavorites::Instance().Delete(MetaTable->Name, ObjectID) : ISFavorites::Instance().Add(MetaTable->Name, ObjectID);
-		ActionFavorites->setChecked(!IsExist);
-		IsExist ? ISPopupMessage::ShowNotification(LANG("RecordRemoveFavorites").arg(ObjectName)) : ISPopupMessage::ShowNotification(LANG("RecordAddFavorites").arg(ObjectName));
-	}
-	else
-	{
-		ISMessageBox::ShowCritical(this, qRecordFavorite.GetErrorString());
-	}
+	bool IsExist = true;
+	ISGui::FavoriteObject(MetaTable->Name, GetObjectID(), IsExist);
+	ActionFavorites->setChecked(!IsExist);
 }
 //-----------------------------------------------------------------------------
 void ISObjectFormBase::Delete()

@@ -309,8 +309,8 @@
   <Local Name="ClickRightButtonMouseForCallContextMenu" Russian="Кликните правой клавишей мыши чтобы вызвать контекстное меню."/>
   <Local Name="SelectExportType" Russian="Выберите тип экспорта"/>
   <Local Name="ClickFromShowList" Russian="Нажмите, чтобы раскрыть справочник."/>
-  <Local Name="RecordAddFavorites" Russian="Запись &quot;%1&quot; добавлена в избранное"/>
-  <Local Name="RecordRemoveFavorites" Russian="Запись &quot;%1&quot; удалена из избранного"/>
+  <Local Name="RecordAddFavorites" Russian="Запись добавлена в избранное"/>
+  <Local Name="RecordRemoveFavorites" Russian="Запись удалена из избранного"/>
   <Local Name="NotAccessSpecialDesktop" Russian="Доступ к рабочему столу закрыт, обратитесь к системному администратору."/>
   <Local Name="NotAccessSystems" Russian="У Вас нет доступа ни к одной из подсистем."/>
   <Local Name="ClickFromCheckLevelVolume" Russian="Нажмите, чтобы проверить уровень громкости"/>

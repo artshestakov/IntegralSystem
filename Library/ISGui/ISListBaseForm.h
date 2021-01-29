@@ -54,6 +54,7 @@ public:
 	virtual void Export(); //Выгрузить таблицу
 	virtual void ShowFavorites(); //Показать форму с избранными объектами
 	void RecordInfo(); //Информация о записи
+	void FavoriteObject(); //Избранное
 	void NoteObject(); //Примечание объекта
 	virtual void LoadData() override; //Загрузка данных в таблицу
 	virtual void CornerButtonClicked(); //Событие нажатия на cornerButton

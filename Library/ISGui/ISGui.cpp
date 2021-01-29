@@ -567,6 +567,29 @@ bool ISGui::RecordsDelete(const QString &TableName, const ISVectorUInt &ObjectsI
 	return true;
 }
 //-----------------------------------------------------------------------------
+void ISGui::FavoriteObject(const QString &TableName, unsigned int ObjectID, bool &IsExist)
+{
+	IsExist = ISFavorites::Instance().Exist(TableName, ObjectID);
+
+	ISTcpQuery qRecordFavorite(IsExist ? API_RECORD_FAVORITE_DELETE : API_RECORD_FAVORITE_ADD);
+	qRecordFavorite.BindValue("TableName", TableName);
+	qRecordFavorite.BindValue("ObjectID", ObjectID);
+
+	ISGui::SetWaitGlobalCursor(true);
+	bool Result = qRecordFavorite.Execute();
+	ISGui::SetWaitGlobalCursor(false);
+
+	if (Result)
+	{
+		IsExist ? ISFavorites::Instance().Delete(TableName, ObjectID) : ISFavorites::Instance().Add(TableName, ObjectID);
+		ISPopupMessage::ShowNotification(IsExist ? LANG("RecordRemoveFavorites") : LANG("RecordAddFavorites"));
+	}
+	else
+	{
+		ISMessageBox::ShowCritical(nullptr, qRecordFavorite.GetErrorString());
+	}
+}
+//-----------------------------------------------------------------------------
 void ISGui::ExitApplication()
 {
 	ISTcpConnector::Instance().Disconnect();
