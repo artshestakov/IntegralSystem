@@ -232,9 +232,6 @@
       <Field UID="{53D25190-AB48-455D-B87D-2BBACD32A966}" Name="ObjectID" Type="Int" LabelName="Идентификатор записи" LocalListName="Идентификатор записи"/>
       <Field UID="{47A1B622-4EA9-4681-A987-47FD03F6915F}" Name="Information" Type="String" LabelName="Дополнительная информация" LocalListName="Дополнительная информация"/>
     </Fields>
-    <Indexes>
-      <Index Field="TableName;ObjectID"/>
-    </Indexes>
     <Foreigns>
       <Foreign Field="User" ForeignClass="_Users" ForeignField="ID" ForeignViewNameField="FIO"/>
       <Foreign Field="Type" ForeignClass="_ProtocolType" ForeignField="ID" ForeignViewNameField="Name"/>

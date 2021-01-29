@@ -346,6 +346,26 @@
             <stringProp name="Argument.value">2634100802</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
+          <elementProp name="UserDeviceAdd_UserID" elementType="Argument">
+            <stringProp name="Argument.name">UserDeviceAdd_UserID</stringProp>
+            <stringProp name="Argument.value">2</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="UserDeviceAdd_Vid" elementType="Argument">
+            <stringProp name="Argument.name">UserDeviceAdd_Vid</stringProp>
+            <stringProp name="Argument.value">13FE</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="UserDeviceAdd_Pid" elementType="Argument">
+            <stringProp name="Argument.name">UserDeviceAdd_Pid</stringProp>
+            <stringProp name="Argument.value">4300</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="UserDeviceAdd_SN" elementType="Argument">
+            <stringProp name="Argument.name">UserDeviceAdd_SN</stringProp>
+            <stringProp name="Argument.value">0700039F239C5276</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
         </collectionProp>
       </Arguments>
       <hashTree/>
@@ -483,6 +503,18 @@ def MapUserSettingsReset =
 	Type: &quot;UserSettingsReset&quot;
 ];
 vars.put(&quot;QueryUserSettingsReset&quot;, MapToString(MapUserSettingsReset));
+
+//Привязка устройства к учётной записи пользователя
+def MapUserDeviceAdd =
+[
+	Type: &quot;UserDeviceAdd&quot;,
+	Parameters:
+		[
+			UserID: vars.get(&quot;UserDeviceAdd_UserID&quot;),
+			Hash: GetSHA256(vars.get(&quot;UserDeviceAdd_Vid&quot;) + vars.get(&quot;UserDeviceAdd_Pid&quot;) + vars.get(&quot;UserDeviceAdd_SN&quot;))
+		]
+];
+vars.put(&quot;QueryUserDeviceAdd&quot;, MapToString(MapUserDeviceAdd));
 
 //Получение записи разговора
 def MapGetRecordCall =
@@ -888,7 +920,7 @@ vars.put(&quot;QueryOrganizationFromINN&quot;, MapToString(MapOrganizationFromIN
           <boolProp name="TCPSampler.nodelay">false</boolProp>
           <stringProp name="TCPSampler.timeout"></stringProp>
           <stringProp name="TCPSampler.request">${QueryAuth}</stringProp>
-          <boolProp name="TCPSampler.closeConnection">true</boolProp>
+          <boolProp name="TCPSampler.closeConnection">false</boolProp>
           <stringProp name="ConfigTestElement.username"></stringProp>
           <stringProp name="ConfigTestElement.password"></stringProp>
         </TCPSampler>
@@ -1092,6 +1124,18 @@ vars.put(&quot;QueryOrganizationFromINN&quot;, MapToString(MapOrganizationFromIN
           <boolProp name="TCPSampler.nodelay">false</boolProp>
           <stringProp name="TCPSampler.timeout"></stringProp>
           <stringProp name="TCPSampler.request">${QueryUserSettingsReset}</stringProp>
+          <boolProp name="TCPSampler.closeConnection">true</boolProp>
+          <stringProp name="ConfigTestElement.username"></stringProp>
+          <stringProp name="ConfigTestElement.password"></stringProp>
+        </TCPSampler>
+        <hashTree/>
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: UserDeviceAdd" enabled="true">
+          <stringProp name="TCPSampler.server"></stringProp>
+          <boolProp name="TCPSampler.reUseConnection">true</boolProp>
+          <stringProp name="TCPSampler.port"></stringProp>
+          <boolProp name="TCPSampler.nodelay">false</boolProp>
+          <stringProp name="TCPSampler.timeout"></stringProp>
+          <stringProp name="TCPSampler.request">${QueryUserDeviceAdd}</stringProp>
           <boolProp name="TCPSampler.closeConnection">true</boolProp>
           <stringProp name="ConfigTestElement.username"></stringProp>
           <stringProp name="ConfigTestElement.password"></stringProp>

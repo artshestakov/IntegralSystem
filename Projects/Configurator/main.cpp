@@ -222,7 +222,7 @@ bool CreateDatabase()
 void InterpreterMode(bool &IsRunning)
 {
 	ISDEBUG();
-	QString Command = ISConsole::GetString("Enter command (press Enter or Return to exit): ");
+	QString Command = ISConsole::GetString("Enter command (press Enter to exit): ");
 	IsRunning = !Command.isEmpty();
 	if (IsRunning)
 	{
