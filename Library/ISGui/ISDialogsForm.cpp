@@ -371,6 +371,7 @@ void ISAuthDialog::Input()
 	ISTcpQuery qAuth(API_AUTH);
 	qAuth.BindValue("Hash", ISSystem::StringToSha256(EditLogin->GetValue().toString() + EditPassword->GetValue().toString()));
 	qAuth.BindValue("Version", ISVersionInfo::Instance().Info.Version);
+	qAuth.BindValue("DeviceList", GetConnectedDevice());
 	if (qAuth.Execute()) //Авторизация прошла успешно
 	{
 		QVariantMap AnswerMap = qAuth.GetAnswer();
@@ -445,6 +446,25 @@ void ISAuthDialog::Input()
 		SetConnecting(false);
 		ISMessageBox::ShowCritical(this, LANG("Message.Error.Auth"), qAuth.GetErrorString());
 	}
+}
+//-----------------------------------------------------------------------------
+QStringList ISAuthDialog::GetConnectedDevice() const
+{
+	QStringList StringList;
+	std::vector<ISDeviceInfo> Vector;
+	QString ErrorString;
+	if (ISGui::GetUSBDevice(Vector, ErrorString))
+	{
+		for (const ISDeviceInfo &DeviceInfo : Vector)
+		{
+			StringList.push_back(ISSystem::StringToSha256(DeviceInfo.VendorID + DeviceInfo.ProductID + DeviceInfo.SerialNumber));
+		}
+	}
+	else
+	{
+		ISMessageBox::ShowWarning(nullptr, ErrorString);
+	}
+	return StringList;
 }
 //-----------------------------------------------------------------------------
 void ISAuthDialog::SetConnecting(bool Connecting)

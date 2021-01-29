@@ -50,6 +50,7 @@ private:
 	void ShowAboutForm(); //Открыть форму "О программе"
 
 	void Input(); //Вход в программу
+	QStringList GetConnectedDevice() const; //Получить список хэшей подключенных устройств
 	void SetConnecting(bool Connecting); //Изменить рисовку интерфейса
 
 private:
