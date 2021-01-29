@@ -328,6 +328,7 @@
   <Local Name="PasswordResetDone" Russian="Пароль был успешно сброшен"/>
   <Local Name="ThisActionIsNotReversible" Russian="Это действие не обратимо."/>
   <Local Name="ReconnectingDone" Russian="Связь с сервером восстановлена!"/>
+  <Local Name="UserDeviceAdd" Russian="Устройство успешно привязано к этой учётной записи!"/>
 
   <!--CalendarForm-->
   <Local Name="CalendarForm.CreateEvent" Russian="Создать событие"/>
