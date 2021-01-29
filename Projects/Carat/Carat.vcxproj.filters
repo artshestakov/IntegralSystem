@@ -52,6 +52,9 @@
     <ClCompile Include="ISTcpWorkerHelper.cpp">
       <Filter>TcpServer</Filter>
     </ClCompile>
+    <ClCompile Include="ISCaratMonitor.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Carat.rc">
@@ -76,6 +79,9 @@
     </ClInclude>
     <ClInclude Include="ISTcpWorkerHelper.h">
       <Filter>TcpServer</Filter>
+    </ClInclude>
+    <ClInclude Include="ISCaratMonitor.h">
+      <Filter>System</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

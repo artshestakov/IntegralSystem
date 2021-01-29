@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="ISAsterisk.cpp" />
     <ClCompile Include="ISCaratApplication.cpp" />
+    <ClCompile Include="ISCaratMonitor.cpp" />
     <ClCompile Include="ISFail2Ban.cpp" />
     <ClCompile Include="ISTcpAnswer.cpp" />
     <ClCompile Include="ISTcpClients.cpp" />
@@ -36,6 +37,7 @@
     <ResourceCompile Include="Carat.rc" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ISCaratMonitor.h" />
     <ClInclude Include="ISTcpWorkerHelper.h" />
     <QtMoc Include="ISCaratApplication.h" />
     <QtMoc Include="ISAsterisk.h" />
