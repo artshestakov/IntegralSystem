@@ -128,75 +128,82 @@ void ISBuffer::InitializeStyleSheets()
 //-----------------------------------------------------------------------------
 void ISBuffer::AddAnimations(const QString &AnimationName, const QString &AnimationPath)
 {
-	if (Animations.count(AnimationName))
+	ISStringMap::iterator It = Animations.find(AnimationName);
+	if (It == Animations.end())
 	{
-		IS_ASSERT(false, QString("Animation \"%1\" already exist in buffer animations").arg(AnimationName));
+		Animations.emplace(AnimationName, AnimationPath);
 	}
 	else
 	{
-		Animations.emplace(AnimationName, AnimationPath);
+		IS_ASSERT(false, QString("Animation \"%1\" already exist in buffer animations").arg(AnimationName));
 	}
 }
 //-----------------------------------------------------------------------------
 void ISBuffer::AddImageIcon(const QString &IconName, const QString &IconPath)
 {
-	if (Icons.count(IconName))
+	std::map<QString, QIcon>::iterator It = Icons.find(IconName);
+	if (It == Icons.end())
 	{
-		IS_ASSERT(false, QString("Icon \"%1\" already exist in buffer icons").arg(IconName));
+		Icons.emplace(IconName, QIcon(IconPath));
 	}
 	else
 	{
-		Icons.emplace(IconName, QIcon(IconPath));
+		IS_ASSERT(false, QString("Icon \"%1\" already exist in buffer icons").arg(IconName));
 	}
 }
 //-----------------------------------------------------------------------------
 void ISBuffer::AddImage(const QString &PixmapName, const QString &PixmapPath)
 {
-	if (Pixmaps.count(PixmapName))
+	std::map<QString, QPixmap>::iterator It = Pixmaps.find(PixmapName);
+	if (It == Pixmaps.end())
 	{
-		IS_ASSERT(false, QString("Pixmap \"%1\" already exist in buffer pixmaps").arg(PixmapName));
+		Pixmaps.emplace(PixmapName, QPixmap(PixmapPath));
 	}
 	else
 	{
-		Pixmaps.emplace(PixmapName, QPixmap(PixmapPath));
+		IS_ASSERT(false, QString("Pixmap \"%1\" already exist in buffer pixmaps").arg(PixmapName));
 	}
 }
 //-----------------------------------------------------------------------------
 void ISBuffer::AddAudio(const QString &AudioName, const QString &AudioPath)
 {
-	if (Audios.count(AudioName))
+	ISStringMap::iterator It = Audios.find(AudioName);
+	if (It == Audios.end())
 	{
-		IS_ASSERT(false, QString("Audio \"%1\" already exist in buffer audios.").arg(AudioName));
+		Audios.emplace(AudioName, AudioPath);
 	}
 	else
 	{
-		Audios.emplace(AudioName, AudioPath);
+		IS_ASSERT(false, QString("Audio \"%1\" already exist in buffer audios.").arg(AudioName));
 	}
 }
 //-----------------------------------------------------------------------------
 void ISBuffer::AddStyle(const QString &FileName, const QString &FilePath)
 {
-	if (StyleSheets.count(FileName))
+	ISStringMap::iterator It = StyleSheets.find(FileName);
+	if (It == StyleSheets.end())
 	{
-		IS_ASSERT(false, "StyleSheet '" + FileName + "' already exist in buffer StyleSheets");
-	}
-
-	QFile FileStyle(FilePath);
-	if (FileStyle.exists())
-	{
-		if (FileStyle.open(QIODevice::ReadOnly))
+		QFile FileStyle(FilePath);
+		if (FileStyle.exists())
 		{
-			StyleSheets.emplace(FileName, FileStyle.readAll());
-			FileStyle.close();
+			if (FileStyle.open(QIODevice::ReadOnly))
+			{
+				StyleSheets.emplace(FileName, FileStyle.readAll());
+				FileStyle.close();
+			}
+			else
+			{
+				IS_ASSERT(false, QString("File %1 style sheet not open. Error: %2").arg(FileName).arg(FileStyle.errorString()));
+			}
 		}
 		else
 		{
-			IS_ASSERT(false, QString("File %1 style sheet not open. Error: %2").arg(FileName).arg(FileStyle.errorString()));
+			IS_ASSERT(false, "File " + FileName + " not exist");
 		}
 	}
 	else
 	{
-		IS_ASSERT(false, "File " + FileName + " not exist");
+		IS_ASSERT(false, "StyleSheet '" + FileName + "' already exist in buffer StyleSheets");
 	}
 }
 //-----------------------------------------------------------------------------
