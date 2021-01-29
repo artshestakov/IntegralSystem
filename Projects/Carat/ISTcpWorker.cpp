@@ -21,9 +21,11 @@ static QString QS_USERS_HASH = PREPARE_QUERY("SELECT usrs_hash, usrs_salt "
 											 "AND usrs_salt IS NOT NULL");
 //-----------------------------------------------------------------------------
 static QString QS_USER_AUTH = PREPARE_QUERY("SELECT usrs_id, usrs_issystem, usrs_group, usrs_fio, usrs_accessallowed, usrs_accountlifetime, usrs_accountlifetimestart, usrs_accountlifetimeend, usgp_fullaccess, "
-											"(SELECT sgdb_useraccessdatabase FROM _settingsdatabase WHERE sgdb_uid = :SettingUID) "
+											"(SELECT sgdb_useraccessdatabase FROM _settingsdatabase WHERE sgdb_uid = :SettingUID), "
+											"udvc_hash, udvc_salt "
 											"FROM _users "
 											"LEFT JOIN _usergroup ON usgp_id = usrs_group "
+											"LEFT JOIN _userdevice ON udvc_user = usrs_id "
 											"WHERE usrs_hash = :Hash");
 //-----------------------------------------------------------------------------
 static QString QI_PROTOCOL = PREPARE_QUERY("SELECT protocol_user(:UserID, :TableName, :TableLocalName, :TypeUID, :ObjectID, :Information)");
@@ -1003,6 +1005,8 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	QString UserFIO = qSelectAuth.ReadColumn("usrs_fio").toString();
 	int GroupID = qSelectAuth.ReadColumn("usrs_group").toInt();
 	bool GroupFullAccess = qSelectAuth.ReadColumn("usgp_fullaccess").toBool();
+	QString DeviceHash = qSelectAuth.ReadColumn("udvc_hash").toString();
+	QString DeviceSalt = qSelectAuth.ReadColumn("udvc_salt").toString();
 
 	//Доступ к БД запрещен
 	if (!qSelectAuth.ReadColumn("sgdb_useraccessdatabase").toBool() && !IsSystem)
@@ -1043,6 +1047,41 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 				ErrorString = LANG("Carat.Error.Query.Auth.LoginLifetimeEnded");
 				return false;
 			}
+		}
+	}
+
+	if (!DeviceHash.isEmpty() && !DeviceSalt.isEmpty()) //Устройство привязано
+	{
+		//Проверяем, передал ли клиент хеши устройств
+		if (!TcpMessage->Parameters.contains("DeviceList"))
+		{
+			ErrorString = LANG("Carat.Error.Query.Auth.DeviceList.NotExist");
+			return false;
+		}
+
+		//Проверяем наличие устройств в списке
+		QStringList DeviceList = TcpMessage->Parameters["DeviceList"].toStringList();
+		if (DeviceList.isEmpty())
+		{
+			ErrorString = LANG("Carat.Error.Query.Auth.DeviceList.Empty");
+			return false;
+		}
+
+		//Обходим список устройств
+		bool DeviceChecked = false;
+		for (const QString &Hash : DeviceList)
+		{
+			DeviceChecked = ISAlgorithm::SaltPassword(Hash, DeviceSalt) == DeviceHash;
+			if (DeviceChecked)
+			{
+				break;
+			}
+		}
+
+		if (!DeviceChecked)
+		{
+			ErrorString = LANG("Carat.Error.Query.Auth.Device.NotConnected");
+			return false;
 		}
 	}
 

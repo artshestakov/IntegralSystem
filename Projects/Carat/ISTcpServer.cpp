@@ -187,7 +187,7 @@ void ISTcpServer::QueueBalancerMessage()
 void ISTcpServer::SendAnswer(ISTcpAnswer *TcpAnswer)
 {
 	//Если такой клиент ещё подключен - отправляем ответ
-	if (ISTcpClients::Instance().Exist(TcpAnswer->GetSocketDescriptor()))
+	//if (ISTcpClients::Instance().Exist(TcpAnswer->GetSocketDescriptor()))
 	{
 		//Получаем указатель на сокет
 		ISTcpSocket *TcpSocket = TcpAnswer->GetSocket();
@@ -218,6 +218,10 @@ void ISTcpServer::SendAnswer(ISTcpAnswer *TcpAnswer)
 		{
 			ISLOGGER_W(__CLASS__, "Client not connected");
 		}
+	}
+	//else
+	{
+		//ISLOGGER_W(__CLASS__, "Send answer is not possible, client disconnected");
 	}
 	delete TcpAnswer; //Удаляем указатель на объект ответа
 }
