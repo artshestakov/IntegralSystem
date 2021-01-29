@@ -791,6 +791,8 @@ ISReconnectDialog::ISReconnectDialog()
 	LabelInfo->setWordWrap(true);
 	GetMainLayout()->addWidget(LabelInfo);
 
+	GetMainLayout()->addWidget(new QLabel(LANG("ReconnectForm.DateTime").arg(QDateTime::currentDateTime().toString(FORMAT_DATE_TIME_V2)), this));
+
 	LabelAttempts = new QLabel(LANG("ReconnectForm.Attempts").arg(Attempts), this);
 	GetMainLayout()->addWidget(LabelAttempts);
 

@@ -339,6 +339,7 @@
   <!--ReconnectForm-->
   <Local Name="ReconnectForm.Title" Russian="Восстановление связи"/>
   <Local Name="ReconnectForm.Info" Russian="Подключение прервано. Повторное соединение с сервером..."/>
+  <Local Name="ReconnectForm.DateTime" Russian="Обрыв связи: %1"/>
   <Local Name="ReconnectForm.Attempts" Russian="Попыток: %1"/>
 
   <!--Search-->
