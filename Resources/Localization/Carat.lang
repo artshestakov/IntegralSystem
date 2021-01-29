@@ -78,11 +78,13 @@
 
   <Local Name="Carat.Error.Query.UserPasswordCreate.UserIsSystem" Russian="Пользователь является системным, создание пароля невозможно."/>
   <Local Name="Carat.Error.Query.UserPasswordCreate.AlreadyExist" Russian="Пароль уже установлен."/>
+  <Local Name="Carat.Error.Query.UserPasswordCreate.GenerateSalt" Russian="Внутренняя ошибка."/>
   <Local Name="Carat.Error.Query.UserPasswordCreate.UpdateHash" Russian="Не удалось добавить пароль пользователю."/>
 
   <Local Name="Carat.Error.Query.UserPasswordEdit.SelectHash" Russian="Не удалось получить данные пользователя."/>
   <Local Name="Carat.Error.Query.UserPasswordEdit.UserNotExist" Russian="Пользователь с идентификатором %1 не существует."/>
   <Local Name="Carat.Error.Query.UserPasswordEdit.InvalidCurrentLoginOrPassword" Russian="Текущие логин или пароль указаны неверно."/>
+  <Local Name="Carat.Error.Query.UserPasswordEdit.GenerateSalt" Russian="Внутренняя ошибка."/>
   <Local Name="Carat.Error.Query.UserPasswordEdit.UpdateHash" Russian="Не удалось обновить пароль."/>
 
   <Local Name="Carat.Error.Query.UserPasswordReset.UserIsSystem" Russian="Пользователь является системным, сброс пароля невозможен."/>
@@ -90,6 +92,11 @@
   <Local Name="Carat.Error.Query.UserPasswordReset.Reset" Russian="Не удалось сбросить пароль пользователя."/>
 
   <Local Name="Carat.Error.Query.UserSettingsReset.Update" Russian="Не удалось сбросить настройки."/>
+
+  <Local Name="Carat.Error.Query.UserDeviceAdd.Select" Russian="Не удалось проверить наличие устройства."/>
+  <Local Name="Carat.Error.Query.UserDeviceAdd.AlreadyExist" Russian="Устройство уже привязано."/>
+  <Local Name="Carat.Error.Query.UserDeviceAdd.GenerateSalt" Russian="Внутренняя ошибка."/>
+  <Local Name="Carat.Error.Query.UserDeviceAdd.Insert" Russian="Не удалось привязать устройство."/>
   
   <Local Name="Carat.Error.Query.GetRecordCall.RecordDirIsEmpty" Russian="На сервере не настроена директория хранения записей разговоров."/>
   <Local Name="Carat.Error.Query.GetRecordCall.SelectUniqueID" Russian="Не удалось получить уникальный идентификатор записи разговора."/>

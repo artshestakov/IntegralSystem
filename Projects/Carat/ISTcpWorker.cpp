@@ -100,6 +100,14 @@ static QString QU_USER_SETTINGS_RESET = PREPARE_QUERY("UPDATE _usersettings SET 
 													  "WHERE usst_user = :UserID "
 													  "RETURNING (SELECT stgs_uid FROM _settings WHERE stgs_id = usst_setting), usst_value");
 //-----------------------------------------------------------------------------
+static QString QS_USER_DEVICE = PREPARE_QUERY("SELECT COUNT(*) "
+											  "FROM _userdevice "
+											  "WHERE udvc_user = :UserID");
+//-----------------------------------------------------------------------------
+static QString QI_USER_DEVICE = PREPARE_QUERY("INSERT INTO _userdevice(udvc_user, udvc_hash, udvc_salt) "
+											  "VALUES(:UserID, :Hash, :Salt) "
+											  "RETURNING (SELECT usrs_fio FROM _users WHERE usrs_id = :UserID)");
+//-----------------------------------------------------------------------------
 static QString QS_ASTERISK_RECORD = PREPARE_QUERY("SELECT ascl_uniqueid "
 												  "FROM _asteriskcalls "
 												  "WHERE ascl_id = :RecordID");
@@ -623,6 +631,7 @@ void ISTcpWorker::Process()
 					case ISNamespace::AMT_UserPasswordEdit: Result = UserPasswordEdit(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_UserPasswordReset: Result = UserPasswordReset(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_UserSettingsReset: Result = UserSettingsReset(tcp_message, TcpAnswer); break;
+					case ISNamespace::AMT_UserDeviceAdd: Result = UserDeviceAdd(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_GetRecordCall: Result = GetRecordCall(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_GetClients: Result = GetClients(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_RecordAdd: Result = RecordAdd(tcp_message, TcpAnswer); break;
@@ -1560,6 +1569,7 @@ bool ISTcpWorker::UserPasswordCreate(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpA
 	QString Salt;
 	if (!ISAlgorithm::GenerateSalt(Salt, ErrorString)) //Ошибка генерации
 	{
+		ErrorString = LANG("Carat.Error.Query.UserPasswordCreate.GenerateSalt");
 		return false;
 	}
 	QString HashResult = ISAlgorithm::SaltPassword(Hash.toString(), Salt);
@@ -1620,6 +1630,7 @@ bool ISTcpWorker::UserPasswordEdit(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAns
 	//Генерируем новую соль и солим новый пароль
 	if (!ISAlgorithm::GenerateSalt(CurrentSalt, ErrorString)) //Ошибка генерации
 	{
+		ErrorString = LANG("Carat.Error.Query.UserPasswordEdit.GenerateSalt");
 		return false;
 	}
 	QString HashResult = ISAlgorithm::SaltPassword(Hash.toString(), CurrentSalt);
@@ -1706,6 +1717,61 @@ bool ISTcpWorker::UserSettingsReset(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAn
 	}
 	TcpAnswer->Parameters["Result"] = ResultMap;
 	Protocol(TcpMessage->TcpSocket->GetUserID(), CONST_UID_PROTOCOL_USER_SETTINGS_RESET);
+	return true;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::UserDeviceAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+	Q_UNUSED(TcpAnswer);
+
+	QVariant UserID = CheckNullField("UserID", TcpMessage),
+		Hash = CheckNullField("Hash", TcpMessage);
+	if (!UserID.isValid() || !Hash.isValid())
+	{
+		return false;
+	}
+
+	//Проверяем, не привязано ли уже устройство
+	ISQuery qSelect(ISDatabase::Instance().GetDB(DBConnectionName), QS_USER_DEVICE);
+	qSelect.BindValue(":UserID", UserID);
+	if (!qSelect.Execute()) //Ошибка запроса
+	{
+		return ErrorQuery(LANG("Carat.Error.Query.UserDeviceAdd.Select"), qSelect);
+	}
+
+	if (!qSelect.First()) //Какие-то проблемы
+	{
+		ErrorString = qSelect.GetErrorString();
+		return false;
+	}
+
+	//Устройство уже привязано - ошибка
+	if (qSelect.ReadColumn("count").toInt() > 0)
+	{
+		ErrorString = LANG("Carat.Error.Query.UserDeviceAdd.AlreadyExist");
+		return false;
+	}
+
+	//Генерируем соль
+	QString Salt;
+	if (!ISAlgorithm::GenerateSalt(Salt, ErrorString))
+	{
+		ErrorString = LANG("Carat.Error.Query.UserDeviceAdd.GenerateSalt");
+		return false;
+	}
+
+	//Солим хэш (тем же алгоритмом, что и пароль пользователя). Затем добавляем устройство в БД
+	QString HashResult = ISAlgorithm::SaltPassword(Hash.toString(), Salt);
+	ISQuery qInsert(ISDatabase::Instance().GetDB(DBConnectionName), QI_USER_DEVICE);
+	qInsert.BindValue(":UserID", UserID);
+	qInsert.BindValue(":Hash", HashResult);
+	qInsert.BindValue(":Salt", Salt);
+	if (!qInsert.Execute())
+	{
+		return ErrorQuery(LANG("Carat.Error.Query.UserDeviceAdd.Insert"), qInsert);
+	}
+	QVariant UserFIO = qInsert.First() ? qInsert.ReadColumn("usrs_fio") : QVariant();
+	Protocol(TcpMessage->TcpSocket->GetUserID(), CONST_UID_PROTOCOL_USER_DEVICE_ADD, QVariant(), QVariant(), QVariant(), UserFIO);
 	return true;
 }
 //-----------------------------------------------------------------------------

@@ -75,6 +75,10 @@ ISNamespace::ApiMessageType ISTcp::GetMessageTypeByName(const QString &Name)
 	{
 		return ISNamespace::AMT_UserSettingsReset;
 	}
+	else if (Name == API_USER_DEVICE_ADD)
+	{
+		return ISNamespace::AMT_UserDeviceAdd;
+	}
 	else if (Name == API_GET_RECORD_CALL)
 	{
 		return ISNamespace::AMT_GetRecordCall;

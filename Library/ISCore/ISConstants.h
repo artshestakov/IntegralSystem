@@ -166,6 +166,7 @@ const char API_USER_PASSWORD_CREATE[] = "UserPasswordCreate"; //Создание пароля 
 const char API_USER_PASSWORD_EDIT[] = "UserPasswordEdit"; //Изменение пароля пользователя
 const char API_USER_PASSWORD_RESET[] = "UserPasswordReset"; //Сброс пароля пользователя
 const char API_USER_SETTINGS_RESET[] = "UserSettingsReset"; //Сброс пользовательских настроек
+const char API_USER_DEVICE_ADD[] = "UserDeviceAdd"; //Привязка устройка к учётной записи пользователя
 const char API_GET_RECORD_CALL[] = "GetRecordCall"; //Получить запись разговора
 const char API_GET_CLIENTS[] = "GetClients"; //Получить список подключенных клиентов
 const char API_RECORD_ADD[] = "RecordAdd"; //Добавить запись
@@ -260,6 +261,7 @@ const char CONST_UID_PROTOCOL_RECORD_FAVORITE_ADD[] = "{8D08A9F9-FC50-4986-8D92-
 const char CONST_UID_PROTOCOL_RECORD_FAVORITE_DELETE[] = "{AF2641F0-6838-441C-A0A9-B62090826998}";
 const char CONST_UID_PROTOCOL_CALENDAR_CLOSE[] = "{F05B1DE1-47F6-43DB-A8C5-5D3582F7BD5F}";
 const char CONST_UID_PROTOCOL_GET_TABLE_DATA[] = "{2A93A14E-4BA5-4CB8-A056-0FF2B3351C5D}";
+const char CONST_UID_PROTOCOL_USER_DEVICE_ADD[] = "{FB849105-9009-4EB0-AAFF-B320B3CA18BE}";
 //-----------------------------------------------------------------------------
 const char CONST_UID_GROUP_ACCESS_TYPE_SHOW[] = "{41743776-D7CE-414F-ACF3-71C42A607742}"; //Просмотр данных
 const char CONST_UID_GROUP_ACCESS_TYPE_CREATE[] = "{1CFA961D-08A2-4AA3-978E-FF23FC88CA08}"; //Создание данных

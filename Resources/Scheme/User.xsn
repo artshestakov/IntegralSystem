@@ -109,5 +109,19 @@
       <Foreign Field="Parent" ForeignClass="_GroupAccessSpecialType" ForeignField="UID" ForeignViewNameField="Name"/>
     </Foreigns>
   </Table>
+
+  <Table Name="_UserDevice" UID="{0D36B04A-DF0C-4D9C-8D7F-A7FB6202CE1B}" Alias="udvc" ShowOnly="true" LocalName="Устройство" LocalListName="Устройства" TitleName="User" IsSystem="true">
+    <Fields>
+      <Field UID="{EC726AD0-879B-4742-B13E-1DE159F7EDF0}" Name="User" Type="BigInt" LabelName="Пользователь" LocalListName="Пользователь" NotNull="true"/>
+      <Field UID="{31B57224-70FB-489A-AC5F-E0B720D03641}" Name="Hash" Type="String" Size="256" LabelName="Хэш" LocalListName="Хэш" NotNull="true"/>
+      <Field UID="{206E5BE4-E897-4722-B4CD-33C94FF72162}" Name="Salt" Type="String" Size="64" LabelName="Соль" LocalListName="Соль" NotNull="true"/>
+    </Fields>
+    <Indexes>
+      <Index Field="User" Unique="true"/>
+    </Indexes>
+    <Foreigns>
+      <Foreign Field="User" ForeignClass="_Users" ForeignField="ID"/>
+    </Foreigns>
+  </Table>
          
 </XSN>
