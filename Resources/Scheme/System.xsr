@@ -58,6 +58,7 @@
   <_ProtocolType IsSystem="true" UID="{F05B1DE1-47F6-43DB-A8C5-5D3582F7BD5F}" Name="Закрытие события календаря"/>
   <_ProtocolType IsSystem="true" UID="{2A93A14E-4BA5-4CB8-A056-0FF2B3351C5D}" Name="Просмотр данных"/>
   <_ProtocolType IsSystem="true" UID="{FB849105-9009-4EB0-AAFF-B320B3CA18BE}" Name="Привязка устройства"/>
+  <_ProtocolType IsSystem="true" UID="{1450D20D-2401-4DF6-8689-51F962604D5B}" Name="Отвязка устройства"/>
 
   <_InternalDirectories IsSystem="true" UID="{A57D9B44-CD09-4880-897D-3B0BACB1F093}" TableName="_TaskType" Order="1"/>
   <_InternalDirectories IsSystem="true" UID="{275E8EE8-C1EE-4495-95C2-79AB3AD98AB9}" TableName="_TaskSpace" Order="2"/>

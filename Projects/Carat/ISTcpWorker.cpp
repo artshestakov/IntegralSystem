@@ -108,6 +108,10 @@ static QString QI_USER_DEVICE = PREPARE_QUERY("INSERT INTO _userdevice(udvc_user
 											  "VALUES(:UserID, :Hash, :Salt) "
 											  "RETURNING (SELECT usrs_fio FROM _users WHERE usrs_id = :UserID)");
 //-----------------------------------------------------------------------------
+static QString QD_USER_DEVICE = PREPARE_QUERY("DELETE FROM _userdevice "
+											  "WHERE udvc_user = :UserID "
+											  "RETURNING (SELECT usrs_fio FROM _users WHERE usrs_id = :UserID)");
+//-----------------------------------------------------------------------------
 static QString QS_ASTERISK_RECORD = PREPARE_QUERY("SELECT ascl_uniqueid "
 												  "FROM _asteriskcalls "
 												  "WHERE ascl_id = :RecordID");
@@ -632,6 +636,7 @@ void ISTcpWorker::Process()
 					case ISNamespace::AMT_UserPasswordReset: Result = UserPasswordReset(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_UserSettingsReset: Result = UserSettingsReset(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_UserDeviceAdd: Result = UserDeviceAdd(tcp_message, TcpAnswer); break;
+					case ISNamespace::AMT_UserDeviceDelete: Result = UserDeviceDelete(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_GetRecordCall: Result = GetRecordCall(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_GetClients: Result = GetClients(tcp_message, TcpAnswer); break;
 					case ISNamespace::AMT_RecordAdd: Result = RecordAdd(tcp_message, TcpAnswer); break;
@@ -1772,6 +1777,49 @@ bool ISTcpWorker::UserDeviceAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer
 	}
 	QVariant UserFIO = qInsert.First() ? qInsert.ReadColumn("usrs_fio") : QVariant();
 	Protocol(TcpMessage->TcpSocket->GetUserID(), CONST_UID_PROTOCOL_USER_DEVICE_ADD, QVariant(), QVariant(), QVariant(), UserFIO);
+	return true;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::UserDeviceDelete(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+	Q_UNUSED(TcpAnswer);
+
+	QVariant UserID = CheckNullField("UserID", TcpMessage);
+	if (!UserID.isValid())
+	{
+		return false;
+	}
+
+	//Проверяем наличие устройства
+	ISQuery qSelect(ISDatabase::Instance().GetDB(DBConnectionName), QS_USER_DEVICE);
+	qSelect.BindValue(":UserID", UserID);
+	if (!qSelect.Execute()) //Ошибка запроса
+	{
+		return ErrorQuery(LANG("Carat.Error.Query.UserDeviceDelete.Select"), qSelect);
+	}
+
+	if (!qSelect.First()) //Какие-то проблемы
+	{
+		ErrorString = qSelect.GetErrorString();
+		return false;
+	}
+
+	//Устройство не привязано - ошибка
+	if (qSelect.ReadColumn("count").toInt() == 0)
+	{
+		ErrorString = LANG("Carat.Error.Query.UserDeviceDelete.NotExist");
+		return false;
+	}
+
+	//Удаляем устройство
+	ISQuery qDelete(ISDatabase::Instance().GetDB(DBConnectionName), QD_USER_DEVICE);
+	qDelete.BindValue(":UserID", UserID);
+	if (!qDelete.Execute())
+	{
+		return ErrorQuery(LANG("Carat.Error.Query.UserDeviceDelete.Delete"), qDelete);
+	}
+	QVariant UserFIO = qDelete.First() ? qDelete.ReadColumn("usrs_fio") : QVariant();
+	Protocol(TcpMessage->TcpSocket->GetUserID(), CONST_UID_PROTOCOL_USER_DEVICE_DELETE, QVariant(), QVariant(), QVariant(), UserFIO);
 	return true;
 }
 //-----------------------------------------------------------------------------

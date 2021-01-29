@@ -366,6 +366,11 @@
             <stringProp name="Argument.value">0700039F239C5276</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
+          <elementProp name="UserDeviceDelete_UserID" elementType="Argument">
+            <stringProp name="Argument.name">UserDeviceDelete_UserID</stringProp>
+            <stringProp name="Argument.value">2</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
         </collectionProp>
       </Arguments>
       <hashTree/>
@@ -515,6 +520,17 @@ def MapUserDeviceAdd =
 		]
 ];
 vars.put(&quot;QueryUserDeviceAdd&quot;, MapToString(MapUserDeviceAdd));
+
+//Отвязка устройства от учётной записи пользователя
+def MapUserDeviceDelete =
+[
+	Type: &quot;UserDeviceDelete&quot;,
+	Parameters:
+		[
+			UserID: vars.get(&quot;UserDeviceDelete_UserID&quot;)
+		]
+];
+vars.put(&quot;QueryUserDeviceDelete&quot;, MapToString(MapUserDeviceDelete));
 
 //Получение записи разговора
 def MapGetRecordCall =
@@ -1129,13 +1145,25 @@ vars.put(&quot;QueryOrganizationFromINN&quot;, MapToString(MapOrganizationFromIN
           <stringProp name="ConfigTestElement.password"></stringProp>
         </TCPSampler>
         <hashTree/>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: UserDeviceAdd" enabled="true">
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: UserDeviceAdd" enabled="false">
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
           <stringProp name="TCPSampler.port"></stringProp>
           <boolProp name="TCPSampler.nodelay">false</boolProp>
           <stringProp name="TCPSampler.timeout"></stringProp>
           <stringProp name="TCPSampler.request">${QueryUserDeviceAdd}</stringProp>
+          <boolProp name="TCPSampler.closeConnection">true</boolProp>
+          <stringProp name="ConfigTestElement.username"></stringProp>
+          <stringProp name="ConfigTestElement.password"></stringProp>
+        </TCPSampler>
+        <hashTree/>
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: UserDeviceDelete" enabled="true">
+          <stringProp name="TCPSampler.server"></stringProp>
+          <boolProp name="TCPSampler.reUseConnection">true</boolProp>
+          <stringProp name="TCPSampler.port"></stringProp>
+          <boolProp name="TCPSampler.nodelay">false</boolProp>
+          <stringProp name="TCPSampler.timeout"></stringProp>
+          <stringProp name="TCPSampler.request">${QueryUserDeviceDelete}</stringProp>
           <boolProp name="TCPSampler.closeConnection">true</boolProp>
           <stringProp name="ConfigTestElement.username"></stringProp>
           <stringProp name="ConfigTestElement.password"></stringProp>

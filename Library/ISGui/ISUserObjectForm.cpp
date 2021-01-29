@@ -27,9 +27,13 @@ ISUserObjectForm::ISUserObjectForm(ISNamespace::ObjectFormType form_type, PMetaT
 	connect(ActionPasswordReset, &QAction::triggered, this, &ISUserObjectForm::PasswordReset);
 	AddActionToolBar(ActionPasswordReset, true);
 
-	QAction *ActionLinkDevice = new QAction(BUFFER_ICONS("USBDevice"), LANG("LinkDevice"), this);
-	connect(ActionLinkDevice, &QAction::triggered, this, &ISUserObjectForm::LinkDevice);
-	AddActionToolBar(ActionLinkDevice, true);
+	QAction *ActionDeviceAdd = new QAction(BUFFER_ICONS("User.USBDevice.Add"), LANG("UserDevice.Add"), this);
+	connect(ActionDeviceAdd, &QAction::triggered, this, &ISUserObjectForm::DeviceAdd);
+	AddActionToolBar(ActionDeviceAdd, true);
+
+	QAction *ActionDeviceDelete = new QAction(BUFFER_ICONS("User.USBDevice.Delete"), LANG("UserDevice.Delete"), this);
+	connect(ActionDeviceDelete, &QAction::triggered, this, &ISUserObjectForm::DeviceDelete);
+	AddActionToolBar(ActionDeviceDelete, true);
 }
 //-----------------------------------------------------------------------------
 ISUserObjectForm::~ISUserObjectForm()
@@ -120,9 +124,9 @@ void ISUserObjectForm::PasswordReset()
 	}
 }
 //-----------------------------------------------------------------------------
-void ISUserObjectForm::LinkDevice()
+void ISUserObjectForm::DeviceAdd()
 {
-	if (!ISMessageBox::ShowQuestion(this, LANG("Message.Question.LinkDevice")))
+	if (!ISMessageBox::ShowQuestion(this, LANG("Message.Question.UserDevice.Add")))
 	{
 		return;
 	}
@@ -153,6 +157,25 @@ void ISUserObjectForm::LinkDevice()
 	else
 	{
 		ISMessageBox::ShowCritical(this, qUserDeviceAdd.GetErrorString());
+	}
+}
+//-----------------------------------------------------------------------------
+void ISUserObjectForm::DeviceDelete()
+{
+	if (!ISMessageBox::ShowQuestion(this, LANG("Message.Question.UserDevice.Delete")))
+	{
+		return;
+	}
+
+	ISTcpQuery qUserDeviceDelete(API_USER_DEVICE_DELETE);
+	qUserDeviceDelete.BindValue("UserID", GetObjectID());
+	if (qUserDeviceDelete.Execute())
+	{
+		ISPopupMessage::ShowNotification(LANG("UserDeviceDelete"));
+	}
+	else
+	{
+		ISMessageBox::ShowCritical(this, qUserDeviceDelete.GetErrorString());
 	}
 }
 //-----------------------------------------------------------------------------

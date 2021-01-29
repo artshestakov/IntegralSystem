@@ -51,6 +51,7 @@ private:
 	bool UserPasswordReset(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
 	bool UserSettingsReset(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
 	bool UserDeviceAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
+	bool UserDeviceDelete(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
 	bool GetRecordCall(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
 	bool GetClients(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
 	bool RecordAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);

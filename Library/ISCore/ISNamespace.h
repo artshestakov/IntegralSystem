@@ -139,6 +139,7 @@ namespace ISNamespace
 		AMT_UserPasswordReset, //Сброс пароля парользователя
 		AMT_UserSettingsReset, //Сброс пользовательских настроек
 		AMT_UserDeviceAdd, //Привязка устройка к учётной записи пользователя
+		AMT_UserDeviceDelete, //Отвязка устройка от учётной записи пользователя
 		AMT_GetRecordCall, //Получить запись разговора
 		AMT_GetClients, //Получить список подключенных клиентов
 		AMT_RecordAdd, //Добавление записи

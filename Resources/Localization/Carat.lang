@@ -97,6 +97,10 @@
   <Local Name="Carat.Error.Query.UserDeviceAdd.AlreadyExist" Russian="Устройство уже привязано."/>
   <Local Name="Carat.Error.Query.UserDeviceAdd.GenerateSalt" Russian="Внутренняя ошибка."/>
   <Local Name="Carat.Error.Query.UserDeviceAdd.Insert" Russian="Не удалось привязать устройство."/>
+
+  <Local Name="Carat.Error.Query.UserDeviceDelete.Select" Russian="Не удалось проверить наличие устройства."/>
+  <Local Name="Carat.Error.Query.UserDeviceDelete.NotExist" Russian="Устройство не привязано."/>
+  <Local Name="Carat.Error.Query.UserDeviceDelete.Delete" Russian="Не удалось отвязать устройство."/>
   
   <Local Name="Carat.Error.Query.GetRecordCall.RecordDirIsEmpty" Russian="На сервере не настроена директория хранения записей разговоров."/>
   <Local Name="Carat.Error.Query.GetRecordCall.SelectUniqueID" Russian="Не удалось получить уникальный идентификатор записи разговора."/>
