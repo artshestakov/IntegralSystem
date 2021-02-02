@@ -1069,9 +1069,9 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 
 		//Обходим список устройств
 		bool DeviceChecked = false;
-		for (const QString &Hash : DeviceList)
+		for (const QString &DeviceListHash : DeviceList)
 		{
-			DeviceChecked = ISAlgorithm::SaltPassword(Hash, DeviceSalt) == DeviceHash;
+			DeviceChecked = ISAlgorithm::SaltPassword(DeviceListHash, DeviceSalt) == DeviceHash;
 			if (DeviceChecked)
 			{
 				break;
@@ -4070,7 +4070,7 @@ bool ISTcpWorker::LogGetContent(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer
 		.arg(Year.toString())
 		.arg(Month.toUInt() < 10 ? "0" + Month.toString() : Month.toString())
 		.arg(QCoreApplication::applicationName())
-		.arg(Day.toString()));
+		.arg(Day.toUInt() < 10 ? "0" + Day.toString() : Day.toString()));
 	if (!File.exists()) //Файл не существует
 	{
 		ErrorString = LANG("Carat.Error.Query.LogGetContent.NotExist");

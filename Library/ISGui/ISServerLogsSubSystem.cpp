@@ -24,7 +24,7 @@ ISServerLogsSubSystem::ISServerLogsSubSystem(QWidget *parent) : ISInterfaceMetaF
 	QVBoxLayout *LayoutGroupBox = new QVBoxLayout();
 	LayoutGroupBox->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_NULL);
 
-	GroupBox = new QGroupBox(LANG("ISServerLogsSubSystem.Content"), this);
+	QGroupBox *GroupBox = new QGroupBox(LANG("ISServerLogsSubSystem.Content"), this);
 	GroupBox->setLayout(LayoutGroupBox);
 	Layout->addWidget(GroupBox);
 
@@ -88,14 +88,7 @@ void ISServerLogsSubSystem::ItemDoubleClicked(QTreeWidgetItem *TreeWidgetItem, i
 	bool Result = qLogGetContent.Execute();
 	ISGui::SetWaitGlobalCursor(false);
 
-	if (Result)
-	{
-		GroupBox->setTitle(TreeWidgetItem->text(0));
-		TextEdit->setText(qLogGetContent.TakeAnswer()["Content"].toString());
-	}
-	else
-	{
+	Result ? TextEdit->setText(qLogGetContent.TakeAnswer()["Content"].toString()) :
 		ISMessageBox::ShowCritical(this, qLogGetContent.GetErrorString());
-	}
 }
 //-----------------------------------------------------------------------------

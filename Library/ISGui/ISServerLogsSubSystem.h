@@ -22,7 +22,6 @@ private:
 
 private:
 	QTreeWidget *TreeWidget;
-	QGroupBox *GroupBox;
 	QTextEdit *TextEdit;
 };
 //-----------------------------------------------------------------------------

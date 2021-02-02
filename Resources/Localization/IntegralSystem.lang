@@ -56,7 +56,7 @@
   <Local Name="ISRecordInfoDialog.Field.DiscussionCount" Russian="Обсуждений:"/>
 
   <!--ISServerLogsSubSystem-->
-  <Local Name="ISServerLogsSubSystem.Content" Russian="Содержимое"/>
+  <Local Name="ISServerLogsSubSystem.Content" Russian="Содержимое файла"/>
 
   <!--ISServerInfoSubSystem-->
   <Local Name="ISServerInfoSubSystem.Carat.Title" Russian="Сервер"/>

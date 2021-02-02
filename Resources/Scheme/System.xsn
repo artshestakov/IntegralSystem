@@ -242,9 +242,6 @@
     <Fields>
       <Field UID="{085649A9-6E72-45BC-9F94-4993C65C804E}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
     </Fields>
-    <Indexes>
-      <Index Field="Name" Unique="true"/>
-    </Indexes>
   </Table>
 
 </XSN>
