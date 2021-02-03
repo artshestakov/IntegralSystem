@@ -75,10 +75,10 @@ bool ISTcpClients::ExistUserID(unsigned int UserID)
 	return ISAlgorithm::VectorContains(GetClientsID(), UserID);
 }
 //-----------------------------------------------------------------------------
-unsigned int ISTcpClients::GetCount()
+size_t ISTcpClients::GetCount()
 {
 	CRITICAL_SECTION_LOCK(&CriticalSection);
-	unsigned int Result = Clients.size();
+	size_t Result = Clients.size();
 	CRITICAL_SECTION_UNLOCK(&CriticalSection);
 	return Result;
 }
