@@ -128,14 +128,17 @@ void ISTcpServer::incomingConnection(qintptr SocketDescriptor)
 	//Создаём сокет и подключаем все нобходимые сигналы
 	ISTcpSocket *TcpSocket = new ISTcpSocket(SocketDescriptor, this);
 	connect(TcpSocket, &ISTcpSocket::disconnected, this, &ISTcpServer::ClientDisconnected, Qt::QueuedConnection);
+	Descriptors.emplace_back(SocketDescriptor);
 	ISLOGGER_I(__CLASS__, "Connect " + TcpSocket->GetAddress());
 }
 //-----------------------------------------------------------------------------
 void ISTcpServer::ClientDisconnected()
 {
 	ISTcpSocket *TcpSocket = dynamic_cast<ISTcpSocket*>(sender());
+	qintptr SocketDescriptor = TcpSocket->GetSocketDescriptor();
 	ISLOGGER_I(__CLASS__, "Disconnect " + TcpSocket->GetAddress());
-	ISTcpClients::Instance().Remove(TcpSocket->GetSocketDescriptor());
+	ISAlgorithm::VectorErase(Descriptors, SocketDescriptor);
+	ISTcpClients::Instance().Remove(SocketDescriptor);
 	QTimer::singleShot(1000, TcpSocket, &ISTcpSocket::deleteLater); //Запускаем удаление сокета через секунду
 }
 //-----------------------------------------------------------------------------
@@ -187,7 +190,7 @@ void ISTcpServer::QueueBalancerMessage()
 void ISTcpServer::SendAnswer(ISTcpAnswer *TcpAnswer)
 {
 	//Если такой клиент ещё подключен - отправляем ответ
-	//if (ISTcpClients::Instance().Exist(TcpAnswer->GetSocketDescriptor()))
+	if (ISAlgorithm::VectorContains(Descriptors, TcpAnswer->GetSocketDescriptor()))
 	{
 		//Получаем указатель на сокет
 		ISTcpSocket *TcpSocket = TcpAnswer->GetSocket();
@@ -219,9 +222,9 @@ void ISTcpServer::SendAnswer(ISTcpAnswer *TcpAnswer)
 			ISLOGGER_W(__CLASS__, "Client not connected");
 		}
 	}
-	//else
+	else
 	{
-		//ISLOGGER_W(__CLASS__, "Send answer is not possible, client disconnected");
+		ISLOGGER_W(__CLASS__, "Send answer is not possible, client disconnected");
 	}
 	delete TcpAnswer; //Удаляем указатель на объект ответа
 }

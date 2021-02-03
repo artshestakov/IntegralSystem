@@ -179,6 +179,16 @@ namespace ISAlgorithm
 		return Vector.empty() ? false : std::find(Vector.begin(), Vector.end(), Value) != Vector.end();
     }
 
+	//Удалить значение из вектора
+	template <typename T> void VectorErase(std::vector<T> &Vector, T t)
+	{
+		typename std::vector<T>::const_iterator It = std::find(Vector.begin(), Vector.end(), t);
+		if (It != Vector.end())
+		{
+			Vector.erase(It);
+		}
+	}
+
 	//Извлечь значение из вектора
     template <typename T> bool VectorTake(std::vector<T> &Vector, T t)
 	{

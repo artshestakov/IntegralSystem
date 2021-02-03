@@ -27,8 +27,9 @@ private:
 
 private:
 	QString ErrorString;
-	unsigned int WorkerCount;
-	std::vector<ISTcpWorker *> Workers;
+	std::vector<qintptr> Descriptors; //Подключенные дескрипторы
+	unsigned int WorkerCount; //Количество воркеров
+	std::vector<ISTcpWorker *> Workers; //Воркеры
 	bool BalancerRunning;
 	bool BalancerFinished;
 
