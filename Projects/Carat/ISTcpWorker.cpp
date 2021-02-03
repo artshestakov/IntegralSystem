@@ -1134,6 +1134,18 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 		}
 	}
 
+	//Проверяем, не подключен ли уже это пользователь
+	//Если пользователь уже подключен - вытаскиваем информацию о подключении
+	if (ISTcpClients::Instance().ExistUserID(UserID))
+	{
+		ISClientInfo ClientInfo = ISTcpClients::Instance().GetClient(UserID);
+		TcpAnswer->Parameters["AlreadyConnected"] = QVariantMap
+		{
+			{ "DateTime", ClientInfo.DTConnected.toString(FORMAT_DATE_TIME_V2) },
+			{ "IPAddress", ClientInfo.Address }
+		};
+	}
+
 	//Устанавливаем флаги сокету
 	TcpMessage->TcpSocket->SetAuthorized(true);
 	TcpMessage->TcpSocket->SetUserID(UserID);

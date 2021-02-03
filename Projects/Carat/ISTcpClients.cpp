@@ -70,12 +70,9 @@ ISClientInfo ISTcpClients::GetClient(unsigned int UserID)
 	return ClientInfo;
 }
 //-----------------------------------------------------------------------------
-bool ISTcpClients::Exist(qintptr SocketDescription)
+bool ISTcpClients::ExistUserID(unsigned int UserID)
 {
-	CRITICAL_SECTION_LOCK(&CriticalSection);
-	bool Result = Clients.count(SocketDescription) > 0;
-	CRITICAL_SECTION_UNLOCK(&CriticalSection);
-	return Result;
+	return ISAlgorithm::VectorContains(GetClientsID(), UserID);
 }
 //-----------------------------------------------------------------------------
 unsigned int ISTcpClients::GetCount()

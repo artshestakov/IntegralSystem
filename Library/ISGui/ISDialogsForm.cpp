@@ -374,7 +374,16 @@ void ISAuthDialog::Input()
 	qAuth.BindValue("DeviceList", GetConnectedDevice());
 	if (qAuth.Execute()) //Авторизация прошла успешно
 	{
-		QVariantMap AnswerMap = qAuth.GetAnswer();
+		QVariantMap AnswerMap = qAuth.GetAnswer(); //Получаем ответ
+
+		QVariantMap AlreadyConnected = AnswerMap.contains("AlreadyConnected") ? AnswerMap["AlreadyConnected"].toMap() : QVariantMap();
+		if (!AlreadyConnected.isEmpty()) //Если клиент уже подключен - сообщаем об этом
+		{
+			ISGui::SetWaitGlobalCursor(false);
+			ISMessageBox::ShowWarning(this, LANG("Message.Warning.AlreadyConnected").arg(AlreadyConnected["DateTime"].toString()).arg(AlreadyConnected["IPAddress"].toString()));
+			ISGui::SetWaitGlobalCursor(true);
+		}
+
 		QVariantMap UpdateClientMap = AnswerMap["UpdateClient"].toMap();
 		PROPERTY_SET("ServerVersion", AnswerMap["Server"].toMap()["Version"].toUInt());
 
