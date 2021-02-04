@@ -17,8 +17,10 @@ public:
 private:
 	ISUserRoleEntity();
 	~ISUserRoleEntity();
-	ISUserRoleEntity(ISUserRoleEntity const &) {};
-	ISUserRoleEntity& operator=(ISUserRoleEntity const&) { return *this; };
+	ISUserRoleEntity(const ISUserRoleEntity&) = delete;
+	ISUserRoleEntity(ISUserRoleEntity&&) = delete;
+	ISUserRoleEntity& operator=(const ISUserRoleEntity&) = delete;
+	ISUserRoleEntity& operator=(ISUserRoleEntity&&) = delete;
 
 private:
 	std::map<QString, ISVectorUID> Tables;

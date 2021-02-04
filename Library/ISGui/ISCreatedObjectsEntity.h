@@ -21,8 +21,10 @@ public:
 private:
 	ISCreatedObjectsEntity();
 	~ISCreatedObjectsEntity();
-	ISCreatedObjectsEntity(ISCreatedObjectsEntity const &) {};
-	ISCreatedObjectsEntity& operator=(ISCreatedObjectsEntity const&) { return *this; };
+	ISCreatedObjectsEntity(const ISCreatedObjectsEntity&) = delete;
+	ISCreatedObjectsEntity(ISCreatedObjectsEntity&&) = delete;
+	ISCreatedObjectsEntity& operator=(const ISCreatedObjectsEntity&) = delete;
+	ISCreatedObjectsEntity& operator=(ISCreatedObjectsEntity&&) = delete;
 	
 private:
 	std::map<ISUuid, ISObjectFormBase*> ObjectForms;

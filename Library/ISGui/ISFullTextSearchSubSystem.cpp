@@ -144,6 +144,6 @@ void ISFullTextSearchSubSystem::Search()
 //-----------------------------------------------------------------------------
 void ISFullTextSearchSubSystem::ClickedRecord()
 {
-	ISGui::ShowObjectForm(ISGui::CreateObjectForm(ISNamespace::OFT_Edit, sender()->property("TableName").toString(), sender()->property("ObjectID").toInt()));
+	ISGui::ShowObjectForm(ISGui::CreateObjectForm(ISNamespace::ObjectFormType::Edit, sender()->property("TableName").toString(), sender()->property("ObjectID").toInt()));
 }
 //-----------------------------------------------------------------------------

@@ -41,6 +41,7 @@ ISAsterisk::ISAsterisk(QObject *parent)
 	: QThread(parent),
 	Pos(0),
 	IsFirstPackage(true),
+	TcpSocket(nullptr),
 	Port(0),
 	qInsert(nullptr)
 {
@@ -80,7 +81,7 @@ void ISAsterisk::run()
 	TcpSocket = new QTcpSocket();
 	connect(TcpSocket, &QTcpSocket::connected, this, &ISAsterisk::Connected, Qt::DirectConnection);
 	connect(TcpSocket, &QTcpSocket::disconnected, this, &ISAsterisk::Connect, Qt::DirectConnection);
-	connect(TcpSocket, static_cast<void(QTcpSocket::*)(QAbstractSocket::SocketError)>(&QTcpSocket::error), this, &ISAsterisk::Error, Qt::DirectConnection);
+	connect(TcpSocket, static_cast<void(QTcpSocket::*)(QAbstractSocket::SocketError)>(&QTcpSocket::errorOccurred), this, &ISAsterisk::Error, Qt::DirectConnection);
 	connect(TcpSocket, &QTcpSocket::readyRead, this, &ISAsterisk::ReadyRead, Qt::DirectConnection);
 	Connect();
 	exec();
@@ -187,8 +188,7 @@ void ISAsterisk::ReadyRead()
 void ISAsterisk::SendAction(const QString &ActionType, const ISStringMap &StringMap)
 {
 	//Формируем сообщение
-	QByteArray Content;
-	Content += "Action: " + ActionType + "\r\n";
+	QString Content = "Action: " + ActionType + "\r\n";
 	for (const auto &MapItem : StringMap)
 	{
 		Content += MapItem.first + ": " + MapItem.second + "\r\n";
@@ -197,7 +197,7 @@ void ISAsterisk::SendAction(const QString &ActionType, const ISStringMap &String
 
 	//Отправляем его и ждём пока не отправится
 	ISLOGGER_I(__CLASS__, "Sending action \"" + ActionType + "\"");
-	TcpSocket->write(Content);
+	TcpSocket->write(Content.toUtf8());
 	ISTcp::WaitForBytesWritten(TcpSocket);
 }
 //-----------------------------------------------------------------------------

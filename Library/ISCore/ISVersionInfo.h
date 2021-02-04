@@ -16,8 +16,10 @@ public:
 private:
 	ISVersionInfo();
 	~ISVersionInfo();
-	ISVersionInfo(ISVersionInfo const &) {};
-	ISVersionInfo& operator=(ISVersionInfo const&) { return *this; };
+	ISVersionInfo(const ISVersionInfo&) = delete;
+	ISVersionInfo(ISVersionInfo&&) = delete;
+	ISVersionInfo& operator=(const ISVersionInfo&) = delete;
+	ISVersionInfo& operator=(ISVersionInfo&&) = delete;
 };
 //-----------------------------------------------------------------------------
 #endif

@@ -128,7 +128,7 @@ void ISSearchForm::AddField(PMetaField *MetaField, QTreeWidgetItem *ParentItem)
 		TreeWidget->setItemWidget(TreeWidgetItem, 1, LabelName);
 
 		//Виджет с выбором оператора
-		QString SearchOperatorWidget = MetaField->Type == ISNamespace::FT_Int && MetaField->Foreign
+		QString SearchOperatorWidget = MetaField->Type == ISNamespace::FieldType::Int && MetaField->Foreign
 			? "ISComboSearchBase" :
 			ISMetaData::Instance().GetType(MetaField->Type).SearchConditionWidget;
 		ISComboSearchBase *ComboSearchOperator = ISAlgorithm::CreatePointer<ISComboSearchBase *>(SearchOperatorWidget, Q_ARG(QWidget *, TreeWidget));
@@ -238,12 +238,11 @@ void ISSearchForm::Search()
 		}
 		else //Поля в списке нет - добавляем
 		{
-			VariantList.append(QVariantMap
-			{
-				{ "FieldName", FieldName },
-				{ "Operator", ComboSearchBase->GetOperator() },
-				{ "Values", QVariantList() << Value }
-			});
+			QVariantMap VariantMap;
+			VariantMap["FieldName"] = FieldName;
+			VariantMap["Operator"] = static_cast<int>(ComboSearchBase->GetOperator());
+			VariantMap["Values"] = QVariantList() << Value;
+			VariantList.push_back(VariantMap);
 		}
 	}
 

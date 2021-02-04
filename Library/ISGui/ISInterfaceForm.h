@@ -6,14 +6,14 @@
 #include "ISUuid.h"
 //-----------------------------------------------------------------------------
 //!Базовый класс формы интерфейса
-class ISGUI_EXPORT	ISInterfaceForm : public QWidget
+class ISGUI_EXPORT ISInterfaceForm : public QWidget
 {
 	Q_OBJECT
 
 	Q_PROPERTY(ISUuid FormUID READ GetFormUID)
 
 public:
-	ISInterfaceForm(QWidget *parent = 0, Qt::WindowFlags Flags = 0);
+	ISInterfaceForm(QWidget *parent = 0, QFlags<Qt::WindowType> Flags = 0);
 	virtual ~ISInterfaceForm();
 
 	void ForbidResize(); //Запретить изменять размер формы

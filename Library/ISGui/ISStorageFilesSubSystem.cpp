@@ -11,7 +11,7 @@
 //-----------------------------------------------------------------------------
 ISStorageFilesSubSystem::ISStorageFilesSubSystem(QWidget *parent) : ISListBaseForm("_StorageFiles", parent)
 {
-	GetAction(ISNamespace::AT_Create)->setToolTip(LANG("StorageFiles.Create"));
+	GetAction(ISNamespace::ActionType::Create)->setToolTip(LANG("StorageFiles.Create"));
 	
 	QAction *ActionSave = ISControls::CreateActionSave(this);
 	connect(ActionSave, &QAction::triggered, this, &ISStorageFilesSubSystem::SaveFile);

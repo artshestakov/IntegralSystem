@@ -5,39 +5,40 @@
 #include "ISLogger.h"
 #include "ISAssert.h"
 //-----------------------------------------------------------------------------
-ISQuery::ISQuery(const QString &sql_text, bool prepare)
-    : ErrorString(NO_ERROR_STRING),
-      SqlQuery(ISDatabase::Instance().GetDB(CONNECTION_DEFAULT)),
-      SqlText(sql_text),
-      SqlDatabase(ISDatabase::Instance().GetDB(CONNECTION_DEFAULT)),
-      Prepared(false),
-      ShowLongQuery(true)
+ISQuery::ISQuery(const QString& sql_text, bool prepare)
+	: ErrorString(NO_ERROR_STRING),
+	SqlQuery(ISDatabase::Instance().GetDB(CONNECTION_DEFAULT)),
+	SqlText(sql_text),
+	SqlDatabase(ISDatabase::Instance().GetDB(CONNECTION_DEFAULT)),
+	Prepared(false),
+	ShowLongQuery(true)
 {
-    if (prepare && !sql_text.isEmpty())
-    {
-        Prepare(sql_text);
-    }
-    else if (!prepare && !sql_text.isEmpty())
-    {
-        Execute(sql_text);
-    }
+	if (prepare && !sql_text.isEmpty())
+	{
+		Prepare(sql_text);
+	}
+	else if (!prepare && !sql_text.isEmpty())
+	{
+		Execute(sql_text);
+	}
 }
 //-----------------------------------------------------------------------------
-ISQuery::ISQuery(const QSqlDatabase &sql_database, const QString &sql_text, bool prepare)
-    : ErrorString(NO_ERROR_STRING),
-      SqlQuery(sql_database),
-      SqlText(sql_text),
-      SqlDatabase(sql_database),
-      Prepared(false)
+ISQuery::ISQuery(const QSqlDatabase& sql_database, const QString& sql_text, bool prepare)
+	: ErrorString(NO_ERROR_STRING),
+	SqlQuery(sql_database),
+	SqlText(sql_text),
+	SqlDatabase(sql_database),
+	Prepared(false),
+	ShowLongQuery(true)
 {
-    if (prepare && !sql_text.isEmpty())
-    {
-        Prepare(sql_text);
-    }
-    else if (!prepare && !sql_text.isEmpty())
-    {
-        Execute(sql_text);
-    }
+	if (prepare && !sql_text.isEmpty())
+	{
+		Prepare(sql_text);
+	}
+	else if (!prepare && !sql_text.isEmpty())
+	{
+		Execute(sql_text);
+	}
 }
 //-----------------------------------------------------------------------------
 ISQuery::~ISQuery()
@@ -45,194 +46,194 @@ ISQuery::~ISQuery()
 
 }
 //-----------------------------------------------------------------------------
-bool ISQuery::Prepare(const QString &sql_text)
+bool ISQuery::Prepare(const QString& sql_text)
 {
-    SqlText = sql_text;
-    Prepared = SqlQuery.prepare(sql_text);
-    if (!Prepared)
-    {
-        ErrorString = SqlQuery.lastError().databaseText();
-    }
-    return Prepared;
+	SqlText = sql_text;
+	Prepared = SqlQuery.prepare(sql_text);
+	if (!Prepared)
+	{
+		ErrorString = SqlQuery.lastError().databaseText();
+	}
+	return Prepared;
 }
 //-----------------------------------------------------------------------------
-bool ISQuery::Prepare(QSqlDatabase &sql_database, const QString &sql_text)
+bool ISQuery::Prepare(QSqlDatabase& sql_database, const QString& sql_text)
 {
-    SqlText = sql_text;
-    SqlQuery = QSqlQuery(sql_database);
-    SqlDatabase = sql_database;
-    return Prepare(sql_text);
+	SqlText = sql_text;
+	SqlQuery = QSqlQuery(sql_database);
+	SqlDatabase = sql_database;
+	return Prepare(sql_text);
 }
 //-----------------------------------------------------------------------------
 bool ISQuery::Execute()
 {
-    ColumnIndices.clear();
+	ColumnIndices.clear();
 	ISTimePoint TimePoint = ISAlgorithm::GetTick();
-    bool Result = SqlQuery.exec();
+	bool Result = SqlQuery.exec();
 	long long Msec = ISAlgorithm::GetTickDiff(ISAlgorithm::GetTick(), TimePoint);
 	if (ShowLongQuery)
-    {
+	{
 		if (Msec > MAX_QUERY_TIME)
-        {
+		{
 			ISLOGGER_W(__CLASS__, QString("Long query msec: %1. %2").arg(Msec).arg(SqlQuery.lastQuery().simplified()));
-        }
-    }
+		}
+	}
 
-    if (!Result)
-    {
+	if (!Result)
+	{
 		ErrorString = SqlQuery.lastError().databaseText();
-    }
-    return Result;
+	}
+	return Result;
 }
 //-----------------------------------------------------------------------------
-bool ISQuery::Execute(const QString &sql_text)
+bool ISQuery::Execute(const QString& sql_text)
 {
-    SqlText = sql_text;
-    ColumnIndices.clear();
+	SqlText = sql_text;
+	ColumnIndices.clear();
 	ISTimePoint TimePoint = ISAlgorithm::GetTick();
-    bool Result = SqlQuery.exec(sql_text);
+	bool Result = SqlQuery.exec(sql_text);
 	long long Msec = ISAlgorithm::GetTickDiff(ISAlgorithm::GetTick(), TimePoint);
-    if (ShowLongQuery)
-    {
-        if (Msec > MAX_QUERY_TIME)
-        {
+	if (ShowLongQuery)
+	{
+		if (Msec > MAX_QUERY_TIME)
+		{
 			ISLOGGER_W(__CLASS__, QString("Long query msec: %1. %2").arg(Msec).arg(SqlQuery.lastQuery().simplified()));
-        }
-    }
+		}
+	}
 
-    if (!Result)
-    {
+	if (!Result)
+	{
 		ErrorString = SqlQuery.lastError().databaseText();
-    }
-    return Result;
+	}
+	return Result;
 }
 //-----------------------------------------------------------------------------
-bool ISQuery::Execute(QSqlDatabase &sql_database, const QString &sql_text)
+bool ISQuery::Execute(QSqlDatabase& sql_database, const QString& sql_text)
 {
-    SqlText = sql_text;
-    ColumnIndices.clear();
+	SqlText = sql_text;
+	ColumnIndices.clear();
 	ISTimePoint TimePoint = ISAlgorithm::GetTick();
-    SqlQuery = sql_database.exec(sql_text);
+	SqlQuery = sql_database.exec(sql_text);
 	long long Msec = ISAlgorithm::GetTickDiff(ISAlgorithm::GetTick(), TimePoint);
-    if (ShowLongQuery)
-    {
-        if (Msec > MAX_QUERY_TIME)
-        {
+	if (ShowLongQuery)
+	{
+		if (Msec > MAX_QUERY_TIME)
+		{
 			ISLOGGER_W(__CLASS__, QString("Long query msec: %1. %2").arg(Msec).arg(SqlQuery.lastQuery().simplified()));
-        }
-    }
+		}
+	}
 	bool Result = SqlQuery.lastError().type() == QSqlError::NoError;
 	if (!Result)
 	{
 		ErrorString = SqlQuery.lastError().databaseText();
 	}
-    return Result;
+	return Result;
 }
 //-----------------------------------------------------------------------------
 bool ISQuery::ExecuteFirst()
 {
-    bool Result = Execute();
-    if (Result)
-    {
-        Result = First();
-    }
-    return Result;
+	bool Result = Execute();
+	if (Result)
+	{
+		Result = First();
+	}
+	return Result;
 }
 //-----------------------------------------------------------------------------
-bool ISQuery::ExecuteFirst(QSqlDatabase &sql_database, const QString &sql_text)
+bool ISQuery::ExecuteFirst(QSqlDatabase& sql_database, const QString& sql_text)
 {
-    bool Result = Execute(sql_database, sql_text);
-    if (Result)
-    {
-        Result = First();
-    }
-    return Result;
+	bool Result = Execute(sql_database, sql_text);
+	if (Result)
+	{
+		Result = First();
+	}
+	return Result;
 }
 //-----------------------------------------------------------------------------
-bool ISQuery::BindValue(const QString &ParameterName, const QVariant &ParameterValue)
+bool ISQuery::BindValue(const QString& ParameterName, const QVariant& ParameterValue)
 {
 #ifdef DEBUG
-    IS_ASSERT(SqlQuery.boundValues().contains(ParameterName), QString("Parameter \"%1\" not found in sql-query:\n\n%2").arg(ParameterName).arg(SqlText));
+	IS_ASSERT(SqlQuery.boundValues().contains(ParameterName), QString("Parameter \"%1\" not found in sql-query:\n\n%2").arg(ParameterName).arg(SqlText));
 #endif
-    SqlQuery.bindValue(ParameterName, ParameterValue);
-    return true;
+	SqlQuery.bindValue(ParameterName, ParameterValue);
+	return true;
 }
 //-----------------------------------------------------------------------------
-QVariant ISQuery::ReadColumn(const QString &name)
+QVariant ISQuery::ReadColumn(const QString& name)
 {
-    if (ColumnIndices.empty())
-    {
-        PrepareColumnIndices();
-    }
+	if (ColumnIndices.empty())
+	{
+		PrepareColumnIndices();
+	}
 
-    ISStringToIntMap::const_iterator Iterator = ColumnIndices.find(name.toLower());
+	ISStringToIntMap::const_iterator Iterator = ColumnIndices.find(name.toLower());
 #ifdef DEBUG
-    IS_ASSERT(Iterator != ColumnIndices.end(), QString("Column \"%1\" not found in sql-query: %2").arg(name).arg(SqlText));
+	IS_ASSERT(Iterator != ColumnIndices.end(), QString("Column \"%1\" not found in sql-query: %2").arg(name).arg(SqlText));
 #endif
-    return ReadColumn(Iterator->second);
+	return ReadColumn(Iterator->second);
 }
 //-----------------------------------------------------------------------------
 QVariant ISQuery::ReadColumn(int index)
 {
-    return SqlQuery.value(index);
+	return SqlQuery.value(index);
 }
 //-----------------------------------------------------------------------------
 bool ISQuery::Next()
 {
-    bool Result = SqlQuery.next();
-    if (!Result && SqlQuery.lastError().type() != QSqlError::NoError)
-    {
+	bool Result = SqlQuery.next();
+	if (!Result && SqlQuery.lastError().type() != QSqlError::NoError)
+	{
 		ErrorString = SqlQuery.lastError().databaseText();
-    }
-    return Result;
+	}
+	return Result;
 }
 //-----------------------------------------------------------------------------
 bool ISQuery::First()
 {
-    bool Result = SqlQuery.first();
-    if (!Result && SqlQuery.lastError().type() != QSqlError::NoError)
-    {
+	bool Result = SqlQuery.first();
+	if (!Result && SqlQuery.lastError().type() != QSqlError::NoError)
+	{
 		ErrorString = SqlQuery.lastError().databaseText();
-    }
-    return Result;
+	}
+	return Result;
 }
 //-----------------------------------------------------------------------------
 QSqlRecord ISQuery::GetRecord()
 {
-    if (SqlQuery.lastError().type() == QSqlError::NoError)
-    {
-        return SqlQuery.record();
-    }
+	if (SqlQuery.lastError().type() == QSqlError::NoError)
+	{
+		return SqlQuery.record();
+	}
 	else
 	{
 		ErrorString = SqlQuery.lastError().databaseText();
 	}
-    return QSqlRecord();
+	return QSqlRecord();
 }
 //-----------------------------------------------------------------------------
 bool ISQuery::IsValid() const
 {
-    return SqlQuery.isValid();
+	return SqlQuery.isValid();
 }
 //-----------------------------------------------------------------------------
 bool ISQuery::IsSelect() const
 {
-    return SqlQuery.isSelect();
+	return SqlQuery.isSelect();
 }
 //-----------------------------------------------------------------------------
-bool ISQuery::ExistParameter(const QString &Name) const
+bool ISQuery::ExistParameter(const QString& Name) const
 {
-    return SqlQuery.boundValues().count(Name);
+	return SqlQuery.boundValues().count(Name);
 }
 //-----------------------------------------------------------------------------
 QString ISQuery::GetSqlText() const
 {
-    return SqlText;
+	return SqlText;
 }
 //-----------------------------------------------------------------------------
 QString ISQuery::GetErrorString()
 {
-    return ErrorString;
+	return ErrorString;
 }
 //-----------------------------------------------------------------------------
 QSqlError::ErrorType ISQuery::GetErrorType()
@@ -242,34 +243,34 @@ QSqlError::ErrorType ISQuery::GetErrorType()
 //-----------------------------------------------------------------------------
 int ISQuery::GetErrorNumber() const
 {
-    return SqlQuery.lastError().number();
+	return SqlQuery.lastError().number();
 }
 //-----------------------------------------------------------------------------
 int ISQuery::GetCountResultRows() const
 {
 #ifdef DEBUG
-    IS_ASSERT(SqlQuery.isSelect(), "Query not select");
+	IS_ASSERT(SqlQuery.isSelect(), "Query not select");
 #endif
-    return SqlQuery.size();
+	return SqlQuery.size();
 }
 //-----------------------------------------------------------------------------
 int ISQuery::GetCountAffected() const
 {
-    return SqlQuery.numRowsAffected();
+	return SqlQuery.numRowsAffected();
 }
 //-----------------------------------------------------------------------------
 void ISQuery::SetShowLongQuery(bool show_long_query)
 {
-    ShowLongQuery = show_long_query;
+	ShowLongQuery = show_long_query;
 }
 //-----------------------------------------------------------------------------
 void ISQuery::PrepareColumnIndices()
 {
-    ColumnIndices.clear();
-    QSqlRecord SqlRecord = SqlQuery.record();
-    for (int i = 0, c = SqlRecord.count(); i < c; ++i)
-    {
-        ColumnIndices.emplace(SqlRecord.fieldName(i).toLower(), i);
-    }
+	ColumnIndices.clear();
+	QSqlRecord SqlRecord = SqlQuery.record();
+	for (int i = 0, c = SqlRecord.count(); i < c; ++i)
+	{
+		ColumnIndices.emplace(SqlRecord.fieldName(i).toLower(), i);
+	}
 }
 //-----------------------------------------------------------------------------

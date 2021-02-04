@@ -18,7 +18,7 @@ void ISProtocolSubSystem::DoubleClickedTable(const QModelIndex &ModelIndex)
 	QVariant ObjectID = GetCurrentRecordValueDB("ObjectID");
 	if (TableName.isValid() && ObjectID.isValid())
 	{
-		ISGui::ShowObjectForm(ISGui::CreateObjectForm(ISNamespace::OFT_Edit, TableName.toString(), ObjectID.toInt()));
+		ISGui::ShowObjectForm(ISGui::CreateObjectForm(ISNamespace::ObjectFormType::Edit, TableName.toString(), ObjectID.toInt()));
 	}
 }
 //-----------------------------------------------------------------------------

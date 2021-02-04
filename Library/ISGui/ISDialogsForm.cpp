@@ -636,7 +636,7 @@ void ISDeviceConnectDialog::Timeout()
 //-----------------------------------------------------------------------------
 ISExportDialog::ISExportDialog(ISTcpModel *TcpModel)
 	: ISInterfaceDialogForm(),
-	SelectedType(ISNamespace::ET_Unknown)
+	SelectedType(ISNamespace::ExportType::Unknown)
 {
 	setWindowIcon(BUFFER_ICONS("ExportTable"));
 	setWindowTitle(LANG("Export.Table"));
@@ -649,11 +649,11 @@ ISExportDialog::ISExportDialog(ISTcpModel *TcpModel)
 
 	ComboBoxType = new ISComboEdit(this);
 	ComboBoxType->SetEditable(false);
-	ComboBoxType->AddItem(LANG("NotSelected"), ISNamespace::ET_Unknown);
-	ComboBoxType->AddItem(LANG("Export.Type.CSV"), ISNamespace::ET_CSV);
-	ComboBoxType->AddItem(LANG("Export.Type.HTML"), ISNamespace::ET_HTML);
-	ComboBoxType->AddItem(LANG("Export.Type.XML"), ISNamespace::ET_XML);
-	ComboBoxType->AddItem(LANG("Export.Type.JSON"), ISNamespace::ET_JSON);
+	ComboBoxType->AddItem(LANG("NotSelected"), static_cast<int>(ISNamespace::ExportType::Unknown));
+	ComboBoxType->AddItem(LANG("Export.Type.CSV"), static_cast<int>(ISNamespace::ExportType::CSV));
+	ComboBoxType->AddItem(LANG("Export.Type.HTML"), static_cast<int>(ISNamespace::ExportType::HTML));
+	ComboBoxType->AddItem(LANG("Export.Type.XML"), static_cast<int>(ISNamespace::ExportType::XML));
+	ComboBoxType->AddItem(LANG("Export.Type.JSON"), static_cast<int>(ISNamespace::ExportType::JSON));
 	connect(ComboBoxType, &ISComboEdit::ValueChange, this, &ISExportDialog::TypeChanged);
 	GetMainLayout()->addWidget(ComboBoxType);
 
@@ -801,7 +801,7 @@ void ISExportDialog::EnterClicked()
 void ISExportDialog::TypeChanged(const QVariant &Value)
 {
 	SelectedType = static_cast<ISNamespace::ExportType>(Value.toInt());
-	ButtonDialog->SetApplyEnabled(Value.toInt() != ISNamespace::ET_Unknown);
+	ButtonDialog->SetApplyEnabled(static_cast<ISNamespace::ExportType>(Value.toInt()) != ISNamespace::ExportType::Unknown);
 }
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
@@ -887,8 +887,8 @@ ISSelectListDialog::ISSelectListDialog(ISNamespace::SelectListMode SelectMode, c
 	{
 		SelectListForm->SetSelectObjectAfterUpdate(SelectObjectID);
 	}
-
-	LabelInfo->setText(SelectMode == ISNamespace::SLM_Single ? LANG("SelectDialog.Title.Single") : LANG("SelectDialog.Title.Multi") + ':');
+	
+	LabelInfo->setText(SelectMode == ISNamespace::SelectListMode::Single ? LANG("SelectDialog.Title.Single") : LANG("SelectDialog.Title.Multi") + ':');
 }
 //-----------------------------------------------------------------------------
 ISSelectListDialog::~ISSelectListDialog()
@@ -918,7 +918,7 @@ void ISSelectListDialog::AfterShowEvent()
 
 	//Изменение размера из конструктора поочему-то не работает, пришлось сделать так
 	resize(1000, 700);
-	ISGui::MoveWidgetToDesktop(this, ISNamespace::MWD_Center);
+	ISGui::MoveWidgetToDesktop(this, ISNamespace::MoveWidgetDesktop::Center);
 }
 //-----------------------------------------------------------------------------
 void ISSelectListDialog::Selected()

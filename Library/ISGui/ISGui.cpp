@@ -313,27 +313,27 @@ void ISGui::MoveWidgetToDesktop(QWidget *Widget, ISNamespace::MoveWidgetDesktop 
 {
 	int X = 0;
 	int Y = 0;
-	if (MovePosition == ISNamespace::MWD_LeftUp)
+	if (MovePosition == ISNamespace::MoveWidgetDesktop::LeftUp)
 	{
 		X = 30;
 		Y = 30;
 	}
-	else if (MovePosition == ISNamespace::MWD_LeftBottom)
+	else if (MovePosition == ISNamespace::MoveWidgetDesktop::LeftBottom)
 	{
 		X = 30;
 		Y = QApplication::desktop()->availableGeometry().height() - Widget->height() - 30;
 	}
-	else if (MovePosition == ISNamespace::MWD_RightUp)
+	else if (MovePosition == ISNamespace::MoveWidgetDesktop::RightUp)
 	{
 		X = QApplication::desktop()->availableGeometry().width() - Widget->width() - 30;
 		Y = 30;
 	}
-	else if (MovePosition == ISNamespace::MWD_RightBottom)
+	else if (MovePosition == ISNamespace::MoveWidgetDesktop::RightBottom)
 	{
 		X = QApplication::desktop()->availableGeometry().width() - Widget->width() - 30;
 		Y = QApplication::desktop()->availableGeometry().height() - Widget->height() - 30;
 	}
-	else if (MovePosition == ISNamespace::MWD_Center)
+	else if (MovePosition == ISNamespace::MoveWidgetDesktop::Center)
 	{
 		QRect Rect = Widget->frameGeometry();
 		Rect.moveCenter(QDesktopWidget().availableGeometry().center());
@@ -627,7 +627,7 @@ ISObjectFormBase* ISGui::CreateObjectForm(ISNamespace::ObjectFormType FormType, 
 ISObjectPair ISGui::SelectObject(const QString &TableName, int SelectObjectID)
 {
 	SetWaitGlobalCursor(true);
-	ISSelectListDialog SelectDialogForm(ISNamespace::SLM_Single, TableName, SelectObjectID);
+	ISSelectListDialog SelectDialogForm(ISNamespace::SelectListMode::Single, TableName, SelectObjectID);
 	SetWaitGlobalCursor(false);
 	return SelectDialogForm.Exec() ? SelectDialogForm.GetSelectedObject() : ISObjectPair();
 }
@@ -636,7 +636,7 @@ ISVectorUInt ISGui::SelectObjects(const QString &TableName)
 {
 	ISVectorUInt VectorInt;
 	SetWaitGlobalCursor(true);
-	ISSelectListDialog SelectDialogForm(ISNamespace::SLM_Multi, TableName, 0);
+	ISSelectListDialog SelectDialogForm(ISNamespace::SelectListMode::Multi, TableName, 0);
 	SetWaitGlobalCursor(false);
 	if (SelectDialogForm.Exec())
 	{
@@ -672,7 +672,7 @@ void ISGui::ShowObjectForm(QWidget *ObjectForm)
 	ObjectForm->setParent(nullptr);
 	QRect Rect = QDesktopWidget().availableGeometry();
 	ObjectForm->resize((Rect.width() / 3) * 2, (Rect.height() / 3) * 2);
-	MoveWidgetToDesktop(ObjectForm, ISNamespace::MWD_Center);
+	MoveWidgetToDesktop(ObjectForm, ISNamespace::MoveWidgetDesktop::Center);
 	ObjectForm->show();
 }
 //-----------------------------------------------------------------------------

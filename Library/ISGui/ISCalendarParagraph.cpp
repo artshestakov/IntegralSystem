@@ -198,7 +198,7 @@ void ISCalendarParagraph::SelectedDateChanged()
 //-----------------------------------------------------------------------------
 void ISCalendarParagraph::Create()
 {
-	ISCalendarObjectForm *CalendarObjectForm = dynamic_cast<ISCalendarObjectForm*>(ISGui::CreateObjectForm(ISNamespace::OFT_New, "_Calendar"));
+	ISCalendarObjectForm *CalendarObjectForm = dynamic_cast<ISCalendarObjectForm*>(ISGui::CreateObjectForm(ISNamespace::ObjectFormType::New, "_Calendar"));
 	CalendarObjectForm->SetFieldValue("User", CURRENT_USER_ID);
 	CalendarObjectForm->SetFieldValue("Date", CalendarPanel->selectedDate());
 	connect(CalendarObjectForm, &ISCalendarObjectForm::UpdateList, this, static_cast<void(ISCalendarParagraph::*)()>(&ISCalendarParagraph::ReloadEvents));
@@ -294,7 +294,7 @@ void ISCalendarParagraph::ItemSelectionChanged()
 //-----------------------------------------------------------------------------
 void ISCalendarParagraph::EditEvent(int CalendarID)
 {
-	ISCalendarObjectForm *CalendarObjectForm = dynamic_cast<ISCalendarObjectForm*>(ISGui::CreateObjectForm(ISNamespace::OFT_Edit, "_Calendar", CalendarID));
+	ISCalendarObjectForm *CalendarObjectForm = dynamic_cast<ISCalendarObjectForm*>(ISGui::CreateObjectForm(ISNamespace::ObjectFormType::Edit, "_Calendar", CalendarID));
 	connect(CalendarObjectForm, &ISCalendarObjectForm::UpdateList, this, &ISCalendarParagraph::SelectedDateChanged);
 	ISGui::ShowObjectForm(CalendarObjectForm);
 }

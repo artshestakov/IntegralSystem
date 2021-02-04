@@ -51,7 +51,7 @@ void ISProcessForm::showEvent(QShowEvent *ShowEvent)
 	adjustSize();
 	ISGui::RepaintWidget(this);
 	PROCESS_EVENTS();
-	ISGui::MoveWidgetToDesktop(this, ISNamespace::MWD_Center);
+	ISGui::MoveWidgetToDesktop(this, ISNamespace::MoveWidgetDesktop::Center);
 	ISInterfaceForm::showEvent(ShowEvent);
 }
 //-----------------------------------------------------------------------------

@@ -71,7 +71,7 @@ bool ISUserObjectForm::Save()
 		SetFieldValue("Photo", ISGui::PixmapToByteArray(ISUserPhotoCreator().Create(GetFieldValue("FIO").toString())));
 	}
 
-	if (GetFormType() == ISNamespace::OFT_New || GetFormType() == ISNamespace::OFT_Copy)
+	if (GetFormType() == ISNamespace::ObjectFormType::New || GetFormType() == ISNamespace::ObjectFormType::Copy)
 	{
 		Result = ISObjectFormBase::Save();
 		if (Result)

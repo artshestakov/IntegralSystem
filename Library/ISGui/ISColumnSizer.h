@@ -19,8 +19,10 @@ public:
 private:
 	ISColumnSizer();
 	~ISColumnSizer();
-	ISColumnSizer(ISColumnSizer const &) {};
-	ISColumnSizer& operator=(ISColumnSizer const&) { return *this; };
+	ISColumnSizer(const ISColumnSizer&) = delete;
+	ISColumnSizer(ISColumnSizer&&) = delete;
+	ISColumnSizer& operator=(const ISColumnSizer&) = delete;
+	ISColumnSizer& operator=(ISColumnSizer&&) = delete;
 
 private:
 	std::map<QString, ISStringToIntMap> Tables;

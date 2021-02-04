@@ -6,8 +6,8 @@ ISComboSearchBase::ISComboSearchBase(QWidget *parent) : ISComboEdit(parent)
 	SetEditable(false);
 	SetWheelScroll(true);
 
-	AddItem(LANG("Search.Operator.Equally"), ISNamespace::SOT_Equally);
-	AddItem(LANG("Search.Operator.NotEqually"), ISNamespace::SOT_NotEqually);
+	AddItem(LANG("Search.Operator.Equally"), static_cast<int>(ISNamespace::SearchType::Equally));
+	AddItem(LANG("Search.Operator.NotEqually"), static_cast<int>(ISNamespace::SearchType::NotEqually));
 }
 //-----------------------------------------------------------------------------
 ISComboSearchBase::~ISComboSearchBase()
@@ -15,19 +15,19 @@ ISComboSearchBase::~ISComboSearchBase()
 
 }
 //-----------------------------------------------------------------------------
-ISNamespace::SearchOperatorType ISComboSearchBase::GetOperator()
+ISNamespace::SearchType ISComboSearchBase::GetOperator()
 {
-	return static_cast<ISNamespace::SearchOperatorType>(GetValue().toInt());
+	return static_cast<ISNamespace::SearchType>(GetValue().toInt());
 }
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 ISComboSearchNumber::ISComboSearchNumber(QWidget *parent) : ISComboSearchBase(parent)
 {
-	AddItem(LANG("Search.Operator.More"), ISNamespace::SOT_More);
-	AddItem(LANG("Search.Operator.Less"), ISNamespace::SOT_Less);
-	AddItem(LANG("Search.Operator.MoreOrEqual"), ISNamespace::SOT_MoreOrEqual);
-	AddItem(LANG("Search.Operator.LessOrEqual"), ISNamespace::SOT_LessOrEqual);
+	AddItem(LANG("Search.Operator.More"), static_cast<int>(ISNamespace::SearchType::More));
+	AddItem(LANG("Search.Operator.Less"), static_cast<int>(ISNamespace::SearchType::Less));
+	AddItem(LANG("Search.Operator.MoreOrEqual"), static_cast<int>(ISNamespace::SearchType::MoreOrEqual));
+	AddItem(LANG("Search.Operator.LessOrEqual"), static_cast<int>(ISNamespace::SearchType::LessOrEqual));
 }
 //-----------------------------------------------------------------------------
 ISComboSearchNumber::~ISComboSearchNumber()
@@ -39,9 +39,9 @@ ISComboSearchNumber::~ISComboSearchNumber()
 //-----------------------------------------------------------------------------
 ISComboSearchString::ISComboSearchString(QWidget *parent) : ISComboSearchBase(parent)
 {
-	AddItem(LANG("Search.Operator.Begin"), ISNamespace::SOT_Begins);
-	AddItem(LANG("Search.Operator.End"), ISNamespace::SOT_Ends);
-	AddItem(LANG("Search.Operator.Contains"), ISNamespace::SOT_Contains);
+	AddItem(LANG("Search.Operator.Begin"), static_cast<int>(ISNamespace::SearchType::Begins));
+	AddItem(LANG("Search.Operator.End"), static_cast<int>(ISNamespace::SearchType::Ends));
+	AddItem(LANG("Search.Operator.Contains"), static_cast<int>(ISNamespace::SearchType::Contains));
 }
 //-----------------------------------------------------------------------------
 ISComboSearchString::~ISComboSearchString()

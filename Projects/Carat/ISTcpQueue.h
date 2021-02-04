@@ -22,8 +22,10 @@ public:
 private:
 	ISTcpQueue();
 	~ISTcpQueue();
-	ISTcpQueue(ISTcpQueue const &) {};
-	ISTcpQueue& operator=(ISTcpQueue const&) { return *this; };
+	ISTcpQueue(const ISTcpQueue&) = delete;
+	ISTcpQueue(ISTcpQueue&&) = delete;
+	ISTcpQueue& operator=(const ISTcpQueue&) = delete;
+	ISTcpQueue& operator=(ISTcpQueue&&) = delete;
 
 private:
 	std::queue<ISTcpMessage *> Queue;

@@ -15,8 +15,10 @@ public:
 private:
 	ISParagraphEntity();
 	~ISParagraphEntity();
-	ISParagraphEntity(ISParagraphEntity const &) {};
-	ISParagraphEntity& operator=(ISParagraphEntity const&) { return *this; };
+	ISParagraphEntity(const ISParagraphEntity&) = delete;
+	ISParagraphEntity(ISParagraphEntity&&) = delete;
+	ISParagraphEntity& operator=(const ISParagraphEntity&) = delete;
+	ISParagraphEntity& operator=(ISParagraphEntity&&) = delete;
 
 private:
 	std::vector<ISMetaParagraph*> Paragraphs;

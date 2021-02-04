@@ -112,7 +112,7 @@ void ISPopupMessage::show()
 	PropertyAnimation->setEndValue(1.0);
 
 	QWidget::show();
-	ISGui::MoveWidgetToDesktop(this, ISNamespace::MWD_RightBottom);
+	ISGui::MoveWidgetToDesktop(this, ISNamespace::MoveWidgetDesktop::RightBottom);
 
 	PropertyAnimation->start();
 	Timer->start(4500);

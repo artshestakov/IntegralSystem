@@ -31,8 +31,10 @@ private:
 private:
 	ISConfig();
 	~ISConfig();
-	ISConfig(ISConfig const &) {};
-	ISConfig& operator=(ISConfig const&) { return *this; };
+	ISConfig(const ISConfig&) = delete;
+	ISConfig(ISConfig&&) = delete;
+	ISConfig& operator=(const ISConfig&) = delete;
+	ISConfig& operator=(ISConfig&&) = delete;
 
 private:
 	std::vector<ISConfigParameter> VectorTemplate;

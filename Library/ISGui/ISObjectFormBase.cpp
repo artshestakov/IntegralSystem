@@ -178,7 +178,7 @@ void ISObjectFormBase::AfterShowEvent()
 	//ѕо умолчанию все действи€ навигации эскортов должны быть отключены (кроме первого действи€ - карточки)
 	for (int i = 1; i < ToolBarEscort->actions().size(); ++i)
 	{
-		ToolBarEscort->actions()[i]->setEnabled(!(FormType == ISNamespace::OFT_New || FormType == ISNamespace::OFT_Copy));
+		ToolBarEscort->actions()[i]->setEnabled(!(FormType == ISNamespace::ObjectFormType::New || FormType == ISNamespace::ObjectFormType::Copy));
 	}
 
 	if (BeginFieldEdit)
@@ -188,7 +188,7 @@ void ISObjectFormBase::AfterShowEvent()
 
 	RenameReiconForm();
 	UpdateObjectActions();
-	SetModificationFlag(FormType == ISNamespace::OFT_Copy);
+	SetModificationFlag(FormType == ISNamespace::ObjectFormType::Copy);
 }
 //-----------------------------------------------------------------------------
 void ISObjectFormBase::CreateToolBarEscorts()
@@ -358,7 +358,7 @@ void ISObjectFormBase::CreateWidgetObject()
 		}
 
 		//≈сли тип пол€ ByteArray и дл€ него не предусмотрен виджет редактировани€ - пропускать его
-		if (MetaField->Type == ISNamespace::FT_ByteArray && MetaField->ControlWidget.isEmpty())
+		if (MetaField->Type == ISNamespace::FieldType::ByteArray && MetaField->ControlWidget.isEmpty())
 		{
 			continue;
 		}
@@ -370,7 +370,7 @@ void ISObjectFormBase::CreateWidgetObject()
 		}
 
 		//≈сли поле €вл€етс€ виртуальным и сейчас режим создани€ копии - поле не размещаем
-		if (!MetaField->QueryText.isEmpty() && FormType == ISNamespace::OFT_Copy)
+		if (!MetaField->QueryText.isEmpty() && FormType == ISNamespace::ObjectFormType::Copy)
 		{
 			continue;
 		}
@@ -394,7 +394,7 @@ void ISObjectFormBase::CreateWidgetObject()
 	}
 
 	//«аполн€ем пол€
-	if (FormType == ISNamespace::OFT_Edit || FormType == ISNamespace::OFT_Copy)
+	if (FormType == ISNamespace::ObjectFormType::Edit || FormType == ISNamespace::ObjectFormType::Copy)
 	{
 		ISTcpQuery qRecordGet(API_RECORD_GET);
 		qRecordGet.BindValue("TableName", MetaTable->Name);
@@ -402,7 +402,7 @@ void ISObjectFormBase::CreateWidgetObject()
 		if (qRecordGet.Execute())
 		{
 			//≈сли форма открыта на изменение - устанавливаем код в виджет
-			if (FormType == ISNamespace::AT_Edit)
+			if (FormType == ISNamespace::ObjectFormType::Edit)
 			{
 				SetValueFieldID(ObjectID);
 			}
@@ -701,14 +701,14 @@ bool ISObjectFormBase::Save()
 	}
 
 	//‘ормирование запроса на добавление/изменение/копирование
-	ISTcpQuery TcpQuery(FormType == ISNamespace::OFT_New || FormType == ISNamespace::OFT_Copy
+	ISTcpQuery TcpQuery(FormType == ISNamespace::ObjectFormType::New || FormType == ISNamespace::ObjectFormType::Copy
 		? API_RECORD_ADD : API_RECORD_EDIT);
 	TcpQuery.BindValue("TableName", MetaTable->Name);
 	TcpQuery.BindValue("Values", ValuesMap);
-	TcpQuery.BindValue("IsCopy", FormType == ISNamespace::OFT_Copy);
+	TcpQuery.BindValue("IsCopy", FormType == ISNamespace::ObjectFormType::Copy);
 
 	//≈сли форма открыта на редактирование - дополн€ем запрос идентификатором
-	if (FormType == ISNamespace::OFT_Edit)
+	if (FormType == ISNamespace::ObjectFormType::Edit)
 	{
 		TcpQuery.BindValue("ObjectID", ObjectID);
 	}
@@ -722,7 +722,7 @@ bool ISObjectFormBase::Save()
 	}
 	QVariantMap AnswerMap = TcpQuery.GetAnswer();
 
-	if (FormType == ISNamespace::OFT_New || FormType == ISNamespace::OFT_Copy)
+	if (FormType == ISNamespace::ObjectFormType::New || FormType == ISNamespace::ObjectFormType::Copy)
 	{
 		ObjectID = AnswerMap["ObjectID"].toUInt();
 	}
@@ -730,15 +730,15 @@ bool ISObjectFormBase::Save()
 	ObjectName = AnswerMap["ObjectName"].toString();
 	switch (FormType)
 	{
-	case ISNamespace::OFT_New:
-		FormType = ISNamespace::OFT_Edit;
+	case ISNamespace::ObjectFormType::New:
+		FormType = ISNamespace::ObjectFormType::Edit;
 		ISPopupMessage::ShowNotification(LANG("NotificationForm.Title.Created") + " - " + MetaTable->LocalName.toLower() + ':', ObjectName);
 		break;
-	case ISNamespace::OFT_Copy:
-		FormType = ISNamespace::OFT_Edit;
+	case ISNamespace::ObjectFormType::Copy:
+		FormType = ISNamespace::ObjectFormType::Edit;
 		ISPopupMessage::ShowNotification(LANG("NotificationForm.Title.CreatedCopy") + " - " + MetaTable->LocalName.toLower() + ':', ObjectName);
 		break;
-	case ISNamespace::OFT_Edit:
+	case ISNamespace::ObjectFormType::Edit:
 		ISPopupMessage::ShowNotification(LANG("NotificationForm.Title.Edited") + " - " + MetaTable->LocalName.toLower() + ':', ObjectName);
 		break;
 	}
@@ -775,15 +775,15 @@ void ISObjectFormBase::RenameReiconForm()
 {
 	switch (FormType)
 	{
-	case ISNamespace::OFT_New:
+	case ISNamespace::ObjectFormType::New:
 		setWindowTitle(LANG("Creating") + " (" + MetaTable->LocalName + ')');
 		setWindowIcon(BUFFER_ICONS("Add"));
 		break;
-	case ISNamespace::OFT_Edit:
+	case ISNamespace::ObjectFormType::Edit:
 		setWindowTitle(MetaTable->LocalName + ": " + ObjectName);
 		setWindowIcon(BUFFER_ICONS("Edit"));
 		break;
-	case ISNamespace::OFT_Copy:
+	case ISNamespace::ObjectFormType::Copy:
 		setWindowTitle(LANG("Coping") + " (" + MetaTable->LocalName + "): " + ObjectName);
 		setWindowIcon(BUFFER_ICONS("AddCopy"));
 		break;
@@ -821,16 +821,16 @@ void ISObjectFormBase::SetModificationFlag(bool modification)
 //-----------------------------------------------------------------------------
 void ISObjectFormBase::UpdateObjectActions()
 {
-	if (FormType == ISNamespace::OFT_New)
+	if (FormType == ISNamespace::ObjectFormType::New)
 	{
 		SetEnabledActions(false);
 	}
-	else if (FormType == ISNamespace::OFT_Copy)
+	else if (FormType == ISNamespace::ObjectFormType::Copy)
 	{
 		SetEnabledActions(false);
 		ActionSave->setEnabled(true);
 	}
-	else if (FormType == ISNamespace::OFT_Edit)
+	else if (FormType == ISNamespace::ObjectFormType::Edit)
 	{
 		SetEnabledActions(true);
 		ActionSave->setEnabled(false);

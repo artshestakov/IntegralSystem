@@ -78,7 +78,7 @@ struct PMetaEscort : public PMetaBase
 struct PMetaField : public PMetaBase
 {
 	PMetaField() : PMetaBase("Field"),
-        Type(ISNamespace::FT_Unknown),
+        Type(ISNamespace::FieldType::Unknown),
 		Size(0),
 		Upper(false),
 		Lower(false),

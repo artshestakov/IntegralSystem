@@ -16,11 +16,11 @@ ISSelectListForm::ISSelectListForm(ISNamespace::SelectListMode select_mode, cons
 	connect(ActionSelect, &QAction::triggered, this, &ISSelectListForm::Select);
 	GetToolBar()->addAction(ActionSelect);
 
-	if (SelectMode == ISNamespace::SLM_Single)
+	if (SelectMode == ISNamespace::SelectListMode::Single)
 	{
 		GetTableView()->setSelectionMode(QAbstractItemView::SingleSelection);
 	}
-	else if (SelectMode == ISNamespace::SLM_Multi)
+	else if (SelectMode == ISNamespace::SelectListMode::Multi)
 	{
 		GetTableView()->setSelectionMode(QAbstractItemView::ExtendedSelection);
 
@@ -54,7 +54,7 @@ void ISSelectListForm::SelectedRowEvent(const QItemSelection &ItemSelected, cons
 	int SelectedRows = GetTableView()->selectionModel()->selectedRows().count();
 	ActionSelect->setEnabled(SelectedRows > 0);
 
-	if (SelectMode == ISNamespace::SLM_Multi)
+	if (SelectMode == ISNamespace::SelectListMode::Multi)
 	{
 		ActionSelect->setText(LANG("Select") + SelectedRows > 0 ? " (" + QString::number(SelectedRows) + ')' : QString());
 	}

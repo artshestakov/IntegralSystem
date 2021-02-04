@@ -6,7 +6,10 @@ ISLogger::ISLogger()
 	: ErrorString(NO_ERROR_STRING),
 	LastIndex(0),
 	IsRunning(false),
-	IsFinished(false)
+	IsFinished(false),
+	CurrentDay(0),
+	CurrentMonth(0),
+	CurrentYear(0)
 {
 	CRITICAL_SECTION_INIT(&CriticalSection);
 }
@@ -68,7 +71,7 @@ void ISLogger::Shutdown()
     }
 }
 //-----------------------------------------------------------------------------
-void ISLogger::Log(bool is_format, MessageType message_type, const std::string &component, const QString &string)
+void ISLogger::Log(bool is_format, ISNamespace::LogMessageType message_type, const std::string &component, const QString &string)
 {
 	if (!IsRunning)
 	{
@@ -83,14 +86,14 @@ void ISLogger::Log(bool is_format, MessageType message_type, const std::string &
 		std::string message_type_string;
 		switch (message_type)
 		{
-		case MessageType::MT_Unknown: break;
-		case MessageType::MT_Debug: message_type_string = LOGGER_SEVERITY_DEBUG; break;
-		case MessageType::MT_Info: message_type_string = LOGGER_SEVERITY_INFO; break;
-		case MessageType::MT_Warning: message_type_string = LOGGER_SEVERITY_WARNING; break;
-		case MessageType::MT_Error: message_type_string = LOGGER_SEVERITY_ERROR; break;
-		case MessageType::MT_Critical: message_type_string = LOGGER_SEVERITY_CRITICAL; break;
-		case MessageType::MT_Trace: message_type_string = LOGGER_SEVERITY_TRACE; break;
-		case MessageType::MT_Assert: message_type_string = LOGGER_SEVERITY_ASSERT; break;
+		case ISNamespace::LogMessageType::Unknown: break;
+		case ISNamespace::LogMessageType::Debug: message_type_string = LOGGER_SEVERITY_DEBUG; break;
+		case ISNamespace::LogMessageType::Info: message_type_string = LOGGER_SEVERITY_INFO; break;
+		case ISNamespace::LogMessageType::Warning: message_type_string = LOGGER_SEVERITY_WARNING; break;
+		case ISNamespace::LogMessageType::Error: message_type_string = LOGGER_SEVERITY_ERROR; break;
+		case ISNamespace::LogMessageType::Critical: message_type_string = LOGGER_SEVERITY_CRITICAL; break;
+		case ISNamespace::LogMessageType::Trace: message_type_string = LOGGER_SEVERITY_TRACE; break;
+		case ISNamespace::LogMessageType::Assert: message_type_string = LOGGER_SEVERITY_ASSERT; break;
 		}
 
         //Получаем текущую дату и время

@@ -49,7 +49,7 @@ QVariant ISExportWorker::PrepareValue(ISNamespace::FieldType Type, const QVarian
 	QVariant Result;
 	if (!Value.isNull())
 	{
-		if (Type == ISNamespace::FT_Bool)
+		if (Type == ISNamespace::FieldType::Bool)
 		{
 			Result = Value.toBool() ? LANG("Yes") : LANG("No");
 		}

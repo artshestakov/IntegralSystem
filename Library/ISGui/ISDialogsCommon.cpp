@@ -129,14 +129,14 @@ ISInputDialog::ISInputDialog(ISNamespace::FieldType DataType, const QString &Tit
 		LayoutLabel->addWidget(Label);
 	}
 
-	if (DataType != ISNamespace::FT_Unknown)
+	if (DataType != ISNamespace::FieldType::Unknown)
 	{
 		FieldEditBase = ISGui::CreateColumnForField(this, DataType);
 		FieldEditBase->SetValue(Value);
 		GetMainLayout()->addWidget(FieldEditBase);
 
 		//Если добавляется поле редактирования большого текста - не вставляем растяжение
-		if (DataType == ISNamespace::FT_Text)
+		if (DataType == ISNamespace::FieldType::Text)
 		{
 			FieldEditBase->SetSizePolicyVertical(QSizePolicy::Minimum);
 		}
@@ -160,7 +160,7 @@ ISInputDialog::~ISInputDialog()
 //-----------------------------------------------------------------------------
 QString ISInputDialog::GetString(const QString &Title, const QString &LabelText, const QVariant &Value)
 {
-	ISInputDialog InputDialog(ISNamespace::FT_String, Title, LabelText, Value);
+	ISInputDialog InputDialog(ISNamespace::FieldType::String, Title, LabelText, Value);
 	if (InputDialog.Exec())
 	{
 		return InputDialog.GetValue().toString();
@@ -170,7 +170,7 @@ QString ISInputDialog::GetString(const QString &Title, const QString &LabelText,
 //-----------------------------------------------------------------------------
 QString ISInputDialog::GetText(const QString &Title, const QString &LabelText, const QVariant &Value)
 {
-	ISInputDialog InputDialog(ISNamespace::FT_Text, Title, LabelText, Value);
+	ISInputDialog InputDialog(ISNamespace::FieldType::Text, Title, LabelText, Value);
 	if (InputDialog.Exec())
 	{
 		return InputDialog.GetValue().toString();
@@ -180,7 +180,7 @@ QString ISInputDialog::GetText(const QString &Title, const QString &LabelText, c
 //-----------------------------------------------------------------------------
 QString ISInputDialog::GetText(const QString &Title, const QString &LabelText, const QVariant &Value, bool &Ok)
 {
-	ISInputDialog InputDialog(ISNamespace::FT_Text, Title, LabelText, Value);
+	ISInputDialog InputDialog(ISNamespace::FieldType::Text, Title, LabelText, Value);
 	Ok = InputDialog.Exec();
 	if (Ok)
 	{
@@ -191,7 +191,7 @@ QString ISInputDialog::GetText(const QString &Title, const QString &LabelText, c
 //-----------------------------------------------------------------------------
 int ISInputDialog::GetInteger(bool &Ok, const QString &Title, const QString &LabelText, int Minimum, int Maximum, const QVariant &Value)
 {
-	ISInputDialog InputDialog(ISNamespace::FT_Int, Title, LabelText, Value);
+	ISInputDialog InputDialog(ISNamespace::FieldType::Int, Title, LabelText, Value);
 	InputDialog.ForbidResize();
 	dynamic_cast<ISIntegerEdit*>(InputDialog.GetEditWidget())->SetRange(Minimum, Maximum);
 	Ok = InputDialog.Exec();
@@ -209,7 +209,7 @@ unsigned int ISInputDialog::GetUInteger(bool &Ok, const QString &Title, const QS
 //-----------------------------------------------------------------------------
 QDateTime ISInputDialog::GetDateTime(const QString &Title, const QString &LabelText)
 {
-	ISInputDialog InputDialog(ISNamespace::FT_DateTime, Title, LabelText);
+	ISInputDialog InputDialog(ISNamespace::FieldType::DateTime, Title, LabelText);
 	InputDialog.ForbidResize();
 	if (InputDialog.Exec())
 	{
@@ -222,7 +222,7 @@ QDateTime ISInputDialog::GetDateTime(const QString &Title, const QString &LabelT
 //-----------------------------------------------------------------------------
 QDate ISInputDialog::GetDate(const QString &Title, const QString &LabelText)
 {
-	ISInputDialog InputDialog(ISNamespace::FT_Date, Title, LabelText);
+	ISInputDialog InputDialog(ISNamespace::FieldType::Date, Title, LabelText);
 	InputDialog.ForbidResize();
 	if (InputDialog.Exec())
 	{
@@ -233,7 +233,7 @@ QDate ISInputDialog::GetDate(const QString &Title, const QString &LabelText)
 //-----------------------------------------------------------------------------
 QTime ISInputDialog::GetTime(const QString &Title, const QString &LabelText)
 {
-	ISInputDialog InputDialog(ISNamespace::FT_Time, Title, LabelText);
+	ISInputDialog InputDialog(ISNamespace::FieldType::Time, Title, LabelText);
 	InputDialog.ForbidResize();
 	if (InputDialog.Exec())
 	{
@@ -244,7 +244,7 @@ QTime ISInputDialog::GetTime(const QString &Title, const QString &LabelText)
 //-----------------------------------------------------------------------------
 QString ISInputDialog::GetPassword()
 {
-	ISInputDialog InputDialog(ISNamespace::FT_Password, LANG("Password"), LANG("EnterThePassword") + ':');
+	ISInputDialog InputDialog(ISNamespace::FieldType::Password, LANG("Password"), LANG("EnterThePassword") + ':');
 	if (InputDialog.Exec())
 	{
 		return InputDialog.GetValue().toString();
@@ -254,7 +254,7 @@ QString ISInputDialog::GetPassword()
 //-----------------------------------------------------------------------------
 QVariant ISInputDialog::GetList(const QString &Title, const QString &LabelText, const ISStringToVariantMap &VariantMap)
 {
-	ISInputDialog InputDialog(ISNamespace::FT_Unknown, Title, LabelText);
+	ISInputDialog InputDialog(ISNamespace::FieldType::Unknown, Title, LabelText);
 	ISComboEdit *ComboEdit = new ISComboEdit(&InputDialog);
 	ComboEdit->setSizePolicy(QSizePolicy::Minimum, ComboEdit->sizePolicy().verticalPolicy());
 	ComboEdit->SetEditable(false);

@@ -19,8 +19,10 @@ public:
 private:
 	ISFail2Ban();
 	~ISFail2Ban();
-    ISFail2Ban(ISFail2Ban const &) : QObject() {};
-	ISFail2Ban& operator=(ISFail2Ban const&) { return *this; };
+    ISFail2Ban(ISFail2Ban const &) = delete;
+	ISFail2Ban(ISFail2Ban &&) = delete;
+	ISFail2Ban& operator=(const ISFail2Ban &) = delete;
+	ISFail2Ban& operator=(ISFail2Ban &&) = delete;
 
 private:
 	void Timeout();

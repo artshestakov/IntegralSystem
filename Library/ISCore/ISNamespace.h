@@ -6,202 +6,208 @@
 //-----------------------------------------------------------------------------
 namespace ISNamespace
 {
-    enum FieldType //Типы данных поля
+    enum class FieldType //Типы данных поля
     {
-        FT_Unknown, //Неизвестный
-		FT_ID, //Идентификатор записи
-        FT_Int, //Целое число
-		FT_IntArray, //Массив целых чисел
-        FT_BigInt, //Большое целое число
-        FT_String, //Строка
-        FT_Text, //Большая строка
-        FT_UID, //Уникальный идентификатор
-        FT_Bool, //Логический
-        FT_Double, //Число с плавающей запятой
-		FT_Money, //Деньги
-        FT_ByteArray, //Массив данных
-        FT_Date, //Дата
-        FT_Time, //Время
-        FT_DateTime, //Дата и время
-        FT_Inn, //Индивидуаьный номер налогоплательщика
-        FT_Kpp, //Код причины постановки на учёт
-        FT_Ogrn, //Основной государственный регистрационный номер
-        FT_Okpo, //Общероссийский классификатор предприятий и организаций
-        FT_Bik, //Банковский идентификационый номер
-        FT_Vin, //Идентификационный номер транспортного средства
-        FT_Year, //Год
-        FT_Phone, //Номер телефона
-        FT_Password, //Пароль
-        FT_Image, //Изображение
-        FT_Color, //Цвет
-        FT_EMail, //Адрес электронной почты
-        FT_Volume, //Громкость
-        FT_Birthday, //Дата рождения
-        FT_Seconds, //Секунды
-        FT_Month, //Месяц
-        FT_Url, //Ссылка
-        FT_File, //Файл
-		FT_TaskImportant, //Важность задачи
-		FT_ProtocolDT, //Важность задачи
+        Unknown, //Неизвестный
+		ID, //Идентификатор записи
+        Int, //Целое число
+		IntArray, //Массив целых чисел
+        BigInt, //Большое целое число
+        String, //Строка
+        Text, //Большая строка
+        UID, //Уникальный идентификатор
+        Bool, //Логический
+        Double, //Число с плавающей запятой
+		Money, //Деньги
+        ByteArray, //Массив данных
+        Date, //Дата
+        Time, //Время
+        DateTime, //Дата и время
+        Inn, //Индивидуаьный номер налогоплательщика
+        Kpp, //Код причины постановки на учёт
+        Ogrn, //Основной государственный регистрационный номер
+        Okpo, //Общероссийский классификатор предприятий и организаций
+        Bik, //Банковский идентификационый номер
+        Vin, //Идентификационный номер транспортного средства
+        Year, //Год
+        Phone, //Номер телефона
+        Password, //Пароль
+        Image, //Изображение
+        Color, //Цвет
+        EMail, //Адрес электронной почты
+        Volume, //Громкость
+        Birthday, //Дата рождения
+        Seconds, //Секунды
+        Month, //Месяц
+        Url, //Ссылка
+        File, //Файл
+		TaskImportant, //Важность задачи
+		ProtocolDT, //Дата события в протоколе
     };
 
-    enum ObjectFormType //Типы формы объекта
+    enum class ObjectFormType //Типы формы объекта
     {
-        OFT_New, //Новый объект
-        OFT_Copy, //Копия объекта
-        OFT_Edit, //Изменение объекта
+        New, //Новый объект
+        Copy, //Копия объекта
+        Edit, //Изменение объекта
     };
 
-    enum SelectListMode //Режим выбора формы списка
+    enum class SelectListMode //Режим выбора формы списка
     {
-        SLM_Single, //Выбор одной записи
-        SLM_Multi, //Выбор нескольких записей
+        Single, //Выбор одной записи
+        Multi, //Выбор нескольких записей
     };
 
-    enum SearchOperatorType //Типы операторов поиска
+    enum class SearchType //Типы операторов поиска
     {
-        SOT_Unknown, //Неизвестно
-        SOT_Equally, //Равно
-        SOT_NotEqually, //Не равно
-        SOT_Begins, //Начинается
-        SOT_Ends, //Заканчивается
-        SOT_Contains, //Содержит
-        SOT_More, //Больше
-        SOT_Less, //Меньше
-        SOT_MoreOrEqual, //Больше или равно
-        SOT_LessOrEqual, //Меньше или равно
+        Unknown, //Неизвестно
+        Equally, //Равно
+        NotEqually, //Не равно
+        Begins, //Начинается
+        Ends, //Заканчивается
+        Contains, //Содержит
+        More, //Больше
+        Less, //Меньше
+        MoreOrEqual, //Больше или равно
+        LessOrEqual, //Меньше или равно
     };
 
-    enum ExportType //Типы базового экспорта данных
+    enum class ExportType //Типы базового экспорта данных
     {
-        ET_Unknown,
-        ET_CSV,
-        ET_HTML,
-        ET_XML,
-		ET_JSON,
+        Unknown,
+        CSV,
+        HTML,
+        XML,
+		JSON,
     };
 
-    enum ActionType
+    enum class ActionType
     {
-        AT_Create,
-        AT_CreateCopy,
-        AT_Edit,
-        AT_Delete,
-        AT_Update,
-        AT_Search,
-        AT_SearchClear,
-        AT_Export,
-        AT_Favorites,
-        AT_Reference,
+        Create,
+        CreateCopy,
+        Edit,
+        Delete,
+        Update,
+        Search,
+        SearchClear,
+        Export,
+        Favorites,
+        Reference,
     };
 
-    enum ActionSpecialType
+    enum class ActionSpecialType
     {
-		AST_RecordInfo,
-		AST_Favorite,
-        AST_Note,
+		RecordInfo,
+		Favorite,
+        Note,
     };
 
-    enum ReportType
+    enum class MoveWidgetDesktop //Тип перемещения виджета
     {
-        RT_Unknown,
-        RT_Html,
+        LeftUp, //Левый верхний угол
+        LeftBottom, //Левый нижний угол
+        RightUp, //Правый верхний угол
+        RightBottom, //Правый нижний угол
+        Center, //Центр экрана
     };
 
-    enum MoveWidgetDesktop //Тип перемещения виджета
+    enum class DebugMessageType //Тип отладочоного сообщения
     {
-        MWD_LeftUp, //Левый верхний угол
-        MWD_LeftBottom, //Левый нижний угол
-        MWD_RightUp, //Правый верхний угол
-        MWD_RightBottom, //Правый нижний угол
-        MWD_Center, //Центр экрана
+        Unknown, //Неизвестное
+        Debug, //Отладочное
+        Info, //Информационное
+        Warning, //Предупреждение
+        Error, //Ошибка
     };
 
-    enum DebugMessageType //Тип отладочоного сообщения
-    {
-        DMT_Unknown, //Неизвестное
-        DMT_Debug, //Отладочное
-        DMT_Info, //Информационное
-        DMT_Warning, //Предупреждение
-        DMT_Error, //Ошибка
-    };
-
-	enum ApiMessageType //Тип API-сообщения
+    enum class ApiMessageType //Тип API-сообщения
 	{
-		AMT_Unknown, //Неизвестное
-		AMT_Auth, //Авторизация
-		AMT_Sleep, //Ожидание
-		AMT_GetMetaData, //Получить мета-данные
-		AMT_GetLastClient, //Получить последнюю версию клиента
-		AMT_UserPasswordExist, //Проверить существование пароля
-		AMT_UserPasswordCreate, //Создание пароля пользователю
-		AMT_UserPasswordEdit, //Изменение пароля пользователя
-		AMT_UserPasswordReset, //Сброс пароля парользователя
-		AMT_UserSettingsReset, //Сброс пользовательских настроек
-		AMT_UserDeviceAdd, //Привязка устройка к учётной записи пользователя
-		AMT_UserDeviceDelete, //Отвязка устройка от учётной записи пользователя
-		AMT_GetRecordCall, //Получить запись разговора
-		AMT_GetClients, //Получить список подключенных клиентов
-		AMT_RecordAdd, //Добавление записи
-		AMT_RecordEdit, //Изменение записи
-		AMT_RecordDelete, //Удаление записи
-		AMT_RecordGet, //Получить запись
-		AMT_RecordGetInfo, //Получить информацию о записи
-		AMT_DiscussionAdd, //Добавить обсуждение
-		AMT_DiscussionEdit, //Изменить обсуждение
-		AMT_DiscussionCopy, //Скопировать обсуждение
-		AMT_GetTableData, //Получить данные таблицы
-		AMT_GetTableQuery, //Получить данные по запросу
-		AMT_NoteRecordGet, //Получить примечание записи
-		AMT_NoteRecordSet, //Изменить примечание записи
-		AMT_FileStorageAdd, //Добавить файл в хранилище
-		AMT_FileStorageCopy, //Скопировать файл в хранилище
-		AMT_FileStorageGet, //Получить файл из хранилища
-		AMT_SearchTaskText, //Поиск задач по тексту
-		AMT_SearchTaskID, //Поиск задач по номеру
-		AMT_SearchFullText, //Полнотекстовый поиск
-		AMT_GetCalendarEvents, //Получить события календаря
-		AMT_CalendarDelete, //Удаление события календаря
-		AMT_GetInternalLists, //Получить список внутренних справочников
-		AMT_SaveMetaData, //Сохранение мета-данных
-		AMT_GetGroupRights, //Получить права группы
-		AMT_GroupRightSubSystemAdd, //Добавить группе право на подсистему
-		AMT_GroupRightSubSystemDelete, //Удалить у группы право на подсистему
-		AMT_GroupRightTableAdd, //Добавить группе право на таблицу
-		AMT_GroupRightTableDelete, //Удалить у группы право на таблицу
-		AMT_GroupRightSpecialAdd, //Добавить спец. право группе
-		AMT_GroupRightSpecialDelete, //Удалить спец. право у группы
-		AMT_GetRecordValue, //Получить значение поля записи
-		AMT_RecordFavoriteAdd, //Добавить запись в избранное
-		AMT_RecordFavoriteDelete, //Удалить запись из избранного
-		AMT_GetFavoriteNames, //Получить имена избранных записей
-		AMT_FavoritesDelete, //Удалить все избранные записи пользователя
-		AMT_LogGetStructure, //Получить структуру лог-файлов
-		AMT_LogGetContent, //Получить содержимое лог-файла
-		AMT_CalendarClose, //Закрытие события календаря
-		AMT_GetHistoryList, //Получить список открытых записей
-		AMT_TaskCommentAdd, //Добавить комментарий к задаче
-		AMT_GetForeignList, //Получить список значений по внешнему ключу
-		AMT_GetServerInfo, //Получить информацию о сервере
-		AMT_OrganizationFromINN, //Поиск организации по ИНН
-		AMT_PeriodContains, //Проверка наличия текущего периода
-		AMT_GetStockList, //Получить список складов
-		AMT_StatementAdd, //Добавить выгрузку в ведомости азс
-		AMT_GetGasStation, //Заполнить на основании
-		AMT_GetDebtImplementation, //Получить загрузки и выгрузки
-		AMT_GetDebtCounterparty, //Получить долги контргаента
+		Unknown, //Неизвестное
+		Auth, //Авторизация
+		Sleep, //Ожидание
+		GetMetaData, //Получить мета-данные
+		GetLastClient, //Получить последнюю версию клиента
+		UserPasswordExist, //Проверить существование пароля
+		UserPasswordCreate, //Создание пароля пользователю
+		UserPasswordEdit, //Изменение пароля пользователя
+		UserPasswordReset, //Сброс пароля парользователя
+		UserSettingsReset, //Сброс пользовательских настроек
+		UserDeviceAdd, //Привязка устройка к учётной записи пользователя
+		UserDeviceDelete, //Отвязка устройка от учётной записи пользователя
+		GetRecordCall, //Получить запись разговора
+		GetClients, //Получить список подключенных клиентов
+		RecordAdd, //Добавление записи
+		RecordEdit, //Изменение записи
+		RecordDelete, //Удаление записи
+		RecordGet, //Получить запись
+		RecordGetInfo, //Получить информацию о записи
+		DiscussionAdd, //Добавить обсуждение
+		DiscussionEdit, //Изменить обсуждение
+		DiscussionCopy, //Скопировать обсуждение
+		GetTableData, //Получить данные таблицы
+		GetTableQuery, //Получить данные по запросу
+		NoteRecordGet, //Получить примечание записи
+		NoteRecordSet, //Изменить примечание записи
+		FileStorageAdd, //Добавить файл в хранилище
+		FileStorageCopy, //Скопировать файл в хранилище
+		FileStorageGet, //Получить файл из хранилища
+		SearchTaskText, //Поиск задач по тексту
+		SearchTaskID, //Поиск задач по номеру
+		SearchFullText, //Полнотекстовый поиск
+		GetCalendarEvents, //Получить события календаря
+		CalendarDelete, //Удаление события календаря
+		GetInternalLists, //Получить список внутренних справочников
+		SaveMetaData, //Сохранение мета-данных
+		GetGroupRights, //Получить права группы
+		GroupRightSubSystemAdd, //Добавить группе право на подсистему
+		GroupRightSubSystemDelete, //Удалить у группы право на подсистему
+		GroupRightTableAdd, //Добавить группе право на таблицу
+		GroupRightTableDelete, //Удалить у группы право на таблицу
+		GroupRightSpecialAdd, //Добавить спец. право группе
+		GroupRightSpecialDelete, //Удалить спец. право у группы
+		GetRecordValue, //Получить значение поля записи
+		RecordFavoriteAdd, //Добавить запись в избранное
+		RecordFavoriteDelete, //Удалить запись из избранного
+		GetFavoriteNames, //Получить имена избранных записей
+		FavoritesDelete, //Удалить все избранные записи пользователя
+		LogGetStructure, //Получить структуру лог-файлов
+		LogGetContent, //Получить содержимое лог-файла
+		CalendarClose, //Закрытие события календаря
+		GetHistoryList, //Получить список открытых записей
+		TaskCommentAdd, //Добавить комментарий к задаче
+		GetForeignList, //Получить список значений по внешнему ключу
+		GetServerInfo, //Получить информацию о сервере
+		OrganizationFromINN, //Поиск организации по ИНН
+		PeriodContains, //Проверка наличия текущего периода
+		GetStockList, //Получить список складов
+		StatementAdd, //Добавить выгрузку в ведомости азс
+		GetGasStation, //Заполнить на основании
+		GetDebtImplementation, //Получить загрузки и выгрузки
+		GetDebtCounterparty, //Получить долги контргаента
 	};
+
+    enum class LogMessageType //Типы сообщений логгера
+    {
+		Unknown, //Неизвестное сообщение
+		Debug, //Отладка
+		Info, //Информация
+		Warning, //Предупреждение
+		Error, //Ошибка
+		Critical, //Критическая ошибка
+		Trace, //Трассировка
+		Assert //Ассерт
+    };
 };
 //-----------------------------------------------------------------------------
 Q_DECLARE_METATYPE(ISNamespace::FieldType);
 Q_DECLARE_METATYPE(ISNamespace::ObjectFormType);
-Q_DECLARE_METATYPE(ISNamespace::SearchOperatorType);
+Q_DECLARE_METATYPE(ISNamespace::SearchType);
 Q_DECLARE_METATYPE(ISNamespace::ExportType);
 Q_DECLARE_METATYPE(ISNamespace::ActionType);
 Q_DECLARE_METATYPE(ISNamespace::ActionSpecialType);
-Q_DECLARE_METATYPE(ISNamespace::ReportType);
 Q_DECLARE_METATYPE(ISNamespace::MoveWidgetDesktop);
 Q_DECLARE_METATYPE(ISNamespace::DebugMessageType);
 Q_DECLARE_METATYPE(ISNamespace::ApiMessageType);
+Q_DECLARE_METATYPE(ISNamespace::LogMessageType);
 //-----------------------------------------------------------------------------
 #endif

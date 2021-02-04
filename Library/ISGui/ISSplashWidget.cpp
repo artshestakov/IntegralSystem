@@ -39,7 +39,7 @@ void ISSplashWidget::showEvent(QShowEvent *e)
 	Q_UNUSED(e);
 
 	QWidget::show();
-	ISGui::MoveWidgetToDesktop(this, ISNamespace::MWD_Center);
+	ISGui::MoveWidgetToDesktop(this, ISNamespace::MoveWidgetDesktop::Center);
 	update();
 	adjustSize();
 	ISGui::RepaintWidget(this);

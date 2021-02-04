@@ -166,19 +166,19 @@ QVariant ISTcpModel::data(const QModelIndex &ModelIndex, int Role) const
 	{
 		ISModelField FieldModel = Fields[ModelIndex.column()];
 		ISNamespace::FieldType Type = FieldModel.Type;
-		if (Type == ISNamespace::FT_Date ||
-			Type == ISNamespace::FT_Time ||
-			Type == ISNamespace::FT_DateTime ||
-			Type == ISNamespace::FT_Birthday ||
-			Type == ISNamespace::FT_Seconds ||
-			Type == ISNamespace::FT_Year ||
-			Type == ISNamespace::FT_Phone) //Расположение по центру
+		if (Type == ISNamespace::FieldType::Date ||
+			Type == ISNamespace::FieldType::Time ||
+			Type == ISNamespace::FieldType::DateTime ||
+			Type == ISNamespace::FieldType::Birthday ||
+			Type == ISNamespace::FieldType::Seconds ||
+			Type == ISNamespace::FieldType::Year ||
+			Type == ISNamespace::FieldType::Phone) //Расположение по центру
 		{
 			Value = Qt::AlignCenter;
 		}
-		else if ((Type == ISNamespace::FT_Int ||
-			Type == ISNamespace::FT_Double ||
-			Type == ISNamespace::FT_Money) &&
+		else if ((Type == ISNamespace::FieldType::Int ||
+			Type == ISNamespace::FieldType::Double ||
+			Type == ISNamespace::FieldType::Money) &&
 			!FieldModel.IsForeign) //Для чисел расположение по центру справа (если не внешний ключ)
 		{
 			Value = Qt::AlignRight + Qt::AlignVCenter;

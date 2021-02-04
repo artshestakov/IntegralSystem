@@ -16,8 +16,10 @@ public:
 private:
 	ISConfigurations();
 	~ISConfigurations();
-	ISConfigurations(ISConfigurations const &) {};
-	ISConfigurations& operator=(ISConfigurations const&) { return *this; };
+	ISConfigurations(const ISConfigurations&) = delete;
+	ISConfigurations(ISConfigurations&&) = delete;
+	ISConfigurations& operator=(const ISConfigurations&) = delete;
+	ISConfigurations& operator=(ISConfigurations&&) = delete;
 
 private:
 	std::vector<ISConfigurationInfo> Vector;

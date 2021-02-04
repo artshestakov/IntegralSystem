@@ -2,7 +2,7 @@
 #include "ISConstants.h"
 //-----------------------------------------------------------------------------
 ISTcpMessage::ISTcpMessage(ISTcpSocket *tcp_socket)
-	: Type(ISNamespace::AMT_Unknown),
+	: Type(ISNamespace::ApiMessageType::Unknown),
 	TcpSocket(tcp_socket),
     ParseMSec(0),
     Size(0),

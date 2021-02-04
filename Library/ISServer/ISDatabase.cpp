@@ -77,7 +77,7 @@ QVariant ISDatabase::GetValue(const QString &TableName, const QString &FieldName
     return QVariant();
 }
 //-----------------------------------------------------------------------------
-bool ISDatabase::Connect(const QString &ConnectionName, const QString &Host, int Port, const QString &Database, const QString &Login, const QString &Password)
+bool ISDatabase::Connect(const QString &ConnectionName, const QString &Host, unsigned short Port, const QString &Database, const QString &Login, const QString &Password)
 {
     //Если объект БД с таким именем соединения уже существует - то забираем
     //его из внутренней памяти QSqlDatabase, иначе - добавляем
@@ -103,7 +103,7 @@ bool ISDatabase::Connect(const QString &ConnectionName, const QString &Host, int
     }
 
 	CRITICAL_SECTION_LOCK(&CriticalSection);
-    ConnectOptions.emplace(ConnectionName, ISConnectOptionDB{ Host, Port, Database, Login, Password });
+    ConnectOptions.emplace(ConnectionName, ISConnectOptionDB(Host, Port, Database, Login, Password));
 	CRITICAL_SECTION_UNLOCK(&CriticalSection);
 	return true;
 }

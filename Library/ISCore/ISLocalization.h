@@ -21,8 +21,10 @@ private:
 private:
 	ISLocalization();
 	~ISLocalization();
-	ISLocalization(ISLocalization const &) {};
-	ISLocalization& operator=(ISLocalization const&) { return *this; };
+	ISLocalization(const ISLocalization&) = delete;
+	ISLocalization(ISLocalization&&) = delete;
+	ISLocalization& operator=(const ISLocalization&) = delete;
+	ISLocalization& operator=(ISLocalization&&) = delete;
 
 private:
 	QString ErrorString;

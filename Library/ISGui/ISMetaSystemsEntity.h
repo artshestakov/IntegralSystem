@@ -20,8 +20,10 @@ private:
 private:
 	ISMetaSystemsEntity();
 	~ISMetaSystemsEntity();
-	ISMetaSystemsEntity(ISMetaSystemsEntity const &) {};
-	ISMetaSystemsEntity& operator=(ISMetaSystemsEntity const&) { return *this; };
+	ISMetaSystemsEntity(const ISMetaSystemsEntity&) = delete;
+	ISMetaSystemsEntity(ISMetaSystemsEntity&&) = delete;
+	ISMetaSystemsEntity& operator=(const ISMetaSystemsEntity&) = delete;
+	ISMetaSystemsEntity& operator=(ISMetaSystemsEntity&&) = delete;
 
 private:
 	std::vector<ISMetaSystem*> Systems;

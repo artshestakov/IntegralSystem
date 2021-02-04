@@ -14,7 +14,7 @@ public:
 	Q_INVOKABLE ISComboSearchBase(QWidget *parent);
 	virtual ~ISComboSearchBase();
 
-	ISNamespace::SearchOperatorType GetOperator();
+	ISNamespace::SearchType GetOperator();
 };
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------

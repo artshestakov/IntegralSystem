@@ -95,7 +95,7 @@ void ISMonitorActivitySubSystem::LoadData()
 //-----------------------------------------------------------------------------
 void ISMonitorActivitySubSystem::ShowUserCard()
 {
-	ISObjectFormBase *ObjectFormBase = ISGui::CreateObjectForm(ISNamespace::OFT_Edit, "_Users", sender()->property("UserID").toInt());
+	ISObjectFormBase *ObjectFormBase = ISGui::CreateObjectForm(ISNamespace::ObjectFormType::Edit, "_Users", sender()->property("UserID").toInt());
 	connect(ObjectFormBase, &ISObjectFormBase::UpdateList, this, &ISMonitorActivitySubSystem::LoadData);
 	ISGui::ShowObjectForm(ObjectFormBase);
 }

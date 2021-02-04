@@ -4,8 +4,8 @@
 //-----------------------------------------------------------------------------
 ISFail2Ban::ISFail2Ban() : QObject()
 {
-	Timer = new QTimer(this);
-	connect(Timer, &QTimer::timeout, this, &ISFail2Ban::Timeout);
+	Timer = new QTimer();
+	QObject::connect(Timer, &QTimer::timeout, this, &ISFail2Ban::Timeout);
 	
 	CRITICAL_SECTION_INIT(&CriticalSection);
 }
@@ -13,6 +13,7 @@ ISFail2Ban::ISFail2Ban() : QObject()
 ISFail2Ban::~ISFail2Ban()
 {
 	CRITICAL_SECTION_DESTROY(&CriticalSection);
+	delete Timer;
 }
 //-----------------------------------------------------------------------------
 ISFail2Ban& ISFail2Ban::Instance()

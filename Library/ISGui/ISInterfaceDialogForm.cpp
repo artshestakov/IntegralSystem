@@ -19,7 +19,7 @@ bool ISInterfaceDialogForm::Exec()
 	setAttribute(Qt::WA_ShowModal, true);
 	if (!IsShowed())
 	{
-		ISGui::MoveWidgetToDesktop(this, ISNamespace::MWD_Center);
+		ISGui::MoveWidgetToDesktop(this, ISNamespace::MoveWidgetDesktop::Center);
 		show();
 	}
 	EventLoop.exec(QEventLoop::DialogExec);
@@ -43,7 +43,7 @@ void ISInterfaceDialogForm::AfterShowEvent()
 	ISInterfaceForm::AfterShowEvent();
 	activateWindow();
 	raise();
-	ISGui::MoveWidgetToDesktop(this, ISNamespace::MWD_Center);
+	ISGui::MoveWidgetToDesktop(this, ISNamespace::MoveWidgetDesktop::Center);
 	setFocus(Qt::ActiveWindowFocusReason);
 }
 //-----------------------------------------------------------------------------

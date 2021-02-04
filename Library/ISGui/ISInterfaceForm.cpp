@@ -6,7 +6,7 @@
 #include "ISAlgorithm.h"
 #include "ISBuffer.h"
 //-----------------------------------------------------------------------------
-ISInterfaceForm::ISInterfaceForm(QWidget *parent, Qt::WindowFlags Flags)
+ISInterfaceForm::ISInterfaceForm(QWidget *parent, QFlags<Qt::WindowType> Flags)
 	: QWidget(parent, Flags),
 	LabelShadow(nullptr),
 	FlashingTimer(nullptr),

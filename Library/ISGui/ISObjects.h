@@ -14,8 +14,10 @@ public:
 private:
 	ISObjects();
 	~ISObjects();
-	ISObjects(ISObjects const &) {};
-	ISObjects& operator=(ISObjects const&) { return *this; };
+	ISObjects(const ISObjects&) = delete;
+	ISObjects(ISObjects&&) = delete;
+	ISObjects& operator=(const ISObjects&) = delete;
+	ISObjects& operator=(ISObjects&&) = delete;
 
 private:
 	ISObjectInterface *ObjectInterface;

@@ -12,203 +12,183 @@
 //-----------------------------------------------------------------------------
 struct ISMetaType
 {
-	ISMetaType() { }
-
-	ISMetaType(const QString &type_name, ISNamespace::FieldType type, const QString &type_db, const QString &control_widget, const QString &search_condition_widget, bool search_allowed)
+	ISMetaType(const QString& type_name, ISNamespace::FieldType type, const QString& type_db, const QString& control_widget, const QString& search_condition_widget, bool search_allowed)
 		: TypeName(type_name), TypeField(type), TypeDB(type_db), ControlWidget(control_widget), SearchConditionWidget(search_condition_widget), SearchAllowed(search_allowed)
 	{ }
 
-    QString TypeName; //Наименование типа
-    ISNamespace::FieldType TypeField; //Тип даннных в системе
-    QString TypeDB; //Тип данных в базе
-    QString ControlWidget; //Имя поля редактирования
-    QString SearchConditionWidget; //Имя поискового виджета
-    bool SearchAllowed; //Возможность поиска по полю
+	QString TypeName; //Наименование типа
+	ISNamespace::FieldType TypeField; //Тип даннных в системе
+	QString TypeDB; //Тип данных в базе
+	QString ControlWidget; //Имя поля редактирования
+	QString SearchConditionWidget; //Имя поискового виджета
+	bool SearchAllowed; //Возможность поиска по полю
 };
 //-----------------------------------------------------------------------------
 struct ISCORE_EXPORT ISCurrentUserInfo
 {
-    ISCurrentUserInfo() : System(false), ID(0), GroupID(0), GroupFullAccess(false) { }
+	ISCurrentUserInfo() : System(false), ID(0), GroupID(0), GroupFullAccess(false) { }
 
-    bool System; //Системный
-    unsigned int ID; //Идентификатор пользователя
+	bool System; //Системный
+	unsigned int ID; //Идентификатор пользователя
 	QString FIO; //ФИО
-    QString Login; //Логин
+	QString Login; //Логин
 	QString Password; //Пароль (временно)
 
 	unsigned int GroupID; //Идентификатор группы в которой состоит пользователь
-    bool GroupFullAccess; //Полный доступ
+	bool GroupFullAccess; //Полный доступ
 };
 //-----------------------------------------------------------------------------
 struct ISCORE_EXPORT ISMetaSetting
 {
-    ISMetaSetting() : Type(ISNamespace::FT_Unknown) { }
+	ISMetaSetting() : Type(ISNamespace::FieldType::Unknown) { }
 
-    ISUuid UID;
-    QString Name;
-    ISNamespace::FieldType Type;
-    QString WidgetEditName;
-    QString LocalName;
-    QString Hint;
-    QVariant Default;
-    QVariant Value;
+	ISUuid UID;
+	QString Name;
+	ISNamespace::FieldType Type;
+	QString WidgetEditName;
+	QString LocalName;
+	QString Hint;
+	QVariant Default;
+	QVariant Value;
 };
 //-----------------------------------------------------------------------------
 struct ISCORE_EXPORT ISMetaSettingsGroup
 {
-    ISMetaSettingsGroup() : System(true) { }
-    ~ISMetaSettingsGroup()
-    {
-        while (!Settings.empty())
-        {
+	ISMetaSettingsGroup() : System(true) { }
+	~ISMetaSettingsGroup()
+	{
+		while (!Settings.empty())
+		{
 			delete ISAlgorithm::VectorTakeBack(Settings);
-        }
-    }
+		}
+	}
 
-    QString Name;
-    ISUuid UID; //??? После перехода на Карат это поле не понадобится
-    QString LocalName;
-    QString IconName;
-    bool System;
-    QString Hint;
-    std::vector<ISMetaSetting*> Settings;
+	QString Name;
+	ISUuid UID; //??? После перехода на Карат это поле не понадобится
+	QString LocalName;
+	QString IconName;
+	bool System;
+	QString Hint;
+	std::vector<ISMetaSetting*> Settings;
 };
 //-----------------------------------------------------------------------------
 struct ISMetaParagraph
 {
-    ISUuid UID;
-    QString Name;
-    QString LocalName;
-    QString ToolTip;
-    QString Icon;
-    QString ClassName;
+	ISUuid UID;
+	QString Name;
+	QString LocalName;
+	QString ToolTip;
+	QString Icon;
+	QString ClassName;
 };
 //-----------------------------------------------------------------------------
 struct ISMetaSubSystem
 {
-    ISMetaSubSystem() { }
+	ISMetaSubSystem() { }
 
-    ISUuid UID; //Идентификатор подсистемы
-    QString LocalName; //Локальное имя подсистемы
-    QString IconName; //Имя иконки подсистемы
-    QString TableName; //Имя таблицы подсистемы
-    QString ClassName; //Имя класса подсистемы
-    QString Hint; //Подсказка
+	ISUuid UID; //Идентификатор подсистемы
+	QString LocalName; //Локальное имя подсистемы
+	QString IconName; //Имя иконки подсистемы
+	QString TableName; //Имя таблицы подсистемы
+	QString ClassName; //Имя класса подсистемы
+	QString Hint; //Подсказка
 
-    QString SystemUID; //Идентификатор системы к которой относится эта подсистема
-    QString SystemLocalName; //Имя родительской системы
+	QString SystemUID; //Идентификатор системы к которой относится эта подсистема
+	QString SystemLocalName; //Имя родительской системы
 };
 //-----------------------------------------------------------------------------
 struct ISMetaSystem
 {
-    ISMetaSystem() : IsSystem(false) { }
+	ISMetaSystem() : IsSystem(false) { }
 
-    ~ISMetaSystem()
-    {
-        while (!SubSystems.empty())
-        {
-            delete ISAlgorithm::VectorTakeBack(SubSystems);
-        }
-    }
+	~ISMetaSystem()
+	{
+		while (!SubSystems.empty())
+		{
+			delete ISAlgorithm::VectorTakeBack(SubSystems);
+		}
+	}
 
-    bool IsSystem; //Движковая система (если нет - значит пользовательская)
-    ISUuid UID; //Идентификатор
-    QString LocalName; //Имя системы
-    QString IconName; //Имя иконки
-    QString Hint; //Всплывающая подсказка
-    std::vector<ISMetaSubSystem*> SubSystems; //Список подсистем
-};
-//-----------------------------------------------------------------------------
-struct ISPrintMetaReport
-{
-    ISPrintMetaReport() : Type(ISNamespace::RT_Unknown) { }
-
-    void SetType(const QString &type)
-    {
-        if (type == REPORT_TYPE_HTML)
-        {
-            Type = ISNamespace::RT_Html;
-        }
-		else
-        {
-            IS_ASSERT(false, QString("Inknown report type: %1").arg(type));
-        }
-    }
-
-	ISUuid UID;
-    ISNamespace::ReportType Type;
-    QString TableName;
-    QString LocalName;
-    QString FileTemplate;
-    ISStringMap Fields;
+	bool IsSystem; //Движковая система (если нет - значит пользовательская)
+	ISUuid UID; //Идентификатор
+	QString LocalName; //Имя системы
+	QString IconName; //Имя иконки
+	QString Hint; //Всплывающая подсказка
+	std::vector<ISMetaSubSystem*> SubSystems; //Список подсистем
 };
 //-----------------------------------------------------------------------------
 struct PMetaUserPermission
 {
-    PMetaUserPermission() : Show(false), CreateCopy(false), Edit(false), Delete(false), UpdateList(false), ShowDeleted(false),
-        ShowAll(false), Search(false), Export(false), Print(false), SystemInformation(false), AttachTask(false), TableNavigation(false) { }
+	PMetaUserPermission() : Show(false), Create(false), CreateCopy(false), Edit(false), Delete(false), UpdateList(false), ShowDeleted(false),
+		ShowAll(false), Search(false), Export(false), Print(false), SystemInformation(false), AttachTask(false), TableNavigation(false) { }
 
-    QString SubSystemUID;
-    QString TableUID;
+	QString SubSystemUID;
+	QString TableUID;
 
-    bool Show;
-    bool Create;
-    bool CreateCopy;
-    bool Edit;
-    bool Delete;
-    bool UpdateList;
-    bool ShowDeleted;
-    bool ShowAll;
-    bool Search;
-    bool Export;
-    bool Print;
-    bool SystemInformation;
-    bool AttachTask;
-    bool TableNavigation;
+	bool Show;
+	bool Create;
+	bool CreateCopy;
+	bool Edit;
+	bool Delete;
+	bool UpdateList;
+	bool ShowDeleted;
+	bool ShowAll;
+	bool Search;
+	bool Export;
+	bool Print;
+	bool SystemInformation;
+	bool AttachTask;
+	bool TableNavigation;
 };
 //-----------------------------------------------------------------------------
 struct ISCORE_EXPORT ISConfigurationInfo
 {
-    QString Name; //Наименование
-    ISUuid UID; //Идентификатор
-    QString LocalName; //Локальное наименование
-    QString DesktopForm; //Имя класса рабочего стола
+	QString Name; //Наименование
+	ISUuid UID; //Идентификатор
+	QString LocalName; //Локальное наименование
+	QString DesktopForm; //Имя класса рабочего стола
 	QDate DateExpired; //Дата, после которой программа запускаться не должна
 	QString LogoName;
 };
 //-----------------------------------------------------------------------------
 struct ISCORE_EXPORT ISBuildInfoStruct
 {
-	unsigned int Version; //Версия
+	ISBuildInfoStruct() : Version(0) { }
 
+	unsigned int Version; //Версия
 	QString Date; //Дата сборки
 	QString Time; //Время сборки
 	QString Hash; //Хэш коммита
 	QString BranchName; //Имя ветки
-    QString Configuration; //Конфигурация
+	QString Configuration; //Конфигурация
 	QString Platform; //Платформа
 };
 //-----------------------------------------------------------------------------
 struct ISCORE_EXPORT CGSectionItem
 {
-    QString Function;
-    QString Description;
+	QString Function;
+	QString Description;
 };
 //-----------------------------------------------------------------------------
 struct ISCORE_EXPORT CGSection
 {
-    QString Name;
-    QString ClassName;
-    std::vector<CGSectionItem*> Items;
+	QString Name;
+	QString ClassName;
+	std::vector<CGSectionItem*> Items;
 };
 //-----------------------------------------------------------------------------
 struct ISCORE_EXPORT ISConnectOptionDB
 {
-    QString Host; //Адрес сервера
-    int Port; //Порт
-    QString Name; //Имя базы данных
-    QString Login; //Логин пользователя
-    QString Password; //Пароль
+	ISConnectOptionDB() : Port(0) { }
+
+	ISConnectOptionDB(const QString& host, unsigned short port, const QString& name, const QString& login, const QString& password)
+		: Host(host), Port(port), Name(name), Login(login), Password(password) { }
+
+	QString Host; //Адрес сервера
+	unsigned short Port; //Порт
+	QString Name; //Имя базы данных
+	QString Login; //Логин пользователя
+	QString Password; //Пароль
 };
 //-----------------------------------------------------------------------------
 struct ISHistoryObject
@@ -221,8 +201,8 @@ struct ISHistoryObject
 //-----------------------------------------------------------------------------
 struct ISMessageBoxButton
 {
-	ISMessageBoxButton(int id, const QString &text, bool _default = false, const QIcon &icon = QIcon()) : ID(id), Text(text), Default(_default), Icon(icon) { }
-	ISMessageBoxButton() : ID(-1) { }
+	ISMessageBoxButton(int id, const QString& text, bool _default = false, const QIcon& icon = QIcon()) : ID(id), Text(text), Default(_default), Icon(icon) { }
+	//ISMessageBoxButton() : ID(-1) { } //???
 
 	int ID; //Идентификатор кнопки
 	QString Text; //Надпись
@@ -247,10 +227,10 @@ struct ISClientInfo
 		: ID(0),
 		Port(0),
 		DTConnected(QDateTime::currentDateTime()),
-		LastQueryType(ISNamespace::AMT_Unknown),
+		LastQueryType(ISNamespace::ApiMessageType::Unknown),
 		LastQueryResult(false),
 		LastQueryMSec(0)
-		{ }
+	{ }
 
 	unsigned int ID; //Идентификатор в БД
 	QString Address; //IP-адрес
@@ -272,11 +252,7 @@ struct ISFailAuthInfo
 //-----------------------------------------------------------------------------
 struct ISCORE_EXPORT ISModelField
 {
-	ISModelField()
-		: Index(0),
-		Type(ISNamespace::FT_Unknown),
-		IsForeign(false),
-		IsSystem(false) { }
+	ISModelField() : Index(0), Type(ISNamespace::FieldType::Unknown), IsForeign(false), IsSystem(false) { }
 
 	size_t Index; //Индекс
 	QString Name; //Имя

@@ -9,12 +9,6 @@
 class ISCORE_EXPORT ISMetaData
 {
 public:
-    ISMetaData(const ISMetaData &) = delete;
-    ISMetaData(ISMetaData &&) = delete;
-    ISMetaData &operator=(const ISMetaData &) = delete;
-    ISMetaData &operator=(ISMetaData &&) = delete;
-    ~ISMetaData();
-
     static ISMetaData& Instance();
 
     QString GetErrorString() const;
@@ -60,6 +54,11 @@ protected:
 
 private:
     ISMetaData();
+    ~ISMetaData();
+	ISMetaData(const ISMetaData &) = delete;
+	ISMetaData(ISMetaData &&) = delete;
+	ISMetaData& operator=(const ISMetaData &) = delete;
+	ISMetaData& operator=(ISMetaData &&) = delete;
 
 private:
     QString ErrorString;

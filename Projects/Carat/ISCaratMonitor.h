@@ -16,8 +16,10 @@ public:
 private:
 	ISCaratMonitor();
 	~ISCaratMonitor();
-	ISCaratMonitor(ISCaratMonitor const &) {};
-	ISCaratMonitor& operator=(ISCaratMonitor const&) { return *this; };
+	ISCaratMonitor(const ISCaratMonitor&) = delete;
+	ISCaratMonitor(ISCaratMonitor&&) = delete;
+	ISCaratMonitor& operator=(const ISCaratMonitor&) = delete;
+	ISCaratMonitor& operator=(ISCaratMonitor&&) = delete;
 
 private:
 	quint64 _IncomingQuerySize; //Размер входящего траффика

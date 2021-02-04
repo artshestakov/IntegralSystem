@@ -27,7 +27,7 @@ ISTcpSocket::ISTcpSocket(qintptr socket_descriptor, QObject *parent)
 	connect(Timer, &QTimer::timeout, this, &ISTcpSocket::Timeout);
 
 	//Эти сигналы обязательно должны подключаться в конце конструктора
-	connect(this, static_cast<void(ISTcpSocket::*)(QAbstractSocket::SocketError)>(&ISTcpSocket::error), this, &ISTcpSocket::Error);
+	connect(this, static_cast<void(ISTcpSocket::*)(QAbstractSocket::SocketError)>(&ISTcpSocket::errorOccurred), this, &ISTcpSocket::Error);
 	connect(this, &ISTcpSocket::readyRead, this, &ISTcpSocket::ReadyRead);
 }
 //-----------------------------------------------------------------------------
@@ -142,7 +142,7 @@ void ISTcpSocket::ReadyRead()
 			{
 				//Получаем тип сообщения по его имени и если оно неизвестное - ошибка
 				ISNamespace::ApiMessageType MessageType = ISTcp::GetMessageTypeByName(TcpMessage->TypeName);
-				Result = MessageType != ISNamespace::AMT_Unknown;
+				Result = MessageType != ISNamespace::ApiMessageType::Unknown;
 				if (Result) //Сообщение валидное
 				{
 					TcpMessage->Type = MessageType;

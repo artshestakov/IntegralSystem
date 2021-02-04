@@ -1959,7 +1959,7 @@ void ISListEditPopup::ItemClicked(QListWidgetItem *ListWidgetItem)
 void ISListEditPopup::Add()
 {
 	hide();
-	ISObjectFormBase *ObjectFormBase = ISGui::CreateObjectForm(ISNamespace::OFT_New, MetaTableForeign->Name);
+	ISObjectFormBase *ObjectFormBase = ISGui::CreateObjectForm(ISNamespace::ObjectFormType::New, MetaTableForeign->Name);
 	connect(ObjectFormBase, &ISObjectFormBase::SavedObject, this, &ISListEditPopup::Created);
 	ISGui::ShowObjectForm(ObjectFormBase);
 }
@@ -2214,7 +2214,7 @@ void ISListEdit::CreateObject()
 {
 	if (ISUserRoleEntity::Instance().CheckAccessTable(MetaTable->Name, CONST_UID_GROUP_ACCESS_TYPE_CREATE))
 	{
-		ISObjectFormBase *ObjectFormBase = ISGui::CreateObjectForm(ISNamespace::OFT_New, MetaTable->Name);
+		ISObjectFormBase *ObjectFormBase = ISGui::CreateObjectForm(ISNamespace::ObjectFormType::New, MetaTable->Name);
 		connect(ObjectFormBase, &ISObjectFormBase::SavedWithListEdit, this, &ISListEdit::SelectedValue);
 		ISGui::ShowObjectForm(ObjectFormBase);
 	}
@@ -2228,7 +2228,7 @@ void ISListEdit::EditObject()
 {
 	if (ISUserRoleEntity::Instance().CheckAccessTable(MetaTable->Name, CONST_UID_GROUP_ACCESS_TYPE_EDIT))
 	{
-		ISObjectFormBase *ObjectFormBase = ISGui::CreateObjectForm(ISNamespace::OFT_Edit, MetaTable->Name, GetValue().toInt());
+		ISObjectFormBase *ObjectFormBase = ISGui::CreateObjectForm(ISNamespace::ObjectFormType::Edit, MetaTable->Name, GetValue().toInt());
 		connect(ObjectFormBase, &ISObjectFormBase::SavedWithListEdit, this, &ISListEdit::SelectedValue);
 		ISGui::ShowObjectForm(ObjectFormBase);
 	}

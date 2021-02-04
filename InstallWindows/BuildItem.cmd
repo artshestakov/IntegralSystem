@@ -12,7 +12,7 @@ REM Win32 - платформа сборки
 REM Если переменная %CPU_CORE_COUNT% не заполнена - заполняем её фактическим количеством процессоров на текущей машине
 IF "%CPU_CORE_COUNT%"=="" (SET /a CPU_CORE_COUNT=%NUMBER_OF_PROCESSORS%)
 
-MSBuild ..\%1\%2\%2.vcxproj -p:Configuration=%3 -p:Platform=%4 -p:OutDir=..\..\Deploy\%3-%4\ -maxcpucount /m:%CPU_CORE_COUNT% /p:CL_MPCount=%CPU_CORE_COUNT%
+"C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Current\Bin\MSBuild" ..\%1\%2\%2.vcxproj -p:Configuration=%3 -p:Platform=%4 -p:OutDir=..\..\Deploy\%3-%4\ -maxcpucount /m:%CPU_CORE_COUNT% /p:CL_MPCount=%CPU_CORE_COUNT%
 IF ERRORLEVEL 1 GOTO ERROR
 GOTO OK
 :ERROR

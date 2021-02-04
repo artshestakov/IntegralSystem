@@ -41,248 +41,248 @@ ISNamespace::ApiMessageType ISTcp::GetMessageTypeByName(const QString &Name)
 {
 	if (Name == API_AUTH)
 	{
-		return ISNamespace::AMT_Auth;
+		return ISNamespace::ApiMessageType::Auth;
 	}
 	else if (Name == API_SLEEP)
 	{
-		return ISNamespace::AMT_Sleep;
+		return ISNamespace::ApiMessageType::Sleep;
 	}
 	else if (Name == API_GET_META_DATA)
 	{
-		return ISNamespace::AMT_GetMetaData;
+		return ISNamespace::ApiMessageType::GetMetaData;
 	}
 	else if (Name == API_GET_LAST_CLIENT)
 	{
-		return ISNamespace::AMT_GetLastClient;
+		return ISNamespace::ApiMessageType::GetLastClient;
 	}
 	else if (Name == API_USER_PASSWORD_EXIST)
 	{
-		return ISNamespace::AMT_UserPasswordExist;
+		return ISNamespace::ApiMessageType::UserPasswordExist;
 	}
 	else if (Name == API_USER_PASSWORD_CREATE)
 	{
-		return ISNamespace::AMT_UserPasswordCreate;
+		return ISNamespace::ApiMessageType::UserPasswordCreate;
 	}
 	else if (Name == API_USER_PASSWORD_EDIT)
 	{
-		return ISNamespace::AMT_UserPasswordEdit;
+		return ISNamespace::ApiMessageType::UserPasswordEdit;
 	}
 	else if (Name == API_USER_PASSWORD_RESET)
 	{
-		return ISNamespace::AMT_UserPasswordReset;
+		return ISNamespace::ApiMessageType::UserPasswordReset;
 	}
 	else if (Name == API_USER_SETTINGS_RESET)
 	{
-		return ISNamespace::AMT_UserSettingsReset;
+		return ISNamespace::ApiMessageType::UserSettingsReset;
 	}
 	else if (Name == API_USER_DEVICE_ADD)
 	{
-		return ISNamespace::AMT_UserDeviceAdd;
+		return ISNamespace::ApiMessageType::UserDeviceAdd;
 	}
 	else if (Name == API_USER_DEVICE_DELETE)
 	{
-		return ISNamespace::AMT_UserDeviceDelete;
+		return ISNamespace::ApiMessageType::UserDeviceDelete;
 	}
 	else if (Name == API_GET_RECORD_CALL)
 	{
-		return ISNamespace::AMT_GetRecordCall;
+		return ISNamespace::ApiMessageType::GetRecordCall;
 	}
 	else if (Name == API_GET_CLIENTS)
 	{
-		return ISNamespace::AMT_GetClients;
+		return ISNamespace::ApiMessageType::GetClients;
 	}
 	else if (Name == API_RECORD_ADD)
 	{
-		return ISNamespace::AMT_RecordAdd;
+		return ISNamespace::ApiMessageType::RecordAdd;
 	}
 	else if (Name == API_RECORD_EDIT)
 	{
-		return ISNamespace::AMT_RecordEdit;
+		return ISNamespace::ApiMessageType::RecordEdit;
 	}
 	else if (Name == API_RECORD_DELETE)
 	{
-		return ISNamespace::AMT_RecordDelete;
+		return ISNamespace::ApiMessageType::RecordDelete;
 	}
 	else if (Name == API_RECORD_GET)
 	{
-		return ISNamespace::AMT_RecordGet;
+		return ISNamespace::ApiMessageType::RecordGet;
 	}
 	else if (Name == API_RECORD_GET_INFO)
 	{
-		return ISNamespace::AMT_RecordGetInfo;
+		return ISNamespace::ApiMessageType::RecordGetInfo;
 	}
 	else if (Name == API_DISCUSSION_ADD)
 	{
-		return ISNamespace::AMT_DiscussionAdd;
+		return ISNamespace::ApiMessageType::DiscussionAdd;
 	}
 	else if (Name == API_DISCUSSION_EDIT)
 	{
-		return ISNamespace::AMT_DiscussionEdit;
+		return ISNamespace::ApiMessageType::DiscussionEdit;
 	}
 	else if (Name == API_DISCUSSION_COPY)
 	{
-		return ISNamespace::AMT_DiscussionCopy;
+		return ISNamespace::ApiMessageType::DiscussionCopy;
 	}
 	else if (Name == API_GET_TABLE_DATA)
 	{
-		return ISNamespace::AMT_GetTableData;
+		return ISNamespace::ApiMessageType::GetTableData;
 	}
 	else if (Name == API_GET_TABLE_QUERY)
 	{
-		return ISNamespace::AMT_GetTableQuery;
+		return ISNamespace::ApiMessageType::GetTableQuery;
 	}
 	else if (Name == API_NOTE_RECORD_GET)
 	{
-		return ISNamespace::AMT_NoteRecordGet;
+		return ISNamespace::ApiMessageType::NoteRecordGet;
 	}
 	else if (Name == API_NOTE_RECORD_SET)
 	{
-		return ISNamespace::AMT_NoteRecordSet;
+		return ISNamespace::ApiMessageType::NoteRecordSet;
 	}
 	else if (Name == API_FILE_STORAGE_ADD)
 	{
-		return ISNamespace::AMT_FileStorageAdd;
+		return ISNamespace::ApiMessageType::FileStorageAdd;
 	}
 	else if (Name == API_FILE_STORAGE_COPY)
 	{
-		return ISNamespace::AMT_FileStorageCopy;
+		return ISNamespace::ApiMessageType::FileStorageCopy;
 	}
 	else if (Name == API_FILE_STORAGE_GET)
 	{
-		return ISNamespace::AMT_FileStorageGet;
+		return ISNamespace::ApiMessageType::FileStorageGet;
 	}
 	else if (Name == API_SEARCH_TASK_TEXT)
 	{
-		return ISNamespace::AMT_SearchTaskText;
+		return ISNamespace::ApiMessageType::SearchTaskText;
 	}
 	else if (Name == API_SEARCH_TASK_ID)
 	{
-		return ISNamespace::AMT_SearchTaskID;
+		return ISNamespace::ApiMessageType::SearchTaskID;
 	}
 	else if (Name == API_SEARCH_FULL_TEXT)
 	{
-		return ISNamespace::AMT_SearchFullText;
+		return ISNamespace::ApiMessageType::SearchFullText;
 	}
 	else if (Name == API_GET_CALENDAR_EVENTS)
 	{
-		return ISNamespace::AMT_GetCalendarEvents;
+		return ISNamespace::ApiMessageType::GetCalendarEvents;
 	}
 	else if (Name == API_CALENDAR_DELETE)
 	{
-		return ISNamespace::AMT_CalendarDelete;
+		return ISNamespace::ApiMessageType::CalendarDelete;
 	}
 	else if (Name == API_GET_INTERNAL_LISTS)
 	{
-		return ISNamespace::AMT_GetInternalLists;
+		return ISNamespace::ApiMessageType::GetInternalLists;
 	}
 	else if (Name == API_SAVE_META_DATA)
 	{
-		return ISNamespace::AMT_SaveMetaData;
+		return ISNamespace::ApiMessageType::SaveMetaData;
 	}
 	else if (Name == API_GET_GROUP_RIGHTS)
 	{
-		return ISNamespace::AMT_GetGroupRights;
+		return ISNamespace::ApiMessageType::GetGroupRights;
 	}
 	else if (Name == API_GROUP_RIGHT_SUBSYSTEM_ADD)
 	{
-		return ISNamespace::AMT_GroupRightSubSystemAdd;
+		return ISNamespace::ApiMessageType::GroupRightSubSystemAdd;
 	}
 	else if (Name == API_GROUP_RIGHT_SUBSYSTEM_DELETE)
 	{
-		return ISNamespace::AMT_GroupRightSubSystemDelete;
+		return ISNamespace::ApiMessageType::GroupRightSubSystemDelete;
 	}
 	else if (Name == API_GROUP_RIGHT_TABLE_ADD)
 	{
-		return ISNamespace::AMT_GroupRightTableAdd;
+		return ISNamespace::ApiMessageType::GroupRightTableAdd;
 	}
 	else if (Name == API_GROUP_RIGHT_TABLE_DELETE)
 	{
-		return ISNamespace::AMT_GroupRightTableDelete;
+		return ISNamespace::ApiMessageType::GroupRightTableDelete;
 	}
 	else if (Name == API_GROUP_RIGHT_SPECIAL_ADD)
 	{
-		return ISNamespace::AMT_GroupRightSpecialAdd;
+		return ISNamespace::ApiMessageType::GroupRightSpecialAdd;
 	}
 	else if (Name == API_GROUP_RIGHT_SPECIAL_DELETE)
 	{
-		return ISNamespace::AMT_GroupRightSpecialDelete;
+		return ISNamespace::ApiMessageType::GroupRightSpecialDelete;
 	}
 	else if (Name == API_GET_RECORD_VALUE)
 	{
-		return ISNamespace::AMT_GetRecordValue;
+		return ISNamespace::ApiMessageType::GetRecordValue;
 	}
 	else if (Name == API_RECORD_FAVORITE_ADD)
 	{
-		return ISNamespace::AMT_RecordFavoriteAdd;
+		return ISNamespace::ApiMessageType::RecordFavoriteAdd;
 	}
 	else if (Name == API_RECORD_FAVORITE_DELETE)
 	{
-		return ISNamespace::AMT_RecordFavoriteDelete;
+		return ISNamespace::ApiMessageType::RecordFavoriteDelete;
 	}
 	else if (Name == API_GET_FAVORITE_NAMES)
 	{
-		return ISNamespace::AMT_GetFavoriteNames;
+		return ISNamespace::ApiMessageType::GetFavoriteNames;
 	}
 	else if (Name == API_FAVORITES_DELETE)
 	{
-		return ISNamespace::AMT_FavoritesDelete;
+		return ISNamespace::ApiMessageType::FavoritesDelete;
 	}
 	else if (Name == API_LOG_GET_STRUCTURE)
 	{
-		return ISNamespace::AMT_LogGetStructure;
+		return ISNamespace::ApiMessageType::LogGetStructure;
 	}
 	else if (Name == API_LOG_GET_CONTENT)
 	{
-		return ISNamespace::AMT_LogGetContent;
+		return ISNamespace::ApiMessageType::LogGetContent;
 	}
 	else if (Name == API_CALENDAR_CLOSE)
 	{
-		return ISNamespace::AMT_CalendarClose;
+		return ISNamespace::ApiMessageType::CalendarClose;
 	}
 	else if (Name == API_GET_HISTORY_LIST)
 	{
-		return ISNamespace::AMT_GetHistoryList;
+		return ISNamespace::ApiMessageType::GetHistoryList;
 	}
 	else if (Name == API_TASK_COMMENT_ADD)
 	{
-		return ISNamespace::AMT_TaskCommentAdd;
+		return ISNamespace::ApiMessageType::TaskCommentAdd;
 	}
 	else if (Name == API_GET_FOREIGN_LIST)
 	{
-		return ISNamespace::AMT_GetForeignList;
+		return ISNamespace::ApiMessageType::GetForeignList;
 	}
 	else if (Name == API_GET_SERVER_INFO)
 	{
-		return ISNamespace::AMT_GetServerInfo;
+		return ISNamespace::ApiMessageType::GetServerInfo;
 	}
 	else if (Name == API_ORGANIZATION_FROM_INN)
 	{
-		return ISNamespace::AMT_OrganizationFromINN;
+		return ISNamespace::ApiMessageType::OrganizationFromINN;
 	}
 	else if (Name == API_PERIOD_CONTAINS)
 	{
-		return ISNamespace::AMT_PeriodContains;
+		return ISNamespace::ApiMessageType::PeriodContains;
 	}
 	else if (Name == API_GET_STOCK_LIST)
 	{
-		return ISNamespace::AMT_GetStockList;
+		return ISNamespace::ApiMessageType::GetStockList;
 	}
 	else if (Name == API_STATEMENT_ADD)
 	{
-		return ISNamespace::AMT_StatementAdd;
+		return ISNamespace::ApiMessageType::StatementAdd;
 	}
 	else if (Name == API_GET_GAST_STATION)
 	{
-		return ISNamespace::AMT_GetGasStation;
+		return ISNamespace::ApiMessageType::GetGasStation;
 	}
 	else if (Name == API_GET_DEBT_IMPLEMENTATION)
 	{
-		return ISNamespace::AMT_GetDebtImplementation;
+		return ISNamespace::ApiMessageType::GetDebtImplementation;
 	}
 	else if (Name == API_GET_DEBT_COUNTERPARTY)
 	{
-		return ISNamespace::AMT_GetDebtCounterparty;
+		return ISNamespace::ApiMessageType::GetDebtCounterparty;
 	}
-	return ISNamespace::AMT_Unknown;
+	return ISNamespace::ApiMessageType::Unknown;
 }
 //-----------------------------------------------------------------------------

@@ -21,8 +21,10 @@ public:
 private:
 	ISTcpClients();
 	~ISTcpClients();
-	ISTcpClients(ISTcpClients const &) {};
-	ISTcpClients& operator=(ISTcpClients const&) { return *this; };
+	ISTcpClients(const ISTcpClients&) = delete;
+	ISTcpClients(ISTcpClients&&) = delete;
+	ISTcpClients& operator=(const ISTcpClients&) = delete;
+	ISTcpClients& operator=(ISTcpClients&&) = delete;
 
 private:
 	std::map<qintptr, ISClientInfo> Clients;

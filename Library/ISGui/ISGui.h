@@ -70,7 +70,7 @@ public:
 	//static void ShowTaskViewForm(QWidget *TaskViewForm); //Показать форму просмотра задач по виджету
 
 private:
-	static ISFieldEditBase* CreateFieldEditBase(QWidget *ParentWidget, PMetaField *MetaField = nullptr, ISNamespace::FieldType DataType = ISNamespace::FT_Unknown, const QString &ControlWidget = QString());
+	static ISFieldEditBase* CreateFieldEditBase(QWidget *ParentWidget, PMetaField *MetaField = nullptr, ISNamespace::FieldType DataType = ISNamespace::FieldType::Unknown, const QString &ControlWidget = QString());
 
 private:
 	static void RegisterMetaType(); //Регистрация мета-типов

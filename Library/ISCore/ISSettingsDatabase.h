@@ -15,8 +15,10 @@ public:
 private:
 	ISSettingsDatabase();
 	~ISSettingsDatabase();
-	ISSettingsDatabase(ISSettingsDatabase const &) {};
-	ISSettingsDatabase& operator=(ISSettingsDatabase const&) { return *this; };
+	ISSettingsDatabase(const ISSettingsDatabase&) = delete;
+	ISSettingsDatabase(ISSettingsDatabase&&) = delete;
+	ISSettingsDatabase& operator=(const ISSettingsDatabase&) = delete;
+	ISSettingsDatabase& operator=(ISSettingsDatabase&&) = delete;
 
 private:
 	ISStringToVariantMap Settings;

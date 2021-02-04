@@ -96,6 +96,6 @@ void ISHistoryForm::Search(const QVariant &Value)
 //-----------------------------------------------------------------------------
 void ISHistoryForm::Open(QListWidgetItem *ListWidgetItem)
 {
-	ISGui::ShowObjectForm(ISGui::CreateObjectForm(ISNamespace::OFT_Edit, ListWidgetItem->data(Qt::UserRole).toString(), ListWidgetItem->data(Qt::UserRole * 2).toInt()));
+	ISGui::ShowObjectForm(ISGui::CreateObjectForm(ISNamespace::ObjectFormType::Edit, ListWidgetItem->data(Qt::UserRole).toString(), ListWidgetItem->data(Qt::UserRole * 2).toInt()));
 }
 //-----------------------------------------------------------------------------

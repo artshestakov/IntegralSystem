@@ -16,8 +16,10 @@ public:
 private:
 	ISProperty();
 	~ISProperty();
-	ISProperty(ISProperty const &) {};
-	ISProperty& operator=(ISProperty const&) { return *this; };
+	ISProperty(const ISProperty&) = delete;
+	ISProperty(ISProperty&&) = delete;
+	ISProperty& operator=(const ISProperty&) = delete;
+	ISProperty& operator=(ISProperty&&) = delete;
 
 private:
 	ISStringToVariantMap Map;

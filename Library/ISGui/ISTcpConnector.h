@@ -26,8 +26,10 @@ private:
 private:
 	ISTcpConnector();
 	~ISTcpConnector();
-    ISTcpConnector(ISTcpConnector const &) : QObject() { };
-	ISTcpConnector& operator=(ISTcpConnector const&) { return *this; };
+	ISTcpConnector(const ISTcpConnector &) = delete;
+	ISTcpConnector(ISTcpConnector &&) = delete;
+	ISTcpConnector& operator=(const ISTcpConnector &) = delete;
+	ISTcpConnector& operator=(ISTcpConnector &&) = delete;
 
 private:
 	QString ErrorString;

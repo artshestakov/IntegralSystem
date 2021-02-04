@@ -21,8 +21,10 @@ protected:
 private:
 	ISAudioPlayerForm();
 	virtual ~ISAudioPlayerForm();
-	ISAudioPlayerForm(ISAudioPlayerForm const &) {};
-	ISAudioPlayerForm& operator=(ISAudioPlayerForm const&) { return *this; };
+	ISAudioPlayerForm(const ISAudioPlayerForm&) = delete;
+	ISAudioPlayerForm(ISAudioPlayerForm&&) = delete;
+	ISAudioPlayerForm& operator=(const ISAudioPlayerForm&) = delete;
+	ISAudioPlayerForm& operator=(ISAudioPlayerForm&&) = delete;
 
 private:
 	void PlayClicked();

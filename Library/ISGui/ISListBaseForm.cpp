@@ -37,71 +37,71 @@ ISListBaseForm::ISListBaseForm(const QString &TableName, QWidget *parent)
 		QAction *ActionCreate = ISControls::CreateActionCreate(this);
 		ActionCreate->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
 		connect(ActionCreate, &QAction::triggered, this, &ISListBaseForm::Create);
-		Actions[ISNamespace::AT_Create] = ActionCreate;
+		Actions[ISNamespace::ActionType::Create] = ActionCreate;
 
 		//Создать копию
 		QAction *ActionCreateCopy = ISControls::CreateActionCreateCopy(this);
 		connect(ActionCreateCopy, &QAction::triggered, this, &ISListBaseForm::CreateCopy);
-		Actions[ISNamespace::AT_CreateCopy] = ActionCreateCopy;
+		Actions[ISNamespace::ActionType::CreateCopy] = ActionCreateCopy;
 		ActionObjectGroup->addAction(ActionCreateCopy);
 		
 		//Изменить
 		QAction *ActionEdit = ISControls::CreateActionEdit(this);
 		connect(ActionEdit, &QAction::triggered, this, &ISListBaseForm::Edit);
-		Actions[ISNamespace::AT_Edit] = ActionEdit;
+		Actions[ISNamespace::ActionType::Edit] = ActionEdit;
 		ActionObjectGroup->addAction(ActionEdit);
 
 		//Удалить
 		QAction *ActionDelete = ISControls::CreateActionDelete(this);
 		connect(ActionDelete, &QAction::triggered, this, &ISListBaseForm::Delete);
-		Actions[ISNamespace::AT_Delete] = ActionDelete;
+		Actions[ISNamespace::ActionType::Delete] = ActionDelete;
 		ActionObjectGroup->addAction(ActionDelete);
 
 		//Обновить
 		QAction *ActionUpdate = ISControls::CreateActionUpdate(this);
 		connect(ActionUpdate, &QAction::triggered, this, &ISListBaseForm::Update);
-		Actions[ISNamespace::AT_Update] = ActionUpdate;
+		Actions[ISNamespace::ActionType::Update] = ActionUpdate;
 
 		//Поиск
 		QAction *ActionSearch = ISControls::CreateActionSearch(this);
 		connect(ActionSearch, &QAction::triggered, this, &ISListBaseForm::SearchShow);
-		Actions[ISNamespace::AT_Search] = ActionSearch;
+		Actions[ISNamespace::ActionType::Search] = ActionSearch;
 
 		//Очистка результатов поиска
 		QAction *ActionSearchClearResult = ISControls::CreateActionSearchClearResults(this);
 		connect(ActionSearchClearResult, &QAction::triggered, this, &ISListBaseForm::SearchClear);
-		Actions[ISNamespace::AT_SearchClear] = ActionSearchClearResult;
+		Actions[ISNamespace::ActionType::SearchClear] = ActionSearchClearResult;
 
 		//Экспорт
 		QAction *ActionExport = new QAction(BUFFER_ICONS("ExportTable"), LANG("ListForm.ExportTable"), this);
 		ActionExport->setShortcut(QKeySequence(Qt::Key_F12));
 		connect(ActionExport, &QAction::triggered, this, &ISListBaseForm::Export);
-		Actions[ISNamespace::AT_Export] = ActionExport;
+		Actions[ISNamespace::ActionType::Export] = ActionExport;
 
 		//Избранное
 		QAction *ActionFavorites = new QAction(BUFFER_ICONS("Favorites"), LANG("Favorites"), this);
 		connect(ActionFavorites, &QAction::triggered, this, &ISListBaseForm::ShowFavorites);
-		Actions[ISNamespace::AT_Favorites] = ActionFavorites;
+		Actions[ISNamespace::ActionType::Favorites] = ActionFavorites;
 	}
 
 	{//Создание специальных действий
 		//Информация о записи
 		QAction *ActionRecordInfo = ISControls::CreateActionRecordInfo(this);
 		connect(ActionRecordInfo, &QAction::triggered, this, &ISListBaseForm::RecordInfo);
-		ActionsSpecial[ISNamespace::AST_RecordInfo] = ActionRecordInfo;
+		ActionsSpecial[ISNamespace::ActionSpecialType::RecordInfo] = ActionRecordInfo;
 		ActionObjectGroup->addAction(ActionRecordInfo);
 
 		//Избранное
 		QAction *ActionFavorite = ISControls::CreateActionFavorite(this);
 		ActionFavorite->setCheckable(true);
 		connect(ActionFavorite, &QAction::triggered, this, &ISListBaseForm::FavoriteObject);
-		ActionsSpecial[ISNamespace::AST_Favorite] = ActionFavorite;
+		ActionsSpecial[ISNamespace::ActionSpecialType::Favorite] = ActionFavorite;
 		ActionObjectGroup->addAction(ActionFavorite);
 
 		//Примечание
 		QAction *ActionNoteObject = ISControls::CreateActionNoteObject(this);
 		connect(ActionNoteObject, &QAction::triggered, this, &ISListBaseForm::NoteObject);
-		ActionsSpecial[ISNamespace::AST_Note] = ActionNoteObject;
+		ActionsSpecial[ISNamespace::ActionSpecialType::Note] = ActionNoteObject;
 		ActionObjectGroup->addAction(ActionNoteObject);
 	}
 
@@ -110,20 +110,20 @@ ISListBaseForm::ISListBaseForm(const QString &TableName, QWidget *parent)
 		ToolBar->setToolButtonStyle(Qt::ToolButtonIconOnly);
 		GetMainLayout()->addWidget(ToolBar);
 
-		ToolBar->addAction(GetAction(ISNamespace::AT_Create));
-		ToolBar->addAction(GetAction(ISNamespace::AT_CreateCopy));
-		ToolBar->addAction(GetAction(ISNamespace::AT_Edit));
-		ToolBar->addAction(GetAction(ISNamespace::AT_Delete));
-		ToolBar->addAction(GetAction(ISNamespace::AT_Update));
-		ToolBar->addAction(GetAction(ISNamespace::AT_Search));
-		ToolBar->addAction(GetAction(ISNamespace::AT_SearchClear));
+		ToolBar->addAction(GetAction(ISNamespace::ActionType::Create));
+		ToolBar->addAction(GetAction(ISNamespace::ActionType::CreateCopy));
+		ToolBar->addAction(GetAction(ISNamespace::ActionType::Edit));
+		ToolBar->addAction(GetAction(ISNamespace::ActionType::Delete));
+		ToolBar->addAction(GetAction(ISNamespace::ActionType::Update));
+		ToolBar->addAction(GetAction(ISNamespace::ActionType::Search));
+		ToolBar->addAction(GetAction(ISNamespace::ActionType::SearchClear));
 
 		QAction *ActionAdditionally = ToolBar->addAction(BUFFER_ICONS("AdditionallyActions"), LANG("Additionally"));
 		dynamic_cast<QToolButton*>(ToolBar->widgetForAction(ActionAdditionally))->setPopupMode(QToolButton::InstantPopup);
 		dynamic_cast<QToolButton*>(ToolBar->widgetForAction(ActionAdditionally))->setStyleSheet(BUFFER_STYLE_SHEET("QToolButtonMenu"));
 		ActionAdditionally->setMenu(new QMenu(ToolBar));
-		ActionAdditionally->menu()->addAction(GetAction(ISNamespace::AT_Favorites));
-		ActionAdditionally->menu()->addAction(GetAction(ISNamespace::AT_Export));
+		ActionAdditionally->menu()->addAction(GetAction(ISNamespace::ActionType::Favorites));
+		ActionAdditionally->menu()->addAction(GetAction(ISNamespace::ActionType::Export));
 		ActionAdditionally->menu()->addAction(LANG("SettingsList"), this, &ISListBaseForm::ShowSettingsForm);
 	}
 
@@ -169,14 +169,14 @@ ISListBaseForm::ISListBaseForm(const QString &TableName, QWidget *parent)
 
 	{//Создание контекстного меню
 		ContextMenu = new QMenu(this);
-		if (GetAction(ISNamespace::AT_Create)) ContextMenu->addAction(GetAction(ISNamespace::AT_Create));
-		if (GetAction(ISNamespace::AT_CreateCopy)) ContextMenu->addAction(GetAction(ISNamespace::AT_CreateCopy));
-		if (GetAction(ISNamespace::AT_Edit)) ContextMenu->addAction(GetAction(ISNamespace::AT_Edit));
-		if (GetAction(ISNamespace::AT_Delete)) ContextMenu->addAction(GetAction(ISNamespace::AT_Delete));
-		if (GetAction(ISNamespace::AT_Update)) ContextMenu->addAction(GetAction(ISNamespace::AT_Update));
-		ContextMenu->addAction(GetSpecialAction(ISNamespace::AST_RecordInfo));
-		ContextMenu->addAction(GetSpecialAction(ISNamespace::AST_Favorite));
-		ContextMenu->addAction(GetSpecialAction(ISNamespace::AST_Note));
+		if (GetAction(ISNamespace::ActionType::Create)) ContextMenu->addAction(GetAction(ISNamespace::ActionType::Create));
+		if (GetAction(ISNamespace::ActionType::CreateCopy)) ContextMenu->addAction(GetAction(ISNamespace::ActionType::CreateCopy));
+		if (GetAction(ISNamespace::ActionType::Edit)) ContextMenu->addAction(GetAction(ISNamespace::ActionType::Edit));
+		if (GetAction(ISNamespace::ActionType::Delete)) ContextMenu->addAction(GetAction(ISNamespace::ActionType::Delete));
+		if (GetAction(ISNamespace::ActionType::Update)) ContextMenu->addAction(GetAction(ISNamespace::ActionType::Update));
+		ContextMenu->addAction(GetSpecialAction(ISNamespace::ActionSpecialType::RecordInfo));
+		ContextMenu->addAction(GetSpecialAction(ISNamespace::ActionSpecialType::Favorite));
+		ContextMenu->addAction(GetSpecialAction(ISNamespace::ActionSpecialType::Note));
 	}
 	ListIndicatorWidget = new ISListIndicatorWidget(this);
 }
@@ -384,7 +384,7 @@ void ISListBaseForm::SelectedRowEvent(const QItemSelection &ItemSelected, const 
 		LabelSelectedRow->clear();
 	}
 
-	GetAction(ISNamespace::AT_Delete)->setEnabled(SelectedRows);
+	GetAction(ISNamespace::ActionType::Delete)->setEnabled(SelectedRows);
 	emit SelectedRowSignal();
 }
 //-----------------------------------------------------------------------------
@@ -415,10 +415,10 @@ void ISListBaseForm::LoadDataAfterEvent()
 void ISListBaseForm::AfterShowEvent()
 {
 	ISInterfaceMetaForm::AfterShowEvent();
-	GetAction(ISNamespace::AT_Create)->setVisible(!MetaTable->ShowOnly);
-	GetAction(ISNamespace::AT_CreateCopy)->setVisible(!MetaTable->ShowOnly);
-	GetAction(ISNamespace::AT_Edit)->setVisible(!MetaTable->ShowOnly);
-	GetAction(ISNamespace::AT_Delete)->setVisible(!MetaTable->ShowOnly);
+	GetAction(ISNamespace::ActionType::Create)->setVisible(!MetaTable->ShowOnly);
+	GetAction(ISNamespace::ActionType::CreateCopy)->setVisible(!MetaTable->ShowOnly);
+	GetAction(ISNamespace::ActionType::Edit)->setVisible(!MetaTable->ShowOnly);
+	GetAction(ISNamespace::ActionType::Delete)->setVisible(!MetaTable->ShowOnly);
 }
 //-----------------------------------------------------------------------------
 void ISListBaseForm::AddAction(QAction *Action, bool AddingToActionGroup, bool AddingToContextMenu)
@@ -493,7 +493,7 @@ void ISListBaseForm::Search(const QVariantList &VariantList)
 {
 	TcpQuery->SetSearch(VariantList);
 	Update();
-	GetAction(ISNamespace::AT_SearchClear)->setEnabled(true);
+	GetAction(ISNamespace::ActionType::SearchClear)->setEnabled(true);
 	
 	if (!TcpModel->rowCount()) //Поиск не дал результатов
 	{
@@ -514,11 +514,11 @@ void ISListBaseForm::CreateDelegates()
 		{
 			switch (MetaField->Type)
 			{
-			case ISNamespace::FT_Bool: AbstractItemDelegate = new ISDelegateBoolean(TableView); break;
-			case ISNamespace::FT_Image: AbstractItemDelegate = new ISDelegateImage(TableView); break;
-			case ISNamespace::FT_Color: AbstractItemDelegate = new ISDelegateColor(TableView); break;
-			case ISNamespace::FT_File: AbstractItemDelegate = new ISDelegateFile(TableView); break;
-			case ISNamespace::FT_TaskImportant: AbstractItemDelegate = new ISDelegateTaskImportant(TableView); break;
+			case ISNamespace::FieldType::Bool: AbstractItemDelegate = new ISDelegateBoolean(TableView); break;
+			case ISNamespace::FieldType::Image: AbstractItemDelegate = new ISDelegateImage(TableView); break;
+			case ISNamespace::FieldType::Color: AbstractItemDelegate = new ISDelegateColor(TableView); break;
+			case ISNamespace::FieldType::File: AbstractItemDelegate = new ISDelegateFile(TableView); break;
+			case ISNamespace::FieldType::TaskImportant: AbstractItemDelegate = new ISDelegateTaskImportant(TableView); break;
 			}
 			if (AbstractItemDelegate)
 			{
@@ -602,7 +602,7 @@ void ISListBaseForm::Create()
 		return;
 	}
 
-	ISObjectFormBase *ObjectFormBase = ISGui::CreateObjectForm(ISNamespace::OFT_New, MetaTable->Name, 0, parentWidget());
+	ISObjectFormBase *ObjectFormBase = ISGui::CreateObjectForm(ISNamespace::ObjectFormType::New, MetaTable->Name, 0, parentWidget());
 	ObjectFormBase->SetParentObjectID(GetParentObjectID(), GetParentFilterField());
 	connect(ObjectFormBase, &ISObjectFormBase::SavedObject, this, static_cast<void(ISListBaseForm::*)(unsigned int)>(&ISListBaseForm::SetSelectObjectAfterUpdate));
 	connect(ObjectFormBase, &ISObjectFormBase::SavedObject, this, &ISListBaseForm::Updated);
@@ -626,7 +626,7 @@ void ISListBaseForm::CreateCopy()
 		return;
 	}
 
-	ISObjectFormBase *ObjectFormBase = ISGui::CreateObjectForm(ISNamespace::ObjectFormType::OFT_Copy, MetaTable->Name, GetObjectID(), parentWidget());
+	ISObjectFormBase *ObjectFormBase = ISGui::CreateObjectForm(ISNamespace::ObjectFormType::Copy, MetaTable->Name, GetObjectID(), parentWidget());
 	ObjectFormBase->SetParentObjectID(GetParentObjectID(), GetParentFilterField());
 	connect(ObjectFormBase, &ISObjectFormBase::SavedObject, this, static_cast<void(ISListBaseForm::*)(unsigned int)>(&ISListBaseForm::SetSelectObjectAfterUpdate));
 	connect(ObjectFormBase, &ISObjectFormBase::SavedObject, this, &ISListBaseForm::Updated);
@@ -643,8 +643,8 @@ void ISListBaseForm::Edit()
 		ISMessageBox::ShowWarning(this, LANG("Message.Warning.SystemObject.NotEdit"));
 		return;
 	}
-
-	ISObjectFormBase *ObjectFormBase = ISGui::CreateObjectForm(ISNamespace::OFT_Edit, MetaTable->Name, GetObjectID(), parentWidget());
+	
+	ISObjectFormBase *ObjectFormBase = ISGui::CreateObjectForm(ISNamespace::ObjectFormType::Edit, MetaTable->Name, GetObjectID(), parentWidget());
 	ObjectFormBase->SetParentObjectID(GetParentObjectID(), GetParentFilterField());
 	connect(ObjectFormBase, &ISObjectFormBase::SavedObject, this, static_cast<void(ISListBaseForm::*)(unsigned int)>(&ISListBaseForm::SetSelectObjectAfterUpdate));
 	connect(ObjectFormBase, &ISObjectFormBase::SavedObject, this, &ISListBaseForm::Updated);
@@ -685,8 +685,8 @@ bool ISListBaseForm::Update()
 
 	//Очередные операции с интерфейсом после загрузки
 	SetEnabledActions(Result);
-	GetAction(ISNamespace::AT_Update)->setEnabled(true); //Включаем только для обновления списка
-	GetAction(ISNamespace::AT_SearchClear)->setEnabled(false);
+	GetAction(ISNamespace::ActionType::Update)->setEnabled(true); //Включаем только для обновления списка
+	GetAction(ISNamespace::ActionType::SearchClear)->setEnabled(false);
 	ISGui::SetWaitGlobalCursor(false);
 
 	if (Result) //Запрос прошёл успешно
@@ -805,7 +805,7 @@ void ISListBaseForm::SearchShow()
 //-----------------------------------------------------------------------------
 void ISListBaseForm::SearchClear()
 {
-	GetAction(ISNamespace::AT_SearchClear)->setEnabled(false);
+	GetAction(ISNamespace::ActionType::SearchClear)->setEnabled(false);
 	TcpQuery->SetSearch(QVariantList());
 	Update();
 }
@@ -833,10 +833,10 @@ void ISListBaseForm::Export()
 	ISExportWorker *ExportWorker = nullptr;
 	switch (ExportForm.GetSelectedType())
 	{
-	case ISNamespace::ET_CSV: ExportWorker = new ISExportCSV(MetaTable, TcpModel, this); break;
-	case ISNamespace::ET_HTML: ExportWorker = new ISExportHTML(MetaTable, TcpModel, this); break;
-	case ISNamespace::ET_XML: ExportWorker = new ISExportXML(MetaTable, TcpModel, this); break;
-	case ISNamespace::ET_JSON: ExportWorker = new ISExportJSON(MetaTable, TcpModel, this); break;
+	case ISNamespace::ExportType::CSV: ExportWorker = new ISExportCSV(MetaTable, TcpModel, this); break;
+	case ISNamespace::ExportType::HTML: ExportWorker = new ISExportHTML(MetaTable, TcpModel, this); break;
+	case ISNamespace::ExportType::XML: ExportWorker = new ISExportXML(MetaTable, TcpModel, this); break;
+	case ISNamespace::ExportType::JSON: ExportWorker = new ISExportJSON(MetaTable, TcpModel, this); break;
 	}
 	ExportWorker->SetFields(ExportForm.GetSelectedFields());
 	ExportWorker->SetHeader(ExportForm.GetHeader());
@@ -894,7 +894,7 @@ void ISListBaseForm::ShowContextMenu(const QPoint &Point)
 {
 	if (!IsLoadingData)
 	{
-		GetSpecialAction(ISNamespace::AST_Favorite)->setChecked(ISFavorites::Instance().Exist(MetaTable->Name, GetObjectID()));
+		GetSpecialAction(ISNamespace::ActionSpecialType::Favorite)->setChecked(ISFavorites::Instance().Exist(MetaTable->Name, GetObjectID()));
 		ContextMenu->exec(TableView->viewport()->mapToGlobal(Point));
 	}
 }

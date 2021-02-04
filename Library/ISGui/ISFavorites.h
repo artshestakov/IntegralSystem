@@ -18,8 +18,10 @@ public:
 private:
 	ISFavorites();
 	~ISFavorites();
-	ISFavorites(ISFavorites const &) {};
-	ISFavorites& operator=(ISFavorites const&) { return *this; };
+	ISFavorites(const ISFavorites&) = delete;
+	ISFavorites(ISFavorites&&) = delete;
+	ISFavorites& operator=(const ISFavorites&) = delete;
+	ISFavorites& operator=(ISFavorites&&) = delete;
 
 private:
 	std::map<QString, ISVectorUInt> Favorites;

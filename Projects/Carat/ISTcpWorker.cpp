@@ -505,6 +505,7 @@ ISTcpWorker::ISTcpWorker(const QString &db_host, int db_port, const QString &db_
 	DBUser(db_user),
 	DBPassword(db_password),
 	IsStarted(false),
+	qProtocol(nullptr),
 	IsRunning(false),
 	CurrentMessage(nullptr),
 	IsStopped(false)
@@ -618,7 +619,7 @@ void ISTcpWorker::Process()
 			if (tcp_message->IsValid()) //Если сообщение валидное - переходим к выполнению
 			{
 				//Если запрос не авторизационный и клиент ещё не авторизовался - ошибка
-				if (tcp_message->Type != ISNamespace::AMT_Auth && !tcp_message->TcpSocket->GetAuthorized())
+				if (tcp_message->Type != ISNamespace::ApiMessageType::Auth && !tcp_message->TcpSocket->GetAuthorized())
 				{
 					ErrorString = LANG("Carat.Error.NotAuthorized");
 				}
@@ -627,68 +628,68 @@ void ISTcpWorker::Process()
 					ISTimePoint TimePoint = ISAlgorithm::GetTick(); //Запоминаем текущее время
 					switch (tcp_message->Type)
 					{
-					case ISNamespace::AMT_Unknown: break;
-					case ISNamespace::AMT_Auth: Result = Auth(tcp_message, TcpAnswer); break;
-					case ISNamespace::AMT_Sleep: Result = Sleep(tcp_message, TcpAnswer); break;
-					case ISNamespace::AMT_GetMetaData: Result = GetMetaData(tcp_message, TcpAnswer); break;
-					case ISNamespace::AMT_GetLastClient: Result = GetLastClient(tcp_message, TcpAnswer); break;
-					case ISNamespace::AMT_UserPasswordExist: Result = UserPasswordExist(tcp_message, TcpAnswer); break;
-					case ISNamespace::AMT_UserPasswordCreate: Result = UserPasswordCreate(tcp_message, TcpAnswer); break;
-					case ISNamespace::AMT_UserPasswordEdit: Result = UserPasswordEdit(tcp_message, TcpAnswer); break;
-					case ISNamespace::AMT_UserPasswordReset: Result = UserPasswordReset(tcp_message, TcpAnswer); break;
-					case ISNamespace::AMT_UserSettingsReset: Result = UserSettingsReset(tcp_message, TcpAnswer); break;
-					case ISNamespace::AMT_UserDeviceAdd: Result = UserDeviceAdd(tcp_message, TcpAnswer); break;
-					case ISNamespace::AMT_UserDeviceDelete: Result = UserDeviceDelete(tcp_message, TcpAnswer); break;
-					case ISNamespace::AMT_GetRecordCall: Result = GetRecordCall(tcp_message, TcpAnswer); break;
-					case ISNamespace::AMT_GetClients: Result = GetClients(tcp_message, TcpAnswer); break;
-					case ISNamespace::AMT_RecordAdd: Result = RecordAdd(tcp_message, TcpAnswer); break;
-					case ISNamespace::AMT_RecordEdit: Result = RecordEdit(tcp_message, TcpAnswer); break;
-					case ISNamespace::AMT_RecordDelete: Result = RecordDelete(tcp_message, TcpAnswer); break;
-					case ISNamespace::AMT_RecordGet: Result = RecordGet(tcp_message, TcpAnswer); break;
-					case ISNamespace::AMT_RecordGetInfo: Result = RecordGetInfo(tcp_message, TcpAnswer); break;
-					case ISNamespace::AMT_DiscussionAdd: Result = DiscussionAdd(tcp_message, TcpAnswer); break;
-					case ISNamespace::AMT_DiscussionEdit: Result = DiscussionEdit(tcp_message, TcpAnswer); break;
-					case ISNamespace::AMT_DiscussionCopy: Result = DiscussionCopy(tcp_message, TcpAnswer); break;
-					case ISNamespace::AMT_GetTableData: Result = GetTableData(tcp_message, TcpAnswer); break;
-					case ISNamespace::AMT_GetTableQuery: Result = GetTableQuery(tcp_message, TcpAnswer); break;
-					case ISNamespace::AMT_NoteRecordGet: Result = NoteRecordGet(tcp_message, TcpAnswer); break;
-					case ISNamespace::AMT_NoteRecordSet: Result = NoteRecordSet(tcp_message, TcpAnswer); break;
-					case ISNamespace::AMT_FileStorageAdd: Result = FileStorageAdd(tcp_message, TcpAnswer); break;
-					case ISNamespace::AMT_FileStorageCopy: Result = FileStorageCopy(tcp_message, TcpAnswer); break;
-					case ISNamespace::AMT_FileStorageGet: Result = FileStorageGet(tcp_message, TcpAnswer); break;
-					case ISNamespace::AMT_SearchTaskText: Result = SearchTaskText(tcp_message, TcpAnswer); break;
-					case ISNamespace::AMT_SearchTaskID: Result = SearchTaskID(tcp_message, TcpAnswer); break;
-					case ISNamespace::AMT_SearchFullText: Result = SearchFullText(tcp_message, TcpAnswer); break;
-					case ISNamespace::AMT_GetCalendarEvents: Result = GetCalendarEvents(tcp_message, TcpAnswer); break;
-					case ISNamespace::AMT_CalendarDelete: Result = CalendarDelete(tcp_message, TcpAnswer); break;
-					case ISNamespace::AMT_GetInternalLists: Result = GetInternalLists(tcp_message, TcpAnswer); break;
-					case ISNamespace::AMT_SaveMetaData: Result = SaveMetaData(tcp_message, TcpAnswer); break;
-					case ISNamespace::AMT_GetGroupRights: Result = GetGroupRights(tcp_message, TcpAnswer); break;
-					case ISNamespace::AMT_GroupRightSubSystemAdd: Result = GroupRightSubSystemAdd(tcp_message, TcpAnswer); break;
-					case ISNamespace::AMT_GroupRightSubSystemDelete: Result = GroupRightSubSystemDelete(tcp_message, TcpAnswer); break;
-					case ISNamespace::AMT_GroupRightTableAdd: Result = GroupRightTableAdd(tcp_message, TcpAnswer); break;
-					case ISNamespace::AMT_GroupRightTableDelete: Result = GroupRightTableDelete(tcp_message, TcpAnswer); break;
-					case ISNamespace::AMT_GroupRightSpecialAdd: Result = GroupRightSpecialAdd(tcp_message, TcpAnswer); break;
-					case ISNamespace::AMT_GroupRightSpecialDelete: Result = GroupRightSpecialDelete(tcp_message, TcpAnswer); break;
-					case ISNamespace::AMT_GetRecordValue: Result = GetRecordValue(tcp_message, TcpAnswer); break;
-					case ISNamespace::AMT_RecordFavoriteAdd: Result = RecordFavoriteAdd(tcp_message, TcpAnswer); break;
-					case ISNamespace::AMT_RecordFavoriteDelete: Result = RecordFavoriteDelete(tcp_message, TcpAnswer); break;
-					case ISNamespace::AMT_GetFavoriteNames: Result = GetFavoriteNames(tcp_message, TcpAnswer); break;
-					case ISNamespace::AMT_FavoritesDelete: Result = FavoritesDelete(tcp_message, TcpAnswer); break;
-					case ISNamespace::AMT_LogGetStructure: Result = LogGetStructure(tcp_message, TcpAnswer); break;
-					case ISNamespace::AMT_LogGetContent: Result = LogGetContent(tcp_message, TcpAnswer); break;
-					case ISNamespace::AMT_CalendarClose: Result = CalendarClose(tcp_message, TcpAnswer); break;
-					case ISNamespace::AMT_GetHistoryList: Result = GetHistoryList(tcp_message, TcpAnswer); break;
-					case ISNamespace::AMT_TaskCommentAdd: Result = TaskCommentAdd(tcp_message, TcpAnswer); break;
-					case ISNamespace::AMT_GetForeignList: Result = GetForeignList(tcp_message, TcpAnswer); break;
-					case ISNamespace::AMT_GetServerInfo: Result = GetServerInfo(tcp_message, TcpAnswer); break;
-					case ISNamespace::AMT_OrganizationFromINN: Result = OrganizationFormINN(tcp_message, TcpAnswer); break;
-					case ISNamespace::AMT_PeriodContains: Result = PeriodContains(tcp_message, TcpAnswer); break;
-					case ISNamespace::AMT_GetStockList: Result = GetStockList(tcp_message, TcpAnswer); break;
-					case ISNamespace::AMT_StatementAdd: Result = StatementAdd(tcp_message, TcpAnswer); break;
-					case ISNamespace::AMT_GetGasStation: Result = GetGasStation(tcp_message, TcpAnswer); break;
-					case ISNamespace::AMT_GetDebtImplementation: Result = GetDebtImplementation(tcp_message, TcpAnswer); break;
-					case ISNamespace::AMT_GetDebtCounterparty: Result = GetDebtCounterparty(tcp_message, TcpAnswer); break;
+					case ISNamespace::ApiMessageType::Unknown: break;
+					case ISNamespace::ApiMessageType::Auth: Result = Auth(tcp_message, TcpAnswer); break;
+					case ISNamespace::ApiMessageType::Sleep: Result = Sleep(tcp_message, TcpAnswer); break;
+					case ISNamespace::ApiMessageType::GetMetaData: Result = GetMetaData(tcp_message, TcpAnswer); break;
+					case ISNamespace::ApiMessageType::GetLastClient: Result = GetLastClient(tcp_message, TcpAnswer); break;
+					case ISNamespace::ApiMessageType::UserPasswordExist: Result = UserPasswordExist(tcp_message, TcpAnswer); break;
+					case ISNamespace::ApiMessageType::UserPasswordCreate: Result = UserPasswordCreate(tcp_message, TcpAnswer); break;
+					case ISNamespace::ApiMessageType::UserPasswordEdit: Result = UserPasswordEdit(tcp_message, TcpAnswer); break;
+					case ISNamespace::ApiMessageType::UserPasswordReset: Result = UserPasswordReset(tcp_message, TcpAnswer); break;
+					case ISNamespace::ApiMessageType::UserSettingsReset: Result = UserSettingsReset(tcp_message, TcpAnswer); break;
+					case ISNamespace::ApiMessageType::UserDeviceAdd: Result = UserDeviceAdd(tcp_message, TcpAnswer); break;
+					case ISNamespace::ApiMessageType::UserDeviceDelete: Result = UserDeviceDelete(tcp_message, TcpAnswer); break;
+					case ISNamespace::ApiMessageType::GetRecordCall: Result = GetRecordCall(tcp_message, TcpAnswer); break;
+					case ISNamespace::ApiMessageType::GetClients: Result = GetClients(tcp_message, TcpAnswer); break;
+					case ISNamespace::ApiMessageType::RecordAdd: Result = RecordAdd(tcp_message, TcpAnswer); break;
+					case ISNamespace::ApiMessageType::RecordEdit: Result = RecordEdit(tcp_message, TcpAnswer); break;
+					case ISNamespace::ApiMessageType::RecordDelete: Result = RecordDelete(tcp_message, TcpAnswer); break;
+					case ISNamespace::ApiMessageType::RecordGet: Result = RecordGet(tcp_message, TcpAnswer); break;
+					case ISNamespace::ApiMessageType::RecordGetInfo: Result = RecordGetInfo(tcp_message, TcpAnswer); break;
+					case ISNamespace::ApiMessageType::DiscussionAdd: Result = DiscussionAdd(tcp_message, TcpAnswer); break;
+					case ISNamespace::ApiMessageType::DiscussionEdit: Result = DiscussionEdit(tcp_message, TcpAnswer); break;
+					case ISNamespace::ApiMessageType::DiscussionCopy: Result = DiscussionCopy(tcp_message, TcpAnswer); break;
+					case ISNamespace::ApiMessageType::GetTableData: Result = GetTableData(tcp_message, TcpAnswer); break;
+					case ISNamespace::ApiMessageType::GetTableQuery: Result = GetTableQuery(tcp_message, TcpAnswer); break;
+					case ISNamespace::ApiMessageType::NoteRecordGet: Result = NoteRecordGet(tcp_message, TcpAnswer); break;
+					case ISNamespace::ApiMessageType::NoteRecordSet: Result = NoteRecordSet(tcp_message, TcpAnswer); break;
+					case ISNamespace::ApiMessageType::FileStorageAdd: Result = FileStorageAdd(tcp_message, TcpAnswer); break;
+					case ISNamespace::ApiMessageType::FileStorageCopy: Result = FileStorageCopy(tcp_message, TcpAnswer); break;
+					case ISNamespace::ApiMessageType::FileStorageGet: Result = FileStorageGet(tcp_message, TcpAnswer); break;
+					case ISNamespace::ApiMessageType::SearchTaskText: Result = SearchTaskText(tcp_message, TcpAnswer); break;
+					case ISNamespace::ApiMessageType::SearchTaskID: Result = SearchTaskID(tcp_message, TcpAnswer); break;
+					case ISNamespace::ApiMessageType::SearchFullText: Result = SearchFullText(tcp_message, TcpAnswer); break;
+					case ISNamespace::ApiMessageType::GetCalendarEvents: Result = GetCalendarEvents(tcp_message, TcpAnswer); break;
+					case ISNamespace::ApiMessageType::CalendarDelete: Result = CalendarDelete(tcp_message, TcpAnswer); break;
+					case ISNamespace::ApiMessageType::GetInternalLists: Result = GetInternalLists(tcp_message, TcpAnswer); break;
+					case ISNamespace::ApiMessageType::SaveMetaData: Result = SaveMetaData(tcp_message, TcpAnswer); break;
+					case ISNamespace::ApiMessageType::GetGroupRights: Result = GetGroupRights(tcp_message, TcpAnswer); break;
+					case ISNamespace::ApiMessageType::GroupRightSubSystemAdd: Result = GroupRightSubSystemAdd(tcp_message, TcpAnswer); break;
+					case ISNamespace::ApiMessageType::GroupRightSubSystemDelete: Result = GroupRightSubSystemDelete(tcp_message, TcpAnswer); break;
+					case ISNamespace::ApiMessageType::GroupRightTableAdd: Result = GroupRightTableAdd(tcp_message, TcpAnswer); break;
+					case ISNamespace::ApiMessageType::GroupRightTableDelete: Result = GroupRightTableDelete(tcp_message, TcpAnswer); break;
+					case ISNamespace::ApiMessageType::GroupRightSpecialAdd: Result = GroupRightSpecialAdd(tcp_message, TcpAnswer); break;
+					case ISNamespace::ApiMessageType::GroupRightSpecialDelete: Result = GroupRightSpecialDelete(tcp_message, TcpAnswer); break;
+					case ISNamespace::ApiMessageType::GetRecordValue: Result = GetRecordValue(tcp_message, TcpAnswer); break;
+					case ISNamespace::ApiMessageType::RecordFavoriteAdd: Result = RecordFavoriteAdd(tcp_message, TcpAnswer); break;
+					case ISNamespace::ApiMessageType::RecordFavoriteDelete: Result = RecordFavoriteDelete(tcp_message, TcpAnswer); break;
+					case ISNamespace::ApiMessageType::GetFavoriteNames: Result = GetFavoriteNames(tcp_message, TcpAnswer); break;
+					case ISNamespace::ApiMessageType::FavoritesDelete: Result = FavoritesDelete(tcp_message, TcpAnswer); break;
+					case ISNamespace::ApiMessageType::LogGetStructure: Result = LogGetStructure(tcp_message, TcpAnswer); break;
+					case ISNamespace::ApiMessageType::LogGetContent: Result = LogGetContent(tcp_message, TcpAnswer); break;
+					case ISNamespace::ApiMessageType::CalendarClose: Result = CalendarClose(tcp_message, TcpAnswer); break;
+					case ISNamespace::ApiMessageType::GetHistoryList: Result = GetHistoryList(tcp_message, TcpAnswer); break;
+					case ISNamespace::ApiMessageType::TaskCommentAdd: Result = TaskCommentAdd(tcp_message, TcpAnswer); break;
+					case ISNamespace::ApiMessageType::GetForeignList: Result = GetForeignList(tcp_message, TcpAnswer); break;
+					case ISNamespace::ApiMessageType::GetServerInfo: Result = GetServerInfo(tcp_message, TcpAnswer); break;
+					case ISNamespace::ApiMessageType::OrganizationFromINN: Result = OrganizationFormINN(tcp_message, TcpAnswer); break;
+					case ISNamespace::ApiMessageType::PeriodContains: Result = PeriodContains(tcp_message, TcpAnswer); break;
+					case ISNamespace::ApiMessageType::GetStockList: Result = GetStockList(tcp_message, TcpAnswer); break;
+					case ISNamespace::ApiMessageType::StatementAdd: Result = StatementAdd(tcp_message, TcpAnswer); break;
+					case ISNamespace::ApiMessageType::GetGasStation: Result = GetGasStation(tcp_message, TcpAnswer); break;
+					case ISNamespace::ApiMessageType::GetDebtImplementation: Result = GetDebtImplementation(tcp_message, TcpAnswer); break;
+					case ISNamespace::ApiMessageType::GetDebtCounterparty: Result = GetDebtCounterparty(tcp_message, TcpAnswer); break;
 					default:
 						ErrorString = LANG("Carat.Error.NotExistFunction").arg(tcp_message->TypeName);
 					}
@@ -2333,7 +2334,7 @@ bool ISTcpWorker::RecordGet(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 		QVariant Value = SqlField.value();
 
 		PMetaField *MetaField = MetaTable->GetField(SqlField.name());
-		if (MetaField->Type == ISNamespace::FT_Image) //Если поле является изображением, приводим его к base64
+		if (MetaField->Type == ISNamespace::FieldType::Image) //Если поле является изображением, приводим его к base64
 		{
 			Value = Value.toByteArray().toBase64();
 		}
@@ -2660,7 +2661,7 @@ bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 		{
 			QVariantMap Map = Variant.toMap();
 			QString FieldName = Map["FieldName"].toString();
-			ISNamespace::SearchOperatorType OperatorType = static_cast<ISNamespace::SearchOperatorType>(Map["Operator"].toUInt());
+			ISNamespace::SearchType OperatorType = static_cast<ISNamespace::SearchType>(Map["Operator"].toUInt());
 			QVariantList ValueList = Map["Values"].toList();
 
 			SqlText += MetaTable->Alias + '_' + MetaTable->GetField(FieldName)->Name.toLower();			
@@ -2668,8 +2669,8 @@ bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 			{
 				switch (OperatorType)
 				{
-				case ISNamespace::SOT_Equally: SqlText += " IN("; break;
-				case ISNamespace::SOT_NotEqually: SqlText += " NOT IN("; break;
+				case ISNamespace::SearchType::Equally: SqlText += " IN("; break;
+				case ISNamespace::SearchType::NotEqually: SqlText += " NOT IN("; break;
 				default:
 					break;
 				}
@@ -2687,11 +2688,11 @@ bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 				QString UIDLite = GENERATE_UUID_LITE;
 				switch (OperatorType)
 				{
-				case ISNamespace::SOT_Equally: SqlText += " = :" + UIDLite; break;
-				case ISNamespace::SOT_NotEqually: SqlText += " != :" + UIDLite; break;
-				case ISNamespace::SOT_Begins: SqlText += " LIKE :" + UIDLite + " || '%'"; break;
-				case ISNamespace::SOT_Ends: SqlText += " LIKE '%' || :" + UIDLite; break;
-				case ISNamespace::SOT_Contains: SqlText += " LIKE '%' || :" + UIDLite + " || '%'"; break;
+				case ISNamespace::SearchType::Equally: SqlText += " = :" + UIDLite; break;
+				case ISNamespace::SearchType::NotEqually: SqlText += " != :" + UIDLite; break;
+				case ISNamespace::SearchType::Begins: SqlText += " LIKE :" + UIDLite + " || '%'"; break;
+				case ISNamespace::SearchType::Ends: SqlText += " LIKE '%' || :" + UIDLite; break;
+				case ISNamespace::SearchType::Contains: SqlText += " LIKE '%' || :" + UIDLite + " || '%'"; break;
 				default:
 					break;
 				}
@@ -2737,7 +2738,7 @@ bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	QSqlRecord SqlRecord = qSelect.GetRecord();
 	int FieldCount = SqlRecord.count();
 	QVariantList FieldList, RecordList;
-	std::vector<ISNamespace::FieldType> VectorType(FieldCount, ISNamespace::FT_Unknown);
+	std::vector<ISNamespace::FieldType> VectorType(FieldCount, ISNamespace::FieldType::Unknown);
 	std::vector<bool> VectorForeign(FieldCount, false);
 
 	//Заполняем описание полей
@@ -2746,15 +2747,15 @@ bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 		PMetaField *MetaField = MetaTable->GetField(SqlRecord.fieldName(i));
 		VectorType[i] = MetaField->Type; //Заполняем типы сейчас, чтобы использовать их ниже
 		VectorForeign[i] = MetaField->Foreign ? true : false;
-		FieldList.append(QVariantMap
-		{
-			{ "Index", i },
-			{ "Name", MetaField->Name },
-			{ "LocalName", MetaField->LocalListName },
-			{ "Type", MetaField->Type },
-			{ "IsForeign", MetaField->Foreign ? true : false },
-			{ "IsSysten", MetaField->IsSystem }
-		});
+		
+		QVariantMap m;
+		m["Index"] = i;
+		m["Name"] = MetaField->Name;
+		m["LocalName"] = MetaField->LocalListName;
+		m["Type"] = static_cast<int>(MetaField->Type);
+		m["IsForeign"] = MetaField->Foreign ? true : false;
+		m["IsSysten"] = MetaField->IsSystem;
+		FieldList.push_back(m);
 	}
 
 	if (qSelect.First()) //Данные есть
@@ -2783,51 +2784,51 @@ bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 				}
 				
 				//Значение не содержит NULL - анализируем
-				if (Type == ISNamespace::FT_Int || Type == ISNamespace::FT_BigInt)
+				if (Type == ISNamespace::FieldType::Int || Type == ISNamespace::FieldType::BigInt)
 				{
 					if (!IsForeign)
 					{
 						Value = ISAlgorithm::FormatNumber(Value.toLongLong());
 					}
 				}
-				else if (Type == ISNamespace::FT_Date)
+				else if (Type == ISNamespace::FieldType::Date)
 				{
 					Value = ISTcpWorkerHelper::ConvertDateToString(Value.toDate());
 				}
-				else if (Type == ISNamespace::FT_Time)
+				else if (Type == ISNamespace::FieldType::Time)
 				{
 					Value = Value.toTime().toString(FORMAT_TIME_V3);
 				}
-				else if (Type == ISNamespace::FT_DateTime)
+				else if (Type == ISNamespace::FieldType::DateTime)
 				{
 					Value = ISTcpWorkerHelper::ConvertDateTimeToString(Value.toDateTime(), FORMAT_TIME_V1);
 				}
-				else if (Type == ISNamespace::FT_Birthday)
+				else if (Type == ISNamespace::FieldType::Birthday)
 				{
 					Value = Value.toDate().toString(FORMAT_DATE_V1);
 				}
-				else if (Type == ISNamespace::FT_Phone)
+				else if (Type == ISNamespace::FieldType::Phone)
 				{
 					QString PhoneNumber = Value.toString();
 					Value = QString("+7 (%1) %2-%3-%4").arg(PhoneNumber.left(3)).arg(PhoneNumber.mid(3, 3)).arg(PhoneNumber.mid(6, 2)).arg(PhoneNumber.right(2));
 				}
-				else if (Type == ISNamespace::FT_Seconds)
+				else if (Type == ISNamespace::FieldType::Seconds)
 				{
 					Value = QTime(0, 0).addSecs(Value.toInt()).toString(FORMAT_TIME_V3);
 				}
-				else if (Type == ISNamespace::FT_Double)
+				else if (Type == ISNamespace::FieldType::Double)
 				{
 					Value = ISAlgorithm::FormatNumber(Value.toDouble(), ' ', Precision);
 				}
-				else if (Type == ISNamespace::FT_Money)
+				else if (Type == ISNamespace::FieldType::Money)
 				{
 					Value = ISAlgorithm::FormatNumber(Value.toDouble(), ' ', 2);
 				}
-				else if (Type == ISNamespace::FT_UID)
+				else if (Type == ISNamespace::FieldType::UID)
 				{
 					Value = ISUuid(Value);
 				}
-				else if (Type == ISNamespace::FT_ProtocolDT)
+				else if (Type == ISNamespace::FieldType::ProtocolDT)
 				{
 					Value = ISTcpWorkerHelper::ConvertDateTimeToString(Value.toDateTime(), FORMAT_TIME_V3);
 				}

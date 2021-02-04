@@ -41,8 +41,10 @@ private:
 private:
 	ISBuffer();
 	~ISBuffer();
-	ISBuffer(ISBuffer const &) {};
-	ISBuffer& operator=(ISBuffer const&) { return *this; };
+	ISBuffer(const ISBuffer&) = delete;
+	ISBuffer(ISBuffer&&) = delete;
+	ISBuffer& operator=(const ISBuffer&) = delete;
+	ISBuffer& operator=(ISBuffer&&) = delete;
 
 private:
 	ISStringMap Animations; //Анимации

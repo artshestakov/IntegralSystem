@@ -59,7 +59,7 @@ void ISOilSphere::Object::InitializePlugin() const
 		{
 			if (ISMessageBox::ShowQuestion(nullptr, LANG("OilSphere.Message.Question.CreateCurrentConstant")))
 			{
-				ISObjectFormBase *ObjectFormBase = ISGui::CreateObjectForm(ISNamespace::OFT_New, "Period");
+				ISObjectFormBase *ObjectFormBase = ISGui::CreateObjectForm(ISNamespace::ObjectFormType::New, "Period");
 				ObjectFormBase->SetFieldValue("DateStart", QDate::currentDate());
 				ObjectFormBase->SetFieldValue("DateEnd", QDate::currentDate());
 				ISGui::ShowObjectForm(ObjectFormBase);
@@ -267,12 +267,12 @@ void ISOilSphere::CounterpartyDebtForm::UpdatedLists()
 //-----------------------------------------------------------------------------
 void ISOilSphere::CounterpartyDebtForm::ShowImplementation()
 {
-	ISGui::ShowObjectForm(ISGui::CreateObjectForm(ISNamespace::OFT_Edit, "Implementation", sender()->property("ImplementationID").toInt()));
+	ISGui::ShowObjectForm(ISGui::CreateObjectForm(ISNamespace::ObjectFormType::Edit, "Implementation", sender()->property("ImplementationID").toInt()));
 }
 //-----------------------------------------------------------------------------
 void ISOilSphere::CounterpartyDebtForm::ShowLoadUnload()
 {
-	ISGui::ShowObjectForm(ISGui::CreateObjectForm(ISNamespace::OFT_Edit, sender()->property("IsLoad").toBool() ? "ImplementationLoad" : "ImplementationUnload", sender()->property("ID").toInt()));
+	ISGui::ShowObjectForm(ISGui::CreateObjectForm(ISNamespace::ObjectFormType::Edit, sender()->property("IsLoad").toBool() ? "ImplementationLoad" : "ImplementationUnload", sender()->property("ID").toInt()));
 }
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
@@ -1044,7 +1044,7 @@ ISOilSphere::DriverCostSubSystem::DriverCostSubSystem(QWidget *parent) : ISListB
 {
 	QAction *ActionCreateInBased = new QAction(BUFFER_ICONS("Add.Green"), LANG("OilSphere.CreateInBased"), GetToolBar());
 	connect(ActionCreateInBased, &QAction::triggered, this, &ISOilSphere::DriverCostSubSystem::CreateOnBased);
-	InsertAction(ActionCreateInBased, GetAction(ISNamespace::AT_Create), true, true);
+	InsertAction(ActionCreateInBased, GetAction(ISNamespace::ActionType::Create), true, true);
 
 	LabelTotal = new QLabel(GetStatusBar());
 	ISGui::SetFontWidgetBold(LabelTotal, true);
@@ -1074,7 +1074,7 @@ void ISOilSphere::DriverCostSubSystem::CreateOnBased()
 	qSelectRemainder.BindValue(":PreviousRemainder", GetCurrentRecordValue("PreviousRemainder"));
 	if (qSelectRemainder.ExecuteFirst())
 	{
-		ISObjectFormBase *ObjectFormBase = ISGui::CreateObjectForm(ISNamespace::OFT_New, "DriverCost");
+		ISObjectFormBase *ObjectFormBase = ISGui::CreateObjectForm(ISNamespace::ObjectFormType::New, "DriverCost");
 		ObjectFormBase->SetFieldValue("PreviousRemainder", qSelectRemainder.ReadColumn("get_driver_cost_remainder"));
 		connect(ObjectFormBase, &ISObjectFormBase::SavedObject, this, &ISListBaseForm::Updated);
 		connect(ObjectFormBase, &ISObjectFormBase::UpdateList, this, &ISListBaseForm::Update);

@@ -22,8 +22,10 @@ public:
 private:
 	ISSettings();
 	~ISSettings();
-    ISSettings(ISSettings const &) {};
-	ISSettings& operator=(ISSettings const&) { return *this; };
+	ISSettings(const ISSettings&) = delete;
+	ISSettings(ISSettings&&) = delete;
+	ISSettings& operator=(const ISSettings&) = delete;
+	ISSettings& operator=(ISSettings&&) = delete;
 
 private:
 	std::vector<ISMetaSettingsGroup*> SettingGroups;
