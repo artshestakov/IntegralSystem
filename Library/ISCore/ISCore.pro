@@ -3,7 +3,7 @@ QT -= gui
 
 TARGET = ISCore
 TEMPLATE = lib
-CONFIG += c++11
+CONFIG += c++17
 DEFINES += ISCORE_LIBRARY
 
 CONFIG(debug, debug|release){

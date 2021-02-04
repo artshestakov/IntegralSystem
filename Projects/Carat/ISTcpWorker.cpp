@@ -4330,7 +4330,7 @@ bool ISTcpWorker::GetServerInfo(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer
 		{ "StartedDateTime", ISTcpWorkerHelper::ConvertDateTimeToString(PROPERTY_GET("Uptime").toDateTime(), FORMAT_TIME_V3) },
 		{ "Uptime", ISTcpWorkerHelper::GetUptime() },
 		{ "SizeLogs", ISAlgorithm::StringFromSize(ISAlgorithm::DirSize(QCoreApplication::applicationDirPath() + "/Logs", QStringList() << "*.log")) },
-		{ "CountClients", ISTcpClients::Instance().GetCount() }
+        { "CountClients", static_cast<int>(ISTcpClients::Instance().GetCount()) }
 	};
 	TcpAnswer->Parameters["Database"] = QVariantMap
 	{

@@ -5,8 +5,8 @@
 #ifdef WIN32
 #pragma warning(disable: 4127)
 #pragma warning(disable: 4718)
-#endif
 #pragma warning(disable: 4996) //???
+#endif
 //Cross-platform-includes------------------------------------------------------
 #ifdef WIN32
 #include <windows.h>

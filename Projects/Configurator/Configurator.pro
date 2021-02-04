@@ -3,7 +3,7 @@ QT -= gui
 
 TARGET = Configurator
 TEMPLATE = app
-CONFIG += c++11
+CONFIG += c++17
 
 CONFIG(debug, debug|release){
     CONFIGURATION = Debug

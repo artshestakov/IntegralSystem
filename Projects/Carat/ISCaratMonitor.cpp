@@ -18,12 +18,12 @@ ISCaratMonitor& ISCaratMonitor::Instance()
 	return CaratMonitor;
 }
 //-----------------------------------------------------------------------------
-void ISCaratMonitor::IncomingQuerySize(quint64 QuerySize)
+void ISCaratMonitor::IncomingQuerySize(int QuerySize)
 {
 	_IncomingQuerySize += QuerySize;
 }
 //-----------------------------------------------------------------------------
-void ISCaratMonitor::AnswerQuerySize(quint64 AnswerSize)
+void ISCaratMonitor::AnswerQuerySize(int AnswerSize)
 {
 	_AnswerQuerySize += AnswerSize;
 }
