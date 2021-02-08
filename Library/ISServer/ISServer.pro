@@ -3,7 +3,7 @@ QT -= gui
 
 TARGET = ISServer
 TEMPLATE = lib
-CONFIG += c++17
+CONFIG += c++11
 DEFINES += ISSERVER_LIBRARY
 
 CONFIG(debug, debug|release){
