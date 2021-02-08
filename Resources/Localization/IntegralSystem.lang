@@ -76,6 +76,7 @@
   <Local Name="ISServerInfoSubSystem.Database.Version" Russian="Версия:"/>
   <Local Name="ISServerInfoSubSystem.Database.ClusterPath" Russian="Путь к кластеру:"/>
   <Local Name="ISServerInfoSubSystem.Database.SizeLogs" Russian="Размер логов:"/>
+  <Local Name="ISServerInfoSubSystem.Database.SizeXLogs" Russian="Размер журнала транзакций (pg_xlog):"/>
   <Local Name="ISServerInfoSubSystem.Database.CountTable" Russian="Количество таблиц:"/>
   <Local Name="ISServerInfoSubSystem.Database.CountField" Russian="Количество полей:"/>
   <Local Name="ISServerInfoSubSystem.Database.CountSequence" Russian="Количество последовательностей:"/>

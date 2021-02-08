@@ -4,6 +4,7 @@
 #include "ISDialogsCommon.h"
 #include "ISLocalization.h"
 #include "ISDefinesGui.h"
+#include "ISGui.h"
 //-----------------------------------------------------------------------------
 ISServerInfoSubSystem::ISServerInfoSubSystem(QWidget *parent) : ISInterfaceMetaForm(parent)
 {
@@ -18,7 +19,11 @@ ISServerInfoSubSystem::~ISServerInfoSubSystem()
 void ISServerInfoSubSystem::LoadData()
 {
 	ISTcpQuery qGetServerInfo(API_GET_SERVER_INFO);
-	if (!qGetServerInfo.Execute())
+
+	ISGui::SetWaitGlobalCursor(true);
+	bool Result = qGetServerInfo.Execute();
+	ISGui::SetWaitGlobalCursor(false);
+	if (!Result)
 	{
 		ISMessageBox::ShowWarning(this, qGetServerInfo.GetErrorString());
 		return;
@@ -53,6 +58,7 @@ void ISServerInfoSubSystem::LoadData()
 	FormLayoutDatabase->addRow(LANG("ISServerInfoSubSystem.Database.Version"), new QLabel(DatabaseMap["Version"].toString(), this));
 	FormLayoutDatabase->addRow(LANG("ISServerInfoSubSystem.Database.ClusterPath"), new QLabel(DatabaseMap["ClusterPath"].toString(), this));
 	FormLayoutDatabase->addRow(LANG("ISServerInfoSubSystem.Database.SizeLogs"), new QLabel(DatabaseMap["SizeLogs"].toString(), this));
+	FormLayoutDatabase->addRow(LANG("ISServerInfoSubSystem.Database.SizeXLogs"), new QLabel(DatabaseMap["SizeXLogs"].toString(), this));
 	FormLayoutDatabase->addRow(LANG("ISServerInfoSubSystem.Database.CountTable"), new QLabel(DatabaseMap["CountTable"].toString(), this));
 	FormLayoutDatabase->addRow(LANG("ISServerInfoSubSystem.Database.CountField"), new QLabel(DatabaseMap["CountField"].toString(), this));
 	FormLayoutDatabase->addRow(LANG("ISServerInfoSubSystem.Database.CountSequence"), new QLabel(DatabaseMap["CountSequence"].toString(), this));

@@ -4323,6 +4323,7 @@ bool ISTcpWorker::GetServerInfo(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer
 	QString DatabaseVersion = qSelect.ReadColumn("database_version").toString();
 	QString DatabaseClusterPath = qSelect.ReadColumn("database_cluster_path").toString();
 	QString DatabaseSizeLogs = ISAlgorithm::StringFromSize(ISAlgorithm::DirSize(DatabaseClusterPath + "/pg_log", QStringList() << "*.log"));
+	QString DatabaseSizeXLogs = ISAlgorithm::StringFromSize(ISAlgorithm::DirSize(DatabaseClusterPath + "/pg_xlog"));
 	unsigned int DatabaseCountTable = qSelect.ReadColumn("table_count").toUInt();
 	unsigned int DatabaseCountField = qSelect.ReadColumn("field_count").toUInt();
 	unsigned int DatabaseCountSequence = qSelect.ReadColumn("sequence_count").toUInt();
@@ -4350,6 +4351,7 @@ bool ISTcpWorker::GetServerInfo(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer
 		{ "Version", DatabaseVersion },
 		{ "ClusterPath", DatabaseClusterPath },
 		{ "SizeLogs", DatabaseSizeLogs },
+		{ "SizeXLogs", DatabaseSizeXLogs },
 		{ "CountTable", DatabaseCountTable },
 		{ "CountField", DatabaseCountField },
 		{ "CountSequence", DatabaseCountSequence },
