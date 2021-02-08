@@ -28,15 +28,15 @@ SET /p REVISION=< revision.tmp
 DEL revision.tmp
 CALL GenerateBuildInfo.cmd %CONFIGURATION% %PLATFORM% %REVISION%
 
-REM Компиляция библиотек
-CALL BuildItem.cmd Library ISCore %CONFIGURATION% %PLATFORM%
-CALL BuildItem.cmd Library ISServer %CONFIGURATION% %PLATFORM%
-CALL BuildItem.cmd Library ISGui %CONFIGURATION% %PLATFORM%
+REM Если переменная %CPU_CORE_COUNT% не заполнена - заполняем её фактическим количеством процессоров на текущей машине
+IF "%CPU_CORE_COUNT%"=="" (SET /a CPU_CORE_COUNT=%NUMBER_OF_PROCESSORS%)
 
-REM Компиляция проектов
-CALL BuildItem.cmd Projects Carat %CONFIGURATION% %PLATFORM%
-CALL BuildItem.cmd Projects Configurator %CONFIGURATION% %PLATFORM%
-CALL BuildItem.cmd Projects IntegralSystem %CONFIGURATION% %PLATFORM%
+MSBuild ..\Solution.sln -p:Configuration=%CONFIGURATION% -p:Platform=%PLATFORM% -p:OutDir=..\..\Deploy\%CONFIGURATION%-%PLATFORM%\ -maxcpucount /m:%CPU_CORE_COUNT% /p:CL_MPCount=%CPU_CORE_COUNT%
+IF ERRORLEVEL 1 GOTO ERROR
+GOTO OK
+:ERROR
+PAUSE
+:OK
 
 REM Формируем шаблон скрипта сборки (удаляем предыдущий, генерируем новый и производим замены)
 IF EXIST %SCRIPT_NAME%.iss.tmp (DEL %SCRIPT_NAME%.iss.tmp)
@@ -50,5 +50,5 @@ COPY %SCRIPT_NAME%.iss %SCRIPT_NAME%.iss.tmp
 REM Запуск сборки
 %INNO_SETUP% %SCRIPT_NAME%.iss.tmp
 
-REM Копируем дистрибутив в облако
-copy ..\Output\IntegralSystem_%CONFIGURATION%_%PLATFORM%_%REVISION%.exe C:\Users\%USERNAME%\YandexDisk\Client\IntegralSystem_%CONFIGURATION%_%PLATFORM%_%REVISION%.exe
+REM Копируем дистрибутив клиента в облако
+IF %SCRIPT_NAME% == "IntegralSystem" (COPY ..\Output\IntegralSystem_%CONFIGURATION%_%PLATFORM%_%REVISION%.exe C:\Users\%USERNAME%\YandexDisk\Client\IntegralSystem_%CONFIGURATION%_%PLATFORM%_%REVISION%.exe)
