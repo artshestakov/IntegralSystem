@@ -27,7 +27,7 @@ ISTcpSocket::ISTcpSocket(qintptr socket_descriptor, QObject *parent)
 	connect(Timer, &QTimer::timeout, this, &ISTcpSocket::Timeout);
 
 	//Эти сигналы обязательно должны подключаться в конце конструктора
-	connect(this, static_cast<void(ISTcpSocket::*)(QAbstractSocket::SocketError)>(&ISTcpSocket::errorOccurred), this, &ISTcpSocket::Error);
+	connect(this, static_cast<void(ISTcpSocket::*)(QAbstractSocket::SocketError)>(&ISTcpSocket::error), this, &ISTcpSocket::Error);
 	connect(this, &ISTcpSocket::readyRead, this, &ISTcpSocket::ReadyRead);
 }
 //-----------------------------------------------------------------------------
