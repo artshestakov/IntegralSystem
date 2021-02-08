@@ -4362,6 +4362,7 @@ bool ISTcpWorker::GetServerInfo(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer
 		{ "ProtocolCount", DatabaseCountProtocol },
 		{ "UsersCount", DatabaseUsersCount }
 	};
+	Protocol(TcpMessage->TcpSocket->GetUserID(), CONST_UID_PROTOCOL_SERVER_INFO);
 	return true;
 }
 //-----------------------------------------------------------------------------
