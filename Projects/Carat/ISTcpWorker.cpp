@@ -454,6 +454,7 @@ static QString QS_SERVER_INFO = PREPARE_QUERY("SELECT "
 											  "(SELECT COUNT(*) AS index_count FROM pg_indexes WHERE schemaname = current_schema()), "
 											  "(SELECT COUNT(*) AS foreign_count FROM information_schema.constraint_table_usage WHERE constraint_catalog = current_database() AND constraint_schema = current_schema()), "
 											  "(SELECT get_rows_count() AS rows_count), "
+											  "(SELECT COUNT(*) AS protocol_count FROM _protocol), "
 											  "(SELECT COUNT(*) AS users_count FROM _users)");
 //-----------------------------------------------------------------------------
 static QString QS_PERIOD = PREPARE_QUERY("SELECT prod_constant "
@@ -4324,12 +4325,13 @@ bool ISTcpWorker::GetServerInfo(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer
 	QString DatabaseClusterPath = qSelect.ReadColumn("database_cluster_path").toString();
 	QString DatabaseSizeLogs = ISAlgorithm::StringFromSize(ISAlgorithm::DirSize(DatabaseClusterPath + "/pg_log", QStringList() << "*.log"));
 	QString DatabaseSizeXLogs = ISAlgorithm::StringFromSize(ISAlgorithm::DirSize(DatabaseClusterPath + "/pg_xlog"));
-	unsigned int DatabaseCountTable = qSelect.ReadColumn("table_count").toUInt();
-	unsigned int DatabaseCountField = qSelect.ReadColumn("field_count").toUInt();
-	unsigned int DatabaseCountSequence = qSelect.ReadColumn("sequence_count").toUInt();
-	unsigned int DatabaseCountForeign = qSelect.ReadColumn("foreign_count").toUInt();
-	unsigned int DatabaseRowsCount = qSelect.ReadColumn("rows_count").toUInt();
-	unsigned int DatabaseUsersCount = qSelect.ReadColumn("users_count").toUInt();
+	QString DatabaseCountTable = ISAlgorithm::FormatNumber(qSelect.ReadColumn("table_count").toLongLong());
+	QString DatabaseCountField = ISAlgorithm::FormatNumber(qSelect.ReadColumn("field_count").toLongLong());
+	QString DatabaseCountSequence = ISAlgorithm::FormatNumber(qSelect.ReadColumn("sequence_count").toLongLong());
+	QString DatabaseCountForeign = ISAlgorithm::FormatNumber(qSelect.ReadColumn("foreign_count").toLongLong());
+	QString DatabaseRowsCount = ISAlgorithm::FormatNumber(qSelect.ReadColumn("rows_count").toLongLong());
+	QString DatabaseCountProtocol = ISAlgorithm::FormatNumber(qSelect.ReadColumn("protocol_count").toLongLong());
+	QString DatabaseUsersCount = ISAlgorithm::FormatNumber(qSelect.ReadColumn("users_count").toLongLong());
 
 	TcpAnswer->Parameters["Carat"] = QVariantMap
 	{
@@ -4357,6 +4359,7 @@ bool ISTcpWorker::GetServerInfo(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer
 		{ "CountSequence", DatabaseCountSequence },
 		{ "CountForeign", DatabaseCountForeign },
 		{ "RowsCount", DatabaseRowsCount },
+		{ "ProtocolCount", DatabaseCountProtocol },
 		{ "UsersCount", DatabaseUsersCount }
 	};
 	return true;
