@@ -135,9 +135,9 @@ QVariant ISTcpWorkerHelper::GetSettingDB(const QString &DBConnectionName, const 
 QString ISTcpWorkerHelper::GenerateSqlQueryFromTitleName(PMetaForeign *MetaForeign, const QString &Alias, const QString &FieldName)
 {
 	PMetaTable *MetaTableForeign = ISMetaData::Instance().GetMetaTable(MetaForeign->ForeignClass);
-	QString SqlQuery = "SELECT " + MetaTableForeign->Alias + '_' + MetaForeign->ForeignViewNameField + "\n" +
-		"FROM " + MetaTableForeign->Name + "\n" +
-		"WHERE " + MetaTableForeign->Alias + "_id = " + Alias + '_' + FieldName;
+	QString SqlQuery = "SELECT " + MetaTableForeign->Alias + '_' + MetaForeign->ForeignViewNameField +
+		" FROM " + MetaTableForeign->Name +
+		" WHERE " + MetaTableForeign->Alias + "_id = " + Alias + '_' + FieldName;
 	return SqlQuery;
 }
 //-----------------------------------------------------------------------------

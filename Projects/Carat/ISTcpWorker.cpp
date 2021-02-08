@@ -818,28 +818,16 @@ bool ISTcpWorker::GetObjectName(PMetaTable *MetaTable, unsigned int ObjectID, QS
 	//Формируем запрос
 	QString QueryText = "SELECT ";
 	QStringList StringList = MetaTable->TitleName.split(';');
-	if (StringList.count() > 1) //Если имя объекта строится из нескольких полей
+	for (const QString &FieldName : StringList) //Обходим список полей
 	{
-		QueryText += "concat(";
-		for (const QString &FieldName : StringList) //Обход полей
-		{
-			PMetaForeign *MetaForeign = MetaTable->GetField(FieldName)->Foreign;
-			QueryText += MetaForeign ?
-				("(" + ISTcpWorkerHelper::GenerateSqlQueryFromTitleName(MetaForeign, MetaTable->Alias, FieldName) + "), ' ', ") :
-				(MetaTable->Alias + '_' + FieldName + ", ' ', ");
-		}
-		QueryText.chop(7);
-		QueryText += ") \n";
-	}
-	else //Если указано только одно поле
-	{
-		PMetaForeign *MetaForeign = MetaTable->GetField(MetaTable->TitleName)->Foreign;
+		PMetaForeign *MetaForeign = MetaTable->GetField(FieldName)->Foreign;
 		QueryText += MetaForeign ?
-			("(" + ISTcpWorkerHelper::GenerateSqlQueryFromTitleName(MetaForeign, MetaTable->Alias, MetaTable->TitleName) + ") \n") :
-			(MetaTable->Alias + '_' + MetaTable->TitleName + " \n");
+			("(" + ISTcpWorkerHelper::GenerateSqlQueryFromTitleName(MetaForeign, MetaTable->Alias, FieldName) + "),") :
+			(MetaTable->Alias + '_' + FieldName + ',');
 	}
-	QueryText += "FROM " + MetaTable->Name + " \n";
-	QueryText += "WHERE " + MetaTable->Alias + "_id = :ObjectID";
+	QueryText.chop(1);
+	QueryText += "\nFROM " + MetaTable->Name;
+	QueryText += "\nWHERE " + MetaTable->Alias + "_id = :ObjectID";
 
 	//Запрашиваем имя
 	ISQuery qSelectName(ISDatabase::Instance().GetDB(DBConnectionName), QueryText);
@@ -855,15 +843,20 @@ bool ISTcpWorker::GetObjectName(PMetaTable *MetaTable, unsigned int ObjectID, QS
 		return true;
 	}
 	
-	//Анализируем
-	QVariant Value = qSelectName.ReadColumn(0);
-	switch (Value.type())
+	//Получаем запись и анализируем её
+	QSqlRecord SqlRecord = qSelectName.GetRecord();
+	for (int i = 0, c = SqlRecord.count(); i < c; ++i)
 	{
-	case QVariant::Date: ObjectName = Value.toDate().toString(FORMAT_DATE_V2); break;
-	case QVariant::Time: ObjectName = Value.toTime().toString(FORMAT_TIME_V1); break;
-	case QVariant::DateTime: ObjectName = Value.toDateTime().toString(FORMAT_DATE_TIME_V2); break;
-	default:
-		ObjectName = qSelectName.ReadColumn(0).toString();
+		QVariant Value = SqlRecord.value(i);
+		switch (Value.type())
+		{
+		case QVariant::Date: ObjectName += Value.toDate().toString(FORMAT_DATE_V2); break;
+		case QVariant::Time: ObjectName += Value.toTime().toString(FORMAT_TIME_V1); break;
+		case QVariant::DateTime: ObjectName += Value.toDateTime().toString(FORMAT_DATE_TIME_V2); break;
+		default:
+			ObjectName += Value.toString();
+		}
+		ObjectName += ' ';
 	}
 
 	//Удаляем возможные пробелы в конце имени объекта
