@@ -431,7 +431,9 @@ void ISObjectFormBase::CreateWidgetObject()
 		}
 		else
 		{
+			ISGui::SetWaitGlobalCursor(false);
 			ISMessageBox::ShowCritical(this, qRecordGet.GetErrorString());
+			close();
 		}
 	}
 
