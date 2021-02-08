@@ -313,6 +313,11 @@ QString ISAlgorithm::FormatNumber(long long Number, char Separator)
 				j = 0; //—брасываем счЄтчик проходов
 			}
 		}
+
+		if (Result[0] == Separator) //”дал€ем первый пробел (если есть)
+		{
+			Result.remove(0, 1);
+		}
 	}
 
 	//„исло не вошло в диапазон - возвращаем его как есть
