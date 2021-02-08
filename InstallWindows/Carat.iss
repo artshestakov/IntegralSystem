@@ -56,11 +56,9 @@ Source: ..\Components\PostgreSQL\9.4\Bin-${PLATFORM}\*; DestDir: {app}; Flags: i
 Source: ..\Components\BackuperDB\${CONFIGURATION}-${PLATFORM}\BackuperDB.exe; DestDir: {app}; Flags: ignoreversion recursesubdirs;
 Source: ..\Resources\Icons\Carat.ico; DestDir: {app}; Flags: ignoreversion recursesubdirs;
 Source: ..\Resources\Icons\Configurator.ico; DestDir: {app}; Flags: ignoreversion recursesubdirs;
-Source: ..\Components\Redistributable\Redistributable_2013_${PLATFORM}.exe; DestDir: {app}; Flags: ignoreversion recursesubdirs;
 Source: ..\Components\Redistributable\Redistributable_2015_${PLATFORM}.exe; DestDir: {app}; Flags: ignoreversion recursesubdirs;
 
 [Run]
-Filename: {app}\Redistributable_2013_${PLATFORM}.exe; Description: "Установка VC++ Redistributable 2013 ${PLATFORM}"; Parameters: "/install /quiet"; WorkingDir: {app}; StatusMsg: "Установка VC++ Redistributable 2013 ${PLATFORM}...";
 Filename: {app}\Redistributable_2015_${PLATFORM}.exe; Description: "Установка VC++ Redistributable 2015 ${PLATFORM}"; Parameters: "/install /quiet"; WorkingDir: {app}; StatusMsg: "Установка VC++ Redistributable 2015 ${PLATFORM}...";
 
 [Code]
