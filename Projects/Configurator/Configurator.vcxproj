@@ -88,11 +88,11 @@
     <IntDir>$(Configuration)-$(Platform)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="QtSettings">
-    <QtInstall>msvc2015</QtInstall>
+    <QtInstall>msvc2015_64</QtInstall>
     <QtModules>core;xml</QtModules>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="QtSettings">
-    <QtInstall>msvc2015</QtInstall>
+    <QtInstall>msvc2015_64</QtInstall>
     <QtModules>core;xml</QtModules>
   </PropertyGroup>
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.props')">
