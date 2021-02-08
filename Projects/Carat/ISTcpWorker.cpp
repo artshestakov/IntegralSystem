@@ -2227,12 +2227,25 @@ bool ISTcpWorker::RecordDelete(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 		return false;
 	}
 
-	//Удаляем
+	//Удаляем запись
 	ISQuery qDelete(ISDatabase::Instance().GetDB(DBConnectionName), "DELETE FROM " + MetaTable->Name + " WHERE " + MetaTable->Alias + "_id IN(" + SqlIN + ")");
 	qDelete.SetShowLongQuery(false);
 	if (!qDelete.Execute()) //Ошибка запроса
 	{
 		return ErrorQuery(LANG("Carat.Error.Query.RecordDelete.Delete"), qDelete);
+	}
+
+	//Удаляем записи из избранного
+	ISQuery qDeleteFavorite(ISDatabase::Instance().GetDB(DBConnectionName), QD_FAVORITE);
+	for (const QVariant &ID : Objects)
+	{
+		qDeleteFavorite.BindValue(":UserID", TcpMessage->TcpSocket->GetUserID());
+		qDeleteFavorite.BindValue(":TableName", MetaTable->Name);
+		qDeleteFavorite.BindValue(":ObjectID", ID);
+		if (!qDeleteFavorite.Execute())
+		{
+			ISLOGGER_W(__CLASS__, qDeleteFavorite.GetErrorString());
+		}
 	}
 
 	//Протоколируем
