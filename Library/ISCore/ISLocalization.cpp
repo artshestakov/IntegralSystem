@@ -41,35 +41,6 @@ QString ISLocalization::GetString(const QString &ParameterName)
 	return It->second;
 }
 //-----------------------------------------------------------------------------
-bool ISLocalization::LoadTraslatorQT()
-{
-	QString FilePath = QCoreApplication::applicationDirPath() + "/translations/qt_ru.qm";
-	bool Result = QFile::exists(FilePath);
-	if (Result) //‘айл трансл€ций существует
-	{
-		QTranslator *Translator = new QTranslator(qApp);
-		Result = Translator->load(FilePath);
-		if (Result) //«агрузка трансл€ций прошла успешно
-		{
-			Result = qApp->installTranslator(Translator);
-			if (!Result) //Ќе удалось установить трансл€ции
-			{
-				ErrorString = "not installing translator file: " + FilePath;
-			}
-		}
-		else //«агрузка трансл€ций была завершена с ошибкой
-		{
-			ErrorString = "not load translator file: " + FilePath;
-			delete Translator;
-		}
-	}
-	else //‘айл трансл€ций не существует
-	{
-		ErrorString = "Not found translator file: " + FilePath;
-	}
-	return Result;
-}
-//-----------------------------------------------------------------------------
 bool ISLocalization::LoadResourceFile(const QString &FileName)
 {
 	QFile File(":Localization/" + FileName + SYMBOL_POINT + EXTENSION_LANG);

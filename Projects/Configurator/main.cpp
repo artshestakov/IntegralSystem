@@ -69,12 +69,6 @@ int main(int argc, char **argv)
 	DBLogin = CONFIG_STRING(CONST_CONFIG_CONNECTION_LOGIN);
 	DBPassword = CONFIG_STRING(CONST_CONFIG_CONNECTION_PASSWORD);
 
-	//Загрузка трансляций QT
-	if (!ISLocalization::Instance().LoadTraslatorQT())
-	{
-		ISDEBUG_W("Not load translator: " + ISLocalization::Instance().GetErrorString());
-	}
-
 	//Загрузка локализации
 	if (!ISLocalization::Instance().LoadResourceFile(LOCALIZATION_FILE_CONFIGURATOR))
 	{

@@ -47,10 +47,6 @@ COPY %SCRIPT_NAME%.iss %SCRIPT_NAME%.iss.tmp
 ..\Components\Replacer\%CONFIGURATION%-%PLATFORM%\Replacer.exe %SCRIPT_NAME%.iss.tmp ${QTDIR} %QT_PATH%
 ..\Components\Replacer\%CONFIGURATION%-%PLATFORM%\Replacer.exe %SCRIPT_NAME%.iss.tmp ${IS_DEBUG} %IS_DEBUG%
 
-REM Генерируем трансляции (создаём папку для них и генерируем)
-MKDIR %DEPLOY_DIR%\translations
-%QT_PATH%\bin\lconvert.exe -o %DEPLOY_DIR%\translations\qt_ru.qm %QT_PATH%\translations\assistant_ru.qm %QT_PATH%\translations\designer_ru.qm %QT_PATH%\translations\linguist_ru.qm %QT_PATH%\translations\qt_help_ru.qm %QT_PATH%\translations\qtbase_ru.qm %QT_PATH%\translations\qtconnectivity_ru.qm %QT_PATH%\translations\qtdeclarative_ru.qm %QT_PATH%\translations\qtlocation_ru.qm ^%QT_PATH%\translations\qtmultimedia_ru.qm %QT_PATH%\translations\qtquickcontrols_ru.qm %QT_PATH%\translations\qtscript_ru.qm %QT_PATH%\translations\qtserialport_ru.qm %QT_PATH%\translations\qtwebengine_ru.qm %QT_PATH%\translations\qtwebsockets_ru.qm %QT_PATH%\translations\qtxmlpatterns_ru.qm
-
 REM Запуск сборки
 %INNO_SETUP% %SCRIPT_NAME%.iss.tmp
 

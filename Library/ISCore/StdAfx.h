@@ -100,7 +100,6 @@
 #include <QtCore/QSettings>
 #include <QtCore/QSizeF>
 #include <QtCore/QMarginsF>
-#include <QtCore/QTranslator>
 #include <QtCore/QAbstractItemModel>
 #include <QtCore/QItemSelectionModel>
 #include <QtCore/QSysInfo>

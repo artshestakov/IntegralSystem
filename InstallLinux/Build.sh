@@ -39,10 +39,6 @@ cp -f ./IntegralSystem.spec ./IntegralSystem.spec.tmp
 ../Components/Replacer/$CONFIGURATION-Linux64/Replacer ./IntegralSystem.spec.tmp %{PLATFORM} $PLATFORM
 ../Components/Replacer/$CONFIGURATION-Linux64/Replacer ./IntegralSystem.spec.tmp %{VERSION} $REVISION
 
-#Генерируем трансляции (создаём папку для них и генерируем)
-mkdir $DEPLOY_DIR/translations
-$QT_DIR/bin/lconvert -o ../Deploy/$CONFIGURATION-$PLATFORM/translations/qt_ru.qm $(ls -d -1 "$QT_DIR/"translations/* | grep _ru.qm)
-
 #Сборка RPM-пакета
 rpmbuild -bb IntegralSystem.spec.tmp --define "_rpmdir $INTEGRAL_SYSTEM_DIR"
 

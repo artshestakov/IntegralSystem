@@ -77,12 +77,6 @@ bool ISGui::Startup(QString &ErrorString)
 	ISSplashWidget SplashWidget;
 	SplashWidget.show();
 
-	//Загрузка трансляций Qt
-	if (!ISLocalization::Instance().LoadTraslatorQT())
-	{
-		ISLOGGER_W("ISLocalization", ISLocalization::Instance().GetErrorString());
-	}
-
 	//Загрузка локализации клиента
 	if (!ISLocalization::Instance().LoadResourceFile(LOCALIZATION_FILE_INTEGRAL_SYSTEM))
 	{

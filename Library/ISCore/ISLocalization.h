@@ -12,7 +12,6 @@ public:
 
 	QString GetErrorString() const;
 	QString GetString(const QString &ParameterName); //Получить локализованную строку
-	bool LoadTraslatorQT(); //Загрузка трансляций QT
 	bool LoadResourceFile(const QString &FileName); //Инициализация файла из ресурсов
 
 private:

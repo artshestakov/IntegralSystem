@@ -19,7 +19,6 @@ rm -rf $RPM_BUILD_ROOT
 %install
 mkdir -p $RPM_BUILD_ROOT/opt/IntegralSystem
 mkdir -p $RPM_BUILD_ROOT/opt/IntegralSystem/sqldrivers
-mkdir -p $RPM_BUILD_ROOT/opt/IntegralSystem/translations
 mkdir -p $RPM_BUILD_ROOT/opt/IntegralSystem/Licenses
 mkdir -p $RPM_BUILD_ROOT/etc/systemd/system
 
