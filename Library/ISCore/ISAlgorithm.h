@@ -192,7 +192,7 @@ namespace ISAlgorithm
 	//Извлечь значение из вектора
     template <typename T> bool VectorTake(std::vector<T> &Vector, T t)
 	{
-        typename std::vector<T>::const_iterator It = std::find(Vector.begin(), Vector.end(), t);
+		auto It = std::find(Vector.begin(), Vector.end(), t);
 		bool Result = It != Vector.end();
 		if (Result)
 		{
@@ -224,12 +224,12 @@ namespace ISAlgorithm
     //Получить индекс элемента в векторе
     template <typename T> size_t VectorIndexOf(const std::vector<T> &Vector, T Value)
     {
-        typename std::vector<T>::const_iterator Iterator = std::find(Vector.begin(), Vector.end(), Value);
-        if (Iterator == Vector.end())
+		auto It = std::find(Vector.begin(), Vector.end(), Value);
+        if (It == Vector.end())
         {
             return size_t();
         }
-        return std::distance(Vector.begin(), Iterator);
+        return std::distance(Vector.begin(), It);
     }
 
     //Удалить все элементы соответствующие значению
@@ -274,7 +274,7 @@ namespace ISAlgorithm
     //Извлечь первое значение словаря
     template <typename TKey, typename TValue> TValue MapTakeFront(std::map<TKey, TValue> &Map)
     {
-        typename std::map<TKey, TValue>::const_iterator It = Map.begin();
+		auto It = Map.begin();
         if (It != Map.end())
         {
             TValue Value = It->second;

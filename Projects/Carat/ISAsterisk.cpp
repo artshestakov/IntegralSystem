@@ -203,7 +203,7 @@ void ISAsterisk::SendAction(const QString &ActionType, const ISStringMap &String
 //-----------------------------------------------------------------------------
 const QString ISAsterisk::ExtractOfPackage(const ISStringMap &AMIPackage, const QString &Key) const
 {
-	ISStringMap::const_iterator It = AMIPackage.find(Key);
+	auto It = AMIPackage.find(Key);
 	if (It == AMIPackage.end())
 	{
 		return QString();

@@ -29,7 +29,7 @@ void ISCreatedObjectsEntity::RegisterForm(ISObjectFormBase *ObjectForm)
 //-----------------------------------------------------------------------------
 void ISCreatedObjectsEntity::UnregisterForm(const QString &FormUID)
 {
-	std::map<ISUuid, ISObjectFormBase*>::const_iterator It = ObjectForms.find(FormUID);
+	auto It = ObjectForms.find(FormUID);
 	if (It != ObjectForms.end())
 	{
 		ObjectForms.erase(It);

@@ -177,7 +177,7 @@ void ISSearchForm::DeleteClicked()
 	delete ParentItem->takeChild(ParentItem->indexOfChild(TreeWidgetItem));
 
 	//Удаляем элемент из массива
-	std::map<QObject*, QTreeWidgetItem*>::iterator It = Map.find(sender());
+	auto It = Map.find(sender());
 	if (It != Map.end())
 	{
 		Map.erase(It);

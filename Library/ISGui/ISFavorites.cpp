@@ -68,7 +68,7 @@ void ISFavorites::DeleteAll()
 //-----------------------------------------------------------------------------
 bool ISFavorites::Exist(const QString &TableName, unsigned int ObjectID)
 {
-	std::map<QString, ISVectorUInt>::iterator It = Favorites.find(TableName);
+	auto It = Favorites.find(TableName);
 	if (It != Favorites.end())
 	{
 		return ISAlgorithm::VectorContains(It->second, ObjectID);

@@ -57,10 +57,10 @@ void ISColumnSizer::SetColumnSize(const QString &TableName, const QString &Field
 //-----------------------------------------------------------------------------
 int ISColumnSizer::GetColumnSize(const QString &TableName, const QString &FieldName) const
 {
-	std::map<QString, ISStringToIntMap>::const_iterator TableIt = Tables.find(TableName);
+	auto TableIt = Tables.find(TableName);
 	if (TableIt != Tables.end()) //Нашли таблицу
 	{
-		ISStringToIntMap::const_iterator ColumnIt = TableIt->second.find(FieldName);
+		auto ColumnIt = TableIt->second.find(FieldName);
 		if (ColumnIt != TableIt->second.end())
 		{
 			return ColumnIt->second;

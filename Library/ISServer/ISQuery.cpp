@@ -166,7 +166,7 @@ QVariant ISQuery::ReadColumn(const QString& name)
 		PrepareColumnIndices();
 	}
 
-	ISStringToIntMap::const_iterator Iterator = ColumnIndices.find(name.toLower());
+	auto Iterator = ColumnIndices.find(name.toLower());
 #ifdef DEBUG
 	IS_ASSERT(Iterator != ColumnIndices.end(), QString("Column \"%1\" not found in sql-query: %2").arg(name).arg(SqlText));
 #endif

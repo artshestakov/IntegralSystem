@@ -127,7 +127,7 @@ PMetaTable* ISMetaData::GetMetaTable(const QString &TableName)
 {
 	PMetaTable *MetaTable = nullptr;
 	CRITICAL_SECTION_LOCK(&CriticalSection);
-	std::map<QString, PMetaTable *>::const_iterator It = TablesMap.find(TableName);
+	auto It = TablesMap.find(TableName);
 	if (It != TablesMap.end())
 	{
 		MetaTable = It->second;

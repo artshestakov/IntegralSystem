@@ -31,7 +31,7 @@ void ISTcpClients::Add(qintptr SocketDescriptor, unsigned int UserID, const QStr
 void ISTcpClients::Remove(qintptr SocketDescriptor)
 {
 	CRITICAL_SECTION_LOCK(&CriticalSection);
-	std::map<qintptr, ISClientInfo>::const_iterator It = Clients.find(SocketDescriptor);
+	auto It = Clients.find(SocketDescriptor);
 	if (It != Clients.end())
 	{
 		Clients.erase(It->first);
@@ -86,7 +86,7 @@ size_t ISTcpClients::GetCount()
 void ISTcpClients::UpdateLastQuery(qintptr SocketDescriptor, ISNamespace::ApiMessageType MessageType, bool Result, unsigned long long MSec)
 {
 	CRITICAL_SECTION_LOCK(&CriticalSection);
-	std::map<qintptr, ISClientInfo>::const_iterator It = Clients.find(SocketDescriptor);
+	auto It = Clients.find(SocketDescriptor);
 	if (It != Clients.end())
 	{
 		Clients[SocketDescriptor].LastQueryDT = QDateTime::currentDateTime();

@@ -31,7 +31,7 @@ QString ISLocalization::GetErrorString() const
 QString ISLocalization::GetString(const QString &ParameterName)
 {
 	CRITICAL_SECTION_LOCK(&CriticalSection);
-	ISStringMap::const_iterator It = Dictionary.find(ParameterName);
+	auto It = Dictionary.find(ParameterName);
 	CRITICAL_SECTION_UNLOCK(&CriticalSection);
 	if (It == Dictionary.end())
 	{
