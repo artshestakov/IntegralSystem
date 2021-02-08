@@ -628,4 +628,25 @@
     </Indexes>
   </Table>
 
+  <Table Name="ConsumptionTest" UID="{EDDE03E1-B32C-4043-BB9A-D35F7EC78B0E}" Alias="cpmp" LocalName="Расход" LocalListName="Расходы" TitleName="Type;Date">
+    <Fields>
+      <Field UID="{15772A76-C3B6-4B69-B32F-E9A5CCEDD7CE}" Name="Type" Type="BigInt" LabelName="Тип расхода" LocalListName="Тип расхода" NotNull="true"/>
+      <Field UID="{F8DE1252-96EB-49A2-9A7B-2CB568A080C1}" Name="Date" Type="Date" LabelName="Дата" LocalListName="Дата" NotNull="true"/>
+      <Field UID="{08230052-D161-4D99-8D24-2D3933594F10}" Name="Sum" Type="Money" LabelName="Сумма" LocalListName="Сумма" NotNull="true"/>
+      <Field UID="{5BF97288-55EC-451D-B4CA-8808E04744F6}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
+    </Fields>
+    <Foreigns>
+      <Foreign Field="Type" ForeignClass="ConsumptionTestType" ForeignField="ID" ForeignViewNameField="Name"/>
+    </Foreigns>
+  </Table>
+
+  <Table Name="ConsumptionTestType" UID="{86A5D1E5-AC87-4D92-980C-3BE7BA06E24F}" Alias="cptp" LocalName="Тип расходов" LocalListName="Типы расходов" TitleName="Name" ShowOnly="true" IsSystem="true">
+    <Fields>
+      <Field UID="{6038D1D4-D9F7-4A7F-B9DA-46714CD27250}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
+    </Fields>
+    <Indexes>
+      <Index Field="Name" Unique="true"/>
+    </Indexes>
+  </Table>
+
 </XSN>

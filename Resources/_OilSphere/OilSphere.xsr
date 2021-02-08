@@ -25,6 +25,7 @@
   <_Systems IsSystem="false" UID="{6BA94FDF-8469-4731-8498-5A7481400406}" OrderID="6" LocalName="Расходы" Icon="Lists"/>
   <_SubSystems UID="{FD49B3A7-3B5B-4FE0-A25D-2B4D2D088AE6}" System="{6BA94FDF-8469-4731-8498-5A7481400406}" OrderID="1" LocalName="Приходы" Icon="Lists" TableName="Coming"/>
   <_SubSystems UID="{9260A5B4-C911-4A76-9989-B962A2FB5E13}" System="{6BA94FDF-8469-4731-8498-5A7481400406}" OrderID="2" LocalName="Розница" Icon="Lists" TableName="Retail"/>
+  <_SubSystems UID="{0BB7F09E-74C4-408A-AF57-46377C3CD067}" System="{6BA94FDF-8469-4731-8498-5A7481400406}" OrderID="3" LocalName="Расходы" Icon="Lists" TableName="ConsumptionTest"/>
   
   <_Systems IsSystem="false" UID="{A6420088-C2C2-4671-9F86-003CAC0F601C}" OrderID="7" LocalName="Прочее" Icon="Lists"/>
   <_SubSystems UID="{6CC832E2-2EE4-4388-9AF5-E49CBE1C6DE7}" System="{A6420088-C2C2-4671-9F86-003CAC0F601C}" OrderID="1" LocalName="Дебет 1" Icon="Lists" ClassName="ISOilSphere::Debet1SubSystem"/>
@@ -35,5 +36,8 @@
   
   <OperationType UID="{439C16CE-421A-4BAB-B2B2-4CEE3FCFEE21}" Name="Списание"/>
   <OperationType UID="{0286A244-9732-43B4-A1B2-3E434EEF04D0}" Name="Зачисление"/>
+
+  <ConsumptionTestType UID="{12D7BA2D-7CCE-4A07-8319-79EF1DF6C8AB}" Name="Розница"/>
+  <ConsumptionTestType UID="{7866F8E1-C3B6-4354-8F68-E8D82F66493F}" Name="Транспорт"/>
 
 </XSR>
