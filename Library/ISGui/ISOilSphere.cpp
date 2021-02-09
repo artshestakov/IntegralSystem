@@ -42,6 +42,7 @@ void ISOilSphere::Object::RegisterMetaTypes() const
 	qRegisterMetaType<ISOilSphere::StockWriteOff*>("ISOilSphere::StockWriteOff");
 	qRegisterMetaType<ISOilSphere::MoveWagonSubSystem*>("ISOilSphere::MoveWagonListForm");
 	qRegisterMetaType<ISOilSphere::ComingObjectForm*>("ISOilSphere::ComingObjectForm");
+	qRegisterMetaType<ISOilSphere::DistributionObjectForm*>("ISOilSphere::DistributionObjectForm");
 	qRegisterMetaType<ISOilSphere::ConsumptionSubSystem*>("ISOilSphere::ConsumptionSubSystem");
 	qRegisterMetaType<ISOilSphere::ConsumptionObjectForm*>("ISOilSphere::ConsumptionObjectForm");
 }
@@ -1194,6 +1195,24 @@ bool ISOilSphere::ComingObjectForm::Save()
 	return ISObjectFormBase::Save();
 }
 //-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+ISOilSphere::DistributionObjectForm::DistributionObjectForm(ISNamespace::ObjectFormType form_type, PMetaTable *meta_table, QWidget *parent, int object_id)
+	: ISObjectFormBase(form_type, meta_table, parent, object_id)
+{
+
+}
+//-----------------------------------------------------------------------------
+ISOilSphere::DistributionObjectForm::~DistributionObjectForm()
+{
+
+}
+//-----------------------------------------------------------------------------
+bool ISOilSphere::DistributionObjectForm::Save()
+{
+	AddVirtualField("UserFrom", CURRENT_USER_ID);
+	return ISObjectFormBase::Save();
+}
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 ISOilSphere::ConsumptionSubSystem::ConsumptionSubSystem(QWidget *parent) : ISListBaseForm("Consumption", parent)

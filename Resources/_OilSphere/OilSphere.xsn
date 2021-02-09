@@ -609,6 +609,19 @@
       <Foreign Field="User" ForeignClass="_Users" ForeignField="ID" ForeignViewNameField="FIO"/>
     </Foreigns>
   </Table>
+  
+  <Table Name="Distribution" UID="{38693406-9F58-46E8-9DF4-EFD482208813}" Alias="dsmn" LocalName="Распределение" LocalListName="Распределение" TitleName="UserTo;Sum" ObjectForm="ISOilSphere::DistributionObjectForm">
+    <Fields>
+      <Field UID="{B843B21E-1F4B-4333-ABA0-E5A0D2657846}" Name="UserFrom" Type="BigInt" LabelName="Отправил" LocalListName="Отправил" NotNull="true" HideFromObject="true"/>
+      <Field UID="{5BDAC65D-A2CF-442B-AEB1-BE868045B84A}" Name="Date" Type="Date" DefaultValue="now()" LabelName="Дата" LocalListName="Дата" NotNull="true" HideFromObject="true"/>
+      <Field UID="{E75FB150-1D22-4B2C-AD67-C24FCA5451DE}" Name="UserTo" Type="BigInt" LabelName="Получатель" LocalListName="Получатель" NotNull="true"/>
+      <Field UID="{A0D64658-4D6E-471D-A608-A93D5B150254}" Name="Sum" Type="Money" LabelName="Сумма" LocalListName="Сумма" NotNull="true"/>
+    </Fields>
+    <Foreigns>
+      <Foreign Field="UserFrom" ForeignClass="_Users" ForeignField="ID" ForeignViewNameField="FIO"/>
+      <Foreign Field="UserTo" ForeignClass="_Users" ForeignField="ID" ForeignViewNameField="FIO"/>
+    </Foreigns>
+  </Table>
 
   <Table Name="Consumption" UID="{EDDE03E1-B32C-4043-BB9A-D35F7EC78B0E}" Alias="cpmp" LocalName="Расход" LocalListName="Расходы" TitleName="Date" ObjectForm="ISOilSphere::ConsumptionObjectForm">
     <Fields>

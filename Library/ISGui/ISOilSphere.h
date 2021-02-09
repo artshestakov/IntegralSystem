@@ -425,6 +425,18 @@ namespace ISOilSphere
 		bool Save() override;
 	};
 
+	//Форма объекта распределения
+	class DistributionObjectForm : public ISObjectFormBase
+	{
+		Q_OBJECT
+
+	public:
+		Q_INVOKABLE DistributionObjectForm(ISNamespace::ObjectFormType form_type, PMetaTable *meta_table, QWidget *parent, int object_id = 0);
+		virtual ~DistributionObjectForm();
+
+		bool Save() override;
+	};
+
 	//Форма списка расходов
 	class ConsumptionSubSystem : public ISListBaseForm
 	{
