@@ -11,11 +11,12 @@ ISProtocolObjectListForm::~ISProtocolObjectListForm()
 
 }
 //-----------------------------------------------------------------------------
-void ISProtocolObjectListForm::LoadDataAfterEvent()
+bool ISProtocolObjectListForm::Update()
 {
-	ISListBaseForm::LoadDataAfterEvent();
+	bool Result = ISListBaseForm::Update();
 	HideField("ObjectID");
 	HideField("TableLocalName");
+	return Result;
 }
 //-----------------------------------------------------------------------------
 void ISProtocolObjectListForm::LoadData()

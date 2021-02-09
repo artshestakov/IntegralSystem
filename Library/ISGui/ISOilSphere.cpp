@@ -94,10 +94,11 @@ ISOilSphere::CounterpartySubSystem::~CounterpartySubSystem()
 
 }
 //-----------------------------------------------------------------------------
-void ISOilSphere::CounterpartySubSystem::LoadDataAfterEvent()
+bool ISOilSphere::CounterpartySubSystem::Update()
 {
-	ISListBaseForm::LoadDataAfterEvent();
+	bool Result = ISListBaseForm::Update();
 	//LabelTotal->setText(LANG("OilSphere.Counterparty.Total").arg(DOUBLE_PREPAREM(GetSqlModel()->GetFieldSum<double>("Debt", 0.0))));
+	return Result;
 }
 //-----------------------------------------------------------------------------
 void ISOilSphere::CounterpartySubSystem::ShowDebt()
@@ -330,9 +331,9 @@ ISOilSphere::ImplementationSubSystem::~ImplementationSubSystem()
 
 }
 //-----------------------------------------------------------------------------
-void ISOilSphere::ImplementationSubSystem::LoadDataAfterEvent()
+bool ISOilSphere::ImplementationSubSystem::Update()
 {
-	ISListBaseForm::LoadDataAfterEvent();
+	bool Result = ISListBaseForm::Update();
 	/*LabelTotal->setText(LANG("OilSphere.Implementation.Total")
 		.arg(GetSqlModel()->GetFieldSum<int>("LoadCount", 0))
 		.arg(GetSqlModel()->GetFieldSum<int>("UnloadCount", 0))
@@ -341,6 +342,7 @@ void ISOilSphere::ImplementationSubSystem::LoadDataAfterEvent()
 		.arg(DOUBLE_PREPAREM(GetSqlModel()->GetFieldSum<double>("LoadCost", 0.0)))
 		.arg(DOUBLE_PREPAREM(GetSqlModel()->GetFieldSum<double>("UnloadCost", 0.0)))
 		.arg(DOUBLE_PREPARE(GetSqlModel()->GetFieldSum<double>("WeightDifference", 0.0))));*/
+	return Result;
 }
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
@@ -549,9 +551,9 @@ ISOilSphere::GasStationStatementSubSystem::~GasStationStatementSubSystem()
 
 }
 //-----------------------------------------------------------------------------
-void ISOilSphere::GasStationStatementSubSystem::LoadDataAfterEvent()
+bool ISOilSphere::GasStationStatementSubSystem::Update()
 {
-	ISListBaseForm::LoadDataAfterEvent();
+	bool Result = ISListBaseForm::Update();
 	/*LabelTotal->setText(LANG("OilSphere.GasStationStatement.Total")
 		.arg(DOUBLE_PREPAREM(GetSqlModel()->GetFieldSum<double>("BalanceBeginChange", 0.0)))
 		.arg(DOUBLE_PREPARE(GetSqlModel()->GetFieldSum<double>("VolumeIncome", 0.0)))
@@ -575,6 +577,7 @@ void ISOilSphere::GasStationStatementSubSystem::LoadDataAfterEvent()
 		.arg(DOUBLE_PREPAREM(GetSqlModel()->GetFieldSum<double>("CashboxCollectionAmount", 0.0)))
 		.arg(DOUBLE_PREPAREM(GetSqlModel()->GetFieldSum<double>("CashboxCollectionAmountKKM", 0.0)))
 		.arg(DOUBLE_PREPAREM(GetSqlModel()->GetFieldSum<double>("CashboxAdministrativeExpenses", 0.0))));*/
+	return Result;
 }
 //-----------------------------------------------------------------------------
 void ISOilSphere::GasStationStatementSubSystem::StockChanged(const QVariant &Value)
@@ -908,9 +911,9 @@ ISOilSphere::Debet1SubSystem::~Debet1SubSystem()
 
 }
 //-----------------------------------------------------------------------------
-void ISOilSphere::Debet1SubSystem::LoadDataAfterEvent()
+bool ISOilSphere::Debet1SubSystem::Update()
 {
-	ISListBaseForm::LoadDataAfterEvent();
+	bool Result = ISListBaseForm::Update();
 	double Total = 0, Calculation = 0;
 	for (int Row = 0; Row < GetTcpModel()->rowCount(); ++Row)
 	{
@@ -920,6 +923,7 @@ void ISOilSphere::Debet1SubSystem::LoadDataAfterEvent()
 		Calculation += Temp.replace(SYMBOL_COMMA, SYMBOL_POINT).remove(' ').toDouble();
 	}
 	Label->setText(LANG("OilSphere.Debet.Label").arg(DOUBLE_PREPARE(Total)).arg(DOUBLE_PREPARE(Calculation)).arg(DOUBLE_PREPARE(Total - Calculation)));
+	return Result;
 }
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
@@ -938,9 +942,9 @@ ISOilSphere::Debet2SubSystem::~Debet2SubSystem()
 
 }
 //-----------------------------------------------------------------------------
-void ISOilSphere::Debet2SubSystem::LoadDataAfterEvent()
+bool ISOilSphere::Debet2SubSystem::Update()
 {
-	ISListBaseForm::LoadDataAfterEvent();
+	bool Result = ISListBaseForm::Update();
 	double Total = 0, Calculation = 0;
 	for (int Row = 0; Row < GetTcpModel()->rowCount(); ++Row)
 	{
@@ -950,6 +954,7 @@ void ISOilSphere::Debet2SubSystem::LoadDataAfterEvent()
 		Calculation += Temp.replace(SYMBOL_COMMA, SYMBOL_POINT).remove(' ').toDouble();
 	}
 	Label->setText(LANG("OilSphere.Debet.Label").arg(DOUBLE_PREPARE(Total)).arg(DOUBLE_PREPARE(Calculation)).arg(DOUBLE_PREPARE(Total - Calculation)));
+	return Result;
 }
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
@@ -968,9 +973,9 @@ ISOilSphere::Debet3SubSystem::~Debet3SubSystem()
 
 }
 //-----------------------------------------------------------------------------
-void ISOilSphere::Debet3SubSystem::LoadDataAfterEvent()
+bool ISOilSphere::Debet3SubSystem::Update()
 {
-	ISListBaseForm::LoadDataAfterEvent();
+	bool Result = ISListBaseForm::Update();
 	double Total = 0, Calculation = 0;
 	for (int Row = 0; Row < GetTcpModel()->rowCount(); ++Row)
 	{
@@ -980,6 +985,7 @@ void ISOilSphere::Debet3SubSystem::LoadDataAfterEvent()
 		Calculation += Temp.replace(SYMBOL_COMMA, SYMBOL_POINT).remove(' ').toDouble();
 	}
 	Label->setText(LANG("OilSphere.Debet.Label").arg(DOUBLE_PREPARE(Total)).arg(DOUBLE_PREPARE(Calculation)).arg(DOUBLE_PREPARE(Total - Calculation)));
+	return Result;
 }
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
@@ -998,9 +1004,9 @@ ISOilSphere::Debet4SubSystem::~Debet4SubSystem()
 
 }
 //-----------------------------------------------------------------------------
-void ISOilSphere::Debet4SubSystem::LoadDataAfterEvent()
+bool ISOilSphere::Debet4SubSystem::Update()
 {
-	ISListBaseForm::LoadDataAfterEvent();
+	bool Result = ISListBaseForm::Update();
 	double Total = 0, Calculation = 0;
 	for (int Row = 0; Row < GetTcpModel()->rowCount(); ++Row)
 	{
@@ -1010,6 +1016,7 @@ void ISOilSphere::Debet4SubSystem::LoadDataAfterEvent()
 		Calculation += Temp.replace(SYMBOL_COMMA, SYMBOL_POINT).remove(' ').toDouble();
 	}
 	Label->setText(LANG("OilSphere.Debet.Label").arg(DOUBLE_PREPARE(Total)).arg(DOUBLE_PREPARE(Calculation)).arg(DOUBLE_PREPARE(Total - Calculation)));
+	return Result;
 }
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
@@ -1028,9 +1035,9 @@ ISOilSphere::Debet5SubSystem::~Debet5SubSystem()
 
 }
 //-----------------------------------------------------------------------------
-void ISOilSphere::Debet5SubSystem::LoadDataAfterEvent()
+bool ISOilSphere::Debet5SubSystem::Update()
 {
-	ISListBaseForm::LoadDataAfterEvent();
+	bool Result = ISListBaseForm::Update();
 	double Total = 0, Calculation = 0;
 	for (int Row = 0; Row < GetTcpModel()->rowCount(); ++Row)
 	{
@@ -1040,6 +1047,7 @@ void ISOilSphere::Debet5SubSystem::LoadDataAfterEvent()
 		Calculation += Temp.replace(SYMBOL_COMMA, SYMBOL_POINT).remove(' ').toDouble();
 	}
 	Label->setText(LANG("OilSphere.Debet.Label").arg(DOUBLE_PREPARE(Total)).arg(DOUBLE_PREPARE(Calculation)).arg(DOUBLE_PREPARE(Total - Calculation)));
+	return Result;
 }
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
@@ -1060,13 +1068,14 @@ ISOilSphere::DriverCostSubSystem::~DriverCostSubSystem()
 
 }
 //-----------------------------------------------------------------------------
-void ISOilSphere::DriverCostSubSystem::LoadDataAfterEvent()
+bool ISOilSphere::DriverCostSubSystem::Update()
 {
-	ISListBaseForm::LoadDataAfterEvent();
+	bool Result = ISListBaseForm::Update();
 	/*LabelTotal->setText(LANG("OilSphere.DriverCost.Total")
 		.arg(DOUBLE_PREPAREM(GetSqlModel()->GetFieldSum<double>("Coming", 0.0)))
 		.arg(DOUBLE_PREPAREM(GetSqlModel()->GetFieldSum<double>("Consumption", 0.0)))
 		.arg(DOUBLE_PREPAREM(GetSqlModel()->GetFieldSum<double>("Remainder", 0.0))));*/
+	return Result;
 }
 //-----------------------------------------------------------------------------
 void ISOilSphere::DriverCostSubSystem::CreateOnBased()
@@ -1161,9 +1170,9 @@ ISOilSphere::MoveWagonSubSystem::~MoveWagonSubSystem()
 
 }
 //-----------------------------------------------------------------------------
-void ISOilSphere::MoveWagonSubSystem::LoadDataAfterEvent()
+bool ISOilSphere::MoveWagonSubSystem::Update()
 {
-	ISListBaseForm::LoadDataAfterEvent();
+	bool Result = ISListBaseForm::Update();
 	/*LabelTotal->setText(LANG("OilSphere.MoveWagon.Total")
 		.arg(DOUBLE_PREPARE(GetSqlModel()->GetFieldSum<double>("Kilogram", 0.0)))
 		.arg(DOUBLE_PREPAREM(GetSqlModel()->GetFieldSum<double>("Price", 0.0)))
@@ -1174,6 +1183,7 @@ void ISOilSphere::MoveWagonSubSystem::LoadDataAfterEvent()
 		.arg(DOUBLE_PREPARE(GetSqlModel()->GetFieldSum<double>("TechnicalLossesWeight", 0.0)))
 		.arg(DOUBLE_PREPAREM(GetSqlModel()->GetFieldSum<double>("PriceFull", 0.0)))
 		.arg(DOUBLE_PREPAREM(GetSqlModel()->GetFieldSum<double>("TotalCost", 0.0))));*/
+	return Result;
 }
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------

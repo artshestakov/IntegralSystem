@@ -75,7 +75,6 @@ protected:
 	QAction* GetSpecialAction(ISNamespace::ActionSpecialType action_special);
 
 	virtual void SelectedRowEvent(const QItemSelection &ItemSelected, const QItemSelection &ItemDeSelected); //Событие выбора строки в таблице
-	virtual void LoadDataAfterEvent(); //Событие происходящее после загрузки данных
 	virtual void AfterShowEvent() override;
 	
 	bool CheckIsSystemObject(); //Проверка объекта на статус "Системный"

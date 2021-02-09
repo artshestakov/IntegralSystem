@@ -407,11 +407,6 @@ void ISListBaseForm::CornerButtonClicked()
 	}
 }
 //-----------------------------------------------------------------------------
-void ISListBaseForm::LoadDataAfterEvent()
-{
-	
-}
-//-----------------------------------------------------------------------------
 void ISListBaseForm::AfterShowEvent()
 {
 	ISInterfaceMetaForm::AfterShowEvent();
@@ -745,8 +740,6 @@ bool ISListBaseForm::Update()
 		{
 			ListIndicatorWidget->hide();
 		}
-
-		LoadDataAfterEvent();
 		emit Updated();
 	}
 	else //Не удалось получить данные - выключаем анимацию и выдаём окно с ошибкой

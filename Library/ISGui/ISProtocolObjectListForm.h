@@ -12,7 +12,7 @@ public:
 	virtual ~ISProtocolObjectListForm();
 
 protected:
-	virtual void LoadDataAfterEvent() override;
+	virtual bool Update() override;
 	void LoadData() override;
 };
 //-----------------------------------------------------------------------------

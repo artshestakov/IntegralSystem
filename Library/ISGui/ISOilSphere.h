@@ -34,7 +34,7 @@ namespace ISOilSphere
 		virtual ~CounterpartySubSystem();
 
 	protected:
-		void LoadDataAfterEvent() override;
+		bool Update() override;
 
 	private:
 		void ShowDebt();
@@ -95,7 +95,7 @@ namespace ISOilSphere
 		~ImplementationSubSystem();
 
 	protected:
-		void LoadDataAfterEvent() override;
+		bool Update() override;
 
 	private:
 		QLabel *LabelTotal;
@@ -141,7 +141,7 @@ namespace ISOilSphere
 		virtual ~GasStationStatementSubSystem();
 
 	protected:
-		void LoadDataAfterEvent() override;
+		bool Update() override;
 
 	private:
 		void StockChanged(const QVariant &Value);
@@ -263,7 +263,7 @@ namespace ISOilSphere
 		virtual ~Debet1SubSystem();
 
 	protected:
-		void LoadDataAfterEvent() override;
+		bool Update() override;
 
 	private:
 		QLabel *Label;
@@ -279,7 +279,7 @@ namespace ISOilSphere
 		virtual ~Debet2SubSystem();
 
 	protected:
-		void LoadDataAfterEvent() override;
+		bool Update() override;
 
 	private:
 		QLabel *Label;
@@ -295,7 +295,7 @@ namespace ISOilSphere
 		virtual ~Debet3SubSystem();
 
 	protected:
-		void LoadDataAfterEvent() override;
+		bool Update() override;
 
 	private:
 		QLabel *Label;
@@ -311,7 +311,7 @@ namespace ISOilSphere
 		virtual ~Debet4SubSystem();
 
 	protected:
-		void LoadDataAfterEvent() override;
+		bool Update() override;
 
 	private:
 		QLabel *Label;
@@ -327,7 +327,7 @@ namespace ISOilSphere
 		virtual ~Debet5SubSystem();
 
 	protected:
-		void LoadDataAfterEvent() override;
+		bool Update() override;
 
 	private:
 		QLabel *Label;
@@ -343,7 +343,7 @@ namespace ISOilSphere
 		virtual ~DriverCostSubSystem();
 
 	protected:
-		void LoadDataAfterEvent() override;
+		bool Update() override;
 
 	private:
 		void CreateOnBased(); //Создать на основании
@@ -407,7 +407,7 @@ namespace ISOilSphere
 		virtual ~MoveWagonSubSystem();
 
 	protected:
-		void LoadDataAfterEvent() override;
+		bool Update() override;
 
 	private:
 		QLabel *LabelTotal;
