@@ -497,14 +497,9 @@ static QString QS_IMPLEMENTATION_UNLOAD = PREPARE_QUERY("SELECT true AS is_load,
 //-----------------------------------------------------------------------------
 static QString QS_COUNTERPARTY_DEBT = PREPARE_QUERY("SELECT get_counterparty_unload(:CounterpartyID), get_counterparty_load(:CounterpartyID), get_counterparty_entrollment(:CounterpartyID), get_counterparty_move_wagon(:CounterpartyID)");
 //-----------------------------------------------------------------------------
-ISTcpWorker::ISTcpWorker(const QString &db_host, int db_port, const QString &db_name, const QString &db_user, const QString &db_password)
-	: QObject(),
+ISTcpWorker::ISTcpWorker(QObject *parent)
+	: QObject(parent),
 	ErrorString(NO_ERROR_STRING),
-	DBHost(db_host),
-	DBPort(db_port),
-	DBName(db_name),
-	DBUser(db_user),
-	DBPassword(db_password),
 	IsStarted(false),
 	qProtocol(nullptr),
 	IsRunning(false),
@@ -530,6 +525,15 @@ bool ISTcpWorker::GetRunning()
 	bool is_running = IsRunning;
 	CRITICAL_SECTION_UNLOCK(&CriticalSection);
 	return is_running;
+}
+//-----------------------------------------------------------------------------
+void ISTcpWorker::SetDB(const QString &db_host, int db_port, const QString &db_name, const QString &db_user, const QString &db_password)
+{
+	DBHost = db_host;
+	DBPort = db_port;
+	DBName = db_name;
+	DBUser = db_user;
+	DBPassword = db_password;
 }
 //-----------------------------------------------------------------------------
 void ISTcpWorker::SetMessage(ISTcpMessage *TcpMessage)

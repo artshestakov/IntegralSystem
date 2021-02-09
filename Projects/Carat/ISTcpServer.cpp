@@ -7,6 +7,8 @@
 #include "ISTcpClients.h"
 #include "ISFail2Ban.h"
 #include "ISCaratMonitor.h"
+#include "ISConfigurations.h"
+#include "ISOilSphereWorker.h"
 //-----------------------------------------------------------------------------
 ISTcpServer::ISTcpServer(QObject *parent)
 	: QTcpServer(parent),
@@ -15,6 +17,9 @@ ISTcpServer::ISTcpServer(QObject *parent)
 	BalancerRunning(false),
 	BalancerFinished(false)
 {
+	qRegisterMetaType<ISTcpWorker*>("ISTcpWorker");
+	qRegisterMetaType<ISOilSphereWorker*>("ISOilSphereWorker");
+
 	CRITICAL_SECTION_INIT(&CriticalSection);
 }
 //-----------------------------------------------------------------------------
@@ -43,15 +48,15 @@ bool ISTcpServer::Run()
 	QEventLoop EventLoop;
 	for (unsigned int i = 0; i < WorkerCount; ++i)
 	{
-		QThread *Thread = new QThread();
-		ISTcpWorker *TcpWorker = new ISTcpWorker(DBHost, DBPort, DBName, DBUser, DBPassword);
+		ISTcpWorker *TcpWorker = ISAlgorithm::CreatePointer<ISTcpWorker*>(ISConfigurations::Instance().Get().WorkerName, Q_ARG(QObject *, this));
+		TcpWorker->SetDB(DBHost, DBPort, DBName, DBUser, DBPassword);
 		connect(TcpWorker, &ISTcpWorker::Answer, this, &ISTcpServer::SendAnswer, Qt::QueuedConnection);
 		connect(TcpWorker, &ISTcpWorker::StartedDone, &EventLoop, &QEventLoop::quit);
 		connect(TcpWorker, &ISTcpWorker::StartedFailed, &EventLoop, &QEventLoop::quit);
 		Workers[i] = TcpWorker;
 
+		QThread *Thread = new QThread();
 		connect(Thread, &QThread::started, TcpWorker, &ISTcpWorker::Run); //Запуск воркера
-
 		TcpWorker->moveToThread(Thread); //Перемещаем воркер в отдельный поток
 		Thread->start(); //Запускаем поток
 		EventLoop.exec(); //Ожидаем запуска воркера

@@ -147,6 +147,7 @@ struct ISCORE_EXPORT ISConfigurationInfo
 	ISUuid UID; //Идентификатор
 	QString LocalName; //Локальное наименование
 	QString DesktopForm; //Имя класса рабочего стола
+	QString WorkerName; //Имя класса серверного воркера
 	QDate DateExpired; //Дата, после которой программа запускаться не должна
 	QString LogoName;
 };
