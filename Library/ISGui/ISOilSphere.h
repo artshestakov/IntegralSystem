@@ -412,6 +412,30 @@ namespace ISOilSphere
 	private:
 		QLabel *LabelTotal;
 	};
+
+	//Форма списка расходов
+	class ConsumptionSubSystem : public ISListBaseForm
+	{
+		Q_OBJECT
+
+	public:
+		Q_INVOKABLE ConsumptionSubSystem(QWidget *parent = 0);
+		virtual ~ConsumptionSubSystem();
+
+		bool Update() override;
+	};
+
+	//Форма объекта расходов
+	class ConsumptionObjectForm : public ISObjectFormBase
+	{
+		Q_OBJECT
+
+	public:
+		Q_INVOKABLE ConsumptionObjectForm(ISNamespace::ObjectFormType form_type, PMetaTable *meta_table, QWidget *parent, int object_id = 0);
+		virtual ~ConsumptionObjectForm();
+
+		bool Save() override;
+	};
 }
 //-----------------------------------------------------------------------------
 #endif

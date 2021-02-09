@@ -41,6 +41,8 @@ void ISOilSphere::Object::RegisterMetaTypes() const
 	qRegisterMetaType<ISOilSphere::StockAdmissionImplemetation*>("ISOilSphere::StockAdmissionImplemetation");
 	qRegisterMetaType<ISOilSphere::StockWriteOff*>("ISOilSphere::StockWriteOff");
 	qRegisterMetaType<ISOilSphere::MoveWagonSubSystem*>("ISOilSphere::MoveWagonListForm");
+	qRegisterMetaType<ISOilSphere::ConsumptionSubSystem*>("ISOilSphere::ConsumptionSubSystem");
+	qRegisterMetaType<ISOilSphere::ConsumptionObjectForm*>("ISOilSphere::ConsumptionObjectForm");
 }
 //-----------------------------------------------------------------------------
 void ISOilSphere::Object::BeforeShowMainWindow() const
@@ -1170,5 +1172,42 @@ void ISOilSphere::MoveWagonSubSystem::LoadDataAfterEvent()
 		.arg(DOUBLE_PREPARE(GetSqlModel()->GetFieldSum<double>("TechnicalLossesWeight", 0.0)))
 		.arg(DOUBLE_PREPAREM(GetSqlModel()->GetFieldSum<double>("PriceFull", 0.0)))
 		.arg(DOUBLE_PREPAREM(GetSqlModel()->GetFieldSum<double>("TotalCost", 0.0))));*/
+}
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+ISOilSphere::ConsumptionSubSystem::ConsumptionSubSystem(QWidget *parent) : ISListBaseForm("Consumption", parent)
+{
+
+}
+//-----------------------------------------------------------------------------
+ISOilSphere::ConsumptionSubSystem::~ConsumptionSubSystem()
+{
+
+}
+//-----------------------------------------------------------------------------
+bool ISOilSphere::ConsumptionSubSystem::Update()
+{
+	GetTcpQuery()->AddFilter("User", CURRENT_USER_ID);
+	return ISListBaseForm::Update();
+}
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+ISOilSphere::ConsumptionObjectForm::ConsumptionObjectForm(ISNamespace::ObjectFormType form_type, PMetaTable *meta_table, QWidget *parent, int object_id)
+	: ISObjectFormBase(form_type, meta_table, parent, object_id)
+{
+
+}
+//-----------------------------------------------------------------------------
+ISOilSphere::ConsumptionObjectForm::~ConsumptionObjectForm()
+{
+
+}
+//-----------------------------------------------------------------------------
+bool ISOilSphere::ConsumptionObjectForm::Save()
+{
+	AddVirtualField("User", CURRENT_USER_ID);
+	return ISObjectFormBase::Save();
 }
 //-----------------------------------------------------------------------------
