@@ -457,48 +457,8 @@ static QString QS_SERVER_INFO = PREPARE_QUERY("SELECT "
 											  "(SELECT COUNT(*) AS protocol_count FROM _protocol), "
 											  "(SELECT COUNT(*) AS users_count FROM _users)");
 //-----------------------------------------------------------------------------
-static QString QS_PERIOD = PREPARE_QUERY("SELECT prod_constant "
-										 "FROM period "
-										 "WHERE CURRENT_DATE BETWEEN prod_datestart AND prod_dateend");
-//-----------------------------------------------------------------------------
-static QString QS_STOCK = PREPARE_QUERY("SELECT stck_id, stck_name "
-										"FROM stock "
-										"ORDER BY stck_name");
-//-----------------------------------------------------------------------------
-static QString QS_STATEMENT = PREPARE_QUERY("SELECT COUNT(*) "
-											"FROM gasstationstatement "
-											"WHERE gsts_implementationunload = :ImplementationUnload");
-//-----------------------------------------------------------------------------
-static QString QI_STATEMENT = PREPARE_QUERY("INSERT INTO gasstationstatement(gsts_implementationunload, gsts_stock, gsts_date, gsts_volumeincome) "
-											"VALUES(:ImplementationUnload, :StockID, "
-											"(SELECT impl_date FROM implementation WHERE impl_id = (SELECT iunl_implementation FROM implementationunload WHERE iunl_id = :ImplementationUnload)), "
-											"(SELECT iunl_weightnet * :VolumeIncome FROM implementationunload WHERE iunl_id = :ImplementationUnload))");
-//-----------------------------------------------------------------------------
-static QString QS_FILL_IN_BASED = PREPARE_QUERY("SELECT "
-												"COALESCE(gsts_balanceendchange, 0) AS gsts_balanceendchange, "
-												"COALESCE(gsts_cashboxtotalpayment, 0) AS gsts_cashboxtotalpayment, "
-												"COALESCE(gsts_cashboxtotalactually, 0) AS gsts_cashboxtotalactually, "
-												"COALESCE(gsts_cashboxkkmtotal, 0) AS gsts_cashboxkkmtotal "
-												"FROM gasstationstatement "
-												"WHERE gsts_id = :StatementID");
-//-----------------------------------------------------------------------------
-static QString QS_IMPLEMENTATION_UNLOAD = PREPARE_QUERY("SELECT true AS is_load, ilod_implementation AS implementation_id, ilod_id AS id, impl_date AS date, ilod_cost AS cost "
-														"FROM implementationload "
-														"LEFT JOIN implementation ON ilod_implementation = impl_id "
-														"WHERE ilod_counterparty = :CounterpartyID "
-														""
-														"UNION "
-														""
-														"SELECT false AS is_load, iunl_implementation AS implementation_id, iunl_id AS id, impl_date AS date, iunl_cost AS cost "
-														"FROM implementationunload "
-														"LEFT JOIN implementation ON iunl_implementation = impl_id "
-														"WHERE iunl_counterparty = :CounterpartyID "
-														"ORDER BY is_load, date DESC");
-//-----------------------------------------------------------------------------
-static QString QS_COUNTERPARTY_DEBT = PREPARE_QUERY("SELECT get_counterparty_unload(:CounterpartyID), get_counterparty_load(:CounterpartyID), get_counterparty_entrollment(:CounterpartyID), get_counterparty_move_wagon(:CounterpartyID)");
-//-----------------------------------------------------------------------------
-ISTcpWorker::ISTcpWorker(QObject *parent)
-	: QObject(parent),
+ISTcpWorker::ISTcpWorker()
+	: QObject(),
 	ErrorString(NO_ERROR_STRING),
 	IsStarted(false),
 	qProtocol(nullptr),
@@ -631,73 +591,7 @@ void ISTcpWorker::Process()
 				else //Клиент авторизовался - продолжаем
 				{
 					ISTimePoint TimePoint = ISAlgorithm::GetTick(); //Запоминаем текущее время
-					switch (tcp_message->Type)
-					{
-					case ISNamespace::ApiMessageType::Unknown: break;
-					case ISNamespace::ApiMessageType::Auth: Result = Auth(tcp_message, TcpAnswer); break;
-					case ISNamespace::ApiMessageType::Sleep: Result = Sleep(tcp_message, TcpAnswer); break;
-					case ISNamespace::ApiMessageType::GetMetaData: Result = GetMetaData(tcp_message, TcpAnswer); break;
-					case ISNamespace::ApiMessageType::GetLastClient: Result = GetLastClient(tcp_message, TcpAnswer); break;
-					case ISNamespace::ApiMessageType::UserPasswordExist: Result = UserPasswordExist(tcp_message, TcpAnswer); break;
-					case ISNamespace::ApiMessageType::UserPasswordCreate: Result = UserPasswordCreate(tcp_message, TcpAnswer); break;
-					case ISNamespace::ApiMessageType::UserPasswordEdit: Result = UserPasswordEdit(tcp_message, TcpAnswer); break;
-					case ISNamespace::ApiMessageType::UserPasswordReset: Result = UserPasswordReset(tcp_message, TcpAnswer); break;
-					case ISNamespace::ApiMessageType::UserSettingsReset: Result = UserSettingsReset(tcp_message, TcpAnswer); break;
-					case ISNamespace::ApiMessageType::UserDeviceAdd: Result = UserDeviceAdd(tcp_message, TcpAnswer); break;
-					case ISNamespace::ApiMessageType::UserDeviceDelete: Result = UserDeviceDelete(tcp_message, TcpAnswer); break;
-					case ISNamespace::ApiMessageType::GetRecordCall: Result = GetRecordCall(tcp_message, TcpAnswer); break;
-					case ISNamespace::ApiMessageType::GetClients: Result = GetClients(tcp_message, TcpAnswer); break;
-					case ISNamespace::ApiMessageType::RecordAdd: Result = RecordAdd(tcp_message, TcpAnswer); break;
-					case ISNamespace::ApiMessageType::RecordEdit: Result = RecordEdit(tcp_message, TcpAnswer); break;
-					case ISNamespace::ApiMessageType::RecordDelete: Result = RecordDelete(tcp_message, TcpAnswer); break;
-					case ISNamespace::ApiMessageType::RecordGet: Result = RecordGet(tcp_message, TcpAnswer); break;
-					case ISNamespace::ApiMessageType::RecordGetInfo: Result = RecordGetInfo(tcp_message, TcpAnswer); break;
-					case ISNamespace::ApiMessageType::DiscussionAdd: Result = DiscussionAdd(tcp_message, TcpAnswer); break;
-					case ISNamespace::ApiMessageType::DiscussionEdit: Result = DiscussionEdit(tcp_message, TcpAnswer); break;
-					case ISNamespace::ApiMessageType::DiscussionCopy: Result = DiscussionCopy(tcp_message, TcpAnswer); break;
-					case ISNamespace::ApiMessageType::GetTableData: Result = GetTableData(tcp_message, TcpAnswer); break;
-					case ISNamespace::ApiMessageType::GetTableQuery: Result = GetTableQuery(tcp_message, TcpAnswer); break;
-					case ISNamespace::ApiMessageType::NoteRecordGet: Result = NoteRecordGet(tcp_message, TcpAnswer); break;
-					case ISNamespace::ApiMessageType::NoteRecordSet: Result = NoteRecordSet(tcp_message, TcpAnswer); break;
-					case ISNamespace::ApiMessageType::FileStorageAdd: Result = FileStorageAdd(tcp_message, TcpAnswer); break;
-					case ISNamespace::ApiMessageType::FileStorageCopy: Result = FileStorageCopy(tcp_message, TcpAnswer); break;
-					case ISNamespace::ApiMessageType::FileStorageGet: Result = FileStorageGet(tcp_message, TcpAnswer); break;
-					case ISNamespace::ApiMessageType::SearchTaskText: Result = SearchTaskText(tcp_message, TcpAnswer); break;
-					case ISNamespace::ApiMessageType::SearchTaskID: Result = SearchTaskID(tcp_message, TcpAnswer); break;
-					case ISNamespace::ApiMessageType::SearchFullText: Result = SearchFullText(tcp_message, TcpAnswer); break;
-					case ISNamespace::ApiMessageType::GetCalendarEvents: Result = GetCalendarEvents(tcp_message, TcpAnswer); break;
-					case ISNamespace::ApiMessageType::CalendarDelete: Result = CalendarDelete(tcp_message, TcpAnswer); break;
-					case ISNamespace::ApiMessageType::GetInternalLists: Result = GetInternalLists(tcp_message, TcpAnswer); break;
-					case ISNamespace::ApiMessageType::SaveMetaData: Result = SaveMetaData(tcp_message, TcpAnswer); break;
-					case ISNamespace::ApiMessageType::GetGroupRights: Result = GetGroupRights(tcp_message, TcpAnswer); break;
-					case ISNamespace::ApiMessageType::GroupRightSubSystemAdd: Result = GroupRightSubSystemAdd(tcp_message, TcpAnswer); break;
-					case ISNamespace::ApiMessageType::GroupRightSubSystemDelete: Result = GroupRightSubSystemDelete(tcp_message, TcpAnswer); break;
-					case ISNamespace::ApiMessageType::GroupRightTableAdd: Result = GroupRightTableAdd(tcp_message, TcpAnswer); break;
-					case ISNamespace::ApiMessageType::GroupRightTableDelete: Result = GroupRightTableDelete(tcp_message, TcpAnswer); break;
-					case ISNamespace::ApiMessageType::GroupRightSpecialAdd: Result = GroupRightSpecialAdd(tcp_message, TcpAnswer); break;
-					case ISNamespace::ApiMessageType::GroupRightSpecialDelete: Result = GroupRightSpecialDelete(tcp_message, TcpAnswer); break;
-					case ISNamespace::ApiMessageType::GetRecordValue: Result = GetRecordValue(tcp_message, TcpAnswer); break;
-					case ISNamespace::ApiMessageType::RecordFavoriteAdd: Result = RecordFavoriteAdd(tcp_message, TcpAnswer); break;
-					case ISNamespace::ApiMessageType::RecordFavoriteDelete: Result = RecordFavoriteDelete(tcp_message, TcpAnswer); break;
-					case ISNamespace::ApiMessageType::GetFavoriteNames: Result = GetFavoriteNames(tcp_message, TcpAnswer); break;
-					case ISNamespace::ApiMessageType::FavoritesDelete: Result = FavoritesDelete(tcp_message, TcpAnswer); break;
-					case ISNamespace::ApiMessageType::LogGetStructure: Result = LogGetStructure(tcp_message, TcpAnswer); break;
-					case ISNamespace::ApiMessageType::LogGetContent: Result = LogGetContent(tcp_message, TcpAnswer); break;
-					case ISNamespace::ApiMessageType::CalendarClose: Result = CalendarClose(tcp_message, TcpAnswer); break;
-					case ISNamespace::ApiMessageType::GetHistoryList: Result = GetHistoryList(tcp_message, TcpAnswer); break;
-					case ISNamespace::ApiMessageType::TaskCommentAdd: Result = TaskCommentAdd(tcp_message, TcpAnswer); break;
-					case ISNamespace::ApiMessageType::GetForeignList: Result = GetForeignList(tcp_message, TcpAnswer); break;
-					case ISNamespace::ApiMessageType::GetServerInfo: Result = GetServerInfo(tcp_message, TcpAnswer); break;
-					case ISNamespace::ApiMessageType::OrganizationFromINN: Result = OrganizationFormINN(tcp_message, TcpAnswer); break;
-					case ISNamespace::ApiMessageType::PeriodContains: Result = PeriodContains(tcp_message, TcpAnswer); break;
-					case ISNamespace::ApiMessageType::GetStockList: Result = GetStockList(tcp_message, TcpAnswer); break;
-					case ISNamespace::ApiMessageType::StatementAdd: Result = StatementAdd(tcp_message, TcpAnswer); break;
-					case ISNamespace::ApiMessageType::GetGasStation: Result = GetGasStation(tcp_message, TcpAnswer); break;
-					case ISNamespace::ApiMessageType::GetDebtImplementation: Result = GetDebtImplementation(tcp_message, TcpAnswer); break;
-					case ISNamespace::ApiMessageType::GetDebtCounterparty: Result = GetDebtCounterparty(tcp_message, TcpAnswer); break;
-					default:
-						ErrorString = LANG("Carat.Error.NotExistFunction").arg(tcp_message->TypeName);
-					}
+					Result = Execute(tcp_message, TcpAnswer);
 					PerfomanceMsec = ISAlgorithm::GetTickDiff(ISAlgorithm::GetTick(), TimePoint);
 				}
 			}
@@ -738,27 +632,6 @@ void ISTcpWorker::Finish()
 	CRITICAL_SECTION_LOCK(&CriticalSection);
 	IsRunning = false;
 	CRITICAL_SECTION_UNLOCK(&CriticalSection);
-}
-//-----------------------------------------------------------------------------
-QVariant ISTcpWorker::CheckNullField(const QString &FieldName, ISTcpMessage *TcpMessage)
-{
-	if (TcpMessage->Parameters.contains(FieldName))
-	{
-		QVariant Value = TcpMessage->Parameters[FieldName];
-		if (!Value.toString().isEmpty())
-		{
-			return Value;
-		}
-		else
-		{
-			ErrorString = LANG("Carat.Error.FieldIsEmpty").arg(FieldName);
-		}
-	}
-	else
-	{
-		ErrorString = LANG("Carat.Error.FieldNotExist").arg(FieldName);
-	}
-	return QVariant();
 }
 //-----------------------------------------------------------------------------
 void ISTcpWorker::Protocol(unsigned int UserID, const ISUuid &ActionTypeUID, const QVariant &TableName, const QVariant &TableLocalName, const QVariant &ObjectID, const QVariant &Information)
@@ -877,6 +750,93 @@ PMetaTable* ISTcpWorker::GetMetaTable(const QString &TableName)
 		ErrorString = LANG("Carat.Error.GetMetaTable").arg(TableName);
 	}
 	return MetaTable;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::Execute(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+	switch (TcpMessage->Type)
+	{
+	case ISNamespace::ApiMessageType::Unknown: break;
+	case ISNamespace::ApiMessageType::Auth: return Auth(TcpMessage, TcpAnswer); break;
+	case ISNamespace::ApiMessageType::Sleep: return Sleep(TcpMessage, TcpAnswer); break;
+	case ISNamespace::ApiMessageType::GetMetaData: return GetMetaData(TcpMessage, TcpAnswer); break;
+	case ISNamespace::ApiMessageType::GetLastClient: return GetLastClient(TcpMessage, TcpAnswer); break;
+	case ISNamespace::ApiMessageType::UserPasswordExist: return UserPasswordExist(TcpMessage, TcpAnswer); break;
+	case ISNamespace::ApiMessageType::UserPasswordCreate: return UserPasswordCreate(TcpMessage, TcpAnswer); break;
+	case ISNamespace::ApiMessageType::UserPasswordEdit: return UserPasswordEdit(TcpMessage, TcpAnswer); break;
+	case ISNamespace::ApiMessageType::UserPasswordReset: return UserPasswordReset(TcpMessage, TcpAnswer); break;
+	case ISNamespace::ApiMessageType::UserSettingsReset: return UserSettingsReset(TcpMessage, TcpAnswer); break;
+	case ISNamespace::ApiMessageType::UserDeviceAdd: return UserDeviceAdd(TcpMessage, TcpAnswer); break;
+	case ISNamespace::ApiMessageType::UserDeviceDelete: return UserDeviceDelete(TcpMessage, TcpAnswer); break;
+	case ISNamespace::ApiMessageType::GetRecordCall: return GetRecordCall(TcpMessage, TcpAnswer); break;
+	case ISNamespace::ApiMessageType::GetClients: return GetClients(TcpMessage, TcpAnswer); break;
+	case ISNamespace::ApiMessageType::RecordAdd: return RecordAdd(TcpMessage, TcpAnswer); break;
+	case ISNamespace::ApiMessageType::RecordEdit: return RecordEdit(TcpMessage, TcpAnswer); break;
+	case ISNamespace::ApiMessageType::RecordDelete: return RecordDelete(TcpMessage, TcpAnswer); break;
+	case ISNamespace::ApiMessageType::RecordGet: return RecordGet(TcpMessage, TcpAnswer); break;
+	case ISNamespace::ApiMessageType::RecordGetInfo: return RecordGetInfo(TcpMessage, TcpAnswer); break;
+	case ISNamespace::ApiMessageType::DiscussionAdd: return DiscussionAdd(TcpMessage, TcpAnswer); break;
+	case ISNamespace::ApiMessageType::DiscussionEdit: return DiscussionEdit(TcpMessage, TcpAnswer); break;
+	case ISNamespace::ApiMessageType::DiscussionCopy: return DiscussionCopy(TcpMessage, TcpAnswer); break;
+	case ISNamespace::ApiMessageType::GetTableData: return GetTableData(TcpMessage, TcpAnswer); break;
+	case ISNamespace::ApiMessageType::GetTableQuery: return GetTableQuery(TcpMessage, TcpAnswer); break;
+	case ISNamespace::ApiMessageType::NoteRecordGet: return NoteRecordGet(TcpMessage, TcpAnswer); break;
+	case ISNamespace::ApiMessageType::NoteRecordSet: return NoteRecordSet(TcpMessage, TcpAnswer); break;
+	case ISNamespace::ApiMessageType::FileStorageAdd: return FileStorageAdd(TcpMessage, TcpAnswer); break;
+	case ISNamespace::ApiMessageType::FileStorageCopy: return FileStorageCopy(TcpMessage, TcpAnswer); break;
+	case ISNamespace::ApiMessageType::FileStorageGet: return FileStorageGet(TcpMessage, TcpAnswer); break;
+	case ISNamespace::ApiMessageType::SearchTaskText: return SearchTaskText(TcpMessage, TcpAnswer); break;
+	case ISNamespace::ApiMessageType::SearchTaskID: return SearchTaskID(TcpMessage, TcpAnswer); break;
+	case ISNamespace::ApiMessageType::SearchFullText: return SearchFullText(TcpMessage, TcpAnswer); break;
+	case ISNamespace::ApiMessageType::GetCalendarEvents: return GetCalendarEvents(TcpMessage, TcpAnswer); break;
+	case ISNamespace::ApiMessageType::CalendarDelete: return CalendarDelete(TcpMessage, TcpAnswer); break;
+	case ISNamespace::ApiMessageType::GetInternalLists: return GetInternalLists(TcpMessage, TcpAnswer); break;
+	case ISNamespace::ApiMessageType::SaveMetaData: return SaveMetaData(TcpMessage, TcpAnswer); break;
+	case ISNamespace::ApiMessageType::GetGroupRights: return GetGroupRights(TcpMessage, TcpAnswer); break;
+	case ISNamespace::ApiMessageType::GroupRightSubSystemAdd: return GroupRightSubSystemAdd(TcpMessage, TcpAnswer); break;
+	case ISNamespace::ApiMessageType::GroupRightSubSystemDelete: return GroupRightSubSystemDelete(TcpMessage, TcpAnswer); break;
+	case ISNamespace::ApiMessageType::GroupRightTableAdd: return GroupRightTableAdd(TcpMessage, TcpAnswer); break;
+	case ISNamespace::ApiMessageType::GroupRightTableDelete: return GroupRightTableDelete(TcpMessage, TcpAnswer); break;
+	case ISNamespace::ApiMessageType::GroupRightSpecialAdd: return GroupRightSpecialAdd(TcpMessage, TcpAnswer); break;
+	case ISNamespace::ApiMessageType::GroupRightSpecialDelete: return GroupRightSpecialDelete(TcpMessage, TcpAnswer); break;
+	case ISNamespace::ApiMessageType::GetRecordValue: return GetRecordValue(TcpMessage, TcpAnswer); break;
+	case ISNamespace::ApiMessageType::RecordFavoriteAdd: return RecordFavoriteAdd(TcpMessage, TcpAnswer); break;
+	case ISNamespace::ApiMessageType::RecordFavoriteDelete: return RecordFavoriteDelete(TcpMessage, TcpAnswer); break;
+	case ISNamespace::ApiMessageType::GetFavoriteNames: return GetFavoriteNames(TcpMessage, TcpAnswer); break;
+	case ISNamespace::ApiMessageType::FavoritesDelete: return FavoritesDelete(TcpMessage, TcpAnswer); break;
+	case ISNamespace::ApiMessageType::LogGetStructure: return LogGetStructure(TcpMessage, TcpAnswer); break;
+	case ISNamespace::ApiMessageType::LogGetContent: return LogGetContent(TcpMessage, TcpAnswer); break;
+	case ISNamespace::ApiMessageType::CalendarClose: return CalendarClose(TcpMessage, TcpAnswer); break;
+	case ISNamespace::ApiMessageType::GetHistoryList: return GetHistoryList(TcpMessage, TcpAnswer); break;
+	case ISNamespace::ApiMessageType::TaskCommentAdd: return TaskCommentAdd(TcpMessage, TcpAnswer); break;
+	case ISNamespace::ApiMessageType::GetForeignList: return GetForeignList(TcpMessage, TcpAnswer); break;
+	case ISNamespace::ApiMessageType::GetServerInfo: return GetServerInfo(TcpMessage, TcpAnswer); break;
+	case ISNamespace::ApiMessageType::OrganizationFromINN: return OrganizationFormINN(TcpMessage, TcpAnswer); break;
+	default:
+		ErrorString = LANG("Carat.Error.NotExistFunction").arg(TcpMessage->TypeName);
+	}
+	return false;
+}
+//-----------------------------------------------------------------------------
+QVariant ISTcpWorker::CheckNullField(const QString &FieldName, ISTcpMessage *TcpMessage)
+{
+	if (TcpMessage->Parameters.contains(FieldName))
+	{
+		QVariant Value = TcpMessage->Parameters[FieldName];
+		if (!Value.toString().isEmpty())
+		{
+			return Value;
+		}
+		else
+		{
+			ErrorString = LANG("Carat.Error.FieldIsEmpty").arg(FieldName);
+		}
+	}
+	else
+	{
+		ErrorString = LANG("Carat.Error.FieldNotExist").arg(FieldName);
+	}
+	return QVariant();
 }
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::ErrorQuery(const QString &LocalError, ISQuery &SqlQuery)
@@ -4417,178 +4377,6 @@ bool ISTcpWorker::OrganizationFormINN(ISTcpMessage *TcpMessage, ISTcpAnswer *Tcp
 		return false;
 	}
 	TcpAnswer->Parameters["Reply"] = ReplyList.front().toMap();
-	return true;
-}
-//-----------------------------------------------------------------------------
-bool ISTcpWorker::PeriodContains(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
-{
-	Q_UNUSED(TcpMessage);
-
-	ISQuery qSelect(ISDatabase::Instance().GetDB(DBConnectionName), QS_PERIOD);
-	if (!qSelect.Execute()) //Ошибка запроса
-	{
-		return ErrorQuery(LANG("Carat.Error.Query.PeriodContains.Select"), qSelect);
-	}
-	bool IsExist = qSelect.First();
-	TcpAnswer->Parameters["Exist"] = IsExist;
-	TcpAnswer->Parameters["Value"] = IsExist ? qSelect.ReadColumn("prod_constant") : QVariant();
-	return true;
-}
-//-----------------------------------------------------------------------------
-bool ISTcpWorker::GetStockList(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
-{
-	Q_UNUSED(TcpMessage);
-
-	ISQuery qSelect(ISDatabase::Instance().GetDB(DBConnectionName), QS_STOCK);
-	if (!qSelect.Execute()) //Ошибка запроса
-	{
-		return ErrorQuery(LANG("Carat.Error.Query.GetStockList.Select"), qSelect);
-	}
-
-	//Обходим результаты выборки
-	QVariantList StockList;
-	while (qSelect.Next())
-	{
-		StockList.append(QVariantMap
-		{
-			{ "ID", qSelect.ReadColumn("stck_id") },
-			{ "Name", qSelect.ReadColumn("stck_name") },
-		});
-	}
-	TcpAnswer->Parameters["List"] = StockList;
-	return true;
-}
-//-----------------------------------------------------------------------------
-bool ISTcpWorker::StatementAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
-{
-	Q_UNUSED(TcpAnswer);
-
-	QVariant ImplementationUnload = CheckNullField("ImplementationUnload", TcpMessage),
-		UnloadStock = CheckNullField("UnloadStock", TcpMessage),
-		ValumeIncome = CheckNullField("ValumeIncome", TcpMessage);
-	if (!ImplementationUnload.isValid() || !UnloadStock.isValid() || !ValumeIncome.isValid())
-	{
-		return false;
-	}
-
-	//Проверяем наличие такой записи
-	ISQuery qSelectUnload(ISDatabase::Instance().GetDB(DBConnectionName), QS_STATEMENT);
-	qSelectUnload.BindValue(":ImplementationUnload", ImplementationUnload);
-	if (!qSelectUnload.Execute()) //Ошибка запроса
-	{
-		return ErrorQuery(LANG("Carat.Error.Query.StatementAdd.Select"), qSelectUnload);
-	}
-
-	if (!qSelectUnload.First()) //Не удалось перейти на первую запись
-	{
-		ErrorString = qSelectUnload.GetErrorString();
-		return false;
-	}
-
-	//Если выгрузки в ведомостях АЗС нет - добавляем
-	if (qSelectUnload.ReadColumn("count").toInt() == 0)
-	{
-		ISQuery qInsert(ISDatabase::Instance().GetDB(DBConnectionName), QI_STATEMENT);
-		qInsert.BindValue(":ImplementationUnload", ImplementationUnload);
-		qInsert.BindValue(":StockID", UnloadStock);
-		qInsert.BindValue(":VolumeIncome", ValumeIncome);
-		if (!qInsert.Execute()) //Не удалось добавить
-		{
-			return ErrorQuery(LANG("Carat.Error.Query.StatementAdd.Insert"), qInsert);
-		}
-	}
-
-	//Выгрузка уже существует - все окей
-	return true;
-}
-//-----------------------------------------------------------------------------
-bool ISTcpWorker::GetGasStation(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
-{
-	QVariant StatementID = CheckNullField("StatementID", TcpMessage);
-	if (!StatementID.isValid())
-	{
-		return false;
-	}
-
-	//Вытаскиваем значения
-	ISQuery qSelect(ISDatabase::Instance().GetDB(DBConnectionName), QS_FILL_IN_BASED);
-	qSelect.BindValue(":StatementID", StatementID);
-	if (!qSelect.Execute()) //Ошибка запроса
-	{
-		return ErrorQuery(LANG("Carat.Error.Query.GetGasStation.Select"), qSelect);
-	}
-
-	if (!qSelect.First()) //Такая запись не существует
-	{
-		ErrorString = LANG("Carat.Error.Query.GetGasStation.NotExist");
-		return false;
-	}
-
-	TcpAnswer->Parameters["BalanceEndChange"] = qSelect.ReadColumn("gsts_balanceendchange");
-	TcpAnswer->Parameters["CashboxTotalPayment"] = qSelect.ReadColumn("gsts_cashboxtotalpayment");
-	TcpAnswer->Parameters["CashboxTotalActually"] = qSelect.ReadColumn("gsts_cashboxtotalactually");
-	TcpAnswer->Parameters["CashboxKKMTotal"] = qSelect.ReadColumn("gsts_cashboxkkmtotal");
-	return true;
-}
-//-----------------------------------------------------------------------------
-bool ISTcpWorker::GetDebtImplementation(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
-{
-	QVariant CounterpartyID = CheckNullField("CounterpartyID", TcpMessage);
-	if (!CounterpartyID.isValid())
-	{
-		return false;
-	}
-
-	//Вытаскиваем загрузки и выгрузки
-	ISQuery qSelectLoadUnload(ISDatabase::Instance().GetDB(DBConnectionName), QS_IMPLEMENTATION_UNLOAD);
-	qSelectLoadUnload.BindValue(":CounterpartyID", CounterpartyID);
-	if (!qSelectLoadUnload.Execute()) //Ошибка запроса
-	{
-		return ErrorQuery(LANG("Carat.Error.Query.GetDebtImplementation.Select"), qSelectLoadUnload);
-	}
-
-	//Обходим результаты выборки
-	QVariantList LoadUnloadList;
-	while (qSelectLoadUnload.Next())
-	{
-		LoadUnloadList.append(QVariantMap
-		{
-			{ "IsLoad", qSelectLoadUnload.ReadColumn("is_load") },
-			{ "ImplementationID", qSelectLoadUnload.ReadColumn("implementation_id") },
-			{ "LoadUnloadID", qSelectLoadUnload.ReadColumn("id") },
-			{ "Date", qSelectLoadUnload.ReadColumn("date").toDate().toString(FORMAT_DATE_V2) },
-			{ "Cost", qSelectLoadUnload.ReadColumn("cost") }
-		});
-	}
-	TcpAnswer->Parameters["LoadUnload"] = LoadUnloadList;
-	return true;
-}
-//-----------------------------------------------------------------------------
-bool ISTcpWorker::GetDebtCounterparty(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
-{
-	QVariant CounterpartyID = CheckNullField("CounterpartyID", TcpMessage);
-	if (!CounterpartyID.isValid())
-	{
-		return false;
-	}
-
-	//Запрашиваем итоговые цифры
-	ISQuery qSelectTitle(ISDatabase::Instance().GetDB(DBConnectionName), QS_COUNTERPARTY_DEBT);
-	qSelectTitle.BindValue(":CounterpartyID", CounterpartyID);
-	if (!qSelectTitle.Execute()) //Ошибка запроса
-	{
-		return ErrorQuery(LANG("Carat.Error.Query.GetDebtCounterparty.Select"), qSelectTitle);
-	}
-
-	if (!qSelectTitle.First()) //Такая запись не существует
-	{
-		ErrorString = LANG("Carat.Error.Query.GetDebtCounterparty.NotExist");
-		return false;
-	}
-	TcpAnswer->Parameters["TotalUnload"] = qSelectTitle.ReadColumn("get_counterparty_unload").toDouble();
-	TcpAnswer->Parameters["TotalLoad"] = qSelectTitle.ReadColumn("get_counterparty_load").toDouble();
-	TcpAnswer->Parameters["TotalEntrollment"] = qSelectTitle.ReadColumn("get_counterparty_entrollment").toDouble();
-	TcpAnswer->Parameters["MoveWagonSum"] = qSelectTitle.ReadColumn("get_counterparty_move_wagon").toDouble();
 	return true;
 }
 //-----------------------------------------------------------------------------

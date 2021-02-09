@@ -20,7 +20,7 @@ signals:
 	void Answer(ISTcpAnswer *);
 
 public:
-	Q_INVOKABLE ISTcpWorker(QObject *parent);
+	Q_INVOKABLE ISTcpWorker();
 	virtual ~ISTcpWorker();
 
 	bool GetStarted() const; //Получить флаг успешного запуска воркера
@@ -33,15 +33,17 @@ public:
 private:
 	void Process();
 	void Finish(); //Уведомление о завершении работы воркера
-	QVariant CheckNullField(const QString &FieldName, ISTcpMessage *TcpMessage); //Проверка наличия поля
 	void Protocol(unsigned int UserID, const ISUuid &ActionTypeUID, const QVariant &TableName = QVariant(), const QVariant &TableLocalName = QVariant(), const QVariant &ObjectID = QVariant(), const QVariant &Information = QVariant()); //Протоколирование действия
 	bool UserPasswordExist(const QVariant &UserID, bool &Exist); //Проверка наличия пароля у пользователя
 	bool UserIsSystem(const QVariant &UserID, bool &IsSystem); //Проверка пользователя на системность
 	bool GetObjectName(PMetaTable *MetaTable, unsigned int ObjectID, QString &ObjectName); //Получить наименование объекта
 	PMetaTable* GetMetaTable(const QString &TableName); //Получить указатель на мета-таблицу
-	bool ErrorQuery(const QString &LocalError, ISQuery &SqlQuery); //Вернуть ошибку запроса
 
 protected:
+	virtual bool Execute(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
+	QVariant CheckNullField(const QString &FieldName, ISTcpMessage *TcpMessage); //Проверка наличия поля
+	bool ErrorQuery(const QString &LocalError, ISQuery &SqlQuery); //Вернуть ошибку запроса
+
 	virtual bool Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
 	virtual bool Sleep(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
 	virtual bool GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
@@ -97,14 +99,6 @@ protected:
 	virtual bool GetForeignList(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
 	virtual bool GetServerInfo(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
 	virtual bool OrganizationFormINN(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
-
-	//Временные функции для Нефтесферы
-	bool PeriodContains(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
-	bool GetStockList(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
-	bool StatementAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
-	bool GetGasStation(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
-	bool GetDebtImplementation(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
-	bool GetDebtCounterparty(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
 
 protected:
     QString ErrorString; //Текстовое описание ошибки запроса

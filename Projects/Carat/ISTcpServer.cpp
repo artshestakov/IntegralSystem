@@ -48,7 +48,7 @@ bool ISTcpServer::Run()
 	QEventLoop EventLoop;
 	for (unsigned int i = 0; i < WorkerCount; ++i)
 	{
-		ISTcpWorker *TcpWorker = ISAlgorithm::CreatePointer<ISTcpWorker*>(ISConfigurations::Instance().Get().WorkerName, Q_ARG(QObject *, this));
+		ISTcpWorker *TcpWorker = ISAlgorithm::CreatePointer<ISTcpWorker*>(ISConfigurations::Instance().Get().WorkerName);
 		TcpWorker->SetDB(DBHost, DBPort, DBName, DBUser, DBPassword);
 		connect(TcpWorker, &ISTcpWorker::Answer, this, &ISTcpServer::SendAnswer, Qt::QueuedConnection);
 		connect(TcpWorker, &ISTcpWorker::StartedDone, &EventLoop, &QEventLoop::quit);
