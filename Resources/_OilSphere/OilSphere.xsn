@@ -599,17 +599,12 @@
     </Indexes>
   </Table>
 
-  <Table Name="Coming" UID="{847342A8-72B8-4581-B098-4B12CF82D5BC}" Alias="cmng" LocalName="Приход" LocalListName="Приходы" TitleName="Date">
+  <Table Name="Coming" UID="{847342A8-72B8-4581-B098-4B12CF82D5BC}" Alias="cmng" LocalName="Приход" LocalListName="Приходы" TitleName="Date" ObjectForm="ISOilSphere::ComingObjectForm">
     <Fields>
-      <Field UID="{127B1F45-62B4-4BEF-97CA-1F22E97687C0}" Name="Date" Type="Date" LabelName="Дата" LocalListName="Дата" NotNull="true"/>
-      <Field UID="{FB17AD0E-C832-4E6B-962B-0DFA0E5E4BB8}" Name="User" Type="BigInt" LabelName="Пользователь" LocalListName="Пользователь" NotNull="true"/>
-      <Field UID="{C226612E-9CEA-44C5-B52B-449A7414DE09}" Name="Sum" Type="Money" LabelName="Сумма" LocalListName="Сумма" NotNull="true"/>
+      <Field UID="{FB17AD0E-C832-4E6B-962B-0DFA0E5E4BB8}" Name="User" Type="BigInt" LabelName="Пользователь" LocalListName="Пользователь" NotNull="true" HideFromObject="true"/>
+      <Field UID="{127B1F45-62B4-4BEF-97CA-1F22E97687C0}" Name="Date" Type="Date" LabelName="Дата" LocalListName="Дата" NotNull="true" LayoutName="Date"/>
+      <Field UID="{C226612E-9CEA-44C5-B52B-449A7414DE09}" Name="Sum" Type="Money" LabelName="Сумма" LocalListName="Сумма" NotNull="true" LayoutName="Date"/>
     </Fields>
-    <Indexes>
-      <Index Field="Date"/>
-      <Index Field="User"/>
-      <Index Field="Sum"/>
-    </Indexes>
     <Foreigns>
       <Foreign Field="User" ForeignClass="_Users" ForeignField="ID" ForeignViewNameField="FIO"/>
     </Foreigns>

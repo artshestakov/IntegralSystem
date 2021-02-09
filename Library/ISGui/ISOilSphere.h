@@ -413,6 +413,18 @@ namespace ISOilSphere
 		QLabel *LabelTotal;
 	};
 
+	//Форма объекта приходов
+	class ComingObjectForm : public ISObjectFormBase
+	{
+		Q_OBJECT
+
+	public:
+		Q_INVOKABLE ComingObjectForm(ISNamespace::ObjectFormType form_type, PMetaTable *meta_table, QWidget *parent, int object_id = 0);
+		virtual ~ComingObjectForm();
+
+		bool Save() override;
+	};
+
 	//Форма списка расходов
 	class ConsumptionSubSystem : public ISListBaseForm
 	{
