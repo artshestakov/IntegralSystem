@@ -65,6 +65,8 @@ public:
 	void HideField(const QString &FieldName); //Скрытие поля по его имени
 	void ShowField(const QString &FieldName); //Отображение поля по его имени
 
+	void SetShowOnly(bool ShowOnly);
+
 protected:
 	void paintEvent(QPaintEvent *e) override;
 	void EscapeClicked() override;

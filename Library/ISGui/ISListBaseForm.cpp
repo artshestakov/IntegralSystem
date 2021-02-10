@@ -410,10 +410,7 @@ void ISListBaseForm::CornerButtonClicked()
 void ISListBaseForm::AfterShowEvent()
 {
 	ISInterfaceMetaForm::AfterShowEvent();
-	GetAction(ISNamespace::ActionType::Create)->setVisible(!MetaTable->ShowOnly);
-	GetAction(ISNamespace::ActionType::CreateCopy)->setVisible(!MetaTable->ShowOnly);
-	GetAction(ISNamespace::ActionType::Edit)->setVisible(!MetaTable->ShowOnly);
-	GetAction(ISNamespace::ActionType::Delete)->setVisible(!MetaTable->ShowOnly);
+	SetShowOnly(MetaTable->ShowOnly);
 }
 //-----------------------------------------------------------------------------
 void ISListBaseForm::AddAction(QAction *Action, bool AddingToActionGroup, bool AddingToContextMenu)
@@ -540,6 +537,14 @@ void ISListBaseForm::ShowField(const QString &FieldName)
 	FieldResized(false);
 	TableView->showColumn(TcpModel->GetFieldIndex(FieldName));
 	FieldResized(true);
+}
+//-----------------------------------------------------------------------------
+void ISListBaseForm::SetShowOnly(bool ShowOnly)
+{
+	GetAction(ISNamespace::ActionType::Create)->setVisible(!ShowOnly);
+	GetAction(ISNamespace::ActionType::CreateCopy)->setVisible(!ShowOnly);
+	GetAction(ISNamespace::ActionType::Edit)->setVisible(!ShowOnly);
+	GetAction(ISNamespace::ActionType::Delete)->setVisible(!ShowOnly);
 }
 //-----------------------------------------------------------------------------
 void ISListBaseForm::SelectRowObject(const ISVectorUInt &Objects)
