@@ -242,7 +242,7 @@ ISAuthDialog::ISAuthDialog()
 	CheckRememberUser = new ISCheckEdit(this);
 	CheckRememberUser->SetText(LANG("RememberMe"));
 	CheckRememberUser->SetToolTip(LANG("RememberMe.ToolTip"));
-	CheckRememberUser->SetValue(CONFIG_BOOL(CONST_CONFIG_REMEMBER_USER_INCLUDE));
+	CheckRememberUser->SetValue(CONFIG_BOOL("RememberUser/Include"));
 	LayoutFields->addWidget(CheckRememberUser);
 
 	LayoutFields->addSpacerItem(new QSpacerItem(0, 55));
@@ -289,9 +289,9 @@ ISAuthDialog::ISAuthDialog()
 	EditLogin->SetValue(SYSTEM_USER_LOGIN);
 	EditPassword->SetValue("adm777");
 #else
-	if (CONFIG_BOOL(CONST_CONFIG_REMEMBER_USER_INCLUDE))
+	if (CheckRememberUser->GetValue().toBool())
 	{
-		EditLogin->SetValue(CONFIG_STRING(CONST_CONFIG_REMEMBER_USER_LOGIN));
+		EditLogin->SetValue(CONFIG_STRING("RememberUser/Login"));
 		QTimer::singleShot(100, EditPassword, &ISLineEdit::SetFocus);
 	}
 #endif
@@ -347,6 +347,10 @@ void ISAuthDialog::Input()
 		EditPassword->BlinkRed();
 		return;
 	}
+
+	//Для запоминания пользователя
+	ISConfig::Instance().SetValue("RememberUser/Include", CheckRememberUser->GetValue().toBool());
+	ISConfig::Instance().SetValue("RememberUser/Login", EditLogin->GetValue().toString());
 
 	SetConnecting(true);
 	if (!ISTcpConnector::Instance().Connect(CONFIG_STRING(CONST_CONFIG_CONNECTION_SERVER), CONFIG_INT(CONST_CONFIG_CONNECTION_PORT))) //Ошибка подключения к карату
