@@ -10,9 +10,9 @@ ISCORE_EXPORT void ShowDebugString(const QString &String);
 //-----------------------------------------------------------------------------
 #define ISDEBUG() std::cout << std::endl;
 #define ISDEBUG_L(MESSAGE) ShowDebugString(MESSAGE)
-#define ISDEBUG_D(MESSAGE) ShowDebugString(LOGGER_SEVERITY_DEBUG, MESSAGE)
-#define ISDEBUG_I(MESSAGE) ShowDebugString(LOGGER_SEVERITY_INFO, MESSAGE)
-#define ISDEBUG_W(MESSAGE) ShowDebugString(LOGGER_SEVERITY_WARNING, MESSAGE)
-#define ISDEBUG_E(MESSAGE) ShowDebugString(LOGGER_SEVERITY_ERROR, MESSAGE)
+#define ISDEBUG_D(MESSAGE) ShowDebugString("Debug", MESSAGE)
+#define ISDEBUG_I(MESSAGE) ShowDebugString("Info", MESSAGE)
+#define ISDEBUG_W(MESSAGE) ShowDebugString("Warning", MESSAGE)
+#define ISDEBUG_E(MESSAGE) ShowDebugString("Error", MESSAGE)
 //-----------------------------------------------------------------------------
 #endif

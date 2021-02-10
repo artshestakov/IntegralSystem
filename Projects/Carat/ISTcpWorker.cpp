@@ -700,7 +700,7 @@ bool ISTcpWorker::GetObjectName(PMetaTable *MetaTable, unsigned int ObjectID, QS
 	{
 		PMetaForeign *MetaForeign = MetaTable->GetField(FieldName)->Foreign;
 		QueryText += MetaForeign ?
-			("(" + ISTcpWorkerHelper::GenerateSqlQueryFromTitleName(MetaForeign, MetaTable->Alias, FieldName) + "),") :
+			("(" + ISTcpWorkerHelper::CreateSqlFromTitleName(MetaForeign, MetaTable->Alias, FieldName) + "),") :
 			(MetaTable->Alias + '_' + FieldName + ',');
 	}
 	QueryText.chop(1);
@@ -2559,138 +2559,10 @@ bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	};
 
 	//Формируем запрос на выборку
-	QString SqlText = "SELECT\n",
-		SqlTextJoins;
-	size_t Index = 0;
-	ISStringMap ForeignFields;
-
-	//Обходим поля мета-таблицы
-	for (PMetaField *MetaField : MetaTable->Fields)
-	{
-		//Если поле скрыто в таблице - пропускаем его
-		if (MetaField->HideFromList)
-		{
-			continue;
-		}
-
-		if (MetaField->Foreign) //Если на поле установлен внешний ключ
-		{
-			PMetaTable *MetaTableFK = ISMetaData::Instance().GetMetaTable(MetaField->Foreign->ForeignClass);
-			QString RandomAlias = MetaTableFK->Alias + QString::number(++Index);
-			SqlTextJoins += "LEFT JOIN " + MetaTableFK->Name.toLower() + ' ' + RandomAlias + " ON " + MetaTable->Alias + '.' + MetaTable->Alias + '_' + MetaField->Name.toLower() + " = " + RandomAlias + '.' + MetaTableFK->Alias + '_' + MetaField->Foreign->ForeignField.toLower() + "\n";
-
-			QString Temp;
-			QStringList StringList = MetaField->Foreign->ForeignViewNameField.split(';');
-			Temp += "concat(";
-			for (const QString &FieldName : StringList)
-			{
-				Temp += RandomAlias + '.' + MetaTableFK->Alias + '_' + FieldName.toLower() + ", ' ',";
-			}
-			Temp.chop(6);
-			Temp += ')';
-			SqlText += Temp;
-			ForeignFields.emplace(MetaField->Name, Temp);
-		}
-		else //Поле стандартное
-		{
-			if (MetaField->QueryText.isEmpty()) //Поле не виртуальное
-			{
-				SqlText += MetaTable->Alias + SYMBOL_POINT + MetaTable->Alias + '_' + MetaField->Name.toLower();
-			}
-			else //Поле является виртуальным
-			{
-				SqlText += '(' + MetaField->QueryText + ')';
-			}
-		}
-		SqlText += " AS \"" + MetaField->Name + "\",\n";
-	}
-	SqlText.chop(2);
-	SqlTextJoins.chop(1);
-
-	SqlText += "\nFROM " + MetaTable->Name.toLower() + ' ' + MetaTable->Alias + '\n';
-	SqlText += SqlTextJoins;
-
-	//Если фильтрация указана - устанавливаем
 	QVariantMap FilterMap = TcpMessage->Parameters.contains("Filter") ? TcpMessage->Parameters["Filter"].toMap() : QVariantMap();
-	if (!FilterMap.isEmpty())
-	{
-		SqlText += "\nWHERE ";
-		for (const auto &MapItem : FilterMap.toStdMap())
-		{
-			SqlText += MetaTable->Alias + '_' + MapItem.first + " = :" + MapItem.first + "\nAND ";
-		}
-		SqlText.chop(5);
-	}
-
-	//Если указаны поисковые параметры
 	QVariantList SearchList = TcpMessage->Parameters.contains("Search") ? TcpMessage->Parameters["Search"].toList() : QVariantList();
 	bool IsSearch = !SearchList.isEmpty();
-	if (IsSearch)
-	{
-		SqlText += "\nWHERE\n";
-		for (const QVariant &Variant : SearchList) //Обходим поисковые условия
-		{
-			QVariantMap Map = Variant.toMap();
-			QString FieldName = Map["FieldName"].toString();
-			ISNamespace::SearchType OperatorType = static_cast<ISNamespace::SearchType>(Map["Operator"].toUInt());
-			QVariantList ValueList = Map["Values"].toList();
-
-			SqlText += MetaTable->Alias + '_' + MetaTable->GetField(FieldName)->Name.toLower();			
-			if (ValueList.size() > 1) //Если значений поиска несколько - используем оператор "IN"
-			{
-				switch (OperatorType)
-				{
-				case ISNamespace::SearchType::Equally: SqlText += " IN("; break;
-				case ISNamespace::SearchType::NotEqually: SqlText += " NOT IN("; break;
-				default:
-					break;
-				}
-				for (const QVariant &Value : ValueList) //Обходим список значений
-				{
-					QString UIDLite = GENERATE_UUID_LITE;
-					SqlText += ':' + UIDLite + ',';
-					FilterMap[UIDLite] = Value;
-				}
-				SqlText.chop(1);
-				SqlText += ')';
-			}
-			else //Одно значение для поиска - используем обычный оператор "="
-			{
-				QString UIDLite = GENERATE_UUID_LITE;
-				switch (OperatorType)
-				{
-				case ISNamespace::SearchType::Equally: SqlText += " = :" + UIDLite; break;
-				case ISNamespace::SearchType::NotEqually: SqlText += " != :" + UIDLite; break;
-				case ISNamespace::SearchType::Begins: SqlText += " LIKE :" + UIDLite + " || '%'"; break;
-				case ISNamespace::SearchType::Ends: SqlText += " LIKE '%' || :" + UIDLite; break;
-				case ISNamespace::SearchType::Contains: SqlText += " LIKE '%' || :" + UIDLite + " || '%'"; break;
-				default:
-					break;
-				}
-				FilterMap[UIDLite] = ValueList.front();
-			}
-			SqlText += "\nAND ";
-		}
-		SqlText.chop(5);
-	}
-
-	//Анализируем сортировку
-	PMetaField *MetaFieldSorting = MetaTable->GetField(SortingField);
-	bool SortingIsVirtual = !MetaFieldSorting->QueryText.isEmpty(),
-		SortingIsForeign = MetaFieldSorting->Foreign;
-	if (SortingIsVirtual) //Если поле является виртуальным - в качестве сортировки будет выступать запрос
-	{
-		SortingField = '(' + MetaFieldSorting->QueryText + ')';
-	}
-	else //Поле не виртуальное: если на поле установлен внешний ключ - используем сформированное имя - иначе просто имя поля
-	{
-		SortingField = SortingIsForeign ? ForeignFields[MetaFieldSorting->Name] : MetaFieldSorting->Name;
-	}
-
-	//Учитываем сортировку и её направление
-	SqlText += "\nORDER BY " + (SortingIsVirtual || SortingIsForeign ? SortingField :
-		MetaTable->Alias + '.' + MetaTable->Alias + '_' + SortingField) + ' ' +
-		(SortingOrder == Qt::AscendingOrder ? "ASC" : "DESC");
+	QString SqlText = ISTcpWorkerHelper::CreateSqlFromTable(MetaTable, FilterMap, SearchList, SortingField, SortingOrder);
 
 	ISQuery qSelect(ISDatabase::Instance().GetDB(DBConnectionName), SqlText);
 	qSelect.SetShowLongQuery(false);
@@ -2808,7 +2680,6 @@ bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 			RecordList.push_back(Values); //Добавляем список значений в список записей
 		} while (qSelect.Next()); //Обходим выборку	
 	}
-
 	TcpAnswer->Parameters["ServiceInfo"] = ServiceInfoMap;
 	TcpAnswer->Parameters["FieldList"] = FieldList;
 	TcpAnswer->Parameters["RecordList"] = RecordList;
