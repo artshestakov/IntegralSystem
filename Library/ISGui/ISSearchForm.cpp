@@ -238,11 +238,12 @@ void ISSearchForm::Search()
 		}
 		else //Поля в списке нет - добавляем
 		{
-			QVariantMap VariantMap;
-			VariantMap["FieldName"] = FieldName;
-			VariantMap["Operator"] = static_cast<int>(ComboSearchBase->GetOperator());
-			VariantMap["Values"] = QVariantList() << Value;
-			VariantList.push_back(VariantMap);
+			VariantList.push_back(QVariantMap
+			{
+				{ "FieldName", FieldName },
+				{ "Operator", static_cast<int>(ComboSearchBase->GetOperator()) },
+				{ "Values", QVariantList() << Value }
+			});
 		}
 	}
 

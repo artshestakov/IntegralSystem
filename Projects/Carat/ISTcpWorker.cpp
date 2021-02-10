@@ -2591,14 +2591,15 @@ bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 		VectorType[i] = MetaField->Type; //Заполняем типы сейчас, чтобы использовать их ниже
 		VectorForeign[i] = MetaField->Foreign ? true : false;
 		
-		QVariantMap m;
-		m["Index"] = i;
-		m["Name"] = MetaField->Name;
-		m["LocalName"] = MetaField->LocalListName;
-		m["Type"] = static_cast<int>(MetaField->Type);
-		m["IsForeign"] = MetaField->Foreign ? true : false;
-		m["IsSysten"] = MetaField->IsSystem;
-		FieldList.push_back(m);
+		FieldList.push_back(QVariantMap
+		{
+			{ "Index", i },
+			{ "Name", MetaField->Name },
+			{ "LocalName", MetaField->LocalListName },
+			{ "Type", static_cast<int>(MetaField->Type) },
+			{ "IsForeign", MetaField->Foreign ? true : false },
+			{ "IsSysten", MetaField->IsSystem }
+		});
 	}
 
 	if (qSelect.First()) //Данные есть
