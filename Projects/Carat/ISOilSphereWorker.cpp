@@ -253,7 +253,6 @@ bool ISOilSphereWorker::GetDebtCounterparty(ISTcpMessage *TcpMessage, ISTcpAnswe
 bool ISOilSphereWorker::GetUserConsumption(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
 	Q_UNUSED(TcpMessage);
-	Q_UNUSED(TcpAnswer);
 
 	//«апрашиваем всех пользователей и их балансы
 	ISQuery qSelectUsers(ISDatabase::Instance().GetDB(DBConnectionName), QS_USERS_CONSUMPTION);

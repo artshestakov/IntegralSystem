@@ -457,6 +457,11 @@ static QString QS_SERVER_INFO = PREPARE_QUERY("SELECT "
 											  "(SELECT COUNT(*) AS protocol_count FROM _protocol), "
 											  "(SELECT COUNT(*) AS users_count FROM _users)");
 //-----------------------------------------------------------------------------
+static QString QS_STATEMENT = PREPARE_QUERY("SELECT userid, rolname, calls, total_time, regexp_replace(query, '\n|\r', '', 'g') AS sql_query "
+											"FROM pg_stat_statements "
+											"LEFT JOIN pg_roles ON oid = userid "
+											"ORDER BY total_time DESC");
+//-----------------------------------------------------------------------------
 ISTcpWorker::ISTcpWorker()
 	: QObject(),
 	ErrorString(NO_ERROR_STRING),
@@ -812,6 +817,7 @@ bool ISTcpWorker::Execute(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	case ISNamespace::ApiMessageType::GetForeignList: return GetForeignList(TcpMessage, TcpAnswer); break;
 	case ISNamespace::ApiMessageType::GetServerInfo: return GetServerInfo(TcpMessage, TcpAnswer); break;
 	case ISNamespace::ApiMessageType::OrganizationFromINN: return OrganizationFormINN(TcpMessage, TcpAnswer); break;
+	case ISNamespace::ApiMessageType::GetStatement: return GetStatement(TcpMessage, TcpAnswer); break;
 	default:
 		ErrorString = LANG("Carat.Error.NotExistFunction").arg(TcpMessage->TypeName);
 	}
@@ -4249,6 +4255,35 @@ bool ISTcpWorker::OrganizationFormINN(ISTcpMessage *TcpMessage, ISTcpAnswer *Tcp
 		return false;
 	}
 	TcpAnswer->Parameters["Reply"] = ReplyList.front().toMap();
+	return true;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::GetStatement(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+	Q_UNUSED(TcpMessage);
+	Q_UNUSED(TcpAnswer);
+
+	//Получаем статистику запросов
+	ISQuery qSelect(ISDatabase::Instance().GetDB(DBConnectionName), QS_STATEMENT);
+	if (!qSelect.Execute()) //Ошибка запроса
+	{
+		return ErrorQuery(LANG("Carat.Error.Query.GetStatement.Select"), qSelect);
+	}
+
+	//Обход запросов
+	QVariantList QueryList;
+	while (qSelect.Next())
+	{
+		QueryList.push_back(QVariantMap
+		{
+			{ "UserID", qSelect.ReadColumn("userid") },
+			{ "Login", qSelect.ReadColumn("rolname") },
+			{ "Calls", qSelect.ReadColumn("calls") },
+			{ "MSec", qSelect.ReadColumn("total_time") },
+			{ "SqlQuery", qSelect.ReadColumn("sql_query") }
+		});
+	}
+	TcpAnswer->Parameters["QueryList"] = QueryList;
 	return true;
 }
 //-----------------------------------------------------------------------------

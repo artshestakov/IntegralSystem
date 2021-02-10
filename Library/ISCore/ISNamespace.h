@@ -178,6 +178,7 @@ namespace ISNamespace
 		GetForeignList, //Получить список значений по внешнему ключу
 		GetServerInfo, //Получить информацию о сервере
 		OrganizationFromINN, //Поиск организации по ИНН
+		GetStatement, //Получить статистику запросов
 		PeriodContains, //Проверка наличия текущего периода
 		GetStockList, //Получить список складов
 		StatementAdd, //Добавить выгрузку в ведомости азс

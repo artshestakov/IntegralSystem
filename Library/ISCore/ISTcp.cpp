@@ -259,6 +259,10 @@ ISNamespace::ApiMessageType ISTcp::GetMessageTypeByName(const QString &Name)
 	{
 		return ISNamespace::ApiMessageType::OrganizationFromINN;
 	}
+	else if (Name == API_GET_STATEMENT)
+	{
+		return ISNamespace::ApiMessageType::GetStatement;
+	}
 	else if (Name == API_PERIOD_CONTAINS)
 	{
 		return ISNamespace::ApiMessageType::PeriodContains;
