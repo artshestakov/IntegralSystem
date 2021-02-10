@@ -437,14 +437,37 @@ namespace ISOilSphere
 		bool Save() override;
 	};
 
-	//Форма списка расходов
-	class ConsumptionSubSystem : public ISListBaseForm
+	//Форма расходов пользователей
+	class ConsumptionAllSubSystem : public ISInterfaceMetaForm
 	{
 		Q_OBJECT
 
 	public:
-		Q_INVOKABLE ConsumptionSubSystem(QWidget *parent = 0);
-		virtual ~ConsumptionSubSystem();
+		Q_INVOKABLE ConsumptionAllSubSystem(QWidget *parent = 0);
+		virtual ~ConsumptionAllSubSystem();
+
+		void LoadData() override;
+
+	private:
+		void BalanceClicked();
+
+	private:
+		QVariantList UserList;
+
+	private:
+		QGroupBox *GroupBoxUsers;
+		ISListWidget *ListConsumption;
+		ISListWidget *ListReturn;
+	};
+
+	//Форма списка моих расходов
+	class ConsumptionMySubSystem : public ISListBaseForm
+	{
+		Q_OBJECT
+
+	public:
+		Q_INVOKABLE ConsumptionMySubSystem(QWidget *parent = 0);
+		virtual ~ConsumptionMySubSystem();
 
 		bool Update() override;
 	};

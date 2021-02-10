@@ -1,6 +1,7 @@
 #include "ISOilSphereWorker.h"
 #include "ISDatabase.h"
 #include "ISLocalization.h"
+#include "ISTcpWorkerHelper.h"
 //-----------------------------------------------------------------------------
 static QString QS_PERIOD = PREPARE_QUERY("SELECT prod_constant "
 										 "FROM period "
@@ -42,6 +43,15 @@ static QString QS_IMPLEMENTATION_UNLOAD = PREPARE_QUERY("SELECT true AS is_load,
 //-----------------------------------------------------------------------------
 static QString QS_COUNTERPARTY_DEBT = PREPARE_QUERY("SELECT get_counterparty_unload(:CounterpartyID), get_counterparty_load(:CounterpartyID), get_counterparty_entrollment(:CounterpartyID), get_counterparty_move_wagon(:CounterpartyID)");
 //-----------------------------------------------------------------------------
+static QString QS_USERS_CONSUMPTION = PREPARE_QUERY("SELECT usrs_id, usrs_fio, get_user_balance(usrs_id) "
+													"FROM _users "
+													"ORDER BY usrs_fio");
+//-----------------------------------------------------------------------------
+static QString QS_USER_CONSUMPTION = PREPARE_QUERY("SELECT cpmp_date, cpmp_sum, cpmp_note "
+												   "FROM consumption "
+												   "WHERE cpmp_user = :UserID "
+												   "ORDER BY cpmp_date DESC");
+//-----------------------------------------------------------------------------
 ISOilSphereWorker::ISOilSphereWorker() : ISTcpWorker()
 {
 
@@ -62,6 +72,7 @@ bool ISOilSphereWorker::Execute(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer
 	case ISNamespace::ApiMessageType::GetGasStation: return GetGasStation(TcpMessage, TcpAnswer); break;
 	case ISNamespace::ApiMessageType::GetDebtImplementation: return GetDebtImplementation(TcpMessage, TcpAnswer); break;
 	case ISNamespace::ApiMessageType::GetDebtCounterparty: return GetDebtCounterparty(TcpMessage, TcpAnswer); break;
+	case ISNamespace::ApiMessageType::GetUserConsumption: return GetUserConsumption(TcpMessage, TcpAnswer); break;
 	default:
 		return ISTcpWorker::Execute(TcpMessage, TcpAnswer);
 	}
@@ -236,6 +247,56 @@ bool ISOilSphereWorker::GetDebtCounterparty(ISTcpMessage *TcpMessage, ISTcpAnswe
 	TcpAnswer->Parameters["TotalLoad"] = qSelectTitle.ReadColumn("get_counterparty_load").toDouble();
 	TcpAnswer->Parameters["TotalEntrollment"] = qSelectTitle.ReadColumn("get_counterparty_entrollment").toDouble();
 	TcpAnswer->Parameters["MoveWagonSum"] = qSelectTitle.ReadColumn("get_counterparty_move_wagon").toDouble();
+	return true;
+}
+//-----------------------------------------------------------------------------
+bool ISOilSphereWorker::GetUserConsumption(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+	Q_UNUSED(TcpMessage);
+	Q_UNUSED(TcpAnswer);
+
+	//Запрашиваем всех пользователей и их балансы
+	ISQuery qSelectUsers(ISDatabase::Instance().GetDB(DBConnectionName), QS_USERS_CONSUMPTION);
+	if (!qSelectUsers.Execute()) //Ошибка запроса
+	{
+		return ErrorQuery(LANG("Carat.Error.Query.GetUserConsumption.SelectUsers"), qSelectUsers);
+	}
+
+	//Обходим пользователей
+	QVariantList UserList;
+	while (qSelectUsers.Next())
+	{
+		unsigned int UserID = qSelectUsers.ReadColumn("usrs_id").toUInt();
+
+		//Запрашиваем все расходы пользователя
+		ISQuery qSelectUserConsumption(ISDatabase::Instance().GetDB(DBConnectionName), QS_USER_CONSUMPTION);
+		qSelectUserConsumption.BindValue(":UserID", UserID);
+		if (!qSelectUserConsumption.Execute()) //Ошибка запроса
+		{
+			return ErrorQuery(LANG("Carat.Error.Query.GetUserConsumption.SelectUser"), qSelectUserConsumption);
+		}
+
+		//Обходим расходы пользователя
+		QVariantList ConsumptionList;
+		while (qSelectUserConsumption.Next())
+		{
+			ConsumptionList.push_back(QVariantMap
+			{
+				{ "Date", ISTcpWorkerHelper::ConvertDateToString(qSelectUserConsumption.ReadColumn("cpmp_date").toDate()) },
+				{ "Sum", DOUBLE_PREPARE(qSelectUserConsumption.ReadColumn("cpmp_sum").toDouble()) },
+				{ "Note", qSelectUserConsumption.ReadColumn("cpmp_note").toString() }
+			});
+		}
+
+		UserList.push_back(QVariantMap
+		{
+			{ "ID", UserID },
+			{ "FIO", qSelectUsers.ReadColumn("usrs_fio") },
+			{ "Balance", DOUBLE_PREPARE(qSelectUsers.ReadColumn("get_user_balance").toDouble()) },
+			{ "ConsumptionList", ConsumptionList }
+		});
+	}
+	TcpAnswer->Parameters["UserList"] = UserList;
 	return true;
 }
 //-----------------------------------------------------------------------------

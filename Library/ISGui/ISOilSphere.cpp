@@ -43,7 +43,8 @@ void ISOilSphere::Object::RegisterMetaTypes() const
 	qRegisterMetaType<ISOilSphere::MoveWagonSubSystem*>("ISOilSphere::MoveWagonListForm");
 	qRegisterMetaType<ISOilSphere::ComingObjectForm*>("ISOilSphere::ComingObjectForm");
 	qRegisterMetaType<ISOilSphere::DistributionObjectForm*>("ISOilSphere::DistributionObjectForm");
-	qRegisterMetaType<ISOilSphere::ConsumptionSubSystem*>("ISOilSphere::ConsumptionSubSystem");
+	qRegisterMetaType<ISOilSphere::ConsumptionAllSubSystem*>("ISOilSphere::ConsumptionAllSubSystem");
+	qRegisterMetaType<ISOilSphere::ConsumptionMySubSystem*>("ISOilSphere::ConsumptionMySubSystem");
 	qRegisterMetaType<ISOilSphere::ConsumptionObjectForm*>("ISOilSphere::ConsumptionObjectForm");
 }
 //-----------------------------------------------------------------------------
@@ -1225,17 +1226,115 @@ bool ISOilSphere::DistributionObjectForm::Save()
 }
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-ISOilSphere::ConsumptionSubSystem::ConsumptionSubSystem(QWidget *parent) : ISListBaseForm("Consumption", parent)
+//-----------------------------------------------------------------------------
+ISOilSphere::ConsumptionAllSubSystem::ConsumptionAllSubSystem(QWidget *parent) : ISInterfaceMetaForm(parent)
+{
+	GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);
+
+	QHBoxLayout *Layout = new QHBoxLayout();
+	GetMainLayout()->addLayout(Layout);
+
+	GroupBoxUsers = new QGroupBox(LANG("OilSphere.Users"), this);
+	GroupBoxUsers->setSizePolicy(QSizePolicy::Maximum, GroupBoxUsers->sizePolicy().verticalPolicy());
+	GroupBoxUsers->setLayout(new QFormLayout());
+	Layout->addWidget(GroupBoxUsers);
+
+	QVBoxLayout *LayoutRight = new QVBoxLayout();
+	Layout->addLayout(LayoutRight);
+
+	QGroupBox *GroupBoxConsumption = new QGroupBox(LANG("OilSphere.Consumption"), this);
+	GroupBoxConsumption->setLayout(new QVBoxLayout());
+	LayoutRight->addWidget(GroupBoxConsumption);
+
+	ListConsumption = new ISListWidget(GroupBoxConsumption);
+	ListConsumption->setAlternatingRowColors(true);
+	GroupBoxConsumption->layout()->addWidget(ListConsumption);
+	
+	QGroupBox *GroupBoxReturn = new QGroupBox(LANG("OilSphere.Return"), this);
+	GroupBoxReturn->setLayout(new QVBoxLayout());
+	LayoutRight->addWidget(GroupBoxReturn);
+
+	ListReturn = new ISListWidget(GroupBoxReturn);
+	ListReturn->setAlternatingRowColors(true);
+	GroupBoxReturn->layout()->addWidget(ListReturn);
+}
+//-----------------------------------------------------------------------------
+ISOilSphere::ConsumptionAllSubSystem::~ConsumptionAllSubSystem()
 {
 
 }
 //-----------------------------------------------------------------------------
-ISOilSphere::ConsumptionSubSystem::~ConsumptionSubSystem()
+void ISOilSphere::ConsumptionAllSubSystem::LoadData()
+{
+	ISTcpQuery qGetUsersConsumption(API_GET_USERS_CONSUMPTION);
+
+	ISGui::SetWaitGlobalCursor(true);
+	bool Result = qGetUsersConsumption.Execute();
+	ISGui::SetWaitGlobalCursor(false);
+
+	if (!Result)
+	{
+		ISMessageBox::ShowCritical(this, qGetUsersConsumption.GetErrorString());
+		return;
+	}
+
+	UserList = qGetUsersConsumption.TakeAnswer()["UserList"].toList();
+	for (const QVariant &Variant : UserList)
+	{
+		QVariantMap UserMap = Variant.toMap();
+
+		ISPushButton *ButtonBalance = new ISPushButton(LANG("OilSphere.Balance").arg(UserMap["Balance"].toString()), GroupBoxUsers);
+		ButtonBalance->setProperty("UserID", UserMap["ID"]);
+		connect(ButtonBalance, &ISPushButton::clicked, this, &ISOilSphere::ConsumptionAllSubSystem::BalanceClicked);
+		dynamic_cast<QFormLayout*>(GroupBoxUsers->layout())->addRow(UserMap["FIO"].toString(), ButtonBalance);
+	}
+}
+//-----------------------------------------------------------------------------
+void ISOilSphere::ConsumptionAllSubSystem::BalanceClicked()
+{
+	ListConsumption->Clear();
+
+	QVariant UserID = sender()->property("UserID");
+
+	QVariantList ConsumptionList;
+	for (const QVariant &Variant : UserList)
+	{
+		QVariantMap UserMap = Variant.toMap();
+		if (UserMap["ID"] == UserID)
+		{
+			ConsumptionList = UserMap["ConsumptionList"].toList();
+		}
+	}
+
+	for (const QVariant &Variant : ConsumptionList)
+	{
+		QVariantMap ConsumptionMap = Variant.toMap();
+
+		QListWidgetItem *ListWidgetItem = new QListWidgetItem(ListConsumption);
+		ListWidgetItem->setText(ConsumptionMap["Date"].toString() + ": " + ConsumptionMap["Sum"].toString());
+		ListWidgetItem->setSizeHint(QSize(ListWidgetItem->sizeHint().width(), 30));
+
+		QString Note = ConsumptionMap["Note"].toString();
+		if (!Note.isEmpty())
+		{
+			ListWidgetItem->setText(ListWidgetItem->text() + '\n' + Note);
+		}
+	}
+}
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+ISOilSphere::ConsumptionMySubSystem::ConsumptionMySubSystem(QWidget *parent) : ISListBaseForm("Consumption", parent)
 {
 
 }
 //-----------------------------------------------------------------------------
-bool ISOilSphere::ConsumptionSubSystem::Update()
+ISOilSphere::ConsumptionMySubSystem::~ConsumptionMySubSystem()
+{
+
+}
+//-----------------------------------------------------------------------------
+bool ISOilSphere::ConsumptionMySubSystem::Update()
 {
 	GetTcpQuery()->AddFilter("User", CURRENT_USER_ID);
 	return ISListBaseForm::Update();

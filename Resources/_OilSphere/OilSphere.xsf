@@ -137,4 +137,21 @@
     COST 100;
   </Function>
 
+  <Function Name="get_user_balance(user_id bigint)" Comment="Получить баланс пользователя">
+    CREATE OR REPLACE FUNCTION public.get_user_balance(user_id bigint)
+    RETURNS numeric AS
+    $body$
+    BEGIN
+    RETURN COALESCE(sum(cpmp_sum), 0)
+    FROM consumption
+    WHERE cpmp_user = user_id;
+    END;
+    $body$
+    LANGUAGE 'plpgsql'
+    VOLATILE
+    CALLED ON NULL INPUT
+    SECURITY INVOKER
+    COST 100;
+  </Function>
+
 </XSF>

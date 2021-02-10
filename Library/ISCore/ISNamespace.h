@@ -184,6 +184,7 @@ namespace ISNamespace
 		GetGasStation, //Заполнить на основании
 		GetDebtImplementation, //Получить загрузки и выгрузки
 		GetDebtCounterparty, //Получить долги контргаента
+		GetUserConsumption, //Получить расходы пользователей
 	};
 
     enum class LogMessageType //Типы сообщений логгера

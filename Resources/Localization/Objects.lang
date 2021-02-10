@@ -24,6 +24,10 @@
   <Local Name="OilSphere.GasStationStatement.Total" Russian="Остаток на начало смены: %1 Объём прихода: %2 Объём отпуска по счётчикам: %3 Технический пролив (отклонения): %4 Остаток на конец смены: %5 Сумма реализации: %6&#10;ККМ наличные: %7 ККМ безналичные: %8 Ведомости: %9 Выплата с проданного объёма: %10 Наличие долга: %11 Остаток в кассе (расчёт): %12 Остаток в кассе (фактический): %13&#10;Расхождения: %14 Наличные по ККМ: %15 Накопительный итог (расчёт): %16 Накопительный итог (фактический): %17 Расхождения итогов: %18 Накопительный итог по ККМ: %19&#10;Сумма инкассации: %20 Сумма инкассации ККМ: %21 Административные расходы с кассы: %22"/>
   <Local Name="OilSphere.FillInBased" Russian="Заполнить на основании"/>
   <Local Name="OilSphere.CreateInBased" Russian="Создать на основании"/>
+  <Local Name="OilSphere.Users" Russian="Пользователи"/>
+  <Local Name="OilSphere.Balance" Russian="Баланс: %1"/>
+  <Local Name="OilSphere.Consumption" Russian="Расходы"/>
+  <Local Name="OilSphere.Return" Russian="Возвраты"/>
   <Local Name="OilSphere.Message.Question.CreateCurrentConstant" Russian="Константа за текущий период не обнаружена, создать её сейчас?"/>
   <Local Name="OilSphere.Message.Warning.LoadCounterpartyAndStockIsEmpty" Russian="Вы не выбрали место загрузки."/>
   <Local Name="OilSphere.Message.Warning.LoadCounterpartyAndStockNotIsEmpty" Russian="Нужно выбрать только одно место загрузки."/>

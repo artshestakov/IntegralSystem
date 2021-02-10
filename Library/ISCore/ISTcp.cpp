@@ -283,6 +283,10 @@ ISNamespace::ApiMessageType ISTcp::GetMessageTypeByName(const QString &Name)
 	{
 		return ISNamespace::ApiMessageType::GetDebtCounterparty;
 	}
+	else if (Name == API_GET_USERS_CONSUMPTION)
+	{
+		return ISNamespace::ApiMessageType::GetUserConsumption;
+	}
 	return ISNamespace::ApiMessageType::Unknown;
 }
 //-----------------------------------------------------------------------------

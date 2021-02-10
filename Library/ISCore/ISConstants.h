@@ -211,6 +211,7 @@ const char API_STATEMENT_ADD[] = "StatementAdd"; //Добавить выгрузку в ведомости
 const char API_GET_GAST_STATION[] = "GetGatStation"; //Заполнить на основании
 const char API_GET_DEBT_IMPLEMENTATION[] = "GetDebtImplementation"; //Получить загрузки и выгрузки
 const char API_GET_DEBT_COUNTERPARTY[] = "GetDebtCounterparty"; //Получить долги контрагента
+const char API_GET_USERS_CONSUMPTION[] = "GetUsersConsumption"; //Получить расходы пользователей
 //-----------------------------------------------------------------------------
 const char CONST_UID_SETTINGS_DATABASE[] = "{1DE3449C-C700-4EFC-A455-E99E38063D9B}"; //Идентификатор настроек базы данных
 //-----------------------------------------------------------------------------

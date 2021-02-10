@@ -22,6 +22,7 @@ private:
 	bool GetGasStation(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
 	bool GetDebtImplementation(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
 	bool GetDebtCounterparty(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
+	bool GetUserConsumption(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
 };
 //-----------------------------------------------------------------------------
 #endif
