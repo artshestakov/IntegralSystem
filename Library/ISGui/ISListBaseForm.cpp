@@ -770,8 +770,8 @@ bool ISListBaseForm::Delete()
 
 	ISVectorUInt VectorInt = GetSelectedIDs();
 	bool Result = VectorInt.size() == 1 ?
-		ISMessageBox::ShowQuestion(this, LANG("Message.Object.Delete"), LANG("Message.Object.Delete.DetailedText")) :
-		ISMessageBox::ShowQuestion(this, LANG("Message.Objects.Delete").arg(VectorInt.size()), LANG("Message.Objects.Delete.DetailedText"));
+		ISMessageBox::ShowQuestion(this, LANG("Message.Object.Delete")) :
+		ISMessageBox::ShowQuestion(this, LANG("Message.Objects.Delete").arg(VectorInt.size()));
 	if (Result) //ѕолучили подтверждение от пользовател€
 	{
 		QString ErrorString;

@@ -394,7 +394,7 @@ void ISAuthDialog::Input()
 		if (UpdateClientMap["IsNeed"].toBool()) //≈сли требуетс€ обновление - предлагаем скачать и установить
 		{
 			SetConnecting(false);
-			if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.UpdateAvailable"), LANG("Message.Question.UpdateAvailable.DetailedText")
+			if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.UpdateAvailable")
 				.arg(ISVersionInfo::Instance().Info.Version).arg(UpdateClientMap["NewVersion"].toUInt()))) //ѕользователь согласилс€
 			{
 				ISProcessForm ProcessForm(LANG("UploadingUpdate"), this);
@@ -1401,7 +1401,7 @@ void ISUserPasswordDialog::Apply()
 	//ѕроверка сложности парол€
 	if (!ISAlgorithm::PasswordVerification(Password))
 	{
-		ISMessageBox::ShowWarning(this, LANG("Message.Warning.PasswordVerification"), LANG("Message.Warning.PasswordVerification.Detailed"));
+		ISMessageBox::ShowWarning(this, LANG("Message.Warning.PasswordVerification"));
 		EditPassword->BlinkRed();
 		return;
 	}

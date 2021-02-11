@@ -115,10 +115,8 @@
   <Local Name="Message.Error.DownloadUpdate" Russian="Не удалось загрузить обновление!"/>
   <Local Name="Message.Error.SaveUpdate" Russian="Не удалось сохранить файл обновления!"/>
   <Local Name="Message.Error.InvalidListValue" Russian="Невалидное значение!"/>
-  <Local Name="Message.Object.Delete" Russian="Вы действительно хотите удалить выбранную запись?"/>
-  <Local Name="Message.Object.Delete.DetailedText" Russian="При удалении записи, все подчиненные ей будут так же удалены."/>
-  <Local Name="Message.Objects.Delete" Russian="Вы действительно удалить выбранные записи (%1 шт.)?"/>
-  <Local Name="Message.Objects.Delete.DetailedText" Russian="При удалении записей, все подчиненные им будут так же удалены."/>
+  <Local Name="Message.Object.Delete" Russian="Вы действительно хотите удалить выбранную запись?&#10;&#10;При удалении записи, все подчиненные ей будут так же удалены."/>
+  <Local Name="Message.Objects.Delete" Russian="Вы действительно удалить выбранные записи (%1 шт.)?&#10;&#10;При удалении записей, все подчиненные им будут так же удалены."/>
   <Local Name="Message.Warning.SystemObject.NotEdit" Russian="Запрещено редактировать системные записи."/>
   <Local Name="Message.Warning.SystemObject.Copy" Russian="Запрещено создавать копии системных записей."/>
   <Local Name="Message.Warning.ValueFieldEditInvalid" Russian="Значение в поле &quot;%1&quot; введено некорректно!"/>
@@ -136,8 +134,7 @@
   <Local Name="Message.Warning.InvalidAccountLifeTimeDatesUser" Russian="ВНИМАНИЕ! Установлен некорректный диапазон даты начала и окончания срока действия учётной записи."/>
   <Local Name="Message.Warning.SaveObjectFromContinue" Russian="Сохраните запись для продолжения."/>
   <Local Name="Message.Warning.OneFieldNotFill" Russian="Одно из полей не заполнено!"/>
-  <Local Name="Message.Warning.PasswordVerification" Russian="Пароль слишком слабый."/>
-  <Local Name="Message.Warning.PasswordVerification.Detailed" Russian="Обязательные требования к надёжному паролю:&#10;&#8226; Пароль должен содержать не менее 8 символов.&#10;&#8226; Пароль должен содержать заглавные и строчные буквы, цифры, и специальные символы. Например: oNQZnz$Hx2.&#10;&#10;Пароль не должен содержать:&#10;&#8226; Личную информацию, которую легко узнать. Например: имя, фамилию или дату рождения.&#10;&#8226; Очевидные и простые слова, фразы, устойчивые выражения и наборы символов, которые легко подобрать. Например: password, parol, abcd, qwerty asdfg, или 1234567."/>
+  <Local Name="Message.Warning.PasswordVerification" Russian="Пароль слишком слабый.&#10;&#10;Обязательные требования к надёжному паролю:&#10;&#8226; Пароль должен содержать не менее 8 символов.&#10;&#8226; Пароль должен содержать заглавные и строчные буквы, цифры, и специальные символы. Например: oNQZnz$Hx2.&#10;&#10;Пароль не должен содержать:&#10;&#8226; Личную информацию, которую легко узнать. Например: имя, фамилию или дату рождения.&#10;&#8226; Очевидные и простые слова, фразы, устойчивые выражения и наборы символов, которые легко подобрать. Например: password, parol, abcd, qwerty asdfg, или 1234567."/>
   <Local Name="Message.Warning.UserPasswordNotCreated" Russian="ВНИМАНИЕ! Пользователь без пароля не сможет зайти в программу!"/>
   <Local Name="Message.Warning.StorageFileBigSize" Russian="Размер файла &quot;%1&quot; превышает ограничение в %2 MB. Файл не будет добавлен."/>
   <Local Name="Message.Warning.ConnectedMoreOneDevice" Russian="Подключено более одного устройства. Попробуйте ещё раз."/>
@@ -159,8 +156,7 @@
   <Local Name="Message.Question.CalendarCloseEvent" Russian="Завершить событие?"/>
   <Local Name="Message.Question.StopInsertingToStorage" Russian="Остановить добавление файлов?"/>
   <Local Name="Message.Question.CopyDiscussion" Russian="Скопировать запись?"/>
-  <Local Name="Message.Question.UpdateAvailable" Russian="Доступно обновление программы. Загрузить его?"/>
-  <Local Name="Message.Question.UpdateAvailable.DetailedText" Russian="Текущая версия: %1&#10;Новая версия: %2"/>
+  <Local Name="Message.Question.UpdateAvailable" Russian="Доступно обновление программы. Загрузить его?&#10;&#10;Текущая версия: %1&#10;Новая версия: %2"/>
   <Local Name="Message.Question.PasswordReset" Russian="Вы уверены что хотите сбросить пароль?"/>
   <Local Name="Message.Question.ResetSettingDB" Russian="Сбросить настройки на стандартные?"/>
   <Local Name="Message.Question.UserDevice.Add" Russian="Привязать устройство?"/>
