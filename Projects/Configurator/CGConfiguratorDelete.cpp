@@ -26,12 +26,10 @@ static QString QS_FOREIGNS = PREPARE_QUERY("SELECT constraint_name "
 //-----------------------------------------------------------------------------
 static QString QD_FOREIGN = "ALTER TABLE public.%1 DROP CONSTRAINT %2 RESTRICT";
 //-----------------------------------------------------------------------------
-static QString QS_TABLES = PREPARE_QUERY("SELECT table_name "
-										 "FROM information_schema.tables "
-										 "WHERE table_catalog = current_database() "
-										 "AND table_schema = 'public' "
-										 "AND table_name != '_cdr' "
-										 "ORDER BY table_name");
+static QString QS_TABLES = PREPARE_QUERY("SELECT tablename "
+										 "FROM pg_tables "
+										 "WHERE schemaname = current_schema() "
+										 "ORDER BY tablename");
 //-----------------------------------------------------------------------------
 static QString QS_COLUMNS = PREPARE_QUERY("SELECT table_name, column_name "
 										  "FROM information_schema.columns "
@@ -194,7 +192,7 @@ bool CGConfiguratorDelete::oldtables()
 	{
 		while (qSelectTables.Next())
 		{
-			QString TableName = qSelectTables.ReadColumn("table_name").toString();
+			QString TableName = qSelectTables.ReadColumn("tablename").toString();
 			if (!ISAlgorithm::VectorContains(VectorString, TableName))
 			{
 				if (ISConsole::Question(QString("Remove table \"%1\"?").arg(TableName)))
