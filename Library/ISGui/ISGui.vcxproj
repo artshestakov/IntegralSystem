@@ -243,6 +243,7 @@
     <ClCompile Include="ISProgressForm.cpp" />
     <ClCompile Include="ISProtocolSubSystem.cpp" />
     <ClCompile Include="ISProtocolObjectListForm.cpp" />
+    <ClCompile Include="ISQuerySubSystem.cpp" />
     <ClCompile Include="ISScrollArea.cpp" />
     <ClCompile Include="ISSearchForm.cpp" />
     <ClCompile Include="ISSelectListForm.cpp" />
@@ -356,6 +357,7 @@
     <QtMoc Include="ISTcpModels.h" />
     <QtMoc Include="ISServerLogsSubSystem.h" />
     <QtMoc Include="ISServerInfoSubSystem.h" />
+    <QtMoc Include="ISQuerySubSystem.h" />
     <ClInclude Include="ISTcpQuery.h" />
     <ClInclude Include="ISUSBSearcher.h" />
     <ClInclude Include="ISUserPhotoCreator.h" />

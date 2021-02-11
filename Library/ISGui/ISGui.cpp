@@ -49,6 +49,7 @@
 #include "ISFavorites.h"
 #include "ISColumnSizer.h"
 #include "ISParagraphEntity.h"
+#include "ISQuerySubSystem.h"
 //-----------------------------------------------------------------------------
 bool ISGui::Startup(QString &ErrorString)
 {
@@ -815,6 +816,7 @@ void ISGui::RegisterMetaType()
 	qRegisterMetaType<ISAsteriskCallsSubSystem*>("ISAsteriskCallsListForm");
 	qRegisterMetaType<ISServerLogsSubSystem*>("ISServerLogsSubSystem");
 	qRegisterMetaType<ISServerInfoSubSystem*>("ISServerInfoSubSystem");
+	qRegisterMetaType<ISQuerySubSystem*>("ISQuerySubSystem");
 
 	qRegisterMetaType<ISDelegateBoolean*>("ISDelegateBoolean");
 	qRegisterMetaType<ISDelegateImage*>("ISDelegateImage");

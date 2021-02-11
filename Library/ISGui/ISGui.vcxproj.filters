@@ -322,6 +322,9 @@
     <ClCompile Include="ISServerLogsSubSystem.cpp">
       <Filter>SubSystem</Filter>
     </ClCompile>
+    <ClCompile Include="ISQuerySubSystem.cpp">
+      <Filter>SubSystem</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ISProcessForm.h">
@@ -538,6 +541,9 @@
       <Filter>SubSystem</Filter>
     </QtMoc>
     <QtMoc Include="ISServerLogsSubSystem.h">
+      <Filter>SubSystem</Filter>
+    </QtMoc>
+    <QtMoc Include="ISQuerySubSystem.h">
       <Filter>SubSystem</Filter>
     </QtMoc>
   </ItemGroup>

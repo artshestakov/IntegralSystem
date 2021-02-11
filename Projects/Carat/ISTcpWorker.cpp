@@ -457,7 +457,7 @@ static QString QS_SERVER_INFO = PREPARE_QUERY("SELECT "
 											  "(SELECT COUNT(*) AS protocol_count FROM _protocol), "
 											  "(SELECT COUNT(*) AS users_count FROM _users)");
 //-----------------------------------------------------------------------------
-static QString QS_STATEMENT = PREPARE_QUERY("SELECT userid, rolname, calls, total_time, regexp_replace(query, '\n|\r', '', 'g') AS sql_query "
+static QString QS_STATEMENT = PREPARE_QUERY("SELECT userid, rolname, calls, total_time, /*regexp_replace(query, '\n|\r', '', 'g')*/query AS sql_query "
 											"FROM pg_stat_statements "
 											"LEFT JOIN pg_roles ON oid = userid "
 											"ORDER BY total_time DESC");
