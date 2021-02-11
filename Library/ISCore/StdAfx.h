@@ -14,6 +14,7 @@
 #include <wincrypt.h>
 #include <SetupAPI.h>
 #include <cfgmgr32.h>
+#include <Psapi.h>
 #else
 #include <pthread.h>
 #include <float.h>

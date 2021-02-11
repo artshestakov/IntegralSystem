@@ -77,6 +77,11 @@ QVariant ISDatabase::GetValue(const QString &TableName, const QString &FieldName
     return QVariant();
 }
 //-----------------------------------------------------------------------------
+bool ISDatabase::Connect(const QString &ConnectionName, const ISConnectOptionDB &ConnectOptionDB)
+{
+	return Connect(ConnectionName, ConnectOptionDB.Host, ConnectOptionDB.Port, ConnectOptionDB.Name, ConnectOptionDB.Login, ConnectOptionDB.Password);
+}
+//-----------------------------------------------------------------------------
 bool ISDatabase::Connect(const QString &ConnectionName, const QString &Host, unsigned short Port, const QString &Database, const QString &Login, const QString &Password)
 {
     //Если объект БД с таким именем соединения уже существует - то забираем

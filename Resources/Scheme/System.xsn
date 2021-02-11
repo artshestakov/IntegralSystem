@@ -244,4 +244,11 @@
     </Fields>
   </Table>
 
+  <Table Name="_Monitor" UID="{AA222D55-AF5E-4A11-BC49-9D63FD2947FC}" Alias="mntr" LocalName="Монитор" LocalListName="Монитор" TitleName="DateTime" IsSystem="true">
+    <Fields>
+      <Field UID="{FC02E302-B0FB-4E8B-B1C3-BECB1A1DA1C2}" Name="DateTime" Type="DateTime" DefaultValue="now()" LabelName="Дата и время" LocalListName="Дата и время" NotNull="true"/>
+      <Field UID="{8E5C9526-5BDA-49E2-9826-726B9B335DCC}" Name="Memory" Type="BigInt" LabelName="Потребляемая память" LocalListName="Потребляемая память" NotNull="true"/>
+    </Fields>
+  </Table>
+
 </XSN>

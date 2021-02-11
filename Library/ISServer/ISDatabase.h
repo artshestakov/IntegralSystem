@@ -18,6 +18,7 @@ public:
 	bool CheckExistDatabase(const QString &ConnectionName, const QString &Database, bool &Exist); //Проверить существование базы данных
 	QVariant GetValue(const QString &TableName, const QString &FieldName, int ObjectID) const; //Получить значение поля из таблицы по идентификатору записи
 
+	bool Connect(const QString &ConnectionName, const ISConnectOptionDB &ConnectOptionDB); //Подключение к базе данных
 	bool Connect(const QString &ConnectionName, const QString &Host, unsigned short Port, const QString &Database, const QString &Login, const QString &Password); //Подключение к базе данных
 	void Disconnect(const QString &ConnectionName); //Отключиться от БД по имени соединения
 	void DisconnectAll(); //Отключение от всех экземпляров БД

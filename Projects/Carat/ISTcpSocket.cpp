@@ -7,7 +7,6 @@
 #include "ISLocalization.h"
 #include "ISTcpQueue.h"
 #include "ISTcpMessage.h"
-#include "ISCaratMonitor.h"
 //-----------------------------------------------------------------------------
 ISTcpSocket::ISTcpSocket(qintptr socket_descriptor, QObject *parent)
 	: QTcpSocket(parent),
@@ -121,7 +120,7 @@ void ISTcpSocket::ReadyRead()
 	TcpMessage->ChunkCount = ChunkCount;
 
 	//Регистрируем входящий траффик
-	ISCaratMonitor::Instance().IncomingQuerySize(TcpMessage->Size);
+	//ISCaratMonitor::Instance().IncomingQuerySize(TcpMessage->Size);
 
 	//Засекаем время и парсим сообщение
 	QJsonParseError JsonParseError;

@@ -99,6 +99,7 @@ const char SYMBOL_SPECIAL_ARRAY[] = "!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~";
 const char CONNECTION_DEFAULT[] = "DefaultDB";
 const char CONNECTION_SYSTEM[] = "SystemDB";
 const char CONNECTION_ASTERISK[] = "AsteriskDB";
+const char CONNECTION_MONITOR[] = "MonitorDB";
 //-----------------------------------------------------------------------------
 const char CONFIG_TEMPLATE_SERVER[] = "Server"; //Щаблон конфигурационного файла для сервера
 const char CONFIG_TEMPLATE_CLIENT[] = "Client"; //Щаблон конфигурационного файла для клиента

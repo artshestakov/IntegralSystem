@@ -67,8 +67,7 @@ bool ISAsterisk::Start()
 void ISAsterisk::run()
 {
 	//При успешном подключении создаём указатель на объект запроса, чтобы использовать его всегда
-	if (ISDatabase::Instance().Connect(CONNECTION_ASTERISK, CONFIG_STRING(CONST_CONFIG_CONNECTION_SERVER), CONFIG_INT(CONST_CONFIG_CONNECTION_PORT), CONFIG_STRING(CONST_CONFIG_CONNECTION_DATABASE),
-		CONFIG_STRING(CONST_CONFIG_CONNECTION_LOGIN), CONFIG_STRING(CONST_CONFIG_CONNECTION_PASSWORD)))
+	if (ISDatabase::Instance().Connect(CONNECTION_ASTERISK, ISDatabase::Instance().GetOption(CONNECTION_DEFAULT)))
 	{
 		qInsert = new ISQuery(ISDatabase::Instance().GetDB(CONNECTION_ASTERISK), QI_ASTERISK_CALLS);
 	}

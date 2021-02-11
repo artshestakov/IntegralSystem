@@ -10,6 +10,7 @@
 #include "ISConsole.h"
 #include "ISConfigurations.h"
 #include "ISDatabase.h"
+#include "ISCaratMonitor.h"
 //-----------------------------------------------------------------------------
 ISCaratApplication::ISCaratApplication(int &argc, char **argv)
 	: QCoreApplication(argc, argv),
@@ -191,6 +192,13 @@ bool ISCaratApplication::Run()
 		}
 	}
 
+	//Запускаем мониторинг
+	if (!ISCaratMonitor::Instance().Start())
+	{
+		ISLOGGER_E("ISCaratMonitor", "starting failed: " + ISCaratMonitor::Instance().GetErrorString());
+		return false;
+	}
+
     //Запускаем контроллер остановки сервиса
     if (!QtConcurrent::run(this, &ISCaratApplication::StopController).isStarted())
     {
@@ -215,6 +223,9 @@ void ISCaratApplication::Shutdown()
 	{
 		Asterisk->quit();
 	}
+
+	//Останавливаем мониторинг
+	ISCaratMonitor::Instance().Shutdown();
 
 	//Отключаемся от БД
 	ISDatabase::Instance().Disconnect(CONNECTION_DEFAULT);

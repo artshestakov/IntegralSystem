@@ -6,7 +6,6 @@
 #include "ISTcp.h"
 #include "ISTcpClients.h"
 #include "ISFail2Ban.h"
-#include "ISCaratMonitor.h"
 #include "ISConfigurations.h"
 #include "ISOilSphereWorker.h"
 //-----------------------------------------------------------------------------
@@ -205,7 +204,7 @@ void ISTcpServer::SendAnswer(ISTcpAnswer *TcpAnswer)
 		{
 			//Формируем ответ и регистрируем исходящий траффик
 			QByteArray ByteArray = TcpAnswer->ToByteArray();
-			ISCaratMonitor::Instance().AnswerQuerySize(ByteArray.size());
+			//ISCaratMonitor::Instance().AnswerQuerySize(ByteArray.size());
 
 			//Записываем в него ответ и ждём отправки
 			TcpSocket->write(ByteArray);

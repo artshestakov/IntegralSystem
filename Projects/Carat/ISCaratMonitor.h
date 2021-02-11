@@ -3,15 +3,20 @@
 #define _ISCARATMONITOR_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
+#include "ISTypedefs.h"
 //-----------------------------------------------------------------------------
 class ISCaratMonitor
 {
 public:
 	static ISCaratMonitor& Instance();
 
-public:
-	void IncomingQuerySize(int QuerySize); //Регистрация размера входящего запроса
-	void AnswerQuerySize(int AnswerSize); //Регистрация размера ответа на запрос
+	QString GetErrorString() const;
+	bool Start();
+	void Shutdown();
+
+private:
+	void Process();
+	quint64 GetMemory() const;
 
 private:
 	ISCaratMonitor();
@@ -22,8 +27,10 @@ private:
 	ISCaratMonitor& operator=(ISCaratMonitor&&) = delete;
 
 private:
-	int _IncomingQuerySize; //Размер входящего траффика
-	int _AnswerQuerySize; //Размер исходящего траффика
+	QString ErrorString;
+	bool IsRunning;
+	bool IsFinished;
+	ISCriticalSection CriticalSection;
 };
 //-----------------------------------------------------------------------------
 #endif
