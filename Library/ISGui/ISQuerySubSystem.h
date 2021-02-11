@@ -19,9 +19,11 @@ public:
 private:
 	void SearchEvent(const QVariant &Value);
 	void ItemClicked(QListWidgetItem *ListWidgetItem);
+	void ClearHistory();
 
 private:
 	QGroupBox *GroupBoxQuery;
+	ISSearchEdit *EditSearch;
 	ISListWidget *ListWidgetQuery;
 	ISTextEdit *TextEdit;
 };

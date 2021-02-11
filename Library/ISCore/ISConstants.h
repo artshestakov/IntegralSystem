@@ -205,7 +205,8 @@ const char API_TASK_COMMENT_ADD[] = "TaskCommentAdd"; //Добавить комментарий к з
 const char API_GET_FOREIGN_LIST[] = "GetForeignList"; //Получить список значений по внешнему ключу
 const char API_GET_SERVER_INFO[] = "GetServerInfo"; //Получить информацию о сервере
 const char API_ORGANIZATION_FROM_INN[] = "OrganizationFromINN"; //Поиск организации по ИНН
-const char API_GET_STATEMENT[] = "GetStatement"; //Получить статистику запросов
+const char API_STATEMENTS_QUERY_GET[] = "StatementsQueryGet"; //Получить статистику запросов
+const char API_STATEMENTS_QUERY_RESET[] = "StatementsQueryReset"; //Очистить статистику запросов
 const char API_PERIOD_CONTAINS[] = "PeriodContains"; //Проверка наличия текущего периода
 const char API_GET_STOCK_LIST[] = "GetStockList"; //Получить список складов
 const char API_STATEMENT_ADD[] = "StatementAdd"; //Добавить выгрузку в ведомости азс
@@ -260,6 +261,7 @@ const char CONST_UID_PROTOCOL_GET_TABLE_DATA[] = "{2A93A14E-4BA5-4CB8-A056-0FF2B
 const char CONST_UID_PROTOCOL_USER_DEVICE_ADD[] = "{FB849105-9009-4EB0-AAFF-B320B3CA18BE}";
 const char CONST_UID_PROTOCOL_USER_DEVICE_DELETE[] = "{1450D20D-2401-4DF6-8689-51F962604D5B}";
 const char CONST_UID_PROTOCOL_SERVER_INFO[] = "{E6F5D167-25E6-4172-8D81-219DE8608647}";
+const char CONST_UID_PROTOCOL_STATEMENTS_QUERY_RESET[] = "{3660E1BE-755A-4034-89D8-15FE83776122}";
 //-----------------------------------------------------------------------------
 const char CONST_UID_GROUP_ACCESS_TYPE_SHOW[] = "{41743776-D7CE-414F-ACF3-71C42A607742}"; //Просмотр данных
 const char CONST_UID_GROUP_ACCESS_TYPE_CREATE[] = "{1CFA961D-08A2-4AA3-978E-FF23FC88CA08}"; //Создание данных

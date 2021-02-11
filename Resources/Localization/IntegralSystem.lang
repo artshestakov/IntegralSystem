@@ -61,6 +61,8 @@
   <!--ISQuerySubSystem-->
   <Local Name="ISQuerySubSystem.GroupBoxQuery" Russian="Статистика запросов (%1)"/>
   <Local Name="ISQuerySubSystem.ItemText" Russian="Идентификатор пользователя: %1&#10;Логин: %2&#10;Количество выполнений: %3&#10;Длительность: %4"/>
+  <Local Name="ISQuerySubSystem.ClearHistory" Russian="Очистить статистику"/>
+  <Local Name="ISQuerySubSystem.GroupBoxHistory" Russian="История очистки статистики"/>
 
   <!--ISServerInfoSubSystem-->
   <Local Name="ISServerInfoSubSystem.Carat.Title" Russian="Сервер"/>
@@ -164,6 +166,7 @@
   <Local Name="Message.Question.UserDevice.Add" Russian="Привязать устройство?"/>
   <Local Name="Message.Question.UserDevice.Delete" Russian="Отвязать устройство?"/>
   <Local Name="Message.Question.LinkingDevice" Russian="Устройство обнаружено.&#10;&#10;Идентификатор поставщика: %1&#10;Идентификатор устройства: %2&#10;Серийный номер: %3&#10;Имя: %4&#10;&#10;Вы уверены что хотите привязать устройство к этой учётной записи?"/>
+  <Local Name="Message.Question.ClearStatementsQuery" Russian="Вы действительно хотите очистить историю запросов?&#10;&#10;Это действие нельзя отменить."/>
   
   <!--System Fields-->
   <Local Name="SystemField.ID" Russian="Код"/>

@@ -457,10 +457,12 @@ static QString QS_SERVER_INFO = PREPARE_QUERY("SELECT "
 											  "(SELECT COUNT(*) AS protocol_count FROM _protocol), "
 											  "(SELECT COUNT(*) AS users_count FROM _users)");
 //-----------------------------------------------------------------------------
-static QString QS_STATEMENT = PREPARE_QUERY("SELECT userid, rolname, calls, total_time, /*regexp_replace(query, '\n|\r', '', 'g')*/query AS sql_query "
-											"FROM pg_stat_statements "
-											"LEFT JOIN pg_roles ON oid = userid "
-											"ORDER BY total_time DESC");
+static QString QS_STATEMENTS_QUERY = PREPARE_QUERY("SELECT userid, rolname, calls, total_time, query AS sql_query "
+												   "FROM pg_stat_statements "
+												   "LEFT JOIN pg_roles ON oid = userid "
+												   "ORDER BY total_time DESC");
+//-----------------------------------------------------------------------------
+static QString QS_STATEMENTS_RESET = PREPARE_QUERY("SELECT pg_stat_statements_reset()");
 //-----------------------------------------------------------------------------
 ISTcpWorker::ISTcpWorker()
 	: QObject(),
@@ -817,7 +819,8 @@ bool ISTcpWorker::Execute(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	case ISNamespace::ApiMessageType::GetForeignList: return GetForeignList(TcpMessage, TcpAnswer); break;
 	case ISNamespace::ApiMessageType::GetServerInfo: return GetServerInfo(TcpMessage, TcpAnswer); break;
 	case ISNamespace::ApiMessageType::OrganizationFromINN: return OrganizationFormINN(TcpMessage, TcpAnswer); break;
-	case ISNamespace::ApiMessageType::GetStatement: return GetStatement(TcpMessage, TcpAnswer); break;
+	case ISNamespace::ApiMessageType::StatementsQueryGet: return StatementsQueryGet(TcpMessage, TcpAnswer); break;
+	case ISNamespace::ApiMessageType::StatementsQueryReset: return StatementsQueryReset(TcpMessage, TcpAnswer); break;
 	default:
 		ErrorString = LANG("Carat.Error.NotExistFunction").arg(TcpMessage->TypeName);
 	}
@@ -4258,16 +4261,16 @@ bool ISTcpWorker::OrganizationFormINN(ISTcpMessage *TcpMessage, ISTcpAnswer *Tcp
 	return true;
 }
 //-----------------------------------------------------------------------------
-bool ISTcpWorker::GetStatement(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+bool ISTcpWorker::StatementsQueryGet(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
 	Q_UNUSED(TcpMessage);
 	Q_UNUSED(TcpAnswer);
 
 	//Получаем статистику запросов
-	ISQuery qSelect(ISDatabase::Instance().GetDB(DBConnectionName), QS_STATEMENT);
+	ISQuery qSelect(ISDatabase::Instance().GetDB(DBConnectionName), QS_STATEMENTS_QUERY);
 	if (!qSelect.Execute()) //Ошибка запроса
 	{
-		return ErrorQuery(LANG("Carat.Error.Query.GetStatement.Select"), qSelect);
+		return ErrorQuery(LANG("Carat.Error.Query.StatementsQueryGet.Select"), qSelect);
 	}
 
 	//Обход запросов
@@ -4284,6 +4287,20 @@ bool ISTcpWorker::GetStatement(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 		});
 	}
 	TcpAnswer->Parameters["QueryList"] = QueryList;
+	return true;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::StatementsQueryReset(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+	Q_UNUSED(TcpMessage);
+	Q_UNUSED(TcpAnswer);
+
+	ISQuery qReset(ISDatabase::Instance().GetDB(DBConnectionName), QS_STATEMENTS_RESET);
+	if (!qReset.Execute())
+	{
+		return ErrorQuery(LANG("Carat.Error.Query.StatementsQueryReset.Select"), qReset);
+	}
+	Protocol(TcpMessage->TcpSocket->GetUserID(), CONST_UID_PROTOCOL_STATEMENTS_QUERY_RESET);
 	return true;
 }
 //-----------------------------------------------------------------------------

@@ -99,7 +99,8 @@ protected:
 	virtual bool GetForeignList(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
 	virtual bool GetServerInfo(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
 	virtual bool OrganizationFormINN(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
-	virtual bool GetStatement(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
+	virtual bool StatementsQueryGet(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
+	virtual bool StatementsQueryReset(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
 
 protected:
     QString ErrorString; //Текстовое описание ошибки запроса

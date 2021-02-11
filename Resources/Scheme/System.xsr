@@ -61,6 +61,7 @@
   <_ProtocolType IsSystem="true" UID="{FB849105-9009-4EB0-AAFF-B320B3CA18BE}" Name="Привязка устройства"/>
   <_ProtocolType IsSystem="true" UID="{1450D20D-2401-4DF6-8689-51F962604D5B}" Name="Отвязка устройства"/>
   <_ProtocolType IsSystem="true" UID="{E6F5D167-25E6-4172-8D81-219DE8608647}" Name="Просмотр информации о сервере"/>
+  <_ProtocolType IsSystem="true" UID="{3660E1BE-755A-4034-89D8-15FE83776122}" Name="Сброс статистики запросов"/>
 
   <_InternalDirectories IsSystem="true" UID="{A57D9B44-CD09-4880-897D-3B0BACB1F093}" TableName="_TaskType" Order="1"/>
   <_InternalDirectories IsSystem="true" UID="{275E8EE8-C1EE-4495-95C2-79AB3AD98AB9}" TableName="_TaskSpace" Order="2"/>

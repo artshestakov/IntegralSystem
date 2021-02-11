@@ -9,14 +9,17 @@ ISQuerySubSystem::ISQuerySubSystem(QWidget *parent) : ISInterfaceMetaForm(parent
 {
 	GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);
 
+	QHBoxLayout *Layout = new QHBoxLayout();
+	GetMainLayout()->addLayout(Layout);
+
 	GroupBoxQuery = new QGroupBox(LANG("ISQuerySubSystem.GroupBoxQuery").arg(0), this);
 	GroupBoxQuery->setLayout(new QVBoxLayout());
-	GetMainLayout()->addWidget(GroupBoxQuery);
+	Layout->addWidget(GroupBoxQuery);
 
 	QHBoxLayout *LayoutTitle = new QHBoxLayout();
 	dynamic_cast<QVBoxLayout*>(GroupBoxQuery->layout())->addLayout(LayoutTitle);
 
-	ISSearchEdit *EditSearch = new ISSearchEdit(GroupBoxQuery);
+	EditSearch = new ISSearchEdit(GroupBoxQuery);
 	connect(EditSearch, &ISSearchEdit::ValueChange, this, &ISQuerySubSystem::SearchEvent);
 	LayoutTitle->addWidget(EditSearch);
 
@@ -28,6 +31,15 @@ ISQuerySubSystem::ISQuerySubSystem(QWidget *parent) : ISInterfaceMetaForm(parent
 	TextEdit = new ISTextEdit(GroupBoxQuery);
 	TextEdit->SetReadOnly(true);
 	GroupBoxQuery->layout()->addWidget(TextEdit);
+
+	QVBoxLayout *LayoutRight = new QVBoxLayout();
+	Layout->addLayout(LayoutRight);
+
+	ISPushButton *ButtonClear = new ISPushButton(LANG("ISQuerySubSystem.ClearHistory"), this);
+	connect(ButtonClear, &ISPushButton::clicked, this, &ISQuerySubSystem::ClearHistory);
+	LayoutRight->addWidget(ButtonClear, 0, Qt::AlignRight);
+
+	//QGroupBox *GroupBoxHistory = new QGroupBox(LANG("ISQuerySubSystem.GroupBoxHistory"), this);
 }
 //-----------------------------------------------------------------------------
 ISQuerySubSystem::~ISQuerySubSystem()
@@ -37,18 +49,18 @@ ISQuerySubSystem::~ISQuerySubSystem()
 //-----------------------------------------------------------------------------
 void ISQuerySubSystem::LoadData()
 {
-	ISTcpQuery qGetStatement(API_GET_STATEMENT);
+	ISTcpQuery qStatementQueryGet(API_STATEMENTS_QUERY_GET);
 
 	ISGui::SetWaitGlobalCursor(true);
-	bool Result = qGetStatement.Execute();
+	bool Result = qStatementQueryGet.Execute();
 	ISGui::SetWaitGlobalCursor(false);
 	if (!Result)
 	{
-		ISMessageBox::ShowCritical(this, qGetStatement.GetErrorString());
+		ISMessageBox::ShowCritical(this, qStatementQueryGet.GetErrorString());
 		return;
 	}
 
-	QVariantMap AnswerMap = qGetStatement.TakeAnswer();
+	QVariantMap AnswerMap = qStatementQueryGet.TakeAnswer();
 	QVariantList QueryList = AnswerMap["QueryList"].toList();
 
 	for (const QVariant &Variant : QueryList)
@@ -87,5 +99,23 @@ void ISQuerySubSystem::SearchEvent(const QVariant &Value)
 void ISQuerySubSystem::ItemClicked(QListWidgetItem *ListWidgetItem)
 {
 	TextEdit->SetValue(ListWidgetItem->data(Qt::UserRole));
+}
+//-----------------------------------------------------------------------------
+void ISQuerySubSystem::ClearHistory()
+{
+	if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.ClearStatementsQuery")))
+	{
+		ISTcpQuery qStatementsReset(API_STATEMENTS_QUERY_RESET);
+		if (qStatementsReset.Execute())
+		{
+			ListWidgetQuery->Clear();
+			TextEdit->Clear();
+			EditSearch->Clear();
+		}
+		else
+		{
+			ISMessageBox::ShowCritical(this, qStatementsReset.GetErrorString());
+		}
+	}
 }
 //-----------------------------------------------------------------------------
