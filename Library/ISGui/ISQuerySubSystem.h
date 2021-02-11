@@ -26,6 +26,7 @@ private:
 	ISSearchEdit *EditSearch;
 	ISListWidget *ListWidgetQuery;
 	ISTextEdit *TextEdit;
+	ISListWidget *ListWidgetHistory;
 };
 //-----------------------------------------------------------------------------
 #endif

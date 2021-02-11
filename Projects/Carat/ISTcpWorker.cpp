@@ -462,6 +462,11 @@ static QString QS_STATEMENTS_QUERY = PREPARE_QUERY("SELECT userid, rolname, call
 												   "LEFT JOIN pg_roles ON oid = userid "
 												   "ORDER BY total_time DESC");
 //-----------------------------------------------------------------------------
+static QString QS_STATEMENTS_HISTORY = PREPARE_QUERY("SELECT prtc_datetime "
+													 "FROM _protocol "
+													 "WHERE prtc_type = (SELECT prtp_id FROM _protocoltype WHERE prtp_uid = '{3660E1BE-755A-4034-89D8-15FE83776122}') "
+													 "ORDER BY prtc_datetime DESC");
+//-----------------------------------------------------------------------------
 static QString QS_STATEMENTS_RESET = PREPARE_QUERY("SELECT pg_stat_statements_reset()");
 //-----------------------------------------------------------------------------
 ISTcpWorker::ISTcpWorker()
@@ -4286,7 +4291,22 @@ bool ISTcpWorker::StatementsQueryGet(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpA
 			{ "SqlQuery", qSelect.ReadColumn("sql_query") }
 		});
 	}
+
+	//Получаем историю очистки статистики
+	ISQuery qSelectHistory(ISDatabase::Instance().GetDB(DBConnectionName), QS_STATEMENTS_HISTORY);
+	if (!qSelectHistory.Execute())
+	{
+		return ErrorQuery(LANG("Carat.Error.Query.StatementsQueryGet.SelectHistory"), qSelectHistory);
+	}
+
+	//Обход дат
+	QStringList DateList;
+	while (qSelectHistory.Next())
+	{
+		DateList.push_back(qSelectHistory.ReadColumn("prtc_datetime").toDateTime().toString(FORMAT_DATE_TIME_V2));
+	}
 	TcpAnswer->Parameters["QueryList"] = QueryList;
+	TcpAnswer->Parameters["DateList"] = DateList;
 	return true;
 }
 //-----------------------------------------------------------------------------

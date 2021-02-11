@@ -39,7 +39,13 @@ ISQuerySubSystem::ISQuerySubSystem(QWidget *parent) : ISInterfaceMetaForm(parent
 	connect(ButtonClear, &ISPushButton::clicked, this, &ISQuerySubSystem::ClearHistory);
 	LayoutRight->addWidget(ButtonClear, 0, Qt::AlignRight);
 
-	//QGroupBox *GroupBoxHistory = new QGroupBox(LANG("ISQuerySubSystem.GroupBoxHistory"), this);
+	QGroupBox *GroupBoxHistory = new QGroupBox(LANG("ISQuerySubSystem.GroupBoxHistory"), this);
+	GroupBoxHistory->setLayout(new QVBoxLayout());
+	LayoutRight->addWidget(GroupBoxHistory);
+
+	ListWidgetHistory = new ISListWidget(GroupBoxHistory);
+	ListWidgetHistory->setAlternatingRowColors(true);
+	GroupBoxHistory->layout()->addWidget(ListWidgetHistory);
 }
 //-----------------------------------------------------------------------------
 ISQuerySubSystem::~ISQuerySubSystem()
@@ -49,6 +55,10 @@ ISQuerySubSystem::~ISQuerySubSystem()
 //-----------------------------------------------------------------------------
 void ISQuerySubSystem::LoadData()
 {
+	ListWidgetQuery->Clear();
+	TextEdit->Clear();
+	EditSearch->Clear();
+
 	ISTcpQuery qStatementQueryGet(API_STATEMENTS_QUERY_GET);
 
 	ISGui::SetWaitGlobalCursor(true);
@@ -62,6 +72,7 @@ void ISQuerySubSystem::LoadData()
 
 	QVariantMap AnswerMap = qStatementQueryGet.TakeAnswer();
 	QVariantList QueryList = AnswerMap["QueryList"].toList();
+	QStringList DateList = AnswerMap["DateList"].toStringList();
 
 	for (const QVariant &Variant : QueryList)
 	{
@@ -76,6 +87,13 @@ void ISQuerySubSystem::LoadData()
 		ListWidgetItem->setData(Qt::UserRole, QueryMap["SqlQuery"]);
 	}
 	GroupBoxQuery->setTitle(LANG("ISQuerySubSystem.GroupBoxQuery").arg(QueryList.size()));
+
+	for (const QString &DateText : DateList)
+	{
+		QListWidgetItem *ListWidgetItem = new QListWidgetItem(ListWidgetHistory);
+		ListWidgetItem->setText(DateText);
+		ListWidgetItem->setSizeHint(QSize(ListWidgetItem->sizeHint().width(), 30));
+	}
 }
 //-----------------------------------------------------------------------------
 void ISQuerySubSystem::SearchEvent(const QVariant &Value)
@@ -108,9 +126,7 @@ void ISQuerySubSystem::ClearHistory()
 		ISTcpQuery qStatementsReset(API_STATEMENTS_QUERY_RESET);
 		if (qStatementsReset.Execute())
 		{
-			ListWidgetQuery->Clear();
-			TextEdit->Clear();
-			EditSearch->Clear();
+			LoadData();
 		}
 		else
 		{
