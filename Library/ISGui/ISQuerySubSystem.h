@@ -17,9 +17,11 @@ public:
 	void LoadData() override;
 
 private:
+	void SearchEvent(const QVariant &Value);
 	void ItemClicked(QListWidgetItem *ListWidgetItem);
 
 private:
+	QGroupBox *GroupBoxQuery;
 	ISListWidget *ListWidgetQuery;
 	ISTextEdit *TextEdit;
 };
