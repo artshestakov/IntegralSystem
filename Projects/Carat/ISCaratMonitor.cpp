@@ -118,11 +118,46 @@ quint64 ISCaratMonitor::GetMemory() const
 	{
 		Result = ProcessMemory.WorkingSetSize / 1024;
 	}
-	else
+    else //Не удалось получить информацию о памяти процесса
 	{
 		ISLOGGER_E(__CLASS__, "Not getting memory: " + ISAlgorithm::GetLastErrorString());
 	}
 #else
+    QFile File(QString("/proc/%1/status").arg(CURRENT_PID()));
+    if (File.open(QIODevice::ReadOnly)) //Файл открылся - читаем его и закрываем
+    {
+        QString Content = File.readAll();
+        File.close();
+
+        //Пробегаемся по всем строкам и ищем нужное поле
+        QStringList StringList = Content.split('\n');
+        for (const QString &String : StringList)
+        {
+            if (String.toLower().contains("rssanon")) //Нашли - вытаскиваем из строки только цифры
+            {
+                QString Temp;
+                for (const QChar &Char : String)
+                {
+                    if (Char.isDigit()) //Текущий символ - цифра
+                    {
+                        Temp.push_back(Char);
+                    }
+                }
+
+                bool Ok = true;
+                Result = Temp.toULong(&Ok);
+                if (!Ok) //Не удалось преобразовать строку в число
+                {
+                    ISLOGGER_E(__CLASS__, QString("Not convert '%1' to unsigned long").arg(Temp));
+                }
+                break; //Выходим из цикла
+            }
+        }
+    }
+    else //Не удалось открыть файл
+    {
+        ISLOGGER_E(__CLASS__, QString("Not error proc-file (%1): %2").arg(File.fileName()).arg(File.errorString()));
+    }
 #endif
 	return Result;
 }

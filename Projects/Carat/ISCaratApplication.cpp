@@ -157,7 +157,7 @@ bool ISCaratApplication::Run()
 		arg(QSysInfo::machineHostName()).
 		arg(QSysInfo::prettyProductName()).
 		arg(CURRENT_THREAD_ID()).
-		arg(GET_PID()).
+        arg(CURRENT_PID()).
 		arg(CONFIG_STRING(CONST_CONFIG_OTHER_CONFIGURATION)).
 		arg(CONFIG_STRING(CONST_CONFIG_CONNECTION_DATABASE)));
 

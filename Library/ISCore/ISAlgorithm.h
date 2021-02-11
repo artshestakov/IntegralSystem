@@ -47,14 +47,14 @@ if (POINTER) \
 #define CRITICAL_SECTION_UNLOCK(CRITICAL_SECTION) LeaveCriticalSection(CRITICAL_SECTION)
 #define CRITICAL_SECTION_DESTROY(CRITICAL_SECTION) DeleteCriticalSection(CRITICAL_SECTION)
 #define CURRENT_THREAD_ID GetCurrentThreadId
-#define GET_PID GetCurrentProcessId
+#define CURRENT_PID GetCurrentProcessId
 #else
 #define CRITICAL_SECTION_INIT(CRITICAL_SECTION) pthread_mutex_init(CRITICAL_SECTION, NULL)
 #define CRITICAL_SECTION_LOCK(CRITICAL_SECTION) pthread_mutex_lock(CRITICAL_SECTION)
 #define CRITICAL_SECTION_UNLOCK(CRITICAL_SECTION) pthread_mutex_unlock(CRITICAL_SECTION)
 #define CRITICAL_SECTION_DESTROY(CRITICAL_SECTION) pthread_mutex_destroy(CRITICAL_SECTION)
 #define CURRENT_THREAD_ID pthread_self
-#define GET_PID getpid
+#define CURRENT_PID getpid
 #endif
 //-----------------------------------------------------------------------------
 namespace ISAlgorithm
