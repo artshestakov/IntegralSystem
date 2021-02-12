@@ -13,6 +13,9 @@ public:
 	virtual ~ISServerInfoSubSystem();
 
 	void LoadData() override;
+
+private:
+	QTabWidget *TabWidget;
 };
 //-----------------------------------------------------------------------------
 #endif

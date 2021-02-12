@@ -5,10 +5,15 @@
 #include "ISLocalization.h"
 #include "ISDefinesGui.h"
 #include "ISGui.h"
+#include "ISBaseTableView.h"
+#include "ISTcpModels.h"
 //-----------------------------------------------------------------------------
 ISServerInfoSubSystem::ISServerInfoSubSystem(QWidget *parent) : ISInterfaceMetaForm(parent)
 {
 	GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);
+
+	TabWidget = new QTabWidget(this);
+	GetMainLayout()->addWidget(TabWidget);
 }
 //-----------------------------------------------------------------------------
 ISServerInfoSubSystem::~ISServerInfoSubSystem()
@@ -31,10 +36,11 @@ void ISServerInfoSubSystem::LoadData()
 
 	QVariantMap AnswerMap = qGetServerInfo.GetAnswer();
 	QVariantMap CaratMap = AnswerMap["Carat"].toMap(),
-		DatabaseMap = AnswerMap["Database"].toMap();
+		DatabaseMap = AnswerMap["Database"].toMap(),
+		PGSettings = AnswerMap["PGSettings"].toMap();
 
-	QGroupBox *GroupBoxCarat = new QGroupBox(LANG("ISServerInfoSubSystem.Carat.Title"), this);
-	GetMainLayout()->addWidget(GroupBoxCarat);
+	QWidget *WidgetCarat = new QWidget(TabWidget);
+	TabWidget->addTab(WidgetCarat, LANG("ISServerInfoSubSystem.Carat.Title"));
 
 	QFormLayout *FormLayoutCarat = new QFormLayout();
 	FormLayoutCarat->addRow(LANG("ISServerInfoSubSystem.Carat.Version"), new QLabel(CaratMap["Version"].toString(), this));
@@ -42,10 +48,10 @@ void ISServerInfoSubSystem::LoadData()
 	FormLayoutCarat->addRow(LANG("ISServerInfoSubSystem.Carat.Uptime"), new QLabel(CaratMap["Uptime"].toString(), this));
 	FormLayoutCarat->addRow(LANG("ISServerInfoSubSystem.Carat.SizeLogs"), new QLabel(CaratMap["SizeLogs"].toString(), this));
 	FormLayoutCarat->addRow(LANG("ISServerInfoSubSystem.Carat.CountClients"), new QLabel(CaratMap["CountClients"].toString(), this));
-	GroupBoxCarat->setLayout(FormLayoutCarat);
+	WidgetCarat->setLayout(FormLayoutCarat);
 
-	QGroupBox *GroupBoxDatabase = new QGroupBox(LANG("ISServerInfoSubSystem.Database.Title"), this);
-	GetMainLayout()->addWidget(GroupBoxDatabase);
+	QWidget *WidgetDatabase = new QWidget(TabWidget);
+	TabWidget->addTab(WidgetDatabase, LANG("ISServerInfoSubSystem.Database.Title"));
 
 	QFormLayout *FormLayoutDatabase = new QFormLayout();
 	FormLayoutDatabase->addRow(LANG("ISServerInfoSubSystem.Database.SizeFull"), new QLabel(DatabaseMap["SizeFull"].toString(), this));
@@ -67,6 +73,13 @@ void ISServerInfoSubSystem::LoadData()
 	FormLayoutDatabase->addRow(LANG("ISServerInfoSubSystem.Database.ProtocolCount"), new QLabel(DatabaseMap["ProtocolCount"].toString(), this));
 	FormLayoutDatabase->addRow(LANG("ISServerInfoSubSystem.Database.MonitorCount"), new QLabel(DatabaseMap["MonitorCount"].toString(), this));
 	FormLayoutDatabase->addRow(LANG("ISServerInfoSubSystem.Database.UsersCount"), new QLabel(DatabaseMap["UsersCount"].toString(), this));
-	GroupBoxDatabase->setLayout(FormLayoutDatabase);
+	WidgetDatabase->setLayout(FormLayoutDatabase);
+
+	ISBaseTableView *PGSettingsView = new ISBaseTableView(TabWidget);
+	TabWidget->addTab(PGSettingsView, LANG("ISServerInfoSubSystem.PGSettings.Title"));
+
+	ISViewModel *ViewModel = new ISViewModel(PGSettingsView);
+	ViewModel->SetSource(PGSettings["FieldList"].toStringList(), PGSettings["RecordList"].toList());
+	PGSettingsView->setModel(ViewModel);
 }
 //-----------------------------------------------------------------------------

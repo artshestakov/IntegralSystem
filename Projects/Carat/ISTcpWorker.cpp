@@ -460,6 +460,8 @@ static QString QS_SERVER_INFO = PREPARE_QUERY("SELECT "
 											  "(SELECT COUNT(*) as monitor_count FROM _monitor), "
 											  "(SELECT COUNT(*) AS users_count FROM _users)");
 //-----------------------------------------------------------------------------
+static QString QS_DATABASE_SETTING = PREPARE_QUERY("");
+//-----------------------------------------------------------------------------
 static QString QS_STATEMENTS_QUERY = PREPARE_QUERY("SELECT userid, rolname, calls, total_time, query AS sql_query "
 												   "FROM pg_stat_statements "
 												   "LEFT JOIN pg_roles ON oid = userid "
@@ -4232,6 +4234,24 @@ bool ISTcpWorker::GetServerInfo(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer
 	if (!qSelect.First())
 	{
 		ErrorString = qSelect.GetErrorString();
+		return false;
+	}
+
+	//Получаем настройки СУБД
+	TcpMessage->Parameters["QueryName"] = "PGSettings";
+	if (GetTableQuery(TcpMessage, TcpAnswer)) //Настройки получены
+	{
+		TcpMessage->Parameters.remove("QueryName");
+		TcpAnswer->Parameters["PGSettings"] = QVariantMap
+		{
+			{ "FieldList", TcpAnswer->Parameters["FieldList"] },
+			{ "RecordList", TcpAnswer->Parameters["RecordList"] }
+		};
+		TcpAnswer->Parameters.remove("FieldList");
+		TcpAnswer->Parameters.remove("RecordList");
+	}
+	else //Не удалось получить настройки
+	{
 		return false;
 	}
 
