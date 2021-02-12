@@ -40,7 +40,6 @@ HEADERS += \
     ISTcpServer.h \
     ISTcpSocket.h \
     ISTcpWorker.h \
-	ISOilSphereWorker.h \
     ISTcpWorkerHelper.h
 
 SOURCES += \
@@ -55,6 +54,5 @@ SOURCES += \
     ISTcpServer.cpp \
     ISTcpSocket.cpp \
     ISTcpWorker.cpp \
-	ISOilSphereWorker.cpp \
     ISTcpWorkerHelper.cpp \
 	main.cpp

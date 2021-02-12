@@ -23,7 +23,6 @@
     <ClCompile Include="ISCaratApplication.cpp" />
     <ClCompile Include="ISCaratMonitor.cpp" />
     <ClCompile Include="ISFail2Ban.cpp" />
-    <ClCompile Include="ISOilSphereWorker.cpp" />
     <ClCompile Include="ISTcpAnswer.cpp" />
     <ClCompile Include="ISTcpClients.cpp" />
     <ClCompile Include="ISTcpMessage.cpp" />
@@ -39,7 +38,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ISCaratMonitor.h" />
-    <QtMoc Include="ISOilSphereWorker.h" />
     <ClInclude Include="ISTcpWorkerHelper.h" />
     <QtMoc Include="ISCaratApplication.h" />
     <QtMoc Include="ISAsterisk.h" />

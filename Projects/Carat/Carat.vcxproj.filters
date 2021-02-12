@@ -58,9 +58,6 @@
     <ClCompile Include="ISCaratMonitor.cpp">
       <Filter>System</Filter>
     </ClCompile>
-    <ClCompile Include="ISOilSphereWorker.cpp">
-      <Filter>Objects</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Carat.rc">
@@ -105,9 +102,6 @@
     </QtMoc>
     <QtMoc Include="ISAsterisk.h">
       <Filter>Asterisk</Filter>
-    </QtMoc>
-    <QtMoc Include="ISOilSphereWorker.h">
-      <Filter>Objects</Filter>
     </QtMoc>
   </ItemGroup>
 </Project>

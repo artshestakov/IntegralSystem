@@ -20,12 +20,11 @@ signals:
 	void Answer(ISTcpAnswer *);
 
 public:
-	Q_INVOKABLE ISTcpWorker();
+	ISTcpWorker(const QString &db_host, int db_port, const QString &db_name, const QString &db_user, const QString &db_password);
 	virtual ~ISTcpWorker();
 
 	bool GetStarted() const; //Получить флаг успешного запуска воркера
 	bool GetRunning(); //Получить флаг занятости
-	void SetDB(const QString &db_host, int db_port, const QString &db_name, const QString &db_user, const QString &db_password);
 	void SetMessage(ISTcpMessage *TcpMessage); //Установить сообщение на обработку
 	void Run(); //Запуск воркера
 	void Stop(); //Остановка воркера
@@ -101,6 +100,15 @@ protected:
 	virtual bool OrganizationFormINN(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
 	virtual bool StatementsQueryGet(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
 	virtual bool StatementsQueryReset(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
+
+	//Нефтесфера
+	bool PeriodContains(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
+	bool GetStockList(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
+	bool StatementAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
+	bool GetGasStation(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
+	bool GetDebtImplementation(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
+	bool GetDebtCounterparty(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
+	bool GetUserConsumption(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
 
 protected:
     QString ErrorString; //Текстовое описание ошибки запроса
