@@ -151,6 +151,7 @@ const size_t			CARAT_BAN_ATTEMPT_COUNT = 5; //Количество попыток подключения
 const char              ASTERISK_AMI_SEPARATOR[] = "\r\n\r\n"; //Разделитель пакетов AMI
 const unsigned short    ASTERISK_AMI_PORT = 5038; //Порт AMI по умолчанию
 //CARAT_API--------------------------------------------------------------------
+const char API_UNKNOWN[] = "Unknown"; //Неизвестное сообщение
 const char API_AUTH[] = "Auth"; //Авторизация
 const char API_SLEEP[] = "Sleep"; //Ожидание
 const char API_GET_META_DATA[] = "GetMetaData"; //Получение мета-данных
@@ -208,13 +209,6 @@ const char API_GET_SERVER_INFO[] = "GetServerInfo"; //Получить информацию о серв
 const char API_ORGANIZATION_FROM_INN[] = "OrganizationFromINN"; //Поиск организации по ИНН
 const char API_STATEMENTS_QUERY_GET[] = "StatementsQueryGet"; //Получить статистику запросов
 const char API_STATEMENTS_QUERY_RESET[] = "StatementsQueryReset"; //Очистить статистику запросов
-const char API_PERIOD_CONTAINS[] = "PeriodContains"; //Проверка наличия текущего периода
-const char API_GET_STOCK_LIST[] = "GetStockList"; //Получить список складов
-const char API_STATEMENT_ADD[] = "StatementAdd"; //Добавить выгрузку в ведомости азс
-const char API_GET_GAST_STATION[] = "GetGatStation"; //Заполнить на основании
-const char API_GET_DEBT_IMPLEMENTATION[] = "GetDebtImplementation"; //Получить загрузки и выгрузки
-const char API_GET_DEBT_COUNTERPARTY[] = "GetDebtCounterparty"; //Получить долги контрагента
-const char API_GET_USERS_CONSUMPTION[] = "GetUsersConsumption"; //Получить расходы пользователей
 //-----------------------------------------------------------------------------
 const char CONST_UID_SETTINGS_DATABASE[] = "{1DE3449C-C700-4EFC-A455-E99E38063D9B}"; //Идентификатор настроек базы данных
 //-----------------------------------------------------------------------------

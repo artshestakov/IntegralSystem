@@ -83,7 +83,7 @@ size_t ISTcpClients::GetCount()
 	return Result;
 }
 //-----------------------------------------------------------------------------
-void ISTcpClients::UpdateLastQuery(qintptr SocketDescriptor, ISNamespace::ApiMessageType MessageType, bool Result, unsigned long long MSec)
+void ISTcpClients::UpdateLastQuery(qintptr SocketDescriptor, const QString &MessageType, bool Result, unsigned long long MSec)
 {
 	CRITICAL_SECTION_LOCK(&CriticalSection);
 	auto It = Clients.find(SocketDescriptor);

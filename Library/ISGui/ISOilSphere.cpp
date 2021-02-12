@@ -56,7 +56,7 @@ void ISOilSphere::Object::BeforeShowMainWindow() const
 void ISOilSphere::Object::InitializePlugin() const
 {
 	//Проверяем наличие константы за текущий период
-	ISTcpQuery qPeriodContains(API_PERIOD_CONTAINS);
+	ISTcpQuery qPeriodContains("OilSphere_PeriodContains");
 	if (qPeriodContains.Execute())
 	{
 		QVariantMap AnswerMap = qPeriodContains.GetAnswer();
@@ -154,7 +154,7 @@ ISOilSphere::CounterpartyDebtForm::CounterpartyDebtForm(int counterparty_id, con
 	ScrollAreaUnload->widget()->setLayout(LayoutScrollUnload);
 	GroupBoxUnload->layout()->addWidget(ScrollAreaUnload);
 
-	ISTcpQuery qGetDebtImplementation(API_GET_DEBT_IMPLEMENTATION);
+	ISTcpQuery qGetDebtImplementation("OilSphere_GetDebtImplementation");
 	qGetDebtImplementation.BindValue("CounterpartyID", counterparty_id);
 	if (qGetDebtImplementation.Execute())
 	{
@@ -250,7 +250,7 @@ void ISOilSphere::CounterpartyDebtForm::EscapeClicked()
 //-----------------------------------------------------------------------------
 void ISOilSphere::CounterpartyDebtForm::UpdatedLists()
 {
-	ISTcpQuery qGetDebtCounterparty(API_GET_DEBT_COUNTERPARTY);
+	ISTcpQuery qGetDebtCounterparty("OilSphere_GetDebtCounterparty");
 	qGetDebtCounterparty.BindValue("CounterpartyID", CounterpartyID);
 	if (qGetDebtCounterparty.Execute())
 	{
@@ -445,7 +445,7 @@ bool ISOilSphere::ImplementationUnloadObjectForm::Save()
 	double ValumeIncome = 0;
 	if (UnloadStock.isValid()) //Если заполнено поле склад - проверяем наличие константы
 	{
-		ISTcpQuery qPeriodConstant(API_PERIOD_CONTAINS);
+		ISTcpQuery qPeriodConstant("OilSphere_PeriodContains");
 		if (qPeriodConstant.Execute())
 		{
 			QVariantMap AnswerMap = qPeriodConstant.GetAnswer();
@@ -466,7 +466,7 @@ bool ISOilSphere::ImplementationUnloadObjectForm::Save()
 	bool Result = ISObjectFormBase::Save();
 	if (Result && UnloadStock.isValid()) //Если сохранение прошло успешно и поле "Склад" заполнено - производим добавление в ведомомсть АЗС
 	{
-		ISTcpQuery qStatementAdd(API_STATEMENT_ADD);
+		ISTcpQuery qStatementAdd("OilSphere_StatementAdd");
 		qStatementAdd.BindValue("ImplementationUnload", GetObjectID());
 		qStatementAdd.BindValue("UnloadStock", UnloadStock);
 		qStatementAdd.BindValue("ValumeIncome", ValumeIncome);
@@ -527,7 +527,7 @@ ISOilSphere::GasStationStatementSubSystem::GasStationStatementSubSystem(QWidget 
 	connect(EditStock, &ISFieldEditBase::ValueChange, this, &ISOilSphere::GasStationStatementSubSystem::StockChanged);
 	GetToolBar()->addWidget(EditStock);
 
-	ISTcpQuery qGetStockList(API_GET_STOCK_LIST);
+	ISTcpQuery qGetStockList("OilSphere_GetStockList");
 	if (qGetStockList.Execute())
 	{
 		QVariantList StockList = qGetStockList.GetAnswer()["List"].toList();
@@ -668,7 +668,7 @@ void ISOilSphere::GasStationStatementObjectForm::FillInBased()
 		}
 		else
 		{
-			ISTcpQuery qGetGasStation(API_GET_GAST_STATION);
+			ISTcpQuery qGetGasStation("OilSphere_GetGasStation");
 			qGetGasStation.BindValue("StatementID", SelectedObject.first);
 			if (qGetGasStation.Execute())
 			{
@@ -1266,7 +1266,7 @@ ISOilSphere::ConsumptionAllSubSystem::~ConsumptionAllSubSystem()
 //-----------------------------------------------------------------------------
 void ISOilSphere::ConsumptionAllSubSystem::LoadData()
 {
-	ISTcpQuery qGetUsersConsumption(API_GET_USERS_CONSUMPTION);
+	ISTcpQuery qGetUsersConsumption("OilSphere_GetUserConsumption");
 
 	ISGui::SetWaitGlobalCursor(true);
 	bool Result = qGetUsersConsumption.Execute();

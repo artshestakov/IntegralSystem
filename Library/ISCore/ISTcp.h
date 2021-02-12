@@ -11,7 +11,6 @@ public:
 	static unsigned int GetQuerySizeFromBuffer(QByteArray &ByteArray, bool &Ok); //Получить размер запроса из его содержимого
 	static void WaitForBytesWritten(QTcpSocket *TcpSocket); //Ожидание записи данных в сокет
 	static void WaitForDisconnected(QTcpSocket *TcpSocket); //Ожидание отключения от хоста
-	static ISNamespace::ApiMessageType GetMessageTypeByName(const QString &Name); //Получить тип сообщение по его имени
 };
 //-----------------------------------------------------------------------------
 #endif

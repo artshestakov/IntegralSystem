@@ -135,22 +135,11 @@ void ISTcpSocket::ReadyRead()
 		if (Result) //Если поле "Type" есть
 		{
 			//Получаем значение поля "Type"
-			TcpMessage->TypeName = VariantMap["Type"].toString();
-			Result = !TcpMessage->TypeName.isEmpty();
+			TcpMessage->Type = VariantMap["Type"].toString();
+			Result = !TcpMessage->Type.isEmpty();
 			if (Result) //Если поле "Type" не пустое
 			{
-				//Получаем тип сообщения по его имени и если оно неизвестное - ошибка
-				ISNamespace::ApiMessageType MessageType = ISTcp::GetMessageTypeByName(TcpMessage->TypeName);
-				Result = MessageType != ISNamespace::ApiMessageType::Unknown;
-				if (Result) //Сообщение валидное
-				{
-					TcpMessage->Type = MessageType;
-					TcpMessage->Parameters = VariantMap["Parameters"].toMap();
-				}
-				else //Тип сообщения не известный
-				{
-					TcpMessage->SetErrorString(LANG("Carat.Error.InvalidMessageType").arg(TcpMessage->TypeName));
-				}
+				TcpMessage->Parameters = VariantMap["Parameters"].toMap();
 			}
 			else //Поле "Type" пустое
 			{

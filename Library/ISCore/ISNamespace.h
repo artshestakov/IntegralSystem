@@ -120,75 +120,6 @@ namespace ISNamespace
         Error, //Ошибка
     };
 
-    enum class ApiMessageType //Тип API-сообщения
-	{
-		Unknown, //Неизвестное
-		Auth, //Авторизация
-		Sleep, //Ожидание
-		GetMetaData, //Получить мета-данные
-		GetLastClient, //Получить последнюю версию клиента
-		UserPasswordExist, //Проверить существование пароля
-		UserPasswordCreate, //Создание пароля пользователю
-		UserPasswordEdit, //Изменение пароля пользователя
-		UserPasswordReset, //Сброс пароля парользователя
-		UserSettingsReset, //Сброс пользовательских настроек
-		UserDeviceAdd, //Привязка устройка к учётной записи пользователя
-		UserDeviceDelete, //Отвязка устройка от учётной записи пользователя
-		GetRecordCall, //Получить запись разговора
-		GetClients, //Получить список подключенных клиентов
-		RecordAdd, //Добавление записи
-		RecordEdit, //Изменение записи
-		RecordDelete, //Удаление записи
-		RecordGet, //Получить запись
-		RecordGetInfo, //Получить информацию о записи
-		DiscussionAdd, //Добавить обсуждение
-		DiscussionEdit, //Изменить обсуждение
-		DiscussionCopy, //Скопировать обсуждение
-		GetTableData, //Получить данные таблицы
-		GetTableQuery, //Получить данные по запросу
-		NoteRecordGet, //Получить примечание записи
-		NoteRecordSet, //Изменить примечание записи
-		FileStorageAdd, //Добавить файл в хранилище
-		FileStorageCopy, //Скопировать файл в хранилище
-		FileStorageGet, //Получить файл из хранилища
-		SearchTaskText, //Поиск задач по тексту
-		SearchTaskID, //Поиск задач по номеру
-		SearchFullText, //Полнотекстовый поиск
-		GetCalendarEvents, //Получить события календаря
-		CalendarDelete, //Удаление события календаря
-		GetInternalLists, //Получить список внутренних справочников
-		SaveMetaData, //Сохранение мета-данных
-		GetGroupRights, //Получить права группы
-		GroupRightSubSystemAdd, //Добавить группе право на подсистему
-		GroupRightSubSystemDelete, //Удалить у группы право на подсистему
-		GroupRightTableAdd, //Добавить группе право на таблицу
-		GroupRightTableDelete, //Удалить у группы право на таблицу
-		GroupRightSpecialAdd, //Добавить спец. право группе
-		GroupRightSpecialDelete, //Удалить спец. право у группы
-		GetRecordValue, //Получить значение поля записи
-		RecordFavoriteAdd, //Добавить запись в избранное
-		RecordFavoriteDelete, //Удалить запись из избранного
-		GetFavoriteNames, //Получить имена избранных записей
-		FavoritesDelete, //Удалить все избранные записи пользователя
-		LogGetStructure, //Получить структуру лог-файлов
-		LogGetContent, //Получить содержимое лог-файла
-		CalendarClose, //Закрытие события календаря
-		GetHistoryList, //Получить список открытых записей
-		TaskCommentAdd, //Добавить комментарий к задаче
-		GetForeignList, //Получить список значений по внешнему ключу
-		GetServerInfo, //Получить информацию о сервере
-		OrganizationFromINN, //Поиск организации по ИНН
-		StatementsQueryGet, //Получить статистику запросов
-		StatementsQueryReset, //Очистить статистику запросов
-		PeriodContains, //Проверка наличия текущего периода
-		GetStockList, //Получить список складов
-		StatementAdd, //Добавить выгрузку в ведомости азс
-		GetGasStation, //Заполнить на основании
-		GetDebtImplementation, //Получить загрузки и выгрузки
-		GetDebtCounterparty, //Получить долги контргаента
-		GetUserConsumption, //Получить расходы пользователей
-	};
-
     enum class LogMessageType //Типы сообщений логгера
     {
 		Unknown, //Неизвестное сообщение
@@ -210,7 +141,6 @@ Q_DECLARE_METATYPE(ISNamespace::ActionType);
 Q_DECLARE_METATYPE(ISNamespace::ActionSpecialType);
 Q_DECLARE_METATYPE(ISNamespace::MoveWidgetDesktop);
 Q_DECLARE_METATYPE(ISNamespace::DebugMessageType);
-Q_DECLARE_METATYPE(ISNamespace::ApiMessageType);
 Q_DECLARE_METATYPE(ISNamespace::LogMessageType);
 //-----------------------------------------------------------------------------
 #endif

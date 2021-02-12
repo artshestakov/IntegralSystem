@@ -16,7 +16,7 @@ public:
 	bool ExistUserID(unsigned int UserID); //Проверить наличие такого пользователя
 	size_t GetCount(); //Получить количество клиентов
 
-	void UpdateLastQuery(qintptr SocketDescriptor, ISNamespace::ApiMessageType MessageType, bool Result, unsigned long long MSec); //Одновить дату и результат последнего запроса
+	void UpdateLastQuery(qintptr SocketDescriptor, const QString &MessageType, bool Result, unsigned long long MSec); //Одновить дату и результат последнего запроса
 
 private:
 	ISTcpClients();

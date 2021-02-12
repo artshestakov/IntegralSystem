@@ -227,7 +227,7 @@ struct ISClientInfo
 		: ID(0),
 		Port(0),
 		DTConnected(QDateTime::currentDateTime()),
-		LastQueryType(ISNamespace::ApiMessageType::Unknown),
+		LastQueryType(API_UNKNOWN),
 		LastQueryResult(false),
 		LastQueryMSec(0)
 	{ }
@@ -237,7 +237,7 @@ struct ISClientInfo
 	unsigned short Port; //Порт
 	QDateTime DTConnected; //Дата и время подключения
 	QDateTime LastQueryDT; //Дата и время последнего запроса
-	ISNamespace::ApiMessageType LastQueryType; //Тип последнего запроса
+	QString LastQueryType; //Тип последнего запроса
 	bool LastQueryResult; //Результат выполнения последнего запроса
 	unsigned long long LastQueryMSec; //Время выполнения последнего запроса
 };

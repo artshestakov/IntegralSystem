@@ -15,8 +15,7 @@ public:
 	void SetErrorString(const QString &error_string); //Изменить текстовое описание ошибки
 	bool IsValid() const; //Получить валидность сообщения
 
-	ISNamespace::ApiMessageType Type; //Тип сообщения
-	QString TypeName; //Имя типа сообщения
+	QString Type; //Тип сообщения
 	QVariantMap Parameters; //Параметры
 	ISTcpSocket *TcpSocket; //Указатель на клиента
 

@@ -15,6 +15,7 @@
 #include "ISProperty.h"
 #include "ISTcpWorkerHelper.h"
 #include "ISCaratMonitor.h"
+#include "ISConfigurations.h"
 //-----------------------------------------------------------------------------
 static QString QS_USERS_HASH = PREPARE_QUERY("SELECT usrs_hash, usrs_salt "
 											 "FROM _users "
@@ -533,6 +534,7 @@ ISTcpWorker::ISTcpWorker(const QString &db_host, int db_port, const QString &db_
 	CurrentMessage(nullptr),
 	IsStopped(false)
 {
+	//Регистрируем базовые методы TCP-сервера
 	MapFunction[API_AUTH] = &ISTcpWorker::Auth;
 	MapFunction[API_SLEEP] = &ISTcpWorker::Sleep;
 	MapFunction[API_GET_META_DATA] = &ISTcpWorker::GetMetaData;
@@ -638,6 +640,12 @@ void ISTcpWorker::Run()
 		ISLOGGER_E(__CLASS__, "Not connected to database: " + ISDatabase::Instance().GetErrorString());
 	}
 
+	//Выполняем регистрацию функций для конфигурации
+	if (!QMetaObject::invokeMethod(this, ("Register" + ISConfigurations::Instance().Get().Name).toUtf8()))
+	{
+		ISLOGGER_E(__CLASS__, "Not registered functions for configuration '" + ISConfigurations::Instance().Get().Name + '\'');
+	}
+
 	//Сигналим об успехе или ошибке
 	emit IsStarted ? StartedDone() : StartedFailed();
 	if (IsStarted)
@@ -700,14 +708,14 @@ void ISTcpWorker::Process()
 			if (tcp_message->IsValid()) //Если сообщение валидное - переходим к выполнению
 			{
 				//Если запрос не авторизационный и клиент ещё не авторизовался - ошибка
-				if (tcp_message->Type != ISNamespace::ApiMessageType::Auth && !tcp_message->TcpSocket->GetAuthorized())
+				if (tcp_message->Type != API_AUTH && !tcp_message->TcpSocket->GetAuthorized())
 				{
 					ErrorString = LANG("Carat.Error.NotAuthorized");
 				}
 				else //Клиент авторизовался - продолжаем
 				{
 					ISTimePoint TimePoint = ISAlgorithm::GetTick(); //Запоминаем текущее время
-					Result = Execute(tcp_message, TcpAnswer);
+					Result = Execute(tcp_message, TcpAnswer); 
 					PerfomanceMsec = ISAlgorithm::GetTickDiff(ISAlgorithm::GetTick(), TimePoint);
 					ISCaratMonitor::Instance().RegisterQueryTime(PerfomanceMsec);
 				}
@@ -720,7 +728,7 @@ void ISTcpWorker::Process()
 			//Формируем лог-сообщение
 			QString LogText = QString("%1 message \"%2\". ID: %3 Size: %4 Chunk: %5 Parse msec: %6 MSec: %7").
 				arg(Result ? "Done" : "Failed").
-				arg(tcp_message->TypeName).
+				arg(tcp_message->Type).
 				arg(tcp_message->MessageID).
 				arg(tcp_message->Size).
 				arg(tcp_message->ChunkCount).
@@ -749,6 +757,42 @@ void ISTcpWorker::Finish()
 	CRITICAL_SECTION_LOCK(&CriticalSection);
 	IsRunning = false;
 	CRITICAL_SECTION_UNLOCK(&CriticalSection);
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::Execute(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+	//Ищем указатель на функцию и если нашли - выполняем
+	auto It = MapFunction.find(TcpMessage->Type);
+	if (It != MapFunction.end())
+	{
+		return (this->*It->second)(TcpMessage, TcpAnswer);
+	}
+	else //Функция не найдена
+	{
+		ErrorString = LANG("Carat.Error.NotExistFunction").arg(TcpMessage->Type);
+	}
+	return false;
+}
+//-----------------------------------------------------------------------------
+QVariant ISTcpWorker::CheckNullField(const QString &FieldName, ISTcpMessage *TcpMessage)
+{
+	if (TcpMessage->Parameters.contains(FieldName))
+	{
+		QVariant Value = TcpMessage->Parameters[FieldName];
+		if (!Value.toString().isEmpty())
+		{
+			return Value;
+		}
+		else
+		{
+			ErrorString = LANG("Carat.Error.FieldIsEmpty").arg(FieldName);
+		}
+	}
+	else
+	{
+		ErrorString = LANG("Carat.Error.FieldNotExist").arg(FieldName);
+	}
+	return QVariant();
 }
 //-----------------------------------------------------------------------------
 void ISTcpWorker::Protocol(unsigned int UserID, const ISUuid &ActionTypeUID, const QVariant &TableName, const QVariant &TableLocalName, const QVariant &ObjectID, const QVariant &Information)
@@ -869,110 +913,22 @@ PMetaTable* ISTcpWorker::GetMetaTable(const QString &TableName)
 	return MetaTable;
 }
 //-----------------------------------------------------------------------------
-bool ISTcpWorker::Execute(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
-{
-	switch (TcpMessage->Type)
-	{
-	case ISNamespace::ApiMessageType::Unknown: break;
-	case ISNamespace::ApiMessageType::Auth: return Auth(TcpMessage, TcpAnswer); break;
-	case ISNamespace::ApiMessageType::Sleep: return Sleep(TcpMessage, TcpAnswer); break;
-	case ISNamespace::ApiMessageType::GetMetaData: return GetMetaData(TcpMessage, TcpAnswer); break;
-	case ISNamespace::ApiMessageType::GetLastClient: return GetLastClient(TcpMessage, TcpAnswer); break;
-	case ISNamespace::ApiMessageType::UserPasswordExist: return UserPasswordExist(TcpMessage, TcpAnswer); break;
-	case ISNamespace::ApiMessageType::UserPasswordCreate: return UserPasswordCreate(TcpMessage, TcpAnswer); break;
-	case ISNamespace::ApiMessageType::UserPasswordEdit: return UserPasswordEdit(TcpMessage, TcpAnswer); break;
-	case ISNamespace::ApiMessageType::UserPasswordReset: return UserPasswordReset(TcpMessage, TcpAnswer); break;
-	case ISNamespace::ApiMessageType::UserSettingsReset: return UserSettingsReset(TcpMessage, TcpAnswer); break;
-	case ISNamespace::ApiMessageType::UserDeviceAdd: return UserDeviceAdd(TcpMessage, TcpAnswer); break;
-	case ISNamespace::ApiMessageType::UserDeviceDelete: return UserDeviceDelete(TcpMessage, TcpAnswer); break;
-	case ISNamespace::ApiMessageType::GetRecordCall: return GetRecordCall(TcpMessage, TcpAnswer); break;
-	case ISNamespace::ApiMessageType::GetClients: return GetClients(TcpMessage, TcpAnswer); break;
-	case ISNamespace::ApiMessageType::RecordAdd: return RecordAdd(TcpMessage, TcpAnswer); break;
-	case ISNamespace::ApiMessageType::RecordEdit: return RecordEdit(TcpMessage, TcpAnswer); break;
-	case ISNamespace::ApiMessageType::RecordDelete: return RecordDelete(TcpMessage, TcpAnswer); break;
-	case ISNamespace::ApiMessageType::RecordGet: return RecordGet(TcpMessage, TcpAnswer); break;
-	case ISNamespace::ApiMessageType::RecordGetInfo: return RecordGetInfo(TcpMessage, TcpAnswer); break;
-	case ISNamespace::ApiMessageType::DiscussionAdd: return DiscussionAdd(TcpMessage, TcpAnswer); break;
-	case ISNamespace::ApiMessageType::DiscussionEdit: return DiscussionEdit(TcpMessage, TcpAnswer); break;
-	case ISNamespace::ApiMessageType::DiscussionCopy: return DiscussionCopy(TcpMessage, TcpAnswer); break;
-	case ISNamespace::ApiMessageType::GetTableData: return GetTableData(TcpMessage, TcpAnswer); break;
-	case ISNamespace::ApiMessageType::GetTableQuery: return GetTableQuery(TcpMessage, TcpAnswer); break;
-	case ISNamespace::ApiMessageType::NoteRecordGet: return NoteRecordGet(TcpMessage, TcpAnswer); break;
-	case ISNamespace::ApiMessageType::NoteRecordSet: return NoteRecordSet(TcpMessage, TcpAnswer); break;
-	case ISNamespace::ApiMessageType::FileStorageAdd: return FileStorageAdd(TcpMessage, TcpAnswer); break;
-	case ISNamespace::ApiMessageType::FileStorageCopy: return FileStorageCopy(TcpMessage, TcpAnswer); break;
-	case ISNamespace::ApiMessageType::FileStorageGet: return FileStorageGet(TcpMessage, TcpAnswer); break;
-	case ISNamespace::ApiMessageType::SearchTaskText: return SearchTaskText(TcpMessage, TcpAnswer); break;
-	case ISNamespace::ApiMessageType::SearchTaskID: return SearchTaskID(TcpMessage, TcpAnswer); break;
-	case ISNamespace::ApiMessageType::SearchFullText: return SearchFullText(TcpMessage, TcpAnswer); break;
-	case ISNamespace::ApiMessageType::GetCalendarEvents: return GetCalendarEvents(TcpMessage, TcpAnswer); break;
-	case ISNamespace::ApiMessageType::CalendarDelete: return CalendarDelete(TcpMessage, TcpAnswer); break;
-	case ISNamespace::ApiMessageType::GetInternalLists: return GetInternalLists(TcpMessage, TcpAnswer); break;
-	case ISNamespace::ApiMessageType::SaveMetaData: return SaveMetaData(TcpMessage, TcpAnswer); break;
-	case ISNamespace::ApiMessageType::GetGroupRights: return GetGroupRights(TcpMessage, TcpAnswer); break;
-	case ISNamespace::ApiMessageType::GroupRightSubSystemAdd: return GroupRightSubSystemAdd(TcpMessage, TcpAnswer); break;
-	case ISNamespace::ApiMessageType::GroupRightSubSystemDelete: return GroupRightSubSystemDelete(TcpMessage, TcpAnswer); break;
-	case ISNamespace::ApiMessageType::GroupRightTableAdd: return GroupRightTableAdd(TcpMessage, TcpAnswer); break;
-	case ISNamespace::ApiMessageType::GroupRightTableDelete: return GroupRightTableDelete(TcpMessage, TcpAnswer); break;
-	case ISNamespace::ApiMessageType::GroupRightSpecialAdd: return GroupRightSpecialAdd(TcpMessage, TcpAnswer); break;
-	case ISNamespace::ApiMessageType::GroupRightSpecialDelete: return GroupRightSpecialDelete(TcpMessage, TcpAnswer); break;
-	case ISNamespace::ApiMessageType::GetRecordValue: return GetRecordValue(TcpMessage, TcpAnswer); break;
-	case ISNamespace::ApiMessageType::RecordFavoriteAdd: return RecordFavoriteAdd(TcpMessage, TcpAnswer); break;
-	case ISNamespace::ApiMessageType::RecordFavoriteDelete: return RecordFavoriteDelete(TcpMessage, TcpAnswer); break;
-	case ISNamespace::ApiMessageType::GetFavoriteNames: return GetFavoriteNames(TcpMessage, TcpAnswer); break;
-	case ISNamespace::ApiMessageType::FavoritesDelete: return FavoritesDelete(TcpMessage, TcpAnswer); break;
-	case ISNamespace::ApiMessageType::LogGetStructure: return LogGetStructure(TcpMessage, TcpAnswer); break;
-	case ISNamespace::ApiMessageType::LogGetContent: return LogGetContent(TcpMessage, TcpAnswer); break;
-	case ISNamespace::ApiMessageType::CalendarClose: return CalendarClose(TcpMessage, TcpAnswer); break;
-	case ISNamespace::ApiMessageType::GetHistoryList: return GetHistoryList(TcpMessage, TcpAnswer); break;
-	case ISNamespace::ApiMessageType::TaskCommentAdd: return TaskCommentAdd(TcpMessage, TcpAnswer); break;
-	case ISNamespace::ApiMessageType::GetForeignList: return GetForeignList(TcpMessage, TcpAnswer); break;
-	case ISNamespace::ApiMessageType::GetServerInfo: return GetServerInfo(TcpMessage, TcpAnswer); break;
-	case ISNamespace::ApiMessageType::OrganizationFromINN: return OrganizationFormINN(TcpMessage, TcpAnswer); break;
-	case ISNamespace::ApiMessageType::StatementsQueryGet: return StatementsQueryGet(TcpMessage, TcpAnswer); break;
-	case ISNamespace::ApiMessageType::StatementsQueryReset: return StatementsQueryReset(TcpMessage, TcpAnswer); break;
-
-	//Нефтесфера
-	case ISNamespace::ApiMessageType::PeriodContains: return PeriodContains(TcpMessage, TcpAnswer); break;
-	case ISNamespace::ApiMessageType::GetStockList: return GetStockList(TcpMessage, TcpAnswer); break;
-	case ISNamespace::ApiMessageType::StatementAdd: return StatementAdd(TcpMessage, TcpAnswer); break;
-	case ISNamespace::ApiMessageType::GetGasStation: return GetGasStation(TcpMessage, TcpAnswer); break;
-	case ISNamespace::ApiMessageType::GetDebtImplementation: return GetDebtImplementation(TcpMessage, TcpAnswer); break;
-	case ISNamespace::ApiMessageType::GetDebtCounterparty: return GetDebtCounterparty(TcpMessage, TcpAnswer); break;
-	case ISNamespace::ApiMessageType::GetUserConsumption: return GetUserConsumption(TcpMessage, TcpAnswer); break;
-
-	default:
-		ErrorString = LANG("Carat.Error.NotExistFunction").arg(TcpMessage->TypeName);
-	}
-	return false;
-}
-//-----------------------------------------------------------------------------
-QVariant ISTcpWorker::CheckNullField(const QString &FieldName, ISTcpMessage *TcpMessage)
-{
-	if (TcpMessage->Parameters.contains(FieldName))
-	{
-		QVariant Value = TcpMessage->Parameters[FieldName];
-		if (!Value.toString().isEmpty())
-		{
-			return Value;
-		}
-		else
-		{
-			ErrorString = LANG("Carat.Error.FieldIsEmpty").arg(FieldName);
-		}
-	}
-	else
-	{
-		ErrorString = LANG("Carat.Error.FieldNotExist").arg(FieldName);
-	}
-	return QVariant();
-}
-//-----------------------------------------------------------------------------
 bool ISTcpWorker::ErrorQuery(const QString &LocalError, ISQuery &SqlQuery)
 {
 	ErrorString = LocalError;
 	ISLOGGER_E(__CLASS__, QString("Sql query:\n%1\n%2").arg(SqlQuery.GetSqlText()).arg(SqlQuery.GetErrorString()));
 	return false;
+}
+//-----------------------------------------------------------------------------
+void ISTcpWorker::RegisterOilSphere()
+{
+	MapFunction["OilSphere_PeriodContains"] = &ISTcpWorker::OilSphere_PeriodContains;
+	MapFunction["OilSphere_GetStockList"] = &ISTcpWorker::OilSphere_GetStockList;
+	MapFunction["OilSphere_StatementAdd"] = &ISTcpWorker::OilSphere_StatementAdd;
+	MapFunction["OilSphere_GetGasStation"] = &ISTcpWorker::OilSphere_GetGasStation;
+	MapFunction["OilSphere_GetDebtImplementation"] = &ISTcpWorker::OilSphere_GetDebtImplementation;
+	MapFunction["OilSphere_GetDebtCounterparty"] = &ISTcpWorker::OilSphere_GetDebtCounterparty;
+	MapFunction["OilSphere_GetUserConsumption"] = &ISTcpWorker::OilSphere_GetUserConsumption;
 }
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
@@ -4438,7 +4394,7 @@ bool ISTcpWorker::StatementsQueryReset(ISTcpMessage *TcpMessage, ISTcpAnswer *Tc
 	return true;
 }
 //-----------------------------------------------------------------------------
-bool ISTcpWorker::PeriodContains(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+bool ISTcpWorker::OilSphere_PeriodContains(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
 	Q_UNUSED(TcpMessage);
 
@@ -4453,7 +4409,7 @@ bool ISTcpWorker::PeriodContains(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
 	return true;
 }
 //-----------------------------------------------------------------------------
-bool ISTcpWorker::GetStockList(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+bool ISTcpWorker::OilSphere_GetStockList(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
 	Q_UNUSED(TcpMessage);
 
@@ -4477,7 +4433,7 @@ bool ISTcpWorker::GetStockList(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	return true;
 }
 //-----------------------------------------------------------------------------
-bool ISTcpWorker::StatementAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+bool ISTcpWorker::OilSphere_StatementAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
 	Q_UNUSED(TcpAnswer);
 
@@ -4520,7 +4476,7 @@ bool ISTcpWorker::StatementAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	return true;
 }
 //-----------------------------------------------------------------------------
-bool ISTcpWorker::GetGasStation(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+bool ISTcpWorker::OilSphere_GetGasStation(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
 	QVariant StatementID = CheckNullField("StatementID", TcpMessage);
 	if (!StatementID.isValid())
@@ -4549,7 +4505,7 @@ bool ISTcpWorker::GetGasStation(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer
 	return true;
 }
 //-----------------------------------------------------------------------------
-bool ISTcpWorker::GetDebtImplementation(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+bool ISTcpWorker::OilSphere_GetDebtImplementation(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
 	QVariant CounterpartyID = CheckNullField("CounterpartyID", TcpMessage);
 	if (!CounterpartyID.isValid())
@@ -4582,7 +4538,7 @@ bool ISTcpWorker::GetDebtImplementation(ISTcpMessage *TcpMessage, ISTcpAnswer *T
 	return true;
 }
 //-----------------------------------------------------------------------------
-bool ISTcpWorker::GetDebtCounterparty(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+bool ISTcpWorker::OilSphere_GetDebtCounterparty(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
 	QVariant CounterpartyID = CheckNullField("CounterpartyID", TcpMessage);
 	if (!CounterpartyID.isValid())
@@ -4610,7 +4566,7 @@ bool ISTcpWorker::GetDebtCounterparty(ISTcpMessage *TcpMessage, ISTcpAnswer *Tcp
 	return true;
 }
 //-----------------------------------------------------------------------------
-bool ISTcpWorker::GetUserConsumption(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+bool ISTcpWorker::OilSphere_GetUserConsumption(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
 	Q_UNUSED(TcpMessage);
 
