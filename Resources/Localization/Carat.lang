@@ -254,6 +254,8 @@
 
   <Local Name="Carat.Error.Query.StatementsQueryReset.Select" Russian="Не удалось сбросить статистику запросов."/>
 
+  <Local Name="Carat.Error.Query.GetMonitor.Select" Russian="Не удалось получить метрики."/>
+
   <Local Name="Carat.Error.Query.PeriodContains.Select" Russian="Не удалось получить константу."/>
 
   <Local Name="Carat.Error.Query.GetStockList.Select" Russian="Не удалось получить список складов."/>

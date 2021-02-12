@@ -209,6 +209,7 @@ const char API_GET_SERVER_INFO[] = "GetServerInfo"; //Получить информацию о серв
 const char API_ORGANIZATION_FROM_INN[] = "OrganizationFromINN"; //Поиск организации по ИНН
 const char API_STATEMENTS_QUERY_GET[] = "StatementsQueryGet"; //Получить статистику запросов
 const char API_STATEMENTS_QUERY_RESET[] = "StatementsQueryReset"; //Очистить статистику запросов
+const char API_GET_MONITOR[] = "GetMonitor"; //Получить метрики мониторинга
 //-----------------------------------------------------------------------------
 const char CONST_UID_SETTINGS_DATABASE[] = "{1DE3449C-C700-4EFC-A455-E99E38063D9B}"; //Идентификатор настроек базы данных
 //-----------------------------------------------------------------------------

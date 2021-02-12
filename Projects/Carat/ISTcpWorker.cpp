@@ -474,6 +474,10 @@ static QString QS_STATEMENTS_HISTORY = PREPARE_QUERY("SELECT prtc_datetime "
 //-----------------------------------------------------------------------------
 static QString QS_STATEMENTS_RESET = PREPARE_QUERY("SELECT pg_stat_statements_reset()");
 //-----------------------------------------------------------------------------
+static QString QS_MONITOR = PREPARE_QUERY("SELECT mntr_datetime, mntr_memory, mntr_clients, mntr_tcpquerytimeavg "
+										  "FROM _monitor "
+										  "ORDER BY mntr_datetime");
+//-----------------------------------------------------------------------------
 static QString QS_PERIOD = PREPARE_QUERY("SELECT prod_constant "
 										 "FROM period "
 										 "WHERE CURRENT_DATE BETWEEN prod_datestart AND prod_dateend");
@@ -595,6 +599,7 @@ ISTcpWorker::ISTcpWorker(const QString &db_host, int db_port, const QString &db_
 	MapFunction[API_ORGANIZATION_FROM_INN] = &ISTcpWorker::OrganizationFormINN;
 	MapFunction[API_STATEMENTS_QUERY_GET] = &ISTcpWorker::StatementsQueryGet;
 	MapFunction[API_STATEMENTS_QUERY_RESET] = &ISTcpWorker::StatementsQueryReset;
+	MapFunction[API_GET_MONITOR] = &ISTcpWorker::GetMonitor;
 
 	CRITICAL_SECTION_INIT(&CriticalSection);
 }
@@ -4414,6 +4419,33 @@ bool ISTcpWorker::StatementsQueryReset(ISTcpMessage *TcpMessage, ISTcpAnswer *Tc
 		return ErrorQuery(LANG("Carat.Error.Query.StatementsQueryReset.Select"), qReset);
 	}
 	Protocol(TcpMessage->TcpSocket->GetUserID(), CONST_UID_PROTOCOL_STATEMENTS_QUERY_RESET);
+	return true;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::GetMonitor(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+	Q_UNUSED(TcpMessage);
+
+	//Получаем метрики
+	ISQuery qSelect(ISDatabase::Instance().GetDB(DBConnectionName), QS_MONITOR);
+	if (!qSelect.Execute()) //Ошибка запроса
+	{
+		return ErrorQuery(LANG("Carat.Error.Query.GetMonitor.Select"), qSelect);
+	}
+
+	//Обходим результаты
+	QVariantList DateTimeList, MemoryList, ClientsList, TCPQueryTimeList;
+	while (qSelect.Next())
+	{
+		DateTimeList.push_back(qSelect.ReadColumn("mntr_datetime").toDateTime().toString(FORMAT_DATE_TIME_V4));
+		MemoryList.push_back(qSelect.ReadColumn("mntr_memory"));
+		ClientsList.push_back(qSelect.ReadColumn("mntr_clients"));
+		TCPQueryTimeList.push_back(qSelect.ReadColumn("mntr_tcpquerytimeavg"));
+	}
+	TcpAnswer->Parameters["DateTimeList"] = DateTimeList;
+	TcpAnswer->Parameters["MemoryList"] = MemoryList;
+	TcpAnswer->Parameters["ClientsList"] = ClientsList;
+	TcpAnswer->Parameters["TCPQueryTimeList"] = TCPQueryTimeList;
 	return true;
 }
 //-----------------------------------------------------------------------------

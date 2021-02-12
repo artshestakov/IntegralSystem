@@ -102,6 +102,7 @@ private:
 	bool OrganizationFormINN(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
 	bool StatementsQueryGet(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
 	bool StatementsQueryReset(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
+	bool GetMonitor(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
 
 	//ֽופעוספונא
 	bool OilSphere_PeriodContains(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
