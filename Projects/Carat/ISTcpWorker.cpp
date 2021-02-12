@@ -479,6 +479,64 @@ ISTcpWorker::ISTcpWorker()
 	CurrentMessage(nullptr),
 	IsStopped(false)
 {
+	MapFunction[API_AUTH] = &ISTcpWorker::Auth;
+	MapFunction[API_SLEEP] = &ISTcpWorker::Sleep;
+	MapFunction[API_GET_META_DATA] = &ISTcpWorker::GetMetaData;
+	MapFunction[API_GET_LAST_CLIENT] = &ISTcpWorker::GetLastClient;
+	MapFunction[API_USER_PASSWORD_EXIST] = &ISTcpWorker::UserPasswordExist;
+	MapFunction[API_USER_PASSWORD_CREATE] = &ISTcpWorker::UserPasswordCreate;
+	MapFunction[API_USER_PASSWORD_EDIT] = &ISTcpWorker::UserPasswordEdit;
+	MapFunction[API_USER_PASSWORD_RESET] = &ISTcpWorker::UserPasswordReset;
+	MapFunction[API_USER_SETTINGS_RESET] = &ISTcpWorker::UserSettingsReset;
+	MapFunction[API_USER_DEVICE_ADD] = &ISTcpWorker::UserDeviceAdd;
+	MapFunction[API_USER_DEVICE_DELETE] = &ISTcpWorker::UserDeviceDelete;
+	MapFunction[API_GET_RECORD_CALL] = &ISTcpWorker::GetRecordCall;
+	MapFunction[API_GET_CLIENTS] = &ISTcpWorker::GetClients;
+	MapFunction[API_RECORD_ADD] = &ISTcpWorker::RecordAdd;
+	MapFunction[API_RECORD_EDIT] = &ISTcpWorker::RecordEdit;
+	MapFunction[API_RECORD_DELETE] = &ISTcpWorker::RecordDelete;
+	MapFunction[API_RECORD_GET] = &ISTcpWorker::RecordGet;
+	MapFunction[API_RECORD_GET_INFO] = &ISTcpWorker::RecordGetInfo;
+	MapFunction[API_DISCUSSION_ADD] = &ISTcpWorker::DiscussionAdd;
+	MapFunction[API_DISCUSSION_EDIT] = &ISTcpWorker::DiscussionEdit;
+	MapFunction[API_DISCUSSION_COPY] = &ISTcpWorker::DiscussionCopy;
+	MapFunction[API_GET_TABLE_DATA] = &ISTcpWorker::GetTableData;
+	MapFunction[API_GET_TABLE_QUERY] = &ISTcpWorker::GetTableQuery;
+	MapFunction[API_NOTE_RECORD_GET] = &ISTcpWorker::NoteRecordGet;
+	MapFunction[API_NOTE_RECORD_SET] = &ISTcpWorker::NoteRecordSet;
+	MapFunction[API_FILE_STORAGE_ADD] = &ISTcpWorker::FileStorageAdd;
+	MapFunction[API_FILE_STORAGE_COPY] = &ISTcpWorker::FileStorageCopy;
+	MapFunction[API_FILE_STORAGE_GET] = &ISTcpWorker::FileStorageGet;
+	MapFunction[API_SEARCH_TASK_TEXT] = &ISTcpWorker::SearchTaskText;
+	MapFunction[API_SEARCH_TASK_ID] = &ISTcpWorker::SearchTaskID;
+	MapFunction[API_SEARCH_FULL_TEXT] = &ISTcpWorker::SearchFullText;
+	MapFunction[API_GET_CALENDAR_EVENTS] = &ISTcpWorker::GetCalendarEvents;
+	MapFunction[API_CALENDAR_DELETE] = &ISTcpWorker::CalendarDelete;
+	MapFunction[API_GET_INTERNAL_LISTS] = &ISTcpWorker::GetInternalLists;
+	MapFunction[API_SAVE_META_DATA] = &ISTcpWorker::SaveMetaData;
+	MapFunction[API_GET_GROUP_RIGHTS] = &ISTcpWorker::GetGroupRights;
+	MapFunction[API_GROUP_RIGHT_SUBSYSTEM_ADD] = &ISTcpWorker::GroupRightSubSystemAdd;
+	MapFunction[API_GROUP_RIGHT_SUBSYSTEM_DELETE] = &ISTcpWorker::GroupRightSubSystemDelete;
+	MapFunction[API_GROUP_RIGHT_TABLE_ADD] = &ISTcpWorker::GroupRightTableAdd;
+	MapFunction[API_GROUP_RIGHT_TABLE_DELETE] = &ISTcpWorker::GroupRightTableDelete;
+	MapFunction[API_GROUP_RIGHT_SPECIAL_ADD] = &ISTcpWorker::GroupRightSpecialAdd;
+	MapFunction[API_GROUP_RIGHT_SPECIAL_DELETE] = &ISTcpWorker::GroupRightSpecialDelete;
+	MapFunction[API_GET_RECORD_VALUE] = &ISTcpWorker::GetRecordValue;
+	MapFunction[API_RECORD_FAVORITE_ADD] = &ISTcpWorker::RecordFavoriteAdd;
+	MapFunction[API_RECORD_FAVORITE_DELETE] = &ISTcpWorker::RecordFavoriteDelete;
+	MapFunction[API_GET_FAVORITE_NAMES] = &ISTcpWorker::GetFavoriteNames;
+	MapFunction[API_FAVORITES_DELETE] = &ISTcpWorker::FavoritesDelete;
+	MapFunction[API_LOG_GET_STRUCTURE] = &ISTcpWorker::LogGetStructure;
+	MapFunction[API_LOG_GET_CONTENT] = &ISTcpWorker::LogGetContent;
+	MapFunction[API_CALENDAR_CLOSE] = &ISTcpWorker::CalendarClose;
+	MapFunction[API_GET_HISTORY_LIST] = &ISTcpWorker::GetHistoryList;
+	MapFunction[API_TASK_COMMENT_ADD] = &ISTcpWorker::TaskCommentAdd;
+	MapFunction[API_GET_FOREIGN_LIST] = &ISTcpWorker::GetForeignList;
+	MapFunction[API_GET_SERVER_INFO] = &ISTcpWorker::GetServerInfo;
+	MapFunction[API_ORGANIZATION_FROM_INN] = &ISTcpWorker::OrganizationFormINN;
+	MapFunction[API_STATEMENTS_QUERY_GET] = &ISTcpWorker::StatementsQueryGet;
+	MapFunction[API_STATEMENTS_QUERY_RESET] = &ISTcpWorker::StatementsQueryReset;
+
 	CRITICAL_SECTION_INIT(&CriticalSection);
 }
 //-----------------------------------------------------------------------------

@@ -118,6 +118,10 @@ private:
 	ISTcpMessage *CurrentMessage; //Указатель на текущее сообщение
 	bool IsStopped; //Флаг остановки работы воркера
 
+	//Список TCP-функций
+	typedef bool (ISTcpWorker::*TCPFunction)(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
+	std::map<QString, TCPFunction> MapFunction;
+
 	ISCriticalSection CriticalSection; //Критическая секция для синхронизации
 };
 //-----------------------------------------------------------------------------
