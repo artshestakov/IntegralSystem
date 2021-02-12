@@ -83,18 +83,20 @@ void ISCaratMonitor::Process()
 		return;
 	}
 
+	//Создаём указатель на объект запроса тут, чтобы потом использовать его постоянно
+	ISQuery *qInsert = new ISQuery(ISDatabase::Instance().GetDB(CONNECTION_MONITOR), QI_MONITOR);
+
 	//Подключение к базе прошло успешно - начинаем работу потока
 	while (true)
 	{
 		ISSleep(5000);
 		{
-			//Получаем показатели и добавляем в базу
-			ISQuery qInsert(ISDatabase::Instance().GetDB(CONNECTION_MONITOR), QI_MONITOR);
-			qInsert.BindValue(":Memory", GetMemory());
-			qInsert.BindValue(":Clients", ISTcpClients::Instance().GetCount());
-			if (!qInsert.Execute()) //Ошибка вставки
+			//Добавляем показатели в базу		
+			qInsert->BindValue(":Memory", GetMemory());
+			qInsert->BindValue(":Clients", ISTcpClients::Instance().GetCount());
+			if (!qInsert->Execute()) //Ошибка вставки
 			{
-				ISLOGGER_E(__CLASS__, "Not insert monitor indicators: " + qInsert.GetErrorString());
+				ISLOGGER_E(__CLASS__, "Not insert monitor indicators: " + qInsert->GetErrorString());
 			}
 		}
 
@@ -104,6 +106,7 @@ void ISCaratMonitor::Process()
 		CRITICAL_SECTION_UNLOCK(&CriticalSection);
 		if (!is_running) //Потока остановлен - отключаемся от БД и выходим
 		{
+			delete qInsert;
 			ISDatabase::Instance().Disconnect(CONNECTION_MONITOR);
 			break;
 		}
