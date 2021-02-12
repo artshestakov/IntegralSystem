@@ -14,6 +14,7 @@
 #include "ISVersionInfo.h"
 #include "ISProperty.h"
 #include "ISTcpWorkerHelper.h"
+#include "ISCaratMonitor.h"
 //-----------------------------------------------------------------------------
 static QString QS_USERS_HASH = PREPARE_QUERY("SELECT usrs_hash, usrs_salt "
 											 "FROM _users "
@@ -605,6 +606,7 @@ void ISTcpWorker::Process()
 					ISTimePoint TimePoint = ISAlgorithm::GetTick(); //Запоминаем текущее время
 					Result = Execute(tcp_message, TcpAnswer);
 					PerfomanceMsec = ISAlgorithm::GetTickDiff(ISAlgorithm::GetTick(), TimePoint);
+					ISCaratMonitor::Instance().RegisterQueryTime(PerfomanceMsec);
 				}
 			}
 			else //Сообщение не валидное

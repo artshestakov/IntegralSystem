@@ -10,13 +10,16 @@ class ISCaratMonitor
 public:
 	static ISCaratMonitor& Instance();
 
+	void RegisterQueryTime(unsigned long long MSec);
+
 	QString GetErrorString() const;
 	bool Start();
 	void Shutdown();
 
 private:
 	void Process();
-	quint64 GetMemory() const;
+	quint64 GetMemory() const; //ѕолучить количество потребл€емой пам€ти
+	unsigned long long GetTCPTimeAvg() const; //ѕолучить среднее врем€ выполнени€ TCP-запросов
 
 private:
 	ISCaratMonitor();
@@ -31,6 +34,10 @@ private:
 	bool IsRunning;
 	bool IsFinished;
 	ISCriticalSection CriticalSection;
+
+private:
+	unsigned long long TCPQueryTime;
+	unsigned long TCPQueryCount;
 };
 //-----------------------------------------------------------------------------
 #endif

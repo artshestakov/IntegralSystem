@@ -5,13 +5,15 @@
 #include "ISQuery.h"
 #include "ISTcpClients.h"
 //-----------------------------------------------------------------------------
-static QString QI_MONITOR = PREPARE_QUERY("INSERT INTO _monitor(mntr_memory, mntr_clients) "
-										  "VALUES(:Memory, :Clients)");
+static QString QI_MONITOR = PREPARE_QUERY("INSERT INTO _monitor(mntr_memory, mntr_clients, mntr_tcpquerytimeavg) "
+										  "VALUES(:Memory, :Clients, :TCPQueryTimeAvg)");
 //-----------------------------------------------------------------------------
 ISCaratMonitor::ISCaratMonitor()
 	: ErrorString(NO_ERROR_STRING),
 	IsRunning(false),
-	IsFinished(false)
+	IsFinished(false),
+	TCPQueryTime(0),
+	TCPQueryCount(0)
 {
 	CRITICAL_SECTION_INIT(&CriticalSection);
 }
@@ -25,6 +27,14 @@ ISCaratMonitor& ISCaratMonitor::Instance()
 {
 	static ISCaratMonitor CaratMonitor;
 	return CaratMonitor;
+}
+//-----------------------------------------------------------------------------
+void ISCaratMonitor::RegisterQueryTime(unsigned long long MSec)
+{
+	CRITICAL_SECTION_LOCK(&CriticalSection);
+	TCPQueryTime += MSec;
+	++TCPQueryCount;
+	CRITICAL_SECTION_UNLOCK(&CriticalSection);
 }
 //-----------------------------------------------------------------------------
 QString ISCaratMonitor::GetErrorString() const
@@ -94,11 +104,12 @@ void ISCaratMonitor::Process()
 		//Добавляем показатели в базу		
 		qInsert->BindValue(":Memory", GetMemory());
 		qInsert->BindValue(":Clients", ISTcpClients::Instance().GetCount());
+		qInsert->BindValue(":TCPQueryTimeAvg", GetTCPTimeAvg());
 		if (!qInsert->Execute()) //Ошибка вставки
 		{
 			ISLOGGER_E(__CLASS__, "Not insert monitor indicators: " + qInsert->GetErrorString());
 		}
-
+		
 		//Проверяем, не остановлен ли поток
 		CRITICAL_SECTION_LOCK(&CriticalSection);
 		bool is_running = IsRunning;
@@ -164,5 +175,14 @@ quint64 ISCaratMonitor::GetMemory() const
     }
 #endif
 	return Result;
+}
+//-----------------------------------------------------------------------------
+unsigned long long ISCaratMonitor::GetTCPTimeAvg() const
+{
+	if (TCPQueryTime > 0 && TCPQueryCount > 0)
+	{
+		return TCPQueryTime / TCPQueryCount;
+	}
+	return 0;
 }
 //-----------------------------------------------------------------------------

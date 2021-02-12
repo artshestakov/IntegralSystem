@@ -249,6 +249,7 @@
       <Field UID="{FC02E302-B0FB-4E8B-B1C3-BECB1A1DA1C2}" Name="DateTime" Type="DateTime" DefaultValue="now()" LabelName="Дата и время" LocalListName="Дата и время" NotNull="true"/>
       <Field UID="{8E5C9526-5BDA-49E2-9826-726B9B335DCC}" Name="Memory" Type="BigInt" DefaultValue="0" LabelName="Потребляемая память" LocalListName="Потребляемая память" NotNull="true"/>
       <Field UID="{62B72370-7D12-4809-9CDB-258C01795A68}" Name="Clients" Type="Int" DefaultValue="0" LabelName="Количество клиентов" LocalListName="Количество клиентов" NotNull="true"/>
+      <Field UID="{B3B72008-FD24-45A2-B488-22A5E287E1C2}" Name="TCPQueryTimeAvg" Type="Int" DefaultValue="0" LabelName="Среднее время выполнения TCP-запросов" LocalListName="Среднее время выполнения TCP-запросов" NotNull="true"/>
     </Fields>
   </Table>
 
