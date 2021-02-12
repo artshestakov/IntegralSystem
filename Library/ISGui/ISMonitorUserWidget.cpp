@@ -17,7 +17,6 @@ ISMonitorUserWidget::ISMonitorUserWidget(const QVariantMap &VariantMap, QWidget 
 	IsOnline = VariantMap["IsOnline"].toBool();
 	UserID = VariantMap["UserID"].toUInt();
 	UserFIO = VariantMap["FIO"].toString();
-	UserPhoto = ISGui::ByteArrayToPixmap(QByteArray::fromBase64(VariantMap["Photo"].toByteArray())).scaled(ISDefines::Gui::SIZE_32_32);
 	UserGroupName = VariantMap["GroupName"].toString();
 	IPAddress = VariantMap["Address"].toString();
 	Port = VariantMap["Port"].toInt();
@@ -36,7 +35,7 @@ ISMonitorUserWidget::ISMonitorUserWidget(const QVariantMap &VariantMap, QWidget 
 	setLayout(Layout);
 
 	QLabel *LabelIcon = new QLabel(this);
-	LabelIcon->setPixmap(UserPhoto.isNull() ? BUFFER_ICONS("User").pixmap(ISDefines::Gui::SIZE_32_32) : UserPhoto);
+	LabelIcon->setPixmap(BUFFER_ICONS("User").pixmap(ISDefines::Gui::SIZE_32_32));
 	Layout->addWidget(LabelIcon, 0, Qt::AlignHCenter);
 
 	QLabel *LabelUserFIO = new QLabel(UserFIO.split(SYMBOL_SPACE, QString::SkipEmptyParts).join('\n'), this);

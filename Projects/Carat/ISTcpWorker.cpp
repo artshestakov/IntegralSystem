@@ -133,7 +133,7 @@ static QString QS_USER_IS_SYSTEM = PREPARE_QUERY("SELECT usrs_issystem "
 												 "FROM _users "
 												 "WHERE usrs_id = :UserID");
 //-----------------------------------------------------------------------------
-static QString QS_CLIENTS = PREPARE_QUERY("SELECT usrs_id, usrs_fio, usgp_name, usrs_photo "
+static QString QS_CLIENTS = PREPARE_QUERY("SELECT usrs_id, usrs_fio, usgp_name "
 										  "FROM _users "
 										  "LEFT JOIN _usergroup ON usgp_id = usrs_group "
 										  "ORDER BY usrs_fio");
@@ -1944,8 +1944,7 @@ bool ISTcpWorker::GetClients(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 				} : QVariant()
 			},
 			{ "FIO", qSelectClients.ReadColumn("usrs_fio") },
-			{ "GroupName", qSelectClients.ReadColumn("usgp_name") },
-			{ "Photo", qSelectClients.ReadColumn("usrs_photo").toByteArray().toBase64() }
+			{ "GroupName", qSelectClients.ReadColumn("usgp_name") }
 		});
 	}
 	VariantList.append(VariantListOffline);

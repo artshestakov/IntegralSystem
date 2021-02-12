@@ -253,9 +253,6 @@
     <ClCompile Include="ISEmpty.cpp">
       <Filter>Objects\Empty</Filter>
     </ClCompile>
-    <ClCompile Include="ISUserPhotoCreator.cpp">
-      <Filter>System</Filter>
-    </ClCompile>
     <ClCompile Include="ISListWidget.cpp">
       <Filter>Widgets</Filter>
     </ClCompile>
@@ -579,9 +576,6 @@
       <Filter>System</Filter>
     </ClInclude>
     <ClInclude Include="isgui_global.h" />
-    <ClInclude Include="ISUserPhotoCreator.h">
-      <Filter>System</Filter>
-    </ClInclude>
     <ClInclude Include="ISTcpQuery.h">
       <Filter>Protocol</Filter>
     </ClInclude>

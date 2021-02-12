@@ -26,7 +26,6 @@ private:
 	bool IsOnline;
 	unsigned int UserID;
 	QString UserFIO;
-	QPixmap UserPhoto;
 	QString UserGroupName;
 	QString IPAddress;
 	int Port;

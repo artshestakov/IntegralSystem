@@ -4,7 +4,6 @@
 #include "ISLocalization.h"
 #include "ISDialogsCommon.h"
 #include "ISGui.h"
-#include "ISUserPhotoCreator.h"
 #include "ISTcpQuery.h"
 #include "ISBuffer.h"
 #include "ISPopupMessage.h"
@@ -64,11 +63,6 @@ bool ISUserObjectForm::Save()
 			EditAccountLifeTimeEnd->BlinkRed();
 			return false;
 		}
-	}
-
-	if (!GetFieldValue("Photo").isValid())
-	{
-		SetFieldValue("Photo", ISGui::PixmapToByteArray(ISUserPhotoCreator().Create(GetFieldValue("FIO").toString())));
 	}
 
 	if (GetFormType() == ISNamespace::ObjectFormType::New || GetFormType() == ISNamespace::ObjectFormType::Copy)

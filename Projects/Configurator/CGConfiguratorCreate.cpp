@@ -9,8 +9,8 @@
 #include "CGDatabase.h"
 #include "ISLocalization.h"
 //-----------------------------------------------------------------------------
-static QString QI_SYSTEM_USER = PREPARE_QUERY("INSERT INTO _users(usrs_uid, usrs_issystem, usrs_fio, usrs_login, usrs_accessallowed, usrs_photo) "
-											  "VALUES(:UID, true, :FIO, :Login, true, :Photo)");
+static QString QI_SYSTEM_USER = PREPARE_QUERY("INSERT INTO _users(usrs_uid, usrs_issystem, usrs_fio, usrs_login, usrs_accessallowed) "
+											  "VALUES(:UID, true, :FIO, :Login, true)");
 //-----------------------------------------------------------------------------
 static QString QU_SYSTEM_USER_PASSWORD = PREPARE_QUERY("UPDATE _users SET "
 													   "usrs_hash = :Hash, "
@@ -29,24 +29,10 @@ CGConfiguratorCreate::~CGConfiguratorCreate()
 //-----------------------------------------------------------------------------
 bool CGConfiguratorCreate::adminaccount()
 {
-	//Читаем файл с аватаркой
-	QByteArray ByteArray;
-	QFile FileAvatar(":/Other/AdminAvatar.png");
-	if (FileAvatar.open(QIODevice::ReadOnly))
-	{
-		ByteArray = FileAvatar.readAll();
-		FileAvatar.close();
-	}
-	else
-	{
-		ISDEBUG_W("Error open avatar \"" + FileAvatar.fileName() + "\": " + FileAvatar.errorString());
-	}
-
 	ISQuery qInsertAccount(QI_SYSTEM_USER);
 	qInsertAccount.BindValue(":UID", SYSTEM_USER_UID);
 	qInsertAccount.BindValue(":FIO", LANG("Configurator.AdminAccountFIO"));
 	qInsertAccount.BindValue(":Login", SYSTEM_USER_LOGIN);
-	qInsertAccount.BindValue(":Photo", ByteArray);
 	qInsertAccount.SetShowLongQuery(false);
 	bool Result = qInsertAccount.Execute();
 	if (Result) //Учётная запись была успешно добавлена - предлагаем создать пароль

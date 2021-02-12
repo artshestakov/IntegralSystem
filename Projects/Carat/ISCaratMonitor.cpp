@@ -90,14 +90,13 @@ void ISCaratMonitor::Process()
 	while (true)
 	{
 		ISSleep(5000);
+		
+		//Добавляем показатели в базу		
+		qInsert->BindValue(":Memory", GetMemory());
+		qInsert->BindValue(":Clients", ISTcpClients::Instance().GetCount());
+		if (!qInsert->Execute()) //Ошибка вставки
 		{
-			//Добавляем показатели в базу		
-			qInsert->BindValue(":Memory", GetMemory());
-			qInsert->BindValue(":Clients", ISTcpClients::Instance().GetCount());
-			if (!qInsert->Execute()) //Ошибка вставки
-			{
-				ISLOGGER_E(__CLASS__, "Not insert monitor indicators: " + qInsert->GetErrorString());
-			}
+			ISLOGGER_E(__CLASS__, "Not insert monitor indicators: " + qInsert->GetErrorString());
 		}
 
 		//Проверяем, не остановлен ли поток

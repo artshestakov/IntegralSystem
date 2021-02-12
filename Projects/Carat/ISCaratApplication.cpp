@@ -170,6 +170,13 @@ bool ISCaratApplication::Run()
 		return false;
 	}
 
+	//Запускаем мониторинг
+	if (!ISCaratMonitor::Instance().Start())
+	{
+		ISLOGGER_E("ISCaratMonitor", "starting failed: " + ISCaratMonitor::Instance().GetErrorString());
+		return false;
+	}
+
 	//Если TCP-сервер включен - запускаем его
 	if (CONFIG_BOOL(CONST_CONFIG_TCPSERVER_INCLUDE))
 	{
@@ -190,13 +197,6 @@ bool ISCaratApplication::Run()
 			ISLOGGER_E("ISAsterisk", "starting failed");
 			return false;
 		}
-	}
-
-	//Запускаем мониторинг
-	if (!ISCaratMonitor::Instance().Start())
-	{
-		ISLOGGER_E("ISCaratMonitor", "starting failed: " + ISCaratMonitor::Instance().GetErrorString());
-		return false;
 	}
 
     //Запускаем контроллер остановки сервиса

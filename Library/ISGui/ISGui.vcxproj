@@ -262,7 +262,6 @@
     <ClCompile Include="ISTcpQuery.cpp" />
     <ClCompile Include="ISUserGroupSubSystem.cpp" />
     <ClCompile Include="ISUserObjectForm.cpp" />
-    <ClCompile Include="ISUserPhotoCreator.cpp" />
     <ClCompile Include="ISUserRoleEntity.cpp" />
     <ClCompile Include="ISValidators.cpp" />
     <ClCompile Include="ISWaitWidget.cpp" />
@@ -360,7 +359,6 @@
     <QtMoc Include="ISQuerySubSystem.h" />
     <ClInclude Include="ISTcpQuery.h" />
     <ClInclude Include="ISUSBSearcher.h" />
-    <ClInclude Include="ISUserPhotoCreator.h" />
     <ClInclude Include="ISUserRoleEntity.h" />
     <QtMoc Include="ISWaitWidget.h" />
     <QtMoc Include="ISScrollArea.h" />
