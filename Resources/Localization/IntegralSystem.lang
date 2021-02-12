@@ -89,6 +89,7 @@
   <Local Name="ISServerInfoSubSystem.Database.CountForeign" Russian="Количество внешних ключей:"/>
   <Local Name="ISServerInfoSubSystem.Database.RowsCount" Russian="Количество строк:"/>
   <Local Name="ISServerInfoSubSystem.Database.ProtocolCount" Russian="Количество событий протокола:"/>
+  <Local Name="ISServerInfoSubSystem.Database.MonitorCount" Russian="Количество событий мониторинга:"/>
   <Local Name="ISServerInfoSubSystem.Database.UsersCount" Russian="Количество пользователей:"/>
 
   <!--Messages-->

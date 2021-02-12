@@ -457,6 +457,7 @@ static QString QS_SERVER_INFO = PREPARE_QUERY("SELECT "
 											  "(SELECT COUNT(*) AS foreign_count FROM information_schema.constraint_table_usage WHERE constraint_catalog = current_database() AND constraint_schema = current_schema()), "
 											  "(SELECT get_rows_count() AS rows_count), "
 											  "(SELECT COUNT(*) AS protocol_count FROM _protocol), "
+											  "(SELECT COUNT(*) as monitor_count FROM _monitor), "
 											  "(SELECT COUNT(*) AS users_count FROM _users)");
 //-----------------------------------------------------------------------------
 static QString QS_STATEMENTS_QUERY = PREPARE_QUERY("SELECT userid, rolname, calls, total_time, query AS sql_query "
@@ -4251,6 +4252,7 @@ bool ISTcpWorker::GetServerInfo(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer
 	QString DatabaseCountForeign = ISAlgorithm::FormatNumber(qSelect.ReadColumn("foreign_count").toLongLong());
 	QString DatabaseRowsCount = ISAlgorithm::FormatNumber(qSelect.ReadColumn("rows_count").toLongLong());
 	QString DatabaseCountProtocol = ISAlgorithm::FormatNumber(qSelect.ReadColumn("protocol_count").toLongLong());
+	QString DatabaseCountMonitor = ISAlgorithm::FormatNumber(qSelect.ReadColumn("monitor_count").toLongLong());
 	QString DatabaseUsersCount = ISAlgorithm::FormatNumber(qSelect.ReadColumn("users_count").toLongLong());
 
 	TcpAnswer->Parameters["Carat"] = QVariantMap
@@ -4280,6 +4282,7 @@ bool ISTcpWorker::GetServerInfo(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer
 		{ "CountForeign", DatabaseCountForeign },
 		{ "RowsCount", DatabaseRowsCount },
 		{ "ProtocolCount", DatabaseCountProtocol },
+		{ "MonitorCount", DatabaseCountMonitor },
 		{ "UsersCount", DatabaseUsersCount }
 	};
 	Protocol(TcpMessage->TcpSocket->GetUserID(), CONST_UID_PROTOCOL_SERVER_INFO);
