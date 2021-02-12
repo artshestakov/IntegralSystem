@@ -27,7 +27,7 @@ ISConfig::ISConfig()
 		{ CONFIG_TEMPLATE_SERVER, "AMI/Password",			QVariant::String,	true,	"admin",				0, 0 },
 		{ CONFIG_TEMPLATE_SERVER, "AMI/RecordDir",			QVariant::String,	false,	QVariant(),				0, 0 },
 		{ CONFIG_TEMPLATE_SERVER, "Monitor/Include",		QVariant::Bool,		true,	false,					0, 0 },
-		{ CONFIG_TEMPLATE_SERVER, "Monitor/Timeout",		QVariant::Int,		true,	60,						0, 86400 },
+		{ CONFIG_TEMPLATE_SERVER, "Monitor/Timeout",		QVariant::Int,		true,	60,						0, DAY_IN_SECONDS },
 		{ CONFIG_TEMPLATE_SERVER, "Other/UpdateClientDir",	QVariant::String,	false,	QVariant(),				0, 0 },
 		{ CONFIG_TEMPLATE_SERVER, "Other/Configuration",	QVariant::String,	true,	QVariant(),				0, 0 },
 
