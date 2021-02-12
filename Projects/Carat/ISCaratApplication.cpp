@@ -12,6 +12,13 @@
 #include "ISDatabase.h"
 #include "ISCaratMonitor.h"
 //-----------------------------------------------------------------------------
+void QtLog(QtMsgType MessageType, const QMessageLogContext &MessageLogContext, const QString &Message)
+{
+	Q_UNUSED(MessageType);
+	Q_UNUSED(MessageLogContext);
+	ISLOGGER_Q(Message);
+}
+//-----------------------------------------------------------------------------
 ISCaratApplication::ISCaratApplication(int &argc, char **argv)
 	: QCoreApplication(argc, argv),
 	ErrorString(NO_ERROR_STRING),
@@ -20,6 +27,7 @@ ISCaratApplication::ISCaratApplication(int &argc, char **argv)
     PathFileStop(QCoreApplication::applicationDirPath() + "/Temp/Carat.stop")
 {
     connect(this, &ISCaratApplication::Stopped, this, &ISCaratApplication::Shutdown);
+	qInstallMessageHandler(QtLog);
 }
 //-----------------------------------------------------------------------------
 ISCaratApplication::~ISCaratApplication()
@@ -170,8 +178,11 @@ bool ISCaratApplication::Run()
 		return false;
 	}
 
-	//Запускаем мониторинг
-	ISCaratMonitor::Instance().Start();
+	//Если мониторинг включен - запуска его
+	if (CONFIG_BOOL(CONST_CONFIG_MONITOR_INCLUDE))
+	{
+		ISCaratMonitor::Instance().Start();
+	}
 
 	//Если TCP-сервер включен - запускаем его
 	if (CONFIG_BOOL(CONST_CONFIG_TCPSERVER_INCLUDE))

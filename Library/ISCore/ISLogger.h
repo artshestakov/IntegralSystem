@@ -66,5 +66,6 @@ private:
 #define ISLOGGER_C(COMPONENT, MESSAGE) ISLogger::Instance().Log(true, ISNamespace::LogMessageType::Critical, COMPONENT, MESSAGE) //Логирование критической ошибки
 #define ISLOGGER_T(MESSAGE) ISLogger::Instance().Log(true, ISNamespace::LogMessageType::Trace, std::string(), MESSAGE) //Трассировка
 #define ISLOGGER_A(MESSAGE) ISLogger::Instance().Log(true, ISNamespace::LogMessageType::Assert, std::string(), MESSAGE) //Логирование сообщения об ассерте
+#define ISLOGGER_Q(MESSAGE) ISLogger::Instance().Log(true, ISNamespace::LogMessageType::QT, std::string(), MESSAGE) //Логирование сообщения об ассерте
 //-----------------------------------------------------------------------------
 #endif

@@ -5,6 +5,8 @@
 #include "ISTcpServer.h"
 #include "ISAsterisk.h"
 //-----------------------------------------------------------------------------
+void QtLog(QtMsgType MessageType, const QMessageLogContext &MessageLogContext, const QString &Message);
+//-----------------------------------------------------------------------------
 class ISCaratApplication : public QCoreApplication
 {
 	Q_OBJECT

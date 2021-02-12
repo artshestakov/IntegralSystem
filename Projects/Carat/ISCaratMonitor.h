@@ -33,6 +33,7 @@ private:
 	QString ErrorString;
 	bool IsRunning;
 	bool IsFinished;
+	unsigned int Timeout;
 	ISCriticalSection CriticalSection;
 
 private:

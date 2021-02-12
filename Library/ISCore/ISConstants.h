@@ -325,6 +325,8 @@ const char CONST_CONFIG_AMI_PORT[] = "AMI/Port";
 const char CONST_CONFIG_AMI_LOGIN[] = "AMI/Login";
 const char CONST_CONFIG_AMI_PASSWORD[] = "AMI/Password";
 const char CONST_CONFIG_AMI_RECORD_DIR[] = "AMI/RecordDir";
+const char CONST_CONFIG_MONITOR_INCLUDE[] = "Monitor/Include";
+const char CONST_CONFIG_MONITOR_TIMEOUT[] = "Monitor/Timeout";
 const char CONST_CONFIG_OTHER_UPDATE_CLIENT_DIR[] = "Other/UpdateClientDir";
 const char CONST_CONFIG_OTHER_CONFIGURATION[] = "Other/Configuration";
 //-----------------------------------------------------------------------------

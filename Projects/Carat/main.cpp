@@ -27,6 +27,9 @@ int main(int argc, char **argv)
         else
         {
             CaratApplication.Shutdown();
+#ifdef DEBUG //Остановимся перед выходом с ошибкой
+			system("PAUSE");
+#endif
         }
     }
     else //Если аргументы запуска есть

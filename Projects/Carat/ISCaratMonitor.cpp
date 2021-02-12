@@ -4,6 +4,7 @@
 #include "ISLogger.h"
 #include "ISQuery.h"
 #include "ISTcpClients.h"
+#include "ISConfig.h"
 //-----------------------------------------------------------------------------
 static QString QI_MONITOR = PREPARE_QUERY("INSERT INTO _monitor(mntr_memory, mntr_clients, mntr_tcpquerytimeavg) "
 										  "VALUES(:Memory, :Clients, :TCPQueryTimeAvg)");
@@ -12,6 +13,7 @@ ISCaratMonitor::ISCaratMonitor()
 	: ErrorString(NO_ERROR_STRING),
 	IsRunning(false),
 	IsFinished(false),
+	Timeout(0),
 	TCPQueryTime(0),
 	TCPQueryCount(0)
 {
@@ -44,8 +46,13 @@ QString ISCaratMonitor::GetErrorString() const
 //-----------------------------------------------------------------------------
 void ISCaratMonitor::Start()
 {
+	//Получаем значение таймаута из конфигурационного файла
+	Timeout = CONFIG_INT(CONST_CONFIG_MONITOR_TIMEOUT);
+
 	//Запускаем поток и ждём секунду
 	std::thread(&ISCaratMonitor::Process, this).detach();
+	ISLOGGER_I(__CLASS__, QString("starting with timeout %1 seconds").arg(Timeout));
+	Timeout *= 1000;
 }
 //-----------------------------------------------------------------------------
 void ISCaratMonitor::Shutdown()
@@ -90,7 +97,7 @@ void ISCaratMonitor::Process()
 	//Подключение к базе прошло успешно - начинаем работу потока
 	while (true)
 	{
-		ISSleep(5000);
+		ISSleep(Timeout);
 		
 		//Добавляем показатели в базу		
 		qInsert->BindValue(":Memory", GetMemory());
