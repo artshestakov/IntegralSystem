@@ -3,9 +3,10 @@
 #include "ISDatabase.h"
 #include "ISLogger.h"
 #include "ISQuery.h"
+#include "ISTcpClients.h"
 //-----------------------------------------------------------------------------
-static QString QI_MONITOR = PREPARE_QUERY("INSERT INTO _monitor(mntr_memory) "
-										  "VALUES(:Memory)");
+static QString QI_MONITOR = PREPARE_QUERY("INSERT INTO _monitor(mntr_memory, mntr_clients) "
+										  "VALUES(:Memory, :Clients)");
 //-----------------------------------------------------------------------------
 ISCaratMonitor::ISCaratMonitor()
 	: ErrorString(NO_ERROR_STRING),
@@ -90,6 +91,7 @@ void ISCaratMonitor::Process()
 			//Получаем показатели и добавляем в базу
 			ISQuery qInsert(ISDatabase::Instance().GetDB(CONNECTION_MONITOR), QI_MONITOR);
 			qInsert.BindValue(":Memory", GetMemory());
+			qInsert.BindValue(":Clients", ISTcpClients::Instance().GetCount());
 			if (!qInsert.Execute()) //Ошибка вставки
 			{
 				ISLOGGER_E(__CLASS__, "Not insert monitor indicators: " + qInsert.GetErrorString());
