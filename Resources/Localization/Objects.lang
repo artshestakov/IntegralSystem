@@ -28,7 +28,6 @@
   <Local Name="OilSphere.Balance" Russian="Баланс: %1"/>
   <Local Name="OilSphere.Consumption" Russian="Расходы"/>
   <Local Name="OilSphere.Return" Russian="Возвраты"/>
-  <Local Name="OilSphere.Message.Question.CreateCurrentConstant" Russian="Константа за текущий период не обнаружена, создать её сейчас?"/>
   <Local Name="OilSphere.Message.Warning.LoadCounterpartyAndStockIsEmpty" Russian="Вы не выбрали место загрузки."/>
   <Local Name="OilSphere.Message.Warning.LoadCounterpartyAndStockNotIsEmpty" Russian="Нужно выбрать только одно место загрузки."/>
   <Local Name="OilSphere.Message.Warning.UnloadCounterpartyAndStockIsEmpty" Russian="Вы не выбрали место выгрузки."/>

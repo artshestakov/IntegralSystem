@@ -55,26 +55,7 @@ void ISOilSphere::Object::BeforeShowMainWindow() const
 //-----------------------------------------------------------------------------
 void ISOilSphere::Object::InitializePlugin() const
 {
-	//Проверяем наличие константы за текущий период
-	ISTcpQuery qPeriodContains("OilSphere_PeriodContains");
-	if (qPeriodContains.Execute())
-	{
-		QVariantMap AnswerMap = qPeriodContains.GetAnswer();
-		if (!AnswerMap["Exist"].toBool()) //Константа отсутствует - предлагаем создать её
-		{
-			if (ISMessageBox::ShowQuestion(nullptr, LANG("OilSphere.Message.Question.CreateCurrentConstant")))
-			{
-				ISObjectFormBase *ObjectFormBase = ISGui::CreateObjectForm(ISNamespace::ObjectFormType::New, "Period");
-				ObjectFormBase->SetFieldValue("DateStart", QDate::currentDate());
-				ObjectFormBase->SetFieldValue("DateEnd", QDate::currentDate());
-				ISGui::ShowObjectForm(ObjectFormBase);
-			}
-		}
-	}
-	else
-	{
-		ISMessageBox::ShowWarning(nullptr, qPeriodContains.GetErrorString());
-	}
+	
 }
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
