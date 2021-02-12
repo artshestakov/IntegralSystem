@@ -145,7 +145,7 @@ bool ISCaratApplication::Run()
 		"Branch: %4 (%5)\n"
 		"Host name: %6\n"
 		"OS: %7\n"
-		"Main ThreadID: %8\n"
+		"Main thread: %8\n"
 		"PID: %9\n"
 		"Configuration: %10\n"
 		"Database: %11").
@@ -171,11 +171,7 @@ bool ISCaratApplication::Run()
 	}
 
 	//Запускаем мониторинг
-	if (!ISCaratMonitor::Instance().Start())
-	{
-		ISLOGGER_E("ISCaratMonitor", "starting failed: " + ISCaratMonitor::Instance().GetErrorString());
-		return false;
-	}
+	ISCaratMonitor::Instance().Start();
 
 	//Если TCP-сервер включен - запускаем его
 	if (CONFIG_BOOL(CONST_CONFIG_TCPSERVER_INCLUDE))

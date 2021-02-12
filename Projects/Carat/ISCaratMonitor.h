@@ -13,7 +13,7 @@ public:
 	void RegisterQueryTime(unsigned long long MSec);
 
 	QString GetErrorString() const;
-	bool Start();
+	void Start();
 	void Shutdown();
 
 private:

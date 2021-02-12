@@ -42,16 +42,10 @@ QString ISCaratMonitor::GetErrorString() const
 	return ErrorString;
 }
 //-----------------------------------------------------------------------------
-bool ISCaratMonitor::Start()
+void ISCaratMonitor::Start()
 {
 	//Запускаем поток и ждём секунду
 	std::thread(&ISCaratMonitor::Process, this).detach();
-	ISSleep(1000);
-	
-	CRITICAL_SECTION_LOCK(&CriticalSection);
-	bool is_running = IsRunning;
-	CRITICAL_SECTION_UNLOCK(&CriticalSection);
-	return is_running;
 }
 //-----------------------------------------------------------------------------
 void ISCaratMonitor::Shutdown()
@@ -83,13 +77,10 @@ void ISCaratMonitor::Shutdown()
 void ISCaratMonitor::Process()
 {
 	//Подключаемся к базе
-	CRITICAL_SECTION_LOCK(&CriticalSection);
 	IsRunning = ISDatabase::Instance().Connect(CONNECTION_MONITOR, ISDatabase::Instance().GetOption(CONNECTION_DEFAULT));
-	CRITICAL_SECTION_UNLOCK(&CriticalSection);
-
 	if (!IsRunning) //Не удалось подключиться к базе
 	{
-		ErrorString = ISDatabase::Instance().GetErrorString();
+		ISLOGGER_E(__CLASS__, "Not connected to database: " + ISDatabase::Instance().GetErrorString());
 		return;
 	}
 
