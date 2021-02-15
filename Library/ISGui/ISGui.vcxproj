@@ -105,8 +105,8 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
-      <PreprocessorDefinitions>WIN32;DEBUG;ISGUI_LIBRARY;_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;$(ProjectDir)..\ISCore;$(QTDIR)\include\QtCore\;$(QTDIR)\include\QtGui\;$(QTDIR)\include\QtMultimedia\;$(QTDIR)\include\QtNetwork\;$(QTDIR)\include\QtWidgets\;$(QTDIR)\include\QtXml\;$(QTDIR)\include\;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;DEBUG;ISGUI_LIBRARY;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;$(ProjectDir)..\..\Components\QCustomPlot;$(ProjectDir)..\ISCore;$(QTDIR)\include\QtCore\;$(QTDIR)\include\QtGui\;$(QTDIR)\include\QtMultimedia\;$(QTDIR)\include\QtNetwork\;$(QTDIR)\include\QtWidgets\;$(QTDIR)\include\QtXml\;$(QTDIR)\include\;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <WarningLevel>Level4</WarningLevel>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <TreatWarningAsError>true</TreatWarningAsError>
@@ -126,7 +126,7 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
-      <PreprocessorDefinitions>WIN32;DEBUG;ISGUI_LIBRARY;_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;DEBUG;ISGUI_LIBRARY;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;$(ProjectDir)..\ISCore;$(QTDIR64)\include\QtCore\;$(QTDIR64)\include\QtGui\;$(QTDIR64)\include\QtMultimedia\;$(QTDIR64)\include\QtNetwork\;$(QTDIR)\include\QtWidgets\;$(QTDIR)\include\QtXml\;$(QTDIR64)\include\QtSql\;$(QTDIR64)\include\QtWidgets\;$(QTDIR64)\include\QtXml\;$(QTDIR64)\include\;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <WarningLevel>Level4</WarningLevel>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -146,7 +146,7 @@
       <DebugInformationFormat />
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
-      <PreprocessorDefinitions>WIN32;ISGUI_LIBRARY;_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;ISGUI_LIBRARY;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;$(ProjectDir)..\ISCore;$(QTDIR)\include\QtCore\;$(QTDIR)\include\QtGui\;$(QTDIR)\include\QtMultimedia\;$(QTDIR)\include\QtNetwork\;$(QTDIR)\include\QtWidgets\;$(QTDIR)\include\QtXml\;$(QTDIR)\include\;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <WarningLevel>Level4</WarningLevel>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -167,7 +167,7 @@
       </DebugInformationFormat>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
-      <PreprocessorDefinitions>WIN32;ISGUI_LIBRARY;_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;ISGUI_LIBRARY;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;$(ProjectDir)..\ISCore;$(QTDIR64)\include\QtCore\;$(QTDIR64)\include\QtGui\;$(QTDIR64)\include\QtMultimedia\;$(QTDIR64)\include\QtNetwork\;$(QTDIR)\include\QtWidgets\;$(QTDIR)\include\QtXml\;$(QTDIR64)\include\QtPrintSupport\;$(QTDIR64)\include\QtSql\;$(QTDIR64)\include\QtWidgets\;$(QTDIR64)\include\QtXml\;$(QTDIR64)\include\;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <WarningLevel>Level4</WarningLevel>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -182,6 +182,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Components\QCustomPlot\qcustomplot.cpp" />
     <ClCompile Include="ISAsteriskCallsSubSystem.cpp" />
     <ClCompile Include="ISAudioPlayerForm.cpp" />
     <ClCompile Include="ISBaseTableView.cpp" />
@@ -348,6 +349,7 @@
     <QtMoc Include="ISAudioPlayerForm.h" />
     <QtMoc Include="ISDialogsCommon.h" />
     <QtMoc Include="ISDialogsForm.h" />
+    <QtMoc Include="..\..\Components\QCustomPlot\qcustomplot.h" />
     <ClInclude Include="isgui_global.h" />
     <QtMoc Include="ISProgressForm.h" />
     <QtMoc Include="ISSettingsDatabaseObjectForm.h" />

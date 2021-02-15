@@ -68,6 +68,9 @@
     <Filter Include="Dialogs">
       <UniqueIdentifier>{3546b8d5-31bc-4936-b050-706634b1317f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="CustomPlot">
+      <UniqueIdentifier>{56b01f90-da7f-43fe-9ab5-b35390f18b3d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ISProcessForm.cpp">
@@ -322,6 +325,9 @@
     <ClCompile Include="ISQuerySubSystem.cpp">
       <Filter>SubSystem</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Components\QCustomPlot\qcustomplot.cpp">
+      <Filter>CustomPlot</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ISProcessForm.h">
@@ -542,6 +548,9 @@
     </QtMoc>
     <QtMoc Include="ISQuerySubSystem.h">
       <Filter>SubSystem</Filter>
+    </QtMoc>
+    <QtMoc Include="..\..\Components\QCustomPlot\qcustomplot.h">
+      <Filter>CustomPlot</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>
