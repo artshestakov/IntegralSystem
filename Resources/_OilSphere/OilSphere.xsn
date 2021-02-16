@@ -635,4 +635,16 @@
     </Foreigns>
   </Table>
 
+  <Table Name="Return" UID="{57E18310-8E74-4F64-8383-D5B084FDFBF6}" Alias="rtrn" LocalName="Возврат" LocalListName="Возвраты" TitleName="Date" ObjectForm="ISOilSphere::ReturnObjectForm">
+    <Fields>
+      <Field UID="{97586790-39D1-48DA-AA9B-B2ED0FDDC90D}" Name="User" Type="BigInt" LabelName="Пользователь" LocalListName="Пользователь" NotNull="true" HideFromList="true" HideFromObject="true"/>
+      <Field UID="{66655C52-073B-4874-99CB-6EFB5BC856E7}" Name="Date" Type="Date" DefaultValue="now()" LabelName="Дата" LocalListName="Дата" NotNull="true" HideFromObject="true"/>
+      <Field UID="{BC148A0B-5E95-4E30-A74A-A50D92F68C05}" Name="Sum" Type="Money" LabelName="Сумма" LocalListName="Сумма" NotNull="true"/>
+      <Field UID="{5A0E6B3A-A63B-42A3-9ADD-A15DFB469AB7}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
+    </Fields>
+    <Foreigns>
+      <Foreign Field="User" ForeignClass="_Users" ForeignField="ID" ForeignViewNameField="FIO"/>
+    </Foreigns>
+  </Table>
+
 </XSN>

@@ -47,6 +47,8 @@ void ISOilSphere::Object::RegisterMetaTypes() const
 	qRegisterMetaType<ISOilSphere::ConsumptionAllSubSystem*>("ISOilSphere::ConsumptionAllSubSystem");
 	qRegisterMetaType<ISOilSphere::ConsumptionMySubSystem*>("ISOilSphere::ConsumptionMySubSystem");
 	qRegisterMetaType<ISOilSphere::ConsumptionObjectForm*>("ISOilSphere::ConsumptionObjectForm");
+	qRegisterMetaType<ISOilSphere::ReturnMySubSystem*>("ISOilSphere::ReturnMySubSystem");
+	qRegisterMetaType<ISOilSphere::ReturnObjectForm*>("ISOilSphere::ReturnObjectForm");
 }
 //-----------------------------------------------------------------------------
 void ISOilSphere::Object::BeforeShowMainWindow() const
@@ -1351,6 +1353,43 @@ ISOilSphere::ConsumptionObjectForm::~ConsumptionObjectForm()
 }
 //-----------------------------------------------------------------------------
 bool ISOilSphere::ConsumptionObjectForm::Save()
+{
+	AddVirtualField("User", CURRENT_USER_ID);
+	return ISObjectFormBase::Save();
+}
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+ISOilSphere::ReturnMySubSystem::ReturnMySubSystem(QWidget *parent) : ISListBaseForm("Return", parent)
+{
+
+}
+//-----------------------------------------------------------------------------
+ISOilSphere::ReturnMySubSystem::~ReturnMySubSystem()
+{
+
+}
+//-----------------------------------------------------------------------------
+bool ISOilSphere::ReturnMySubSystem::Update()
+{
+	GetTcpQuery()->AddFilter("User", CURRENT_USER_ID);
+	return ISListBaseForm::Update();
+}
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+ISOilSphere::ReturnObjectForm::ReturnObjectForm(ISNamespace::ObjectFormType form_type, PMetaTable *meta_table, QWidget *parent, int object_id)
+	: ISObjectFormBase(form_type, meta_table, parent, object_id)
+{
+
+}
+//-----------------------------------------------------------------------------
+ISOilSphere::ReturnObjectForm::~ReturnObjectForm()
+{
+
+}
+//-----------------------------------------------------------------------------
+bool ISOilSphere::ReturnObjectForm::Save()
 {
 	AddVirtualField("User", CURRENT_USER_ID);
 	return ISObjectFormBase::Save();

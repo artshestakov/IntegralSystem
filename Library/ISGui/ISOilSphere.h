@@ -483,6 +483,30 @@ namespace ISOilSphere
 
 		bool Save() override;
 	};
+
+	//Форма списка моих возвратов
+	class ReturnMySubSystem : public ISListBaseForm
+	{
+		Q_OBJECT
+
+	public:
+		Q_INVOKABLE ReturnMySubSystem(QWidget *parent = 0);
+		virtual ~ReturnMySubSystem();
+
+		bool Update() override;
+	};
+
+	//Форма объекта возврата
+	class ReturnObjectForm : public ISObjectFormBase
+	{
+		Q_OBJECT
+
+	public:
+		Q_INVOKABLE ReturnObjectForm(ISNamespace::ObjectFormType form_type, PMetaTable *meta_table, QWidget *parent, int object_id = 0);
+		virtual ~ReturnObjectForm();
+
+		bool Save() override;
+	};
 }
 //-----------------------------------------------------------------------------
 #endif
