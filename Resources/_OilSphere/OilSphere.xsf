@@ -142,9 +142,18 @@
     RETURNS numeric AS
     $body$
     BEGIN
-    RETURN COALESCE(sum(cpmp_sum), 0)
+    RETURN
+    (
+    SELECT COALESCE(sum(dsmn_sum), 0)
+    FROM distribution
+    WHERE dsmn_userto = user_id
+    )
+    -
+    (
+    SELECT COALESCE(sum(cpmp_sum), 0)
     FROM consumption
-    WHERE cpmp_user = user_id;
+    WHERE cpmp_user = user_id
+    );
     END;
     $body$
     LANGUAGE 'plpgsql'
