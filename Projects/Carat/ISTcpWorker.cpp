@@ -532,6 +532,10 @@ static QString QS_USER_RETURN = PREPARE_QUERY("SELECT rtrn_date, rtrn_sum, rtrn_
 											  "WHERE rtrn_user = :UserID "
 											  "ORDER BY rtrn_date DESC");
 //-----------------------------------------------------------------------------
+static QString QS_TOTAL_BALANCE = PREPARE_QUERY("SELECT "
+												"(SELECT COALESCE(sum(cmng_sum), 0) AS total_coming FROM coming), "
+												"(SELECT COALESCE(sum(cpmp_sum), 0) AS total_consumption FROM consumption)");
+//-----------------------------------------------------------------------------
 ISTcpWorker::ISTcpWorker(const QString &db_host, int db_port, const QString &db_name, const QString &db_user, const QString &db_password)
 	: QObject(),
 	ErrorString(NO_ERROR_STRING),
@@ -4693,6 +4697,19 @@ bool ISTcpWorker::OilSphere_GetUserConsumption(ISTcpMessage *TcpMessage, ISTcpAn
 		});
 	}
 	TcpAnswer->Parameters["UserList"] = UserList;
+
+	//Получаем итоговые цифры
+	ISQuery qSelectTotalBalance(ISDatabase::Instance().GetDB(DBConnectionName), QS_TOTAL_BALANCE);
+	if (!qSelectTotalBalance.Execute())
+	{
+		return ErrorQuery(LANG("Carat.Error.Query.GetUserConsumption.SelectTotal"), qSelectTotalBalance);
+	}
+	qSelectTotalBalance.First();
+	double TotalComing = qSelectTotalBalance.ReadColumn("total_coming").toDouble(),
+		TotalConsumption = qSelectTotalBalance.ReadColumn("total_consumption").toDouble();
+	TcpAnswer->Parameters["TotalComing"] = TotalComing;
+	TcpAnswer->Parameters["TotalConsumption"] = TotalConsumption;
+	TcpAnswer->Parameters["Balance"] = TotalComing - TotalConsumption;
 	return true;
 }
 //-----------------------------------------------------------------------------

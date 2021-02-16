@@ -455,6 +455,7 @@ namespace ISOilSphere
 		QVariantList UserList;
 
 	private:
+		QLabel *LabelTitle;
 		QGroupBox *GroupBoxUsers;
 		ISListWidget *ListConsumption;
 		ISListWidget *ListReturn;

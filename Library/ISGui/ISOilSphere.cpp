@@ -1215,6 +1215,10 @@ ISOilSphere::ConsumptionAllSubSystem::ConsumptionAllSubSystem(QWidget *parent) :
 {
 	GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);
 
+	LabelTitle = new QLabel(LANG("OilSphere.TotalBalance").arg(0).arg(0).arg(0), this);
+	ISGui::SetFontWidgetBold(LabelTitle, true);
+	GetMainLayout()->addWidget(LabelTitle, 0, Qt::AlignCenter);
+
 	QHBoxLayout *Layout = new QHBoxLayout();
 	GetMainLayout()->addLayout(Layout);
 
@@ -1266,7 +1270,8 @@ void ISOilSphere::ConsumptionAllSubSystem::LoadData()
 		return;
 	}
 
-	UserList = qGetUsersConsumption.TakeAnswer()["UserList"].toList();
+	QVariantMap AnswerMap = qGetUsersConsumption.TakeAnswer();
+	UserList = AnswerMap["UserList"].toList();
 	for (const QVariant &Variant : UserList)
 	{
 		QVariantMap UserMap = Variant.toMap();
@@ -1291,6 +1296,7 @@ void ISOilSphere::ConsumptionAllSubSystem::LoadData()
 		connect(ButtonBalance, &ISPushButton::clicked, this, &ISOilSphere::ConsumptionAllSubSystem::BalanceClicked);
 		dynamic_cast<QFormLayout*>(GroupBoxUsers->layout())->addRow(Label, ButtonBalance);
 	}
+	LabelTitle->setText(LANG("OilSphere.TotalBalance").arg(AnswerMap["TotalComing"].toString()).arg(AnswerMap["TotalConsumption"].toString()).arg(AnswerMap["Balance"].toString()));
 }
 //-----------------------------------------------------------------------------
 void ISOilSphere::ConsumptionAllSubSystem::BalanceClicked()
