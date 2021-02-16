@@ -161,17 +161,11 @@ namespace ISAlgorithm
 	//! \return возвращает извлеченную строку
 	ISCORE_EXPORT QString StringTake(QString &String, int Pos, int N);
 
-    //! Конвертация DEC в HEX
-    //! \param N число
-    //! \return возвращает число в HEX-формате
-    ISCORE_EXPORT QString DecToHex(int N);
-
-    //! Конвертация RGB в HEX
-    //! \param R уровень красного
-    //! \param G уровень зелёного
-    //! \param B уровень синего
-    //! \return возвращает цвет в HEX-формате
-    ISCORE_EXPORT QString RGBToHEX(int R, int G, int B);
+	//! Парсинг аргументов командной строки
+	//! \param argc количество аргументов
+	//! \param argv массив аргументов
+	//! \return возвращает вектор аргументов
+	ISCORE_EXPORT std::vector<std::string> ParseCommandArgs(int argc, char **argv);
 
 	//Поиск значения в векторе
     template <typename T> bool VectorContains(const std::vector<T> &Vector, T Value)
@@ -244,6 +238,12 @@ namespace ISAlgorithm
             }
         }
     }
+
+	//Удалить первый элемент из вектора
+	template <typename T> void VectorRemoveFirst(std::vector<T> &Vector)
+	{
+		Vector.erase(Vector.begin());
+	}
 
     //Получить все ключи словаря
     template <typename TKey, typename TValue> std::vector<TKey> ConvertMapToKeys(const std::map<TKey, TValue> &Map)

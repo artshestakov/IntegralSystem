@@ -20,7 +20,7 @@ public:
 
 	QString GetErrorString() const; //Получить текстовое описание ошибки
 	bool Initialize(); //Инициализация
-    bool Run(const QStringList &Arguments); //Запуск с параметрами
+    bool Run(const std::vector<std::string> &Arguments); //Запуск с параметрами
 	bool Run(); //Стандартный запуск
 	void Shutdown(); //Остановка приложения
 

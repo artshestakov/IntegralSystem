@@ -356,43 +356,13 @@ QString ISAlgorithm::StringTake(QString &String, int Pos, int N)
 	return Result;
 }
 //-----------------------------------------------------------------------------
-QString ISAlgorithm::DecToHex(int N)
+std::vector<std::string> ISAlgorithm::ParseCommandArgs(int argc, char **argv)
 {
-    char Char[2] = { 0 };
-    int Index = 0;
-    while (N > 0)
-    {
-        int Temp = N % 16;
-        Char[Index] = Temp + (Temp < 10 ? 48 : 55);
-        ++Index;
-        N = N / 16;
-    }
-
-    QString HexCode;
-    if (Index == 2)
-    {
-        HexCode.push_back(Char[1]);
-        HexCode.push_back(Char[0]);
-    }
-    else if (Index == 1)
-    {
-        HexCode = "0";
-        HexCode.push_back(Char[0]);
-    }
-    else if (Index == 0)
-    {
-        HexCode = "00";
-    }
-    return HexCode;
-}
-//-----------------------------------------------------------------------------
-QString ISAlgorithm::RGBToHEX(int R, int G, int B)
-{
-    QString Result;
-    if ((R >= 0 && R <= 255) && (G >= 0 && G <= 255) && (B >= 0 && B <= 255))
-    {
-        Result = '#' + ISAlgorithm::DecToHex(R) + ISAlgorithm::DecToHex(G) + ISAlgorithm::DecToHex(B);
-    }
-    return Result;
+	std::vector<std::string> Vector(argc);
+	for (int i = 0; i < argc; ++i)
+	{
+		Vector[i] = argv[i];
+	}
+	return Vector;
 }
 //-----------------------------------------------------------------------------
