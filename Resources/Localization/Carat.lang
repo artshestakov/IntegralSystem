@@ -272,6 +272,7 @@
   <Local Name="Carat.Error.Query.GetDebtCounterparty.NotExist" Russian="Такая запись не существует."/>
 
   <Local Name="Carat.Error.Query.GetUserConsumption.SelectUsers" Russian="Не удалось получить пользователей и их балансы."/>
-  <Local Name="Carat.Error.Query.GetUserConsumption.SelectUser" Russian="Не удалось получить расходы пользователя."/>
+  <Local Name="Carat.Error.Query.GetUserConsumption.UserConsumption" Russian="Не удалось получить расходы пользователя."/>
+  <Local Name="Carat.Error.Query.GetUserConsumption.UserReturn" Russian="Не удалось получить возвраты пользователя."/>
 
 </LANG>

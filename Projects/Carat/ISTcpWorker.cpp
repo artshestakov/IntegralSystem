@@ -527,6 +527,11 @@ static QString QS_USER_CONSUMPTION = PREPARE_QUERY("SELECT cpmp_date, cpmp_sum, 
 												   "WHERE cpmp_user = :UserID "
 												   "ORDER BY cpmp_date DESC");
 //-----------------------------------------------------------------------------
+static QString QS_USER_RETURN = PREPARE_QUERY("SELECT rtrn_date, rtrn_sum, rtrn_note "
+											  "FROM return "
+											  "WHERE rtrn_user = :UserID "
+											  "ORDER BY rtrn_date DESC");
+//-----------------------------------------------------------------------------
 ISTcpWorker::ISTcpWorker(const QString &db_host, int db_port, const QString &db_name, const QString &db_user, const QString &db_password)
 	: QObject(),
 	ErrorString(NO_ERROR_STRING),
@@ -4643,7 +4648,7 @@ bool ISTcpWorker::OilSphere_GetUserConsumption(ISTcpMessage *TcpMessage, ISTcpAn
 		qSelectUserConsumption.BindValue(":UserID", UserID);
 		if (!qSelectUserConsumption.Execute()) //Ошибка запроса
 		{
-			return ErrorQuery(LANG("Carat.Error.Query.GetUserConsumption.SelectUser"), qSelectUserConsumption);
+			return ErrorQuery(LANG("Carat.Error.Query.GetUserConsumption.UserConsumption"), qSelectUserConsumption);
 		}
 
 		//Обходим расходы пользователя
@@ -4658,12 +4663,33 @@ bool ISTcpWorker::OilSphere_GetUserConsumption(ISTcpMessage *TcpMessage, ISTcpAn
 			});
 		}
 
+		//Запрашиваем все возвраты пользователя
+		ISQuery qSelectUserReturn(ISDatabase::Instance().GetDB(DBConnectionName), QS_USER_RETURN);
+		qSelectUserReturn.BindValue(":UserID", UserID);
+		if (!qSelectUserReturn.Execute())
+		{
+			return ErrorQuery(LANG("Carat.Error.Query.GetUserConsumption.UserReturn"), qSelectUserReturn);
+		}
+
+		//Обходим возраты пользователя
+		QVariantList ReturnList;
+		while (qSelectUserReturn.Next())
+		{
+			ReturnList.push_back(QVariantMap
+			{
+				{ "Date", ISTcpWorkerHelper::ConvertDateToString(qSelectUserReturn.ReadColumn("rtrn_date").toDate()) },
+				{ "Sum", qSelectUserReturn.ReadColumn("rtrn_sum").toDouble() },
+				{ "Note", qSelectUserReturn.ReadColumn("rtrn_note").toString() }
+			});
+		}
+
 		UserList.push_back(QVariantMap
 		{
 			{ "ID", UserID },
 			{ "FIO", qSelectUsers.ReadColumn("usrs_fio") },
 			{ "Balance", DOUBLE_PREPARE(qSelectUsers.ReadColumn("get_user_balance").toDouble()) },
-			{ "ConsumptionList", ConsumptionList }
+			{ "ConsumptionList", ConsumptionList },
+			{ "ReturnList", ReturnList }
 		});
 	}
 	TcpAnswer->Parameters["UserList"] = UserList;

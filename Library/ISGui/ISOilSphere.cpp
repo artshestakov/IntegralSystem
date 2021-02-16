@@ -1228,18 +1228,22 @@ ISOilSphere::ConsumptionAllSubSystem::ConsumptionAllSubSystem(QWidget *parent) :
 
 	QGroupBox *GroupBoxConsumption = new QGroupBox(LANG("OilSphere.Consumption"), this);
 	GroupBoxConsumption->setLayout(new QVBoxLayout());
+	GroupBoxConsumption->layout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_1_PX);
 	LayoutRight->addWidget(GroupBoxConsumption);
 
 	ListConsumption = new ISListWidget(GroupBoxConsumption);
 	ListConsumption->setAlternatingRowColors(true);
+	ListConsumption->setFrameShape(QFrame::NoFrame);
 	GroupBoxConsumption->layout()->addWidget(ListConsumption);
 	
 	QGroupBox *GroupBoxReturn = new QGroupBox(LANG("OilSphere.Return"), this);
 	GroupBoxReturn->setLayout(new QVBoxLayout());
+	GroupBoxReturn->layout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_1_PX);
 	LayoutRight->addWidget(GroupBoxReturn);
 
 	ListReturn = new ISListWidget(GroupBoxReturn);
 	ListReturn->setAlternatingRowColors(true);
+	ListReturn->setFrameShape(QFrame::NoFrame);
 	GroupBoxReturn->layout()->addWidget(ListReturn);
 }
 //-----------------------------------------------------------------------------
@@ -1292,16 +1296,19 @@ void ISOilSphere::ConsumptionAllSubSystem::LoadData()
 void ISOilSphere::ConsumptionAllSubSystem::BalanceClicked()
 {
 	ListConsumption->Clear();
+	ListReturn->Clear();
 
 	QVariant UserID = sender()->property("UserID");
 
-	QVariantList ConsumptionList;
+	QVariantList ConsumptionList, ReturnList;
 	for (const QVariant &Variant : UserList)
 	{
 		QVariantMap UserMap = Variant.toMap();
 		if (UserMap["ID"] == UserID)
 		{
 			ConsumptionList = UserMap["ConsumptionList"].toList();
+			ReturnList = UserMap["ReturnList"].toList();
+			break;
 		}
 	}
 
@@ -1314,6 +1321,21 @@ void ISOilSphere::ConsumptionAllSubSystem::BalanceClicked()
 		ListWidgetItem->setSizeHint(QSize(ListWidgetItem->sizeHint().width(), 30));
 
 		QString Note = ConsumptionMap["Note"].toString();
+		if (!Note.isEmpty())
+		{
+			ListWidgetItem->setText(ListWidgetItem->text() + '\n' + Note);
+		}
+	}
+
+	for (const QVariant &Variant : ReturnList)
+	{
+		QVariantMap ReturnMap = Variant.toMap();
+
+		QListWidgetItem *ListWidgetItem = new QListWidgetItem(ListReturn);
+		ListWidgetItem->setText(ReturnMap["Date"].toString() + ": " + ReturnMap["Sum"].toString());
+		ListWidgetItem->setSizeHint(QSize(ListWidgetItem->sizeHint().width(), 30));
+
+		QString Note = ReturnMap["Note"].toString();
 		if (!Note.isEmpty())
 		{
 			ListWidgetItem->setText(ListWidgetItem->text() + '\n' + Note);
