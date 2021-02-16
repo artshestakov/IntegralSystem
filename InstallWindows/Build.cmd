@@ -51,4 +51,4 @@ REM Запуск сборки
 %INNO_SETUP% %SCRIPT_NAME%.iss.tmp
 
 REM Копируем дистрибутив клиента в облако
-IF %SCRIPT_NAME% == "IntegralSystem" (COPY ..\Output\IntegralSystem_%CONFIGURATION%_%PLATFORM%_%REVISION%.exe C:\Users\%USERNAME%\YandexDisk\Client\IntegralSystem_%CONFIGURATION%_%PLATFORM%_%REVISION%.exe)
+IF "%SCRIPT_NAME%"=="IntegralSystem" (COPY ..\Output\IntegralSystem_%CONFIGURATION%_%PLATFORM%_%REVISION%.exe C:\Users\%USERNAME%\YandexDisk\Client\IntegralSystem_%CONFIGURATION%_%PLATFORM%_%REVISION%.exe)
