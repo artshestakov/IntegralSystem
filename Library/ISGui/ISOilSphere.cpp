@@ -6,6 +6,7 @@
 #include "ISDefinesGui.h"
 #include "ISControls.h"
 #include "ISObjects.h"
+#include "ISLabels.h"
 //-----------------------------------------------------------------------------
 ISOilSphere::Object::Object() : ISObjectInterface()
 {
@@ -1263,11 +1264,28 @@ void ISOilSphere::ConsumptionAllSubSystem::LoadData()
 	for (const QVariant &Variant : UserList)
 	{
 		QVariantMap UserMap = Variant.toMap();
+		double Balance = UserMap["Balance"].toDouble();
 
-		ISPushButton *ButtonBalance = new ISPushButton(LANG("OilSphere.Balance").arg(UserMap["Balance"].toString()), GroupBoxUsers);
+		ISLabelPixmapText *Label = new ISLabelPixmapText(UserMap["FIO"].toString(), GroupBoxUsers);
+		connect(Label, &ISLabelPixmapText::Clicked, this, &ISOilSphere::ConsumptionAllSubSystem::BalanceClicked);
+
+		if (Balance > 0)
+		{
+			Label->SetPixmap(ISObjects::Instance().GetInterface()->GetIcon("Balance.Positive").pixmap(16, 16));
+		}
+		else if (Balance < 0)
+		{
+			Label->SetPixmap(ISObjects::Instance().GetInterface()->GetIcon("Balance.Negative").pixmap(16, 16));
+		}
+		else
+		{
+			Label->SetPixmap(ISObjects::Instance().GetInterface()->GetIcon("Balance.Null").pixmap(16, 16));
+		}
+
+		ISPushButton *ButtonBalance = new ISPushButton(LANG("OilSphere.Balance").arg(Balance), GroupBoxUsers);
 		ButtonBalance->setProperty("UserID", UserMap["ID"]);
 		connect(ButtonBalance, &ISPushButton::clicked, this, &ISOilSphere::ConsumptionAllSubSystem::BalanceClicked);
-		dynamic_cast<QFormLayout*>(GroupBoxUsers->layout())->addRow(UserMap["FIO"].toString(), ButtonBalance);
+		dynamic_cast<QFormLayout*>(GroupBoxUsers->layout())->addRow(Label, ButtonBalance);
 	}
 }
 //-----------------------------------------------------------------------------
