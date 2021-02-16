@@ -1267,8 +1267,6 @@ void ISOilSphere::ConsumptionAllSubSystem::LoadData()
 		double Balance = UserMap["Balance"].toDouble();
 
 		ISLabelPixmapText *Label = new ISLabelPixmapText(UserMap["FIO"].toString(), GroupBoxUsers);
-		connect(Label, &ISLabelPixmapText::Clicked, this, &ISOilSphere::ConsumptionAllSubSystem::BalanceClicked);
-
 		if (Balance > 0)
 		{
 			Label->SetPixmap(ISObjects::Instance().GetInterface()->GetIcon("Balance.Positive").pixmap(16, 16));

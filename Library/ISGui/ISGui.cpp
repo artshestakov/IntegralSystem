@@ -8,7 +8,6 @@
 #include "ISDialogsCommon.h"
 #include "ISPopupMessage.h"
 //#include "ISTaskViewForm.h"
-#include "ISSplashWidget.h"
 #include "ISConfig.h"
 #include "ISBuffer.h"
 #include "ISVersionInfo.h"
@@ -75,9 +74,6 @@ bool ISGui::Startup(QString &ErrorString)
 
 	ISDefines::Gui::Init();
 
-	ISSplashWidget SplashWidget;
-	SplashWidget.show();
-
 	//Загрузка локализации клиента
 	if (!ISLocalization::Instance().LoadResourceFile(LOCALIZATION_FILE_INTEGRAL_SYSTEM))
 	{
@@ -93,11 +89,9 @@ bool ISGui::Startup(QString &ErrorString)
 	}
 
 	//Загрузка буфера
-	SplashWidget.SetText(LANG("SplashWidget.Buffer"));
 	ISBuffer::Instance().Initialize();
 
 	//Проверка наличия прав администратора
-	SplashWidget.SetText(LANG("SplashWidget.AdminRoles"));
 	if (!CheckAdminRole())
 	{
 		ErrorString = LANG("NoAdministratorRights");

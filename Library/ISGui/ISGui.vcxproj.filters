@@ -235,9 +235,6 @@
     <ClCompile Include="ISSplashScreen.cpp">
       <Filter>Controls</Filter>
     </ClCompile>
-    <ClCompile Include="ISSplashWidget.cpp">
-      <Filter>Controls</Filter>
-    </ClCompile>
     <ClCompile Include="ISSystemsPanel.cpp">
       <Filter>Controls</Filter>
     </ClCompile>
@@ -460,9 +457,6 @@
       <Filter>Controls</Filter>
     </QtMoc>
     <QtMoc Include="ISSplashScreen.h">
-      <Filter>Controls</Filter>
-    </QtMoc>
-    <QtMoc Include="ISSplashWidget.h">
       <Filter>Controls</Filter>
     </QtMoc>
     <QtMoc Include="ISSystemsPanel.h">

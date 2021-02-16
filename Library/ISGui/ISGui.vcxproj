@@ -253,7 +253,6 @@
     <ClCompile Include="ISSettingFieldWidgets.cpp" />
     <ClCompile Include="ISSettingsDatabaseObjectForm.cpp" />
     <ClCompile Include="ISSplashScreen.cpp" />
-    <ClCompile Include="ISSplashWidget.cpp" />
     <ClCompile Include="ISStorageFilesSubSystem.cpp" />
     <ClCompile Include="ISSystemsPanel.cpp" />
     <ClCompile Include="ISTabBarMain.cpp" />
@@ -342,7 +341,6 @@
     <QtMoc Include="ISMonitorUserWidget.h" />
     <QtMoc Include="ISPopupMessage.h" />
     <QtMoc Include="ISSplashScreen.h" />
-    <QtMoc Include="ISSplashWidget.h" />
     <QtMoc Include="ISSystemsPanel.h" />
     <QtMoc Include="ISEmpty.h" />
     <QtMoc Include="ISAsteriskCallsSubSystem.h" />
