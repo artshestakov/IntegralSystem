@@ -1,9 +1,4 @@
 #include "ISDatabase.h"
-#include "ISQuery.h"
-//-----------------------------------------------------------------------------
-static QString QS_DATABASE = PREPARE_QUERY("SELECT COUNT(*) "
-                                           "FROM pg_database "
-                                           "WHERE datname = :DatabaseName");
 //-----------------------------------------------------------------------------
 ISDatabase::ISDatabase()
     : ErrorString(NO_ERROR_STRING)
@@ -76,19 +71,6 @@ ISConnectOptionDB ISDatabase::GetOptionLibPQ(const QString &ConnectionName)
 	}
 	CRITICAL_SECTION_UNLOCK(&CriticalSection);
 	return ConnectOption;
-}
-//-----------------------------------------------------------------------------
-bool ISDatabase::CheckExistDatabase(const QString &ConnectionName, const QString &Database, bool &Exist)
-{
-    ISQuery qSelectDatabase(GetDB(ConnectionName), QS_DATABASE);
-    qSelectDatabase.SetShowLongQuery(false);
-    qSelectDatabase.BindValue(":DatabaseName", Database);
-    bool Result = qSelectDatabase.ExecuteFirst();
-    if (Result)
-    {
-        Exist = qSelectDatabase.ReadColumn("count").toBool();
-    }
-    return Result;
 }
 //-----------------------------------------------------------------------------
 bool ISDatabase::ConnectLibPQ(const QString &ConnectionName, const QString &Host, unsigned short Port, const QString &Database, const QString &Login, const QString &Password)

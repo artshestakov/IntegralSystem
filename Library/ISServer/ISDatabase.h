@@ -21,8 +21,6 @@ public:
 	ISConnectOptionDB GetOption(const QString &ConnectionName);
 	ISConnectOptionDB GetOptionLibPQ(const QString &ConnectionName);
 
-	bool CheckExistDatabase(const QString &ConnectionName, const QString &Database, bool &Exist); //Проверить существование базы данных
-
 	bool ConnectLibPQ(const QString &ConnectionName, const QString &Host, unsigned short Port, const QString &Database, const QString &Login, const QString &Password); //Подключение к БД через LibPQ
 	void DisconnectLibPQ(const QString &ConnectionName); //Отключение от БД через LibPQ
 	void DisconnectAllLibPQ(); //Отключение от всех экземпляров БД через LibPQ

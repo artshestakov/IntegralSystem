@@ -6,6 +6,7 @@
 #include "ISSystem.h"
 #include "ISDebug.h"
 #include "ISVersionInfo.h"
+#include "ISDatabase.h"
 #include "ISQuery.h"
 #include "ISAlgorithm.h"
 #include "ISLocalization.h"
@@ -20,12 +21,17 @@
 //-----------------------------------------------------------------------------
 static QString QC_DATABASE = "CREATE DATABASE %1 WITH OWNER = %2 ENCODING = 'UTF8'";
 //-----------------------------------------------------------------------------
+static QString QS_DATABASE = PREPARE_QUERY("SELECT COUNT(*) "
+                                           "FROM pg_database "
+                                           "WHERE datname = :DatabaseName");
+//-----------------------------------------------------------------------------
 std::vector<CGSection*> Arguments;
 QString DBHost, DBName, DBLogin, DBPassword;
 int DBPort = 0;
 //-----------------------------------------------------------------------------
 bool InitConfiguratorScheme(QString &ErrorString); //Инициализация схемы конфигуратора
 bool CreateDatabase(); //Проверка существования БД
+bool CheckExistDatabase(const QString &Database, bool &Exist); //Проверить существование базы данных
 void InterpreterMode(bool &IsRunning); //Режим интерпретатора
 bool Execute(const QString &Argument); //Выполнить одиночную команду
 bool Execute(const QString &Argument, const QString &SubArgument); //Выполнить двойную команду
@@ -174,7 +180,7 @@ bool CreateDatabase()
 		return Result;
 	}
 
-	Result = ISDatabase::Instance().CheckExistDatabase(CONNECTION_SYSTEM, DBName, Exist);
+	Result = CheckExistDatabase(DBName, Exist);
 	if (Result) //Проверка прошла успешно - анализируем
 	{
 		if (Exist) //БД существует - подключаемся к существующей
@@ -210,6 +216,19 @@ bool CreateDatabase()
 
 	//Отключаемся от системной БД и выходим
 	ISDatabase::Instance().Disconnect(CONNECTION_SYSTEM);
+	return Result;
+}
+//-----------------------------------------------------------------------------
+bool CheckExistDatabase(const QString &Database, bool &Exist)
+{
+	ISQuery qSelectDatabase(ISDatabase::Instance().GetDB(CONNECTION_SYSTEM), QS_DATABASE);
+	qSelectDatabase.SetShowLongQuery(false);
+	qSelectDatabase.BindValue(":DatabaseName", Database);
+	bool Result = qSelectDatabase.ExecuteFirst();
+	if (Result)
+	{
+		Exist = qSelectDatabase.ReadColumn("count").toBool();
+	}
 	return Result;
 }
 //-----------------------------------------------------------------------------
