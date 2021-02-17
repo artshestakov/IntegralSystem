@@ -15,18 +15,6 @@
       <Field UID="{9D4228B1-3DBB-4918-AA5B-A5B36189A2D8}" Name="Important" Type="TaskImportant" DefaultValue="false" LabelName="Это важная задача" LocalListName="Это важная задача"/>
       <Field UID="{4D76E89A-A38B-484C-A94F-6362137CF184}" Name="Status" Type="BigInt" DefaultValue="get_task_status_id_by_uid('2FD27958-6EC9-4E78-88F4-0A2BFDFE4716'::UUID)" LabelName="Статус задачи" LocalListName="Статус задачи" NotNull="true" HideFromObject="true"/>
     </Fields>
-    <Indexes>
-      <Index Field="Parent"/>
-      <Index Field="Space"/>
-      <Index Field="Name"/>
-      <Index Field="Description"/>
-      <Index Field="Executor"/>
-      <Index Field="Type"/>
-      <Index Field="Priority"/>
-      <Index Field="Deadline"/>
-      <Index Field="Important"/>
-      <Index Field="Status"/>
-    </Indexes>
     <Foreigns>
       <Foreign Field="Space" ForeignClass="_TaskSpace" ForeignField="ID" ForeignViewNameField="Name"/>
       <Foreign Field="Executor" ForeignClass="_Users" ForeignField="ID" ForeignViewNameField="FIO"/>
@@ -62,13 +50,6 @@
       <Field UID="{27CA4711-86BE-4717-B95A-C92C79691AFD}" Name="StyleSheet" Type="String" LabelName="Стиль" LocalListName="Стиль"/>
       <Field UID="{F3CFAD71-DD49-4D53-8202-5F65ED3C2632}" Name="Icon" Type="String" LabelName="Иконка" LocalListName="Иконка"/>
     </Fields>
-    <Indexes>
-      <Index Field="Order"/>
-      <Index Field="Name"/>
-      <Index Field="ButtonText"/>
-      <Index Field="StyleSheet"/>
-      <Index Field="Icon"/>
-    </Indexes>
   </Table>
 
   <Table Name="_TaskStatusHistory" UID="{06649583-3042-45E8-867E-42CE90F73B06}" Alias="tshr" ShowOnly="true" LocalName="Изменение статуса" LocalListName="Изменения статуса" TitleName="Status" IsSystem="true">
@@ -77,11 +58,6 @@
       <Field UID="{D5BB8578-7D4F-4BDA-96B9-F77567F0B4EE}" Name="DateTime" Type="DateTime" DefaultValue="now()" LabelName="Дата и время" LocalListName="Дата и время" NotNull="true"/>
       <Field UID="{DC67347A-EA59-417C-BA01-EF5A7DF8B088}" Name="Status" Type="BigInt" LabelName="Статус" LocalListName="Статус" NotNull="true"/>
     </Fields>
-    <Indexes>
-      <Index Field="Task"/>
-      <Index Field="DateTime"/>
-      <Index Field="Status"/>
-    </Indexes>
     <Foreigns>
       <Foreign Field="Task" ForeignClass="_Task" ForeignField="ID" ForeignViewNameField="Name"/>
       <Foreign Field="Status" ForeignClass="_TaskStatus" ForeignField="ID" ForeignViewNameField="Name"/>
@@ -96,13 +72,6 @@
       <Field UID="{7D4D81EE-EED4-4D29-A48E-A70AAD2E7A95}" Name="StyleSheet" Type="String" LabelName="Стиль" LocalListName="Стиль" NotNull="true"/>
       <Field UID="{A22ABCF2-2DAF-42DC-BEFD-B5FB9C06762F}" Name="Icon" Type="String" LabelName="Иконка" LocalListName="Иконка" NotNull="true"/>
     </Fields>
-    <Indexes>
-      <Index Field="Order"/>
-      <Index Field="Name" Unique="true"/>
-      <Index Field="ToolTip"/>
-      <Index Field="StyleSheet"/>
-      <Index Field="Icon"/>
-    </Indexes>
   </Table>
 
   <Table Name="_TaskComment" UID="{A37809AE-7889-4E2A-B314-6E86BFD7F0A7}" Alias="tcom" LocalName="Комментарий к задаче" LocalListName="Комментарии к задачам" TitleName="Comment" IsSystem="true">
@@ -114,11 +83,8 @@
       <Field UID="{2B8CFE09-5BF7-4AAA-B206-CA646868E322}" Name="Comment" Type="Text" LabelName="Комментарий" LocalListName="Комментарий" NotNull="true"/>
     </Fields>
     <Indexes>
-      <Index Field="Owner"/>
-      <Index Field="DateTime"/>
       <Index Field="Task"/>
       <Index Field="Parent"/>
-      <Index Field="Comment"/>
     </Indexes>
     <Foreigns>
       <Foreign Field="Owner" ForeignClass="_Users" ForeignField="ID" ForeignViewNameField="FIO"/>
@@ -135,8 +101,6 @@
     </Fields>
     <Indexes>
       <Index Field="Task"/>
-      <Index Field="Name"/>
-      <Index Field="Done"/>
     </Indexes>
     <Foreigns>
       <Foreign Field="Task" ForeignClass="_Task" ForeignField="ID" ForeignViewNameField="Name"/>
@@ -151,8 +115,6 @@
       <Field UID="{3615E923-9B37-4E47-927B-738218705DDD}" Name="Link" Type="BigInt" LabelName="Связанная задача" LocalListName="Связанная задача" NotNull="true"/>
     </Fields>
     <Indexes>
-      <Index Field="User"/>
-      <Index Field="DateTime"/>
       <Index Field="Task"/>
       <Index Field="Link"/>
       <Index Field="Task;Link" Unique="true"/>
@@ -177,13 +139,7 @@
       <Field UID="{3C0B727A-AF36-4A31-BB1A-AFC640F6D850}" Name="Icon" Type="ByteArray" LabelName="Иконка файла" LocalListName="Иконка файла"/>
     </Fields>
     <Indexes>
-      <Index Field="User"/>
-      <Index Field="DateTime"/>
       <Index Field="Task"/>
-      <Index Field="IsImage"/>
-      <Index Field="Name"/>
-      <Index Field="Extension"/>
-      <Index Field="Size"/>
     </Indexes>
     <Foreigns>
       <Foreign Field="User" ForeignClass="_Users" ForeignField="ID" ForeignViewNameField="FIO"/>
