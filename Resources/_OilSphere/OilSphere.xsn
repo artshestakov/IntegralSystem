@@ -17,15 +17,6 @@
     </Fields>
     <Indexes>
       <Index Field="Name" Unique="true"/>
-      <Index Field="Address"/>
-      <Index Field="Type"/>
-      <Index Field="Status"/>
-      <Index Field="Director"/>
-      <Index Field="Inn"/>
-      <Index Field="Kpp"/>
-      <Index Field="Ogrn"/>
-      <Index Field="Phone" Unique="true"/>
-      <Index Field="EMail"/>
     </Indexes>
     <Foreigns>
       <Foreign Field="Type" ForeignClass="CounterpartyType" ForeignField="ID" ForeignViewNameField="Name"/>
@@ -46,10 +37,6 @@
     </Fields>
     <Indexes>
       <Index Field="Counterparty"/>
-      <Index Field="Date"/>
-      <Index Field="Sum"/>
-      <Index Field="PaymentType"/>
-      <Index Field="Note"/>
     </Indexes>
     <Foreigns>
       <Foreign Field="Counterparty" ForeignClass="Counterparty" ForeignField="ID" ForeignViewNameField="Name"/>
@@ -73,14 +60,6 @@
       <Field UID="{F58FD218-D3A5-404F-97D0-6B987315A2A4}" Name="Checked" Type="Bool" DefaultValue="false" LabelName="Загрузка проверена" LocalListName="Загрузка проверена" SeparatorName="Дополнительно"/>
       <Field UID="{19711CDA-B8F4-4EC7-994A-D83D7BFE8B31}" Name="Implementation" Type="Bool" DefaultValue="false" LabelName="Реализация" LocalListName="Реализация"/>
     </Fields>
-    <Indexes>
-      <Index Field="Date"/>
-      <Index Field="ProductType"/>
-      <Index Field="Driver"/>
-      <Index Field="Car"/>
-      <Index Field="Checked"/>
-      <Index Field="Implementation"/>
-    </Indexes>
     <Foreigns>
       <Foreign Field="ProductType" ForeignClass="ProductType" ForeignField="ID" ForeignViewNameField="Name"/>
       <Foreign Field="Driver" ForeignClass="Driver" ForeignField="ID" ForeignViewNameField="FIO"/>
@@ -107,15 +86,6 @@
     </Fields>
     <Indexes>
       <Index Field="Implementation"/>
-      <Index Field="Counterparty"/>
-      <Index Field="Stock"/>
-      <Index Field="Container"/>
-      <Index Field="WeightGross"/>
-      <Index Field="WeightNet"/>
-      <Index Field="PriceUnit"/>
-      <Index Field="Cost"/>
-      <Index Field="PaymentType"/>
-      <Index Field="Note"/>
     </Indexes>
     <Foreigns>
       <Foreign Field="Implementation" ForeignClass="Implementation" ForeignField="ID" ForeignViewNameField="Date"/>
@@ -140,15 +110,6 @@
     </Fields>
     <Indexes>
       <Index Field="Implementation"/>
-      <Index Field="Counterparty"/>
-      <Index Field="Stock"/>
-      <Index Field="WeightGross"/>
-      <Index Field="Container"/>
-      <Index Field="WeightNet"/>
-      <Index Field="PriceUnit"/>
-      <Index Field="Cost"/>
-      <Index Field="PaymentType"/>
-      <Index Field="Note"/>
     </Indexes>
     <Foreigns>
       <Foreign Field="Implementation" ForeignClass="Implementation" ForeignField="ID" ForeignViewNameField="Date"/>
@@ -205,16 +166,6 @@
       <Field UID="{B259018F-0E88-4DA7-988B-36747489F91F}" Name="EMail" Type="EMail" LabelName="Электронная почта" LocalListName="Электронная почта"/>
       <Field UID="{32A4254D-1D93-4FE8-811F-6E8235343785}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
     </Fields>
-    <Indexes>
-      <Index Field="FIO"/>
-      <Index Field="Birthday"/>
-      <Index Field="Type"/>
-      <Index Field="Address"/>
-      <Index Field="PhoneMain" Unique="true"/>
-      <Index Field="PhoneOther" Unique="true"/>
-      <Index Field="EMail"/>
-      <Index Field="Note"/>
-    </Indexes>
     <Foreigns>
       <Foreign Field="Type" ForeignClass="DriverType" ForeignField="ID" ForeignViewNameField="Name"/>
     </Foreigns>
@@ -236,12 +187,6 @@
       <Field UID="{DB93A5B6-5F6C-4E03-AF9E-B133024D2F1A}" Name="Number" Type="String" LabelName="Гос. номер" LocalListName="Гос. номер" NotNull="true"/>
       <Field UID="{2B4D0C01-6018-4E9A-B110-AEE74332C5C6}" Name="VIN" Type="Vin" LabelName="ВИН" LocalListName="ВИН"/>
     </Fields>
-    <Indexes>
-      <Index Field="Mark"/>
-      <Index Field="Model"/>
-      <Index Field="Number"/>
-      <Index Field="VIN"/>
-    </Indexes>
   </Table>
 
   <Table Name="GasStationStatement" UID="{C9620F81-9306-4170-A9D4-569744F55697}" Alias="gsts" LocalName="Ведомость АЗС" LocalListName="Ведомость АЗС" TitleName="Date" ObjectForm="ISOilSphere::GasStationStatementObjectForm">
@@ -282,11 +227,7 @@
       <Field UID="{8E7094B4-DE39-466C-A7AD-A12346A7EB10}" Name="CashboxAdministrativeExpensesNote" Type="String" LabelName="Пояснения к административным расходам" LocalListName="Пояснения к административным расходам" LayoutName="Layout6"/>
     </Fields>
     <Indexes>
-      <Index Field="ImplementationUnload"/>
       <Index Field="Stock"/>
-      <Index Field="Date"/>
-      <Index Field="Operator"/>
-      <Index Field="Change"/>
     </Indexes>
     <Foreigns>
       <Foreign Field="ImplementationUnload" ForeignClass="ImplementationUnload" ForeignField="ID"/>
@@ -325,17 +266,6 @@
       <Field UID="{4C09D8BD-F29A-4EB9-81E7-698F2B90576C}" Name="Remainder" Type="Money" LabelName="Остаток" LocalListName="Остаток" LayoutName="DateReturn"/>
       <Field UID="{E58FB379-7635-4C7B-B8AF-7C00FD760640}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
     </Fields>
-    <Indexes>
-      <Index Field="DateComing"/>
-      <Index Field="Counterparty"/>
-      <Index Field="Coming"/>
-      <Index Field="Percent"/>
-      <Index Field="Total"/>
-      <Index Field="DateReturn"/>
-      <Index Field="Calculation"/>
-      <Index Field="Remainder"/>
-      <Index Field="Note"/>
-    </Indexes>
     <Foreigns>
       <Foreign Field="Counterparty" ForeignClass="Counterparty" ForeignField="ID" ForeignViewNameField="Name"/>
     </Foreigns>
@@ -353,17 +283,6 @@
       <Field UID="{65ECF301-2D4E-41A6-ACC3-BC1CA6042840}" Name="Remainder" Type="Money" LabelName="Остаток" LocalListName="Остаток" LayoutName="DateReturn"/>
       <Field UID="{73D37EA8-3F61-41AA-A485-514CF99558DA}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
     </Fields>
-    <Indexes>
-      <Index Field="DateComing"/>
-      <Index Field="Counterparty"/>
-      <Index Field="Coming"/>
-      <Index Field="Percent"/>
-      <Index Field="Total"/>
-      <Index Field="DateReturn"/>
-      <Index Field="Calculation"/>
-      <Index Field="Remainder"/>
-      <Index Field="Note"/>
-    </Indexes>
     <Foreigns>
       <Foreign Field="Counterparty" ForeignClass="Counterparty" ForeignField="ID" ForeignViewNameField="Name"/>
     </Foreigns>
@@ -381,17 +300,6 @@
       <Field UID="{CE500E60-F9C8-4858-89EF-BCCB67FEFFD9}" Name="Remainder" Type="Money" LabelName="Остаток" LocalListName="Остаток" LayoutName="DateReturn"/>
       <Field UID="{FE4F1688-4261-4081-A3E8-3933117CCF0B}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
     </Fields>
-    <Indexes>
-      <Index Field="DateComing"/>
-      <Index Field="Counterparty"/>
-      <Index Field="Coming"/>
-      <Index Field="Percent"/>
-      <Index Field="Total"/>
-      <Index Field="DateReturn"/>
-      <Index Field="Calculation"/>
-      <Index Field="Remainder"/>
-      <Index Field="Note"/>
-    </Indexes>
     <Foreigns>
       <Foreign Field="Counterparty" ForeignClass="Counterparty" ForeignField="ID" ForeignViewNameField="Name"/>
     </Foreigns>
@@ -409,17 +317,6 @@
       <Field UID="{660DB0C1-7F4C-4B77-9032-40D0970D38E3}" Name="Remainder" Type="Money" LabelName="Остаток" LocalListName="Остаток" LayoutName="DateReturn"/>
       <Field UID="{6E3F58D9-15E8-46DE-98C6-7BA2FFFB0D01}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
     </Fields>
-    <Indexes>
-      <Index Field="DateComing"/>
-      <Index Field="Counterparty"/>
-      <Index Field="Coming"/>
-      <Index Field="Percent"/>
-      <Index Field="Total"/>
-      <Index Field="DateReturn"/>
-      <Index Field="Calculation"/>
-      <Index Field="Remainder"/>
-      <Index Field="Note"/>
-    </Indexes>
     <Foreigns>
       <Foreign Field="Counterparty" ForeignClass="Counterparty" ForeignField="ID" ForeignViewNameField="Name"/>
     </Foreigns>
@@ -437,17 +334,6 @@
       <Field UID="{68CAB74C-8079-4FD5-9542-BB53C581F2F8}" Name="Remainder" Type="Money" LabelName="Остаток" LocalListName="Остаток" LayoutName="DateReturn"/>
       <Field UID="{5DD474F0-576B-4245-894B-F03E2E8DE547}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
     </Fields>
-    <Indexes>
-      <Index Field="DateComing"/>
-      <Index Field="Counterparty"/>
-      <Index Field="Coming"/>
-      <Index Field="Percent"/>
-      <Index Field="Total"/>
-      <Index Field="DateReturn"/>
-      <Index Field="Calculation"/>
-      <Index Field="Remainder"/>
-      <Index Field="Note"/>
-    </Indexes>
     <Foreigns>
       <Foreign Field="Counterparty" ForeignClass="Counterparty" ForeignField="ID" ForeignViewNameField="Name"/>
     </Foreigns>
@@ -487,18 +373,6 @@
       <Field UID="{5EE18C72-5ACB-4026-84B9-BE20252A9B00}" Name="TotalCost" Type="Money" LabelName="Итоговая стоимость" LocalListName="Итоговая стоимость" QueryText="get_sum_weight_move_wagon_detail(mwag_id) / 1000 * (mwag_price + mwag_storageservices + mwag_transshipment)"/>
       <Field UID="{1FFBC69B-26E5-4180-AF52-DB1F5FE37201}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
     </Fields>
-    <Indexes>
-      <Index Field="DateShipping"/>
-      <Index Field="Provider"/>
-      <Index Field="Waybill"/>
-      <Index Field="PassportQuality"/>
-      <Index Field="Price"/>
-      <Index Field="Stock"/>
-      <Index Field="DateArrival"/>
-      <Index Field="TechnicalLosses"/>
-      <Index Field="StorageServices"/>
-      <Index Field="Note"/>
-    </Indexes>
     <Foreigns>
       <Foreign Field="Provider" ForeignClass="Counterparty" ForeignField="ID" ForeignViewNameField="Name"/>
       <Foreign Field="Stock" ForeignClass="Stock" ForeignField="ID" ForeignViewNameField="Name"/>
@@ -517,9 +391,6 @@
     </Fields>
     <Indexes>
       <Index Field="MoveWagon"/>
-      <Index Field="WagonNumber"/>
-      <Index Field="Kilogram"/>
-      <Index Field="Note"/>
     </Indexes>
     <Foreigns>
       <Foreign Field="MoveWagon" ForeignClass="MoveWagon" ForeignField="ID" ForeignViewNameField="DateShipping"/>
@@ -537,14 +408,6 @@
       <Field UID="{E1A85ECD-1BE7-4466-9458-5F5977167997}" Name="Remainder" Type="Money" ReadOnly="true" LabelName="Остаток" LocalListName="Остаток" LayoutName="Consumption" QueryText="get_driver_cost_remainder(drcs_id, drcs_coming, drcs_previousremainder)"/>
       <Field UID="{2CA5BCCF-A93B-42AD-82B9-BE5FEDAA8B44}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
     </Fields>
-    <Indexes>
-      <Index Field="Date"/>
-      <Index Field="Driver"/>
-      <Index Field="Car"/>
-      <Index Field="Coming"/>
-      <Index Field="PreviousRemainder"/>
-      <Index Field="Note"/>
-    </Indexes>
     <Foreigns>
       <Foreign Field="Driver" ForeignClass="Driver" ForeignField="ID" ForeignViewNameField="FIO"/>
       <Foreign Field="Car" ForeignClass="Car" ForeignField="ID" ForeignViewNameField="Mark;Model;Number"/>
@@ -563,9 +426,6 @@
     </Fields>
     <Indexes>
       <Index Field="DriverCost"/>
-      <Index Field="Service"/>
-      <Index Field="Price"/>
-      <Index Field="Note"/>
     </Indexes>
     <Foreigns>
       <Foreign Field="DriverCost" ForeignClass="DriverCost" ForeignField="ID"/>
@@ -592,10 +452,7 @@
     </Fields>
     <Indexes>
       <Index Field="Name" Unique="true"/>
-      <Index Field="DateStart"/>
-      <Index Field="DateEnd"/>
-      <Index Field="Constant"/>
-      <Index Field="Note"/>
+      <Index Field="DateStart;DateEnd"/>
     </Indexes>
   </Table>
 
