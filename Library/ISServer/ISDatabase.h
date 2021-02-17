@@ -13,13 +13,19 @@ public:
 
 	QString GetErrorString() const; //Получить описание последней ошибки
 
-	QSqlDatabase GetDB(const QString &ConnectionName); //Получить ссылку на экземпляр БД по имени соединения
-	ISConnectOptionDB GetOption(const QString &ConnectionName); //Получить параметры подключения к БД
+	//Получить ссылку на экземпляр БД по имени соединения
+	QSqlDatabase GetDB(const QString &ConnectionName);
+	PGconn* GetDBLibPQ(const QString &ConnectionName);
+	
+	//Получить параметры подключения к БД
+	ISConnectOptionDB GetOption(const QString &ConnectionName);
+	ISConnectOptionDB GetOptionLibPQ(const QString &ConnectionName);
 
 	bool CheckExistDatabase(const QString &ConnectionName, const QString &Database, bool &Exist); //Проверить существование базы данных
 
 	bool ConnectLibPQ(const QString &ConnectionName, const QString &Host, unsigned short Port, const QString &Database, const QString &Login, const QString &Password); //Подключение к БД через LibPQ
 	void DisconnectLibPQ(const QString &ConnectionName); //Отключение от БД через LibPQ
+	void DisconnectAllLibPQ(); //Отключение от всех экземпляров БД через LibPQ
 
 	bool Connect(const QString &ConnectionName, const ISConnectOptionDB &ConnectOptionDB); //Подключение к базе данных
 	bool Connect(const QString &ConnectionName, const QString &Host, unsigned short Port, const QString &Database, const QString &Login, const QString &Password); //Подключение к базе данных

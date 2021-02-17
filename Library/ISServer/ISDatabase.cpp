@@ -36,6 +36,19 @@ QSqlDatabase ISDatabase::GetDB(const QString &ConnectionName)
     return QSqlDatabase();
 }
 //-----------------------------------------------------------------------------
+PGconn* ISDatabase::GetDBLibPQ(const QString &ConnectionName)
+{
+	PGconn *Connection = NULL;
+	CRITICAL_SECTION_LOCK(&CriticalSection);
+	auto It = ConnectionsLibPQ.find(ConnectionName);
+	if (It != ConnectionsLibPQ.end())
+	{
+		Connection = It->second;
+	}
+	CRITICAL_SECTION_UNLOCK(&CriticalSection);
+	return Connection;
+}
+//-----------------------------------------------------------------------------
 ISConnectOptionDB ISDatabase::GetOption(const QString &ConnectionName)
 {
     ISConnectOptionDB ConnectOption;
@@ -46,6 +59,23 @@ ISConnectOptionDB ISDatabase::GetOption(const QString &ConnectionName)
 	}
 	CRITICAL_SECTION_UNLOCK(&CriticalSection);
     return ConnectOption;
+}
+//-----------------------------------------------------------------------------
+ISConnectOptionDB ISDatabase::GetOptionLibPQ(const QString &ConnectionName)
+{
+	ISConnectOptionDB ConnectOption;
+	CRITICAL_SECTION_LOCK(&CriticalSection);
+	auto It = ConnectionsLibPQ.find(ConnectionName);
+	if (It != ConnectionsLibPQ.end())
+	{
+		ConnectOption.Host = PQhost(It->second);
+		ConnectOption.Port = atoi(PQport(It->second));
+		ConnectOption.Name = PQdb(It->second);
+		ConnectOption.Login = PQuser(It->second);
+		ConnectOption.Password = PQpass(It->second);
+	}
+	CRITICAL_SECTION_UNLOCK(&CriticalSection);
+	return ConnectOption;
 }
 //-----------------------------------------------------------------------------
 bool ISDatabase::CheckExistDatabase(const QString &ConnectionName, const QString &Database, bool &Exist)
@@ -69,7 +99,8 @@ bool ISDatabase::ConnectLibPQ(const QString &ConnectionName, const QString &Host
 	StringStream << "port=" << std::to_string(Port) << ' ';
 	StringStream << "dbname=" << Database.toStdString() << ' ';
 	StringStream << "user=" << Login.toStdString() << ' ';
-	StringStream << "password=" << Password.toStdString();
+	StringStream << "password=" << Password.toStdString() << ' ';
+	StringStream << "application_name=" << QCoreApplication::applicationName().toStdString();
 	std::string String = StringStream.str(); //Нужна именно такая конструкция
 	const char *ConnectionInfo = String.c_str();
 
@@ -108,13 +139,22 @@ void ISDatabase::DisconnectLibPQ(const QString &ConnectionName)
 {
 	CRITICAL_SECTION_LOCK(&CriticalSection);
 	auto It = ConnectionsLibPQ.find(ConnectionName);
-	if (It != ConnectionsLibPQ.end()) //Нашли соединение - отключаемся
+	if (It != ConnectionsLibPQ.end()) //Нашли соединение
 	{
 		PQfinish(It->second);
 		It->second = NULL;
 		ConnectionsLibPQ.erase(It);
 	}
 	CRITICAL_SECTION_UNLOCK(&CriticalSection);
+}
+//-----------------------------------------------------------------------------
+void ISDatabase::DisconnectAllLibPQ()
+{
+	std::vector<QString> Keys = ISAlgorithm::ConvertMapToKeys(ConnectionsLibPQ);
+	for (const QString &ConnectionName : Keys)
+	{
+		DisconnectLibPQ(ConnectionName);
+	}
 }
 //-----------------------------------------------------------------------------
 bool ISDatabase::Connect(const QString &ConnectionName, const ISConnectOptionDB &ConnectOptionDB)
