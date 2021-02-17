@@ -14,15 +14,9 @@
       <Field UID="{196BD860-208E-4DF7-8E4D-A65F7A9E8F35}" Name="AccountLifeTimeEnd" Type="Date" LabelName="Дата окончания действия" LocalListName="Дата окончания действия" HideFromList="true" LayoutName="AccountLifeTime"/>
     </Fields>
     <Indexes>
-      <Index Field="Group"/>
-      <Index Field="FIO"/>
       <Index Field="Login" Unique="true"/>
       <Index Field="Hash" Unique="true"/>
       <Index Field="Salt" Unique="true"/>
-      <Index Field="AccessAllowed"/>
-      <Index Field="AccountLifetime"/>
-      <Index Field="AccountLifetimeStart"/>
-      <Index Field="AccountLifetimeEnd"/>
     </Indexes>
     <Foreigns>
       <Foreign Field="Group" ForeignClass="_UserGroup" ForeignField="ID" ForeignViewNameField="Name"/>
@@ -100,9 +94,6 @@
     </Fields>
     <Indexes>
       <Index Field="Parent"/>
-      <Index Field="Name"/>
-      <Index Field="Hint"/>
-      <Index Field="Order"/>
     </Indexes>
     <Foreigns>
       <Foreign Field="Parent" ForeignClass="_GroupAccessSpecialType" ForeignField="UID" ForeignViewNameField="Name"/>
