@@ -170,13 +170,14 @@ bool ISCaratApplication::Run()
 		arg(CONFIG_STRING(CONST_CONFIG_CONNECTION_DATABASE)));
 
 	//Подключаемся к БД
-	if (!ISDatabase::Instance().Connect(CONNECTION_DEFAULT,
+	if (!ISDatabase::Instance().ConnectLibPQ(CONNECTION_DEFAULT,
 		CONFIG_STRING(CONST_CONFIG_CONNECTION_SERVER), CONFIG_INT(CONST_CONFIG_CONNECTION_PORT), CONFIG_STRING(CONST_CONFIG_CONNECTION_DATABASE),
 		CONFIG_STRING(CONST_CONFIG_CONNECTION_LOGIN), CONFIG_STRING(CONST_CONFIG_CONNECTION_PASSWORD)))
 	{
 		ISLOGGER_E(__CLASS__, "Not connected to db: " + ISDatabase::Instance().GetErrorString());
 		return false;
 	}
+	ISDatabase::Instance().DisconnectLibPQ(CONNECTION_DEFAULT);
 
 	//Если мониторинг включен - запуска его
 	if (CONFIG_BOOL(CONST_CONFIG_MONITOR_INCLUDE))

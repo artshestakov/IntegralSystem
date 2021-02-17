@@ -1,7 +1,5 @@
 #include "ISDatabase.h"
 #include "ISQuery.h"
-#include "ISConstants.h"
-#include "ISMetaData.h"
 //-----------------------------------------------------------------------------
 static QString QS_DATABASE = PREPARE_QUERY("SELECT COUNT(*) "
                                            "FROM pg_database "
@@ -61,6 +59,62 @@ bool ISDatabase::CheckExistDatabase(const QString &ConnectionName, const QString
         Exist = qSelectDatabase.ReadColumn("count").toBool();
     }
     return Result;
+}
+//-----------------------------------------------------------------------------
+bool ISDatabase::ConnectLibPQ(const QString &ConnectionName, const QString &Host, unsigned short Port, const QString &Database, const QString &Login, const QString &Password)
+{
+	//Формируем строку подключения
+	std::stringstream StringStream;
+	StringStream << "host=" << Host.toStdString() << ' ';
+	StringStream << "port=" << std::to_string(Port) << ' ';
+	StringStream << "dbname=" << Database.toStdString() << ' ';
+	StringStream << "user=" << Login.toStdString() << ' ';
+	StringStream << "password=" << Password.toStdString();
+	std::string String = StringStream.str(); //Нужна именно такая конструкция
+	const char *ConnectionInfo = String.c_str();
+
+	//Пингуем сервер
+	PGPing Ping = PQping(ConnectionInfo);
+	if (Ping != PQPING_OK) //Что-то не так
+	{
+		switch (Ping)
+		{
+		case PGPing::PQPING_REJECT: ErrorString = "The server reject connection"; break;
+		case PGPing::PQPING_NO_RESPONSE: ErrorString = "The server no responce"; break;
+		case PGPing::PQPING_NO_ATTEMPT: ErrorString = "No contact was made with the server: invalid connection parameters or out of memory"; break;
+		default:
+			break;
+		}
+		return false;
+	}
+
+	//Подключаемся
+	PGconn *Connection = PQconnectdb(ConnectionInfo);
+	if (PQstatus(Connection) != CONNECTION_OK) //Что-то не так
+	{
+		PQfinish(Connection);
+		ErrorString = QString::fromLocal8Bit(PQerrorMessage(Connection));
+		return false;
+	}
+
+	//Добавляем указатель на соединение в список
+	CRITICAL_SECTION_LOCK(&CriticalSection);
+	ConnectionsLibPQ.emplace(ConnectionName, Connection);
+	CRITICAL_SECTION_UNLOCK(&CriticalSection);
+	return true;
+}
+//-----------------------------------------------------------------------------
+void ISDatabase::DisconnectLibPQ(const QString &ConnectionName)
+{
+	CRITICAL_SECTION_LOCK(&CriticalSection);
+	auto It = ConnectionsLibPQ.find(ConnectionName);
+	if (It != ConnectionsLibPQ.end()) //Нашли соединение - отключаемся
+	{
+		PQfinish(It->second);
+		It->second = NULL;
+		ConnectionsLibPQ.erase(It);
+	}
+	CRITICAL_SECTION_UNLOCK(&CriticalSection);
 }
 //-----------------------------------------------------------------------------
 bool ISDatabase::Connect(const QString &ConnectionName, const ISConnectOptionDB &ConnectOptionDB)
