@@ -8,9 +8,7 @@
       <Field UID="{BB690831-A151-4BA0-9E4F-66699DB132F9}" Name="Value" Type="String" LabelName="Значение" LocalListName="Значение"/>
     </Fields>
     <Indexes>
-      <Index Field="Setting"/>
-      <Index Field="Value"/>
-      <Index Field="User;Setting"/>
+      <Index Field="User;Setting" Unique="true"/>
     </Indexes>
     <Foreigns>
       <Foreign Field="User" ForeignClass="_Users" ForeignField="ID" ForeignViewNameField="FIO"/>
@@ -48,16 +46,6 @@
       <Field UID="{AED0720D-95E5-4ECC-8A6C-9BE2FBDA819A}" Name="Hint" Type="String" LabelName="Подсказка" LocalListName="Подсказка"/>
       <Field UID="{F3EA136B-DA73-400C-9BC4-E09F1A4FE032}" Name="DefaultValue" Type="String" LabelName="Значение по умолчанию" LocalListName="Значение по умолчанию"/>
     </Fields>
-    <Indexes>
-      <Index Field="Group"/>
-      <Index Field="Order"/>
-      <Index Field="Name"/>
-      <Index Field="Type"/>
-      <Index Field="WidgetEditName"/>
-      <Index Field="LocalName"/>
-      <Index Field="Hint"/>
-      <Index Field="DefaultValue"/>
-    </Indexes>
     <Foreigns>
       <Foreign Field="Group" ForeignClass="_SettingsGroup" ForeignField="UID" ForeignViewNameField="LocalName"/>
     </Foreigns>
