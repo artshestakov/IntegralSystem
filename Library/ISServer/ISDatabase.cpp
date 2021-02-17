@@ -63,20 +63,6 @@ bool ISDatabase::CheckExistDatabase(const QString &ConnectionName, const QString
     return Result;
 }
 //-----------------------------------------------------------------------------
-QVariant ISDatabase::GetValue(const QString &TableName, const QString &FieldName, int ObjectID) const
-{
-    PMetaTable *MetaTable = ISMetaData::Instance().GetMetaTable(TableName);
-    PMetaField *MetaField = MetaTable->GetField(FieldName);
-    QString SqlText = "SELECT " + MetaTable->Alias + '_' + MetaField->Name.toLower() + " FROM " + MetaTable->Name.toLower() + " WHERE " + MetaTable->Alias + "_id = :ObjectID";
-    ISQuery qSelect(SqlText);
-    qSelect.BindValue(":ObjectID", ObjectID);
-    if (qSelect.ExecuteFirst())
-    {
-        return qSelect.ReadColumn(MetaTable->Alias + '_' + MetaField->Name.toLower());
-    }
-    return QVariant();
-}
-//-----------------------------------------------------------------------------
 bool ISDatabase::Connect(const QString &ConnectionName, const ISConnectOptionDB &ConnectOptionDB)
 {
 	return Connect(ConnectionName, ConnectOptionDB.Host, ConnectOptionDB.Port, ConnectOptionDB.Name, ConnectOptionDB.Login, ConnectOptionDB.Password);
