@@ -42,12 +42,6 @@
       <Field UID="{DED0FB98-5B69-4EFF-9F52-3605836AFB68}" Name="Icon" Type="String" LabelName="Наименование иконки" LocalListName="Наименование иконки"/>
       <Field UID="{2CDE872E-B25B-4A95-9FBC-8810C996DB63}" Name="Hint" Type="String" LabelName="Подсказка" LocalListName="Подсказка"/>
     </Fields>
-    <Indexes>
-      <Index Field="LocalName" Unique="true"/>
-      <Index Field="OrderID"/>
-      <Index Field="Icon"/>
-      <Index Field="Hint"/>
-    </Indexes>
   </Table>
 
   <Table Name="_SubSystems" UID="{8F19D6C6-53BB-4272-859B-8A96939FE770}" Alias="sbsm" LocalName="Подсистема" LocalListName="Подсистемы" TitleName="LocalName" IsSystem="true">
@@ -62,12 +56,6 @@
     </Fields>
     <Indexes>
       <Index Field="System"/>
-      <Index Field="LocalName"/>
-      <Index Field="OrderID"/>
-      <Index Field="Icon"/>
-      <Index Field="ClassName"/>
-      <Index Field="TableName"/>
-      <Index Field="Hint"/>
     </Indexes>
     <Foreigns>
       <Foreign Field="System" ForeignClass="_Systems" ForeignField="UID" ForeignViewNameField="LocalName"/>
@@ -83,14 +71,6 @@
       <Field UID="{5F7C5BCD-6D38-42B2-933D-E2E381182799}" Name="Icon" Type="String" LabelName="Иконка" LocalListName="Иконка" NotNull="true"/>
       <Field UID="{C09B8103-A395-491D-8E29-CB1792336C42}" Name="ClassName" Type="String" LabelName="Наименование класса" LocalListName="Наименование класса" NotNull="true"/>
     </Fields>
-    <Indexes>
-      <Index Field="Name" Unique="true"/>
-      <Index Field="OrderID"/>
-      <Index Field="LocalName" Unique="true"/>
-      <Index Field="ToolTip"/>
-      <Index Field="Icon" Unique="true"/>
-      <Index Field="ClassName" Unique="true"/>
-    </Indexes>
   </Table>
 
   <Table Name="_InternalDirectories" UID="{4E1B9753-9D99-41A8-ACE8-0BF7D769530A}" Alias="intd" LocalName="Запись" LocalListName="Записи" TitleName="TableName" IsSystem="true">
@@ -100,7 +80,6 @@
     </Fields>
     <Indexes>
       <Index Field="TableName" Unique="true"/>
-      <Index Field="Order"/>
     </Indexes>
   </Table>
 
@@ -124,11 +103,7 @@
       <Field UID="{04D790CB-F34A-4367-A1C8-2DFA28F01A7A}" Name="Message" Type="Text" LabelName="Сообщение" LocalListName="Сообщение" NotNull="true" PlaceholderText="Что Вы хотите сказать?"/>
     </Fields>
     <Indexes>
-      <Index Field="User"/>
-      <Index Field="DateTime"/>
-      <Index Field="TableName"/>
-      <Index Field="ObjectID"/>
-      <Index Field="Message"/>
+      <Index Field="TableName;ObjectID"/>
     </Indexes>
     <Foreigns>
       <Foreign Field="User" ForeignClass="_Users" ForeignField="ID" ForeignViewNameField="FIO"/>
@@ -142,6 +117,7 @@
       <Field UID="{A5E091B4-62D3-4A2D-9E9F-EBBEAA3011EF}" Name="ObjectID" Type="BigInt" LabelName="Идентификатор объекта" LocalListName="Идентификатор объекта" NotNull="true"/>
     </Fields>
     <Indexes>
+      <Index Field="User"/>
       <Index Field="User;TableName;ObjectID" Unique="true"/>
     </Indexes>
     <Foreigns>
@@ -159,11 +135,6 @@
       <Field UID="{F3B4D524-5B30-4B70-8DAA-1245FB97C808}" Name="Data" Type="ByteArray" LabelName="Данные" LocalListName="Данные" HideFromList="true" HideFromObject="true" NotNull="true"/>
     </Fields>
     <Indexes>
-      <Index Field="Owner"/>
-      <Index Field="Name"/>
-      <Index Field="Expansion"/>
-      <Index Field="Size"/>
-      <Index Field="Note"/>
       <Index Field="Name;Expansion" Unique="true"/>
     </Indexes>
     <Foreigns>
@@ -180,15 +151,6 @@
       <Field UID="{97110CE7-6D68-41E1-BD46-303FE1759A9E}" Name="Text" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
       <Field UID="{088B15C9-2728-4595-9AB4-908F28A3D11B}" Name="Closed" Type="Bool" DefaultValue="false" LabelName="Закрыто" LocalListName="Закрыто" HideFromObject="true"/>
     </Fields>
-    <Indexes>
-      <Index Field="User"/>
-      <Index Field="Date"/>
-      <Index Field="TimeAlert"/>
-      <Index Field="Name"/>
-      <Index Field="Text"/>
-      <Index Field="Closed"/>
-      <Index Field="Closed;Date;TimeAlert"/>
-    </Indexes>
     <Foreigns>
       <Foreign Field="User" ForeignClass="_Users" ForeignField="ID" ForeignViewNameField="FIO"/>
     </Foreigns>
@@ -215,9 +177,6 @@
     </Fields>
     <Indexes>
       <Index Field="User"/>
-      <Index Field="TableName"/>
-      <Index Field="FieldName"/>
-      <Index Field="Size"/>
       <Index Field="User;TableName;FieldName" Unique="true"/>
     </Indexes>
   </Table>
