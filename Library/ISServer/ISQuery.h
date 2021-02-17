@@ -52,7 +52,6 @@ private:
     QString SqlText;
     ISStringToIntMap ColumnIndices;
     QSqlDatabase SqlDatabase;
-    bool Prepared;
     bool ShowLongQuery;
 };
 //-----------------------------------------------------------------------------

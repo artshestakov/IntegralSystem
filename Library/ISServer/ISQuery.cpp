@@ -10,7 +10,6 @@ ISQuery::ISQuery(const QString& sql_text, bool prepare)
 	SqlQuery(ISDatabase::Instance().GetDB(CONNECTION_DEFAULT)),
 	SqlText(sql_text),
 	SqlDatabase(ISDatabase::Instance().GetDB(CONNECTION_DEFAULT)),
-	Prepared(false),
 	ShowLongQuery(true)
 {
 	if (prepare && !sql_text.isEmpty())
@@ -28,7 +27,6 @@ ISQuery::ISQuery(const QSqlDatabase& sql_database, const QString& sql_text, bool
 	SqlQuery(sql_database),
 	SqlText(sql_text),
 	SqlDatabase(sql_database),
-	Prepared(false),
 	ShowLongQuery(true)
 {
 	if (prepare && !sql_text.isEmpty())
@@ -49,12 +47,12 @@ ISQuery::~ISQuery()
 bool ISQuery::Prepare(const QString& sql_text)
 {
 	SqlText = sql_text;
-	Prepared = SqlQuery.prepare(sql_text);
-	if (!Prepared)
+	if (!SqlQuery.prepare(sql_text))
 	{
 		ErrorString = SqlQuery.lastError().databaseText();
+		return false;
 	}
-	return Prepared;
+	return true;
 }
 //-----------------------------------------------------------------------------
 bool ISQuery::Prepare(QSqlDatabase& sql_database, const QString& sql_text)
