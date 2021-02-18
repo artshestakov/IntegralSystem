@@ -140,6 +140,7 @@
   <Local Name="Message.Warning.NotOpenFeedbackLink" Russian="Не удалось открыть ссылку!"/>
   <Local Name="Message.Warning.SearchFieldsIsEmpty" Russian="Поисковые значения отсутствуют."/>
   <Local Name="Message.Warning.AlreadyConnected" Russian="ВНИМАНИЕ! Вход в вашу учётную запись уже был выполнен.&#10;&#10;Дата и время подключения: %1&#10;Адрес: %2"/>
+  <Local Name="Message.Warning.ProtocolNoRecord" Russian="Данное событие не связанно с запись в базе данных."/>
   <Local Name="Message.Question.ChangeUser" Russian="Сменить пользователя?"/>
   <Local Name="Message.Question.ExitApplication" Russian="Вы действительно хотите выйти из программы?"/>
   <Local Name="Message.Question.File.SavedToPath" Russian="Файл успешно сохранен по пути:&#10;%1&#10;Открыть его?"/>
