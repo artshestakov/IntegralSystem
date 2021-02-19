@@ -4,9 +4,11 @@
 #include "ISBuffer.h"
 #include "ISGui.h"
 #include "ISMetaData.h"
-#include "ISComboSearchWidgets.h"
 #include "ISDelegates.h"
 #include "ISDialogsCommon.h"
+#include "ISAlgorithm.h"
+#include "ISButtons.h"
+#include "ISScrollArea.h"
 //-----------------------------------------------------------------------------
 ISSearchForm::ISSearchForm(PMetaTable *meta_table, QWidget *parent)
 	: ISInterfaceForm(parent),
@@ -17,16 +19,11 @@ ISSearchForm::ISSearchForm(PMetaTable *meta_table, QWidget *parent)
 	resize(800, 600);
 	GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);
 
-	TreeWidget = new QTreeWidget(this);
-	TreeWidget->setHeaderLabels(QStringList() << "Field name" << "Operator" << "Edit" << "Button");
-	TreeWidget->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
-	TreeWidget->setAnimated(true);
-	TreeWidget->setSelectionMode(QAbstractItemView::NoSelection);
-	TreeWidget->setHeaderHidden(true);
-	TreeWidget->setItemDelegate(new ISDelegateSearchField(TreeWidget));
-	TreeWidget->setFrameShape(QFrame::NoFrame);
-	TreeWidget->setFocusPolicy(Qt::NoFocus);
-	GetMainLayout()->addWidget(TreeWidget);
+	ISScrollArea *ScrollArea = new ISScrollArea(this);
+	GetMainLayout()->addWidget(ScrollArea);
+
+	GridLayout = new QGridLayout();
+	ScrollArea->widget()->setLayout(GridLayout);
 
 	for (PMetaField *MetaField : MetaTable->Fields)
 	{
@@ -43,20 +40,11 @@ ISSearchForm::ISSearchForm(PMetaTable *meta_table, QWidget *parent)
 		}
 		AddField(MetaField);
 	}
-
-	for (int i = 0; i < TreeWidget->columnCount(); ++i)
-	{
-		TreeWidget->resizeColumnToContents(i);
-	}
+	GetMainLayout()->addStretch();
 
 	QHBoxLayout *LayoutBottom = new QHBoxLayout();
-	GetMainLayout()->addLayout(LayoutBottom);
-
-	ISPushButton *ButtonClear = new ISPushButton(LANG("Search.Clear"), this);
-	connect(ButtonClear, &ISPushButton::clicked, this, &ISSearchForm::Clear);
-	LayoutBottom->addWidget(ButtonClear);
-
 	LayoutBottom->addStretch();
+	GetMainLayout()->addLayout(LayoutBottom);
 
 	ISPushButton *ButtonSearch = new ISPushButton(this);
 	ButtonSearch->setText(LANG("Search"));
@@ -72,7 +60,7 @@ ISSearchForm::ISSearchForm(PMetaTable *meta_table, QWidget *parent)
 //-----------------------------------------------------------------------------
 ISSearchForm::~ISSearchForm()
 {
-
+	
 }
 //-----------------------------------------------------------------------------
 void ISSearchForm::closeEvent(QCloseEvent *e)
@@ -91,163 +79,110 @@ void ISSearchForm::EnterClicked()
 	Search();
 }
 //-----------------------------------------------------------------------------
-void ISSearchForm::AddField(PMetaField *MetaField, QTreeWidgetItem *ParentItem)
+void ISSearchForm::AddField(PMetaField *MetaField)
 {
-	QTreeWidgetItem *TreeWidgetItem = nullptr;
-	if (ParentItem)
+	int RowIndex = GridLayout->rowCount();
+
+	//Заголовок поискового поля
+	QLabel *LabelName = new QLabel(MetaField->LabelName + ':', this);
+	ISGui::SetFontWidgetBold(LabelName, true);
+	GridLayout->addWidget(LabelName, RowIndex, 0);
+
+	//Виджет с выбором оператора
+	QString SearchOperatorWidget = MetaField->Type == ISNamespace::FieldType::BigInt && MetaField->Foreign
+		? "ISComboSearchBase" :
+		ISMetaData::Instance().GetType(MetaField->Type).SearchConditionWidget;
+	ISComboSearchBase *ComboSearchOperator = ISAlgorithm::CreatePointer<ISComboSearchBase *>(SearchOperatorWidget, Q_ARG(QWidget *, this));
+	GridLayout->addWidget(ComboSearchOperator, RowIndex, 1);
+
+	//Поле редактирования
+	ISFieldEditBase *FieldEditBase = ISGui::CreateColumnForField(this, MetaField);
+	if (MetaField->Foreign)
 	{
-		TreeWidgetItem = new QTreeWidgetItem(ParentItem);
-		TreeWidget->expandItem(ParentItem);
+		FieldEditBase->setProperty("MainEdit", true);
+		dynamic_cast<ISListEdit*>(FieldEditBase)->InvokeList(MetaField->Foreign);
+		connect(FieldEditBase, &ISFieldEditBase::ValueChange, this, &ISSearchForm::ListEditChanged);
+
+		QVBoxLayout *Layout = new QVBoxLayout();
+		QWidget *Widget = new QWidget(this);
+		Widget->setLayout(Layout);
+		GridLayout->addWidget(Widget, RowIndex, 2);
+		Layout->addWidget(FieldEditBase);
+
+		ISPushButton *ButtonAdd = new ISPushButton(BUFFER_ICONS("Add"), LANG("ISSearchForm.AddValue"), Widget);
+		ButtonAdd->setFlat(true);
+		ButtonAdd->setProperty("FieldName", MetaField->Name);
+		connect(ButtonAdd, &ISPushButton::clicked, this, &ISSearchForm::AddClicked);
+		Layout->addWidget(ButtonAdd, 0, Qt::AlignLeft);		
 	}
 	else
 	{
-		TreeWidgetItem = new QTreeWidgetItem(TreeWidget);
+		GridLayout->addWidget(FieldEditBase, RowIndex, 2);
 	}
-
-	//Панель для кнопки (нужна для правильного центрирования за счёт Layout)
-	QWidget *Widget = new QWidget(TreeWidget);
-	Widget->setLayout(new QVBoxLayout());
-	Widget->layout()->setContentsMargins(0, 0, 25, 0);
-	TreeWidget->setItemWidget(TreeWidgetItem, 0, Widget);
-
-	//Кнопка добавления/удаления полей
-	ISServiceButton *ButtonAction = new ISServiceButton(ParentItem ? BUFFER_ICONS("Delete") : BUFFER_ICONS("Add"),
-		ParentItem ? LANG("ISSearchForm.DeleteField") : LANG("ISSearchForm.AddField"), Widget);
-	ParentItem ?
-		connect(ButtonAction, &ISServiceButton::clicked, this, &ISSearchForm::DeleteClicked) :
-		connect(ButtonAction, &ISServiceButton::clicked, this, &ISSearchForm::AddClicked);
-	ButtonAction->setFlat(true);
-	ButtonAction->setFocusPolicy(Qt::NoFocus);
-	ButtonAction->setProperty("FieldName", MetaField->Name);
-	Widget->layout()->addWidget(ButtonAction);
-
-	if (!ParentItem)
-	{
-		//Заголовок поискового поля
-		QLabel *LabelName = new QLabel(MetaField->LabelName + ':', TreeWidget);
-		TreeWidget->setItemWidget(TreeWidgetItem, 1, LabelName);
-
-		//Виджет с выбором оператора
-		QString SearchOperatorWidget = MetaField->Type == ISNamespace::FieldType::Int && MetaField->Foreign
-			? "ISComboSearchBase" :
-			ISMetaData::Instance().GetType(MetaField->Type).SearchConditionWidget;
-		ISComboSearchBase *ComboSearchOperator = ISAlgorithm::CreatePointer<ISComboSearchBase *>(SearchOperatorWidget, Q_ARG(QWidget *, TreeWidget));
-		TreeWidget->setItemWidget(TreeWidgetItem, 2, ComboSearchOperator);
-	}
-
-	//Панель для поля редактирования (нужна для отображения виджетов редактирования слева)
-	//QWidget *PanelFieldEdit = new QWidget(TreeWidget);
-	//PanelFieldEdit->setLayout(new QVBoxLayout());
-	//TreeWidget->setItemWidget(TreeWidgetItem, 3, PanelFieldEdit);
-
-	//Поле редактирования
-	ISFieldEditBase *FieldEdit = ISGui::CreateColumnForField(TreeWidget, MetaField);
-	FieldEdit->SetSizePolicyHorizontal(QSizePolicy::Minimum);
-	if (MetaField->Foreign) //Если поле является справочным - инициализируем его
-	{
-		dynamic_cast<ISListEdit*>(FieldEdit)->InvokeList(MetaField->Foreign);
-	}
-	//dynamic_cast<QVBoxLayout*>(PanelFieldEdit->layout())->addWidget(FieldEdit, 0, Qt::AlignLeft);
-	TreeWidget->setItemWidget(TreeWidgetItem, 3, FieldEdit);
-
-	Map.emplace(ButtonAction, TreeWidgetItem);
-	if (ParentItem)
-	{
-		FieldEdit->SetFocus();
-	}
+	VectorEdits.push_back({ MetaField->Name, ComboSearchOperator, std::vector<ISFieldEditBase*>{FieldEditBase} });
 }
 //-----------------------------------------------------------------------------
 void ISSearchForm::AddClicked()
 {
-	PMetaField *MetaField = MetaTable->GetField(sender()->property("FieldName").toString());
-	AddField(MetaField, Map[sender()]);
-}
-//-----------------------------------------------------------------------------
-void ISSearchForm::DeleteClicked()
-{
-	//Получаем элементы
-	QTreeWidgetItem *TreeWidgetItem = Map[sender()];
+	ISPushButton *ButtonSender = dynamic_cast<ISPushButton*>(sender());
+	PMetaField *MetaField = MetaTable->GetField(ButtonSender->property("FieldName").toString());
 
-	//Удаляем виджеты
-	TreeWidget->removeItemWidget(TreeWidgetItem, 0);
-	TreeWidget->removeItemWidget(TreeWidgetItem, 3);
+	ISFieldEditBase *FieldEditBase = ISGui::CreateColumnForField(this, MetaField);
+	FieldEditBase->setProperty("MainEdit", false);
+	dynamic_cast<ISListEdit*>(FieldEditBase)->InvokeList(MetaField->Foreign);
+	connect(FieldEditBase, &ISFieldEditBase::ValueChange, this, &ISSearchForm::ListEditChanged);
 
-	//Удаляем элемент
-	QTreeWidgetItem *ParentItem = TreeWidgetItem->parent();
-	delete ParentItem->takeChild(ParentItem->indexOfChild(TreeWidgetItem));
-
-	//Удаляем элемент из массива
-	auto It = Map.find(sender());
-	if (It != Map.end())
+	for (SearchField &Field : VectorEdits)
 	{
-		Map.erase(It);
-	}
-}
-//-----------------------------------------------------------------------------
-void ISSearchForm::Clear()
-{
-	for (int i = 0; i < TreeWidget->topLevelItemCount(); ++i)
-	{
-		QTreeWidgetItem *TopLevelItem = TreeWidget->topLevelItem(i);
-		ISFieldEditBase *FieldEditBase = dynamic_cast<ISFieldEditBase*>(TreeWidget->itemWidget(TopLevelItem, 3));
-		FieldEditBase->Clear();
-
-		for (int j = 0; j < TopLevelItem->childCount(); ++j)
+		if (Field.Name == MetaField->Name)
 		{
-			QTreeWidgetItem *ChildItem = TopLevelItem->child(j);
-			FieldEditBase = dynamic_cast<ISFieldEditBase*>(TreeWidget->itemWidget(ChildItem, 3));
-			FieldEditBase->Clear();
+			Field.Edits.push_back(FieldEditBase);
 		}
+	}
+	
+	QVBoxLayout *Layout = dynamic_cast<QVBoxLayout*>(ButtonSender->parentWidget()->layout());
+	Layout->insertWidget(Layout->indexOf(ButtonSender), FieldEditBase);
+	QTimer::singleShot(100, dynamic_cast<ISListEdit*>(FieldEditBase), &ISListEdit::ShowPopup);
+}
+//-----------------------------------------------------------------------------
+void ISSearchForm::ListEditChanged(const QVariant &Value)
+{
+	if (!Value.isValid() && !sender()->property("MainEdit").toBool())
+	{
+		dynamic_cast<ISListEdit*>(sender())->deleteLater();
 	}
 }
 //-----------------------------------------------------------------------------
 void ISSearchForm::Search()
 {
 	QVariantList VariantList;
-	for (const auto &MapItem : Map)
+	for (const SearchField &Field : VectorEdits)
 	{
-		//Получаем имя поля
-		QString FieldName = MapItem.first->property("FieldName").toString();
+		QVariantList Values;
+		for (ISFieldEditBase *FieldEditBase : Field.Edits)
+		{
+			//Если поле не изменялось - пропускаем его
+			if (!FieldEditBase->GetModificationFlag())
+			{
+				continue;
+			}
+			Values.push_back(FieldEditBase->GetValue());
+		}
 
-		//Получаем виджеты
-		QTreeWidgetItem *TreeWidgetItem = MapItem.second;
-		ISComboSearchBase *ComboSearchBase = dynamic_cast<ISComboSearchBase *>(TreeWidget->itemWidget(TreeWidgetItem->parent() ? TreeWidgetItem->parent() : TreeWidgetItem, 2));
-		ISFieldEditBase *FieldEditBase = dynamic_cast<ISFieldEditBase *>(TreeWidget->itemWidget(TreeWidgetItem, 3));
-
-		//Если поле не изменялось - пропускаем его
-		QVariant Value = FieldEditBase->GetValue();
-		if (!FieldEditBase->GetModificationFlag() || !Value.isValid())
+		if (Values.isEmpty())
 		{
 			continue;
 		}
 
-		if (ExistField(VariantList, FieldName)) //Если поле в списке уже есть, добавляем к нему значение
+		VariantList.push_back(QVariantMap
 		{
-			for (int i = 0; i < VariantList.size(); ++i)
-			{
-				QVariantMap VariantMap = VariantList[i].toMap();
-				if (VariantMap["FieldName"].toString() == FieldName)
-				{
-					QVariantList Values = VariantMap["Values"].toList();
-					Values.append(Value);
-					VariantMap["Values"] = Values;
-					VariantList[i] = VariantMap;
-					break;
-				}
-			}
-		}
-		else //Поля в списке нет - добавляем
-		{
-			VariantList.push_back(QVariantMap
-			{
-				{ "FieldName", FieldName },
-				{ "Operator", static_cast<int>(ComboSearchBase->GetOperator()) },
-				{ "Values", QVariantList() << Value }
-			});
-		}
+			{ "FieldName", Field.Name },
+			{ "Operator", static_cast<unsigned int>(Field.SearchOperator->GetOperator()) },
+			{ "Values", Values }
+		});
 	}
 
-	if (!VariantList.isEmpty()) //Если значения для поиска есть: виджеты-редакторы заполнена
+	if (!VariantList.isEmpty()) //Если значения для поиска есть: виджеты-редакторы заполнены
 	{
 		emit Search(VariantList);
 		hide();
@@ -256,20 +191,5 @@ void ISSearchForm::Search()
 	{
 		ISMessageBox::ShowWarning(this, LANG("Message.Warning.SearchFieldsIsEmpty"));
 	}
-}
-//-----------------------------------------------------------------------------
-bool ISSearchForm::ExistField(const QVariantList &VariantList, const QString &FieldName)
-{
-	bool Result = false;
-	for (const QVariant &Variant : VariantList)
-	{
-		QVariantMap VariantMap = Variant.toMap();
-		Result = VariantMap["FieldName"].toString() == FieldName;
-		if (Result)
-		{
-			break;
-		}
-	}
-	return Result;
 }
 //-----------------------------------------------------------------------------

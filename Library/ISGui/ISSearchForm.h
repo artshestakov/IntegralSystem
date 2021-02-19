@@ -1,10 +1,18 @@
 #pragma once
+#ifndef _ISSEARCHFORM_H_INCLUDED
+#define _ISSEARCHFORM_H_INCLUDED
 //-----------------------------------------------------------------------------
-#include "StdAfx.h"
 #include "ISInterfaceForm.h"
 #include "PMetaClass.h"
-#include "ISButtons.h"
-#include "ISScrollArea.h"
+#include "ISComboSearchWidgets.h"
+#include "ISFieldEditBase.h"
+//-----------------------------------------------------------------------------
+struct SearchField
+{
+	QString Name;
+	ISComboSearchBase *SearchOperator;
+	std::vector<ISFieldEditBase*> Edits;
+};
 //-----------------------------------------------------------------------------
 class ISSearchForm : public ISInterfaceForm
 {
@@ -23,18 +31,17 @@ protected:
 	void EnterClicked() override;
 
 private:
-	void AddField(PMetaField *MetaField, QTreeWidgetItem *ParentItem = nullptr);
+	void AddField(PMetaField *MetaField);
 	void AddClicked();
-	void DeleteClicked();
-
-	void Clear();
+	void ListEditChanged(const QVariant &Value);
 	void Search();
-	bool ExistField(const QVariantList &VariantList, const QString &FieldName);
 	
 private:
 	PMetaTable *MetaTable;
+	std::vector<SearchField> VectorEdits;
 	
-	QTreeWidget *TreeWidget;
-	std::map<QObject*, QTreeWidgetItem*> Map;
+private:
+	QGridLayout *GridLayout;
 };
 //-----------------------------------------------------------------------------
+#endif

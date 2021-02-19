@@ -203,8 +203,7 @@
 
   <!--ISSearchForm-->
   <Local Name="ISSearchForm.Title" Russian="Расширенный поиск"/>
-  <Local Name="ISSearchForm.AddField" Russian="Добавить поле"/>
-  <Local Name="ISSearchForm.DeleteField" Russian="Удалить поле"/>
+  <Local Name="ISSearchForm.AddValue" Russian="Добавить значение"/>
 
   <!--Other-->
   <Local Name="NoData" Russian="Данных нет"/>
@@ -353,7 +352,6 @@
 
   <!--Search-->
   <Local Name="Search" Russian="Поиск"/>
-  <Local Name="Search.Clear" Russian="Очистить"/>
   <Local Name="Search.HideForm" Russian="Скрыть"/>
   <Local Name="Search.Cancel" Russian="Отменить поиск"/>
   <Local Name="Search.Operator.Equally" Russian="Равно"/>

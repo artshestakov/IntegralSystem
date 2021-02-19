@@ -44,7 +44,7 @@ QVariant ISCheckEdit::GetValue() const
 //-----------------------------------------------------------------------------
 void ISCheckEdit::Clear()
 {
-	ISFieldEditBase::Clear();
+	CheckBox->setChecked(false);
 }
 //-----------------------------------------------------------------------------
 void ISCheckEdit::SetReadOnly(bool read_only)
@@ -2153,18 +2153,6 @@ void ISListEdit::SetEnabled(bool Enabled)
 	ButtonList->setEnabled(Enabled);
 }
 //-----------------------------------------------------------------------------
-void ISListEdit::SelectedValue(const QVariant &id, const QString &text)
-{
-	ID = id;
-	ButtonMain->setText(text);
-	ValueChanged();
-
-	if (ActionEdit)
-	{
-		ActionEdit->setEnabled(true);
-	}
-}
-//-----------------------------------------------------------------------------
 void ISListEdit::ShowPopup()
 {
 	ButtonMain->setIcon(BUFFER_ICONS("ArrowUp"));
@@ -2193,6 +2181,18 @@ void ISListEdit::ShowPopup()
 
 	ListEditPopup->move(PointNew);
 	ListEditPopup->show();
+}
+//-----------------------------------------------------------------------------
+void ISListEdit::SelectedValue(const QVariant &id, const QString &text)
+{
+	ID = id;
+	ButtonMain->setText(text);
+	ValueChanged();
+
+	if (ActionEdit)
+	{
+		ActionEdit->setEnabled(true);
+	}
 }
 //-----------------------------------------------------------------------------
 void ISListEdit::HidedPopup()

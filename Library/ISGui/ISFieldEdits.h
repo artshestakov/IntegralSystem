@@ -788,10 +788,11 @@ public:
 	QString GetCurrentText() const; //Получить локальное наименование объекта
 	void SetEnabled(bool Enabled);
 
-protected:
+	void ShowPopup();
+
+private:
 	void SelectedValue(const QVariant &id, const QString &text);
 
-	void ShowPopup();
 	void HidedPopup();
 	void ShowListForm();
 
