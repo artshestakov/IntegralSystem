@@ -40,7 +40,6 @@ ISSearchForm::ISSearchForm(PMetaTable *meta_table, QWidget *parent)
 		}
 		AddField(MetaField);
 	}
-	GetMainLayout()->addStretch();
 
 	QHBoxLayout *LayoutBottom = new QHBoxLayout();
 	LayoutBottom->addStretch();
@@ -162,11 +161,12 @@ void ISSearchForm::Search()
 		for (ISFieldEditBase *FieldEditBase : Field.Edits)
 		{
 			//≈сли поле не измен€лось - пропускаем его
-			if (!FieldEditBase->GetModificationFlag())
+			QVariant Value = FieldEditBase->GetValue();
+			if (!FieldEditBase->GetModificationFlag() && !Value.isValid())
 			{
 				continue;
 			}
-			Values.push_back(FieldEditBase->GetValue());
+			Values.push_back(Value);
 		}
 
 		if (Values.isEmpty())
