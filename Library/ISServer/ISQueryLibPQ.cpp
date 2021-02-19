@@ -109,11 +109,39 @@ bool ISQueryLibPQ::ExecuteFirst()
 	return Result;
 }
 //-----------------------------------------------------------------------------
-QString ISQueryLibPQ::ReadColumn_String(const QString &FieldName)
+Oid ISQueryLibPQ::ColumnType(int Index)
 {
-	Q_UNUSED(FieldName);
-	char *Value = PQgetvalue(SqlResult, CurrentRow, 0);
-	return QString::fromLocal8Bit(Value);
+	return PQftype(SqlResult, Index);
+}
+//-----------------------------------------------------------------------------
+Oid ISQueryLibPQ::ColumnType(const std::string &FieldName)
+{
+	return ColumnType(PQfnumber(SqlResult, FieldName.c_str()));
+}
+//-----------------------------------------------------------------------------
+char* ISQueryLibPQ::ReadColumn(int Index)
+{
+	return PQgetvalue(SqlResult, CurrentRow, Index);
+}
+//-----------------------------------------------------------------------------
+char* ISQueryLibPQ::ReadColumn(const std::string &FieldName)
+{
+	return ReadColumn(PQfnumber(SqlResult, FieldName.c_str()));
+}
+//-----------------------------------------------------------------------------
+std::string ISQueryLibPQ::ReadColumn_String(int Index)
+{
+	char *Value = ReadColumn(Index);
+	if (Value)
+	{
+		return Value;
+	}
+	return std::string();
+}
+//-----------------------------------------------------------------------------
+std::string ISQueryLibPQ::ReadColumn_String(const std::string &FieldName)
+{
+	return ReadColumn_String(PQfnumber(SqlResult, FieldName.c_str()));
 }
 //-----------------------------------------------------------------------------
 bool ISQueryLibPQ::Prepare()

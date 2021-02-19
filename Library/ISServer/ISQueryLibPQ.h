@@ -4,6 +4,7 @@
 //-----------------------------------------------------------------------------
 #include "isserver_global.h"
 #include <libpq-fe.h>
+#include <pg_type_d.h>
 //-----------------------------------------------------------------------------
 class ISSERVER_EXPORT ISQueryLibPQ
 {
@@ -22,9 +23,17 @@ public:
 
 	bool ExecuteFirst();
 
-	QString ReadColumn_String(const QString &FieldName);
+	Oid ColumnType(int Index); //Получить тип поля по индексу
+	Oid ColumnType(const std::string &FieldName); //Получить тип поля по имени поля
+
+	char* ReadColumn(int Index);
+	char* ReadColumn(const std::string &FieldName);
+
+	std::string ReadColumn_String(int Index);
+	std::string ReadColumn_String(const std::string &FieldName);
 
 private:
+
 	bool Prepare();
 	bool Prepare(PGconn *sql_connection);
 
