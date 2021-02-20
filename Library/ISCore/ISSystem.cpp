@@ -78,13 +78,6 @@ QByteArray ISSystem::VariantListToJsonString(const QVariantList &VariantList, QJ
 	return QJsonDocument(QJsonArray::fromVariantList(VariantList)).toJson(Format);
 }
 //-----------------------------------------------------------------------------
-QString ISSystem::StringToMD5(const QString &String)
-{
-    QCryptographicHash CryptographicHash(QCryptographicHash::Md5);
-    CryptographicHash.addData(String.toUtf8());
-    return QString(CryptographicHash.result().toHex());
-}
-//-----------------------------------------------------------------------------
 QString ISSystem::StringToSha256(const QString &String)
 {
     return QCryptographicHash::hash(String.toUtf8(), QCryptographicHash::Sha256).toHex().toUpper();
