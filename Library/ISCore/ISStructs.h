@@ -270,6 +270,12 @@ struct ISCORE_EXPORT ISModelRecord
 	ISVectorVariant Values; //Список значений
 };
 //-----------------------------------------------------------------------------
+struct ISCORE_EXPORT ISSqlField
+{
+	std::string Name; //Имя поля
+	unsigned int Type;
+};
+//-----------------------------------------------------------------------------
 struct ISCORE_EXPORT ISDeviceInfo
 {
 	QString VendorID; //Идентификатор поставщика

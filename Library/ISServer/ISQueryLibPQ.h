@@ -3,18 +3,22 @@
 #define _ISQUERYLIBPQ_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "isserver_global.h"
+#include "ISStructs.h"
 #include <libpq-fe.h>
 #include <pg_type_d.h>
 //-----------------------------------------------------------------------------
 class ISSERVER_EXPORT ISQueryLibPQ
 {
 public:
-	ISQueryLibPQ(const QString &sql_text, bool prepare = false);
-	ISQueryLibPQ(PGconn *sql_connection, const QString &sql_text = QString(), bool prepare = false);
+	ISQueryLibPQ(const std::string &sql_text, bool prepare = false);
+	ISQueryLibPQ(PGconn *sql_connection, const std::string &sql_text = std::string(), bool prepare = false);
 	~ISQueryLibPQ();
 
-	QString GetErrorString() const;
-	int GetResultSize() const;
+	std::string GetErrorString() const; //Получить текстовое описание ошибки
+	int GetResultSize() const; //Получить размер выборки
+	bool GetIsSelect() const; //Проверить, является ли запрос выборкой
+
+	void SetShowLongQuery(bool show_long_query);
 	
 	void First();
 	bool Next();
@@ -33,19 +37,21 @@ public:
 	std::string ReadColumn_String(const std::string &FieldName);
 
 private:
-
+	void FillColumnMap();
 	bool Prepare();
 	bool Prepare(PGconn *sql_connection);
 
 private:
-	QString ErrorString;
-	bool ShowLongQuery;
-	QString SqlText;
-	PGconn *SqlConnection;
-	PGresult *SqlResult;
-	int CountRows;
-	int CountColumns;
-	int CurrentRow;
+	std::string ErrorString; //Тексовое описание ошибки
+	bool ShowLongQuery; //Показывать долгие запрос
+	std::string SqlText; //Текст запроса
+	PGconn *SqlConnection; //Указатель на соединение с базой
+	PGresult *SqlResult; //Структура с результатом запроса
+	int CountRows; //Количество строк в результате запроса
+	int CountColumns; //Количество полей в результате запроса
+	int CurrentRow; //Индекс текущей строки результирующей выборки
+	bool IsSelect; //Запрос является SELECT или SHOW
+	std::map<int, ISSqlField> ColumnMap;
 };
 //-----------------------------------------------------------------------------
 #endif
