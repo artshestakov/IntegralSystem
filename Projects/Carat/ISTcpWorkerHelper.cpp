@@ -204,7 +204,7 @@ QString ISTcpWorkerHelper::CreateSqlFromTable(PMetaTable *MetaTable, QVariantMap
 				}
 				for (const QVariant &Value : ValueList) //Обходим список значений
 				{
-					QString UIDLite = GENERATE_UUID_LITE;
+					ISUuid UIDLite = GENERATE_UUID_LITE();
 					SqlText += ':' + UIDLite + ',';
 					FilterMap[UIDLite] = Value;
 				}
@@ -213,7 +213,7 @@ QString ISTcpWorkerHelper::CreateSqlFromTable(PMetaTable *MetaTable, QVariantMap
 			}
 			else //Одно значение для поиска - используем обычный оператор "="
 			{
-				QString UIDLite = GENERATE_UUID_LITE;
+				ISUuid UIDLite = GENERATE_UUID_LITE();
 				switch (OperatorType)
 				{
 				case ISNamespace::SearchType::Equally: SqlText += " = :" + UIDLite; break;

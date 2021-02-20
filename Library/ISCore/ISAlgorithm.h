@@ -26,11 +26,14 @@ if (POINTER) \
 //Обработать события из очереди событий
 #define PROCESS_EVENTS qApp->processEvents
 
+//Сгенерировать стандартный уникальный идентификатор
+#define GENERATE_UUID_STANDART ISAlgorithm::GenerateUuidStandart
+
 //Сгенерировать уникальный идентификатор
-#define GENERATE_UUID ISUuid(QUuid::createUuid())
+#define GENERATE_UUID ISAlgorithm::GenerateUuid
 
 //Сгенерировать упрощенный уникальный идентификатор
-#define GENERATE_UUID_LITE ISAlgorithm::GenerateUuidLite();
+#define GENERATE_UUID_LITE ISAlgorithm::GenerateUuidLite
 
 //Заглушка для SQL-запросов
 #define PREPARE_QUERY(x) x
@@ -150,9 +153,17 @@ namespace ISAlgorithm
 	//! \return возвращает форматированное число
 	ISCORE_EXPORT QString FormatNumber(double Number, char Separator = ' ', unsigned int Precision = 0);
 
-	//! Генерация упрощённого уникального идентификатора в формате BE285BCC8A0046C5A46183A8A3390774
+	//! Генерация стандартного уникального идентификатора в формате b75ed238-411a-4f06-85ea-a2ecca37cfa8
+	//! \return возвращает стандартный уникальный идентификатор
+	ISCORE_EXPORT std::string GenerateUuidStandart();
+
+	//! Генерация уникального идентификатора в формате {B75ED238-411A-4F06-85EA-A2ECCA37CFA8}
+	//! \return возвращает уникальный идентификатор
+	ISCORE_EXPORT std::string GenerateUuid();
+
+	//! Генерация упрощённого уникального идентификатора в формате B75ED238411A4F0685EAA2ECCA37CFA8
 	//! \return возвращает упрощённый уникальный идентификатор
-    ISCORE_EXPORT ISUuid GenerateUuidLite();
+    ISCORE_EXPORT std::string GenerateUuidLite();
 
 	//! Извлечь подстроку из строки
 	//! \param String строка, из которой будет происходить извлечение

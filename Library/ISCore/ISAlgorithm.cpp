@@ -340,12 +340,49 @@ QString ISAlgorithm::FormatNumber(double Number, char Separator, unsigned int Pr
 	return Result;
 }
 //-----------------------------------------------------------------------------
-ISUuid ISAlgorithm::GenerateUuidLite()
+std::string ISAlgorithm::GenerateUuidStandart()
 {
-	ISUuid UID = GENERATE_UUID;
-	UID.remove('-'); //Удаляем все тирэ
-	UID.remove(0, 1); //Удаляем первую фигурную скобку
-	UID.chop(1); //Удаляем последнюю фигурную скобку
+	std::string StringUID;
+	StringUID.resize(UUID_STANDART_SIZE);
+#ifdef WIN32
+	GUID UID = { 0 };
+	HRESULT Result = CoCreateGuid(&UID); //Генерируем идентификатор
+	if (Result == S_OK) //Генерация прошла успешно
+	{
+		unsigned char *Char = { 0 };
+		if (UuidToString(&UID, &Char) == RPC_S_OK) //Преобразовываем в строку
+		{
+			//Заполняем
+			for (size_t i = 0; i < UUID_STANDART_SIZE; ++i)
+			{
+				StringUID[i] = Char[i];
+			}
+		}
+	}
+#else
+#endif
+	return StringUID;
+}
+//-----------------------------------------------------------------------------
+std::string ISAlgorithm::GenerateUuid()
+{
+	std::string UID = ISAlgorithm::GenerateUuidStandart();
+	std::transform(UID.begin(), UID.end(), UID.begin(), toupper);
+	return '{' + UID + '}';
+}
+//-----------------------------------------------------------------------------
+std::string ISAlgorithm::GenerateUuidLite()
+{
+	std::string UID = ISAlgorithm::GenerateUuidStandart();
+	std::transform(UID.begin(), UID.end(), UID.begin(), tolower);
+	auto Begin = UID.begin();
+	for (size_t i = UID.size() - 1; i > 0; --i)
+	{
+		if (UID[i] == '-')
+		{
+			UID.erase(Begin + i);
+		}
+	}
 	return UID;
 }
 //-----------------------------------------------------------------------------

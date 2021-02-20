@@ -134,6 +134,7 @@ const char			LOCAL_HOST_ADDRESS[] = "127.0.0.1";
 const char			DEVICE_CLASS_UID_USB[] = "{36FC9E60-C465-11CF-8056-444553540000}";
 const char			LINK_FEEDBACK[] = "https://forms.yandex.ru/u/602e2ac1b129012bf81424fb/";
 const qint64		DAY_IN_SECONDS = 86400;
+const size_t		UUID_STANDART_SIZE = 36; //Размер стандартного размера
 //LOGGER-----------------------------------------------------------------------
 const size_t	LOGGER_ARRAY_SIZE = 20000; //Максимальный размер массива
 const size_t	LOGGER_TIMEOUT = 50; //Таймаут логгера
