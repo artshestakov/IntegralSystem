@@ -18,14 +18,6 @@ QDomElement ISSystem::GetDomElement(const QString &Content)
     return DomElement;
 }
 //-----------------------------------------------------------------------------
-void ISSystem::BeginSymbolToUpper(QString &String)
-{
-    if (!String.isEmpty())
-    {
-        String[0] = String[0].toUpper();
-    }
-}
-//-----------------------------------------------------------------------------
 void ISSystem::ExecLoop(unsigned long Milliseconds)
 {
     QEventLoop EventLoop;
