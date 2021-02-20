@@ -1,5 +1,6 @@
 #include "ISConstants.h"
 #include "ISAlgorithm.h"
+#include <openssl/sha.h>
 //-----------------------------------------------------------------------------
 std::string ISAlgorithm::GetFileNameFromPath(const std::string &FilePath)
 {
@@ -384,6 +385,28 @@ std::string ISAlgorithm::GenerateUuidLite()
 		}
 	}
 	return UID;
+}
+//-----------------------------------------------------------------------------
+std::string ISAlgorithm::StringToSha256(const std::string &String)
+{
+	//Формируем хеш
+	SHA256_CTX SHA256 = { 0 };
+	SHA256_Init(&SHA256);
+	SHA256_Update(&SHA256, String.c_str(), String.size());
+	unsigned char Hash[SHA256_DIGEST_LENGTH] = { 0 };
+	SHA256_Final(Hash, &SHA256);
+	
+	//Преобразовываем в hex
+	std::stringstream StringStream;
+	for (int i = 0; i < SHA256_DIGEST_LENGTH; i++)
+	{
+		StringStream << std::hex << (int)Hash[i];
+	}
+
+	//Приводим к строке, меняем регистр и возвращаем
+	std::string Result = StringStream.str();
+	std::transform(Result.begin(), Result.end(), Result.begin(), toupper);
+	return Result;
 }
 //-----------------------------------------------------------------------------
 QString ISAlgorithm::StringTake(QString &String, int Pos, int N)

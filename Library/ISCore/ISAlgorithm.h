@@ -165,6 +165,8 @@ namespace ISAlgorithm
 	//! \return возвращает упрощённый уникальный идентификатор
     ISCORE_EXPORT std::string GenerateUuidLite();
 
+	ISCORE_EXPORT std::string StringToSha256(const std::string &String);
+
 	//! Извлечь подстроку из строки
 	//! \param String строка, из которой будет происходить извлечение
 	//! \param Pos позиция, с которой начнется извлечение
