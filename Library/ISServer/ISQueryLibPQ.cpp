@@ -78,11 +78,27 @@ bool ISQueryLibPQ::Next()
 	return true;
 }
 //-----------------------------------------------------------------------------
+void ISQueryLibPQ::AddBindValue(const char *Value)
+{
+	Parameters.emplace_back(Value);
+}
+//-----------------------------------------------------------------------------
 bool ISQueryLibPQ::Execute()
 {
 	//Засекаем время и выполняем запрос
 	ISTimePoint TimePoint = ISAlgorithm::GetTick();
-	SqlResult = PQexec(SqlConnection, SqlText.c_str());
+	if (Parameters.empty())
+	{
+		SqlResult = PQexec(SqlConnection, SqlText.c_str());
+	}
+	else
+	{
+		size_t ParametersCount = Parameters.size();
+		const char **ParamValues = (const char **)malloc(ParametersCount);
+		const int *ParamLengths = (const int *)malloc(ParametersCount);
+		const int *ParamFormats = (const int *)malloc(ParametersCount);
+		SqlResult = PQexecParams(SqlConnection, SqlText.c_str(), (int)ParametersCount, NULL, ParamValues, ParamLengths, ParamFormats, 0);
+	}
 	long long Msec = ISAlgorithm::GetTickDiff(ISAlgorithm::GetTick(), TimePoint);
 	if (!SqlResult) //Не удалось отправить запрос
 	{
