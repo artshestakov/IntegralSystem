@@ -23,7 +23,7 @@ public:
 	void First();
 	bool Next();
 
-	void AddBindValue(const char *Value);
+	void AddBindValue(char *Value);
 
 	bool Execute();
 
@@ -46,7 +46,8 @@ private:
 private:
 	std::string ErrorString; //Тексовое описание ошибки
 	bool ShowLongQuery; //Показывать долгие запрос
-	std::vector<const char *> Parameters;
+	std::vector<char *> Parameters;
+	size_t ParametersCount;
 	std::string SqlText; //Текст запроса
 	PGconn *SqlConnection; //Указатель на соединение с базой
 	PGresult *SqlResult; //Структура с результатом запроса

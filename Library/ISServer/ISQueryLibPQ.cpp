@@ -7,7 +7,9 @@ ISQueryLibPQ::ISQueryLibPQ(const std::string &sql_text, bool prepare)
 	: ErrorString(NO_ERROR_STRING),
 	ShowLongQuery(true),
 	SqlText(sql_text),
+	ParametersCount(0),
 	SqlConnection(ISDatabase::Instance().GetDBLibPQ(CONNECTION_DEFAULT)),
+	SqlResult(NULL),
 	CountRows(-1),
 	CountColumns(-1),
 	CurrentRow(-1),
@@ -23,7 +25,9 @@ ISQueryLibPQ::ISQueryLibPQ(PGconn *sql_connection, const std::string &sql_text, 
 	: ErrorString(NO_ERROR_STRING),
 	ShowLongQuery(true),
 	SqlText(sql_text),
+	ParametersCount(0),
 	SqlConnection(sql_connection),
+	SqlResult(NULL),
 	CountRows(-1),
 	CountColumns(-1),
 	CurrentRow(-1),
@@ -37,7 +41,16 @@ ISQueryLibPQ::ISQueryLibPQ(PGconn *sql_connection, const std::string &sql_text, 
 //-----------------------------------------------------------------------------
 ISQueryLibPQ::~ISQueryLibPQ()
 {
+	for (size_t i = 0; i < ParametersCount; ++i)
+	{
+		free(Parameters[i]);
+	}
+	Parameters.clear();
 
+	if (SqlResult)
+	{
+		PQclear(SqlResult);
+	}
 }
 //-----------------------------------------------------------------------------
 std::string ISQueryLibPQ::GetErrorString() const
@@ -78,26 +91,54 @@ bool ISQueryLibPQ::Next()
 	return true;
 }
 //-----------------------------------------------------------------------------
-void ISQueryLibPQ::AddBindValue(const char *Value)
+void ISQueryLibPQ::AddBindValue(char *Value)
 {
-	Parameters.emplace_back(Value);
+	char *Char = (char *)malloc(strlen(Value) + 1);
+	strcpy(Char, Value);
+	Parameters.emplace_back(Char);
+	++ParametersCount;
 }
 //-----------------------------------------------------------------------------
 bool ISQueryLibPQ::Execute()
 {
 	//Засекаем время и выполняем запрос
 	ISTimePoint TimePoint = ISAlgorithm::GetTick();
-	if (Parameters.empty())
+	if (Parameters.empty()) //Параметров запроса нет - исполняем как есть
 	{
 		SqlResult = PQexec(SqlConnection, SqlText.c_str());
 	}
-	else
+	else //Есть параметры запроса - параметизированный запрос
 	{
-		size_t ParametersCount = Parameters.size();
-		const char **ParamValues = (const char **)malloc(ParametersCount);
-		const int *ParamLengths = (const int *)malloc(ParametersCount);
-		const int *ParamFormats = (const int *)malloc(ParametersCount);
-		SqlResult = PQexecParams(SqlConnection, SqlText.c_str(), (int)ParametersCount, NULL, ParamValues, ParamLengths, ParamFormats, 0);
+		//Получаем размер параметров и пытаемся выделить память
+		char **ParamValues = (char **)malloc(ParametersCount * (sizeof(char *)));
+		if (!ParamValues) //Не удалось выделить память
+		{
+			ErrorString = "Malloc out of memory";
+			return false;
+		}
+
+		//Заполяняем параметры
+		for (size_t i = 0; i < ParametersCount; ++i)
+		{
+			ParamValues[i] = (char *)malloc(strlen(Parameters[i]) + 1); //Выделяем память для параметра
+			if (!ParamValues[i]) //Не удалось выделить память
+			{
+				free(ParamValues); //Очищаем память под массив
+				ErrorString = "Malloc out of memory";
+				return false;
+			}
+			strcpy(ParamValues[i], Parameters[i]); //Копируем значение в память
+		}
+
+		//Выполняем запрос
+		SqlResult = PQexecParams(SqlConnection, SqlText.c_str(), (int)ParametersCount, NULL, ParamValues, NULL, NULL, 0);
+
+		//Очищаем выделенную память под параметры
+		for (size_t i = 0; i < ParametersCount; ++i)
+		{
+			free(ParamValues[i]);
+		}
+		free(ParamValues);
 	}
 	long long Msec = ISAlgorithm::GetTickDiff(ISAlgorithm::GetTick(), TimePoint);
 	if (!SqlResult) //Не удалось отправить запрос
