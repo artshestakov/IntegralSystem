@@ -23,8 +23,6 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <sys/file.h>
-#include <openssl/sha.h>
-#include <openssl/md5.h>
 #include <uuid/uuid.h>
 #endif
 //STD-includes-----------------------------------------------------------------

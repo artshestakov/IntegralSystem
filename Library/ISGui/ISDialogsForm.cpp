@@ -10,6 +10,7 @@
 #include "ISControls.h"
 #include "ISSettings.h"
 #include "ISSystem.h"
+#include "ISAlgorithm.h"
 #include "ISPopupMessage.h"
 #include "ISMetaData.h"
 #include "ISProcessForm.h"
@@ -373,7 +374,7 @@ void ISAuthDialog::Input()
 	LabelIndicator->setText(LANG("AuthProcess"));
 
 	ISTcpQuery qAuth(API_AUTH);
-	qAuth.BindValue("Hash", ISSystem::StringToSha256(EditLogin->GetValue().toString() + EditPassword->GetValue().toString()));
+	qAuth.BindValue("Hash", ISAlgorithm::StringToSha256(EditLogin->GetValue().toString().toStdString() + EditPassword->GetValue().toString().toStdString()).c_str());
 	qAuth.BindValue("Version", ISVersionInfo::Instance().Info.Version);
 	qAuth.BindValue("DeviceList", GetConnectedDevice());
 	if (qAuth.Execute()) //Авторизация прошла успешно
@@ -470,7 +471,8 @@ QStringList ISAuthDialog::GetConnectedDevice() const
 	{
 		for (const ISDeviceInfo &DeviceInfo : Vector)
 		{
-			StringList.push_back(ISSystem::StringToSha256(DeviceInfo.VendorID + DeviceInfo.ProductID + DeviceInfo.SerialNumber));
+			StringList.push_back(QString::fromStdString(ISAlgorithm::StringToSha256(DeviceInfo.VendorID.toStdString()
+				+ DeviceInfo.ProductID.toStdString() + DeviceInfo.SerialNumber.toStdString())));
 		}
 	}
 	else
@@ -1416,9 +1418,9 @@ void ISUserPasswordDialog::Apply()
 	qUserPassword.BindValue("UserID", UserID);
 	if (PasswordExist)
 	{
-		qUserPassword.BindValue("HashOld", ISSystem::StringToSha256(UserLogin + PasswordCurrent));
+		qUserPassword.BindValue("HashOld", ISAlgorithm::StringToSha256(UserLogin.toStdString() + PasswordCurrent.toStdString()).c_str());
 	}
-	qUserPassword.BindValue("Hash", ISSystem::StringToSha256(UserLogin + Password));
+	qUserPassword.BindValue("Hash", ISAlgorithm::StringToSha256(UserLogin.toStdString() + Password.toStdString()).c_str());
 	if (qUserPassword.Execute())
 	{
 		ISPopupMessage::ShowNotification(PasswordExist ? LANG("UserPasswordForm.EditedPassword") : LANG("UserPasswordForm.CreatedPassword"));

@@ -19,7 +19,7 @@
 #include "ISDialogsForm.h"
 #include "ISPopupMessage.h"
 #include "ISTcpQuery.h"
-#include "ISSystem.h"
+#include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
 ISMainWindow::ISMainWindow(QWidget *parent)
 	: ISInterfaceForm(parent),
@@ -191,7 +191,7 @@ void ISMainWindow::Reconnect()
 		ISGui::SetWaitGlobalCursor(false);
 
 		ISTcpQuery qReAuth(API_AUTH);
-		qReAuth.BindValue("Hash", ISSystem::StringToSha256(ISBuffer::Instance().CurrentUserInfo.Login + ISBuffer::Instance().CurrentUserInfo.Password));
+		qReAuth.BindValue("Hash", ISAlgorithm::StringToSha256(ISBuffer::Instance().CurrentUserInfo.Login.toStdString() + ISBuffer::Instance().CurrentUserInfo.Password.toStdString()).c_str());
 		Result = qReAuth.Execute();
 		if (Result)
 		{

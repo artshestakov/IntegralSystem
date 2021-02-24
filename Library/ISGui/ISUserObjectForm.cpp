@@ -8,7 +8,7 @@
 #include "ISBuffer.h"
 #include "ISPopupMessage.h"
 #include "ISDialogsForm.h"
-#include "ISSystem.h"
+#include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
 ISUserObjectForm::ISUserObjectForm(ISNamespace::ObjectFormType form_type, PMetaTable *meta_table, QWidget *parent, int object_id) : ISObjectFormBase(form_type, meta_table, parent, object_id)
 {
@@ -133,17 +133,16 @@ void ISUserObjectForm::DeviceAdd()
 	ISDeviceInfo DeviceInfo = DeviceConnectDialog.GetConnectedDevice();
 
 	if (!ISMessageBox::ShowQuestion(this, LANG("Message.Question.LinkingDevice")
-		.arg(DeviceInfo.VendorID)
-		.arg(DeviceInfo.ProductID)
-		.arg(DeviceInfo.SerialNumber)
-		.arg(DeviceInfo.Description)))
+		.arg(DeviceInfo.VendorID).arg(DeviceInfo.ProductID)
+		.arg(DeviceInfo.SerialNumber).arg(DeviceInfo.Description)))
 	{
 		return;
 	}
 
 	ISTcpQuery qUserDeviceAdd(API_USER_DEVICE_ADD);
 	qUserDeviceAdd.BindValue("UserID", GetObjectID());
-	qUserDeviceAdd.BindValue("Hash", ISSystem::StringToSha256(DeviceInfo.VendorID + DeviceInfo.ProductID + DeviceInfo.SerialNumber));
+	qUserDeviceAdd.BindValue("Hash", ISAlgorithm::StringToSha256(DeviceInfo.VendorID.toStdString()
+		+ DeviceInfo.ProductID.toStdString() + DeviceInfo.SerialNumber.toStdString()).c_str());
 	if (qUserDeviceAdd.Execute())
 	{
 		ISPopupMessage::ShowNotification(LANG("UserDeviceAdd"));
