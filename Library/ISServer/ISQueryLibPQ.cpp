@@ -8,6 +8,7 @@ ISQueryLibPQ::ISQueryLibPQ(const std::string &sql_text, bool prepare, size_t Par
 	ShowLongQuery(true),
 	SqlText(sql_text),
 	ParametersCount(0),
+	Prepared(false),
 	SqlConnection(ISDatabase::Instance().GetDBLibPQ(CONNECTION_DEFAULT)),
 	SqlResult(NULL),
 	CountRows(-1),
@@ -26,6 +27,7 @@ ISQueryLibPQ::ISQueryLibPQ(PGconn *sql_connection, const std::string &sql_text, 
 	ShowLongQuery(true),
 	SqlText(sql_text),
 	ParametersCount(0),
+	Prepared(false),
 	SqlConnection(sql_connection),
 	SqlResult(NULL),
 	CountRows(-1),
@@ -101,6 +103,11 @@ void ISQueryLibPQ::AddBindValue(char *Value)
 //-----------------------------------------------------------------------------
 bool ISQueryLibPQ::Execute()
 {
+	if (!StmtName.empty() && !Prepared) //Была попытка подготовить оператор, но она не завершилась успехом
+	{
+		return false;
+	}
+
 	//Засекаем время и выполняем запрос
 	ISTimePoint TimePoint = ISAlgorithm::GetTick();
 	if (Parameters.empty()) //Параметров запроса нет - исполняем как есть
@@ -255,36 +262,23 @@ bool ISQueryLibPQ::Prepare(size_t ParamCount)
 {
 	StmtName = ISAlgorithm::StringToMD5(SqlText);
 	PGresult *STMT = PQprepare(SqlConnection, StmtName.c_str(), SqlText.c_str(), ParamCount, NULL);
-	if (!STMT)
+	Prepared = STMT ? true : false;
+	if (Prepared)
+	{
+		//Проверяем результат, очищаем память и проверяем результат
+		ExecStatusType ResultStatus = PQresultStatus(STMT);
+		PQclear(STMT);
+		Prepared = ResultStatus == PGRES_TUPLES_OK || ResultStatus == PGRES_SINGLE_TUPLE || ResultStatus == PGRES_COMMAND_OK;
+		if (!Prepared) //Подготовка не удалась
+		{
+			ErrorString = PQerrorMessage(SqlConnection);
+		}
+	}
+	else
 	{
 		ErrorString = "Out of memory";
-		return false;
 	}
-
-	switch (PQresultStatus(STMT)) //Проверяем результат
-	{
-	case PGRES_TUPLES_OK:
-		CountRows = PQntuples(SqlResult);
-		CountColumns = PQnfields(SqlResult);
-		IsSelect = true;
-		FillColumnMap();
-		return true;
-		break;
-
-	case PGRES_SINGLE_TUPLE:
-		IsSelect = true;
-		return true;
-		break;
-
-	case PGRES_COMMAND_OK:
-		return true;
-		break;
-
-	default:
-		break;
-	}
-
-	return true;
+	return Prepared;
 }
 //-----------------------------------------------------------------------------
 bool ISQueryLibPQ::Prepare(PGconn *sql_connection, size_t ParamCount)
