@@ -70,6 +70,9 @@
     <ClCompile Include="ISDebug.cpp">
       <Filter>System</Filter>
     </ClCompile>
+    <ClCompile Include="ISVariant.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ISMetaData.h">
@@ -134,6 +137,9 @@
       <Filter>System</Filter>
     </ClInclude>
     <ClInclude Include="ISDebug.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="ISVariant.h">
       <Filter>System</Filter>
     </ClInclude>
   </ItemGroup>

@@ -132,6 +132,18 @@ namespace ISNamespace
 		Assert, //Ассерт
 		QT //Сообщения от Qt
     };
+
+	enum class VariantType //Типы данных
+	{
+		Invalid, //Невалидное значение
+		Bool, //Логический тип
+		Int, //Числовой тип
+		UInt, //Беззнаковый числовой тип
+		Double, //Дробный тип
+		Float, //Дробный тип
+		Char, //Символьный тип
+		String //Строковый тип
+	};
 };
 //-----------------------------------------------------------------------------
 Q_DECLARE_METATYPE(ISNamespace::FieldType);
@@ -143,5 +155,6 @@ Q_DECLARE_METATYPE(ISNamespace::ActionSpecialType);
 Q_DECLARE_METATYPE(ISNamespace::MoveWidgetDesktop);
 Q_DECLARE_METATYPE(ISNamespace::DebugMessageType);
 Q_DECLARE_METATYPE(ISNamespace::LogMessageType);
+Q_DECLARE_METATYPE(ISNamespace::VariantType);
 //-----------------------------------------------------------------------------
 #endif
