@@ -70,8 +70,3 @@ QByteArray ISSystem::VariantListToJsonString(const QVariantList &VariantList, QJ
 	return QJsonDocument(QJsonArray::fromVariantList(VariantList)).toJson(Format);
 }
 //-----------------------------------------------------------------------------
-QString ISSystem::StringToSha256(const QString &String)
-{
-    return QCryptographicHash::hash(String.toUtf8(), QCryptographicHash::Sha256).toHex().toUpper();
-}
-//-----------------------------------------------------------------------------

@@ -79,7 +79,7 @@ bool CGConfiguratorCreate::adminpassword()
 	}
 
 	//Формируем хэш, генерируем соль и солим пароль
-	QString Hash = ISSystem::StringToSha256(SYSTEM_USER_LOGIN + Password), Salt;
+    QString Hash = QString::fromStdString(ISAlgorithm::StringToSha256(std::string(SYSTEM_USER_LOGIN) + Password.toStdString())), Salt;
 	if (!ISAlgorithm::GenerateSalt(Salt, ErrorString))
 	{
 		return false;

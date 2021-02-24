@@ -94,7 +94,6 @@
 #include <QtCore/QTextCodec>
 #include <QtCore/QJsonDocument>
 #include <QtCore/QJsonObject>
-#include <QtCore/QCryptographicHash>
 #include <QtCore/QEventLoop>
 #include <QtCore/QFuture>
 #include <QtCore/QFutureWatcher>
