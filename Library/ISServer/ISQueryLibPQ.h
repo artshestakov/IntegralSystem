@@ -10,8 +10,8 @@
 class ISSERVER_EXPORT ISQueryLibPQ
 {
 public:
-	ISQueryLibPQ(const std::string &sql_text, bool prepare = false, size_t ParamCount = 0);
-	ISQueryLibPQ(PGconn *sql_connection, const std::string &sql_text = std::string(), bool prepare = false, size_t ParamCount = 0);
+	ISQueryLibPQ(const std::string &sql_text, bool prepare = false, int ParamCount = 0);
+	ISQueryLibPQ(PGconn *sql_connection, const std::string &sql_text = std::string(), bool prepare = false, int ParamCount = 0);
 	~ISQueryLibPQ();
 
 	std::string GetErrorString() const; //Получить текстовое описание ошибки
@@ -40,8 +40,8 @@ public:
 
 private:
 	void FillColumnMap();
-	bool Prepare(size_t ParamCount);
-	bool Prepare(PGconn *sql_connection, size_t ParamCount);
+	bool Prepare(int ParamCount);
+	bool Prepare(PGconn *sql_connection, int ParamCount);
 
 private:
 	std::string ErrorString; //Тексовое описание ошибки

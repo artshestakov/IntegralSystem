@@ -3,7 +3,7 @@
 #include "ISDatabase.h"
 #include "ISLogger.h"
 //-----------------------------------------------------------------------------
-ISQueryLibPQ::ISQueryLibPQ(const std::string &sql_text, bool prepare, size_t ParamCount)
+ISQueryLibPQ::ISQueryLibPQ(const std::string &sql_text, bool prepare, int ParamCount)
 	: ErrorString(NO_ERROR_STRING),
 	ShowLongQuery(true),
 	SqlText(sql_text),
@@ -22,7 +22,7 @@ ISQueryLibPQ::ISQueryLibPQ(const std::string &sql_text, bool prepare, size_t Par
 	}
 }
 //-----------------------------------------------------------------------------
-ISQueryLibPQ::ISQueryLibPQ(PGconn *sql_connection, const std::string &sql_text, bool prepare, size_t ParamCount)
+ISQueryLibPQ::ISQueryLibPQ(PGconn *sql_connection, const std::string &sql_text, bool prepare, int ParamCount)
 	: ErrorString(NO_ERROR_STRING),
 	ShowLongQuery(true),
 	SqlText(sql_text),
@@ -258,7 +258,7 @@ void ISQueryLibPQ::FillColumnMap()
 	}
 }
 //-----------------------------------------------------------------------------
-bool ISQueryLibPQ::Prepare(size_t ParamCount)
+bool ISQueryLibPQ::Prepare(int ParamCount)
 {
 	StmtName = ISAlgorithm::StringToMD5(SqlText);
 	PGresult *STMT = PQprepare(SqlConnection, StmtName.c_str(), SqlText.c_str(), ParamCount, NULL);
@@ -281,7 +281,7 @@ bool ISQueryLibPQ::Prepare(size_t ParamCount)
 	return Prepared;
 }
 //-----------------------------------------------------------------------------
-bool ISQueryLibPQ::Prepare(PGconn *sql_connection, size_t ParamCount)
+bool ISQueryLibPQ::Prepare(PGconn *sql_connection, int ParamCount)
 {
 	SqlConnection = sql_connection;
 	return Prepare(ParamCount);
