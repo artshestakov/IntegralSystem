@@ -73,6 +73,11 @@ ISConnectOptionDB ISDatabase::GetOptionLibPQ(const QString &ConnectionName)
 	return ConnectOption;
 }
 //-----------------------------------------------------------------------------
+bool ISDatabase::ConnectLibPQ(const QString &ConnectionName, const ISConnectOptionDB &ConnectOptionDB)
+{
+	return ConnectLibPQ(ConnectionName, ConnectOptionDB.Host, ConnectOptionDB.Port, ConnectOptionDB.Name, ConnectOptionDB.Login, ConnectOptionDB.Password);
+}
+//-----------------------------------------------------------------------------
 bool ISDatabase::ConnectLibPQ(const QString &ConnectionName, const QString &Host, unsigned short Port, const QString &Database, const QString &Login, const QString &Password)
 {
 	//Формируем строку подключения
