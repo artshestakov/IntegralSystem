@@ -34,12 +34,14 @@ HEADERS += \
     ISConsole.h \
     ISDatabase.h \
     ISQuery.h \
+    ISQueryLibPQ.h \
     isserver_global.h
 
 SOURCES += \
     ISConfigurations.cpp \
     ISConsole.cpp \
     ISDatabase.cpp \
-    ISQuery.cpp
+    ISQuery.cpp \
+    ISQueryLibPQ.cpp
 
 RESOURCES += $$PWD/../../Resources/ISServer.qrc

@@ -46,11 +46,11 @@ private:
 private:
 	std::string ErrorString; //Тексовое описание ошибки
 	bool ShowLongQuery; //Показывать долгие запрос
+    std::string SqlText; //Текст запроса
 	std::vector<char *> Parameters;
 	size_t ParametersCount; //Количество параметров
 	std::string StmtName; //Имя подготовленного оператора
 	bool Prepared; //Флаг подготовки запроса
-	std::string SqlText; //Текст запроса
 	PGconn *SqlConnection; //Указатель на соединение с базой
 	PGresult *SqlResult; //Структура с результатом запроса
 	int CountRows; //Количество строк в результате запроса
