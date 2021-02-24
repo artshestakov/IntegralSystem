@@ -38,6 +38,9 @@ if (POINTER) \
 //Заглушка для SQL-запросов
 #define PREPARE_QUERY(x) x
 
+//Подавление предупреждения неиспользуемого параметра
+#define IS_UNUSED(x) (void)x
+
 #ifdef WIN32
 #define __CLASS__ ISAlgorithm::GetClassName(__FUNCTION__)
 #else

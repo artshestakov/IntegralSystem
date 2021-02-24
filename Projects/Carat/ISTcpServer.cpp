@@ -143,7 +143,7 @@ void ISTcpServer::ClientDisconnected()
 //-----------------------------------------------------------------------------
 void ISTcpServer::AcceptError(QTcpSocket::SocketError socket_error)
 {
-	Q_UNUSED(socket_error);
+	IS_UNUSED(socket_error);
 	ISLOGGER_C(__CLASS__, "Accept error: " + errorString());
 }
 //-----------------------------------------------------------------------------

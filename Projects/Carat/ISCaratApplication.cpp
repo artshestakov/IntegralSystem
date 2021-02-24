@@ -14,8 +14,8 @@
 //-----------------------------------------------------------------------------
 void QtLog(QtMsgType MessageType, const QMessageLogContext &MessageLogContext, const QString &Message)
 {
-	Q_UNUSED(MessageType);
-	Q_UNUSED(MessageLogContext);
+	IS_UNUSED(MessageType);
+	IS_UNUSED(MessageLogContext);
 	ISLOGGER_Q(Message);
 }
 //-----------------------------------------------------------------------------

@@ -950,7 +950,7 @@ void ISTcpWorker::RegisterOilSphere()
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
-	Q_UNUSED(TcpAnswer);
+	IS_UNUSED(TcpAnswer);
 
 	//Проверяем, не авторизаван ли уже клиент. Если авторизован - выходим с ошибкой
 	if (TcpMessage->TcpSocket->GetAuthorized())
@@ -1249,7 +1249,7 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::Sleep(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
-	Q_UNUSED(TcpAnswer);
+	IS_UNUSED(TcpAnswer);
 	QVariant Timeout = CheckNullField("Timeout", TcpMessage);
 	if (!Timeout.isValid())
 	{
@@ -1594,7 +1594,7 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::GetLastClient(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
-	Q_UNUSED(TcpMessage);
+	IS_UNUSED(TcpMessage);
 
 	//Получаем отсортированный (по дате) список файлов
 	//в настроенной директории и проверяем его на пустоту
@@ -1647,7 +1647,7 @@ bool ISTcpWorker::UserPasswordExist(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAn
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::UserPasswordCreate(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
-	Q_UNUSED(TcpAnswer);
+	IS_UNUSED(TcpAnswer);
 
 	QVariant UserID = CheckNullField("UserID", TcpMessage),
 		Hash = CheckNullField("Hash", TcpMessage);
@@ -1709,7 +1709,7 @@ bool ISTcpWorker::UserPasswordCreate(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpA
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::UserPasswordEdit(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
-	Q_UNUSED(TcpAnswer);
+	IS_UNUSED(TcpAnswer);
 
 	QVariant UserID = CheckNullField("UserID", TcpMessage),
 		HashOld = CheckNullField("HashOld", TcpMessage), //Старый пароль
@@ -1769,7 +1769,7 @@ bool ISTcpWorker::UserPasswordEdit(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAns
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::UserPasswordReset(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
-	Q_UNUSED(TcpAnswer);
+	IS_UNUSED(TcpAnswer);
 
 	QVariant UserID = CheckNullField("UserID", TcpMessage);
 	if (!UserID.isValid())
@@ -1839,7 +1839,7 @@ bool ISTcpWorker::UserSettingsReset(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAn
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::UserDeviceAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
-	Q_UNUSED(TcpAnswer);
+	IS_UNUSED(TcpAnswer);
 
 	QVariant UserID = CheckNullField("UserID", TcpMessage),
 		Hash = CheckNullField("Hash", TcpMessage);
@@ -1894,7 +1894,7 @@ bool ISTcpWorker::UserDeviceAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::UserDeviceDelete(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
-	Q_UNUSED(TcpAnswer);
+	IS_UNUSED(TcpAnswer);
 
 	QVariant UserID = CheckNullField("UserID", TcpMessage);
 	if (!UserID.isValid())
@@ -1986,7 +1986,7 @@ bool ISTcpWorker::GetRecordCall(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::GetClients(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
-	Q_UNUSED(TcpMessage);
+	IS_UNUSED(TcpMessage);
 
 	//Запрашиваем список пользователей
 	QVariantList VariantList, VariantListOffline;
@@ -2216,7 +2216,7 @@ bool ISTcpWorker::RecordEdit(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::RecordDelete(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
-	Q_UNUSED(TcpAnswer);
+	IS_UNUSED(TcpAnswer);
 
 	QVariant TableName = CheckNullField("TableName", TcpMessage);
 	if (!TableName.isValid())
@@ -2515,7 +2515,7 @@ bool ISTcpWorker::DiscussionAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::DiscussionEdit(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
-	Q_UNUSED(TcpAnswer);
+	IS_UNUSED(TcpAnswer);
 
 	QVariant DiscussionID = CheckNullField("ID", TcpMessage),
 		Message = CheckNullField("Message", TcpMessage);
@@ -2908,7 +2908,7 @@ bool ISTcpWorker::NoteRecordGet(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::NoteRecordSet(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
-	Q_UNUSED(TcpAnswer);
+	IS_UNUSED(TcpAnswer);
 
 	QVariant TableName = CheckNullField("TableName", TcpMessage),
 		ObjectID = CheckNullField("ObjectID", TcpMessage);
@@ -2975,7 +2975,7 @@ bool ISTcpWorker::NoteRecordSet(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::FileStorageAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
-	Q_UNUSED(TcpAnswer);
+	IS_UNUSED(TcpAnswer);
 
 	QVariant FileName = CheckNullField("FileName", TcpMessage),
 		Data = CheckNullField("Data", TcpMessage);
@@ -3239,7 +3239,7 @@ bool ISTcpWorker::GetCalendarEvents(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAn
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::CalendarDelete(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
-	Q_UNUSED(TcpAnswer);
+	IS_UNUSED(TcpAnswer);
 	
 	QVariant ID = CheckNullField("ID", TcpMessage);
 	if (!ID.isValid())
@@ -3273,7 +3273,7 @@ bool ISTcpWorker::CalendarDelete(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::GetInternalLists(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
-	Q_UNUSED(TcpMessage);
+	IS_UNUSED(TcpMessage);
 
 	//Запрашиваем справочники
 	ISQuery qSelect(ISDatabase::Instance().GetDB(DBConnectionName), QS_INTERNAL_LISTS);
@@ -3294,7 +3294,7 @@ bool ISTcpWorker::GetInternalLists(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAns
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::SaveMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
-	Q_UNUSED(TcpAnswer);
+	IS_UNUSED(TcpAnswer);
 
 	//Протоколируем в начале, вдруг где-то дальше будет ошибка
 	Protocol(TcpMessage->TcpSocket->GetUserID(), CONST_UID_PROTOCOL_EXIT_APPLICATION);
@@ -3513,7 +3513,7 @@ bool ISTcpWorker::GetGroupRights(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::GroupRightSubSystemAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
-	Q_UNUSED(TcpAnswer);
+	IS_UNUSED(TcpAnswer);
 
 	QVariant GroupID = CheckNullField("GroupID", TcpMessage),
 		SubSystemUID = CheckNullField("UID", TcpMessage);
@@ -3546,7 +3546,7 @@ bool ISTcpWorker::GroupRightSubSystemAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::GroupRightSubSystemDelete(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
-	Q_UNUSED(TcpAnswer);
+	IS_UNUSED(TcpAnswer);
 
 	QVariant GroupID = CheckNullField("GroupID", TcpMessage),
 		SubSystemUID = CheckNullField("UID", TcpMessage);
@@ -3582,7 +3582,7 @@ bool ISTcpWorker::GroupRightSubSystemDelete(ISTcpMessage *TcpMessage, ISTcpAnswe
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::GroupRightTableAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
-	Q_UNUSED(TcpAnswer);
+	IS_UNUSED(TcpAnswer);
 
 	QVariant GroupID = CheckNullField("GroupID", TcpMessage),
 		TableName = CheckNullField("TableName", TcpMessage),
@@ -3624,7 +3624,7 @@ bool ISTcpWorker::GroupRightTableAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpA
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::GroupRightTableDelete(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
-	Q_UNUSED(TcpAnswer);
+	IS_UNUSED(TcpAnswer);
 	
 	QVariant GroupID = CheckNullField("GroupID", TcpMessage),
 		TableName = CheckNullField("TableName", TcpMessage),
@@ -3669,7 +3669,7 @@ bool ISTcpWorker::GroupRightTableDelete(ISTcpMessage *TcpMessage, ISTcpAnswer *T
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::GroupRightSpecialAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
-	Q_UNUSED(TcpAnswer);
+	IS_UNUSED(TcpAnswer);
 
 	QVariant GroupID = CheckNullField("GroupID", TcpMessage),
 		SpecialRightUID = CheckNullField("SpecialRightUID", TcpMessage);
@@ -3702,7 +3702,7 @@ bool ISTcpWorker::GroupRightSpecialAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *Tc
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::GroupRightSpecialDelete(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
-	Q_UNUSED(TcpAnswer);
+	IS_UNUSED(TcpAnswer);
 
 	QVariant GroupID = CheckNullField("GroupID", TcpMessage),
 		SpecialRightUID = CheckNullField("SpecialRightUID", TcpMessage);
@@ -3780,7 +3780,7 @@ bool ISTcpWorker::GetRecordValue(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::RecordFavoriteAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
-	Q_UNUSED(TcpAnswer);
+	IS_UNUSED(TcpAnswer);
 
 	QVariant TableName = CheckNullField("TableName", TcpMessage),
 		ObjectID = CheckNullField("ObjectID", TcpMessage);
@@ -3821,7 +3821,7 @@ bool ISTcpWorker::RecordFavoriteAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAn
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::RecordFavoriteDelete(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
-	Q_UNUSED(TcpAnswer);
+	IS_UNUSED(TcpAnswer);
 
 	QVariant TableName = CheckNullField("TableName", TcpMessage),
 		ObjectID = CheckNullField("ObjectID", TcpMessage);
@@ -3928,7 +3928,7 @@ bool ISTcpWorker::GetFavoriteNames(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAns
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::FavoritesDelete(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
-	Q_UNUSED(TcpAnswer);
+	IS_UNUSED(TcpAnswer);
 
 	//Удаляем избранные записи
 	ISQuery qDelete(ISDatabase::Instance().GetDB(DBConnectionName));
@@ -3957,7 +3957,7 @@ bool ISTcpWorker::FavoritesDelete(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnsw
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::LogGetStructure(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
-	Q_UNUSED(TcpMessage);
+	IS_UNUSED(TcpMessage);
 
 	//Формируем объект папки с логами и получаем список папок-годов
 	QDir DirYear(QCoreApplication::applicationDirPath() + "/Logs");
@@ -4050,7 +4050,7 @@ bool ISTcpWorker::LogGetContent(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::CalendarClose(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
-	Q_UNUSED(TcpAnswer);
+	IS_UNUSED(TcpAnswer);
 
 	QVariant CalendarID = CheckNullField("CalendarID", TcpMessage);
 	if (!CalendarID.isValid())
@@ -4133,7 +4133,7 @@ bool ISTcpWorker::GetHistoryList(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::TaskCommentAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
-	Q_UNUSED(TcpAnswer);
+	IS_UNUSED(TcpAnswer);
 
 	QVariant TaskID = CheckNullField("TaskID", TcpMessage),
 		Comment = CheckNullField("Comment", TcpMessage);
@@ -4236,7 +4236,7 @@ bool ISTcpWorker::GetForeignList(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::GetServerInfo(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
-	Q_UNUSED(TcpMessage);
+	IS_UNUSED(TcpMessage);
 
 	//Делаем запрос к БД
 	ISQuery qSelect(ISDatabase::Instance().GetDB(DBConnectionName), QS_SERVER_INFO);
@@ -4375,8 +4375,8 @@ bool ISTcpWorker::OrganizationFormINN(ISTcpMessage *TcpMessage, ISTcpAnswer *Tcp
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::StatementsQueryGet(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
-	Q_UNUSED(TcpMessage);
-	Q_UNUSED(TcpAnswer);
+	IS_UNUSED(TcpMessage);
+	IS_UNUSED(TcpAnswer);
 
 	//Получаем статистику запросов
 	ISQuery qSelect(ISDatabase::Instance().GetDB(DBConnectionName), QS_STATEMENTS_QUERY);
@@ -4419,8 +4419,8 @@ bool ISTcpWorker::StatementsQueryGet(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpA
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::StatementsQueryReset(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
-	Q_UNUSED(TcpMessage);
-	Q_UNUSED(TcpAnswer);
+	IS_UNUSED(TcpMessage);
+	IS_UNUSED(TcpAnswer);
 
 	ISQuery qReset(ISDatabase::Instance().GetDB(DBConnectionName), QS_STATEMENTS_RESET);
 	if (!qReset.Execute())
@@ -4433,7 +4433,7 @@ bool ISTcpWorker::StatementsQueryReset(ISTcpMessage *TcpMessage, ISTcpAnswer *Tc
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::GetMonitor(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
-	Q_UNUSED(TcpMessage);
+	IS_UNUSED(TcpMessage);
 
 	//Получаем метрики
 	ISQuery qSelect(ISDatabase::Instance().GetDB(DBConnectionName), QS_MONITOR);
@@ -4460,7 +4460,7 @@ bool ISTcpWorker::GetMonitor(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::OilSphere_PeriodContains(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
-	Q_UNUSED(TcpMessage);
+	IS_UNUSED(TcpMessage);
 
 	ISQuery qSelect(ISDatabase::Instance().GetDB(DBConnectionName), QS_PERIOD);
 	if (!qSelect.Execute()) //Ошибка запроса
@@ -4475,7 +4475,7 @@ bool ISTcpWorker::OilSphere_PeriodContains(ISTcpMessage *TcpMessage, ISTcpAnswer
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::OilSphere_GetStockList(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
-	Q_UNUSED(TcpMessage);
+	IS_UNUSED(TcpMessage);
 
 	ISQuery qSelect(ISDatabase::Instance().GetDB(DBConnectionName), QS_STOCK);
 	if (!qSelect.Execute()) //Ошибка запроса
@@ -4499,7 +4499,7 @@ bool ISTcpWorker::OilSphere_GetStockList(ISTcpMessage *TcpMessage, ISTcpAnswer *
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::OilSphere_StatementAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
-	Q_UNUSED(TcpAnswer);
+	IS_UNUSED(TcpAnswer);
 
 	QVariant ImplementationUnload = CheckNullField("ImplementationUnload", TcpMessage),
 		UnloadStock = CheckNullField("UnloadStock", TcpMessage),
@@ -4632,7 +4632,7 @@ bool ISTcpWorker::OilSphere_GetDebtCounterparty(ISTcpMessage *TcpMessage, ISTcpA
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::OilSphere_GetUserConsumption(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
-	Q_UNUSED(TcpMessage);
+	IS_UNUSED(TcpMessage);
 
 	//Запрашиваем всех пользователей и их балансы
 	ISQuery qSelectUsers(ISDatabase::Instance().GetDB(DBConnectionName), QS_USERS_CONSUMPTION);
