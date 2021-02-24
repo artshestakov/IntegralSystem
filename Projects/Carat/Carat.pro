@@ -22,11 +22,14 @@ OBJECTS_DIR = $$PWD/$${CONFIGURATION}-$${PLATFORM}/$${TARGET}
 
 INCLUDEPATH += $$PWD/../../Library/ISCore
 INCLUDEPATH += $$PWD/../../Library/ISServer
+INCLUDEPATH += $$PWD/../../Components/OpenSSL/Include
+INCLUDEPATH += $$PWD/../../Components/PostgreSQL/12.0.5/Include
 INCLUDEPATH += .
 
 LIBS += -L$$DESTDIR -Wl,-rpath="'\$$ORIGIN'",-rpath-link="'\$$ORIGIN'" \
     -lISCore \
 	-lISServer
+LIBS += -L$$PWD/../../Components/OpenSSL/Bin-$${PLATFORM} -lcrypto
 
 HEADERS += \
     ISAsterisk.h \
