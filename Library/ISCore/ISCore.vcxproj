@@ -226,7 +226,6 @@
     <ClCompile Include="ISLogger.cpp" />
     <ClCompile Include="ISMetaData.cpp" />
     <ClCompile Include="ISProperty.cpp" />
-    <ClCompile Include="ISRandom.cpp" />
     <ClCompile Include="ISSettings.cpp" />
     <ClCompile Include="ISSettingsDatabase.cpp" />
     <ClCompile Include="ISSystem.cpp" />
@@ -252,7 +251,6 @@
     <ClInclude Include="ISLogger.h" />
     <ClInclude Include="ISNamespace.h" />
     <ClInclude Include="ISProperty.h" />
-    <ClInclude Include="ISRandom.h" />
     <ClInclude Include="ISStructs.h" />
     <ClInclude Include="ISSystem.h" />
     <ClInclude Include="ISTcp.h" />

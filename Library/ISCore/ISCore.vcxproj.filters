@@ -46,9 +46,6 @@
     <ClCompile Include="ISProperty.cpp">
       <Filter>System</Filter>
     </ClCompile>
-    <ClCompile Include="ISRandom.cpp">
-      <Filter>System</Filter>
-    </ClCompile>
     <ClCompile Include="ISSystem.cpp">
       <Filter>System</Filter>
     </ClCompile>
@@ -107,9 +104,6 @@
       <Filter>System</Filter>
     </ClInclude>
     <ClInclude Include="ISProperty.h">
-      <Filter>System</Filter>
-    </ClInclude>
-    <ClInclude Include="ISRandom.h">
       <Filter>System</Filter>
     </ClInclude>
     <ClInclude Include="ISStructs.h">

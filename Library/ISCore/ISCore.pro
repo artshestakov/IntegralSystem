@@ -38,7 +38,6 @@ HEADERS += \
     ISMetaData.h \
     ISNamespace.h \
     ISProperty.h \
-    ISRandom.h \
     ISSettings.h \
     ISSettingsDatabase.h \
     ISStructs.h \
@@ -59,7 +58,6 @@ SOURCES += \
     ISLogger.cpp \
     ISMetaData.cpp \
     ISProperty.cpp \
-    ISRandom.cpp \
     ISSettings.cpp \
     ISSettingsDatabase.cpp \
     ISSystem.cpp \
