@@ -165,7 +165,15 @@ namespace ISAlgorithm
 	//! \return возвращает упрощённый уникальный идентификатор
     ISCORE_EXPORT std::string GenerateUuidLite();
 
+	//! Генерация хеша SHA256
+	//! \param String строка, из которой будет извлечен хеш
+	//! \return возвращает строку с хешем
 	ISCORE_EXPORT std::string StringToSha256(const std::string &String);
+
+	//! Генерация хеша MD5
+	//! \param String строка, из которой будет извлечен хеш
+	//! \return возвращает строку с хешем
+	ISCORE_EXPORT std::string StringToMD5(const std::string &String);
 
 	//! Извлечь подстроку из строки
 	//! \param String строка, из которой будет происходить извлечение

@@ -1,6 +1,7 @@
 #include "ISConstants.h"
 #include "ISAlgorithm.h"
 #include <openssl/sha.h>
+#include <openssl/md5.h>
 //-----------------------------------------------------------------------------
 std::string ISAlgorithm::GetFileNameFromPath(const std::string &FilePath)
 {
@@ -399,6 +400,28 @@ std::string ISAlgorithm::StringToSha256(const std::string &String)
 	//Преобразовываем в hex
 	std::stringstream StringStream;
 	for (int i = 0; i < SHA256_DIGEST_LENGTH; i++)
+	{
+		StringStream << std::hex << (int)Hash[i];
+	}
+
+	//Приводим к строке, меняем регистр и возвращаем
+	std::string Result = StringStream.str();
+	std::transform(Result.begin(), Result.end(), Result.begin(), toupper);
+	return Result;
+}
+//-----------------------------------------------------------------------------
+std::string ISAlgorithm::StringToMD5(const std::string &String)
+{
+	//Формируем хеш
+	MD5_CTX MD5Context = { 0 };
+	MD5_Init(&MD5Context);
+	MD5_Update(&MD5Context, String.c_str(), 5);
+	unsigned char Hash[MD5_DIGEST_LENGTH] = { 0 };
+	MD5_Final(Hash, &MD5Context);
+	
+	//Преобразовываем в hex
+	std::stringstream StringStream;
+	for (int i = 0; i < MD5_DIGEST_LENGTH; i++)
 	{
 		StringStream << std::hex << (int)Hash[i];
 	}

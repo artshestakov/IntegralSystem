@@ -3,7 +3,7 @@
 #include "ISDatabase.h"
 #include "ISLogger.h"
 //-----------------------------------------------------------------------------
-ISQueryLibPQ::ISQueryLibPQ(const std::string &sql_text, bool prepare)
+ISQueryLibPQ::ISQueryLibPQ(const std::string &sql_text, bool prepare, size_t ParamCount)
 	: ErrorString(NO_ERROR_STRING),
 	ShowLongQuery(true),
 	SqlText(sql_text),
@@ -17,11 +17,11 @@ ISQueryLibPQ::ISQueryLibPQ(const std::string &sql_text, bool prepare)
 {
 	if (prepare && !sql_text.empty())
 	{
-		Prepare();
+		Prepare(ParamCount);
 	}
 }
 //-----------------------------------------------------------------------------
-ISQueryLibPQ::ISQueryLibPQ(PGconn *sql_connection, const std::string &sql_text, bool prepare)
+ISQueryLibPQ::ISQueryLibPQ(PGconn *sql_connection, const std::string &sql_text, bool prepare, size_t ParamCount)
 	: ErrorString(NO_ERROR_STRING),
 	ShowLongQuery(true),
 	SqlText(sql_text),
@@ -35,7 +35,7 @@ ISQueryLibPQ::ISQueryLibPQ(PGconn *sql_connection, const std::string &sql_text, 
 {
 	if (prepare && !sql_text.empty())
 	{
-		Prepare(sql_connection);
+		Prepare(sql_connection, ParamCount);
 	}
 }
 //-----------------------------------------------------------------------------
@@ -105,7 +105,9 @@ bool ISQueryLibPQ::Execute()
 	ISTimePoint TimePoint = ISAlgorithm::GetTick();
 	if (Parameters.empty()) //Параметров запроса нет - исполняем как есть
 	{
-		SqlResult = PQexec(SqlConnection, SqlText.c_str());
+		//Если запрос не был подготовлен - исполняем как есть, иначе - выполняем подготовленный оператор
+		SqlResult = StmtName.empty() ? PQexec(SqlConnection, SqlText.c_str()) :
+			PQexecPrepared(SqlConnection, StmtName.c_str(), 0, NULL, NULL, NULL, 0);
 	}
 	else //Есть параметры запроса - параметизированный запрос
 	{
@@ -131,7 +133,9 @@ bool ISQueryLibPQ::Execute()
 		}
 
 		//Выполняем запрос
-		SqlResult = PQexecParams(SqlConnection, SqlText.c_str(), (int)ParametersCount, NULL, ParamValues, NULL, NULL, 0);
+		//Если запрос не был подготовлен - исполняем как есть, иначе - выполняем подготовленный оператор
+		SqlResult = StmtName.empty() ? PQexec(SqlConnection, SqlText.c_str()) :
+			PQexecPrepared(SqlConnection, StmtName.c_str(), 0, NULL, NULL, NULL, 0);
 
 		//Очищаем выделенную память под параметры
 		for (size_t i = 0; i < ParametersCount; ++i)
@@ -247,14 +251,45 @@ void ISQueryLibPQ::FillColumnMap()
 	}
 }
 //-----------------------------------------------------------------------------
-bool ISQueryLibPQ::Prepare()
+bool ISQueryLibPQ::Prepare(size_t ParamCount)
 {
+	StmtName = ISAlgorithm::StringToMD5(SqlText);
+	PGresult *STMT = PQprepare(SqlConnection, StmtName.c_str(), SqlText.c_str(), ParamCount, NULL);
+	if (!STMT)
+	{
+		ErrorString = "Out of memory";
+		return false;
+	}
+
+	switch (PQresultStatus(STMT)) //Проверяем результат
+	{
+	case PGRES_TUPLES_OK:
+		CountRows = PQntuples(SqlResult);
+		CountColumns = PQnfields(SqlResult);
+		IsSelect = true;
+		FillColumnMap();
+		return true;
+		break;
+
+	case PGRES_SINGLE_TUPLE:
+		IsSelect = true;
+		return true;
+		break;
+
+	case PGRES_COMMAND_OK:
+		return true;
+		break;
+
+	default:
+		break;
+	}
+
 	return true;
 }
 //-----------------------------------------------------------------------------
-bool ISQueryLibPQ::Prepare(PGconn *sql_connection)
+bool ISQueryLibPQ::Prepare(PGconn *sql_connection, size_t ParamCount)
 {
-	Q_UNUSED(sql_connection);
-	return true;
+	SqlConnection = sql_connection;
+	return Prepare(ParamCount);
 }
 //-----------------------------------------------------------------------------

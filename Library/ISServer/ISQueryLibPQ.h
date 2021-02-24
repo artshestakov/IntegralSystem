@@ -10,8 +10,8 @@
 class ISSERVER_EXPORT ISQueryLibPQ
 {
 public:
-	ISQueryLibPQ(const std::string &sql_text, bool prepare = false);
-	ISQueryLibPQ(PGconn *sql_connection, const std::string &sql_text = std::string(), bool prepare = false);
+	ISQueryLibPQ(const std::string &sql_text, bool prepare = false, size_t ParamCount = 0);
+	ISQueryLibPQ(PGconn *sql_connection, const std::string &sql_text = std::string(), bool prepare = false, size_t ParamCount = 0);
 	~ISQueryLibPQ();
 
 	std::string GetErrorString() const; //Получить текстовое описание ошибки
@@ -40,8 +40,8 @@ public:
 
 private:
 	void FillColumnMap();
-	bool Prepare();
-	bool Prepare(PGconn *sql_connection);
+	bool Prepare(size_t ParamCount);
+	bool Prepare(PGconn *sql_connection, size_t ParamCount);
 
 private:
 	std::string ErrorString; //Тексовое описание ошибки
@@ -51,6 +51,7 @@ private:
 	std::string SqlText; //Текст запроса
 	PGconn *SqlConnection; //Указатель на соединение с базой
 	PGresult *SqlResult; //Структура с результатом запроса
+	std::string StmtName; //Имя подготовленного оператора
 	int CountRows; //Количество строк в результате запроса
 	int CountColumns; //Количество полей в результате запроса
 	int CurrentRow; //Индекс текущей строки результирующей выборки
