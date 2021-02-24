@@ -1,8 +1,5 @@
 #include "ISConstants.h"
 #include "ISAlgorithm.h"
-#include <openssl/sha.h>
-#include <openssl/md5.h>
-#include <uuid/uuid.h>
 //-----------------------------------------------------------------------------
 std::string ISAlgorithm::GetFileNameFromPath(const std::string &FilePath)
 {
