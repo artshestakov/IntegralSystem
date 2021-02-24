@@ -24,6 +24,8 @@ OBJECTS_DIR = $$PWD/$${CONFIGURATION}-$${PLATFORM}/$${TARGET}
 INCLUDEPATH += $$PWD/../../Components/OpenSSL/Include
 INCLUDEPATH += .
 
+LIBS += -L$$DESTDIR -Wl,-rpath="'\$$ORIGIN'",-rpath-link="'\$$ORIGIN'" \
+    -luuid
 LIBS += -L$$PWD/../../Components/OpenSSL/Bin-$${PLATFORM} -lcrypto
 
 HEADERS += \

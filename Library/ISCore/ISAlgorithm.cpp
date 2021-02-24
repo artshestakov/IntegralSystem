@@ -2,6 +2,7 @@
 #include "ISAlgorithm.h"
 #include <openssl/sha.h>
 #include <openssl/md5.h>
+#include <uuid/uuid.h>
 //-----------------------------------------------------------------------------
 std::string ISAlgorithm::GetFileNameFromPath(const std::string &FilePath)
 {
@@ -345,7 +346,6 @@ QString ISAlgorithm::FormatNumber(double Number, char Separator, unsigned int Pr
 std::string ISAlgorithm::GenerateUuidStandart()
 {
 	std::string StringUID;
-	StringUID.resize(UUID_STANDART_SIZE);
 #ifdef WIN32
 	GUID UID = { 0 };
 	HRESULT Result = CoCreateGuid(&UID); //Генерируем идентификатор
@@ -354,7 +354,8 @@ std::string ISAlgorithm::GenerateUuidStandart()
 		unsigned char *Char = { 0 };
 		if (UuidToString(&UID, &Char) == RPC_S_OK) //Преобразовываем в строку
 		{
-			//Заполняем
+            //Формируем строку и заполняем её
+            StringUID.resize(UUID_STANDART_SIZE);
 			for (size_t i = 0; i < UUID_STANDART_SIZE; ++i)
 			{
 				StringUID[i] = Char[i];
@@ -362,6 +363,14 @@ std::string ISAlgorithm::GenerateUuidStandart()
 		}
 	}
 #else
+    //Генерируем идентификатор
+    uuid_t UUID = { 0 };
+    uuid_generate(UUID);
+
+    //Переводим его в строку
+    char Char[UUID_STANDART_SIZE] = { 0 };
+    uuid_unparse(UUID, Char);
+    StringUID = Char;
 #endif
 	return StringUID;
 }
@@ -391,7 +400,7 @@ std::string ISAlgorithm::GenerateUuidLite()
 std::string ISAlgorithm::StringToSha256(const std::string &String)
 {
 	//Формируем хеш
-	SHA256_CTX SHA256 = { 0 };
+    SHA256_CTX SHA256;
 	SHA256_Init(&SHA256);
 	SHA256_Update(&SHA256, String.c_str(), String.size());
 	unsigned char Hash[SHA256_DIGEST_LENGTH] = { 0 };
@@ -413,7 +422,7 @@ std::string ISAlgorithm::StringToSha256(const std::string &String)
 std::string ISAlgorithm::StringToMD5(const std::string &String)
 {
 	//Формируем хеш
-	MD5_CTX MD5Context = { 0 };
+    MD5_CTX MD5Context;
 	MD5_Init(&MD5Context);
 	MD5_Update(&MD5Context, String.c_str(), 5);
 	unsigned char Hash[MD5_DIGEST_LENGTH] = { 0 };
