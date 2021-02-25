@@ -63,7 +63,7 @@ struct ISCORE_EXPORT ISMetaSettingsGroup
 	}
 
 	QString Name;
-	QString UID; //??? После перехода на Карат это поле не понадобится
+	QString UID;
 	QString LocalName;
 	QString IconName;
 	bool System;
