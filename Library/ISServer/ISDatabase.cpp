@@ -31,7 +31,7 @@ QSqlDatabase ISDatabase::GetDB(const QString &ConnectionName)
     return QSqlDatabase();
 }
 //-----------------------------------------------------------------------------
-PGconn* ISDatabase::GetDBLibPQ(const QString &ConnectionName)
+PGconn* ISDatabase::GetDBLibPQ(const std::string &ConnectionName)
 {
 	PGconn *Connection = NULL;
 	CRITICAL_SECTION_LOCK(&CriticalSection);
@@ -56,7 +56,7 @@ ISConnectOptionDB ISDatabase::GetOption(const QString &ConnectionName)
     return ConnectOption;
 }
 //-----------------------------------------------------------------------------
-ISConnectOptionDB ISDatabase::GetOptionLibPQ(const QString &ConnectionName)
+ISConnectOptionDB ISDatabase::GetOptionLibPQ(const std::string &ConnectionName)
 {
 	ISConnectOptionDB ConnectOption;
 	CRITICAL_SECTION_LOCK(&CriticalSection);
@@ -73,12 +73,12 @@ ISConnectOptionDB ISDatabase::GetOptionLibPQ(const QString &ConnectionName)
 	return ConnectOption;
 }
 //-----------------------------------------------------------------------------
-bool ISDatabase::ConnectLibPQ(const QString &ConnectionName, const ISConnectOptionDB &ConnectOptionDB)
+bool ISDatabase::ConnectLibPQ(const std::string &ConnectionName, const ISConnectOptionDB &ConnectOptionDB)
 {
 	return ConnectLibPQ(ConnectionName, ConnectOptionDB.Host, ConnectOptionDB.Port, ConnectOptionDB.Name, ConnectOptionDB.Login, ConnectOptionDB.Password);
 }
 //-----------------------------------------------------------------------------
-bool ISDatabase::ConnectLibPQ(const QString &ConnectionName, const QString &Host, unsigned short Port, const QString &Database, const QString &Login, const QString &Password)
+bool ISDatabase::ConnectLibPQ(const std::string &ConnectionName, const QString &Host, unsigned short Port, const QString &Database, const QString &Login, const QString &Password)
 {
 	//Формируем строку подключения
 	std::stringstream StringStream;
@@ -122,7 +122,7 @@ bool ISDatabase::ConnectLibPQ(const QString &ConnectionName, const QString &Host
 	return true;
 }
 //-----------------------------------------------------------------------------
-void ISDatabase::DisconnectLibPQ(const QString &ConnectionName)
+void ISDatabase::DisconnectLibPQ(const std::string &ConnectionName)
 {
 	CRITICAL_SECTION_LOCK(&CriticalSection);
 	auto It = ConnectionsLibPQ.find(ConnectionName);
@@ -137,8 +137,8 @@ void ISDatabase::DisconnectLibPQ(const QString &ConnectionName)
 //-----------------------------------------------------------------------------
 void ISDatabase::DisconnectAllLibPQ()
 {
-	std::vector<QString> Keys = ISAlgorithm::ConvertMapToKeys(ConnectionsLibPQ);
-	for (const QString &ConnectionName : Keys)
+	std::vector<std::string> Keys = ISAlgorithm::ConvertMapToKeys(ConnectionsLibPQ);
+	for (const std::string &ConnectionName : Keys)
 	{
 		DisconnectLibPQ(ConnectionName);
 	}

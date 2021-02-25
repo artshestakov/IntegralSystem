@@ -15,7 +15,8 @@ public:
 	ISQueryLibPQ(PGconn *sql_connection, const std::string &sql_text = std::string(), bool prepare = false, int ParamCount = 0);
 	~ISQueryLibPQ();
 
-	std::string GetErrorString() const; //Получить текстовое описание ошибки
+	const std::string& GetErrorString() const; //Получить текстовое описание ошибки
+	const std::string& GetSqlText() const; //Получить текст запроса
 	int GetResultSize() const; //Получить размер выборки
 	bool GetIsSelect() const; //Проверить, является ли запрос выборкой
 

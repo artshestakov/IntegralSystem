@@ -43,21 +43,20 @@ ISQueryLibPQ::ISQueryLibPQ(PGconn *sql_connection, const std::string &sql_text, 
 //-----------------------------------------------------------------------------
 ISQueryLibPQ::~ISQueryLibPQ()
 {
-	for (size_t i = 0; i < ParametersCount; ++i)
-	{
-		//free(Parameters[i]);
-	}
-	Parameters.clear();
-
 	if (SqlResult)
 	{
 		PQclear(SqlResult);
 	}
 }
 //-----------------------------------------------------------------------------
-std::string ISQueryLibPQ::GetErrorString() const
+const std::string& ISQueryLibPQ::GetErrorString() const
 {
 	return ErrorString;
+}
+//-----------------------------------------------------------------------------
+const std::string& ISQueryLibPQ::GetSqlText() const
+{
+	return SqlText;
 }
 //-----------------------------------------------------------------------------
 int ISQueryLibPQ::GetResultSize() const

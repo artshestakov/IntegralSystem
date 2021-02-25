@@ -17,10 +17,10 @@
 #include "ISCaratMonitor.h"
 #include "ISConfigurations.h"
 //-----------------------------------------------------------------------------
-static QString QS_USERS_HASH = PREPARE_QUERY("SELECT usrs_hash, usrs_salt "
-											 "FROM _users "
-											 "WHERE usrs_hash IS NOT NULL "
-											 "AND usrs_salt IS NOT NULL");
+static std::string QS_USERS_HASH = PREPARE_QUERY("SELECT usrs_hash, usrs_salt "
+												 "FROM _users "
+												 "WHERE usrs_hash IS NOT NULL "
+												 "AND usrs_salt IS NOT NULL");
 //-----------------------------------------------------------------------------
 static QString QS_USER_AUTH = PREPARE_QUERY("SELECT usrs_id, usrs_issystem, usrs_group, usrs_fio, usrs_accessallowed, usrs_accountlifetime, usrs_accountlifetimestart, usrs_accountlifetimeend, usgp_fullaccess, "
 											"(SELECT sgdb_useraccessdatabase FROM _settingsdatabase WHERE sgdb_uid = :SettingUID), "
@@ -645,6 +645,7 @@ void ISTcpWorker::Run()
 
 	//Формируем имя подключения к БД
 	DBConnectionName = QString::number(CURRENT_THREAD_ID());
+	DBConnectionNameLibPQ = "LibPQ_" + std::to_string(CURRENT_THREAD_ID());
 
 	//Пытаемся подключиться к БД
 	IsStarted = ISDatabase::Instance().Connect(DBConnectionName, DBHost, DBPort, DBName, DBUser, DBPassword);
@@ -656,6 +657,8 @@ void ISTcpWorker::Run()
 	{
 		ISLOGGER_E(__CLASS__, "Not connected to database: " + ISDatabase::Instance().GetErrorString());
 	}
+
+	ISDatabase::Instance().ConnectLibPQ(DBConnectionNameLibPQ, DBHost, DBPort, DBName, DBUser, DBPassword);
 
 	//Выполняем регистрацию функций для конфигурации
 	if (!QMetaObject::invokeMethod(this, ("Register" + ISConfigurations::Instance().Get().Name).toUtf8()))
@@ -702,6 +705,7 @@ void ISTcpWorker::Process()
 			ISLOGGER_I(__CLASS__, "Stopping ...");
 			delete qProtocol;
 			ISDatabase::Instance().Disconnect(DBConnectionName);
+			ISDatabase::Instance().DisconnectLibPQ(DBConnectionNameLibPQ);
 			break;
 		}
 
@@ -937,6 +941,13 @@ bool ISTcpWorker::ErrorQuery(const QString &LocalError, ISQuery &SqlQuery)
 	return false;
 }
 //-----------------------------------------------------------------------------
+bool ISTcpWorker::ErrorQuery(const QString &LocalError, ISQueryLibPQ &SqlQuery)
+{
+	ErrorString = LocalError;
+	ISLOGGER_E(__CLASS__, QString("Sql query:\n%1\n%2").arg(SqlQuery.GetSqlText().c_str()).arg(SqlQuery.GetErrorString().c_str()));
+	return false;
+}
+//-----------------------------------------------------------------------------
 void ISTcpWorker::RegisterOilSphere()
 {
 	MapFunction["OilSphere_PeriodContains"] = &ISTcpWorker::OilSphere_PeriodContains;
@@ -1006,14 +1017,14 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 
 	{
 		//Запрашиваем все хэши из БД
-		ISQuery qSelectHash(ISDatabase::Instance().GetDB(DBConnectionName), QS_USERS_HASH);
+		ISQueryLibPQ qSelectHash(ISDatabase::Instance().GetDBLibPQ(DBConnectionNameLibPQ), QS_USERS_HASH);
 		if (!qSelectHash.Execute()) //Ошибка запроса
 		{
 			return ErrorQuery(LANG("Carat.Error.Query.Auth.SelectHash"), qSelectHash);
 		}
 
 		//Если запрос ничего не вернул, значит в БД нет ни одного пользователя
-		if (qSelectHash.GetCountResultRows() == 0)
+		if (qSelectHash./*GetCountResultRows()*/GetResultSize() == 0)
 		{
 			ErrorString = LANG("Carat.Error.Query.Auth.NoUsers");
 			return false;
@@ -1024,15 +1035,15 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 		while (qSelectHash.Next())
 		{
 			//Получаем хэш и соль
-			QString CurrentHash = qSelectHash.ReadColumn("usrs_hash").toString(),
-				CurrentSalt = qSelectHash.ReadColumn("usrs_salt").toString();
+			std::string CurrentHash = qSelectHash.ReadColumn(/*"usrs_hash"*/0).ToString(),
+				CurrentSalt = qSelectHash.ReadColumn(/*"usrs_salt"*/1).ToString();
 
 			//Солим присланный хэш текущей солью
-			QString HashResult = ISAlgorithm::SaltPassword(HashString, CurrentSalt);
-			IsFound = HashResult == CurrentHash;
+			//QString HashResult = ISAlgorithm::SaltPassword(HashString, CurrentSalt);
+			//IsFound = HashResult == CurrentHash;
 			if (IsFound) //Нашли
 			{
-				Hash = HashResult;
+				//Hash = HashResult;
 				break;
 			}
 		}
