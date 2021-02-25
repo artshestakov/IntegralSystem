@@ -2,12 +2,12 @@
 #include "ISAlgorithm.h"
 #include "ISDatabase.h"
 #include "ISLogger.h"
-#include "ISQuery.h"
+#include "ISQueryLibPQ.h"
 #include "ISTcpClients.h"
 #include "ISConfig.h"
 //-----------------------------------------------------------------------------
-static QString QI_MONITOR = PREPARE_QUERY("INSERT INTO _monitor(mntr_memory, mntr_clients, mntr_tcpquerytimeavg) "
-										  "VALUES(:Memory, :Clients, :TCPQueryTimeAvg)");
+static std::string QI_MONITOR = PREPARE_QUERY("INSERT INTO _monitor(mntr_memory, mntr_clients, mntr_tcpquerytimeavg) "
+											  "VALUES($1, $2, $3)");
 //-----------------------------------------------------------------------------
 ISCaratMonitor::ISCaratMonitor()
 	: ErrorString(NO_ERROR_STRING),
@@ -31,7 +31,7 @@ ISCaratMonitor& ISCaratMonitor::Instance()
 	return CaratMonitor;
 }
 //-----------------------------------------------------------------------------
-void ISCaratMonitor::RegisterQueryTime(unsigned long long MSec)
+void ISCaratMonitor::RegisterQueryTime(unsigned int MSec)
 {
 	CRITICAL_SECTION_LOCK(&CriticalSection);
 	TCPQueryTime += MSec;
@@ -84,7 +84,7 @@ void ISCaratMonitor::Shutdown()
 void ISCaratMonitor::Process()
 {
 	//Подключаемся к базе
-	IsRunning = ISDatabase::Instance().Connect(CONNECTION_MONITOR, ISDatabase::Instance().GetOption(CONNECTION_DEFAULT));
+	IsRunning = ISDatabase::Instance().ConnectLibPQ(CONNECTION_MONITOR, ISDatabase::Instance().GetOption(CONNECTION_DEFAULT));
 	if (!IsRunning) //Не удалось подключиться к базе
 	{
 		ISLOGGER_E(__CLASS__, "Not connected to database: " + ISDatabase::Instance().GetErrorString());
@@ -92,7 +92,7 @@ void ISCaratMonitor::Process()
 	}
 
 	//Создаём указатель на объект запроса тут, чтобы потом использовать его постоянно
-	ISQuery *qInsert = new ISQuery(ISDatabase::Instance().GetDB(CONNECTION_MONITOR), QI_MONITOR);
+	ISQueryLibPQ *qInsert = new ISQueryLibPQ(ISDatabase::Instance().GetDBLibPQ(CONNECTION_MONITOR), QI_MONITOR, true, 3);
 
 	//Подключение к базе прошло успешно - начинаем работу потока
 	while (true)
@@ -100,12 +100,12 @@ void ISCaratMonitor::Process()
 		ISSleep(Timeout);
 		
 		//Добавляем показатели в базу		
-		qInsert->BindValue(":Memory", GetMemory());
-        qInsert->BindValue(":Clients", (unsigned int)ISTcpClients::Instance().GetCount());
-		qInsert->BindValue(":TCPQueryTimeAvg", GetTCPTimeAvg());
+		qInsert->AddBindValue(GetMemory());
+        qInsert->AddBindValue(ISTcpClients::Instance().GetCount());
+		qInsert->AddBindValue(GetTCPTimeAvg());
 		if (!qInsert->Execute()) //Ошибка вставки
 		{
-			ISLOGGER_E(__CLASS__, "Not insert monitor indicators: " + qInsert->GetErrorString());
+			ISLOGGER_E(__CLASS__, "Not insert monitor indicators: " + QString::fromStdString(qInsert->GetErrorString()));
 		}
 		
 		//Проверяем, не остановлен ли поток
@@ -122,9 +122,9 @@ void ISCaratMonitor::Process()
 	IsFinished = true;
 }
 //-----------------------------------------------------------------------------
-quint64 ISCaratMonitor::GetMemory() const
+int ISCaratMonitor::GetMemory() const
 {
-	unsigned long Result = 0;
+	unsigned int Result = 0;
 #ifdef WIN32
 	PROCESS_MEMORY_COUNTERS ProcessMemory = { 0 };
 	if (GetProcessMemoryInfo(GetCurrentProcess(), &ProcessMemory, sizeof(PROCESS_MEMORY_COUNTERS)) == TRUE)
@@ -158,7 +158,7 @@ quint64 ISCaratMonitor::GetMemory() const
                 }
 
                 bool Ok = true;
-                Result = Temp.toULong(&Ok);
+                Result = Temp.toUInt(&Ok);
                 if (!Ok) //Не удалось преобразовать строку в число
                 {
                     ISLOGGER_E(__CLASS__, QString("Not convert '%1' to unsigned long").arg(Temp));
@@ -175,7 +175,7 @@ quint64 ISCaratMonitor::GetMemory() const
 	return Result;
 }
 //-----------------------------------------------------------------------------
-unsigned long long ISCaratMonitor::GetTCPTimeAvg() const
+unsigned int ISCaratMonitor::GetTCPTimeAvg() const
 {
 	if (TCPQueryTime > 0 && TCPQueryCount > 0)
 	{
