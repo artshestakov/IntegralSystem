@@ -444,7 +444,7 @@ void ISAuthDialog::Input()
 		//Получаем информацию о конфигурации
 		QVariantMap ConfigurationInfo = AnswerMap["Configuration"].toMap();
 		ISBuffer::Instance().ConfigurationInfo.Name = ConfigurationInfo["Name"].toString();
-		ISBuffer::Instance().ConfigurationInfo.UID = ConfigurationInfo["UID"];
+		ISBuffer::Instance().ConfigurationInfo.UID = ConfigurationInfo["UID"].toString();
 		ISBuffer::Instance().ConfigurationInfo.LocalName = ConfigurationInfo["LocalName"].toString();
 		ISBuffer::Instance().ConfigurationInfo.DesktopForm = ConfigurationInfo["DesktopForm"].toString();
 		ISBuffer::Instance().ConfigurationInfo.DateExpired = QDate::fromString(ConfigurationInfo["DateExpired"].toString(), FORMAT_DATE_V2);

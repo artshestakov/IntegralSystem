@@ -4,7 +4,6 @@
 //-----------------------------------------------------------------------------
 #include "iscore_global.h"
 #include "ISNamespace.h"
-#include "ISUuid.h"
 #include "ISTypedefs.h"
 //-----------------------------------------------------------------------------
 class ISCORE_EXPORT ISSystem

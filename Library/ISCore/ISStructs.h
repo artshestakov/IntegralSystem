@@ -4,7 +4,6 @@
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 #include "ISNamespace.h"
-#include "ISUuid.h"
 #include "ISConstants.h"
 #include "ISAssert.h"
 #include "ISTypedefs.h"
@@ -42,7 +41,7 @@ struct ISCORE_EXPORT ISMetaSetting
 {
 	ISMetaSetting() : Type(ISNamespace::FieldType::Unknown) { }
 
-	ISUuid UID;
+	QString UID;
 	QString Name;
 	ISNamespace::FieldType Type;
 	QString WidgetEditName;
@@ -64,7 +63,7 @@ struct ISCORE_EXPORT ISMetaSettingsGroup
 	}
 
 	QString Name;
-	ISUuid UID; //??? После перехода на Карат это поле не понадобится
+	QString UID; //??? После перехода на Карат это поле не понадобится
 	QString LocalName;
 	QString IconName;
 	bool System;
@@ -74,7 +73,7 @@ struct ISCORE_EXPORT ISMetaSettingsGroup
 //-----------------------------------------------------------------------------
 struct ISMetaParagraph
 {
-	ISUuid UID;
+	QString UID;
 	QString Name;
 	QString LocalName;
 	QString ToolTip;
@@ -86,7 +85,7 @@ struct ISMetaSubSystem
 {
 	ISMetaSubSystem() { }
 
-	ISUuid UID; //Идентификатор подсистемы
+	QString UID; //Идентификатор подсистемы
 	QString LocalName; //Локальное имя подсистемы
 	QString IconName; //Имя иконки подсистемы
 	QString TableName; //Имя таблицы подсистемы
@@ -110,7 +109,7 @@ struct ISMetaSystem
 	}
 
 	bool IsSystem; //Движковая система (если нет - значит пользовательская)
-	ISUuid UID; //Идентификатор
+	QString UID; //Идентификатор
 	QString LocalName; //Имя системы
 	QString IconName; //Имя иконки
 	QString Hint; //Всплывающая подсказка
@@ -144,7 +143,7 @@ struct PMetaUserPermission
 struct ISCORE_EXPORT ISConfigurationInfo
 {
 	QString Name; //Наименование
-	ISUuid UID; //Идентификатор
+	QString UID; //Идентификатор
 	QString LocalName; //Локальное наименование
 	QString DesktopForm; //Имя класса рабочего стола
 	QDate DateExpired; //Дата, после которой программа запускаться не должна

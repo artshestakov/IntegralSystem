@@ -812,7 +812,7 @@ QVariant ISTcpWorker::CheckNullField(const QString &FieldName, ISTcpMessage *Tcp
 	return QVariant();
 }
 //-----------------------------------------------------------------------------
-void ISTcpWorker::Protocol(unsigned int UserID, const ISUuid &ActionTypeUID, const QVariant &TableName, const QVariant &TableLocalName, const QVariant &ObjectID, const QVariant &Information)
+void ISTcpWorker::Protocol(unsigned int UserID, const QString &ActionTypeUID, const QVariant &TableName, const QVariant &TableLocalName, const QVariant &ObjectID, const QVariant &Information)
 {
 	qProtocol->BindValue(":UserID", UserID);
 	qProtocol->BindValue(":TableName", TableName);
@@ -1323,7 +1323,7 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 		while (qSelectAccessTables.Next())
 		{
 			QString TableName = qSelectAccessTables.ReadColumn("gatb_table").toString();
-			ISUuid AccessUID = qSelectAccessTables.ReadColumn("gatt_uid");
+			QString AccessUID = qSelectAccessTables.ReadColumn("gatt_uid").toString();
 			if (AccessTablesMap.contains(TableName))
 			{
 				QVariantList AccessList = AccessTablesMap[TableName].toList();
@@ -1349,7 +1349,7 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	{
 		while (qSelectAccessSpecial.Next())
 		{
-			AccessSpecialList.append(ISUuid(qSelectAccessSpecial.ReadColumn("gast_uid")));
+			AccessSpecialList.append(qSelectAccessSpecial.ReadColumn("gast_uid"));
 		}
 	}
 	else
@@ -1375,7 +1375,7 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 				{
 					SubSystemsList.append(QVariantMap
 					{
-						{ "UID", ISUuid(qSelectSubSystem.ReadColumn("sbsm_uid")) },
+						{ "UID", qSelectSubSystem.ReadColumn("sbsm_uid") },
 						{ "Local", qSelectSubSystem.ReadColumn("sbsm_localname") },
 						{ "Icon", qSelectSubSystem.ReadColumn("sbsm_icon") },
 						{ "Class", qSelectSubSystem.ReadColumn("sbsm_classname") },
@@ -1394,7 +1394,7 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 			{
 				SystemSubSystemList.append(QVariantMap
 				{
-					{ "UID", ISUuid(qSelectSystem.ReadColumn("stms_uid")) },
+					{ "UID", qSelectSystem.ReadColumn("stms_uid") },
 					{ "IsSystem", qSelectSystem.ReadColumn("stms_issystem") },
 					{ "Local", qSelectSystem.ReadColumn("stms_localname") },
 					{ "Icon", qSelectSystem.ReadColumn("stms_icon") },
@@ -1455,7 +1455,7 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	{
 		while (qSelectSettingGroup.Next())
 		{
-			ISUuid GroupUID = qSelectSettingGroup.ReadColumn("stgp_uid");
+			QString GroupUID = qSelectSettingGroup.ReadColumn("stgp_uid").toString();
 			QVariantList SettingsList;
 			qSelectSettingUser.BindValue(":UserID", TcpMessage->TcpSocket->GetUserID());
 			qSelectSettingUser.BindValue(":GroupUID", GroupUID);
@@ -1463,7 +1463,7 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 			{
 				while (qSelectSettingUser.Next())
 				{
-					ISUuid SettingUID = qSelectSettingUser.ReadColumn("stgs_uid");
+					QString SettingUID = qSelectSettingUser.ReadColumn("stgs_uid").toString();
 					QVariant SettingDefault = qSelectSettingUser.ReadColumn("stgs_defaultvalue");
 					QVariantMap SettingMap =
 					{
@@ -1526,7 +1526,7 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 		{
 			ParagraphList.append(QVariantMap
 			{
-				{ "UID", ISUuid(qSelectParagraph.ReadColumn("prhs_uid")) },
+				{ "UID", qSelectParagraph.ReadColumn("prhs_uid") },
 				{ "Name", qSelectParagraph.ReadColumn("prhs_name") },
 				{ "Local", qSelectParagraph.ReadColumn("prhs_localname") },
 				{ "ToolTip", qSelectParagraph.ReadColumn("prhs_tooltip") },
@@ -1830,7 +1830,7 @@ bool ISTcpWorker::UserSettingsReset(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAn
 	QVariantMap ResultMap;
 	while (qUpdate.Next())
 	{
-		ResultMap[ISUuid(qUpdate.ReadColumn("stgs_uid"))] = qUpdate.ReadColumn("usst_value");
+		ResultMap[qUpdate.ReadColumn("stgs_uid").toString()] = qUpdate.ReadColumn("usst_value");
 	}
 	TcpAnswer->Parameters["Result"] = ResultMap;
 	Protocol(TcpMessage->TcpSocket->GetUserID(), CONST_UID_PROTOCOL_USER_SETTINGS_RESET);
@@ -2771,7 +2771,7 @@ bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 				}
 				else if (Type == ISNamespace::FieldType::UID)
 				{
-					Value = ISUuid(Value);
+					Value = Value.toString();
 				}
 				else if (Type == ISNamespace::FieldType::ProtocolDT)
 				{
@@ -3384,7 +3384,7 @@ bool ISTcpWorker::GetGroupRights(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
 					QVariantList SubSystemsList = SystemMap["SubSystems"].toList();
 					SubSystemsList.append(QVariantMap
 					{
-						{ "UID", ISUuid(qSelectSubSystems.ReadColumn("sbsm_uid")) },
+						{ "UID", qSelectSubSystems.ReadColumn("sbsm_uid") },
 						{ "LocalName", qSelectSubSystems.ReadColumn("sbsm_localname") },
 						{ "IsExist", qSelectSubSystems.ReadColumn("is_exist") }
 					});
@@ -3412,7 +3412,7 @@ bool ISTcpWorker::GetGroupRights(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
 		{
 			RightsTableTypeList.append(QVariantMap
 			{
-				{ "UID", ISUuid(qSelectAccessTablesType.ReadColumn("gatt_uid")) },
+				{ "UID", qSelectAccessTablesType.ReadColumn("gatt_uid") },
 				{ "LocalName", qSelectAccessTablesType.ReadColumn("gatt_name") },
 				{ "Icon", qSelectAccessTablesType.ReadColumn("gatt_icon") }
 			});
@@ -3447,7 +3447,7 @@ bool ISTcpWorker::GetGroupRights(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
 			while (qSelectTables.Next()) //Обходим права на текущую таблицу
 			{
 				QVariantList RightList = TableMap["Rights"].toList();
-				RightList.append(ISUuid(qSelectTables.ReadColumn("gatt_uid")));
+				RightList.append(qSelectTables.ReadColumn("gatt_uid"));
 				TableMap["Rights"] = RightList;
 			}
 		}
@@ -3484,7 +3484,7 @@ bool ISTcpWorker::GetGroupRights(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
 					QVariantList VariantList = SpecialGroupMap["Rights"].toList();
 					VariantList.append(QVariantMap
 					{
-						{ "UID", ISUuid(qSelectSpecial.ReadColumn("gast_uid")) },
+						{ "UID", qSelectSpecial.ReadColumn("gast_uid") },
 						{ "LocalName", qSelectSpecial.ReadColumn("gast_name") },
 						{ "Hint", qSelectSpecial.ReadColumn("gast_hint") },
 						{ "IsExist", qSelectSpecial.ReadColumn("is_exist") }

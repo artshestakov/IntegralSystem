@@ -3,14 +3,13 @@
 #define _ISINTERFACEFORM_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "isgui_global.h"
-#include "ISUuid.h"
 //-----------------------------------------------------------------------------
 //!Базовый класс формы интерфейса
 class ISGUI_EXPORT ISInterfaceForm : public QWidget
 {
 	Q_OBJECT
 
-	Q_PROPERTY(ISUuid FormUID READ GetFormUID)
+	Q_PROPERTY(QString FormUID READ GetFormUID)
 
 public:
 	ISInterfaceForm(QWidget *parent = 0, QFlags<Qt::WindowType> Flags = 0);
@@ -18,7 +17,7 @@ public:
 
 	void ForbidResize(); //Запретить изменять размер формы
 	void SetVisibleShadow(bool Visible); //Изменить видимость тени
-	ISUuid GetFormUID() const; //Получить уникальный идентификатор формы
+	QString GetFormUID() const; //Получить уникальный идентификатор формы
 
 protected:
 	virtual void showEvent(QShowEvent *e);
@@ -44,7 +43,7 @@ private:
 	QLabel *LabelShadow;
 	QTimer *FlashingTimer;
 	bool ShowedFlag;
-	ISUuid FormUID;
+	QString FormUID;
 };
 //-----------------------------------------------------------------------------
 #endif

@@ -1,7 +1,6 @@
 #pragma once
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
-#include "ISUuid.h"
 #include "ISButtons.h"
 //-----------------------------------------------------------------------------
 class ISMenuBar : public QWidget
@@ -9,7 +8,7 @@ class ISMenuBar : public QWidget
 	Q_OBJECT
 
 signals:
-	void ParagraphClicked(const ISUuid &ParagraphUID);
+	void ParagraphClicked(const QString &ParagraphUID);
 	void ChangeUser();
 	void Exit();
 	void Favorites();
@@ -30,6 +29,6 @@ private:
 
 private:
 	QHBoxLayout *LayoutButtons;
-	std::map<ISUuid, QToolButton*> ParagraphButtons;
+	std::map<QString, QToolButton*> ParagraphButtons;
 };
 //-----------------------------------------------------------------------------

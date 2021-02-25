@@ -39,7 +39,7 @@ ISMainWindow::ISMainWindow(QWidget *parent)
 	GetMainLayout()->setSpacing(0);
 
 	MenuBar = new ISMenuBar(this);
-	connect(MenuBar, static_cast<void(ISMenuBar::*)(const ISUuid &)>(&ISMenuBar::ParagraphClicked), this, &ISMainWindow::ParagraphClicked);
+	connect(MenuBar, static_cast<void(ISMenuBar::*)(const QString &)>(&ISMenuBar::ParagraphClicked), this, &ISMainWindow::ParagraphClicked);
 	connect(MenuBar, &ISMenuBar::ChangeUser, this, &ISMainWindow::ChangeUser);
 	connect(MenuBar, &ISMenuBar::Exit, this, &ISMainWindow::close);
 	connect(MenuBar, &ISMenuBar::Favorites, this, &ISMainWindow::ShowFavoritesForm);
@@ -97,7 +97,7 @@ void ISMainWindow::EscapeClicked()
 	close();
 }
 //-----------------------------------------------------------------------------
-void ISMainWindow::ParagraphClicked(const ISUuid &ParagraphUID)
+void ISMainWindow::ParagraphClicked(const QString &ParagraphUID)
 {
 	if (CurrentParagraphUID == ParagraphUID)
 	{

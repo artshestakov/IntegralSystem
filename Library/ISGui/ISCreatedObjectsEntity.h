@@ -1,7 +1,6 @@
 #pragma once
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
-#include "ISUuid.h"
 #include "ISObjectFormBase.h"
 //-----------------------------------------------------------------------------
 class ISCreatedObjectsEntity : public QObject
@@ -27,6 +26,6 @@ private:
 	ISCreatedObjectsEntity& operator=(ISCreatedObjectsEntity&&) = delete;
 	
 private:
-	std::map<ISUuid, ISObjectFormBase*> ObjectForms;
+	std::map<QString, ISObjectFormBase*> ObjectForms;
 };
 //-----------------------------------------------------------------------------

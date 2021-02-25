@@ -101,7 +101,7 @@ void ISCaratMonitor::Process()
 		
 		//Добавляем показатели в базу		
 		qInsert->AddBindValue(GetMemory());
-        qInsert->AddBindValue(ISTcpClients::Instance().GetCount());
+        qInsert->AddBindValue((unsigned int)ISTcpClients::Instance().GetCount());
 		qInsert->AddBindValue(GetTCPTimeAvg());
 		if (!qInsert->Execute()) //Ошибка вставки
 		{

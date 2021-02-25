@@ -34,7 +34,7 @@ private:
 	void Finish(); //Уведомление о завершении работы воркера
 	bool Execute(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer); //Выполнение запроса
 	QVariant CheckNullField(const QString &FieldName, ISTcpMessage *TcpMessage); //Проверка наличия поля
-	void Protocol(unsigned int UserID, const ISUuid &ActionTypeUID, const QVariant &TableName = QVariant(), const QVariant &TableLocalName = QVariant(), const QVariant &ObjectID = QVariant(), const QVariant &Information = QVariant()); //Протоколирование действия
+	void Protocol(unsigned int UserID, const QString &ActionTypeUID, const QVariant &TableName = QVariant(), const QVariant &TableLocalName = QVariant(), const QVariant &ObjectID = QVariant(), const QVariant &Information = QVariant()); //Протоколирование действия
 	bool UserPasswordExist(const QVariant &UserID, bool &Exist); //Проверка наличия пароля у пользователя
 	bool UserIsSystem(const QVariant &UserID, bool &IsSystem); //Проверка пользователя на системность
 	bool GetObjectName(PMetaTable *MetaTable, unsigned int ObjectID, QString &ObjectName); //Получить наименование объекта

@@ -28,7 +28,7 @@ void ISMetaSystemsEntity::Initialize(const QVariantList &VariantList)
 		QVariantMap SystemMap = System.toMap();
 		ISMetaSystem *MetaSystem = new ISMetaSystem();
 		MetaSystem->IsSystem = SystemMap["IsSystem"].toBool();
-		MetaSystem->UID = SystemMap["UID"];
+		MetaSystem->UID = SystemMap["UID"].toString();
 		MetaSystem->LocalName = SystemMap["Local"].toString();
 		MetaSystem->IconName = SystemMap["Icon"].toString();
 		MetaSystem->Hint = SystemMap["Hint"].toString();
@@ -38,7 +38,7 @@ void ISMetaSystemsEntity::Initialize(const QVariantList &VariantList)
 		{
 			QVariantMap SubSystemMap = SubSystem.toMap();
 			ISMetaSubSystem *MetaSubSystem = new ISMetaSubSystem();
-			MetaSubSystem->UID = SubSystemMap["UID"];
+			MetaSubSystem->UID = SubSystemMap["UID"].toString();
 			MetaSubSystem->LocalName = SubSystemMap["Local"].toString();
 			MetaSubSystem->IconName = SubSystemMap["Icon"].toString();
 			MetaSubSystem->ClassName = SubSystemMap["Class"].toString();
@@ -81,7 +81,7 @@ ISMetaSubSystem* ISMetaSystemsEntity::GetSubSystem(const QString &SubSystemUID)
 	return nullptr;
 }
 //-----------------------------------------------------------------------------
-ISMetaSystem* ISMetaSystemsEntity::CheckExistSystem(const ISUuid &SystemUID)
+ISMetaSystem* ISMetaSystemsEntity::CheckExistSystem(const QString &SystemUID)
 {
 	for (ISMetaSystem *MetaSystem : Systems)
 	{

@@ -15,7 +15,7 @@ public:
 	ISMetaSubSystem* GetSubSystem(const QString &SubSystemUID); //Получить подсистему по её идентификатору
 
 private:
-	ISMetaSystem* CheckExistSystem(const ISUuid &SystemUID);
+	ISMetaSystem* CheckExistSystem(const QString &SystemUID);
 
 private:
 	ISMetaSystemsEntity();

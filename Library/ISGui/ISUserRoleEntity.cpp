@@ -24,7 +24,7 @@ void ISUserRoleEntity::InitializeTables(const QVariantMap &VariantMap)
 	{
 		for (const QVariant &AccessUID : MapItem.second.toList())
 		{
-			Tables.count(MapItem.first) ? Tables[MapItem.first].emplace_back(AccessUID) : Tables[MapItem.first] = { AccessUID };
+			Tables.count(MapItem.first) ? Tables[MapItem.first].emplace_back(AccessUID.toString()) : Tables[MapItem.first] = { AccessUID.toString() };
 		}
 	}
 }
@@ -33,17 +33,17 @@ void ISUserRoleEntity::InitializeSpecial(const QVariantList &VariantList)
 {
 	for (const QVariant &SpecialAccessUID : VariantList)
 	{
-		Specials.emplace_back(SpecialAccessUID);
+		Specials.emplace_back(SpecialAccessUID.toString());
 	}
 }
 //-----------------------------------------------------------------------------
-bool ISUserRoleEntity::CheckAccessTable(const QString &TableName, const ISUuid &AccessUID)
+bool ISUserRoleEntity::CheckAccessTable(const QString &TableName, const QString &AccessUID)
 {
 	return ISBuffer::Instance().CurrentUserInfo.System || ISBuffer::Instance().CurrentUserInfo.GroupFullAccess ?
 		true : ISAlgorithm::VectorContains(Tables[TableName], AccessUID);
 }
 //-----------------------------------------------------------------------------
-bool ISUserRoleEntity::CheckAccessSpecial(const ISUuid &SpecialAccessUID)
+bool ISUserRoleEntity::CheckAccessSpecial(const QString &SpecialAccessUID)
 {
 	return ISBuffer::Instance().CurrentUserInfo.System || ISBuffer::Instance().CurrentUserInfo.GroupFullAccess ?
 		true : ISAlgorithm::VectorContains(Specials, SpecialAccessUID);

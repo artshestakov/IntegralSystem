@@ -23,7 +23,7 @@ protected:
 	void EscapeClicked() override;
 
 private:
-	void ParagraphClicked(const ISUuid &ParagraphUID); //Событие нажатия на кнопку-параграф
+	void ParagraphClicked(const QString &ParagraphUID); //Событие нажатия на кнопку-параграф
 	void RollUp();
 	void ChangeUser(); //Смена пользователя
 	void ActivateWorkspace(); //Активация рабочей области
@@ -38,7 +38,7 @@ private:
 private:
 	ISMenuBar *MenuBar;
 
-	std::map<ISUuid, int> Paragraphs;
+	std::map<QString, int> Paragraphs;
 	QStackedWidget *StackedWidget; //Стек-главных виджетов
 	ISDesktopParagraph *WidgetDesktop; //Виджет рабочего стола
 	ISWorkspaceParagraph *WorkspaceForm; //Виджет рабочей области

@@ -25,7 +25,7 @@ public slots:
 	bool oldforeigns();
 
 private:
-	void ShowResourceConsole(PMetaTable *MetaTable, const ISUuid &ResourceUID);
+	void ShowResourceConsole(PMetaTable *MetaTable, const QString &ResourceUID);
 };
 //-----------------------------------------------------------------------------
 #endif

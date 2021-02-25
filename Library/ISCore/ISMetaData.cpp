@@ -2,14 +2,13 @@
 #include "ISAssert.h"
 #include "ISConstants.h"
 #include "ISSystem.h"
-#include "ISUuid.h"
 #include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
 ISMetaData::ISMetaData()
 	: ErrorString(NO_ERROR_STRING),
 	Initialized(false)
 {
-	VectorTypes.emplace_back(ISMetaType("Unknown",		ISNamespace::FieldType::Unknown,			QString(),						QString(),				QString(),				false));
+	VectorTypes.emplace_back(ISMetaType("Unknown",		ISNamespace::FieldType::Unknown,		QString(),						QString(),				QString(),				false));
 	VectorTypes.emplace_back(ISMetaType("ID",			ISNamespace::FieldType::ID,				"BIGINT",						"ISIntegerEdit",		"ISComboSearchNumber",	true));
 	VectorTypes.emplace_back(ISMetaType("Int",			ISNamespace::FieldType::Int,			"INTEGER",						"ISIntegerEdit",		"ISComboSearchNumber",	true));
 	VectorTypes.emplace_back(ISMetaType("IntArray",		ISNamespace::FieldType::IntArray,		"INTEGER[]",					"ISIntegerEdit",		"ISComboSearchNumber",	true));
@@ -220,11 +219,11 @@ bool ISMetaData::CheckExitField(PMetaTable *MetaTable, const QString &FieldName)
 	return false;
 }
 //-----------------------------------------------------------------------------
-bool ISMetaData::CheckExistResource(const ISUuid &ResourceUID) const
+bool ISMetaData::CheckExistResource(const QString &UID) const
 {
 	for (PMetaResource *MetaResource : Resources)
 	{
-		if (MetaResource->UID == ResourceUID)
+		if (MetaResource->UID == UID)
 		{
 			return true;
 		}

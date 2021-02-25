@@ -293,7 +293,7 @@ bool CGConfiguratorDelete::oldresources()
 		{
 			while (qSelect.Next())
 			{
-				ISUuid ResourceUID = qSelect.ReadColumn(MetaTable->Alias + "_uid");
+				QString ResourceUID = qSelect.ReadColumn(MetaTable->Alias + "_uid").toString();
 				if (!ISAlgorithm::VectorContains<QString>(UIDs, ResourceUID))
 				{
 					ShowResourceConsole(MetaTable, ResourceUID);
@@ -432,7 +432,7 @@ bool CGConfiguratorDelete::oldforeigns()
 	return Result;
 }
 //-----------------------------------------------------------------------------
-void CGConfiguratorDelete::ShowResourceConsole(PMetaTable *MetaTable, const ISUuid &ResourceUID)
+void CGConfiguratorDelete::ShowResourceConsole(PMetaTable *MetaTable, const QString &ResourceUID)
 {
 	ISDEBUG();
 	ISDEBUG_L("Table name: " + MetaTable->Name);

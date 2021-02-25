@@ -27,7 +27,7 @@ public:
 
     bool CheckExistTable(const QString &TableName) const; //Проверить наличие указанной таблицы в базе
     bool CheckExitField(PMetaTable *MetaTable, const QString &FieldName) const; //Проверить наличие указанного поля в указанной таблице
-	bool CheckExistResource(const ISUuid &ResourceUID) const; //Проверить наличие ресурса по его идентификатору
+	bool CheckExistResource(const QString &UID) const; //Проверить наличие ресурса по его идентификатору
 
 	const ISMetaType& GetType(const QString &type_name); //Получить тип по имени
 	const ISMetaType& GetType(ISNamespace::FieldType type); //Получить тип по типа

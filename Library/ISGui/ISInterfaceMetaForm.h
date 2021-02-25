@@ -2,7 +2,6 @@
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 #include "ISInterfaceForm.h"
-#include "ISUuid.h"
 //-----------------------------------------------------------------------------
 class ISInterfaceMetaForm : public ISInterfaceForm
 {

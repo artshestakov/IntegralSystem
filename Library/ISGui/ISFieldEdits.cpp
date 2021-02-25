@@ -694,12 +694,13 @@ ISUuidEdit::~ISUuidEdit()
 //-----------------------------------------------------------------------------
 void ISUuidEdit::SetValue(const QVariant &value)
 {
-	ISLineEdit::SetValue(ISUuid(value.toString()));
+	ISLineEdit::SetValue(value.toString());
 }
 //-----------------------------------------------------------------------------
 bool ISUuidEdit::IsValid() const
 {
-	return !ISUuid(GetValue().toString()).isEmpty();
+	//return !ISUuid(GetValue().toString()).isEmpty();
+	return true;
 }
 //-----------------------------------------------------------------------------
 void ISUuidEdit::SetReadOnly(bool read_only)

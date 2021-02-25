@@ -236,7 +236,7 @@ bool CGConfiguratorUpdate::resources()
 			{
 				while (qSelectResources.Next()) //Обходим ресурсы конкретной таблицы
 				{
-					ISUuid ResourceUID = qSelectResources.ReadColumn("uid");
+					QString ResourceUID = qSelectResources.ReadColumn("uid").toString();
 					if (!ISMetaData::Instance().CheckExistResource(ResourceUID)) //Если ресурс не существует в мета-данных - предлагаем удалить его из БД
 					{
 						if (ISConsole::Question(QString("Delete old resource %1 in table %2?").arg(ResourceUID).arg(TableName))) //Пользователь согласился удалить ресурс из БД

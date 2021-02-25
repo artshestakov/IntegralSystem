@@ -28,7 +28,7 @@ void ISSettings::Initialize(const QVariantList &VariantList)
 	{
 		QVariantMap GroupMap = SettingGroup.toMap();
 		ISMetaSettingsGroup *MetaGroup = new ISMetaSettingsGroup();
-		MetaGroup->UID = GroupMap["UID"];
+		MetaGroup->UID = GroupMap["UID"].toString();
 		MetaGroup->Name = GroupMap["Name"].toString();
 		MetaGroup->LocalName = GroupMap["Local"].toString();
 		MetaGroup->IconName = GroupMap["Icon"].toString();
@@ -39,7 +39,7 @@ void ISSettings::Initialize(const QVariantList &VariantList)
 		{
 			QVariantMap SettingMap = Setting.toMap();
 			ISMetaSetting *MetaSetting = new ISMetaSetting();
-			MetaSetting->UID = SettingMap["UID"];
+			MetaSetting->UID = SettingMap["UID"].toString();
 			MetaSetting->Name = SettingMap["Name"].toString();
 			MetaSetting->Type = ISMetaData::Instance().GetType(SettingMap["Type"].toString()).TypeField;
 			MetaSetting->WidgetEditName = SettingMap["WidgetEditName"].toString();

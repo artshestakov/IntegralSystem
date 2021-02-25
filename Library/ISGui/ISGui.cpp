@@ -789,7 +789,6 @@ void ISGui::RegisterMetaType()
 {
 	qRegisterMetaType<std::vector<QString>>("std::vector<QString>");
 	qRegisterMetaType<ISVectorString>("ISVectorString");
-	qRegisterMetaType<ISUuid>("ISUuid");
 
 	qRegisterMetaType<ISUserObjectForm*>("ISUserObjectForm");
 	qRegisterMetaType<ISProtocolObjectListForm*>("ISProtocolObjectListForm");

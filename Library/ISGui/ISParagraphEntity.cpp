@@ -30,7 +30,7 @@ void ISParagraphEntity::Initialize(const QVariantList &VariantList)
 		QVariantMap ParagraphMap = Paragraph.toMap();
 		Paragraphs.emplace_back(new ISMetaParagraph
 		{
-			ParagraphMap["UID"],
+			ParagraphMap["UID"].toString(),
 			ParagraphMap["Name"].toString(),
 			ParagraphMap["Local"].toString(),
 			ParagraphMap["ToolTip"].toString(),

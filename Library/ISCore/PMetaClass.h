@@ -3,7 +3,6 @@
 #define _PMETACLASS_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "iscore_global.h"
-#include "ISUuid.h"
 #include "ISNamespace.h"
 #include "ISTypedefs.h"
 //-----------------------------------------------------------------------------
@@ -99,7 +98,7 @@ struct PMetaField : public PMetaBase
 	bool IsFieldID() const { return Name.toLower() == "id"; }
 	bool IsFieldUID() const { return Name.toLower() == "uid"; }
 
-	ISUuid UID;
+	QString UID;
 	ISNamespace::FieldType Type; //Тип
 	QString Name; //Название
 	int Size; //Размер
@@ -192,7 +191,7 @@ struct PMetaTable : public PMetaBase
 	}
 
 	QString Name; //Название таблицы
-	ISUuid UID; //Идентификатор
+	QString UID; //Идентификатор
 	QString Alias; //Псевдоним
 	QString LocalName; //Локальное имя (в единственном числе)
 	QString LocalListName; //Локальное имя (в множественном числе)
@@ -230,7 +229,7 @@ struct PMetaResource : public PMetaBase
 	}
 
 	QString TableName;
-	ISUuid UID;
+	QString UID;
 	ISStringMap Parameters;
 };
 //-----------------------------------------------------------------------------

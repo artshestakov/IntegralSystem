@@ -219,7 +219,7 @@ private:
 	ISButtonDialog *ButtonDialog;
 
 	std::map<QListWidgetItem*, ISMetaSettingsGroup*> Groups;
-	std::map<ISUuid, ISFieldEditBase*> Fields;
+	std::map<QString, ISFieldEditBase*> Fields;
 };
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
