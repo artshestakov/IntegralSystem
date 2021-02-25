@@ -20,6 +20,9 @@
     <Filter Include="Protocol">
       <UniqueIdentifier>{a1892984-fec4-4959-954d-64dc25248b0d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="TinyXML2">
+      <UniqueIdentifier>{511d7458-00f9-40b4-9da4-827d92eab930}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ISMetaData.cpp">
@@ -69,6 +72,9 @@
     </ClCompile>
     <ClCompile Include="ISVariant.cpp">
       <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Components\TinyXML2\tinyxml2.cpp">
+      <Filter>TinyXML2</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -135,6 +141,9 @@
     </ClInclude>
     <ClInclude Include="ISVariant.h">
       <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Components\TinyXML2\tinyxml2.h">
+      <Filter>TinyXML2</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
