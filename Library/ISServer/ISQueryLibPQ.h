@@ -4,6 +4,7 @@
 //-----------------------------------------------------------------------------
 #include "isserver_global.h"
 #include "ISStructs.h"
+#include "ISVariant.h"
 #include <libpq-fe.h>
 #include <pg_type_d.h>
 //-----------------------------------------------------------------------------
@@ -23,7 +24,7 @@ public:
 	void First();
 	bool Next();
 
-	void AddBindValue(char *Value);
+	void AddBindValue(const ISVariant &Value);
 
 	bool Execute();
 
@@ -47,7 +48,7 @@ private:
 	std::string ErrorString; //Тексовое описание ошибки
 	bool ShowLongQuery; //Показывать долгие запрос
     std::string SqlText; //Текст запроса
-	std::vector<char *> Parameters;
+	std::vector<ISVariant> Parameters;
 	size_t ParametersCount; //Количество параметров
 	std::string StmtName; //Имя подготовленного оператора
 	bool Prepared; //Флаг подготовки запроса

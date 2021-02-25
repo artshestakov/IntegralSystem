@@ -45,7 +45,7 @@ ISQueryLibPQ::~ISQueryLibPQ()
 {
 	for (size_t i = 0; i < ParametersCount; ++i)
 	{
-		free(Parameters[i]);
+		//free(Parameters[i]);
 	}
 	Parameters.clear();
 
@@ -93,11 +93,9 @@ bool ISQueryLibPQ::Next()
 	return true;
 }
 //-----------------------------------------------------------------------------
-void ISQueryLibPQ::AddBindValue(char *Value)
+void ISQueryLibPQ::AddBindValue(const ISVariant &Value)
 {
-	char *Char = (char *)malloc(strlen(Value) + 1);
-	strcpy(Char, Value);
-	Parameters.emplace_back(Char);
+	Parameters.emplace_back(Value);
 	++ParametersCount;
 }
 //-----------------------------------------------------------------------------
@@ -118,7 +116,7 @@ bool ISQueryLibPQ::Execute()
 	}
 	else //Есть параметры запроса - параметизированный запрос
 	{
-		//Получаем размер параметров и пытаемся выделить память
+		//Получаем размер параметров и пытаемся выделить память для них
 		char **ParamValues = (char **)malloc(ParametersCount * (sizeof(char *)));
 		if (!ParamValues) //Не удалось выделить память
 		{
@@ -126,30 +124,59 @@ bool ISQueryLibPQ::Execute()
 			return false;
 		}
 
+		//Выделяем память под типы параметров
+		Oid *ParamTypes = (Oid *)malloc(ParametersCount * sizeof(Oid *));
+
 		//Заполяняем параметры
 		for (size_t i = 0; i < ParametersCount; ++i)
 		{
-			ParamValues[i] = (char *)malloc(strlen(Parameters[i]) + 1); //Выделяем память для параметра
+			//Получаем значение параметра и приводим его к строке
+			ISVariant Value = Parameters[i];
+			std::string String = Value.ToString();
+
+			//Выделяем память для параметра
+			ParamValues[i] = (char *)malloc(String.size() + 1);
 			if (!ParamValues[i]) //Не удалось выделить память
 			{
 				free(ParamValues); //Очищаем память под массив
 				ErrorString = "Malloc out of memory";
 				return false;
 			}
-			strcpy(ParamValues[i], Parameters[i]); //Копируем значение в память
+			strcpy(ParamValues[i], String.c_str()); //Копируем значение в память
+			
+			switch (Value.GetType()) //Определяем тип параметра
+			{
+			case ISNamespace::VariantType::Bool:	ParamTypes[i] = BOOLOID;	break;
+			case ISNamespace::VariantType::Short:	ParamTypes[i] = INT2OID;	break;
+			case ISNamespace::VariantType::Int:		ParamTypes[i] = INT4OID;	break;
+			case ISNamespace::VariantType::Int64:	ParamTypes[i] = INT8OID;	break;
+			case ISNamespace::VariantType::UInt:	ParamTypes[i] = INT4OID;	break;
+			case ISNamespace::VariantType::Double:	ParamTypes[i] = NUMERICOID;	break;
+			case ISNamespace::VariantType::Float:	ParamTypes[i] = FLOAT4OID;	break;
+			case ISNamespace::VariantType::Char:	ParamTypes[i] = CHAROID;	break;
+			case ISNamespace::VariantType::String:	ParamTypes[i] = VARCHAROID;	break;
+			}
 		}
 
-		//Выполняем запрос
-		//Если запрос не был подготовлен - исполняем как есть, иначе - выполняем подготовленный оператор
-		SqlResult = StmtName.empty() ? PQexec(SqlConnection, SqlText.c_str()) :
-			PQexecPrepared(SqlConnection, StmtName.c_str(), 0, NULL, NULL, NULL, 0);
+		if (StmtName.empty()) //Запрос не был подготовлен - выполняем либо с параметрами, либо без
+		{
+			SqlResult = ParametersCount > 0 ? PQexecParams(SqlConnection, SqlText.c_str(), (int)ParametersCount, NULL, ParamValues, NULL, NULL, 0) :
+				PQexec(SqlConnection, SqlText.c_str());
+		}
+		else //Запрос был подготовлен - выполняем подготовленный оператор
+		{
+			SqlResult = PQexecPrepared(SqlConnection, StmtName.c_str(), (int)ParametersCount, ParamValues, NULL, NULL, 0);
+		}
 
-		//Очищаем выделенную память под параметры
+		//Очищаем выделенную память
 		for (size_t i = 0; i < ParametersCount; ++i)
 		{
 			free(ParamValues[i]);
 		}
 		free(ParamValues);
+		free(ParamTypes);
+		Parameters.clear();
+		ParametersCount = 0;
 	}
 	long long Msec = ISAlgorithm::GetTickDiff(ISAlgorithm::GetTick(), TimePoint);
 	if (!SqlResult) //Не удалось отправить запрос
