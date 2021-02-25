@@ -248,29 +248,56 @@ Oid ISQueryLibPQ::ColumnType(const std::string &FieldName)
 	return FieldType;
 }
 //-----------------------------------------------------------------------------
-char* ISQueryLibPQ::ReadColumn(int Index)
+ISVariant ISQueryLibPQ::ReadColumn(int Index)
 {
-	return PQgetvalue(SqlResult, CurrentRow, Index);
-}
-//-----------------------------------------------------------------------------
-char* ISQueryLibPQ::ReadColumn(const std::string &FieldName)
-{
-	return ReadColumn(PQfnumber(SqlResult, FieldName.c_str()));
-}
-//-----------------------------------------------------------------------------
-std::string ISQueryLibPQ::ReadColumn_String(int Index)
-{
-	char *Value = ReadColumn(Index);
-	if (Value)
+	ISVariant Value;
+	if (PQgetisnull(SqlResult, CurrentRow, Index)) //«начение отсутствует - возвращаем невалидное
 	{
 		return Value;
 	}
-	return std::string();
+
+	//ѕолучаем значение, провер€ем его тип и возвращаем
+	char *Char = PQgetvalue(SqlResult, CurrentRow, Index);
+	switch (ColumnMap[Index].Type)
+	{
+	case BOOLOID:
+		Value.SetBool(strcmp(Char, "t") == 0);
+		break;
+
+	case INT2OID:
+		Value.SetShort((short)atoi(Char));
+		break;
+
+	case INT4OID:
+		Value.SetInt(atoi(Char));
+		break;
+
+	case INT8OID:
+		Value.SetInt64(_atoi64(Char));
+		break;
+
+	case NUMERICOID:
+		Value.SetDouble(atof(Char));
+		break;
+
+	case FLOAT4OID:
+		Value.SetFloat((float)atof(Char));
+		break;
+
+	case CHAROID:
+		Value.SetChar(Char[0]);
+		break;
+
+	case VARCHAROID:
+		Value.SetString(Char);
+		break;
+	}
+	return Value;
 }
 //-----------------------------------------------------------------------------
-std::string ISQueryLibPQ::ReadColumn_String(const std::string &FieldName)
+ISVariant ISQueryLibPQ::ReadColumn(const std::string &FieldName)
 {
-	return ReadColumn_String(PQfnumber(SqlResult, FieldName.c_str()));
+	return ReadColumn(PQfnumber(SqlResult, FieldName.c_str()));
 }
 //-----------------------------------------------------------------------------
 void ISQueryLibPQ::FillColumnMap()

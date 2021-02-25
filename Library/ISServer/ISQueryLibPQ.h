@@ -33,11 +33,8 @@ public:
 	Oid ColumnType(int Index); //Получить тип поля по индексу
 	Oid ColumnType(const std::string &FieldName); //Получить тип поля по имени поля
 
-	char* ReadColumn(int Index);
-	char* ReadColumn(const std::string &FieldName);
-
-	std::string ReadColumn_String(int Index);
-	std::string ReadColumn_String(const std::string &FieldName);
+	ISVariant ReadColumn(int Index);
+	ISVariant ReadColumn(const std::string &FieldName);
 
 private:
 	void FillColumnMap();
