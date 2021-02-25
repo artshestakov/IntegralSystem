@@ -50,6 +50,7 @@ Source: ${QTDIR}\bin\Qt5Gui${IS_DEBUG}.dll; DestDir: {app}; Flags: ignoreversion
 Source: ${QTDIR}\bin\Qt5Multimedia${IS_DEBUG}.dll; DestDir: {app}; Flags: ignoreversion recursesubdirs;
 Source: ${QTDIR}\bin\Qt5Network${IS_DEBUG}.dll; DestDir: {app}; Flags: ignoreversion recursesubdirs;
 Source: ${QTDIR}\bin\Qt5Widgets${IS_DEBUG}.dll; DestDir: {app}; Flags: ignoreversion recursesubdirs;
+Source: ${QTDIR}\bin\Qt5PrintSupport${IS_DEBUG}.dll; DestDir: {app}; Flags: ignoreversion recursesubdirs;
 Source: ${QTDIR}\bin\Qt5Xml${IS_DEBUG}.dll; DestDir: {app}; Flags: ignoreversion recursesubdirs;
 
 Source: ${QTDIR}\plugins\imageformats\qgif${IS_DEBUG}.dll; DestDir: {app}\imageformats; Flags: ignoreversion recursesubdirs;
