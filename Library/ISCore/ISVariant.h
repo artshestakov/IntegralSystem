@@ -8,13 +8,14 @@ class ISCORE_EXPORT ISVariant
 {
 public:
 	ISVariant(ISNamespace::VariantType type = ISNamespace::VariantType::Invalid);
-	ISVariant(bool vbool);
-	ISVariant(int vint);
-	ISVariant(unsigned int vuint);
-	ISVariant(double vdouble);
-	ISVariant(float vfloat);
-	ISVariant(char vchar);
-	ISVariant(const std::string &vstring);
+	ISVariant(bool value);
+	ISVariant(int value);
+	ISVariant(unsigned int value);
+	ISVariant(double value);
+	ISVariant(float value);
+	ISVariant(char value);
+	ISVariant(const std::string &value);
+	ISVariant(const char *value);
 	~ISVariant();
 
 	ISNamespace::VariantType GetType() const;
@@ -26,6 +27,8 @@ public:
 	void SetFloat(float value);
 	void SetChar(char value);
 	void SetString(const std::string &value);
+
+	std::string ToString(); //Конвертация значения в строку
 
 private:
 	void Clear(ISNamespace::VariantType type);
