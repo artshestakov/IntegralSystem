@@ -9,7 +9,9 @@ class ISCORE_EXPORT ISVariant
 public:
 	ISVariant(ISNamespace::VariantType type = ISNamespace::VariantType::Invalid);
 	ISVariant(bool value);
+	ISVariant(short value);
 	ISVariant(int value);
+	ISVariant(__int64 value);
 	ISVariant(unsigned int value);
 	ISVariant(double value);
 	ISVariant(float value);
@@ -21,7 +23,9 @@ public:
 	ISNamespace::VariantType GetType() const;
 
 	void SetBool(bool value);
-	void SetInt(int value); 
+	void SetShort(short value);
+	void SetInt(int value);
+	void SetInt64(__int64 value);
 	void SetUInt(unsigned int value);
 	void SetDouble(double value);
 	void SetFloat(float value);
@@ -36,7 +40,9 @@ private:
 private:
 	ISNamespace::VariantType Type;
 	bool VBool;
+	short VShort;
 	int VInt;
+	__int64 VInt64;
 	unsigned int VUInt;
 	double VDouble;
 	float VFloat;

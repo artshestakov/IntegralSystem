@@ -5,50 +5,52 @@ ISVariant::ISVariant(ISNamespace::VariantType type)
 	Clear(type);
 }
 //-----------------------------------------------------------------------------
-ISVariant::ISVariant(bool value)
-	: ISVariant(ISNamespace::VariantType::Bool)
+ISVariant::ISVariant(bool value) : ISVariant(ISNamespace::VariantType::Bool)
 {
 	VBool = value;
 }
 //-----------------------------------------------------------------------------
-ISVariant::ISVariant(int value)
-	: ISVariant(ISNamespace::VariantType::Int)
+ISVariant::ISVariant(short value) : ISVariant(ISNamespace::VariantType::Short)
+{
+	VShort = value;
+}
+//-----------------------------------------------------------------------------
+ISVariant::ISVariant(int value) : ISVariant(ISNamespace::VariantType::Int)
 {
 	VInt = value;
 }
 //-----------------------------------------------------------------------------
-ISVariant::ISVariant(unsigned int value)
-	: ISVariant(ISNamespace::VariantType::UInt)
+ISVariant::ISVariant(__int64 value) : ISVariant(ISNamespace::VariantType::Int64)
+{
+	VInt64 = value;
+}
+//-----------------------------------------------------------------------------
+ISVariant::ISVariant(unsigned int value) : ISVariant(ISNamespace::VariantType::UInt)
 {
 	VUInt = value;
 }
 //-----------------------------------------------------------------------------
-ISVariant::ISVariant(double value)
-	: ISVariant(ISNamespace::VariantType::Double)
+ISVariant::ISVariant(double value) : ISVariant(ISNamespace::VariantType::Double)
 {
 	VDouble = value;
 }
 //-----------------------------------------------------------------------------
-ISVariant::ISVariant(float value)
-	: ISVariant(ISNamespace::VariantType::Float)
+ISVariant::ISVariant(float value) : ISVariant(ISNamespace::VariantType::Float)
 {
 	VFloat = value;
 }
 //-----------------------------------------------------------------------------
-ISVariant::ISVariant(char value)
-	: ISVariant(ISNamespace::VariantType::Char)
+ISVariant::ISVariant(char value) : ISVariant(ISNamespace::VariantType::Char)
 {
 	VChar = value;
 }
 //-----------------------------------------------------------------------------
-ISVariant::ISVariant(const std::string &value)
-	: ISVariant(ISNamespace::VariantType::String)
+ISVariant::ISVariant(const std::string &value) : ISVariant(ISNamespace::VariantType::String)
 {
 	VString = value;
 }
 //-----------------------------------------------------------------------------
-ISVariant::ISVariant(const char *value)
-	: ISVariant(ISNamespace::VariantType::String)
+ISVariant::ISVariant(const char *value) : ISVariant(ISNamespace::VariantType::String)
 {
 	VString = std::string(value);
 }
@@ -69,10 +71,22 @@ void ISVariant::SetBool(bool value)
 	VBool = value;
 }
 //-----------------------------------------------------------------------------
+void ISVariant::SetShort(short value)
+{
+	Clear(ISNamespace::VariantType::Short);
+	VShort = value;
+}
+//-----------------------------------------------------------------------------
 void ISVariant::SetInt(int value)
 {
 	Clear(ISNamespace::VariantType::Int);
 	VInt = value;
+}
+//-----------------------------------------------------------------------------
+void ISVariant::SetInt64(__int64 value)
+{
+	Clear(ISNamespace::VariantType::Int64);
+	VInt64 = value;
 }
 //-----------------------------------------------------------------------------
 void ISVariant::SetUInt(unsigned int value)
@@ -117,8 +131,16 @@ std::string ISVariant::ToString()
 		String = VBool ? "true" : "false";
 		break;
 
+	case ISNamespace::VariantType::Short:
+		String = std::to_string(VShort);
+		break;
+
 	case ISNamespace::VariantType::Int:
 		String = std::to_string(VInt);
+		break;
+
+	case ISNamespace::VariantType::Int64:
+		String = std::to_string(VInt64);
 		break;
 
 	case ISNamespace::VariantType::UInt:
@@ -148,7 +170,9 @@ void ISVariant::Clear(ISNamespace::VariantType type)
 {
 	Type = type;
 	VBool = false;
+	VShort = 0;
 	VInt = 0;
+	VInt64 = 0;
 	VUInt = 0;
 	VDouble = 0;
 	VFloat = 0;
