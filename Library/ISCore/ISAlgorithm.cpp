@@ -409,7 +409,7 @@ std::string ISAlgorithm::StringToSha256(const std::string &String)
 	std::stringstream StringStream;
 	for (int i = 0; i < SHA256_DIGEST_LENGTH; i++)
 	{
-		StringStream << std::hex << (int)Hash[i];
+		StringStream << std::hex << std::setw(2) << std::setfill('0') << (int)Hash[i];
 	}
 
 	//ѕриводим к строке, мен€ем регистр и возвращаем
