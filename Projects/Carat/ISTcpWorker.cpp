@@ -17,10 +17,10 @@
 #include "ISCaratMonitor.h"
 #include "ISConfigurations.h"
 //-----------------------------------------------------------------------------
-static std::string QS_USERS_HASH = PREPARE_QUERY("SELECT usrs_hash, usrs_salt "
-												 "FROM _users "
-												 "WHERE usrs_hash IS NOT NULL "
-												 "AND usrs_salt IS NOT NULL");
+static QString QS_USERS_HASH = PREPARE_QUERY("SELECT usrs_hash, usrs_salt "
+											 "FROM _users "
+											 "WHERE usrs_hash IS NOT NULL "
+											 "AND usrs_salt IS NOT NULL");
 //-----------------------------------------------------------------------------
 static QString QS_USER_AUTH = PREPARE_QUERY("SELECT usrs_id, usrs_issystem, usrs_group, usrs_fio, usrs_accessallowed, usrs_accountlifetime, usrs_accountlifetimestart, usrs_accountlifetimeend, usgp_fullaccess, "
 											"(SELECT sgdb_useraccessdatabase FROM _settingsdatabase WHERE sgdb_uid = :SettingUID), "
@@ -658,7 +658,7 @@ void ISTcpWorker::Run()
 		ISLOGGER_E(__CLASS__, "Not connected to database: " + ISDatabase::Instance().GetErrorString());
 	}
 
-	ISDatabase::Instance().ConnectLibPQ(DBConnectionNameLibPQ, DBHost, DBPort, DBName, DBUser, DBPassword);
+	//ISDatabase::Instance().ConnectLibPQ(DBConnectionNameLibPQ, DBHost, DBPort, DBName, DBUser, DBPassword);
 
 	//Выполняем регистрацию функций для конфигурации
 	if (!QMetaObject::invokeMethod(this, ("Register" + ISConfigurations::Instance().Get().Name).toUtf8()))
@@ -1017,14 +1017,14 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 
 	{
 		//Запрашиваем все хэши из БД
-		ISQueryLibPQ qSelectHash(ISDatabase::Instance().GetDBLibPQ(DBConnectionNameLibPQ), QS_USERS_HASH);
+		ISQuery qSelectHash(ISDatabase::Instance().GetDB(DBConnectionName), QS_USERS_HASH);
 		if (!qSelectHash.Execute()) //Ошибка запроса
 		{
 			return ErrorQuery(LANG("Carat.Error.Query.Auth.SelectHash"), qSelectHash);
 		}
 
 		//Если запрос ничего не вернул, значит в БД нет ни одного пользователя
-		if (qSelectHash./*GetCountResultRows()*/GetResultSize() == 0)
+		if (qSelectHash.GetCountResultRows() == 0)
 		{
 			ErrorString = LANG("Carat.Error.Query.Auth.NoUsers");
 			return false;
@@ -1035,15 +1035,15 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 		while (qSelectHash.Next())
 		{
 			//Получаем хэш и соль
-			std::string CurrentHash = qSelectHash.ReadColumn(/*"usrs_hash"*/0).ToString(),
-				CurrentSalt = qSelectHash.ReadColumn(/*"usrs_salt"*/1).ToString();
+			QString CurrentHash = qSelectHash.ReadColumn("usrs_hash").toString(),
+				CurrentSalt = qSelectHash.ReadColumn("usrs_salt").toString();
 
 			//Солим присланный хэш текущей солью
-			//QString HashResult = ISAlgorithm::SaltPassword(HashString, CurrentSalt);
-			//IsFound = HashResult == CurrentHash;
+			QString HashResult = ISAlgorithm::SaltPassword(HashString, CurrentSalt);
+			IsFound = HashResult == CurrentHash;
 			if (IsFound) //Нашли
 			{
-				//Hash = HashResult;
+				Hash = HashResult;
 				break;
 			}
 		}
@@ -1197,8 +1197,10 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 				}
 				//Обновлений нет - идём дальше
 			}
-			//Директория не настроена - логируем предупреждение и идём дальше
-			ISLOGGER_W(__CLASS__, "Not setting directory updates");
+			else //Директория не настроена - логируем предупреждение и идём дальше
+			{
+				ISLOGGER_W(__CLASS__, "Not setting directory updates");
+			}
 		}
 		else //Версия невалидна
 		{
