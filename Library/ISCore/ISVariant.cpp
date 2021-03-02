@@ -1,4 +1,5 @@
 #include "ISVariant.h"
+#include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
 ISVariant::ISVariant(ISNamespace::VariantType type)
 {
@@ -53,6 +54,11 @@ ISVariant::ISVariant(const std::string &value) : ISVariant(ISNamespace::VariantT
 ISVariant::ISVariant(const char *value) : ISVariant(ISNamespace::VariantType::String)
 {
 	VString = std::string(value);
+}
+//-----------------------------------------------------------------------------
+ISVariant::ISVariant(const ISUuid &value) : ISVariant(ISNamespace::VariantType::Uuid)
+{
+	VUuid = value;
 }
 //-----------------------------------------------------------------------------
 ISVariant::~ISVariant()
@@ -119,6 +125,13 @@ void ISVariant::SetString(const std::string &value)
 	VString = value;
 }
 //-----------------------------------------------------------------------------
+void ISVariant::SetUuid(const ISUuid &value)
+{
+	IS_UNUSED(value);
+	Clear(ISNamespace::VariantType::Uuid);
+	VUuid = value;
+}
+//-----------------------------------------------------------------------------
 std::string ISVariant::ToString()
 {
 	std::string String;
@@ -162,6 +175,10 @@ std::string ISVariant::ToString()
 	case ISNamespace::VariantType::String:
 		String = VString;
 		break;
+
+	case ISNamespace::VariantType::Uuid:
+		String = VUuid.ToString();
+		break;
 	}
 	return String;
 }
@@ -178,5 +195,6 @@ void ISVariant::Clear(ISNamespace::VariantType type)
 	VFloat = 0;
 	VChar = 0;
 	VString.clear();
+	VUuid.Clear();
 }
 //-----------------------------------------------------------------------------

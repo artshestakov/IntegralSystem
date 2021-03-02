@@ -2,8 +2,6 @@
 #ifndef _ISNAMESPACE_H_INCLUDED
 #define _ISNAMESPACE_H_INCLUDED
 //-----------------------------------------------------------------------------
-#include "iscore_global.h"
-//-----------------------------------------------------------------------------
 namespace ISNamespace
 {
     enum class FieldType //Типы данных поля
@@ -144,19 +142,9 @@ namespace ISNamespace
 		Double, //Дробный тип
 		Float, //Дробный тип
 		Char, //Символьный тип
-		String //Строковый тип
+		String, //Строковый тип
+		Uuid //Уникальный идентификатор
 	};
 };
-//-----------------------------------------------------------------------------
-Q_DECLARE_METATYPE(ISNamespace::FieldType);
-Q_DECLARE_METATYPE(ISNamespace::ObjectFormType);
-Q_DECLARE_METATYPE(ISNamespace::SearchType);
-Q_DECLARE_METATYPE(ISNamespace::ExportType);
-Q_DECLARE_METATYPE(ISNamespace::ActionType);
-Q_DECLARE_METATYPE(ISNamespace::ActionSpecialType);
-Q_DECLARE_METATYPE(ISNamespace::MoveWidgetDesktop);
-Q_DECLARE_METATYPE(ISNamespace::DebugMessageType);
-Q_DECLARE_METATYPE(ISNamespace::LogMessageType);
-Q_DECLARE_METATYPE(ISNamespace::VariantType);
 //-----------------------------------------------------------------------------
 #endif

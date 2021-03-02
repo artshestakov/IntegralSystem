@@ -76,6 +76,9 @@
     <ClCompile Include="..\..\Components\TinyXML2\tinyxml2.cpp">
       <Filter>TinyXML2</Filter>
     </ClCompile>
+    <ClCompile Include="ISUuid.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ISMetaData.h">
@@ -144,6 +147,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Components\TinyXML2\tinyxml2.h">
       <Filter>TinyXML2</Filter>
+    </ClInclude>
+    <ClInclude Include="ISUuid.h">
+      <Filter>System</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

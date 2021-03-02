@@ -46,7 +46,8 @@ private:
 	std::string ErrorString; //Тексовое описание ошибки
 	bool ShowLongQuery; //Показывать долгие запрос
     std::string SqlText; //Текст запроса
-	std::vector<ISVariant> Parameters;
+	std::vector<ISVariant> Parameters; //Параметры запроса
+	std::vector<Oid> Types; //Типы параметров запроса
 	size_t ParametersCount; //Количество параметров
 	std::string StmtName; //Имя подготовленного оператора
 	bool Prepared; //Флаг подготовки запроса

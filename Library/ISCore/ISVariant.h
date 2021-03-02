@@ -2,7 +2,9 @@
 #ifndef _ISVARIANT_H_INCLUDED
 #define _ISVARIANT_H_INCLUDED
 //-----------------------------------------------------------------------------
+#include "iscore_global.h"
 #include "ISNamespace.h"
+#include "ISUuid.h"
 //-----------------------------------------------------------------------------
 class ISCORE_EXPORT ISVariant
 {
@@ -18,6 +20,7 @@ public:
 	ISVariant(char value);
 	ISVariant(const std::string &value);
 	ISVariant(const char *value);
+	ISVariant(const ISUuid &value);
 	~ISVariant();
 
 	ISNamespace::VariantType GetType() const;
@@ -31,6 +34,7 @@ public:
 	void SetFloat(float value);
 	void SetChar(char value);
 	void SetString(const std::string &value);
+	void SetUuid(const ISUuid &value);
 
 	std::string ToString(); //Конвертация значения в строку
 
@@ -48,6 +52,7 @@ private:
 	float VFloat;
 	char VChar;
 	std::string VString;
+	ISUuid VUuid;
 };
 //-----------------------------------------------------------------------------
 #endif

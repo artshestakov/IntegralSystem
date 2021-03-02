@@ -444,7 +444,7 @@ bool ISMetaData::InitializeXSNTable(QDomNode &DomNode)
 			{
 				QDomNamedNodeMap DomNamedNodeMap = DomNode.attributes();
 				MetaTable->Name = DomNamedNodeMap.namedItem("Name").nodeValue();
-				MetaTable->UID = DomNamedNodeMap.namedItem("UID").nodeValue();
+				MetaTable->UID = DomNamedNodeMap.namedItem("UID").nodeValue().toLower();
 				MetaTable->Alias = DomNamedNodeMap.namedItem("Alias").nodeValue();
 				MetaTable->LocalName = DomNamedNodeMap.namedItem("LocalName").nodeValue();
 				MetaTable->LocalListName = DomNamedNodeMap.namedItem("LocalListName").nodeValue();
@@ -620,7 +620,7 @@ bool ISMetaData::InitializeXSNTableFields(PMetaTable *MetaTable, const QDomNode 
 
 			QDomNamedNodeMap DomNamedNodeMap = Temp.attributes();
 			PMetaField *MetaField = new PMetaField();
-			MetaField->UID = DomNamedNodeMap.namedItem("UID").nodeValue();
+			MetaField->UID = DomNamedNodeMap.namedItem("UID").nodeValue().toLower();
 			MetaField->Name = FieldName;
 			MetaField->Type = ISMetaData::Instance().GetType(DomNamedNodeMap.namedItem("Type").nodeValue()).TypeField;
 			MetaField->Size = DomNamedNodeMap.namedItem("Size").nodeValue().toInt();
@@ -906,9 +906,13 @@ bool ISMetaData::InitializeXSR(const QString &Content)
 							break;
 						}
 
+						QString ResourceUID = DomNamedNodeMap.namedItem("UID").nodeValue().toLower();
+						ResourceUID.remove(0, 1);
+						ResourceUID.chop(1);
+
 						PMetaResource *MetaResource = new PMetaResource();
 						MetaResource->TableName = TableName;
-						MetaResource->UID = DomNamedNodeMap.namedItem("UID").nodeValue();
+						MetaResource->UID = ResourceUID;
 						DomNamedNodeMap.removeNamedItem("UID");
 
 						for (int i = 0, c = DomNamedNodeMap.size(); i < c; ++i) //Обход полей ресурса

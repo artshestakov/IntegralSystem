@@ -95,7 +95,24 @@ bool ISQueryLibPQ::Next()
 void ISQueryLibPQ::AddBindValue(const ISVariant &Value)
 {
 	Parameters.emplace_back(Value);
-	++ParametersCount;
+	Oid OidType = NULL;
+	switch (Value.GetType()) //Определяем тип параметра
+	{
+	case ISNamespace::VariantType::Bool:	OidType = BOOLOID;		break;
+	case ISNamespace::VariantType::Short:	OidType = INT2OID;		break;
+	case ISNamespace::VariantType::Int:		OidType = INT4OID;		break;
+	case ISNamespace::VariantType::Int64:	OidType = INT8OID;		break;
+	case ISNamespace::VariantType::UInt:	OidType = INT4OID;		break;
+	case ISNamespace::VariantType::Double:	OidType = NUMERICOID;	break;
+	case ISNamespace::VariantType::Float:	OidType = FLOAT4OID;	break;
+	case ISNamespace::VariantType::Char:	OidType = CHAROID;		break;
+	case ISNamespace::VariantType::String:	OidType = VARCHAROID;	break;
+	case ISNamespace::VariantType::Uuid:	OidType = UUIDOID;		break;
+	default:
+		break;
+	}
+	Types.emplace_back(OidType);
+	++ParametersCount; //Инкрементируем значение параметры
 }
 //-----------------------------------------------------------------------------
 bool ISQueryLibPQ::Execute()
@@ -142,19 +159,7 @@ bool ISQueryLibPQ::Execute()
 				return false;
 			}
 			strcpy(ParamValues[i], String.c_str()); //Копируем значение в память
-			
-			switch (Value.GetType()) //Определяем тип параметра
-			{
-			case ISNamespace::VariantType::Bool:	ParamTypes[i] = BOOLOID;	break;
-			case ISNamespace::VariantType::Short:	ParamTypes[i] = INT2OID;	break;
-			case ISNamespace::VariantType::Int:		ParamTypes[i] = INT4OID;	break;
-			case ISNamespace::VariantType::Int64:	ParamTypes[i] = INT8OID;	break;
-			case ISNamespace::VariantType::UInt:	ParamTypes[i] = INT4OID;	break;
-			case ISNamespace::VariantType::Double:	ParamTypes[i] = NUMERICOID;	break;
-			case ISNamespace::VariantType::Float:	ParamTypes[i] = FLOAT4OID;	break;
-			case ISNamespace::VariantType::Char:	ParamTypes[i] = CHAROID;	break;
-			case ISNamespace::VariantType::String:	ParamTypes[i] = VARCHAROID;	break;
-			}
+			ParamTypes[i] = Types[i];
 		}
 
 		if (StmtName.empty()) //Запрос не был подготовлен - выполняем либо с параметрами, либо без
