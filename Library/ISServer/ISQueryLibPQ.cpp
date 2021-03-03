@@ -92,26 +92,28 @@ bool ISQueryLibPQ::Next()
 	return true;
 }
 //-----------------------------------------------------------------------------
-void ISQueryLibPQ::AddBindValue(const ISVariant &Value)
+void ISQueryLibPQ::AddBindValue(const ISVariant &Value, Oid OID)
 {
 	Parameters.emplace_back(Value);
-	Oid OidType = NULL;
-	switch (Value.GetType()) //Определяем тип параметра
+	if (OID == NULL)
 	{
-	case ISNamespace::VariantType::Bool:	OidType = BOOLOID;		break;
-	case ISNamespace::VariantType::Short:	OidType = INT2OID;		break;
-	case ISNamespace::VariantType::Int:		OidType = INT4OID;		break;
-	case ISNamespace::VariantType::Int64:	OidType = INT8OID;		break;
-	case ISNamespace::VariantType::UInt:	OidType = INT4OID;		break;
-	case ISNamespace::VariantType::Double:	OidType = NUMERICOID;	break;
-	case ISNamespace::VariantType::Float:	OidType = FLOAT4OID;	break;
-	case ISNamespace::VariantType::Char:	OidType = CHAROID;		break;
-	case ISNamespace::VariantType::String:	OidType = VARCHAROID;	break;
-	case ISNamespace::VariantType::Uuid:	OidType = UUIDOID;		break;
-	default:
-		break;
+		switch (Value.GetType()) //Определяем тип параметра
+		{
+		case ISNamespace::VariantType::Bool:	OID = BOOLOID;		break;
+		case ISNamespace::VariantType::Short:	OID = INT2OID;		break;
+		case ISNamespace::VariantType::Int:		OID = INT4OID;		break;
+		case ISNamespace::VariantType::Int64:	OID = INT8OID;		break;
+		case ISNamespace::VariantType::UInt:	OID = INT4OID;		break;
+		case ISNamespace::VariantType::Double:	OID = NUMERICOID;	break;
+		case ISNamespace::VariantType::Float:	OID = FLOAT4OID;	break;
+		case ISNamespace::VariantType::Char:	OID = CHAROID;		break;
+		case ISNamespace::VariantType::String:	OID = VARCHAROID;	break;
+		case ISNamespace::VariantType::Uuid:	OID = UUIDOID;		break;
+		default:
+			break;
+		}
 	}
-	Types.emplace_back(OidType);
+	Types.emplace_back(OID);
 	++ParametersCount; //Инкрементируем значение параметры
 }
 //-----------------------------------------------------------------------------
@@ -180,6 +182,7 @@ bool ISQueryLibPQ::Execute()
 		free(ParamValues);
 		free(ParamTypes);
 		Parameters.clear();
+		Types.clear();
 		ParametersCount = 0;
 	}
 	long long Msec = ISAlgorithm::GetTickDiff(ISAlgorithm::GetTick(), TimePoint);
@@ -295,7 +298,12 @@ ISVariant ISQueryLibPQ::ReadColumn(int Index)
 		break;
 
 	case VARCHAROID:
+	case TEXTOID:
 		Value.SetString(Char);
+		break;
+	
+	case UUIDOID:
+		Value.SetUuid(Char);
 		break;
 	}
 	return Value;

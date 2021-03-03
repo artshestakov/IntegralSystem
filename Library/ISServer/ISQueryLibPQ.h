@@ -25,7 +25,7 @@ public:
 	void First();
 	bool Next();
 
-	void AddBindValue(const ISVariant &Value);
+	void AddBindValue(const ISVariant &Value, Oid OID = NULL);
 
 	bool Execute();
 

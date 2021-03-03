@@ -56,11 +56,6 @@ ISVariant::ISVariant(const char *value) : ISVariant(ISNamespace::VariantType::St
 	VString = std::string(value);
 }
 //-----------------------------------------------------------------------------
-ISVariant::ISVariant(const ISUuid &value) : ISVariant(ISNamespace::VariantType::Uuid)
-{
-	VUuid = value;
-}
-//-----------------------------------------------------------------------------
 ISVariant::~ISVariant()
 {
 
@@ -125,9 +120,8 @@ void ISVariant::SetString(const std::string &value)
 	VString = value;
 }
 //-----------------------------------------------------------------------------
-void ISVariant::SetUuid(const ISUuid &value)
+void ISVariant::SetUuid(const std::string &value)
 {
-	IS_UNUSED(value);
 	Clear(ISNamespace::VariantType::Uuid);
 	VUuid = value;
 }
@@ -175,9 +169,9 @@ std::string ISVariant::ToString()
 	case ISNamespace::VariantType::String:
 		String = VString;
 		break;
-
+	
 	case ISNamespace::VariantType::Uuid:
-		String = VUuid.ToString();
+		String = VUuid;
 		break;
 	}
 	return String;
@@ -195,6 +189,6 @@ void ISVariant::Clear(ISNamespace::VariantType type)
 	VFloat = 0;
 	VChar = 0;
 	VString.clear();
-	VUuid.Clear();
+	VUuid.clear();
 }
 //-----------------------------------------------------------------------------

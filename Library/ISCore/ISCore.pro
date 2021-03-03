@@ -32,7 +32,6 @@ HEADERS += \
     ISConstants.h \
     ISDebug.h \
     ISTcp.h \
-    ISUuid.h \
     iscore_global.h \
     ISLocalization.h \
     ISLogger.h \
@@ -64,7 +63,6 @@ SOURCES += \
     ISSystem.cpp \
     ISTcp.cpp \
     ISTrace.cpp \
-    ISUuid.cpp \
     ISVariant.cpp \
     ISVersionInfo.cpp \
     StdAfx.cpp
