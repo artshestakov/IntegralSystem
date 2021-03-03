@@ -3,6 +3,26 @@
 #include "ISLogger.h"
 #include "ISProperty.h"
 //-----------------------------------------------------------------------------
+void test()
+{
+	std::string conn_name = "LibPQ";
+	if (ISDatabase::Instance().ConnectLibPQ(conn_name, "127.0.0.1", 5432, "oilsphere_db", "postgres", "adm777"))
+	{
+		ISQueryLibPQ qInsert(ISDatabase::Instance().GetDBLibPQ(conn_name), "SELECT prtc_datetime::DATE FROM _protocol ORDER BY prtc_id DESC LIMIT 1");
+		if (qInsert.Execute())
+		{
+			while (qInsert.Next())
+			{
+				//ISVariant GroupID = qInsert.ReadColumn("usgp_id");
+				//ISVariant GroupUID = qInsert.ReadColumn("usgp_uid");
+				ISVariant GroupName = qInsert.ReadColumn(0);
+				//std::cout << GroupID.ToString() << ' ' << GroupUID.ToString() << ' ' << GroupName.ToString() << std::endl;
+			}
+		}
+		ISDatabase::Instance().DisconnectLibPQ(conn_name);
+	}
+}
+//-----------------------------------------------------------------------------
 int main(int argc, char **argv)
 {
     ISCaratApplication CaratApplication(argc, argv);
