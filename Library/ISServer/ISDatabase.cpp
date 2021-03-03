@@ -87,7 +87,9 @@ bool ISDatabase::ConnectLibPQ(const std::string &ConnectionName, const QString &
 	StringStream << "dbname=" << Database.toStdString() << ' ';
 	StringStream << "user=" << Login.toStdString() << ' ';
 	StringStream << "password=" << Password.toStdString() << ' ';
-	StringStream << "application_name=" << QCoreApplication::applicationName().toStdString();
+	StringStream << "connect_timeout=3 ";
+	StringStream << "application_name=Carat ";
+	StringStream << "client_encoding=WIN1251";
 	std::string String = StringStream.str(); //Нужна именно такая конструкция
 	const char *ConnectionInfo = String.c_str();
 
@@ -101,13 +103,20 @@ bool ISDatabase::ConnectLibPQ(const std::string &ConnectionName, const QString &
 		case PGPing::PQPING_NO_RESPONSE: ErrorString = "The server no responce"; break;
 		case PGPing::PQPING_NO_ATTEMPT: ErrorString = "No contact was made with the server: invalid connection parameters or out of memory"; break;
 		default:
+			ErrorString = "Unknown error";
 			break;
 		}
 		return false;
 	}
 
-	//Подключаемся
+	//Подключаемся и проверяем объект на NULL
 	PGconn *Connection = PQconnectdb(ConnectionInfo);
+	if (!Connection)
+	{
+		ErrorString = "Error PQconnectdb";
+		return false;
+	}
+
 	if (PQstatus(Connection) != CONNECTION_OK) //Что-то не так
 	{
 		PQfinish(Connection);
