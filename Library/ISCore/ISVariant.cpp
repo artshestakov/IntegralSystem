@@ -21,7 +21,7 @@ ISVariant::ISVariant(int value) : ISVariant(ISNamespace::VariantType::Int)
 	VInt = value;
 }
 //-----------------------------------------------------------------------------
-ISVariant::ISVariant(__int64 value) : ISVariant(ISNamespace::VariantType::Int64)
+ISVariant::ISVariant(ISInt64 value) : ISVariant(ISNamespace::VariantType::Int64)
 {
 	VInt64 = value;
 }
@@ -89,7 +89,7 @@ void ISVariant::SetInt(int value)
 	VInt = value;
 }
 //-----------------------------------------------------------------------------
-void ISVariant::SetInt64(__int64 value)
+void ISVariant::SetInt64(ISInt64 value)
 {
 	Clear(ISNamespace::VariantType::Int64);
 	VInt64 = value;
