@@ -6,12 +6,8 @@
 //-----------------------------------------------------------------------------
 #ifdef WIN32
 typedef CRITICAL_SECTION ISCriticalSection;
-typedef __int64 ISInt64;
-typedef unsigned __int64 ISUInt64;
 #else
 typedef pthread_mutex_t ISCriticalSection;
-typedef long long ISInt64;
-typedef unsigned long long ISUInt64;
 #endif
 typedef std::map<QString, QString> ISStringMap;
 typedef std::map<QString, int> ISStringToIntMap;
@@ -24,5 +20,7 @@ typedef std::vector<QByteArray> ISVectorByteArray;
 typedef std::vector<QVariantMap> ISVectorMap;
 typedef std::chrono::time_point<std::chrono::steady_clock> ISTimePoint;
 typedef std::pair<unsigned int, QString> ISObjectPair;
+typedef long long ISInt64;
+typedef unsigned long long ISUInt64;
 //-----------------------------------------------------------------------------
 #endif
