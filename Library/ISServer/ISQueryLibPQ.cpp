@@ -277,7 +277,9 @@ ISVariant ISQueryLibPQ::ReadColumn(int Index)
 		break;
 
 	case INT8OID:
+#ifdef WIN32 //???
 		Value.SetInt64(_atoi64(Char));
+#endif
 		break;
 
 	case NUMERICOID:
