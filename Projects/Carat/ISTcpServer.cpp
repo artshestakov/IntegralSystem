@@ -69,7 +69,7 @@ bool ISTcpServer::Run()
 	ISTcpQueue::Instance().ReadMessageID();
 
 	//Запускаем ISFail2Ban
-	ISFail2Ban::Instance().Start();
+    //ISFail2Ban::Instance().Start();
 
 	//Запускаем балансировщик
 	if (!QtConcurrent::run(this, &ISTcpServer::QueueBalancerMessage).isStarted())

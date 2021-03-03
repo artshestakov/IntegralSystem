@@ -980,11 +980,11 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 
 	//Проверяем, не заблокирован ли адрес
 	QString IPAddress = TcpMessage->TcpSocket->GetAddress();
-	if (ISFail2Ban::Instance().IsLock(IPAddress))
+    /*if (ISFail2Ban::Instance().IsLock(IPAddress))
 	{
 		ErrorString = LANG("Carat.Error.Query.Auth.AddressIsLocked").arg(IPAddress).arg(ISFail2Ban::Instance().GetUnlockDateTime(IPAddress).toString(FORMAT_DATE_TIME_V2));
 		return false;
-	}
+    }*/
 
 	QVariant Hash = CheckNullField("Hash", TcpMessage);
 	if (!Hash.isValid())
@@ -1048,7 +1048,7 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 			}
 		}
 
-		if (IsFound) //Нашли пользователя - удаляем адрес из Fail2Ban
+        /*if (IsFound) //Нашли пользователя - удаляем адрес из Fail2Ban
 		{
 			ISFail2Ban::Instance().Remove(IPAddress);
 		}
@@ -1060,7 +1060,7 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 				? LANG("Carat.Error.Query.Auth.Fail2Ban").arg(CARAT_BAN_ATTEMPT_COUNT).arg(IPAddress).arg(ISFail2Ban::Instance().GetUnlockDateTime(IPAddress).toString(FORMAT_DATE_TIME_V2))
 				: LANG("Carat.Error.Query.Auth.InvalidLoginOrPassword");
 			return false;
-		}
+        }*/
 	}
 
 	//Проверка пользователя
