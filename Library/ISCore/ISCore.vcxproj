@@ -232,7 +232,6 @@
     <ClCompile Include="ISSystem.cpp" />
     <ClCompile Include="ISTcp.cpp" />
     <ClCompile Include="ISTrace.cpp" />
-    <ClCompile Include="ISVariant.cpp" />
     <ClCompile Include="ISVersionInfo.cpp" />
     <ClCompile Include="StdAfx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -258,7 +257,6 @@
     <ClInclude Include="ISTcp.h" />
     <ClInclude Include="ISTrace.h" />
     <ClInclude Include="ISTypedefs.h" />
-    <ClInclude Include="ISVariant.h" />
     <ClInclude Include="ISVersionInfo.h" />
     <ClInclude Include="StdAfx.h" />
     <ClInclude Include="ISSettings.h" />

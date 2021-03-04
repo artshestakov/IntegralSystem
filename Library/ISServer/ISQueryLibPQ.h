@@ -4,7 +4,6 @@
 //-----------------------------------------------------------------------------
 #include "isserver_global.h"
 #include "ISStructs.h"
-#include "ISVariant.h"
 #include <libpq-fe.h>
 #include <pg_type_d.h>
 //-----------------------------------------------------------------------------

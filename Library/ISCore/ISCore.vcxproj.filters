@@ -70,9 +70,6 @@
     <ClCompile Include="ISDebug.cpp">
       <Filter>System</Filter>
     </ClCompile>
-    <ClCompile Include="ISVariant.cpp">
-      <Filter>System</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Components\TinyXML2\tinyxml2.cpp">
       <Filter>TinyXML2</Filter>
     </ClCompile>
@@ -137,9 +134,6 @@
       <Filter>System</Filter>
     </ClInclude>
     <ClInclude Include="ISDebug.h">
-      <Filter>System</Filter>
-    </ClInclude>
-    <ClInclude Include="ISVariant.h">
       <Filter>System</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Components\TinyXML2\tinyxml2.h">

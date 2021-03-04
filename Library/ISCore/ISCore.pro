@@ -44,7 +44,6 @@ HEADERS += \
     ISSystem.h \
     ISTrace.h \
     ISTypedefs.h \
-    ISVariant.h \
     ISVersionInfo.h \
     PMetaClass.h \
     StdAfx.h
@@ -63,7 +62,6 @@ SOURCES += \
     ISSystem.cpp \
     ISTcp.cpp \
     ISTrace.cpp \
-    ISVariant.cpp \
     ISVersionInfo.cpp \
     StdAfx.cpp
 
