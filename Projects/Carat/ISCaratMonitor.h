@@ -19,7 +19,6 @@ public:
 private:
 	void Process();
 	int GetMemory() const; //ѕолучить количество потребл€емой пам€ти
-	unsigned int GetTCPTimeAvg() const; //ѕолучить среднее врем€ выполнени€ TCP-запросов
 
 private:
 	ISCaratMonitor();

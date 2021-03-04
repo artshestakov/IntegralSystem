@@ -11,8 +11,8 @@
 class ISSERVER_EXPORT ISQueryLibPQ
 {
 public:
-	ISQueryLibPQ(const std::string &sql_text, bool prepare = false, int ParamCount = 0);
-	ISQueryLibPQ(PGconn *sql_connection, const std::string &sql_text = std::string(), bool prepare = false, int ParamCount = 0);
+	ISQueryLibPQ(const std::string &sql_text);
+	ISQueryLibPQ(PGconn *sql_connection, const std::string &sql_text = std::string());
 	~ISQueryLibPQ();
 
 	const std::string& GetErrorString() const; //Получить текстовое описание ошибки
@@ -25,10 +25,12 @@ public:
 	void First();
 	bool Next();
 
-	void AddBindValue(const ISVariant &Value, Oid OID = NULL);
+	void BindValue(std::nullptr_t Pointer);
+	void BindValue(int Value, Oid OID = InvalidOid);
+	void BindValue(unsigned int Value, Oid OID = InvalidOid);
+	void BindValue(const std::string &Value, Oid OID = InvalidOid);
 
-	bool Execute();
-
+	bool Execute(bool PrepareQuery = false, size_t ParamCount = 0);
 	bool ExecuteFirst();
 
 	Oid ColumnType(int Index); //Получить тип поля по индексу
@@ -38,26 +40,29 @@ public:
 	ISVariant ReadColumn(const std::string &FieldName);
 
 private:
-	void FillColumnMap();
-	bool Prepare(int ParamCount);
-	bool Prepare(PGconn *sql_connection, int ParamCount);
+	void FillColumnMap(); //Заполнить мета-данные выборки
+	bool Prepare(size_t ParamCount);
 
 private:
 	std::string ErrorString; //Тексовое описание ошибки
 	bool ShowLongQuery; //Показывать долгие запрос
     std::string SqlText; //Текст запроса
-	std::vector<ISVariant> Parameters; //Параметры запроса
-	std::vector<Oid> Types; //Типы параметров запроса
-	size_t ParametersCount; //Количество параметров
+
+	std::vector<std::string> ParameterValues; //Параметры запроса
+	std::vector<Oid> ParameterTypes; //Типы параметров запроса
+	size_t ParameterCount; //Количество параметров
+	
+	bool Prepared; //Флаг подготовленного запроса
 	std::string StmtName; //Имя подготовленного оператора
-	bool Prepared; //Флаг подготовки запроса
+
 	PGconn *SqlConnection; //Указатель на соединение с базой
 	PGresult *SqlResult; //Структура с результатом запроса
 	int CountRows; //Количество строк в результате запроса
 	int CountColumns; //Количество полей в результате запроса
 	int CurrentRow; //Индекс текущей строки результирующей выборки
 	bool IsSelect; //Запрос является SELECT или SHOW
-	std::map<int, ISSqlField> ColumnMap;
+
+	std::map<int, ISSqlField> ColumnMap; //Мета-данные выборки
 };
 //-----------------------------------------------------------------------------
 #endif

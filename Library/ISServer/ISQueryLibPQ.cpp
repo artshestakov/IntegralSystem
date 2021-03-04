@@ -3,11 +3,11 @@
 #include "ISDatabase.h"
 #include "ISLogger.h"
 //-----------------------------------------------------------------------------
-ISQueryLibPQ::ISQueryLibPQ(const std::string &sql_text, bool prepare, int ParamCount)
+ISQueryLibPQ::ISQueryLibPQ(const std::string &sql_text)
 	: ErrorString(NO_ERROR_STRING),
 	ShowLongQuery(true),
 	SqlText(sql_text),
-	ParametersCount(0),
+	ParameterCount(0),
 	Prepared(false),
 	SqlConnection(ISDatabase::Instance().GetDBLibPQ(CONNECTION_DEFAULT)),
 	SqlResult(NULL),
@@ -16,17 +16,14 @@ ISQueryLibPQ::ISQueryLibPQ(const std::string &sql_text, bool prepare, int ParamC
 	CurrentRow(-1),
 	IsSelect(false)
 {
-	if (prepare && !sql_text.empty())
-	{
-		Prepare(ParamCount);
-	}
+	
 }
 //-----------------------------------------------------------------------------
-ISQueryLibPQ::ISQueryLibPQ(PGconn *sql_connection, const std::string &sql_text, bool prepare, int ParamCount)
+ISQueryLibPQ::ISQueryLibPQ(PGconn *sql_connection, const std::string &sql_text)
 	: ErrorString(NO_ERROR_STRING),
 	ShowLongQuery(true),
 	SqlText(sql_text),
-	ParametersCount(0),
+	ParameterCount(0),
 	Prepared(false),
 	SqlConnection(sql_connection),
 	SqlResult(NULL),
@@ -35,10 +32,7 @@ ISQueryLibPQ::ISQueryLibPQ(PGconn *sql_connection, const std::string &sql_text, 
 	CurrentRow(-1),
 	IsSelect(false)
 {
-	if (prepare && !sql_text.empty())
-	{
-		Prepare(sql_connection, ParamCount);
-	}
+	
 }
 //-----------------------------------------------------------------------------
 ISQueryLibPQ::~ISQueryLibPQ()
@@ -92,100 +86,110 @@ bool ISQueryLibPQ::Next()
 	return true;
 }
 //-----------------------------------------------------------------------------
-void ISQueryLibPQ::AddBindValue(const ISVariant &Value, Oid OID)
+void ISQueryLibPQ::BindValue(std::nullptr_t Pointer)
 {
-	Parameters.emplace_back(Value);
-	if (OID == NULL)
-	{
-		switch (Value.GetType()) //Определяем тип параметра
-		{
-		case ISNamespace::VariantType::Bool:	OID = BOOLOID;		break;
-		case ISNamespace::VariantType::Short:	OID = INT2OID;		break;
-		case ISNamespace::VariantType::Int:		OID = INT4OID;		break;
-		case ISNamespace::VariantType::Int64:	OID = INT8OID;		break;
-		case ISNamespace::VariantType::UInt:	OID = INT4OID;		break;
-		case ISNamespace::VariantType::Double:	OID = NUMERICOID;	break;
-		case ISNamespace::VariantType::Float:	OID = FLOAT4OID;	break;
-		case ISNamespace::VariantType::Char:	OID = CHAROID;		break;
-		case ISNamespace::VariantType::String:	OID = VARCHAROID;	break;
-		case ISNamespace::VariantType::Uuid:	OID = UUIDOID;		break;
-		default:
-			break;
-		}
-	}
-	Types.emplace_back(OID);
-	++ParametersCount; //Инкрементируем значение параметры
+	IS_UNUSED(Pointer);
+	ParameterValues.emplace_back(std::string());
+	ParameterTypes.emplace_back(InvalidOid);
+	++ParameterCount;
 }
 //-----------------------------------------------------------------------------
-bool ISQueryLibPQ::Execute()
+void ISQueryLibPQ::BindValue(int Value, Oid OID)
 {
-	if (!StmtName.empty() && !Prepared) //Была попытка подготовить оператор, но она не завершилась успехом
+	ParameterValues.emplace_back(std::to_string(Value));
+	ParameterTypes.emplace_back(OID == InvalidOid ? INT2OID : OID);
+	++ParameterCount;
+}
+//-----------------------------------------------------------------------------
+void ISQueryLibPQ::BindValue(unsigned int Value, Oid OID)
+{
+	ParameterValues.emplace_back(std::to_string(Value));
+	ParameterTypes.emplace_back(OID == InvalidOid ? INT4OID : OID);
+	++ParameterCount;
+}
+//-----------------------------------------------------------------------------
+void ISQueryLibPQ::BindValue(const std::string &Value, Oid OID)
+{
+	ParameterValues.emplace_back(Value);
+	ParameterTypes.emplace_back(OID == InvalidOid ? VARCHAROID : OID);
+	++ParameterCount;
+}
+//-----------------------------------------------------------------------------
+bool ISQueryLibPQ::Execute(bool PrepareQuery, size_t ParamCount)
+{
+	if (PrepareQuery && !Prepared) //Если запрос нужно подготовить и он ещё не готов - готовим
 	{
-		return false;
+		if (!Prepare(ParamCount))
+		{
+			return false;
+		}
 	}
 
 	//Засекаем время и выполняем запрос
 	ISTimePoint TimePoint = ISAlgorithm::GetTick();
-	if (Parameters.empty()) //Параметров запроса нет - исполняем как есть
-	{
-		//Если запрос не был подготовлен - исполняем как есть, иначе - выполняем подготовленный оператор
-		SqlResult = StmtName.empty() ? PQexec(SqlConnection, SqlText.c_str()) :
-			PQexecPrepared(SqlConnection, StmtName.c_str(), 0, NULL, NULL, NULL, 0);
-	}
-	else //Есть параметры запроса - параметизированный запрос
+	if (ParameterCount > 0) //Есть параметры запроса - параметизированный запрос
 	{
 		//Получаем размер параметров и пытаемся выделить память для них
-		char **ParamValues = (char **)malloc(ParametersCount * (sizeof(char *)));
+		char **ParamValues = (char **)malloc(ParameterCount * (sizeof(char *)));
 		if (!ParamValues) //Не удалось выделить память
 		{
 			ErrorString = "Malloc out of memory";
 			return false;
 		}
 
-		//Выделяем память под типы параметров
-		Oid *ParamTypes = (Oid *)malloc(ParametersCount * sizeof(Oid *));
-
 		//Заполяняем параметры
-		for (size_t i = 0; i < ParametersCount; ++i)
+		for (size_t i = 0; i < ParameterCount; ++i)
 		{
-			//Получаем значение параметра и приводим его к строке
-			ISVariant Value = Parameters[i];
-			std::string String = Value.ToString();
-
-			//Выделяем память для параметра
-			ParamValues[i] = (char *)malloc(String.size() + 1);
-			if (!ParamValues[i]) //Не удалось выделить память
+			//Получаем значение параметра
+			std::string String = ParameterValues[i];
+			if (String.empty()) //Если значение пустое - интерпретируем его как NULL
 			{
-				free(ParamValues); //Очищаем память под массив
-				ErrorString = "Malloc out of memory";
-				return false;
+				ParamValues[i] = nullptr;
 			}
-			strcpy(ParamValues[i], String.c_str()); //Копируем значение в память
-			ParamTypes[i] = Types[i];
+			else //Значение не пустое - анализируем его
+			{
+				//Выделяем память для параметра
+				ParamValues[i] = (char *)malloc(String.size() + 1);
+				if (!ParamValues[i]) //Не удалось выделить память
+				{
+					free(ParamValues); //Очищаем память под массив
+					ErrorString = "Malloc out of memory";
+					return false;
+				}
+				strcpy(ParamValues[i], String.c_str()); //Копируем значение в память
+			}
 		}
 
 		if (StmtName.empty()) //Запрос не был подготовлен - выполняем либо с параметрами, либо без
 		{
-			SqlResult = ParametersCount > 0 ? PQexecParams(SqlConnection, SqlText.c_str(), (int)ParametersCount, NULL, ParamValues, NULL, NULL, 0) :
+			SqlResult = ParameterCount > 0 ? PQexecParams(SqlConnection, SqlText.c_str(), (int)ParameterCount, ParameterTypes.data(), ParamValues, NULL, NULL, 0) :
 				PQexec(SqlConnection, SqlText.c_str());
 		}
 		else //Запрос был подготовлен - выполняем подготовленный оператор
 		{
-			SqlResult = PQexecPrepared(SqlConnection, StmtName.c_str(), (int)ParametersCount, ParamValues, NULL, NULL, 0);
+			SqlResult = PQexecPrepared(SqlConnection, StmtName.c_str(), (int)ParameterCount, ParamValues, NULL, NULL, 0);
 		}
 
 		//Очищаем выделенную память
-		for (size_t i = 0; i < ParametersCount; ++i)
+		for (size_t i = 0; i < ParameterCount; ++i)
 		{
 			free(ParamValues[i]);
 		}
 		free(ParamValues);
-		free(ParamTypes);
-		Parameters.clear();
-		Types.clear();
-		ParametersCount = 0;
+		ParameterValues.clear();
+		ParameterTypes.clear();
+		ParameterCount = 0;
 	}
+	else //Параметров запроса нет - исполняем как есть
+	{
+		//Если запрос не был подготовлен - исполняем как есть, иначе - выполняем подготовленный оператор
+		SqlResult = StmtName.empty() ? PQexec(SqlConnection, SqlText.c_str()) :
+			PQexecPrepared(SqlConnection, StmtName.c_str(), 0, NULL, NULL, NULL, 0);
+	}
+
+	//Считаем затраченное время на выполнение запроса
 	long long Msec = ISAlgorithm::GetTickDiff(ISAlgorithm::GetTick(), TimePoint);
+
 	if (!SqlResult) //Не удалось отправить запрос
 	{
 		ErrorString = "Out of memory";
@@ -326,10 +330,10 @@ void ISQueryLibPQ::FillColumnMap()
 	}
 }
 //-----------------------------------------------------------------------------
-bool ISQueryLibPQ::Prepare(int ParamCount)
+bool ISQueryLibPQ::Prepare(size_t ParamCount)
 {
 	StmtName = ISAlgorithm::StringToMD5(SqlText);
-	PGresult *STMT = PQprepare(SqlConnection, StmtName.c_str(), SqlText.c_str(), ParamCount, NULL);
+	PGresult *STMT = PQprepare(SqlConnection, StmtName.c_str(), SqlText.c_str(), ParamCount, ParameterTypes.data());
 	Prepared = STMT ? true : false;
 	if (Prepared)
 	{
@@ -347,11 +351,5 @@ bool ISQueryLibPQ::Prepare(int ParamCount)
 		ErrorString = "Out of memory";
 	}
 	return Prepared;
-}
-//-----------------------------------------------------------------------------
-bool ISQueryLibPQ::Prepare(PGconn *sql_connection, int ParamCount)
-{
-	SqlConnection = sql_connection;
-	return Prepare(ParamCount);
 }
 //-----------------------------------------------------------------------------

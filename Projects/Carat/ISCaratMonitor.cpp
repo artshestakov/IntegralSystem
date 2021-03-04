@@ -92,7 +92,7 @@ void ISCaratMonitor::Process()
 	}
 
 	//Создаём указатель на объект запроса тут, чтобы потом использовать его постоянно
-	ISQueryLibPQ *qInsert = new ISQueryLibPQ(ISDatabase::Instance().GetDBLibPQ(CONNECTION_MONITOR), QI_MONITOR, true, 3);
+	ISQueryLibPQ *qInsert = new ISQueryLibPQ(ISDatabase::Instance().GetDBLibPQ(CONNECTION_MONITOR), QI_MONITOR);
 
 	//Подключение к базе прошло успешно - начинаем работу потока
 	while (true)
@@ -100,10 +100,10 @@ void ISCaratMonitor::Process()
 		ISSleep(Timeout);
 		
 		//Добавляем показатели в базу		
-		qInsert->AddBindValue(GetMemory());
-        qInsert->AddBindValue((unsigned int)ISTcpClients::Instance().GetCount());
-		qInsert->AddBindValue(GetTCPTimeAvg());
-		if (!qInsert->Execute()) //Ошибка вставки
+		qInsert->BindValue(GetMemory());
+        qInsert->BindValue(ISTcpClients::Instance().GetCount());
+		qInsert->BindValue((TCPQueryTime > 0 && TCPQueryCount > 0) ? TCPQueryTime / TCPQueryCount : 0, INT2OID);
+		if (!qInsert->Execute(true, 3)) //Ошибка вставки
 		{
 			ISLOGGER_E(__CLASS__, "Not insert monitor indicators: " + QString::fromStdString(qInsert->GetErrorString()));
 		}
@@ -173,14 +173,5 @@ int ISCaratMonitor::GetMemory() const
     }
 #endif
 	return Result;
-}
-//-----------------------------------------------------------------------------
-unsigned int ISCaratMonitor::GetTCPTimeAvg() const
-{
-	if (TCPQueryTime > 0 && TCPQueryCount > 0)
-	{
-		return TCPQueryTime / TCPQueryCount;
-	}
-	return 0;
 }
 //-----------------------------------------------------------------------------

@@ -30,7 +30,7 @@ static QString QS_USER_AUTH = PREPARE_QUERY("SELECT usrs_id, usrs_issystem, usrs
 											"LEFT JOIN _userdevice ON udvc_user = usrs_id "
 											"WHERE usrs_hash = :Hash");
 //-----------------------------------------------------------------------------
-static QString QI_PROTOCOL = PREPARE_QUERY("SELECT protocol_user(:UserID, :TableName, :TableLocalName, :TypeUID, :ObjectID, :Information)");
+static std::string QI_PROTOCOL = PREPARE_QUERY("SELECT protocol_user($1, $2, $3, $4, $5, $6)");
 //-----------------------------------------------------------------------------
 static QString QS_GROUP_ACCESS_TABLE = PREPARE_QUERY("SELECT gatb_table, gatt_uid "
 													 "FROM _groupaccesstable "
@@ -647,18 +647,18 @@ void ISTcpWorker::Run()
 	DBConnectionName = QString::number(CURRENT_THREAD_ID());
 	DBConnectionNameLibPQ = "LibPQ_" + std::to_string(CURRENT_THREAD_ID());
 
+	ISDatabase::Instance().ConnectLibPQ(DBConnectionNameLibPQ, DBHost, DBPort, DBName, DBUser, DBPassword);
+
 	//Пытаемся подключиться к БД
 	IsStarted = ISDatabase::Instance().Connect(DBConnectionName, DBHost, DBPort, DBName, DBUser, DBPassword);
 	if (IsStarted)
 	{
-		qProtocol = new ISQuery(ISDatabase::Instance().GetDB(DBConnectionName), QI_PROTOCOL);
+		qProtocol = new ISQueryLibPQ(ISDatabase::Instance().GetDBLibPQ(DBConnectionNameLibPQ), QI_PROTOCOL);
 	}
 	else
 	{
 		ISLOGGER_E(__CLASS__, "Not connected to database: " + ISDatabase::Instance().GetErrorString());
 	}
-
-	//ISDatabase::Instance().ConnectLibPQ(DBConnectionNameLibPQ, DBHost, DBPort, DBName, DBUser, DBPassword);
 
 	//Выполняем регистрацию функций для конфигурации
 	if (!QMetaObject::invokeMethod(this, ("Register" + ISConfigurations::Instance().Get().Name).toUtf8()))
@@ -816,17 +816,17 @@ QVariant ISTcpWorker::CheckNullField(const QString &FieldName, ISTcpMessage *Tcp
 	return QVariant();
 }
 //-----------------------------------------------------------------------------
-void ISTcpWorker::Protocol(unsigned int UserID, const QString &ActionTypeUID, const QVariant &TableName, const QVariant &TableLocalName, const QVariant &ObjectID, const QVariant &Information)
+void ISTcpWorker::Protocol(unsigned int UserID, const std::string &ActionTypeUID, const QVariant &TableName, const QVariant &TableLocalName, const QVariant &ObjectID, const QVariant &Information)
 {
-	qProtocol->BindValue(":UserID", UserID);
-	qProtocol->BindValue(":TableName", TableName);
-	qProtocol->BindValue(":TypeUID", ActionTypeUID);
-	qProtocol->BindValue(":ObjectID", ObjectID);
-	qProtocol->BindValue(":TableLocalName", TableLocalName);
-	qProtocol->BindValue(":Information", Information);
-	if (!qProtocol->Execute()) //Не удалось добавить запись в протокол
+	qProtocol->BindValue(UserID);
+	qProtocol->BindValue(TableName.toString().toStdString());
+	qProtocol->BindValue(TableLocalName.toString().toStdString());
+	qProtocol->BindValue(ActionTypeUID, UUIDOID);
+	ObjectID.isValid() ? qProtocol->BindValue(ObjectID.toUInt()) : qProtocol->BindValue(nullptr);
+	qProtocol->BindValue(Information.toString().toStdString());
+	if (!qProtocol->Execute(true, 6)) //Не удалось добавить запись в протокол
 	{
-		ISLOGGER_E(__CLASS__, "Not insert protocol: " + qProtocol->GetErrorString());
+		ISLOGGER_E(__CLASS__, "Not insert protocol: " + QString::fromStdString(qProtocol->GetErrorString()));
 	}
 }
 //-----------------------------------------------------------------------------
