@@ -33,11 +33,16 @@ public:
 	bool Execute(bool PrepareQuery = false, size_t ParamCount = 0);
 	bool ExecuteFirst();
 
-	Oid ColumnType(int Index); //Получить тип поля по индексу
+	Oid ColumnType(size_t Index); //Получить тип поля по индексу
 	Oid ColumnType(const std::string &FieldName); //Получить тип поля по имени поля
 
-	ISVariant ReadColumn(int Index);
-	ISVariant ReadColumn(const std::string &FieldName);
+	char* ReadColumn(size_t Index) const;
+	std::string ReadColumn_String(size_t Index) const;
+	int ReadColumn_Int(size_t Index) const;
+	unsigned int ReadColumn_UInt(size_t Index) const;
+	ISInt64 ReadColumn_Int64(size_t Index) const;
+	ISUInt64 ReadColumn_UInt64(size_t Index) const;
+	bool ReadColumn_Bool(size_t Index) const;
 
 private:
 	void FillColumnMap(); //Заполнить мета-данные выборки

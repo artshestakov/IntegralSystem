@@ -240,7 +240,7 @@ bool ISQueryLibPQ::ExecuteFirst()
 	return Result;
 }
 //-----------------------------------------------------------------------------
-Oid ISQueryLibPQ::ColumnType(int Index)
+Oid ISQueryLibPQ::ColumnType(size_t Index)
 {
 	return ColumnMap[Index].Type;
 }
@@ -259,63 +259,39 @@ Oid ISQueryLibPQ::ColumnType(const std::string &FieldName)
 	return FieldType;
 }
 //-----------------------------------------------------------------------------
-ISVariant ISQueryLibPQ::ReadColumn(int Index)
+char* ISQueryLibPQ::ReadColumn(size_t Index) const
 {
-	ISVariant Value;
-	if (PQgetisnull(SqlResult, CurrentRow, Index)) //«начение отсутствует - возвращаем невалидное
-	{
-		return Value;
-	}
-
-	//ѕолучаем значение, провер€ем его тип и возвращаем
-	char *Char = PQgetvalue(SqlResult, CurrentRow, Index);
-	switch (ColumnMap[Index].Type)
-	{
-	case BOOLOID:
-		Value.SetBool(strcmp(Char, "t") == 0);
-		break;
-
-	case INT2OID:
-		Value.SetShort((short)atoi(Char));
-		break;
-
-	case INT4OID:
-		Value.SetInt(atoi(Char));
-		break;
-
-	case INT8OID:
-#ifdef WIN32 //???
-		Value.SetInt64(_atoi64(Char));
-#endif
-		break;
-
-	case NUMERICOID:
-		Value.SetDouble(atof(Char));
-		break;
-
-	case FLOAT4OID:
-		Value.SetFloat((float)atof(Char));
-		break;
-
-	case CHAROID:
-		Value.SetChar(Char[0]);
-		break;
-
-	case VARCHAROID:
-	case TEXTOID:
-		Value.SetString(Char);
-		break;
-	
-	case UUIDOID:
-		Value.SetUuid(Char);
-		break;
-	}
-	return Value;
+	return PQgetvalue(SqlResult, CurrentRow, Index);
 }
 //-----------------------------------------------------------------------------
-ISVariant ISQueryLibPQ::ReadColumn(const std::string &FieldName)
+std::string ISQueryLibPQ::ReadColumn_String(size_t Index) const
 {
-	return ReadColumn(PQfnumber(SqlResult, FieldName.c_str()));
+	return ReadColumn(Index);
+}
+//-----------------------------------------------------------------------------
+int ISQueryLibPQ::ReadColumn_Int(size_t Index) const
+{
+	return std::atoi(ReadColumn(Index));
+}
+//-----------------------------------------------------------------------------
+unsigned int ISQueryLibPQ::ReadColumn_UInt(size_t Index) const
+{
+	return ReadColumn_Int(Index);
+}
+//-----------------------------------------------------------------------------
+ISInt64 ISQueryLibPQ::ReadColumn_Int64(size_t Index) const
+{
+	return std::atoll(ReadColumn(Index));
+}
+//-----------------------------------------------------------------------------
+ISUInt64 ISQueryLibPQ::ReadColumn_UInt64(size_t Index) const
+{
+	return ReadColumn_Int64(Index);
+}
+//-----------------------------------------------------------------------------
+bool ISQueryLibPQ::ReadColumn_Bool(size_t Index) const
+{
+	return (strcmp(ReadColumn(Index), "t") == 0) ? true : false;
 }
 //-----------------------------------------------------------------------------
 void ISQueryLibPQ::FillColumnMap()
