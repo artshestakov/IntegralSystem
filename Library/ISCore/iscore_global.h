@@ -5,9 +5,9 @@
 #include "StdAfx.h"
 //-----------------------------------------------------------------------------
 #if defined(ISCORE_LIBRARY)
-# define ISCORE_EXPORT Q_DECL_EXPORT
+# define ISCORE_EXPORT __declspec(dllexport)
 #else
-# define ISCORE_EXPORT Q_DECL_IMPORT
+# define ISCORE_EXPORT __declspec(dllimport)
 #endif
 //-----------------------------------------------------------------------------
 #endif

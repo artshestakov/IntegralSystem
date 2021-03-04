@@ -5,9 +5,9 @@
 #include "StdAfx.h"
 //-----------------------------------------------------------------------------
 #if defined(ISSERVER_LIBRARY)
-# define ISSERVER_EXPORT Q_DECL_EXPORT
+# define ISSERVER_EXPORT __declspec(dllexport)
 #else
-# define ISSERVER_EXPORT Q_DECL_IMPORT
+# define ISSERVER_EXPORT __declspec(dllimport)
 #endif
 //-----------------------------------------------------------------------------
 #endif
