@@ -261,7 +261,7 @@ Oid ISQueryLibPQ::ColumnType(const std::string &FieldName)
 //-----------------------------------------------------------------------------
 char* ISQueryLibPQ::ReadColumn(size_t Index) const
 {
-	return PQgetvalue(SqlResult, CurrentRow, Index);
+	return PQgetvalue(SqlResult, CurrentRow, (int)Index);
 }
 //-----------------------------------------------------------------------------
 std::string ISQueryLibPQ::ReadColumn_String(size_t Index) const
@@ -309,7 +309,7 @@ void ISQueryLibPQ::FillColumnMap()
 bool ISQueryLibPQ::Prepare(size_t ParamCount)
 {
 	StmtName = ISAlgorithm::StringToMD5(SqlText);
-	PGresult *STMT = PQprepare(SqlConnection, StmtName.c_str(), SqlText.c_str(), ParamCount, ParameterTypes.data());
+	PGresult *STMT = PQprepare(SqlConnection, StmtName.c_str(), SqlText.c_str(), (int)ParamCount, ParameterTypes.data());
 	Prepared = STMT ? true : false;
 	if (Prepared)
 	{

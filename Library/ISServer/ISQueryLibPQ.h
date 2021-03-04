@@ -66,7 +66,7 @@ private:
 	int CurrentRow; //Индекс текущей строки результирующей выборки
 	bool IsSelect; //Запрос является SELECT или SHOW
 
-	std::map<int, ISSqlField> ColumnMap; //Мета-данные выборки
+	std::map<size_t, ISSqlField> ColumnMap; //Мета-данные выборки
 };
 //-----------------------------------------------------------------------------
 #endif
