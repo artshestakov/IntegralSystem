@@ -1,10 +1,13 @@
-#include "StdAfx.h"
-#include "ISAlgorithm.h"
+#include "ISCaratApplication.h"
 //-----------------------------------------------------------------------------
 int main(int argc, char **argv)
 {
-	IS_UNUSED(argc);
-	IS_UNUSED(argv);
-	return 0;
+	ISCaratApplication CaratApplication(argc, argv);
+	if (CaratApplication.Init())
+	{
+		return CaratApplication.Start();
+	}
+	//logging error...
+	return EXIT_FAILURE;
 }
 //-----------------------------------------------------------------------------

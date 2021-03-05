@@ -11,6 +11,7 @@ const size_t MAX_PATH = 260;
 const char PATH_SEPARATOR = '/';
 #endif
 //-----------------------------------------------------------------------------
-const size_t NPOS = std::string::npos;
+const size_t	NPOS = std::string::npos;
+const char		NO_ERROR_STRING[] = "No error.";
 //-----------------------------------------------------------------------------
 #endif

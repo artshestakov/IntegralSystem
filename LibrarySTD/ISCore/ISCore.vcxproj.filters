@@ -25,5 +25,8 @@
     <ClInclude Include="ISConstants.h">
       <Filter>System</Filter>
     </ClInclude>
+    <ClInclude Include="ISTypedefs.h">
+      <Filter>System</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -10,5 +10,13 @@
     <ClCompile Include="main.cpp">
       <Filter>System</Filter>
     </ClCompile>
+    <ClCompile Include="ISCaratApplication.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ISCaratApplication.h">
+      <Filter>System</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
