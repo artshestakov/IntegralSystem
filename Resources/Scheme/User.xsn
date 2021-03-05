@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <XSN Name="User.xsn">
   
   <Table Name="_Users" UID="{6027E727-3704-43FA-BA13-CF7A209ACDA8}" Alias="usrs" LocalName="Пользователь" LocalListName="Пользователи" TitleName="FIO" ObjectForm="ISUserObjectForm">

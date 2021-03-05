@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <XSN Name="Task.xsn">
 
   <Table Name="_Task" UID="{0C4396AF-BD65-482C-BFE0-D46C072341AC}" Alias="task" LocalName="Задача" LocalListName="Задачи" TitleName="Name" ObjectForm="ISTaskObjectForm" IsSystem="true">

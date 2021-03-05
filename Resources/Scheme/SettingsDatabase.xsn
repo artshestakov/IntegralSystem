@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <XSN Name="SettingsDatabase.xsn">
 
   <Table Name="_SettingsDatabase" UID="{55F13612-074A-493B-B948-50A23EAE9945}" Alias="sgdb" LocalName="Настройка базы данных" LocalListName="Настройки базы данных" TitleName="ID" ObjectForm="ISSettingsDatabaseObjectForm" IsSystem="true">

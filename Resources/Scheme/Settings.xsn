@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <XSN Name="Settings.xsn">
   
   <Table Name="_UserSettings" UID="{40628A04-2B01-49F2-87EC-2935221C5B3E}" Alias="usst" LocalName="Настройка пользователя" LocalListName="Настройки пользователя" TitleName="Setting" IsSystem="true">

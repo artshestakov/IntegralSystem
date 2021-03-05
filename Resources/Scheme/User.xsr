@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <XSR Name="User.xsr">
 
   <_GroupAccessTableType IsSystem="true" UID="{41743776-D7CE-414F-ACF3-71C42A607742}" Name="Просмотр" Icon="Access.Show" Order="1"/>

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <XSR Name="Task.xsr">
 
   <_TaskPriority IsSystem="true" UID="{CD620874-5069-48E4-BDEA-2D5AEBF8ABA7}" Order="1" Name="Низкий" ToolTip="Несрочная, низкоприоритетная задача (выполняется, когда нет других задач)" StyleSheet="Task.Priority.Low" Icon="Task.Priority.Low"/>
