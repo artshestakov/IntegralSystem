@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <XSF Name="Functions.xsf">
 
   <Function Name="uuid_generate_v4()" Comment="Генерация уникального идентификатора">
