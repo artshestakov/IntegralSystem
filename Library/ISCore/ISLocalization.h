@@ -30,7 +30,6 @@ private:
 	QString ErrorString;
 	ISStringMap Dictionary;
 	ISStringMapSTD DictionarySTD;
-	ISVectorString LoadedFiles;
 	ISCriticalSection CriticalSection;
 };
 //-----------------------------------------------------------------------------

@@ -132,42 +132,33 @@ bool ISLocalization::InitializeContent(const QString &Content)
 		Result = !LocalizationName.isEmpty();
 		if (Result) //Если имя локализации указано
 		{
-			Result = !ISAlgorithm::VectorContains(LoadedFiles, LocalizationName);
-			if (Result) //Этот файл ещё не инициализирован
+			while (!NodeLocalization.isNull() && Result)
 			{
-				while (!NodeLocalization.isNull() && Result)
+				if (!NodeLocalization.isComment())
 				{
-					if (!NodeLocalization.isComment())
-					{
-						//Получаем ключ и значение перевода
-						QString LocalKey = NodeLocalization.attributes().namedItem("Name").nodeValue();
-						QString Value = NodeLocalization.attributes().namedItem("Russian").nodeValue();
+					//Получаем ключ и значение перевода
+					QString LocalKey = NodeLocalization.attributes().namedItem("Name").nodeValue();
+					QString Value = NodeLocalization.attributes().namedItem("Russian").nodeValue();
 
-						Result = !LocalKey.isEmpty();
-						if (Result) //Если ключ перевода не пустой
+					Result = !LocalKey.isEmpty();
+					if (Result) //Если ключ перевода не пустой
+					{
+						Result = !Value.isEmpty();
+						if (Result) //Значение перевода не пустое - добавляем
 						{
-							Result = !Value.isEmpty();
-							if (Result) //Значение перевода не пустое - добавляем
-							{
-								Dictionary.emplace(LocalKey, Value);
-							}
-							else //Значение перевода пустое
-							{
-								ErrorString = QString("localization value is empty. File: %1. Line: %2.").arg(LocalizationName).arg(NodeLocalization.lineNumber());
-							}
+							Dictionary.emplace(LocalKey, Value);
 						}
-						else //Ключ перевода пустой
+						else //Значение перевода пустое
 						{
-							ErrorString = QString("localization key is empty. File: %1. Line: %2.").arg(LocalizationName).arg(NodeLocalization.lineNumber());
+							ErrorString = QString("localization value is empty. File: %1. Line: %2.").arg(LocalizationName).arg(NodeLocalization.lineNumber());
 						}
 					}
-					NodeLocalization = NodeLocalization.nextSibling();
+					else //Ключ перевода пустой
+					{
+						ErrorString = QString("localization key is empty. File: %1. Line: %2.").arg(LocalizationName).arg(NodeLocalization.lineNumber());
+					}
 				}
-				LoadedFiles.emplace_back(LocalizationName);
-			}
-			else //Этот файл уже инициализирован
-			{
-				ErrorString = "already initialized.";
+				NodeLocalization = NodeLocalization.nextSibling();
 			}
 		}
 		else //Имя локализации не указано
