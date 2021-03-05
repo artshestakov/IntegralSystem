@@ -1,8 +1,11 @@
 /Bin
+/BinSTD
 /Deploy
 /Library/**/*-*
+/LibrarySTD/**/*-*
 /Output
 /Projects/**/*-*
+/ProjectsSTD/**/*-*
 /Tools/**/*-*
 /x86_64
 /.vs
