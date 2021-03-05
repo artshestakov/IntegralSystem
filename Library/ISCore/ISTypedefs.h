@@ -10,6 +10,7 @@ typedef CRITICAL_SECTION ISCriticalSection;
 typedef pthread_mutex_t ISCriticalSection;
 #endif
 typedef std::map<QString, QString> ISStringMap;
+typedef std::map<std::string, std::string> ISStringMapSTD;
 typedef std::map<QString, int> ISStringToIntMap;
 typedef std::map<QString, QVariant> ISStringToVariantMap;
 typedef std::vector<int> ISVectorInt;

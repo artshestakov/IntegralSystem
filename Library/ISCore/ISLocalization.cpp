@@ -4,6 +4,7 @@
 #include "ISAssert.h"
 #include "ISAlgorithm.h"
 #include "ISLogger.h"
+#include "tinyxml2.h"
 //-----------------------------------------------------------------------------
 ISLocalization::ISLocalization()
 	: ErrorString(NO_ERROR_STRING)
@@ -53,6 +54,68 @@ bool ISLocalization::LoadResourceFile(const QString &FileName)
 	else //Не удалось открыть файл локализации
 	{
 		ErrorString = QString("not open localization file \"%1\". Error: %2.").arg(File.fileName()).arg(File.errorString());
+	}
+	return Result;
+}
+//-----------------------------------------------------------------------------
+bool ISLocalization::LoadFile(const std::string &FilePath)
+{
+	tinyxml2::XMLDocument Document;
+	tinyxml2::XMLError Error = Document.LoadFile(FilePath.c_str());
+	bool Result = Error == tinyxml2::XML_SUCCESS;
+	if (Result) //Файл загрузился успешно - получаем главный элемент
+	{
+		tinyxml2::XMLElement *XmlElement = Document.FirstChildElement();
+		Result = XmlElement ? true : false;
+		if (Result) //Главные элемент есть - переходим к элементам локализации
+		{
+			QString LocalizationName = XmlElement->Attribute("Name"); //Получаем имя файла локализации
+			XmlElement = XmlElement->FirstChildElement();
+			Result = XmlElement ? true : false;
+			if (Result) //Как минимум один элемент есть - обходим элементы локализации
+			{
+				do
+				{
+					//Получаем ключ и значение на русском языке
+					std::string Key = XmlElement->Attribute("Name"),
+						Value = ISAlgorithm::FromLocal8Bit(XmlElement->Attribute("Russian"));
+
+					Result = !Key.empty();
+					if (!Result) //Если ключ пустой - ошибка
+					{
+						ErrorString = QString("localization key is empty. File: %1. Line: %2.").arg(LocalizationName).arg(XmlElement->GetLineNum());
+						break;
+					}
+
+					Result = !Value.empty();
+					if (!Result) //Если значение пустое - ошибка
+					{
+						ErrorString = QString("localization value is empty. File: %1. Line: %2.").arg(LocalizationName).arg(XmlElement->GetLineNum());
+						break;
+					}
+
+					Result = DictionarySTD.find(Key) == DictionarySTD.end();
+					if (!Result)
+					{
+						ErrorString = QString("duplicate key \"%1\"").arg(QString::fromStdString(Key));
+						break;
+					}
+					DictionarySTD.emplace(Key, Value);
+				} while ((XmlElement = XmlElement->NextSiblingElement()) != nullptr);
+			}
+			else //Элементы локализации отсутствуют
+			{
+				ErrorString = "Not found local";
+			}
+		}
+		else //Главного элемента нет
+		{
+			ErrorString = "Not exist main element LANG";
+		}
+	}
+	else //Ошибка загрузки файла
+	{
+		ErrorString = Document.ErrorStr();
 	}
 	return Result;
 }

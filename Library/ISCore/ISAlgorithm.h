@@ -191,6 +191,19 @@ namespace ISAlgorithm
 	//! \return возвращает вектор аргументов
 	ISCORE_EXPORT std::vector<std::string> ParseCommandArgs(int argc, char **argv);
 
+	//! Конвертация строки из кодировки UTF8 в кодировку CP1251 (WIN1251)
+	//! \param String строка в кодировке UTF8
+	//! \return возвращает строку в кодировке CP1251
+	ISCORE_EXPORT std::string FromLocal8Bit(const char *String);
+
+	//! Получить путь к исполняемому файлу
+	//! \return возвращает путь к испролняемому файлу
+	ISCORE_EXPORT std::string GetApplicationPath();
+
+	//! Получить путь к папке приложения
+	//! \return возвращает путь к папке приложения
+	ISCORE_EXPORT std::string GetApplicationDir();
+
 	//Поиск значения в векторе
     template <typename T> bool VectorContains(const std::vector<T> &Vector, T Value)
     {
