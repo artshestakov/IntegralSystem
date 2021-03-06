@@ -4,11 +4,14 @@
 //-----------------------------------------------------------------------------
 #ifdef WIN32
 #include <windows.h>
+#include <Shlwapi.h>
 #endif
 //-----------------------------------------------------------------------------
 #include <iostream>
 #include <string>
 #include <chrono>
 #include <thread>
+#include <vector>
+#include <fstream>
 //-----------------------------------------------------------------------------
 #endif

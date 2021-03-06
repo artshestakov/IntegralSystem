@@ -4,6 +4,7 @@
 //-----------------------------------------------------------------------------
 #include "iscore_global.h"
 #include "StdAfx.h"
+#include "ISTypedefs.h"
 //-----------------------------------------------------------------------------
 //Заснуть на Msec миллисекунд
 #define ISSleep(MSec) std::this_thread::sleep_for(std::chrono::milliseconds(MSec))
@@ -54,6 +55,22 @@ namespace ISAlgorithm
 	//! \return возвращает true в случае успешного создания папки, иначе - false
 	ISCORE_EXPORT bool DirCreate(const std::string &DirPath, std::string &ErrorString);
 
+	//! Проверка существования файла
+	//! \param FilePath путь к файлу
+	//! \return возвращает true в случае существования файла, иначе - false
+	ISCORE_EXPORT bool FileExist(const std::string &FilePath);
+
+	//! Удаление файла
+	//! \param FilePath путь к файлу
+	//! \return возвращает true в сулчае успешного удаления файла, иначе - false
+	ISCORE_EXPORT bool FileDelete(const std::string &FilePath);
+
+	//! Удаление файла
+	//! \param FilePath путь к файлу
+	//! \param ErrorString ссылка на строку с ошибкой
+	//! \return возвращает true в сулчае успешного удаления файла, иначе - false
+	ISCORE_EXPORT bool FileDelete(const std::string &FilePath, std::string &ErrorString);
+
 	//! Получить путь к исполняемому файлу
 	//! \return возвращает путь к испролняемому файлу
 	ISCORE_EXPORT std::string GetApplicationPath();
@@ -61,6 +78,12 @@ namespace ISAlgorithm
 	//! Получить путь к папке приложения
 	//! \return возвращает путь к папке приложения
 	ISCORE_EXPORT std::string GetApplicationDir();
+
+	//! Парсинг аргументов командной строки
+	//! \param argc количество аргументов
+	//! \param argv массив аргументов
+	//! \return возвращает вектор аргументов
+	ISCORE_EXPORT ISVectorString ParseArgs(int argc, char **argv);
 }
 //-----------------------------------------------------------------------------
 #endif

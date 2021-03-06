@@ -15,7 +15,7 @@ void test()
 			{
 				//ISVariant GroupID = qInsert.ReadColumn("usgp_id");
 				//ISVariant GroupUID = qInsert.ReadColumn("usgp_uid");
-				ISVariant GroupName = qInsert.ReadColumn(0);
+				//ISVariant GroupName = qInsert.ReadColumn(0);
 				//std::cout << GroupID.ToString() << ' ' << GroupUID.ToString() << ' ' << GroupName.ToString() << std::endl;
 			}
 		}

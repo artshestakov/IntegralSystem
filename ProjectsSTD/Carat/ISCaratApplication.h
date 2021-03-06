@@ -23,6 +23,8 @@ private:
 	std::string ErrorString;
 	bool IsRunning;
 	ISCriticalSection CriticalSection;
+	ISVectorString Arguments;
+	std::string FileShutdown;
 };
 //-----------------------------------------------------------------------------
 #endif

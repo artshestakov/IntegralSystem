@@ -3,7 +3,16 @@
 //-----------------------------------------------------------------------------
 std::string ISAlgorithm::GetLastErrorString()
 {
-	std::string ErrorString;
+	std::string ErrorString = NO_ERROR_STRING;
+	DWORD ErrorID = GetLastError();
+	if (ErrorID != 0) //Код ошибки валиден
+	{
+		LPSTR Buffer = nullptr;
+		size_t MessageSize = FormatMessageA(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
+			NULL, ErrorID, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPSTR)&Buffer, 0, NULL);
+		ErrorString = std::string(Buffer, MessageSize - 2);
+		LocalFree(Buffer);
+	}
 	return ErrorString;
 }
 //-----------------------------------------------------------------------------
@@ -43,6 +52,11 @@ bool ISAlgorithm::DirCreate(const std::string &DirPath, std::string &ErrorString
 	return true;
 }
 //-----------------------------------------------------------------------------
+bool ISAlgorithm::FileExist(const std::string &FilePath)
+{
+	return PathFileExists(FilePath.c_str()) == TRUE;
+}
+//-----------------------------------------------------------------------------
 std::string ISAlgorithm::GetApplicationPath()
 {
 	std::string Path;
@@ -52,6 +66,22 @@ std::string ISAlgorithm::GetApplicationPath()
 		Path = Buffer;
 	}
 	return Path;
+}
+//-----------------------------------------------------------------------------
+bool ISAlgorithm::FileDelete(const std::string &FilePath)
+{
+	std::string ErrorString;
+	return FileDelete(FilePath, ErrorString);
+}
+//-----------------------------------------------------------------------------
+bool ISAlgorithm::FileDelete(const std::string &FilePath, std::string &ErrorString)
+{
+	if (DeleteFile(FilePath.c_str()) == FALSE)
+	{
+		ErrorString = GetLastErrorString();
+		return false;
+	}
+	return true;
 }
 //-----------------------------------------------------------------------------
 std::string ISAlgorithm::GetApplicationDir()
@@ -66,5 +96,21 @@ std::string ISAlgorithm::GetApplicationDir()
 		}
 	}
 	return Path;
+}
+//-----------------------------------------------------------------------------
+ISVectorString ISAlgorithm::ParseArgs(int argc, char **argv)
+{
+	ISVectorString VectorString;
+	if (argc > 1) //Если аргументов больше одного
+	{
+		VectorString.resize(argc - 1);
+
+		//Начинаем цикл с единицы, чтобы не брать путь к исполняемому файлу приложения
+		for (int i = 1; i < argc; ++i)
+		{
+			VectorString[i - 1] = argv[i];
+		}
+	}
+	return VectorString;
 }
 //-----------------------------------------------------------------------------
