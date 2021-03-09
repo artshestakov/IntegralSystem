@@ -508,6 +508,19 @@ namespace ISOilSphere
 
 		bool Save() override;
 	};
+
+	//Форма списка банка
+	class BankListForm : public ISListBaseForm
+	{
+		Q_OBJECT
+
+	public:
+		Q_INVOKABLE BankListForm(QWidget *parent = 0);
+		virtual ~BankListForm();
+
+	private:
+		void Load();
+	};
 }
 //-----------------------------------------------------------------------------
 #endif

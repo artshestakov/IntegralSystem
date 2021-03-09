@@ -49,6 +49,7 @@ void ISOilSphere::Object::RegisterMetaTypes() const
 	qRegisterMetaType<ISOilSphere::ConsumptionObjectForm*>("ISOilSphere::ConsumptionObjectForm");
 	qRegisterMetaType<ISOilSphere::ReturnMySubSystem*>("ISOilSphere::ReturnMySubSystem");
 	qRegisterMetaType<ISOilSphere::ReturnObjectForm*>("ISOilSphere::ReturnObjectForm");
+	qRegisterMetaType<ISOilSphere::BankListForm*>("ISOilSphere::BankListForm");
 }
 //-----------------------------------------------------------------------------
 void ISOilSphere::Object::BeforeShowMainWindow() const
@@ -1421,5 +1422,45 @@ bool ISOilSphere::ReturnObjectForm::Save()
 {
 	AddVirtualField("User", CURRENT_USER_ID);
 	return ISObjectFormBase::Save();
+}
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+ISOilSphere::BankListForm::BankListForm(QWidget *parent) : ISListBaseForm("Bank", parent)
+{
+	QAction *ActionLoad = new QAction(BUFFER_ICONS("Arrow.Up"), LANG("OilSphere.LoadData"), GetToolBar());
+	connect(ActionLoad, &QAction::triggered, this, &ISOilSphere::BankListForm::Load);
+	AddAction(ActionLoad, false, true);
+}
+//-----------------------------------------------------------------------------
+ISOilSphere::BankListForm::~BankListForm()
+{
+
+}
+//-----------------------------------------------------------------------------
+void ISOilSphere::BankListForm::Load()
+{
+	QString FilePath = /*ISFileDialog::GetOpenFileName(this)*/"C:/Users/artem/iCloudDrive/Test.csv";
+	if (FilePath.isEmpty())
+	{
+		return;
+	}
+
+	QFile File(FilePath);
+	if (!File.open(QIODevice::ReadOnly))
+	{
+		ISMessageBox::ShowCritical(this, LANG("Message.Error.NotOpenedFile").arg(FilePath), File.errorString());
+		return;
+	}
+
+	QByteArray ByteArray = File.readAll().toBase64();
+	File.close();
+
+	ISTcpQuery qLoadBanks("OilSphere_LoadBanks");
+	qLoadBanks.BindValue("ByteArray", ByteArray);
+	if (!qLoadBanks.Execute())
+	{
+		ISMessageBox::ShowCritical(this, qLoadBanks.GetErrorString());
+	}
 }
 //-----------------------------------------------------------------------------

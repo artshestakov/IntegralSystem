@@ -1261,7 +1261,6 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 		TcpMessage->TcpSocket->peerAddress().toString(),
         TcpMessage->TcpSocket->peerPort());
 	Protocol(UserID, CONST_UID_PROTOCOL_ENTER_APPLICATION, QVariant(), QVariant(), QVariant(), QVariant());
-	OilSphere_LoadBanks(TcpMessage, TcpAnswer);
 	return true;
 }
 //-----------------------------------------------------------------------------
@@ -4733,17 +4732,16 @@ bool ISTcpWorker::OilSphere_GetUserConsumption(ISTcpMessage *TcpMessage, ISTcpAn
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::OilSphere_LoadBanks(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
-	IS_UNUSED(TcpMessage);
 	IS_UNUSED(TcpAnswer);
 
-	QFile File("C:/Users/Artem.Shestakov/iCloudDrive/Test.csv");
-	if (!File.open(QIODevice::ReadOnly))
+	QVariant ByteArray = CheckNullField("ByteArray", TcpMessage);
+	if (!ByteArray.isValid())
 	{
 		return false;
 	}
 
-	QString Content = QString::fromLocal8Bit(File.readAll());
-	File.close();
+	QByteArray b = QByteArray::fromBase64(ByteArray.toByteArray());
+	QString Content = QString::fromLocal8Bit(b);
 
 	QStringList StringList = Content.split('\n');
 	StringList.removeFirst(); //Удаляем заголовки
