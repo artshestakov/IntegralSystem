@@ -1,5 +1,6 @@
 #include "ISLogger.h"
 #include "ISAlgorithm.h"
+#include "ISDebug.h"
 //-----------------------------------------------------------------------------
 ISLogger::ISLogger()
 	: ErrorString(NO_ERROR_STRING),
@@ -32,8 +33,8 @@ std::string ISLogger::GetErrorString() const
 bool ISLogger::Initialize()
 {
 	//Получаем текущую дату и время и запоминаем текущий день
-	SYSTEMTIME CurrentDate = ISAlgorithm::GetCurrentDate();
-	CurrentDay = CurrentDate.wDay;
+	ISDateTime CurrentDate = ISAlgorithm::GetCurrentDate();
+	CurrentDay = CurrentDate.Day;
 
 	if (!CreateLogDirectory(CurrentDate)) //Ошибка при создании директорий
 	{
@@ -41,7 +42,7 @@ bool ISLogger::Initialize()
 	}
 
 	std::string path_file = GetPathFile(CurrentDate);
-	File.open(path_file.c_str(), std::ios::out);
+	File.open(path_file.c_str(), std::ios::out | std::ios::app);
 	if (!File.is_open()) //Не удалось открыть файл
 	{
 		ErrorString = "Error open file \"" + path_file + "\": " + ISAlgorithm::GetLastErrorS();
@@ -74,7 +75,7 @@ void ISLogger::Log(bool is_format, ISNamespace::LogMessageType message_type, con
 {
 	if (!IsRunning)
 	{
-		//ISDEBUG_E("Logger is not initialized");
+		ISDEBUG_W("Logger is not initialized");
 		return;
 	}
 
@@ -96,42 +97,20 @@ void ISLogger::Log(bool is_format, ISNamespace::LogMessageType message_type, con
 		}
 
         //Получаем текущую дату и время
-        unsigned int Day = 0, Month = 0, Year = 0, Hour = 0, Minute = 0, Second = 0, Millisecond = 0;
-#ifdef WIN32
-		SYSTEMTIME SystemTime;
-		GetLocalTime(&SystemTime);
-        Day = SystemTime.wDay;
-        Month = SystemTime.wMonth;
-        Year = SystemTime.wYear;
-        Hour = SystemTime.wHour;
-        Minute = SystemTime.wMinute;
-        Second = SystemTime.wSecond;
-        Millisecond = SystemTime.wMilliseconds;
-#else
-        struct timeval TimeValue;
-        gettimeofday(&TimeValue, NULL);
-
-        struct tm *SystemTime = localtime(&TimeValue.tv_sec);
-        Day = SystemTime->tm_mday;
-        Month = SystemTime->tm_mon + 1;
-        Year = SystemTime->tm_year + 1900;
-        Hour = SystemTime->tm_hour;
-        Minute = SystemTime->tm_min;
-        Second = SystemTime->tm_sec;
-        Millisecond = (unsigned int)(TimeValue.tv_usec / 1000);
-#endif
+		ISDateTime DateTime = ISAlgorithm::GetCurrentDate();
+        
         //Формируем заголовок сообщения
 		char buffer[LOGGER_MESSAGE_SIZE] = { 0 };
 		if (component.empty()) //Если компонент указан
 		{
 			snprintf(buffer, LOGGER_MESSAGE_SIZE, "%02d.%02d.%02d %02d:%02d:%02d:%03d\t%lu\t[%s] %s",
-                Day, Month, Year % 100, Hour, Minute, Second, Millisecond,
+				DateTime.Day, DateTime.Month, DateTime.Year % 100, DateTime.Hour, DateTime.Minute, DateTime.Second, DateTime.Millisecond,
 				CURRENT_THREAD_ID(), message_type_string.c_str(), message.c_str());
 		}
 		else //Компонент не указан
 		{
 			snprintf(buffer, LOGGER_MESSAGE_SIZE, "%02d.%02d.%02d %02d:%02d:%02d:%03d\t%lu\t[%s][%s] %s",
-                Day, Month, Year % 100, Hour, Minute, Second, Millisecond,
+				DateTime.Day, DateTime.Month, DateTime.Year % 100, DateTime.Hour, DateTime.Minute, DateTime.Second, DateTime.Millisecond,
 				CURRENT_THREAD_ID(), message_type_string.c_str(), component.c_str(), message.c_str());
 		}
 		string_complete = buffer;
@@ -143,7 +122,7 @@ void ISLogger::Log(bool is_format, ISNamespace::LogMessageType message_type, con
 
 	CRITICAL_SECTION_LOCK(&CriticalSection);
 #ifdef DEBUG //В отладочной версии выводим строку в консоль
-	//ISDEBUG_L(QString::fromStdString(string_complete));
+	ISDEBUG_L(string_complete);
 #ifdef WIN32 //Для Windows выводим строку в консоль Visual Studio
 	OutputDebugString((string_complete + '\n').c_str());
 #endif
@@ -152,14 +131,16 @@ void ISLogger::Log(bool is_format, ISNamespace::LogMessageType message_type, con
 	CRITICAL_SECTION_UNLOCK(&CriticalSection);
 }
 //-----------------------------------------------------------------------------
-bool ISLogger::CreateLogDirectory(const SYSTEMTIME &ST)
+bool ISLogger::CreateLogDirectory(const ISDateTime &DT)
 {
 	//Запоминаем текущий месяц и год
-	CurrentMonth = ST.wMonth;
-	CurrentYear = ST.wYear;
+	CurrentMonth = DT.Month;
+	CurrentYear = DT.Year;
 
 	//Формируем путь к текущей папке
-    PathLogsDir = ISAlgorithm::GetApplicationDir() + PATH_SEPARATOR + "Logs" + PATH_SEPARATOR + std::to_string(CurrentYear) + PATH_SEPARATOR + std::to_string(CurrentMonth) + PATH_SEPARATOR;
+	char Buffer[MAX_PATH];
+	sprintf(Buffer, "%s%cLogs%c%d%c%02d%c", ISAlgorithm::GetApplicationDir().c_str(), PATH_SEPARATOR, PATH_SEPARATOR, CurrentYear, PATH_SEPARATOR, CurrentMonth, PATH_SEPARATOR);
+    PathLogsDir = Buffer;
 	
 	if (!ISAlgorithm::DirExist(PathLogsDir)) //Если папка с текущим месяцем не существует - создаём её
 	{
@@ -172,10 +153,11 @@ bool ISLogger::CreateLogDirectory(const SYSTEMTIME &ST)
 	return true;
 }
 //-----------------------------------------------------------------------------
-std::string ISLogger::GetPathFile(const SYSTEMTIME &ST) const
+std::string ISLogger::GetPathFile(const ISDateTime &DT) const
 {
-	return PathLogsDir + ISAlgorithm::GetApplicationName() + '_' +
-		std::to_string(ST.wDay) + std::to_string(ST.wMonth) + std::to_string(ST.wYear) + ".log";
+	char Buffer[MAX_PATH];
+	sprintf(Buffer, "%s%s_%02d.%02d.%d.log", PathLogsDir.c_str(), ISAlgorithm::GetApplicationName().c_str(), DT.Day, DT.Month, DT.Year);
+	return Buffer;
 }
 //-----------------------------------------------------------------------------
 void ISLogger::Worker()
@@ -188,37 +170,28 @@ void ISLogger::Worker()
 		{
 			for (size_t i = 0; i < LastIndex; ++i)
 			{
-				//std::string message_string = Array[i] + "\n";
-				//size_t message_size = message_string.size();
-				//if (File.write(message_string.c_str(), message_size) == -1) //Не удалось произвести запись в файл
-				{
-					//ISDEBUG_E("Logger: not write to file. Error: " + File.errorString());
-				}
+				File << Array[i] << std::endl;
 				Array[i].clear(); //Очищаем текущую строку
 			}
 			LastIndex = 0;
-
-			//if (!File.flush()) //Не удалось сбросить информацию в файл принудительно
-			{
-				//ISDEBUG_E("Logger: not flushing. Error: " + File.errorString());
-			}
+			File.flush();
 		}
         CRITICAL_SECTION_UNLOCK(&CriticalSection);
 
 		//Если сменился месяц или год - создаём недостающие папки
-		SYSTEMTIME CurrentDate = ISAlgorithm::GetCurrentDate();
-		if (CurrentMonth != CurrentDate.wMonth || CurrentYear != CurrentDate.wYear)
+		ISDateTime CurrentDate = ISAlgorithm::GetCurrentDate();
+		if (CurrentMonth != CurrentDate.Month || CurrentYear != CurrentDate.Year)
 		{
 			//Пытаемся создать недосающие директории пока не получится
 			while (!CreateLogDirectory(CurrentDate))
 			{
-				//ISDEBUG_E(ErrorString);
+				ISDEBUG_E(ErrorString);
 				ISSleep(LOGGER_TIMEOUT);
 			}
 		}
 
 		//Если сменился день - закрываем текущий файл и открываем новый
-		if (CurrentDay != CurrentDate.wDay)
+		if (CurrentDay != CurrentDate.Day)
 		{
 			File.close();
 
@@ -226,15 +199,15 @@ void ISLogger::Worker()
 			while (!is_opened) //Пытаемся открыть файл
 			{
 				std::string path_file = GetPathFile(CurrentDate);
-				File.open(path_file);
+				File.open(path_file, std::ios::out | std::ios::app);
 				is_opened = File.is_open();
 				if (is_opened) //Файл был успешно открыт - запоминаем текущий день
 				{
-					CurrentDay = CurrentDate.wDay;
+					CurrentDay = CurrentDate.Day;
 				}
 				else //Файл не удалось открыть, пытаемся сделать это ещё раз через секунду
 				{
-					//ISDEBUG_E("Logger: not open file \"" + path_file + "\". Error: " + File.errorString());
+					ISDEBUG_E("Logger: not open file \"" + path_file + "\". Error: " + ErrorString);
 					ISSleep(1000);
 				}
 			}

@@ -1,6 +1,8 @@
 #include "ISCaratApplication.h"
 #include "ISAlgorithm.h"
 #include "ISConstants.h"
+#include "ISLogger.h"
+#include "ISDebug.h"
 //-----------------------------------------------------------------------------
 ISCaratApplication::ISCaratApplication(int argc, char **argv)
 	: ErrorString(NO_ERROR_STRING),
@@ -23,9 +25,15 @@ std::string ISCaratApplication::GetErrorString() const
 //-----------------------------------------------------------------------------
 bool ISCaratApplication::Init()
 {
+	if (!ISLogger::Instance().Initialize()) //Не удалось иницилизировать логгер
+	{
+		ISDEBUG_E("Error initialize logger: " + ISLogger::Instance().GetErrorString());
+		return false;
+	}
+
 	if (!ISAlgorithm::ConsoleSetEncoding(65001, ErrorString))
 	{
-		//warning...
+		ISLOGGER_W("Console", "Not setting console encoding: " + ErrorString);
 	}
 
 	//Создаём папку Temp
@@ -34,7 +42,7 @@ bool ISCaratApplication::Init()
 	{
 		if (!ISAlgorithm::DirCreate(DirTemp, ErrorString))
 		{
-			//error...
+			ISLOGGER_E(__CLASS__, "Not created dir (" + DirTemp + "): " + ErrorString);
 			return false;
 		}
 	}
@@ -42,9 +50,9 @@ bool ISCaratApplication::Init()
 	//Удаляем stop-файл
 	if (ISAlgorithm::FileExist(FileShutdown))
 	{
-		if (!ISAlgorithm::FileDelete(FileShutdown))
+		if (!ISAlgorithm::FileDelete(FileShutdown, ErrorString))
 		{
-			//error...
+			ISLOGGER_E(__CLASS__, "Not delete shutdown file (" + FileShutdown + "): " + ErrorString);
 			return false;
 		}
 	}
@@ -76,6 +84,9 @@ int ISCaratApplication::Start()
 			CRITICAL_SECTION_UNLOCK(&CriticalSection);
 			if (!is_running)
 			{
+				ISLOGGER_I(__CLASS__, "Shutdown server");
+
+				ISLogger::Instance().Shutdown();
 				break;
 			}
 		}

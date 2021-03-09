@@ -6,6 +6,7 @@
 #include "ISConstants.h"
 #include "ISTypedefs.h"
 #include "ISNamespace.h"
+#include "ISStructs.h"
 //-----------------------------------------------------------------------------
 class ISCORE_EXPORT ISLogger
 {
@@ -18,8 +19,8 @@ public:
 	void Log(bool is_format, ISNamespace::LogMessageType message_type, const std::string &component, const std::string &message);
 
 private:
-	bool CreateLogDirectory(const SYSTEMTIME &ST);
-	std::string GetPathFile(const SYSTEMTIME &ST) const;
+	bool CreateLogDirectory(const ISDateTime &DT);
+	std::string GetPathFile(const ISDateTime &DT) const;
 	void Worker();
 
 private:

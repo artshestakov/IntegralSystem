@@ -5,12 +5,19 @@
 #include "iscore_global.h"
 #include "StdAfx.h"
 #include "ISTypedefs.h"
+#include "ISStructs.h"
 //-----------------------------------------------------------------------------
 //Заснуть на Msec миллисекунд
 #define ISSleep(MSec) std::this_thread::sleep_for(std::chrono::milliseconds(MSec))
 
 //Подавление предупреждения неиспользуемого параметра
 #define IS_UNUSED(x) (void)x
+
+#ifdef WIN32
+#define __CLASS__ ISAlgorithm::GetClassName(__FUNCTION__)
+#else
+#define __CLASS__ ISAlgorithm::GetClassName(__PRETTY_FUNCTION__)
+#endif
 //-----------------------------------------------------------------------------
 #ifdef WIN32
 #define CRITICAL_SECTION_INIT(CRITICAL_SECTION) InitializeCriticalSection(CRITICAL_SECTION)
@@ -30,6 +37,11 @@
 //-----------------------------------------------------------------------------
 namespace ISAlgorithm
 {
+	//! Получить имя класса
+	//! \param FunctionName в качестве этого параметра необходимо передавать макрос
+	//! \return возвращает имя класса в случае успеха, иначе пустую строку
+	ISCORE_EXPORT std::string GetClassName(const std::string &FunctionName);
+
 	//! Получить описание последней ошибки
 	ISCORE_EXPORT std::string GetLastErrorS();
 
@@ -44,12 +56,12 @@ namespace ISAlgorithm
 	//! \return возвращает true в случае существования папки, иначе - false
 	ISCORE_EXPORT bool DirExist(const std::string &DirPath);
 
-	//! Создание папки
+	//! Создание папки рекусивно
 	//! \param DirPath путь к папке
 	//! \return возвращает true в случае успешного создания папки, иначе - false
 	ISCORE_EXPORT bool DirCreate(const std::string &DirPath);
 
-	//! Создание папки
+	//! Создание папки рекусивно
 	//! \param DirPath путь к папке
 	//! \param ErrorString ссылка на строку с ошибкой
 	//! \return возвращает true в случае успешного создания папки, иначе - false
@@ -91,7 +103,7 @@ namespace ISAlgorithm
 
 	//! Получить текущую дату и время
 	//! \return возвращает структуру с текущей датой и временем
-	ISCORE_EXPORT SYSTEMTIME GetCurrentDate();
+	ISCORE_EXPORT ISDateTime GetCurrentDate();
 }
 //-----------------------------------------------------------------------------
 #endif

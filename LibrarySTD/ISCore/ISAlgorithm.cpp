@@ -1,6 +1,32 @@
 #include "ISAlgorithm.h"
 #include "ISConstants.h"
 //-----------------------------------------------------------------------------
+std::string ISAlgorithm::GetClassName(const std::string &FunctionName)
+{
+	std::string Result(FunctionName);
+	size_t Index = 0;
+
+#ifndef WIN32 //Если работаем сейчас под Linux - исключаем имя типа
+	Index = Result.find('('); //Ищем открывающуюся скобку
+	if (Index != NPOS) //Если скобку нашли - удаляем все что после неё
+	{
+		Result.erase(Index, Result.size() - Index);
+	}
+
+	while ((Index = Result.find(SYMBOL_SPACE)) != NPOS)
+	{
+		Result.erase(0, ++Index);
+	}
+#endif
+
+	Index = Result.find(':');
+	if (Index != NPOS)
+	{
+		Result.erase(Index, Result.size() - Index);
+	}
+	return Result;
+}
+//-----------------------------------------------------------------------------
 std::string ISAlgorithm::GetLastErrorS()
 {
 	std::string ErrorString = NO_ERROR_STRING;DWORD ErrorID = GetLastError();
@@ -43,7 +69,7 @@ bool ISAlgorithm::DirCreate(const std::string &DirPath)
 //-----------------------------------------------------------------------------
 bool ISAlgorithm::DirCreate(const std::string &DirPath, std::string &ErrorString)
 {
-	if (CreateDirectory(DirPath.c_str(), NULL) == FALSE)
+	if (SHCreateDirectoryExA(NULL, DirPath.c_str(), NULL) != ERROR_SUCCESS)
 	{
 		ErrorString = GetLastErrorS();
 		return false;
@@ -105,8 +131,16 @@ std::string ISAlgorithm::GetApplicationName()
 		size_t Pos = Path.rfind(PATH_SEPARATOR);
 		if (Pos != NPOS)
 		{
-			Path.erase(0, Pos);
+			Path.erase(0, ++Pos);
 		}
+
+#ifdef WIN32 //Для Windows удаляем расширение
+		Pos = Path.find('.');
+		if (Pos != NPOS) //Точка в названии есть - удаляем расширение
+		{
+			Path.erase(Pos, Path.size() - Pos);
+		}
+#endif
 	}
 	return Path;
 }
@@ -127,10 +161,17 @@ ISVectorString ISAlgorithm::ParseArgs(int argc, char **argv)
 	return VectorString;
 }
 //-----------------------------------------------------------------------------
-SYSTEMTIME ISAlgorithm::GetCurrentDate()
+ISDateTime ISAlgorithm::GetCurrentDate()
 {
+#ifdef WIN32
 	SYSTEMTIME ST;
 	GetLocalTime(&ST);
-	return ST;
+	return{ ST.wDay, ST.wMonth, ST.wYear, ST.wHour, ST.wMinute, ST.wSecond, ST.wMilliseconds };
+#else
+	struct timeval TimeValue;
+	gettimeofday(&TimeValue, NULL);
+	struct tm *ST = localtime(&TimeValue.tv_sec);
+	return{ ST->tm_mday, ST->tm_mon + 1, ST->tm_year + 1900, ST->tm_hour, ST->tm_min, ST->tm_sec, (unsigned int)(TimeValue.tv_usec / 1000) };
+#endif
 }
 //-----------------------------------------------------------------------------

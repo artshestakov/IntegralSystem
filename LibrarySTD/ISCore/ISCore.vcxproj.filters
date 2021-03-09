@@ -16,6 +16,9 @@
     <ClCompile Include="ISLogger.cpp">
       <Filter>System</Filter>
     </ClCompile>
+    <ClCompile Include="ISDebug.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StdAfx.h">
@@ -35,6 +38,12 @@
       <Filter>System</Filter>
     </ClInclude>
     <ClInclude Include="ISNamespace.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="ISStructs.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="ISDebug.h">
       <Filter>System</Filter>
     </ClInclude>
   </ItemGroup>
