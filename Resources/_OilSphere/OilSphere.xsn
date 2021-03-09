@@ -504,18 +504,17 @@
     </Foreigns>
   </Table>
   
-  <Table Name="TableName" UID="{AB254670-CA9A-47A3-A4B6-8924EF462622}" Alias="tbln" ShowOnly="true" LocalName="Таблица" LocalListName="Таблица" TitleName="PurposePayment">
+  <Table Name="Bank" UID="{AB254670-CA9A-47A3-A4B6-8924EF462622}" Alias="bank" ShowOnly="true" LocalName="Таблица" LocalListName="Таблица" TitleName="PurposePayment">
     <Fields>
-      <Field UID="{E4C08281-385A-45FF-8BE9-C1F2510AC8C0}" Name="Files" Type="Bool" LabelName="Есть файлы" LocalListName="Есть файлы"/>
-      <Field UID="{5A6DC010-400F-4982-A367-416C5BBF59AF}" Name="Date" Type="Date" LabelName="Дата" LocalListName="Дата"/>
-      <Field UID="{AD4E6EC3-F7A5-432A-B97E-F1D3D749430A}" Name="Admission" Type="Money" LabelName="Поступление" LocalListName="Поступление"/>
-      <Field UID="{0C820599-EE92-4EBF-B3D6-F7F3AE62DD10}" Name="WriteOff" Type="Money" LabelName="Списание" LocalListName="Списание"/>
+      <Field UID="{5A6DC010-400F-4982-A367-416C5BBF59AF}" Name="Date" Type="String" LabelName="Дата" LocalListName="Дата"/>
+      <Field UID="{AD4E6EC3-F7A5-432A-B97E-F1D3D749430A}" Name="Admission" Type="String" LabelName="Поступление" LocalListName="Поступление"/>
+      <Field UID="{0C820599-EE92-4EBF-B3D6-F7F3AE62DD10}" Name="WriteOff" Type="String" LabelName="Списание" LocalListName="Списание"/>
       <Field UID="{267F3601-2220-4898-BD4B-79E5ADF9FF03}" Name="PurposePayment" Type="String" LabelName="Назначение платежа" LocalListName="Назначение платежа"/>
       <Field UID="{602899C3-8067-4F7F-929A-6592E3E06584}" Name="Counterparty" Type="String" LabelName="Контрагент" LocalListName="Контрагент"/>
       <Field UID="{53257AB8-0944-4327-B492-8837DB4323E8}" Name="CheckNumber" Type="String" LabelName="Номер чека" LocalListName="Номер чека"/>
       <Field UID="{CF43CB3D-4D6D-4EAE-8E09-233E860E9E8C}" Name="OperationType" Type="String" LabelName="Вид операции" LocalListName="Вид операции"/>
       <Field UID="{8CCE6880-79F8-4948-99F2-2C4992D6CDC1}" Name="IncomingNumber" Type="String" LabelName="Входящий номер" LocalListName="Входящий номер"/>
-      <Field UID="{D4139892-EAE1-43C4-BB88-F0D36FD77426}" Name="IncomingDate" Type="Date" LabelName="Входящая дата" LocalListName="Входящая дата"/>
+      <Field UID="{D4139892-EAE1-43C4-BB88-F0D36FD77426}" Name="IncomingDate" Type="String" LabelName="Входящая дата" LocalListName="Входящая дата"/>
       <Field UID="{4C8DA9F1-B9AF-4B8B-9FB4-937A3249CD5C}" Name="BankAccount" Type="String" LabelName="Банковский счёт" LocalListName="Банковский счёт"/>
       <Field UID="{9C164CF5-E72C-400D-B155-2F7E24EA85F4}" Name="Comment" Type="String" LabelName="Комментарий" LocalListName="Комментарий"/>
     </Fields>

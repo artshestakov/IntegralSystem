@@ -276,4 +276,6 @@
   <Local Name="Carat.Error.Query.GetUserConsumption.UserReturn" Russian="Не удалось получить возвраты пользователя."/>
   <Local Name="Carat.Error.Query.GetUserConsumption.SelectTotal" Russian="Не удалось получить итоговые данные."/>
 
+  <Local Name="Carat.Error.Query.LoadBank.Insert" Russian="Не удалось добавить запись с кодом %1."/>
+
 </LANG>

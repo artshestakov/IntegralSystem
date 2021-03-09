@@ -536,6 +536,9 @@ static QString QS_TOTAL_BALANCE = PREPARE_QUERY("SELECT "
 												"(SELECT COALESCE(sum(cmng_sum), 0) AS total_coming FROM coming), "
 												"(SELECT COALESCE(sum(cpmp_sum), 0) AS total_consumption FROM consumption)");
 //-----------------------------------------------------------------------------
+static QString QI_BANK = PREPARE_QUERY("INSERT INTO bank(bank_date, bank_admission, bank_writeoff, bank_purposepayment, bank_counterparty, bank_checknumber, bank_operationtype, bank_incomingnumber, bank_incomingdate, bank_bankaccount, bank_comment) "
+									   "VALUES(:Date, :Admission, :WriteOff, :PurposePayment, :Counterparty, :CheckNumber, :OperationType, :IncomingNumber, :IncomingDate, :BankAccount, :Comment)");
+//-----------------------------------------------------------------------------
 ISTcpWorker::ISTcpWorker(const QString &db_host, int db_port, const QString &db_name, const QString &db_user, const QString &db_password)
 	: QObject(),
 	ErrorString(NO_ERROR_STRING),
@@ -957,6 +960,7 @@ void ISTcpWorker::RegisterOilSphere()
 	MapFunction["OilSphere_GetDebtImplementation"] = &ISTcpWorker::OilSphere_GetDebtImplementation;
 	MapFunction["OilSphere_GetDebtCounterparty"] = &ISTcpWorker::OilSphere_GetDebtCounterparty;
 	MapFunction["OilSphere_GetUserConsumption"] = &ISTcpWorker::OilSphere_GetUserConsumption;
+	MapFunction["OilSphere_LoadBanks"] = &ISTcpWorker::OilSphere_LoadBanks;
 }
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
@@ -1257,6 +1261,7 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 		TcpMessage->TcpSocket->peerAddress().toString(),
         TcpMessage->TcpSocket->peerPort());
 	Protocol(UserID, CONST_UID_PROTOCOL_ENTER_APPLICATION, QVariant(), QVariant(), QVariant(), QVariant());
+	OilSphere_LoadBanks(TcpMessage, TcpAnswer);
 	return true;
 }
 //-----------------------------------------------------------------------------
@@ -4723,6 +4728,51 @@ bool ISTcpWorker::OilSphere_GetUserConsumption(ISTcpMessage *TcpMessage, ISTcpAn
 	TcpAnswer->Parameters["TotalComing"] = TotalComing;
 	TcpAnswer->Parameters["TotalConsumption"] = TotalConsumption;
 	TcpAnswer->Parameters["Balance"] = TotalComing - TotalConsumption;
+	return true;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::OilSphere_LoadBanks(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+	IS_UNUSED(TcpMessage);
+	IS_UNUSED(TcpAnswer);
+
+	QFile File("C:/Users/Artem.Shestakov/iCloudDrive/Test.csv");
+	if (!File.open(QIODevice::ReadOnly))
+	{
+		return false;
+	}
+
+	QString Content = QString::fromLocal8Bit(File.readAll());
+	File.close();
+
+	QStringList StringList = Content.split('\n');
+	StringList.removeFirst(); //Удаляем заголовки
+	StringList.removeAll(QString()); //Удаляем пустые строки
+
+	//Подготовим запрос и обойдём все записи
+	ISQuery qInsert(ISDatabase::Instance().GetDB(DBConnectionName), QI_BANK);
+	for (QString &String : StringList)
+	{
+		QStringList Values = String.split(';');
+		Values.removeFirst(); //Удаляем первое поле "Есть файлы"
+		
+		qInsert.BindValue(":Date", Values[0]);
+		qInsert.BindValue(":Admission", Values[1]);
+		qInsert.BindValue(":WriteOff", Values[2]);
+		qInsert.BindValue(":PurposePayment", Values[3]);
+		qInsert.BindValue(":Counterparty", Values[4]);
+		qInsert.BindValue(":CheckNumber", Values[5]);
+		qInsert.BindValue(":OperationType", Values[6]);
+		qInsert.BindValue(":IncomingNumber", Values[7]);
+		qInsert.BindValue(":IncomingDate", Values[8]);
+		qInsert.BindValue(":BankAccount", Values[9]);
+		qInsert.BindValue(":Comment", Values[10]);
+		if (!qInsert.Execute()) //Не удалось добавить запись
+		{
+			return ErrorQuery(LANG("Carat.Error.Query.LoadBank.Insert").arg(Values[7]), qInsert);
+		}
+	}
+
 	return true;
 }
 //-----------------------------------------------------------------------------
