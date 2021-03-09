@@ -13,6 +13,9 @@
     <ClCompile Include="ISAlgorithm.cpp">
       <Filter>System</Filter>
     </ClCompile>
+    <ClCompile Include="ISLogger.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StdAfx.h">
@@ -26,6 +29,12 @@
       <Filter>System</Filter>
     </ClInclude>
     <ClInclude Include="ISTypedefs.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="ISLogger.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="ISNamespace.h">
       <Filter>System</Filter>
     </ClInclude>
   </ItemGroup>

@@ -13,5 +13,6 @@
 #include <thread>
 #include <vector>
 #include <fstream>
+#include <array>
 //-----------------------------------------------------------------------------
 #endif

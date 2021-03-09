@@ -31,7 +31,7 @@
 namespace ISAlgorithm
 {
 	//! ѕолучить описание последней ошибки
-	ISCORE_EXPORT std::string GetLastErrorString();
+	ISCORE_EXPORT std::string GetLastErrorS();
 
 	//! ”становить кодовую страницу
 	//! \param CodePage номер кодовой страницы
@@ -79,11 +79,19 @@ namespace ISAlgorithm
 	//! \return возвращает путь к папке приложени€
 	ISCORE_EXPORT std::string GetApplicationDir();
 
+	//! ѕолучить им€ приложени€
+	//! \return возвращает им€ приложени€
+	ISCORE_EXPORT std::string GetApplicationName();
+
 	//! ѕарсинг аргументов командной строки
 	//! \param argc количество аргументов
 	//! \param argv массив аргументов
 	//! \return возвращает вектор аргументов
 	ISCORE_EXPORT ISVectorString ParseArgs(int argc, char **argv);
+
+	//! ѕолучить текущую дату и врем€
+	//! \return возвращает структуру с текущей датой и временем
+	ISCORE_EXPORT SYSTEMTIME GetCurrentDate();
 }
 //-----------------------------------------------------------------------------
 #endif

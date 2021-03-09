@@ -1,10 +1,9 @@
 #include "ISAlgorithm.h"
 #include "ISConstants.h"
 //-----------------------------------------------------------------------------
-std::string ISAlgorithm::GetLastErrorString()
+std::string ISAlgorithm::GetLastErrorS()
 {
-	std::string ErrorString = NO_ERROR_STRING;
-	DWORD ErrorID = GetLastError();
+	std::string ErrorString = NO_ERROR_STRING;DWORD ErrorID = GetLastError();
 	if (ErrorID != 0) //Код ошибки валиден
 	{
 		LPSTR Buffer = nullptr;
@@ -21,7 +20,7 @@ bool ISAlgorithm::ConsoleSetEncoding(unsigned int CodePage, std::string &ErrorSt
 #ifdef WIN32
 	if (SetConsoleOutputCP(CodePage) == FALSE) //Не удалось установить кодовую страницу
 	{
-		ErrorString = ISAlgorithm::GetLastErrorString();
+		ErrorString = ISAlgorithm::GetLastErrorS();
 		return false;
 	}
 	return true;
@@ -46,7 +45,7 @@ bool ISAlgorithm::DirCreate(const std::string &DirPath, std::string &ErrorString
 {
 	if (CreateDirectory(DirPath.c_str(), NULL) == FALSE)
 	{
-		ErrorString = GetLastErrorString();
+		ErrorString = GetLastErrorS();
 		return false;
 	}
 	return true;
@@ -78,7 +77,7 @@ bool ISAlgorithm::FileDelete(const std::string &FilePath, std::string &ErrorStri
 {
 	if (DeleteFile(FilePath.c_str()) == FALSE)
 	{
-		ErrorString = GetLastErrorString();
+		ErrorString = GetLastErrorS();
 		return false;
 	}
 	return true;
@@ -98,6 +97,20 @@ std::string ISAlgorithm::GetApplicationDir()
 	return Path;
 }
 //-----------------------------------------------------------------------------
+std::string ISAlgorithm::GetApplicationName()
+{
+	std::string Path = ISAlgorithm::GetApplicationPath();
+	if (!Path.empty())
+	{
+		size_t Pos = Path.rfind(PATH_SEPARATOR);
+		if (Pos != NPOS)
+		{
+			Path.erase(0, Pos);
+		}
+	}
+	return Path;
+}
+//-----------------------------------------------------------------------------
 ISVectorString ISAlgorithm::ParseArgs(int argc, char **argv)
 {
 	ISVectorString VectorString;
@@ -112,5 +125,12 @@ ISVectorString ISAlgorithm::ParseArgs(int argc, char **argv)
 		}
 	}
 	return VectorString;
+}
+//-----------------------------------------------------------------------------
+SYSTEMTIME ISAlgorithm::GetCurrentDate()
+{
+	SYSTEMTIME ST;
+	GetLocalTime(&ST);
+	return ST;
 }
 //-----------------------------------------------------------------------------
