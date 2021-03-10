@@ -3,9 +3,10 @@
 #include "ISConstants.h"
 #include "ISLogger.h"
 #include "ISDebug.h"
+#include "ISTcpServer.h"
 //-----------------------------------------------------------------------------
 ISCaratApplication::ISCaratApplication(int argc, char **argv)
-	: ErrorString(NO_ERROR_STRING),
+	: ErrorString(STRING_NO_ERROR),
 	IsRunning(true),
 	Arguments(ISAlgorithm::ParseArgs(argc, argv)),
 	FileShutdown(ISAlgorithm::GetApplicationDir() + PATH_SEPARATOR + "Temp" + PATH_SEPARATOR + "Carat.stop")
@@ -67,6 +68,8 @@ int ISCaratApplication::Start()
     {
         //Запускаем поток контроля работы
         std::thread(&ISCaratApplication::ShutdownController, this).detach();
+
+		ISTcpServer::Instance().Start();
 
         while (true) //Бесконечный цикл основного потока
         {

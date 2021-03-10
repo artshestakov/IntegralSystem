@@ -3,7 +3,7 @@
 #include "ISDebug.h"
 //-----------------------------------------------------------------------------
 ISLogger::ISLogger()
-	: ErrorString(NO_ERROR_STRING),
+	: ErrorString(STRING_NO_ERROR),
 	LastIndex(0),
 	IsRunning(false),
 	IsFinished(false),

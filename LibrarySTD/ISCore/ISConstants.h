@@ -12,7 +12,8 @@ const char PATH_SEPARATOR = '/';
 #endif
 //-----------------------------------------------------------------------------
 const size_t	NPOS = std::string::npos;
-const char		NO_ERROR_STRING[] = "No error.";
+const char		STRING_NO_ERROR[] = "No error.";
+const char		STRING_UNKNOWN_ERROR[] = "Unknown error.";
 //LOGGER-----------------------------------------------------------------------
 const size_t	LOGGER_ARRAY_SIZE = 20000; //Максимальный размер массива
 const size_t	LOGGER_TIMEOUT = 50; //Таймаут логгера

@@ -29,7 +29,7 @@ std::string ISAlgorithm::GetClassName(const std::string &FunctionName)
 //-----------------------------------------------------------------------------
 std::string ISAlgorithm::GetLastErrorS()
 {
-    std::string ErrorString = NO_ERROR_STRING;
+    std::string ErrorString = STRING_UNKNOWN_ERROR;
 #ifdef WIN32
     DWORD ErrorID = GetLastError();
 	if (ErrorID != 0) //Код ошибки валиден
@@ -37,8 +37,11 @@ std::string ISAlgorithm::GetLastErrorS()
 		LPSTR Buffer = nullptr;
 		size_t MessageSize = FormatMessageA(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
 			NULL, ErrorID, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPSTR)&Buffer, 0, NULL);
-		ErrorString = std::string(Buffer, MessageSize - 2);
-		LocalFree(Buffer);
+		if (MessageSize > 0 && Buffer)
+		{
+			ErrorString = std::string(Buffer, MessageSize - 2);
+			LocalFree(Buffer);
+		}
 	}
 #else
     ErrorString = strerror(errno);
@@ -75,7 +78,7 @@ bool ISAlgorithm::DirExist(const std::string &DirPath)
 //-----------------------------------------------------------------------------
 bool ISAlgorithm::DirCreate(const std::string &DirPath)
 {
-	std::string ErrorString = NO_ERROR_STRING;
+	std::string ErrorString = STRING_NO_ERROR;
 	return DirCreate(DirPath, ErrorString);
 }
 //-----------------------------------------------------------------------------

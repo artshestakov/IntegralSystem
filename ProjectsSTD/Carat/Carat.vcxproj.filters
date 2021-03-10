@@ -5,6 +5,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Tcp">
+      <UniqueIdentifier>{ee131c1a-2172-4050-b97a-323b5f401469}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -13,10 +16,16 @@
     <ClCompile Include="ISCaratApplication.cpp">
       <Filter>System</Filter>
     </ClCompile>
+    <ClCompile Include="ISTcpServer.cpp">
+      <Filter>Tcp</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ISCaratApplication.h">
       <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="ISTcpServer.h">
+      <Filter>Tcp</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

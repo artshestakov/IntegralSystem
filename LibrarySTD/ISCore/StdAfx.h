@@ -7,6 +7,7 @@
 #endif
 //-----------------------------------------------------------------------------
 #ifdef WIN32
+#include <WinSock2.h>
 #include <windows.h>
 #include <Shlwapi.h>
 #else
