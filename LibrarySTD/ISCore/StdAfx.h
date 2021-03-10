@@ -9,7 +9,6 @@
 #ifdef WIN32
 #include <windows.h>
 #include <Shlwapi.h>
-#include <ShlObj.h>
 #else
 #include <sys/time.h>
 #include <sys/stat.h>
