@@ -81,30 +81,30 @@ bool ISAlgorithm::DirCreate(const std::string &DirPath)
 //-----------------------------------------------------------------------------
 bool ISAlgorithm::DirCreate(const std::string &DirPath, std::string &ErrorString)
 {
-#ifdef WIN32
-	if (SHCreateDirectoryExA(NULL, DirPath.c_str(), NULL) != ERROR_SUCCESS)
-	{
-		ErrorString = GetLastErrorS();
-		return false;
-	}
-#else
-    ISVectorString VectorString = StringSplit(DirPath, PATH_SEPARATOR);
-    std::string TempPath;
-    TempPath.push_back(PATH_SEPARATOR);
+	ISVectorString VectorString = StringSplit(DirPath, PATH_SEPARATOR);
+	std::string TempPath;
+
+	//В реализации под Линукс нужно в начало вставлять разделитель пути
+#ifndef WIN32
+	TempPath.push_back(PATH_SEPARATOR);
+#endif
 
     for (const std::string &String : VectorString)
     {
         TempPath += String + PATH_SEPARATOR;
         if (!DirExist(TempPath))
         {
-            if (mkdir(TempPath.c_str(), 0777) != 0)
+#ifdef WIN32
+			if (CreateDirectory(TempPath.c_str(), NULL) != TRUE)
+#else
+			if (mkdir(TempPath.c_str(), 0777) != 0)
+#endif
             {
                 ErrorString = GetLastErrorS();
                 return false;
             }
         }
     }
-#endif
 	return true;
 }
 //-----------------------------------------------------------------------------
