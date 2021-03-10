@@ -45,7 +45,7 @@ bool ISLogger::Initialize()
 	File.open(path_file.c_str(), std::ios::out | std::ios::app);
 	if (!File.is_open()) //Не удалось открыть файл
 	{
-		ErrorString = "Error open file \"" + path_file + "\": " + ISAlgorithm::GetLastErrorS();
+        ErrorString = "not open file \"" + path_file + "\": " + ISAlgorithm::GetLastErrorS();
 		return false;
 	}
 	IsRunning = true;

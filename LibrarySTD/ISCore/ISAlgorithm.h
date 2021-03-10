@@ -104,6 +104,11 @@ namespace ISAlgorithm
 	//! ѕолучить текущую дату и врем€
 	//! \return возвращает структуру с текущей датой и временем
 	ISCORE_EXPORT ISDateTime GetCurrentDate();
+
+    //! –азделить строку
+    //! \param Separator разделитель
+    //! \return возвращает вектор разделЄнных строк
+    ISCORE_EXPORT ISVectorString StringSplit(const std::string &String, char Separator);
 }
 //-----------------------------------------------------------------------------
 #endif

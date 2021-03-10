@@ -13,7 +13,7 @@ std::string ISAlgorithm::GetClassName(const std::string &FunctionName)
 		Result.erase(Index, Result.size() - Index);
 	}
 
-	while ((Index = Result.find(SYMBOL_SPACE)) != NPOS)
+    while ((Index = Result.find(' ')) != NPOS)
 	{
 		Result.erase(0, ++Index);
 	}
@@ -29,7 +29,9 @@ std::string ISAlgorithm::GetClassName(const std::string &FunctionName)
 //-----------------------------------------------------------------------------
 std::string ISAlgorithm::GetLastErrorS()
 {
-	std::string ErrorString = NO_ERROR_STRING;DWORD ErrorID = GetLastError();
+    std::string ErrorString = NO_ERROR_STRING;
+#ifdef WIN32
+    DWORD ErrorID = GetLastError();
 	if (ErrorID != 0) //Код ошибки валиден
 	{
 		LPSTR Buffer = nullptr;
@@ -38,6 +40,9 @@ std::string ISAlgorithm::GetLastErrorS()
 		ErrorString = std::string(Buffer, MessageSize - 2);
 		LocalFree(Buffer);
 	}
+#else
+    ErrorString = strerror(errno);
+#endif
 	return ErrorString;
 }
 //-----------------------------------------------------------------------------
@@ -50,15 +55,22 @@ bool ISAlgorithm::ConsoleSetEncoding(unsigned int CodePage, std::string &ErrorSt
 		return false;
 	}
 	return true;
-#else
+#else //Реализации под Linux не существует
+    IS_UNUSED(CodePage);
+    IS_UNUSED(ErrorString);
 	return true;
 #endif
 }
 //-----------------------------------------------------------------------------
 bool ISAlgorithm::DirExist(const std::string &DirPath)
 {
+#ifdef WIN32
 	DWORD Attributes = GetFileAttributes(DirPath.c_str());
 	return (Attributes != INVALID_FILE_ATTRIBUTES && (Attributes & FILE_ATTRIBUTE_DIRECTORY));
+#else
+    struct stat Stat;
+    return stat(DirPath.c_str(), &Stat) == 0 && S_ISDIR(Stat.st_mode);
+#endif
 }
 //-----------------------------------------------------------------------------
 bool ISAlgorithm::DirCreate(const std::string &DirPath)
@@ -69,27 +81,58 @@ bool ISAlgorithm::DirCreate(const std::string &DirPath)
 //-----------------------------------------------------------------------------
 bool ISAlgorithm::DirCreate(const std::string &DirPath, std::string &ErrorString)
 {
+#ifdef WIN32
 	if (SHCreateDirectoryExA(NULL, DirPath.c_str(), NULL) != ERROR_SUCCESS)
 	{
 		ErrorString = GetLastErrorS();
 		return false;
 	}
+#else
+    ISVectorString VectorString = StringSplit(DirPath, PATH_SEPARATOR);
+    std::string TempPath;
+    TempPath.push_back(PATH_SEPARATOR);
+
+    for (const std::string &String : VectorString)
+    {
+        TempPath += String + PATH_SEPARATOR;
+        if (!DirExist(TempPath))
+        {
+            if (mkdir(TempPath.c_str(), 0777) != 0)
+            {
+                ErrorString = GetLastErrorS();
+                return false;
+            }
+        }
+    }
+#endif
 	return true;
 }
 //-----------------------------------------------------------------------------
 bool ISAlgorithm::FileExist(const std::string &FilePath)
 {
+#ifdef WIN32
 	return PathFileExists(FilePath.c_str()) == TRUE;
+#else
+    return access(FilePath.c_str(), F_OK) == 0;
+#endif
 }
 //-----------------------------------------------------------------------------
 std::string ISAlgorithm::GetApplicationPath()
 {
 	std::string Path;
-	char Buffer[MAX_PATH] = { 0 };
+    char Buffer[MAX_PATH] = { 0 };
+#ifdef WIN32
+
 	if (GetModuleFileName(GetModuleHandle(NULL), Buffer, sizeof(Buffer)) > 0)
 	{
 		Path = Buffer;
 	}
+#else
+    char Temp[20] = { 0 };
+    sprintf(Temp, "/proc/%d/exe", CURRENT_PID());
+    size_t Size = readlink(Temp, Buffer, 1024);
+    Path = std::string(Buffer, Size);
+#endif
 	return Path;
 }
 //-----------------------------------------------------------------------------
@@ -101,11 +144,19 @@ bool ISAlgorithm::FileDelete(const std::string &FilePath)
 //-----------------------------------------------------------------------------
 bool ISAlgorithm::FileDelete(const std::string &FilePath, std::string &ErrorString)
 {
+#ifdef WIN32
 	if (DeleteFile(FilePath.c_str()) == FALSE)
 	{
 		ErrorString = GetLastErrorS();
 		return false;
 	}
+#else
+    if (remove(FilePath.c_str()) != 0)
+    {
+        ErrorString = GetLastErrorS();
+        return false;
+    }
+#endif
 	return true;
 }
 //-----------------------------------------------------------------------------
@@ -171,7 +222,39 @@ ISDateTime ISAlgorithm::GetCurrentDate()
 	struct timeval TimeValue;
 	gettimeofday(&TimeValue, NULL);
 	struct tm *ST = localtime(&TimeValue.tv_sec);
-	return{ ST->tm_mday, ST->tm_mon + 1, ST->tm_year + 1900, ST->tm_hour, ST->tm_min, ST->tm_sec, (unsigned int)(TimeValue.tv_usec / 1000) };
+    return{ (unsigned short)ST->tm_mday, (unsigned short)(ST->tm_mon + 1), (unsigned short)(ST->tm_year + 1900),
+                (unsigned short)ST->tm_hour, (unsigned short)ST->tm_min, (unsigned short)ST->tm_sec, (unsigned short)(TimeValue.tv_usec / 1000) };
 #endif
+}
+//-----------------------------------------------------------------------------
+ISVectorString ISAlgorithm::StringSplit(const std::string &String, char Separator)
+{
+    ISVectorString VectorString;
+    if (!String.empty()) //Если строка не пустая - анализируем
+    {
+        size_t Pos = 0, LastPos = 0;
+        while ((Pos = String.find(Separator, LastPos)) != NPOS)
+        {
+            if (Pos != 0)
+            {
+                VectorString.emplace_back(String.substr(LastPos, Pos - LastPos));
+                LastPos = ++Pos;
+            }
+            else
+            {
+                ++LastPos;
+            }
+        }
+
+        if (Pos == NPOS)
+        {
+            size_t Size = String.size();
+            if (LastPos < Size)
+            {
+                VectorString.emplace_back(String.substr(LastPos, Size - LastPos));
+            }
+        }
+    }
+    return VectorString;
 }
 //-----------------------------------------------------------------------------

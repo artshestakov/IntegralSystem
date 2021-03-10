@@ -50,7 +50,7 @@ bool ISCaratApplication::Init()
 	//Удаляем stop-файл
 	if (ISAlgorithm::FileExist(FileShutdown))
 	{
-		if (!ISAlgorithm::FileDelete(FileShutdown, ErrorString))
+        if (!ISAlgorithm::FileDelete(FileShutdown, ErrorString))
 		{
 			ISLOGGER_E(__CLASS__, "Not delete shutdown file (" + FileShutdown + "): " + ErrorString);
 			return false;
@@ -63,42 +63,45 @@ bool ISCaratApplication::Init()
 int ISCaratApplication::Start()
 {
 	std::string Argument = Arguments.empty() ? std::string() : Arguments.front();
-	if (Argument == "--shutdown") //Режим остановки службы
+    if (Argument.empty()) //Режим службы
+    {
+        //Запускаем поток контроля работы
+        std::thread(&ISCaratApplication::ShutdownController, this).detach();
+
+        while (true) //Бесконечный цикл основного потока
+        {
+            ISSleep(1);
+
+            //Проверяем, работать дальше или завершить работу
+            CRITICAL_SECTION_LOCK(&CriticalSection);
+            bool is_running = IsRunning;
+            CRITICAL_SECTION_UNLOCK(&CriticalSection);
+            if (!is_running)
+            {
+                ISLOGGER_I(__CLASS__, "Shutdown server");
+
+                ISLogger::Instance().Shutdown();
+                break;
+            }
+        }
+    }
+    else if (Argument == "--shutdown") //Режим остановки службы
 	{
 		std::ofstream File(FileShutdown);
 		File.close();
-		return EXIT_SUCCESS;
 	}
-	else //Режим службы
+    else //Аргумент неопознан
 	{
-		//Запускаем поток контроля работы
-		std::thread(&ISCaratApplication::ShutdownController, this).detach();
-
-		while (true) //Бесконечный цикл основного потока
-		{
-			ISSleep(1);
-
-			//Проверяем, работать дальше или завершить работу
-			CRITICAL_SECTION_LOCK(&CriticalSection);
-			bool is_running = IsRunning;
-			CRITICAL_SECTION_UNLOCK(&CriticalSection);
-			if (!is_running)
-			{
-				ISLOGGER_I(__CLASS__, "Shutdown server");
-
-				ISLogger::Instance().Shutdown();
-				break;
-			}
-		}
-		return EXIT_SUCCESS;
+        ISDEBUG_L("Invalid argument: " + Argument);
 	}
+    return EXIT_SUCCESS;
 }
 //-----------------------------------------------------------------------------
 void ISCaratApplication::ShutdownController()
 {
 	while (true)
 	{
-		ISSleep(1000);
+        ISSleep(500);
 		if (ISAlgorithm::FileExist(FileShutdown)) //Если файл появился - останавливаем приложение
 		{
 			CRITICAL_SECTION_LOCK(&CriticalSection);
