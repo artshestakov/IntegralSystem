@@ -7,6 +7,8 @@
 #include "ISControls.h"
 #include "ISObjects.h"
 #include "ISLabels.h"
+#include <ActiveQt/QAxObject>
+#include <ActiveQt/QAxBase>
 //-----------------------------------------------------------------------------
 ISOilSphere::Object::Object() : ISObjectInterface()
 {
@@ -1440,7 +1442,7 @@ ISOilSphere::BankListForm::~BankListForm()
 //-----------------------------------------------------------------------------
 void ISOilSphere::BankListForm::Load()
 {
-	QString FilePath = /*ISFileDialog::GetOpenFileName(this)*/"C:/Users/artem/iCloudDrive/Test.csv";
+	QString FilePath = ISFileDialog::GetOpenFileName(this);
 	if (FilePath.isEmpty())
 	{
 		return;
@@ -1458,7 +1460,13 @@ void ISOilSphere::BankListForm::Load()
 
 	ISTcpQuery qLoadBanks("OilSphere_LoadBanks");
 	qLoadBanks.BindValue("ByteArray", ByteArray);
-	if (!qLoadBanks.Execute())
+	if (qLoadBanks.Execute())
+	{
+		QVariantMap AnswerMap = qLoadBanks.GetAnswer();
+		ISMessageBox::ShowInformation(this, LANG("OilSphere.Message.Information.LoadBanks").arg(AnswerMap["Loaded"].toInt()).arg(AnswerMap["Total"].toInt()));
+		Update();
+	}
+	else
 	{
 		ISMessageBox::ShowCritical(this, qLoadBanks.GetErrorString());
 	}

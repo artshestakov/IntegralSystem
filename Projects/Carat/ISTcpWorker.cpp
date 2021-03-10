@@ -536,6 +536,11 @@ static QString QS_TOTAL_BALANCE = PREPARE_QUERY("SELECT "
 												"(SELECT COALESCE(sum(cmng_sum), 0) AS total_coming FROM coming), "
 												"(SELECT COALESCE(sum(cpmp_sum), 0) AS total_consumption FROM consumption)");
 //-----------------------------------------------------------------------------
+static QString QS_BANK = PREPARE_QUERY("SELECT COUNT(*) "
+									   "FROM bank "
+									   "WHERE bank_date = :Date "
+									   "AND bank_incomingnumber = :IncomingNumber");
+//-----------------------------------------------------------------------------
 static QString QI_BANK = PREPARE_QUERY("INSERT INTO bank(bank_date, bank_admission, bank_writeoff, bank_purposepayment, bank_counterparty, bank_checknumber, bank_operationtype, bank_incomingnumber, bank_incomingdate, bank_bankaccount, bank_comment) "
 									   "VALUES(:Date, :Admission, :WriteOff, :PurposePayment, :Counterparty, :CheckNumber, :OperationType, :IncomingNumber, :IncomingDate, :BankAccount, :Comment)");
 //-----------------------------------------------------------------------------
@@ -4732,8 +4737,6 @@ bool ISTcpWorker::OilSphere_GetUserConsumption(ISTcpMessage *TcpMessage, ISTcpAn
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::OilSphere_LoadBanks(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
-	IS_UNUSED(TcpAnswer);
-
 	QVariant ByteArray = CheckNullField("ByteArray", TcpMessage);
 	if (!ByteArray.isValid())
 	{
@@ -4741,36 +4744,91 @@ bool ISTcpWorker::OilSphere_LoadBanks(ISTcpMessage *TcpMessage, ISTcpAnswer *Tcp
 	}
 
 	QByteArray b = QByteArray::fromBase64(ByteArray.toByteArray());
-	QString Content = QString::fromLocal8Bit(b);
+	QString Content = QString::fromUtf8(b);
 
 	QStringList StringList = Content.split('\n');
 	StringList.removeFirst(); //Удаляем заголовки
 	StringList.removeAll(QString()); //Удаляем пустые строки
 
-	//Подготовим запрос и обойдём все записи
-	ISQuery qInsert(ISDatabase::Instance().GetDB(DBConnectionName), QI_BANK);
+	int Loaded = 0;
+
+	//Подготовим запросы и обойдём все записи
+	ISQuery qInsert(ISDatabase::Instance().GetDB(DBConnectionName), QI_BANK),
+		qSelect(ISDatabase::Instance().GetDB(DBConnectionName), QS_BANK);
 	for (QString &String : StringList)
 	{
-		QStringList Values = String.split(';');
+		QStringList Values = String.split('\t');
 		Values.removeFirst(); //Удаляем первое поле "Есть файлы"
+
+		QString StringDate = Values[0],
+			StringAdmission = Values[1],
+			StringWriteOff = Values[2],
+			StringPurposePayment = Values[3],
+			StringCounterparty = Values[4],
+			StringCheckNumber = Values[5],
+			StringOperationType = Values[6],
+			StringIncomingNumber = Values[7],
+			StringIncomingDate = Values[8],
+			StringBankAccount = Values[9],
+			StringComment = Values[10];
+
+		//Дата
+		QDate Date = QDate::fromString(Values[0], FORMAT_DATE_V2);
+
+		//Поступление
+		bool AdmissionOK = false;
+		StringAdmission.remove(160);
+		StringAdmission.replace(',', '.');
+		double Admission = StringAdmission.toDouble(&AdmissionOK);
+
+		//Списание
+		bool WriteOffOK = false;
+		StringWriteOff.remove(160);
+		StringWriteOff.replace(',', '.');
+		double WriteOff = StringWriteOff.toDouble(&WriteOffOK);
+
+		//Входящая дата
+		QDate IncomingDate = QDate::fromString(StringIncomingDate, FORMAT_DATE_V2);
+
+		//Проверяем наличие такой записи
+		qSelect.BindValue(":Date", Date);
+		qSelect.BindValue(":IncomingNumber", StringIncomingNumber);
+		if (!qSelect.Execute()) //Не удалось проверить наличие записи
+		{
+			return ErrorQuery(LANG("Carat.Error.Query.LoadBank.Select"), qSelect);
+		}
+
+		if (!qSelect.First()) //Не удалось перейти на первую запись
+		{
+			ErrorString = qSelect.GetErrorString();
+			return false;
+		}
+
+		//Если такая запись уже есть - переходим к следующей
+		if (qSelect.ReadColumn("count").toInt() > 0)
+		{
+			continue;
+		}
 		
-		qInsert.BindValue(":Date", Values[0]);
-		qInsert.BindValue(":Admission", Values[1]);
-		qInsert.BindValue(":WriteOff", Values[2]);
-		qInsert.BindValue(":PurposePayment", Values[3]);
-		qInsert.BindValue(":Counterparty", Values[4]);
-		qInsert.BindValue(":CheckNumber", Values[5]);
-		qInsert.BindValue(":OperationType", Values[6]);
-		qInsert.BindValue(":IncomingNumber", Values[7]);
-		qInsert.BindValue(":IncomingDate", Values[8]);
-		qInsert.BindValue(":BankAccount", Values[9]);
-		qInsert.BindValue(":Comment", Values[10]);
+		qInsert.BindValue(":Date", Date);
+		qInsert.BindValue(":Admission", AdmissionOK ? Admission : QVariant());
+		qInsert.BindValue(":WriteOff", WriteOffOK ? WriteOff : QVariant());
+		qInsert.BindValue(":PurposePayment", StringPurposePayment.isEmpty() ? QVariant() : StringPurposePayment);
+		qInsert.BindValue(":Counterparty", StringCounterparty.isEmpty() ? QVariant() : StringCounterparty);
+		qInsert.BindValue(":CheckNumber", StringCheckNumber.isEmpty() ? QVariant() : StringCheckNumber);
+		qInsert.BindValue(":OperationType", StringOperationType.isEmpty() ? QVariant() : StringOperationType);
+		qInsert.BindValue(":IncomingNumber", StringIncomingNumber.isEmpty() ? QVariant() : StringIncomingNumber);
+		qInsert.BindValue(":IncomingDate", IncomingDate);
+		qInsert.BindValue(":BankAccount", StringBankAccount.isEmpty() ? QVariant() : StringBankAccount);
+		qInsert.BindValue(":Comment", StringComment.isEmpty() ? QVariant() : StringComment);
 		if (!qInsert.Execute()) //Не удалось добавить запись
 		{
-			return ErrorQuery(LANG("Carat.Error.Query.LoadBank.Insert").arg(Values[7]), qInsert);
+			return ErrorQuery(LANG("Carat.Error.Query.LoadBank.Insert").arg(Values.join(' ')), qInsert);
 		}
+		++Loaded;
 	}
-
+	TcpAnswer->Parameters["Loaded"] = Loaded;
+	TcpAnswer->Parameters["Total"] = StringList.size();
 	return true;
 }
 //-----------------------------------------------------------------------------
