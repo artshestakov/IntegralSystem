@@ -19,12 +19,18 @@
     <ClCompile Include="ISTcpServer.cpp">
       <Filter>Tcp</Filter>
     </ClCompile>
+    <ClCompile Include="ISTcpClient.cpp">
+      <Filter>Tcp</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ISCaratApplication.h">
       <Filter>System</Filter>
     </ClInclude>
     <ClInclude Include="ISTcpServer.h">
+      <Filter>Tcp</Filter>
+    </ClInclude>
+    <ClInclude Include="ISTcpClient.h">
       <Filter>Tcp</Filter>
     </ClInclude>
   </ItemGroup>

@@ -104,7 +104,7 @@
       <TreatWarningAsError>true</TreatWarningAsError>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <MinimalRebuild>false</MinimalRebuild>
-      <AdditionalIncludeDirectories>$(PorjectDir)..\..\LibrarySTD\ISCore;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(PorjectDir)..\..\Components\RapidJSON;$(PorjectDir)..\..\LibrarySTD\ISCore;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -181,11 +181,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ISCaratApplication.cpp" />
+    <ClCompile Include="ISTcpClient.cpp" />
     <ClCompile Include="ISTcpServer.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ISCaratApplication.h" />
+    <ClInclude Include="ISTcpClient.h" />
     <ClInclude Include="ISTcpServer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 #include "ISTypedefs.h"
-#include "ISStructs.h"
+#include "ISTcpClient.h"
 //-----------------------------------------------------------------------------
 class ISTcpServer
 {
@@ -17,7 +17,8 @@ public:
 
 private:
 	void WorkerAcceptor();
-	void ReadData(const ISTcpClient &TcpClient);
+	void ReadData(ISTcpClient &TcpClient);
+	bool ParseMessage(const char *Buffer, size_t BufferSize);
 	void CloseSocket(SOCKET Socket);
 	void ClientAdd(const ISTcpClient &TcpClient);
 
