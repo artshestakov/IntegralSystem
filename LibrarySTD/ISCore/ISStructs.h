@@ -19,4 +19,16 @@ struct ISDateTime
 	unsigned short Millisecond;
 };
 //-----------------------------------------------------------------------------
+struct ISTcpClient
+{
+	~ISTcpClient()
+	{
+
+	}
+
+	SOCKET Socket;
+	std::string IPAddress;
+	ISTcpPort Port;
+};
+//-----------------------------------------------------------------------------
 #endif
