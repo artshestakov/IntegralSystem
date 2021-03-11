@@ -3,6 +3,7 @@
 #define _ISTCP_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "iscore_global.h"
+#include "StdAfx.h"
 #include "ISNamespace.h"
 //-----------------------------------------------------------------------------
 class ISCORE_EXPORT ISTcp

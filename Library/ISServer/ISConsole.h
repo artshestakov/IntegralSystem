@@ -3,6 +3,7 @@
 #define _ISCONSOLE_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "isserver_global.h"
+#include "StdAfx.h"
 //-----------------------------------------------------------------------------
 class ISSERVER_EXPORT ISConsole
 {
