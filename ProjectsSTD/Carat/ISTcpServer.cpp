@@ -32,6 +32,8 @@ std::string ISTcpServer::GetErrorString() const
 //-----------------------------------------------------------------------------
 bool ISTcpServer::Start()
 {
+	ISLOGGER_I(__CLASS__, "Starting");
+
 	WSADATA WsaData;
 	if (WSAStartup(MAKEWORD(2, 2), &WsaData) != 0)
 	{
@@ -64,7 +66,16 @@ bool ISTcpServer::Start()
 	}
 
 	std::thread(&ISTcpServer::WorkerAcceptor, this).detach();
+	ISLOGGER_I(__CLASS__, "Started");
 	return true;
+}
+//-----------------------------------------------------------------------------
+void ISTcpServer::Stop()
+{
+	if (WSACleanup() != 0) //Не удалось выгрузить WSA
+	{
+		ISLOGGER_E(__CLASS__, "not clean WSA: " + ISAlgorithm::GetLastErrorS());
+	}
 }
 //-----------------------------------------------------------------------------
 void ISTcpServer::WorkerAcceptor()
@@ -94,6 +105,11 @@ void ISTcpServer::WorkerAcceptor()
 
 			//Создаём новым поток для этого клиента
 			std::thread(&ISTcpServer::ReadData, this, std::ref(TcpClient)).detach();
+		}
+		else if (SocketClient == NPOS && GetLastError() == WSAEINTR) //Завершение работы сервера
+		{
+			ISLOGGER_I(__CLASS__, "Stopped");
+			break;
 		}
 		else //При подключении произошла ошибка
 		{
@@ -171,7 +187,7 @@ void ISTcpServer::ReadData(ISTcpClient *TcpClient)
 			ISTcpMessage *TcpMessage = new ISTcpMessage();
 			if (!ParseMessage(Vector.data(), VectorSize, TcpMessage)) //Не удалось спарсить сообщение
 			{
-				ISLOGGER_E(__CLASS__, "Invalid message. Client will be disconnected. Error: " + ErrorString);
+				ISLOGGER_E(__CLASS__, "Invalid message. Client will be disconnected. Error: " + TcpMessage->GetErrorString());
 			}
 			ISTcpQueue::Instance().AddMessage(TcpMessage);
 		}
@@ -254,8 +270,8 @@ void ISTcpServer::CloseSocket(SOCKET Socket)
 			if (Clients[i]->Socket == Socket) //Нашли нужного клиента
 			{
 				ISTcpClient *TcpClient = Clients[i];
-				delete TcpClient;
 				Clients.erase(Clients.begin() + i);
+				delete TcpClient;
 				IsDeleted = true;
 				break;
 			}

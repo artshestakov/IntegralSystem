@@ -15,6 +15,7 @@ public:
 	std::string GetErrorString() const;
 	
 	bool Start();
+	void Stop();
 
 private:
 	void WorkerAcceptor();
@@ -22,7 +23,7 @@ private:
 	bool ParseMessage(const char *Buffer, size_t BufferSize, ISTcpMessage *TcpMessage);
 	void CloseSocket(SOCKET Socket);
 	void ClientAdd(ISTcpClient *TcpClient);
-
+	
 private:
 	ISTcpServer();
 	~ISTcpServer();

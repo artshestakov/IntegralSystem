@@ -66,12 +66,21 @@ int ISCaratApplication::Start()
 	std::string Argument = Arguments.empty() ? std::string() : Arguments.front();
     if (Argument.empty()) //Режим службы
     {
+		ISLOGGER_I(__CLASS__, "Starting server");
+
+		//Запускаем TCP-сервер
+		if (!ISTcpServer::Instance().Start())
+		{
+			ISLOGGER_E(__CLASS__, "not starting TCPServer: " + ISTcpServer::Instance().GetErrorString());
+			return EXIT_FAILURE;
+		}
+
         //Запускаем поток контроля работы
         std::thread(&ISCaratApplication::ShutdownController, this).detach();
+		ISLOGGER_I(__CLASS__, "Started server");
 
-		ISTcpServer::Instance().Start();
-
-        while (true) //Бесконечный цикл основного потока
+		//Бесконечный цикл основного потока
+        while (true)
         {
             ISSleep(1);
 
@@ -81,9 +90,14 @@ int ISCaratApplication::Start()
             CRITICAL_SECTION_UNLOCK(&CriticalSection);
             if (!is_running)
             {
-                ISLOGGER_I(__CLASS__, "Shutdown server");
+                ISLOGGER_I(__CLASS__, "Stopping server");
 
+				ISTcpServer::Instance().Stop();
+
+				//На всякий случай немного подождём и завершим работу логгера
+				ISSleep(500);
                 ISLogger::Instance().Shutdown();
+				ISLOGGER_I(__CLASS__, "Stopped server");
                 break;
             }
         }
