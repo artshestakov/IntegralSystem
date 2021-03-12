@@ -12,7 +12,7 @@ class ISCORE_EXPORT ISLogger
 {
 public:
 	static ISLogger& Instance();
-	static std::string GetClassName(const std::string &FunctionName);
+	static std::string GetClassName(const char *FunctionName);
 
 	std::string GetErrorString() const;
 	bool Initialize();

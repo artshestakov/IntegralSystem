@@ -112,9 +112,9 @@ void ISTcpServer::ReadData(ISTcpClient *TcpClient)
 		Result = recv(TcpClient->Socket, Buffer, TCP_PACKET_MAX_SIZE, 0);
 		if (Result == 0 || Result == SOCKET_ERROR) //Клиент либо отключился, либо произошло ошибка - в любом случае отключаем его принудительно
 		{
-			CloseSocket(TcpClient->Socket);
 			Result == 0 ? ISLOGGER_I(__CLASS__, "Disconnected " + TcpClient->IPAddress) :
 				ISLOGGER_E(__CLASS__, "Socket error: " + ISAlgorithm::GetLastErrorS());
+			CloseSocket(TcpClient->Socket);
 			break;
 		}
 		else if(Result > 0) //Пришли данные

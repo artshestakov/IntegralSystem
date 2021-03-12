@@ -25,7 +25,7 @@ ISLogger& ISLogger::Instance()
 	return Logger;
 }
 //-----------------------------------------------------------------------------
-std::string ISLogger::GetClassName(const std::string &FunctionName)
+std::string ISLogger::GetClassName(const char *FunctionName)
 {
 	std::string Result(FunctionName);
 	size_t Index = 0;
