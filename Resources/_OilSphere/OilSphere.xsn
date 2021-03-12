@@ -504,7 +504,7 @@
     </Foreigns>
   </Table>
   
-  <Table Name="Bank" UID="{AB254670-CA9A-47A3-A4B6-8924EF462622}" Alias="bank" ShowOnly="true" LocalName="Таблица" LocalListName="Таблица" TitleName="PurposePayment">
+  <Table Name="Bank" UID="{AB254670-CA9A-47A3-A4B6-8924EF462622}" Alias="bank" ShowOnly="true" LocalName="Банки" LocalListName="Банки" TitleName="PurposePayment">
     <Fields>
       <Field UID="{5A6DC010-400F-4982-A367-416C5BBF59AF}" Name="Date" Type="Date" LabelName="Дата" LocalListName="Дата"/>
       <Field UID="{AD4E6EC3-F7A5-432A-B97E-F1D3D749430A}" Name="Admission" Type="Money" LabelName="Поступление" LocalListName="Поступление"/>
