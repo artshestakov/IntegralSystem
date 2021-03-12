@@ -11,14 +11,15 @@ public:
 	~ISTcpClient();
 
 	void AddData(const char *Data, int Size);
+	void GetBuffer(std::vector<char> &Vector);
 
 public:
 	SOCKET Socket;
 	std::string IPAddress;
 	ISTcpPort Port;
 
-	std::vector<char> Buffer;
-	int BufferSize;
+private:
+	std::vector<std::vector<char>> Buffer;
 };
 //-----------------------------------------------------------------------------
 #endif

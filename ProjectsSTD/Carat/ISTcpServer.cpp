@@ -5,6 +5,7 @@
 #include "rapidjson.h"
 #include "document.h"
 #include "error\en.h"
+#include "ISTcpQueue.h"
 //-----------------------------------------------------------------------------
 ISTcpServer::ISTcpServer()
 	: ErrorString(STRING_NO_ERROR),
@@ -84,12 +85,12 @@ void ISTcpServer::WorkerAcceptor()
 			}
 
 			//Адрес получили. Добавляем клиента в память
-			ISTcpClient TcpClient;
-			TcpClient.Socket = SocketClient;
-			TcpClient.IPAddress = Char;
-			TcpClient.Port = SocketInfo.sin_port;
+			ISTcpClient *TcpClient = new ISTcpClient();
+			TcpClient->Socket = SocketClient;
+			TcpClient->IPAddress = Char;
+			TcpClient->Port = SocketInfo.sin_port;
 			ClientAdd(TcpClient);
-			ISLOGGER_I(__CLASS__, "Connected " + TcpClient.IPAddress);
+			ISLOGGER_I(__CLASS__, "Connected " + TcpClient->IPAddress);
 
 			//Создаём новым поток для этого клиента
 			std::thread(&ISTcpServer::ReadData, this, std::ref(TcpClient)).detach();
@@ -101,17 +102,18 @@ void ISTcpServer::WorkerAcceptor()
 	}
 }
 //-----------------------------------------------------------------------------
-void ISTcpServer::ReadData(ISTcpClient &TcpClient)
+void ISTcpServer::ReadData(ISTcpClient *TcpClient)
 {
-	int Result = 0, MessageSize = 0;
+	int Result = 0;
+	size_t MessageSize = 0;
 	char Buffer[TCP_PACKET_MAX_SIZE] = { 0 }; //Буфер для сообщения
 	while (true)
 	{
-		Result = recv(TcpClient.Socket, Buffer, TCP_PACKET_MAX_SIZE, 0);
+		Result = recv(TcpClient->Socket, Buffer, TCP_PACKET_MAX_SIZE, 0);
 		if (Result == 0 || Result == SOCKET_ERROR) //Клиент либо отключился, либо произошло ошибка - в любом случае отключаем его принудительно
 		{
-			CloseSocket(TcpClient.Socket);
-			Result == 0 ? ISLOGGER_I(__CLASS__, "Disconnected " + TcpClient.IPAddress) :
+			CloseSocket(TcpClient->Socket);
+			Result == 0 ? ISLOGGER_I(__CLASS__, "Disconnected " + TcpClient->IPAddress) :
 				ISLOGGER_E(__CLASS__, "Socket error: " + ISAlgorithm::GetLastErrorS());
 			break;
 		}
@@ -138,14 +140,13 @@ void ISTcpServer::ReadData(ISTcpClient &TcpClient)
 				if (!MessageSize) //Размер не найден - сообщение не валидное - отключаем клиента
 				{
 					ISLOGGER_C(__CLASS__, "Not get message size. Client will be disconnected. Invalid message:\n" + std::string(Buffer, Result));
-					CloseSocket(TcpClient.Socket);
+					CloseSocket(TcpClient->Socket);
 					break;
 				}
 			}
 			
 			//Добавляем очередную порцию данных в буфер клиента
-			TcpClient.AddData(Buffer, Result);
-			TcpClient.BufferSize += Result;
+			TcpClient->AddData(Buffer, Result);
 
 			//Если последний символ текущего пакета не является завершающим - идём на следующую итерацию
 			if (Buffer[Result - 1] != TCP_PAKCET_END_CHAR)
@@ -153,59 +154,92 @@ void ISTcpServer::ReadData(ISTcpClient &TcpClient)
 				continue;
 			}
 
+			//Получаем целое сообщение
+			std::vector<char> Vector;
+			TcpClient->GetBuffer(Vector);
+
 			//Размер заявленных данных не соответствует реальному - отключаем клиента
-			if (TcpClient.BufferSize != MessageSize)
+			size_t VectorSize = Vector.size();
+			if (VectorSize != MessageSize)
 			{
-				ISLOGGER_E(__CLASS__, "Invalid size. Client will be disconnected. Declared size " + std::to_string(MessageSize) + ", read size " + std::to_string(TcpClient.BufferSize));
-				CloseSocket(TcpClient.Socket);
+				ISLOGGER_E(__CLASS__, "Invalid size. Client will be disconnected. Declared size " + std::to_string(MessageSize) + ", read size " + std::to_string(VectorSize));
+				CloseSocket(TcpClient->Socket);
 				break;
 			}
 
-			//Не удалось спарсить сообщение
-			const char *Data = TcpClient.Buffer.data();
-			if (!ParseMessage(Data, TcpClient.BufferSize))
+			//Создаём указатель на сообщение и пытаем парсить
+			ISTcpMessage *TcpMessage = new ISTcpMessage();
+			if (!ParseMessage(Vector.data(), VectorSize, TcpMessage)) //Не удалось спарсить сообщение
 			{
 				ISLOGGER_E(__CLASS__, "Invalid message. Client will be disconnected. Error: " + ErrorString);
-				break;
 			}
+			ISTcpQueue::Instance().AddMessage(TcpMessage);
 		}
-		std::memset(Buffer, 0, sizeof(Buffer)); //Очистка буфера
+
+		//Чистим буфер и переменные
+		std::memset(Buffer, 0, sizeof(Buffer));
+		Result = 0;
+		MessageSize = 0;
 	}
 }
 //-----------------------------------------------------------------------------
-bool ISTcpServer::ParseMessage(const char *Buffer, size_t BufferSize)
+bool ISTcpServer::ParseMessage(const char *Buffer, size_t BufferSize, ISTcpMessage *TcpMessage)
 {
-	//Пытаемся парсить сообщение
+	//Заполняем размер сообщения
+	TcpMessage->Size = BufferSize;
+
+	//Засекаем время и парсим сообщение
 	rapidjson::Document JsonDocument;
+	ISTimePoint TimePoint = ISAlgorithm::GetTick();
 	JsonDocument.Parse(Buffer, BufferSize);
+	TcpMessage->MSecParse = ISAlgorithm::GetTickDiff(ISAlgorithm::GetTick(), TimePoint);
+
+	//Проверяем результат парсинга
 	rapidjson::ParseErrorCode ParseError = JsonDocument.GetParseError();
-	if (ParseError != rapidjson::ParseErrorCode::kParseErrorNone) //Ошибка парсинга
+	if (ParseError != rapidjson::ParseErrorCode::kParseErrorNone)
 	{
-		ErrorString = GetParseError_En(ParseError);
+		TcpMessage->SetErrorString(GetParseError_En(ParseError));
 		return false;
 	}
 
 	//Документ не является объектом - ошибка
 	if (!JsonDocument.IsObject())
 	{
-		ErrorString = "message is not JSON-Object";
+		TcpMessage->SetErrorString("message is not JSON-Object");
 		return false;
 	}
 
 	//Проверяем наличие поля Type
 	if (!JsonDocument.HasMember("Type"))
 	{
-		ErrorString = "not exist field \"Type\"";
+		TcpMessage->SetErrorString("not exist field \"Type\"");
 		return false;
 	}
 
-	//Значение Type пустое
-	std::string MessageType = JsonDocument["Type"].GetString();
-	if (MessageType.empty())
+	//Проверим что Type - строка
+	rapidjson::Value &FieldType = JsonDocument["Type"];
+	if (!FieldType.IsString())
 	{
-		ErrorString = "field \"Type\" is empty";
+		TcpMessage->SetErrorString("field \"Type\" is not a string");
 		return false;
 	}
+
+	//Значение Type пустое - ошибка
+	std::string MessageType = FieldType.GetString();
+	if (MessageType.empty())
+	{
+		TcpMessage->SetErrorString("field \"Type\" is empty");
+		return false;
+	}
+	TcpMessage->Type = MessageType;
+
+	rapidjson::Value &FieldParameters = JsonDocument["Parameters"];
+	if (!FieldParameters.IsObject())
+	{
+		TcpMessage->SetErrorString("field \"Parameters\" is not a JSON-objects");
+		return false;
+	}
+	TcpMessage->Parameters = FieldParameters;
 	return true;
 }
 //-----------------------------------------------------------------------------
@@ -217,8 +251,10 @@ void ISTcpServer::CloseSocket(SOCKET Socket)
 		CRITICAL_SECTION_LOCK(&CriticalSection);
 		for (size_t i = 0, c = Clients.size(); i < c; ++i)
 		{
-			if (Clients[i].Socket == Socket) //Нашли нужного клиента
+			if (Clients[i]->Socket == Socket) //Нашли нужного клиента
 			{
+				ISTcpClient *TcpClient = Clients[i];
+				delete TcpClient;
 				Clients.erase(Clients.begin() + i);
 				IsDeleted = true;
 				break;
@@ -237,7 +273,7 @@ void ISTcpServer::CloseSocket(SOCKET Socket)
 	}
 }
 //-----------------------------------------------------------------------------
-void ISTcpServer::ClientAdd(const ISTcpClient &TcpClient)
+void ISTcpServer::ClientAdd(ISTcpClient *TcpClient)
 {
 	CRITICAL_SECTION_LOCK(&CriticalSection);
 	Clients.emplace_back(TcpClient);

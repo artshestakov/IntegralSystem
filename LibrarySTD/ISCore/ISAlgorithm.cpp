@@ -1,30 +1,14 @@
 #include "ISAlgorithm.h"
 #include "ISConstants.h"
 //-----------------------------------------------------------------------------
-std::string ISAlgorithm::GetClassName(const std::string &FunctionName)
+ISTimePoint ISAlgorithm::GetTick()
 {
-	std::string Result(FunctionName);
-	size_t Index = 0;
-
-#ifndef WIN32 //Если работаем сейчас под Linux - исключаем имя типа
-	Index = Result.find('('); //Ищем открывающуюся скобку
-	if (Index != NPOS) //Если скобку нашли - удаляем все что после неё
-	{
-		Result.erase(Index, Result.size() - Index);
-	}
-
-    while ((Index = Result.find(' ')) != NPOS)
-	{
-		Result.erase(0, ++Index);
-	}
-#endif
-
-	Index = Result.find(':');
-	if (Index != NPOS)
-	{
-		Result.erase(Index, Result.size() - Index);
-	}
-	return Result;
+	return std::chrono::steady_clock::now();
+}
+//-----------------------------------------------------------------------------
+unsigned long long ISAlgorithm::GetTickDiff(const ISTimePoint &T1, const ISTimePoint &T2)
+{
+	return std::chrono::duration_cast<std::chrono::milliseconds>(T1 - T2).count();
 }
 //-----------------------------------------------------------------------------
 std::string ISAlgorithm::GetLastErrorS()

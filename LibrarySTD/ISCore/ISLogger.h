@@ -12,6 +12,7 @@ class ISCORE_EXPORT ISLogger
 {
 public:
 	static ISLogger& Instance();
+	static std::string GetClassName(const std::string &FunctionName);
 
 	std::string GetErrorString() const;
 	bool Initialize();
@@ -54,5 +55,11 @@ private:
 #define ISLOGGER_T(MESSAGE) ISLogger::Instance().Log(true, ISNamespace::LogMessageType::Trace, std::string(), MESSAGE) //Трассировка
 #define ISLOGGER_A(MESSAGE) ISLogger::Instance().Log(true, ISNamespace::LogMessageType::Assert, std::string(), MESSAGE) //Логирование сообщения об ассерте
 #define ISLOGGER_Q(MESSAGE) ISLogger::Instance().Log(true, ISNamespace::LogMessageType::QT, std::string(), MESSAGE) //Логирование сообщения об ассерте
+//-----------------------------------------------------------------------------
+#ifdef WIN32
+#define __CLASS__ ISLogger::GetClassName(__FUNCTION__)
+#else
+#define __CLASS__ ISLogger::GetClassName(__PRETTY_FUNCTION__)
+#endif
 //-----------------------------------------------------------------------------
 #endif

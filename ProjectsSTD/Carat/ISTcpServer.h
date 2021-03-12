@@ -5,6 +5,7 @@
 #include "StdAfx.h"
 #include "ISTypedefs.h"
 #include "ISTcpClient.h"
+#include "ISTcpMessage.h"
 //-----------------------------------------------------------------------------
 class ISTcpServer
 {
@@ -17,10 +18,10 @@ public:
 
 private:
 	void WorkerAcceptor();
-	void ReadData(ISTcpClient &TcpClient);
-	bool ParseMessage(const char *Buffer, size_t BufferSize);
+	void ReadData(ISTcpClient *TcpClient);
+	bool ParseMessage(const char *Buffer, size_t BufferSize, ISTcpMessage *TcpMessage);
 	void CloseSocket(SOCKET Socket);
-	void ClientAdd(const ISTcpClient &TcpClient);
+	void ClientAdd(ISTcpClient *TcpClient);
 
 private:
 	ISTcpServer();
@@ -33,7 +34,7 @@ private:
 private:
 	std::string ErrorString;
 	SOCKET SocketServer;
-	std::vector<ISTcpClient> Clients;
+	std::vector<ISTcpClient*> Clients;
 	ISCriticalSection CriticalSection;
 };
 //-----------------------------------------------------------------------------

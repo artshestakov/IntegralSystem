@@ -28,5 +28,6 @@
 #include <cstdlib>
 #include <iosfwd>
 #include <map>
+#include <queue>
 //-----------------------------------------------------------------------------
 #endif

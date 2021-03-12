@@ -2,8 +2,7 @@
 //-----------------------------------------------------------------------------
 ISTcpClient::ISTcpClient()
 	: Socket(0),
-	Port(0),
-	BufferSize(0)
+	Port(0)
 {
 
 }
@@ -15,9 +14,15 @@ ISTcpClient::~ISTcpClient()
 //-----------------------------------------------------------------------------
 void ISTcpClient::AddData(const char *Data, int Size)
 {
-	for (int i = 0; i < Size; ++i)
+	Buffer.emplace_back(std::vector<char>(Data, Data + Size));
+}
+//-----------------------------------------------------------------------------
+void ISTcpClient::GetBuffer(std::vector<char> &Vector)
+{
+	for (size_t i = 0, c = Buffer.size(); i < c; ++i)
 	{
-		Buffer.emplace_back(Data[i]);
+		Vector.insert(Vector.end(), Buffer[i].begin(), Buffer[i].end());
 	}
+	Buffer.clear();
 }
 //-----------------------------------------------------------------------------

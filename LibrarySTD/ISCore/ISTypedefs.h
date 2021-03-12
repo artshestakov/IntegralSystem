@@ -13,5 +13,6 @@ typedef std::vector<std::string> ISVectorString;
 typedef long long ISInt64;
 typedef unsigned long long ISUInt64;
 typedef unsigned short ISTcpPort;
+typedef std::chrono::time_point<std::chrono::steady_clock> ISTimePoint;
 //-----------------------------------------------------------------------------
 #endif

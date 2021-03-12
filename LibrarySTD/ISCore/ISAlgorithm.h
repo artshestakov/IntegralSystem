@@ -12,12 +12,6 @@
 
 //Подавление предупреждения неиспользуемого параметра
 #define IS_UNUSED(x) (void)x
-
-#ifdef WIN32
-#define __CLASS__ ISAlgorithm::GetClassName(__FUNCTION__)
-#else
-#define __CLASS__ ISAlgorithm::GetClassName(__PRETTY_FUNCTION__)
-#endif
 //-----------------------------------------------------------------------------
 #ifdef WIN32
 #define CRITICAL_SECTION_INIT(CRITICAL_SECTION) InitializeCriticalSection(CRITICAL_SECTION)
@@ -37,10 +31,15 @@
 //-----------------------------------------------------------------------------
 namespace ISAlgorithm
 {
-	//! Получить имя класса
-	//! \param FunctionName в качестве этого параметра необходимо передавать макрос
-	//! \return возвращает имя класса в случае успеха, иначе пустую строку
-	ISCORE_EXPORT std::string GetClassName(const std::string &FunctionName);
+	//! Получить временную метку
+	//! \return возвращает временную метку
+	ISCORE_EXPORT ISTimePoint GetTick();
+
+	//! Получить разницу временных меток
+	//! \param TickA временная метка
+	//! \param TickB временная метка
+	//! \return возвращает разницу между двумя временными метками
+	ISCORE_EXPORT unsigned long long GetTickDiff(const ISTimePoint &T1, const ISTimePoint &T2);
 
 	//! Получить описание последней ошибки
 	ISCORE_EXPORT std::string GetLastErrorS();
