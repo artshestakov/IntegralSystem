@@ -2,12 +2,13 @@
 #include "ISAlgorithm.h"
 #include "ISDatabase.h"
 #include "ISLogger.h"
-#include "ISQueryLibPQ.h"
+#include "ISQuery.h"
+//#include "ISQueryLibPQ.h"
 #include "ISTcpClients.h"
 #include "ISConfig.h"
 //-----------------------------------------------------------------------------
-static std::string QI_MONITOR = PREPARE_QUERY("INSERT INTO _monitor(mntr_memory, mntr_clients, mntr_tcpquerytimeavg) "
-											  "VALUES($1, $2, $3)");
+static QString QI_MONITOR = PREPARE_QUERY("INSERT INTO _monitor(mntr_memory, mntr_clients, mntr_tcpquerytimeavg) "
+										  "VALUES(:Memory, :Clients, :TCPQueryTimeAVG)");
 //-----------------------------------------------------------------------------
 ISCaratMonitor::ISCaratMonitor()
 	: ErrorString(NO_ERROR_STRING),
@@ -92,7 +93,7 @@ void ISCaratMonitor::Process()
 	}
 
 	//Создаём указатель на объект запроса тут, чтобы потом использовать его постоянно
-	ISQueryLibPQ *qInsert = new ISQueryLibPQ(ISDatabase::Instance().GetDBLibPQ(CONNECTION_MONITOR), QI_MONITOR);
+	ISQuery *qInsert = new ISQuery(ISDatabase::Instance().GetDB(CONNECTION_MONITOR), QI_MONITOR);
 
 	//Подключение к базе прошло успешно - начинаем работу потока
 	while (true)
@@ -100,12 +101,12 @@ void ISCaratMonitor::Process()
 		ISSleep(Timeout);
 		
 		//Добавляем показатели в базу		
-		qInsert->BindValue(GetMemory());
-        qInsert->BindValue((unsigned int)ISTcpClients::Instance().GetCount());
-		qInsert->BindValue((TCPQueryTime > 0 && TCPQueryCount > 0) ? TCPQueryTime / TCPQueryCount : 0, INT2OID);
-		if (!qInsert->Execute(true, 3)) //Ошибка вставки
+		qInsert->BindValue(":Memory", GetMemory());
+        qInsert->BindValue(":Clients", (unsigned int)ISTcpClients::Instance().GetCount());
+		qInsert->BindValue(":TCPQueryTimeAVG", (TCPQueryTime > 0 && TCPQueryCount > 0) ? TCPQueryTime / TCPQueryCount : 0);
+		if (!qInsert->Execute()) //Ошибка вставки
 		{
-			ISLOGGER_E(__CLASS__, "Not insert monitor indicators: " + QString::fromStdString(qInsert->GetErrorString()));
+			ISLOGGER_E(__CLASS__, "Not insert monitor indicators: " + qInsert->GetErrorString());
 		}
 		
 		//Проверяем, не остановлен ли поток

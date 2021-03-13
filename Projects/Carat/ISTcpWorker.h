@@ -8,7 +8,7 @@
 #include "ISTypedefs.h"
 #include "ISStructs.h"
 #include "ISQuery.h"
-#include "ISQueryLibPQ.h"
+#include "ISQuery.h"
 #include "PMetaClass.h"
 //-----------------------------------------------------------------------------
 class ISTcpWorker : public QObject
@@ -35,13 +35,12 @@ private:
 	void Finish(); //Уведомление о завершении работы воркера
 	bool Execute(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer); //Выполнение запроса
 	QVariant CheckNullField(const QString &FieldName, ISTcpMessage *TcpMessage); //Проверка наличия поля
-	void Protocol(unsigned int UserID, const std::string &ActionTypeUID, const QVariant &TableName = QVariant(), const QVariant &TableLocalName = QVariant(), const QVariant &ObjectID = QVariant(), const QVariant &Information = QVariant()); //Протоколирование действия
+	void Protocol(unsigned int UserID, const char *ActionTypeUID, const QVariant &TableName = QVariant(), const QVariant &TableLocalName = QVariant(), const QVariant &ObjectID = QVariant(), const QVariant &Information = QVariant()); //Протоколирование действия
 	bool UserPasswordExist(const QVariant &UserID, bool &Exist); //Проверка наличия пароля у пользователя
 	bool UserIsSystem(const QVariant &UserID, bool &IsSystem); //Проверка пользователя на системность
 	bool GetObjectName(PMetaTable *MetaTable, unsigned int ObjectID, QString &ObjectName); //Получить наименование объекта
 	PMetaTable* GetMetaTable(const QString &TableName); //Получить указатель на мета-таблицу
 	bool ErrorQuery(const QString &LocalError, ISQuery &SqlQuery); //Вернуть ошибку запроса
-	bool ErrorQuery(const QString &LocalError, ISQueryLibPQ &SqlQuery); //Вернуть ошибку запроса
 
 private slots:
 	void RegisterOilSphere(); //Регистрация методов Нефтесферы
@@ -119,14 +118,13 @@ private:
 private:
 	QString ErrorString; //Текстовое описание ошибки запроса
 	QString DBConnectionName; //Имя подключения к БД
-	std::string DBConnectionNameLibPQ; //Имя подключения к БД для LibPQ
 	QString DBHost;
 	int DBPort;
 	QString DBName;
 	QString DBUser;
 	QString DBPassword;
 	bool IsStarted; //Флаг успешного запуска воркера
-	ISQueryLibPQ *qProtocol;
+	ISQuery *qProtocol;
 	bool IsRunning; //Флаг занятости воркера
 	ISTcpMessage *CurrentMessage; //Указатель на текущее сообщение
 	bool IsStopped; //Флаг остановки работы воркера

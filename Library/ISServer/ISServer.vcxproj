@@ -214,7 +214,6 @@
     <ClInclude Include="ISConsole.h" />
     <ClInclude Include="ISDatabase.h" />
     <ClInclude Include="ISQuery.h" />
-    <ClInclude Include="ISQueryLibPQ.h" />
     <ClInclude Include="isserver_global.h" />
   </ItemGroup>
   <ItemGroup>
@@ -222,7 +221,6 @@
     <ClCompile Include="ISConsole.cpp" />
     <ClCompile Include="ISDatabase.cpp" />
     <ClCompile Include="ISQuery.cpp" />
-    <ClCompile Include="ISQueryLibPQ.cpp" />
   </ItemGroup>
   <ItemGroup>
     <QtRcc Include="..\..\Resources\ISServer.qrc" />
