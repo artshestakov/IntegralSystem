@@ -30,7 +30,7 @@ static QString QS_USER_AUTH = PREPARE_QUERY("SELECT usrs_id, usrs_issystem, usrs
 											"LEFT JOIN _userdevice ON udvc_user = usrs_id "
 											"WHERE usrs_hash = :Hash");
 //-----------------------------------------------------------------------------
-static QString QI_PROTOCOL = PREPARE_QUERY("SELECT protocol_user(:UserID, :TableName, :TableLocalName, :TypeUID, :ObjectID, :Infomration)");
+static QString QI_PROTOCOL = PREPARE_QUERY("SELECT protocol_user(:UserID, :TableName, :TableLocalName, :TypeUID, :ObjectID, :Information)");
 //-----------------------------------------------------------------------------
 static QString QS_GROUP_ACCESS_TABLE = PREPARE_QUERY("SELECT gatb_table, gatt_uid "
 													 "FROM _groupaccesstable "
@@ -4739,7 +4739,7 @@ bool ISTcpWorker::OilSphere_LoadBanks(ISTcpMessage *TcpMessage, ISTcpAnswer *Tcp
 	StringList.removeFirst(); //Удаляем заголовки
 	StringList.removeAll(QString()); //Удаляем пустые строки
 
-	int Loaded = 0;
+	int Loaded = 0, Invalid = 0;
 
 	//Подготовим запросы и обойдём все записи
 	ISQuery qInsert(ISDatabase::Instance().GetDB(DBConnectionName), QI_BANK),
@@ -4748,6 +4748,11 @@ bool ISTcpWorker::OilSphere_LoadBanks(ISTcpMessage *TcpMessage, ISTcpAnswer *Tcp
 	{
 		QStringList Values = String.split('\t');
 		Values.removeFirst(); //Удаляем первое поле "Есть файлы"
+		if (Values.size() != 11) //Запись не валидная
+		{
+			++Invalid;
+			continue;
+		}
 
 		QString StringDate = Values[0],
 			StringAdmission = Values[1],
@@ -4817,6 +4822,7 @@ bool ISTcpWorker::OilSphere_LoadBanks(ISTcpMessage *TcpMessage, ISTcpAnswer *Tcp
 		++Loaded;
 	}
 	TcpAnswer->Parameters["Loaded"] = Loaded;
+	TcpAnswer->Parameters["Invalid"] = Invalid;
 	TcpAnswer->Parameters["Total"] = StringList.size();
 	return true;
 }

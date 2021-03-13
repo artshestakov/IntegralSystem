@@ -36,6 +36,7 @@
   <Local Name="OilSphere.Message.Warning.UnloadCounterpartyAndStockNotIsEmpty" Russian="Нужно выбрать только одно место выгрузки."/>
   <Local Name="OilSphere.Message.Warning.NotFoundCurrentConstant" Russian="Плотность на текущий период отсутствует."/>
   <Local Name="OilSphere.Message.Warning.FillInBased" Russian="Заполнение возможно на основании записи отличной от текущей."/>
-  <Local Name="OilSphere.Message.Information.LoadBanks" Russian="Данные загружены успешно. Загружено %1 из %2 записей."/>
+  <Local Name="OilSphere.Message.Information.LoadBanks" Russian="Данные загружены успешно!&#10;Всего записей: %1&#10;Загружено: %2&#10;Битых записей: %3*"/>
+  <Local Name="OilSphere.Message.Information.LoadBanks.DetailText" Russian="* Битые записи не соответствуют формату."/>
 	
 </LANG>

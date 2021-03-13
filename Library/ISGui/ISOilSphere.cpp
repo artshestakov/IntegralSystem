@@ -1463,7 +1463,11 @@ void ISOilSphere::BankListForm::Load()
 	if (qLoadBanks.Execute())
 	{
 		QVariantMap AnswerMap = qLoadBanks.GetAnswer();
-		ISMessageBox::ShowInformation(this, LANG("OilSphere.Message.Information.LoadBanks").arg(AnswerMap["Loaded"].toInt()).arg(AnswerMap["Total"].toInt()));
+		int Total = AnswerMap["Total"].toInt(),
+			Loaded = AnswerMap["Loaded"].toInt(),
+			Invalid = AnswerMap["Invalid"].toInt();
+		ISMessageBox::ShowInformation(this, LANG("OilSphere.Message.Information.LoadBanks").arg(Total).arg(Loaded).arg(Invalid),
+			LANG("OilSphere.Message.Information.LoadBanks.DetailText"));
 		Update();
 	}
 	else
