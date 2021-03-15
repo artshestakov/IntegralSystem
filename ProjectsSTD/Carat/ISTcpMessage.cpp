@@ -8,7 +8,8 @@ ISTcpMessage::ISTcpMessage()
 	MSecParse(0),
 	Size(0),
 	ChunkCount(0),
-	Valid(true)
+	Valid(true),
+	Socket(INVALID_SOCKET)
 {
 
 }

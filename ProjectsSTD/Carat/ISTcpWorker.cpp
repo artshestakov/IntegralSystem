@@ -1,6 +1,7 @@
 #include "ISTcpWorker.h"
 #include "ISAlgorithm.h"
 #include "ISConstants.h"
+#include "ISTcpQueue.h"
 //-----------------------------------------------------------------------------
 ISTcpWorker::ISTcpWorker()
 	: ErrorString(STRING_NO_ERROR),
@@ -96,7 +97,7 @@ void ISTcpWorker::Process()
 
 		bool Result = false;
 		unsigned long long PerfomanceMsec = 0;
-		ISTcpAnswer *TcpAnswer = new ISTcpAnswer();
+		ISTcpAnswer *TcpAnswer = new ISTcpAnswer(tcp_message->Socket);
 
 		if (tcp_message->IsValid()) //Если сообщение валидное - переходим к выполнению
 		{
@@ -116,6 +117,17 @@ void ISTcpWorker::Process()
 		{
 			//ErrorString = tcp_message->GetErrorString();
 		}
+		delete tcp_message;
+
+		if (!Result)
+		{
+			TcpAnswer->SetError(ErrorString);
+		}
+		ISTcpQueue::Instance().AddAnswer(TcpAnswer);
+
+		CRITICAL_SECTION_LOCK(&CriticalSection);
+		IsBusy = false;
+		CRITICAL_SECTION_UNLOCK(&CriticalSection);
 	}
 
 	//Установим флаг остановки

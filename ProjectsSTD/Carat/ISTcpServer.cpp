@@ -81,6 +81,7 @@ bool ISTcpServer::Start()
 	IsRunning = true;
 	std::thread(&ISTcpServer::WorkerAcceptor, this).detach();
 	std::thread(&ISTcpServer::WorkerBalancer, this).detach();
+	std::thread(&ISTcpServer::WorkerAnswer, this).detach();
 	ISLOGGER_I(__CLASS__, "Started");
 	return true;
 }
@@ -216,6 +217,7 @@ void ISTcpServer::WorkerReader(ISTcpClient *TcpClient)
 
 			//Создаём указатель на сообщение и пытаем парсить
 			ISTcpMessage *TcpMessage = new ISTcpMessage();
+			TcpMessage->Socket = TcpClient->Socket;
 			if (!ParseMessage(Vector.data(), VectorSize, TcpMessage)) //Не удалось спарсить сообщение
 			{
 				ISLOGGER_E(__CLASS__, "Invalid message. Client will be disconnected. Error: " + TcpMessage->GetErrorString());
@@ -235,11 +237,7 @@ void ISTcpServer::WorkerBalancer()
 	ISTcpMessage *TcpMessage = nullptr;
 	while (true)
 	{
-		//Проверяем, запущен ли балансер
-		CRITICAL_SECTION_LOCK(&CriticalSection);
-		bool is_running = IsRunning;
-		CRITICAL_SECTION_UNLOCK(&CriticalSection);
-		if (!is_running)
+		if (!GetIsRunning()) //Проверим, не остановлен ли сервер
 		{
 			break;
 		}
@@ -264,6 +262,36 @@ void ISTcpServer::WorkerBalancer()
 					Index = 0;
 				}
 			}
+		}
+	}
+}
+//-----------------------------------------------------------------------------
+void ISTcpServer::WorkerAnswer()
+{
+	ISTcpAnswer *TcpAnswer = nullptr;
+	while (true)
+	{
+		if (!GetIsRunning()) //Проверим, не остановлен ли сервер
+		{
+			break;
+		}
+
+		ISSleep(1);
+		TcpAnswer = ISTcpQueue::Instance().GetAnswer();
+		if (TcpAnswer) //Если на очереди есть ответ - отправляем его клиенту
+		{
+			std::string JsonString = TcpAnswer->ToJson();
+			size_t Size = JsonString.size();
+			int Result = send(TcpAnswer->GetSocket(), JsonString.c_str(), (int)Size, MSG_DONTROUTE);
+			if (Result == SOCKET_ERROR) //Ошибка отправки
+			{
+				ISLOGGER_E(__CLASS__, "not send answer: " + ISAlgorithm::GetLastErrorS());
+			}
+			else //Данные были отправлены успешно
+			{
+				ISLOGGER_I(__CLASS__, "Sended " + std::to_string(Result) + " of " + std::to_string(Size) + " bytes");
+			}
+			delete TcpAnswer;
 		}
 	}
 }
@@ -373,5 +401,14 @@ void ISTcpServer::ClientAdd(ISTcpClient *TcpClient)
 	CRITICAL_SECTION_LOCK(&CriticalSection);
 	Clients.emplace_back(TcpClient);
 	CRITICAL_SECTION_UNLOCK(&CriticalSection);
+}
+//-----------------------------------------------------------------------------
+bool ISTcpServer::GetIsRunning()
+{
+	//Проверяем, запущен ли сервер
+	CRITICAL_SECTION_LOCK(&CriticalSection);
+	bool is_running = IsRunning;
+	CRITICAL_SECTION_UNLOCK(&CriticalSection);
+	return is_running;
 }
 //-----------------------------------------------------------------------------

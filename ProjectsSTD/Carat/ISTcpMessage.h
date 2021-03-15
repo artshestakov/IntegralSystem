@@ -20,6 +20,7 @@ public:
 	long long MSecParse; //Время парсинга
 	size_t Size;
 	size_t ChunkCount; //Количетсво чанков
+	SOCKET Socket; //Клиентский сокет
 
 private:
 	std::string ErrorString;

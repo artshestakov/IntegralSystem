@@ -5,12 +5,14 @@
 ISTcpQueue::ISTcpQueue()
 	: IsActive(true)
 {
-	CRITICAL_SECTION_INIT(&CriticalSection);
+	CRITICAL_SECTION_INIT(&CriticalSectionM);
+	CRITICAL_SECTION_INIT(&CriticalSectionA);
 }
 //-----------------------------------------------------------------------------
 ISTcpQueue::~ISTcpQueue()
 {
-	CRITICAL_SECTION_DESTROY(&CriticalSection);
+	CRITICAL_SECTION_DESTROY(&CriticalSectionM);
+	CRITICAL_SECTION_DESTROY(&CriticalSectionA);
 }
 //-----------------------------------------------------------------------------
 ISTcpQueue& ISTcpQueue::Instance()
@@ -21,45 +23,75 @@ ISTcpQueue& ISTcpQueue::Instance()
 //-----------------------------------------------------------------------------
 void ISTcpQueue::Shutdown()
 {
-	CRITICAL_SECTION_LOCK(&CriticalSection);
+	CRITICAL_SECTION_LOCK(&CriticalSectionM);
 	IsActive = false;
-	while (!Queue.empty())
+	while (!QueueM.empty())
 	{
-		ISTcpMessage *TcpMessage = Queue.front();
-		Queue.pop();
+		ISTcpMessage *TcpMessage = QueueM.front();
+		QueueM.pop();
 		delete TcpMessage;
 	}
-	CRITICAL_SECTION_UNLOCK(&CriticalSection);
+	CRITICAL_SECTION_UNLOCK(&CriticalSectionM);
 }
 //-----------------------------------------------------------------------------
 void ISTcpQueue::AddMessage(ISTcpMessage *TcpMessage)
 {
-	CRITICAL_SECTION_LOCK(&CriticalSection);
+	CRITICAL_SECTION_LOCK(&CriticalSectionM);
 	if (IsActive) //Если очередь активна - добавляем сообщение в неё
 	{
-		Queue.push(TcpMessage);
+		QueueM.push(TcpMessage);
 	}
 	else //Иначе удаляем
 	{
 		delete TcpMessage;
 	}
-	CRITICAL_SECTION_UNLOCK(&CriticalSection);
+	CRITICAL_SECTION_UNLOCK(&CriticalSectionM);
 }
 //-----------------------------------------------------------------------------
 ISTcpMessage* ISTcpQueue::GetMessage()
 {
 	ISTcpMessage *TcpMessage = nullptr;
 	//Блокируем критическую секцию, забираем очередное сообщение и разблокируем секцию
-	CRITICAL_SECTION_LOCK(&CriticalSection);
+	CRITICAL_SECTION_LOCK(&CriticalSectionM);
 	if (IsActive) //Если очередь активна - возвращем очередное сообщение
 	{
-		if (!Queue.empty())
+		if (!QueueM.empty())
 		{
-			TcpMessage = Queue.front();
-			Queue.pop();
+			TcpMessage = QueueM.front();
+			QueueM.pop();
 		}
 	}
-	CRITICAL_SECTION_UNLOCK(&CriticalSection);
+	CRITICAL_SECTION_UNLOCK(&CriticalSectionM);
 	return TcpMessage;
+}
+//-----------------------------------------------------------------------------
+void ISTcpQueue::AddAnswer(ISTcpAnswer *TcpAnswer)
+{
+	CRITICAL_SECTION_LOCK(&CriticalSectionA);
+	if (IsActive)
+	{
+		QueueA.push(TcpAnswer);
+	}
+	else
+	{
+		delete TcpAnswer;
+	}
+	CRITICAL_SECTION_UNLOCK(&CriticalSectionA);
+}
+//-----------------------------------------------------------------------------
+ISTcpAnswer* ISTcpQueue::GetAnswer()
+{
+	ISTcpAnswer *TcpAnswer = nullptr;
+	CRITICAL_SECTION_LOCK(&CriticalSectionA);
+	if (IsActive)
+	{
+		if (!QueueA.empty())
+		{
+			TcpAnswer = QueueA.front();
+			QueueA.pop();
+		}
+	}
+	CRITICAL_SECTION_UNLOCK(&CriticalSectionA);
+	return TcpAnswer;
 }
 //-----------------------------------------------------------------------------

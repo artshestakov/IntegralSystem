@@ -22,9 +22,12 @@ private:
 	void WorkerAcceptor(); //Поток приёма соединений
 	void WorkerReader(ISTcpClient *TcpClient); //Поток чтения данных
 	void WorkerBalancer(); //Поток распределения сообщений
+	void WorkerAnswer(); //Поток ответов
+
 	bool ParseMessage(const char *Buffer, size_t BufferSize, ISTcpMessage *TcpMessage);
 	void CloseSocket(SOCKET Socket);
 	void ClientAdd(ISTcpClient *TcpClient);
+	bool GetIsRunning(); //Проверка работы сервера
 	
 private:
 	ISTcpServer();
