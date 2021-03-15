@@ -4375,7 +4375,7 @@ bool ISTcpWorker::OrganizationFormINN(ISTcpMessage *TcpMessage, ISTcpAnswer *Tcp
 	}
 	
 	QVariantList ReplyList = ReplyMap["suggestions"].toList();
-	if(ReplyList.isEmpty()) //Ничего не найдено
+	if (ReplyList.isEmpty()) //Ничего не найдено
 	{
 		ErrorString = LANG("Carat.Error.Query.OrganizationFormINN.NotFound");
 		return false;

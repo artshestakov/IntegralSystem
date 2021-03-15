@@ -285,7 +285,7 @@ bool ISCaratApplication::Version()
 //-----------------------------------------------------------------------------
 bool ISCaratApplication::SendShutdown()
 {
-    if(!ISConfig::Instance().Initialize(CONFIG_TEMPLATE_SERVER))
+    if (!ISConfig::Instance().Initialize(CONFIG_TEMPLATE_SERVER))
     {
         ISDEBUG_E("Not created config: " + ISConfig::Instance().GetErrorString());
         return false;
