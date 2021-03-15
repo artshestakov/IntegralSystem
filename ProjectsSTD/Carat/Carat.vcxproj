@@ -181,18 +181,22 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ISCaratApplication.cpp" />
+    <ClCompile Include="ISTcpAnswer.cpp" />
     <ClCompile Include="ISTcpClient.cpp" />
     <ClCompile Include="ISTcpMessage.cpp" />
     <ClCompile Include="ISTcpQueue.cpp" />
     <ClCompile Include="ISTcpServer.cpp" />
+    <ClCompile Include="ISTcpWorker.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ISCaratApplication.h" />
+    <ClInclude Include="ISTcpAnswer.h" />
     <ClInclude Include="ISTcpClient.h" />
     <ClInclude Include="ISTcpMessage.h" />
     <ClInclude Include="ISTcpQueue.h" />
     <ClInclude Include="ISTcpServer.h" />
+    <ClInclude Include="ISTcpWorker.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

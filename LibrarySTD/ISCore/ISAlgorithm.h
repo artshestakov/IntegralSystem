@@ -108,6 +108,26 @@ namespace ISAlgorithm
     //! \param Separator разделитель
     //! \return возвращает вектор разделённых строк
     ISCORE_EXPORT ISVectorString StringSplit(const std::string &String, char Separator);
+
+	//Извлечь элемент из вектора по заданному индексу
+	template <typename T> T VectorTakeAt(std::vector<T> &Vector, size_t Index)
+	{
+		T Value = Vector[Index];
+		Vector.erase(Vector.begin() + Index);
+		return Value;
+	}
+
+	//Извлечь первый элемент из вектора
+	template <typename T> T VectorTakeFront(std::vector<T> &Vector)
+	{
+		return VectorTakeAt(Vector, 0);
+	}
+
+	//Извлечь последний элемент из вектора
+	template <typename T> T VectorTakeBack(std::vector<T> &Vector)
+	{
+		return VectorTakeAt(Vector, Vector.size() - 1);
+	}
 }
 //-----------------------------------------------------------------------------
 #endif

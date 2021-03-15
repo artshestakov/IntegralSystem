@@ -28,6 +28,12 @@
     <ClCompile Include="ISTcpQueue.cpp">
       <Filter>Tcp</Filter>
     </ClCompile>
+    <ClCompile Include="ISTcpWorker.cpp">
+      <Filter>Tcp</Filter>
+    </ClCompile>
+    <ClCompile Include="ISTcpAnswer.cpp">
+      <Filter>Tcp</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ISCaratApplication.h">
@@ -43,6 +49,12 @@
       <Filter>Tcp</Filter>
     </ClInclude>
     <ClInclude Include="ISTcpQueue.h">
+      <Filter>Tcp</Filter>
+    </ClInclude>
+    <ClInclude Include="ISTcpWorker.h">
+      <Filter>Tcp</Filter>
+    </ClInclude>
+    <ClInclude Include="ISTcpAnswer.h">
       <Filter>Tcp</Filter>
     </ClInclude>
   </ItemGroup>

@@ -16,7 +16,7 @@ public:
 	bool IsValid() const;
 
 	std::string Type; //Тип сообщения
-	rapidjson::Value Parameters; //Параметры
+	rapidjson::Document Parameters; //Параметры
 	long long MSecParse; //Время парсинга
 	size_t Size;
 	size_t ChunkCount; //Количетсво чанков

@@ -25,7 +25,7 @@ std::string ISTcpMessage::GetErrorString() const
 //-----------------------------------------------------------------------------
 void ISTcpMessage::SetErrorString(const std::string &error_string)
 {
-	Valid = true;
+	Valid = false;
 	ErrorString = error_string;
 	ISLOGGER_E(__CLASS__, error_string);
 }

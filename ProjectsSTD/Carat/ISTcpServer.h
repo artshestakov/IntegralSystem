@@ -6,6 +6,7 @@
 #include "ISTypedefs.h"
 #include "ISTcpClient.h"
 #include "ISTcpMessage.h"
+#include "ISTcpWorker.h"
 //-----------------------------------------------------------------------------
 class ISTcpServer
 {
@@ -18,8 +19,9 @@ public:
 	void Stop();
 
 private:
-	void WorkerAcceptor();
-	void ReadData(ISTcpClient *TcpClient);
+	void WorkerAcceptor(); //Поток приёма соединений
+	void WorkerReader(ISTcpClient *TcpClient); //Поток чтения данных
+	void WorkerBalancer(); //Поток распределения сообщений
 	bool ParseMessage(const char *Buffer, size_t BufferSize, ISTcpMessage *TcpMessage);
 	void CloseSocket(SOCKET Socket);
 	void ClientAdd(ISTcpClient *TcpClient);
@@ -36,6 +38,9 @@ private:
 	std::string ErrorString;
 	SOCKET SocketServer;
 	std::vector<ISTcpClient*> Clients;
+	bool IsRunning;
+	std::vector<ISTcpWorker*> Workers;
+	unsigned int WorkerCount;
 	ISCriticalSection CriticalSection;
 };
 //-----------------------------------------------------------------------------

@@ -23,4 +23,7 @@ const size_t	TCP_PACKET_MAX_SIZE = 65535; //Максимальный размер одного TCP-пакет
 const char		TCP_PAKCET_END_CHAR = '\0'; //Символ конца пакета
 //CARAT_API--------------------------------------------------------------------
 const char API_UNKNOWN[] = "Unknown"; //Неизвестное сообщение
+const char API_AUTH[] = "Auth"; //Авторизация
+const char API_SLEEP[] = "Sleep"; //Ожидание
+//-----------------------------------------------------------------------------
 #endif
