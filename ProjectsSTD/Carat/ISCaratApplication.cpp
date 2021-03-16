@@ -50,17 +50,17 @@ bool ISCaratApplication::Init()
 	}
 
 	//Инициализируем конфигурационный файл
-	if (!ISConfig::Instance().Initialize(CONFIG_TEMPLATE_SERVER))
+	//if (!ISConfig::Instance().Initialize(CONFIG_TEMPLATE_SERVER))
 	{
-		ISLOGGER_E("ISConfig", "Not initialize: %s", ISConfig::Instance().GetErrorString().c_str());
-		return false;
+		//ISLOGGER_E("ISConfig", "Not initialize: %s", ISConfig::Instance().GetErrorString().c_str());
+		//return false;
 	}
 
 	//Проверяем валидность конфигурационного файла
 	if (!ISConfig::Instance().IsValid())
 	{
-		ISLOGGER_E("ISConfig", "File is not valid: %s", ISConfig::Instance().GetErrorString().c_str());
-		return false;
+		//ISLOGGER_E("ISConfig", "File is not valid: %s", ISConfig::Instance().GetErrorString().c_str());
+		//return false;
 	}
 
 	//Удаляем stop-файл
@@ -81,7 +81,17 @@ int ISCaratApplication::Start()
 	std::string Argument = Arguments.empty() ? std::string() : Arguments.front();
     if (Argument.empty()) //Режим службы
     {
-		ISLOGGER_I(__CLASS__, "Starting server");
+		ISLOGGER_I(__CLASS__, "Starting service...\n"
+			"Version: [version] ([configuration] [platform])\n"
+			"Branch: [branch_name] (hash)\n"
+			"Host name: %s\n"
+			"User name: %s\n"
+			"Main thread: %d\n"
+			"PID: %d",
+			ISAlgorithm::GetHostName().c_str(),
+			ISAlgorithm::GetUserName().c_str(),
+			CURRENT_THREAD_ID(),
+			CURRENT_PID());
 
 		//Запускаем TCP-сервер
 		if (!ISTcpServer::Instance().Start())

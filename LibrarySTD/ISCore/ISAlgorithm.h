@@ -94,6 +94,14 @@ namespace ISAlgorithm
 	//! \return возвращает имя приложения
 	ISCORE_EXPORT std::string GetApplicationName();
 
+	//! Получить имя компьютера
+	//! \return возвращает имя компьютера
+	ISCORE_EXPORT std::string GetHostName();
+
+	//! Получить имя пользователя
+	//! \return возвращает имя текущего пользователя в ОС
+	ISCORE_EXPORT std::string GetUserName();
+
 	//! Парсинг аргументов командной строки
 	//! \param argc количество аргументов
 	//! \param argv массив аргументов

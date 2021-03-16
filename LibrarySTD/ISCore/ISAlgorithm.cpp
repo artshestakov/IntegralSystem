@@ -183,6 +183,38 @@ std::string ISAlgorithm::GetApplicationName()
 	return Path;
 }
 //-----------------------------------------------------------------------------
+std::string ISAlgorithm::GetHostName()
+{
+	std::string HostName;
+#ifdef WIN32
+	char Buffer[32] = { 0 };
+	DWORD Size = sizeof(Buffer);
+	if (GetComputerNameEx(ComputerNameNetBIOS, Buffer, &Size) == TRUE)
+	{
+		HostName = Buffer;
+	}
+#else
+	IS_ASSERT(false, "not support");
+#endif
+	return HostName;
+}
+//-----------------------------------------------------------------------------
+std::string ISAlgorithm::GetUserName()
+{
+	std::string UserName;
+#ifdef WIN32
+	char Buffer[32] = { 0 };
+	DWORD Size = sizeof(Buffer);
+	if (::GetUserName(Buffer, &Size) == TRUE)
+	{
+		UserName = Buffer;
+	}
+#else
+	IS_ASSERT(false, "not support");
+#endif
+	return UserName;
+}
+//-----------------------------------------------------------------------------
 ISVectorString ISAlgorithm::ParseArgs(int argc, char **argv)
 {
 	ISVectorString VectorString;
