@@ -22,6 +22,7 @@
 #include <iosfwd>
 #include <string>
 #include <fstream>
+#include <sstream>
 #include <chrono>
 #include <thread>
 #include <vector>

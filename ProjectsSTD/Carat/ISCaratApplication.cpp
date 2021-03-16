@@ -4,6 +4,7 @@
 #include "ISLogger.h"
 #include "ISDebug.h"
 #include "ISTcpServer.h"
+#include "ISConfig.h"
 //-----------------------------------------------------------------------------
 ISCaratApplication::ISCaratApplication(int argc, char **argv)
 	: ErrorString(STRING_NO_ERROR),
@@ -46,6 +47,20 @@ bool ISCaratApplication::Init()
 			ISLOGGER_E(__CLASS__, "Not created dir (%s): %s", DirTemp.c_str(), ErrorString.c_str());
 			return false;
 		}
+	}
+
+	//Инициализируем конфигурационный файл
+	if (!ISConfig::Instance().Initialize(CONFIG_TEMPLATE_SERVER))
+	{
+		ISLOGGER_E("ISConfig", "Not initialize: %s", ISConfig::Instance().GetErrorString().c_str());
+		return false;
+	}
+
+	//Проверяем валидность конфигурационного файла
+	if (!ISConfig::Instance().IsValid())
+	{
+		ISLOGGER_E("ISConfig", "File is not valid: %s", ISConfig::Instance().GetErrorString().c_str());
+		return false;
 	}
 
 	//Удаляем stop-файл

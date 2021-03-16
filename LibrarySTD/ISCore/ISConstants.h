@@ -15,14 +15,17 @@ const size_t	NPOS = std::string::npos;
 const char		STRING_NO_ERROR[] = "No error.";
 const char		STRING_UNKNOWN_ERROR[] = "Unknown error.";
 const char		CHAR_NULL_TERM = '\0'; //Символ конца строки
+const char		CONFIG_TEMPLATE_SERVER[] = "Server";
+const char		CONFIG_TEMPLATE_CLIENT[] = "Client";
 //LOGGER-----------------------------------------------------------------------
-const size_t	LOG_ARRAY_SIZE = 2000; //Максимальный размер массива
+const size_t	LOG_ARRAY_SIZE = 20000; //Максимальный размер массива
 const size_t	LOG_TIMEOUT = 50; //Таймаут логгера
-const size_t	LOGGER_MESSAGE_SIZE = 4098; //Максимальный размер строки логгера
 const size_t	LOG_HEADER_SIZE = 64; //Макисмальный размер заголовка
-const size_t	LOG_BUFFER_SIZE = /*10240*/32; //Размер буфера для одного сообщения
-//TCP-----------------------------------------------------------------------------
+const size_t	LOG_BUFFER_SIZE = 10240; //Размер буфера для одного сообщения
+//ASTERISK---------------------------------------------------------------------
 const size_t	TCP_PACKET_MAX_SIZE = 65535; //Максимальный размер одного TCP-пакета
+//CARAT------------------------------------------------------------------------
+const unsigned short	CARAT_TCP_PORT = 50000; //Стандартный порт TCP-сервера
 //CARAT_API--------------------------------------------------------------------
 const char API_UNKNOWN[] = "Unknown"; //Неизвестное сообщение
 const char API_AUTH[] = "Auth"; //Авторизация

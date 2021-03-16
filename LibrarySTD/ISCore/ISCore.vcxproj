@@ -169,18 +169,24 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ISAlgorithm.cpp" />
+    <ClCompile Include="ISAssert.cpp" />
+    <ClCompile Include="ISConfig.cpp" />
     <ClCompile Include="ISDebug.cpp" />
     <ClCompile Include="ISLogger.cpp" />
+    <ClCompile Include="ISTrace.cpp" />
     <ClCompile Include="StdAfx.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ISAlgorithm.h" />
+    <ClInclude Include="ISAssert.h" />
+    <ClInclude Include="ISConfig.h" />
     <ClInclude Include="ISConstants.h" />
     <ClInclude Include="iscore_global.h" />
     <ClInclude Include="ISDebug.h" />
     <ClInclude Include="ISLogger.h" />
     <ClInclude Include="ISNamespace.h" />
     <ClInclude Include="ISStructs.h" />
+    <ClInclude Include="ISTrace.h" />
     <ClInclude Include="ISTypedefs.h" />
     <ClInclude Include="StdAfx.h" />
   </ItemGroup>
