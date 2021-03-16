@@ -34,7 +34,7 @@ bool ISCaratApplication::Init()
 
 	if (!ISAlgorithm::ConsoleSetEncoding(65001, ErrorString))
 	{
-		ISLOGGER_W("Console", "Not setting console encoding: " + ErrorString);
+		ISLOGGER_W("Console", "Not setting console encoding: %s", ErrorString.c_str());
 	}
 
 	//Создаём папку Temp
@@ -43,7 +43,7 @@ bool ISCaratApplication::Init()
 	{
 		if (!ISAlgorithm::DirCreate(DirTemp, ErrorString))
 		{
-			ISLOGGER_E(__CLASS__, "Not created dir (" + DirTemp + "): " + ErrorString);
+			ISLOGGER_E(__CLASS__, "Not created dir (%s): %s", DirTemp.c_str(), ErrorString.c_str());
 			return false;
 		}
 	}
@@ -53,7 +53,7 @@ bool ISCaratApplication::Init()
 	{
         if (!ISAlgorithm::FileDelete(FileShutdown, ErrorString))
 		{
-			ISLOGGER_E(__CLASS__, "Not delete shutdown file (" + FileShutdown + "): " + ErrorString);
+			ISLOGGER_E(__CLASS__, "Not delete shutdown file (%s): %s", FileShutdown.c_str(), ErrorString.c_str());
 			return false;
 		}
 	}
@@ -71,7 +71,7 @@ int ISCaratApplication::Start()
 		//Запускаем TCP-сервер
 		if (!ISTcpServer::Instance().Start())
 		{
-			ISLOGGER_E(__CLASS__, "not starting TCPServer: " + ISTcpServer::Instance().GetErrorString());
+			ISLOGGER_E(__CLASS__, "not starting TCPServer: %s", ISTcpServer::Instance().GetErrorString().c_str());
 			return EXIT_FAILURE;
 		}
 

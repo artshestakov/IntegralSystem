@@ -90,7 +90,7 @@ void ISTcpServer::Stop()
 {
 	if (WSACleanup() != 0) //Не удалось выгрузить WSA
 	{
-		ISLOGGER_E(__CLASS__, "not clean WSA: " + ISAlgorithm::GetLastErrorS());
+		ISLOGGER_E(__CLASS__, "not clean WSA: %s", ISAlgorithm::GetLastErrorS().c_str());
 	}
 
 	CRITICAL_SECTION_LOCK(&CriticalSection);
@@ -128,7 +128,7 @@ void ISTcpServer::WorkerAcceptor()
 			TcpClient->IPAddress = Char;
 			TcpClient->Port = SocketInfo.sin_port;
 			ClientAdd(TcpClient);
-			ISLOGGER_I(__CLASS__, "Connected " + TcpClient->IPAddress);
+			ISLOGGER_I(__CLASS__, "Connected %s", TcpClient->IPAddress.c_str());
 
 			//Создаём новым поток для этого клиента
 			std::thread(&ISTcpServer::WorkerReader, this, std::ref(TcpClient)).detach();
@@ -140,7 +140,7 @@ void ISTcpServer::WorkerAcceptor()
 		}
 		else //При подключении произошла ошибка
 		{
-			ISLOGGER_C(__CLASS__, "Connect client with error: " + ISAlgorithm::GetLastErrorS());
+			ISLOGGER_C(__CLASS__, "Connect client with error: %s", ISAlgorithm::GetLastErrorS().c_str());
 		}
 	}
 }
@@ -155,19 +155,19 @@ void ISTcpServer::WorkerReader(ISTcpClient *TcpClient)
 		Result = recv(TcpClient->Socket, Buffer, TCP_PACKET_MAX_SIZE, 0);
 		if (Result == 0) //Клиент отключился
 		{
-			ISLOGGER_I(__CLASS__, "Disconnected " + TcpClient->IPAddress);
+			ISLOGGER_I(__CLASS__, "Disconnected %s", TcpClient->IPAddress.c_str());
 			CloseSocket(TcpClient->Socket);
 			break;
 		}
 		else if (Result == SOCKET_ERROR) //Произошла ошибка
 		{
-			ISLOGGER_E(__CLASS__, "Socket error: " + ISAlgorithm::GetLastErrorS());
+			ISLOGGER_E(__CLASS__, "Socket error: %s", ISAlgorithm::GetLastErrorS().c_str());
 			CloseSocket(TcpClient->Socket);
 			break;
 		}
 		else if(Result > 0) //Пришли данные
 		{
-			ISLOGGER_I(__CLASS__, "Receive data: " + std::to_string(Result));
+			ISLOGGER_I(__CLASS__, "Receive data: %d", Result);
 			if (MessageSize == 0) //Если размер сообщения ещё не получен - получаем его
 			{
 				for (int i = 0; i < Result; ++i)
@@ -187,7 +187,7 @@ void ISTcpServer::WorkerReader(ISTcpClient *TcpClient)
 				}
 				if (!MessageSize) //Размер не найден - сообщение не валидное - отключаем клиента
 				{
-					ISLOGGER_C(__CLASS__, "Not get message size. Client will be disconnected. Invalid message:\n" + std::string(Buffer, Result));
+					ISLOGGER_C(__CLASS__, "Not get message size. Client will be disconnected. Invalid message:\n%s", Buffer);
 					CloseSocket(TcpClient->Socket);
 					break;
 				}
@@ -197,7 +197,7 @@ void ISTcpServer::WorkerReader(ISTcpClient *TcpClient)
 			TcpClient->AddData(Buffer, Result);
 
 			//Если последний символ текущего пакета не является завершающим - идём на следующую итерацию
-			if (Buffer[Result - 1] != TCP_PAKCET_END_CHAR)
+			if (Buffer[Result - 1] != CHAR_NULL_TERM)
 			{
 				continue;
 			}
@@ -210,7 +210,7 @@ void ISTcpServer::WorkerReader(ISTcpClient *TcpClient)
 			size_t VectorSize = Vector.size();
 			if (VectorSize != MessageSize)
 			{
-				ISLOGGER_E(__CLASS__, "Invalid size. Client will be disconnected. Declared size " + std::to_string(MessageSize) + ", read size " + std::to_string(VectorSize));
+				ISLOGGER_E(__CLASS__, "Invalid size. Client will be disconnected. Declared size %d, read size %d", MessageSize, VectorSize);
 				CloseSocket(TcpClient->Socket);
 				break;
 			}
@@ -220,7 +220,7 @@ void ISTcpServer::WorkerReader(ISTcpClient *TcpClient)
 			TcpMessage->Socket = TcpClient->Socket;
 			if (!ParseMessage(Vector.data(), VectorSize, TcpMessage)) //Не удалось спарсить сообщение
 			{
-				ISLOGGER_E(__CLASS__, "Invalid message. Client will be disconnected. Error: " + TcpMessage->GetErrorString());
+				ISLOGGER_E(__CLASS__, "Invalid message. Client will be disconnected. Error: %s", TcpMessage->GetErrorString().c_str());
 			}
 			ISTcpQueue::Instance().AddMessage(TcpMessage);
 		}
@@ -285,11 +285,11 @@ void ISTcpServer::WorkerAnswer()
 			int Result = send(TcpAnswer->GetSocket(), JsonString.c_str(), (int)Size, MSG_DONTROUTE);
 			if (Result == SOCKET_ERROR) //Ошибка отправки
 			{
-				ISLOGGER_E(__CLASS__, "not send answer: " + ISAlgorithm::GetLastErrorS());
+				ISLOGGER_E(__CLASS__, "not send answer: %s", ISAlgorithm::GetLastErrorS().c_str());
 			}
 			else //Данные были отправлены успешно
 			{
-				ISLOGGER_I(__CLASS__, "Sended " + std::to_string(Result) + " of " + std::to_string(Size) + " bytes");
+				ISLOGGER_I(__CLASS__, "Sended %d of %d bytes", Result, Size);
 			}
 			delete TcpAnswer;
 		}
@@ -392,7 +392,7 @@ void ISTcpServer::CloseSocket(SOCKET Socket)
 	}
 	else //Не удалось закрыть сокет
 	{
-		ISLOGGER_E(__CLASS__, "Not close socket: " + ISAlgorithm::GetLastErrorS());
+		ISLOGGER_E(__CLASS__, "Not close socket: %s", ISAlgorithm::GetLastErrorS().c_str());
 	}
 }
 //-----------------------------------------------------------------------------

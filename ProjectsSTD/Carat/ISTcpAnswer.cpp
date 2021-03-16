@@ -52,6 +52,6 @@ std::string ISTcpAnswer::ToJson() const
 
 	rapidjson::Writer<rapidjson::StringBuffer> JsonWriter(JsonBuffer);
 	JsonDocument.Accept(JsonWriter);
-	return std::to_string(JsonBuffer.GetSize()) + '.' + JsonBuffer.GetString() + SYMBOL_NULL_TERM;
+	return std::to_string(JsonBuffer.GetSize()) + '.' + JsonBuffer.GetString() + CHAR_NULL_TERM;
 }
 //-----------------------------------------------------------------------------

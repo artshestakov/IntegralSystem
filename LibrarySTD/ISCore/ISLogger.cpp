@@ -25,7 +25,7 @@ ISLogger& ISLogger::Instance()
 	return Logger;
 }
 //-----------------------------------------------------------------------------
-std::string ISLogger::GetClassName(const char *FunctionName)
+std::string ISLogger::GetClassName(char *FunctionName)
 {
 	std::string Result(FunctionName);
 	size_t Index = 0;
@@ -130,13 +130,13 @@ void ISLogger::Log(bool is_format, ISNamespace::LogMessageType message_type, con
 		if (component.empty()) //Если компонент указан
 		{
 			snprintf(buffer, LOGGER_MESSAGE_SIZE, "%02d.%02d.%02d %02d:%02d:%02d:%03d\t%lu\t[%s] %s",
-				DateTime.Day, DateTime.Month, DateTime.Year % 100, DateTime.Hour, DateTime.Minute, DateTime.Second, DateTime.Millisecond,
+				DateTime.Day, DateTime.Month, DateTime.Year % 100, DateTime.Hour, DateTime.Minute, DateTime.Second, DateTime.Milliseconds,
 				CURRENT_THREAD_ID(), message_type_string.c_str(), message.c_str());
 		}
 		else //Компонент не указан
 		{
 			snprintf(buffer, LOGGER_MESSAGE_SIZE, "%02d.%02d.%02d %02d:%02d:%02d:%03d\t%lu\t[%s][%s] %s",
-				DateTime.Day, DateTime.Month, DateTime.Year % 100, DateTime.Hour, DateTime.Minute, DateTime.Second, DateTime.Millisecond,
+				DateTime.Day, DateTime.Month, DateTime.Year % 100, DateTime.Hour, DateTime.Minute, DateTime.Second, DateTime.Milliseconds,
 				CURRENT_THREAD_ID(), message_type_string.c_str(), component.c_str(), message.c_str());
 		}
 		string_complete = buffer;
@@ -157,6 +157,87 @@ void ISLogger::Log(bool is_format, ISNamespace::LogMessageType message_type, con
 	CRITICAL_SECTION_UNLOCK(&CriticalSection);
 }
 //-----------------------------------------------------------------------------
+void ISLogger::Log2(ISNamespace::LogMessageType MessageType, const std::string &Component, const char *Format, ...)
+{
+	if (!IsRunning)
+	{
+		ISDEBUG_W("Logger is not initialized");
+		return;
+	}
+
+	//Получаем строковый тип сообщения
+	std::string message_type_string;
+	switch (MessageType)
+	{
+	case ISNamespace::LogMessageType::Unknown: break;
+	case ISNamespace::LogMessageType::Debug: message_type_string = "Debug"; break;
+	case ISNamespace::LogMessageType::Info: message_type_string = "Info"; break;
+	case ISNamespace::LogMessageType::Warning: message_type_string = "Warning"; break;
+	case ISNamespace::LogMessageType::Error: message_type_string = "Error"; break;
+	case ISNamespace::LogMessageType::Critical: message_type_string = "Critical"; break;
+	case ISNamespace::LogMessageType::Trace: message_type_string = "Trace"; break;
+	case ISNamespace::LogMessageType::Assert: message_type_string = "Assert"; break;
+	}
+
+	//Получаем текущую дату и время
+	ISDateTime DateTime = ISAlgorithm::GetCurrentDate();
+
+	//Формируем заголовок
+	char BufferHeader[LOG_HEADER_SIZE] = { 0 };
+	std::sprintf(BufferHeader, "%02d.%02d.%02d %02d:%02d:%02d:%03d\t%lu\t[%s]",
+		DateTime.Day, DateTime.Month, DateTime.Year % 100,
+		DateTime.Hour, DateTime.Minute, DateTime.Second, DateTime.Milliseconds,
+		CURRENT_THREAD_ID(), message_type_string.c_str());
+
+	//Если указан компонент - добавим его к заголовку
+	if (!Component.empty())
+	{
+		std::strcat(BufferHeader, ('[' + Component + ']').c_str());
+	}
+
+	//Результирующая строка
+	std::string string_result(BufferHeader);
+	string_result += ' ';
+
+	//Вытаскиваем аргументы
+	va_list Arguments;
+	va_start(Arguments, Format);
+
+	//Форматируем строку
+	char Buffer[LOG_BUFFER_SIZE] = { 0 };
+	int Writed = std::vsnprintf(Buffer, LOG_BUFFER_SIZE, Format, Arguments);
+	if (Writed > LOG_BUFFER_SIZE) //Переполнение буфера - используем резервный
+	{
+		int NewSize = ++Writed + LOG_HEADER_SIZE;
+		std::vector<char> Vector;
+		Vector.resize(NewSize);
+		std::vsnprintf(&Vector[0], NewSize, Format, Arguments);
+		string_result += &Vector[0];
+	}
+	else
+	{
+		string_result += Buffer;
+	}
+	va_end(Arguments);
+	
+	CRITICAL_SECTION_LOCK(&CriticalSection);
+#ifdef DEBUG //В отладочной версии выводим строку в консоль
+	ISDEBUG_L(string_result);
+#ifdef WIN32 //Для Windows выводим строку в консоль Visual Studio
+	OutputDebugString((string_result + '\n').c_str());
+#endif
+#endif
+	if (LastIndex == LOG_ARRAY_SIZE) //Если превысили размер массива
+	{
+		ISDEBUG_E("Log array is full");
+	}
+	else
+	{
+		Array[LastIndex++] = string_result;
+	}
+	CRITICAL_SECTION_UNLOCK(&CriticalSection);
+}
+//-----------------------------------------------------------------------------
 bool ISLogger::CreateLogDirectory(const ISDateTime &DT)
 {
 	//Запоминаем текущий месяц и год
@@ -165,7 +246,8 @@ bool ISLogger::CreateLogDirectory(const ISDateTime &DT)
 
 	//Формируем путь к текущей папке
 	char Buffer[MAX_PATH];
-	sprintf(Buffer, "%s%cLogs%c%d%c%02d%c", ISAlgorithm::GetApplicationDir().c_str(), PATH_SEPARATOR, PATH_SEPARATOR, CurrentYear, PATH_SEPARATOR, CurrentMonth, PATH_SEPARATOR);
+	sprintf(Buffer, "%s%cLogs%c%d%c%02d%c", ISAlgorithm::GetApplicationDir().c_str(), PATH_SEPARATOR,
+		PATH_SEPARATOR, CurrentYear, PATH_SEPARATOR, CurrentMonth, PATH_SEPARATOR);
     PathLogsDir = Buffer;
 	
 	if (!ISAlgorithm::DirExist(PathLogsDir)) //Если папка с текущим месяцем не существует - создаём её
@@ -190,7 +272,7 @@ void ISLogger::Worker()
 {
 	while (IsRunning)
 	{
-		ISSleep(LOGGER_TIMEOUT);
+		ISSleep(LOG_TIMEOUT);
         CRITICAL_SECTION_LOCK(&CriticalSection);
 		if (LastIndex) //Если в очереди есть сообщения
 		{
@@ -212,7 +294,7 @@ void ISLogger::Worker()
 			while (!CreateLogDirectory(CurrentDate))
 			{
 				ISDEBUG_E(ErrorString);
-				ISSleep(LOGGER_TIMEOUT);
+				ISSleep(LOG_TIMEOUT);
 			}
 		}
 
