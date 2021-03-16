@@ -97,67 +97,7 @@ void ISLogger::Shutdown()
     }
 }
 //-----------------------------------------------------------------------------
-void ISLogger::Log(bool is_format, ISNamespace::LogMessageType message_type, const std::string &component, const std::string &message)
-{
-	if (!IsRunning)
-	{
-		ISDEBUG_W("Logger is not initialized");
-		return;
-	}
-
-	std::string string_complete;
-	if (is_format) //Если сообщение нужно форматировать
-	{
-		//Получаем строковый тип сообщения
-		std::string message_type_string;
-		switch (message_type)
-		{
-		case ISNamespace::LogMessageType::Unknown: break;
-		case ISNamespace::LogMessageType::Debug: message_type_string = "Debug"; break;
-		case ISNamespace::LogMessageType::Info: message_type_string = "Info"; break;
-		case ISNamespace::LogMessageType::Warning: message_type_string = "Warning"; break;
-		case ISNamespace::LogMessageType::Error: message_type_string = "Error"; break;
-		case ISNamespace::LogMessageType::Critical: message_type_string = "Critical"; break;
-		case ISNamespace::LogMessageType::Trace: message_type_string = "Trace"; break;
-		case ISNamespace::LogMessageType::Assert: message_type_string = "Assert"; break;
-		}
-
-        //Получаем текущую дату и время
-		ISDateTime DateTime = ISAlgorithm::GetCurrentDate();
-        
-        //Формируем заголовок сообщения
-		char buffer[LOGGER_MESSAGE_SIZE] = { 0 };
-		if (component.empty()) //Если компонент указан
-		{
-			snprintf(buffer, LOGGER_MESSAGE_SIZE, "%02d.%02d.%02d %02d:%02d:%02d:%03d\t%lu\t[%s] %s",
-				DateTime.Day, DateTime.Month, DateTime.Year % 100, DateTime.Hour, DateTime.Minute, DateTime.Second, DateTime.Milliseconds,
-				CURRENT_THREAD_ID(), message_type_string.c_str(), message.c_str());
-		}
-		else //Компонент не указан
-		{
-			snprintf(buffer, LOGGER_MESSAGE_SIZE, "%02d.%02d.%02d %02d:%02d:%02d:%03d\t%lu\t[%s][%s] %s",
-				DateTime.Day, DateTime.Month, DateTime.Year % 100, DateTime.Hour, DateTime.Minute, DateTime.Second, DateTime.Milliseconds,
-				CURRENT_THREAD_ID(), message_type_string.c_str(), component.c_str(), message.c_str());
-		}
-		string_complete = buffer;
-	}
-	else //Форматирование не нужно - записываем сообщение "как есть"
-	{
-		string_complete = message;
-	}
-
-	CRITICAL_SECTION_LOCK(&CriticalSection);
-#ifdef DEBUG //В отладочной версии выводим строку в консоль
-	ISDEBUG_L(string_complete);
-#ifdef WIN32 //Для Windows выводим строку в консоль Visual Studio
-	OutputDebugString((string_complete + '\n').c_str());
-#endif
-#endif
-	Array[LastIndex++] = string_complete;
-	CRITICAL_SECTION_UNLOCK(&CriticalSection);
-}
-//-----------------------------------------------------------------------------
-void ISLogger::Log2(ISNamespace::LogMessageType MessageType, const std::string &Component, const char *Format, ...)
+void ISLogger::Log(ISNamespace::LogMessageType MessageType, const std::string &Component, const char *Format, ...)
 {
 	if (!IsRunning)
 	{

@@ -17,8 +17,7 @@ public:
 	std::string GetErrorString() const;
 	bool Initialize();
 	void Shutdown();
-	void Log(bool is_format, ISNamespace::LogMessageType message_type, const std::string &component, const std::string &message);
-	void Log2(ISNamespace::LogMessageType MessageType, const std::string &Component, const char *Format, ...);
+	void Log(ISNamespace::LogMessageType MessageType, const std::string &Component, const char *Format, ...);
 
 private:
 	bool CreateLogDirectory(const ISDateTime &DT);
@@ -47,14 +46,13 @@ private:
 	ISCriticalSection CriticalSection; //Критическая секция для синхронизации
 };
 //-----------------------------------------------------------------------------
-//#define ISLOGGER(COMPONENT, FORMAT, ...) ISLogger::Instance().Log2(ISNamespace::LogMessageType::Debug, COMPONENT, FORMAT, __VA_ARGS__)
-#define ISLOGGER_D(COMPONENT, FORMAT, ...) ISLogger::Instance().Log2(ISNamespace::LogMessageType::Debug, COMPONENT, FORMAT, __VA_ARGS__) //Логирование отладочного сообщения
-#define ISLOGGER_I(COMPONENT, FORMAT, ...) ISLogger::Instance().Log2(ISNamespace::LogMessageType::Info, COMPONENT, FORMAT, __VA_ARGS__) //Логирование информационного сообщения
-#define ISLOGGER_W(COMPONENT, FORMAT, ...) ISLogger::Instance().Log2(ISNamespace::LogMessageType::Warning, COMPONENT, FORMAT, __VA_ARGS__) //Логировние предупреждающего сообщения
-#define ISLOGGER_E(COMPONENT, FORMAT, ...) ISLogger::Instance().Log2(ISNamespace::LogMessageType::Error, COMPONENT, FORMAT, __VA_ARGS__) //Логирование сообщения об ошибке
-#define ISLOGGER_C(COMPONENT, FORMAT, ...) ISLogger::Instance().Log2(ISNamespace::LogMessageType::Critical, COMPONENT, FORMAT, __VA_ARGS__) //Логирование критической ошибки
-#define ISLOGGER_T(FORMAT, ...) ISLogger::Instance().Log2(ISNamespace::LogMessageType::Trace, std::string(), FORMAT, __VA_ARGS__) //Трассировка
-#define ISLOGGER_A(FORMAT, ...) ISLogger::Instance().Log2(ISNamespace::LogMessageType::Assert, std::string(), FORMAT, __VA_ARGS__) //Логирование сообщения об ассерте
+#define ISLOGGER_D(COMPONENT, FORMAT, ...) ISLogger::Instance().Log(ISNamespace::LogMessageType::Debug, COMPONENT, FORMAT, __VA_ARGS__) //Логирование отладочного сообщения
+#define ISLOGGER_I(COMPONENT, FORMAT, ...) ISLogger::Instance().Log(ISNamespace::LogMessageType::Info, COMPONENT, FORMAT, __VA_ARGS__) //Логирование информационного сообщения
+#define ISLOGGER_W(COMPONENT, FORMAT, ...) ISLogger::Instance().Log(ISNamespace::LogMessageType::Warning, COMPONENT, FORMAT, __VA_ARGS__) //Логировние предупреждающего сообщения
+#define ISLOGGER_E(COMPONENT, FORMAT, ...) ISLogger::Instance().Log(ISNamespace::LogMessageType::Error, COMPONENT, FORMAT, __VA_ARGS__) //Логирование сообщения об ошибке
+#define ISLOGGER_C(COMPONENT, FORMAT, ...) ISLogger::Instance().Log(ISNamespace::LogMessageType::Critical, COMPONENT, FORMAT, __VA_ARGS__) //Логирование критической ошибки
+#define ISLOGGER_T(FORMAT, ...) ISLogger::Instance().Log(ISNamespace::LogMessageType::Trace, std::string(), FORMAT, __VA_ARGS__) //Трассировка
+#define ISLOGGER_A(FORMAT, ...) ISLogger::Instance().Log(ISNamespace::LogMessageType::Assert, std::string(), FORMAT, __VA_ARGS__) //Логирование сообщения об ассерте
 //-----------------------------------------------------------------------------
 #ifdef WIN32
 #define __CLASS__ ISLogger::GetClassName(__FUNCTION__)
