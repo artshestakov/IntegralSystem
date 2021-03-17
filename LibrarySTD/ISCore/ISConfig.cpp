@@ -133,8 +133,9 @@ bool ISConfig::Initialize(ISNamespace::ConfigType Type)
 		ErrorString = "unknown config type";
 		return false;
 	}
+	MapConfig = GetTemplate(Type);
 	PathConfigFile = ISAlgorithm::GetApplicationDir() + PATH_SEPARATOR + FileName + ".ini";
-	return ISAlgorithm::FileExist(PathConfigFile) ? Update() : Create(Type);
+	return ISAlgorithm::FileExist(PathConfigFile) ? Update() : Create();
 }
 //-----------------------------------------------------------------------------
 std::string ISConfig::GetValue(const std::string &ParameterName)
@@ -168,7 +169,7 @@ bool ISConfig::Update()
 	}
 
 	//Читаем файл построчно
-	/*std::string Line, CurrentSection;
+	std::string Line, CurrentSection;
 	while (std::getline(File, Line))
 	{
 		if (Line.empty())
@@ -185,26 +186,17 @@ bool ISConfig::Update()
 			size_t Pos = Line.find('=');
 			if (Pos != NPOS) //Нашли разделитель
 			{
-				MapValues[CurrentSection + '/' + Line.substr(0, Pos)] =
-					Pos == Line.size() - 1 ? std::string() : Line.substr(Pos + 1, Line.size() - Pos - 1);
+				std::string Name = Line.substr(0, Pos),
+					Value = Line.substr(Pos + 1, Line.size() - Pos - 1);
+				MapConfig[CurrentSection][Name].Value = Value;
 			}
 		}
 	}
 	File.close();
-
-	//Ищем устаревшие параметры
-	for (const auto &ParameterItem : MapValues)
-	{
-		if (!ContainsKey(ParameterItem.first))
-		{
-
-		}
-	}*/
-
 	return true;
 }
 //-----------------------------------------------------------------------------
-bool ISConfig::Create(ISNamespace::ConfigType Type)
+bool ISConfig::Create()
 {
 	std::ofstream File;
 	File.open(PathConfigFile, std::ios::out);
@@ -214,17 +206,9 @@ bool ISConfig::Create(ISNamespace::ConfigType Type)
 		return false;
 	}
 
-	//Выбираем шаблон
-	std::map<std::string, std::map<std::string, ISConfigParameter>> Map;
-	switch (Type)
-	{
-	case ISNamespace::ConfigType::Server: Map = TemplateServer; break;
-	case ISNamespace::ConfigType::Client: Map = TemplateClient; break;
-	}
-
 	//Обходим секции
 	bool IsBeginSection = true;
-	for (const auto &SectionItem : Map)
+	for (const auto &SectionItem : MapConfig)
 	{
 		//Если секция первая - перевод строки не вставляем
 		if (!IsBeginSection)
@@ -255,5 +239,15 @@ std::string ISConfig::GetDefaultValue(const std::string &Key) const
 {
 	IS_UNUSED(Key);
 	return std::string();
+}
+//-----------------------------------------------------------------------------
+ISConfig::TemplateMap ISConfig::GetTemplate(ISNamespace::ConfigType Type) const
+{
+	switch (Type)
+	{
+	case ISNamespace::ConfigType::Server: return TemplateServer; break;
+	case ISNamespace::ConfigType::Client: return TemplateClient; break;
+	}
+	return ISConfig::TemplateMap();
 }
 //-----------------------------------------------------------------------------

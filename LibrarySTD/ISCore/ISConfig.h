@@ -9,6 +9,8 @@
 //-----------------------------------------------------------------------------
 class ISCORE_EXPORT ISConfig
 {
+	typedef std::map<std::string, std::map<std::string, ISConfigParameter>> TemplateMap;
+
 public:
 	static ISConfig& Instance();
 
@@ -19,11 +21,12 @@ public:
 
 private:
 	bool Update(); //Обновление файла
-	bool Create(ISNamespace::ConfigType Type); //Генерация файла из шаблона
+	bool Create(); //Генерация файла из шаблона
 
 private:
 	bool ContainsKey(const std::string &Key); //Проверить наличие ключа в шаблоне
 	std::string GetDefaultValue(const std::string &Key) const; //Получить значение по умолчанию для параметра
+	ISConfig::TemplateMap GetTemplate(ISNamespace::ConfigType Type) const;
 
 private:
 	ISConfig();
@@ -34,8 +37,11 @@ private:
 	ISConfig& operator=(ISConfig&&) = delete;
 
 private:
-	std::map<std::string, std::map<std::string, ISConfigParameter>> TemplateServer;
-	std::map<std::string, std::map<std::string, ISConfigParameter>> TemplateClient;
+	ISConfig::TemplateMap TemplateServer;
+	ISConfig::TemplateMap TemplateClient;
+
+private:
+	ISConfig::TemplateMap MapConfig;
 	std::string ErrorString;
 	std::string PathConfigFile;
 	ISCriticalSection CriticalSection;
