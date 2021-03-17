@@ -5,6 +5,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Config">
+      <UniqueIdentifier>{4f240a2c-7ef4-4bea-a554-72a9c5cffd60}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="StdAfx.cpp">
@@ -19,14 +22,14 @@
     <ClCompile Include="ISDebug.cpp">
       <Filter>System</Filter>
     </ClCompile>
-    <ClCompile Include="ISConfig.cpp">
-      <Filter>System</Filter>
-    </ClCompile>
     <ClCompile Include="ISAssert.cpp">
       <Filter>System</Filter>
     </ClCompile>
     <ClCompile Include="ISTrace.cpp">
       <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="ISConfig.cpp">
+      <Filter>Config</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -55,9 +58,6 @@
     <ClInclude Include="ISDebug.h">
       <Filter>System</Filter>
     </ClInclude>
-    <ClInclude Include="ISConfig.h">
-      <Filter>System</Filter>
-    </ClInclude>
     <ClInclude Include="ISAssert.h">
       <Filter>System</Filter>
     </ClInclude>
@@ -65,7 +65,10 @@
       <Filter>System</Filter>
     </ClInclude>
     <ClInclude Include="SimpleIni.h">
-      <Filter>System</Filter>
+      <Filter>Config</Filter>
+    </ClInclude>
+    <ClInclude Include="ISConfig.h">
+      <Filter>Config</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
