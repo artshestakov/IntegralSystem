@@ -110,7 +110,7 @@ bool ISCaratApplication::Initialize()
 	return true;
 }
 //-----------------------------------------------------------------------------
-bool ISCaratApplication::Run(const std::vector<std::string> &Arguments)
+bool ISCaratApplication::Run(const ISVectorString &Arguments)
 {
 	std::string Argument = Arguments.front();
 	if (Argument == "--help" || Argument == "-h")

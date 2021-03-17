@@ -1,53 +1,25 @@
 #include "ISConfig.h"
 #include "ISConstants.h"
 #include "ISAlgorithm.h"
-#include <unordered_map>
+#include "ISAssert.h"
 //-----------------------------------------------------------------------------
 ISConfig::ISConfig()
 	: ErrorString(STRING_NO_ERROR)
 {
 	//Структура шаблонов для конфигурационных файлов
-	MapTemplate = std::map<std::string, std::map<std::string, std::vector<ISConfigParameter>>>
+	VectorTemplate = std::vector<ISConfigParameter>
 	{
-		{
-			CONFIG_TEMPLATE_SERVER,
-			{
-				{
-					"TCPServer", std::vector<ISConfigParameter>
-					{
-						{ "Include",		"Bool",		true,	"false",						0, 0											},
-						{ "Port",			"Int",		true,	std::to_string(CARAT_TCP_PORT),	1, UINT16_MAX									},
-						{ "WorkerCount",	"Int",		true,	"1",							1, (int)std::thread::hardware_concurrency() * 2	}
-					}
-				},
-				{
-					"Other", std::vector<ISConfigParameter>
-					{
-						{ "Configuration",	"String",	true,	std::string(),					0, 0 }
-					}
-				}
-			}
-		},
-		{
-			CONFIG_TEMPLATE_CLIENT,
-			{
+		//Серверный шаблон
+		{ CONFIG_TEMPLATE_SERVER, "TCPServer",	"Include",			CONFIG_TYPE_BOOL,	true,	"false",						0, 0 },
+		{ CONFIG_TEMPLATE_SERVER, "TCPServer",	"Port",				CONFIG_TYPE_INT,	true,	std::to_string(CARAT_TCP_PORT),	1, UINT16_MAX },
+		{ CONFIG_TEMPLATE_SERVER, "TCPServer",	"WorkerCount",		CONFIG_TYPE_INT,	true,	"1",							1, (int)std::thread::hardware_concurrency() * 2 },
+		{ CONFIG_TEMPLATE_SERVER, "Other",		"Configuration",	CONFIG_TYPE_STRING,	true,	std::string(),					0, 0 },
 
-				{
-					"Connection", std::vector<ISConfigParameter>
-					{
-						{ "Host", "String",	true, std::string(),					0, 0 },
-						{ "Port", "Int",	true, std::to_string(CARAT_TCP_PORT),	1, UINT16_MAX },
-					}
-				},
-				{
-					"RememberUser", std::vector<ISConfigParameter>
-					{
-						{ "Include",	"Bool",		true,	"false",		0, 0 },
-						{ "Login",		"String",	true,	std::string(),	0, 0 }
-					}
-				}
-			}
-		}
+		//Клиентский шаблон
+		{ CONFIG_TEMPLATE_CLIENT, "Connection",		"Host",		CONFIG_TYPE_STRING,	true,	std::string(),					0, 0 },
+		{ CONFIG_TEMPLATE_CLIENT, "Connection",		"Port",		CONFIG_TYPE_INT,	true,	std::to_string(CARAT_TCP_PORT),	1, UINT16_MAX },
+		{ CONFIG_TEMPLATE_CLIENT, "RememberUser",	"Include",	CONFIG_TYPE_BOOL,	true,	"false",						0, 0 },
+		{ CONFIG_TEMPLATE_CLIENT, "RememberUser",	"Login",	CONFIG_TYPE_STRING,	true,	std::string(),					0, 0 }
 	};
 	CRITICAL_SECTION_INIT(&CriticalSection);
 }
@@ -70,13 +42,6 @@ std::string ISConfig::GetErrorString() const
 //-----------------------------------------------------------------------------
 bool ISConfig::IsValid()
 {
-	//Проверяем на наличие инициализации
-	/*if (!Settings)
-	{
-		ErrorString = "Not initialized";
-		return false;
-	}
-
 	//Проверяем параметры на заполняемость
 	for (const ISConfigParameter &ConfigParameter : VectorTemplate)
 	{
@@ -84,12 +49,12 @@ bool ISConfig::IsValid()
 		{
 			continue;
 		}
-		QVariant Value = GetValue(ConfigParameter.Name);
+		std::string Value = GetValue(ConfigParameter.SectionName, ConfigParameter.Name);
 
-		//Если параметр обязателен для заполнения, у него нет значения по умолчанию и он пустой - ошибка
-		if (ConfigParameter.NotNull && !ConfigParameter.DefaultValue.isValid() && Value.toString().isEmpty())
+		//Если параметр обязателен для заполнения и он пустой - ошибка
+		if (ConfigParameter.NotNull && Value.empty())
 		{
-			ErrorString = "Parameter \"" + ConfigParameter.Name + "\" is empty";
+			ErrorString = "Parameter \"" + ConfigParameter.SectionName + '/' + ConfigParameter.Name + "\" is empty";
 			return false;
 		}
 	}
@@ -102,35 +67,42 @@ bool ISConfig::IsValid()
 			continue;
 		}
 
-		if (ConfigParameter.Type == QVariant::Int) //Если текущий параметр - число
+		std::string Value = GetValue(ConfigParameter.SectionName, ConfigParameter.Name);
+		if (ConfigParameter.Type == CONFIG_TYPE_INT) //Если текущий параметр - число
 		{
-			bool Ok = true;
-			QVariant Value = GetValue(ConfigParameter.Name);
-			int IntValue = Value.toInt(&Ok);
-			if (!Ok) //Не удалось привести значение к числу
+			if (!ISAlgorithm::StringIsNumber(Value))
 			{
-				ErrorString = QString("Invalid paramter value %1=%2").arg(ConfigParameter.Name).arg(Value.toString());
+				ErrorString = "Invalid paramter value " + ConfigParameter.SectionName + '/' + ConfigParameter.Name + '=' + Value;
 				return false;
 			}
+			int IntValue = std::stoi(Value);
 
 			//Проверяем вхождение значения в диапазон
 			if (IntValue < ConfigParameter.Minimum || IntValue > ConfigParameter.Maximum)
 			{
-				ErrorString = QString("Parameter %1=%2 out of range [%3;%4]").arg(ConfigParameter.Name).arg(IntValue).arg(ConfigParameter.Minimum).arg(ConfigParameter.Maximum);
+				ErrorString = "Parameter " + ConfigParameter.SectionName + '/' + ConfigParameter.Name + '=' + Value + " out of range [" + std::to_string(ConfigParameter.Minimum) + ';' + std::to_string(ConfigParameter.Maximum) + ']';
 				return false;
 			}
 		}
-		else if (ConfigParameter.Type == QVariant::Bool) //Если текущий параметр - логический
+		else if (ConfigParameter.Type == CONFIG_TYPE_BOOL) //Если текущий параметр - логический
 		{
-			//Проверяем корректность значений
-			QString StringValue = GetValue(ConfigParameter.Name).toString();
-			if (!(StringValue.toLower() == "true" || StringValue.toLower() == "false"))
+			ISAlgorithm::StringToLower(Value);
+			if (!(Value == "true" || Value == "false"))
 			{
-				ErrorString = QString("Invalid paramter value %1=%2 (allowed \"true\" or \"false\")").arg(ConfigParameter.Name).arg(StringValue);
+				ErrorString = "Invalid parameter value " + ConfigParameter.SectionName + '/' + ConfigParameter.Name + '=' + Value + " (allowed \"true\" or \"false\")";
 				return false;
 			}
 		}
-	}*/
+		else if (ConfigParameter.Type == CONFIG_TYPE_STRING)
+		{
+			//Для строк ничего не делаем
+		}
+		else //Неизвестный тип
+		{
+			ErrorString = "Invalid parameter type \"" + ConfigParameter.Type + "\" from " + ConfigParameter.SectionName + '/' + ConfigParameter.Name;
+			return false;
+		}
+	}
 	return true;
 }
 //-----------------------------------------------------------------------------
@@ -141,161 +113,103 @@ bool ISConfig::Initialize(const std::string &template_name)
 	return ISAlgorithm::FileExist(PathConfigFile) ? Update() : Create();
 }
 //-----------------------------------------------------------------------------
-std::string ISConfig::GetValue(const std::string &ParameterName)
+std::string ISConfig::GetValueString(const std::string &SectionName, const std::string &ParameterName)
 {
-	IS_UNUSED(ParameterName);
+	return GetValue(SectionName, ParameterName);
+}
+//-----------------------------------------------------------------------------
+int ISConfig::GetValueInt(const std::string &SectionName, const std::string &ParameterName)
+{
+	return std::stoi(GetValue(SectionName, ParameterName));
+}
+//-----------------------------------------------------------------------------
+bool ISConfig::GetValueBool(const std::string &SectionName, const std::string &ParameterName)
+{
+	return GetValue(SectionName, ParameterName) == "true";
+}
+//-----------------------------------------------------------------------------
+std::string ISConfig::GetValue(const std::string &SectionName, const std::string &ParameterName)
+{
 	std::string Value;
-	/*CRITICAL_SECTION_LOCK(&CriticalSection);
-	bool Contains = Settings->contains(ParameterName);
-	if (Contains)
-	{
-		Value = Settings->value(ParameterName);
-		if (Value.toString().isEmpty())
-		{
-			Value = GetDefaultValue(ParameterName);
-		}
-	}
+	CRITICAL_SECTION_LOCK(&CriticalSection);
+	Value = SimpleINI.GetValue(SectionName.c_str(), ParameterName.c_str());
 	CRITICAL_SECTION_UNLOCK(&CriticalSection);
-	IS_ASSERT(Contains, QString("Not found key \"%1\" in file \"%2\"").arg(ParameterName).arg(Settings->fileName()));*/
 	return Value;
 }
 //-----------------------------------------------------------------------------
 bool ISConfig::Update()
 {
-	//Открываем файл
-	std::ifstream File;
-	File.open(PathConfigFile);
-	if (!File.is_open())
+	if (SimpleINI.LoadFile(PathConfigFile.c_str()) != SI_OK)
 	{
-		ErrorString = "not open file \"" + PathConfigFile + "\": " + ISAlgorithm::GetLastErrorS();
 		return false;
 	}
 
-	//Читаем файл построчно
-	std::string Line, CurrentSection;
-	while (std::getline(File, Line))
+	bool NeedSave = false; //Флаг необходимости сохранения
+	ISVectorString TempKeys; //Временный список всех ключей
+	CSimpleIni::TNamesDepend Sections, Keys;
+	SimpleINI.GetAllSections(Sections);
+	for (const CSimpleIni::Entry &Section : Sections) //Обходим все секции
 	{
-		if (Line.empty())
+		SimpleINI.GetAllKeys(Section.pItem, Keys);
+		for (const CSimpleIni::Entry &Key : Keys) //Обходим все ключи
 		{
-			continue;
-		}
-
-		if (Line.front() == '[' && Line.back() == ']') //Попалась секция
-		{
-			CurrentSection = Line.substr(1, Line.size() - 2);
-		}
-		else //Параметр
-		{
-			size_t Pos = Line.find('=');
-			if (Pos != NPOS) //Нашли разделитель
+			if (!ContainsKey(Section.pItem, Key.pItem)) //Если такого ключа в шаблоне нет - удаляем его из текущео файла
 			{
-				MapValues[CurrentSection + '/' + Line.substr(0, Pos)] =
-					Pos == Line.size() - 1 ? std::string() : Line.substr(Pos + 1, Line.size() - Pos - 1);
+				SimpleINI.Delete(Section.pItem, Key.pItem);
+				NeedSave = true;
 			}
+			TempKeys.emplace_back(std::string(Section.pItem) + '/' + std::string(Key.pItem));
 		}
 	}
-	File.close();
 
-	//Ищем устаревшие параметры
-	for (const auto &ParameterItem : MapValues)
+	//Теперь проверяем, не появилось ли новых параметров в шаблоне
+	for (const ISConfigParameter &ConfigParameter : VectorTemplate) //Обходим параметры из шаблона
 	{
-		if (!ContainsKey(ParameterItem.first))
+		//Такого ключа в текущем конфигурационном файле нет - добавляем
+		if (ConfigParameter.TemplateName == TemplateName &&
+			!ISAlgorithm::VectorContains(TempKeys,
+				ConfigParameter.SectionName + '/' + ConfigParameter.Name))
 		{
-
+			SimpleINI.SetValue(ConfigParameter.SectionName.c_str(), ConfigParameter.Name.c_str(), ConfigParameter.DefaultValue.c_str());
+			NeedSave = true;
 		}
 	}
 
+	if (NeedSave) //Требуется сохранение
+	{
+		if (SimpleINI.SaveFile(PathConfigFile.c_str()) != SI_OK)
+		{
+			return false;
+		}
+	}
 	return true;
 }
 //-----------------------------------------------------------------------------
 bool ISConfig::Create()
 {
-	//Ищем нужный шаблон
-	auto It = MapTemplate.find(TemplateName);
-	if (It == MapTemplate.end())
+	for (const ISConfigParameter &ConfigParameter : VectorTemplate)
 	{
-		ErrorString = "not found template \"" + TemplateName + "\"";
-		return false;
-	}
-
-	std::ofstream File;
-	File.open(PathConfigFile, std::ios::out);
-	if (!File.is_open())
-	{
-		ErrorString = "not open file \"" + PathConfigFile + "\": " + ISAlgorithm::GetLastErrorS();
-		return false;
-	}
-
-	//Обходим секции
-	bool IsBeginSection = true;
-	for (const auto &SectionItem : It->second)
-	{
-		//Если секция первая - перевод строки не вставляем
-		if (!IsBeginSection)
+		if (ConfigParameter.TemplateName != TemplateName)
 		{
-			File << std::endl;
+			continue;
 		}
-		IsBeginSection = false;
-
-		//Записываем имя секции и обходим её параметры
-		File << '[' << SectionItem.first << ']' << std::endl;
-		for (const ISConfigParameter &ConfigParameter : SectionItem.second)
-		{
-			File << ConfigParameter.Name << '=' << ConfigParameter.DefaultValue << std::endl;
-			MapValues.emplace(SectionItem.first + '/' + ConfigParameter.Name, ConfigParameter.DefaultValue);
-		}
+		SimpleINI.SetValue(ConfigParameter.SectionName.c_str(), ConfigParameter.Name.c_str(), ConfigParameter.DefaultValue.c_str());
 	}
-	File.close();
-
-	//Обходим все параметры текущего шаблона и добавляем их в конфигурационный файл
-	/*for (const ISConfigParameter &ConfigParameter : VectorTemplate)
-	{
-		if (ConfigParameter.TemplateName == TemplateName)
-		{
-			Settings->setValue(ConfigParameter.Name, ConfigParameter.DefaultValue.toString());
-		}
-	}*/
-	return true;
+	return SimpleINI.SaveFile(PathConfigFile.c_str()) == SI_OK;
 }
 //-----------------------------------------------------------------------------
-bool ISConfig::ContainsKey(const std::string &Key)
+bool ISConfig::ContainsKey(const std::string &SectionName, const std::string &ParameterName)
 {
-	//Если разделитель найден - продолжаем
-	size_t Pos = Key.find('/');
-	if (Pos != NPOS)
+	for (const ISConfigParameter &ConfigParameter : VectorTemplate)
 	{
-		//Вытаскиваем имя секции и параметра
-		std::string SectionName = Key.substr(0, Pos),
-			ParameterName = Key.substr(Pos + 1, Key.size() - Pos - 1);
-
-		//Обходим секции
-		for (const auto &MapItem : MapTemplate.find(TemplateName)->second)
+		if (ConfigParameter.TemplateName == TemplateName &&
+			ConfigParameter.SectionName == SectionName &&
+			ConfigParameter.Name == ParameterName)
 		{
-			if (MapItem.first == SectionName) //Секция нашлась - обходим параметры
-			{
-				for (const ISConfigParameter &ConfigParameter : MapItem.second)
-				{
-					if (ConfigParameter.Name == ParameterName) //Нашли параметр - выходим
-					{
-						return true;
-					}
-				}
-			}
+			return true;
 		}
+
 	}
 	return false;
-}
-//-----------------------------------------------------------------------------
-std::string ISConfig::GetDefaultValue(const std::string &Key) const
-{
-	IS_UNUSED(Key);
-	/*for (const ISConfigParameter &ConfigParameter : VectorTemplate)
-	{
-		if (ConfigParameter.TemplateName == TemplateName && ConfigParameter.Name == Key)
-		{
-			return ConfigParameter.DefaultValue;
-		}
-	}*/
-	return std::string();
 }
 //-----------------------------------------------------------------------------

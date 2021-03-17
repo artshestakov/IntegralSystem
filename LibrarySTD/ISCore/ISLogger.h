@@ -54,10 +54,4 @@ private:
 #define ISLOGGER_T(FORMAT, ...) ISLogger::Instance().Log(ISNamespace::LogMessageType::Trace, std::string(), FORMAT, __VA_ARGS__) //Трассировка
 #define ISLOGGER_A(FORMAT, ...) ISLogger::Instance().Log(ISNamespace::LogMessageType::Assert, std::string(), FORMAT, __VA_ARGS__) //Логирование сообщения об ассерте
 //-----------------------------------------------------------------------------
-#ifdef WIN32
-#define __CLASS__ ISLogger::GetClassName(__FUNCTION__)
-#else
-#define __CLASS__ ISLogger::GetClassName(__PRETTY_FUNCTION__)
-#endif
-//-----------------------------------------------------------------------------
 #endif

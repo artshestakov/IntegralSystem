@@ -1,7 +1,7 @@
 #include "ISAssert.h"
 #include "ISLogger.h"
 //-----------------------------------------------------------------------------
-void ISASSERT::Assert(bool Boolean, const std::string &FalseMessage, const char *FunctionName, int Line, const char *FileName)
+void ISASSERT::Assert(bool Boolean, const std::string &FalseMessage, const std::string &FunctionName, int Line, const char *FileName)
 {
 	if (!Boolean)
 	{
@@ -9,7 +9,7 @@ void ISASSERT::Assert(bool Boolean, const std::string &FalseMessage, const char 
 	}
 }
 //-----------------------------------------------------------------------------
-void ISASSERT::Assert(int Integer, const std::string &FalseMessage, const char *FunctionName, int Line, const char *FileName)
+void ISASSERT::Assert(int Integer, const std::string &FalseMessage, const std::string &FunctionName, int Line, const char *FileName)
 {
 	if (!Integer)
 	{
@@ -17,7 +17,7 @@ void ISASSERT::Assert(int Integer, const std::string &FalseMessage, const char *
 	}
 }
 //-----------------------------------------------------------------------------
-void ISASSERT::Assert(const std::string &String, const std::string &FalseMessage, const char *FunctionName, int Line, const char *FileName)
+void ISASSERT::Assert(const std::string &String, const std::string &FalseMessage, const std::string &FunctionName, int Line, const char *FileName)
 {
 	if (String.empty())
 	{
@@ -25,7 +25,7 @@ void ISASSERT::Assert(const std::string &String, const std::string &FalseMessage
 	}
 }
 //-----------------------------------------------------------------------------
-void ISASSERT::Assert(size_t SizeT, const std::string &FalseMessage, const char *FunctionName, int Line, const char *FileName)
+void ISASSERT::Assert(size_t SizeT, const std::string &FalseMessage, const std::string &FunctionName, int Line, const char *FileName)
 {
 	if (!SizeT)
 	{
@@ -33,7 +33,7 @@ void ISASSERT::Assert(size_t SizeT, const std::string &FalseMessage, const char 
 	}
 }
 //-----------------------------------------------------------------------------
-void ISASSERT::ShowAssert(const std::string &FalseMessage, const char *FunctionName, int Line, const char *FileName)
+void ISASSERT::ShowAssert(const std::string &FalseMessage, const std::string &FunctionName, int Line, const char *FileName)
 {
     ISLOGGER_A(FalseMessage.c_str());
 	std::stringstream StringStream;

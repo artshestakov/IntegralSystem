@@ -1,6 +1,32 @@
 #include "ISAlgorithm.h"
 #include "ISConstants.h"
 //-----------------------------------------------------------------------------
+std::string ISAlgorithm::GetClassName(char *FunctionName)
+{
+	std::string Result(FunctionName);
+	size_t Index = 0;
+
+#ifndef WIN32 //Если работаем сейчас под Linux - исключаем имя типа
+	Index = Result.find('('); //Ищем открывающуюся скобку
+	if (Index != NPOS) //Если скобку нашли - удаляем все что после неё
+	{
+		Result.erase(Index, Result.size() - Index);
+	}
+
+	while ((Index = Result.find(' ')) != NPOS)
+	{
+		Result.erase(0, ++Index);
+	}
+#endif
+
+	Index = Result.find(':');
+	if (Index != NPOS)
+	{
+		Result.erase(Index, Result.size() - Index);
+	}
+	return Result;
+}
+//-----------------------------------------------------------------------------
 ISTimePoint ISAlgorithm::GetTick()
 {
 	return std::chrono::steady_clock::now();
@@ -275,5 +301,33 @@ ISVectorString ISAlgorithm::StringSplit(const std::string &String, char Separato
         }
     }
     return VectorString;
+}
+//-----------------------------------------------------------------------------
+bool ISAlgorithm::StringIsNumber(const std::string &String)
+{
+	for (size_t i = 0, c = String.size(); i < c; ++i)
+	{
+		if (!std::isdigit(String[i]))
+		{
+			return false;
+		}
+	}
+	return true;
+}
+//-----------------------------------------------------------------------------
+void ISAlgorithm::StringToLower(std::string &String)
+{
+	if (!String.empty())
+	{
+		std::transform(String.begin(), String.end(), String.begin(), tolower);
+	}
+}
+//-----------------------------------------------------------------------------
+void ISAlgorithm::StringToUpper(std::string &String)
+{
+	if (!String.empty())
+	{
+		std::transform(String.begin(), String.end(), String.begin(), toupper);
+	}
 }
 //-----------------------------------------------------------------------------

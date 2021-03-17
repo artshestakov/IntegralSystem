@@ -1,6 +1,7 @@
 #include "ISTcpMessage.h"
 #include "ISConstants.h"
 #include "ISLogger.h"
+#include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
 ISTcpMessage::ISTcpMessage()
 	: ErrorString(STRING_NO_ERROR),

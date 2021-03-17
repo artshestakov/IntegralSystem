@@ -12,6 +12,12 @@
 
 //ѕодавление предупреждени€ неиспользуемого параметра
 #define IS_UNUSED(x) (void)x
+
+#ifdef WIN32
+#define __CLASS__ ISAlgorithm::GetClassName(__FUNCTION__)
+#else
+#define __CLASS__ ISAlgorithm::GetClassName(__PRETTY_FUNCTION__)
+#endif
 //-----------------------------------------------------------------------------
 #ifdef WIN32
 #define CRITICAL_SECTION_INIT(CRITICAL_SECTION) InitializeCriticalSection(CRITICAL_SECTION)
@@ -31,6 +37,10 @@
 //-----------------------------------------------------------------------------
 namespace ISAlgorithm
 {
+	//! ѕолучить им€ класса
+	//! \return возвращает им€ класса
+	ISCORE_EXPORT std::string GetClassName(char *FunctionName);
+
 	//! ѕолучить временную метку
 	//! \return возвращает временную метку
 	ISCORE_EXPORT ISTimePoint GetTick();
@@ -117,6 +127,19 @@ namespace ISAlgorithm
     //! \return возвращает вектор разделЄнных строк
     ISCORE_EXPORT ISVectorString StringSplit(const std::string &String, char Separator);
 
+	//! ѕроверка строки на число
+	//! \param String строка
+	//! \return возвращает true если строка €вл€етс€ число, иначе - false
+	ISCORE_EXPORT bool StringIsNumber(const std::string &String);
+
+	//! ѕриведение строки к нижнему регистру
+	//! \param String строка
+	ISCORE_EXPORT void StringToLower(std::string &String);
+
+	//! ѕриведение строки к верхнему регистру
+	//! \param String строка
+	ISCORE_EXPORT void StringToUpper(std::string &String);
+
 	//»звлечь элемент из вектора по заданному индексу
 	template <typename T> T VectorTakeAt(std::vector<T> &Vector, size_t Index)
 	{
@@ -135,6 +158,12 @@ namespace ISAlgorithm
 	template <typename T> T VectorTakeBack(std::vector<T> &Vector)
 	{
 		return VectorTakeAt(Vector, Vector.size() - 1);
+	}
+
+	//ѕроверить наличие значени€ в векторе
+	template <typename T> bool VectorContains(const std::vector<T> &Vector, T Value)
+	{
+		return std::find(Vector.begin(), Vector.end(), Value) != Vector.end();
 	}
 }
 //-----------------------------------------------------------------------------

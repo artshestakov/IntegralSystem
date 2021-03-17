@@ -23,6 +23,8 @@ struct ISDateTime
 //-----------------------------------------------------------------------------
 struct ISConfigParameter
 {
+	std::string TemplateName; //Имя шаблона
+	std::string SectionName; //Имя секции
 	std::string Name; //Имя параметра
 	std::string Type; //Тип параметра
 	bool NotNull; //Параметр обязателен для заполнения
