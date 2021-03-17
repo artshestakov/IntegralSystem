@@ -50,9 +50,8 @@ private:
 	ISCriticalSection CriticalSection;
 };
 //-----------------------------------------------------------------------------
-//#define CONFIG_VALUE(PARAMETER_NAME) ISConfig::Instance().GetValue(PARAMETER_NAME) //Получить значение параметра из конфигурационного файла
-//#define CONFIG_BOOL(PARAMETER_NAME) CONFIG_VALUE(PARAMETER_NAME).toBool() //Получить значение типа bool
-//#define CONFIG_STRING(PARAMETER_NAME) CONFIG_VALUE(PARAMETER_NAME).toString() //Получить значение типа QString
-//#define CONFIG_INT(PARAMETER_NAME) CONFIG_VALUE(PARAMETER_NAME).toInt() //Получить значение типа int
+#define CONFIG_BOOL(SECTION_NAME, PARAMETER_NAME) ISConfig::Instance().GetValueBool(SECTION_NAME, PARAMETER_NAME)
+#define CONFIG_STRING(SECTION_NAME, PARAMETER_NAME) ISConfig::Instance().GetValueString(SECTION_NAME, PARAMETER_NAME)
+#define CONFIG_INT(SECTION_NAME, PARAMETER_NAME) ISConfig::Instance().GetValueInt(SECTION_NAME, PARAMETER_NAME)
 //-----------------------------------------------------------------------------
 #endif
