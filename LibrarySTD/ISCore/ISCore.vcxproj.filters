@@ -64,5 +64,8 @@
     <ClInclude Include="ISTrace.h">
       <Filter>System</Filter>
     </ClInclude>
+    <ClInclude Include="SimpleIni.h">
+      <Filter>System</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

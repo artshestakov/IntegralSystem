@@ -2,40 +2,25 @@
 #include "ISConstants.h"
 #include "ISAlgorithm.h"
 #include "ISAssert.h"
+#include "SimpleIni.h"
 //-----------------------------------------------------------------------------
 ISConfig::ISConfig()
 	: ErrorString(STRING_NO_ERROR)
 {
-	//Шаблоны
-	TemplateServer = std::map<std::string, std::map<std::string, ISConfigParameter>>
+	//Структура шаблонов для конфигурационных файлов
+	VectorTemplate = std::vector<ISConfigParameter>
 	{
-		{ "TCPServer",
-			{
-				{ "Include", { "Bool", true, "false", std::string(), 0, 0 } },
-				{ "Port", { "Int", true, std::to_string(CARAT_TCP_PORT), std::string(), 1, UINT16_MAX } },
-				{ "WorkerCount", { "Int", true, "1", std::string(), 1, (int)std::thread::hardware_concurrency() * 2 } }
-			}
-		},
-		{ "Other",
-			{
-				{ "Configuration", { "String", true, std::string(), std::string(), 0, 0 } }
-			}
-		}
-	};
-	TemplateClient = std::map<std::string, std::map<std::string, ISConfigParameter>>
-	{
-		{ "Connection",
-			{
-				{ "Host", { "String", true, std::string(), std::string(), 0, 0 } },
-				{ "Port", { "Int", true, std::to_string(CARAT_TCP_PORT), std::string(), 1, UINT16_MAX } }
-			}
-		},
-		{ "RememberUser",
-			{
-				{ "Include", { "Bool", true, "false", std::string(), 0, 0 } },
-				{ "Login", { "String", true, std::string(), std::string(), 0, 0 } }
-			}
-		}
+		//Серверный шаблон
+		{ CONFIG_TEMPLATE_SERVER, "TCPServer",	"Include",			"Bool",		true,	"false",						0, 0 },
+		{ CONFIG_TEMPLATE_SERVER, "TCPServer",	"Port",				"Int",		true,	std::to_string(CARAT_TCP_PORT),	1, UINT16_MAX },
+		{ CONFIG_TEMPLATE_SERVER, "TCPServer",	"WorkerCount",		"Int",		true,	"1",							1, (int)std::thread::hardware_concurrency() * 2 },
+		{ CONFIG_TEMPLATE_SERVER, "Other",		"Configuration",	"String",	true,	std::string(),					0, 0 },
+
+		//Клиентский шаблон
+		{ CONFIG_TEMPLATE_CLIENT, "Connection",		"Host",		"String",	true,	std::string(),					0, 0 },
+		{ CONFIG_TEMPLATE_CLIENT, "Connection",		"Port",		"Int",		true,	std::to_string(CARAT_TCP_PORT),	1, UINT16_MAX },
+		{ CONFIG_TEMPLATE_CLIENT, "RememberUser",	"Include",	"Bool",		true,	"false",						0, 0 },
+		{ CONFIG_TEMPLATE_CLIENT, "RememberUser",	"Login",	"String",	true,	std::string(),					0, 0 }
 	};
 	CRITICAL_SECTION_INIT(&CriticalSection);
 }
@@ -122,19 +107,10 @@ bool ISConfig::IsValid()
 	return true;
 }
 //-----------------------------------------------------------------------------
-bool ISConfig::Initialize(ISNamespace::ConfigType Type)
+bool ISConfig::Initialize(const std::string &template_name)
 {
-	std::string FileName;
-	switch (Type)
-	{
-	case ISNamespace::ConfigType::Server: FileName = "Server"; break;
-	case ISNamespace::ConfigType::Client: FileName = "Client"; break;
-	default:
-		ErrorString = "unknown config type";
-		return false;
-	}
-	MapConfig = GetTemplate(Type);
-	PathConfigFile = ISAlgorithm::GetApplicationDir() + PATH_SEPARATOR + FileName + ".ini";
+	TemplateName = template_name;
+	PathConfigFile = ISAlgorithm::GetApplicationDir() + PATH_SEPARATOR + TemplateName + ".ini";
 	return ISAlgorithm::FileExist(PathConfigFile) ? Update() : Create();
 }
 //-----------------------------------------------------------------------------
@@ -165,8 +141,10 @@ bool ISConfig::GetValueBool(const std::string &SectionName, const std::string &P
 //-----------------------------------------------------------------------------
 std::string ISConfig::GetValue(const std::string &SectionName, const std::string &ParameterName)
 {
+	IS_UNUSED(SectionName);
+	IS_UNUSED(ParameterName);
 	std::string Value;
-	bool Contains = false;
+	/*bool Contains = false;
 	CRITICAL_SECTION_LOCK(&CriticalSection);
 	auto ItSection = MapConfig.find(SectionName);
 	if (ItSection != MapConfig.end())
@@ -179,89 +157,85 @@ std::string ISConfig::GetValue(const std::string &SectionName, const std::string
 		}
 	}
 	CRITICAL_SECTION_UNLOCK(&CriticalSection);
-	IS_ASSERT(Contains, "Not found config parameter: " + SectionName + '/' + ParameterName);
+	IS_ASSERT(Contains, "Not found config parameter: " + SectionName + '/' + ParameterName);*/
 	return Value;
 }
 //-----------------------------------------------------------------------------
 bool ISConfig::Update()
 {
-	//Открываем файл
-	std::ifstream File;
-	File.open(PathConfigFile);
-	if (!File.is_open())
+	CSimpleIni SimpleIni;
+	if (SimpleIni.LoadFile(PathConfigFile.c_str()) != SI_OK)
 	{
-		ErrorString = "not open file \"" + PathConfigFile + "\": " + ISAlgorithm::GetLastErrorS();
 		return false;
 	}
 
-	//Читаем файл построчно
-	std::string Line, CurrentSection;
-	while (std::getline(File, Line))
+	bool NeedSave = false; //Флаг необходимости сохранения
+	ISVectorString TempKeys; //Временный список всех ключей
+	CSimpleIni::TNamesDepend Sections, Keys;
+	SimpleIni.GetAllSections(Sections);
+	for (const CSimpleIni::Entry &Section : Sections) //Обходим все секции
 	{
-		if (Line.empty())
+		SimpleIni.GetAllKeys(Section.pItem, Keys);
+		for (const CSimpleIni::Entry &Key : Keys) //Обходим все ключи
 		{
-			continue;
-		}
-
-		if (Line.front() == '[' && Line.back() == ']') //Попалась секция
-		{
-			CurrentSection = Line.substr(1, Line.size() - 2);
-		}
-		else //Параметр
-		{
-			size_t Pos = Line.find('=');
-			if (Pos != NPOS) //Нашли разделитель
+			if (!ContainsKey(Section.pItem, Key.pItem)) //Если такого ключа в шаблоне нет - удаляем его из текущео файла
 			{
-				std::string Name = Line.substr(0, Pos),
-					Value = Line.substr(Pos + 1, Line.size() - Pos - 1);
-				MapConfig[CurrentSection][Name].Value = Value;
+				SimpleIni.Delete(Section.pItem, Key.pItem);
+				NeedSave = true;
 			}
+			TempKeys.emplace_back(std::string(Section.pItem) + '/' + std::string(Key.pItem));
 		}
 	}
-	File.close();
+
+	//Теперь проверяем, не появилось ли новых параметров в шаблоне
+	for (const ISConfigParameter &ConfigParameter : VectorTemplate) //Обходим параметры из шаблона
+	{
+		//Такого ключа в текущем конфигурационном файле нет - добавляем
+		if (ConfigParameter.TemplateName == TemplateName &&
+			!ISAlgorithm::VectorContains(TempKeys,
+				ConfigParameter.SectionName + '/' + ConfigParameter.Name))
+		{
+			SimpleIni.SetValue(ConfigParameter.SectionName.c_str(), ConfigParameter.Name.c_str(), ConfigParameter.DefaultValue.c_str());
+			NeedSave = true;
+		}
+	}
+
+	if (NeedSave) //Требуется сохранение
+	{
+		if (SimpleIni.SaveFile(PathConfigFile.c_str()) != SI_OK)
+		{
+			return false;
+		}
+	}
 	return true;
 }
 //-----------------------------------------------------------------------------
 bool ISConfig::Create()
 {
-	std::ofstream File;
-	File.open(PathConfigFile, std::ios::out);
-	if (!File.is_open())
+	CSimpleIni SimpleIni;
+	for (const ISConfigParameter &ConfigParameter : VectorTemplate)
 	{
-		ErrorString = "not open file \"" + PathConfigFile + "\": " + ISAlgorithm::GetLastErrorS();
-		return false;
-	}
-
-	//Обходим секции
-	bool IsBeginSection = true;
-	for (const auto &SectionItem : MapConfig)
-	{
-		//Если секция первая - перевод строки не вставляем
-		if (!IsBeginSection)
+		if (ConfigParameter.TemplateName != TemplateName)
 		{
-			File << std::endl;
+			continue;
 		}
-		IsBeginSection = false;
-
-		//Записываем имя секции и обходим её параметры
-		File << '[' << SectionItem.first << ']' << std::endl;
-		for (const auto &ParameterItem : SectionItem.second)
-		{
-			File << ParameterItem.first << '=' << ParameterItem.second.DefaultValue << std::endl;
-			TemplateServer[SectionItem.first][ParameterItem.first].Value = ParameterItem.second.DefaultValue;
-		}
+		SimpleIni.SetValue(ConfigParameter.SectionName.c_str(), ConfigParameter.Name.c_str(), ConfigParameter.DefaultValue.c_str());
 	}
-	File.close();
-	return true;
+	return SimpleIni.SaveFile(PathConfigFile.c_str()) == SI_OK;
 }
 //-----------------------------------------------------------------------------
-ISConfig::TemplateMap ISConfig::GetTemplate(ISNamespace::ConfigType Type) const
+bool ISConfig::ContainsKey(const std::string &SectionName, const std::string &ParameterName)
 {
-	switch (Type)
+	for (const ISConfigParameter &ConfigParameter : VectorTemplate)
 	{
-	case ISNamespace::ConfigType::Server: return TemplateServer; break;
-	case ISNamespace::ConfigType::Client: return TemplateClient; break;
+		if (ConfigParameter.TemplateName == TemplateName &&
+			ConfigParameter.SectionName == SectionName &&
+			ConfigParameter.Name == ParameterName)
+		{
+			return true;
+		}
+
 	}
-	return ISConfig::TemplateMap();
+	return false;
 }
 //-----------------------------------------------------------------------------

@@ -10,6 +10,7 @@ typedef CRITICAL_SECTION ISCriticalSection;
 typedef pthread_mutex_t ISCriticalSection;
 #endif
 typedef std::vector<std::string> ISVectorString;
+typedef std::map<std::string, std::string> ISMapString;
 typedef long long ISInt64;
 typedef unsigned long long ISUInt64;
 typedef unsigned short ISTcpPort;

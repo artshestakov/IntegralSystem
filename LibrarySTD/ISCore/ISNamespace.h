@@ -15,13 +15,6 @@ namespace ISNamespace
 		Debug, //Отладка
 		Trace //Трассировка
     };
-
-	enum class ConfigType //Тип конфигурационного файла
-	{
-		Unknown,
-		Server,
-		Client
-	};
 };
 //-----------------------------------------------------------------------------
 #endif

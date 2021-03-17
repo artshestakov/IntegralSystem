@@ -138,6 +138,12 @@ namespace ISAlgorithm
 	{
 		return VectorTakeAt(Vector, Vector.size() - 1);
 	}
+
+	//ѕроверить наличие значени€ в векторе
+	template <typename T> bool VectorContains(const std::vector<T> &Vector, T Value)
+	{
+		return std::find(Vector.begin(), Vector.end(), Value) != Vector.end();
+	}
 }
 //-----------------------------------------------------------------------------
 #endif

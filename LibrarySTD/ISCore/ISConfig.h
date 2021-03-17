@@ -5,18 +5,15 @@
 #include "iscore_global.h"
 #include "ISStructs.h"
 #include "ISTypedefs.h"
-#include "ISNamespace.h"
 //-----------------------------------------------------------------------------
 class ISCORE_EXPORT ISConfig
 {
-	typedef std::map<std::string, std::map<std::string, ISConfigParameter>> TemplateMap;
-
 public:
 	static ISConfig& Instance();
 
 	std::string GetErrorString() const;
 	bool IsValid(); //Проверить корректность заполнения конфигурационного файла
-	bool Initialize(ISNamespace::ConfigType Type);
+	bool Initialize(const std::string &template_name);
 	
 	//Функции получения значений
 	std::string GetValueString(const std::string &SectionName, const std::string &ParameterName);
@@ -29,7 +26,7 @@ private:
 	bool Create(); //Генерация файла из шаблона
 
 private:
-	ISConfig::TemplateMap GetTemplate(ISNamespace::ConfigType Type) const;
+	bool ContainsKey(const std::string &SectionName, const std::string &ParameterName);
 
 private:
 	ISConfig();
@@ -40,11 +37,8 @@ private:
 	ISConfig& operator=(ISConfig&&) = delete;
 
 private:
-	ISConfig::TemplateMap TemplateServer;
-	ISConfig::TemplateMap TemplateClient;
-
-private:
-	ISConfig::TemplateMap MapConfig;
+	std::string TemplateName;
+	std::vector<ISConfigParameter> VectorTemplate;
 	std::string ErrorString;
 	std::string PathConfigFile;
 	ISCriticalSection CriticalSection;
