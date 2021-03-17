@@ -181,7 +181,7 @@ bool ISTcpWorker::Sleep(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	rapidjson::Value &ValueTimeout = TcpMessage->Parameters["Timeout"];
 	if (!ValueTimeout.IsInt()) //Значение не является числовым
 	{
-		ErrorString = "The Value is not a integer";
+		ErrorString = "The value is not a integer";
 		return false;
 	}
 

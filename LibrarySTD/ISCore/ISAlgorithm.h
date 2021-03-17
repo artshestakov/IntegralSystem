@@ -140,6 +140,10 @@ namespace ISAlgorithm
 	//! \param String строка
 	ISCORE_EXPORT void StringToUpper(std::string &String);
 
+	//! Форматирование строки
+	//! \param
+	ISCORE_EXPORT std::string StringF(const char *Format, ...);
+
 	//Извлечь элемент из вектора по заданному индексу
 	template <typename T> T VectorTakeAt(std::vector<T> &Vector, size_t Index)
 	{

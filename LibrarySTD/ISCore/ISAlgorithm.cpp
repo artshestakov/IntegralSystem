@@ -331,3 +331,34 @@ void ISAlgorithm::StringToUpper(std::string &String)
 	}
 }
 //-----------------------------------------------------------------------------
+std::string ISAlgorithm::StringF(const char *Format, ...)
+{
+	//¬ытаскиваем аргументы
+	va_list Arguments;
+	va_start(Arguments, Format);
+	std::vector<char> Buffer(STRING_FORMAT_BUFFER_SIZE);
+
+	while (true)
+	{
+		//ƒелаем копию аргументов заранее
+		va_list Arguments2;
+		va_copy(Arguments2, Arguments);
+
+		//‘орматируем
+		size_t BufferSize = Buffer.size(),
+			BufferSizeNew = 0; //Ёта инициализаци€ нужна дл€ подавлени€ предупреждени€
+		int Writed = std::vsnprintf(Buffer.data(), BufferSize, Format, Arguments2);
+		if ((Writed >= 0) && (Writed < static_cast<int>(BufferSize))) //‘орматирование удалось
+		{
+			va_end(Arguments);
+			va_end(Arguments2);
+			return std::string(Buffer.data());
+		}
+		//ѕри форматировании что-то пошло не так - увеличиваем размер буфера
+		BufferSizeNew = Writed < 0 ? (BufferSizeNew * 2) : (Writed + 1);
+		Buffer.clear();
+		Buffer.resize(BufferSizeNew);
+		va_end(Arguments2);
+	}
+}
+//-----------------------------------------------------------------------------

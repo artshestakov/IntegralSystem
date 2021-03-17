@@ -54,7 +54,7 @@ bool ISConfig::IsValid()
 		//Если параметр обязателен для заполнения и он пустой - ошибка
 		if (ConfigParameter.NotNull && Value.empty())
 		{
-			ErrorString = "Parameter \"" + ConfigParameter.SectionName + '/' + ConfigParameter.Name + "\" is empty";
+			ErrorString = ISAlgorithm::StringF("Parameter \"%s/%s\" is empty", ConfigParameter.SectionName.c_str(), ConfigParameter.Name.c_str());
 			return false;
 		}
 	}
@@ -72,7 +72,7 @@ bool ISConfig::IsValid()
 		{
 			if (!ISAlgorithm::StringIsNumber(Value))
 			{
-				ErrorString = "Invalid paramter value " + ConfigParameter.SectionName + '/' + ConfigParameter.Name + '=' + Value;
+				ErrorString = ISAlgorithm::StringF("Invalid parameter value %s/%s=%s", ConfigParameter.SectionName.c_str(), ConfigParameter.Name.c_str(), Value.c_str());
 				return false;
 			}
 			int IntValue = std::stoi(Value);
@@ -80,7 +80,7 @@ bool ISConfig::IsValid()
 			//Проверяем вхождение значения в диапазон
 			if (IntValue < ConfigParameter.Minimum || IntValue > ConfigParameter.Maximum)
 			{
-				ErrorString = "Parameter " + ConfigParameter.SectionName + '/' + ConfigParameter.Name + '=' + Value + " out of range [" + std::to_string(ConfigParameter.Minimum) + ';' + std::to_string(ConfigParameter.Maximum) + ']';
+				ErrorString = ISAlgorithm::StringF("Parameter %s/%s=%s out of range [%d;%d]", ConfigParameter.SectionName.c_str(), ConfigParameter.Name.c_str(), Value.c_str(), ConfigParameter.Minimum, ConfigParameter.Maximum);
 				return false;
 			}
 		}
@@ -89,7 +89,7 @@ bool ISConfig::IsValid()
 			ISAlgorithm::StringToLower(Value);
 			if (!(Value == "true" || Value == "false"))
 			{
-				ErrorString = "Invalid parameter value " + ConfigParameter.SectionName + '/' + ConfigParameter.Name + '=' + Value + " (allowed \"true\" or \"false\")";
+				ErrorString = ISAlgorithm::StringF("Invalid parameter value %s/%s=%s (allower \"true\" or \"false\"", ConfigParameter.SectionName.c_str(), ConfigParameter.Name.c_str(), Value.c_str());
 				return false;
 			}
 		}
@@ -99,7 +99,7 @@ bool ISConfig::IsValid()
 		}
 		else //Неизвестный тип
 		{
-			ErrorString = "Invalid parameter type \"" + ConfigParameter.Type + "\" from " + ConfigParameter.SectionName + '/' + ConfigParameter.Name;
+			ErrorString = ISAlgorithm::StringF("Invalid parameter type \"%s\" from %s/%s", ConfigParameter.Type.c_str(), ConfigParameter.SectionName.c_str(), ConfigParameter.Name.c_str());
 			return false;
 		}
 	}

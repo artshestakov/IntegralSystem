@@ -50,7 +50,7 @@ bool ISCaratApplication::Init()
 	}
 
 	//Инициализируем конфигурационный файл
-	//if (!ISConfig::Instance().Initialize(CONFIG_TEMPLATE_SERVER))
+	if (!ISConfig::Instance().Initialize(CONFIG_TEMPLATE_SERVER))
 	{
 		//ISLOGGER_E("ISConfig", "Not initialize: %s", ISConfig::Instance().GetErrorString().c_str());
 		//return false;
