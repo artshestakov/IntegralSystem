@@ -12,6 +12,12 @@
 
 //ѕодавление предупреждени€ неиспользуемого параметра
 #define IS_UNUSED(x) (void)x
+
+#ifdef WIN32
+#define __CLASS__ ISAlgorithm::GetClassName(__FUNCTION__)
+#else
+#define __CLASS__ ISAlgorithm::GetClassName(__PRETTY_FUNCTION__)
+#endif
 //-----------------------------------------------------------------------------
 #ifdef WIN32
 #define CRITICAL_SECTION_INIT(CRITICAL_SECTION) InitializeCriticalSection(CRITICAL_SECTION)
@@ -31,6 +37,10 @@
 //-----------------------------------------------------------------------------
 namespace ISAlgorithm
 {
+	//! ѕолучить им€ класса
+	//! \return возвращает им€ класса
+	ISCORE_EXPORT std::string GetClassName(char *FunctionName);
+
 	//! ѕолучить временную метку
 	//! \return возвращает временную метку
 	ISCORE_EXPORT ISTimePoint GetTick();

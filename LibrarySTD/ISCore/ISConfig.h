@@ -17,15 +17,18 @@ public:
 	std::string GetErrorString() const;
 	bool IsValid(); //Проверить корректность заполнения конфигурационного файла
 	bool Initialize(ISNamespace::ConfigType Type);
-	std::string GetValue(const std::string &ParameterName); //Получить значение параметра
+	
+	//Функции получения значений
+	std::string GetValueString(const std::string &SectionName, const std::string &ParameterName);
+	int GetValueInt(const std::string &SectionName, const std::string &ParameterName);
+	bool GetValueBool(const std::string &SectionName, const std::string &ParameterName);
 
 private:
+	std::string GetValue(const std::string &SectionName, const std::string &ParameterName); //Получить значение параметра
 	bool Update(); //Обновление файла
 	bool Create(); //Генерация файла из шаблона
 
 private:
-	bool ContainsKey(const std::string &Key); //Проверить наличие ключа в шаблоне
-	std::string GetDefaultValue(const std::string &Key) const; //Получить значение по умолчанию для параметра
 	ISConfig::TemplateMap GetTemplate(ISNamespace::ConfigType Type) const;
 
 private:

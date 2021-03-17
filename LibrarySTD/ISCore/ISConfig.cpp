@@ -1,7 +1,7 @@
 #include "ISConfig.h"
 #include "ISConstants.h"
 #include "ISAlgorithm.h"
-#include <unordered_map>
+#include "ISAssert.h"
 //-----------------------------------------------------------------------------
 ISConfig::ISConfig()
 	: ErrorString(STRING_NO_ERROR)
@@ -138,22 +138,48 @@ bool ISConfig::Initialize(ISNamespace::ConfigType Type)
 	return ISAlgorithm::FileExist(PathConfigFile) ? Update() : Create();
 }
 //-----------------------------------------------------------------------------
-std::string ISConfig::GetValue(const std::string &ParameterName)
+std::string ISConfig::GetValueString(const std::string &SectionName, const std::string &ParameterName)
 {
-	IS_UNUSED(ParameterName);
-	std::string Value;
-	/*CRITICAL_SECTION_LOCK(&CriticalSection);
-	bool Contains = Settings->contains(ParameterName);
-	if (Contains)
+	return GetValue(SectionName, ParameterName);
+}
+//-----------------------------------------------------------------------------
+int ISConfig::GetValueInt(const std::string &SectionName, const std::string &ParameterName)
+{
+	std::string Value = GetValue(SectionName, ParameterName);
+	int IntValue = 0;
+	try
 	{
-		Value = Settings->value(ParameterName);
-		if (Value.toString().isEmpty())
+		IntValue = std::stoi(Value);
+	}
+	catch (const std::exception &e)
+	{
+		IS_ASSERT(false, e.what());
+	}
+	return IntValue;
+}
+//-----------------------------------------------------------------------------
+bool ISConfig::GetValueBool(const std::string &SectionName, const std::string &ParameterName)
+{
+	return GetValue(SectionName, ParameterName) == "true";
+}
+//-----------------------------------------------------------------------------
+std::string ISConfig::GetValue(const std::string &SectionName, const std::string &ParameterName)
+{
+	std::string Value;
+	bool Contains = false;
+	CRITICAL_SECTION_LOCK(&CriticalSection);
+	auto ItSection = MapConfig.find(SectionName);
+	if (ItSection != MapConfig.end())
+	{
+		auto ItParameter = ItSection->second.find(ParameterName);
+		if (ItParameter != ItSection->second.end())
 		{
-			Value = GetDefaultValue(ParameterName);
+			Value = ItParameter->second.Value;
+			Contains = true;
 		}
 	}
 	CRITICAL_SECTION_UNLOCK(&CriticalSection);
-	IS_ASSERT(Contains, QString("Not found key \"%1\" in file \"%2\"").arg(ParameterName).arg(Settings->fileName()));*/
+	IS_ASSERT(Contains, "Not found config parameter: " + SectionName + '/' + ParameterName);
 	return Value;
 }
 //-----------------------------------------------------------------------------
@@ -227,18 +253,6 @@ bool ISConfig::Create()
 	}
 	File.close();
 	return true;
-}
-//-----------------------------------------------------------------------------
-bool ISConfig::ContainsKey(const std::string &Key)
-{
-	IS_UNUSED(Key);
-	return true;
-}
-//-----------------------------------------------------------------------------
-std::string ISConfig::GetDefaultValue(const std::string &Key) const
-{
-	IS_UNUSED(Key);
-	return std::string();
 }
 //-----------------------------------------------------------------------------
 ISConfig::TemplateMap ISConfig::GetTemplate(ISNamespace::ConfigType Type) const

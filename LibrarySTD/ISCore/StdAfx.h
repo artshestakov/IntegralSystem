@@ -31,5 +31,6 @@
 #include <queue>
 #include <cstdlib>
 #include <cstdarg>
+#include <exception>
 //-----------------------------------------------------------------------------
 #endif

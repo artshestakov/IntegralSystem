@@ -25,32 +25,6 @@ ISLogger& ISLogger::Instance()
 	return Logger;
 }
 //-----------------------------------------------------------------------------
-std::string ISLogger::GetClassName(char *FunctionName)
-{
-	std::string Result(FunctionName);
-	size_t Index = 0;
-
-#ifndef WIN32 //Если работаем сейчас под Linux - исключаем имя типа
-	Index = Result.find('('); //Ищем открывающуюся скобку
-	if (Index != NPOS) //Если скобку нашли - удаляем все что после неё
-	{
-		Result.erase(Index, Result.size() - Index);
-	}
-
-	while ((Index = Result.find(' ')) != NPOS)
-	{
-		Result.erase(0, ++Index);
-	}
-#endif
-
-	Index = Result.find(':');
-	if (Index != NPOS)
-	{
-		Result.erase(Index, Result.size() - Index);
-	}
-	return Result;
-}
-//-----------------------------------------------------------------------------
 std::string ISLogger::GetErrorString() const
 {
 	return ErrorString;
