@@ -15,8 +15,12 @@ const size_t	NPOS = std::string::npos;
 const char		STRING_NO_ERROR[] = "No error.";
 const char		STRING_UNKNOWN_ERROR[] = "Unknown error.";
 const char		CHAR_NULL_TERM = '\0'; //Символ конца строки
-const char		CONFIG_TEMPLATE_SERVER[] = "Server";
-const char		CONFIG_TEMPLATE_CLIENT[] = "Client";
+//CONFIG-----------------------------------------------------------------------
+const char	CONFIG_TEMPLATE_SERVER[] = "Server";
+const char	CONFIG_TEMPLATE_CLIENT[] = "Client";
+const char	CONFIG_TYPE_INT[] = "Int";
+const char	CONFIG_TYPE_BOOL[] = "Bool";
+const char	CONFIG_TYPE_STRING[] = "String";
 //LOGGER-----------------------------------------------------------------------
 const size_t	LOG_ARRAY_SIZE = 20000; //Максимальный размер массива
 const size_t	LOG_TIMEOUT = 50; //Таймаут логгера

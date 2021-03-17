@@ -271,3 +271,31 @@ ISVectorString ISAlgorithm::StringSplit(const std::string &String, char Separato
     return VectorString;
 }
 //-----------------------------------------------------------------------------
+bool ISAlgorithm::StringIsNumber(const std::string &String)
+{
+	for (size_t i = 0, c = String.size(); i < c; ++i)
+	{
+		if (!std::isdigit(String[i]))
+		{
+			return false;
+		}
+	}
+	return true;
+}
+//-----------------------------------------------------------------------------
+void ISAlgorithm::StringToLower(std::string &String)
+{
+	if (!String.empty())
+	{
+		std::transform(String.begin(), String.end(), String.begin(), tolower);
+	}
+}
+//-----------------------------------------------------------------------------
+void ISAlgorithm::StringToUpper(std::string &String)
+{
+	if (!String.empty())
+	{
+		std::transform(String.begin(), String.end(), String.begin(), toupper);
+	}
+}
+//-----------------------------------------------------------------------------

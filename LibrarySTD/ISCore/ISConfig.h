@@ -5,6 +5,7 @@
 #include "iscore_global.h"
 #include "ISStructs.h"
 #include "ISTypedefs.h"
+#include "SimpleIni.h"
 //-----------------------------------------------------------------------------
 class ISCORE_EXPORT ISConfig
 {
@@ -41,11 +42,8 @@ private:
 	std::vector<ISConfigParameter> VectorTemplate;
 	std::string ErrorString;
 	std::string PathConfigFile;
+	CSimpleIni SimpleINI;
 	ISCriticalSection CriticalSection;
 };
-//-----------------------------------------------------------------------------
-#define CONFIG_BOOL(SECTION_NAME, PARAMETER_NAME) ISConfig::Instance().GetValueBool(SECTION_NAME, PARAMETER_NAME)
-#define CONFIG_STRING(SECTION_NAME, PARAMETER_NAME) ISConfig::Instance().GetValueString(SECTION_NAME, PARAMETER_NAME)
-#define CONFIG_INT(SECTION_NAME, PARAMETER_NAME) ISConfig::Instance().GetValueInt(SECTION_NAME, PARAMETER_NAME)
 //-----------------------------------------------------------------------------
 #endif

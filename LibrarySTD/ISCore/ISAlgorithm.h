@@ -119,6 +119,19 @@ namespace ISAlgorithm
     //! \return возвращает вектор разделЄнных строк
     ISCORE_EXPORT ISVectorString StringSplit(const std::string &String, char Separator);
 
+	//! ѕроверка строки на число
+	//! \param String строка
+	//! \return возвращает true если строка €вл€етс€ число, иначе - false
+	ISCORE_EXPORT bool StringIsNumber(const std::string &String);
+
+	//! ѕриведение строки к нижнему регистру
+	//! \param String строка
+	ISCORE_EXPORT void StringToLower(std::string &String);
+
+	//! ѕриведение строки к верхнему регистру
+	//! \param String строка
+	ISCORE_EXPORT void StringToUpper(std::string &String);
+
 	//»звлечь элемент из вектора по заданному индексу
 	template <typename T> T VectorTakeAt(std::vector<T> &Vector, size_t Index)
 	{

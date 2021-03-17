@@ -7,7 +7,9 @@ int main(int argc, char **argv)
 	{
 		return CaratApplication.Start();
 	}
-	//logging error...
+#ifdef DEBUG
+	system("PAUSE");
+#endif
 	return EXIT_FAILURE;
 }
 //-----------------------------------------------------------------------------

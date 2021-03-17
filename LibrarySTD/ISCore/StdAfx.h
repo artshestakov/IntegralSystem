@@ -29,8 +29,10 @@
 #include <array>
 #include <map>
 #include <queue>
+#include <exception>
+#include <algorithm>
 #include <cstdlib>
 #include <cstdarg>
-#include <exception>
+#include <cctype>
 //-----------------------------------------------------------------------------
 #endif
