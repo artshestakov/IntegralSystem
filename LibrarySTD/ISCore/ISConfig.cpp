@@ -6,46 +6,34 @@
 ISConfig::ISConfig()
 	: ErrorString(STRING_NO_ERROR)
 {
-	//Структура шаблонов для конфигурационных файлов
-	MapTemplate = std::map<std::string, std::map<std::string, std::vector<ISConfigParameter>>>
+	//Шаблоны
+	TemplateServer = std::map<std::string, std::map<std::string, ISConfigParameter>>
 	{
-		{
-			CONFIG_TEMPLATE_SERVER,
+		{ "TCPServer",
 			{
-				{
-					"TCPServer", std::vector<ISConfigParameter>
-					{
-						{ "Include",		"Bool",		true,	"false",						0, 0											},
-						{ "Port",			"Int",		true,	std::to_string(CARAT_TCP_PORT),	1, UINT16_MAX									},
-						{ "WorkerCount",	"Int",		true,	"1",							1, (int)std::thread::hardware_concurrency() * 2	}
-					}
-				},
-				{
-					"Other", std::vector<ISConfigParameter>
-					{
-						{ "Configuration",	"String",	true,	std::string(),					0, 0 }
-					}
-				}
+				{ "Include", { "Bool", true, "false", std::string(), 0, 0 } },
+				{ "Port", { "Int", true, std::to_string(CARAT_TCP_PORT), std::string(), 1, UINT16_MAX } },
+				{ "WorkerCount", { "Int", true, "1", std::string(), 1, (int)std::thread::hardware_concurrency() * 2 } }
 			}
 		},
-		{
-			CONFIG_TEMPLATE_CLIENT,
+		{ "Other",
 			{
-
-				{
-					"Connection", std::vector<ISConfigParameter>
-					{
-						{ "Host", "String",	true, std::string(),					0, 0 },
-						{ "Port", "Int",	true, std::to_string(CARAT_TCP_PORT),	1, UINT16_MAX },
-					}
-				},
-				{
-					"RememberUser", std::vector<ISConfigParameter>
-					{
-						{ "Include",	"Bool",		true,	"false",		0, 0 },
-						{ "Login",		"String",	true,	std::string(),	0, 0 }
-					}
-				}
+				{ "Configuration", { "String", true, std::string(), std::string(), 0, 0 } }
+			}
+		}
+	};
+	TemplateClient = std::map<std::string, std::map<std::string, ISConfigParameter>>
+	{
+		{ "Connection",
+			{
+				{ "Host", { "String", true, std::string(), std::string(), 0, 0 } },
+				{ "Port", { "Int", true, std::to_string(CARAT_TCP_PORT), std::string(), 1, UINT16_MAX } }
+			}
+		},
+		{ "RememberUser",
+			{
+				{ "Include", { "Bool", true, "false", std::string(), 0, 0 } },
+				{ "Login", { "String", true, std::string(), std::string(), 0, 0 } }
 			}
 		}
 	};
@@ -134,11 +122,19 @@ bool ISConfig::IsValid()
 	return true;
 }
 //-----------------------------------------------------------------------------
-bool ISConfig::Initialize(const std::string &template_name)
+bool ISConfig::Initialize(ISNamespace::ConfigType Type)
 {
-	TemplateName = template_name;
-	PathConfigFile = ISAlgorithm::GetApplicationDir() + PATH_SEPARATOR + TemplateName + ".ini";
-	return ISAlgorithm::FileExist(PathConfigFile) ? Update() : Create();
+	std::string FileName;
+	switch (Type)
+	{
+	case ISNamespace::ConfigType::Server: FileName = "Server"; break;
+	case ISNamespace::ConfigType::Client: FileName = "Client"; break;
+	default:
+		ErrorString = "unknown config type";
+		return false;
+	}
+	PathConfigFile = ISAlgorithm::GetApplicationDir() + PATH_SEPARATOR + FileName + ".ini";
+	return ISAlgorithm::FileExist(PathConfigFile) ? Update() : Create(Type);
 }
 //-----------------------------------------------------------------------------
 std::string ISConfig::GetValue(const std::string &ParameterName)
@@ -172,7 +168,7 @@ bool ISConfig::Update()
 	}
 
 	//Читаем файл построчно
-	std::string Line, CurrentSection;
+	/*std::string Line, CurrentSection;
 	while (std::getline(File, Line))
 	{
 		if (Line.empty())
@@ -203,21 +199,13 @@ bool ISConfig::Update()
 		{
 
 		}
-	}
+	}*/
 
 	return true;
 }
 //-----------------------------------------------------------------------------
-bool ISConfig::Create()
+bool ISConfig::Create(ISNamespace::ConfigType Type)
 {
-	//Ищем нужный шаблон
-	auto It = MapTemplate.find(TemplateName);
-	if (It == MapTemplate.end())
-	{
-		ErrorString = "not found template \"" + TemplateName + "\"";
-		return false;
-	}
-
 	std::ofstream File;
 	File.open(PathConfigFile, std::ios::out);
 	if (!File.is_open())
@@ -226,9 +214,17 @@ bool ISConfig::Create()
 		return false;
 	}
 
+	//Выбираем шаблон
+	std::map<std::string, std::map<std::string, ISConfigParameter>> Map;
+	switch (Type)
+	{
+	case ISNamespace::ConfigType::Server: Map = TemplateServer; break;
+	case ISNamespace::ConfigType::Client: Map = TemplateClient; break;
+	}
+
 	//Обходим секции
 	bool IsBeginSection = true;
-	for (const auto &SectionItem : It->second)
+	for (const auto &SectionItem : Map)
 	{
 		//Если секция первая - перевод строки не вставляем
 		if (!IsBeginSection)
@@ -239,63 +235,25 @@ bool ISConfig::Create()
 
 		//Записываем имя секции и обходим её параметры
 		File << '[' << SectionItem.first << ']' << std::endl;
-		for (const ISConfigParameter &ConfigParameter : SectionItem.second)
+		for (const auto &ParameterItem : SectionItem.second)
 		{
-			File << ConfigParameter.Name << '=' << ConfigParameter.DefaultValue << std::endl;
-			MapValues.emplace(SectionItem.first + '/' + ConfigParameter.Name, ConfigParameter.DefaultValue);
+			File << ParameterItem.first << '=' << ParameterItem.second.DefaultValue << std::endl;
+			TemplateServer[SectionItem.first][ParameterItem.first].Value = ParameterItem.second.DefaultValue;
 		}
 	}
 	File.close();
-
-	//Обходим все параметры текущего шаблона и добавляем их в конфигурационный файл
-	/*for (const ISConfigParameter &ConfigParameter : VectorTemplate)
-	{
-		if (ConfigParameter.TemplateName == TemplateName)
-		{
-			Settings->setValue(ConfigParameter.Name, ConfigParameter.DefaultValue.toString());
-		}
-	}*/
 	return true;
 }
 //-----------------------------------------------------------------------------
 bool ISConfig::ContainsKey(const std::string &Key)
 {
-	//Если разделитель найден - продолжаем
-	size_t Pos = Key.find('/');
-	if (Pos != NPOS)
-	{
-		//Вытаскиваем имя секции и параметра
-		std::string SectionName = Key.substr(0, Pos),
-			ParameterName = Key.substr(Pos + 1, Key.size() - Pos - 1);
-
-		//Обходим секции
-		for (const auto &MapItem : MapTemplate.find(TemplateName)->second)
-		{
-			if (MapItem.first == SectionName) //Секция нашлась - обходим параметры
-			{
-				for (const ISConfigParameter &ConfigParameter : MapItem.second)
-				{
-					if (ConfigParameter.Name == ParameterName) //Нашли параметр - выходим
-					{
-						return true;
-					}
-				}
-			}
-		}
-	}
-	return false;
+	IS_UNUSED(Key);
+	return true;
 }
 //-----------------------------------------------------------------------------
 std::string ISConfig::GetDefaultValue(const std::string &Key) const
 {
 	IS_UNUSED(Key);
-	/*for (const ISConfigParameter &ConfigParameter : VectorTemplate)
-	{
-		if (ConfigParameter.TemplateName == TemplateName && ConfigParameter.Name == Key)
-		{
-			return ConfigParameter.DefaultValue;
-		}
-	}*/
 	return std::string();
 }
 //-----------------------------------------------------------------------------

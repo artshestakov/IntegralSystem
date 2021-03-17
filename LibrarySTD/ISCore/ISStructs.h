@@ -23,10 +23,10 @@ struct ISDateTime
 //-----------------------------------------------------------------------------
 struct ISConfigParameter
 {
-	std::string Name; //Имя параметра
 	std::string Type; //Тип параметра
 	bool NotNull; //Параметр обязателен для заполнения
 	std::string DefaultValue; //Значение по умолчанию
+	std::string Value; //Значение
 	int Minimum; //Минимальное значение (для числовых параметров)
 	int Maximum; //Максимальное значение (для числовых параметров)
 };
