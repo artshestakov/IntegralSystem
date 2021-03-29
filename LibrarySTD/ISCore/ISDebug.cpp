@@ -9,7 +9,7 @@ void ShowDebugString(const char *Severity, const std::string &String)
 
 	//Формируем сообщение
 	char Buffer[LOG_BUFFER_SIZE] = { 0 };
-	snprintf(Buffer, LOG_BUFFER_SIZE, "%02d.%02d.%02d %02d:%02d:%02d:%03d [%s]\t%s",
+	(void)snprintf(Buffer, LOG_BUFFER_SIZE, "%02d.%02d.%02d %02d:%02d:%02d:%03d [%s]\t%s",
 		DT.Day, DT.Month, DT.Year % 100, DT.Hour, DT.Minute, DT.Second, DT.Milliseconds,
 		Severity, String.c_str());
 	std::cout << Buffer << std::endl;

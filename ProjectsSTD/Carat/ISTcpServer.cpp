@@ -116,7 +116,7 @@ void ISTcpServer::WorkerAcceptor()
 		{
 			//Пытаемся получить IP-адрес клиента и если не получилось - отключаем его
 			char Char[15] = { 0 }; //Выделяем 15 байт для хранения IP-адреса
-			if (!inet_ntop(AF_INET, &SocketInfo.sin_addr, Char, 32))
+			if (!inet_ntop(AF_INET, &SocketInfo.sin_addr, Char, 15))
 			{
 				CloseSocket(SocketClient);
 				continue;

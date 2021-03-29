@@ -71,7 +71,7 @@ void ISTcpWorker::Process()
 		ISSleep(1); //Немного поспим
 
 		//Проверяем, не останавливали ли воркер
-		CRITICAL_SECTION_INIT(&CriticalSection);
+		CRITICAL_SECTION_LOCK(&CriticalSection);
 		bool is_running = IsRunning;
 		CRITICAL_SECTION_UNLOCK(&CriticalSection);
 		if (!is_running) //Воркер остановлен - выходим из потока
@@ -131,7 +131,7 @@ void ISTcpWorker::Process()
 	}
 
 	//Установим флаг остановки
-	CRITICAL_SECTION_INIT(&CriticalSection);
+	CRITICAL_SECTION_LOCK(&CriticalSection);
 	IsFinished = true;
 	CRITICAL_SECTION_UNLOCK(&CriticalSection);
 }
