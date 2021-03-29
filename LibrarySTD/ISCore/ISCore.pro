@@ -1,6 +1,6 @@
 TARGET = ISCore
 TEMPLATE = lib
-CONFIG += c++11
+CONFIG += c++11 staticlib
 CONFIG -= app_bundle
 CONFIG -= qt
 DEFINES += ISCORE_LIBRARY
@@ -30,8 +30,7 @@ HEADERS += \
     ISNamespace.h \
     ISStructs.h \
     ISTypedefs.h \
-    StdAfx.h \
-    iscore_global.h
+	StdAfx.h
 
 SOURCES += \
     ISAlgorithm.cpp \

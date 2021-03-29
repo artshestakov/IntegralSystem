@@ -1,6 +1,6 @@
 TARGET = ISServer
 TEMPLATE = lib
-CONFIG += c++11
+CONFIG += c++11 staticlib
 CONFIG -= app_bundle
 CONFIG -= qt
 DEFINES += ISSERVER_LIBRARY
@@ -21,8 +21,7 @@ MOC_DIR = $$PWD/$${CONFIGURATION}-$${PLATFORM}/$${TARGET}
 OBJECTS_DIR = $$PWD/$${CONFIGURATION}-$${PLATFORM}/$${TARGET}
 
 HEADERS += \
-    TestClass.h \
-    isserver_global.h
+    TestClass.h
 
 SOURCES += \
     TestClass.cpp

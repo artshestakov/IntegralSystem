@@ -106,7 +106,7 @@ void ISLogger::Log(ISNamespace::LogMessageType MessageType, const std::string &C
     //Если указан компонент - добавим его к заголовку
     if (!Component.empty())
     {
-        std::strcat(BufferHeader, ('[' + Component + ']').c_str());
+        strcat(BufferHeader, ('[' + Component + ']').c_str());
     }
 
     //Результирующая строка
@@ -120,7 +120,7 @@ void ISLogger::Log(ISNamespace::LogMessageType MessageType, const std::string &C
     //Форматируем строку
     char Buffer[LOG_BUFFER_SIZE] = { 0 };
     int Writed = std::vsnprintf(Buffer, LOG_BUFFER_SIZE, Format, Arguments);
-    if (Writed > LOG_BUFFER_SIZE) //Переполнение буфера - используем резервный
+    if ((size_t)Writed > LOG_BUFFER_SIZE) //Переполнение буфера - используем резервный
     {
         int NewSize = ++Writed + LOG_HEADER_SIZE;
         std::vector<char> Vector;

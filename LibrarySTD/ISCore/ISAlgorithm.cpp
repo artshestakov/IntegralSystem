@@ -1,5 +1,6 @@
 #include "ISAlgorithm.h"
 #include "ISConstants.h"
+#include "ISAssert.h"
 //-----------------------------------------------------------------------------
 std::string ISAlgorithm::GetClassName(char *FunctionName)
 {
