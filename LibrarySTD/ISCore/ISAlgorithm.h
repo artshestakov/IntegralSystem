@@ -2,7 +2,6 @@
 #ifndef _ISALGORITHM_H_INCLUDED
 #define _ISALGORITHM_H_INCLUDED
 //-----------------------------------------------------------------------------
-#include "iscore_global.h"
 #include "StdAfx.h"
 #include "ISTypedefs.h"
 #include "ISStructs.h"
@@ -39,110 +38,110 @@ namespace ISAlgorithm
 {
     //! Получить имя класса
     //! \return возвращает имя класса
-    ISCORE_EXPORT std::string GetClassName(char *FunctionName);
+    std::string GetClassName(char *FunctionName);
 
     //! Получить временную метку
     //! \return возвращает временную метку
-    ISCORE_EXPORT ISTimePoint GetTick();
+    ISTimePoint GetTick();
 
     //! Получить разницу временных меток
     //! \param TickA временная метка
     //! \param TickB временная метка
     //! \return возвращает разницу между двумя временными метками
-    ISCORE_EXPORT unsigned long long GetTickDiff(const ISTimePoint &T1, const ISTimePoint &T2);
+    unsigned long long GetTickDiff(const ISTimePoint &T1, const ISTimePoint &T2);
 
     //! Получить описание последней ошибки
-    ISCORE_EXPORT std::string GetLastErrorS();
+    std::string GetLastErrorS();
 
     //! Установить кодовую страницу
     //! \param CodePage номер кодовой страницы
     //! \param ErrorString ссылка на строку с ошибкой
     //! \return возвращает true в случае успешной установки, иначе - false
-    ISCORE_EXPORT bool ConsoleSetEncoding(unsigned int CodePage, std::string &ErrorString);
+    bool ConsoleSetEncoding(unsigned int CodePage, std::string &ErrorString);
 
     //! Проверка существования папки
     //! \param DirPath путь к папке
     //! \return возвращает true в случае существования папки, иначе - false
-    ISCORE_EXPORT bool DirExist(const std::string &DirPath);
+    bool DirExist(const std::string &DirPath);
 
     //! Создание папки рекусивно
     //! \param DirPath путь к папке
     //! \return возвращает true в случае успешного создания папки, иначе - false
-    ISCORE_EXPORT bool DirCreate(const std::string &DirPath);
+    bool DirCreate(const std::string &DirPath);
 
     //! Создание папки рекусивно
     //! \param DirPath путь к папке
     //! \param ErrorString ссылка на строку с ошибкой
     //! \return возвращает true в случае успешного создания папки, иначе - false
-    ISCORE_EXPORT bool DirCreate(const std::string &DirPath, std::string &ErrorString);
+    bool DirCreate(const std::string &DirPath, std::string &ErrorString);
 
     //! Проверка существования файла
     //! \param FilePath путь к файлу
     //! \return возвращает true в случае существования файла, иначе - false
-    ISCORE_EXPORT bool FileExist(const std::string &FilePath);
+    bool FileExist(const std::string &FilePath);
 
     //! Удаление файла
     //! \param FilePath путь к файлу
     //! \return возвращает true в сулчае успешного удаления файла, иначе - false
-    ISCORE_EXPORT bool FileDelete(const std::string &FilePath);
+    bool FileDelete(const std::string &FilePath);
 
     //! Удаление файла
     //! \param FilePath путь к файлу
     //! \param ErrorString ссылка на строку с ошибкой
     //! \return возвращает true в сулчае успешного удаления файла, иначе - false
-    ISCORE_EXPORT bool FileDelete(const std::string &FilePath, std::string &ErrorString);
+    bool FileDelete(const std::string &FilePath, std::string &ErrorString);
 
     //! Получить путь к исполняемому файлу
     //! \return возвращает путь к испролняемому файлу
-    ISCORE_EXPORT std::string GetApplicationPath();
+    std::string GetApplicationPath();
 
     //! Получить путь к папке приложения
     //! \return возвращает путь к папке приложения
-    ISCORE_EXPORT std::string GetApplicationDir();
+    std::string GetApplicationDir();
 
     //! Получить имя приложения
     //! \return возвращает имя приложения
-    ISCORE_EXPORT std::string GetApplicationName();
+    std::string GetApplicationName();
 
     //! Получить имя компьютера
     //! \return возвращает имя компьютера
-    ISCORE_EXPORT std::string GetHostName();
+    std::string GetHostName();
 
     //! Получить имя пользователя
     //! \return возвращает имя текущего пользователя в ОС
-    ISCORE_EXPORT std::string GetUserName();
+    std::string GetUserName();
 
     //! Парсинг аргументов командной строки
     //! \param argc количество аргументов
     //! \param argv массив аргументов
     //! \return возвращает вектор аргументов
-    ISCORE_EXPORT ISVectorString ParseArgs(int argc, char **argv);
+    ISVectorString ParseArgs(int argc, char **argv);
 
     //! Получить текущую дату и время
     //! \return возвращает структуру с текущей датой и временем
-    ISCORE_EXPORT ISDateTime GetCurrentDate();
+    ISDateTime GetCurrentDate();
 
     //! Разделить строку
     //! \param Separator разделитель
     //! \return возвращает вектор разделённых строк
-    ISCORE_EXPORT ISVectorString StringSplit(const std::string &String, char Separator);
+    ISVectorString StringSplit(const std::string &String, char Separator);
 
     //! Проверка строки на число
     //! \param String строка
     //! \return возвращает true если строка является число, иначе - false
-    ISCORE_EXPORT bool StringIsNumber(const std::string &String);
+    bool StringIsNumber(const std::string &String);
 
     //! Приведение строки к нижнему регистру
     //! \param String строка
-    ISCORE_EXPORT void StringToLower(std::string &String);
+    void StringToLower(std::string &String);
 
     //! Приведение строки к верхнему регистру
     //! \param String строка
-    ISCORE_EXPORT void StringToUpper(std::string &String);
+    void StringToUpper(std::string &String);
 
     //! Форматирование строки
     //! \param
-    ISCORE_EXPORT std::string StringF(const char *Format, ...);
+    std::string StringF(const char *Format, ...);
 
     //Извлечь элемент из вектора по заданному индексу
     template <typename T> T VectorTakeAt(std::vector<T> &Vector, size_t Index)

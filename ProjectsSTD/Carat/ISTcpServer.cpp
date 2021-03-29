@@ -368,31 +368,29 @@ bool ISTcpServer::ParseMessage(const char *Buffer, size_t BufferSize, ISTcpMessa
 //-----------------------------------------------------------------------------
 void ISTcpServer::CloseSocket(SOCKET Socket)
 {
-    if (shutdown(Socket, SD_BOTH) != SOCKET_ERROR) //Сокет закрыт - удаляем его из памяти
-    {
-        bool IsDeleted = false; //Флаг удаления клиента
-        CRITICAL_SECTION_LOCK(&CriticalSection);
-        for (size_t i = 0, c = Clients.size(); i < c; ++i)
-        {
-            if (Clients[i]->Socket == Socket) //Нашли нужного клиента
-            {
-                ISTcpClient *TcpClient = Clients[i];
-                Clients.erase(Clients.begin() + i);
-                delete TcpClient;
-                IsDeleted = true;
-                break;
-            }
-        }
-        CRITICAL_SECTION_UNLOCK(&CriticalSection);
-
-        if (!IsDeleted) //Клиент не был удалён
-        {
-            ISLOGGER_C(__CLASS__, "Not remove client with memory");
-        }
-    }
-    else //Не удалось закрыть сокет
+    //Пытаемся закрыть сокет
+    if (shutdown(Socket, SD_BOTH) == SOCKET_ERROR)
     {
         ISLOGGER_E(__CLASS__, "Not close socket: %s", ISAlgorithm::GetLastErrorS().c_str());
+    }
+
+    bool IsDeleted = false; //Флаг удаления клиента
+    CRITICAL_SECTION_LOCK(&CriticalSection);
+    for (size_t i = 0, c = Clients.size(); i < c; ++i)
+    {
+        if (Clients[i]->Socket == Socket) //Нашли нужного клиента
+        {
+            ISTcpClient *TcpClient = Clients[i];
+            Clients.erase(Clients.begin() + i);
+            delete TcpClient;
+            IsDeleted = true;
+            break;
+        }
+    }
+    CRITICAL_SECTION_UNLOCK(&CriticalSection);
+    if (!IsDeleted) //Клиент не был удалён
+    {
+        ISLOGGER_C(__CLASS__, "Not remove client with memory");
     }
 }
 //-----------------------------------------------------------------------------

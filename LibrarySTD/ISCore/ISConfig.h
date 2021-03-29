@@ -2,12 +2,11 @@
 #ifndef _ISCONFIG_H_INCLUDED
 #define _ISCONFIG_H_INCLUDED
 //-----------------------------------------------------------------------------
-#include "iscore_global.h"
 #include "ISStructs.h"
 #include "ISTypedefs.h"
 #include "SimpleIni.h"
 //-----------------------------------------------------------------------------
-class ISCORE_EXPORT ISConfig
+class ISConfig
 {
 public:
     static ISConfig& Instance();

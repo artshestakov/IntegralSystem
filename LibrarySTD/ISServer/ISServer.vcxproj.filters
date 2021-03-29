@@ -7,9 +7,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="isserver_global.h">
-      <Filter>System</Filter>
-    </ClInclude>
     <ClInclude Include="TestClass.h">
       <Filter>System</Filter>
     </ClInclude>

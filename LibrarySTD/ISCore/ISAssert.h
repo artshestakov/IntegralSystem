@@ -2,7 +2,6 @@
 #ifndef _ISASSERT_H_INCLUDED
 #define _ISASSERT_H_INCLUDED
 //-----------------------------------------------------------------------------
-#include "iscore_global.h"
 #include "StdAfx.h"
 #include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
@@ -12,7 +11,7 @@
 #define IS_ASSERT(CONDITION, FALSE_MESSAGE) ISASSERT::Assert(CONDITION, FALSE_MESSAGE, __PRETTY_FUNCTION__, __LINE__, __FILE__)
 #endif
 //-----------------------------------------------------------------------------
-class ISCORE_EXPORT ISASSERT
+class ISASSERT
 {
 public:
     static void Assert(bool Boolean, const std::string &FalseMessage, const std::string &FunctionName, int Line, const char *FileName);

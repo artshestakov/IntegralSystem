@@ -2,13 +2,12 @@
 #ifndef _ISLOGGER_H_INCLUDED
 #define _ISLOGGER_H_INCLUDED
 //-----------------------------------------------------------------------------
-#include "iscore_global.h"
 #include "ISConstants.h"
 #include "ISTypedefs.h"
 #include "ISNamespace.h"
 #include "ISStructs.h"
 //-----------------------------------------------------------------------------
-class ISCORE_EXPORT ISLogger
+class ISLogger
 {
 public:
     static ISLogger& Instance();

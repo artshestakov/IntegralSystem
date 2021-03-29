@@ -36,7 +36,6 @@
     <ClInclude Include="StdAfx.h">
       <Filter>System</Filter>
     </ClInclude>
-    <ClInclude Include="iscore_global.h" />
     <ClInclude Include="ISAlgorithm.h">
       <Filter>System</Filter>
     </ClInclude>
