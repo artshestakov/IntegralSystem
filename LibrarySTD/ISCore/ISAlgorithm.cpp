@@ -3,38 +3,38 @@
 //-----------------------------------------------------------------------------
 std::string ISAlgorithm::GetClassName(char *FunctionName)
 {
-	std::string Result(FunctionName);
-	size_t Index = 0;
+    std::string Result(FunctionName);
+    size_t Index = 0;
 
 #ifndef WIN32 //Если работаем сейчас под Linux - исключаем имя типа
-	Index = Result.find('('); //Ищем открывающуюся скобку
-	if (Index != NPOS) //Если скобку нашли - удаляем все что после неё
-	{
-		Result.erase(Index, Result.size() - Index);
-	}
+    Index = Result.find('('); //Ищем открывающуюся скобку
+    if (Index != NPOS) //Если скобку нашли - удаляем все что после неё
+    {
+        Result.erase(Index, Result.size() - Index);
+    }
 
-	while ((Index = Result.find(' ')) != NPOS)
-	{
-		Result.erase(0, ++Index);
-	}
+    while ((Index = Result.find(' ')) != NPOS)
+    {
+        Result.erase(0, ++Index);
+    }
 #endif
 
-	Index = Result.find(':');
-	if (Index != NPOS)
-	{
-		Result.erase(Index, Result.size() - Index);
-	}
-	return Result;
+    Index = Result.find(':');
+    if (Index != NPOS)
+    {
+        Result.erase(Index, Result.size() - Index);
+    }
+    return Result;
 }
 //-----------------------------------------------------------------------------
 ISTimePoint ISAlgorithm::GetTick()
 {
-	return std::chrono::steady_clock::now();
+    return std::chrono::steady_clock::now();
 }
 //-----------------------------------------------------------------------------
 unsigned long long ISAlgorithm::GetTickDiff(const ISTimePoint &T1, const ISTimePoint &T2)
 {
-	return std::chrono::duration_cast<std::chrono::milliseconds>(T1 - T2).count();
+    return std::chrono::duration_cast<std::chrono::milliseconds>(T1 - T2).count();
 }
 //-----------------------------------------------------------------------------
 std::string ISAlgorithm::GetLastErrorS()
@@ -42,44 +42,44 @@ std::string ISAlgorithm::GetLastErrorS()
     std::string ErrorString = STRING_UNKNOWN_ERROR;
 #ifdef WIN32
     DWORD ErrorID = GetLastError();
-	if (ErrorID != 0) //Код ошибки валиден
-	{
-		LPSTR Buffer = nullptr;
-		size_t MessageSize = FormatMessageA(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
-			NULL, ErrorID, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPSTR)&Buffer, 0, NULL);
-		if (MessageSize > 0 && Buffer)
-		{
-			ErrorString = std::string(Buffer, MessageSize - 2);
-			LocalFree(Buffer);
-		}
-	}
+    if (ErrorID != 0) //Код ошибки валиден
+    {
+        LPSTR Buffer = nullptr;
+        size_t MessageSize = FormatMessageA(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
+            NULL, ErrorID, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPSTR)&Buffer, 0, NULL);
+        if (MessageSize > 0 && Buffer)
+        {
+            ErrorString = std::string(Buffer, MessageSize - 2);
+            LocalFree(Buffer);
+        }
+    }
 #else
     ErrorString = strerror(errno);
 #endif
-	return ErrorString;
+    return ErrorString;
 }
 //-----------------------------------------------------------------------------
 bool ISAlgorithm::ConsoleSetEncoding(unsigned int CodePage, std::string &ErrorString)
 {
 #ifdef WIN32
-	if (SetConsoleOutputCP(CodePage) == FALSE) //Не удалось установить кодовую страницу
-	{
-		ErrorString = ISAlgorithm::GetLastErrorS();
-		return false;
-	}
-	return true;
+    if (SetConsoleOutputCP(CodePage) == FALSE) //Не удалось установить кодовую страницу
+    {
+        ErrorString = ISAlgorithm::GetLastErrorS();
+        return false;
+    }
+    return true;
 #else //Реализации под Linux не существует
     IS_UNUSED(CodePage);
     IS_UNUSED(ErrorString);
-	return true;
+    return true;
 #endif
 }
 //-----------------------------------------------------------------------------
 bool ISAlgorithm::DirExist(const std::string &DirPath)
 {
 #ifdef WIN32
-	DWORD Attributes = GetFileAttributes(DirPath.c_str());
-	return (Attributes != INVALID_FILE_ATTRIBUTES && (Attributes & FILE_ATTRIBUTE_DIRECTORY));
+    DWORD Attributes = GetFileAttributes(DirPath.c_str());
+    return (Attributes != INVALID_FILE_ATTRIBUTES && (Attributes & FILE_ATTRIBUTE_DIRECTORY));
 #else
     struct stat Stat;
     return stat(DirPath.c_str(), &Stat) == 0 && S_ISDIR(Stat.st_mode);
@@ -88,18 +88,18 @@ bool ISAlgorithm::DirExist(const std::string &DirPath)
 //-----------------------------------------------------------------------------
 bool ISAlgorithm::DirCreate(const std::string &DirPath)
 {
-	std::string ErrorString = STRING_NO_ERROR;
-	return DirCreate(DirPath, ErrorString);
+    std::string ErrorString = STRING_NO_ERROR;
+    return DirCreate(DirPath, ErrorString);
 }
 //-----------------------------------------------------------------------------
 bool ISAlgorithm::DirCreate(const std::string &DirPath, std::string &ErrorString)
 {
-	ISVectorString VectorString = StringSplit(DirPath, PATH_SEPARATOR);
-	std::string TempPath;
+    ISVectorString VectorString = StringSplit(DirPath, PATH_SEPARATOR);
+    std::string TempPath;
 
-	//В реализации под Линукс нужно в начало вставлять разделитель пути
+    //В реализации под Линукс нужно в начало вставлять разделитель пути
 #ifndef WIN32
-	TempPath.push_back(PATH_SEPARATOR);
+    TempPath.push_back(PATH_SEPARATOR);
 #endif
 
     for (const std::string &String : VectorString)
@@ -108,9 +108,9 @@ bool ISAlgorithm::DirCreate(const std::string &DirPath, std::string &ErrorString
         if (!DirExist(TempPath))
         {
 #ifdef WIN32
-			if (CreateDirectory(TempPath.c_str(), NULL) != TRUE)
+            if (CreateDirectory(TempPath.c_str(), NULL) != TRUE)
 #else
-			if (mkdir(TempPath.c_str(), 0777) != 0)
+            if (mkdir(TempPath.c_str(), 0777) != 0)
 #endif
             {
                 ErrorString = GetLastErrorS();
@@ -118,13 +118,13 @@ bool ISAlgorithm::DirCreate(const std::string &DirPath, std::string &ErrorString
             }
         }
     }
-	return true;
+    return true;
 }
 //-----------------------------------------------------------------------------
 bool ISAlgorithm::FileExist(const std::string &FilePath)
 {
 #ifdef WIN32
-	return PathFileExists(FilePath.c_str()) == TRUE;
+    return PathFileExists(FilePath.c_str()) == TRUE;
 #else
     return access(FilePath.c_str(), F_OK) == 0;
 #endif
@@ -132,37 +132,37 @@ bool ISAlgorithm::FileExist(const std::string &FilePath)
 //-----------------------------------------------------------------------------
 std::string ISAlgorithm::GetApplicationPath()
 {
-	std::string Path;
+    std::string Path;
     char Buffer[MAX_PATH] = { 0 };
 #ifdef WIN32
 
-	if (GetModuleFileName(GetModuleHandle(NULL), Buffer, sizeof(Buffer)) > 0)
-	{
-		Path = Buffer;
-	}
+    if (GetModuleFileName(GetModuleHandle(NULL), Buffer, sizeof(Buffer)) > 0)
+    {
+        Path = Buffer;
+    }
 #else
     char Temp[20] = { 0 };
     sprintf(Temp, "/proc/%d/exe", CURRENT_PID());
     size_t Size = readlink(Temp, Buffer, 1024);
     Path = std::string(Buffer, Size);
 #endif
-	return Path;
+    return Path;
 }
 //-----------------------------------------------------------------------------
 bool ISAlgorithm::FileDelete(const std::string &FilePath)
 {
-	std::string ErrorString;
-	return FileDelete(FilePath, ErrorString);
+    std::string ErrorString;
+    return FileDelete(FilePath, ErrorString);
 }
 //-----------------------------------------------------------------------------
 bool ISAlgorithm::FileDelete(const std::string &FilePath, std::string &ErrorString)
 {
 #ifdef WIN32
-	if (DeleteFile(FilePath.c_str()) == FALSE)
-	{
-		ErrorString = GetLastErrorS();
-		return false;
-	}
+    if (DeleteFile(FilePath.c_str()) == FALSE)
+    {
+        ErrorString = GetLastErrorS();
+        return false;
+    }
 #else
     if (remove(FilePath.c_str()) != 0)
     {
@@ -170,103 +170,103 @@ bool ISAlgorithm::FileDelete(const std::string &FilePath, std::string &ErrorStri
         return false;
     }
 #endif
-	return true;
+    return true;
 }
 //-----------------------------------------------------------------------------
 std::string ISAlgorithm::GetApplicationDir()
 {
-	std::string Path = ISAlgorithm::GetApplicationPath();
-	if (!Path.empty())
-	{
-		size_t Pos = Path.rfind(PATH_SEPARATOR);
-		if (Pos != NPOS)
-		{
-			Path.erase(Pos, Path.size() - Pos);
-		}
-	}
-	return Path;
+    std::string Path = ISAlgorithm::GetApplicationPath();
+    if (!Path.empty())
+    {
+        size_t Pos = Path.rfind(PATH_SEPARATOR);
+        if (Pos != NPOS)
+        {
+            Path.erase(Pos, Path.size() - Pos);
+        }
+    }
+    return Path;
 }
 //-----------------------------------------------------------------------------
 std::string ISAlgorithm::GetApplicationName()
 {
-	std::string Path = ISAlgorithm::GetApplicationPath();
-	if (!Path.empty())
-	{
-		size_t Pos = Path.rfind(PATH_SEPARATOR);
-		if (Pos != NPOS)
-		{
-			Path.erase(0, ++Pos);
-		}
+    std::string Path = ISAlgorithm::GetApplicationPath();
+    if (!Path.empty())
+    {
+        size_t Pos = Path.rfind(PATH_SEPARATOR);
+        if (Pos != NPOS)
+        {
+            Path.erase(0, ++Pos);
+        }
 
 #ifdef WIN32 //Для Windows удаляем расширение
-		Pos = Path.find('.');
-		if (Pos != NPOS) //Точка в названии есть - удаляем расширение
-		{
-			Path.erase(Pos, Path.size() - Pos);
-		}
+        Pos = Path.find('.');
+        if (Pos != NPOS) //Точка в названии есть - удаляем расширение
+        {
+            Path.erase(Pos, Path.size() - Pos);
+        }
 #endif
-	}
-	return Path;
+    }
+    return Path;
 }
 //-----------------------------------------------------------------------------
 std::string ISAlgorithm::GetHostName()
 {
-	std::string HostName;
+    std::string HostName;
 #ifdef WIN32
-	char Buffer[32] = { 0 };
-	DWORD Size = sizeof(Buffer);
-	if (GetComputerNameEx(ComputerNameNetBIOS, Buffer, &Size) == TRUE)
-	{
-		HostName = Buffer;
-	}
+    char Buffer[32] = { 0 };
+    DWORD Size = sizeof(Buffer);
+    if (GetComputerNameEx(ComputerNameNetBIOS, Buffer, &Size) == TRUE)
+    {
+        HostName = Buffer;
+    }
 #else
-	IS_ASSERT(false, "not support");
+    IS_ASSERT(false, "not support");
 #endif
-	return HostName;
+    return HostName;
 }
 //-----------------------------------------------------------------------------
 std::string ISAlgorithm::GetUserName()
 {
-	std::string UserName;
+    std::string UserName;
 #ifdef WIN32
-	char Buffer[32] = { 0 };
-	DWORD Size = sizeof(Buffer);
-	if (::GetUserName(Buffer, &Size) == TRUE)
-	{
-		UserName = Buffer;
-	}
+    char Buffer[32] = { 0 };
+    DWORD Size = sizeof(Buffer);
+    if (::GetUserName(Buffer, &Size) == TRUE)
+    {
+        UserName = Buffer;
+    }
 #else
-	IS_ASSERT(false, "not support");
+    IS_ASSERT(false, "not support");
 #endif
-	return UserName;
+    return UserName;
 }
 //-----------------------------------------------------------------------------
 ISVectorString ISAlgorithm::ParseArgs(int argc, char **argv)
 {
-	ISVectorString VectorString;
-	if (argc > 1) //Если аргументов больше одного
-	{
-		VectorString.resize(argc - 1);
+    ISVectorString VectorString;
+    if (argc > 1) //Если аргументов больше одного
+    {
+        VectorString.resize(argc - 1);
 
-		//Начинаем цикл с единицы, чтобы не брать путь к исполняемому файлу приложения
-		for (int i = 1; i < argc; ++i)
-		{
-			VectorString[i - 1] = argv[i];
-		}
-	}
-	return VectorString;
+        //Начинаем цикл с единицы, чтобы не брать путь к исполняемому файлу приложения
+        for (int i = 1; i < argc; ++i)
+        {
+            VectorString[i - 1] = argv[i];
+        }
+    }
+    return VectorString;
 }
 //-----------------------------------------------------------------------------
 ISDateTime ISAlgorithm::GetCurrentDate()
 {
 #ifdef WIN32
-	SYSTEMTIME ST;
-	GetLocalTime(&ST);
-	return{ ST.wDay, ST.wMonth, ST.wYear, ST.wHour, ST.wMinute, ST.wSecond, ST.wMilliseconds };
+    SYSTEMTIME ST;
+    GetLocalTime(&ST);
+    return{ ST.wDay, ST.wMonth, ST.wYear, ST.wHour, ST.wMinute, ST.wSecond, ST.wMilliseconds };
 #else
-	struct timeval TimeValue;
-	gettimeofday(&TimeValue, NULL);
-	struct tm *ST = localtime(&TimeValue.tv_sec);
+    struct timeval TimeValue;
+    gettimeofday(&TimeValue, NULL);
+    struct tm *ST = localtime(&TimeValue.tv_sec);
     return{ (unsigned short)ST->tm_mday, (unsigned short)(ST->tm_mon + 1), (unsigned short)(ST->tm_year + 1900),
                 (unsigned short)ST->tm_hour, (unsigned short)ST->tm_min, (unsigned short)ST->tm_sec, (unsigned short)(TimeValue.tv_usec / 1000) };
 #endif
@@ -305,60 +305,60 @@ ISVectorString ISAlgorithm::StringSplit(const std::string &String, char Separato
 //-----------------------------------------------------------------------------
 bool ISAlgorithm::StringIsNumber(const std::string &String)
 {
-	for (size_t i = 0, c = String.size(); i < c; ++i)
-	{
-		if (!std::isdigit(String[i]))
-		{
-			return false;
-		}
-	}
-	return true;
+    for (size_t i = 0, c = String.size(); i < c; ++i)
+    {
+        if (!std::isdigit(String[i]))
+        {
+            return false;
+        }
+    }
+    return true;
 }
 //-----------------------------------------------------------------------------
 void ISAlgorithm::StringToLower(std::string &String)
 {
-	if (!String.empty())
-	{
-		std::transform(String.begin(), String.end(), String.begin(), tolower);
-	}
+    if (!String.empty())
+    {
+        std::transform(String.begin(), String.end(), String.begin(), tolower);
+    }
 }
 //-----------------------------------------------------------------------------
 void ISAlgorithm::StringToUpper(std::string &String)
 {
-	if (!String.empty())
-	{
-		std::transform(String.begin(), String.end(), String.begin(), toupper);
-	}
+    if (!String.empty())
+    {
+        std::transform(String.begin(), String.end(), String.begin(), toupper);
+    }
 }
 //-----------------------------------------------------------------------------
 std::string ISAlgorithm::StringF(const char *Format, ...)
 {
-	//Вытаскиваем аргументы
-	va_list Arguments;
-	va_start(Arguments, Format);
-	std::vector<char> Buffer(STRING_FORMAT_BUFFER_SIZE);
+    //Вытаскиваем аргументы
+    va_list Arguments;
+    va_start(Arguments, Format);
+    std::vector<char> Buffer(STRING_FORMAT_BUFFER_SIZE);
 
-	while (true)
-	{
-		//Делаем копию аргументов заранее
-		va_list Arguments2;
-		va_copy(Arguments2, Arguments);
+    while (true)
+    {
+        //Делаем копию аргументов заранее
+        va_list Arguments2;
+        va_copy(Arguments2, Arguments);
 
-		//Форматируем
-		size_t BufferSize = Buffer.size(),
-			BufferSizeNew = 0; //Эта инициализация нужна для подавления предупреждения
-		int Writed = std::vsnprintf(Buffer.data(), BufferSize, Format, Arguments2);
-		if ((Writed >= 0) && (Writed < static_cast<int>(BufferSize))) //Форматирование удалось
-		{
-			va_end(Arguments);
-			va_end(Arguments2);
-			return std::string(Buffer.data());
-		}
-		//При форматировании что-то пошло не так - увеличиваем размер буфера
-		BufferSizeNew = Writed < 0 ? (BufferSizeNew * 2) : (Writed + 1);
-		Buffer.clear();
-		Buffer.resize(BufferSizeNew);
-		va_end(Arguments2);
-	}
+        //Форматируем
+        size_t BufferSize = Buffer.size(),
+            BufferSizeNew = 0; //Эта инициализация нужна для подавления предупреждения
+        int Writed = std::vsnprintf(Buffer.data(), BufferSize, Format, Arguments2);
+        if ((Writed >= 0) && (Writed < static_cast<int>(BufferSize))) //Форматирование удалось
+        {
+            va_end(Arguments);
+            va_end(Arguments2);
+            return std::string(Buffer.data());
+        }
+        //При форматировании что-то пошло не так - увеличиваем размер буфера
+        BufferSizeNew = Writed < 0 ? (BufferSizeNew * 2) : (Writed + 1);
+        Buffer.clear();
+        Buffer.resize(BufferSizeNew);
+        va_end(Arguments2);
+    }
 }
 //-----------------------------------------------------------------------------

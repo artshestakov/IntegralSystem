@@ -11,39 +11,39 @@
 class ISCORE_EXPORT ISLogger
 {
 public:
-	static ISLogger& Instance();
-	static std::string GetClassName(char *FunctionName);
+    static ISLogger& Instance();
+    static std::string GetClassName(char *FunctionName);
 
-	std::string GetErrorString() const;
-	bool Initialize();
-	void Shutdown();
-	void Log(ISNamespace::LogMessageType MessageType, const std::string &Component, const char *Format, ...);
-
-private:
-	bool CreateLogDirectory(const ISDateTime &DT);
-	std::string GetPathFile(const ISDateTime &DT) const;
-	void Worker();
+    std::string GetErrorString() const;
+    bool Initialize();
+    void Shutdown();
+    void Log(ISNamespace::LogMessageType MessageType, const std::string &Component, const char *Format, ...);
 
 private:
-	ISLogger();
-	~ISLogger();
-	ISLogger(const ISLogger&) = delete;
-	ISLogger(ISLogger&&) = delete;
-	ISLogger& operator=(const ISLogger&) = delete;
-	ISLogger& operator=(ISLogger&&) = delete;
+    bool CreateLogDirectory(const ISDateTime &DT);
+    std::string GetPathFile(const ISDateTime &DT) const;
+    void Worker();
 
 private:
-	std::string ErrorString; //Описание ошибки
-	std::array<std::string, LOG_ARRAY_SIZE> Array; //Массив сообщений (очередь)
-	size_t LastIndex; //Последняя позиция в очереди
-	bool IsRunning; //Флаг работы
-	bool IsFinished; //Флаг остановки
-	std::ofstream File; //Текущий лог-файл
-	std::string PathLogsDir; //Текущий путь к конечной папке с логами
-	unsigned short CurrentDay; //Текущий день
-	unsigned short CurrentMonth; //Текущий месяц
-	unsigned short CurrentYear; //Текущий год
-	ISCriticalSection CriticalSection; //Критическая секция для синхронизации
+    ISLogger();
+    ~ISLogger();
+    ISLogger(const ISLogger&) = delete;
+    ISLogger(ISLogger&&) = delete;
+    ISLogger& operator=(const ISLogger&) = delete;
+    ISLogger& operator=(ISLogger&&) = delete;
+
+private:
+    std::string ErrorString; //Описание ошибки
+    std::array<std::string, LOG_ARRAY_SIZE> Array; //Массив сообщений (очередь)
+    size_t LastIndex; //Последняя позиция в очереди
+    bool IsRunning; //Флаг работы
+    bool IsFinished; //Флаг остановки
+    std::ofstream File; //Текущий лог-файл
+    std::string PathLogsDir; //Текущий путь к конечной папке с логами
+    unsigned short CurrentDay; //Текущий день
+    unsigned short CurrentMonth; //Текущий месяц
+    unsigned short CurrentYear; //Текущий год
+    ISCriticalSection CriticalSection; //Критическая секция для синхронизации
 };
 //-----------------------------------------------------------------------------
 #define ISLOGGER_D(COMPONENT, FORMAT, ...) ISLogger::Instance().Log(ISNamespace::LogMessageType::Debug, COMPONENT, FORMAT, __VA_ARGS__) //Логирование отладочного сообщения

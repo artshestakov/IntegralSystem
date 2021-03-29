@@ -37,138 +37,138 @@
 //-----------------------------------------------------------------------------
 namespace ISAlgorithm
 {
-	//! Получить имя класса
-	//! \return возвращает имя класса
-	ISCORE_EXPORT std::string GetClassName(char *FunctionName);
+    //! Получить имя класса
+    //! \return возвращает имя класса
+    ISCORE_EXPORT std::string GetClassName(char *FunctionName);
 
-	//! Получить временную метку
-	//! \return возвращает временную метку
-	ISCORE_EXPORT ISTimePoint GetTick();
+    //! Получить временную метку
+    //! \return возвращает временную метку
+    ISCORE_EXPORT ISTimePoint GetTick();
 
-	//! Получить разницу временных меток
-	//! \param TickA временная метка
-	//! \param TickB временная метка
-	//! \return возвращает разницу между двумя временными метками
-	ISCORE_EXPORT unsigned long long GetTickDiff(const ISTimePoint &T1, const ISTimePoint &T2);
+    //! Получить разницу временных меток
+    //! \param TickA временная метка
+    //! \param TickB временная метка
+    //! \return возвращает разницу между двумя временными метками
+    ISCORE_EXPORT unsigned long long GetTickDiff(const ISTimePoint &T1, const ISTimePoint &T2);
 
-	//! Получить описание последней ошибки
-	ISCORE_EXPORT std::string GetLastErrorS();
+    //! Получить описание последней ошибки
+    ISCORE_EXPORT std::string GetLastErrorS();
 
-	//! Установить кодовую страницу
-	//! \param CodePage номер кодовой страницы
-	//! \param ErrorString ссылка на строку с ошибкой
-	//! \return возвращает true в случае успешной установки, иначе - false
-	ISCORE_EXPORT bool ConsoleSetEncoding(unsigned int CodePage, std::string &ErrorString);
+    //! Установить кодовую страницу
+    //! \param CodePage номер кодовой страницы
+    //! \param ErrorString ссылка на строку с ошибкой
+    //! \return возвращает true в случае успешной установки, иначе - false
+    ISCORE_EXPORT bool ConsoleSetEncoding(unsigned int CodePage, std::string &ErrorString);
 
-	//! Проверка существования папки
-	//! \param DirPath путь к папке
-	//! \return возвращает true в случае существования папки, иначе - false
-	ISCORE_EXPORT bool DirExist(const std::string &DirPath);
+    //! Проверка существования папки
+    //! \param DirPath путь к папке
+    //! \return возвращает true в случае существования папки, иначе - false
+    ISCORE_EXPORT bool DirExist(const std::string &DirPath);
 
-	//! Создание папки рекусивно
-	//! \param DirPath путь к папке
-	//! \return возвращает true в случае успешного создания папки, иначе - false
-	ISCORE_EXPORT bool DirCreate(const std::string &DirPath);
+    //! Создание папки рекусивно
+    //! \param DirPath путь к папке
+    //! \return возвращает true в случае успешного создания папки, иначе - false
+    ISCORE_EXPORT bool DirCreate(const std::string &DirPath);
 
-	//! Создание папки рекусивно
-	//! \param DirPath путь к папке
-	//! \param ErrorString ссылка на строку с ошибкой
-	//! \return возвращает true в случае успешного создания папки, иначе - false
-	ISCORE_EXPORT bool DirCreate(const std::string &DirPath, std::string &ErrorString);
+    //! Создание папки рекусивно
+    //! \param DirPath путь к папке
+    //! \param ErrorString ссылка на строку с ошибкой
+    //! \return возвращает true в случае успешного создания папки, иначе - false
+    ISCORE_EXPORT bool DirCreate(const std::string &DirPath, std::string &ErrorString);
 
-	//! Проверка существования файла
-	//! \param FilePath путь к файлу
-	//! \return возвращает true в случае существования файла, иначе - false
-	ISCORE_EXPORT bool FileExist(const std::string &FilePath);
+    //! Проверка существования файла
+    //! \param FilePath путь к файлу
+    //! \return возвращает true в случае существования файла, иначе - false
+    ISCORE_EXPORT bool FileExist(const std::string &FilePath);
 
-	//! Удаление файла
-	//! \param FilePath путь к файлу
-	//! \return возвращает true в сулчае успешного удаления файла, иначе - false
-	ISCORE_EXPORT bool FileDelete(const std::string &FilePath);
+    //! Удаление файла
+    //! \param FilePath путь к файлу
+    //! \return возвращает true в сулчае успешного удаления файла, иначе - false
+    ISCORE_EXPORT bool FileDelete(const std::string &FilePath);
 
-	//! Удаление файла
-	//! \param FilePath путь к файлу
-	//! \param ErrorString ссылка на строку с ошибкой
-	//! \return возвращает true в сулчае успешного удаления файла, иначе - false
-	ISCORE_EXPORT bool FileDelete(const std::string &FilePath, std::string &ErrorString);
+    //! Удаление файла
+    //! \param FilePath путь к файлу
+    //! \param ErrorString ссылка на строку с ошибкой
+    //! \return возвращает true в сулчае успешного удаления файла, иначе - false
+    ISCORE_EXPORT bool FileDelete(const std::string &FilePath, std::string &ErrorString);
 
-	//! Получить путь к исполняемому файлу
-	//! \return возвращает путь к испролняемому файлу
-	ISCORE_EXPORT std::string GetApplicationPath();
+    //! Получить путь к исполняемому файлу
+    //! \return возвращает путь к испролняемому файлу
+    ISCORE_EXPORT std::string GetApplicationPath();
 
-	//! Получить путь к папке приложения
-	//! \return возвращает путь к папке приложения
-	ISCORE_EXPORT std::string GetApplicationDir();
+    //! Получить путь к папке приложения
+    //! \return возвращает путь к папке приложения
+    ISCORE_EXPORT std::string GetApplicationDir();
 
-	//! Получить имя приложения
-	//! \return возвращает имя приложения
-	ISCORE_EXPORT std::string GetApplicationName();
+    //! Получить имя приложения
+    //! \return возвращает имя приложения
+    ISCORE_EXPORT std::string GetApplicationName();
 
-	//! Получить имя компьютера
-	//! \return возвращает имя компьютера
-	ISCORE_EXPORT std::string GetHostName();
+    //! Получить имя компьютера
+    //! \return возвращает имя компьютера
+    ISCORE_EXPORT std::string GetHostName();
 
-	//! Получить имя пользователя
-	//! \return возвращает имя текущего пользователя в ОС
-	ISCORE_EXPORT std::string GetUserName();
+    //! Получить имя пользователя
+    //! \return возвращает имя текущего пользователя в ОС
+    ISCORE_EXPORT std::string GetUserName();
 
-	//! Парсинг аргументов командной строки
-	//! \param argc количество аргументов
-	//! \param argv массив аргументов
-	//! \return возвращает вектор аргументов
-	ISCORE_EXPORT ISVectorString ParseArgs(int argc, char **argv);
+    //! Парсинг аргументов командной строки
+    //! \param argc количество аргументов
+    //! \param argv массив аргументов
+    //! \return возвращает вектор аргументов
+    ISCORE_EXPORT ISVectorString ParseArgs(int argc, char **argv);
 
-	//! Получить текущую дату и время
-	//! \return возвращает структуру с текущей датой и временем
-	ISCORE_EXPORT ISDateTime GetCurrentDate();
+    //! Получить текущую дату и время
+    //! \return возвращает структуру с текущей датой и временем
+    ISCORE_EXPORT ISDateTime GetCurrentDate();
 
     //! Разделить строку
     //! \param Separator разделитель
     //! \return возвращает вектор разделённых строк
     ISCORE_EXPORT ISVectorString StringSplit(const std::string &String, char Separator);
 
-	//! Проверка строки на число
-	//! \param String строка
-	//! \return возвращает true если строка является число, иначе - false
-	ISCORE_EXPORT bool StringIsNumber(const std::string &String);
+    //! Проверка строки на число
+    //! \param String строка
+    //! \return возвращает true если строка является число, иначе - false
+    ISCORE_EXPORT bool StringIsNumber(const std::string &String);
 
-	//! Приведение строки к нижнему регистру
-	//! \param String строка
-	ISCORE_EXPORT void StringToLower(std::string &String);
+    //! Приведение строки к нижнему регистру
+    //! \param String строка
+    ISCORE_EXPORT void StringToLower(std::string &String);
 
-	//! Приведение строки к верхнему регистру
-	//! \param String строка
-	ISCORE_EXPORT void StringToUpper(std::string &String);
+    //! Приведение строки к верхнему регистру
+    //! \param String строка
+    ISCORE_EXPORT void StringToUpper(std::string &String);
 
-	//! Форматирование строки
-	//! \param
-	ISCORE_EXPORT std::string StringF(const char *Format, ...);
+    //! Форматирование строки
+    //! \param
+    ISCORE_EXPORT std::string StringF(const char *Format, ...);
 
-	//Извлечь элемент из вектора по заданному индексу
-	template <typename T> T VectorTakeAt(std::vector<T> &Vector, size_t Index)
-	{
-		T Value = Vector[Index];
-		Vector.erase(Vector.begin() + Index);
-		return Value;
-	}
+    //Извлечь элемент из вектора по заданному индексу
+    template <typename T> T VectorTakeAt(std::vector<T> &Vector, size_t Index)
+    {
+        T Value = Vector[Index];
+        Vector.erase(Vector.begin() + Index);
+        return Value;
+    }
 
-	//Извлечь первый элемент из вектора
-	template <typename T> T VectorTakeFront(std::vector<T> &Vector)
-	{
-		return VectorTakeAt(Vector, 0);
-	}
+    //Извлечь первый элемент из вектора
+    template <typename T> T VectorTakeFront(std::vector<T> &Vector)
+    {
+        return VectorTakeAt(Vector, 0);
+    }
 
-	//Извлечь последний элемент из вектора
-	template <typename T> T VectorTakeBack(std::vector<T> &Vector)
-	{
-		return VectorTakeAt(Vector, Vector.size() - 1);
-	}
+    //Извлечь последний элемент из вектора
+    template <typename T> T VectorTakeBack(std::vector<T> &Vector)
+    {
+        return VectorTakeAt(Vector, Vector.size() - 1);
+    }
 
-	//Проверить наличие значения в векторе
-	template <typename T> bool VectorContains(const std::vector<T> &Vector, T Value)
-	{
-		return std::find(Vector.begin(), Vector.end(), Value) != Vector.end();
-	}
+    //Проверить наличие значения в векторе
+    template <typename T> bool VectorContains(const std::vector<T> &Vector, T Value)
+    {
+        return std::find(Vector.begin(), Vector.end(), Value) != Vector.end();
+    }
 }
 //-----------------------------------------------------------------------------
 #endif

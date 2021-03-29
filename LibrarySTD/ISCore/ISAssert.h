@@ -15,13 +15,13 @@
 class ISCORE_EXPORT ISASSERT
 {
 public:
-	static void Assert(bool Boolean, const std::string &FalseMessage, const std::string &FunctionName, int Line, const char *FileName);
-	static void Assert(int Integer, const std::string &FalseMessage, const std::string &FunctionName, int Line, const char *FileName);
-	static void Assert(const std::string &String, const std::string &FalseMessage, const std::string &FunctionName, int Line, const char *FileName);
-	static void Assert(size_t SizeT, const std::string &FalseMessage, const std::string &FunctionName, int Line, const char *FileName);
+    static void Assert(bool Boolean, const std::string &FalseMessage, const std::string &FunctionName, int Line, const char *FileName);
+    static void Assert(int Integer, const std::string &FalseMessage, const std::string &FunctionName, int Line, const char *FileName);
+    static void Assert(const std::string &String, const std::string &FalseMessage, const std::string &FunctionName, int Line, const char *FileName);
+    static void Assert(size_t SizeT, const std::string &FalseMessage, const std::string &FunctionName, int Line, const char *FileName);
 
 protected:
-	static void ShowAssert(const std::string &FalseMessage, const std::string &FunctionName, int Line, const char *FileName);
+    static void ShowAssert(const std::string &FalseMessage, const std::string &FunctionName, int Line, const char *FileName);
 };
 //-----------------------------------------------------------------------------
 #endif

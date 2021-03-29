@@ -10,32 +10,32 @@
 class ISTcpQueue
 {
 public:
-	static ISTcpQueue& Instance();
+    static ISTcpQueue& Instance();
 
-	void Shutdown(); //Остановка работы с очередью
+    void Shutdown(); //Остановка работы с очередью
 
-	void AddMessage(ISTcpMessage *TcpMessage); //Добавить сообщение в очередь
-	ISTcpMessage* GetMessage(); //Получить очередное сообщение
+    void AddMessage(ISTcpMessage *TcpMessage); //Добавить сообщение в очередь
+    ISTcpMessage* GetMessage(); //Получить очередное сообщение
 
-	void AddAnswer(ISTcpAnswer *TcpAnswer); //Добавить ответ в очередь
-	ISTcpAnswer* GetAnswer(); //Получить очередной ответ
-
-private:
-	ISTcpQueue();
-	~ISTcpQueue();
-	ISTcpQueue(const ISTcpQueue&) = delete;
-	ISTcpQueue(ISTcpQueue&&) = delete;
-	ISTcpQueue& operator=(const ISTcpQueue&) = delete;
-	ISTcpQueue& operator=(ISTcpQueue&&) = delete;
+    void AddAnswer(ISTcpAnswer *TcpAnswer); //Добавить ответ в очередь
+    ISTcpAnswer* GetAnswer(); //Получить очередной ответ
 
 private:
-	std::queue<ISTcpMessage *> QueueM;
-	std::queue<ISTcpAnswer *> QueueA;
-	bool IsActive; //Флаг активности очереди
+    ISTcpQueue();
+    ~ISTcpQueue();
+    ISTcpQueue(const ISTcpQueue&) = delete;
+    ISTcpQueue(ISTcpQueue&&) = delete;
+    ISTcpQueue& operator=(const ISTcpQueue&) = delete;
+    ISTcpQueue& operator=(ISTcpQueue&&) = delete;
 
-	//Критические секции
-	ISCriticalSection CriticalSectionM;
-	ISCriticalSection CriticalSectionA;
+private:
+    std::queue<ISTcpMessage *> QueueM;
+    std::queue<ISTcpAnswer *> QueueA;
+    bool IsActive; //Флаг активности очереди
+
+    //Критические секции
+    ISCriticalSection CriticalSectionM;
+    ISCriticalSection CriticalSectionA;
 };
 //-----------------------------------------------------------------------------
 #endif

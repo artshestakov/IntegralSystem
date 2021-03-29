@@ -11,40 +11,40 @@
 class ISTcpServer
 {
 public:
-	static ISTcpServer& Instance();
+    static ISTcpServer& Instance();
 
-	std::string GetErrorString() const;
-	
-	bool Start();
-	void Stop();
-
-private:
-	void WorkerAcceptor(); //Поток приёма соединений
-	void WorkerReader(ISTcpClient *TcpClient); //Поток чтения данных
-	void WorkerBalancer(); //Поток распределения сообщений
-	void WorkerAnswer(); //Поток ответов
-
-	bool ParseMessage(const char *Buffer, size_t BufferSize, ISTcpMessage *TcpMessage);
-	void CloseSocket(SOCKET Socket);
-	void ClientAdd(ISTcpClient *TcpClient);
-	bool GetIsRunning(); //Проверка работы сервера
-	
-private:
-	ISTcpServer();
-	~ISTcpServer();
-	ISTcpServer(const ISTcpServer&) = delete;
-	ISTcpServer(ISTcpServer&&) = delete;
-	ISTcpServer& operator=(const ISTcpServer&) = delete;
-	ISTcpServer& operator=(ISTcpServer&&) = delete;
+    std::string GetErrorString() const;
+    
+    bool Start();
+    void Stop();
 
 private:
-	std::string ErrorString;
-	SOCKET SocketServer;
-	std::vector<ISTcpClient*> Clients;
-	bool IsRunning;
-	std::vector<ISTcpWorker*> Workers;
-	unsigned int WorkerCount;
-	ISCriticalSection CriticalSection;
+    void WorkerAcceptor(); //Поток приёма соединений
+    void WorkerReader(ISTcpClient *TcpClient); //Поток чтения данных
+    void WorkerBalancer(); //Поток распределения сообщений
+    void WorkerAnswer(); //Поток ответов
+
+    bool ParseMessage(const char *Buffer, size_t BufferSize, ISTcpMessage *TcpMessage);
+    void CloseSocket(SOCKET Socket);
+    void ClientAdd(ISTcpClient *TcpClient);
+    bool GetIsRunning(); //Проверка работы сервера
+    
+private:
+    ISTcpServer();
+    ~ISTcpServer();
+    ISTcpServer(const ISTcpServer&) = delete;
+    ISTcpServer(ISTcpServer&&) = delete;
+    ISTcpServer& operator=(const ISTcpServer&) = delete;
+    ISTcpServer& operator=(ISTcpServer&&) = delete;
+
+private:
+    std::string ErrorString;
+    SOCKET SocketServer;
+    std::vector<ISTcpClient*> Clients;
+    bool IsRunning;
+    std::vector<ISTcpWorker*> Workers;
+    unsigned int WorkerCount;
+    ISCriticalSection CriticalSection;
 };
 //-----------------------------------------------------------------------------
 #endif

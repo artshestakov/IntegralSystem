@@ -7,19 +7,19 @@
 class ISTcpAnswer
 {
 public:
-	ISTcpAnswer(SOCKET socket);
-	~ISTcpAnswer();
+    ISTcpAnswer(SOCKET socket);
+    ~ISTcpAnswer();
 
-	bool IsError() const;
-	std::string GetErrorString() const;
-	void SetError(const std::string &error_string);
-	SOCKET GetSocket() const;
-	std::string ToJson() const;
-	
+    bool IsError() const;
+    std::string GetErrorString() const;
+    void SetError(const std::string &error_string);
+    SOCKET GetSocket() const;
+    std::string ToJson() const;
+    
 private:
-	std::string ErrorString;
-	bool Error;
-	SOCKET Socket; //Клиентский сокет
+    std::string ErrorString;
+    bool Error;
+    SOCKET Socket; //Клиентский сокет
 };
 //-----------------------------------------------------------------------------
 #endif

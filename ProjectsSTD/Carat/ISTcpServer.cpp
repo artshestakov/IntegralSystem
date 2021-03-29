@@ -8,407 +8,407 @@
 #include "ISTcpQueue.h"
 //-----------------------------------------------------------------------------
 ISTcpServer::ISTcpServer()
-	: ErrorString(STRING_NO_ERROR),
-	SocketServer(0),
-	IsRunning(false),
-	WorkerCount(0)
+    : ErrorString(STRING_NO_ERROR),
+    SocketServer(0),
+    IsRunning(false),
+    WorkerCount(0)
 {
-	CRITICAL_SECTION_INIT(&CriticalSection);
+    CRITICAL_SECTION_INIT(&CriticalSection);
 }
 //-----------------------------------------------------------------------------
 ISTcpServer::~ISTcpServer()
 {
-	CRITICAL_SECTION_DESTROY(&CriticalSection);
+    CRITICAL_SECTION_DESTROY(&CriticalSection);
 }
 //-----------------------------------------------------------------------------
 ISTcpServer& ISTcpServer::Instance()
 {
-	static ISTcpServer TcpServer;
-	return TcpServer;
+    static ISTcpServer TcpServer;
+    return TcpServer;
 }
 //-----------------------------------------------------------------------------
 std::string ISTcpServer::GetErrorString() const
 {
-	return ErrorString;
+    return ErrorString;
 }
 //-----------------------------------------------------------------------------
 bool ISTcpServer::Start()
 {
-	ISLOGGER_I(__CLASS__, "Starting");
+    ISLOGGER_I(__CLASS__, "Starting");
 
-	WSADATA WsaData;
-	if (WSAStartup(MAKEWORD(2, 2), &WsaData) != 0)
-	{
-		ErrorString = ISAlgorithm::GetLastErrorS();
-		return false;
-	}
-	
-	SOCKADDR_IN SocketAddress;
-	SocketAddress.sin_addr.S_un.S_addr = INADDR_ANY; //Любой IP адресс
-	SocketAddress.sin_port = htons(50000); //Задаём порт
-	SocketAddress.sin_family = AF_INET; //AF_INET - Cемейство адресов для IPv4
+    WSADATA WsaData;
+    if (WSAStartup(MAKEWORD(2, 2), &WsaData) != 0)
+    {
+        ErrorString = ISAlgorithm::GetLastErrorS();
+        return false;
+    }
+    
+    SOCKADDR_IN SocketAddress;
+    SocketAddress.sin_addr.S_un.S_addr = INADDR_ANY; //Любой IP адресс
+    SocketAddress.sin_port = htons(50000); //Задаём порт
+    SocketAddress.sin_family = AF_INET; //AF_INET - Cемейство адресов для IPv4
 
-	SocketServer = socket(AF_INET, SOCK_STREAM, 0);
-	if (SocketServer == INVALID_SOCKET)
-	{
-		ErrorString = ISAlgorithm::GetLastErrorS();
-		return false;
-	}
+    SocketServer = socket(AF_INET, SOCK_STREAM, 0);
+    if (SocketServer == INVALID_SOCKET)
+    {
+        ErrorString = ISAlgorithm::GetLastErrorS();
+        return false;
+    }
 
-	if (bind(SocketServer, (struct sockaddr*)&SocketAddress, sizeof(SocketAddress)) == SOCKET_ERROR)
-	{
-		ErrorString = ISAlgorithm::GetLastErrorS();
-		return false;
-	}
+    if (bind(SocketServer, (struct sockaddr*)&SocketAddress, sizeof(SocketAddress)) == SOCKET_ERROR)
+    {
+        ErrorString = ISAlgorithm::GetLastErrorS();
+        return false;
+    }
 
-	if (listen(SocketServer, SOMAXCONN) == SOCKET_ERROR)
-	{
-		ErrorString = ISAlgorithm::GetLastErrorS();
-		return false;
-	}
+    if (listen(SocketServer, SOMAXCONN) == SOCKET_ERROR)
+    {
+        ErrorString = ISAlgorithm::GetLastErrorS();
+        return false;
+    }
 
-	//Создаём воркеры
-	WorkerCount = std::thread::hardware_concurrency();
-	Workers.resize(WorkerCount);
-	for (unsigned int i = 0; i < WorkerCount; ++i)
-	{
-		ISTcpWorker *TcpWorker = new ISTcpWorker();
-		TcpWorker->Start();
-		Workers[i] = TcpWorker;
-	}
+    //Создаём воркеры
+    WorkerCount = std::thread::hardware_concurrency();
+    Workers.resize(WorkerCount);
+    for (unsigned int i = 0; i < WorkerCount; ++i)
+    {
+        ISTcpWorker *TcpWorker = new ISTcpWorker();
+        TcpWorker->Start();
+        Workers[i] = TcpWorker;
+    }
 
-	//Запускаем потоки и выходим
-	IsRunning = true;
-	std::thread(&ISTcpServer::WorkerAcceptor, this).detach();
-	std::thread(&ISTcpServer::WorkerBalancer, this).detach();
-	std::thread(&ISTcpServer::WorkerAnswer, this).detach();
-	ISLOGGER_I(__CLASS__, "Started");
-	return true;
+    //Запускаем потоки и выходим
+    IsRunning = true;
+    std::thread(&ISTcpServer::WorkerAcceptor, this).detach();
+    std::thread(&ISTcpServer::WorkerBalancer, this).detach();
+    std::thread(&ISTcpServer::WorkerAnswer, this).detach();
+    ISLOGGER_I(__CLASS__, "Started");
+    return true;
 }
 //-----------------------------------------------------------------------------
 void ISTcpServer::Stop()
 {
-	if (WSACleanup() != 0) //Не удалось выгрузить WSA
-	{
-		ISLOGGER_E(__CLASS__, "not clean WSA: %s", ISAlgorithm::GetLastErrorS().c_str());
-	}
+    if (WSACleanup() != 0) //Не удалось выгрузить WSA
+    {
+        ISLOGGER_E(__CLASS__, "not clean WSA: %s", ISAlgorithm::GetLastErrorS().c_str());
+    }
 
-	CRITICAL_SECTION_LOCK(&CriticalSection);
-	IsRunning = false;
-	CRITICAL_SECTION_UNLOCK(&CriticalSection);
+    CRITICAL_SECTION_LOCK(&CriticalSection);
+    IsRunning = false;
+    CRITICAL_SECTION_UNLOCK(&CriticalSection);
 
-	while (!Workers.empty())
-	{
-		ISTcpWorker *TcpWorker = ISAlgorithm::VectorTakeBack(Workers);
-		TcpWorker->Shutdown();
-		delete TcpWorker;
-	}
+    while (!Workers.empty())
+    {
+        ISTcpWorker *TcpWorker = ISAlgorithm::VectorTakeBack(Workers);
+        TcpWorker->Shutdown();
+        delete TcpWorker;
+    }
 }
 //-----------------------------------------------------------------------------
 void ISTcpServer::WorkerAcceptor()
 {
-	while (true)
-	{
-		SOCKADDR_IN SocketInfo = { 0 };
-		int AddressLen = sizeof(SocketInfo);
-		SOCKET SocketClient = accept(SocketServer, (struct sockaddr*)&SocketInfo, &AddressLen);
-		if (SocketClient != SOCKET_ERROR) //Клиент успешно подключился
-		{
-			//Пытаемся получить IP-адрес клиента и если не получилось - отключаем его
-			char Char[15] = { 0 }; //Выделяем 15 байт для хранения IP-адреса
-			if (!inet_ntop(AF_INET, &SocketInfo.sin_addr, Char, 15))
-			{
-				CloseSocket(SocketClient);
-				continue;
-			}
+    while (true)
+    {
+        SOCKADDR_IN SocketInfo = { 0 };
+        int AddressLen = sizeof(SocketInfo);
+        SOCKET SocketClient = accept(SocketServer, (struct sockaddr*)&SocketInfo, &AddressLen);
+        if (SocketClient != SOCKET_ERROR) //Клиент успешно подключился
+        {
+            //Пытаемся получить IP-адрес клиента и если не получилось - отключаем его
+            char Char[15] = { 0 }; //Выделяем 15 байт для хранения IP-адреса
+            if (!inet_ntop(AF_INET, &SocketInfo.sin_addr, Char, 15))
+            {
+                CloseSocket(SocketClient);
+                continue;
+            }
 
-			//Адрес получили. Добавляем клиента в память
-			ISTcpClient *TcpClient = new ISTcpClient();
-			TcpClient->Socket = SocketClient;
-			TcpClient->IPAddress = Char;
-			TcpClient->Port = SocketInfo.sin_port;
-			ClientAdd(TcpClient);
-			ISLOGGER_I(__CLASS__, "Connected %s", TcpClient->IPAddress.c_str());
+            //Адрес получили. Добавляем клиента в память
+            ISTcpClient *TcpClient = new ISTcpClient();
+            TcpClient->Socket = SocketClient;
+            TcpClient->IPAddress = Char;
+            TcpClient->Port = SocketInfo.sin_port;
+            ClientAdd(TcpClient);
+            ISLOGGER_I(__CLASS__, "Connected %s", TcpClient->IPAddress.c_str());
 
-			//Создаём новым поток для этого клиента
-			std::thread(&ISTcpServer::WorkerReader, this, std::ref(TcpClient)).detach();
-		}
-		else if (SocketClient == NPOS && GetLastError() == WSAEINTR) //Завершение работы сервера
-		{
-			ISLOGGER_I(__CLASS__, "Stopped");
-			break;
-		}
-		else //При подключении произошла ошибка
-		{
-			ISLOGGER_C(__CLASS__, "Connect client with error: %s", ISAlgorithm::GetLastErrorS().c_str());
-		}
-	}
+            //Создаём новым поток для этого клиента
+            std::thread(&ISTcpServer::WorkerReader, this, std::ref(TcpClient)).detach();
+        }
+        else if (SocketClient == NPOS && GetLastError() == WSAEINTR) //Завершение работы сервера
+        {
+            ISLOGGER_I(__CLASS__, "Stopped");
+            break;
+        }
+        else //При подключении произошла ошибка
+        {
+            ISLOGGER_C(__CLASS__, "Connect client with error: %s", ISAlgorithm::GetLastErrorS().c_str());
+        }
+    }
 }
 //-----------------------------------------------------------------------------
 void ISTcpServer::WorkerReader(ISTcpClient *TcpClient)
 {
-	int Result = 0;
-	size_t MessageSize = 0;
-	char Buffer[TCP_PACKET_MAX_SIZE] = { 0 }; //Буфер для сообщения
-	while (true)
-	{
-		Result = recv(TcpClient->Socket, Buffer, TCP_PACKET_MAX_SIZE, 0);
-		if (Result == 0) //Клиент отключился
-		{
-			ISLOGGER_I(__CLASS__, "Disconnected %s", TcpClient->IPAddress.c_str());
-			CloseSocket(TcpClient->Socket);
-			break;
-		}
-		else if (Result == SOCKET_ERROR) //Произошла ошибка
-		{
-			ISLOGGER_E(__CLASS__, "Socket error: %s", ISAlgorithm::GetLastErrorS().c_str());
-			CloseSocket(TcpClient->Socket);
-			break;
-		}
-		else if(Result > 0) //Пришли данные
-		{
-			ISLOGGER_I(__CLASS__, "Receive data: %d", Result);
-			if (MessageSize == 0) //Если размер сообщения ещё не получен - получаем его
-			{
-				for (int i = 0; i < Result; ++i)
-				{
-					if (Buffer[i] == '.') //Нашли точку
-					{
-						char Char[20] = { 0 };
-						std::memcpy(Char, Buffer, i); //Получаем размер строкой
-						MessageSize = std::atoi(Char); //Приводим строку с размером к целому числу
-						if (MessageSize > 0) //Приведение прошло успешно
-						{
-							--Result -= i; //Реформируем размер данных
-							std::memmove(Buffer, Buffer + i + 1, Result); //Смещаем буфер (вырезаем размер и точку)
-						}
-						break;
-					}
-				}
-				if (!MessageSize) //Размер не найден - сообщение не валидное - отключаем клиента
-				{
-					ISLOGGER_C(__CLASS__, "Not get message size. Client will be disconnected. Invalid message:\n%s", Buffer);
-					CloseSocket(TcpClient->Socket);
-					break;
-				}
-			}
-			
-			//Добавляем очередную порцию данных в буфер клиента
-			TcpClient->AddData(Buffer, Result);
+    int Result = 0;
+    size_t MessageSize = 0;
+    char Buffer[TCP_PACKET_MAX_SIZE] = { 0 }; //Буфер для сообщения
+    while (true)
+    {
+        Result = recv(TcpClient->Socket, Buffer, TCP_PACKET_MAX_SIZE, 0);
+        if (Result == 0) //Клиент отключился
+        {
+            ISLOGGER_I(__CLASS__, "Disconnected %s", TcpClient->IPAddress.c_str());
+            CloseSocket(TcpClient->Socket);
+            break;
+        }
+        else if (Result == SOCKET_ERROR) //Произошла ошибка
+        {
+            ISLOGGER_E(__CLASS__, "Socket error: %s", ISAlgorithm::GetLastErrorS().c_str());
+            CloseSocket(TcpClient->Socket);
+            break;
+        }
+        else if(Result > 0) //Пришли данные
+        {
+            ISLOGGER_I(__CLASS__, "Receive data: %d", Result);
+            if (MessageSize == 0) //Если размер сообщения ещё не получен - получаем его
+            {
+                for (int i = 0; i < Result; ++i)
+                {
+                    if (Buffer[i] == '.') //Нашли точку
+                    {
+                        char Char[20] = { 0 };
+                        std::memcpy(Char, Buffer, i); //Получаем размер строкой
+                        MessageSize = std::atoi(Char); //Приводим строку с размером к целому числу
+                        if (MessageSize > 0) //Приведение прошло успешно
+                        {
+                            --Result -= i; //Реформируем размер данных
+                            std::memmove(Buffer, Buffer + i + 1, Result); //Смещаем буфер (вырезаем размер и точку)
+                        }
+                        break;
+                    }
+                }
+                if (!MessageSize) //Размер не найден - сообщение не валидное - отключаем клиента
+                {
+                    ISLOGGER_C(__CLASS__, "Not get message size. Client will be disconnected. Invalid message:\n%s", Buffer);
+                    CloseSocket(TcpClient->Socket);
+                    break;
+                }
+            }
+            
+            //Добавляем очередную порцию данных в буфер клиента
+            TcpClient->AddData(Buffer, Result);
 
-			//Если последний символ текущего пакета не является завершающим - идём на следующую итерацию
-			if (Buffer[Result - 1] != CHAR_NULL_TERM)
-			{
-				continue;
-			}
+            //Если последний символ текущего пакета не является завершающим - идём на следующую итерацию
+            if (Buffer[Result - 1] != CHAR_NULL_TERM)
+            {
+                continue;
+            }
 
-			//Получаем целое сообщение
-			std::vector<char> Vector;
-			TcpClient->GetBuffer(Vector);
+            //Получаем целое сообщение
+            std::vector<char> Vector;
+            TcpClient->GetBuffer(Vector);
 
-			//Размер заявленных данных не соответствует реальному - отключаем клиента
-			size_t VectorSize = Vector.size();
-			if (VectorSize != MessageSize)
-			{
-				ISLOGGER_E(__CLASS__, "Invalid size. Client will be disconnected. Declared size %d, read size %d", MessageSize, VectorSize);
-				CloseSocket(TcpClient->Socket);
-				break;
-			}
+            //Размер заявленных данных не соответствует реальному - отключаем клиента
+            size_t VectorSize = Vector.size();
+            if (VectorSize != MessageSize)
+            {
+                ISLOGGER_E(__CLASS__, "Invalid size. Client will be disconnected. Declared size %d, read size %d", MessageSize, VectorSize);
+                CloseSocket(TcpClient->Socket);
+                break;
+            }
 
-			//Создаём указатель на сообщение и пытаем парсить
-			ISTcpMessage *TcpMessage = new ISTcpMessage();
-			TcpMessage->Socket = TcpClient->Socket;
-			if (!ParseMessage(Vector.data(), VectorSize, TcpMessage)) //Не удалось спарсить сообщение
-			{
-				ISLOGGER_E(__CLASS__, "Invalid message. Client will be disconnected. Error: %s", TcpMessage->GetErrorString().c_str());
-			}
-			ISTcpQueue::Instance().AddMessage(TcpMessage);
-		}
+            //Создаём указатель на сообщение и пытаем парсить
+            ISTcpMessage *TcpMessage = new ISTcpMessage();
+            TcpMessage->Socket = TcpClient->Socket;
+            if (!ParseMessage(Vector.data(), VectorSize, TcpMessage)) //Не удалось спарсить сообщение
+            {
+                ISLOGGER_E(__CLASS__, "Invalid message. Client will be disconnected. Error: %s", TcpMessage->GetErrorString().c_str());
+            }
+            ISTcpQueue::Instance().AddMessage(TcpMessage);
+        }
 
-		//Чистим буфер и переменные
-		std::memset(Buffer, 0, sizeof(Buffer));
-		Result = 0;
-		MessageSize = 0;
-	}
+        //Чистим буфер и переменные
+        std::memset(Buffer, 0, sizeof(Buffer));
+        Result = 0;
+        MessageSize = 0;
+    }
 }
 //-----------------------------------------------------------------------------
 void ISTcpServer::WorkerBalancer()
 {
-	ISTcpMessage *TcpMessage = nullptr;
-	while (true)
-	{
-		if (!GetIsRunning()) //Проверим, не остановлен ли сервер
-		{
-			break;
-		}
+    ISTcpMessage *TcpMessage = nullptr;
+    while (true)
+    {
+        if (!GetIsRunning()) //Проверим, не остановлен ли сервер
+        {
+            break;
+        }
 
-		ISSleep(1);
-		TcpMessage = ISTcpQueue::Instance().GetMessage();
-		if (TcpMessage) //Если есть сообщение на очереди - ищем свободный воркер
-		{
-			unsigned int Index = 0;
-			while (Index < WorkerCount)
-			{
-				ISTcpWorker *TcpWorker = Workers[Index]; //Получаем текущий воркер
-				if (!TcpWorker->GetBusy()) //Если он не занят - передаём ему очередное сообщение и выходим из цикла
-				{
-					TcpWorker->SetMessage(TcpMessage);
-					TcpMessage = nullptr;
-					break;
-				}
-				++Index; //Инкрементируем индекс
-				if (Index == WorkerCount) //Если текущий индекс сравнялся с количеством воркером - обнуляем его
-				{
-					Index = 0;
-				}
-			}
-		}
-	}
+        ISSleep(1);
+        TcpMessage = ISTcpQueue::Instance().GetMessage();
+        if (TcpMessage) //Если есть сообщение на очереди - ищем свободный воркер
+        {
+            unsigned int Index = 0;
+            while (Index < WorkerCount)
+            {
+                ISTcpWorker *TcpWorker = Workers[Index]; //Получаем текущий воркер
+                if (!TcpWorker->GetBusy()) //Если он не занят - передаём ему очередное сообщение и выходим из цикла
+                {
+                    TcpWorker->SetMessage(TcpMessage);
+                    TcpMessage = nullptr;
+                    break;
+                }
+                ++Index; //Инкрементируем индекс
+                if (Index == WorkerCount) //Если текущий индекс сравнялся с количеством воркером - обнуляем его
+                {
+                    Index = 0;
+                }
+            }
+        }
+    }
 }
 //-----------------------------------------------------------------------------
 void ISTcpServer::WorkerAnswer()
 {
-	ISTcpAnswer *TcpAnswer = nullptr;
-	while (true)
-	{
-		if (!GetIsRunning()) //Проверим, не остановлен ли сервер
-		{
-			break;
-		}
+    ISTcpAnswer *TcpAnswer = nullptr;
+    while (true)
+    {
+        if (!GetIsRunning()) //Проверим, не остановлен ли сервер
+        {
+            break;
+        }
 
-		ISSleep(1);
-		TcpAnswer = ISTcpQueue::Instance().GetAnswer();
-		if (TcpAnswer) //Если на очереди есть ответ - отправляем его клиенту
-		{
-			std::string JsonString = TcpAnswer->ToJson();
-			size_t Size = JsonString.size();
-			int Result = send(TcpAnswer->GetSocket(), JsonString.c_str(), (int)Size, MSG_DONTROUTE);
-			if (Result == SOCKET_ERROR) //Ошибка отправки
-			{
-				ISLOGGER_E(__CLASS__, "not send answer: %s", ISAlgorithm::GetLastErrorS().c_str());
-			}
-			else //Данные были отправлены успешно
-			{
-				ISLOGGER_I(__CLASS__, "Sended %d of %d bytes", Result, Size);
-			}
-			delete TcpAnswer;
-		}
-	}
+        ISSleep(1);
+        TcpAnswer = ISTcpQueue::Instance().GetAnswer();
+        if (TcpAnswer) //Если на очереди есть ответ - отправляем его клиенту
+        {
+            std::string JsonString = TcpAnswer->ToJson();
+            size_t Size = JsonString.size();
+            int Result = send(TcpAnswer->GetSocket(), JsonString.c_str(), (int)Size, MSG_DONTROUTE);
+            if (Result == SOCKET_ERROR) //Ошибка отправки
+            {
+                ISLOGGER_E(__CLASS__, "not send answer: %s", ISAlgorithm::GetLastErrorS().c_str());
+            }
+            else //Данные были отправлены успешно
+            {
+                ISLOGGER_I(__CLASS__, "Sended %d of %d bytes", Result, Size);
+            }
+            delete TcpAnswer;
+        }
+    }
 }
 //-----------------------------------------------------------------------------
 bool ISTcpServer::ParseMessage(const char *Buffer, size_t BufferSize, ISTcpMessage *TcpMessage)
 {
-	//Заполняем размер сообщения
-	TcpMessage->Size = BufferSize;
+    //Заполняем размер сообщения
+    TcpMessage->Size = BufferSize;
 
-	//Засекаем время и парсим сообщение
-	rapidjson::Document JsonDocument;
-	ISTimePoint TimePoint = ISAlgorithm::GetTick();
-	JsonDocument.Parse(Buffer, BufferSize);
-	TcpMessage->MSecParse = ISAlgorithm::GetTickDiff(ISAlgorithm::GetTick(), TimePoint);
+    //Засекаем время и парсим сообщение
+    rapidjson::Document JsonDocument;
+    ISTimePoint TimePoint = ISAlgorithm::GetTick();
+    JsonDocument.Parse(Buffer, BufferSize);
+    TcpMessage->MSecParse = ISAlgorithm::GetTickDiff(ISAlgorithm::GetTick(), TimePoint);
 
-	//Проверяем результат парсинга
-	rapidjson::ParseErrorCode ParseError = JsonDocument.GetParseError();
-	if (ParseError != rapidjson::ParseErrorCode::kParseErrorNone)
-	{
-		TcpMessage->SetErrorString(GetParseError_En(ParseError));
-		return false;
-	}
+    //Проверяем результат парсинга
+    rapidjson::ParseErrorCode ParseError = JsonDocument.GetParseError();
+    if (ParseError != rapidjson::ParseErrorCode::kParseErrorNone)
+    {
+        TcpMessage->SetErrorString(GetParseError_En(ParseError));
+        return false;
+    }
 
-	//Документ не является объектом - ошибка
-	if (!JsonDocument.IsObject())
-	{
-		TcpMessage->SetErrorString("message is not JSON-Object");
-		return false;
-	}
+    //Документ не является объектом - ошибка
+    if (!JsonDocument.IsObject())
+    {
+        TcpMessage->SetErrorString("message is not JSON-Object");
+        return false;
+    }
 
-	//Проверяем наличие поля Type
-	if (!JsonDocument.HasMember("Type"))
-	{
-		TcpMessage->SetErrorString("not exist field \"Type\"");
-		return false;
-	}
+    //Проверяем наличие поля Type
+    if (!JsonDocument.HasMember("Type"))
+    {
+        TcpMessage->SetErrorString("not exist field \"Type\"");
+        return false;
+    }
 
-	//Проверим что Type - строка
-	rapidjson::Value &FieldType = JsonDocument["Type"];
-	if (!FieldType.IsString())
-	{
-		TcpMessage->SetErrorString("field \"Type\" is not a string");
-		return false;
-	}
+    //Проверим что Type - строка
+    rapidjson::Value &FieldType = JsonDocument["Type"];
+    if (!FieldType.IsString())
+    {
+        TcpMessage->SetErrorString("field \"Type\" is not a string");
+        return false;
+    }
 
-	//Значение Type пустое - ошибка
-	std::string MessageType = FieldType.GetString();
-	if (MessageType.empty())
-	{
-		TcpMessage->SetErrorString("field \"Type\" is empty");
-		return false;
-	}
-	TcpMessage->Type = MessageType;
+    //Значение Type пустое - ошибка
+    std::string MessageType = FieldType.GetString();
+    if (MessageType.empty())
+    {
+        TcpMessage->SetErrorString("field \"Type\" is empty");
+        return false;
+    }
+    TcpMessage->Type = MessageType;
 
-	//Если параметры в запросе есть - проверим их наличие и тип
-	if (JsonDocument.HasMember("Parameters"))
-	{
-		rapidjson::Value &FieldParameters = JsonDocument["Parameters"];
-		if (!FieldParameters.IsObject())
-		{
-			TcpMessage->SetErrorString("field \"Parameters\" is not a JSON-objects");
-			return false;
-		}
+    //Если параметры в запросе есть - проверим их наличие и тип
+    if (JsonDocument.HasMember("Parameters"))
+    {
+        rapidjson::Value &FieldParameters = JsonDocument["Parameters"];
+        if (!FieldParameters.IsObject())
+        {
+            TcpMessage->SetErrorString("field \"Parameters\" is not a JSON-objects");
+            return false;
+        }
 
-		if (FieldParameters.GetObjectA().ObjectEmpty())
-		{
-			TcpMessage->SetErrorString("field \"Parameters\" is empty");
-			return false;
-		}
-		TcpMessage->Parameters.CopyFrom(FieldParameters, TcpMessage->Parameters.GetAllocator());
-	}
-	return true;
+        if (FieldParameters.GetObjectA().ObjectEmpty())
+        {
+            TcpMessage->SetErrorString("field \"Parameters\" is empty");
+            return false;
+        }
+        TcpMessage->Parameters.CopyFrom(FieldParameters, TcpMessage->Parameters.GetAllocator());
+    }
+    return true;
 }
 //-----------------------------------------------------------------------------
 void ISTcpServer::CloseSocket(SOCKET Socket)
 {
-	if (shutdown(Socket, SD_BOTH) != SOCKET_ERROR) //Сокет закрыт - удаляем его из памяти
-	{
-		bool IsDeleted = false; //Флаг удаления клиента
-		CRITICAL_SECTION_LOCK(&CriticalSection);
-		for (size_t i = 0, c = Clients.size(); i < c; ++i)
-		{
-			if (Clients[i]->Socket == Socket) //Нашли нужного клиента
-			{
-				ISTcpClient *TcpClient = Clients[i];
-				Clients.erase(Clients.begin() + i);
-				delete TcpClient;
-				IsDeleted = true;
-				break;
-			}
-		}
-		CRITICAL_SECTION_UNLOCK(&CriticalSection);
+    if (shutdown(Socket, SD_BOTH) != SOCKET_ERROR) //Сокет закрыт - удаляем его из памяти
+    {
+        bool IsDeleted = false; //Флаг удаления клиента
+        CRITICAL_SECTION_LOCK(&CriticalSection);
+        for (size_t i = 0, c = Clients.size(); i < c; ++i)
+        {
+            if (Clients[i]->Socket == Socket) //Нашли нужного клиента
+            {
+                ISTcpClient *TcpClient = Clients[i];
+                Clients.erase(Clients.begin() + i);
+                delete TcpClient;
+                IsDeleted = true;
+                break;
+            }
+        }
+        CRITICAL_SECTION_UNLOCK(&CriticalSection);
 
-		if (!IsDeleted) //Клиент не был удалён
-		{
-			ISLOGGER_C(__CLASS__, "Not remove client with memory");
-		}
-	}
-	else //Не удалось закрыть сокет
-	{
-		ISLOGGER_E(__CLASS__, "Not close socket: %s", ISAlgorithm::GetLastErrorS().c_str());
-	}
+        if (!IsDeleted) //Клиент не был удалён
+        {
+            ISLOGGER_C(__CLASS__, "Not remove client with memory");
+        }
+    }
+    else //Не удалось закрыть сокет
+    {
+        ISLOGGER_E(__CLASS__, "Not close socket: %s", ISAlgorithm::GetLastErrorS().c_str());
+    }
 }
 //-----------------------------------------------------------------------------
 void ISTcpServer::ClientAdd(ISTcpClient *TcpClient)
 {
-	CRITICAL_SECTION_LOCK(&CriticalSection);
-	Clients.emplace_back(TcpClient);
-	CRITICAL_SECTION_UNLOCK(&CriticalSection);
+    CRITICAL_SECTION_LOCK(&CriticalSection);
+    Clients.emplace_back(TcpClient);
+    CRITICAL_SECTION_UNLOCK(&CriticalSection);
 }
 //-----------------------------------------------------------------------------
 bool ISTcpServer::GetIsRunning()
 {
-	//Проверяем, запущен ли сервер
-	CRITICAL_SECTION_LOCK(&CriticalSection);
-	bool is_running = IsRunning;
-	CRITICAL_SECTION_UNLOCK(&CriticalSection);
-	return is_running;
+    //Проверяем, запущен ли сервер
+    CRITICAL_SECTION_LOCK(&CriticalSection);
+    bool is_running = IsRunning;
+    CRITICAL_SECTION_UNLOCK(&CriticalSection);
+    return is_running;
 }
 //-----------------------------------------------------------------------------

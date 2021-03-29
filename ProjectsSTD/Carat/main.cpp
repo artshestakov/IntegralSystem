@@ -2,14 +2,14 @@
 //-----------------------------------------------------------------------------
 int main(int argc, char **argv)
 {
-	ISCaratApplication CaratApplication(argc, argv);
-	if (CaratApplication.Init())
-	{
-		return CaratApplication.Start();
-	}
+    ISCaratApplication CaratApplication(argc, argv);
+    if (CaratApplication.Init())
+    {
+        return CaratApplication.Start();
+    }
 #ifdef DEBUG
-	system("PAUSE");
+    system("PAUSE");
 #endif
-	return EXIT_FAILURE;
+    return EXIT_FAILURE;
 }
 //-----------------------------------------------------------------------------

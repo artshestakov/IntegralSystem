@@ -7,8 +7,8 @@
 class ISSERVER_EXPORT TestClass
 {
 public:
-	TestClass();
-	~TestClass();
+    TestClass();
+    ~TestClass();
 };
 //-----------------------------------------------------------------------------
 #endif

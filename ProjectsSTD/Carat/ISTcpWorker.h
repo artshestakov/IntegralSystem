@@ -10,34 +10,34 @@
 class ISTcpWorker
 {
 public:
-	ISTcpWorker();
-	~ISTcpWorker();
+    ISTcpWorker();
+    ~ISTcpWorker();
 
-	bool GetBusy(); //Получить "занятость" воркера
-	void SetMessage(ISTcpMessage *TcpMessage); //Установить сообщение на обработку
-	void Start(); //Запустить воркер
-	void Shutdown(); //Остановить воркер
-
-private:
-	void Process();
-	bool Execute(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
-	bool CheckIsNull(ISTcpMessage *TcpMessage, const std::string &ParameterName);
+    bool GetBusy(); //Получить "занятость" воркера
+    void SetMessage(ISTcpMessage *TcpMessage); //Установить сообщение на обработку
+    void Start(); //Запустить воркер
+    void Shutdown(); //Остановить воркер
 
 private:
-	bool Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
-	bool Sleep(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
+    void Process();
+    bool Execute(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
+    bool CheckIsNull(ISTcpMessage *TcpMessage, const std::string &ParameterName);
 
 private:
-	std::string ErrorString;
-	bool IsBusy;
-	bool IsRunning;
-	bool IsFinished;
-	ISTcpMessage *CurrentMessage;
-	ISCriticalSection CriticalSection;
+    bool Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
+    bool Sleep(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
 
-	//Список TCP-функций
-	typedef bool (ISTcpWorker::*TCPFunction)(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
-	std::map<std::string, TCPFunction> MapFunction;
+private:
+    std::string ErrorString;
+    bool IsBusy;
+    bool IsRunning;
+    bool IsFinished;
+    ISTcpMessage *CurrentMessage;
+    ISCriticalSection CriticalSection;
+
+    //Список TCP-функций
+    typedef bool (ISTcpWorker::*TCPFunction)(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
+    std::map<std::string, TCPFunction> MapFunction;
 };
 //-----------------------------------------------------------------------------
 #endif

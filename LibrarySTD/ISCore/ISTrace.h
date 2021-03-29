@@ -11,12 +11,12 @@
 class ISCORE_EXPORT ISTrace
 {
 public:
-	ISTrace(const std::string &function_name, const std::string &message_text);
-	~ISTrace();
+    ISTrace(const std::string &function_name, const std::string &message_text);
+    ~ISTrace();
 
 private:
-	ISTimePoint TimePoint;
-	std::string FunctionName;
+    ISTimePoint TimePoint;
+    std::string FunctionName;
 };
 //-----------------------------------------------------------------------------
 #endif

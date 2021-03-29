@@ -8,23 +8,23 @@
 class ISTcpMessage
 {
 public:
-	ISTcpMessage();
-	~ISTcpMessage();
+    ISTcpMessage();
+    ~ISTcpMessage();
 
-	std::string GetErrorString() const;
-	void SetErrorString(const std::string &error_string);
-	bool IsValid() const;
+    std::string GetErrorString() const;
+    void SetErrorString(const std::string &error_string);
+    bool IsValid() const;
 
-	std::string Type; //Тип сообщения
-	rapidjson::Document Parameters; //Параметры
-	long long MSecParse; //Время парсинга
-	size_t Size;
-	size_t ChunkCount; //Количетсво чанков
-	SOCKET Socket; //Клиентский сокет
+    std::string Type; //Тип сообщения
+    rapidjson::Document Parameters; //Параметры
+    long long MSecParse; //Время парсинга
+    size_t Size;
+    size_t ChunkCount; //Количетсво чанков
+    SOCKET Socket; //Клиентский сокет
 
 private:
-	std::string ErrorString;
-	bool Valid; //Флаг валидности сообщения
+    std::string ErrorString;
+    bool Valid; //Флаг валидности сообщения
 };
 //-----------------------------------------------------------------------------
 #endif

@@ -8,23 +8,23 @@
 class ISCaratApplication
 {
 public:
-	ISCaratApplication(int argc, char **argv);
-	~ISCaratApplication();
+    ISCaratApplication(int argc, char **argv);
+    ~ISCaratApplication();
 
-	std::string GetErrorString() const;
+    std::string GetErrorString() const;
 
-	bool Init();
-	int Start();
-
-private:
-	void ShutdownController();
+    bool Init();
+    int Start();
 
 private:
-	std::string ErrorString;
-	bool IsRunning;
-	ISCriticalSection CriticalSection;
-	ISVectorString Arguments;
-	std::string FileShutdown;
+    void ShutdownController();
+
+private:
+    std::string ErrorString;
+    bool IsRunning;
+    ISCriticalSection CriticalSection;
+    ISVectorString Arguments;
+    std::string FileShutdown;
 };
 //-----------------------------------------------------------------------------
 #endif

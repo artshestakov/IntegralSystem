@@ -7,19 +7,19 @@
 class ISTcpClient
 {
 public:
-	ISTcpClient();
-	~ISTcpClient();
+    ISTcpClient();
+    ~ISTcpClient();
 
-	void AddData(const char *Data, int Size);
-	void GetBuffer(std::vector<char> &Vector);
+    void AddData(const char *Data, int Size);
+    void GetBuffer(std::vector<char> &Vector);
 
 public:
-	SOCKET Socket;
-	std::string IPAddress;
-	ISTcpPort Port;
+    SOCKET Socket;
+    std::string IPAddress;
+    ISTcpPort Port;
 
 private:
-	std::vector<std::vector<char>> Buffer;
+    std::vector<std::vector<char>> Buffer;
 };
 //-----------------------------------------------------------------------------
 #endif
