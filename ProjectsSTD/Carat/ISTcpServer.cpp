@@ -156,13 +156,11 @@ void ISTcpServer::WorkerReader(ISTcpClient *TcpClient)
         if (Result == 0) //Клиент отключился
         {
             ISLOGGER_I(__CLASS__, "Disconnected %s", TcpClient->IPAddress.c_str());
-            CloseSocket(TcpClient->Socket);
             break;
         }
         else if (Result == SOCKET_ERROR) //Произошла ошибка
         {
             ISLOGGER_E(__CLASS__, "Socket error: %s", ISAlgorithm::GetLastErrorS().c_str());
-            CloseSocket(TcpClient->Socket);
             break;
         }
         else if(Result > 0) //Пришли данные
@@ -188,7 +186,6 @@ void ISTcpServer::WorkerReader(ISTcpClient *TcpClient)
                 if (!MessageSize) //Размер не найден - сообщение не валидное - отключаем клиента
                 {
                     ISLOGGER_C(__CLASS__, "Not get message size. Client will be disconnected. Invalid message:\n%s", Buffer);
-                    CloseSocket(TcpClient->Socket);
                     break;
                 }
             }
@@ -211,7 +208,6 @@ void ISTcpServer::WorkerReader(ISTcpClient *TcpClient)
             if (VectorSize != MessageSize)
             {
                 ISLOGGER_E(__CLASS__, "Invalid size. Client will be disconnected. Declared size %d, read size %d", MessageSize, VectorSize);
-                CloseSocket(TcpClient->Socket);
                 break;
             }
 
@@ -230,6 +226,9 @@ void ISTcpServer::WorkerReader(ISTcpClient *TcpClient)
         Result = 0;
         MessageSize = 0;
     }
+
+    //Закрываем сокет
+    CloseSocket(TcpClient);
 }
 //-----------------------------------------------------------------------------
 void ISTcpServer::WorkerBalancer()
@@ -366,21 +365,16 @@ bool ISTcpServer::ParseMessage(const char *Buffer, size_t BufferSize, ISTcpMessa
     return true;
 }
 //-----------------------------------------------------------------------------
-void ISTcpServer::CloseSocket(SOCKET Socket)
+void ISTcpServer::CloseSocket(ISTcpClient *TcpClient)
 {
-    //Пытаемся закрыть сокет
-    if (shutdown(Socket, SD_BOTH) == SOCKET_ERROR)
-    {
-        ISLOGGER_E(__CLASS__, "Not close socket: %s", ISAlgorithm::GetLastErrorS().c_str());
-    }
-
     bool IsDeleted = false; //Флаг удаления клиента
+    SOCKET TcpSocket = TcpClient->Socket;
+
     CRITICAL_SECTION_LOCK(&CriticalSection);
     for (size_t i = 0, c = Clients.size(); i < c; ++i)
     {
-        if (Clients[i]->Socket == Socket) //Нашли нужного клиента
+        if (Clients[i] == TcpClient) //Нашли нужного клиента
         {
-            ISTcpClient *TcpClient = Clients[i];
             Clients.erase(Clients.begin() + i);
             delete TcpClient;
             IsDeleted = true;
@@ -388,9 +382,20 @@ void ISTcpServer::CloseSocket(SOCKET Socket)
         }
     }
     CRITICAL_SECTION_UNLOCK(&CriticalSection);
+
     if (!IsDeleted) //Клиент не был удалён
     {
         ISLOGGER_C(__CLASS__, "Not remove client with memory");
+    }
+    CloseSocket(TcpSocket);
+}
+//-----------------------------------------------------------------------------
+void ISTcpServer::CloseSocket(SOCKET Socket)
+{
+    //Пытаемся закрыть сокет
+    if (closesocket(Socket) == SOCKET_ERROR)
+    {
+        ISLOGGER_E(__CLASS__, "Not close socket %d: %s", Socket, ISAlgorithm::GetLastErrorS().c_str());
     }
 }
 //-----------------------------------------------------------------------------

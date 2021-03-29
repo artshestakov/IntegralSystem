@@ -25,6 +25,7 @@ private:
     void WorkerAnswer(); //Поток ответов
 
     bool ParseMessage(const char *Buffer, size_t BufferSize, ISTcpMessage *TcpMessage);
+    void CloseSocket(ISTcpClient *TcpClient);
     void CloseSocket(SOCKET Socket);
     void ClientAdd(ISTcpClient *TcpClient);
     bool GetIsRunning(); //Проверка работы сервера
