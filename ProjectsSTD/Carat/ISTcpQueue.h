@@ -15,7 +15,7 @@ public:
     void Shutdown(); //Остановка работы с очередью
 
     void AddMessage(ISTcpMessage *TcpMessage); //Добавить сообщение в очередь
-    ISTcpMessage* GetMessage(); //Получить очередное сообщение
+    ISTcpMessage* GetMessage(size_t &QueueSize); //Получить очередное сообщение
 
     void AddAnswer(ISTcpAnswer *TcpAnswer); //Добавить ответ в очередь
     ISTcpAnswer* GetAnswer(); //Получить очередной ответ

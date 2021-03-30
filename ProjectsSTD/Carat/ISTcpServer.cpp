@@ -236,6 +236,8 @@ void ISTcpServer::WorkerReader(ISTcpClient *TcpClient)
 void ISTcpServer::WorkerBalancer()
 {
     ISTcpMessage *TcpMessage = nullptr;
+    size_t QueueSize = 0;
+
     while (true)
     {
         if (!GetIsRunning()) //ѕроверим, не остановлен ли сервер
@@ -244,7 +246,7 @@ void ISTcpServer::WorkerBalancer()
         }
 
         ISSleep(1);
-        TcpMessage = ISTcpQueue::Instance().GetMessage();
+        TcpMessage = ISTcpQueue::Instance().GetMessage(QueueSize);
         if (TcpMessage) //≈сли есть сообщение на очереди - ищем свободный воркер
         {
             unsigned int Index = 0;
@@ -257,10 +259,11 @@ void ISTcpServer::WorkerBalancer()
                     TcpMessage = nullptr;
                     break;
                 }
-                ++Index; //»нкрементируем индекс
-                if (Index == WorkerCount) //≈сли текущий индекс сравн€лс€ с количеством воркером - обнул€ем его
+                if (++Index == WorkerCount) //≈сли текущий индекс сравн€лс€ с количеством воркером - обнул€ем его и ждЄм
                 {
                     Index = 0;
+                    ISLOGGER_W(__CLASS__, "All workers is busy. Queue size %d. Wait %d msec...", QueueSize, CARAT_WAIT_WORKERS_MSEC);
+                    ISSleep(CARAT_WAIT_WORKERS_MSEC);
                 }
             }
         }

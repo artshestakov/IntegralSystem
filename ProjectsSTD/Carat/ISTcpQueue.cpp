@@ -48,7 +48,7 @@ void ISTcpQueue::AddMessage(ISTcpMessage *TcpMessage)
     CRITICAL_SECTION_UNLOCK(&CriticalSectionM);
 }
 //-----------------------------------------------------------------------------
-ISTcpMessage* ISTcpQueue::GetMessage()
+ISTcpMessage* ISTcpQueue::GetMessage(size_t &QueueSize)
 {
     ISTcpMessage *TcpMessage = nullptr;
     //Блокируем критическую секцию, забираем очередное сообщение и разблокируем секцию
@@ -60,6 +60,7 @@ ISTcpMessage* ISTcpQueue::GetMessage()
             TcpMessage = QueueM.front();
             QueueM.pop();
         }
+        QueueSize = QueueM.size();
     }
     CRITICAL_SECTION_UNLOCK(&CriticalSectionM);
     return TcpMessage;
