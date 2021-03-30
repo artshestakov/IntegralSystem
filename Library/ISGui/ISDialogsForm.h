@@ -50,7 +50,6 @@ private:
 	void ShowAboutForm(); //Открыть форму "О программе"
 
 	void Input(); //Вход в программу
-	QStringList GetConnectedDevice() const; //Получить список хэшей подключенных устройств
 	void SetConnecting(bool Connecting); //Изменить рисовку интерфейса
 
 private:
@@ -85,27 +84,6 @@ private:
 private:
 	ISLineEdit *EditServer;
 	ISIntegerEdit *EditPort;
-};
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-class ISDeviceConnectDialog : public ISInterfaceDialogForm
-{
-	Q_OBJECT
-
-public:
-	ISDeviceConnectDialog();
-	virtual ~ISDeviceConnectDialog();
-
-	ISDeviceInfo& GetConnectedDevice();
-
-private:
-	void Timeout();
-
-private:
-	QTimer *Timer;
-	std::vector<ISDeviceInfo> LastVector;
-	ISDeviceInfo ConnectedDevice;
 };
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------

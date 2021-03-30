@@ -56,9 +56,6 @@
   <Local Name="Carat.Error.Query.Auth.LoginLinkGroup" Russian="Ваша учётная запись не привязанна к группе."/>
   <Local Name="Carat.Error.Query.Auth.LoginLifetimeNotStarted" Russian="Срок действия вашей учётной записи начнется %1."/>
   <Local Name="Carat.Error.Query.Auth.LoginLifetimeEnded" Russian="Срок действия вашей учётной записи закончился."/>
-  <Local Name="Carat.Error.Query.Auth.DeviceList.NotExist" Russian="Устройства не были переданы."/>
-  <Local Name="Carat.Error.Query.Auth.DeviceList.Empty" Russian="Список переданных устройств пуст."/>
-  <Local Name="Carat.Error.Query.Auth.Device.NotConnected" Russian="USB-устройство не подключено."/>
   <Local Name="Carat.Error.Query.Auth.UpdatePathNotExist" Russian="Не удалось проверить наличие обновлений."/>
 
   <Local Name="Carat.Error.Query.Sleep.TimeoutValueInvalid" Russian="Неправильное значение"/>
@@ -95,15 +92,6 @@
 
   <Local Name="Carat.Error.Query.UserSettingsReset.Update" Russian="Не удалось сбросить настройки."/>
 
-  <Local Name="Carat.Error.Query.UserDeviceAdd.Select" Russian="Не удалось проверить наличие устройства."/>
-  <Local Name="Carat.Error.Query.UserDeviceAdd.AlreadyExist" Russian="Устройство уже привязано."/>
-  <Local Name="Carat.Error.Query.UserDeviceAdd.GenerateSalt" Russian="Внутренняя ошибка."/>
-  <Local Name="Carat.Error.Query.UserDeviceAdd.Insert" Russian="Не удалось привязать устройство."/>
-
-  <Local Name="Carat.Error.Query.UserDeviceDelete.Select" Russian="Не удалось проверить наличие устройства."/>
-  <Local Name="Carat.Error.Query.UserDeviceDelete.NotExist" Russian="Устройство не привязано."/>
-  <Local Name="Carat.Error.Query.UserDeviceDelete.Delete" Russian="Не удалось отвязать устройство."/>
-  
   <Local Name="Carat.Error.Query.GetRecordCall.RecordDirIsEmpty" Russian="На сервере не настроена директория хранения записей разговоров."/>
   <Local Name="Carat.Error.Query.GetRecordCall.SelectUniqueID" Russian="Не удалось получить уникальный идентификатор записи разговора."/>
   <Local Name="Carat.Error.Query.GetRecordCall.NotFoundUniqueID" Russian="Запись с кодом %1 не найдена."/>

@@ -23,11 +23,9 @@ static QString QS_USERS_HASH = PREPARE_QUERY("SELECT usrs_hash, usrs_salt "
 											 "AND usrs_salt IS NOT NULL");
 //-----------------------------------------------------------------------------
 static QString QS_USER_AUTH = PREPARE_QUERY("SELECT usrs_id, usrs_issystem, usrs_group, usrs_fio, usrs_accessallowed, usrs_accountlifetime, usrs_accountlifetimestart, usrs_accountlifetimeend, usgp_fullaccess, "
-											"(SELECT sgdb_useraccessdatabase FROM _settingsdatabase WHERE sgdb_uid = :SettingUID), "
-											"udvc_hash, udvc_salt "
+											"(SELECT sgdb_useraccessdatabase FROM _settingsdatabase WHERE sgdb_uid = :SettingUID) "
 											"FROM _users "
 											"LEFT JOIN _usergroup ON usgp_id = usrs_group "
-											"LEFT JOIN _userdevice ON udvc_user = usrs_id "
 											"WHERE usrs_hash = :Hash");
 //-----------------------------------------------------------------------------
 static QString QI_PROTOCOL = PREPARE_QUERY("SELECT protocol_user(:UserID, :TableName, :TableLocalName, :TypeUID, :ObjectID, :Information)");
@@ -103,18 +101,6 @@ static QString QU_USER_SETTINGS_RESET = PREPARE_QUERY("UPDATE _usersettings SET 
 													  "usst_value = (SELECT stgs_defaultvalue FROM _settings WHERE stgs_id = usst_setting) "
 													  "WHERE usst_user = :UserID "
 													  "RETURNING (SELECT stgs_uid FROM _settings WHERE stgs_id = usst_setting), usst_value");
-//-----------------------------------------------------------------------------
-static QString QS_USER_DEVICE = PREPARE_QUERY("SELECT COUNT(*) "
-											  "FROM _userdevice "
-											  "WHERE udvc_user = :UserID");
-//-----------------------------------------------------------------------------
-static QString QI_USER_DEVICE = PREPARE_QUERY("INSERT INTO _userdevice(udvc_user, udvc_hash, udvc_salt) "
-											  "VALUES(:UserID, :Hash, :Salt) "
-											  "RETURNING (SELECT usrs_fio FROM _users WHERE usrs_id = :UserID)");
-//-----------------------------------------------------------------------------
-static QString QD_USER_DEVICE = PREPARE_QUERY("DELETE FROM _userdevice "
-											  "WHERE udvc_user = :UserID "
-											  "RETURNING (SELECT usrs_fio FROM _users WHERE usrs_id = :UserID)");
 //-----------------------------------------------------------------------------
 static QString QS_ASTERISK_RECORD = PREPARE_QUERY("SELECT ascl_uniqueid "
 												  "FROM _asteriskcalls "
@@ -568,8 +554,6 @@ ISTcpWorker::ISTcpWorker(const QString &db_host, int db_port, const QString &db_
 	MapFunction[API_USER_PASSWORD_EDIT] = &ISTcpWorker::UserPasswordEdit;
 	MapFunction[API_USER_PASSWORD_RESET] = &ISTcpWorker::UserPasswordReset;
 	MapFunction[API_USER_SETTINGS_RESET] = &ISTcpWorker::UserSettingsReset;
-	MapFunction[API_USER_DEVICE_ADD] = &ISTcpWorker::UserDeviceAdd;
-	MapFunction[API_USER_DEVICE_DELETE] = &ISTcpWorker::UserDeviceDelete;
 	MapFunction[API_GET_RECORD_CALL] = &ISTcpWorker::GetRecordCall;
 	MapFunction[API_GET_CLIENTS] = &ISTcpWorker::GetClients;
 	MapFunction[API_RECORD_ADD] = &ISTcpWorker::RecordAdd;
@@ -1075,8 +1059,6 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	QString UserFIO = qSelectAuth.ReadColumn("usrs_fio").toString();
 	int GroupID = qSelectAuth.ReadColumn("usrs_group").toInt();
 	bool GroupFullAccess = qSelectAuth.ReadColumn("usgp_fullaccess").toBool();
-	QString DeviceHash = qSelectAuth.ReadColumn("udvc_hash").toString();
-	QString DeviceSalt = qSelectAuth.ReadColumn("udvc_salt").toString();
 
 	//Доступ к БД запрещен
 	if (!qSelectAuth.ReadColumn("sgdb_useraccessdatabase").toBool() && !IsSystem)
@@ -1117,41 +1099,6 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 				ErrorString = LANG("Carat.Error.Query.Auth.LoginLifetimeEnded");
 				return false;
 			}
-		}
-	}
-
-	if (!DeviceHash.isEmpty() && !DeviceSalt.isEmpty()) //Устройство привязано
-	{
-		//Проверяем, передал ли клиент хеши устройств
-		if (!TcpMessage->Parameters.contains("DeviceList"))
-		{
-			ErrorString = LANG("Carat.Error.Query.Auth.DeviceList.NotExist");
-			return false;
-		}
-
-		//Проверяем наличие устройств в списке
-		QStringList DeviceList = TcpMessage->Parameters["DeviceList"].toStringList();
-		if (DeviceList.isEmpty())
-		{
-			ErrorString = LANG("Carat.Error.Query.Auth.DeviceList.Empty");
-			return false;
-		}
-
-		//Обходим список устройств
-		bool DeviceChecked = false;
-		for (const QString &DeviceListHash : DeviceList)
-		{
-			DeviceChecked = ISAlgorithm::SaltPassword(DeviceListHash, DeviceSalt) == DeviceHash;
-			if (DeviceChecked)
-			{
-				break;
-			}
-		}
-
-		if (!DeviceChecked)
-		{
-			ErrorString = LANG("Carat.Error.Query.Auth.Device.NotConnected");
-			return false;
 		}
 	}
 
@@ -1845,104 +1792,6 @@ bool ISTcpWorker::UserSettingsReset(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAn
 	}
 	TcpAnswer->Parameters["Result"] = ResultMap;
 	Protocol(TcpMessage->TcpSocket->GetUserID(), CONST_UID_PROTOCOL_USER_SETTINGS_RESET);
-	return true;
-}
-//-----------------------------------------------------------------------------
-bool ISTcpWorker::UserDeviceAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
-{
-	IS_UNUSED(TcpAnswer);
-
-	QVariant UserID = CheckNullField("UserID", TcpMessage),
-		Hash = CheckNullField("Hash", TcpMessage);
-	if (!UserID.isValid() || !Hash.isValid())
-	{
-		return false;
-	}
-
-	//Проверяем, не привязано ли уже устройство
-	ISQuery qSelect(ISDatabase::Instance().GetDB(DBConnectionName), QS_USER_DEVICE);
-	qSelect.BindValue(":UserID", UserID);
-	if (!qSelect.Execute()) //Ошибка запроса
-	{
-		return ErrorQuery(LANG("Carat.Error.Query.UserDeviceAdd.Select"), qSelect);
-	}
-
-	if (!qSelect.First()) //Какие-то проблемы
-	{
-		ErrorString = qSelect.GetErrorString();
-		return false;
-	}
-
-	//Устройство уже привязано - ошибка
-	if (qSelect.ReadColumn("count").toInt() > 0)
-	{
-		ErrorString = LANG("Carat.Error.Query.UserDeviceAdd.AlreadyExist");
-		return false;
-	}
-
-	//Генерируем соль
-	QString Salt;
-	if (!ISAlgorithm::GenerateSalt(Salt, ErrorString))
-	{
-		ErrorString = LANG("Carat.Error.Query.UserDeviceAdd.GenerateSalt");
-		return false;
-	}
-
-	//Солим хэш (тем же алгоритмом, что и пароль пользователя). Затем добавляем устройство в БД
-	QString HashResult = ISAlgorithm::SaltPassword(Hash.toString(), Salt);
-	ISQuery qInsert(ISDatabase::Instance().GetDB(DBConnectionName), QI_USER_DEVICE);
-	qInsert.BindValue(":UserID", UserID);
-	qInsert.BindValue(":Hash", HashResult);
-	qInsert.BindValue(":Salt", Salt);
-	if (!qInsert.Execute())
-	{
-		return ErrorQuery(LANG("Carat.Error.Query.UserDeviceAdd.Insert"), qInsert);
-	}
-	QVariant UserFIO = qInsert.First() ? qInsert.ReadColumn("usrs_fio") : QVariant();
-	Protocol(TcpMessage->TcpSocket->GetUserID(), CONST_UID_PROTOCOL_USER_DEVICE_ADD, QVariant(), QVariant(), QVariant(), UserFIO);
-	return true;
-}
-//-----------------------------------------------------------------------------
-bool ISTcpWorker::UserDeviceDelete(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
-{
-	IS_UNUSED(TcpAnswer);
-
-	QVariant UserID = CheckNullField("UserID", TcpMessage);
-	if (!UserID.isValid())
-	{
-		return false;
-	}
-
-	//Проверяем наличие устройства
-	ISQuery qSelect(ISDatabase::Instance().GetDB(DBConnectionName), QS_USER_DEVICE);
-	qSelect.BindValue(":UserID", UserID);
-	if (!qSelect.Execute()) //Ошибка запроса
-	{
-		return ErrorQuery(LANG("Carat.Error.Query.UserDeviceDelete.Select"), qSelect);
-	}
-
-	if (!qSelect.First()) //Какие-то проблемы
-	{
-		ErrorString = qSelect.GetErrorString();
-		return false;
-	}
-
-	//Устройство не привязано - ошибка
-	if (qSelect.ReadColumn("count").toInt() == 0)
-	{
-		ErrorString = LANG("Carat.Error.Query.UserDeviceDelete.NotExist");
-		return false;
-	}
-
-	//Удаляем устройство
-	ISQuery qDelete(ISDatabase::Instance().GetDB(DBConnectionName), QD_USER_DEVICE);
-	qDelete.BindValue(":UserID", UserID);
-	if (!qDelete.Execute())
-	{
-		return ErrorQuery(LANG("Carat.Error.Query.UserDeviceDelete.Delete"), qDelete);
-	}
-	QVariant UserFIO = qDelete.First() ? qDelete.ReadColumn("usrs_fio") : QVariant();
-	Protocol(TcpMessage->TcpSocket->GetUserID(), CONST_UID_PROTOCOL_USER_DEVICE_DELETE, QVariant(), QVariant(), QVariant(), UserFIO);
 	return true;
 }
 //-----------------------------------------------------------------------------

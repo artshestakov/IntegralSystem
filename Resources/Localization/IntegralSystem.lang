@@ -136,7 +136,6 @@
   <Local Name="Message.Warning.PasswordVerification" Russian="Пароль слишком слабый.&#10;&#10;Обязательные требования к надёжному паролю:&#10;&#8226; Пароль должен содержать не менее 8 символов.&#10;&#8226; Пароль должен содержать заглавные и строчные буквы, цифры, и специальные символы. Например: oNQZnz$Hx2.&#10;&#10;Пароль не должен содержать:&#10;&#8226; Личную информацию, которую легко узнать. Например: имя, фамилию или дату рождения.&#10;&#8226; Очевидные и простые слова, фразы, устойчивые выражения и наборы символов, которые легко подобрать. Например: password, parol, abcd, qwerty asdfg, или 1234567."/>
   <Local Name="Message.Warning.UserPasswordNotCreated" Russian="ВНИМАНИЕ! Пользователь без пароля не сможет зайти в программу!"/>
   <Local Name="Message.Warning.StorageFileBigSize" Russian="Размер файла &quot;%1&quot; превышает ограничение в %2 MB. Файл не будет добавлен."/>
-  <Local Name="Message.Warning.ConnectedMoreOneDevice" Russian="Подключено более одного устройства. Попробуйте ещё раз."/>
   <Local Name="Message.Warning.NotOpenFeedbackLink" Russian="Не удалось открыть ссылку!"/>
   <Local Name="Message.Warning.SearchFieldsIsEmpty" Russian="Поисковые значения отсутствуют."/>
   <Local Name="Message.Warning.AlreadyConnected" Russian="ВНИМАНИЕ! Вход в вашу учётную запись уже был выполнен.&#10;&#10;Дата и время подключения: %1&#10;Адрес: %2"/>
@@ -159,9 +158,6 @@
   <Local Name="Message.Question.UpdateAvailable" Russian="Доступно обновление программы. Загрузить его?&#10;&#10;Текущая версия: %1&#10;Новая версия: %2"/>
   <Local Name="Message.Question.PasswordReset" Russian="Вы уверены что хотите сбросить пароль?"/>
   <Local Name="Message.Question.ResetSettingDB" Russian="Сбросить настройки на стандартные?"/>
-  <Local Name="Message.Question.UserDevice.Add" Russian="Привязать устройство?"/>
-  <Local Name="Message.Question.UserDevice.Delete" Russian="Отвязать устройство?"/>
-  <Local Name="Message.Question.LinkingDevice" Russian="Устройство обнаружено.&#10;&#10;Идентификатор поставщика: %1&#10;Идентификатор устройства: %2&#10;Серийный номер: %3&#10;Имя: %4&#10;&#10;Вы уверены что хотите привязать устройство к этой учётной записи?"/>
   <Local Name="Message.Question.ClearStatementsQuery" Russian="Вы действительно хотите очистить историю запросов?&#10;&#10;Это действие нельзя отменить."/>
   
   <!--System Fields-->
@@ -183,11 +179,6 @@
   <Local Name="ListForm.Search.ToolTip" Russian="Расширенный поиск по таблице (F7)"/>
   <Local Name="ListForm.ExportTable" Russian="Экспорт таблицы"/>
 
-  <!--ISDeviceConnectDialog-->
-  <Local Name="ISDeviceConnectDialog.Title" Russian="Вставьте USB-устройство"/>
-  <Local Name="ISDeviceConnectDialog.LabelInfo" Russian="Вставьте USB-устройство в устройство чтения, чтобы привязать его к учётной записи пользователя.&#10;&#10;Если USB-устройство уже вставлено в устройство чтения, извлеките его и вставьте снова."/>
-  <Local Name="ISDeviceConnectDialog.Cancel" Russian="Отмена"/>
-  
   <!--ISHistoryForm-->
   <Local Name="ISHistoryForm.Title" Russian="История"/>
   <Local Name="ISHistoryForm.RowCount" Russian="Записей: %1"/>
@@ -334,8 +325,6 @@
   <Local Name="PasswordResetDone" Russian="Пароль был успешно сброшен"/>
   <Local Name="ThisActionIsNotReversible" Russian="Это действие не обратимо."/>
   <Local Name="ReconnectingDone" Russian="Связь с сервером восстановлена!"/>
-  <Local Name="UserDeviceAdd" Russian="Устройство успешно привязано к этой учётной записи."/>
-  <Local Name="UserDeviceDelete" Russian="Устройство успешно отвязано от этой учётной записи."/>
 
   <!--CalendarForm-->
   <Local Name="CalendarForm.CreateEvent" Russian="Создать событие"/>
@@ -516,13 +505,6 @@
   <Local Name="Field.Okpo.PlaceholderText" Russian="8 цифр"/>
   <Local Name="Field.EMail.PlaceholderText" Russian="Введите адрес электронной почты"/>
 
-  <!--GetUSBDevice-->
-  <Local Name="GetUSBDevice.Error.SetupClassDevs" Russian="Не удалось получить информацию об устройствах в системе: %1"/>
-  <Local Name="GetUSBDevice.Error.GettingDeviceID.BufferSmall" Russian="Буффер слишком мал."/>
-  <Local Name="GetUSBDevice.Error.GettingDeviceID" Russian="Не удалось получить информацию об устройстве: %1"/>
-  <Local Name="GetUSBDevice.Error.GettingDescription" Russian="Не удалось получить описание устройства: %1"/>
-  <Local Name="GetUSBDevice.Error.InvalidFormat" Russian="Невалидный формат устройства."/>
-  
   <!--Other-->
   <Local Name="Yesterday" Russian="Вчера"/>
   <Local Name="Today" Russian="Сегодня"/>
@@ -592,8 +574,6 @@
   <Local Name="DatabaseSettings" Russian="Настройки базы данных"/>
   <Local Name="Online" Russian="В сети"/>
   <Local Name="Offline" Russian="Не в сети"/>
-  <Local Name="UserDevice.Add" Russian="Привязать устройство"/>
-  <Local Name="UserDevice.Delete" Russian="Отвязать устройство"/>
   <Local Name="In" Russian="в"/>
   <Local Name="AddRecord" Russian="Добавить запись"/>
 

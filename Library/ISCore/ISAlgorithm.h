@@ -189,7 +189,7 @@ namespace ISAlgorithm
 	//! \param argc количество аргументов
 	//! \param argv массив аргументов
 	//! \return возвращает вектор аргументов
-	ISCORE_EXPORT std::vector<std::string> ParseCommandArgs(int argc, char **argv);
+	ISCORE_EXPORT ISVectorString ParseCommandArgs(int argc, char **argv);
 
 	//Поиск значения в векторе
     template <typename T> bool VectorContains(const std::vector<T> &Vector, T Value)

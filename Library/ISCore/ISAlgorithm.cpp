@@ -447,9 +447,9 @@ QString ISAlgorithm::StringTake(QString &String, int Pos, int N)
 	return Result;
 }
 //-----------------------------------------------------------------------------
-std::vector<std::string> ISAlgorithm::ParseCommandArgs(int argc, char **argv)
+ISVectorString ISAlgorithm::ParseCommandArgs(int argc, char **argv)
 {
-	std::vector<std::string> Vector(argc);
+	ISVectorString Vector(argc);
 	for (int i = 0; i < argc; ++i)
 	{
 		Vector[i] = argv[i];

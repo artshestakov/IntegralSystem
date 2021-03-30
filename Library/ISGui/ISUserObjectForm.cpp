@@ -25,14 +25,6 @@ ISUserObjectForm::ISUserObjectForm(ISNamespace::ObjectFormType form_type, PMetaT
 	QAction *ActionPasswordReset = new QAction(BUFFER_ICONS("User.Password.Reset"), LANG("PasswordReset"), this);
 	connect(ActionPasswordReset, &QAction::triggered, this, &ISUserObjectForm::PasswordReset);
 	AddActionToolBar(ActionPasswordReset, true);
-
-	QAction *ActionDeviceAdd = new QAction(BUFFER_ICONS("User.USBDevice.Add"), LANG("UserDevice.Add"), this);
-	connect(ActionDeviceAdd, &QAction::triggered, this, &ISUserObjectForm::DeviceAdd);
-	AddActionToolBar(ActionDeviceAdd, true);
-
-	QAction *ActionDeviceDelete = new QAction(BUFFER_ICONS("User.USBDevice.Delete"), LANG("UserDevice.Delete"), this);
-	connect(ActionDeviceDelete, &QAction::triggered, this, &ISUserObjectForm::DeviceDelete);
-	AddActionToolBar(ActionDeviceDelete, true);
 }
 //-----------------------------------------------------------------------------
 ISUserObjectForm::~ISUserObjectForm()
@@ -115,60 +107,6 @@ void ISUserObjectForm::PasswordReset()
 		{
 			ISMessageBox::ShowCritical(nullptr, qPasswordReset.GetErrorString());
 		}
-	}
-}
-//-----------------------------------------------------------------------------
-void ISUserObjectForm::DeviceAdd()
-{
-	if (!ISMessageBox::ShowQuestion(this, LANG("Message.Question.UserDevice.Add")))
-	{
-		return;
-	}
-
-	ISDeviceConnectDialog DeviceConnectDialog;
-	if (!DeviceConnectDialog.Exec())
-	{
-		return;
-	}
-	ISDeviceInfo DeviceInfo = DeviceConnectDialog.GetConnectedDevice();
-
-	if (!ISMessageBox::ShowQuestion(this, LANG("Message.Question.LinkingDevice")
-		.arg(DeviceInfo.VendorID).arg(DeviceInfo.ProductID)
-		.arg(DeviceInfo.SerialNumber).arg(DeviceInfo.Description)))
-	{
-		return;
-	}
-
-	ISTcpQuery qUserDeviceAdd(API_USER_DEVICE_ADD);
-	qUserDeviceAdd.BindValue("UserID", GetObjectID());
-	qUserDeviceAdd.BindValue("Hash", ISAlgorithm::StringToSha256(DeviceInfo.VendorID.toStdString()
-		+ DeviceInfo.ProductID.toStdString() + DeviceInfo.SerialNumber.toStdString()).c_str());
-	if (qUserDeviceAdd.Execute())
-	{
-		ISPopupMessage::ShowNotification(LANG("UserDeviceAdd"));
-	}
-	else
-	{
-		ISMessageBox::ShowCritical(this, qUserDeviceAdd.GetErrorString());
-	}
-}
-//-----------------------------------------------------------------------------
-void ISUserObjectForm::DeviceDelete()
-{
-	if (!ISMessageBox::ShowQuestion(this, LANG("Message.Question.UserDevice.Delete")))
-	{
-		return;
-	}
-
-	ISTcpQuery qUserDeviceDelete(API_USER_DEVICE_DELETE);
-	qUserDeviceDelete.BindValue("UserID", GetObjectID());
-	if (qUserDeviceDelete.Execute())
-	{
-		ISPopupMessage::ShowNotification(LANG("UserDeviceDelete"));
-	}
-	else
-	{
-		ISMessageBox::ShowCritical(this, qUserDeviceDelete.GetErrorString());
 	}
 }
 //-----------------------------------------------------------------------------

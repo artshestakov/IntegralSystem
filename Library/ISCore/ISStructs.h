@@ -275,12 +275,4 @@ struct ISCORE_EXPORT ISSqlField
 	unsigned int Type;
 };
 //-----------------------------------------------------------------------------
-struct ISCORE_EXPORT ISDeviceInfo
-{
-	QString VendorID; //Идентификатор поставщика
-	QString ProductID; //Идентификатор устройства
-	QString SerialNumber; //Серийный номер
-	QString Description; //Описание
-};
-//-----------------------------------------------------------------------------
 #endif

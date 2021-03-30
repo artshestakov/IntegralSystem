@@ -9,7 +9,7 @@ int main(int argc, char **argv)
     int ResultCode = 0;
 
     //ѕолучаем аргументы запуска и удал€ем первый (путь к исполн€емому файлу)
-    std::vector<std::string> Arguments = ISAlgorithm::ParseCommandArgs(argc, argv);
+    ISVectorString Arguments = ISAlgorithm::ParseCommandArgs(argc, argv);
     ISAlgorithm::VectorRemoveFirst(Arguments);
     if (Arguments.empty()) //јргуменов запуска не было, запускаемс€ в режиме сервера
     {

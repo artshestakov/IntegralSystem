@@ -18,8 +18,6 @@ protected:
 private:
 	void PasswordManagement();
 	void PasswordReset();
-	void DeviceAdd();
-	void DeviceDelete();
 	void AccountLifeTimeChanged();
 
 private:

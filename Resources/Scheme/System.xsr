@@ -58,8 +58,6 @@
   <_ProtocolType IsSystem="true" UID="{AF2641F0-6838-441C-A0A9-B62090826998}" Name="Удаление записи из избранного"/>
   <_ProtocolType IsSystem="true" UID="{F05B1DE1-47F6-43DB-A8C5-5D3582F7BD5F}" Name="Закрытие события календаря"/>
   <_ProtocolType IsSystem="true" UID="{2A93A14E-4BA5-4CB8-A056-0FF2B3351C5D}" Name="Просмотр данных"/>
-  <_ProtocolType IsSystem="true" UID="{FB849105-9009-4EB0-AAFF-B320B3CA18BE}" Name="Привязка устройства"/>
-  <_ProtocolType IsSystem="true" UID="{1450D20D-2401-4DF6-8689-51F962604D5B}" Name="Отвязка устройства"/>
   <_ProtocolType IsSystem="true" UID="{E6F5D167-25E6-4172-8D81-219DE8608647}" Name="Просмотр информации о сервере"/>
   <_ProtocolType IsSystem="true" UID="{3660E1BE-755A-4034-89D8-15FE83776122}" Name="Сброс статистики запросов"/>
 

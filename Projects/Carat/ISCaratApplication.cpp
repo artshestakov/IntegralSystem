@@ -112,7 +112,7 @@ bool ISCaratApplication::Initialize()
 //-----------------------------------------------------------------------------
 bool ISCaratApplication::Run(const ISVectorString &Arguments)
 {
-	std::string Argument = Arguments.front();
+	QString Argument = Arguments.front();
 	if (Argument == "--help" || Argument == "-h")
 	{
         return Help();
@@ -135,7 +135,7 @@ bool ISCaratApplication::Run(const ISVectorString &Arguments)
 	}
 	else
 	{
-		ISDEBUG_L("Argument \"" + QString::fromStdString(Argument) + "\" not support");
+		ISDEBUG_L("Argument \"" + Argument + "\" not support");
         (void)Help();
 	}
     return false;

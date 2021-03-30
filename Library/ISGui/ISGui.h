@@ -17,7 +17,6 @@ public:
 	static void Shutdown(ISSplashScreen *SplashScreen);
 
 	static bool CheckAdminRole(); //Проверка наличия прав администратора
-	static bool GetUSBDevice(std::vector<ISDeviceInfo> &Vector, QString &ErrorString);
 	static void RepaintWidget(QWidget *Widget, bool AdjustSize = true); //Перерисовать указанный в параметре виджет
 	static void MoveWidgetToDesktop(QWidget *Widget, ISNamespace::MoveWidgetDesktop MovePosition); //Перемещение виджета по рабочему столу (вызывать только после вызова метода show() у виджета)
 	static void SetWaitGlobalCursor(bool Wait); //Изменить глобальный курсор для ожидания
