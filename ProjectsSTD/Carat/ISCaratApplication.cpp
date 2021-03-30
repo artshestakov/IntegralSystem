@@ -52,15 +52,15 @@ bool ISCaratApplication::Init()
     //Инициализируем конфигурационный файл
     if (!ISConfig::Instance().Initialize(CONFIG_TEMPLATE_SERVER))
     {
-        //ISLOGGER_E("ISConfig", "Not initialize: %s", ISConfig::Instance().GetErrorString().c_str());
-        //return false;
+        ISLOGGER_E("ISConfig", "Not initialize: %s", ISConfig::Instance().GetErrorString().c_str());
+        return false;
     }
 
     //Проверяем валидность конфигурационного файла
     if (!ISConfig::Instance().IsValid())
     {
-        //ISLOGGER_E("ISConfig", "File is not valid: %s", ISConfig::Instance().GetErrorString().c_str());
-        //return false;
+        ISLOGGER_E("ISConfig", "File is not valid: %s", ISConfig::Instance().GetErrorString().c_str());
+        return false;
     }
 
     //Удаляем stop-файл
@@ -81,7 +81,7 @@ int ISCaratApplication::Start()
     std::string Argument = Arguments.empty() ? std::string() : Arguments.front();
     if (Argument.empty()) //Режим службы
     {
-        ISLOGGER_I(__CLASS__, "Starting service...\n"
+        ISLOGGER_I(__CLASS__, "Starting...\n"
             "Version: [version] ([configuration] [platform])\n"
             "Branch: [branch_name] (hash)\n"
             "Host name: %s\n"
@@ -102,7 +102,7 @@ int ISCaratApplication::Start()
 
         //Запускаем поток контроля работы
         std::thread(&ISCaratApplication::ShutdownController, this).detach();
-        ISLOGGER_I(__CLASS__, "Started server");
+        ISLOGGER_I(__CLASS__, "Started");
 
         //Бесконечный цикл основного потока
         while (true)
