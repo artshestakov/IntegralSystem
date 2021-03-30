@@ -73,6 +73,7 @@ bool ISCaratApplication::Init()
         }
     }
 
+    ISLOGGER_I(__CLASS__, "Initialized");
     return true;
 }
 //-----------------------------------------------------------------------------

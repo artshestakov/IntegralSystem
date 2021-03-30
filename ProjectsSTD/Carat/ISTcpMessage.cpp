@@ -10,7 +10,7 @@ ISTcpMessage::ISTcpMessage()
     Size(0),
     ChunkCount(0),
     Valid(true),
-    Socket(INVALID_SOCKET)
+    TcpClient(nullptr)
 {
 
 }

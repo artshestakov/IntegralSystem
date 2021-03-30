@@ -10,7 +10,7 @@
 #define ISSleep(MSec) std::this_thread::sleep_for(std::chrono::milliseconds(MSec))
 
 //ѕодавление предупреждени€ неиспользуемого параметра
-#define IS_UNUSED(x) (void)x
+#define IS_UNUSED(x) (void)(x)
 
 #ifdef WIN32
 #define __CLASS__ ISAlgorithm::GetClassName(__FUNCTION__)
@@ -48,7 +48,7 @@ namespace ISAlgorithm
     //! \param TickA временна€ метка
     //! \param TickB временна€ метка
     //! \return возвращает разницу между двум€ временными метками
-    unsigned long long GetTickDiff(const ISTimePoint &T1, const ISTimePoint &T2);
+    ISUInt64 GetTickDiff(const ISTimePoint &T1, const ISTimePoint &T2);
 
     //! ѕолучить описание последней ошибки
     std::string GetLastErrorS();
@@ -140,7 +140,8 @@ namespace ISAlgorithm
     void StringToUpper(std::string &String);
 
     //! ‘орматирование строки
-    //! \param
+    //! \param Format формат сообщени€
+    //! \param ... аргументы
     std::string StringF(const char *Format, ...);
 
     //»звлечь элемент из вектора по заданному индексу

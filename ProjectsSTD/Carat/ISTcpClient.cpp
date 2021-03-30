@@ -2,7 +2,8 @@
 //-----------------------------------------------------------------------------
 ISTcpClient::ISTcpClient()
     : Socket(0),
-    Port(0)
+    Port(0),
+    Authorized(false)
 {
 
 }

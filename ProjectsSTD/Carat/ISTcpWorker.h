@@ -21,7 +21,7 @@ public:
 private:
     void Process();
     bool Execute(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
-    bool CheckIsNull(ISTcpMessage *TcpMessage, const std::string &ParameterName);
+    bool CheckIsNull(ISTcpMessage *TcpMessage, const char *ParameterName);
 
 private:
     bool Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);

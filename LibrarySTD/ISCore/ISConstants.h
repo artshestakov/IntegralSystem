@@ -30,7 +30,8 @@ const size_t	LOG_BUFFER_SIZE = 10240; //Размер буфера для одного сообщения
 //ASTERISK---------------------------------------------------------------------
 const size_t	TCP_PACKET_MAX_SIZE = 65535; //Максимальный размер одного TCP-пакета
 //CARAT------------------------------------------------------------------------
-const unsigned short	CARAT_TCP_PORT = 50000; //Стандартный порт TCP-сервера
+const unsigned short    CARAT_TCP_PORT = 50000; //Стандартный порт TCP-сервера
+const size_t            CARAT_HASH_SIZE = 64; //Фиксированный размер хэша SHA256 для авторизации
 //CARAT_API--------------------------------------------------------------------
 const char API_UNKNOWN[] = "Unknown"; //Неизвестное сообщение
 const char API_AUTH[] = "Auth"; //Авторизация

@@ -17,6 +17,7 @@ public:
     SOCKET Socket;
     std::string IPAddress;
     ISTcpPort Port;
+    bool Authorized;
 
 private:
     std::vector<std::vector<char>> Buffer;

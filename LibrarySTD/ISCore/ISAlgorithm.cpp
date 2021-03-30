@@ -33,7 +33,7 @@ ISTimePoint ISAlgorithm::GetTick()
     return std::chrono::steady_clock::now();
 }
 //-----------------------------------------------------------------------------
-unsigned long long ISAlgorithm::GetTickDiff(const ISTimePoint &T1, const ISTimePoint &T2)
+ISUInt64 ISAlgorithm::GetTickDiff(const ISTimePoint &T1, const ISTimePoint &T2)
 {
     return std::chrono::duration_cast<std::chrono::milliseconds>(T1 - T2).count();
 }

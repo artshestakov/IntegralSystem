@@ -2,6 +2,8 @@
 #include "ISAlgorithm.h"
 #include "ISConstants.h"
 #include "ISTcpQueue.h"
+#include "ISAssert.h"
+#include "ISLogger.h"
 //-----------------------------------------------------------------------------
 ISTcpWorker::ISTcpWorker()
     : ErrorString(STRING_NO_ERROR),
@@ -96,17 +98,17 @@ void ISTcpWorker::Process()
         }
 
         bool Result = false;
-        unsigned long long PerfomanceMsec = 0;
-        ISTcpAnswer *TcpAnswer = new ISTcpAnswer(tcp_message->Socket);
+        ISUInt64 PerfomanceMsec = 0;
+        ISTcpAnswer *TcpAnswer = new ISTcpAnswer(tcp_message->TcpClient->Socket);
 
         if (tcp_message->IsValid()) //Если сообщение валидное - переходим к выполнению
         {
             //Если запрос не авторизационный и клиент ещё не авторизовался - ошибка
-            //if (tcp_message->Type != API_AUTH && !tcp_message->TcpSocket->GetAuthorized())
+            if (tcp_message->Type != API_AUTH && !tcp_message->TcpClient->Authorized)
             {
-                //ErrorString = LANG("Carat.Error.NotAuthorized");
+                ErrorString = "Not authorized";
             }
-            //else //Клиент авторизовался - продолжаем
+            else //Клиент авторизовался - продолжаем
             {
                 ISTimePoint TimePoint = ISAlgorithm::GetTick(); //Запоминаем текущее время
                 Result = Execute(tcp_message, TcpAnswer);
@@ -115,14 +117,24 @@ void ISTcpWorker::Process()
         }
         else //Сообщение не валидное
         {
-            //ErrorString = tcp_message->GetErrorString();
+            ErrorString = tcp_message->GetErrorString();
         }
-        delete tcp_message;
-
-        if (!Result)
+        
+        //Формируем лог-сообщение
+        std::string LogText = ISAlgorithm::StringF("%s message \"%s\"\n"
+            "Size: %d, Chunk: %d, Parse msec: %llu, Execute msec: %llu",
+            (Result ? "Done" : "Failed"), tcp_message->Type.c_str(),
+            tcp_message->Size, tcp_message->ChunkCount, tcp_message->MSecParse, PerfomanceMsec);
+        if (!Result) //Запрос выполнен с ошибкой - устанавливаем текст ошибки в ответе и лог-сообщении, а так же очищаем потенциально не пустые параметры ответа
         {
             TcpAnswer->SetError(ErrorString);
+            LogText.append("\nError string: " + ErrorString);
+            ErrorString.clear();
         }
+
+        //Удаляем сообщение, логируемся, добавляем ответ в очередь и освобождаем воркер
+        delete tcp_message;
+        Result ? ISLOGGER_I(__CLASS__, LogText.c_str()) : ISLOGGER_E(__CLASS__, LogText.c_str());
         ISTcpQueue::Instance().AddAnswer(TcpAnswer);
 
         CRITICAL_SECTION_LOCK(&CriticalSection);
@@ -146,26 +158,110 @@ bool ISTcpWorker::Execute(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
     }
     else //Функция не найдена
     {
-        //ErrorString = LANG("Carat.Error.NotExistFunction").arg(TcpMessage->Type);
+        ErrorString = ISAlgorithm::StringF("Not support function \"%s\"", TcpMessage->Type);
     }
     return false;
 }
 //-----------------------------------------------------------------------------
-bool ISTcpWorker::CheckIsNull(ISTcpMessage *TcpMessage, const std::string &ParameterName)
+bool ISTcpWorker::CheckIsNull(ISTcpMessage *TcpMessage, const char *ParameterName)
 {
-    if (!TcpMessage->Parameters.HasMember(ParameterName.c_str()))
+    //Получаем константное имя параметра
+    if (!TcpMessage->Parameters.HasMember(ParameterName))
     {
-        ErrorString = "parameters is empty";
+        ErrorString = ISAlgorithm::StringF("Parameter \"%s\" not exist", ParameterName);
         return false;
     }
 
+    //Получаем значение
+    rapidjson::Value &JsonValue = TcpMessage->Parameters[ParameterName];
+
+    //Проверяем, не пустое ли значение
+    if (JsonValue.IsNull())
+    {
+        ErrorString = ISAlgorithm::StringF("Parameter \"%s\" is null", ParameterName);
+        return false;
+    }
+
+    switch (JsonValue.GetType()) //Проверяем тип
+    {
+    case rapidjson::Type::kNullType:
+        IS_ASSERT(false, "Not support type. Need of develop support");
+        break;
+
+    case rapidjson::Type::kFalseType:
+        IS_ASSERT(false, "Not support type. Need of develop support");
+        break;
+
+    case rapidjson::Type::kTrueType:
+        IS_ASSERT(false, "Not support type. Need of develop support");
+        break;
+
+    case rapidjson::Type::kObjectType:
+        IS_ASSERT(false, "Not support type. Need of develop support");
+        break;
+
+    case rapidjson::Type::kArrayType:
+        IS_ASSERT(false, "Not support type. Need of develop support");
+        break;
+
+    case rapidjson::Type::kStringType: //Строковый тип
+        if (strlen(JsonValue.GetString()) == 0)
+        {
+            ErrorString = ISAlgorithm::StringF("Parameter \"%s\" is empty", ParameterName);
+            return false;
+        }
+        break;
+
+    default:
+        break;
+    }
     return true;
 }
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
-    IS_UNUSED(TcpMessage);
     IS_UNUSED(TcpAnswer);
+
+    //Проверяем, не авторизаван ли уже клиент. Если авторизован - выходим с ошибкой
+    if (TcpMessage->TcpClient->Authorized)
+    {
+        ErrorString = "Already authorized";
+        return false;
+    }
+
+    if (!CheckIsNull(TcpMessage, "Hash"))
+    {
+        return false;
+    }
+
+    //Получаем хэш
+    std::string Hash = TcpMessage->Parameters["Hash"].GetString();
+
+    //Проверяем размер хэша
+    size_t HashSize = Hash.size();
+    if (HashSize != CARAT_HASH_SIZE)
+    {
+        ErrorString = ISAlgorithm::StringF("Invalid hash size %d", HashSize);
+        return false;
+    }
+
+    //Проверяем валидность хэша
+    for (const char Char : Hash)
+    {
+        int ASCII = (int)Char; //Преобразовываем текущий символ в ASCII-код
+        if ((ASCII >= 48 && ASCII <= 57) || (ASCII >= 65 && ASCII <= 70)) //Если текущий символ входит в диапазон [0-9] или [a-z] - все окей
+        {
+            continue;
+        }
+        else //Иначе - хэш невалидный
+        {
+            ErrorString = "Invalid hash";
+            return false;
+        }
+    }
+
+    //Устанавливаем флаги клиенту
+    TcpMessage->TcpClient->Authorized = true;
     return true;
 }
 //-----------------------------------------------------------------------------

@@ -4,6 +4,7 @@
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 #include "document.h"
+#include "ISTcpClient.h"
 //-----------------------------------------------------------------------------
 class ISTcpMessage
 {
@@ -17,10 +18,10 @@ public:
 
     std::string Type; //Тип сообщения
     rapidjson::Document Parameters; //Параметры
-    long long MSecParse; //Время парсинга
+    ISUInt64 MSecParse; //Время парсинга
     size_t Size;
     size_t ChunkCount; //Количетсво чанков
-    SOCKET Socket; //Клиентский сокет
+    ISTcpClient *TcpClient; //Клиент, от которого пришло это сообщение
 
 private:
     std::string ErrorString;

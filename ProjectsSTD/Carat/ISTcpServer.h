@@ -28,6 +28,7 @@ private:
     void CloseSocket(ISTcpClient *TcpClient);
     void CloseSocket(SOCKET Socket);
     void ClientAdd(ISTcpClient *TcpClient);
+    bool ClientExist(SOCKET Socket);
     bool GetIsRunning(); //Проверка работы сервера
     
 private:
@@ -45,7 +46,8 @@ private:
     bool IsRunning;
     std::vector<ISTcpWorker*> Workers;
     unsigned int WorkerCount;
-    ISCriticalSection CriticalSection;
+    ISCriticalSection CSRunning;
+    ISCriticalSection CSClient;
 };
 //-----------------------------------------------------------------------------
 #endif

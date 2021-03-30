@@ -7,19 +7,19 @@
 class ISTcpAnswer
 {
 public:
-    ISTcpAnswer(SOCKET socket);
+    ISTcpAnswer(SOCKET socket_client);
     ~ISTcpAnswer();
 
     bool IsError() const;
     std::string GetErrorString() const;
     void SetError(const std::string &error_string);
-    SOCKET GetSocket() const;
+    SOCKET GetSocketClient() const; //Получить дескриптор клиентского сокета
     std::string ToJson() const;
     
 private:
     std::string ErrorString;
     bool Error;
-    SOCKET Socket; //Клиентский сокет
+    SOCKET SocketClient; //Клиентский сокет
 };
 //-----------------------------------------------------------------------------
 #endif

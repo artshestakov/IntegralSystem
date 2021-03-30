@@ -4,10 +4,10 @@
 #include "stringbuffer.h"
 #include "writer.h"
 //-----------------------------------------------------------------------------
-ISTcpAnswer::ISTcpAnswer(SOCKET socket)
+ISTcpAnswer::ISTcpAnswer(SOCKET socket_client)
     : ErrorString(STRING_NO_ERROR),
     Error(false),
-    Socket(socket)
+    SocketClient(socket_client)
 {
     
 }
@@ -33,9 +33,9 @@ void ISTcpAnswer::SetError(const std::string &error_string)
     ErrorString = error_string;
 }
 //-----------------------------------------------------------------------------
-SOCKET ISTcpAnswer::GetSocket() const
+SOCKET ISTcpAnswer::GetSocketClient() const
 {
-    return Socket;
+    return SocketClient;
 }
 //-----------------------------------------------------------------------------
 std::string ISTcpAnswer::ToJson() const
