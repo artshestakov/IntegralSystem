@@ -4673,6 +4673,7 @@ bool ISTcpWorker::OilSphere_LoadBanks(ISTcpMessage *TcpMessage, ISTcpAnswer *Tcp
 	TcpAnswer->Parameters["Loaded"] = Loaded;
 	TcpAnswer->Parameters["Invalid"] = Invalid;
 	TcpAnswer->Parameters["Total"] = StringList.size();
+	Protocol(TcpMessage->TcpSocket->GetUserID(), "{85DCCA5C-723E-4E18-8286-FF33D12C6F4D}");
 	return true;
 }
 //-----------------------------------------------------------------------------

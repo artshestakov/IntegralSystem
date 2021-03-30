@@ -40,4 +40,6 @@
   <OperationType UID="{439C16CE-421A-4BAB-B2B2-4CEE3FCFEE21}" Name="Списание"/>
   <OperationType UID="{0286A244-9732-43B4-A1B2-3E434EEF04D0}" Name="Зачисление"/>
 
+  <_ProtocolType IsSystem="true" UID="{85DCCA5C-723E-4E18-8286-FF33D12C6F4D}" Name="Импорт банков"/>
+
 </XSR>
