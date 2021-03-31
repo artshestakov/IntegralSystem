@@ -179,6 +179,7 @@
     <ClCompile Include="ISLogger.cpp" />
     <ClCompile Include="ISTrace.cpp" />
     <ClCompile Include="StdAfx.cpp" />
+    <ClCompile Include="tinyxml2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ISAlgorithm.h" />
@@ -193,6 +194,7 @@
     <ClInclude Include="ISTypedefs.h" />
     <ClInclude Include="SimpleIni.h" />
     <ClInclude Include="StdAfx.h" />
+    <ClInclude Include="tinyxml2.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
