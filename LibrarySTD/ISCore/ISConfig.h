@@ -18,6 +18,7 @@ public:
     //Функции получения значений
     std::string GetValueString(const std::string &SectionName, const std::string &ParameterName);
     int GetValueInt(const std::string &SectionName, const std::string &ParameterName);
+    unsigned short GetValueUShort(const std::string &SectionName, const std::string &ParameterName);
     bool GetValueBool(const std::string &SectionName, const std::string &ParameterName);
 
 private:

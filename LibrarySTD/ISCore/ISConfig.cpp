@@ -123,9 +123,17 @@ int ISConfig::GetValueInt(const std::string &SectionName, const std::string &Par
     return std::stoi(GetValue(SectionName, ParameterName));
 }
 //-----------------------------------------------------------------------------
+unsigned short ISConfig::GetValueUShort(const std::string &SectionName, const std::string &ParameterName)
+{
+    return static_cast<unsigned short>(GetValueInt(SectionName, ParameterName));
+}
+//-----------------------------------------------------------------------------
 bool ISConfig::GetValueBool(const std::string &SectionName, const std::string &ParameterName)
 {
-    return GetValue(SectionName, ParameterName) == "true";
+    //Получаем значение, приводим его к нижнему регистру и проверяем
+    std::string Value = GetValue(SectionName, ParameterName);
+    ISAlgorithm::StringToLower(Value);
+    return Value == "true";
 }
 //-----------------------------------------------------------------------------
 std::string ISConfig::GetValue(const std::string &SectionName, const std::string &ParameterName)
