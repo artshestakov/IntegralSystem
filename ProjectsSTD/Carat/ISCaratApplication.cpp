@@ -6,6 +6,7 @@
 #include "ISTcpServer.h"
 #include "ISConfig.h"
 #include "ISDatabase.h"
+#include "ISLocalization.h"
 //-----------------------------------------------------------------------------
 ISCaratApplication::ISCaratApplication(int argc, char **argv)
     : ErrorString(STRING_NO_ERROR),
@@ -38,6 +39,12 @@ bool ISCaratApplication::Init()
     if (!ISAlgorithm::ConsoleSetEncoding(65001, ErrorString))
     {
         ISLOGGER_W("Console", "Not setting console encoding: %s", ErrorString.c_str());
+    }
+
+    if (!ISLocalization::Instance().Init(LOCALIZATION_FILE_CARAT))
+    {
+        ISLOGGER_E("ISLocalization", "Not init file \"%s\": %s", LOCALIZATION_FILE_CARAT, ISLocalization::Instance().GetErrorString().c_str());
+        return false;
     }
 
     //Создаём папку Temp

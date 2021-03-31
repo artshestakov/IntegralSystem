@@ -6,6 +6,7 @@
 #include "ISLogger.h"
 #include "ISConfig.h"
 #include "ISDatabase.h"
+#include "ISLocalization.h"
 //-----------------------------------------------------------------------------
 static std::string QS_USERS_HASH = "SELECT usrs_hash, usrs_salt "
                                    "FROM _users "
@@ -316,14 +317,13 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
         ISQuery qSelectHash(DBConnection, QS_USERS_HASH);
         if (!qSelectHash.Execute()) //Ошибка запроса
         {
-            //return ErrorQuery(LANG("Carat.Error.Query.Auth.SelectHash"), qSelectHash);
-            return false;
+            return ErrorQuery(LANG("Carat.Error.Query.Auth.SelectHash"), qSelectHash);
         }
 
         //Если запрос ничего не вернул, значит в БД нет ни одного пользователя
         if (qSelectHash.GetResultSize() == 0)
         {
-            //ErrorString = LANG("Carat.Error.Query.Auth.NoUsers");
+            ErrorString = LANG("Carat.Error.Query.Auth.NoUsers");
             return false;
         }
 

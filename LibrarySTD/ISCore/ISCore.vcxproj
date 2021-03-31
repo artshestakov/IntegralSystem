@@ -176,6 +176,7 @@
     <ClCompile Include="ISAssert.cpp" />
     <ClCompile Include="ISConfig.cpp" />
     <ClCompile Include="ISDebug.cpp" />
+    <ClCompile Include="ISLocalization.cpp" />
     <ClCompile Include="ISLogger.cpp" />
     <ClCompile Include="ISTrace.cpp" />
     <ClCompile Include="StdAfx.cpp" />
@@ -187,6 +188,7 @@
     <ClInclude Include="ISConfig.h" />
     <ClInclude Include="ISConstants.h" />
     <ClInclude Include="ISDebug.h" />
+    <ClInclude Include="ISLocalization.h" />
     <ClInclude Include="ISLogger.h" />
     <ClInclude Include="ISNamespace.h" />
     <ClInclude Include="ISStructs.h" />
