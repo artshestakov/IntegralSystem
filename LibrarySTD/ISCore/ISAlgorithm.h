@@ -144,6 +144,18 @@ namespace ISAlgorithm
     //! \param ... аргументы
     std::string StringF(const char *Format, ...);
 
+    //! Генерация стандартного уникального идентификатора в формате b75ed238-411a-4f06-85ea-a2ecca37cfa8
+    //! \return возвращает стандартный уникальный идентификатор
+    std::string GenerateUuidStandart();
+
+    //! Генерация уникального идентификатора в формате {B75ED238-411A-4F06-85EA-A2ECCA37CFA8}
+    //! \return возвращает уникальный идентификатор
+    std::string GenerateUuid();
+
+    //! Генерация упрощённого уникального идентификатора в формате b75ed238411a4f0685eaa2ecca37cfa8
+    //! \return возвращает упрощённый уникальный идентификатор
+    std::string GenerateUuidLite();
+
     //Извлечь элемент из вектора по заданному индексу
     template <typename T> T VectorTakeAt(std::vector<T> &Vector, size_t Index)
     {
@@ -168,6 +180,19 @@ namespace ISAlgorithm
     template <typename T> bool VectorContains(const std::vector<T> &Vector, T Value)
     {
         return std::find(Vector.begin(), Vector.end(), Value) != Vector.end();
+    }
+
+    //Получить все ключи словаря
+    template <typename TKey, typename TValue> std::vector<TKey> ConvertMapToKeys(const std::map<TKey, TValue> &Map)
+    {
+        std::vector<TKey> Vector(Map.size());
+        size_t Index = 0;
+        for (const auto &MapItem : Map)
+        {
+            Vector[Index] = MapItem.first;
+            ++Index;
+        }
+        return Vector;
     }
 }
 //-----------------------------------------------------------------------------

@@ -3,7 +3,6 @@
 #define _STDAFX_H_INCLUDED
 //-----------------------------------------------------------------------------
 #ifdef WIN32
-#pragma warning(disable: 4251) //For use stl-classes in DLL
 #pragma warning(disable: 6262)
 #endif
 //-----------------------------------------------------------------------------

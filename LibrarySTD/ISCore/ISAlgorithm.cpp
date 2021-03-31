@@ -364,3 +364,57 @@ std::string ISAlgorithm::StringF(const char *Format, ...)
     }
 }
 //-----------------------------------------------------------------------------
+std::string ISAlgorithm::GenerateUuidStandart()
+{
+    std::string StringUID;
+#ifdef WIN32
+    GUID UID = { 0 };
+    HRESULT Result = CoCreateGuid(&UID); //Генерируем идентификатор
+    if (Result == S_OK) //Генерация прошла успешно
+    {
+        unsigned char *Char = { 0 };
+        if (UuidToString(&UID, &Char) == RPC_S_OK) //Преобразовываем в строку
+        {
+            //Формируем строку и заполняем её
+            StringUID.resize(UUID_STANDART_SIZE);
+            for (size_t i = 0; i < UUID_STANDART_SIZE; ++i)
+            {
+                StringUID[i] = Char[i];
+            }
+        }
+    }
+#else
+    //Генерируем идентификатор
+    uuid_t UUID = { 0 };
+    uuid_generate(UUID);
+
+    //Переводим его в строку
+    char Char[UUID_STANDART_SIZE] = { 0 };
+    uuid_unparse(UUID, Char);
+    StringUID = Char;
+#endif
+    return StringUID;
+}
+//-----------------------------------------------------------------------------
+std::string ISAlgorithm::GenerateUuid()
+{
+    std::string UID = ISAlgorithm::GenerateUuidStandart();
+    std::transform(UID.begin(), UID.end(), UID.begin(), toupper);
+    return '{' + UID + '}';
+}
+//-----------------------------------------------------------------------------
+std::string ISAlgorithm::GenerateUuidLite()
+{
+    std::string UID = ISAlgorithm::GenerateUuidStandart();
+    std::transform(UID.begin(), UID.end(), UID.begin(), tolower);
+    auto Begin = UID.begin();
+    for (size_t i = UID.size() - 1; i > 0; --i)
+    {
+        if (UID[i] == '-')
+        {
+            UID.erase(Begin + i);
+        }
+    }
+    return UID;
+}
+//-----------------------------------------------------------------------------

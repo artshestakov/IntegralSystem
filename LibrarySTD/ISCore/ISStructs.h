@@ -33,4 +33,18 @@ struct ISConfigParameter
     int Maximum; //Максимальное значение (для числовых параметров)
 };
 //-----------------------------------------------------------------------------
+struct ISConnectOptionDB
+{
+    ISConnectOptionDB() : Port(0) { }
+
+    ISConnectOptionDB(const std::string& host, unsigned short port, const std::string& name, const std::string& login, const std::string& password)
+        : Host(host), Port(port), Name(name), Login(login), Password(password) { }
+
+    std::string Host; //Адрес сервера
+    unsigned short Port; //Порт
+    std::string Name; //Имя базы данных
+    std::string Login; //Логин пользователя
+    std::string Password; //Пароль
+};
+//-----------------------------------------------------------------------------
 #endif
