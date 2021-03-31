@@ -95,10 +95,13 @@ int ISCaratApplication::Start()
             CURRENT_PID());
 
         //Запускаем TCP-сервер
-        if (!ISTcpServer::Instance().Start())
+        if (ISConfig::Instance().GetValueBool("TCPServer", "Include"))
         {
-            ISLOGGER_E(__CLASS__, "not starting TCPServer: %s", ISTcpServer::Instance().GetErrorString().c_str());
-            return EXIT_FAILURE;
+            if (!ISTcpServer::Instance().Start())
+            {
+                ISLOGGER_E(__CLASS__, "not starting TCPServer: %s", ISTcpServer::Instance().GetErrorString().c_str());
+                return EXIT_FAILURE;
+            }
         }
 
         //Запускаем поток контроля работы

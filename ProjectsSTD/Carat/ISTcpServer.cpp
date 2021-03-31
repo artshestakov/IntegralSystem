@@ -6,6 +6,7 @@
 #include "document.h"
 #include "error\en.h"
 #include "ISTcpQueue.h"
+#include "ISConfig.h"
 //-----------------------------------------------------------------------------
 ISTcpServer::ISTcpServer()
     : ErrorString(STRING_NO_ERROR),
@@ -47,7 +48,7 @@ bool ISTcpServer::Start()
     
     SOCKADDR_IN SocketAddress;
     SocketAddress.sin_addr.S_un.S_addr = INADDR_ANY; //Любой IP адресс
-    SocketAddress.sin_port = htons(50000); //Задаём порт
+    SocketAddress.sin_port = htons(ISConfig::Instance().GetValueUShort("TcpServer", "Port")); //Задаём порт
     SocketAddress.sin_family = AF_INET; //AF_INET - Cемейство адресов для IPv4
 
     SocketServer = socket(AF_INET, SOCK_STREAM, 0);
@@ -70,7 +71,7 @@ bool ISTcpServer::Start()
     }
 
     //Создаём воркеры
-    WorkerCount = std::thread::hardware_concurrency();
+    WorkerCount = ISConfig::Instance().GetValueInt("TcpServer", "WorkerCount");
     Workers.resize(WorkerCount);
     for (unsigned int i = 0; i < WorkerCount; ++i)
     {
