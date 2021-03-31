@@ -13,11 +13,11 @@ public:
 
     std::string GetErrorString() const; //Получить описание последней ошибки
 
-	PGconn* GetDB(const std::string &ConnectionName); //Получить ссылку на экземпляр БД по имени соединения
-	ISConnectOptionDB GetOption(const std::string &ConnectionName); //Получить параметры подключения к БД
+    PGconn* GetDB(const std::string &ConnectionName); //Получить ссылку на экземпляр БД по имени соединения
+    ISConnectOptionDB GetOption(const std::string &ConnectionName); //Получить параметры подключения к БД
 
     bool Connect(const std::string &ConnectionName, const ISConnectOptionDB &ConnectOptionDB); //Подключение к БД
-	bool Connect(const std::string &ConnectionName, const std::string &Host, unsigned short Port, const std::string &Database, const std::string &Login, const std::string &Password); //Подключение к БД
+    bool Connect(const std::string &ConnectionName, const std::string &Host, unsigned short Port, const std::string &Database, const std::string &Login, const std::string &Password); //Подключение к БД
     void Disconnect(const std::string &ConnectionName); //Отключение от БД
     void DisconnectAll(); //Отключение от всех БД
 

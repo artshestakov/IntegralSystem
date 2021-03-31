@@ -17,6 +17,9 @@ const char      STRING_UNKNOWN_ERROR[] = "Unknown error.";
 const size_t    STRING_FORMAT_BUFFER_SIZE = 4096;
 const char      CHAR_NULL_TERM = '\0'; //Символ конца строки
 const size_t    UUID_STANDART_SIZE = 36; //Размер стандартного UID
+//DATABASE---------------------------------------------------------------------
+const size_t    DB_MAX_QUERY_TIME = 50; //Максимальное время (в милисекундах) выполнения SQL-запроса
+const char      DB_CONNECTION_DEFAULT[] = "DefaultDB";
 //CONFIG-----------------------------------------------------------------------
 const char  CONFIG_TEMPLATE_SERVER[] = "Server"; //Шаблон сервера
 const char  CONFIG_TEMPLATE_CLIENT[] = "Client"; //Шаблон клиента

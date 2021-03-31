@@ -20,9 +20,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ISDatabase.cpp" />
+    <ClCompile Include="ISQuery.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ISDatabase.h" />
+    <ClInclude Include="ISQuery.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{77CC8439-66E0-46A6-8103-5320FF654728}</ProjectGuid>
