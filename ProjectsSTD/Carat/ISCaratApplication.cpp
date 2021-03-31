@@ -138,10 +138,17 @@ int ISCaratApplication::Start()
             }
         }
     }
-    else if (Argument == "--shutdown") //Режим остановки службы
+    else if (Argument == "--shutdown" || Argument == "-s") //Режим остановки службы
     {
-        std::ofstream File(FileShutdown);
-        File.close();
+        Shutdown();
+    }
+    else if (Argument == "--help" || Argument == "-h") //Вывод помощи на консоль
+    {
+        Help();
+    }
+    else if (Argument == "--version" || Argument == "-v") //Вывод версии на консоль
+    {
+        Version();
     }
     else //Аргумент неопознан
     {
@@ -163,5 +170,37 @@ void ISCaratApplication::ShutdownController()
             break;
         }
     }
+}
+//-----------------------------------------------------------------------------
+void ISCaratApplication::Shutdown()
+{
+    std::ofstream File(FileShutdown);
+    File.close();
+}
+//-----------------------------------------------------------------------------
+void ISCaratApplication::Help()
+{
+#ifdef WIN32
+    ISDEBUG_L("Usage: Carat.exe [argument]");
+#else
+    ISDEBUG_L("Usage: ./Carat [argument]");
+#endif
+    ISDEBUG;
+    ISDEBUG_L("Arguments:");
+    ISDEBUG_L("  -h,\t--help\t\tshow this help and exit");
+    ISDEBUG_L("  -v,\t--version\t\tshow version and exit");
+    ISDEBUG_L("  -s,\t--shutdown\t\tshutdown service");
+    ISDEBUG;
+#ifdef WIN32
+    ISDEBUG_L("Example: Carat.exe (service mode)");
+#else
+    ISDEBUG_L("Example: ./Carat (service mode)");
+#endif
+    ISDEBUG_L("* No arguments needed to start in service mode");
+}
+//-----------------------------------------------------------------------------
+void ISCaratApplication::Version()
+{
+    ISDEBUG_L("This flag not support");
 }
 //-----------------------------------------------------------------------------

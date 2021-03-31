@@ -18,6 +18,9 @@ public:
 
 private:
     void ShutdownController();
+    void Shutdown();
+    void Help();
+    void Version();
 
 private:
     std::string ErrorString;
