@@ -156,6 +156,12 @@ namespace ISAlgorithm
     //! \return возвращает упрощённый уникальный идентификатор
     std::string GenerateUuidLite();
 
+    //! Соление пароля
+    //! \param HashPassword строка, которая должна содержать хэш логина и пароля (sha256(Login + Password))
+    //! \param Salt строка, которая должна содержать соль (sha256(Login + Password))
+    //! \return возвращает солёный пароль
+    std::string SaltPassword(const std::string &HashPassword, const std::string &Salt); //Посолить пароль
+
     //Извлечь элемент из вектора по заданному индексу
     template <typename T> T VectorTakeAt(std::vector<T> &Vector, size_t Index)
     {

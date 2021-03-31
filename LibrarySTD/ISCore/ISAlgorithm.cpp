@@ -418,3 +418,15 @@ std::string ISAlgorithm::GenerateUuidLite()
     return UID;
 }
 //-----------------------------------------------------------------------------
+std::string ISAlgorithm::SaltPassword(const std::string &HashPassword, const std::string &Salt)
+{
+    std::string HashResult;
+    for (int i = 0; i < (int)CARAT_HASH_SIZE; ++i)
+    {
+        HashResult.push_back(HashPassword[i]);
+        HashResult.push_back(Salt[i]);
+    }
+    std::reverse(HashResult.begin(), HashResult.end());
+    return HashResult;
+}
+//-----------------------------------------------------------------------------

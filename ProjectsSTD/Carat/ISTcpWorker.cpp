@@ -4,15 +4,21 @@
 #include "ISTcpQueue.h"
 #include "ISAssert.h"
 #include "ISLogger.h"
-#include "ISDatabase.h"
 #include "ISConfig.h"
+#include "ISDatabase.h"
+//-----------------------------------------------------------------------------
+static std::string QS_USERS_HASH = "SELECT usrs_hash, usrs_salt "
+                                   "FROM _users "
+                                   "WHERE usrs_hash IS NOT NULL "
+                                   "AND usrs_salt IS NOT NULL";
 //-----------------------------------------------------------------------------
 ISTcpWorker::ISTcpWorker()
     : ErrorString(STRING_NO_ERROR),
     IsBusy(false),
     IsRunning(false),
     IsFinished(false),
-    CurrentMessage(nullptr)
+    CurrentMessage(nullptr),
+    DBConnection(nullptr)
 {
     MapFunction[API_AUTH] = &ISTcpWorker::Auth;
     MapFunction[API_SLEEP] = &ISTcpWorker::Sleep;
@@ -96,14 +102,17 @@ void ISTcpWorker::Process()
     //Формируем имя подключения
     std::stringstream StringStream;
     StringStream << CURRENT_THREAD_ID();
-    ConnectionNameDB = StringStream.str();
+    std::string DBConnectionName = StringStream.str();
 
     //Подключаемся к БД
-    if (!ISDatabase::Instance().Connect(ConnectionNameDB, DBHost, DBPort, DBName, DBUser, DBPassword))
+    if (!ISDatabase::Instance().Connect(DBConnectionName, DBHost, DBPort, DBName, DBUser, DBPassword))
     {
         ISLOGGER_E(__CLASS__, "Not connected to database: %s", ISDatabase::Instance().GetErrorString().c_str());
         return;
     }
+
+    //Получаем указатель на соединение
+    DBConnection = ISDatabase::Instance().GetDB(DBConnectionName);
     
     SetRunning(true);
     while (true)
@@ -253,6 +262,13 @@ bool ISTcpWorker::CheckIsNull(ISTcpMessage *TcpMessage, const char *ParameterNam
     return true;
 }
 //-----------------------------------------------------------------------------
+bool ISTcpWorker::ErrorQuery(const std::string &LocalError, ISQuery &SqlQuery)
+{
+    ErrorString = LocalError;
+    ISLOGGER_E(__CLASS__, "Sql query error:\n%s\n%s", SqlQuery.GetSqlText().c_str(), SqlQuery.GetErrorString().c_str());
+    return false;
+}
+//-----------------------------------------------------------------------------
 bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
     IS_UNUSED(TcpAnswer);
@@ -293,6 +309,55 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
             ErrorString = "Invalid hash";
             return false;
         }
+    }
+
+    {
+        //Запрашиваем все хэши из БД
+        ISQuery qSelectHash(DBConnection, QS_USERS_HASH);
+        if (!qSelectHash.Execute()) //Ошибка запроса
+        {
+            //return ErrorQuery(LANG("Carat.Error.Query.Auth.SelectHash"), qSelectHash);
+            return false;
+        }
+
+        //Если запрос ничего не вернул, значит в БД нет ни одного пользователя
+        if (qSelectHash.GetResultSize() == 0)
+        {
+            //ErrorString = LANG("Carat.Error.Query.Auth.NoUsers");
+            return false;
+        }
+
+        //Ищем пользователя
+        bool IsFound = false;
+        while (qSelectHash.Next())
+        {
+            //Получаем хэш и соль
+            char *CurrentHash = qSelectHash.ReadColumn(0),
+                *CurrentSalt = qSelectHash.ReadColumn(1);
+
+            //Солим присланный хэш текущей солью
+            std::string HashResult = ISAlgorithm::SaltPassword(Hash, CurrentSalt);
+            IsFound = HashResult == CurrentHash;
+            if (IsFound) //Нашли
+            {
+                Hash = HashResult;
+                break;
+            }
+        }
+
+        /*if (IsFound) //Нашли пользователя - удаляем адрес из Fail2Ban
+        {
+        ISFail2Ban::Instance().Remove(IPAddress);
+        }
+        else //Не нашли пользователя - добавляем адрес в Fail2Ban
+        {
+        //Если адрес заблокирован - сообщаем об этом
+        //Иначе - предупреждаем о неправильном вводе логина или пароля
+        ErrorString = ISFail2Ban::Instance().Add(IPAddress)
+        ? LANG("Carat.Error.Query.Auth.Fail2Ban").arg(CARAT_BAN_ATTEMPT_COUNT).arg(IPAddress).arg(ISFail2Ban::Instance().GetUnlockDateTime(IPAddress).toString(FORMAT_DATE_TIME_V2))
+        : LANG("Carat.Error.Query.Auth.InvalidLoginOrPassword");
+        return false;
+        }*/
     }
 
     //Устанавливаем флаги клиенту
