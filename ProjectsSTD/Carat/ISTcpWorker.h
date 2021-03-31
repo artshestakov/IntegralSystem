@@ -19,6 +19,8 @@ public:
     void Shutdown(); //Остановить воркер
 
 private:
+    void SetRunning(bool is_running);
+    bool GetRunning();
     void Process();
     bool Execute(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
     bool CheckIsNull(ISTcpMessage *TcpMessage, const char *ParameterName);
@@ -33,7 +35,9 @@ private:
     bool IsRunning;
     bool IsFinished;
     ISTcpMessage *CurrentMessage;
+    std::string ConnectionNameDB;
     ISCriticalSection CriticalSection;
+    ISCriticalSection CSRunning;
 
     //Список TCP-функций
     typedef bool (ISTcpWorker::*TCPFunction)(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);

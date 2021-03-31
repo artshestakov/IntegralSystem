@@ -4,6 +4,8 @@
 #include "ISTcpQueue.h"
 #include "ISAssert.h"
 #include "ISLogger.h"
+#include "ISDatabase.h"
+#include "ISConfig.h"
 //-----------------------------------------------------------------------------
 ISTcpWorker::ISTcpWorker()
     : ErrorString(STRING_NO_ERROR),
@@ -16,17 +18,20 @@ ISTcpWorker::ISTcpWorker()
     MapFunction[API_SLEEP] = &ISTcpWorker::Sleep;
 
     CRITICAL_SECTION_INIT(&CriticalSection);
+    CRITICAL_SECTION_INIT(&CSRunning);
 }
 //-----------------------------------------------------------------------------
 ISTcpWorker::~ISTcpWorker()
 {
     CRITICAL_SECTION_DESTROY(&CriticalSection);
+    CRITICAL_SECTION_DESTROY(&CSRunning);
 }
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::GetBusy()
 {
+    bool is_busy = false;
     CRITICAL_SECTION_LOCK(&CriticalSection);
-    bool is_busy = IsBusy;
+    is_busy = IsBusy;
     CRITICAL_SECTION_UNLOCK(&CriticalSection);
     return is_busy;
 }
@@ -46,9 +51,7 @@ void ISTcpWorker::Start()
 void ISTcpWorker::Shutdown()
 {
     //Останавливаем воркер
-    CRITICAL_SECTION_INIT(&CriticalSection);
-    IsRunning = false;
-    CRITICAL_SECTION_UNLOCK(&CriticalSection);
+    SetRunning(false);
 
     //Ждём пока воркер не остановится
     while (true)
@@ -65,18 +68,50 @@ void ISTcpWorker::Shutdown()
     }
 }
 //-----------------------------------------------------------------------------
+void ISTcpWorker::SetRunning(bool is_running)
+{
+    CRITICAL_SECTION_LOCK(&CSRunning);
+    IsRunning = is_running;
+    CRITICAL_SECTION_UNLOCK(&CSRunning);
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::GetRunning()
+{
+    bool is_running = false;
+    CRITICAL_SECTION_LOCK(&CSRunning);
+    is_running = IsRunning;
+    CRITICAL_SECTION_UNLOCK(&CSRunning);
+    return is_running;
+}
+//-----------------------------------------------------------------------------
 void ISTcpWorker::Process()
 {
-    IsRunning = true;
+    //Получаем параметры подключения к БД
+    std::string DBHost = ISConfig::Instance().GetValueString("Database", "Host"),
+        DBName = ISConfig::Instance().GetValueString("Database", "Name"),
+        DBUser = ISConfig::Instance().GetValueString("Database", "User"),
+        DBPassword = ISConfig::Instance().GetValueString("Database", "Password");
+    unsigned short DBPort = ISConfig::Instance().GetValueUShort("Database", "Port");
+
+    //Формируем имя подключения
+    std::stringstream StringStream;
+    StringStream << CURRENT_THREAD_ID();
+    ConnectionNameDB = StringStream.str();
+
+    //Подключаемся к БД
+    if (!ISDatabase::Instance().Connect(ConnectionNameDB, DBHost, DBPort, DBName, DBUser, DBPassword))
+    {
+        ISLOGGER_E(__CLASS__, "Not connected to database: %s", ISDatabase::Instance().GetErrorString().c_str());
+        return;
+    }
+    
+    SetRunning(true);
     while (true)
     {
         ISSleep(1); //Немного поспим
 
-        //Проверяем, не останавливали ли воркер
-        CRITICAL_SECTION_LOCK(&CriticalSection);
-        bool is_running = IsRunning;
-        CRITICAL_SECTION_UNLOCK(&CriticalSection);
-        if (!is_running) //Воркер остановлен - выходим из потока
+        //Проверяем, не останавливали ли воркер. Если не запущен - выходим из потока
+        if (!GetRunning())
         {
             break;
         }

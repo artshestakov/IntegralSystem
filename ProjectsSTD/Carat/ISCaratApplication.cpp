@@ -5,6 +5,7 @@
 #include "ISDebug.h"
 #include "ISTcpServer.h"
 #include "ISConfig.h"
+#include "ISDatabase.h"
 //-----------------------------------------------------------------------------
 ISCaratApplication::ISCaratApplication(int argc, char **argv)
     : ErrorString(STRING_NO_ERROR),
@@ -129,6 +130,9 @@ int ISCaratApplication::Start()
                 {
                     ISTcpServer::Instance().Stop();
                 }
+
+                //Отключаемся от всех БД
+                ISDatabase::Instance().DisconnectAll();
 
                 //На всякий случай немного подождём и завершим работу логгера
                 ISSleep(500);

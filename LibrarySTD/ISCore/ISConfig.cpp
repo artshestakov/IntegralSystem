@@ -10,16 +10,21 @@ ISConfig::ISConfig()
     VectorTemplate = std::vector<ISConfigParameter>
     {
         //Серверный шаблон
-        { CONFIG_TEMPLATE_SERVER, "TCPServer",	"Include",			CONFIG_TYPE_BOOL,	true,	"false",						0, 0 },
-        { CONFIG_TEMPLATE_SERVER, "TCPServer",	"Port",				CONFIG_TYPE_INT,	true,	std::to_string(CARAT_TCP_PORT),	1, UINT16_MAX },
-        { CONFIG_TEMPLATE_SERVER, "TCPServer",	"WorkerCount",		CONFIG_TYPE_INT,	true,	"1",							1, (int)std::thread::hardware_concurrency() * 2 },
-        { CONFIG_TEMPLATE_SERVER, "Other",		"Configuration",	CONFIG_TYPE_STRING,	true,	std::string(),					0, 0 },
+        { CONFIG_TEMPLATE_SERVER, "Database",   "Host",             CONFIG_TYPE_STRING, true,   std::string(),                  0, 0 },
+        { CONFIG_TEMPLATE_SERVER, "Database",   "Port",             CONFIG_TYPE_INT,    true,   std::string(),                  1, UINT16_MAX },
+        { CONFIG_TEMPLATE_SERVER, "Database",   "Name",             CONFIG_TYPE_STRING, true,   std::string(),                  0, 0 },
+        { CONFIG_TEMPLATE_SERVER, "Database",   "User",             CONFIG_TYPE_STRING, true,   std::string(),                  0, 0 },
+        { CONFIG_TEMPLATE_SERVER, "Database",   "Password",         CONFIG_TYPE_STRING, true,   std::string(),                  0, 0 },
+        { CONFIG_TEMPLATE_SERVER, "TCPServer",  "Include",          CONFIG_TYPE_BOOL,   true,   "false",                        0, 0 },
+        { CONFIG_TEMPLATE_SERVER, "TCPServer",  "Port",             CONFIG_TYPE_INT,    true,   std::to_string(CARAT_TCP_PORT), 1, UINT16_MAX },
+        { CONFIG_TEMPLATE_SERVER, "TCPServer",  "WorkerCount",      CONFIG_TYPE_INT,    true,   "1",                            1, (int)std::thread::hardware_concurrency() * 2 },
+        { CONFIG_TEMPLATE_SERVER, "Other",      "Configuration",    CONFIG_TYPE_STRING, true,   std::string(),                  0, 0 },
 
         //Клиентский шаблон
-        { CONFIG_TEMPLATE_CLIENT, "Connection",		"Host",		CONFIG_TYPE_STRING,	true,	std::string(),					0, 0 },
-        { CONFIG_TEMPLATE_CLIENT, "Connection",		"Port",		CONFIG_TYPE_INT,	true,	std::to_string(CARAT_TCP_PORT),	1, UINT16_MAX },
-        { CONFIG_TEMPLATE_CLIENT, "RememberUser",	"Include",	CONFIG_TYPE_BOOL,	true,	"false",						0, 0 },
-        { CONFIG_TEMPLATE_CLIENT, "RememberUser",	"Login",	CONFIG_TYPE_STRING,	true,	std::string(),					0, 0 }
+        { CONFIG_TEMPLATE_CLIENT, "Connection",     "Host",     CONFIG_TYPE_STRING, true,   std::string(),                  0, 0 },
+        { CONFIG_TEMPLATE_CLIENT, "Connection",     "Port",     CONFIG_TYPE_INT,    true,   std::to_string(CARAT_TCP_PORT), 1, UINT16_MAX },
+        { CONFIG_TEMPLATE_CLIENT, "RememberUser",   "Include",  CONFIG_TYPE_BOOL,   true,   "false",                        0, 0 },
+        { CONFIG_TEMPLATE_CLIENT, "RememberUser",   "Login",    CONFIG_TYPE_STRING, true,   std::string(),                  0, 0 }
     };
     CRITICAL_SECTION_INIT(&CriticalSection);
 }
