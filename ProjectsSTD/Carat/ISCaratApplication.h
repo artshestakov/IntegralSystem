@@ -25,6 +25,7 @@ private:
     ISCriticalSection CriticalSection;
     ISVectorString Arguments;
     std::string FileShutdown;
+    bool TCPServer;
 };
 //-----------------------------------------------------------------------------
 #endif

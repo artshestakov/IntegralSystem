@@ -10,7 +10,8 @@ ISCaratApplication::ISCaratApplication(int argc, char **argv)
     : ErrorString(STRING_NO_ERROR),
     IsRunning(true),
     Arguments(ISAlgorithm::ParseArgs(argc, argv)),
-    FileShutdown(ISAlgorithm::GetApplicationDir() + PATH_SEPARATOR + "Temp" + PATH_SEPARATOR + "Carat.stop")
+    FileShutdown(ISAlgorithm::GetApplicationDir() + PATH_SEPARATOR + "Temp" + PATH_SEPARATOR + "Carat.stop"),
+    TCPServer(false)
 {
     CRITICAL_SECTION_INIT(&CriticalSection);
 }
@@ -73,7 +74,9 @@ bool ISCaratApplication::Init()
         }
     }
 
-    ISLOGGER_I(__CLASS__, "Initialized");
+    //Получаем параметры конфигурационного файла
+    TCPServer = ISConfig::Instance().GetValueBool("TCPServer", "Include");
+
     return true;
 }
 //-----------------------------------------------------------------------------
@@ -95,7 +98,7 @@ int ISCaratApplication::Start()
             CURRENT_PID());
 
         //Запускаем TCP-сервер
-        if (ISConfig::Instance().GetValueBool("TCPServer", "Include"))
+        if (TCPServer)
         {
             if (!ISTcpServer::Instance().Start())
             {
@@ -121,12 +124,16 @@ int ISCaratApplication::Start()
             {
                 ISLOGGER_I(__CLASS__, "Stopping server");
 
-                ISTcpServer::Instance().Stop();
+                //Останавливаем TCP-сервер
+                if (TCPServer)
+                {
+                    ISTcpServer::Instance().Stop();
+                }
 
                 //На всякий случай немного подождём и завершим работу логгера
                 ISSleep(500);
-                ISLogger::Instance().Shutdown();
                 ISLOGGER_I(__CLASS__, "Stopped server");
+                ISLogger::Instance().Shutdown();
                 break;
             }
         }
