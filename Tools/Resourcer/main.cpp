@@ -8,15 +8,21 @@
 #endif
 //-----------------------------------------------------------------------------
 #define LOG_E(MESSAGE) std::cout << "ERROR: " << MESSAGE << std::endl;
+#define LOG_I(MESSAGE) std::cout << "INFO: " << MESSAGE << std::endl;
+#define LOG_W(MESSAGE) std::cout << "WARNING: " << MESSAGE << std::endl;
 #ifdef WIN32
-#define PATH_SEPARATOR '\\'
+const char PATH_SEPARATOR = '\\';
 #else
-#define PATH_SEPARATOR '/'
+const char PATH_SEPARATOR = '/';
 #endif
+const size_t BUFFER_ERROR_SIZE = 1024;
 //-----------------------------------------------------------------------------
 bool CheckArgument(int argc, char** argv, std::string &DirPath); //Проверка аргумента
 void PreparePath(std::string &DirPath); //Подготовка пути
 bool RecursiveSearch(const std::string &DirPath, std::vector<std::string> &VectorFiles); //Чтение содержимого папки
+bool ReadFiles(std::vector<std::string> &VectorFiles, size_t &SeparatorIndex); //Чтение файлов
+bool ReadFile(const std::string &FilePath, size_t &SeparatorIndex, FILE *FileOut); //Чтение файла
+std::string GetErrorString(); //Получить текст последней ошибки
 //-----------------------------------------------------------------------------
 int main(int argc, char** argv)
 {
@@ -26,7 +32,9 @@ int main(int argc, char** argv)
     {
         return EXIT_FAILURE;
     }
+
     PreparePath(DirPath);
+    size_t SeparatorIndex = DirPath.size() - 1;
 
     //Читаем директорию
     std::vector<std::string> VectorFiles;
@@ -35,6 +43,10 @@ int main(int argc, char** argv)
         return EXIT_FAILURE;
     }
 
+    if (!ReadFiles(VectorFiles, SeparatorIndex))
+    {
+        return EXIT_FAILURE;
+    }
     return EXIT_SUCCESS;
 }
 //-----------------------------------------------------------------------------
@@ -118,5 +130,111 @@ bool RecursiveSearch(const std::string &DirPath, std::vector<std::string> &Vecto
     } while (FindNextFile(Handle, &FindData));
     FindClose(Handle);
     return true;
+}
+//-----------------------------------------------------------------------------
+bool ReadFiles(std::vector<std::string> &VectorFiles, size_t &SeparatorIndex)
+{
+    remove("G:\\out");
+
+    FILE *FileOut = nullptr;
+    errno_t Error = fopen_s(&FileOut, "G:\\out", "wb");
+    if (Error != 0)
+    {
+        LOG_E("Error open file: " + GetErrorString());
+        return false;
+    }
+
+    for (const std::string &FilePath : VectorFiles)
+    {
+        LOG_I("Reading file " + FilePath);
+        if (!ReadFile(FilePath, SeparatorIndex, FileOut))
+        {
+            return false;
+        }
+    }
+    fclose(FileOut);
+    return true;
+}
+//-----------------------------------------------------------------------------
+bool ReadFile(const std::string &FilePath, size_t &SeparatorIndex, FILE *FileOut)
+{
+    FILE *File = nullptr;
+    errno_t Error = fopen_s(&File, FilePath.c_str(), "rb");
+    if (Error != 0) //Не удалось открыть файл
+    {
+        LOG_E("Not open file: " + GetErrorString());
+        return false;
+    }
+
+    //Перемещаемся в конец файла
+    int FSeek = fseek(File, 0L, SEEK_END);
+    bool Result = FSeek == 0;
+    if (Result) //Перемещение прошло успешно
+    {
+        long FileSize = ftell(File);
+        Result = FileSize != 1L;
+        if (Result) //Размер файла получен
+        {
+            rewind(File); //Возвращаемся в начало файла
+
+            //Выделяем память под содержмое
+            unsigned char *Data = (unsigned char *)malloc(FileSize + 1);
+            Result = Data ? true : false;
+            if (Result) //Память успешно выделена
+            {
+                long Readed = fread_s(Data, FileSize, sizeof(unsigned char), FileSize, File);
+                Result = Readed == FileSize;
+                if (Result) //Файл прочитан успешно
+                {
+                    //Копируем путь к файлу и отрезаем лишнее
+                    std::string Temp = FilePath;
+                    Temp.erase(0, SeparatorIndex);
+
+                    fprintf_s(FileOut, "FileName=%s\n", Temp.c_str());
+                    //Записываем содержимое текущего файла в выходной файл
+                    Result = (long)fwrite(Data, sizeof(unsigned char), FileSize, FileOut) == FileSize &&
+                        (long)fwrite("\n", sizeof(unsigned char), 1, FileOut) == 1;
+                    if (Result) //Ошибка записи
+                    {
+                        if (fflush(FileOut) != 0)
+                        {
+                            LOG_W("No flushing data");
+                        }
+                    }
+                    else
+                    {
+                        LOG_E("Error write");
+                    }
+                }
+                else //Ошибка чтения файла
+                {
+                    LOG_E("Error read file: " + GetErrorString());
+                }
+            }
+            else //Не удалось выделить память
+            {
+                LOG_E("Malloc error: " + GetErrorString());
+            }
+        }
+        else //Не удалось получить размер файла
+        {
+            LOG_E("Not getting file size: " + GetErrorString());
+        }
+    }
+    else //Не удалось переместиться в конец файла
+    {
+        LOG_E("Not seek to end file: " + GetErrorString());
+    }
+
+    //Закрываем файл и выходим
+    fclose(File);
+    return Result;
+}
+//-----------------------------------------------------------------------------
+std::string GetErrorString()
+{
+    char Buffer[BUFFER_ERROR_SIZE];
+    (void)strerror_s(Buffer, BUFFER_ERROR_SIZE, errno);
+    return Buffer;
 }
 //-----------------------------------------------------------------------------
