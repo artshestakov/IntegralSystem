@@ -13,19 +13,24 @@ const char PATH_SEPARATOR = '\\';
 #else
 const char PATH_SEPARATOR = '/';
 #endif
+const char OUTPUT_FILE_NAME[] = "Resources.bin";
 const size_t BUFFER_ERROR_SIZE = 1024;
 //-----------------------------------------------------------------------------
 bool CheckArgument(int argc, char** argv, std::string &DirPath); //Проверка аргумента
 void PreparePath(std::string &DirPath); //Подготовка пути
-bool RecursiveSearch(const std::string &DirPath, std::vector<std::string> &VectorFiles); //Чтение содержимого папки
+bool GetFilesPath(const std::string &DirPath, std::vector<std::string> &VectorFiles); //Чтение содержимого папки
 bool ReadFiles(std::vector<std::string> &VectorFiles, size_t &SeparatorIndex); //Чтение файлов
-bool ReadFile(const std::string &FilePath, size_t &SeparatorIndex, FILE *FileOut); //Чтение файла
+bool ReadFile(const std::string &FilePath, size_t &SeparatorIndex, unsigned long long &FileOutSize, FILE *FileOut); //Чтение файла
 std::string GetErrorString(); //Получить текст последней ошибки
 //-----------------------------------------------------------------------------
 int main(int argc, char** argv)
 {
-    //Проверим аргумент
+    //Установим кодироку на всякий случай
+    setlocale(LC_ALL, "Russian");
+
     std::string DirPath;
+
+    //Проверим аргумент
     if (!CheckArgument(argc, argv, DirPath))
     {
         return EXIT_FAILURE;
@@ -35,8 +40,9 @@ int main(int argc, char** argv)
     size_t SeparatorIndex = DirPath.size();
 
     //Читаем директорию
+    printf("Getting files list...\n");
     std::vector<std::string> VectorFiles;
-    if (!RecursiveSearch(DirPath.c_str(), VectorFiles))
+    if (!GetFilesPath(DirPath.c_str(), VectorFiles))
     {
         return EXIT_FAILURE;
     }
@@ -53,13 +59,12 @@ bool CheckArgument(int argc, char** argv, std::string &DirPath)
     //Проверим, есть ли вообще аргумент
     if (argc < 2) //Аргумента нет - выводим ошибку, помощь и выходим
     {
-        std::cout << "Not specified dir path" << std::endl;
+        printf("Not specified dir path\n");
 #ifdef WIN32
-        std::cout << "Example: Resourcer.exe C:\\path\\to\\dir";
+        printf("Example: Resourcer.exe C:\\path\\to\\dir\n");
 #else
-        std::cout << "Example: ./Resourcer /path/to/dir";
+        printf("Example: ./Resourcer /path/to/dir\n");
 #endif
-        std::cout << std::endl;
         return false;
     }
     DirPath = argv[1];
@@ -72,7 +77,7 @@ bool CheckArgument(int argc, char** argv, std::string &DirPath)
 #endif
     if (!PathExist) //Нет такого пути - ошибка
     {
-        std::cout << "Path \"" << DirPath << "\" not exist" << std::endl;
+        printf("Path \"%s\" not exist\n", DirPath.c_str());
         return false;
     }
 
@@ -82,7 +87,7 @@ bool CheckArgument(int argc, char** argv, std::string &DirPath)
 #endif
     if (!PathIsDir)
     {
-        std::cout << "Path \"" + DirPath + "\" is not a dir" << std::endl;
+        printf("Path \"%s\" is not a dir\n", DirPath.c_str());
         return false;
     }
     return true;
@@ -96,14 +101,14 @@ void PreparePath(std::string &DirPath)
     }
 }
 //-----------------------------------------------------------------------------
-bool RecursiveSearch(const std::string &DirPath, std::vector<std::string> &VectorFiles)
+bool GetFilesPath(const std::string &DirPath, std::vector<std::string> &VectorFiles)
 {
     WIN32_FIND_DATA FindData = { 0 };
     std::string DirPathTemp = DirPath + '*';
     HANDLE Handle = FindFirstFile(DirPathTemp.c_str(), &FindData);
     if (Handle == INVALID_HANDLE_VALUE)
     {
-        std::cout << "No open path (" << DirPathTemp << "): " << GetErrorString() << std::endl;
+        printf("Error open path (%s): %s\n", DirPathTemp.c_str(), GetErrorString().c_str());
         return false;
     }
 
@@ -117,7 +122,7 @@ bool RecursiveSearch(const std::string &DirPath, std::vector<std::string> &Vecto
         
         if (FindData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) //Директория
         {
-            if (!RecursiveSearch(DirPath + std::string(FindData.cFileName) + PATH_SEPARATOR, VectorFiles))
+            if (!GetFilesPath(DirPath + std::string(FindData.cFileName) + PATH_SEPARATOR, VectorFiles))
             {
                 return false;
             }
@@ -133,38 +138,59 @@ bool RecursiveSearch(const std::string &DirPath, std::vector<std::string> &Vecto
 //-----------------------------------------------------------------------------
 bool ReadFiles(std::vector<std::string> &VectorFiles, size_t &SeparatorIndex)
 {
+    //Проверим наличие выходного файла
+#ifdef WIN32
+    bool IsExist = PathFileExists(OUTPUT_FILE_NAME) == TRUE;
+#else
+    bool IsExist = access(OUTPUT_FILE_NAME, F_OK) == 0;
+#endif
+    if (IsExist) //Если файл существует - пробуем удалить его
+    {
+#ifdef WIN32
+        bool Deleted = DeleteFile(OUTPUT_FILE_NAME) == TRUE;
+#else
+        bool Deleted = remove(OUTPUT_FILE_NAME) == 0;
+#endif
+        if (!Deleted) //Не удалось удалить файл
+        {
+            printf("Error deleting out file: %s\n", GetErrorString().c_str());
+            return false;
+        }
+    }
+
     FILE *FileOut = nullptr;
-    errno_t Error = fopen_s(&FileOut, "G:\\out", "wb");
+    errno_t Error = fopen_s(&FileOut, OUTPUT_FILE_NAME, "wb");
     if (Error != 0)
     {
-        std::cout << "Error open out file: " << GetErrorString() << std::endl;
+        printf("Error open out file: %s\n", GetErrorString().c_str());
         return false;
     }
 
     //Засекаем время
     auto TimeStart = std::chrono::steady_clock::now();
+    unsigned long long FileOutSize = 0;
 
     for (size_t i = 0, c = VectorFiles.size(); i < c; ++i)
     {
         std::string FilePath = VectorFiles[i];
         printf("Reading file (%zd of %zd): %s\n", i + 1, c, FilePath.c_str());
-        if (!ReadFile(FilePath, SeparatorIndex, FileOut))
+        if (!ReadFile(FilePath, SeparatorIndex, FileOutSize, FileOut))
         {
             return false;
         }
     }
     fclose(FileOut);
-    printf("Complete with %llu msec\n", std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - TimeStart).count());
+    printf("Complete with %llu msec. Size: %llu\n", std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - TimeStart).count(), FileOutSize);
     return true;
 }
 //-----------------------------------------------------------------------------
-bool ReadFile(const std::string &FilePath, size_t &SeparatorIndex, FILE *FileOut)
+bool ReadFile(const std::string &FilePath, size_t &SeparatorIndex, unsigned long long &FileOutSize, FILE *FileOut)
 {
     FILE *File = nullptr;
     errno_t Error = fopen_s(&File, FilePath.c_str(), "rb");
     if (Error != 0) //Не удалось открыть файл
     {
-        std::cout << "Error open file: " + GetErrorString() << std::endl;
+        printf("Error open file: %s\n", GetErrorString().c_str());
         return false;
     }
 
@@ -173,61 +199,56 @@ bool ReadFile(const std::string &FilePath, size_t &SeparatorIndex, FILE *FileOut
     bool Result = FSeek == 0;
     if (Result) //Перемещение прошло успешно
     {
+        //Получаем размер файла и возвращаемся в начало файла
         long FileSize = ftell(File);
-        Result = FileSize != 1L;
-        if (Result) //Размер файла получен
+        FileOutSize += FileSize;
+        rewind(File);
+
+        //Выделяем память под содержмое
+        unsigned char *Data = (unsigned char *)malloc(FileSize + 1);
+        Result = Data ? true : false;
+        if (Result) //Память успешно выделена
         {
-            rewind(File); //Возвращаемся в начало файла
-
-            //Выделяем память под содержмое
-            unsigned char *Data = (unsigned char *)malloc(FileSize + 1);
-            Result = Data ? true : false;
-            if (Result) //Память успешно выделена
+            long Readed = (long)fread_s(Data, FileSize, sizeof(unsigned char), FileSize, File);
+            Result = Readed == FileSize;
+            if (Result) //Файл прочитан успешно
             {
-                long Readed = (long)fread_s(Data, FileSize, sizeof(unsigned char), FileSize, File);
-                Result = Readed == FileSize;
-                if (Result) //Файл прочитан успешно
+                //Копируем путь к файлу и отрезаем лишнее
+                std::string Temp = FilePath;
+                Temp.erase(0, SeparatorIndex);
+
+                //Записываем заголовок файла
+                fprintf_s(FileOut, "FileName=%s Size=%ld\n", Temp.c_str(), FileSize);
+
+                //Записываем содержимое текущего файла в выходной файл
+                Result = (long)fwrite(Data, sizeof(unsigned char), FileSize, FileOut) == FileSize &&
+                    (long)fwrite("\n", sizeof(unsigned char), 1, FileOut) == 1;
+                if (Result) //Ошибка записи
                 {
-                    //Копируем путь к файлу и отрезаем лишнее
-                    std::string Temp = FilePath;
-                    Temp.erase(0, SeparatorIndex);
-
-                    //Записываем заголовок файла
-                    fprintf_s(FileOut, "FileName=%s Size=%ld\n", Temp.c_str(), FileSize);
-
-                    //Записываем содержимое текущего файла в выходной файл
-                    Result = (long)fwrite(Data, sizeof(unsigned char), FileSize, FileOut) == FileSize &&
-                        (long)fwrite("\n", sizeof(unsigned char), 1, FileOut) == 1;
-                    if (Result) //Ошибка записи
+                    if (fflush(FileOut) != 0)
                     {
-                        if (fflush(FileOut) != 0)
-                        {
-                            std::cout << "No flushing data to out file: " << GetErrorString() << std::endl;
-                        }
-                    }
-                    else
-                    {
-                        std::cout << "Error write: " << GetErrorString() << std::endl;
+                        printf("No flushing data to out file: %s\n", GetErrorString().c_str());
                     }
                 }
-                else //Ошибка чтения файла
+                else
                 {
-                    std::cout << "Error read file: " << GetErrorString() << std::endl;
+                    printf("Error write file content to out file: %s\n", GetErrorString().c_str());
                 }
             }
-            else //Не удалось выделить память
+            else //Ошибка чтения файла
             {
-                std::cout << "Malloc error" << std::endl;
+                printf("Error read file: %s\n", GetErrorString().c_str());
             }
+            free(Data);
         }
-        else //Не удалось получить размер файла
+        else //Не удалось выделить память
         {
-            std::cout << "Not getting file size: " << GetErrorString() << std::endl;
+            printf("Malloc error\n");
         }
     }
     else //Не удалось переместиться в конец файла
     {
-        std::cout << "Not seek to end file: " << GetErrorString() << std::endl;
+        printf("Not seek to end file: %s\n", GetErrorString().c_str());
     }
 
     //Закрываем файл и выходим
