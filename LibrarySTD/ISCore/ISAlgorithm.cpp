@@ -124,7 +124,6 @@ bool ISAlgorithm::DirCreate(const std::string &DirPath, std::string &ErrorString
 //-----------------------------------------------------------------------------
 bool ISAlgorithm::FileExist(const std::string &FilePath)
 {
-    IS_UNUSED(FilePath);
 #ifdef WIN32
     return PathFileExists(FilePath.c_str()) == TRUE;
 #else
