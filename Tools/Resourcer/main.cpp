@@ -3,13 +3,11 @@
 #include <string>
 #include <iostream>
 #include <vector>
+#include <chrono>
 #ifdef WIN32
 #include <shlwapi.h>
 #endif
 //-----------------------------------------------------------------------------
-#define LOG_E(MESSAGE) std::cout << "ERROR: " << MESSAGE << std::endl;
-#define LOG_I(MESSAGE) std::cout << "INFO: " << MESSAGE << std::endl;
-#define LOG_W(MESSAGE) std::cout << "WARNING: " << MESSAGE << std::endl;
 #ifdef WIN32
 const char PATH_SEPARATOR = '\\';
 #else
@@ -34,7 +32,7 @@ int main(int argc, char** argv)
     }
 
     PreparePath(DirPath);
-    size_t SeparatorIndex = DirPath.size() - 1;
+    size_t SeparatorIndex = DirPath.size();
 
     //Читаем директорию
     std::vector<std::string> VectorFiles;
@@ -55,7 +53,7 @@ bool CheckArgument(int argc, char** argv, std::string &DirPath)
     //Проверим, есть ли вообще аргумент
     if (argc < 2) //Аргумента нет - выводим ошибку, помощь и выходим
     {
-        LOG_E("Not specified dir path");
+        std::cout << "Not specified dir path" << std::endl;
 #ifdef WIN32
         std::cout << "Example: Resourcer.exe C:\\path\\to\\dir";
 #else
@@ -74,7 +72,7 @@ bool CheckArgument(int argc, char** argv, std::string &DirPath)
 #endif
     if (!PathExist) //Нет такого пути - ошибка
     {
-        LOG_E("Path \"" + DirPath + "\" not exist");
+        std::cout << "Path \"" << DirPath << "\" not exist" << std::endl;
         return false;
     }
 
@@ -105,6 +103,7 @@ bool RecursiveSearch(const std::string &DirPath, std::vector<std::string> &Vecto
     HANDLE Handle = FindFirstFile(DirPathTemp.c_str(), &FindData);
     if (Handle == INVALID_HANDLE_VALUE)
     {
+        std::cout << "No open path (" << DirPathTemp << "): " << GetErrorString() << std::endl;
         return false;
     }
 
@@ -134,25 +133,28 @@ bool RecursiveSearch(const std::string &DirPath, std::vector<std::string> &Vecto
 //-----------------------------------------------------------------------------
 bool ReadFiles(std::vector<std::string> &VectorFiles, size_t &SeparatorIndex)
 {
-    remove("G:\\out");
-
     FILE *FileOut = nullptr;
     errno_t Error = fopen_s(&FileOut, "G:\\out", "wb");
     if (Error != 0)
     {
-        LOG_E("Error open file: " + GetErrorString());
+        std::cout << "Error open out file: " << GetErrorString() << std::endl;
         return false;
     }
 
-    for (const std::string &FilePath : VectorFiles)
+    //Засекаем время
+    auto TimeStart = std::chrono::steady_clock::now();
+
+    for (size_t i = 0, c = VectorFiles.size(); i < c; ++i)
     {
-        LOG_I("Reading file " + FilePath);
+        std::string FilePath = VectorFiles[i];
+        printf("Reading file (%zd of %zd): %s\n", i + 1, c, FilePath.c_str());
         if (!ReadFile(FilePath, SeparatorIndex, FileOut))
         {
             return false;
         }
     }
     fclose(FileOut);
+    printf("Complete with %llu msec\n", std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - TimeStart).count());
     return true;
 }
 //-----------------------------------------------------------------------------
@@ -162,7 +164,7 @@ bool ReadFile(const std::string &FilePath, size_t &SeparatorIndex, FILE *FileOut
     errno_t Error = fopen_s(&File, FilePath.c_str(), "rb");
     if (Error != 0) //Не удалось открыть файл
     {
-        LOG_E("Not open file: " + GetErrorString());
+        std::cout << "Error open file: " + GetErrorString() << std::endl;
         return false;
     }
 
@@ -182,7 +184,7 @@ bool ReadFile(const std::string &FilePath, size_t &SeparatorIndex, FILE *FileOut
             Result = Data ? true : false;
             if (Result) //Память успешно выделена
             {
-                long Readed = fread_s(Data, FileSize, sizeof(unsigned char), FileSize, File);
+                long Readed = (long)fread_s(Data, FileSize, sizeof(unsigned char), FileSize, File);
                 Result = Readed == FileSize;
                 if (Result) //Файл прочитан успешно
                 {
@@ -190,7 +192,9 @@ bool ReadFile(const std::string &FilePath, size_t &SeparatorIndex, FILE *FileOut
                     std::string Temp = FilePath;
                     Temp.erase(0, SeparatorIndex);
 
-                    fprintf_s(FileOut, "FileName=%s\n", Temp.c_str());
+                    //Записываем заголовок файла
+                    fprintf_s(FileOut, "FileName=%s Size=%ld\n", Temp.c_str(), FileSize);
+
                     //Записываем содержимое текущего файла в выходной файл
                     Result = (long)fwrite(Data, sizeof(unsigned char), FileSize, FileOut) == FileSize &&
                         (long)fwrite("\n", sizeof(unsigned char), 1, FileOut) == 1;
@@ -198,32 +202,32 @@ bool ReadFile(const std::string &FilePath, size_t &SeparatorIndex, FILE *FileOut
                     {
                         if (fflush(FileOut) != 0)
                         {
-                            LOG_W("No flushing data");
+                            std::cout << "No flushing data to out file: " << GetErrorString() << std::endl;
                         }
                     }
                     else
                     {
-                        LOG_E("Error write");
+                        std::cout << "Error write: " << GetErrorString() << std::endl;
                     }
                 }
                 else //Ошибка чтения файла
                 {
-                    LOG_E("Error read file: " + GetErrorString());
+                    std::cout << "Error read file: " << GetErrorString() << std::endl;
                 }
             }
             else //Не удалось выделить память
             {
-                LOG_E("Malloc error: " + GetErrorString());
+                std::cout << "Malloc error" << std::endl;
             }
         }
         else //Не удалось получить размер файла
         {
-            LOG_E("Not getting file size: " + GetErrorString());
+            std::cout << "Not getting file size: " << GetErrorString() << std::endl;
         }
     }
     else //Не удалось переместиться в конец файла
     {
-        LOG_E("Not seek to end file: " + GetErrorString());
+        std::cout << "Not seek to end file: " << GetErrorString() << std::endl;
     }
 
     //Закрываем файл и выходим
@@ -233,8 +237,25 @@ bool ReadFile(const std::string &FilePath, size_t &SeparatorIndex, FILE *FileOut
 //-----------------------------------------------------------------------------
 std::string GetErrorString()
 {
+    std::string ErrorString = "Unknown error";
+#ifdef WIN32
+    DWORD ErrorID = GetLastError();
+    if (ErrorID != 0) //Код ошибки валиден
+    {
+        LPSTR Buffer = nullptr;
+        size_t MessageSize = FormatMessageA(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
+            NULL, ErrorID, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPSTR)&Buffer, 0, NULL);
+        if (MessageSize > 0 && Buffer)
+        {
+            ErrorString = std::string(Buffer, MessageSize - 2);
+            LocalFree(Buffer);
+        }
+    }
+#else
     char Buffer[BUFFER_ERROR_SIZE];
     (void)strerror_s(Buffer, BUFFER_ERROR_SIZE, errno);
-    return Buffer;
+    ErrorString = Buffer;
+#endif
+    return ErrorString;
 }
 //-----------------------------------------------------------------------------
