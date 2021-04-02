@@ -1,11 +1,17 @@
 #include <cstdlib>
-#include <cstdio>
+#include <stdio.h>
 #include <string>
+#include <cstring>
 #include <iostream>
 #include <vector>
 #include <chrono>
 #ifdef WIN32
 #include <shlwapi.h>
+#else
+#include <unistd.h>
+#include <dirent.h>
+#include <sys/stat.h>
+#include <sys/types.h>
 #endif
 //-----------------------------------------------------------------------------
 #ifdef WIN32
@@ -14,7 +20,6 @@ const char PATH_SEPARATOR = '\\';
 const char PATH_SEPARATOR = '/';
 #endif
 const char OUTPUT_FILE_NAME[] = "Resources.bin";
-const size_t BUFFER_ERROR_SIZE = 1024;
 //-----------------------------------------------------------------------------
 bool CheckArgument(int argc, char** argv, std::string &DirPath); //Проверка аргумента
 void PreparePath(std::string &DirPath); //Подготовка пути
@@ -84,6 +89,14 @@ bool CheckArgument(int argc, char** argv, std::string &DirPath)
 #ifdef WIN32
     DWORD Attributes = GetFileAttributes(DirPath.c_str());
     bool PathIsDir = (Attributes != INVALID_FILE_ATTRIBUTES && (Attributes & FILE_ATTRIBUTE_DIRECTORY));
+#else
+    struct stat StatBUF;
+    if (stat(DirPath.c_str(), &StatBUF) != 0)
+    {
+        printf("Error checking path: %s\n", GetErrorString().c_str());
+        return false;
+    }
+    bool PathIsDir = S_ISDIR(StatBUF.st_mode);
 #endif
     if (!PathIsDir)
     {
@@ -103,6 +116,7 @@ void PreparePath(std::string &DirPath)
 //-----------------------------------------------------------------------------
 bool GetFilesPath(const std::string &DirPath, std::vector<std::string> &VectorFiles)
 {
+#ifdef WIN32
     WIN32_FIND_DATA FindData = { 0 };
     std::string DirPathTemp = DirPath + '*';
     HANDLE Handle = FindFirstFile(DirPathTemp.c_str(), &FindData);
@@ -133,6 +147,37 @@ bool GetFilesPath(const std::string &DirPath, std::vector<std::string> &VectorFi
         }
     } while (FindNextFile(Handle, &FindData));
     FindClose(Handle);
+#else
+    DIR *Dir = { 0 };
+    struct dirent *Entry = { 0 };
+
+    if (!(Dir = opendir(DirPath.c_str())))
+    {
+        return false;
+    }
+
+    while ((Entry = readdir(Dir)) != NULL)
+    {
+        if (Entry->d_type == DT_DIR) //Директория
+        {
+            //Пропускаем указатели на текущий и родитеский каталоги
+            if (strcmp(Entry->d_name, ".") == 0 || strcmp(Entry->d_name, "..") == 0)
+            {
+                continue;
+            }
+
+            if (!GetFilesPath(DirPath + Entry->d_name + '/', VectorFiles))
+            {
+                return false;
+            }
+        }
+        else //Файл
+        {
+            VectorFiles.emplace_back(DirPath + Entry->d_name);
+        }
+    }
+    closedir(Dir);
+#endif
     return true;
 }
 //-----------------------------------------------------------------------------
@@ -159,9 +204,8 @@ bool ReadFiles(std::vector<std::string> &VectorFiles, size_t &SeparatorIndex)
     }
 
     //Открываем выходной файл
-    FILE *FileOut = nullptr;
-    errno_t Error = fopen_s(&FileOut, OUTPUT_FILE_NAME, "wb");
-    if (Error != 0)
+    FILE *FileOut = fopen(OUTPUT_FILE_NAME, "wb");
+    if (!FileOut)
     {
         printf("Error open out file: %s\n", GetErrorString().c_str());
         return false;
@@ -181,27 +225,28 @@ bool ReadFiles(std::vector<std::string> &VectorFiles, size_t &SeparatorIndex)
         }
     }
     fclose(FileOut); //Закрываем выходной файл
-    printf("Complete with %llu msec. Size: %llu\n", std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - TimeStart).count(), FileOutSize);
+    printf("Complete with %ld msec. Size: %llu\n",
+           std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - TimeStart).count(),
+           FileOutSize);
     return true;
 }
 //-----------------------------------------------------------------------------
 bool ReadFile(const std::string &FilePath, size_t &SeparatorIndex, unsigned long long &FileOutSize, FILE *FileOut)
 {
-    FILE *File = nullptr;
-    errno_t Error = fopen_s(&File, FilePath.c_str(), "rb");
-    if (Error != 0) //Не удалось открыть файл
+    FILE *File = fopen(FilePath.c_str(), "rb");
+    if (!File) //Не удалось открыть файл
     {
         printf("Error open file: %s\n", GetErrorString().c_str());
         return false;
     }
 
     //Перемещаемся в конец файла
-    int FSeek = _fseeki64(File, 0L, SEEK_END);
+    int FSeek = fseek(File, 0L, SEEK_END);
     bool Result = FSeek == 0;
     if (Result) //Перемещение прошло успешно
     {
         //Получаем размер файла и возвращаемся в начало файла
-        long long FileSize = _ftelli64(File);
+        long FileSize = ftell(File);
         FileOutSize += FileSize;
         rewind(File);
 
@@ -210,7 +255,7 @@ bool ReadFile(const std::string &FilePath, size_t &SeparatorIndex, unsigned long
         Result = Data ? true : false;
         if (Result) //Память успешно выделена
         {
-            long Readed = (long)fread_s(Data, (size_t)FileSize, sizeof(unsigned char), (size_t)FileSize, File);
+            long Readed = (long)fread(Data, sizeof(unsigned char), (size_t)FileSize, File);
             Result = Readed == FileSize;
             if (Result) //Файл прочитан успешно
             {
@@ -219,7 +264,7 @@ bool ReadFile(const std::string &FilePath, size_t &SeparatorIndex, unsigned long
                 Temp.erase(0, SeparatorIndex);
 
                 //Записываем заголовок файла
-                fprintf_s(FileOut, "FileName=%s Size=%I64d\n", Temp.c_str(), FileSize);
+                fprintf(FileOut, "FileName=%s Size=%ld\n", Temp.c_str(), FileSize);
 
                 //Записываем содержимое текущего файла в выходной файл
                 Result = (long)fwrite(Data, sizeof(unsigned char), (size_t)FileSize, FileOut) == FileSize &&
@@ -274,9 +319,7 @@ std::string GetErrorString()
         }
     }
 #else
-    char Buffer[BUFFER_ERROR_SIZE];
-    (void)strerror_s(Buffer, BUFFER_ERROR_SIZE, errno);
-    ErrorString = Buffer;
+    ErrorString = strerror(errno);
 #endif
     return ErrorString;
 }
