@@ -80,7 +80,7 @@ bool CheckArgument(int argc, char** argv, std::string &DirPath, std::string &App
     size_t Pos = ApplicationDir.rfind(PATH_SEPARATOR);
     if (Pos != std::string::npos)
     {
-        ApplicationDir.erase(++Pos, ApplicationDir.size() - Pos);
+        ApplicationDir.erase(Pos + 1, ApplicationDir.size() - Pos);
     }
 
     //Проверим существование такого пути
@@ -197,14 +197,14 @@ bool ReadFiles(std::vector<std::string> &VectorFiles, size_t &SeparatorIndex, st
 #ifdef WIN32
     bool IsExist = PathFileExists(PathOutputFile.c_str()) == TRUE;
 #else
-    bool IsExist = access(PathOutputFile, F_OK) == 0;
+    bool IsExist = access(PathOutputFile.c_str(), F_OK) == 0;
 #endif
     if (IsExist) //Если файл существует - пробуем удалить его
     {
 #ifdef WIN32
         bool Deleted = DeleteFile(PathOutputFile.c_str()) == TRUE;
 #else
-        bool Deleted = remove(PathOutputFile) == 0;
+        bool Deleted = remove(PathOutputFile.c_str()) == 0;
 #endif
         if (!Deleted) //Не удалось удалить файл
         {
