@@ -16,8 +16,10 @@
 //-----------------------------------------------------------------------------
 #ifdef WIN32
 const char PATH_SEPARATOR = '\\';
+#define CHRONO_FORMAT "%lld"
 #else
 const char PATH_SEPARATOR = '/';
+#define CHRONO_FORMAT "%ld"
 #endif
 const char OUTPUT_FILE_NAME[] = "Resources.bin";
 //-----------------------------------------------------------------------------
@@ -225,7 +227,7 @@ bool ReadFiles(std::vector<std::string> &VectorFiles, size_t &SeparatorIndex)
         }
     }
     fclose(FileOut); //Закрываем выходной файл
-    printf("Complete with %ld msec. Size: %llu\n",
+    printf("Complete with " CHRONO_FORMAT " msec. Size: %llu\n",
            std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - TimeStart).count(),
            FileOutSize);
     return true;
