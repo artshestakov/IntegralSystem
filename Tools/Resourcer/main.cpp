@@ -23,10 +23,10 @@ const char PATH_SEPARATOR = '/';
 #endif
 const char OUTPUT_FILE_NAME[] = "Resources.bin";
 //-----------------------------------------------------------------------------
-bool CheckArgument(int argc, char** argv, std::string &DirPath); //Проверка аргумента
+bool CheckArgument(int argc, char** argv, std::string &DirPath, std::string &ApplicationDir); //Проверка аргумента
 void PreparePath(std::string &DirPath); //Подготовка пути
 bool GetFilesPath(const std::string &DirPath, std::vector<std::string> &VectorFiles); //Чтение содержимого папки
-bool ReadFiles(std::vector<std::string> &VectorFiles, size_t &SeparatorIndex); //Чтение файлов
+bool ReadFiles(std::vector<std::string> &VectorFiles, size_t &SeparatorIndex, std::string &ApplicationDir); //Чтение файлов
 bool ReadFile(const std::string &FilePath, size_t &SeparatorIndex, unsigned long long &FileOutSize, FILE *FileOut); //Чтение файла
 std::string GetErrorString(); //Получить текст последней ошибки
 //-----------------------------------------------------------------------------
@@ -35,10 +35,10 @@ int main(int argc, char** argv)
     //Установим кодироку на всякий случай
     setlocale(LC_ALL, "Russian");
 
-    std::string DirPath;
+    std::string DirPath, ApplicationDir;
 
     //Проверим аргумент
-    if (!CheckArgument(argc, argv, DirPath))
+    if (!CheckArgument(argc, argv, DirPath, ApplicationDir))
     {
         return EXIT_FAILURE;
     }
@@ -54,14 +54,14 @@ int main(int argc, char** argv)
         return EXIT_FAILURE;
     }
 
-    if (!ReadFiles(VectorFiles, SeparatorIndex))
+    if (!ReadFiles(VectorFiles, SeparatorIndex, ApplicationDir))
     {
         return EXIT_FAILURE;
     }
     return EXIT_SUCCESS;
 }
 //-----------------------------------------------------------------------------
-bool CheckArgument(int argc, char** argv, std::string &DirPath)
+bool CheckArgument(int argc, char** argv, std::string &DirPath, std::string &ApplicationDir)
 {
     //Проверим, есть ли вообще аргумент
     if (argc < 2) //Аргумента нет - выводим ошибку, помощь и выходим
@@ -75,6 +75,13 @@ bool CheckArgument(int argc, char** argv, std::string &DirPath)
         return false;
     }
     DirPath = argv[1];
+
+    ApplicationDir = argv[0];
+    size_t Pos = ApplicationDir.rfind(PATH_SEPARATOR);
+    if (Pos != std::string::npos)
+    {
+        ApplicationDir.erase(++Pos, ApplicationDir.size() - Pos);
+    }
 
     //Проверим существование такого пути
 #ifdef WIN32
@@ -183,20 +190,21 @@ bool GetFilesPath(const std::string &DirPath, std::vector<std::string> &VectorFi
     return true;
 }
 //-----------------------------------------------------------------------------
-bool ReadFiles(std::vector<std::string> &VectorFiles, size_t &SeparatorIndex)
+bool ReadFiles(std::vector<std::string> &VectorFiles, size_t &SeparatorIndex, std::string &ApplicationDir)
 {
     //Проверим наличие выходного файла
+    std::string PathOutputFile = ApplicationDir + OUTPUT_FILE_NAME;
 #ifdef WIN32
-    bool IsExist = PathFileExists(OUTPUT_FILE_NAME) == TRUE;
+    bool IsExist = PathFileExists(PathOutputFile.c_str()) == TRUE;
 #else
-    bool IsExist = access(OUTPUT_FILE_NAME, F_OK) == 0;
+    bool IsExist = access(PathOutputFile, F_OK) == 0;
 #endif
     if (IsExist) //Если файл существует - пробуем удалить его
     {
 #ifdef WIN32
-        bool Deleted = DeleteFile(OUTPUT_FILE_NAME) == TRUE;
+        bool Deleted = DeleteFile(PathOutputFile.c_str()) == TRUE;
 #else
-        bool Deleted = remove(OUTPUT_FILE_NAME) == 0;
+        bool Deleted = remove(PathOutputFile) == 0;
 #endif
         if (!Deleted) //Не удалось удалить файл
         {
@@ -206,7 +214,7 @@ bool ReadFiles(std::vector<std::string> &VectorFiles, size_t &SeparatorIndex)
     }
 
     //Открываем выходной файл
-    FILE *FileOut = fopen(OUTPUT_FILE_NAME, "wb");
+    FILE *FileOut = fopen(PathOutputFile.c_str(), "wb");
     if (!FileOut)
     {
         printf("Error open out file: %s\n", GetErrorString().c_str());
