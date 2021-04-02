@@ -3,4 +3,7 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Resourcer.rc" />
+  </ItemGroup>
 </Project>

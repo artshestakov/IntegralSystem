@@ -21,6 +21,9 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Resourcer.rc" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{3D9434D7-66C2-4126-93D6-B015764156A8}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>

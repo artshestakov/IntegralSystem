@@ -158,6 +158,7 @@ bool ReadFiles(std::vector<std::string> &VectorFiles, size_t &SeparatorIndex)
         }
     }
 
+    //Открываем выходной файл
     FILE *FileOut = nullptr;
     errno_t Error = fopen_s(&FileOut, OUTPUT_FILE_NAME, "wb");
     if (Error != 0)
@@ -179,7 +180,7 @@ bool ReadFiles(std::vector<std::string> &VectorFiles, size_t &SeparatorIndex)
             return false;
         }
     }
-    fclose(FileOut);
+    fclose(FileOut); //Закрываем выходной файл
     printf("Complete with %llu msec. Size: %llu\n", std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - TimeStart).count(), FileOutSize);
     return true;
 }
@@ -205,7 +206,7 @@ bool ReadFile(const std::string &FilePath, size_t &SeparatorIndex, unsigned long
         rewind(File);
 
         //Выделяем память под содержмое
-        unsigned char *Data = (unsigned char *)malloc(FileSize + 1);
+        unsigned char *Data = (unsigned char *)malloc((size_t)FileSize + 1);
         Result = Data ? true : false;
         if (Result) //Память успешно выделена
         {
@@ -243,7 +244,7 @@ bool ReadFile(const std::string &FilePath, size_t &SeparatorIndex, unsigned long
         }
         else //Не удалось выделить память
         {
-            printf("Malloc error: %s\n", GetErrorString());
+            printf("Malloc error: %s\n", GetErrorString().c_str());
         }
     }
     else //Не удалось переместиться в конец файла
