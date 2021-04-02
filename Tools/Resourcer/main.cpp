@@ -195,12 +195,12 @@ bool ReadFile(const std::string &FilePath, size_t &SeparatorIndex, unsigned long
     }
 
     //Перемещаемся в конец файла
-    int FSeek = fseek(File, 0L, SEEK_END);
+    int FSeek = _fseeki64(File, 0L, SEEK_END);
     bool Result = FSeek == 0;
     if (Result) //Перемещение прошло успешно
     {
         //Получаем размер файла и возвращаемся в начало файла
-        long FileSize = ftell(File);
+        long long FileSize = _ftelli64(File);
         FileOutSize += FileSize;
         rewind(File);
 
@@ -209,7 +209,7 @@ bool ReadFile(const std::string &FilePath, size_t &SeparatorIndex, unsigned long
         Result = Data ? true : false;
         if (Result) //Память успешно выделена
         {
-            long Readed = (long)fread_s(Data, FileSize, sizeof(unsigned char), FileSize, File);
+            long Readed = (long)fread_s(Data, (size_t)FileSize, sizeof(unsigned char), (size_t)FileSize, File);
             Result = Readed == FileSize;
             if (Result) //Файл прочитан успешно
             {
@@ -218,10 +218,10 @@ bool ReadFile(const std::string &FilePath, size_t &SeparatorIndex, unsigned long
                 Temp.erase(0, SeparatorIndex);
 
                 //Записываем заголовок файла
-                fprintf_s(FileOut, "FileName=%s Size=%ld\n", Temp.c_str(), FileSize);
+                fprintf_s(FileOut, "FileName=%s Size=%I64d\n", Temp.c_str(), FileSize);
 
                 //Записываем содержимое текущего файла в выходной файл
-                Result = (long)fwrite(Data, sizeof(unsigned char), FileSize, FileOut) == FileSize &&
+                Result = (long)fwrite(Data, sizeof(unsigned char), (size_t)FileSize, FileOut) == FileSize &&
                     (long)fwrite("\n", sizeof(unsigned char), 1, FileOut) == 1;
                 if (Result) //Ошибка записи
                 {
@@ -243,7 +243,7 @@ bool ReadFile(const std::string &FilePath, size_t &SeparatorIndex, unsigned long
         }
         else //Не удалось выделить память
         {
-            printf("Malloc error\n");
+            printf("Malloc error: %s\n", GetErrorString());
         }
     }
     else //Не удалось переместиться в конец файла
