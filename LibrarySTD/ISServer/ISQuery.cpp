@@ -268,7 +268,7 @@ bool ISQuery::ReadColumn_Bool(size_t Index) const
 ISDate ISQuery::ReadColumn_Date(size_t Index) const
 {
     //Если поле содержит пустое значение - возвращаем пустую структуру
-    if (PQgetisnull(SqlResult, CurrentRow, Index) == 1)
+    if (PQgetisnull(SqlResult, CurrentRow, (int)Index) == 1)
     {
         return ISDate();
     }

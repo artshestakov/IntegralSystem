@@ -88,9 +88,7 @@ void ISResourcer::Free()
 {
     while (!Files.empty())
     {
-        //ISResourceFile ResourceFile = ISAlgorithm::VectorTakeBack(Files);
-        //free(ResourceFile.Data);
-        ISAlgorithm::VectorTakeBack(Files);
+        free(ISAlgorithm::VectorTakeBack(Files).Data);
     }
 }
 //-----------------------------------------------------------------------------
