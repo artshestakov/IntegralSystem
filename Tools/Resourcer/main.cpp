@@ -245,7 +245,7 @@ bool ReadFiles(std::vector<std::string> &VectorFiles, size_t &SeparatorIndex, st
         }
     }
     fclose(FileOut); //Закрываем выходной файл
-    printf("Complete with " CHRONO_FORMAT " msec. Files: %d. Size: %llu.\n%s\n",
+    printf("Complete with " CHRONO_FORMAT " msec. Files: %zu. Size: %llu.\n%s\n",
            std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - TimeStart).count(),
            FilesCount, FileOutSize, PathOutputFile.c_str());
     return true;
