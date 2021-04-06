@@ -13,6 +13,12 @@ static std::string QS_USERS_HASH = "SELECT usrs_hash, usrs_salt "
                                    "WHERE usrs_hash IS NOT NULL "
                                    "AND usrs_salt IS NOT NULL";
 //-----------------------------------------------------------------------------
+static std::string QS_USER_AUTH = "SELECT usrs_id, usrs_issystem, usrs_fio, usrs_group, usgp_fullaccess, usrs_accessallowed, usrs_accountlifetime, usrs_accountlifetimestart, usrs_accountlifetimeend, "
+                                  "(SELECT sgdb_useraccessdatabase FROM _settingsdatabase WHERE sgdb_uid = $1) "
+                                  "FROM _users "
+                                  "LEFT JOIN _usergroup ON usgp_id = usrs_group "
+                                  "WHERE usrs_hash = $2";
+//-----------------------------------------------------------------------------
 ISTcpWorker::ISTcpWorker()
     : ErrorString(STRING_NO_ERROR),
     IsBusy(false),
@@ -277,7 +283,7 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
     //Проверяем, не авторизаван ли уже клиент. Если авторизован - выходим с ошибкой
     if (TcpMessage->TcpClient->Authorized)
     {
-        ErrorString = "Already authorized";
+        ErrorString = LANG("Carat.Error.Query.Auth.AlreadyAuthorized");
         return false;
     }
 
@@ -332,8 +338,8 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
         while (qSelectHash.Next())
         {
             //Получаем хэш и соль
-            char *CurrentHash = qSelectHash.ReadColumn(0),
-                *CurrentSalt = qSelectHash.ReadColumn(1);
+            std::string CurrentHash = qSelectHash.ReadColumn_String(0),
+                CurrentSalt = qSelectHash.ReadColumn_String(1);
 
             //Солим присланный хэш текущей солью
             std::string HashResult = ISAlgorithm::SaltPassword(Hash, CurrentSalt);
@@ -347,17 +353,74 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 
         /*if (IsFound) //Нашли пользователя - удаляем адрес из Fail2Ban
         {
-        ISFail2Ban::Instance().Remove(IPAddress);
+            ISFail2Ban::Instance().Remove(IPAddress);
         }
         else //Не нашли пользователя - добавляем адрес в Fail2Ban
         {
-        //Если адрес заблокирован - сообщаем об этом
-        //Иначе - предупреждаем о неправильном вводе логина или пароля
-        ErrorString = ISFail2Ban::Instance().Add(IPAddress)
-        ? LANG("Carat.Error.Query.Auth.Fail2Ban").arg(CARAT_BAN_ATTEMPT_COUNT).arg(IPAddress).arg(ISFail2Ban::Instance().GetUnlockDateTime(IPAddress).toString(FORMAT_DATE_TIME_V2))
-        : LANG("Carat.Error.Query.Auth.InvalidLoginOrPassword");
-        return false;
+            //Если адрес заблокирован - сообщаем об этом
+            //Иначе - предупреждаем о неправильном вводе логина или пароля
+            ErrorString = ISFail2Ban::Instance().Add(IPAddress)
+            ? LANG("Carat.Error.Query.Auth.Fail2Ban").arg(CARAT_BAN_ATTEMPT_COUNT).arg(IPAddress).arg(ISFail2Ban::Instance().GetUnlockDateTime(IPAddress).toString(FORMAT_DATE_TIME_V2))
+            : LANG("Carat.Error.Query.Auth.InvalidLoginOrPassword");
+            return false;
         }*/
+    }
+
+    //Проверка пользователя
+    ISQuery qSelectAuth(DBConnection, QS_USER_AUTH);
+    qSelectAuth.BindValue(CONST_UID_SETTINGS_DATABASE, UUIDOID);
+    qSelectAuth.BindValue(Hash);
+    if (!qSelectAuth.ExecuteFirst()) //Запрос выполнен с ошибкой
+    {
+        return ErrorQuery(LANG("Carat.Error.Query.Auth.SelectLogin"), qSelectAuth);
+    }
+
+    //unsigned int UserID = qSelectAuth.ReadColumn_UInt(0);
+    bool IsSystem = qSelectAuth.ReadColumn_Bool(1);
+    std::string UserFIO = qSelectAuth.ReadColumn_String(2);
+    unsigned int GroupID = qSelectAuth.ReadColumn_UInt(3);
+    //bool GroupFullAccess = qSelectAuth.ReadColumn_Bool(4);
+
+    //Доступ к БД запрещен
+    if (!qSelectAuth.ReadColumn_Bool(9) && !IsSystem)
+    {
+        ErrorString = LANG("Carat.Error.Query.Auth.ConnectionBan");
+        return false;
+    }
+
+    //Если у пользователя нет права доступа
+    if (!qSelectAuth.ReadColumn_Bool(5))
+    {
+        ErrorString = LANG("Carat.Error.Query.Auth.LoginNoAccess");
+        return false;
+    }
+
+    //Проверка наличия привязки не системного пользователя к группе
+    if (!IsSystem && GroupID == 0)
+    {
+        ErrorString = LANG("Carat.Error.Query.Auth.LoginLinkGroup");
+        return false;
+    }
+
+    //Если для пользователя настроено ограничение срока действия учётной записи
+    if (qSelectAuth.ReadColumn_Bool(6))
+    {
+        ISDate DateStart = qSelectAuth.ReadColumn_Date(7),
+            DateEnd = qSelectAuth.ReadColumn_Date(8);
+        if (!DateStart.IsNull() && !DateEnd.IsNull()) //Если дата начала и окончания срока действия установлена
+        {
+            ISDate CurrentDate = ISAlgorithm::GetCurrentDate();
+            if (CurrentDate < DateStart)
+            {
+                //ErrorString = LANG("Carat.Error.Query.Auth.LoginLifetimeNotStarted").arg(DateStart.toString(FORMAT_DATE_V1));
+                return false;
+            }
+            else if (CurrentDate > DateEnd)
+            {
+                ErrorString = LANG("Carat.Error.Query.Auth.LoginLifetimeEnded");
+                return false;
+            }
+        }
     }
 
     //Устанавливаем флаги клиенту

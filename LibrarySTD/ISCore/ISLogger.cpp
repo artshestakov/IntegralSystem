@@ -32,8 +32,8 @@ std::string ISLogger::GetErrorString() const
 //-----------------------------------------------------------------------------
 bool ISLogger::Initialize()
 {
-    //Получаем текущую дату и время и запоминаем текущий день
-    ISDateTime CurrentDate = ISAlgorithm::GetCurrentDate();
+    //Получаем текущую дату и запоминаем текущий день
+    ISDate CurrentDate = ISAlgorithm::GetCurrentDate();
     CurrentDay = CurrentDate.Day;
 
     if (!CreateLogDirectory(CurrentDate)) //Ошибка при создании директорий
@@ -94,13 +94,13 @@ void ISLogger::Log(ISNamespace::LogMessageType MessageType, const std::string &C
     }
 
     //Получаем текущую дату и время
-    ISDateTime DateTime = ISAlgorithm::GetCurrentDate();
+    ISDateTime DT = ISAlgorithm::GetCurrentDateTime();
 
     //Формируем заголовок
     char BufferHeader[LOG_HEADER_SIZE] = { 0 };
     std::sprintf(BufferHeader, "%02d.%02d.%02d %02d:%02d:%02d:%03d\t%lu\t[%s]",
-        DateTime.Day, DateTime.Month, DateTime.Year % 100,
-        DateTime.Hour, DateTime.Minute, DateTime.Second, DateTime.Milliseconds,
+        DT.Date.Day, DT.Date.Month, DT.Date.Year % 100,
+        DT.Time.Hour, DT.Time.Minute, DT.Time.Second, DT.Time.Milliseconds,
         CURRENT_THREAD_ID(), message_type_string.c_str());
 
     //Если указан компонент - добавим его к заголовку
@@ -152,11 +152,11 @@ void ISLogger::Log(ISNamespace::LogMessageType MessageType, const std::string &C
     CRITICAL_SECTION_UNLOCK(&CriticalSection);
 }
 //-----------------------------------------------------------------------------
-bool ISLogger::CreateLogDirectory(const ISDateTime &DT)
+bool ISLogger::CreateLogDirectory(const ISDate &Date)
 {
     //Запоминаем текущий месяц и год
-    CurrentMonth = DT.Month;
-    CurrentYear = DT.Year;
+    CurrentMonth = Date.Month;
+    CurrentYear = Date.Year;
 
     //Формируем путь к текущей папке
     char Buffer[MAX_PATH];
@@ -175,10 +175,10 @@ bool ISLogger::CreateLogDirectory(const ISDateTime &DT)
     return true;
 }
 //-----------------------------------------------------------------------------
-std::string ISLogger::GetPathFile(const ISDateTime &DT) const
+std::string ISLogger::GetPathFile(const ISDate &Date) const
 {
     char Buffer[MAX_PATH];
-    sprintf(Buffer, "%s%s_%02d.%02d.%d.log", PathLogsDir.c_str(), ISAlgorithm::GetApplicationName().c_str(), DT.Day, DT.Month, DT.Year);
+    sprintf(Buffer, "%s%s_%02d.%02d.%d.log", PathLogsDir.c_str(), ISAlgorithm::GetApplicationName().c_str(), Date.Day, Date.Month, Date.Year);
     return Buffer;
 }
 //-----------------------------------------------------------------------------
@@ -201,7 +201,7 @@ void ISLogger::Worker()
         CRITICAL_SECTION_UNLOCK(&CriticalSection);
 
         //Если сменился месяц или год - создаём недостающие папки
-        ISDateTime CurrentDate = ISAlgorithm::GetCurrentDate();
+        ISDate CurrentDate = ISAlgorithm::GetCurrentDate();
         if (CurrentMonth != CurrentDate.Month || CurrentYear != CurrentDate.Year)
         {
             //Пытаемся создать недосающие директории пока не получится

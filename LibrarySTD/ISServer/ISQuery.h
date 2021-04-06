@@ -3,6 +3,7 @@
 #define _ISQUERY_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "ISTypedefs.h"
+#include "ISStructs.h"
 #include <libpq-fe.h>
 #include <pg_type_d.h>
 //-----------------------------------------------------------------------------
@@ -38,6 +39,7 @@ public:
     ISInt64 ReadColumn_Int64(size_t Index) const;
     ISUInt64 ReadColumn_UInt64(size_t Index) const;
     bool ReadColumn_Bool(size_t Index) const;
+    ISDate ReadColumn_Date(size_t Index) const;
 
 private:
     bool Prepare(size_t ParamCount);

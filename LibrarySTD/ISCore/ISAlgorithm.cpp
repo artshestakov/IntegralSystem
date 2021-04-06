@@ -257,12 +257,12 @@ ISVectorString ISAlgorithm::ParseArgs(int argc, char **argv)
     return VectorString;
 }
 //-----------------------------------------------------------------------------
-ISDateTime ISAlgorithm::GetCurrentDate()
+ISDateTime ISAlgorithm::GetCurrentDateTime()
 {
 #ifdef WIN32
     SYSTEMTIME ST;
     GetLocalTime(&ST);
-    return{ ST.wDay, ST.wMonth, ST.wYear, ST.wHour, ST.wMinute, ST.wSecond, ST.wMilliseconds };
+    return{ {ST.wDay, ST.wMonth, ST.wYear}, {ST.wHour, ST.wMinute, ST.wSecond, ST.wMilliseconds } };
 #else
     struct timeval TimeValue;
     gettimeofday(&TimeValue, NULL);
@@ -270,6 +270,18 @@ ISDateTime ISAlgorithm::GetCurrentDate()
     return{ (unsigned short)ST->tm_mday, (unsigned short)(ST->tm_mon + 1), (unsigned short)(ST->tm_year + 1900),
                 (unsigned short)ST->tm_hour, (unsigned short)ST->tm_min, (unsigned short)ST->tm_sec, (unsigned short)(TimeValue.tv_usec / 1000) };
 #endif
+}
+//-----------------------------------------------------------------------------
+ISDate ISAlgorithm::GetCurrentDate()
+{
+    ISDateTime DateTime = GetCurrentDateTime();
+    return{ DateTime.Date.Day, DateTime.Date.Month, DateTime.Date.Year };
+}
+//-----------------------------------------------------------------------------
+ISTime ISAlgorithm::GetCurrentTime()
+{
+    ISDateTime DateTime = GetCurrentDateTime();
+    return{ DateTime.Time.Hour, DateTime.Time.Minute, DateTime.Time.Second, DateTime.Time.Milliseconds };
 }
 //-----------------------------------------------------------------------------
 ISVectorString ISAlgorithm::StringSplit(const std::string &String, char Separator)

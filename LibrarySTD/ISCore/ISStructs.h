@@ -4,21 +4,93 @@
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 //-----------------------------------------------------------------------------
-struct ISDateTime
+struct ISDate
 {
-    ISDateTime()
-        : Day(0), Month(0), Year(0), Hour(0), Minute(0), Second(0), Milliseconds(0) { }
+    ISDate()
+        : Day(0), Month(0), Year(0) { }
 
-    ISDateTime(unsigned short day, unsigned short month, unsigned short year, unsigned short hour, unsigned short minute, unsigned short second, unsigned short milliseconds)
-        : Day(day), Month(month), Year(year), Hour(hour), Minute(minute), Second(second), Milliseconds(milliseconds) { }
+    ISDate(unsigned short day, unsigned short month, unsigned short year)
+        : Day(day), Month(month), Year(year) { }
+
+    bool IsNull() const
+    {
+        return Day == 0 && Month == 0 && Year == 0;
+    }
+
+    bool operator<(const ISDate &d)
+    {
+        if (Year < d.Year)
+        {
+            return true;
+        }
+        else if (Year == d.Year)
+        {
+            if (Month < d.Month)
+            {
+                return true;
+            }
+            else if (Month == d.Month)
+            {
+                if (Day < d.Day)
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    bool operator>(const ISDate &d)
+    {
+        if (Year > d.Year)
+        {
+            return true;
+        }
+        else if (Year == d.Year)
+        {
+            if (Month > d.Month)
+            {
+                return true;
+            }
+            else if (Month == d.Month)
+            {
+                if (Day > d.Day)
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 
     unsigned short Day;
     unsigned short Month;
     unsigned short Year;
+};
+//-----------------------------------------------------------------------------
+struct ISTime
+{
+    ISTime()
+        : Hour(0), Minute(0), Second(0), Milliseconds(0) { }
+
+    ISTime(unsigned short hour, unsigned short minute, unsigned short second, unsigned short milliseconds)
+        : Hour(hour), Minute(minute), Second(second), Milliseconds(milliseconds) { }
+
     unsigned short Hour;
     unsigned short Minute;
     unsigned short Second;
     unsigned short Milliseconds;
+};
+//-----------------------------------------------------------------------------
+struct ISDateTime
+{
+    ISDateTime() { }
+
+    ISDateTime(const ISDate &date, const ISTime &time)
+        : Date(date), Time(time) { }
+
+    ISDate Date;
+    ISTime Time;
 };
 //-----------------------------------------------------------------------------
 struct ISConfigParameter

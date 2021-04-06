@@ -17,6 +17,7 @@ const char      STRING_UNKNOWN_ERROR[] = "Unknown error.";
 const size_t    STRING_FORMAT_BUFFER_SIZE = 4096;
 const char      CHAR_NULL_TERM = '\0'; //Символ конца строки
 const size_t    UUID_STANDART_SIZE = 36; //Размер стандартного UID
+const char      CONST_UID_SETTINGS_DATABASE[] = "1de3449c-c700-4efc-a455-e99e38063d9b"; //Идентификатор настроек базы данных
 //LOCALIZATION-----------------------------------------------------------------
 const char  LOCALIZATION_FILE_CARAT[] = "Carat";
 //DATABASE---------------------------------------------------------------------

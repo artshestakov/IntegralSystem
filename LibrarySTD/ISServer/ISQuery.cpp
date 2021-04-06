@@ -147,7 +147,7 @@ bool ISQuery::Execute(bool PrepareQuery, size_t ParamCount)
                     ErrorString = "Malloc out of memory";
                     return false;
                 }
-                strcpy_s(ParamValues[i], 5, String.c_str()); //Копируем значение в память
+                strcpy(ParamValues[i], String.c_str()); //Копируем значение в память
             }
         }
 
@@ -265,8 +265,25 @@ bool ISQuery::ReadColumn_Bool(size_t Index) const
     return (strcmp(ReadColumn(Index), "t") == 0) ? true : false;
 }
 //-----------------------------------------------------------------------------
+ISDate ISQuery::ReadColumn_Date(size_t Index) const
+{
+    //Если поле содержит пустое значение - возвращаем пустую структуру
+    if (PQgetisnull(SqlResult, CurrentRow, Index) == 1)
+    {
+        return ISDate();
+    }
+    //Поле не пустое - парсим
+
+    char *Value = ReadColumn(Index);
+    char Year[5] = { Value[0], Value[1], Value[2], Value[3], '\0' },
+        Month[3] = { Value[5], Value[6], '\0' },
+        Day[3] = { Value[8], Value[9], '\0' };
+    return{ (unsigned short)atoi(Day), (unsigned short)atoi(Month), (unsigned short)atoi(Year) };
+}
+//-----------------------------------------------------------------------------
 bool ISQuery::Prepare(size_t ParamCount)
 {
+    //???
     //StmtName = ISAlgorithm::StringToMD5(SqlText);
     PGresult *STMT = PQprepare(SqlConnection, StmtName.c_str(), SqlText.c_str(), (int)ParamCount, ParameterTypes.data());
     Prepared = STMT ? true : false;

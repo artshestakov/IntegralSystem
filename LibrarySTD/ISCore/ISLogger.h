@@ -19,8 +19,8 @@ public:
     void Log(ISNamespace::LogMessageType MessageType, const std::string &Component, const char *Format, ...);
 
 private:
-    bool CreateLogDirectory(const ISDateTime &DT);
-    std::string GetPathFile(const ISDateTime &DT) const;
+    bool CreateLogDirectory(const ISDate &Date);
+    std::string GetPathFile(const ISDate &Date) const;
     void Worker();
 
 private:
