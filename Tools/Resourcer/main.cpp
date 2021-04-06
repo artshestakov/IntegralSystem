@@ -225,19 +225,20 @@ bool ReadFiles(std::vector<std::string> &VectorFiles, size_t &SeparatorIndex, st
     auto TimeStart = std::chrono::steady_clock::now();
     unsigned long long FileOutSize = 0;
 
-    for (size_t i = 0, c = VectorFiles.size(); i < c; ++i)
+    size_t FilesCount = VectorFiles.size();
+    for (size_t i = 0; i < FilesCount; ++i)
     {
         std::string FilePath = VectorFiles[i];
-        printf("Reading file (%zd of %zd): %s\n", i + 1, c, FilePath.c_str());
+        printf("Reading file (%zd of %zd): %s\n", i + 1, FilesCount, FilePath.c_str());
         if (!ReadFile(FilePath, SeparatorIndex, FileOutSize, FileOut))
         {
             return false;
         }
     }
     fclose(FileOut); //Закрываем выходной файл
-    printf("Complete with " CHRONO_FORMAT " msec. Size: %llu\n",
+    printf("Complete with " CHRONO_FORMAT " msec. Files: %d. Size: %llu.\n",
            std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - TimeStart).count(),
-           FileOutSize);
+           FilesCount, FileOutSize);
     return true;
 }
 //-----------------------------------------------------------------------------
