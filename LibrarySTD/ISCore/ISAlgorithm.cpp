@@ -136,7 +136,6 @@ std::string ISAlgorithm::GetApplicationPath()
     std::string Path;
     char Buffer[MAX_PATH] = { 0 };
 #ifdef WIN32
-
     if (GetModuleFileName(GetModuleHandle(NULL), Buffer, sizeof(Buffer)) > 0)
     {
         Path = Buffer;
