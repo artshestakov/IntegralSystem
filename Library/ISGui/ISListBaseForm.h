@@ -77,6 +77,7 @@ protected:
 	QAction* GetSpecialAction(ISNamespace::ActionSpecialType action_special);
 
 	virtual void SelectedRowEvent(const QItemSelection &ItemSelected, const QItemSelection &ItemDeSelected); //Событие выбора строки в таблице
+    void CurrentColumnChanged(const QModelIndex &current, const QModelIndex &previous);
 	virtual void AfterShowEvent() override;
 	
 	bool CheckIsSystemObject(); //Проверка объекта на статус "Системный"
@@ -116,6 +117,7 @@ private:
 	QStatusBar *StatusBar; //Статус-бар
 	QLabel *LabelRowCount; //Надпись с количеством строк
 	QLabel *LabelSelectedRow; //Надпись с выделенными записями
+    QLabel *LabelSum; //Надпись с суммой поля
 	QMenu *ContextMenu; //Контекстное меню
 	ISListIndicatorWidget *ListIndicatorWidget; //Индикатор
 	ISSearchForm *SearchForm; //Форма поиска

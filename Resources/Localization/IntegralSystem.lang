@@ -178,6 +178,7 @@
   <Local Name="ListForm.Search" Russian="Расширенный поиск"/>
   <Local Name="ListForm.Search.ToolTip" Russian="Расширенный поиск по таблице (F7)"/>
   <Local Name="ListForm.ExportTable" Russian="Экспорт таблицы"/>
+  <Local Name="ListForm.Column.Sum" Russian="Сумма: %1"/>
 
   <!--ISHistoryForm-->
   <Local Name="ISHistoryForm.Title" Russian="История"/>
@@ -249,7 +250,7 @@
   <Local Name="InputInSystem" Russian="Вход в систему"/>
   <Local Name="InputLoginAndPassword" Russian="Введите логин и пароль"/>
   <Local Name="Send" Russian="Отправить"/>
-  <Local Name="SelectedRecords" Russian="Выбрано записей"/>
+  <Local Name="SelectedRecords" Russian="Выбрано записей: %1"/>
   <Local Name="Age" Russian="Возраст"/>
   <Local Name="AgeNotSelected" Russian="Не указан"/>
   <Local Name="TimeAlert" Russian="Время уведомления"/>

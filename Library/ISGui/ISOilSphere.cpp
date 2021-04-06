@@ -72,9 +72,9 @@ ISOilSphere::CounterpartySubSystem::CounterpartySubSystem(QWidget *parent) : ISL
 	connect(ActionDebt, &QAction::triggered, this, &ISOilSphere::CounterpartySubSystem::ShowDebt);
 	AddAction(ActionDebt, true, true);
 
-	LabelTotal = new QLabel(GetStatusBar());
-	ISGui::SetFontWidgetBold(LabelTotal, true);
-	GetStatusBar()->addWidget(LabelTotal);
+	//LabelTotal = new QLabel(GetStatusBar());
+	//ISGui::SetFontWidgetBold(LabelTotal, true);
+	//GetStatusBar()->addWidget(LabelTotal);
 }
 //-----------------------------------------------------------------------------
 ISOilSphere::CounterpartySubSystem::~CounterpartySubSystem()

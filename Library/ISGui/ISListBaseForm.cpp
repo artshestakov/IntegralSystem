@@ -151,6 +151,7 @@ ISListBaseForm::ISListBaseForm(const QString &TableName, QWidget *parent)
 
 		//Это соединение обязательно должно быть после присваивания модели к QTableView
 		connect(TableView->selectionModel(), &QItemSelectionModel::selectionChanged, this, &ISListBaseForm::SelectedRowEvent);
+        connect(TableView->selectionModel(), &QItemSelectionModel::currentColumnChanged, this, &ISListBaseForm::CurrentColumnChanged);
 	}
 	
 	{//Создание статус-бара
@@ -165,6 +166,9 @@ ISListBaseForm::ISListBaseForm(const QString &TableName, QWidget *parent)
 		LabelSelectedRow = new QLabel(StatusBar);
 		LabelSelectedRow->setVisible(false);
 		StatusBar->addWidget(LabelSelectedRow);
+
+        LabelSum = new QLabel(StatusBar);
+        StatusBar->addWidget(LabelSum);
 	}
 
 	{//Создание контекстного меню
@@ -376,7 +380,7 @@ void ISListBaseForm::SelectedRowEvent(const QItemSelection &ItemSelected, const 
 	if (SelectedRows)
 	{
 		LabelSelectedRow->setVisible(true);
-		LabelSelectedRow->setText(LANG("SelectedRecords") + ": " + QString::number(SelectedRows));
+		LabelSelectedRow->setText(LANG("SelectedRecords").arg(SelectedRows));
 	}
 	else
 	{
@@ -386,6 +390,12 @@ void ISListBaseForm::SelectedRowEvent(const QItemSelection &ItemSelected, const 
 
 	GetAction(ISNamespace::ActionType::Delete)->setEnabled(SelectedRows);
 	emit SelectedRowSignal();
+}
+//-----------------------------------------------------------------------------
+void ISListBaseForm::CurrentColumnChanged(const QModelIndex &current, const QModelIndex &previous)
+{
+    Q_UNUSED(previous);
+    LabelSum->setText(LANG("ListForm.Column.Sum").arg(DOUBLE_PREPARE(TcpModel->GetSum(current.column()).toDouble())));
 }
 //-----------------------------------------------------------------------------
 void ISListBaseForm::LoadData()

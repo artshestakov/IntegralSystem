@@ -143,6 +143,37 @@ ISModelField ISTcpModel::GetField(unsigned int Index)
 	return Fields[Index];
 }
 //-----------------------------------------------------------------------------
+QVariant ISTcpModel::GetSum(int ColumnIndex)
+{
+    switch (Fields[ColumnIndex].Type)
+    {
+    case ISNamespace::FieldType::Money:
+    case ISNamespace::FieldType::Double:
+    {
+        double Double = 0;
+        for (size_t i = 0, c = rowCount(); i < c; ++i)
+        {
+            QVariant v = Records[i].Values[ColumnIndex];
+            Double += v.toString().remove(' ').toDouble();
+        }
+        return Double;
+    }
+
+    case ISNamespace::FieldType::BigInt:
+    case ISNamespace::FieldType::Int:
+    {
+        int Integer = 0;
+        for (size_t i = 0, c = rowCount(); i < c; ++i)
+        {
+            QVariant v = Records[i].Values[ColumnIndex];
+            Integer += v.toString().remove(' ').toInt();
+        }
+        return Integer;
+    }
+    }
+    return QVariant();
+}
+//-----------------------------------------------------------------------------
 QVariant ISTcpModel::data(const QModelIndex &ModelIndex, int Role) const
 {
 	if (!ModelIndex.isValid())
