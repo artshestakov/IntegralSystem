@@ -40,6 +40,9 @@
     <ClCompile Include="ISLocalization.cpp">
       <Filter>System</Filter>
     </ClCompile>
+    <ClCompile Include="ISResourcer.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StdAfx.h">
@@ -82,6 +85,9 @@
       <Filter>TinyXML2</Filter>
     </ClInclude>
     <ClInclude Include="ISLocalization.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="ISResourcer.h">
       <Filter>System</Filter>
     </ClInclude>
   </ItemGroup>

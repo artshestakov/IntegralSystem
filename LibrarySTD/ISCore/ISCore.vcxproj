@@ -178,6 +178,7 @@
     <ClCompile Include="ISDebug.cpp" />
     <ClCompile Include="ISLocalization.cpp" />
     <ClCompile Include="ISLogger.cpp" />
+    <ClCompile Include="ISResourcer.cpp" />
     <ClCompile Include="ISTrace.cpp" />
     <ClCompile Include="StdAfx.cpp" />
     <ClCompile Include="tinyxml2.cpp" />
@@ -191,6 +192,7 @@
     <ClInclude Include="ISLocalization.h" />
     <ClInclude Include="ISLogger.h" />
     <ClInclude Include="ISNamespace.h" />
+    <ClInclude Include="ISResourcer.h" />
     <ClInclude Include="ISStructs.h" />
     <ClInclude Include="ISTrace.h" />
     <ClInclude Include="ISTypedefs.h" />
