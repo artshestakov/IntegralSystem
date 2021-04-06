@@ -47,4 +47,17 @@ struct ISConnectOptionDB
     std::string Password; //Пароль
 };
 //-----------------------------------------------------------------------------
+struct ISResourceFile
+{
+    ISResourceFile()
+        : Size(0), Data(nullptr) { }
+
+    ISResourceFile(const std::string &name, unsigned long size, char *data)
+        : Name(name), Size(size), Data(data) { }
+
+    std::string Name;
+    unsigned long Size;
+    char *Data;
+};
+//-----------------------------------------------------------------------------
 #endif
