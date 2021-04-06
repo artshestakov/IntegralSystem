@@ -283,6 +283,15 @@ bool ReadFile(const std::string &FilePath, size_t &SeparatorIndex, unsigned long
                 std::string Temp = FilePath;
                 Temp.erase(0, SeparatorIndex);
 
+                //Заменяем символы разделения пути
+#ifdef WIN32
+                size_t Pos = 0;
+                while ((Pos = Temp.find('\\')) != std::string::npos)
+                {
+                    Temp[Pos] = '/';
+                }
+#endif
+
                 //Записываем заголовок файла
                 fprintf(FileOut, "FileName=%s Size=%ld\n", Temp.c_str(), FileSize);
 
