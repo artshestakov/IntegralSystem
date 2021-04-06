@@ -65,13 +65,6 @@ bool ISCaratApplication::Init()
         return false;
     }
 
-    //Проверяем валидность конфигурационного файла
-    if (!ISConfig::Instance().IsValid())
-    {
-        ISLOGGER_E("ISConfig", "File is not valid: %s", ISConfig::Instance().GetErrorString().c_str());
-        return false;
-    }
-
     //Удаляем stop-файл
     if (ISAlgorithm::FileExist(FileShutdown))
     {
@@ -93,6 +86,13 @@ int ISCaratApplication::Start()
     std::string Argument = Arguments.empty() ? std::string() : Arguments.front();
     if (Argument.empty()) //Режим службы
     {
+        //Проверяем валидность конфигурационного файла
+        if (!ISConfig::Instance().IsValid())
+        {
+            ISLOGGER_E("ISConfig", "File is not valid: %s", ISConfig::Instance().GetErrorString().c_str());
+            return EXIT_FAILURE;
+        }
+
         ISLOGGER_I(__CLASS__, "Starting...\n"
             "Version: [version] ([configuration] [platform])\n"
             "Branch: [branch_name] (hash)\n"
@@ -161,6 +161,10 @@ int ISCaratApplication::Start()
     {
         Version();
     }
+    else if (Argument == "--conf-create" || Argument == "-cc") //Создать конфигурационный файл
+    {
+        ConfigCreate();
+    }
     else //Аргумент неопознан
     {
         ISDEBUG_L("Invalid argument: " + Argument);
@@ -198,9 +202,10 @@ void ISCaratApplication::Help()
 #endif
     ISDEBUG;
     ISDEBUG_L("Arguments:");
-    ISDEBUG_L("  -h,\t--help\t\tshow this help and exit");
+    ISDEBUG_L("  -h,\t--help\t\t\tshow this help and exit");
     ISDEBUG_L("  -v,\t--version\t\tshow version and exit");
     ISDEBUG_L("  -s,\t--shutdown\t\tshutdown service");
+    ISDEBUG_L("  -cc,\t--conf-create\t\tcreate config");
     ISDEBUG;
 #ifdef WIN32
     ISDEBUG_L("Example: Carat.exe (service mode)");
@@ -213,5 +218,11 @@ void ISCaratApplication::Help()
 void ISCaratApplication::Version()
 {
     ISDEBUG_L("This flag not support");
+}
+//-----------------------------------------------------------------------------
+void ISCaratApplication::ConfigCreate()
+{
+    //Функция должна быть пустой
+    //Конфыигурационный файл создаётся автоматически в функции ISCaratApplication::Init()
 }
 //-----------------------------------------------------------------------------

@@ -21,6 +21,7 @@ private:
     void Shutdown();
     void Help();
     void Version();
+    void ConfigCreate();
 
 private:
     std::string ErrorString;
