@@ -29,6 +29,7 @@ bool GetFilesPath(const std::string &DirPath, std::vector<std::string> &VectorFi
 bool ReadFiles(std::vector<std::string> &VectorFiles, size_t &SeparatorIndex, std::string &ApplicationDir); //Чтение файлов
 bool ReadFile(const std::string &FilePath, size_t &SeparatorIndex, unsigned long long &FileOutSize, FILE *FileOut); //Чтение файла
 std::string GetErrorString(); //Получить текст последней ошибки
+bool DeleteFile(const std::string &FilePath);
 //-----------------------------------------------------------------------------
 int main(int argc, char** argv)
 {
@@ -201,14 +202,8 @@ bool ReadFiles(std::vector<std::string> &VectorFiles, size_t &SeparatorIndex, st
 #endif
     if (IsExist) //Если файл существует - пробуем удалить его
     {
-#ifdef WIN32
-        bool Deleted = DeleteFile(PathOutputFile.c_str()) == TRUE;
-#else
-        bool Deleted = remove(PathOutputFile.c_str()) == 0;
-#endif
-        if (!Deleted) //Не удалось удалить файл
+        if (!DeleteFile(PathOutputFile))
         {
-            printf("Error deleting out file: %s\n", GetErrorString().c_str());
             return false;
         }
     }
@@ -232,6 +227,7 @@ bool ReadFiles(std::vector<std::string> &VectorFiles, size_t &SeparatorIndex, st
         printf("Reading file (%zd of %zd): %s\n", i + 1, FilesCount, FilePath.c_str());
         if (!ReadFile(FilePath, SeparatorIndex, FileOutSize, FileOut))
         {
+            (void)DeleteFile(PathOutputFile);
             return false;
         }
     }
@@ -333,5 +329,19 @@ std::string GetErrorString()
     ErrorString = strerror(errno);
 #endif
     return ErrorString;
+}
+//-----------------------------------------------------------------------------
+bool DeleteFile(const std::string &FilePath)
+{
+#ifdef WIN32
+    if (DeleteFile(FilePath.c_str()) == FALSE)
+#else
+    if (remove(FilePath.c_str()) != 0)
+#endif
+    {
+        printf("Error deleting out file: %s\n", GetErrorString().c_str());
+        return false;
+    }
+    return true;
 }
 //-----------------------------------------------------------------------------
