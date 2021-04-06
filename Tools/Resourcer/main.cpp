@@ -77,7 +77,20 @@ bool CheckArgument(int argc, char** argv, std::string &DirPath, std::string &App
     }
     DirPath = argv[1];
 
-    ApplicationDir = argv[0];
+    //Получаем путь к модулю
+    char Buffer[MAX_PATH] = { 0 };
+#ifdef WIN32
+    if (GetModuleFileName(GetModuleHandle(NULL), Buffer, sizeof(Buffer)) == 0)
+    {
+        printf("Not getting application dir: %s\n", GetErrorString().c_str());
+        return false;
+    }
+#else
+    //реализация под Linux
+#endif
+
+    //Обрезаем лишнее из пути
+    ApplicationDir = Buffer;
     size_t Pos = ApplicationDir.rfind(PATH_SEPARATOR);
     if (Pos != std::string::npos)
     {
@@ -232,9 +245,9 @@ bool ReadFiles(std::vector<std::string> &VectorFiles, size_t &SeparatorIndex, st
         }
     }
     fclose(FileOut); //Закрываем выходной файл
-    printf("Complete with " CHRONO_FORMAT " msec. Files: %d. Size: %llu.\n",
+    printf("Complete with " CHRONO_FORMAT " msec. Files: %d. Size: %llu.\n%s\n",
            std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - TimeStart).count(),
-           FilesCount, FileOutSize);
+           FilesCount, FileOutSize, PathOutputFile.c_str());
     return true;
 }
 //-----------------------------------------------------------------------------
