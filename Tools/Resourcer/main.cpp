@@ -78,7 +78,7 @@ bool CheckArgument(int argc, char** argv, std::string &DirPath, std::string &App
     DirPath = argv[1];
 
     //Получаем путь к модулю
-    char Buffer[MAX_PATH] = { 0 };
+    char Buffer[256] = { 0 };
 #ifdef WIN32
     if (GetModuleFileName(GetModuleHandle(NULL), Buffer, sizeof(Buffer)) == 0)
     {
@@ -86,7 +86,9 @@ bool CheckArgument(int argc, char** argv, std::string &DirPath, std::string &App
         return false;
     }
 #else
-    //реализация под Linux
+    char Temp[20] = { 0 };
+    sprintf(Temp, "/proc/%d/exe", getpid());
+    readlink(Temp, Buffer, 1024);
 #endif
 
     //Обрезаем лишнее из пути
