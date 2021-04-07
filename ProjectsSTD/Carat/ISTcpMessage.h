@@ -3,7 +3,7 @@
 #define _ISTCPMESSAGE_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
-#include "document.h"
+#include "rapidjson\document.h"
 #include "ISTcpClient.h"
 //-----------------------------------------------------------------------------
 class ISTcpMessage

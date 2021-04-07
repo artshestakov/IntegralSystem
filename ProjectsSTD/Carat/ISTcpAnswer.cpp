@@ -1,7 +1,7 @@
 #include "ISTcpAnswer.h"
 #include "ISConstants.h"
-#include "stringbuffer.h"
-#include "writer.h"
+#include "rapidjson\stringbuffer.h"
+#include "rapidjson\writer.h"
 //-----------------------------------------------------------------------------
 ISTcpAnswer::ISTcpAnswer(SOCKET socket_client)
     : ErrorString(STRING_NO_ERROR),

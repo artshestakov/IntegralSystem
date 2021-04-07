@@ -3,7 +3,7 @@
 #define _ISTCPANSWER_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
-#include "document.h"
+#include "rapidjson\document.h"
 //-----------------------------------------------------------------------------
 class ISTcpAnswer
 {
