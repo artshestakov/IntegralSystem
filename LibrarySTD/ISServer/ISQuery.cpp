@@ -283,8 +283,7 @@ ISDate ISQuery::ReadColumn_Date(size_t Index) const
 //-----------------------------------------------------------------------------
 bool ISQuery::Prepare(size_t ParamCount)
 {
-    //???
-    //StmtName = ISAlgorithm::StringToMD5(SqlText);
+    StmtName = ISAlgorithm::MD5(SqlText);
     PGresult *STMT = PQprepare(SqlConnection, StmtName.c_str(), SqlText.c_str(), (int)ParamCount, ParameterTypes.data());
     Prepared = STMT ? true : false;
     if (Prepared)

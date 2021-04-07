@@ -158,6 +158,11 @@ namespace ISAlgorithm
     //! \return возвращает солёный пароль
     std::string SaltPassword(const std::string &HashPassword, const std::string &Salt); //Посолить пароль
 
+    //! Формирование MD5-хэша из строки
+    //! \param String строка, из которой будет вычислен MD5-хэш
+    //! \return возвращает MD5-хэш. Если вернулась пустая строка - значит ошибка
+    std::string MD5(const std::string &String);
+
     //Извлечь элемент из вектора по заданному индексу
     template <typename T> T VectorTakeAt(std::vector<T> &Vector, size_t Index)
     {

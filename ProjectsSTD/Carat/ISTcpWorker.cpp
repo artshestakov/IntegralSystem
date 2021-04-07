@@ -19,13 +19,16 @@ static std::string QS_USER_AUTH = "SELECT usrs_id, usrs_issystem, usrs_fio, usrs
                                   "LEFT JOIN _usergroup ON usgp_id = usrs_group "
                                   "WHERE usrs_hash = $2";
 //-----------------------------------------------------------------------------
+static std::string QI_PROTOCOL = "SELECT protocol_user($1, $2, $3, $4, $5, $6)";
+//-----------------------------------------------------------------------------
 ISTcpWorker::ISTcpWorker()
     : ErrorString(STRING_NO_ERROR),
     IsBusy(false),
     IsRunning(false),
     IsFinished(false),
     CurrentMessage(nullptr),
-    DBConnection(nullptr)
+    DBConnection(nullptr),
+    qProtocol(nullptr)
 {
     MapFunction[API_AUTH] = &ISTcpWorker::Auth;
     MapFunction[API_SLEEP] = &ISTcpWorker::Sleep;
@@ -38,6 +41,7 @@ ISTcpWorker::~ISTcpWorker()
 {
     CRITICAL_SECTION_DESTROY(&CriticalSection);
     CRITICAL_SECTION_DESTROY(&CSRunning);
+    delete qProtocol;
 }
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::GetBusy()
@@ -120,6 +124,9 @@ void ISTcpWorker::Process()
 
     //Получаем указатель на соединение
     DBConnection = ISDatabase::Instance().GetDB(DBConnectionName);
+
+    //Создаём указатель на объект запроса протокола
+    qProtocol = new ISQuery(DBConnection, QI_PROTOCOL);
     
     SetRunning(true);
     while (true)
@@ -274,6 +281,20 @@ bool ISTcpWorker::ErrorQuery(const std::string &LocalError, ISQuery &SqlQuery)
     ErrorString = LocalError;
     ISLOGGER_E(__CLASS__, "Sql query error:\n%s\n%s", SqlQuery.GetSqlText().c_str(), SqlQuery.GetErrorString().c_str());
     return false;
+}
+//-----------------------------------------------------------------------------
+void ISTcpWorker::Protocol(unsigned int UserID, const char *ActionUID, const std::string &TableName, const std::string &TableLocalName, unsigned int ObjectID, const std::string &Information)
+{
+    qProtocol->BindValue(UserID);
+    TableName.empty() ? qProtocol->BindValue(nullptr) : qProtocol->BindValue(TableName);
+    TableLocalName.empty() ? qProtocol->BindValue(nullptr) : qProtocol->BindValue(TableLocalName);
+    qProtocol->BindValue(ActionUID, UUIDOID);
+    ObjectID == 0 ? qProtocol->BindValue(nullptr) : qProtocol->BindValue(ObjectID);
+    Information.empty() ? qProtocol->BindValue(nullptr) : qProtocol->BindValue(Information);
+    if (!qProtocol->Execute(true, 6))
+    {
+        ISLOGGER_E(__CLASS__, "Not insert protocol: %s", qProtocol->GetErrorString().c_str());
+    }
 }
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
@@ -458,6 +479,7 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
     Configuration.AddMember("LogoName", rapidjson::Value().SetNull(), Configuration.GetAllocator());
     TcpAnswer->Parameters.AddMember("Configuration", rapidjson::Value(Configuration, Allocator), Allocator);
 
+    Protocol(TcpMessage->TcpClient->UserID, CONST_UID_PROTOCOL_ENTER_APPLICATION);
     return true;
 }
 //-----------------------------------------------------------------------------

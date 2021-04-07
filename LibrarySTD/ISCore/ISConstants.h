@@ -14,9 +14,12 @@ const char PATH_SEPARATOR = '/';
 const size_t    NPOS = std::string::npos;
 const char      STRING_NO_ERROR[] = "No error.";
 const char      STRING_UNKNOWN_ERROR[] = "Unknown error.";
+const char      CONST_UID_SETTINGS_DATABASE[] = "1de3449c-c700-4efc-a455-e99e38063d9b"; //Идентификатор настроек базы данных
 const size_t    STRING_FORMAT_BUFFER_SIZE = 4096;
 const size_t    UUID_STANDART_SIZE = 36; //Размер стандартного UID
-const char      CONST_UID_SETTINGS_DATABASE[] = "1de3449c-c700-4efc-a455-e99e38063d9b"; //Идентификатор настроек базы данных
+const size_t    MD5_SIZE = 16;
+const size_t    MD5_RESULT_SIZE = 32;
+const char      MD5_DIGITS[] = "0123456789abcdef";
 //CHARS------------------------------------------------------------------------
 const char  CHAR_NULL_TERM = '\0'; //Символ конца строки
 //LOCALIZATION-----------------------------------------------------------------
@@ -45,5 +48,7 @@ const size_t            CARAT_WAIT_WORKERS_MSEC = 1000; //Ожидание освобождения 
 const char API_UNKNOWN[] = "Unknown"; //Неизвестное сообщение
 const char API_AUTH[] = "Auth"; //Авторизация
 const char API_SLEEP[] = "Sleep"; //Ожидание
+//PROTOCOL---------------------------------------------------------------------
+const char CONST_UID_PROTOCOL_ENTER_APPLICATION[] = "2614CB96-EC54-4D4F-B1A6-06D2444962CA";
 //-----------------------------------------------------------------------------
 #endif

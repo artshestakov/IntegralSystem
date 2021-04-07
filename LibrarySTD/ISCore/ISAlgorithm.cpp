@@ -349,7 +349,7 @@ std::string ISAlgorithm::StringF(const char *Format, ...)
 //-----------------------------------------------------------------------------
 std::string ISAlgorithm::GenerateUuidStandart()
 {
-    std::string StringUID;
+    std::string StringUID(UUID_STANDART_SIZE, CHAR_NULL_TERM);
 #ifdef WIN32
     GUID UID = { 0 };
     HRESULT Result = CoCreateGuid(&UID); //Генерируем идентификатор
@@ -358,8 +358,7 @@ std::string ISAlgorithm::GenerateUuidStandart()
         unsigned char *Char = { 0 };
         if (UuidToString(&UID, &Char) == RPC_S_OK) //Преобразовываем в строку
         {
-            //Формируем строку и заполняем её
-            StringUID.resize(UUID_STANDART_SIZE);
+            //Заполняем строку
             for (size_t i = 0; i < UUID_STANDART_SIZE; ++i)
             {
                 StringUID[i] = Char[i];
@@ -372,7 +371,7 @@ std::string ISAlgorithm::GenerateUuidStandart()
     uuid_generate(UUID);
 
     //Переводим его в строку
-    char Char[UUID_STANDART_SIZE] = { 0 };
+    char Char[SIZE_UUID_STANDART] = { 0 };
     uuid_unparse(UUID, Char);
     StringUID = Char;
 #endif
@@ -411,5 +410,39 @@ std::string ISAlgorithm::SaltPassword(const std::string &HashPassword, const std
     }
     std::reverse(HashResult.begin(), HashResult.end());
     return HashResult;
+}
+//-----------------------------------------------------------------------------
+std::string ISAlgorithm::MD5(const std::string &String)
+{
+    std::string Result(MD5_RESULT_SIZE, CHAR_NULL_TERM);
+#ifdef WIN32
+    HCRYPTPROV HCryptoProv = 0;
+    if (CryptAcquireContext(&HCryptoProv, NULL, NULL, PROV_RSA_FULL, CRYPT_VERIFYCONTEXT) == TRUE)
+    {
+        HCRYPTHASH CryptoHash = 0;
+        if (CryptCreateHash(HCryptoProv, CALG_MD5, 0, 0, &CryptoHash) == TRUE)
+        {
+            if (CryptHashData(CryptoHash, (unsigned char *)String.c_str(), String.size(), 0) == TRUE)
+            {
+                unsigned char Hash[MD5_SIZE] = { 0 };
+                unsigned long MD5Size = MD5_SIZE;
+                if (CryptGetHashParam(CryptoHash, HP_HASHVAL, Hash, &MD5Size, 0) == TRUE)
+                {
+                    size_t Index = 0;
+                    for (size_t i = 0; i < MD5_SIZE; ++i, ++Index)
+                    {
+                        Result[Index] = MD5_DIGITS[Hash[i] >> 4];
+                        Result[++Index] = MD5_DIGITS[Hash[i] & 0xF];
+                    }
+                }
+            }
+            CryptDestroyHash(CryptoHash);
+        }
+        CryptReleaseContext(HCryptoProv, 0);
+    }
+#else
+    IS_ASSERT(false, "not support");
+#endif
+    return Result;
 }
 //-----------------------------------------------------------------------------

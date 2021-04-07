@@ -27,6 +27,7 @@ private:
     bool Execute(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
     bool CheckIsNull(ISTcpMessage *TcpMessage, const char *ParameterName);
     bool ErrorQuery(const std::string &LocalError, ISQuery &SqlQuery);
+    void Protocol(unsigned int UserID, const char *ActionUID, const std::string &TableName = std::string(), const std::string &TableLocalName = std::string(), unsigned int ObjectID = 0, const std::string &Information = std::string());
 
 private:
     bool Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
@@ -39,6 +40,7 @@ private:
     bool IsFinished;
     ISTcpMessage *CurrentMessage;
     PGconn *DBConnection; //”казатель на соединение
+    ISQuery *qProtocol;
     ISCriticalSection CriticalSection;
     ISCriticalSection CSRunning;
 
