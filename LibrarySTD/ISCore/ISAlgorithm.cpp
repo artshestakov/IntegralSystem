@@ -122,6 +122,49 @@ bool ISAlgorithm::DirCreate(const std::string &DirPath, std::string &ErrorString
     return true;
 }
 //-----------------------------------------------------------------------------
+ISVectorString ISAlgorithm::DirFiles(const std::string &DirPath, std::string &ErrorString)
+{
+    ISVectorString Vector;
+    if (DirExist(DirPath))
+    {
+#ifdef WIN32
+        std::string DirPathTemp = DirPath;
+        if (DirPathTemp.back() != PATH_SEPARATOR)
+        {
+            DirPathTemp.push_back(PATH_SEPARATOR);
+        }
+        DirPathTemp.push_back('*');
+
+        WIN32_FIND_DATA FindData = { 0 };
+        HANDLE Handle = FindFirstFile(DirPathTemp.c_str(), &FindData);
+        if (Handle != INVALID_HANDLE_VALUE)
+        {
+            do
+            {
+                //Пропускаем указатели на текущий и родитеский каталоги
+                if ((strcmp(FindData.cFileName, ".") == 0) || (strcmp(FindData.cFileName, "..") == 0))
+                {
+                    continue;
+                }
+
+                if (!(FindData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)) //Файл
+                {
+                    Vector.emplace_back(FindData.cFileName);
+                }
+            } while (FindNextFile(Handle, &FindData));
+            FindClose(Handle);
+        }
+        else
+        {
+            ErrorString = ISAlgorithm::StringF("Error open path (%s): %s\n", DirPathTemp.c_str(), GetLastErrorS().c_str());
+        }
+#else
+        IS_ASSERT(false, "not support");
+#endif
+    }
+    return Vector;
+}
+//-----------------------------------------------------------------------------
 bool ISAlgorithm::FileExist(const std::string &FilePath)
 {
 #ifdef WIN32

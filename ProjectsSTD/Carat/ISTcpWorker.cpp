@@ -297,6 +297,26 @@ void ISTcpWorker::Protocol(unsigned int UserID, const char *ActionUID, const std
     }
 }
 //-----------------------------------------------------------------------------
+unsigned int ISTcpWorker::ExtractVersionFile(const std::string &FileName)
+{
+    unsigned int Version = 0;
+    ISVectorString VectorString = ISAlgorithm::StringSplit(FileName, '_');
+    if (VectorString.size() == 4) //Формат вроде валиден
+    {
+        std::string Temp = VectorString.back();
+        size_t Pos = Temp.find('.');
+        if (Pos != NPOS) //Нашли точку (разделитель расширения файла)
+        {
+            Temp.erase(Pos);
+            if (!Temp.empty()) //На всякий случай
+            {
+                Version = std::stoi(Temp);
+            }
+        }
+    }
+    return Version;
+}
+//-----------------------------------------------------------------------------
 bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
     IS_UNUSED(TcpAnswer);
@@ -444,6 +464,55 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
         }
     }
 
+    //Проверяем версию клиента
+    bool IsNeedUpdate = false; //По умолчанию флаг обновления должен быть false (вдруг клиент отправил невалидную версию)
+    unsigned int VersionLast = 0;
+    if (TcpMessage->Parameters.HasMember("Version")) //Если версия указана
+    {
+        //Получаем версию клиента
+        unsigned int VersionClient = TcpMessage->Parameters["Version"].GetUint();
+        VersionClient = VersionClient;
+
+        //Получаем директорию с обновлениями
+        std::string UpdateClientDir = ISConfig::Instance().GetValueString("Other", "UpdateClientDir");
+        if (!UpdateClientDir.empty()) //Если директория настроена - идём дальше
+        {
+            //Проверяем существование директории с обновлениями
+            if (!ISAlgorithm::DirExist(UpdateClientDir))
+            {
+                ISLOGGER_W(__CLASS__, "Folder \"%s\" not exist. Check config parameter \"Other\\UpdateClientDir\"", UpdateClientDir.c_str());
+                ErrorString = LANG("Carat.Error.Query.Auth.UpdatePathNotExist");
+                return false;
+            }
+
+            //Получаем список файлов и проверяем его на пустоту
+            ISVectorString VectorString = ISAlgorithm::DirFiles(UpdateClientDir, ErrorString);
+            if (!VectorString.empty()) //Если обновления есть - ищем последнюю версию
+            {
+                std::string FileNameLast;
+                for (const std::string &FileName : VectorString) //Обходим список файлов
+                {
+                    unsigned int Version = ExtractVersionFile(FileName); //Вытаскиваем версию текущего файла
+                    if (Version > VersionLast) //Если версия текущего файла выше последней - запоминаем
+                    {
+                        VersionLast = Version;
+                        FileNameLast = FileName;
+                    }
+                }
+
+                if (VersionLast > 0) //Если нашли версию - сравниваем её с версией клиента
+                {
+                    IsNeedUpdate = VersionLast > VersionClient;
+                }
+            }
+            //Обновлений нет - идём дальше
+        }
+        else //Директория не настроена - логируем предупреждение и идём дальше
+        {
+            ISLOGGER_W(__CLASS__, "Not setting directory updates");
+        }
+    }
+
     //Устанавливаем флаги клиенту
     TcpMessage->TcpClient->Authorized = true;
     TcpMessage->TcpClient->UserID = UserID;
@@ -465,7 +534,7 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 
     //Информация об обновлении клиента
     rapidjson::Document UpdateClient(rapidjson::Type::kObjectType);
-    UpdateClient.AddMember("IsNeed", false, UpdateClient.GetAllocator());
+    UpdateClient.AddMember("IsNeed", IsNeedUpdate, UpdateClient.GetAllocator());
     UpdateClient.AddMember("NewVersion", 1, UpdateClient.GetAllocator());
     TcpAnswer->Parameters.AddMember("UpdateClient", rapidjson::Value(UpdateClient, Allocator), Allocator);
 

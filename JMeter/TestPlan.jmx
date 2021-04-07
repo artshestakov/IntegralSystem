@@ -425,7 +425,7 @@ def MapAuth =
 	Parameters:
 		[
 			Hash: GetSHA256(vars.get(&quot;Auth_Login&quot;) + vars.get(&quot;Auth_Password&quot;)),
-			Version: vars.get(&quot;Auth_Version&quot;)
+			Version: Integer.parseInt(vars.get(&quot;Auth_Version&quot;))
 		]
 ];
 vars.put(&quot;QueryAuth&quot;, MapToString(MapAuth));

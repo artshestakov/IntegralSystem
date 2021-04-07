@@ -75,6 +75,12 @@ namespace ISAlgorithm
     //! \return возвращает true в случае успешного создания папки, иначе - false
     bool DirCreate(const std::string &DirPath, std::string &ErrorString);
 
+    //! Получить список файлов в папке
+    //! \param DirPath путь к папке
+    //! \param ErrorString ссылка на строку с ошибкой
+    //! \return возвращает список имён файлов. Если список пустой - произошла ошибка
+    ISVectorString DirFiles(const std::string &DirPath, std::string &ErrorString);
+
     //! Проверка существования файла
     //! \param FilePath путь к файлу
     //! \return возвращает true в случае существования файла, иначе - false

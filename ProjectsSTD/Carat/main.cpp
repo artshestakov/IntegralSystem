@@ -4,9 +4,10 @@
 int main(int argc, char **argv)
 {
     ISCaratApplication CaratApplication(argc, argv);
-    if (CaratApplication.Init()) //Приложение успешно инициализировалось
+    bool Result = CaratApplication.Init();
+    if (Result) //Приложение успешно инициализировалось
     {
-        return CaratApplication.Start();
+        Result = CaratApplication.Start() == EXIT_SUCCESS;
     }
     else //При инициализации возникли проблемы - остановим логгер, чтобы ошибка записалась в лог
     {
@@ -15,6 +16,6 @@ int main(int argc, char **argv)
 #ifdef DEBUG
     system("PAUSE");
 #endif
-    return EXIT_FAILURE;
+    return Result ? EXIT_SUCCESS : EXIT_FAILURE;
 }
 //-----------------------------------------------------------------------------

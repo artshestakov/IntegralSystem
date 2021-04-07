@@ -19,6 +19,7 @@ ISConfig::ISConfig()
         { CONFIG_TEMPLATE_SERVER, "TCPServer",  "Port",             CONFIG_TYPE_INT,    true,   std::to_string(CARAT_TCP_PORT), 1, UINT16_MAX },
         { CONFIG_TEMPLATE_SERVER, "TCPServer",  "WorkerCount",      CONFIG_TYPE_INT,    true,   "1",                            1, (int)std::thread::hardware_concurrency() * 2 },
         { CONFIG_TEMPLATE_SERVER, "Other",      "Configuration",    CONFIG_TYPE_STRING, true,   std::string(),                  0, 0 },
+        { CONFIG_TEMPLATE_SERVER, "Other",      "UpdateClientDir",  CONFIG_TYPE_STRING, true,   std::string(),                  0, 0 },
 
         //Клиентский шаблон
         { CONFIG_TEMPLATE_CLIENT, "Connection",     "Host",     CONFIG_TYPE_STRING, true,   std::string(),                  0, 0 },
@@ -59,7 +60,7 @@ bool ISConfig::IsValid()
         //Если параметр обязателен для заполнения и он пустой - ошибка
         if (ConfigParameter.NotNull && Value.empty())
         {
-            ErrorString = ISAlgorithm::StringF("Parameter \"%s/%s\" is empty", ConfigParameter.SectionName.c_str(), ConfigParameter.Name.c_str());
+            ErrorString = ISAlgorithm::StringF("Parameter \"%s\\%s\" is empty", ConfigParameter.SectionName.c_str(), ConfigParameter.Name.c_str());
             return false;
         }
     }
@@ -77,7 +78,7 @@ bool ISConfig::IsValid()
         {
             if (!ISAlgorithm::StringIsNumber(Value))
             {
-                ErrorString = ISAlgorithm::StringF("Invalid parameter value %s/%s=%s", ConfigParameter.SectionName.c_str(), ConfigParameter.Name.c_str(), Value.c_str());
+                ErrorString = ISAlgorithm::StringF("Invalid parameter value %s\\%s=%s", ConfigParameter.SectionName.c_str(), ConfigParameter.Name.c_str(), Value.c_str());
                 return false;
             }
             int IntValue = std::stoi(Value);
@@ -85,7 +86,7 @@ bool ISConfig::IsValid()
             //Проверяем вхождение значения в диапазон
             if (IntValue < ConfigParameter.Minimum || IntValue > ConfigParameter.Maximum)
             {
-                ErrorString = ISAlgorithm::StringF("Parameter %s/%s=%s out of range [%d;%d]", ConfigParameter.SectionName.c_str(), ConfigParameter.Name.c_str(), Value.c_str(), ConfigParameter.Minimum, ConfigParameter.Maximum);
+                ErrorString = ISAlgorithm::StringF("Parameter %s\\%s=%s out of range [%d;%d]", ConfigParameter.SectionName.c_str(), ConfigParameter.Name.c_str(), Value.c_str(), ConfigParameter.Minimum, ConfigParameter.Maximum);
                 return false;
             }
         }
@@ -94,7 +95,7 @@ bool ISConfig::IsValid()
             ISAlgorithm::StringToLower(Value);
             if (!(Value == "true" || Value == "false"))
             {
-                ErrorString = ISAlgorithm::StringF("Invalid parameter value %s/%s=%s (allower \"true\" or \"false\"", ConfigParameter.SectionName.c_str(), ConfigParameter.Name.c_str(), Value.c_str());
+                ErrorString = ISAlgorithm::StringF("Invalid parameter value %s\\%s=%s (allower \"true\" or \"false\"", ConfigParameter.SectionName.c_str(), ConfigParameter.Name.c_str(), Value.c_str());
                 return false;
             }
         }
@@ -104,7 +105,7 @@ bool ISConfig::IsValid()
         }
         else //Неизвестный тип
         {
-            ErrorString = ISAlgorithm::StringF("Invalid parameter type \"%s\" from %s/%s", ConfigParameter.Type.c_str(), ConfigParameter.SectionName.c_str(), ConfigParameter.Name.c_str());
+            ErrorString = ISAlgorithm::StringF("Invalid parameter type \"%s\" from %s\\%s", ConfigParameter.Type.c_str(), ConfigParameter.SectionName.c_str(), ConfigParameter.Name.c_str());
             return false;
         }
     }
