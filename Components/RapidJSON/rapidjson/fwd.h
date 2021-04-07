@@ -101,7 +101,7 @@ class PrettyWriter;
 
 // document.h
 
-template <typename Encoding, typename Allocator> 
+template <typename Encoding, typename Allocator>
 class GenericMember;
 
 template <bool Const, typename Encoding, typename Allocator>
@@ -110,7 +110,7 @@ class GenericMemberIterator;
 template<typename CharType>
 struct GenericStringRef;
 
-template <typename Encoding, typename Allocator> 
+template <typename Encoding, typename Allocator>
 class GenericValue;
 
 typedef GenericValue<UTF8<char>, MemoryPoolAllocator<CrtAllocator> > Value;
@@ -142,7 +142,7 @@ template <
     typename SchemaDocumentType,
     typename OutputHandler,
     typename StateAllocator>
-class GenericSchemaValidator;
+    class GenericSchemaValidator;
 
 typedef GenericSchemaValidator<SchemaDocument, BaseReaderHandler<UTF8<char>, void>, CrtAllocator> SchemaValidator;
 

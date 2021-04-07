@@ -40,9 +40,9 @@
 
 #ifdef __clang__
 RAPIDJSON_DIAG_PUSH
-RAPIDJSON_DIAG_OFF(old-style-cast)
+RAPIDJSON_DIAG_OFF(old - style - cast)
 RAPIDJSON_DIAG_OFF(padded)
-RAPIDJSON_DIAG_OFF(switch-enum)
+RAPIDJSON_DIAG_OFF(switch - enum)
 #elif defined(_MSC_VER)
 RAPIDJSON_DIAG_PUSH
 RAPIDJSON_DIAG_OFF(4127)  // conditional expression is constant
@@ -104,17 +104,17 @@ RAPIDJSON_DIAG_OFF(effc++)
     RAPIDJSON_MULTILINEMACRO_END
 #endif
 
-/*! \def RAPIDJSON_PARSE_ERROR
-    \ingroup RAPIDJSON_ERRORS
-    \brief (Internal) macro to indicate and handle a parse error.
-    \param parseErrorCode \ref rapidjson::ParseErrorCode of the error
-    \param offset  position of the error in JSON input (\c size_t)
+ /*! \def RAPIDJSON_PARSE_ERROR
+     \ingroup RAPIDJSON_ERRORS
+     \brief (Internal) macro to indicate and handle a parse error.
+     \param parseErrorCode \ref rapidjson::ParseErrorCode of the error
+     \param offset  position of the error in JSON input (\c size_t)
 
-    Invokes RAPIDJSON_PARSE_ERROR_NORETURN and stops the parsing.
+     Invokes RAPIDJSON_PARSE_ERROR_NORETURN and stops the parsing.
 
-    \see RAPIDJSON_PARSE_ERROR_NORETURN
-    \hideinitializer
- */
+     \see RAPIDJSON_PARSE_ERROR_NORETURN
+     \hideinitializer
+  */
 #ifndef RAPIDJSON_PARSE_ERROR
 #define RAPIDJSON_PARSE_ERROR(parseErrorCode, offset) \
     RAPIDJSON_MULTILINEMACRO_BEGIN \
@@ -125,25 +125,25 @@ RAPIDJSON_DIAG_OFF(effc++)
 
 #include "error/error.h" // ParseErrorCode, ParseResult
 
-RAPIDJSON_NAMESPACE_BEGIN
+    RAPIDJSON_NAMESPACE_BEGIN
 
-///////////////////////////////////////////////////////////////////////////////
-// ParseFlag
+    ///////////////////////////////////////////////////////////////////////////////
+    // ParseFlag
 
-/*! \def RAPIDJSON_PARSE_DEFAULT_FLAGS
-    \ingroup RAPIDJSON_CONFIG
-    \brief User-defined kParseDefaultFlags definition.
+    /*! \def RAPIDJSON_PARSE_DEFAULT_FLAGS
+        \ingroup RAPIDJSON_CONFIG
+        \brief User-defined kParseDefaultFlags definition.
 
-    User can define this as any \c ParseFlag combinations.
-*/
+        User can define this as any \c ParseFlag combinations.
+    */
 #ifndef RAPIDJSON_PARSE_DEFAULT_FLAGS
 #define RAPIDJSON_PARSE_DEFAULT_FLAGS kParseNoFlags
 #endif
 
-//! Combination of parseFlags
-/*! \see Reader::Parse, Document::Parse, Document::ParseInsitu, Document::ParseStream
- */
-enum ParseFlag {
+    //! Combination of parseFlags
+    /*! \see Reader::Parse, Document::Parse, Document::ParseInsitu, Document::ParseStream
+     */
+    enum ParseFlag {
     kParseNoFlags = 0,              //!< No flags are set.
     kParseInsituFlag = 1,           //!< In-situ(destructive) parsing.
     kParseValidateEncodingFlag = 2, //!< Validate encoding of JSON strings.
@@ -223,35 +223,35 @@ struct BaseReaderHandler {
 
 namespace internal {
 
-template<typename Stream, int = StreamTraits<Stream>::copyOptimization>
-class StreamLocalCopy;
+    template<typename Stream, int = StreamTraits<Stream>::copyOptimization>
+    class StreamLocalCopy;
 
-//! Do copy optimization.
-template<typename Stream>
-class StreamLocalCopy<Stream, 1> {
-public:
-    StreamLocalCopy(Stream& original) : s(original), original_(original) {}
-    ~StreamLocalCopy() { original_ = s; }
+    //! Do copy optimization.
+    template<typename Stream>
+    class StreamLocalCopy<Stream, 1> {
+    public:
+        StreamLocalCopy(Stream& original) : s(original), original_(original) {}
+        ~StreamLocalCopy() { original_ = s; }
 
-    Stream s;
+        Stream s;
 
-private:
-    StreamLocalCopy& operator=(const StreamLocalCopy&) /* = delete */;
+    private:
+        StreamLocalCopy& operator=(const StreamLocalCopy&) /* = delete */;
 
-    Stream& original_;
-};
+        Stream& original_;
+    };
 
-//! Keep reference.
-template<typename Stream>
-class StreamLocalCopy<Stream, 0> {
-public:
-    StreamLocalCopy(Stream& original) : s(original) {}
+    //! Keep reference.
+    template<typename Stream>
+    class StreamLocalCopy<Stream, 0> {
+    public:
+        StreamLocalCopy(Stream& original) : s(original) {}
 
-    Stream& s;
+        Stream& s;
 
-private:
-    StreamLocalCopy& operator=(const StreamLocalCopy&) /* = delete */;
-};
+    private:
+        StreamLocalCopy& operator=(const StreamLocalCopy&) /* = delete */;
+    };
 
 } // namespace internal
 
@@ -347,9 +347,9 @@ inline const char *SkipWhitespace_SIMD(const char* p) {
             return p;
 
     // The rest of string
-    #define C16(c) { c, c, c, c, c, c, c, c, c, c, c, c, c, c, c, c }
+#define C16(c) { c, c, c, c, c, c, c, c, c, c, c, c, c, c, c, c }
     static const char whitespaces[4][16] = { C16(' '), C16('\n'), C16('\r'), C16('\t') };
-    #undef C16
+#undef C16
 
     const __m128i w0 = _mm_loadu_si128(reinterpret_cast<const __m128i *>(&whitespaces[0][0]));
     const __m128i w1 = _mm_loadu_si128(reinterpret_cast<const __m128i *>(&whitespaces[1][0]));
@@ -383,9 +383,9 @@ inline const char *SkipWhitespace_SIMD(const char* p, const char* end) {
         return p;
 
     // The rest of string
-    #define C16(c) { c, c, c, c, c, c, c, c, c, c, c, c, c, c, c, c }
+#define C16(c) { c, c, c, c, c, c, c, c, c, c, c, c, c, c, c, c }
     static const char whitespaces[4][16] = { C16(' '), C16('\n'), C16('\r'), C16('\t') };
-    #undef C16
+#undef C16
 
     const __m128i w0 = _mm_loadu_si128(reinterpret_cast<const __m128i *>(&whitespaces[0][0]));
     const __m128i w1 = _mm_loadu_si128(reinterpret_cast<const __m128i *>(&whitespaces[1][0]));
@@ -453,7 +453,8 @@ inline const char *SkipWhitespace_SIMD(const char* p) {
                 uint32_t lz = internal::clzll(high);
                 return p + 8 + (lz >> 3);
             }
-        } else {
+        }
+        else {
             uint32_t lz = internal::clzll(low);
             return p + (lz >> 3);
         }
@@ -489,7 +490,8 @@ inline const char *SkipWhitespace_SIMD(const char* p, const char* end) {
                 uint32_t lz = internal::clzll(high);
                 return p + 8 + (lz >> 3);
             }
-        } else {
+        }
+        else {
             uint32_t lz = internal::clzll(low);
             return p + (lz >> 3);
         }
@@ -778,18 +780,18 @@ private:
             ++memberCount;
 
             switch (is.Peek()) {
-                case ',':
-                    is.Take();
-                    SkipWhitespaceAndComments<parseFlags>(is);
-                    RAPIDJSON_PARSE_ERROR_EARLY_RETURN_VOID;
-                    break;
-                case '}':
-                    is.Take();
-                    if (RAPIDJSON_UNLIKELY(!handler.EndObject(memberCount)))
-                        RAPIDJSON_PARSE_ERROR(kParseErrorTermination, is.Tell());
-                    return;
-                default:
-                    RAPIDJSON_PARSE_ERROR(kParseErrorObjectMissCommaOrCurlyBracket, is.Tell()); break; // This useless break is only for making warning and coverage happy
+            case ',':
+                is.Take();
+                SkipWhitespaceAndComments<parseFlags>(is);
+                RAPIDJSON_PARSE_ERROR_EARLY_RETURN_VOID;
+                break;
+            case '}':
+                is.Take();
+                if (RAPIDJSON_UNLIKELY(!handler.EndObject(memberCount)))
+                    RAPIDJSON_PARSE_ERROR(kParseErrorTermination, is.Tell());
+                return;
+            default:
+                RAPIDJSON_PARSE_ERROR(kParseErrorObjectMissCommaOrCurlyBracket, is.Tell()); break; // This useless break is only for making warning and coverage happy
             }
 
             if (parseFlags & kParseTrailingCommasFlag) {
@@ -989,7 +991,7 @@ private:
     // This function handles the prefix/suffix double quotes, escaping, and optional encoding validation.
     template<unsigned parseFlags, typename SEncoding, typename TEncoding, typename InputStream, typename OutputStream>
     RAPIDJSON_FORCEINLINE void ParseStringToStream(InputStream& is, OutputStream& os) {
-//!@cond RAPIDJSON_HIDDEN_FROM_DOXYGEN
+        //!@cond RAPIDJSON_HIDDEN_FROM_DOXYGEN
 #define Z16 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
         static const char escape[256] = {
             Z16, Z16, 0, 0,'\"', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '/',
@@ -999,7 +1001,7 @@ private:
             Z16, Z16, Z16, Z16, Z16, Z16, Z16, Z16
         };
 #undef Z16
-//!@endcond
+        //!@endcond
 
         for (;;) {
             // Scan and copy string before "\\\"" or < 0x20. This is an optional optimzation.
@@ -1069,7 +1071,7 @@ private:
 
     template<typename InputStream, typename OutputStream>
     static RAPIDJSON_FORCEINLINE void ScanCopyUnescapedString(InputStream&, OutputStream&) {
-            // Do nothing for generic version
+        // Do nothing for generic version
     }
 
 #if defined(RAPIDJSON_SSE2) || defined(RAPIDJSON_SSE42)
@@ -1090,7 +1092,7 @@ private:
         // The rest of string using SIMD
         static const char dquote[16] = { '\"', '\"', '\"', '\"', '\"', '\"', '\"', '\"', '\"', '\"', '\"', '\"', '\"', '\"', '\"', '\"' };
         static const char bslash[16] = { '\\', '\\', '\\', '\\', '\\', '\\', '\\', '\\', '\\', '\\', '\\', '\\', '\\', '\\', '\\', '\\' };
-        static const char space[16]  = { 0x1F, 0x1F, 0x1F, 0x1F, 0x1F, 0x1F, 0x1F, 0x1F, 0x1F, 0x1F, 0x1F, 0x1F, 0x1F, 0x1F, 0x1F, 0x1F };
+        static const char space[16] = { 0x1F, 0x1F, 0x1F, 0x1F, 0x1F, 0x1F, 0x1F, 0x1F, 0x1F, 0x1F, 0x1F, 0x1F, 0x1F, 0x1F, 0x1F, 0x1F };
         const __m128i dq = _mm_loadu_si128(reinterpret_cast<const __m128i *>(&dquote[0]));
         const __m128i bs = _mm_loadu_si128(reinterpret_cast<const __m128i *>(&bslash[0]));
         const __m128i sp = _mm_loadu_si128(reinterpret_cast<const __m128i *>(&space[0]));
@@ -1104,13 +1106,13 @@ private:
             unsigned short r = static_cast<unsigned short>(_mm_movemask_epi8(x));
             if (RAPIDJSON_UNLIKELY(r != 0)) {   // some of characters is escaped
                 SizeType length;
-    #ifdef _MSC_VER         // Find the index of first escaped
+#ifdef _MSC_VER         // Find the index of first escaped
                 unsigned long offset;
                 _BitScanForward(&offset, r);
                 length = offset;
-    #else
+#else
                 length = static_cast<SizeType>(__builtin_ffs(r) - 1);
-    #endif
+#endif
                 if (length != 0) {
                     char* q = reinterpret_cast<char*>(os.Push(length));
                     for (size_t i = 0; i < length; i++)
@@ -1269,7 +1271,8 @@ private:
                     length = 8 + (lz >> 3);
                     escaped = true;
                 }
-            } else {
+            }
+            else {
                 uint32_t lz = internal::clzll(low);
                 length = lz >> 3;
                 escaped = true;
@@ -1339,7 +1342,8 @@ private:
                     length = 8 + (lz >> 3);
                     escaped = true;
                 }
-            } else {
+            }
+            else {
                 uint32_t lz = internal::clzll(low);
                 length = lz >> 3;
                 escaped = true;
@@ -1393,7 +1397,8 @@ private:
                     p += 8 + (lz >> 3);
                     break;
                 }
-            } else {
+            }
+            else {
                 uint32_t lz = internal::clzll(low);
                 p += lz >> 3;
                 break;
@@ -1412,7 +1417,7 @@ private:
     public:
         typedef typename InputStream::Ch Ch;
 
-        NumberStream(GenericReader& reader, InputStream& s) : is(s) { (void)reader;  }
+        NumberStream(GenericReader& reader, InputStream& s) : is(s) { (void)reader; }
 
         RAPIDJSON_FORCEINLINE Ch Peek() const { return is.Peek(); }
         RAPIDJSON_FORCEINLINE Ch TakePush() { return is.Take(); }
@@ -1469,10 +1474,10 @@ private:
         internal::StreamLocalCopy<InputStream> copy(is);
         NumberStream<InputStream,
             ((parseFlags & kParseNumbersAsStringsFlag) != 0) ?
-                ((parseFlags & kParseInsituFlag) == 0) :
-                ((parseFlags & kParseFullPrecisionFlag) != 0),
+            ((parseFlags & kParseInsituFlag) == 0) :
+            ((parseFlags & kParseFullPrecisionFlag) != 0),
             (parseFlags & kParseNumbersAsStringsFlag) != 0 &&
-                (parseFlags & kParseInsituFlag) == 0> s(*this, copy.s);
+            (parseFlags & kParseInsituFlag) == 0> s(*this, copy.s);
 
         size_t startOffset = s.Tell();
         double d = 0.0;
@@ -1532,7 +1537,7 @@ private:
                     useNanOrInf = true;
 
                     if (RAPIDJSON_UNLIKELY(s.Peek() == 'i' && !(Consume(s, 'i') && Consume(s, 'n')
-                                                                && Consume(s, 'i') && Consume(s, 't') && Consume(s, 'y')))) {
+                        && Consume(s, 'i') && Consume(s, 't') && Consume(s, 'y')))) {
                         RAPIDJSON_PARSE_ERROR(kParseErrorValueInvalid, s.Tell());
                     }
                 }
@@ -1550,7 +1555,7 @@ private:
         if (use64bit) {
             if (minus)
                 while (RAPIDJSON_LIKELY(s.Peek() >= '0' && s.Peek() <= '9')) {
-                     if (RAPIDJSON_UNLIKELY(i64 >= RAPIDJSON_UINT64_C2(0x0CCCCCCC, 0xCCCCCCCC))) // 2^63 = 9223372036854775808
+                    if (RAPIDJSON_UNLIKELY(i64 >= RAPIDJSON_UINT64_C2(0x0CCCCCCC, 0xCCCCCCCC))) // 2^63 = 9223372036854775808
                         if (RAPIDJSON_LIKELY(i64 != RAPIDJSON_UINT64_C2(0x0CCCCCCC, 0xCCCCCCCC) || s.Peek() > '8')) {
                             d = static_cast<double>(i64);
                             useDouble = true;
@@ -1704,42 +1709,42 @@ private:
             }
         }
         else {
-           size_t length = s.Length();
-           const char* decimal = s.Pop();  // Pop stack no matter if it will be used or not.
+            size_t length = s.Length();
+            const char* decimal = s.Pop();  // Pop stack no matter if it will be used or not.
 
-           if (useDouble) {
-               int p = exp + expFrac;
-               if (parseFlags & kParseFullPrecisionFlag)
-                   d = internal::StrtodFullPrecision(d, p, decimal, length, decimalPosition, exp);
-               else
-                   d = internal::StrtodNormalPrecision(d, p);
+            if (useDouble) {
+                int p = exp + expFrac;
+                if (parseFlags & kParseFullPrecisionFlag)
+                    d = internal::StrtodFullPrecision(d, p, decimal, length, decimalPosition, exp);
+                else
+                    d = internal::StrtodNormalPrecision(d, p);
 
-               // Use > max, instead of == inf, to fix bogus warning -Wfloat-equal
-               if (d > (std::numeric_limits<double>::max)()) {
-                   // Overflow
-                   // TODO: internal::StrtodX should report overflow (or underflow)
-                   RAPIDJSON_PARSE_ERROR(kParseErrorNumberTooBig, startOffset);
-               }
+                // Use > max, instead of == inf, to fix bogus warning -Wfloat-equal
+                if (d > (std::numeric_limits<double>::max)()) {
+                    // Overflow
+                    // TODO: internal::StrtodX should report overflow (or underflow)
+                    RAPIDJSON_PARSE_ERROR(kParseErrorNumberTooBig, startOffset);
+                }
 
-               cont = handler.Double(minus ? -d : d);
-           }
-           else if (useNanOrInf) {
-               cont = handler.Double(d);
-           }
-           else {
-               if (use64bit) {
-                   if (minus)
-                       cont = handler.Int64(static_cast<int64_t>(~i64 + 1));
-                   else
-                       cont = handler.Uint64(i64);
-               }
-               else {
-                   if (minus)
-                       cont = handler.Int(static_cast<int32_t>(~i + 1));
-                   else
-                       cont = handler.Uint(i);
-               }
-           }
+                cont = handler.Double(minus ? -d : d);
+            }
+            else if (useNanOrInf) {
+                cont = handler.Double(d);
+            }
+            else {
+                if (use64bit) {
+                    if (minus)
+                        cont = handler.Int64(static_cast<int64_t>(~i64 + 1));
+                    else
+                        cont = handler.Uint64(i64);
+                }
+                else {
+                    if (minus)
+                        cont = handler.Int(static_cast<int32_t>(~i + 1));
+                    else
+                        cont = handler.Uint(i);
+                }
+            }
         }
         if (RAPIDJSON_UNLIKELY(!cont))
             RAPIDJSON_PARSE_ERROR(kParseErrorTermination, startOffset);
@@ -1749,15 +1754,15 @@ private:
     template<unsigned parseFlags, typename InputStream, typename Handler>
     void ParseValue(InputStream& is, Handler& handler) {
         switch (is.Peek()) {
-            case 'n': ParseNull  <parseFlags>(is, handler); break;
-            case 't': ParseTrue  <parseFlags>(is, handler); break;
-            case 'f': ParseFalse <parseFlags>(is, handler); break;
-            case '"': ParseString<parseFlags>(is, handler); break;
-            case '{': ParseObject<parseFlags>(is, handler); break;
-            case '[': ParseArray <parseFlags>(is, handler); break;
-            default :
-                      ParseNumber<parseFlags>(is, handler);
-                      break;
+        case 'n': ParseNull  <parseFlags>(is, handler); break;
+        case 't': ParseTrue  <parseFlags>(is, handler); break;
+        case 'f': ParseFalse <parseFlags>(is, handler); break;
+        case '"': ParseString<parseFlags>(is, handler); break;
+        case '{': ParseObject<parseFlags>(is, handler); break;
+        case '[': ParseArray <parseFlags>(is, handler); break;
+        default:
+            ParseNumber<parseFlags>(is, handler);
+            break;
 
         }
     }
@@ -1814,7 +1819,7 @@ private:
 
     RAPIDJSON_FORCEINLINE Token Tokenize(Ch c) const {
 
-//!@cond RAPIDJSON_HIDDEN_FROM_DOXYGEN
+        //!@cond RAPIDJSON_HIDDEN_FROM_DOXYGEN
 #define N NumberToken
 #define N16 N,N,N,N,N,N,N,N,N,N,N,N,N,N,N,N
         // Maps from ASCII to Token
@@ -1831,7 +1836,7 @@ private:
         };
 #undef N
 #undef N16
-//!@endcond
+        //!@endcond
 
         if (sizeof(Ch) == 1 || static_cast<unsigned>(c) < 256)
             return static_cast<Token>(tokenMap[static_cast<unsigned char>(c)]);

@@ -40,7 +40,7 @@ RAPIDJSON_NAMESPACE_BEGIN
 
     \tparam StreamType Class derived from \c std::basic_ostream.
 */
-   
+
 template <typename StreamType>
 class BasicOStreamWrapper {
 public:

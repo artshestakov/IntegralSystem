@@ -40,17 +40,18 @@ class CursorStreamWrapper : public GenericStreamWrapper<InputStream, Encoding> {
 public:
     typedef typename Encoding::Ch Ch;
 
-    CursorStreamWrapper(InputStream& is):
+    CursorStreamWrapper(InputStream& is) :
         GenericStreamWrapper<InputStream, Encoding>(is), line_(1), col_(0) {}
 
     // counting line and column number
     Ch Take() {
         Ch ch = this->is_.Take();
-        if(ch == '\n') {
-            line_ ++;
+        if (ch == '\n') {
+            line_++;
             col_ = 0;
-        } else {
-            col_ ++;
+        }
+        else {
+            col_++;
         }
         return ch;
     }

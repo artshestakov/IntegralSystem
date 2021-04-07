@@ -119,7 +119,7 @@ template <typename InputStream, typename Encoding = UTF8<> >
 class GenericStreamWrapper {
 public:
     typedef typename Encoding::Ch Ch;
-    GenericStreamWrapper(InputStream& is): is_(is) {}
+    GenericStreamWrapper(InputStream& is) : is_(is) {}
 
     Ch Peek() const { return is_.Peek(); }
     Ch Take() { return is_.Take(); }

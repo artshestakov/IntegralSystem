@@ -40,8 +40,8 @@
 #ifdef __clang__
 RAPIDJSON_DIAG_PUSH
 RAPIDJSON_DIAG_OFF(padded)
-RAPIDJSON_DIAG_OFF(unreachable-code)
-RAPIDJSON_DIAG_OFF(c++98-compat)
+RAPIDJSON_DIAG_OFF(unreachable - code)
+RAPIDJSON_DIAG_OFF(c++98 - compat)
 #elif defined(_MSC_VER)
 RAPIDJSON_DIAG_PUSH
 RAPIDJSON_DIAG_OFF(4127) // conditional expression is constant
@@ -52,7 +52,7 @@ RAPIDJSON_NAMESPACE_BEGIN
 ///////////////////////////////////////////////////////////////////////////////
 // WriteFlag
 
-/*! \def RAPIDJSON_WRITE_DEFAULT_FLAGS 
+/*! \def RAPIDJSON_WRITE_DEFAULT_FLAGS
     \ingroup RAPIDJSON_CONFIG
     \brief User-defined kWriteDefaultFlags definition.
 
@@ -76,7 +76,7 @@ enum WriteFlag {
 
     User may programmatically calls the functions of a writer to generate JSON text.
 
-    On the other side, a writer can also be passed to objects that generates events, 
+    On the other side, a writer can also be passed to objects that generates events,
 
     for example Reader::Parse() and Document::Accept().
 
@@ -99,11 +99,11 @@ public:
         \param levelDepth Initial capacity of stack.
     */
     explicit
-    Writer(OutputStream& os, StackAllocator* stackAllocator = 0, size_t levelDepth = kDefaultLevelDepth) : 
+        Writer(OutputStream& os, StackAllocator* stackAllocator = 0, size_t levelDepth = kDefaultLevelDepth) :
         os_(&os), level_stack_(stackAllocator, levelDepth * sizeof(Level)), maxDecimalPlaces_(kDefaultMaxDecimalPlaces), hasRoot_(false) {}
 
     explicit
-    Writer(StackAllocator* allocator = 0, size_t levelDepth = kDefaultLevelDepth) :
+        Writer(StackAllocator* allocator = 0, size_t levelDepth = kDefaultLevelDepth) :
         os_(0), level_stack_(allocator, levelDepth * sizeof(Level)), maxDecimalPlaces_(kDefaultMaxDecimalPlaces), hasRoot_(false) {}
 
 #if RAPIDJSON_HAS_CXX11_RVALUE_REFS
@@ -153,7 +153,7 @@ public:
     /*!
         This setting truncates the output with specified number of decimal places.
 
-        For example, 
+        For example,
 
         \code
         writer.SetMaxDecimalPlaces(3);
@@ -179,19 +179,19 @@ public:
     */
     //@{
 
-    bool Null()                 { Prefix(kNullType);   return EndValue(WriteNull()); }
-    bool Bool(bool b)           { Prefix(b ? kTrueType : kFalseType); return EndValue(WriteBool(b)); }
-    bool Int(int i)             { Prefix(kNumberType); return EndValue(WriteInt(i)); }
-    bool Uint(unsigned u)       { Prefix(kNumberType); return EndValue(WriteUint(u)); }
-    bool Int64(int64_t i64)     { Prefix(kNumberType); return EndValue(WriteInt64(i64)); }
-    bool Uint64(uint64_t u64)   { Prefix(kNumberType); return EndValue(WriteUint64(u64)); }
+    bool Null() { Prefix(kNullType);   return EndValue(WriteNull()); }
+    bool Bool(bool b) { Prefix(b ? kTrueType : kFalseType); return EndValue(WriteBool(b)); }
+    bool Int(int i) { Prefix(kNumberType); return EndValue(WriteInt(i)); }
+    bool Uint(unsigned u) { Prefix(kNumberType); return EndValue(WriteUint(u)); }
+    bool Int64(int64_t i64) { Prefix(kNumberType); return EndValue(WriteInt64(i64)); }
+    bool Uint64(uint64_t u64) { Prefix(kNumberType); return EndValue(WriteUint64(u64)); }
 
     //! Writes the given \c double value to the stream
     /*!
         \param d The value to be written.
         \return Whether it is succeed.
     */
-    bool Double(double d)       { Prefix(kNumberType); return EndValue(WriteDouble(d)); }
+    bool Double(double d) { Prefix(kNumberType); return EndValue(WriteDouble(d)); }
 
     bool RawNumber(const Ch* str, SizeType length, bool copy = false) {
         RAPIDJSON_ASSERT(str != 0);
@@ -224,7 +224,7 @@ public:
 #if RAPIDJSON_HAS_STDSTRING
     bool Key(const std::basic_string<Ch>& str)
     {
-      return Key(str.data(), SizeType(str.size()));
+        return Key(str.data(), SizeType(str.size()));
     }
 #endif
 
@@ -258,7 +258,7 @@ public:
     //! Simpler but slower overload.
     bool String(const Ch* const& str) { return String(str, internal::StrLen(str)); }
     bool Key(const Ch* const& str) { return Key(str, internal::StrLen(str)); }
-    
+
     //@}
 
     //! Write a raw JSON value.
@@ -293,12 +293,12 @@ protected:
         bool inArray;       //!< true if in array, otherwise in object
     };
 
-    bool WriteNull()  {
+    bool WriteNull() {
         PutReserve(*os_, 4);
         PutUnsafe(*os_, 'n'); PutUnsafe(*os_, 'u'); PutUnsafe(*os_, 'l'); PutUnsafe(*os_, 'l'); return true;
     }
 
-    bool WriteBool(bool b)  {
+    bool WriteBool(bool b) {
         if (b) {
             PutReserve(*os_, 4);
             PutUnsafe(*os_, 't'); PutUnsafe(*os_, 'r'); PutUnsafe(*os_, 'u'); PutUnsafe(*os_, 'e');
@@ -374,7 +374,7 @@ protected:
         return true;
     }
 
-    bool WriteString(const Ch* str, SizeType length)  {
+    bool WriteString(const Ch* str, SizeType length) {
         static const typename OutputStream::Ch hexDigits[16] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
         static const char escape[256] = {
 #define Z16 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
@@ -406,9 +406,9 @@ protected:
                 PutUnsafe(*os_, 'u');
                 if (codepoint <= 0xD7FF || (codepoint >= 0xE000 && codepoint <= 0xFFFF)) {
                     PutUnsafe(*os_, hexDigits[(codepoint >> 12) & 15]);
-                    PutUnsafe(*os_, hexDigits[(codepoint >>  8) & 15]);
-                    PutUnsafe(*os_, hexDigits[(codepoint >>  4) & 15]);
-                    PutUnsafe(*os_, hexDigits[(codepoint      ) & 15]);
+                    PutUnsafe(*os_, hexDigits[(codepoint >> 8) & 15]);
+                    PutUnsafe(*os_, hexDigits[(codepoint >> 4) & 15]);
+                    PutUnsafe(*os_, hexDigits[(codepoint) & 15]);
                 }
                 else {
                     RAPIDJSON_ASSERT(codepoint >= 0x010000 && codepoint <= 0x10FFFF);
@@ -417,18 +417,18 @@ protected:
                     unsigned lead = (s >> 10) + 0xD800;
                     unsigned trail = (s & 0x3FF) + 0xDC00;
                     PutUnsafe(*os_, hexDigits[(lead >> 12) & 15]);
-                    PutUnsafe(*os_, hexDigits[(lead >>  8) & 15]);
-                    PutUnsafe(*os_, hexDigits[(lead >>  4) & 15]);
-                    PutUnsafe(*os_, hexDigits[(lead      ) & 15]);
+                    PutUnsafe(*os_, hexDigits[(lead >> 8) & 15]);
+                    PutUnsafe(*os_, hexDigits[(lead >> 4) & 15]);
+                    PutUnsafe(*os_, hexDigits[(lead) & 15]);
                     PutUnsafe(*os_, '\\');
                     PutUnsafe(*os_, 'u');
                     PutUnsafe(*os_, hexDigits[(trail >> 12) & 15]);
-                    PutUnsafe(*os_, hexDigits[(trail >>  8) & 15]);
-                    PutUnsafe(*os_, hexDigits[(trail >>  4) & 15]);
-                    PutUnsafe(*os_, hexDigits[(trail      ) & 15]);                    
+                    PutUnsafe(*os_, hexDigits[(trail >> 8) & 15]);
+                    PutUnsafe(*os_, hexDigits[(trail >> 4) & 15]);
+                    PutUnsafe(*os_, hexDigits[(trail) & 15]);
                 }
             }
-            else if ((sizeof(Ch) == 1 || static_cast<unsigned>(c) < 256) && RAPIDJSON_UNLIKELY(escape[static_cast<unsigned char>(c)]))  {
+            else if ((sizeof(Ch) == 1 || static_cast<unsigned>(c) < 256) && RAPIDJSON_UNLIKELY(escape[static_cast<unsigned char>(c)])) {
                 is.Take();
                 PutUnsafe(*os_, '\\');
                 PutUnsafe(*os_, static_cast<typename OutputStream::Ch>(escape[static_cast<unsigned char>(c)]));
@@ -439,7 +439,7 @@ protected:
                     PutUnsafe(*os_, hexDigits[static_cast<unsigned char>(c) & 0xF]);
                 }
             }
-            else if (RAPIDJSON_UNLIKELY(!(writeFlags & kWriteValidateEncodingFlag ? 
+            else if (RAPIDJSON_UNLIKELY(!(writeFlags & kWriteValidateEncodingFlag ?
                 Transcoder<SourceEncoding, TargetEncoding>::Validate(is, *os_) :
                 Transcoder<SourceEncoding, TargetEncoding>::TranscodeUnsafe(is, *os_))))
                 return false;
@@ -453,16 +453,16 @@ protected:
     }
 
     bool WriteStartObject() { os_->Put('{'); return true; }
-    bool WriteEndObject()   { os_->Put('}'); return true; }
-    bool WriteStartArray()  { os_->Put('['); return true; }
-    bool WriteEndArray()    { os_->Put(']'); return true; }
+    bool WriteEndObject() { os_->Put('}'); return true; }
+    bool WriteStartArray() { os_->Put('['); return true; }
+    bool WriteEndArray() { os_->Put(']'); return true; }
 
     bool WriteRawValue(const Ch* json, size_t length) {
         PutReserve(*os_, length);
         GenericStringStream<SourceEncoding> is(json);
         while (RAPIDJSON_LIKELY(is.Tell() < length)) {
             RAPIDJSON_ASSERT(is.Peek() != '\0');
-            if (RAPIDJSON_UNLIKELY(!(writeFlags & kWriteValidateEncodingFlag ? 
+            if (RAPIDJSON_UNLIKELY(!(writeFlags & kWriteValidateEncodingFlag ?
                 Transcoder<SourceEncoding, TargetEncoding>::Validate(is, *os_) :
                 Transcoder<SourceEncoding, TargetEncoding>::TranscodeUnsafe(is, *os_))))
                 return false;
@@ -475,7 +475,7 @@ protected:
         if (RAPIDJSON_LIKELY(level_stack_.GetSize() != 0)) { // this value is not at root
             Level* level = level_stack_.template Top<Level>();
             if (level->valueCount > 0) {
-                if (level->inArray) 
+                if (level->inArray)
                     os_->Put(','); // add comma if it is not the first element in array
                 else  // in object
                     os_->Put((level->valueCount % 2 == 0) ? ',' : ':');
@@ -563,7 +563,7 @@ inline bool Writer<StringBuffer>::WriteDouble(double d) {
         PutUnsafe(*os_, 'i'); PutUnsafe(*os_, 'n'); PutUnsafe(*os_, 'i'); PutUnsafe(*os_, 't'); PutUnsafe(*os_, 'y');
         return true;
     }
-    
+
     char *buffer = os_->Push(25);
     char* end = internal::dtoa(d, buffer, maxDecimalPlaces_);
     os_->Pop(static_cast<size_t>(25 - (end - buffer)));
@@ -597,7 +597,7 @@ inline bool Writer<StringBuffer>::ScanWriteUnescapedString(StringStream& is, siz
     // The rest of string using SIMD
     static const char dquote[16] = { '\"', '\"', '\"', '\"', '\"', '\"', '\"', '\"', '\"', '\"', '\"', '\"', '\"', '\"', '\"', '\"' };
     static const char bslash[16] = { '\\', '\\', '\\', '\\', '\\', '\\', '\\', '\\', '\\', '\\', '\\', '\\', '\\', '\\', '\\', '\\' };
-    static const char space[16]  = { 0x1F, 0x1F, 0x1F, 0x1F, 0x1F, 0x1F, 0x1F, 0x1F, 0x1F, 0x1F, 0x1F, 0x1F, 0x1F, 0x1F, 0x1F, 0x1F };
+    static const char space[16] = { 0x1F, 0x1F, 0x1F, 0x1F, 0x1F, 0x1F, 0x1F, 0x1F, 0x1F, 0x1F, 0x1F, 0x1F, 0x1F, 0x1F, 0x1F, 0x1F };
     const __m128i dq = _mm_loadu_si128(reinterpret_cast<const __m128i *>(&dquote[0]));
     const __m128i bs = _mm_loadu_si128(reinterpret_cast<const __m128i *>(&bslash[0]));
     const __m128i sp = _mm_loadu_si128(reinterpret_cast<const __m128i *>(&space[0]));
@@ -680,7 +680,8 @@ inline bool Writer<StringBuffer>::ScanWriteUnescapedString(StringStream& is, siz
                 len = 8 + (lz >> 3);
                 escaped = true;
             }
-        } else {
+        }
+        else {
             uint32_t lz = internal::clzll(low);
             len = lz >> 3;
             escaped = true;

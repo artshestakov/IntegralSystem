@@ -17,36 +17,36 @@
 
 /*!\file rapidjson.h
     \brief common definitions and configuration
-    
+
     \see RAPIDJSON_CONFIG
  */
 
-/*! \defgroup RAPIDJSON_CONFIG RapidJSON configuration
-    \brief Configuration macros for library features
+ /*! \defgroup RAPIDJSON_CONFIG RapidJSON configuration
+     \brief Configuration macros for library features
 
-    Some RapidJSON features are configurable to adapt the library to a wide
-    variety of platforms, environments and usage scenarios.  Most of the
-    features can be configured in terms of overridden or predefined
-    preprocessor macros at compile-time.
+     Some RapidJSON features are configurable to adapt the library to a wide
+     variety of platforms, environments and usage scenarios.  Most of the
+     features can be configured in terms of overridden or predefined
+     preprocessor macros at compile-time.
 
-    Some additional customization is available in the \ref RAPIDJSON_ERRORS APIs.
+     Some additional customization is available in the \ref RAPIDJSON_ERRORS APIs.
 
-    \note These macros should be given on the compiler command-line
-          (where applicable)  to avoid inconsistent values when compiling
-          different translation units of a single application.
- */
+     \note These macros should be given on the compiler command-line
+           (where applicable)  to avoid inconsistent values when compiling
+           different translation units of a single application.
+  */
 
 #include <cstdlib>  // malloc(), realloc(), free(), size_t
 #include <cstring>  // memset(), memcpy(), memmove(), memcmp()
 
-///////////////////////////////////////////////////////////////////////////////
-// RAPIDJSON_VERSION_STRING
-//
-// ALWAYS synchronize the following 3 macros with corresponding variables in /CMakeLists.txt.
-//
+  ///////////////////////////////////////////////////////////////////////////////
+  // RAPIDJSON_VERSION_STRING
+  //
+  // ALWAYS synchronize the following 3 macros with corresponding variables in /CMakeLists.txt.
+  //
 
-//!@cond RAPIDJSON_HIDDEN_FROM_DOXYGEN
-// token stringification
+  //!@cond RAPIDJSON_HIDDEN_FROM_DOXYGEN
+  // token stringification
 #define RAPIDJSON_STRINGIFY(x) RAPIDJSON_DO_STRINGIFY(x)
 #define RAPIDJSON_DO_STRINGIFY(x) #x
 
@@ -104,16 +104,16 @@
 
     \see rapidjson
  */
-/*! \def RAPIDJSON_NAMESPACE_BEGIN
-    \ingroup RAPIDJSON_CONFIG
-    \brief   provide custom rapidjson namespace (opening expression)
-    \see RAPIDJSON_NAMESPACE
-*/
-/*! \def RAPIDJSON_NAMESPACE_END
-    \ingroup RAPIDJSON_CONFIG
-    \brief   provide custom rapidjson namespace (closing expression)
-    \see RAPIDJSON_NAMESPACE
-*/
+ /*! \def RAPIDJSON_NAMESPACE_BEGIN
+     \ingroup RAPIDJSON_CONFIG
+     \brief   provide custom rapidjson namespace (opening expression)
+     \see RAPIDJSON_NAMESPACE
+ */
+ /*! \def RAPIDJSON_NAMESPACE_END
+     \ingroup RAPIDJSON_CONFIG
+     \brief   provide custom rapidjson namespace (closing expression)
+     \see RAPIDJSON_NAMESPACE
+ */
 #ifndef RAPIDJSON_NAMESPACE
 #define RAPIDJSON_NAMESPACE rapidjson
 #endif
@@ -124,8 +124,8 @@
 #define RAPIDJSON_NAMESPACE_END }
 #endif
 
-///////////////////////////////////////////////////////////////////////////////
-// RAPIDJSON_HAS_STDSTRING
+ ///////////////////////////////////////////////////////////////////////////////
+ // RAPIDJSON_HAS_STDSTRING
 
 #ifndef RAPIDJSON_HAS_STDSTRING
 #ifdef RAPIDJSON_DOXYGEN_RUNNING
@@ -448,14 +448,14 @@ RAPIDJSON_NAMESPACE_END
     RAPIDJSON_JOIN(StaticAssertTypedef, __LINE__) RAPIDJSON_STATIC_ASSERT_UNUSED_ATTRIBUTE
 #endif // RAPIDJSON_STATIC_ASSERT
 
-///////////////////////////////////////////////////////////////////////////////
-// RAPIDJSON_LIKELY, RAPIDJSON_UNLIKELY
+ ///////////////////////////////////////////////////////////////////////////////
+ // RAPIDJSON_LIKELY, RAPIDJSON_UNLIKELY
 
-//! Compiler branching hint for expression with high probability to be true.
-/*!
-    \ingroup RAPIDJSON_CONFIG
-    \param x Boolean expression likely to be true.
-*/
+ //! Compiler branching hint for expression with high probability to be true.
+ /*!
+     \ingroup RAPIDJSON_CONFIG
+     \param x Boolean expression likely to be true.
+ */
 #ifndef RAPIDJSON_LIKELY
 #if defined(__GNUC__) || defined(__clang__)
 #define RAPIDJSON_LIKELY(x) __builtin_expect(!!(x), 1)
@@ -464,11 +464,11 @@ RAPIDJSON_NAMESPACE_END
 #endif
 #endif
 
-//! Compiler branching hint for expression with low probability to be true.
-/*!
-    \ingroup RAPIDJSON_CONFIG
-    \param x Boolean expression unlikely to be true.
-*/
+ //! Compiler branching hint for expression with low probability to be true.
+ /*!
+     \ingroup RAPIDJSON_CONFIG
+     \param x Boolean expression unlikely to be true.
+ */
 #ifndef RAPIDJSON_UNLIKELY
 #if defined(__GNUC__) || defined(__clang__)
 #define RAPIDJSON_UNLIKELY(x) __builtin_expect(!!(x), 0)
@@ -477,10 +477,10 @@ RAPIDJSON_NAMESPACE_END
 #endif
 #endif
 
-///////////////////////////////////////////////////////////////////////////////
-// Helpers
+ ///////////////////////////////////////////////////////////////////////////////
+ // Helpers
 
-//!@cond RAPIDJSON_HIDDEN_FROM_DOXYGEN
+ //!@cond RAPIDJSON_HIDDEN_FROM_DOXYGEN
 
 #define RAPIDJSON_MULTILINEMACRO_BEGIN do {  
 #define RAPIDJSON_MULTILINEMACRO_END \
@@ -623,8 +623,8 @@ RAPIDJSON_NAMESPACE_END
     supported, and to \ref RAPIDJSON_ASSERT otherwise.
  */
 
-///////////////////////////////////////////////////////////////////////////////
-// RAPIDJSON_NOEXCEPT_ASSERT
+ ///////////////////////////////////////////////////////////////////////////////
+ // RAPIDJSON_NOEXCEPT_ASSERT
 
 #ifndef RAPIDJSON_NOEXCEPT_ASSERT
 #ifdef RAPIDJSON_ASSERT_THROWS

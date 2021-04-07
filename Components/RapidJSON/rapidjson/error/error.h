@@ -160,7 +160,7 @@ typedef const RAPIDJSON_ERROR_CHARTYPE* (*GetParseErrorFunc)(ParseErrorCode);
     \see GenericSchemaValidator
 */
 enum ValidateErrorCode {
-    kValidateErrors    = -1,                   //!< Top level error code when kValidateContinueOnErrorsFlag set.
+    kValidateErrors = -1,                   //!< Top level error code when kValidateContinueOnErrorsFlag set.
     kValidateErrorNone = 0,                    //!< No error.
 
     kValidateErrorMultipleOf,                  //!< Number is not a multiple of the 'multipleOf' value.

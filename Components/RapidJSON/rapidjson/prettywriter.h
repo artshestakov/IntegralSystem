@@ -24,7 +24,7 @@ RAPIDJSON_DIAG_OFF(effc++)
 
 #if defined(__clang__)
 RAPIDJSON_DIAG_PUSH
-RAPIDJSON_DIAG_OFF(c++98-compat)
+RAPIDJSON_DIAG_OFF(c++98 - compat)
 #endif
 
 RAPIDJSON_NAMESPACE_BEGIN
@@ -32,7 +32,7 @@ RAPIDJSON_NAMESPACE_BEGIN
 //! Combination of PrettyWriter format flags.
 /*! \see PrettyWriter::SetFormatOptions
  */
-enum PrettyFormatOptions {
+    enum PrettyFormatOptions {
     kFormatDefault = 0,         //!< Default pretty formatting.
     kFormatSingleLineArray = 1  //!< Format arrays on a single line.
 };
@@ -55,11 +55,11 @@ public:
         \param allocator User supplied allocator. If it is null, it will create a private one.
         \param levelDepth Initial capacity of stack.
     */
-    explicit PrettyWriter(OutputStream& os, StackAllocator* allocator = 0, size_t levelDepth = Base::kDefaultLevelDepth) : 
+    explicit PrettyWriter(OutputStream& os, StackAllocator* allocator = 0, size_t levelDepth = Base::kDefaultLevelDepth) :
         Base(os, allocator, levelDepth), indentChar_(' '), indentCharCount_(4), formatOptions_(kFormatDefault) {}
 
 
-    explicit PrettyWriter(StackAllocator* allocator = 0, size_t levelDepth = Base::kDefaultLevelDepth) : 
+    explicit PrettyWriter(StackAllocator* allocator = 0, size_t levelDepth = Base::kDefaultLevelDepth) :
         Base(allocator, levelDepth), indentChar_(' '), indentCharCount_(4), formatOptions_(kFormatDefault) {}
 
 #if RAPIDJSON_HAS_CXX11_RVALUE_REFS
@@ -92,13 +92,13 @@ public:
     */
     //@{
 
-    bool Null()                 { PrettyPrefix(kNullType);   return Base::EndValue(Base::WriteNull()); }
-    bool Bool(bool b)           { PrettyPrefix(b ? kTrueType : kFalseType); return Base::EndValue(Base::WriteBool(b)); }
-    bool Int(int i)             { PrettyPrefix(kNumberType); return Base::EndValue(Base::WriteInt(i)); }
-    bool Uint(unsigned u)       { PrettyPrefix(kNumberType); return Base::EndValue(Base::WriteUint(u)); }
-    bool Int64(int64_t i64)     { PrettyPrefix(kNumberType); return Base::EndValue(Base::WriteInt64(i64)); }
-    bool Uint64(uint64_t u64)   { PrettyPrefix(kNumberType); return Base::EndValue(Base::WriteUint64(u64));  }
-    bool Double(double d)       { PrettyPrefix(kNumberType); return Base::EndValue(Base::WriteDouble(d)); }
+    bool Null() { PrettyPrefix(kNullType);   return Base::EndValue(Base::WriteNull()); }
+    bool Bool(bool b) { PrettyPrefix(b ? kTrueType : kFalseType); return Base::EndValue(Base::WriteBool(b)); }
+    bool Int(int i) { PrettyPrefix(kNumberType); return Base::EndValue(Base::WriteInt(i)); }
+    bool Uint(unsigned u) { PrettyPrefix(kNumberType); return Base::EndValue(Base::WriteUint(u)); }
+    bool Int64(int64_t i64) { PrettyPrefix(kNumberType); return Base::EndValue(Base::WriteInt64(i64)); }
+    bool Uint64(uint64_t u64) { PrettyPrefix(kNumberType); return Base::EndValue(Base::WriteUint64(u64)); }
+    bool Double(double d) { PrettyPrefix(kNumberType); return Base::EndValue(Base::WriteDouble(d)); }
 
     bool RawNumber(const Ch* str, SizeType length, bool copy = false) {
         RAPIDJSON_ASSERT(str != 0);
@@ -133,13 +133,13 @@ public:
         return Key(str.data(), SizeType(str.size()));
     }
 #endif
-	
+
     bool EndObject(SizeType memberCount = 0) {
         (void)memberCount;
         RAPIDJSON_ASSERT(Base::level_stack_.GetSize() >= sizeof(typename Base::Level)); // not inside an Object
         RAPIDJSON_ASSERT(!Base::level_stack_.template Top<typename Base::Level>()->inArray); // currently inside an Array, not Object
         RAPIDJSON_ASSERT(0 == Base::level_stack_.template Top<typename Base::Level>()->valueCount % 2); // Object has a Key without a Value
-       
+
         bool empty = Base::level_stack_.template Pop<typename Base::Level>(1)->valueCount == 0;
 
         if (!empty) {
@@ -249,7 +249,7 @@ protected:
         }
     }
 
-    void WriteIndent()  {
+    void WriteIndent() {
         size_t count = (Base::level_stack_.GetSize() / sizeof(typename Base::Level)) * indentCharCount_;
         PutN(*Base::os_, static_cast<typename OutputStream::Ch>(indentChar_), count);
     }
