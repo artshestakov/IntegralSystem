@@ -26,6 +26,13 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Configurator", "ProjectsSTD
 		{77CC8439-66E0-46A6-8103-5320FF654728} = {77CC8439-66E0-46A6-8103-5320FF654728}
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Resources", "Resources", "{0CE26878-D0B6-4E9E-9F60-E489DD645582}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Localization", "Localization", "{FD28AD7F-8FAF-45B3-84E7-0250312B3CA1}"
+	ProjectSection(SolutionItems) = preProject
+		Resources\Localization\Carat.lang = Resources\Localization\Carat.lang
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -75,5 +82,6 @@ Global
 		{23417504-DDF5-47E3-A6F6-55D58230CA58} = {46B98025-84D7-422B-9D85-5DADA2BC2900}
 		{77CC8439-66E0-46A6-8103-5320FF654728} = {46B98025-84D7-422B-9D85-5DADA2BC2900}
 		{F42F3490-2DC9-4ED9-8D0A-68A9EE1F40CE} = {2AC05B3F-E9D9-43B0-AD5D-6B8D7E231513}
+		{FD28AD7F-8FAF-45B3-84E7-0250312B3CA1} = {0CE26878-D0B6-4E9E-9F60-E489DD645582}
 	EndGlobalSection
 EndGlobal

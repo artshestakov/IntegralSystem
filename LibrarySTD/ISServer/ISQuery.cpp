@@ -275,10 +275,10 @@ ISDate ISQuery::ReadColumn_Date(size_t Index) const
     //Поле не пустое - парсим
 
     char *Value = ReadColumn(Index);
-    char Year[5] = { Value[0], Value[1], Value[2], Value[3], '\0' },
-        Month[3] = { Value[5], Value[6], '\0' },
-        Day[3] = { Value[8], Value[9], '\0' };
-    return{ (unsigned short)atoi(Day), (unsigned short)atoi(Month), (unsigned short)atoi(Year) };
+    char Year[5] = { Value[0], Value[1], Value[2], Value[3], CHAR_NULL_TERM },
+        Month[3] = { Value[5], Value[6], CHAR_NULL_TERM },
+        Day[3] = { Value[8], Value[9], CHAR_NULL_TERM };
+    return ISDate((unsigned short)std::atoi(Day), (unsigned short)std::atoi(Month), (unsigned short)std::atoi(Year));
 }
 //-----------------------------------------------------------------------------
 bool ISQuery::Prepare(size_t ParamCount)

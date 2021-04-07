@@ -18,6 +18,8 @@ public:
     std::string IPAddress;
     ISTcpPort Port;
     bool Authorized;
+    unsigned int UserID;
+    bool UserSystem;
 
 private:
     std::vector<std::vector<char>> Buffer;

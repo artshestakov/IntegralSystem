@@ -375,14 +375,14 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
         return ErrorQuery(LANG("Carat.Error.Query.Auth.SelectLogin"), qSelectAuth);
     }
 
-    //unsigned int UserID = qSelectAuth.ReadColumn_UInt(0);
-    bool IsSystem = qSelectAuth.ReadColumn_Bool(1);
+    unsigned int UserID = qSelectAuth.ReadColumn_UInt(0);
+    bool UserSystem = qSelectAuth.ReadColumn_Bool(1);
     std::string UserFIO = qSelectAuth.ReadColumn_String(2);
     unsigned int GroupID = qSelectAuth.ReadColumn_UInt(3);
-    //bool GroupFullAccess = qSelectAuth.ReadColumn_Bool(4);
+    bool GroupFullAccess = qSelectAuth.ReadColumn_Bool(4);
 
     //Доступ к БД запрещен
-    if (!qSelectAuth.ReadColumn_Bool(9) && !IsSystem)
+    if (!qSelectAuth.ReadColumn_Bool(9) && !UserSystem)
     {
         ErrorString = LANG("Carat.Error.Query.Auth.ConnectionBan");
         return false;
@@ -396,7 +396,7 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
     }
 
     //Проверка наличия привязки не системного пользователя к группе
-    if (!IsSystem && GroupID == 0)
+    if (!UserSystem && GroupID == 0)
     {
         ErrorString = LANG("Carat.Error.Query.Auth.LoginLinkGroup");
         return false;
@@ -409,13 +409,13 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
             DateEnd = qSelectAuth.ReadColumn_Date(8);
         if (!DateStart.IsNull() && !DateEnd.IsNull()) //Если дата начала и окончания срока действия установлена
         {
-            ISDate CurrentDate = ISAlgorithm::GetCurrentDate();
-            if (CurrentDate < DateStart)
+            ISDate CurrentDate = ISDate::CurrentDate();
+            if (CurrentDate < DateStart) //Срок действия учётной записи ещё не начался
             {
-                //ErrorString = LANG("Carat.Error.Query.Auth.LoginLifetimeNotStarted").arg(DateStart.toString(FORMAT_DATE_V1));
+                ErrorString = ISAlgorithm::StringF(LANG("Carat.Error.Query.Auth.LoginLifetimeNotStarted").c_str(), DateStart.ToString().c_str());
                 return false;
             }
-            else if (CurrentDate > DateEnd)
+            else if (CurrentDate > DateEnd) //Срок действия учётной записи закончился
             {
                 ErrorString = LANG("Carat.Error.Query.Auth.LoginLifetimeEnded");
                 return false;
@@ -425,6 +425,39 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 
     //Устанавливаем флаги клиенту
     TcpMessage->TcpClient->Authorized = true;
+    TcpMessage->TcpClient->UserID = UserID;
+    TcpMessage->TcpClient->UserSystem = UserSystem;
+
+    rapidjson::MemoryPoolAllocator<rapidjson::CrtAllocator> &Allocator = TcpAnswer->Parameters.GetAllocator();
+
+    //Отдаём информацию о пользователе и конфигурации
+    TcpAnswer->Parameters.AddMember("UserID", UserID, Allocator);
+    TcpAnswer->Parameters.AddMember("UserIsSystem", UserSystem, Allocator);
+    TcpAnswer->Parameters.AddMember("UserFIO", rapidjson::Value(UserFIO.c_str(), (rapidjson::SizeType)UserFIO.size()), Allocator);
+    TcpAnswer->Parameters.AddMember("UserGroupID", GroupID, Allocator);
+    TcpAnswer->Parameters.AddMember("UserGroupFullAccess", GroupFullAccess, Allocator);
+    
+    //Информация о сервере
+    rapidjson::Document Server(rapidjson::Type::kObjectType);
+    Server.AddMember("Version", 1, Server.GetAllocator());
+    TcpAnswer->Parameters.AddMember("Server", rapidjson::Value(Server, Allocator), Allocator);
+
+    //Информация об обновлении клиента
+    rapidjson::Document UpdateClient(rapidjson::Type::kObjectType);
+    UpdateClient.AddMember("IsNeed", false, UpdateClient.GetAllocator());
+    UpdateClient.AddMember("NewVersion", 1, UpdateClient.GetAllocator());
+    TcpAnswer->Parameters.AddMember("UpdateClient", rapidjson::Value(UpdateClient, Allocator), Allocator);
+
+    //Информация о конфигурации
+    rapidjson::Document Configuration(rapidjson::Type::kObjectType);
+    Configuration.AddMember("Name", rapidjson::Value().SetNull(), Configuration.GetAllocator());
+    Configuration.AddMember("UID", rapidjson::Value().SetNull(), Configuration.GetAllocator());
+    Configuration.AddMember("LocalName", rapidjson::Value().SetNull(), Configuration.GetAllocator());
+    Configuration.AddMember("DesktopForm", rapidjson::Value().SetNull(), Configuration.GetAllocator());
+    Configuration.AddMember("DateExpired", rapidjson::Value().SetNull(), Configuration.GetAllocator());
+    Configuration.AddMember("LogoName", rapidjson::Value().SetNull(), Configuration.GetAllocator());
+    TcpAnswer->Parameters.AddMember("Configuration", rapidjson::Value(Configuration, Allocator), Allocator);
+
     return true;
 }
 //-----------------------------------------------------------------------------

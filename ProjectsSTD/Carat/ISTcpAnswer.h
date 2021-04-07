@@ -3,6 +3,7 @@
 #define _ISTCPANSWER_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
+#include "document.h"
 //-----------------------------------------------------------------------------
 class ISTcpAnswer
 {
@@ -15,6 +16,8 @@ public:
     void SetError(const std::string &error_string);
     SOCKET GetSocketClient() const; //Получить дескриптор клиентского сокета
     std::string ToJson() const;
+
+    rapidjson::Document Parameters;
     
 private:
     std::string ErrorString;

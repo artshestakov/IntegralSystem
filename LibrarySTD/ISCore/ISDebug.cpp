@@ -1,11 +1,11 @@
 #include "ISDebug.h"
-#include "ISAlgorithm.h"
+#include "ISDateTime.h"
 #include "ISConstants.h"
 //-----------------------------------------------------------------------------
 void ShowDebugString(const char *Severity, const std::string &String)
 {
     //Получаем текущую дату
-    ISDateTime DT = ISAlgorithm::GetCurrentDateTime();
+    ISDateTime DT = ISDateTime::CurrentDateTime();
 
     //Формируем сообщение
     char Buffer[LOG_BUFFER_SIZE] = { 0 };

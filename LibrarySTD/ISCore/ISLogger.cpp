@@ -33,7 +33,7 @@ std::string ISLogger::GetErrorString() const
 bool ISLogger::Initialize()
 {
     //Получаем текущую дату и запоминаем текущий день
-    ISDate CurrentDate = ISAlgorithm::GetCurrentDate();
+    ISDate CurrentDate = ISDate::CurrentDate();
     CurrentDay = CurrentDate.Day;
 
     if (!CreateLogDirectory(CurrentDate)) //Ошибка при создании директорий
@@ -94,7 +94,7 @@ void ISLogger::Log(ISNamespace::LogMessageType MessageType, const std::string &C
     }
 
     //Получаем текущую дату и время
-    ISDateTime DT = ISAlgorithm::GetCurrentDateTime();
+    ISDateTime DT = ISDateTime::CurrentDateTime();
 
     //Формируем заголовок
     char BufferHeader[LOG_HEADER_SIZE] = { 0 };
@@ -201,7 +201,7 @@ void ISLogger::Worker()
         CRITICAL_SECTION_UNLOCK(&CriticalSection);
 
         //Если сменился месяц или год - создаём недостающие папки
-        ISDate CurrentDate = ISAlgorithm::GetCurrentDate();
+        ISDate CurrentDate = ISDate::CurrentDate();
         if (CurrentMonth != CurrentDate.Month || CurrentYear != CurrentDate.Year)
         {
             //Пытаемся создать недосающие директории пока не получится

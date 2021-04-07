@@ -3,7 +3,7 @@
 #define _ISQUERY_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "ISTypedefs.h"
-#include "ISStructs.h"
+#include "ISDateTime.h"
 #include <libpq-fe.h>
 #include <pg_type_d.h>
 //-----------------------------------------------------------------------------

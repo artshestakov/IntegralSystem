@@ -117,18 +117,6 @@ namespace ISAlgorithm
     //! \return возвращает вектор аргументов
     ISVectorString ParseArgs(int argc, char **argv);
 
-    //! ѕолучить текущую дату и врем€
-    //! \return возвращает структуру с текущей датой и временем
-    ISDateTime GetCurrentDateTime();
-
-    //! ѕолучить текущую дату
-    //! \return возвращает структуру с текущей датой
-    ISDate GetCurrentDate();
-
-    //! ѕолучить текущее врем€
-    //! \return возвращает структуру с текущим временем
-    ISTime GetCurrentTime();
-
     //! –азделить строку
     //! \param Separator разделитель
     //! \return возвращает вектор разделЄнных строк

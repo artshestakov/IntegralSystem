@@ -175,6 +175,7 @@
     <ClCompile Include="ISAlgorithm.cpp" />
     <ClCompile Include="ISAssert.cpp" />
     <ClCompile Include="ISConfig.cpp" />
+    <ClCompile Include="ISDateTime.cpp" />
     <ClCompile Include="ISDebug.cpp" />
     <ClCompile Include="ISLocalization.cpp" />
     <ClCompile Include="ISLogger.cpp" />
@@ -188,6 +189,7 @@
     <ClInclude Include="ISAssert.h" />
     <ClInclude Include="ISConfig.h" />
     <ClInclude Include="ISConstants.h" />
+    <ClInclude Include="ISDateTime.h" />
     <ClInclude Include="ISDebug.h" />
     <ClInclude Include="ISLocalization.h" />
     <ClInclude Include="ISLogger.h" />

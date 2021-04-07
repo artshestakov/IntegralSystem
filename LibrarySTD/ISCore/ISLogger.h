@@ -5,7 +5,7 @@
 #include "ISConstants.h"
 #include "ISTypedefs.h"
 #include "ISNamespace.h"
-#include "ISStructs.h"
+#include "ISDateTime.h"
 //-----------------------------------------------------------------------------
 class ISLogger
 {

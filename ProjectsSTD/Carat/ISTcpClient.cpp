@@ -3,7 +3,9 @@
 ISTcpClient::ISTcpClient()
     : Socket(0),
     Port(0),
-    Authorized(false)
+    Authorized(false),
+    UserID(0),
+    UserSystem(false)
 {
 
 }
