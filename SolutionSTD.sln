@@ -33,6 +33,23 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Localization", "Localizatio
 		Resources\Localization\Carat.lang = Resources\Localization\Carat.lang
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scheme", "Scheme", "{329A818C-EF46-4F3F-8465-AB65BEB9198E}"
+	ProjectSection(SolutionItems) = preProject
+		Resources\Scheme\Asterisk.xsn = Resources\Scheme\Asterisk.xsn
+		Resources\Scheme\Asterisk.xsr = Resources\Scheme\Asterisk.xsr
+		Resources\Scheme\Functions.xsf = Resources\Scheme\Functions.xsf
+		Resources\Scheme\Settings.xsn = Resources\Scheme\Settings.xsn
+		Resources\Scheme\Settings.xsr = Resources\Scheme\Settings.xsr
+		Resources\Scheme\SettingsDatabase.xsn = Resources\Scheme\SettingsDatabase.xsn
+		Resources\Scheme\SettingsDatabase.xsr = Resources\Scheme\SettingsDatabase.xsr
+		Resources\Scheme\System.xsn = Resources\Scheme\System.xsn
+		Resources\Scheme\System.xsr = Resources\Scheme\System.xsr
+		Resources\Scheme\Task.xsn = Resources\Scheme\Task.xsn
+		Resources\Scheme\Task.xsr = Resources\Scheme\Task.xsr
+		Resources\Scheme\User.xsn = Resources\Scheme\User.xsn
+		Resources\Scheme\User.xsr = Resources\Scheme\User.xsr
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -83,5 +100,6 @@ Global
 		{77CC8439-66E0-46A6-8103-5320FF654728} = {46B98025-84D7-422B-9D85-5DADA2BC2900}
 		{F42F3490-2DC9-4ED9-8D0A-68A9EE1F40CE} = {2AC05B3F-E9D9-43B0-AD5D-6B8D7E231513}
 		{FD28AD7F-8FAF-45B3-84E7-0250312B3CA1} = {0CE26878-D0B6-4E9E-9F60-E489DD645582}
+		{329A818C-EF46-4F3F-8465-AB65BEB9198E} = {0CE26878-D0B6-4E9E-9F60-E489DD645582}
 	EndGlobalSection
 EndGlobal

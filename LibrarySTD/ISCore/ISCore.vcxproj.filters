@@ -11,6 +11,9 @@
     <Filter Include="TinyXML2">
       <UniqueIdentifier>{f07c48d2-ae9b-4150-9a80-5ee579509fd0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MetaData">
+      <UniqueIdentifier>{a2e59790-67f4-4c75-9dba-3edadc2670ac}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="StdAfx.cpp">
@@ -45,6 +48,9 @@
     </ClCompile>
     <ClCompile Include="ISDateTime.cpp">
       <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="ISMetaData.cpp">
+      <Filter>MetaData</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -95,6 +101,12 @@
     </ClInclude>
     <ClInclude Include="ISDateTime.h">
       <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="ISMetaData.h">
+      <Filter>MetaData</Filter>
+    </ClInclude>
+    <ClInclude Include="PMetaClass.h">
+      <Filter>MetaData</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
