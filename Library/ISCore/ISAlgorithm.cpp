@@ -333,7 +333,7 @@ QString ISAlgorithm::FormatNumber(double Number, char Separator, unsigned int Pr
 	if (PosPoint != -1)
 	{
 		bool Ok = true;
-		long long Left = Result.mid(0, PosPoint).toInt(&Ok);
+		long long Left = Result.mid(0, PosPoint).toLongLong(&Ok);
 		if (Ok)
 		{
             Result.replace(0, PosPoint, FormatNumber(Left, Separator));
