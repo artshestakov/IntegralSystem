@@ -465,7 +465,7 @@ std::string ISAlgorithm::MD5(const std::string &String)
         HCRYPTHASH CryptoHash = 0;
         if (CryptCreateHash(HCryptoProv, CALG_MD5, 0, 0, &CryptoHash) == TRUE)
         {
-            if (CryptHashData(CryptoHash, (unsigned char *)String.c_str(), String.size(), 0) == TRUE)
+            if (CryptHashData(CryptoHash, (unsigned char *)String.c_str(), (DWORD)String.size(), 0) == TRUE)
             {
                 unsigned char Hash[MD5_SIZE] = { 0 };
                 unsigned long MD5Size = MD5_SIZE;

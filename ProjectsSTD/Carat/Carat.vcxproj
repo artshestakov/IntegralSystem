@@ -183,6 +183,7 @@
     <ClCompile Include="ISCaratApplication.cpp" />
     <ClCompile Include="ISTcpAnswer.cpp" />
     <ClCompile Include="ISTcpClient.cpp" />
+    <ClCompile Include="ISTcpClients.cpp" />
     <ClCompile Include="ISTcpMessage.cpp" />
     <ClCompile Include="ISTcpQueue.cpp" />
     <ClCompile Include="ISTcpServer.cpp" />
@@ -193,6 +194,7 @@
     <ClInclude Include="ISCaratApplication.h" />
     <ClInclude Include="ISTcpAnswer.h" />
     <ClInclude Include="ISTcpClient.h" />
+    <ClInclude Include="ISTcpClients.h" />
     <ClInclude Include="ISTcpMessage.h" />
     <ClInclude Include="ISTcpQueue.h" />
     <ClInclude Include="ISTcpServer.h" />

@@ -6,6 +6,7 @@
 #include "rapidjson\error\en.h"
 #include "ISTcpQueue.h"
 #include "ISConfig.h"
+#include "ISTcpClients.h"
 //-----------------------------------------------------------------------------
 ISTcpServer::ISTcpServer()
     : ErrorString(STRING_NO_ERROR),
@@ -14,13 +15,11 @@ ISTcpServer::ISTcpServer()
     WorkerCount(0)
 {
     CRITICAL_SECTION_INIT(&CSRunning);
-    CRITICAL_SECTION_INIT(&CSClient);
 }
 //-----------------------------------------------------------------------------
 ISTcpServer::~ISTcpServer()
 {
     CRITICAL_SECTION_DESTROY(&CSRunning);
-    CRITICAL_SECTION_DESTROY(&CSClient);
 }
 //-----------------------------------------------------------------------------
 ISTcpServer& ISTcpServer::Instance()
@@ -129,7 +128,7 @@ void ISTcpServer::WorkerAcceptor()
             TcpClient->Socket = SocketClient;
             TcpClient->IPAddress = Char;
             TcpClient->Port = SocketInfo.sin_port;
-            ClientAdd(TcpClient);
+            ISTcpClients::Instance().Add(TcpClient);
             ISLOGGER_I(__CLASS__, "Connected %s", TcpClient->IPAddress.c_str());
 
             //Создаём новым поток для этого клиента
@@ -284,7 +283,7 @@ void ISTcpServer::WorkerAnswer()
         TcpAnswer = ISTcpQueue::Instance().GetAnswer();
         if (TcpAnswer) //Если на очереди есть ответ - отправляем его клиенту
         {
-            if (ClientExist(TcpAnswer->GetSocketClient())) //Клиент подключен - отправляем ему ответ
+            if (ISTcpClients::Instance().IsExist(TcpAnswer->GetSocketClient())) //Клиент подключен - отправляем ему ответ
             {
                 std::string JsonString = TcpAnswer->ToJson();
                 size_t Size = JsonString.size();
@@ -379,23 +378,10 @@ bool ISTcpServer::ParseMessage(const char *Buffer, size_t BufferSize, ISTcpMessa
 //-----------------------------------------------------------------------------
 void ISTcpServer::CloseSocket(ISTcpClient *TcpClient)
 {
-    bool IsDeleted = false; //Флаг удаления клиента
+    //Запоминаем удаляемый сокет
     SOCKET TcpSocket = TcpClient->Socket;
 
-    CRITICAL_SECTION_LOCK(&CSClient);
-    for (size_t i = 0, c = Clients.size(); i < c; ++i)
-    {
-        if (Clients[i] == TcpClient) //Нашли нужного клиента
-        {
-            Clients.erase(Clients.begin() + i);
-            delete TcpClient;
-            IsDeleted = true;
-            break;
-        }
-    }
-    CRITICAL_SECTION_UNLOCK(&CSClient);
-
-    if (!IsDeleted) //Клиент не был удалён
+    if (!ISTcpClients::Instance().Remove(TcpClient)) //Клиент не был удалён
     {
         ISLOGGER_C(__CLASS__, "Not remove client with memory");
     }
@@ -409,29 +395,6 @@ void ISTcpServer::CloseSocket(SOCKET Socket)
     {
         ISLOGGER_E(__CLASS__, "Not close socket %d: %s", Socket, ISAlgorithm::GetLastErrorS().c_str());
     }
-}
-//-----------------------------------------------------------------------------
-void ISTcpServer::ClientAdd(ISTcpClient *TcpClient)
-{
-    CRITICAL_SECTION_LOCK(&CSClient);
-    Clients.emplace_back(TcpClient);
-    CRITICAL_SECTION_UNLOCK(&CSClient);
-}
-//-----------------------------------------------------------------------------
-bool ISTcpServer::ClientExist(SOCKET Socket)
-{
-    bool Result = false;
-    CRITICAL_SECTION_LOCK(&CSClient);
-    for (size_t i = 0, c = Clients.size(); i < c; ++i)
-    {
-        if (Clients[i]->Socket == Socket)
-        {
-            Result = true;
-            break;
-        }
-    }
-    CRITICAL_SECTION_UNLOCK(&CSClient);
-    return Result;
 }
 //-----------------------------------------------------------------------------
 bool ISTcpServer::GetIsRunning()

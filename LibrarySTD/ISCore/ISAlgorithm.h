@@ -195,6 +195,19 @@ namespace ISAlgorithm
         return std::find(Vector.begin(), Vector.end(), Value) != Vector.end();
     }
 
+    //Удалить все элементы соответствующие значению
+    template <typename T> void VectorRemoveAll(std::vector<T> &Vector, T Value)
+    {
+        for (size_t i = 0, c = Vector.size(); i < c; ++i)
+        {
+            if (Vector[i] == Value) //Если попалось значение - удаляем его
+            {
+                Vector.erase(Vector.begin() + i);
+                --i, --c; //Обратно инкрементируем текущий индекс и размер (т.к. удалили один элемент)
+            }
+        }
+    }
+
     //Получить все ключи словаря
     template <typename TKey, typename TValue> std::vector<TKey> ConvertMapToKeys(const std::map<TKey, TValue> &Map)
     {
