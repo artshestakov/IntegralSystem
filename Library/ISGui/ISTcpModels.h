@@ -24,7 +24,7 @@ public:
 	int GetFieldIndex(const QString &FieldName) const;
 	ISModelField GetField(const QString &FieldName); //Получить поле по имени
 	ISModelField GetField(unsigned int Index); //Получить поле по индексу
-    QVariant GetSum(int ColumnIndex); //Получить сумму значений в поле
+    bool GetSum(int ColumnIndex, QString &Sum, QString &Avg); //Получить сумму значений в поле
 
 	QVariant data(const QModelIndex &ModelIndex, int Role = Qt::DisplayRole) const override;
 	QVariant headerData(int Section, Qt::Orientation Orientation, int Role = Qt::DisplayRole) const override;

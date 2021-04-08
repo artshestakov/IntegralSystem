@@ -15,13 +15,8 @@
   <Local Name="OilSphere.Debts.Label" Russian="Стоимость загрузки: %1 Стоимость выгрузки: %2 Начислено: %3 Покупка ЖД/Ц: %4 Долг: %5"/>
   <Local Name="OilSphere.Implementation.Loads" Russian="Загрузки"/>
   <Local Name="OilSphere.Implementation.Unloads" Russian="Выгрузки"/>
-  <Local Name="OilSphere.Implementation.Total" Russian="Количество загрузок: %1 Количество выгрузок: %2 Вес загрузок (нетто): %3 Вес выгрузок (нетто): %4 Стоимость загрузок: %5 Стоимость выгрузок: %6 Разница весов: %7"/>
-  <Local Name="OilSphere.Counterparty.Total" Russian="Долг: %1"/>
   <Local Name="OilSphere.Counterparty.Enrollments" Russian="Начисления"/>
   <Local Name="OilSphere.Counterparty.MoveWagon" Russian="Движения вагонов"/>
-  <Local Name="OilSphere.MoveWagon.Total" Russian="Общая масса: %1 Цена: %2 Сумма: %3 Технические потери: %4 Услуги хранения: %5 Перевалка: %6&#10;Масса с учётом технических потерь: %7 Цена с учётом хранения, подачи и уборки: %8 Итоговая стоимость: %9"/>
-  <Local Name="OilSphere.DriverCost.Total" Russian="Приход: %1 Расход: %2 Остаток: %3"/>
-  <Local Name="OilSphere.GasStationStatement.Total" Russian="Остаток на начало смены: %1 Объём прихода: %2 Объём отпуска по счётчикам: %3 Технический пролив (отклонения): %4 Остаток на конец смены: %5 Сумма реализации: %6&#10;ККМ наличные: %7 ККМ безналичные: %8 Ведомости: %9 Выплата с проданного объёма: %10 Наличие долга: %11 Остаток в кассе (расчёт): %12 Остаток в кассе (фактический): %13&#10;Расхождения: %14 Наличные по ККМ: %15 Накопительный итог (расчёт): %16 Накопительный итог (фактический): %17 Расхождения итогов: %18 Накопительный итог по ККМ: %19&#10;Сумма инкассации: %20 Сумма инкассации ККМ: %21 Административные расходы с кассы: %22"/>
   <Local Name="OilSphere.FillInBased" Russian="Заполнить на основании"/>
   <Local Name="OilSphere.CreateInBased" Russian="Создать на основании"/>
   <Local Name="OilSphere.Users" Russian="Пользователи"/>

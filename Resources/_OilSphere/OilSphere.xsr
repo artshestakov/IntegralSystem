@@ -15,12 +15,12 @@
   
   <_Systems IsSystem="false" UID="{83EE4ECD-F1AC-4D6D-AEE5-0CE51DA940CD}" OrderID="4" LocalName="Картотека" Icon="Lists"/>
   <_SubSystems UID="{F4FA61A3-F079-440D-BA72-4C64B1DB77E8}" System="{83EE4ECD-F1AC-4D6D-AEE5-0CE51DA940CD}" OrderID="1" LocalName="Контрагенты" Icon="Lists" ClassName="ISOilSphere::CounterpartySubSystem"/>
-  <_SubSystems UID="{A4676EAE-DBDC-43BE-A2CB-C2E37D7C72AF}" System="{83EE4ECD-F1AC-4D6D-AEE5-0CE51DA940CD}" OrderID="2" LocalName="Реализация" Icon="Lists" ClassName="ISOilSphere::ImplementationSubSystem"/>
+  <_SubSystems UID="{A4676EAE-DBDC-43BE-A2CB-C2E37D7C72AF}" System="{83EE4ECD-F1AC-4D6D-AEE5-0CE51DA940CD}" OrderID="2" LocalName="Реализация" Icon="Lists" TableName="Implementation"/>
   <_SubSystems UID="{06CA0641-BA9A-448B-A1CC-371DBD9C36F4}" System="{83EE4ECD-F1AC-4D6D-AEE5-0CE51DA940CD}" OrderID="3" LocalName="Ведомость АЗС" Icon="Lists" ClassName="ISOilSphere::GasStationStatementSubSystem"/>
   <_SubSystems UID="{ECFB2E41-7D52-4273-AE93-D4659D7BFD4C}" System="{83EE4ECD-F1AC-4D6D-AEE5-0CE51DA940CD}" OrderID="4" LocalName="Банк" Icon="Lists" ClassName="ISOilSphere::BankListForm"/>
 
   <_Systems IsSystem="false" UID="{A7C2E19B-FA7B-4333-B003-BEF49012116B}" OrderID="5" LocalName="Логистика" Icon="Lists"/>
-  <_SubSystems UID="{6858929B-F34A-4AFF-A95B-A5436E8FECA5}" System="{A7C2E19B-FA7B-4333-B003-BEF49012116B}" OrderID="1" LocalName="Движения вагонов" Icon="Lists" ClassName="ISOilSphere::MoveWagonSubSystem"/>
+  <_SubSystems UID="{6858929B-F34A-4AFF-A95B-A5436E8FECA5}" System="{A7C2E19B-FA7B-4333-B003-BEF49012116B}" OrderID="1" LocalName="Движения вагонов" Icon="Lists" TableName="MoveWagon"/>
   <_SubSystems UID="{8807444E-EBDE-4DB6-A261-D9430C48D448}" System="{A7C2E19B-FA7B-4333-B003-BEF49012116B}" OrderID="2" LocalName="Расходы водителей" Icon="Lists" ClassName="ISOilSphere::DriverCostSubSystem"/>
 
   <_Systems IsSystem="false" UID="{6BA94FDF-8469-4731-8498-5A7481400406}" OrderID="6" LocalName="Расходы" Icon="Lists"/>

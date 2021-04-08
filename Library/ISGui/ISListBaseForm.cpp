@@ -168,6 +168,7 @@ ISListBaseForm::ISListBaseForm(const QString &TableName, QWidget *parent)
 		StatusBar->addWidget(LabelSelectedRow);
 
         LabelSum = new QLabel(StatusBar);
+        LabelSum->setVisible(false);
         StatusBar->addWidget(LabelSum);
 	}
 
@@ -381,21 +382,32 @@ void ISListBaseForm::SelectedRowEvent(const QItemSelection &ItemSelected, const 
 	{
 		LabelSelectedRow->setVisible(true);
 		LabelSelectedRow->setText(LANG("SelectedRecords").arg(SelectedRows));
+        CurrentColumnChanged(TableView->currentIndex(), QModelIndex());
 	}
 	else
 	{
 		LabelSelectedRow->setVisible(false);
-		LabelSelectedRow->clear();
+        LabelSum->setVisible(false);
 	}
 
 	GetAction(ISNamespace::ActionType::Delete)->setEnabled(SelectedRows);
 	emit SelectedRowSignal();
 }
 //-----------------------------------------------------------------------------
-void ISListBaseForm::CurrentColumnChanged(const QModelIndex &current, const QModelIndex &previous)
+void ISListBaseForm::CurrentColumnChanged(const QModelIndex &CurrentIndex, const QModelIndex &PreviousIndex)
 {
-    Q_UNUSED(previous);
-    LabelSum->setText(LANG("ListForm.Column.Sum").arg(DOUBLE_PREPARE(TcpModel->GetSum(current.column()).toDouble())));
+    Q_UNUSED(PreviousIndex);
+
+    QString Sum, Avg;
+    if (TcpModel->GetSum(CurrentIndex.column(), Sum, Avg))
+    {
+        LabelSum->setVisible(true);
+        LabelSum->setText(LANG("ListForm.Column.Sum").arg(Sum).arg(Avg));
+    }
+    else
+    {
+        LabelSum->setVisible(false);
+    }
 }
 //-----------------------------------------------------------------------------
 void ISListBaseForm::LoadData()

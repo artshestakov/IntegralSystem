@@ -143,35 +143,41 @@ ISModelField ISTcpModel::GetField(unsigned int Index)
 	return Fields[Index];
 }
 //-----------------------------------------------------------------------------
-QVariant ISTcpModel::GetSum(int ColumnIndex)
+bool ISTcpModel::GetSum(int ColumnIndex, QString &Sum, QString &Avg)
 {
-    switch (Fields[ColumnIndex].Type)
+    const ISModelField &Field = Fields[ColumnIndex];
+    if (Field.IsForeign) //Если поле является внешним ключом - выходим
     {
-    case ISNamespace::FieldType::Money:
-    case ISNamespace::FieldType::Double:
+        return false;
+    }
+    
+    if (Field.Type == ISNamespace::FieldType::Double ||
+        Field.Type == ISNamespace::FieldType::Money)
     {
         double Double = 0;
         for (size_t i = 0, c = rowCount(); i < c; ++i)
         {
-            QVariant v = Records[i].Values[ColumnIndex];
-            Double += v.toString().remove(' ').toDouble();
+            Double += Records[i].Values[ColumnIndex].toString().remove(' ').toDouble();
         }
-        return Double;
+        Sum = Field.Type == ISNamespace::FieldType::Double ?
+            DOUBLE_PREPARE(Double) : DOUBLE_PREPAREM(Double);
+        Avg = DOUBLE_PREPARE(Double / rowCount());
+        return true;
     }
-
-    case ISNamespace::FieldType::BigInt:
-    case ISNamespace::FieldType::Int:
+    else if (Field.Type == ISNamespace::FieldType::BigInt ||
+        Field.Type == ISNamespace::FieldType::Int ||
+        Field.Type == ISNamespace::FieldType::Seconds)
     {
         int Integer = 0;
         for (size_t i = 0, c = rowCount(); i < c; ++i)
         {
-            QVariant v = Records[i].Values[ColumnIndex];
-            Integer += v.toString().remove(' ').toInt();
+            Integer += Records[i].Values[ColumnIndex].toString().remove(' ').toInt();
         }
-        return Integer;
+        Sum = QString::number(Integer);
+        Avg = DOUBLE_PREPARE(Integer / rowCount());
+        return true;
     }
-    }
-    return QVariant();
+    return false;
 }
 //-----------------------------------------------------------------------------
 QVariant ISTcpModel::data(const QModelIndex &ModelIndex, int Role) const

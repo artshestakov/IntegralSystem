@@ -178,7 +178,7 @@
   <Local Name="ListForm.Search" Russian="Расширенный поиск"/>
   <Local Name="ListForm.Search.ToolTip" Russian="Расширенный поиск по таблице (F7)"/>
   <Local Name="ListForm.ExportTable" Russian="Экспорт таблицы"/>
-  <Local Name="ListForm.Column.Sum" Russian="Сумма: %1"/>
+  <Local Name="ListForm.Column.Sum" Russian="Сумма: %1 Среднее значение: %2"/>
 
   <!--ISHistoryForm-->
   <Local Name="ISHistoryForm.Title" Russian="История"/>

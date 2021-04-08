@@ -77,7 +77,7 @@ protected:
 	QAction* GetSpecialAction(ISNamespace::ActionSpecialType action_special);
 
 	virtual void SelectedRowEvent(const QItemSelection &ItemSelected, const QItemSelection &ItemDeSelected); //Событие выбора строки в таблице
-    void CurrentColumnChanged(const QModelIndex &current, const QModelIndex &previous);
+    void CurrentColumnChanged(const QModelIndex &CurrentIndex, const QModelIndex &PreviousIndex);
 	virtual void AfterShowEvent() override;
 	
 	bool CheckIsSystemObject(); //Проверка объекта на статус "Системный"

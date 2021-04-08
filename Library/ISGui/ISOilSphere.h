@@ -33,14 +33,8 @@ namespace ISOilSphere
 		Q_INVOKABLE CounterpartySubSystem(QWidget *parent = 0);
 		virtual ~CounterpartySubSystem();
 
-	protected:
-		bool Update() override;
-
 	private:
 		void ShowDebt();
-
-	private:
-		QLabel *LabelTotal;
 	};
 
 	//Форма долгов контрагента
@@ -64,7 +58,7 @@ namespace ISOilSphere
 		int CounterpartyID;
 
 	private:
-		QLabel *LabelTotal;
+        QLabel *LabelTotal;
 		ISListBaseForm *EntrollmentListForm;
 		ISListViewForm *MoveWagonViewForm;
 	};
@@ -83,22 +77,6 @@ namespace ISOilSphere
 
 	private:
 		ISINNEdit *INNEdit;
-	};
-
-	//Форма списка реализаций
-	class ImplementationSubSystem : public ISListBaseForm
-	{
-		Q_OBJECT
-
-	public:
-		Q_INVOKABLE ImplementationSubSystem(QWidget *parent = 0);
-		~ImplementationSubSystem();
-
-	protected:
-		bool Update() override;
-
-	private:
-		QLabel *LabelTotal;
 	};
 
 	//Форма объекта загрузки реализации
@@ -140,15 +118,11 @@ namespace ISOilSphere
 		Q_INVOKABLE GasStationStatementSubSystem(QWidget *parent = 0);
 		virtual ~GasStationStatementSubSystem();
 
-	protected:
-		bool Update() override;
-
 	private:
 		void StockChanged(const QVariant &Value);
 
 	private:
 		ISComboEdit *EditStock;
-		QLabel *LabelTotal;
 	};
 
 	//Форма объекта ведомости АЗС
@@ -342,14 +316,8 @@ namespace ISOilSphere
 		Q_INVOKABLE DriverCostSubSystem(QWidget *parent = 0);
 		virtual ~DriverCostSubSystem();
 
-	protected:
-		bool Update() override;
-
 	private:
 		void CreateOnBased(); //Создать на основании
-
-	private:
-		QLabel *LabelTotal;
 	};
 
 	//Форма постуления на склад ЖД
@@ -395,22 +363,6 @@ namespace ISOilSphere
 
 	private:
 		ISListViewForm *ListViewForm;
-	};
-
-	//Форма списка движения вагонов
-	class MoveWagonSubSystem : public ISListBaseForm
-	{
-		Q_OBJECT
-
-	public:
-		Q_INVOKABLE MoveWagonSubSystem(QWidget *parent = 0);
-		virtual ~MoveWagonSubSystem();
-
-	protected:
-		bool Update() override;
-
-	private:
-		QLabel *LabelTotal;
 	};
 
 	//Форма объекта приходов
