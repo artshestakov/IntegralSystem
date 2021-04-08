@@ -100,6 +100,21 @@ ISTime ISTime::CurrentTime()
     return{ DateTime.Time.Hour, DateTime.Time.Minute, DateTime.Time.Second, DateTime.Time.Milliseconds };
 }
 //-----------------------------------------------------------------------------
+bool ISTime::IsNull() const
+{
+    return Hour == 0 && Minute == 0 && Second == 0 && Milliseconds == 0;
+}
+//-----------------------------------------------------------------------------
+std::string ISTime::ToString() const
+{
+    std::string Result;
+    if (!IsNull())
+    {
+        Result = ISAlgorithm::StringF("%02d:%02d:%02d", Hour, Minute, Second);
+    }
+    return Result;
+}
+//-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 ISDateTime::ISDateTime()
@@ -126,5 +141,20 @@ ISDateTime ISDateTime::CurrentDateTime()
     return{ (unsigned short)ST->tm_mday, (unsigned short)(ST->tm_mon + 1), (unsigned short)(ST->tm_year + 1900),
         (unsigned short)ST->tm_hour, (unsigned short)ST->tm_min, (unsigned short)ST->tm_sec, (unsigned short)(TimeValue.tv_usec / 1000) };
 #endif
+}
+//-----------------------------------------------------------------------------
+bool ISDateTime::IsNull() const
+{
+    return Date.IsNull() && Time.IsNull();
+}
+//-----------------------------------------------------------------------------
+std::string ISDateTime::ToString() const
+{
+    std::string Result;
+    if (!IsNull())
+    {
+        Result = Date.ToString() + ' ' + Time.ToString();
+    }
+    return Result;
 }
 //-----------------------------------------------------------------------------

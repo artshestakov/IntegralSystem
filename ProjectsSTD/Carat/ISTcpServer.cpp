@@ -283,7 +283,7 @@ void ISTcpServer::WorkerAnswer()
         TcpAnswer = ISTcpQueue::Instance().GetAnswer();
         if (TcpAnswer) //Если на очереди есть ответ - отправляем его клиенту
         {
-            if (ISTcpClients::Instance().IsExist(TcpAnswer->GetSocketClient())) //Клиент подключен - отправляем ему ответ
+            if (ISTcpClients::Instance().IsExistSocket(TcpAnswer->GetSocketClient())) //Клиент подключен - отправляем ему ответ
             {
                 std::string JsonString = TcpAnswer->ToJson();
                 size_t Size = JsonString.size();

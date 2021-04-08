@@ -11,7 +11,9 @@ public:
 
     void Add(ISTcpClient *TcpClient);
     bool Remove(ISTcpClient *TcpClient);
-    bool IsExist(SOCKET Socket);
+    ISTcpClientInfo GetInfo(unsigned int UserID);
+    bool IsExistSocket(SOCKET Socket);
+    bool IsExistUserID(unsigned int UserID);
     size_t GetCount();
 
 private:

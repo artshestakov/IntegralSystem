@@ -4,6 +4,7 @@
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 #include "ISAlgorithm.h"
+#include "ISDateTime.h"
 //-----------------------------------------------------------------------------
 struct ISConfigParameter
 {
@@ -42,6 +43,12 @@ struct ISResourceFile
     std::string Name;
     unsigned long Size;
     char *Data;
+};
+//-----------------------------------------------------------------------------
+struct ISTcpClientInfo
+{
+    std::string IPAddress; //Адрес клиента
+    ISDateTime DTConnected; //Дата и время подключения
 };
 //-----------------------------------------------------------------------------
 #endif

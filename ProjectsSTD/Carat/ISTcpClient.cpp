@@ -3,6 +3,7 @@
 ISTcpClient::ISTcpClient()
     : Socket(0),
     Port(0),
+    DTConnected(ISDateTime::CurrentDateTime()),
     Authorized(false),
     UserID(0),
     UserSystem(false)
@@ -27,5 +28,10 @@ void ISTcpClient::GetBuffer(std::vector<char> &Vector)
         Vector.insert(Vector.end(), Buffer[i].begin(), Buffer[i].end());
     }
     Buffer.clear();
+}
+//-----------------------------------------------------------------------------
+ISTcpClientInfo ISTcpClient::GetInfo() const
+{
+    return{ IPAddress, DTConnected };
 }
 //-----------------------------------------------------------------------------

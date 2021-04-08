@@ -7,6 +7,7 @@
 #include "ISConfig.h"
 #include "ISDatabase.h"
 #include "ISLocalization.h"
+#include "ISTcpClients.h"
 //-----------------------------------------------------------------------------
 static std::string QS_USERS_HASH = "SELECT usrs_hash, usrs_salt "
                                    "FROM _users "
@@ -391,20 +392,6 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
                 break;
             }
         }
-
-        /*if (IsFound) //Нашли пользователя - удаляем адрес из Fail2Ban
-        {
-            ISFail2Ban::Instance().Remove(IPAddress);
-        }
-        else //Не нашли пользователя - добавляем адрес в Fail2Ban
-        {
-            //Если адрес заблокирован - сообщаем об этом
-            //Иначе - предупреждаем о неправильном вводе логина или пароля
-            ErrorString = ISFail2Ban::Instance().Add(IPAddress)
-            ? LANG("Carat.Error.Query.Auth.Fail2Ban").arg(CARAT_BAN_ATTEMPT_COUNT).arg(IPAddress).arg(ISFail2Ban::Instance().GetUnlockDateTime(IPAddress).toString(FORMAT_DATE_TIME_V2))
-            : LANG("Carat.Error.Query.Auth.InvalidLoginOrPassword");
-            return false;
-        }*/
     }
 
     //Проверка пользователя
@@ -513,12 +500,25 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
         }
     }
 
+    rapidjson::MemoryPoolAllocator<rapidjson::CrtAllocator> &Allocator = TcpAnswer->Parameters.GetAllocator();
+
+    //Проверяем, не подключен ли уже это пользователь
+    //Если пользователь уже подключен - вытаскиваем информацию о подключении
+    if (ISTcpClients::Instance().IsExistUserID(UserID))
+    {
+        ISTcpClientInfo TcpClientInfo = ISTcpClients::Instance().GetInfo(UserID);
+        std::string DTConnected = TcpClientInfo.DTConnected.ToString();
+
+        rapidjson::Document AlreadyConnected(rapidjson::Type::kObjectType);
+        AlreadyConnected.AddMember("DateTime", rapidjson::Value().SetString(DTConnected.c_str(), (rapidjson::SizeType)DTConnected.size(), AlreadyConnected.GetAllocator()), AlreadyConnected.GetAllocator());
+        AlreadyConnected.AddMember("IPAddress", rapidjson::Value().SetString(TcpClientInfo.IPAddress.c_str(), (rapidjson::SizeType)TcpClientInfo.IPAddress.size(), AlreadyConnected.GetAllocator()), AlreadyConnected.GetAllocator());
+        TcpAnswer->Parameters.AddMember("AlreadyConnected", rapidjson::Value(AlreadyConnected, Allocator), Allocator);
+    }
+
     //Устанавливаем флаги клиенту
     TcpMessage->TcpClient->Authorized = true;
     TcpMessage->TcpClient->UserID = UserID;
     TcpMessage->TcpClient->UserSystem = UserSystem;
-
-    rapidjson::MemoryPoolAllocator<rapidjson::CrtAllocator> &Allocator = TcpAnswer->Parameters.GetAllocator();
 
     //Отдаём информацию о пользователе и конфигурации
     TcpAnswer->Parameters.AddMember("UserID", UserID, Allocator);

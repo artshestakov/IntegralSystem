@@ -46,13 +46,45 @@ bool ISTcpClients::Remove(ISTcpClient *TcpClient)
     return Result;
 }
 //-----------------------------------------------------------------------------
-bool ISTcpClients::IsExist(SOCKET Socket)
+ISTcpClientInfo ISTcpClients::GetInfo(unsigned int UserID)
+{
+    ISTcpClientInfo TcpClientInfo;
+    CRITICAL_SECTION_LOCK(&CS);
+    for (size_t i = 0; i < Count; ++i)
+    {
+        if (Clients[i]->UserID == UserID)
+        {
+            TcpClientInfo = Clients[i]->GetInfo();
+            break;
+        }
+    }
+    CRITICAL_SECTION_UNLOCK(&CS);
+    return TcpClientInfo;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpClients::IsExistSocket(SOCKET Socket)
 {
     bool Result = false;
     CRITICAL_SECTION_LOCK(&CS);
     for (size_t i = 0; i < Count; ++i)
     {
         if (Clients[i]->Socket == Socket)
+        {
+            Result = true;
+            break;
+        }
+    }
+    CRITICAL_SECTION_UNLOCK(&CS);
+    return Result;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpClients::IsExistUserID(unsigned int UserID)
+{
+    bool Result = false;
+    CRITICAL_SECTION_LOCK(&CS);
+    for (size_t i = 0; i < Count; ++i)
+    {
+        if (Clients[i]->UserID == UserID)
         {
             Result = true;
             break;

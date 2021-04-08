@@ -31,6 +31,9 @@ struct ISTime
 
     static ISTime CurrentTime();
 
+    bool IsNull() const;
+    std::string ToString() const;
+
     unsigned short Hour;
     unsigned short Minute;
     unsigned short Second;
@@ -45,6 +48,9 @@ struct ISDateTime
     ISDateTime(const ISDate &date, const ISTime &time);
 
     static ISDateTime CurrentDateTime();
+
+    bool IsNull() const;
+    std::string ToString() const;
 
     ISDate Date;
     ISTime Time;
