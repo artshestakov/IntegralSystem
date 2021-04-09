@@ -90,6 +90,7 @@ void ISResourcer::Free()
     {
         free(ISAlgorithm::VectorTakeBack(Files).Data);
     }
+    FileCount = 0;
 }
 //-----------------------------------------------------------------------------
 const char* ISResourcer::GetFile(const std::string &FileName)
@@ -130,7 +131,7 @@ bool ISResourcer::ParseFile()
             }
 
             //Выделяем память под файл
-            char *FileData = (char *)malloc(FileSize);
+            char *FileData = (char *)malloc(sizeof(char) * FileSize + 1);
             if (!FileData) //Ошибка выделения памяти
             {
                 ErrorString = ISAlgorithm::StringF("not allocate memory %d", FileSize);
