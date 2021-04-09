@@ -2,12 +2,12 @@
 #include "ISConstants.h"
 #include "ISAlgorithm.h"
 #include "ISAssert.h"
-#include "ISResourcer.h"
 //-----------------------------------------------------------------------------
 ISMetaData::ISMetaData()
     : ErrorString(STRING_NO_ERROR),
     Initialized(false),
     CurrentXSN(nullptr),
+    CurrentXSF(nullptr),
     TypesCount(0)
 {
     VectorFilesXSN.emplace_back("Scheme/Asterisk.xsn");
@@ -16,6 +16,8 @@ ISMetaData::ISMetaData()
     VectorFilesXSN.emplace_back("Scheme/System.xsn");
     VectorFilesXSN.emplace_back("Scheme/Task.xsn");
     VectorFilesXSN.emplace_back("Scheme/User.xsn");
+
+    VectorFilesXSF.emplace_back("Scheme/Functions.xsf");
 
     VectorTypes.emplace_back(ISMetaType("Unknown", ISNamespace::FieldType::Unknown, std::string(), std::string(), std::string(), false));
     VectorTypes.emplace_back(ISMetaType("ID", ISNamespace::FieldType::ID, "BIGINT", "ISIntegerEdit", "ISComboSearchNumber", true));
@@ -74,10 +76,6 @@ std::string ISMetaData::GetErrorString() const
 //-----------------------------------------------------------------------------
 bool ISMetaData::Init(const std::string &configuration_name, bool XSR, bool XSF)
 {
-    IS_UNUSED(configuration_name);
-    IS_UNUSED(XSR);
-    IS_UNUSED(XSF);
-
     //Если мета-данные уже инициализированны - выходим
     if (Initialized)
     {
@@ -90,21 +88,28 @@ bool ISMetaData::Init(const std::string &configuration_name, bool XSR, bool XSF)
     }
     ConfigurationName = configuration_name;
 
-    if (!XSNInit())
+    //Читаем файл ресурсов
+    ISResourcer Resourcer;
+    if (!Resourcer.LoadFile(ISAlgorithm::GetApplicationDir() + PATH_SEPARATOR + "Resources.bin"))
+    {
+        ErrorString = ISAlgorithm::StringF("Not read resource file: %s", Resourcer.GetErrorString().c_str());
+        return false;
+    }
+
+    if (!XSNInit(&Resourcer))
     {
         return false;
     }
 
-    if (XSR && !XSNInit())
+    if (XSR && !XSRInit())
     {
         return false;
     }
 
-    if (XSF && !XSFInit())
+    if (XSF && !XSFInit(&Resourcer))
     {
         return false;
     }
-
     Initialized = true;
     return true;
 }
@@ -138,19 +143,11 @@ PMetaTable* ISMetaData::GetTable(const std::string &TableName)
     return Table;
 }
 //-----------------------------------------------------------------------------
-bool ISMetaData::XSNInit()
+bool ISMetaData::XSNInit(ISResourcer *Resourcer)
 {
-    //Читаем файл ресурсов
-    ISResourcer Resourcer;
-    if (!Resourcer.LoadFile(ISAlgorithm::GetApplicationDir() + PATH_SEPARATOR + "Resources.bin"))
-    {
-        ErrorString = ISAlgorithm::StringF("Not read resource file: %s", Resourcer.GetErrorString().c_str());
-        return false;
-    }
-
     //Получаем содержимое шаблона
     unsigned long TemplateSize = 0;
-    const char *TemplateContent = Resourcer.GetFile("Other/ClassTemplateFields.xml", TemplateSize);
+    const char *TemplateContent = Resourcer->GetFile("Other/ClassTemplateFields.xml", TemplateSize);
 
     //Парсим содержимое шаблона
     tinyxml2::XMLDocument XmlDocument;
@@ -172,7 +169,7 @@ bool ISMetaData::XSNInit()
     for (const std::string &FileName : VectorFilesXSN)
     {
         unsigned long ContentSize = 0;
-        const char *Content = Resourcer.GetFile(FileName, ContentSize);
+        const char *Content = Resourcer->GetFile(FileName, ContentSize);
         if (!XSNInit(Content, (size_t)ContentSize, FileName, XmlElementTemplateXNS))
         {
             return false;
@@ -237,7 +234,7 @@ bool ISMetaData::XSNInitTable(tinyxml2::XMLElement *XmlElement, tinyxml2::XMLEle
     const char *TableName = XmlElement->Attribute("Name");
     if (!TableName || strlen(TableName) == 0)
     {
-        ErrorString = ISAlgorithm::StringF("Empty TableName in table. File: %s Line: %d", CurrentXSN, XmlElement->GetLineNum());
+        ErrorString = ISAlgorithm::StringF("Empty name in table. File: %s Line: %d", CurrentXSN, XmlElement->GetLineNum());
         return false;
     }
 
@@ -562,8 +559,91 @@ bool ISMetaData::XSRInit()
     return true;
 }
 //-----------------------------------------------------------------------------
-bool ISMetaData::XSFInit()
+bool ISMetaData::XSFInit(ISResourcer *Resourcer)
 {
+    for (const std::string &FileName : VectorFilesXSF)
+    {
+        unsigned long ContentSize = 0;
+        const char *Content = Resourcer->GetFile(FileName, ContentSize);
+        if (!XSFInit(Content, (size_t)ContentSize, FileName))
+        {
+            return false;
+        }
+    }
+    return true;
+}
+//-----------------------------------------------------------------------------
+bool ISMetaData::XSFInit(const std::string &Content, size_t Size, const std::string &FileName)
+{
+    //Парсим содержимое файла
+    tinyxml2::XMLDocument XmlDocument;
+    tinyxml2::XMLError XmlError = XmlDocument.Parse(Content.c_str(), Size);
+    if (XmlError != tinyxml2::XMLError::XML_SUCCESS)
+    {
+        ErrorString = ISAlgorithm::StringF("Not parse file \"%s\": %s", FileName.c_str(), XmlDocument.ErrorStr());
+        return false;
+    }
+
+    //Проверим имя главного тега
+    tinyxml2::XMLElement *XmlElement = XmlDocument.FirstChildElement();
+    const char *TagName = XmlElement->Name();
+    if (strcmp(TagName, "XSF") != 0)
+    {
+        ErrorString = ISAlgorithm::StringF("Invalid tag name. \"%s\" in XSF file \"%s\"", TagName, FileName.c_str());
+        return false;
+    }
+
+    //Проверим наличие атрибута Name в главном теге
+    const tinyxml2::XMLAttribute *XmlAttribute = XmlElement->FindAttribute("Name");
+    if (!XmlAttribute)
+    {
+        ErrorString = ISAlgorithm::StringF("Not found attribute \"Name\" in a XSF file \"%s\"", FileName.c_str());
+        return false;
+    }
+    CurrentXSF = XmlAttribute->Value();
+
+    //Переходим к функциям и перебираем каждую
+    XmlElement = XmlElement->FirstChildElement();
+    while (XmlElement)
+    {
+        if (!XSFInit(XmlElement))
+        {
+            return false;
+        }
+        XmlElement = XmlElement->NextSiblingElement();
+    }
+    return true;
+}
+//-----------------------------------------------------------------------------
+bool ISMetaData::XSFInit(tinyxml2::XMLElement *XmlElement)
+{
+    //Проверяем наличие атрибутов
+    const tinyxml2::XMLAttribute *XmlAttribute = XmlElement->FirstAttribute();
+    if (!XmlAttribute)
+    {
+        ErrorString = ISAlgorithm::StringF("Empty attributes. File: %s Line: %d", CurrentXSF, XmlElement->GetLineNum());
+        return false;
+    }
+
+    //Получаем имя функции
+    const char *Name = XmlElement->Attribute("Name");
+    if (!Name || strlen(Name) == 0)
+    {
+        ErrorString = ISAlgorithm::StringF("Empty function name in function. File: %s Line: %d", CurrentXSF, XmlElement->GetLineNum());
+        return false;
+    }
+
+    //Получаем текст функции
+    const char *SqlText = XmlElement->GetText();
+    if (!SqlText || strlen(SqlText) == 0)
+    {
+        ErrorString = ISAlgorithm::StringF("Empty sql text in function. File: %s Line: %d", CurrentXSF, XmlElement->GetLineNum());
+        return false;
+    }
+
+    //Получаем комментарий
+    const char *Comment = XmlElement->Attribute("Comment");    
+    Functions.emplace_back(new PMetaFunction{ Name, Comment ? Comment : std::string() , SqlText });
     return true;
 }
 //-----------------------------------------------------------------------------

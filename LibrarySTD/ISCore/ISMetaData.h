@@ -6,6 +6,7 @@
 #include "tinyxml2.h"
 #include "PMetaClass.h"
 #include "ISStructs.h"
+#include "ISResourcer.h"
 //-----------------------------------------------------------------------------
 class ISMetaData
 {
@@ -18,7 +19,7 @@ public:
     PMetaTable* GetTable(const std::string &TableName);
 
 private:
-    bool XSNInit();
+    bool XSNInit(ISResourcer *Resourcer);
     bool XSNInit(const std::string &Content, size_t Size, const std::string &FileName, tinyxml2::XMLElement *XmlElementTemplateXNS);
     bool XSNInitTable(tinyxml2::XMLElement *XmlElement, tinyxml2::XMLElement *XmlElementTemplateXNS);
     bool XSNInitTableSystemFields(PMetaTable *MetaTable);
@@ -28,7 +29,10 @@ private:
     bool XSNInitEscorts(PMetaTable *MetaTable, tinyxml2::XMLElement *XmlElement);
 
     bool XSRInit();
-    bool XSFInit();
+
+    bool XSFInit(ISResourcer *Resourcer);
+    bool XSFInit(const std::string &Content, size_t Size, const std::string &FileName);
+    bool XSFInit(tinyxml2::XMLElement *XmlElement);
 
 private:
     ISMetaData();
@@ -43,7 +47,7 @@ private:
     ISCriticalSection CS;
     bool Initialized;
     std::string ConfigurationName;
-    const char *CurrentXSN;
+    const char *CurrentXSN, *CurrentXSF;
     std::vector<ISMetaType> VectorTypes; //Перечисление типов системы
     size_t TypesCount; //Количество типов
 
@@ -54,6 +58,7 @@ private:
         VectorFilesXSF;
 
     std::vector<PMetaTable*> Tables;
+    std::vector<PMetaFunction*> Functions;
 };
 //-----------------------------------------------------------------------------
 #endif

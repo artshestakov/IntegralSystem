@@ -154,4 +154,15 @@ struct PMetaTable : public PMetaBase
     std::vector<PMetaEscort*> Escorts; //Эскортные таблицы
 };
 //-----------------------------------------------------------------------------
+struct PMetaFunction : public PMetaBase
+{
+    PMetaFunction(const std::string &name, const std::string &comment, const std::string &text)
+        : PMetaBase("Function"),
+        Name(name), Comment(comment), Text(text) { }
+
+    std::string Name; //Имя функции
+    std::string Comment; //Комментарий функции
+    std::string Text; //Текст функции
+};
+//-----------------------------------------------------------------------------
 #endif
