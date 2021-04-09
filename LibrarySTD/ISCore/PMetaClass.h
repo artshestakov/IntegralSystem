@@ -101,6 +101,16 @@ struct PMetaField : public PMetaBase
     std::string SeparatorName; //Наименование вкладки
 };
 //-----------------------------------------------------------------------------
+struct PMetaEscort : public PMetaBase
+{
+    PMetaEscort() : PMetaBase("Escort") { }
+
+    std::string LocalName;
+    std::string TableName;
+    std::string FilterField;
+    std::string ClassName;
+};
+//-----------------------------------------------------------------------------
 struct PMetaTable : public PMetaBase
 {
     PMetaTable() : PMetaBase("Table")
@@ -141,6 +151,7 @@ struct PMetaTable : public PMetaBase
 
     std::vector<PMetaField*> Fields;
     std::vector<PMetaIndex*> IndexesCompound; //Составные индексы таблицы
+    std::vector<PMetaEscort*> Escorts; //Эскортные таблицы
 };
 //-----------------------------------------------------------------------------
 #endif

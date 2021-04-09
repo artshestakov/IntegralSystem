@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <XSR Name="User.xsr">
 
-  <_GroupAccessTableType IsSystem="true" UID="{41743776-D7CE-414F-ACF3-71C42A607742}" Name="Просмотр" Icon="Access.Show" Order="1"/>
-  <_GroupAccessTableType IsSystem="true" UID="{1CFA961D-08A2-4AA3-978E-FF23FC88CA08}" Name="Создание" Icon="Access.Create" Order="2"/>
-  <_GroupAccessTableType IsSystem="true" UID="{259AC6D5-63F8-4C44-B8A6-0108DA542BA6}" Name="Изменение" Icon="Access.Edit" Order="3"/>
-  <_GroupAccessTableType IsSystem="true" UID="{48E0575C-31A0-4AE1-87D7-6450B69A41A5}" Name="Удаление" Icon="Access.Delete" Order="4"/>
-  <_GroupAccessTableType IsSystem="true" UID="{E3DB5851-69A2-4D32-B4F4-0EB98C331B22}" Name="Экспорт" Icon="Access.Export" Order="5"/>
+    <_GroupAccessTableType IsSystem="true" UID="{41743776-D7CE-414F-ACF3-71C42A607742}" Name="Просмотр" Icon="Access.Show" Order="1"/>
+    <_GroupAccessTableType IsSystem="true" UID="{1CFA961D-08A2-4AA3-978E-FF23FC88CA08}" Name="Создание" Icon="Access.Create" Order="2"/>
+    <_GroupAccessTableType IsSystem="true" UID="{259AC6D5-63F8-4C44-B8A6-0108DA542BA6}" Name="Изменение" Icon="Access.Edit" Order="3"/>
+    <_GroupAccessTableType IsSystem="true" UID="{48E0575C-31A0-4AE1-87D7-6450B69A41A5}" Name="Удаление" Icon="Access.Delete" Order="4"/>
+    <_GroupAccessTableType IsSystem="true" UID="{E3DB5851-69A2-4D32-B4F4-0EB98C331B22}" Name="Экспорт" Icon="Access.Export" Order="5"/>
 
-  <_GroupAccessSpecialType IsSystem="true" UID="{1469B06A-9155-40A0-BED9-8CCFDBA89989}" Name="Основные" Order="1"/>
-  <_GroupAccessSpecialType IsSystem="true" UID="{6948884F-5F69-4F74-A230-A2D892A44A52}" Parent="{1469B06A-9155-40A0-BED9-8CCFDBA89989}" Name="Рабочий стол" Hint="Доступ к рабочему столу программы" Order="1"/>
-  <_GroupAccessSpecialType IsSystem="true" UID="{E006A41A-465F-41AB-BA5D-2CBC41935B2C}" Parent="{1469B06A-9155-40A0-BED9-8CCFDBA89989}" Name="Управление настройками базы данных" Order="2"/>
+    <_GroupAccessSpecialType IsSystem="true" UID="{1469B06A-9155-40A0-BED9-8CCFDBA89989}" Name="Основные" Order="1"/>
+    <_GroupAccessSpecialType IsSystem="true" UID="{6948884F-5F69-4F74-A230-A2D892A44A52}" Parent="{1469B06A-9155-40A0-BED9-8CCFDBA89989}" Name="Рабочий стол" Hint="Доступ к рабочему столу программы" Order="1"/>
+    <_GroupAccessSpecialType IsSystem="true" UID="{E006A41A-465F-41AB-BA5D-2CBC41935B2C}" Parent="{1469B06A-9155-40A0-BED9-8CCFDBA89989}" Name="Управление настройками базы данных" Order="2"/>
 
-  <_GroupAccessSpecialType IsSystem="true" UID="{47115F72-C49E-4CB6-8AEF-A2648CF648E9}" Name="Трекер задач" Order="2"/>
-  <_GroupAccessSpecialType IsSystem="true" UID="{4FA7688B-E0B8-4018-B6EC-FD4BE898C90B}" Parent="{47115F72-C49E-4CB6-8AEF-A2648CF648E9}" Name="Закрытие задач" Order="1"/>
-  <_GroupAccessSpecialType IsSystem="true" UID="{D0A6AA06-FF19-4945-9441-AEA245AE32DF}" Parent="{47115F72-C49E-4CB6-8AEF-A2648CF648E9}" Name="Переоткрытие задач" Order="2"/>
-  <_GroupAccessSpecialType IsSystem="true" UID="{988106BE-292A-428A-A10D-5858C4DFE569}" Parent="{47115F72-C49E-4CB6-8AEF-A2648CF648E9}" Name="Редактирование задач" Order="3"/>
-  <_GroupAccessSpecialType IsSystem="true" UID="{D7837403-15BA-4B50-8B9A-660602C24B98}" Parent="{47115F72-C49E-4CB6-8AEF-A2648CF648E9}" Name="Преобразование задач в подзадачи и наоборот" Order="4"/>
-  <_GroupAccessSpecialType IsSystem="true" UID="{14B3E83D-56D4-4527-9C33-0770D38B78D5}" Parent="{47115F72-C49E-4CB6-8AEF-A2648CF648E9}" Name="Назначение исполнителей" Order="5"/>
-  <_GroupAccessSpecialType IsSystem="true" UID="{093E482F-C108-4939-A1D5-66377BA354AC}" Parent="{47115F72-C49E-4CB6-8AEF-A2648CF648E9}" Name="Просмотр всех задач" Order="6"/>
-  
-  <_GroupAccessSpecialType IsSystem="true" UID="{C84B3053-BBF0-4B2E-B1F4-32ABE9A817D4}" Name="Прочее" Order="3"/>
+    <_GroupAccessSpecialType IsSystem="true" UID="{47115F72-C49E-4CB6-8AEF-A2648CF648E9}" Name="Трекер задач" Order="2"/>
+    <_GroupAccessSpecialType IsSystem="true" UID="{4FA7688B-E0B8-4018-B6EC-FD4BE898C90B}" Parent="{47115F72-C49E-4CB6-8AEF-A2648CF648E9}" Name="Закрытие задач" Order="1"/>
+    <_GroupAccessSpecialType IsSystem="true" UID="{D0A6AA06-FF19-4945-9441-AEA245AE32DF}" Parent="{47115F72-C49E-4CB6-8AEF-A2648CF648E9}" Name="Переоткрытие задач" Order="2"/>
+    <_GroupAccessSpecialType IsSystem="true" UID="{988106BE-292A-428A-A10D-5858C4DFE569}" Parent="{47115F72-C49E-4CB6-8AEF-A2648CF648E9}" Name="Редактирование задач" Order="3"/>
+    <_GroupAccessSpecialType IsSystem="true" UID="{D7837403-15BA-4B50-8B9A-660602C24B98}" Parent="{47115F72-C49E-4CB6-8AEF-A2648CF648E9}" Name="Преобразование задач в подзадачи и наоборот" Order="4"/>
+    <_GroupAccessSpecialType IsSystem="true" UID="{14B3E83D-56D4-4527-9C33-0770D38B78D5}" Parent="{47115F72-C49E-4CB6-8AEF-A2648CF648E9}" Name="Назначение исполнителей" Order="5"/>
+    <_GroupAccessSpecialType IsSystem="true" UID="{093E482F-C108-4939-A1D5-66377BA354AC}" Parent="{47115F72-C49E-4CB6-8AEF-A2648CF648E9}" Name="Просмотр всех задач" Order="6"/>
+
+    <_GroupAccessSpecialType IsSystem="true" UID="{C84B3053-BBF0-4B2E-B1F4-32ABE9A817D4}" Name="Прочее" Order="3"/>
 
 </XSR>

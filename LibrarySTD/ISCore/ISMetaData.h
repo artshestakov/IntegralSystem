@@ -25,6 +25,7 @@ private:
     bool XSNInitTableFields(PMetaTable *MetaTable, tinyxml2::XMLElement *XmlElement);
     bool XSNInitIndexes(PMetaTable *MetaTable, tinyxml2::XMLElement *XmlElement);
     bool XSNInitForeigns(PMetaTable *MetaTable, tinyxml2::XMLElement *XmlElement);
+    bool XSNInitEscorts(PMetaTable *MetaTable, tinyxml2::XMLElement *XmlElement);
 
     bool XSRInit();
     bool XSFInit();

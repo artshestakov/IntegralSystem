@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <XSN Name="SettingsDatabase.xsn">
 
-  <Table Name="_SettingsDatabase" UID="{55F13612-074A-493B-B948-50A23EAE9945}" Alias="sgdb" LocalName="Настройка базы данных" LocalListName="Настройки базы данных" TitleName="ID" ObjectForm="ISSettingsDatabaseObjectForm" IsSystem="true">
-    <Fields>
-      <Field UID="{43D4DC65-3706-4D7E-86AA-31A952DF3FD0}" Name="UserAccessDatabase" Type="Bool" DefaultValue="true" LabelName="Доступ к базе данных" LocalListName="Доступ к базе данных" HideFromList="true" Hint="Закрывает доступ к подключению для всех пользователей кроме системного."/>
-      <Field UID="{2878FEEB-F439-422C-A7B8-DA4684A6460F}" Name="NumberSimbolsAfterComma" Type="Int" DefaultValue="3" LabelName="Размер дробной части в дробных числах" LocalListName="Размер дробной части в дробных числах" HideFromList="true"/>
-      <Field UID="{6288E37D-413A-48E0-B9BF-D4CA288B5007}" Name="StorageFileMaxSize" Type="Int" DefaultValue="10" LabelName="Максимальный размер файла в хранилище (мб)" LocalListName="Максимальный размер файла в хранилище (мб)" HideFromList="true" Hint="Ограничение размера файла добавляемого в файловое хранилище."/>
-      <Field UID="{341DFE6C-CBE1-4ED9-BFBA-A077F9A09FA6}" Name="TCPMessageID" Type="BigInt" ReadOnly="true" DefaultValue="0" LabelName="Идентификатор TCP-сообщения" LocalListName="Идентификатор TCP-сообщения" HideFromList="true"/>
-    </Fields>
-  </Table>
-  
+    <Table Name="_SettingsDatabase" UID="{55F13612-074A-493B-B948-50A23EAE9945}" Alias="sgdb" LocalName="Настройка базы данных" LocalListName="Настройки базы данных" TitleName="ID" ObjectForm="ISSettingsDatabaseObjectForm" IsSystem="true">
+        <Fields>
+            <Field UID="{43D4DC65-3706-4D7E-86AA-31A952DF3FD0}" Name="UserAccessDatabase" Type="Bool" DefaultValue="true" LabelName="Доступ к базе данных" LocalListName="Доступ к базе данных" HideFromList="true" Hint="Закрывает доступ к подключению для всех пользователей кроме системного."/>
+            <Field UID="{2878FEEB-F439-422C-A7B8-DA4684A6460F}" Name="NumberSimbolsAfterComma" Type="Int" DefaultValue="3" LabelName="Размер дробной части в дробных числах" LocalListName="Размер дробной части в дробных числах" HideFromList="true"/>
+            <Field UID="{6288E37D-413A-48E0-B9BF-D4CA288B5007}" Name="StorageFileMaxSize" Type="Int" DefaultValue="10" LabelName="Максимальный размер файла в хранилище (мб)" LocalListName="Максимальный размер файла в хранилище (мб)" HideFromList="true" Hint="Ограничение размера файла добавляемого в файловое хранилище."/>
+            <Field UID="{341DFE6C-CBE1-4ED9-BFBA-A077F9A09FA6}" Name="TCPMessageID" Type="BigInt" ReadOnly="true" DefaultValue="0" LabelName="Идентификатор TCP-сообщения" LocalListName="Идентификатор TCP-сообщения" HideFromList="true"/>
+        </Fields>
+    </Table>
+
 </XSN>

@@ -311,6 +311,11 @@ bool ISMetaData::XSNInitTable(tinyxml2::XMLElement *XmlElement, tinyxml2::XMLEle
         return false;
     }
 
+    if (!XSNInitEscorts(MetaTable, XmlElement->FirstChildElement("Escorts")))
+    {
+        return false;
+    }
+
     //Получаем поле-имя
     const char *TitleName = XmlElement->Attribute("TitleName");
     if (!TitleName || strlen(TitleName) == 0) //Если такого атрибута нет или он пустой - используем ID
@@ -521,6 +526,33 @@ bool ISMetaData::XSNInitForeigns(PMetaTable *MetaTable, tinyxml2::XMLElement *Xm
         MetaField->Foreign = new PMetaForeign(FieldName, ForeignClass, ForeignField,
             ForeignViewFieldName ? ForeignViewFieldName : std::string(), MetaTable->Name);
         ElementForeign = ElementForeign->NextSiblingElement();
+    }
+    return true;
+}
+//-----------------------------------------------------------------------------
+bool ISMetaData::XSNInitEscorts(PMetaTable *MetaTable, tinyxml2::XMLElement *XmlElement)
+{
+    if (!XmlElement) //У этой таблицы нет эскортов
+    {
+        return true;
+    }
+
+    //Переходим к индексам
+    tinyxml2::XMLElement *ElementEscort = XmlElement->FirstChildElement();
+    while (ElementEscort)
+    {
+        const char *LocalName = ElementEscort->Attribute("LocalName");
+        const char *TableName = ElementEscort->Attribute("TableName");
+        const char *FilterField = ElementEscort->Attribute("FilterField");
+        const char *ClassName = ElementEscort->Attribute("ClassName");
+
+        PMetaEscort *MetaEscort = new PMetaEscort();
+        MetaEscort->LocalName = LocalName ? LocalName : std::string();
+        MetaEscort->TableName = TableName ? TableName : std::string();
+        MetaEscort->FilterField = FilterField ? FilterField : std::string();
+        MetaEscort->ClassName = ClassName ? ClassName : std::string();
+        MetaTable->Escorts.emplace_back(MetaEscort);
+        ElementEscort = ElementEscort->NextSiblingElement();
     }
     return true;
 }

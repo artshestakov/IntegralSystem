@@ -1,45 +1,45 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <XSR Name="OilSphere.xsr">
 
-  <_Systems IsSystem="false" UID="{F5295C29-19CC-4E94-9CD1-F2B9865D4DAB}" OrderID="3" LocalName="Справочники" Icon="Lists"/>
-  <_SubSystems UID="{B1F0AD53-DACE-4908-B6BE-C4A0E2E7AB1D}" System="{F5295C29-19CC-4E94-9CD1-F2B9865D4DAB}" OrderID="1" LocalName="Типы контрагентов" Icon="Lists" TableName="CounterpartyType"/>
-  <_SubSystems UID="{C5335057-8068-4C2B-BDAA-E6337991FD03}" System="{F5295C29-19CC-4E94-9CD1-F2B9865D4DAB}" OrderID="2" LocalName="Статусы контрагентов" Icon="Lists" TableName="CounterpartyStatus"/>
-  <_SubSystems UID="{6C93589E-AAC2-4891-82EA-4AA47C3A52BC}" System="{F5295C29-19CC-4E94-9CD1-F2B9865D4DAB}" OrderID="3" LocalName="Типы оплаты" Icon="Lists" TableName="PaymentType"/>
-  <_SubSystems UID="{21DE6698-09A4-4067-BBC4-F118AAED1BD6}" System="{F5295C29-19CC-4E94-9CD1-F2B9865D4DAB}" OrderID="4" LocalName="Типы продуктов" Icon="Lists" TableName="ProductType"/>
-  <_SubSystems UID="{D2959027-5AC9-4D1C-B887-DAA7D84BC371}" System="{F5295C29-19CC-4E94-9CD1-F2B9865D4DAB}" OrderID="5" LocalName="Водители" Icon="Lists" TableName="Driver"/>
-  <_SubSystems UID="{C67806B7-637C-45DD-8D3D-1DE9A6792D6C}" System="{F5295C29-19CC-4E94-9CD1-F2B9865D4DAB}" OrderID="6" LocalName="Типы водителей" Icon="Lists" TableName="DriverType"/>
-  <_SubSystems UID="{EE8684B4-F174-47F8-9124-E21029713353}" System="{F5295C29-19CC-4E94-9CD1-F2B9865D4DAB}" OrderID="7" LocalName="Автомобили" Icon="Lists" TableName="Car"/>
-  <_SubSystems UID="{CA4CDA5C-34CD-445A-9B32-2E715D3CC85D}" System="{F5295C29-19CC-4E94-9CD1-F2B9865D4DAB}" OrderID="8" LocalName="Склады" Icon="Lists" TableName="Stock"/>
-  <_SubSystems UID="{B435C1EC-D234-48E9-A31D-FAF156A490E7}" System="{F5295C29-19CC-4E94-9CD1-F2B9865D4DAB}" OrderID="9" LocalName="Услуги" Icon="Lists" TableName="DriverService"/>
-  <_SubSystems UID="{4F55C05B-D956-4954-BDBF-7866FF7DA8DC}" System="{F5295C29-19CC-4E94-9CD1-F2B9865D4DAB}" OrderID="10" LocalName="Периоды" Icon="Lists" TableName="Period"/>
-  
-  <_Systems IsSystem="false" UID="{83EE4ECD-F1AC-4D6D-AEE5-0CE51DA940CD}" OrderID="4" LocalName="Картотека" Icon="Lists"/>
-  <_SubSystems UID="{F4FA61A3-F079-440D-BA72-4C64B1DB77E8}" System="{83EE4ECD-F1AC-4D6D-AEE5-0CE51DA940CD}" OrderID="1" LocalName="Контрагенты" Icon="Lists" ClassName="ISOilSphere::CounterpartySubSystem"/>
-  <_SubSystems UID="{A4676EAE-DBDC-43BE-A2CB-C2E37D7C72AF}" System="{83EE4ECD-F1AC-4D6D-AEE5-0CE51DA940CD}" OrderID="2" LocalName="Реализация" Icon="Lists" TableName="Implementation"/>
-  <_SubSystems UID="{06CA0641-BA9A-448B-A1CC-371DBD9C36F4}" System="{83EE4ECD-F1AC-4D6D-AEE5-0CE51DA940CD}" OrderID="3" LocalName="Ведомость АЗС" Icon="Lists" ClassName="ISOilSphere::GasStationStatementSubSystem"/>
-  <_SubSystems UID="{ECFB2E41-7D52-4273-AE93-D4659D7BFD4C}" System="{83EE4ECD-F1AC-4D6D-AEE5-0CE51DA940CD}" OrderID="4" LocalName="Банк" Icon="Lists" ClassName="ISOilSphere::BankListForm"/>
+    <_Systems IsSystem="false" UID="{F5295C29-19CC-4E94-9CD1-F2B9865D4DAB}" OrderID="3" LocalName="Справочники" Icon="Lists"/>
+    <_SubSystems UID="{B1F0AD53-DACE-4908-B6BE-C4A0E2E7AB1D}" System="{F5295C29-19CC-4E94-9CD1-F2B9865D4DAB}" OrderID="1" LocalName="Типы контрагентов" Icon="Lists" TableName="CounterpartyType"/>
+    <_SubSystems UID="{C5335057-8068-4C2B-BDAA-E6337991FD03}" System="{F5295C29-19CC-4E94-9CD1-F2B9865D4DAB}" OrderID="2" LocalName="Статусы контрагентов" Icon="Lists" TableName="CounterpartyStatus"/>
+    <_SubSystems UID="{6C93589E-AAC2-4891-82EA-4AA47C3A52BC}" System="{F5295C29-19CC-4E94-9CD1-F2B9865D4DAB}" OrderID="3" LocalName="Типы оплаты" Icon="Lists" TableName="PaymentType"/>
+    <_SubSystems UID="{21DE6698-09A4-4067-BBC4-F118AAED1BD6}" System="{F5295C29-19CC-4E94-9CD1-F2B9865D4DAB}" OrderID="4" LocalName="Типы продуктов" Icon="Lists" TableName="ProductType"/>
+    <_SubSystems UID="{D2959027-5AC9-4D1C-B887-DAA7D84BC371}" System="{F5295C29-19CC-4E94-9CD1-F2B9865D4DAB}" OrderID="5" LocalName="Водители" Icon="Lists" TableName="Driver"/>
+    <_SubSystems UID="{C67806B7-637C-45DD-8D3D-1DE9A6792D6C}" System="{F5295C29-19CC-4E94-9CD1-F2B9865D4DAB}" OrderID="6" LocalName="Типы водителей" Icon="Lists" TableName="DriverType"/>
+    <_SubSystems UID="{EE8684B4-F174-47F8-9124-E21029713353}" System="{F5295C29-19CC-4E94-9CD1-F2B9865D4DAB}" OrderID="7" LocalName="Автомобили" Icon="Lists" TableName="Car"/>
+    <_SubSystems UID="{CA4CDA5C-34CD-445A-9B32-2E715D3CC85D}" System="{F5295C29-19CC-4E94-9CD1-F2B9865D4DAB}" OrderID="8" LocalName="Склады" Icon="Lists" TableName="Stock"/>
+    <_SubSystems UID="{B435C1EC-D234-48E9-A31D-FAF156A490E7}" System="{F5295C29-19CC-4E94-9CD1-F2B9865D4DAB}" OrderID="9" LocalName="Услуги" Icon="Lists" TableName="DriverService"/>
+    <_SubSystems UID="{4F55C05B-D956-4954-BDBF-7866FF7DA8DC}" System="{F5295C29-19CC-4E94-9CD1-F2B9865D4DAB}" OrderID="10" LocalName="Периоды" Icon="Lists" TableName="Period"/>
 
-  <_Systems IsSystem="false" UID="{A7C2E19B-FA7B-4333-B003-BEF49012116B}" OrderID="5" LocalName="Логистика" Icon="Lists"/>
-  <_SubSystems UID="{6858929B-F34A-4AFF-A95B-A5436E8FECA5}" System="{A7C2E19B-FA7B-4333-B003-BEF49012116B}" OrderID="1" LocalName="Движения вагонов" Icon="Lists" TableName="MoveWagon"/>
-  <_SubSystems UID="{8807444E-EBDE-4DB6-A261-D9430C48D448}" System="{A7C2E19B-FA7B-4333-B003-BEF49012116B}" OrderID="2" LocalName="Расходы водителей" Icon="Lists" ClassName="ISOilSphere::DriverCostSubSystem"/>
+    <_Systems IsSystem="false" UID="{83EE4ECD-F1AC-4D6D-AEE5-0CE51DA940CD}" OrderID="4" LocalName="Картотека" Icon="Lists"/>
+    <_SubSystems UID="{F4FA61A3-F079-440D-BA72-4C64B1DB77E8}" System="{83EE4ECD-F1AC-4D6D-AEE5-0CE51DA940CD}" OrderID="1" LocalName="Контрагенты" Icon="Lists" ClassName="ISOilSphere::CounterpartySubSystem"/>
+    <_SubSystems UID="{A4676EAE-DBDC-43BE-A2CB-C2E37D7C72AF}" System="{83EE4ECD-F1AC-4D6D-AEE5-0CE51DA940CD}" OrderID="2" LocalName="Реализация" Icon="Lists" TableName="Implementation"/>
+    <_SubSystems UID="{06CA0641-BA9A-448B-A1CC-371DBD9C36F4}" System="{83EE4ECD-F1AC-4D6D-AEE5-0CE51DA940CD}" OrderID="3" LocalName="Ведомость АЗС" Icon="Lists" ClassName="ISOilSphere::GasStationStatementSubSystem"/>
+    <_SubSystems UID="{ECFB2E41-7D52-4273-AE93-D4659D7BFD4C}" System="{83EE4ECD-F1AC-4D6D-AEE5-0CE51DA940CD}" OrderID="4" LocalName="Банк" Icon="Lists" ClassName="ISOilSphere::BankListForm"/>
 
-  <_Systems IsSystem="false" UID="{6BA94FDF-8469-4731-8498-5A7481400406}" OrderID="6" LocalName="Расходы" Icon="Lists"/>
-  <_SubSystems UID="{FD49B3A7-3B5B-4FE0-A25D-2B4D2D088AE6}" System="{6BA94FDF-8469-4731-8498-5A7481400406}" OrderID="1" LocalName="Приход д/с" Icon="Lists" TableName="Coming"/>
-  <_SubSystems UID="{0078D151-9DFD-4A9B-8292-1BF94B494D2B}" System="{6BA94FDF-8469-4731-8498-5A7481400406}" OrderID="2" LocalName="Распределение д/с" Icon="Lists" TableName="Distribution"/>
-  <_SubSystems UID="{DCCE40D2-1E77-4054-8933-DB8011510962}" System="{6BA94FDF-8469-4731-8498-5A7481400406}" OrderID="3" LocalName="Расходы пользователей" Icon="Lists" ClassName="ISOilSphere::ConsumptionAllSubSystem"/>
-  <_SubSystems UID="{0BB7F09E-74C4-408A-AF57-46377C3CD067}" System="{6BA94FDF-8469-4731-8498-5A7481400406}" OrderID="4" LocalName="Мои расходы" Icon="Lists" ClassName="ISOilSphere::ConsumptionMySubSystem"/>
-  <_SubSystems UID="{5EAC927D-429D-43E8-A7A0-48EF1748F189}" System="{6BA94FDF-8469-4731-8498-5A7481400406}" OrderID="5" LocalName="Мои возвраты" Icon="Lists" ClassName="ISOilSphere::ReturnMySubSystem"/>
+    <_Systems IsSystem="false" UID="{A7C2E19B-FA7B-4333-B003-BEF49012116B}" OrderID="5" LocalName="Логистика" Icon="Lists"/>
+    <_SubSystems UID="{6858929B-F34A-4AFF-A95B-A5436E8FECA5}" System="{A7C2E19B-FA7B-4333-B003-BEF49012116B}" OrderID="1" LocalName="Движения вагонов" Icon="Lists" TableName="MoveWagon"/>
+    <_SubSystems UID="{8807444E-EBDE-4DB6-A261-D9430C48D448}" System="{A7C2E19B-FA7B-4333-B003-BEF49012116B}" OrderID="2" LocalName="Расходы водителей" Icon="Lists" ClassName="ISOilSphere::DriverCostSubSystem"/>
 
-  <_Systems IsSystem="false" UID="{A6420088-C2C2-4671-9F86-003CAC0F601C}" OrderID="7" LocalName="Прочее" Icon="Lists"/>
-  <_SubSystems UID="{6CC832E2-2EE4-4388-9AF5-E49CBE1C6DE7}" System="{A6420088-C2C2-4671-9F86-003CAC0F601C}" OrderID="1" LocalName="Дебет 1" Icon="Lists" ClassName="ISOilSphere::Debet1SubSystem"/>
-  <_SubSystems UID="{9A3446F9-EC80-43B5-AFC9-51BA993FD436}" System="{A6420088-C2C2-4671-9F86-003CAC0F601C}" OrderID="2" LocalName="Дебет 2" Icon="Lists" ClassName="ISOilSphere::Debet2SubSystem"/>
-  <_SubSystems UID="{F5E54371-7753-4FDD-8CC1-A7772F378C7B}" System="{A6420088-C2C2-4671-9F86-003CAC0F601C}" OrderID="3" LocalName="Дебет 3" Icon="Lists" ClassName="ISOilSphere::Debet3SubSystem"/>
-  <_SubSystems UID="{D15B2A1E-1592-493F-A0B6-871ECC62FA08}" System="{A6420088-C2C2-4671-9F86-003CAC0F601C}" OrderID="4" LocalName="Дебет 4" Icon="Lists" ClassName="ISOilSphere::Debet4SubSystem"/>
-  <_SubSystems UID="{95B4B821-8F6B-4C5F-8734-5ED8D3331F3C}" System="{A6420088-C2C2-4671-9F86-003CAC0F601C}" OrderID="5" LocalName="Дебет 5" Icon="Lists" ClassName="ISOilSphere::Debet5SubSystem"/>
-  
-  <OperationType UID="{439C16CE-421A-4BAB-B2B2-4CEE3FCFEE21}" Name="Списание"/>
-  <OperationType UID="{0286A244-9732-43B4-A1B2-3E434EEF04D0}" Name="Зачисление"/>
+    <_Systems IsSystem="false" UID="{6BA94FDF-8469-4731-8498-5A7481400406}" OrderID="6" LocalName="Расходы" Icon="Lists"/>
+    <_SubSystems UID="{FD49B3A7-3B5B-4FE0-A25D-2B4D2D088AE6}" System="{6BA94FDF-8469-4731-8498-5A7481400406}" OrderID="1" LocalName="Приход д/с" Icon="Lists" TableName="Coming"/>
+    <_SubSystems UID="{0078D151-9DFD-4A9B-8292-1BF94B494D2B}" System="{6BA94FDF-8469-4731-8498-5A7481400406}" OrderID="2" LocalName="Распределение д/с" Icon="Lists" TableName="Distribution"/>
+    <_SubSystems UID="{DCCE40D2-1E77-4054-8933-DB8011510962}" System="{6BA94FDF-8469-4731-8498-5A7481400406}" OrderID="3" LocalName="Расходы пользователей" Icon="Lists" ClassName="ISOilSphere::ConsumptionAllSubSystem"/>
+    <_SubSystems UID="{0BB7F09E-74C4-408A-AF57-46377C3CD067}" System="{6BA94FDF-8469-4731-8498-5A7481400406}" OrderID="4" LocalName="Мои расходы" Icon="Lists" ClassName="ISOilSphere::ConsumptionMySubSystem"/>
+    <_SubSystems UID="{5EAC927D-429D-43E8-A7A0-48EF1748F189}" System="{6BA94FDF-8469-4731-8498-5A7481400406}" OrderID="5" LocalName="Мои возвраты" Icon="Lists" ClassName="ISOilSphere::ReturnMySubSystem"/>
 
-  <_ProtocolType IsSystem="true" UID="{85DCCA5C-723E-4E18-8286-FF33D12C6F4D}" Name="Импорт банков"/>
+    <_Systems IsSystem="false" UID="{A6420088-C2C2-4671-9F86-003CAC0F601C}" OrderID="7" LocalName="Прочее" Icon="Lists"/>
+    <_SubSystems UID="{6CC832E2-2EE4-4388-9AF5-E49CBE1C6DE7}" System="{A6420088-C2C2-4671-9F86-003CAC0F601C}" OrderID="1" LocalName="Дебет 1" Icon="Lists" ClassName="ISOilSphere::Debet1SubSystem"/>
+    <_SubSystems UID="{9A3446F9-EC80-43B5-AFC9-51BA993FD436}" System="{A6420088-C2C2-4671-9F86-003CAC0F601C}" OrderID="2" LocalName="Дебет 2" Icon="Lists" ClassName="ISOilSphere::Debet2SubSystem"/>
+    <_SubSystems UID="{F5E54371-7753-4FDD-8CC1-A7772F378C7B}" System="{A6420088-C2C2-4671-9F86-003CAC0F601C}" OrderID="3" LocalName="Дебет 3" Icon="Lists" ClassName="ISOilSphere::Debet3SubSystem"/>
+    <_SubSystems UID="{D15B2A1E-1592-493F-A0B6-871ECC62FA08}" System="{A6420088-C2C2-4671-9F86-003CAC0F601C}" OrderID="4" LocalName="Дебет 4" Icon="Lists" ClassName="ISOilSphere::Debet4SubSystem"/>
+    <_SubSystems UID="{95B4B821-8F6B-4C5F-8734-5ED8D3331F3C}" System="{A6420088-C2C2-4671-9F86-003CAC0F601C}" OrderID="5" LocalName="Дебет 5" Icon="Lists" ClassName="ISOilSphere::Debet5SubSystem"/>
+
+    <OperationType UID="{439C16CE-421A-4BAB-B2B2-4CEE3FCFEE21}" Name="Списание"/>
+    <OperationType UID="{0286A244-9732-43B4-A1B2-3E434EEF04D0}" Name="Зачисление"/>
+
+    <_ProtocolType IsSystem="true" UID="{85DCCA5C-723E-4E18-8286-FF33D12C6F4D}" Name="Импорт банков"/>
 
 </XSR>

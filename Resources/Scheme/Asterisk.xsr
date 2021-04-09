@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <XSR Name="Asterisk.xsr">
 
-  <_DispositionType UID="{9D8B294B-76F6-4E3B-91CB-772BA4593ED2}" Name="NO ANSWER" LocalName="Нет ответа"/>
-  <_DispositionType UID="{0F162E23-E139-42EF-919B-E871F5D93F37}" Name="FAILED" LocalName="Звонок не удался"/>
-  <_DispositionType UID="{97696BB4-12E9-4C6C-86A2-078A349E6A2C}" Name="BUSY" LocalName="Занято"/>
-  <_DispositionType UID="{A5E6CBE9-F002-436F-85C9-1F341C91DEF9}" Name="ANSWERED" LocalName="Не отвечено"/>
-  <_DispositionType UID="{D00B6710-9E6E-4D8F-872A-901D3EAE335E}" Name="CONGESTION" LocalName="Попытка дозвона"/>
+    <_DispositionType UID="{9D8B294B-76F6-4E3B-91CB-772BA4593ED2}" Name="NO ANSWER" LocalName="Нет ответа"/>
+    <_DispositionType UID="{0F162E23-E139-42EF-919B-E871F5D93F37}" Name="FAILED" LocalName="Звонок не удался"/>
+    <_DispositionType UID="{97696BB4-12E9-4C6C-86A2-078A349E6A2C}" Name="BUSY" LocalName="Занято"/>
+    <_DispositionType UID="{A5E6CBE9-F002-436F-85C9-1F341C91DEF9}" Name="ANSWERED" LocalName="Не отвечено"/>
+    <_DispositionType UID="{D00B6710-9E6E-4D8F-872A-901D3EAE335E}" Name="CONGESTION" LocalName="Попытка дозвона"/>
 
 </XSR>

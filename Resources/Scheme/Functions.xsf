@@ -1,213 +1,213 @@
 <?xml version="1.0" encoding="utf-8"?>
 <XSF Name="Functions.xsf">
 
-  <Function Name="uuid_generate_v4()" Comment="Генерация уникального идентификатора">
-    CREATE OR REPLACE FUNCTION public.uuid_generate_v4()
-    RETURNS uuid AS
-    $$
-    BEGIN
-    RETURN md5(random()::TEXT || clock_timestamp()::TEXT)::UUID;
-    END;
-    $$
-    LANGUAGE 'plpgsql'
-    VOLATILE
-    RETURNS NULL ON NULL INPUT
-    SECURITY INVOKER
-    COST 100;
-  </Function>
+    <Function Name="uuid_generate_v4()" Comment="Генерация уникального идентификатора">
+        CREATE OR REPLACE FUNCTION public.uuid_generate_v4()
+        RETURNS uuid AS
+        $$
+        BEGIN
+        RETURN md5(random()::TEXT || clock_timestamp()::TEXT)::UUID;
+        END;
+        $$
+        LANGUAGE 'plpgsql'
+        VOLATILE
+        RETURNS NULL ON NULL INPUT
+        SECURITY INVOKER
+        COST 100;
+    </Function>
 
-  <Function Name="tablesize(table_name character varying)" Comment="Получить раззмер таблицы по её имени">
-    CREATE OR REPLACE FUNCTION public.tablesize(table_name character varying)
-    RETURNS character varying AS
-    $body$
-    BEGIN
-    RETURN pg_size_pretty(pg_relation_size(table_name));
-    END;
-    $body$
-    LANGUAGE 'plpgsql'
-    VOLATILE
-    CALLED ON NULL INPUT
-    SECURITY INVOKER
-    COST 100;
-  </Function>
+    <Function Name="tablesize(table_name character varying)" Comment="Получить раззмер таблицы по её имени">
+        CREATE OR REPLACE FUNCTION public.tablesize(table_name character varying)
+        RETURNS character varying AS
+        $body$
+        BEGIN
+        RETURN pg_size_pretty(pg_relation_size(table_name));
+        END;
+        $body$
+        LANGUAGE 'plpgsql'
+        VOLATILE
+        CALLED ON NULL INPUT
+        SECURITY INVOKER
+        COST 100;
+    </Function>
 
-  <Function Name="tablesizefull(table_name character varying)" Comment="Получить полный размер таблицы по её имени">
-    CREATE OR REPLACE FUNCTION public.tablesizefull(table_name character varying)
-    RETURNS character varying AS
-    $body$
-    BEGIN
-    RETURN pg_size_pretty(pg_total_relation_size(table_name));
-    END;
-    $body$
-    LANGUAGE 'plpgsql'
-    VOLATILE
-    CALLED ON NULL INPUT
-    SECURITY INVOKER
-    COST 100;
-  </Function>
+    <Function Name="tablesizefull(table_name character varying)" Comment="Получить полный размер таблицы по её имени">
+        CREATE OR REPLACE FUNCTION public.tablesizefull(table_name character varying)
+        RETURNS character varying AS
+        $body$
+        BEGIN
+        RETURN pg_size_pretty(pg_total_relation_size(table_name));
+        END;
+        $body$
+        LANGUAGE 'plpgsql'
+        VOLATILE
+        CALLED ON NULL INPUT
+        SECURITY INVOKER
+        COST 100;
+    </Function>
 
-  <Function Name="get_task_status_id_by_uid(status_uid uuid)" Comment="Получить идентификатор статуса задачи по его уникальному идентификатору">
-    CREATE OR REPLACE FUNCTION public.get_task_status_id_by_uid(status_uid uuid)
-    RETURNS bigint AS
-    $body$
-    BEGIN
-    RETURN tsst_id FROM _taskstatus WHERE tsst_uid = status_uid;
-    END;
-    $body$
-    LANGUAGE 'plpgsql'
-    VOLATILE
-    CALLED ON NULL INPUT
-    SECURITY INVOKER
-    COST 100;
-  </Function>
+    <Function Name="get_task_status_id_by_uid(status_uid uuid)" Comment="Получить идентификатор статуса задачи по его уникальному идентификатору">
+        CREATE OR REPLACE FUNCTION public.get_task_status_id_by_uid(status_uid uuid)
+        RETURNS bigint AS
+        $body$
+        BEGIN
+        RETURN tsst_id FROM _taskstatus WHERE tsst_uid = status_uid;
+        END;
+        $body$
+        LANGUAGE 'plpgsql'
+        VOLATILE
+        CALLED ON NULL INPUT
+        SECURITY INVOKER
+        COST 100;
+    </Function>
 
-  <Function Name="get_user_setting_value(user_id bigint, setting_uid uuid)" Comment="Получить настройку пользователя">
-    CREATE OR REPLACE FUNCTION public.get_user_setting_value(user_id bigint, setting_uid uuid)
-    RETURNS varchar AS
-    $body$
-    BEGIN
-    RETURN usst_value
-    FROM _usersettings
-    WHERE usst_user = user_id
-    AND usst_setting = (SELECT stgs_id FROM _settings WHERE stgs_uid = setting_uid);
-    END;
-    $body$
-    LANGUAGE 'plpgsql'
-    VOLATILE
-    CALLED ON NULL INPUT
-    SECURITY INVOKER
-    COST 100;
-  </Function>
+    <Function Name="get_user_setting_value(user_id bigint, setting_uid uuid)" Comment="Получить настройку пользователя">
+        CREATE OR REPLACE FUNCTION public.get_user_setting_value(user_id bigint, setting_uid uuid)
+        RETURNS varchar AS
+        $body$
+        BEGIN
+        RETURN usst_value
+        FROM _usersettings
+        WHERE usst_user = user_id
+        AND usst_setting = (SELECT stgs_id FROM _settings WHERE stgs_uid = setting_uid);
+        END;
+        $body$
+        LANGUAGE 'plpgsql'
+        VOLATILE
+        CALLED ON NULL INPUT
+        SECURITY INVOKER
+        COST 100;
+    </Function>
 
-  <Function Name="check_access_user_subsystem(user_id bigint, user_is_system boolean, subsystem_uid uuid)" Comment="Проверить доступ пользователя к подсистеме">
-    CREATE OR REPLACE FUNCTION public.check_access_user_subsystem(user_id bigint, user_is_system boolean, subsystem_uid uuid)
-    RETURNS boolean AS
-    $body$
-    DECLARE
-    group_id BIGINT;
-    full_access BOOLEAN;
-    result BOOLEAN;
-    BEGIN
+    <Function Name="check_access_user_subsystem(user_id bigint, user_is_system boolean, subsystem_uid uuid)" Comment="Проверить доступ пользователя к подсистеме">
+        CREATE OR REPLACE FUNCTION public.check_access_user_subsystem(user_id bigint, user_is_system boolean, subsystem_uid uuid)
+        RETURNS boolean AS
+        $body$
+        DECLARE
+        group_id BIGINT;
+        full_access BOOLEAN;
+        result BOOLEAN;
+        BEGIN
 
-    --Если это системный пользователь - сразу возвращаем true
-    IF user_is_system THEN
-    RETURN true;
-    END IF;
+        --Если это системный пользователь - сразу возвращаем true
+        IF user_is_system THEN
+        RETURN true;
+        END IF;
 
-    --Получаем код группы пользователя
-    SELECT COALESCE(usrs_group, 0), COALESCE(usgp_fullaccess, NULL)
-    INTO group_id, full_access
-    FROM _users
-    LEFT JOIN _usergroup ON usgp_id = usrs_group
-    WHERE usrs_id = user_id;
+        --Получаем код группы пользователя
+        SELECT COALESCE(usrs_group, 0), COALESCE(usgp_fullaccess, NULL)
+        INTO group_id, full_access
+        FROM _users
+        LEFT JOIN _usergroup ON usgp_id = usrs_group
+        WHERE usrs_id = user_id;
 
-    --Если у группы этого пользователя полный доступ - сразу возвращаем true
-    IF full_access THEN
-    RETURN true;
-    END IF;
+        --Если у группы этого пользователя полный доступ - сразу возвращаем true
+        IF full_access THEN
+        RETURN true;
+        END IF;
 
-    --Если код группы нулевой - доступ не даём
-    IF group_id > 0 THEN
-    SELECT (COUNT(*) > 0)::BOOLEAN INTO result
-    FROM _groupaccesssubsystem
-    WHERE gass_group = group_id
-    AND gass_subsystem = subsystem_uid;
-    ELSE --Код группы не нулевой - проверяем доступ
-    RETURN false;
-    END IF;
-    RETURN result;
-    END;
-    $body$
-    LANGUAGE 'plpgsql'
-    VOLATILE
-    CALLED ON NULL INPUT
-    SECURITY INVOKER
-    COST 100;
-  </Function>
+        --Если код группы нулевой - доступ не даём
+        IF group_id > 0 THEN
+        SELECT (COUNT(*) > 0)::BOOLEAN INTO result
+        FROM _groupaccesssubsystem
+        WHERE gass_group = group_id
+        AND gass_subsystem = subsystem_uid;
+        ELSE --Код группы не нулевой - проверяем доступ
+        RETURN false;
+        END IF;
+        RETURN result;
+        END;
+        $body$
+        LANGUAGE 'plpgsql'
+        VOLATILE
+        CALLED ON NULL INPUT
+        SECURITY INVOKER
+        COST 100;
+    </Function>
 
-  <Function Name="check_access_user_table(user_id bigint, table_name character varying, access_uid_type uuid)" Comment="Проверить наличие права на таблицу у пользователя">
-    CREATE OR REPLACE FUNCTION public.check_access_user_table(user_id bigint, table_name character varying, access_uid_type uuid)
-    RETURNS boolean AS
-    $body$
-    DECLARE
-    user_is_system BOOLEAN;
-    user_group_id BIGINT;
-    user_group_fullaccess BOOLEAN;
-    result BOOLEAN;
+    <Function Name="check_access_user_table(user_id bigint, table_name character varying, access_uid_type uuid)" Comment="Проверить наличие права на таблицу у пользователя">
+        CREATE OR REPLACE FUNCTION public.check_access_user_table(user_id bigint, table_name character varying, access_uid_type uuid)
+        RETURNS boolean AS
+        $body$
+        DECLARE
+        user_is_system BOOLEAN;
+        user_group_id BIGINT;
+        user_group_fullaccess BOOLEAN;
+        result BOOLEAN;
 
-    BEGIN
-    --Запрашиваем информацию по пользователю
-    SELECT usrs_issystem, usgp_id, usgp_fullaccess
-    INTO user_is_system, user_group_id, user_group_fullaccess
-    FROM _users
-    LEFT JOIN _usergroup ON usgp_id = usrs_group
-    WHERE usrs_id = user_id;
+        BEGIN
+        --Запрашиваем информацию по пользователю
+        SELECT usrs_issystem, usgp_id, usgp_fullaccess
+        INTO user_is_system, user_group_id, user_group_fullaccess
+        FROM _users
+        LEFT JOIN _usergroup ON usgp_id = usrs_group
+        WHERE usrs_id = user_id;
 
-    --Если пользователь системный - сразу возращаем true
-    IF user_is_system THEN
-    RETURN true;
-    END IF;
+        --Если пользователь системный - сразу возращаем true
+        IF user_is_system THEN
+        RETURN true;
+        END IF;
 
-    --Если у группы этого пользователя полный доступ - сразу возвращаем true
-    IF user_group_fullaccess THEN
-    RETURN true;
-    END IF;
+        --Если у группы этого пользователя полный доступ - сразу возвращаем true
+        IF user_group_fullaccess THEN
+        RETURN true;
+        END IF;
 
-    --Проверяем наличие права
-    SELECT (COUNT(*) > 0)::BOOLEAN
-    INTO result
-    FROM _groupaccesstable
-    WHERE gatb_group = user_group_id
-    AND gatb_table = table_name
-    AND gatb_accesstype = (SELECT gatt_id FROM _groupaccesstabletype WHERE gatt_uid = access_uid_type);
+        --Проверяем наличие права
+        SELECT (COUNT(*) > 0)::BOOLEAN
+        INTO result
+        FROM _groupaccesstable
+        WHERE gatb_group = user_group_id
+        AND gatb_table = table_name
+        AND gatb_accesstype = (SELECT gatt_id FROM _groupaccesstabletype WHERE gatt_uid = access_uid_type);
 
-    RETURN result;
-    END;
-    $body$
-    LANGUAGE 'plpgsql'
-    VOLATILE
-    CALLED ON NULL INPUT
-    SECURITY INVOKER
-    COST 100;
-  </Function>
+        RETURN result;
+        END;
+        $body$
+        LANGUAGE 'plpgsql'
+        VOLATILE
+        CALLED ON NULL INPUT
+        SECURITY INVOKER
+        COST 100;
+    </Function>
 
-  <Function Name="get_rows_count()" Comment="Получить количество записей во всех таблицах">
-    CREATE OR REPLACE FUNCTION public.get_rows_count()
-    RETURNS bigint AS
-    $body$
-    DECLARE
-    table_list CURSOR FOR SELECT tablename FROM pg_tables WHERE schemaname = current_schema() ORDER BY tablename;
-    row_count_table BIGINT;
-    cnt BIGINT := 0;
-    BEGIN
-    FOR table_record IN table_list LOOP
-    EXECUTE 'SELECT COALESCE(COUNT(*)::BIGINT, 0) FROM ' || table_record.tablename INTO row_count_table;
-    cnt := cnt + row_count_table;
-    END LOOP;
-    RETURN cnt;
-    END;
-    $body$
-    LANGUAGE 'plpgsql'
-    VOLATILE
-    CALLED ON NULL INPUT
-    SECURITY INVOKER
-    COST 100;
-  </Function>
+    <Function Name="get_rows_count()" Comment="Получить количество записей во всех таблицах">
+        CREATE OR REPLACE FUNCTION public.get_rows_count()
+        RETURNS bigint AS
+        $body$
+        DECLARE
+        table_list CURSOR FOR SELECT tablename FROM pg_tables WHERE schemaname = current_schema() ORDER BY tablename;
+        row_count_table BIGINT;
+        cnt BIGINT := 0;
+        BEGIN
+        FOR table_record IN table_list LOOP
+        EXECUTE 'SELECT COALESCE(COUNT(*)::BIGINT, 0) FROM ' || table_record.tablename INTO row_count_table;
+        cnt := cnt + row_count_table;
+        END LOOP;
+        RETURN cnt;
+        END;
+        $body$
+        LANGUAGE 'plpgsql'
+        VOLATILE
+        CALLED ON NULL INPUT
+        SECURITY INVOKER
+        COST 100;
+    </Function>
 
-  <Function Name="protocol_user(user_id bigint, table_name character varying, table_local_name character varying, type_uid uuid, object_id bigint, information character varying)" Comment="Добавить запись в протокол">
-    CREATE OR REPLACE FUNCTION public.protocol_user(user_id bigint, table_name character varying, table_local_name character varying, type_uid uuid, object_id bigint, information character varying)
-    RETURNS void AS
-    $body$
-    BEGIN
-    INSERT INTO _protocol(prtc_user, prtc_tablename, prtc_tablelocalname, prtc_type, prtc_objectid, prtc_information)
-    VALUES(user_id, table_name, table_local_name, (SELECT prtp_id FROM _protocoltype WHERE prtp_uid = type_uid), object_id, information);
-    END;
-    $body$
-    LANGUAGE 'plpgsql'
-    VOLATILE
-    CALLED ON NULL INPUT
-    SECURITY INVOKER
-    COST 100;
-  </Function>
+    <Function Name="protocol_user(user_id bigint, table_name character varying, table_local_name character varying, type_uid uuid, object_id bigint, information character varying)" Comment="Добавить запись в протокол">
+        CREATE OR REPLACE FUNCTION public.protocol_user(user_id bigint, table_name character varying, table_local_name character varying, type_uid uuid, object_id bigint, information character varying)
+        RETURNS void AS
+        $body$
+        BEGIN
+        INSERT INTO _protocol(prtc_user, prtc_tablename, prtc_tablelocalname, prtc_type, prtc_objectid, prtc_information)
+        VALUES(user_id, table_name, table_local_name, (SELECT prtp_id FROM _protocoltype WHERE prtp_uid = type_uid), object_id, information);
+        END;
+        $body$
+        LANGUAGE 'plpgsql'
+        VOLATILE
+        CALLED ON NULL INPUT
+        SECURITY INVOKER
+        COST 100;
+    </Function>
 
 </XSF>

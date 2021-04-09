@@ -1,31 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <XSR Name="Settings.xsr">
 
-  <_SettingsGroup IsSystem="true" UID="{152517C5-B081-42E5-98E4-0BA102EF7FF8}" Name="General" LocalName="Основные" IconName="Settings.General" Order="1" System="true"/>
+    <_SettingsGroup IsSystem="true" UID="{152517C5-B081-42E5-98E4-0BA102EF7FF8}" Name="General" LocalName="Основные" IconName="Settings.General" Order="1" System="true"/>
 
-  <_SettingsGroup IsSystem="true" UID="{3AECBF8A-531F-4484-B507-1269A10B5F2F}" Name="View" LocalName="Вид" IconName="Settings.View" Order="2" System="true"/>
-  
-  <_SettingsGroup IsSystem="true" UID="{12B776E9-CE2E-44A8-855D-67EDB4E58CD2}" Name="Tables" LocalName="Таблицы" IconName="Settings.Tables" Order="3" System="true"/>
-  <_Settings IsSystem="true" UID="{77BA2566-D78D-467A-92CE-DFD987F21C03}" Group="{12B776E9-CE2E-44A8-855D-67EDB4E58CD2}" Order="1" Name="MinimizeHeightRows" Type="Bool" LocalName="Минимизировать высоту строк" Hint="Высота всех строк в таблицах будет минимальной." DefaultValue="false"/>
-  <_Settings IsSystem="true" UID="{E0B5EED0-947E-408E-9666-944CC31C5D1A}" Group="{12B776E9-CE2E-44A8-855D-67EDB4E58CD2}" Order="2" Name="DoubleClickEvent" Type="String" WidgetEditName="ISComboTableDoubleClickEvent" LocalName="Режим редактирования" DefaultValue="Tab"/>
-  <_Settings IsSystem="true" UID="{22C5FF3B-83DE-4C8D-BC2B-8A456C8C57D4}" Group="{12B776E9-CE2E-44A8-855D-67EDB4E58CD2}" Order="3" Name="ShowHorizontalHeader" Type="Bool" LocalName="Показывать заголовоки столбцов" DefaultValue="true"/>
-  <_Settings IsSystem="true" UID="{6D14F262-B98E-4FBD-B9CC-A1A8E7B52D9F}" Group="{12B776E9-CE2E-44A8-855D-67EDB4E58CD2}" Order="4" Name="ShowVerticalHeader" Type="Bool" LocalName="Показывать заголовоки строк" DefaultValue="true"/>
-  <_Settings IsSystem="true" UID="{EFD021B1-5267-4DFA-8D11-A4FF4A419536}" Group="{12B776E9-CE2E-44A8-855D-67EDB4E58CD2}" Order="5" Name="ShowCountRecord" Type="Bool" LocalName="Показывать количество записей" Hint="Под таблицей будет надпись, отображающая количество строк в таблице." DefaultValue="true"/>
-  <_Settings IsSystem="true" UID="{2876F177-B30F-41A0-8643-F2BCA583726F}" Group="{12B776E9-CE2E-44A8-855D-67EDB4E58CD2}" Order="6" Name="VisibleFieldID" Type="Bool" LocalName="Показывать поле &quot;Код&quot;" DefaultValue="true"/>
-  
-  <_SettingsGroup IsSystem="true" UID="{C42701D0-3404-42C6-82D9-41EC50F2E556}" Name="Tabs" LocalName="Вкладки" IconName="Settings.Tabs" Order="4" System="true"/>
-  <_Settings IsSystem="true" UID="{8C96BF79-A7FB-4562-ABAB-A9C520B4B68D}" Group="{C42701D0-3404-42C6-82D9-41EC50F2E556}" Order="1" Name="SelectionBehavior" Type="String" WidgetEditName="ISComboTabBarSelectionBehavior" LocalName="Поведение при закрытии вкладки" DefaultValue="SelectLeftTab"/>
+    <_SettingsGroup IsSystem="true" UID="{3AECBF8A-531F-4484-B507-1269A10B5F2F}" Name="View" LocalName="Вид" IconName="Settings.View" Order="2" System="true"/>
 
-  <_SettingsGroup IsSystem="true" UID="{8460DB7A-90FB-459E-8343-7A67529414C0}" Name="Sound" LocalName="Звуки" IconName="Settings.Sound" Hint="Использование звуков может повлиять на производительность программы." Order="5" System="true"/>
-  <_Settings IsSystem="true" UID="{203F8364-B041-4C20-A7EF-E1FBA8CDB68B}" Group="{8460DB7A-90FB-459E-8343-7A67529414C0}" Order="1" Name="Volume" Type="Volume" LocalName="Громкость" DefaultValue="50"/>
-  <_Settings IsSystem="true" UID="{70680EED-160D-45E9-8F79-D6CBDE8AA875}" Group="{8460DB7A-90FB-459E-8343-7A67529414C0}" Order="2" Name="CalendarEvent" Type="Bool" LocalName="Напоминание календаря" DefaultValue="true"/>
+    <_SettingsGroup IsSystem="true" UID="{12B776E9-CE2E-44A8-855D-67EDB4E58CD2}" Name="Tables" LocalName="Таблицы" IconName="Settings.Tables" Order="3" System="true"/>
+    <_Settings IsSystem="true" UID="{77BA2566-D78D-467A-92CE-DFD987F21C03}" Group="{12B776E9-CE2E-44A8-855D-67EDB4E58CD2}" Order="1" Name="MinimizeHeightRows" Type="Bool" LocalName="Минимизировать высоту строк" Hint="Высота всех строк в таблицах будет минимальной." DefaultValue="false"/>
+    <_Settings IsSystem="true" UID="{E0B5EED0-947E-408E-9666-944CC31C5D1A}" Group="{12B776E9-CE2E-44A8-855D-67EDB4E58CD2}" Order="2" Name="DoubleClickEvent" Type="String" WidgetEditName="ISComboTableDoubleClickEvent" LocalName="Режим редактирования" DefaultValue="Tab"/>
+    <_Settings IsSystem="true" UID="{22C5FF3B-83DE-4C8D-BC2B-8A456C8C57D4}" Group="{12B776E9-CE2E-44A8-855D-67EDB4E58CD2}" Order="3" Name="ShowHorizontalHeader" Type="Bool" LocalName="Показывать заголовоки столбцов" DefaultValue="true"/>
+    <_Settings IsSystem="true" UID="{6D14F262-B98E-4FBD-B9CC-A1A8E7B52D9F}" Group="{12B776E9-CE2E-44A8-855D-67EDB4E58CD2}" Order="4" Name="ShowVerticalHeader" Type="Bool" LocalName="Показывать заголовоки строк" DefaultValue="true"/>
+    <_Settings IsSystem="true" UID="{EFD021B1-5267-4DFA-8D11-A4FF4A419536}" Group="{12B776E9-CE2E-44A8-855D-67EDB4E58CD2}" Order="5" Name="ShowCountRecord" Type="Bool" LocalName="Показывать количество записей" Hint="Под таблицей будет надпись, отображающая количество строк в таблице." DefaultValue="true"/>
+    <_Settings IsSystem="true" UID="{2876F177-B30F-41A0-8643-F2BCA583726F}" Group="{12B776E9-CE2E-44A8-855D-67EDB4E58CD2}" Order="6" Name="VisibleFieldID" Type="Bool" LocalName="Показывать поле &quot;Код&quot;" DefaultValue="true"/>
 
-  <_SettingsGroup IsSystem="true" UID="{65F8B333-5C21-48A2-8F30-D947C36EF51B}" Name="Calendar" LocalName="Календарь" IconName="Settings.Calendar" Order="6" System="true"/>
-  <_Settings IsSystem="true" UID="{B03FBAC5-F793-4565-92A3-821C87AE3B56}" Group="{65F8B333-5C21-48A2-8F30-D947C36EF51B}" Order="1" Name="NoteViewType" Type="String" WidgetEditName="ISComboCalendarNoteType" LocalName="Отображение примечаний" DefaultValue="ToolTip"/>
-  
-  <_SettingsGroup IsSystem="true" UID="{4443097F-5390-4CC1-8E8E-D591E81B3D2F}" Name="TaskTracker" LocalName="Трекер задач" IconName="Settings.TaskTracker" Order="7" System="true"/>
-  <_Settings IsSystem="true" UID="{094CB33E-13B9-4E5C-87DC-79AE69CBE533}" Group="{4443097F-5390-4CC1-8E8E-D591E81B3D2F}" Order="1" Name="ShowTaskAfterCreate" Type="Bool" LocalName="Открыть задачу после создания" DefaultValue="false"/>
-  
-  <_SettingsGroup IsSystem="true" UID="{0BAEF651-D749-4566-B682-F11D03C6D849}" Name="Other" LocalName="Прочее" IconName="Settings.Other" Order="8" System="true"/>
+    <_SettingsGroup IsSystem="true" UID="{C42701D0-3404-42C6-82D9-41EC50F2E556}" Name="Tabs" LocalName="Вкладки" IconName="Settings.Tabs" Order="4" System="true"/>
+    <_Settings IsSystem="true" UID="{8C96BF79-A7FB-4562-ABAB-A9C520B4B68D}" Group="{C42701D0-3404-42C6-82D9-41EC50F2E556}" Order="1" Name="SelectionBehavior" Type="String" WidgetEditName="ISComboTabBarSelectionBehavior" LocalName="Поведение при закрытии вкладки" DefaultValue="SelectLeftTab"/>
+
+    <_SettingsGroup IsSystem="true" UID="{8460DB7A-90FB-459E-8343-7A67529414C0}" Name="Sound" LocalName="Звуки" IconName="Settings.Sound" Hint="Использование звуков может повлиять на производительность программы." Order="5" System="true"/>
+    <_Settings IsSystem="true" UID="{203F8364-B041-4C20-A7EF-E1FBA8CDB68B}" Group="{8460DB7A-90FB-459E-8343-7A67529414C0}" Order="1" Name="Volume" Type="Volume" LocalName="Громкость" DefaultValue="50"/>
+    <_Settings IsSystem="true" UID="{70680EED-160D-45E9-8F79-D6CBDE8AA875}" Group="{8460DB7A-90FB-459E-8343-7A67529414C0}" Order="2" Name="CalendarEvent" Type="Bool" LocalName="Напоминание календаря" DefaultValue="true"/>
+
+    <_SettingsGroup IsSystem="true" UID="{65F8B333-5C21-48A2-8F30-D947C36EF51B}" Name="Calendar" LocalName="Календарь" IconName="Settings.Calendar" Order="6" System="true"/>
+    <_Settings IsSystem="true" UID="{B03FBAC5-F793-4565-92A3-821C87AE3B56}" Group="{65F8B333-5C21-48A2-8F30-D947C36EF51B}" Order="1" Name="NoteViewType" Type="String" WidgetEditName="ISComboCalendarNoteType" LocalName="Отображение примечаний" DefaultValue="ToolTip"/>
+
+    <_SettingsGroup IsSystem="true" UID="{4443097F-5390-4CC1-8E8E-D591E81B3D2F}" Name="TaskTracker" LocalName="Трекер задач" IconName="Settings.TaskTracker" Order="7" System="true"/>
+    <_Settings IsSystem="true" UID="{094CB33E-13B9-4E5C-87DC-79AE69CBE533}" Group="{4443097F-5390-4CC1-8E8E-D591E81B3D2F}" Order="1" Name="ShowTaskAfterCreate" Type="Bool" LocalName="Открыть задачу после создания" DefaultValue="false"/>
+
+    <_SettingsGroup IsSystem="true" UID="{0BAEF651-D749-4566-B682-F11D03C6D849}" Name="Other" LocalName="Прочее" IconName="Settings.Other" Order="8" System="true"/>
 
 </XSR>

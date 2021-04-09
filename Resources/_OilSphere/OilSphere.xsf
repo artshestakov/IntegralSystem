@@ -1,166 +1,166 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <XSF Name="Functions.xsf">
 
-  <Function Name="get_counterparty_entrollment(counterparty_id bigint)" Comment="Получить сумму начислений контрагента">
-    CREATE OR REPLACE FUNCTION public.get_counterparty_entrollment(counterparty_id bigint)
-    RETURNS numeric AS
-    $body$
-    BEGIN
-    RETURN COALESCE(sum(cpen_sum), 0)
-    FROM counterpartyenrollment 
-    WHERE cpen_counterparty = counterparty_id;
-    END;
-    $body$
-    LANGUAGE 'plpgsql'
-    VOLATILE
-    CALLED ON NULL INPUT
-    SECURITY INVOKER
-    COST 100;
-  </Function>
-  
-  <Function Name="get_counterparty_unload(counterparty_id bigint)" Comment="Получить сумму выгрузок контрагента">
-    CREATE OR REPLACE FUNCTION public.get_counterparty_unload(counterparty_id bigint)
-    RETURNS numeric AS
-    $body$
-    BEGIN
-    RETURN COALESCE(sum(iunl_cost), 0)
-    FROM implementationunload
-    WHERE iunl_counterparty = counterparty_id;
-    END;
-    $body$
-    LANGUAGE 'plpgsql'
-    VOLATILE
-    CALLED ON NULL INPUT
-    SECURITY INVOKER
-    COST 100;
-  </Function>
+    <Function Name="get_counterparty_entrollment(counterparty_id bigint)" Comment="Получить сумму начислений контрагента">
+        CREATE OR REPLACE FUNCTION public.get_counterparty_entrollment(counterparty_id bigint)
+        RETURNS numeric AS
+        $body$
+        BEGIN
+        RETURN COALESCE(sum(cpen_sum), 0)
+        FROM counterpartyenrollment
+        WHERE cpen_counterparty = counterparty_id;
+        END;
+        $body$
+        LANGUAGE 'plpgsql'
+        VOLATILE
+        CALLED ON NULL INPUT
+        SECURITY INVOKER
+        COST 100;
+    </Function>
 
-  <Function Name="get_counterparty_load(counterparty_id bigint)" Comment="Получить сумму загрузок контрагента">
-    CREATE OR REPLACE FUNCTION public.get_counterparty_load(counterparty_id bigint)
-    RETURNS numeric AS
-    $body$
-    BEGIN
-    RETURN COALESCE(sum(ilod_cost), 0)
-    FROM implementationload
-    WHERE ilod_counterparty = counterparty_id;
-    END;
-    $body$
-    LANGUAGE 'plpgsql'
-    VOLATILE
-    CALLED ON NULL INPUT
-    SECURITY INVOKER
-    COST 100;
-  </Function>
+    <Function Name="get_counterparty_unload(counterparty_id bigint)" Comment="Получить сумму выгрузок контрагента">
+        CREATE OR REPLACE FUNCTION public.get_counterparty_unload(counterparty_id bigint)
+        RETURNS numeric AS
+        $body$
+        BEGIN
+        RETURN COALESCE(sum(iunl_cost), 0)
+        FROM implementationunload
+        WHERE iunl_counterparty = counterparty_id;
+        END;
+        $body$
+        LANGUAGE 'plpgsql'
+        VOLATILE
+        CALLED ON NULL INPUT
+        SECURITY INVOKER
+        COST 100;
+    </Function>
 
-  <Function Name="get_counterparty_move_wagon(counterparty_id bigint)" Comment="Получить сумму закупок вагонов у контрагента">
-    CREATE OR REPLACE FUNCTION public.get_counterparty_move_wagon(counterparty_id bigint)
-    RETURNS numeric AS
-    $body$
-    BEGIN
-    RETURN COALESCE(sum(mwag_price * (get_sum_weight_move_wagon_detail(mwag_id) / 1000)), 0)
-    FROM movewagon
-    WHERE mwag_provider = counterparty_id;
-    END;
-    $body$
-    LANGUAGE 'plpgsql'
-    VOLATILE
-    CALLED ON NULL INPUT
-    SECURITY INVOKER
-    COST 100;
-  </Function>
+    <Function Name="get_counterparty_load(counterparty_id bigint)" Comment="Получить сумму загрузок контрагента">
+        CREATE OR REPLACE FUNCTION public.get_counterparty_load(counterparty_id bigint)
+        RETURNS numeric AS
+        $body$
+        BEGIN
+        RETURN COALESCE(sum(ilod_cost), 0)
+        FROM implementationload
+        WHERE ilod_counterparty = counterparty_id;
+        END;
+        $body$
+        LANGUAGE 'plpgsql'
+        VOLATILE
+        CALLED ON NULL INPUT
+        SECURITY INVOKER
+        COST 100;
+    </Function>
 
-  <Function Name="get_stock_balance(stock_id bigint)" Comment="Получить баланс склада в килограммах">
-    CREATE OR REPLACE FUNCTION public.get_stock_balance(stock_id bigint)
-    RETURNS numeric AS
-    $body$
-    BEGIN
-    RETURN
-    (
-    SELECT COALESCE(sum(-((get_sum_weight_move_wagon_detail(mwag_id) * mwag_technicallosses / 100) - get_sum_weight_move_wagon_detail(mwag_id))), 0)
-    FROM movewagon
-    LEFT JOIN movewagondetail ON mwdt_movewagon = mwag_id
-    WHERE mwag_datearrival IS NOT NULL
-    AND mwag_stock = stock_id
-    )
-    +
-    (
-    SELECT COALESCE(sum(iunl_weightnet), 0)
-    FROM implementationunload
-    WHERE iunl_stock = stock_id
-    )
-    -
-    (
-    SELECT COALESCE(sum(ilod_weightnet), 0)
-    FROM implementation
-    LEFT JOIN implementationload ON ilod_implementation = impl_id AND ilod_stock = stock_id
-    );
-    END;
-    $body$
-    LANGUAGE 'plpgsql'
-    VOLATILE
-    CALLED ON NULL INPUT
-    SECURITY INVOKER
-    COST 100;
-  </Function>
+    <Function Name="get_counterparty_move_wagon(counterparty_id bigint)" Comment="Получить сумму закупок вагонов у контрагента">
+        CREATE OR REPLACE FUNCTION public.get_counterparty_move_wagon(counterparty_id bigint)
+        RETURNS numeric AS
+        $body$
+        BEGIN
+        RETURN COALESCE(sum(mwag_price * (get_sum_weight_move_wagon_detail(mwag_id) / 1000)), 0)
+        FROM movewagon
+        WHERE mwag_provider = counterparty_id;
+        END;
+        $body$
+        LANGUAGE 'plpgsql'
+        VOLATILE
+        CALLED ON NULL INPUT
+        SECURITY INVOKER
+        COST 100;
+    </Function>
 
-  <Function Name="get_driver_cost_remainder(driver_cost_id bigint, driver_cost_coming numeric, driver_cost_previous_remainder numeric)" Comment="Получить остаток денежных средств водителя">
-    CREATE OR REPLACE FUNCTION public.get_driver_cost_remainder(driver_cost_id bigint, driver_cost_coming numeric, driver_cost_previous_remainder numeric)
-    RETURNS numeric AS
-    $body$
-    BEGIN
-    RETURN COALESCE(driver_cost_coming, 0) + COALESCE(driver_cost_previous_remainder, 0) - COALESCE(sum(dcdt_price), 0)
-    FROM drivercostdetail
-    WHERE dcdt_drivercost = driver_cost_id;
-    END;
-    $body$
-    LANGUAGE 'plpgsql'
-    VOLATILE
-    CALLED ON NULL INPUT
-    SECURITY INVOKER
-    COST 100;
-  </Function>
+    <Function Name="get_stock_balance(stock_id bigint)" Comment="Получить баланс склада в килограммах">
+        CREATE OR REPLACE FUNCTION public.get_stock_balance(stock_id bigint)
+        RETURNS numeric AS
+        $body$
+        BEGIN
+        RETURN
+        (
+        SELECT COALESCE(sum(-((get_sum_weight_move_wagon_detail(mwag_id) * mwag_technicallosses / 100) - get_sum_weight_move_wagon_detail(mwag_id))), 0)
+        FROM movewagon
+        LEFT JOIN movewagondetail ON mwdt_movewagon = mwag_id
+        WHERE mwag_datearrival IS NOT NULL
+        AND mwag_stock = stock_id
+        )
+        +
+        (
+        SELECT COALESCE(sum(iunl_weightnet), 0)
+        FROM implementationunload
+        WHERE iunl_stock = stock_id
+        )
+        -
+        (
+        SELECT COALESCE(sum(ilod_weightnet), 0)
+        FROM implementation
+        LEFT JOIN implementationload ON ilod_implementation = impl_id AND ilod_stock = stock_id
+        );
+        END;
+        $body$
+        LANGUAGE 'plpgsql'
+        VOLATILE
+        CALLED ON NULL INPUT
+        SECURITY INVOKER
+        COST 100;
+    </Function>
 
-  <Function Name="get_sum_weight_move_wagon_detail(movewagon_id bigint)" Comment="Получить массу всех вагонов">
-    CREATE OR REPLACE FUNCTION public.get_sum_weight_move_wagon_detail(movewagon_id bigint)
-    RETURNS numeric AS
-    $body$
-    BEGIN
-    RETURN COALESCE(sum(mwdt_kilogram), 0)
-    FROM movewagondetail
-    WHERE mwdt_movewagon = movewagon_id;
-    END;
-    $body$
-    LANGUAGE 'plpgsql'
-    VOLATILE
-    CALLED ON NULL INPUT
-    SECURITY INVOKER
-    COST 100;
-  </Function>
+    <Function Name="get_driver_cost_remainder(driver_cost_id bigint, driver_cost_coming numeric, driver_cost_previous_remainder numeric)" Comment="Получить остаток денежных средств водителя">
+        CREATE OR REPLACE FUNCTION public.get_driver_cost_remainder(driver_cost_id bigint, driver_cost_coming numeric, driver_cost_previous_remainder numeric)
+        RETURNS numeric AS
+        $body$
+        BEGIN
+        RETURN COALESCE(driver_cost_coming, 0) + COALESCE(driver_cost_previous_remainder, 0) - COALESCE(sum(dcdt_price), 0)
+        FROM drivercostdetail
+        WHERE dcdt_drivercost = driver_cost_id;
+        END;
+        $body$
+        LANGUAGE 'plpgsql'
+        VOLATILE
+        CALLED ON NULL INPUT
+        SECURITY INVOKER
+        COST 100;
+    </Function>
 
-  <Function Name="get_user_balance(user_id bigint)" Comment="Получить баланс пользователя">
-    CREATE OR REPLACE FUNCTION public.get_user_balance(user_id bigint)
-    RETURNS numeric AS
-    $body$
-    BEGIN
-    RETURN
-    (
-    SELECT COALESCE(sum(dsmn_sum), 0)
-    FROM distribution
-    WHERE dsmn_userto = user_id
-    )
-    -
-    (
-    SELECT COALESCE(sum(cpmp_sum), 0)
-    FROM consumption
-    WHERE cpmp_user = user_id
-    );
-    END;
-    $body$
-    LANGUAGE 'plpgsql'
-    VOLATILE
-    CALLED ON NULL INPUT
-    SECURITY INVOKER
-    COST 100;
-  </Function>
+    <Function Name="get_sum_weight_move_wagon_detail(movewagon_id bigint)" Comment="Получить массу всех вагонов">
+        CREATE OR REPLACE FUNCTION public.get_sum_weight_move_wagon_detail(movewagon_id bigint)
+        RETURNS numeric AS
+        $body$
+        BEGIN
+        RETURN COALESCE(sum(mwdt_kilogram), 0)
+        FROM movewagondetail
+        WHERE mwdt_movewagon = movewagon_id;
+        END;
+        $body$
+        LANGUAGE 'plpgsql'
+        VOLATILE
+        CALLED ON NULL INPUT
+        SECURITY INVOKER
+        COST 100;
+    </Function>
+
+    <Function Name="get_user_balance(user_id bigint)" Comment="Получить баланс пользователя">
+        CREATE OR REPLACE FUNCTION public.get_user_balance(user_id bigint)
+        RETURNS numeric AS
+        $body$
+        BEGIN
+        RETURN
+        (
+        SELECT COALESCE(sum(dsmn_sum), 0)
+        FROM distribution
+        WHERE dsmn_userto = user_id
+        )
+        -
+        (
+        SELECT COALESCE(sum(cpmp_sum), 0)
+        FROM consumption
+        WHERE cpmp_user = user_id
+        );
+        END;
+        $body$
+        LANGUAGE 'plpgsql'
+        VOLATILE
+        CALLED ON NULL INPUT
+        SECURITY INVOKER
+        COST 100;
+    </Function>
 
 </XSF>

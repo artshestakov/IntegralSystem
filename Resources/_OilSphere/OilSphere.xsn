@@ -1,526 +1,526 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <XSN Name="OilSphere.xsn">
-  
-  <Table Name="Counterparty" UID="{833FC9C9-F3C4-49B1-A181-33DA44F28922}" Alias="cnpr" LocalName="Контрагент" LocalListName="Контрагенты" TitleName="Name" ObjectForm="ISOilSphere::CounterpartyObjectForm">
-    <Fields>
-      <Field UID="{BB62B804-B840-4523-AF34-C89E89F76000}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
-      <Field UID="{8DD37BEA-8600-4300-8C34-38659E010F3D}" Name="Debt" Type="Money" ReadOnly="true" LabelName="Долг" LocalListName="Долг" QueryText="get_counterparty_unload(cnpr_id) - (get_counterparty_load(cnpr_id) + get_counterparty_entrollment(cnpr_id) + get_counterparty_move_wagon(cnpr_id))"/>
-      <Field UID="{3B7EB4F8-CFEB-40C8-99E9-22150ED555B9}" Name="Address" Type="String" LabelName="Адрес" LocalListName="Адрес"/>
-      <Field UID="{7D005CC2-2604-4CD0-AA08-8579EA92C659}" Name="Type" Type="BigInt" LabelName="Тип" LocalListName="Тип"/>
-      <Field UID="{F561ECC8-D12A-44B9-A7BA-8FAA06AB6673}" Name="Status" Type="BigInt" LabelName="Статус" LocalListName="Статус"/>
-      <Field UID="{4514E2E7-18C5-4B1B-8052-AEFCBF4626E8}" Name="Director" Type="String" LabelName="Директор" LocalListName="Директор"/>
-      <Field UID="{3CB172A8-590C-462B-AB70-F6A4BABF3A24}" Name="Inn" Type="Inn" LabelName="ИНН" LocalListName="ИНН" LayoutName="INN"/>
-      <Field UID="{4459AAC7-F885-4120-A1D8-13C7E84179B0}" Name="Kpp" Type="Kpp" LabelName="КПП" LocalListName="КПП" LayoutName="INN"/>
-      <Field UID="{2BF964F2-20F0-44C6-91D6-CB436DBFFE67}" Name="Ogrn" Type="Ogrn" LabelName="ОГРН" LocalListName="ОГРН" LayoutName="INN"/>
-      <Field UID="{6A63EE11-4F3E-4C72-BBE6-454AF87E2BD6}" Name="Phone" Type="Phone" LabelName="Телефон" LocalListName="Телефон" LayoutName="Phone"/>
-      <Field UID="{AB52855E-A2E9-4DA8-BFBE-1885CCCA13EF}" Name="EMail" Type="EMail" LabelName="Электронная почта" LocalListName="Электронная почта" LayoutName="Phone"/>
-    </Fields>
-    <Indexes>
-      <Index Field="Name" Unique="true"/>
-    </Indexes>
-    <Foreigns>
-      <Foreign Field="Type" ForeignClass="CounterpartyType" ForeignField="ID" ForeignViewNameField="Name"/>
-      <Foreign Field="Status" ForeignClass="CounterpartyStatus" ForeignField="ID" ForeignViewNameField="Name"/>
-    </Foreigns>
-    <Escorts>
-      <Escort LocalName="Зачисления" TableName="CounterpartyEnrollment" FilterField="Counterparty"/>
-    </Escorts>
-  </Table>
 
-  <Table Name="CounterpartyEnrollment" UID="{BB867613-17D5-4FC0-B29F-6C5167257630}" Alias="cpen" LocalName="Зачисление" LocalListName="Зачисления" TitleName="Counterparty">
-    <Fields>
-      <Field UID="{1EA7C67D-02A9-421A-B742-FC25DFE2808F}" Name="Counterparty" Type="BigInt" LabelName="Контрагент" LocalListName="Контрагент" NotNull="true" HideFromList="true" HideFromObject="true"/>
-      <Field UID="{EBEF5EA5-0AEC-4A47-A3B4-C094D6CE4247}" Name="Date" Type="Date" LabelName="Дата операции" LocalListName="Дата операции" NotNull="true"/>
-      <Field UID="{E72F8D34-7317-484D-BD2F-01AF4889D8FB}" Name="Sum" Type="Money" LabelName="Сумма зачисления" LocalListName="Сумма зачисления" NotNull="true"/>
-      <Field UID="{D78A509E-9B94-4C7A-8881-6B0EB99560F2}" Name="PaymentType" Type="BigInt" LabelName="Тип оплаты" LocalListName="Тип оплаты"/>
-      <Field UID="{787F2C5F-1840-4108-A5C5-EAB4AAEBE89E}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
-    </Fields>
-    <Indexes>
-      <Index Field="Counterparty"/>
-    </Indexes>
-    <Foreigns>
-      <Foreign Field="Counterparty" ForeignClass="Counterparty" ForeignField="ID" ForeignViewNameField="Name"/>
-      <Foreign Field="PaymentType" ForeignClass="PaymentType" ForeignField="ID" ForeignViewNameField="Name"/>
-    </Foreigns>
-  </Table>
+    <Table Name="Counterparty" UID="{833FC9C9-F3C4-49B1-A181-33DA44F28922}" Alias="cnpr" LocalName="Контрагент" LocalListName="Контрагенты" TitleName="Name" ObjectForm="ISOilSphere::CounterpartyObjectForm">
+        <Fields>
+            <Field UID="{BB62B804-B840-4523-AF34-C89E89F76000}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
+            <Field UID="{8DD37BEA-8600-4300-8C34-38659E010F3D}" Name="Debt" Type="Money" ReadOnly="true" LabelName="Долг" LocalListName="Долг" QueryText="get_counterparty_unload(cnpr_id) - (get_counterparty_load(cnpr_id) + get_counterparty_entrollment(cnpr_id) + get_counterparty_move_wagon(cnpr_id))"/>
+            <Field UID="{3B7EB4F8-CFEB-40C8-99E9-22150ED555B9}" Name="Address" Type="String" LabelName="Адрес" LocalListName="Адрес"/>
+            <Field UID="{7D005CC2-2604-4CD0-AA08-8579EA92C659}" Name="Type" Type="BigInt" LabelName="Тип" LocalListName="Тип"/>
+            <Field UID="{F561ECC8-D12A-44B9-A7BA-8FAA06AB6673}" Name="Status" Type="BigInt" LabelName="Статус" LocalListName="Статус"/>
+            <Field UID="{4514E2E7-18C5-4B1B-8052-AEFCBF4626E8}" Name="Director" Type="String" LabelName="Директор" LocalListName="Директор"/>
+            <Field UID="{3CB172A8-590C-462B-AB70-F6A4BABF3A24}" Name="Inn" Type="Inn" LabelName="ИНН" LocalListName="ИНН" LayoutName="INN"/>
+            <Field UID="{4459AAC7-F885-4120-A1D8-13C7E84179B0}" Name="Kpp" Type="Kpp" LabelName="КПП" LocalListName="КПП" LayoutName="INN"/>
+            <Field UID="{2BF964F2-20F0-44C6-91D6-CB436DBFFE67}" Name="Ogrn" Type="Ogrn" LabelName="ОГРН" LocalListName="ОГРН" LayoutName="INN"/>
+            <Field UID="{6A63EE11-4F3E-4C72-BBE6-454AF87E2BD6}" Name="Phone" Type="Phone" LabelName="Телефон" LocalListName="Телефон" LayoutName="Phone"/>
+            <Field UID="{AB52855E-A2E9-4DA8-BFBE-1885CCCA13EF}" Name="EMail" Type="EMail" LabelName="Электронная почта" LocalListName="Электронная почта" LayoutName="Phone"/>
+        </Fields>
+        <Indexes>
+            <Index Field="Name" Unique="true"/>
+        </Indexes>
+        <Foreigns>
+            <Foreign Field="Type" ForeignClass="CounterpartyType" ForeignField="ID" ForeignViewNameField="Name"/>
+            <Foreign Field="Status" ForeignClass="CounterpartyStatus" ForeignField="ID" ForeignViewNameField="Name"/>
+        </Foreigns>
+        <Escorts>
+            <Escort LocalName="Зачисления" TableName="CounterpartyEnrollment" FilterField="Counterparty"/>
+        </Escorts>
+    </Table>
 
-  <Table Name="Implementation" UID="{DC253A0F-C05D-4F33-9786-F9FB507FCD08}" Alias="impl" LocalName="Реализация" LocalListName="Реализация" TitleName="Date">
-    <Fields>
-      <Field UID="{0315D371-7932-4DE2-9913-52DA23DBE33E}" Name="Date" Type="Date" LabelName="Дата" LocalListName="Дата" NotNull="true"/>
-      <Field UID="{17DD0C95-280D-4C2B-88AC-2376E083A2DE}" Name="ProductType" Type="BigInt" LabelName="Тип продукта" LocalListName="Тип продукта" NotNull="true"/>
-      <Field UID="{1384A6C2-FDB7-4586-B7ED-08B2FC68CC76}" Name="Driver" Type="BigInt" LabelName="Водитель" LocalListName="Водитель" LayoutName="Driver"/>
-      <Field UID="{63634143-4B5D-453E-8318-A283BACD15B4}" Name="Car" Type="BigInt" LabelName="Автомобиль" LocalListName="Автомобиль" LayoutName="Driver"/>
-      <Field UID="{AB8F960B-45B3-4822-9F67-AEF74B65A5E3}" Name="LoadCount" Type="Int" ReadOnly="true" LabelName="Количество загрузок" LocalListName="Количество загрузок" SeparatorName="Общее" LayoutName="Load" QueryText="SELECT COUNT(*) FROM implementationload WHERE ilod_implementation = impl_id"/>
-      <Field UID="{7047216E-288F-4355-98EE-982603061C5D}" Name="LoadWeightNet" Type="Double" ReadOnly="true" LabelName="Вес загрузки (нетто)" LocalListName="Вес загрузки (нетто)" LayoutName="Load" QueryText="SELECT sum(ilod_weightnet) FROM implementationload WHERE ilod_implementation = impl_id"/>
-      <Field UID="{A86A8680-D363-4CCC-90E6-E11FED2E50CF}" Name="LoadCost" Type="Money" ReadOnly="true" LabelName="Стоимость загрузки" LocalListName="Стоимость загрузки" LayoutName="Load" QueryText="SELECT sum(ilod_cost) FROM implementationload WHERE ilod_implementation = impl_id"/>
-      <Field UID="{9A469E5C-DED8-4701-930A-37A647B7A2D2}" Name="UnloadCount" Type="Int" ReadOnly="true" LabelName="Количество выгрузок" LocalListName="Количество выгрузок" LayoutName="Unload" QueryText="SELECT COUNT(*) FROM implementationunload WHERE iunl_implementation = impl_id"/>
-      <Field UID="{D7A74FDD-106C-4FFC-A6AB-AC13D461CF99}" Name="UnloadWeightNet" Type="Double" ReadOnly="true" LabelName="Вес выгрузки (нетто)" LocalListName="Вес выгрузки (нетто)" LayoutName="Unload" QueryText="SELECT sum(iunl_weightnet) FROM implementationunload WHERE iunl_implementation = impl_id"/>
-      <Field UID="{1EA933CA-06AE-4F0D-B2B3-B6CCAD7A9B46}" Name="UnloadCost" Type="Money" ReadOnly="true" LabelName="Стоимость выгрузки" LocalListName="Стоимость выгрузки" LayoutName="Unload" QueryText="SELECT sum(iunl_cost) FROM implementationunload WHERE iunl_implementation = impl_id"/>
-      <Field UID="{4864E582-6A0F-4BCC-A3CB-024B3CD70310}" Name="WeightDifference" Type="Double" ReadOnly="true" LabelName="Разница весов" LocalListName="Разница весов" QueryText="WITH r AS (SELECT (SELECT COALESCE(sum(ilod_weightnet), 0) AS load FROM implementationload WHERE ilod_implementation = impl_id), (SELECT COALESCE(sum(iunl_weightnet), 0) AS unload FROM implementationunload WHERE iunl_implementation = impl_id)) SELECT unload - load FROM r"/>
-      <Field UID="{F58FD218-D3A5-404F-97D0-6B987315A2A4}" Name="Checked" Type="Bool" DefaultValue="false" LabelName="Загрузка проверена" LocalListName="Загрузка проверена" SeparatorName="Дополнительно"/>
-      <Field UID="{19711CDA-B8F4-4EC7-994A-D83D7BFE8B31}" Name="Implementation" Type="Bool" DefaultValue="false" LabelName="Реализация" LocalListName="Реализация"/>
-    </Fields>
-    <Foreigns>
-      <Foreign Field="ProductType" ForeignClass="ProductType" ForeignField="ID" ForeignViewNameField="Name"/>
-      <Foreign Field="Driver" ForeignClass="Driver" ForeignField="ID" ForeignViewNameField="FIO"/>
-      <Foreign Field="Car" ForeignClass="Car" ForeignField="ID" ForeignViewNameField="Mark;Model;Number"/>
-    </Foreigns>
-    <Escorts>
-      <Escort LocalName="Загрузка" TableName="ImplementationLoad" FilterField="Implementation"/>
-      <Escort LocalName="Выгрузка" TableName="ImplementationUnload" FilterField="Implementation"/>
-    </Escorts>
-  </Table>
+    <Table Name="CounterpartyEnrollment" UID="{BB867613-17D5-4FC0-B29F-6C5167257630}" Alias="cpen" LocalName="Зачисление" LocalListName="Зачисления" TitleName="Counterparty">
+        <Fields>
+            <Field UID="{1EA7C67D-02A9-421A-B742-FC25DFE2808F}" Name="Counterparty" Type="BigInt" LabelName="Контрагент" LocalListName="Контрагент" NotNull="true" HideFromList="true" HideFromObject="true"/>
+            <Field UID="{EBEF5EA5-0AEC-4A47-A3B4-C094D6CE4247}" Name="Date" Type="Date" LabelName="Дата операции" LocalListName="Дата операции" NotNull="true"/>
+            <Field UID="{E72F8D34-7317-484D-BD2F-01AF4889D8FB}" Name="Sum" Type="Money" LabelName="Сумма зачисления" LocalListName="Сумма зачисления" NotNull="true"/>
+            <Field UID="{D78A509E-9B94-4C7A-8881-6B0EB99560F2}" Name="PaymentType" Type="BigInt" LabelName="Тип оплаты" LocalListName="Тип оплаты"/>
+            <Field UID="{787F2C5F-1840-4108-A5C5-EAB4AAEBE89E}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
+        </Fields>
+        <Indexes>
+            <Index Field="Counterparty"/>
+        </Indexes>
+        <Foreigns>
+            <Foreign Field="Counterparty" ForeignClass="Counterparty" ForeignField="ID" ForeignViewNameField="Name"/>
+            <Foreign Field="PaymentType" ForeignClass="PaymentType" ForeignField="ID" ForeignViewNameField="Name"/>
+        </Foreigns>
+    </Table>
 
-  <Table Name="ImplementationLoad" UID="{FA3F9DFF-16BB-4170-A0B0-E8044332ECB3}" Alias="ilod" LocalName="Загрузка" LocalListName="Загрузки" TitleName="ID" ObjectForm="ISOilSphere::ImplementationLoadObjectForm">
-    <Fields>
-      <Field UID="{A65F0858-C7C4-4C7C-B715-1FB59A5E2EED}" Name="Implementation" Type="BigInt" LabelName="Реализация" LocalListName="Реализация" NotNull="true" HideFromList="true" HideFromObject="true"/>
-      <Field UID="{7236B6F9-0890-414D-B3EE-C829602CF376}" Name="Counterparty" Type="BigInt" LabelName="Контрагент" LocalListName="Контрагент"/>
-      <Field UID="{747E79CA-D9B9-4127-B66D-51B421673545}" Name="Stock" Type="BigInt" LabelName="Склад" LocalListName="Склад"/>
-      <Field UID="{70F3A0FF-3034-437D-A998-7863EE3310FB}" Name="Container" Type="Double" LabelName="Тара (весы)" LocalListName="Тара (весы)" NotNull="true" LayoutName="Container"/>
-      <Field UID="{FD72FC59-F89E-43E8-A074-CFF6CF8DD587}" Name="WeightGross" Type="Double" LabelName="Вес (брутто)" LocalListName="Вес (брутто)" NotNull="true" LayoutName="Container"/>
-      <Field UID="{E0BB3135-E091-4D06-9854-19BCEF3D2629}" Name="WeightNet" Type="Double" ReadOnly="true" LabelName="Вес (нетто)" LocalListName="Вес (нетто)" NotNull="true" LayoutName="Container"/>
-      <Field UID="{12223763-4E01-4C53-AA20-63FA8BC05D64}" Name="PriceUnit" Type="Money" LabelName="Цена за кг./л" LocalListName="Цена за кг./л" NotNull="true" LayoutName="Price"/>
-      <Field UID="{CCA79032-4463-4059-B973-41CA4792AC1D}" Name="Cost" Type="Money" ReadOnly="true" LabelName="Стоимость" LocalListName="Стоимость" NotNull="true" LayoutName="Price"/>
-      <Field UID="{1CA3F687-00FA-43D4-AF86-BA20602EA4EE}" Name="PaymentType" Type="BigInt" LabelName="Тип оплаты" LocalListName="Тип оплаты" SeparatorName="Дополнительно"/>
-      <Field UID="{C80569A0-764A-4746-B69F-01D403B97E42}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
-    </Fields>
-    <Indexes>
-      <Index Field="Implementation"/>
-    </Indexes>
-    <Foreigns>
-      <Foreign Field="Implementation" ForeignClass="Implementation" ForeignField="ID" ForeignViewNameField="Date"/>
-      <Foreign Field="Counterparty" ForeignClass="Counterparty" ForeignField="ID" ForeignViewNameField="Name"/>
-      <Foreign Field="Stock" ForeignClass="Stock" ForeignField="ID" ForeignViewNameField="Name"/>
-      <Foreign Field="PaymentType" ForeignClass="PaymentType" ForeignField="ID" ForeignViewNameField="Name"/>
-    </Foreigns>
-  </Table>
-  
-  <Table Name="ImplementationUnload" UID="{EEA80ECE-1EE1-47C8-92BC-7AD3FB92337E}" Alias="iunl" LocalName="Выгрузка" LocalListName="Выгрузки" TitleName="ID" ObjectForm="ISOilSphere::ImplementationUnloadObjectForm">
-    <Fields>
-      <Field UID="{9256664C-F15B-42AC-8CD6-854D0B575FB5}" Name="Implementation" Type="BigInt" LabelName="Реализация" LocalListName="Реализация" NotNull="true" HideFromList="true" HideFromObject="true"/>
-      <Field UID="{5B6F6960-F201-417C-9682-04855C0DF468}" Name="Counterparty" Type="BigInt" LabelName="Контрагент" LocalListName="Контрагент"/>
-      <Field UID="{08F8D368-32A9-4F87-A5A9-01C115C24146}" Name="Stock" Type="BigInt" LabelName="Склад" LocalListName="Склад"/>
-      <Field UID="{B3D72F1A-14BA-4C24-84E5-B59974135CE4}" Name="Container" Type="Double" LabelName="Вес (тара)" LocalListName="Вес (тара)" NotNull="true" LayoutName="Unload"/>
-      <Field UID="{92E7D55E-FE3B-4175-AF84-7D859085BDB1}" Name="WeightGross" Type="Double" LabelName="Вес (брутто)" LocalListName="Вес (брутто)" NotNull="true" LayoutName="Unload"/>
-      <Field UID="{BC20D00D-9D02-4848-85F7-40626A422118}" Name="WeightNet" Type="Double" ReadOnly="true" LabelName="Вес (нетто)" LocalListName="Вес (нетто)" NotNull="true" LayoutName="Unload"/>
-      <Field UID="{770982DA-76BB-4A3B-B107-A9404D0FE3F8}" Name="PriceUnit" Type="Money" LabelName="Цена за кг./л" LocalListName="Цена за кг./л" NotNull="true" LayoutName="UnloadPrice"/>
-      <Field UID="{B46EDE1E-5076-4AEA-ACA2-5ADA91F186B7}" Name="Cost" Type="Money" ReadOnly="true" LabelName="Стоимость" LocalListName="Стоимость" NotNull="true" LayoutName="UnloadPrice"/>
-      <Field UID="{7F4BA1E7-DBD1-4766-A108-5A118FA3BB66}" Name="PaymentType" Type="BigInt" LabelName="Тип оплаты" LocalListName="Тип оплаты" SeparatorName="Дополнительно"/>
-      <Field UID="{2AB41BFD-F2DE-450F-8002-B67D60052C49}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
-    </Fields>
-    <Indexes>
-      <Index Field="Implementation"/>
-    </Indexes>
-    <Foreigns>
-      <Foreign Field="Implementation" ForeignClass="Implementation" ForeignField="ID" ForeignViewNameField="Date"/>
-      <Foreign Field="Counterparty" ForeignClass="Counterparty" ForeignField="ID" ForeignViewNameField="Name"/>
-      <Foreign Field="Stock" ForeignClass="Stock" ForeignField="ID" ForeignViewNameField="Name"/>
-      <Foreign Field="PaymentType" ForeignClass="PaymentType" ForeignField="ID" ForeignViewNameField="Name"/>
-    </Foreigns>
-  </Table>
+    <Table Name="Implementation" UID="{DC253A0F-C05D-4F33-9786-F9FB507FCD08}" Alias="impl" LocalName="Реализация" LocalListName="Реализация" TitleName="Date">
+        <Fields>
+            <Field UID="{0315D371-7932-4DE2-9913-52DA23DBE33E}" Name="Date" Type="Date" LabelName="Дата" LocalListName="Дата" NotNull="true"/>
+            <Field UID="{17DD0C95-280D-4C2B-88AC-2376E083A2DE}" Name="ProductType" Type="BigInt" LabelName="Тип продукта" LocalListName="Тип продукта" NotNull="true"/>
+            <Field UID="{1384A6C2-FDB7-4586-B7ED-08B2FC68CC76}" Name="Driver" Type="BigInt" LabelName="Водитель" LocalListName="Водитель" LayoutName="Driver"/>
+            <Field UID="{63634143-4B5D-453E-8318-A283BACD15B4}" Name="Car" Type="BigInt" LabelName="Автомобиль" LocalListName="Автомобиль" LayoutName="Driver"/>
+            <Field UID="{AB8F960B-45B3-4822-9F67-AEF74B65A5E3}" Name="LoadCount" Type="Int" ReadOnly="true" LabelName="Количество загрузок" LocalListName="Количество загрузок" SeparatorName="Общее" LayoutName="Load" QueryText="SELECT COUNT(*) FROM implementationload WHERE ilod_implementation = impl_id"/>
+            <Field UID="{7047216E-288F-4355-98EE-982603061C5D}" Name="LoadWeightNet" Type="Double" ReadOnly="true" LabelName="Вес загрузки (нетто)" LocalListName="Вес загрузки (нетто)" LayoutName="Load" QueryText="SELECT sum(ilod_weightnet) FROM implementationload WHERE ilod_implementation = impl_id"/>
+            <Field UID="{A86A8680-D363-4CCC-90E6-E11FED2E50CF}" Name="LoadCost" Type="Money" ReadOnly="true" LabelName="Стоимость загрузки" LocalListName="Стоимость загрузки" LayoutName="Load" QueryText="SELECT sum(ilod_cost) FROM implementationload WHERE ilod_implementation = impl_id"/>
+            <Field UID="{9A469E5C-DED8-4701-930A-37A647B7A2D2}" Name="UnloadCount" Type="Int" ReadOnly="true" LabelName="Количество выгрузок" LocalListName="Количество выгрузок" LayoutName="Unload" QueryText="SELECT COUNT(*) FROM implementationunload WHERE iunl_implementation = impl_id"/>
+            <Field UID="{D7A74FDD-106C-4FFC-A6AB-AC13D461CF99}" Name="UnloadWeightNet" Type="Double" ReadOnly="true" LabelName="Вес выгрузки (нетто)" LocalListName="Вес выгрузки (нетто)" LayoutName="Unload" QueryText="SELECT sum(iunl_weightnet) FROM implementationunload WHERE iunl_implementation = impl_id"/>
+            <Field UID="{1EA933CA-06AE-4F0D-B2B3-B6CCAD7A9B46}" Name="UnloadCost" Type="Money" ReadOnly="true" LabelName="Стоимость выгрузки" LocalListName="Стоимость выгрузки" LayoutName="Unload" QueryText="SELECT sum(iunl_cost) FROM implementationunload WHERE iunl_implementation = impl_id"/>
+            <Field UID="{4864E582-6A0F-4BCC-A3CB-024B3CD70310}" Name="WeightDifference" Type="Double" ReadOnly="true" LabelName="Разница весов" LocalListName="Разница весов" QueryText="WITH r AS (SELECT (SELECT COALESCE(sum(ilod_weightnet), 0) AS load FROM implementationload WHERE ilod_implementation = impl_id), (SELECT COALESCE(sum(iunl_weightnet), 0) AS unload FROM implementationunload WHERE iunl_implementation = impl_id)) SELECT unload - load FROM r"/>
+            <Field UID="{F58FD218-D3A5-404F-97D0-6B987315A2A4}" Name="Checked" Type="Bool" DefaultValue="false" LabelName="Загрузка проверена" LocalListName="Загрузка проверена" SeparatorName="Дополнительно"/>
+            <Field UID="{19711CDA-B8F4-4EC7-994A-D83D7BFE8B31}" Name="Implementation" Type="Bool" DefaultValue="false" LabelName="Реализация" LocalListName="Реализация"/>
+        </Fields>
+        <Foreigns>
+            <Foreign Field="ProductType" ForeignClass="ProductType" ForeignField="ID" ForeignViewNameField="Name"/>
+            <Foreign Field="Driver" ForeignClass="Driver" ForeignField="ID" ForeignViewNameField="FIO"/>
+            <Foreign Field="Car" ForeignClass="Car" ForeignField="ID" ForeignViewNameField="Mark;Model;Number"/>
+        </Foreigns>
+        <Escorts>
+            <Escort LocalName="Загрузка" TableName="ImplementationLoad" FilterField="Implementation"/>
+            <Escort LocalName="Выгрузка" TableName="ImplementationUnload" FilterField="Implementation"/>
+        </Escorts>
+    </Table>
 
-  <Table Name="CounterpartyType" UID="{838409C1-063F-4595-AD0C-0D9499CA4E5C}" Alias="cntp" LocalName="Тип контрагента" LocalListName="Типы контрагентов" TitleName="Name">
-    <Fields>
-      <Field UID="{3C15FF5D-3C52-4F62-9E34-CFD4FCC2D80E}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
-    </Fields>
-    <Indexes>
-      <Index Field="Name" Unique="true"/>
-    </Indexes>
-  </Table>
+    <Table Name="ImplementationLoad" UID="{FA3F9DFF-16BB-4170-A0B0-E8044332ECB3}" Alias="ilod" LocalName="Загрузка" LocalListName="Загрузки" TitleName="ID" ObjectForm="ISOilSphere::ImplementationLoadObjectForm">
+        <Fields>
+            <Field UID="{A65F0858-C7C4-4C7C-B715-1FB59A5E2EED}" Name="Implementation" Type="BigInt" LabelName="Реализация" LocalListName="Реализация" NotNull="true" HideFromList="true" HideFromObject="true"/>
+            <Field UID="{7236B6F9-0890-414D-B3EE-C829602CF376}" Name="Counterparty" Type="BigInt" LabelName="Контрагент" LocalListName="Контрагент"/>
+            <Field UID="{747E79CA-D9B9-4127-B66D-51B421673545}" Name="Stock" Type="BigInt" LabelName="Склад" LocalListName="Склад"/>
+            <Field UID="{70F3A0FF-3034-437D-A998-7863EE3310FB}" Name="Container" Type="Double" LabelName="Тара (весы)" LocalListName="Тара (весы)" NotNull="true" LayoutName="Container"/>
+            <Field UID="{FD72FC59-F89E-43E8-A074-CFF6CF8DD587}" Name="WeightGross" Type="Double" LabelName="Вес (брутто)" LocalListName="Вес (брутто)" NotNull="true" LayoutName="Container"/>
+            <Field UID="{E0BB3135-E091-4D06-9854-19BCEF3D2629}" Name="WeightNet" Type="Double" ReadOnly="true" LabelName="Вес (нетто)" LocalListName="Вес (нетто)" NotNull="true" LayoutName="Container"/>
+            <Field UID="{12223763-4E01-4C53-AA20-63FA8BC05D64}" Name="PriceUnit" Type="Money" LabelName="Цена за кг./л" LocalListName="Цена за кг./л" NotNull="true" LayoutName="Price"/>
+            <Field UID="{CCA79032-4463-4059-B973-41CA4792AC1D}" Name="Cost" Type="Money" ReadOnly="true" LabelName="Стоимость" LocalListName="Стоимость" NotNull="true" LayoutName="Price"/>
+            <Field UID="{1CA3F687-00FA-43D4-AF86-BA20602EA4EE}" Name="PaymentType" Type="BigInt" LabelName="Тип оплаты" LocalListName="Тип оплаты" SeparatorName="Дополнительно"/>
+            <Field UID="{C80569A0-764A-4746-B69F-01D403B97E42}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
+        </Fields>
+        <Indexes>
+            <Index Field="Implementation"/>
+        </Indexes>
+        <Foreigns>
+            <Foreign Field="Implementation" ForeignClass="Implementation" ForeignField="ID" ForeignViewNameField="Date"/>
+            <Foreign Field="Counterparty" ForeignClass="Counterparty" ForeignField="ID" ForeignViewNameField="Name"/>
+            <Foreign Field="Stock" ForeignClass="Stock" ForeignField="ID" ForeignViewNameField="Name"/>
+            <Foreign Field="PaymentType" ForeignClass="PaymentType" ForeignField="ID" ForeignViewNameField="Name"/>
+        </Foreigns>
+    </Table>
 
-  <Table Name="CounterpartyStatus" UID="{A6ECB0F6-E730-4B75-970A-17691865BE26}" Alias="cnst" LocalName="Статус контрагента" LocalListName="Статусы контрагентов" TitleName="Name">
-    <Fields>
-      <Field UID="{9B314A7F-15A0-4C50-9A93-F4310C5B56AA}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
-    </Fields>
-    <Indexes>
-      <Index Field="Name" Unique="true"/>
-    </Indexes>
-  </Table>
+    <Table Name="ImplementationUnload" UID="{EEA80ECE-1EE1-47C8-92BC-7AD3FB92337E}" Alias="iunl" LocalName="Выгрузка" LocalListName="Выгрузки" TitleName="ID" ObjectForm="ISOilSphere::ImplementationUnloadObjectForm">
+        <Fields>
+            <Field UID="{9256664C-F15B-42AC-8CD6-854D0B575FB5}" Name="Implementation" Type="BigInt" LabelName="Реализация" LocalListName="Реализация" NotNull="true" HideFromList="true" HideFromObject="true"/>
+            <Field UID="{5B6F6960-F201-417C-9682-04855C0DF468}" Name="Counterparty" Type="BigInt" LabelName="Контрагент" LocalListName="Контрагент"/>
+            <Field UID="{08F8D368-32A9-4F87-A5A9-01C115C24146}" Name="Stock" Type="BigInt" LabelName="Склад" LocalListName="Склад"/>
+            <Field UID="{B3D72F1A-14BA-4C24-84E5-B59974135CE4}" Name="Container" Type="Double" LabelName="Вес (тара)" LocalListName="Вес (тара)" NotNull="true" LayoutName="Unload"/>
+            <Field UID="{92E7D55E-FE3B-4175-AF84-7D859085BDB1}" Name="WeightGross" Type="Double" LabelName="Вес (брутто)" LocalListName="Вес (брутто)" NotNull="true" LayoutName="Unload"/>
+            <Field UID="{BC20D00D-9D02-4848-85F7-40626A422118}" Name="WeightNet" Type="Double" ReadOnly="true" LabelName="Вес (нетто)" LocalListName="Вес (нетто)" NotNull="true" LayoutName="Unload"/>
+            <Field UID="{770982DA-76BB-4A3B-B107-A9404D0FE3F8}" Name="PriceUnit" Type="Money" LabelName="Цена за кг./л" LocalListName="Цена за кг./л" NotNull="true" LayoutName="UnloadPrice"/>
+            <Field UID="{B46EDE1E-5076-4AEA-ACA2-5ADA91F186B7}" Name="Cost" Type="Money" ReadOnly="true" LabelName="Стоимость" LocalListName="Стоимость" NotNull="true" LayoutName="UnloadPrice"/>
+            <Field UID="{7F4BA1E7-DBD1-4766-A108-5A118FA3BB66}" Name="PaymentType" Type="BigInt" LabelName="Тип оплаты" LocalListName="Тип оплаты" SeparatorName="Дополнительно"/>
+            <Field UID="{2AB41BFD-F2DE-450F-8002-B67D60052C49}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
+        </Fields>
+        <Indexes>
+            <Index Field="Implementation"/>
+        </Indexes>
+        <Foreigns>
+            <Foreign Field="Implementation" ForeignClass="Implementation" ForeignField="ID" ForeignViewNameField="Date"/>
+            <Foreign Field="Counterparty" ForeignClass="Counterparty" ForeignField="ID" ForeignViewNameField="Name"/>
+            <Foreign Field="Stock" ForeignClass="Stock" ForeignField="ID" ForeignViewNameField="Name"/>
+            <Foreign Field="PaymentType" ForeignClass="PaymentType" ForeignField="ID" ForeignViewNameField="Name"/>
+        </Foreigns>
+    </Table>
 
-  <Table Name="PaymentType" UID="{0A1A27E0-3CDD-47B2-900D-C0CC82ED159B}" Alias="pmtp" LocalName="Тип оплаты" LocalListName="Типы оплаты" TitleName="Name">
-    <Fields>
-      <Field UID="{01CEBE1A-99DE-496A-9405-979AD71379C0}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
-    </Fields>
-    <Indexes>
-      <Index Field="Name" Unique="true"/>
-    </Indexes>
-  </Table>
+    <Table Name="CounterpartyType" UID="{838409C1-063F-4595-AD0C-0D9499CA4E5C}" Alias="cntp" LocalName="Тип контрагента" LocalListName="Типы контрагентов" TitleName="Name">
+        <Fields>
+            <Field UID="{3C15FF5D-3C52-4F62-9E34-CFD4FCC2D80E}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
+        </Fields>
+        <Indexes>
+            <Index Field="Name" Unique="true"/>
+        </Indexes>
+    </Table>
 
-  <Table Name="ProductType" UID="{7863AAAC-FB7B-4330-97BB-8490409134DB}" Alias="pdtp" LocalName="Тип продукта" LocalListName="Типы продуктов" TitleName="Name">
-    <Fields>
-      <Field UID="{31320A15-8039-4899-B642-4DF4A7B34F13}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
-    </Fields>
-    <Indexes>
-      <Index Field="Name" Unique="true"/>
-    </Indexes>
-  </Table>
+    <Table Name="CounterpartyStatus" UID="{A6ECB0F6-E730-4B75-970A-17691865BE26}" Alias="cnst" LocalName="Статус контрагента" LocalListName="Статусы контрагентов" TitleName="Name">
+        <Fields>
+            <Field UID="{9B314A7F-15A0-4C50-9A93-F4310C5B56AA}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
+        </Fields>
+        <Indexes>
+            <Index Field="Name" Unique="true"/>
+        </Indexes>
+    </Table>
 
-  <Table Name="Driver" UID="{DB23E49B-FAE0-4BEB-BC6F-0661C3B74BFF}" Alias="drvr" LocalName="Водитель" LocalListName="Водители" TitleName="FIO">
-    <Fields>
-      <Field UID="{19147562-18AA-4DC7-953F-A0DD4A0843D7}" Name="FIO" Type="String" LabelName="ФИО" LocalListName="ФИО" NotNull="true"/>
-      <Field UID="{FECC72D2-03B6-44BC-85D5-0197204274C9}" Name="Birthday" Type="Birthday" LabelName="Дата рождения" LocalListName="Дата рождения"/>
-      <Field UID="{1F9C9036-EDC7-4E91-AC72-852A810A7CB1}" Name="Type" Type="BigInt" LabelName="Тип водителя" LocalListName="Тип водителя"/>
-      <Field UID="{50874597-C07E-4CF9-9DC1-12A2C99D007F}" Name="Address" Type="String" LabelName="Адрес (домашний)" LocalListName="Адрес (домашний)"/>
-      <Field UID="{5CFC1697-2A76-4C3E-B5A7-D7365BAF441B}" Name="PhoneMain" Type="Phone" LabelName="Телефон (основной)" LocalListName="Телефон (основной)"/>
-      <Field UID="{FE94A84B-E945-4D59-AD10-5962DBF23102}" Name="PhoneOther" Type="Phone" LabelName="Телефон (дополнительный)" LocalListName="Телефон (дополнительный)"/>
-      <Field UID="{B259018F-0E88-4DA7-988B-36747489F91F}" Name="EMail" Type="EMail" LabelName="Электронная почта" LocalListName="Электронная почта"/>
-      <Field UID="{32A4254D-1D93-4FE8-811F-6E8235343785}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
-    </Fields>
-    <Foreigns>
-      <Foreign Field="Type" ForeignClass="DriverType" ForeignField="ID" ForeignViewNameField="Name"/>
-    </Foreigns>
-  </Table>
+    <Table Name="PaymentType" UID="{0A1A27E0-3CDD-47B2-900D-C0CC82ED159B}" Alias="pmtp" LocalName="Тип оплаты" LocalListName="Типы оплаты" TitleName="Name">
+        <Fields>
+            <Field UID="{01CEBE1A-99DE-496A-9405-979AD71379C0}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
+        </Fields>
+        <Indexes>
+            <Index Field="Name" Unique="true"/>
+        </Indexes>
+    </Table>
 
-  <Table Name="DriverType" UID="{B237DF98-804E-4913-A20B-8D1536CC313A}" Alias="drtp" LocalName="Тип водителя" LocalListName="Типы водителей" TitleName="Name">
-    <Fields>
-      <Field UID="{A2C7173B-3DF8-4FF2-9EB6-B8325459D041}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
-    </Fields>
-    <Indexes>
-      <Index Field="Name" Unique="true"/>
-    </Indexes>
-  </Table>
-  
-  <Table Name="Car" UID="{5D3EA65D-8595-4334-BA66-F76AA0A5D0AE}" Alias="cars" LocalName="Автомобиль" LocalListName="Автомобили" TitleName="Mark;Model;Number">
-    <Fields>
-      <Field UID="{61BF0C58-DFFC-4998-AEAD-1A7BABAC33AD}" Name="Mark" Type="String" LabelName="Марка" LocalListName="Марка" NotNull="true"/>
-      <Field UID="{593974BD-BF3C-4270-86CC-DE6936D45C7B}" Name="Model" Type="String" LabelName="Модель" LocalListName="Модель" NotNull="true"/>
-      <Field UID="{DB93A5B6-5F6C-4E03-AF9E-B133024D2F1A}" Name="Number" Type="String" LabelName="Гос. номер" LocalListName="Гос. номер" NotNull="true"/>
-      <Field UID="{2B4D0C01-6018-4E9A-B110-AEE74332C5C6}" Name="VIN" Type="Vin" LabelName="ВИН" LocalListName="ВИН"/>
-    </Fields>
-  </Table>
+    <Table Name="ProductType" UID="{7863AAAC-FB7B-4330-97BB-8490409134DB}" Alias="pdtp" LocalName="Тип продукта" LocalListName="Типы продуктов" TitleName="Name">
+        <Fields>
+            <Field UID="{31320A15-8039-4899-B642-4DF4A7B34F13}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
+        </Fields>
+        <Indexes>
+            <Index Field="Name" Unique="true"/>
+        </Indexes>
+    </Table>
 
-  <Table Name="GasStationStatement" UID="{C9620F81-9306-4170-A9D4-569744F55697}" Alias="gsts" LocalName="Ведомость АЗС" LocalListName="Ведомость АЗС" TitleName="Date" ObjectForm="ISOilSphere::GasStationStatementObjectForm">
-    <Fields>
-      <Field UID="{7C6A6D31-3F92-41A6-836D-A1B96E345A92}" Name="ImplementationUnload" Type="BigInt" LabelName="Выгрузка" LocalListName="Выгрузка" HideFromList="true" HideFromObject="true"/>
-      <Field UID="{4809E303-3E8F-42D3-B3A8-1B0C108DEB40}" Name="Stock" Type="BigInt" LabelName="Склад" LocalListName="Склад" LayoutName="Title"/>
-      <Field UID="{64DC2A84-C906-4F46-AE3E-3D32E273E236}" Name="Date" Type="Date" LabelName="Дата" LocalListName="Дата" NotNull="true" LayoutName="Title"/>
-      <Field UID="{AC99A6CC-A80E-4807-A6BF-C5712A8A8C3E}" Name="Operator" Type="BigInt" LabelName="Оператор" LocalListName="Оператор" LayoutName="Title"/>
-      <Field UID="{1CA44875-F7D1-4624-8B1E-5A12F82E5CA5}" Name="Change" Type="BigInt" LabelName="Смена" LocalListName="Смена" LayoutName="Title" HideFromObject="true"/>
-      
-      <Field UID="{79298632-AE9B-4DFF-B0EF-EE23CD9A6914}" Name="BalanceBeginChange" Type="Money" LabelName="Остаток на начало смены" LocalListName="Остаток на начало смены" LayoutName="Layout1"/>
-      <Field UID="{6E0C3D58-C0B2-4BA7-B62E-AB0EA597317A}" Name="VolumeIncome" Type="Double" LabelName="Объём прихода" LocalListName="Объём прихода" LayoutName="Layout1"/>
-      <Field UID="{1BD71122-D089-4A06-A903-1643F15B12BF}" Name="VolumeHolidaysCounters" Type="Double" LabelName="Объём отпуска по счётчикам" LocalListName="Объём отпуска по счётчикам" LayoutName="Layout1"/>
-      <Field UID="{39277383-AE19-43D9-8219-166C8B51A3A6}" Name="TechnicalStraitDeviation" Type="Double" LabelName="Технический пролив (отклонения)" LocalListName="Технический пролив (отклонения)" LayoutName="Layout1"/>
-      <Field UID="{4DEFF451-A68A-4AD4-8CEB-0D2EFEFF4F24}" Name="StraitNote" Type="String" LabelName="Пояснение пролива" LocalListName="Пояснение пролива" LayoutName="Layout1"/>
-      <Field UID="{FF4D3766-3CBB-469B-8135-45E978185266}" Name="BalanceEndChange" Type="Money" ReadOnly="true" LabelName="Остаток на конец смены" LocalListName="Остаток на конец смены"/>
-      
-      <Field UID="{321C8D0A-D118-4C48-A0A4-D911C34B0C40}" Name="SalesAmount" Type="Money" LabelName="Сумма реализации" LocalListName="Сумма реализации" SeparatorName="Продажи и поступления" LayoutName="Layout2"/>
-      <Field UID="{912692BE-3D25-48C4-A794-5E0DA25277D8}" Name="KKMCash" Type="Money" LabelName="ККМ наличные" LocalListName="ККМ наличные" LayoutName="Layout2"/>
-      <Field UID="{DD200050-9CF2-4829-991B-561BC6554A6C}" Name="KKMCashless" Type="Money" LabelName="ККМ безналичные" LocalListName="ККМ безналичные" LayoutName="Layout2"/>
-      <Field UID="{741FE611-0F11-4CB2-A8A5-A6B6C16C5EAF}" Name="Statements" Type="Double" LabelName="Ведомости" LocalListName="Ведомости" LayoutName="Layout2"/>
+    <Table Name="Driver" UID="{DB23E49B-FAE0-4BEB-BC6F-0661C3B74BFF}" Alias="drvr" LocalName="Водитель" LocalListName="Водители" TitleName="FIO">
+        <Fields>
+            <Field UID="{19147562-18AA-4DC7-953F-A0DD4A0843D7}" Name="FIO" Type="String" LabelName="ФИО" LocalListName="ФИО" NotNull="true"/>
+            <Field UID="{FECC72D2-03B6-44BC-85D5-0197204274C9}" Name="Birthday" Type="Birthday" LabelName="Дата рождения" LocalListName="Дата рождения"/>
+            <Field UID="{1F9C9036-EDC7-4E91-AC72-852A810A7CB1}" Name="Type" Type="BigInt" LabelName="Тип водителя" LocalListName="Тип водителя"/>
+            <Field UID="{50874597-C07E-4CF9-9DC1-12A2C99D007F}" Name="Address" Type="String" LabelName="Адрес (домашний)" LocalListName="Адрес (домашний)"/>
+            <Field UID="{5CFC1697-2A76-4C3E-B5A7-D7365BAF441B}" Name="PhoneMain" Type="Phone" LabelName="Телефон (основной)" LocalListName="Телефон (основной)"/>
+            <Field UID="{FE94A84B-E945-4D59-AD10-5962DBF23102}" Name="PhoneOther" Type="Phone" LabelName="Телефон (дополнительный)" LocalListName="Телефон (дополнительный)"/>
+            <Field UID="{B259018F-0E88-4DA7-988B-36747489F91F}" Name="EMail" Type="EMail" LabelName="Электронная почта" LocalListName="Электронная почта"/>
+            <Field UID="{32A4254D-1D93-4FE8-811F-6E8235343785}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
+        </Fields>
+        <Foreigns>
+            <Foreign Field="Type" ForeignClass="DriverType" ForeignField="ID" ForeignViewNameField="Name"/>
+        </Foreigns>
+    </Table>
 
-      <Field UID="{6C2A6801-9056-4959-8565-AD092BF71EFC}" Name="PaySoldVolume" Type="Money" LabelName="Выплата с проданного объёма" LocalListName="Выплата с проданного объёма" LayoutName="Layout3"/>
-      <Field UID="{1CC47F68-0A72-4548-AEFB-CA872A40C11F}" Name="PresenceDebt" Type="Money" LabelName="Наличие долга" LocalListName="Наличие долга" LayoutName="Layout3"/>
-      <Field UID="{423037B5-20A4-47B3-ADBF-E59BD172CCBC}" Name="DebtNote" Type="String" LabelName="Пояснение долга" LocalListName="Пояснение долга" LayoutName="Layout3"/>
+    <Table Name="DriverType" UID="{B237DF98-804E-4913-A20B-8D1536CC313A}" Alias="drtp" LocalName="Тип водителя" LocalListName="Типы водителей" TitleName="Name">
+        <Fields>
+            <Field UID="{A2C7173B-3DF8-4FF2-9EB6-B8325459D041}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
+        </Fields>
+        <Indexes>
+            <Index Field="Name" Unique="true"/>
+        </Indexes>
+    </Table>
 
-      <Field UID="{34E1380C-9677-40CC-8050-03C793B0C64A}" Name="CashboxBalancePayment" Type="Money" ReadOnly="true" LabelName="Остаток в кассе (расчёт)" LocalListName="Остаток в кассе (расчёт)" SeparatorName="Касса" LayoutName="Layout4"/>
-      <Field UID="{735E9E17-F729-440D-AD30-3B36984E4D6F}" Name="CashboxBalanceActually" Type="Money" ReadOnly="true" LabelName="Остаток в кассе (фактический)" LocalListName="Остаток в кассе (фактический)" LayoutName="Layout4"/>
-      <Field UID="{CE7603C4-ABF4-4745-BA70-F2F62746789D}" Name="CashboxDiscrepancies" Type="Money" ReadOnly="true" LabelName="Расхождения" LocalListName="Расхождения" LayoutName="Layout4"/>
-      <Field UID="{0D0A420B-6BBF-4482-8861-5DB54CB6BA24}" Name="CashboxKKMCash" Type="Money" ReadOnly="true" LabelName="Наличные по ККМ" LocalListName="Наличные по ККМ" LayoutName="Layout4"/>
-      <Field UID="{CD7622A3-1F45-4662-B390-3C2EF10841B5}" Name="CashboxTotalPayment" Type="Money" ReadOnly="true" LabelName="Накопительный итог (расчёт)" LocalListName="Накопительный итог (расчёт)" LayoutName="Layout5"/>
-      <Field UID="{353092C3-F451-4F54-ACA1-6C9A8297FBD5}" Name="CashboxTotalActually" Type="Money" ReadOnly="true" LabelName="Накопительный итог (фактический)" LocalListName="Накопительный итог (фактический)" LayoutName="Layout5"/>
-      <Field UID="{01E8D88F-213C-4617-A079-4E65AA65A099}" Name="CashboxDiscrepanciesTotals" Type="Money" ReadOnly="true" LabelName="Расхождения итогов" LocalListName="Расхождения итогов" LayoutName="Layout5"/>
-      <Field UID="{64D434CD-5E32-4F6F-A7C2-E7F6E5E1D526}" Name="CashboxKKMTotal" Type="Money" ReadOnly="true" LabelName="Накопительный итог по ККМ" LocalListName="Накопительный итог по ККМ"/>
-      <Field UID="{91D0DB88-3EB3-4E09-91A8-FE2B421B820B}" Name="CashboxCollectionAmount" Type="Money" LabelName="Сумма инкассации" LocalListName="Сумма инкассации"/>
-      <Field UID="{C0E5DFC2-41FF-4C0A-BD3E-B91FB00E4601}" Name="CashboxCollectionAmountKKM" Type="Money" LabelName="Сумма инкассации ККМ" LocalListName="Сумма инкассации ККМ"/>
-      <Field UID="{D3501D71-2A4D-4E42-B435-C58511CC074F}" Name="CashboxAdministrativeExpenses" Type="Money" LabelName="Административные расходы с кассы" LocalListName="Административные расходы с кассы" LayoutName="Layout6"/>
-      <Field UID="{8E7094B4-DE39-466C-A7AD-A12346A7EB10}" Name="CashboxAdministrativeExpensesNote" Type="String" LabelName="Пояснения к административным расходам" LocalListName="Пояснения к административным расходам" LayoutName="Layout6"/>
-    </Fields>
-    <Indexes>
-      <Index Field="Stock"/>
-    </Indexes>
-    <Foreigns>
-      <Foreign Field="ImplementationUnload" ForeignClass="ImplementationUnload" ForeignField="ID"/>
-      <Foreign Field="Stock" ForeignClass="Stock" ForeignField="ID" ForeignViewNameField="Name"/>
-      <Foreign Field="Operator" ForeignClass="Operator" ForeignField="ID" ForeignViewNameField="FIO"/>
-    </Foreigns>
-  </Table>
+    <Table Name="Car" UID="{5D3EA65D-8595-4334-BA66-F76AA0A5D0AE}" Alias="cars" LocalName="Автомобиль" LocalListName="Автомобили" TitleName="Mark;Model;Number">
+        <Fields>
+            <Field UID="{61BF0C58-DFFC-4998-AEAD-1A7BABAC33AD}" Name="Mark" Type="String" LabelName="Марка" LocalListName="Марка" NotNull="true"/>
+            <Field UID="{593974BD-BF3C-4270-86CC-DE6936D45C7B}" Name="Model" Type="String" LabelName="Модель" LocalListName="Модель" NotNull="true"/>
+            <Field UID="{DB93A5B6-5F6C-4E03-AF9E-B133024D2F1A}" Name="Number" Type="String" LabelName="Гос. номер" LocalListName="Гос. номер" NotNull="true"/>
+            <Field UID="{2B4D0C01-6018-4E9A-B110-AEE74332C5C6}" Name="VIN" Type="Vin" LabelName="ВИН" LocalListName="ВИН"/>
+        </Fields>
+    </Table>
 
-  <Table Name="Operator" UID="{84E69F6B-3072-4815-9318-4A61E753F4A2}" Alias="oper" LocalName="Оператор" LocalListName="Оператор" TitleName="FIO">
-    <Fields>
-      <Field UID="{DF5A811C-857B-4E41-9E66-4D9FA3D8075D}" Name="FIO" Type="String" LabelName="ФИО" LocalListName="ФИО" NotNull="true"/>
-    </Fields>
-    <Indexes>
-      <Index Field="FIO" Unique="true"/>
-    </Indexes>
-  </Table>
-  
-  <Table Name="OperationType" UID="{398473D9-FC00-4565-99A2-C70E35A95160}" Alias="optp" LocalName="Тип операции" LocalListName="Тип операции" TitleName="Name">
-    <Fields>
-      <Field UID="{610F62E2-B596-41DA-BB65-B08F64F395E2}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
-    </Fields>
-    <Indexes>
-      <Index Field="Name" Unique="true"/>
-    </Indexes>
-  </Table>
+    <Table Name="GasStationStatement" UID="{C9620F81-9306-4170-A9D4-569744F55697}" Alias="gsts" LocalName="Ведомость АЗС" LocalListName="Ведомость АЗС" TitleName="Date" ObjectForm="ISOilSphere::GasStationStatementObjectForm">
+        <Fields>
+            <Field UID="{7C6A6D31-3F92-41A6-836D-A1B96E345A92}" Name="ImplementationUnload" Type="BigInt" LabelName="Выгрузка" LocalListName="Выгрузка" HideFromList="true" HideFromObject="true"/>
+            <Field UID="{4809E303-3E8F-42D3-B3A8-1B0C108DEB40}" Name="Stock" Type="BigInt" LabelName="Склад" LocalListName="Склад" LayoutName="Title"/>
+            <Field UID="{64DC2A84-C906-4F46-AE3E-3D32E273E236}" Name="Date" Type="Date" LabelName="Дата" LocalListName="Дата" NotNull="true" LayoutName="Title"/>
+            <Field UID="{AC99A6CC-A80E-4807-A6BF-C5712A8A8C3E}" Name="Operator" Type="BigInt" LabelName="Оператор" LocalListName="Оператор" LayoutName="Title"/>
+            <Field UID="{1CA44875-F7D1-4624-8B1E-5A12F82E5CA5}" Name="Change" Type="BigInt" LabelName="Смена" LocalListName="Смена" LayoutName="Title" HideFromObject="true"/>
 
-  <Table Name="Debet1" UID="{6FD4EE55-A3F7-4E96-883E-925A948B935A}" Alias="deb1" LocalName="Дебет 1" LocalListName="Дебет 1" TitleName="DateComing" ObjectForm="ISOilSphere::Debet1ObjectForm">
-    <Fields>
-      <Field UID="{04482A58-63A5-4106-9D86-04A33D19C657}" Name="DateComing" Type="Date" LabelName="Дата прихода" LocalListName="Дата прихода" LayoutName="Date"/>
-      <Field UID="{AF55147F-AA42-452E-8EB5-BCA1B805C77C}" Name="Counterparty" Type="BigInt" LabelName="Контрагент" LocalListName="Контрагент" LayoutName="Date"/>
-      <Field UID="{DA51AC4E-F5FA-47DB-950F-A6A27C4E79E7}" Name="Coming" Type="Money" LabelName="Приход" LocalListName="Приход" LayoutName="Coming"/>
-      <Field UID="{45637C9C-076E-499D-8488-F5BDEB7510A0}" Name="Percent" Type="Double" LabelName="Процент" LocalListName="Процент" LayoutName="Coming"/>
-      <Field UID="{A7A9E5C6-1517-47A4-B621-09958862E8D0}" Name="Total" Type="Money" LabelName="Итого" LocalListName="Итого" LayoutName="Coming"/>
-      <Field UID="{FE1EFFD3-5F14-42AC-89CB-2968BFC52744}" Name="DateReturn" Type="Date" LabelName="Дата возврата" LocalListName="Дата возврата" LayoutName="DateReturn"/>
-      <Field UID="{6D8CF294-D4E5-4026-9056-68CC4DFCFDB0}" Name="Calculation" Type="Money" LabelName="Расчёт" LocalListName="Расчёт" LayoutName="DateReturn"/>
-      <Field UID="{4C09D8BD-F29A-4EB9-81E7-698F2B90576C}" Name="Remainder" Type="Money" LabelName="Остаток" LocalListName="Остаток" LayoutName="DateReturn"/>
-      <Field UID="{E58FB379-7635-4C7B-B8AF-7C00FD760640}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
-    </Fields>
-    <Foreigns>
-      <Foreign Field="Counterparty" ForeignClass="Counterparty" ForeignField="ID" ForeignViewNameField="Name"/>
-    </Foreigns>
-  </Table>
+            <Field UID="{79298632-AE9B-4DFF-B0EF-EE23CD9A6914}" Name="BalanceBeginChange" Type="Money" LabelName="Остаток на начало смены" LocalListName="Остаток на начало смены" LayoutName="Layout1"/>
+            <Field UID="{6E0C3D58-C0B2-4BA7-B62E-AB0EA597317A}" Name="VolumeIncome" Type="Double" LabelName="Объём прихода" LocalListName="Объём прихода" LayoutName="Layout1"/>
+            <Field UID="{1BD71122-D089-4A06-A903-1643F15B12BF}" Name="VolumeHolidaysCounters" Type="Double" LabelName="Объём отпуска по счётчикам" LocalListName="Объём отпуска по счётчикам" LayoutName="Layout1"/>
+            <Field UID="{39277383-AE19-43D9-8219-166C8B51A3A6}" Name="TechnicalStraitDeviation" Type="Double" LabelName="Технический пролив (отклонения)" LocalListName="Технический пролив (отклонения)" LayoutName="Layout1"/>
+            <Field UID="{4DEFF451-A68A-4AD4-8CEB-0D2EFEFF4F24}" Name="StraitNote" Type="String" LabelName="Пояснение пролива" LocalListName="Пояснение пролива" LayoutName="Layout1"/>
+            <Field UID="{FF4D3766-3CBB-469B-8135-45E978185266}" Name="BalanceEndChange" Type="Money" ReadOnly="true" LabelName="Остаток на конец смены" LocalListName="Остаток на конец смены"/>
 
-  <Table Name="Debet2" UID="{0900FB4B-DA80-41D4-A2EB-CA3291AD0A0C}" Alias="deb2" LocalName="Дебет 2" LocalListName="Дебет 2" TitleName="DateComing" ObjectForm="ISOilSphere::Debet2ObjectForm">
-    <Fields>
-      <Field UID="{D3B45759-9DBB-41CD-8C21-24251D74DC54}" Name="DateComing" Type="Date" LabelName="Дата прихода" LocalListName="Дата прихода" LayoutName="Date"/>
-      <Field UID="{54AA3182-F3E2-46F5-858D-7BFA8EE6D1D4}" Name="Counterparty" Type="BigInt" LabelName="Контрагент" LocalListName="Контрагент" LayoutName="Date"/>
-      <Field UID="{7DFA22B9-92AC-4211-80CB-2A6321D25774}" Name="Coming" Type="Money" LabelName="Приход" LocalListName="Приход" LayoutName="Coming"/>
-      <Field UID="{470FE697-E3A9-4C48-94EE-3361C258498B}" Name="Percent" Type="Double" LabelName="Процент" LocalListName="Процент" LayoutName="Coming"/>
-      <Field UID="{8F500AA9-069F-415A-9DAB-7F7F31C9F05F}" Name="Total" Type="Money" LabelName="Итого" LocalListName="Итого" LayoutName="Coming"/>
-      <Field UID="{FAEA3ABA-00C5-4652-92F9-AC6C82C971DD}" Name="DateReturn" Type="Date" LabelName="Дата возврата" LocalListName="Дата возврата" LayoutName="DateReturn"/>
-      <Field UID="{395423A7-6C36-4B53-9855-029E685EA098}" Name="Calculation" Type="Money" LabelName="Расчёт" LocalListName="Расчёт" LayoutName="DateReturn"/>
-      <Field UID="{65ECF301-2D4E-41A6-ACC3-BC1CA6042840}" Name="Remainder" Type="Money" LabelName="Остаток" LocalListName="Остаток" LayoutName="DateReturn"/>
-      <Field UID="{73D37EA8-3F61-41AA-A485-514CF99558DA}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
-    </Fields>
-    <Foreigns>
-      <Foreign Field="Counterparty" ForeignClass="Counterparty" ForeignField="ID" ForeignViewNameField="Name"/>
-    </Foreigns>
-  </Table>
+            <Field UID="{321C8D0A-D118-4C48-A0A4-D911C34B0C40}" Name="SalesAmount" Type="Money" LabelName="Сумма реализации" LocalListName="Сумма реализации" SeparatorName="Продажи и поступления" LayoutName="Layout2"/>
+            <Field UID="{912692BE-3D25-48C4-A794-5E0DA25277D8}" Name="KKMCash" Type="Money" LabelName="ККМ наличные" LocalListName="ККМ наличные" LayoutName="Layout2"/>
+            <Field UID="{DD200050-9CF2-4829-991B-561BC6554A6C}" Name="KKMCashless" Type="Money" LabelName="ККМ безналичные" LocalListName="ККМ безналичные" LayoutName="Layout2"/>
+            <Field UID="{741FE611-0F11-4CB2-A8A5-A6B6C16C5EAF}" Name="Statements" Type="Double" LabelName="Ведомости" LocalListName="Ведомости" LayoutName="Layout2"/>
 
-  <Table Name="Debet3" UID="{264100C1-AE92-4664-9BD3-462757561AD1}" Alias="deb3" LocalName="Дебет 3" LocalListName="Дебет 3" TitleName="DateComing" ObjectForm="ISOilSphere::Debet3ObjectForm">
-    <Fields>
-      <Field UID="{5D03FCD1-C332-4F06-B23A-90C91A5C2805}" Name="DateComing" Type="Date" LabelName="Дата прихода" LocalListName="Дата прихода" LayoutName="Date"/>
-      <Field UID="{DFCAB892-FFB3-4AE5-A2FF-C7D18FAE3A6B}" Name="Counterparty" Type="BigInt" LabelName="Контрагент" LocalListName="Контрагент" LayoutName="Date"/>
-      <Field UID="{8D3552B4-7828-4F01-989D-E51FE08A4BB0}" Name="Coming" Type="Money" LabelName="Приход" LocalListName="Приход" LayoutName="Coming"/>
-      <Field UID="{B6819797-5F77-4546-B137-80F522EE0E9C}" Name="Percent" Type="Double" LabelName="Процент" LocalListName="Процент" LayoutName="Coming"/>
-      <Field UID="{65670AFF-EB23-428F-91E1-717157EED24B}" Name="Total" Type="Money" LabelName="Итого" LocalListName="Итого" LayoutName="Coming"/>
-      <Field UID="{232FDD41-7206-4031-BFEF-225635B36892}" Name="DateReturn" Type="Date" LabelName="Дата возврата" LocalListName="Дата возврата" LayoutName="DateReturn"/>
-      <Field UID="{76AA77C6-237A-461D-A1AD-405093574DA4}" Name="Calculation" Type="Money" LabelName="Расчёт" LocalListName="Расчёт" LayoutName="DateReturn"/>
-      <Field UID="{CE500E60-F9C8-4858-89EF-BCCB67FEFFD9}" Name="Remainder" Type="Money" LabelName="Остаток" LocalListName="Остаток" LayoutName="DateReturn"/>
-      <Field UID="{FE4F1688-4261-4081-A3E8-3933117CCF0B}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
-    </Fields>
-    <Foreigns>
-      <Foreign Field="Counterparty" ForeignClass="Counterparty" ForeignField="ID" ForeignViewNameField="Name"/>
-    </Foreigns>
-  </Table>
+            <Field UID="{6C2A6801-9056-4959-8565-AD092BF71EFC}" Name="PaySoldVolume" Type="Money" LabelName="Выплата с проданного объёма" LocalListName="Выплата с проданного объёма" LayoutName="Layout3"/>
+            <Field UID="{1CC47F68-0A72-4548-AEFB-CA872A40C11F}" Name="PresenceDebt" Type="Money" LabelName="Наличие долга" LocalListName="Наличие долга" LayoutName="Layout3"/>
+            <Field UID="{423037B5-20A4-47B3-ADBF-E59BD172CCBC}" Name="DebtNote" Type="String" LabelName="Пояснение долга" LocalListName="Пояснение долга" LayoutName="Layout3"/>
 
-  <Table Name="Debet4" UID="{6744958E-7341-4FE2-8163-AFB8FAD7EEFB}" Alias="deb4" LocalName="Дебет 4" LocalListName="Дебет 4" TitleName="DateComing" ObjectForm="ISOilSphere::Debet4ObjectForm">
-    <Fields>
-      <Field UID="{9A9B95B6-2EF2-4ED6-935D-A6902D287A6E}" Name="DateComing" Type="Date" LabelName="Дата прихода" LocalListName="Дата прихода" LayoutName="Date"/>
-      <Field UID="{CDBC44C5-1364-4CA8-AEC3-F77C03EC123C}" Name="Counterparty" Type="BigInt" LabelName="Контрагент" LocalListName="Контрагент" LayoutName="Date"/>
-      <Field UID="{C0D0B530-F661-4046-8EE0-BC9648224F5E}" Name="Coming" Type="Money" LabelName="Приход" LocalListName="Приход" LayoutName="Coming"/>
-      <Field UID="{CB9E816A-0EE1-4791-867B-2C4383044361}" Name="Percent" Type="Double" LabelName="Процент" LocalListName="Процент" LayoutName="Coming"/>
-      <Field UID="{27C3FB86-8C9F-4C68-9F1E-505899D9F957}" Name="Total" Type="Money" LabelName="Итого" LocalListName="Итого" LayoutName="Coming"/>
-      <Field UID="{FC3679F1-24F6-421A-B58E-19197706EC06}" Name="DateReturn" Type="Date" LabelName="Дата возврата" LocalListName="Дата возврата" LayoutName="DateReturn"/>
-      <Field UID="{3DAA9E49-5F8D-4565-B71D-8FAA490545B9}" Name="Calculation" Type="Money" LabelName="Расчёт" LocalListName="Расчёт" LayoutName="DateReturn"/>
-      <Field UID="{660DB0C1-7F4C-4B77-9032-40D0970D38E3}" Name="Remainder" Type="Money" LabelName="Остаток" LocalListName="Остаток" LayoutName="DateReturn"/>
-      <Field UID="{6E3F58D9-15E8-46DE-98C6-7BA2FFFB0D01}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
-    </Fields>
-    <Foreigns>
-      <Foreign Field="Counterparty" ForeignClass="Counterparty" ForeignField="ID" ForeignViewNameField="Name"/>
-    </Foreigns>
-  </Table>
+            <Field UID="{34E1380C-9677-40CC-8050-03C793B0C64A}" Name="CashboxBalancePayment" Type="Money" ReadOnly="true" LabelName="Остаток в кассе (расчёт)" LocalListName="Остаток в кассе (расчёт)" SeparatorName="Касса" LayoutName="Layout4"/>
+            <Field UID="{735E9E17-F729-440D-AD30-3B36984E4D6F}" Name="CashboxBalanceActually" Type="Money" ReadOnly="true" LabelName="Остаток в кассе (фактический)" LocalListName="Остаток в кассе (фактический)" LayoutName="Layout4"/>
+            <Field UID="{CE7603C4-ABF4-4745-BA70-F2F62746789D}" Name="CashboxDiscrepancies" Type="Money" ReadOnly="true" LabelName="Расхождения" LocalListName="Расхождения" LayoutName="Layout4"/>
+            <Field UID="{0D0A420B-6BBF-4482-8861-5DB54CB6BA24}" Name="CashboxKKMCash" Type="Money" ReadOnly="true" LabelName="Наличные по ККМ" LocalListName="Наличные по ККМ" LayoutName="Layout4"/>
+            <Field UID="{CD7622A3-1F45-4662-B390-3C2EF10841B5}" Name="CashboxTotalPayment" Type="Money" ReadOnly="true" LabelName="Накопительный итог (расчёт)" LocalListName="Накопительный итог (расчёт)" LayoutName="Layout5"/>
+            <Field UID="{353092C3-F451-4F54-ACA1-6C9A8297FBD5}" Name="CashboxTotalActually" Type="Money" ReadOnly="true" LabelName="Накопительный итог (фактический)" LocalListName="Накопительный итог (фактический)" LayoutName="Layout5"/>
+            <Field UID="{01E8D88F-213C-4617-A079-4E65AA65A099}" Name="CashboxDiscrepanciesTotals" Type="Money" ReadOnly="true" LabelName="Расхождения итогов" LocalListName="Расхождения итогов" LayoutName="Layout5"/>
+            <Field UID="{64D434CD-5E32-4F6F-A7C2-E7F6E5E1D526}" Name="CashboxKKMTotal" Type="Money" ReadOnly="true" LabelName="Накопительный итог по ККМ" LocalListName="Накопительный итог по ККМ"/>
+            <Field UID="{91D0DB88-3EB3-4E09-91A8-FE2B421B820B}" Name="CashboxCollectionAmount" Type="Money" LabelName="Сумма инкассации" LocalListName="Сумма инкассации"/>
+            <Field UID="{C0E5DFC2-41FF-4C0A-BD3E-B91FB00E4601}" Name="CashboxCollectionAmountKKM" Type="Money" LabelName="Сумма инкассации ККМ" LocalListName="Сумма инкассации ККМ"/>
+            <Field UID="{D3501D71-2A4D-4E42-B435-C58511CC074F}" Name="CashboxAdministrativeExpenses" Type="Money" LabelName="Административные расходы с кассы" LocalListName="Административные расходы с кассы" LayoutName="Layout6"/>
+            <Field UID="{8E7094B4-DE39-466C-A7AD-A12346A7EB10}" Name="CashboxAdministrativeExpensesNote" Type="String" LabelName="Пояснения к административным расходам" LocalListName="Пояснения к административным расходам" LayoutName="Layout6"/>
+        </Fields>
+        <Indexes>
+            <Index Field="Stock"/>
+        </Indexes>
+        <Foreigns>
+            <Foreign Field="ImplementationUnload" ForeignClass="ImplementationUnload" ForeignField="ID"/>
+            <Foreign Field="Stock" ForeignClass="Stock" ForeignField="ID" ForeignViewNameField="Name"/>
+            <Foreign Field="Operator" ForeignClass="Operator" ForeignField="ID" ForeignViewNameField="FIO"/>
+        </Foreigns>
+    </Table>
 
-  <Table Name="Debet5" UID="{DD9552E0-BC52-40E6-A222-063F0A921515}" Alias="deb5" LocalName="Дебет 5" LocalListName="Дебет 5" TitleName="DateComing" ObjectForm="ISOilSphere::Debet5ObjectForm">
-    <Fields>
-      <Field UID="{DB318393-4904-4F85-869D-3DC87F3CF358}" Name="DateComing" Type="Date" LabelName="Дата прихода" LocalListName="Дата прихода" LayoutName="Date"/>
-      <Field UID="{4488EC31-B1D3-4202-9475-3AFB23A1B41D}" Name="Counterparty" Type="BigInt" LabelName="Контрагент" LocalListName="Контрагент" LayoutName="Date"/>
-      <Field UID="{260757FC-0F98-484B-9C5D-F9577C0C9A03}" Name="Coming" Type="Money" LabelName="Приход" LocalListName="Приход" LayoutName="Coming"/>
-      <Field UID="{15AFCF0D-2F74-495B-8D2D-8EBF39ACB2D1}" Name="Percent" Type="Double" LabelName="Процент" LocalListName="Процент" LayoutName="Coming"/>
-      <Field UID="{90BF9079-B1BA-49E7-8AA0-29FCBD60BD4A}" Name="Total" Type="Money" LabelName="Итого" LocalListName="Итого" LayoutName="Coming"/>
-      <Field UID="{89E9F989-520F-496C-BF12-520CCD09941D}" Name="DateReturn" Type="Date" LabelName="Дата возврата" LocalListName="Дата возврата" LayoutName="DateReturn"/>
-      <Field UID="{BA31BCA1-8674-474D-BCE7-A3D50C43EB35}" Name="Calculation" Type="Money" LabelName="Расчёт" LocalListName="Расчёт" LayoutName="DateReturn"/>
-      <Field UID="{68CAB74C-8079-4FD5-9542-BB53C581F2F8}" Name="Remainder" Type="Money" LabelName="Остаток" LocalListName="Остаток" LayoutName="DateReturn"/>
-      <Field UID="{5DD474F0-576B-4245-894B-F03E2E8DE547}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
-    </Fields>
-    <Foreigns>
-      <Foreign Field="Counterparty" ForeignClass="Counterparty" ForeignField="ID" ForeignViewNameField="Name"/>
-    </Foreigns>
-  </Table>
+    <Table Name="Operator" UID="{84E69F6B-3072-4815-9318-4A61E753F4A2}" Alias="oper" LocalName="Оператор" LocalListName="Оператор" TitleName="FIO">
+        <Fields>
+            <Field UID="{DF5A811C-857B-4E41-9E66-4D9FA3D8075D}" Name="FIO" Type="String" LabelName="ФИО" LocalListName="ФИО" NotNull="true"/>
+        </Fields>
+        <Indexes>
+            <Index Field="FIO" Unique="true"/>
+        </Indexes>
+    </Table>
 
-  <Table Name="Stock" UID="{49AA23FB-4679-4349-95FA-DB1933ED65BE}" Alias="stck" LocalName="Склад" LocalListName="Склады" TitleName="Name">
-    <Fields>
-      <Field UID="{E256950B-F90C-4643-9493-ADFEB2349918}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
-      <Field UID="{C2F49C31-8DAA-4A30-80F3-BE0CC9DF4730}" Name="Balance" Type="Double" ReadOnly="true" LabelName="Баланс" LocalListName="Баланс" QueryText="get_stock_balance(stck_id)"/>
-    </Fields>
-    <Indexes>
-      <Index Field="Name" Unique="true"/>
-    </Indexes>
-    <Escorts>
-      <Escort LocalName="Поступления ЖД" ClassName="ISOilSphere::StockAdmissionTrain"/>
-      <Escort LocalName="Поступления с реализаций" ClassName="ISOilSphere::StockAdmissionImplemetation"/>
-      <Escort LocalName="Списания" ClassName="ISOilSphere::StockWriteOff"/>
-    </Escorts>
-  </Table>
+    <Table Name="OperationType" UID="{398473D9-FC00-4565-99A2-C70E35A95160}" Alias="optp" LocalName="Тип операции" LocalListName="Тип операции" TitleName="Name">
+        <Fields>
+            <Field UID="{610F62E2-B596-41DA-BB65-B08F64F395E2}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
+        </Fields>
+        <Indexes>
+            <Index Field="Name" Unique="true"/>
+        </Indexes>
+    </Table>
 
-  <Table Name="MoveWagon" UID="{C8417E41-30A5-46AC-A7C6-05E2C3520E60}" Alias="mwag" LocalName="Движения вагонов" LocalListName="Движения вагонов" TitleName="DateShipping">
-    <Fields>
-      <Field UID="{BDC812BD-2136-450D-AD39-FC986774DBC2}" Name="DateShipping" Type="Date" LabelName="Дата отгрузки" LocalListName="Дата отгрузки" NotNull="true"/>
-      <Field UID="{2A72FD16-99E4-4147-A544-513140F4B40D}" Name="Provider" Type="BigInt" LabelName="Поставщик" LocalListName="Поставщик" NotNull="true"/>
-      <Field UID="{41EB2FB9-67B7-4BAE-9CC5-A74D063516BA}" Name="Waybill" Type="String" LabelName="Накладная" LocalListName="Накладная" NotNull="true"/>
-      <Field UID="{C6DFF9F3-C4D4-456C-8EFF-77AB756A360F}" Name="PassportQuality" Type="Bool" DefaultValue="false" LabelName="Паспорт качества" LocalListName="Паспорт качества"/>
-      <Field UID="{3929B107-F2B9-4F71-B5BD-AFF1EE373876}" Name="Kilogram" Type="Double" ReadOnly="true" LabelName="Общая масса" LocalListName="Общая масса" QueryText="get_sum_weight_move_wagon_detail(mwag_id)"/>
-      <Field UID="{3A6F9BAF-1671-444F-B128-1CC990BD136E}" Name="Price" Type="Money" LabelName="Цена" LocalListName="Цена" NotNull="true"/>
-      <Field UID="{85E2A21B-337C-42DC-B82D-94A45349C65C}" Name="Sum" Type="Money" ReadOnly="true" LabelName="Сумма, руб." LocalListName="Сумма, руб." QueryText="mwag_price * (get_sum_weight_move_wagon_detail(mwag_id) / 1000)"/>
-      <Field UID="{28F1374B-CDDE-4902-B6F0-6B4DBE6A1640}" Name="Stock" Type="BigInt" LabelName="Склад" LocalListName="Склад" NotNull="true"/>
-      <Field UID="{546A0D2F-CB17-4DD2-99BD-16793CAD6501}" Name="DateArrival" Type="Date" LabelName="Дата прибытия" LocalListName="Дата прибытия"/>
-      <Field UID="{923EBDB0-819F-4D98-94C7-DEA903697850}" Name="TechnicalLosses" Type="Double" LabelName="Технические потери, %" LocalListName="Технические потери, %"/>
-      <Field UID="{C29C2DB1-840B-4D04-9A5D-0B7D57873B2E}" Name="StorageServices" Type="Money" LabelName="Услуги хранения, руб." LocalListName="Услуги хранения, руб."/>
-      <Field UID="{E25CC337-B559-401D-9827-6C578A0D642F}" Name="Transshipment" Type="Money" LabelName="Перевалка" LocalListName="Перевалка"/>
-      <Field UID="{1091D114-97FE-477C-9DD9-B8F099B4ED50}" Name="TechnicalLossesWeight" Type="Double" LabelName="Масса с учётом технических потерь" LocalListName="Масса с учётом технических потерь" QueryText="-((get_sum_weight_move_wagon_detail(mwag_id) * mwag_technicallosses / 100) - get_sum_weight_move_wagon_detail(mwag_id))"/>
-      <Field UID="{C938C8AE-946F-4577-A742-4464FF505287}" Name="PriceFull" Type="Money" LabelName="Цена с учётом хранения, подачи и уборки" LocalListName="Цена с учётом хранения, подачи и уборки" QueryText="mwag_price + mwag_storageservices + mwag_transshipment"/>
-      <Field UID="{5EE18C72-5ACB-4026-84B9-BE20252A9B00}" Name="TotalCost" Type="Money" LabelName="Итоговая стоимость" LocalListName="Итоговая стоимость" QueryText="get_sum_weight_move_wagon_detail(mwag_id) / 1000 * (mwag_price + mwag_storageservices + mwag_transshipment)"/>
-      <Field UID="{1FFBC69B-26E5-4180-AF52-DB1F5FE37201}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
-    </Fields>
-    <Foreigns>
-      <Foreign Field="Provider" ForeignClass="Counterparty" ForeignField="ID" ForeignViewNameField="Name"/>
-      <Foreign Field="Stock" ForeignClass="Stock" ForeignField="ID" ForeignViewNameField="Name"/>
-    </Foreigns>
-    <Escorts>
-      <Escort LocalName="Подробности передвижений" TableName="MoveWagonDetail" FilterField="MoveWagon"/>
-    </Escorts>
-  </Table>
+    <Table Name="Debet1" UID="{6FD4EE55-A3F7-4E96-883E-925A948B935A}" Alias="deb1" LocalName="Дебет 1" LocalListName="Дебет 1" TitleName="DateComing" ObjectForm="ISOilSphere::Debet1ObjectForm">
+        <Fields>
+            <Field UID="{04482A58-63A5-4106-9D86-04A33D19C657}" Name="DateComing" Type="Date" LabelName="Дата прихода" LocalListName="Дата прихода" LayoutName="Date"/>
+            <Field UID="{AF55147F-AA42-452E-8EB5-BCA1B805C77C}" Name="Counterparty" Type="BigInt" LabelName="Контрагент" LocalListName="Контрагент" LayoutName="Date"/>
+            <Field UID="{DA51AC4E-F5FA-47DB-950F-A6A27C4E79E7}" Name="Coming" Type="Money" LabelName="Приход" LocalListName="Приход" LayoutName="Coming"/>
+            <Field UID="{45637C9C-076E-499D-8488-F5BDEB7510A0}" Name="Percent" Type="Double" LabelName="Процент" LocalListName="Процент" LayoutName="Coming"/>
+            <Field UID="{A7A9E5C6-1517-47A4-B621-09958862E8D0}" Name="Total" Type="Money" LabelName="Итого" LocalListName="Итого" LayoutName="Coming"/>
+            <Field UID="{FE1EFFD3-5F14-42AC-89CB-2968BFC52744}" Name="DateReturn" Type="Date" LabelName="Дата возврата" LocalListName="Дата возврата" LayoutName="DateReturn"/>
+            <Field UID="{6D8CF294-D4E5-4026-9056-68CC4DFCFDB0}" Name="Calculation" Type="Money" LabelName="Расчёт" LocalListName="Расчёт" LayoutName="DateReturn"/>
+            <Field UID="{4C09D8BD-F29A-4EB9-81E7-698F2B90576C}" Name="Remainder" Type="Money" LabelName="Остаток" LocalListName="Остаток" LayoutName="DateReturn"/>
+            <Field UID="{E58FB379-7635-4C7B-B8AF-7C00FD760640}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
+        </Fields>
+        <Foreigns>
+            <Foreign Field="Counterparty" ForeignClass="Counterparty" ForeignField="ID" ForeignViewNameField="Name"/>
+        </Foreigns>
+    </Table>
 
-  <Table Name="MoveWagonDetail" UID="{5E5F2AB5-29EA-46CB-84CF-93890DF87965}" Alias="mwdt" LocalName="Детали движения вагона" LocalListName="Детали движения вагонов" TitleName="WagonNumber">
-    <Fields>
-      <Field UID="{B9AD4F3A-6AA9-485D-9B4A-4CD558392A63}" Name="MoveWagon" Type="BigInt" LabelName="Движения вагонов" LocalListName="Движения вагонов" NotNull="true" HideFromList="true" HideFromObject="true"/>
-      <Field UID="{916CDBC8-55AC-4A22-8B0D-9CA43D6A4A3F}" Name="WagonNumber" Type="Int" LabelName="Номер вагона" LocalListName="Номер вагона" NotNull="true"/>
-      <Field UID="{B94799C8-4ADB-490A-A835-83F50E36CCAE}" Name="Kilogram" Type="Double" LabelName="Килограммы" LocalListName="Килограммы" NotNull="true"/>
-      <Field UID="{1071385C-D44D-48A4-A757-DFA13AA32D27}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
-    </Fields>
-    <Indexes>
-      <Index Field="MoveWagon"/>
-    </Indexes>
-    <Foreigns>
-      <Foreign Field="MoveWagon" ForeignClass="MoveWagon" ForeignField="ID" ForeignViewNameField="DateShipping"/>
-    </Foreigns>
-  </Table>
-  
-  <Table Name="DriverCost" UID="{76EA6E6B-3351-4886-B01B-58035ED361B4}" Alias="drcs" LocalName="Расход водителя" LocalListName="Расходы водителей" TitleName="Date;Driver">
-    <Fields>
-      <Field UID="{E0372DB0-2FF6-4D96-B9C8-2167450BB54C}" Name="Date" Type="Date" LabelName="Дата" LocalListName="Дата" NotNull="true" LayoutName="Date"/>
-      <Field UID="{8389F60E-67FF-42BA-A15A-7CCE9CE7D148}" Name="Driver" Type="BigInt" LabelName="Водитель" LocalListName="Водитель" NotNull="true"/>
-      <Field UID="{441F7785-D668-416C-A2AF-42C640AC1C86}" Name="Car" Type="BigInt" LabelName="Автомобиль" LocalListName="Автомобиль" NotNull="true"/>
-      <Field UID="{3A7ED027-84D2-4AA8-8AE1-143B29492290}" Name="Coming" Type="Money" LabelName="Приход" LocalListName="Приход" LayoutName="Coming"/>
-      <Field UID="{27CC10AC-B714-4A1D-83AA-D1BAB73DA04D}" Name="PreviousRemainder" Type="Money" ReadOnly="true" LabelName="Остаток с предыдущей смены" LocalListName="Остаток с предыдущей смены" LayoutName="Coming"/>
-      <Field UID="{1F704D75-C3CE-414B-ACC1-334499E99423}" Name="Consumption" Type="Money" ReadOnly="true" LabelName="Расход" LocalListName="Расход" LayoutName="Consumption" QueryText="SELECT COALESCE(sum(dcdt_price), 0) FROM drivercostdetail WHERE dcdt_drivercost = drcs_id"/>
-      <Field UID="{E1A85ECD-1BE7-4466-9458-5F5977167997}" Name="Remainder" Type="Money" ReadOnly="true" LabelName="Остаток" LocalListName="Остаток" LayoutName="Consumption" QueryText="get_driver_cost_remainder(drcs_id, drcs_coming, drcs_previousremainder)"/>
-      <Field UID="{2CA5BCCF-A93B-42AD-82B9-BE5FEDAA8B44}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
-    </Fields>
-    <Foreigns>
-      <Foreign Field="Driver" ForeignClass="Driver" ForeignField="ID" ForeignViewNameField="FIO"/>
-      <Foreign Field="Car" ForeignClass="Car" ForeignField="ID" ForeignViewNameField="Mark;Model;Number"/>
-    </Foreigns>
-    <Escorts>
-      <Escort LocalName="Расходы" TableName="DriverCostDetail" FilterField="DriverCost"/>
-    </Escorts>
-  </Table>
+    <Table Name="Debet2" UID="{0900FB4B-DA80-41D4-A2EB-CA3291AD0A0C}" Alias="deb2" LocalName="Дебет 2" LocalListName="Дебет 2" TitleName="DateComing" ObjectForm="ISOilSphere::Debet2ObjectForm">
+        <Fields>
+            <Field UID="{D3B45759-9DBB-41CD-8C21-24251D74DC54}" Name="DateComing" Type="Date" LabelName="Дата прихода" LocalListName="Дата прихода" LayoutName="Date"/>
+            <Field UID="{54AA3182-F3E2-46F5-858D-7BFA8EE6D1D4}" Name="Counterparty" Type="BigInt" LabelName="Контрагент" LocalListName="Контрагент" LayoutName="Date"/>
+            <Field UID="{7DFA22B9-92AC-4211-80CB-2A6321D25774}" Name="Coming" Type="Money" LabelName="Приход" LocalListName="Приход" LayoutName="Coming"/>
+            <Field UID="{470FE697-E3A9-4C48-94EE-3361C258498B}" Name="Percent" Type="Double" LabelName="Процент" LocalListName="Процент" LayoutName="Coming"/>
+            <Field UID="{8F500AA9-069F-415A-9DAB-7F7F31C9F05F}" Name="Total" Type="Money" LabelName="Итого" LocalListName="Итого" LayoutName="Coming"/>
+            <Field UID="{FAEA3ABA-00C5-4652-92F9-AC6C82C971DD}" Name="DateReturn" Type="Date" LabelName="Дата возврата" LocalListName="Дата возврата" LayoutName="DateReturn"/>
+            <Field UID="{395423A7-6C36-4B53-9855-029E685EA098}" Name="Calculation" Type="Money" LabelName="Расчёт" LocalListName="Расчёт" LayoutName="DateReturn"/>
+            <Field UID="{65ECF301-2D4E-41A6-ACC3-BC1CA6042840}" Name="Remainder" Type="Money" LabelName="Остаток" LocalListName="Остаток" LayoutName="DateReturn"/>
+            <Field UID="{73D37EA8-3F61-41AA-A485-514CF99558DA}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
+        </Fields>
+        <Foreigns>
+            <Foreign Field="Counterparty" ForeignClass="Counterparty" ForeignField="ID" ForeignViewNameField="Name"/>
+        </Foreigns>
+    </Table>
 
-  <Table Name="DriverCostDetail" UID="{1BC1638C-687A-4423-94AD-3E591554C911}" Alias="dcdt" LocalName="Расход" LocalListName="Расходы" TitleName="Service">
-    <Fields>
-      <Field UID="{7382BD00-C037-4B93-A0F5-A21E66C2DBD3}" Name="DriverCost" Type="BigInt" LabelName="Расход водителя" LocalListName="Расход водителя" NotNull="true" HideFromList="true" HideFromObject="true"/>
-      <Field UID="{F61804DD-00C4-4024-8446-2DBF6C27E92D}" Name="Service" Type="BigInt" LabelName="Услуга" LocalListName="Услуга" NotNull="true"/>
-      <Field UID="{3E689891-AE2A-4589-B80E-79F47B46A324}" Name="Price" Type="Money" LabelName="Стоимость" LocalListName="Стоимость" NotNull="true"/>
-      <Field UID="{B177D422-38F4-4D28-A3BC-33C0C9158B5E}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
-    </Fields>
-    <Indexes>
-      <Index Field="DriverCost"/>
-    </Indexes>
-    <Foreigns>
-      <Foreign Field="DriverCost" ForeignClass="DriverCost" ForeignField="ID"/>
-      <Foreign Field="Service" ForeignClass="DriverService" ForeignField="ID" ForeignViewNameField="Name"/>
-    </Foreigns>
-  </Table>
+    <Table Name="Debet3" UID="{264100C1-AE92-4664-9BD3-462757561AD1}" Alias="deb3" LocalName="Дебет 3" LocalListName="Дебет 3" TitleName="DateComing" ObjectForm="ISOilSphere::Debet3ObjectForm">
+        <Fields>
+            <Field UID="{5D03FCD1-C332-4F06-B23A-90C91A5C2805}" Name="DateComing" Type="Date" LabelName="Дата прихода" LocalListName="Дата прихода" LayoutName="Date"/>
+            <Field UID="{DFCAB892-FFB3-4AE5-A2FF-C7D18FAE3A6B}" Name="Counterparty" Type="BigInt" LabelName="Контрагент" LocalListName="Контрагент" LayoutName="Date"/>
+            <Field UID="{8D3552B4-7828-4F01-989D-E51FE08A4BB0}" Name="Coming" Type="Money" LabelName="Приход" LocalListName="Приход" LayoutName="Coming"/>
+            <Field UID="{B6819797-5F77-4546-B137-80F522EE0E9C}" Name="Percent" Type="Double" LabelName="Процент" LocalListName="Процент" LayoutName="Coming"/>
+            <Field UID="{65670AFF-EB23-428F-91E1-717157EED24B}" Name="Total" Type="Money" LabelName="Итого" LocalListName="Итого" LayoutName="Coming"/>
+            <Field UID="{232FDD41-7206-4031-BFEF-225635B36892}" Name="DateReturn" Type="Date" LabelName="Дата возврата" LocalListName="Дата возврата" LayoutName="DateReturn"/>
+            <Field UID="{76AA77C6-237A-461D-A1AD-405093574DA4}" Name="Calculation" Type="Money" LabelName="Расчёт" LocalListName="Расчёт" LayoutName="DateReturn"/>
+            <Field UID="{CE500E60-F9C8-4858-89EF-BCCB67FEFFD9}" Name="Remainder" Type="Money" LabelName="Остаток" LocalListName="Остаток" LayoutName="DateReturn"/>
+            <Field UID="{FE4F1688-4261-4081-A3E8-3933117CCF0B}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
+        </Fields>
+        <Foreigns>
+            <Foreign Field="Counterparty" ForeignClass="Counterparty" ForeignField="ID" ForeignViewNameField="Name"/>
+        </Foreigns>
+    </Table>
 
-  <Table Name="DriverService" UID="{FB317D58-F783-47F2-A8AD-E6D40CC28AC0}" Alias="dsrv" LocalName="Услуга" LocalListName="Услуги" TitleName="Name">
-    <Fields>
-      <Field UID="{7154D2FE-5091-48AD-ACD5-BD49BB39DA41}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
-    </Fields>
-    <Indexes>
-      <Index Field="Name" Unique="true"/>
-    </Indexes>
-  </Table>
+    <Table Name="Debet4" UID="{6744958E-7341-4FE2-8163-AFB8FAD7EEFB}" Alias="deb4" LocalName="Дебет 4" LocalListName="Дебет 4" TitleName="DateComing" ObjectForm="ISOilSphere::Debet4ObjectForm">
+        <Fields>
+            <Field UID="{9A9B95B6-2EF2-4ED6-935D-A6902D287A6E}" Name="DateComing" Type="Date" LabelName="Дата прихода" LocalListName="Дата прихода" LayoutName="Date"/>
+            <Field UID="{CDBC44C5-1364-4CA8-AEC3-F77C03EC123C}" Name="Counterparty" Type="BigInt" LabelName="Контрагент" LocalListName="Контрагент" LayoutName="Date"/>
+            <Field UID="{C0D0B530-F661-4046-8EE0-BC9648224F5E}" Name="Coming" Type="Money" LabelName="Приход" LocalListName="Приход" LayoutName="Coming"/>
+            <Field UID="{CB9E816A-0EE1-4791-867B-2C4383044361}" Name="Percent" Type="Double" LabelName="Процент" LocalListName="Процент" LayoutName="Coming"/>
+            <Field UID="{27C3FB86-8C9F-4C68-9F1E-505899D9F957}" Name="Total" Type="Money" LabelName="Итого" LocalListName="Итого" LayoutName="Coming"/>
+            <Field UID="{FC3679F1-24F6-421A-B58E-19197706EC06}" Name="DateReturn" Type="Date" LabelName="Дата возврата" LocalListName="Дата возврата" LayoutName="DateReturn"/>
+            <Field UID="{3DAA9E49-5F8D-4565-B71D-8FAA490545B9}" Name="Calculation" Type="Money" LabelName="Расчёт" LocalListName="Расчёт" LayoutName="DateReturn"/>
+            <Field UID="{660DB0C1-7F4C-4B77-9032-40D0970D38E3}" Name="Remainder" Type="Money" LabelName="Остаток" LocalListName="Остаток" LayoutName="DateReturn"/>
+            <Field UID="{6E3F58D9-15E8-46DE-98C6-7BA2FFFB0D01}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
+        </Fields>
+        <Foreigns>
+            <Foreign Field="Counterparty" ForeignClass="Counterparty" ForeignField="ID" ForeignViewNameField="Name"/>
+        </Foreigns>
+    </Table>
 
-  <Table Name="Period" UID="{832E7C72-9D07-46D6-910F-DCB04131C968}" Alias="prod" LocalName="Период" LocalListName="Периоды" TitleName="Name">
-    <Fields>
-      <Field UID="{C2729C95-DD67-40C6-9356-64084300F124}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
-      <Field UID="{0BECAF8A-8D84-4379-BC6E-005DC6974F01}" Name="DateStart" Type="Date" LabelName="Начало периода" LocalListName="Начало периода" NotNull="true" LayoutName="DateStart"/>
-      <Field UID="{F8553578-5954-4538-B9F6-28FA61D4337A}" Name="DateEnd" Type="Date" LabelName="Конец периода" LocalListName="Конец периода" NotNull="true" LayoutName="DateStart"/>
-      <Field UID="{8B2A4D90-C051-4B18-9A4E-949D1454FDF4}" Name="Constant" Type="Double" LabelName="Константа" LocalListName="Константа" NotNull="true" LayoutName="DateStart"/>
-      <Field UID="{BC93B9AA-6A9E-4543-BA99-9C17790770D2}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
-    </Fields>
-    <Indexes>
-      <Index Field="Name" Unique="true"/>
-      <Index Field="DateStart;DateEnd"/>
-    </Indexes>
-  </Table>
+    <Table Name="Debet5" UID="{DD9552E0-BC52-40E6-A222-063F0A921515}" Alias="deb5" LocalName="Дебет 5" LocalListName="Дебет 5" TitleName="DateComing" ObjectForm="ISOilSphere::Debet5ObjectForm">
+        <Fields>
+            <Field UID="{DB318393-4904-4F85-869D-3DC87F3CF358}" Name="DateComing" Type="Date" LabelName="Дата прихода" LocalListName="Дата прихода" LayoutName="Date"/>
+            <Field UID="{4488EC31-B1D3-4202-9475-3AFB23A1B41D}" Name="Counterparty" Type="BigInt" LabelName="Контрагент" LocalListName="Контрагент" LayoutName="Date"/>
+            <Field UID="{260757FC-0F98-484B-9C5D-F9577C0C9A03}" Name="Coming" Type="Money" LabelName="Приход" LocalListName="Приход" LayoutName="Coming"/>
+            <Field UID="{15AFCF0D-2F74-495B-8D2D-8EBF39ACB2D1}" Name="Percent" Type="Double" LabelName="Процент" LocalListName="Процент" LayoutName="Coming"/>
+            <Field UID="{90BF9079-B1BA-49E7-8AA0-29FCBD60BD4A}" Name="Total" Type="Money" LabelName="Итого" LocalListName="Итого" LayoutName="Coming"/>
+            <Field UID="{89E9F989-520F-496C-BF12-520CCD09941D}" Name="DateReturn" Type="Date" LabelName="Дата возврата" LocalListName="Дата возврата" LayoutName="DateReturn"/>
+            <Field UID="{BA31BCA1-8674-474D-BCE7-A3D50C43EB35}" Name="Calculation" Type="Money" LabelName="Расчёт" LocalListName="Расчёт" LayoutName="DateReturn"/>
+            <Field UID="{68CAB74C-8079-4FD5-9542-BB53C581F2F8}" Name="Remainder" Type="Money" LabelName="Остаток" LocalListName="Остаток" LayoutName="DateReturn"/>
+            <Field UID="{5DD474F0-576B-4245-894B-F03E2E8DE547}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
+        </Fields>
+        <Foreigns>
+            <Foreign Field="Counterparty" ForeignClass="Counterparty" ForeignField="ID" ForeignViewNameField="Name"/>
+        </Foreigns>
+    </Table>
 
-  <Table Name="Coming" UID="{847342A8-72B8-4581-B098-4B12CF82D5BC}" Alias="cmng" LocalName="Приход" LocalListName="Приходы" TitleName="Date" ObjectForm="ISOilSphere::ComingObjectForm">
-    <Fields>
-      <Field UID="{FB17AD0E-C832-4E6B-962B-0DFA0E5E4BB8}" Name="User" Type="BigInt" LabelName="Пользователь" LocalListName="Пользователь" NotNull="true" HideFromObject="true"/>
-      <Field UID="{127B1F45-62B4-4BEF-97CA-1F22E97687C0}" Name="Date" Type="Date" LabelName="Дата" LocalListName="Дата" NotNull="true" LayoutName="Date"/>
-      <Field UID="{C226612E-9CEA-44C5-B52B-449A7414DE09}" Name="Sum" Type="Money" LabelName="Сумма" LocalListName="Сумма" NotNull="true" LayoutName="Date"/>
-    </Fields>
-    <Foreigns>
-      <Foreign Field="User" ForeignClass="_Users" ForeignField="ID" ForeignViewNameField="FIO"/>
-    </Foreigns>
-  </Table>
-  
-  <Table Name="Distribution" UID="{38693406-9F58-46E8-9DF4-EFD482208813}" Alias="dsmn" LocalName="Распределение" LocalListName="Распределение" TitleName="UserTo;Sum" ObjectForm="ISOilSphere::DistributionObjectForm">
-    <Fields>
-      <Field UID="{B843B21E-1F4B-4333-ABA0-E5A0D2657846}" Name="UserFrom" Type="BigInt" LabelName="Отправил" LocalListName="Отправил" NotNull="true" HideFromObject="true"/>
-      <Field UID="{5BDAC65D-A2CF-442B-AEB1-BE868045B84A}" Name="Date" Type="Date" DefaultValue="now()" LabelName="Дата" LocalListName="Дата" NotNull="true" HideFromObject="true"/>
-      <Field UID="{E75FB150-1D22-4B2C-AD67-C24FCA5451DE}" Name="UserTo" Type="BigInt" LabelName="Получатель" LocalListName="Получатель" NotNull="true"/>
-      <Field UID="{A0D64658-4D6E-471D-A608-A93D5B150254}" Name="Sum" Type="Money" LabelName="Сумма" LocalListName="Сумма" NotNull="true"/>
-    </Fields>
-    <Foreigns>
-      <Foreign Field="UserFrom" ForeignClass="_Users" ForeignField="ID" ForeignViewNameField="FIO"/>
-      <Foreign Field="UserTo" ForeignClass="_Users" ForeignField="ID" ForeignViewNameField="FIO"/>
-    </Foreigns>
-  </Table>
+    <Table Name="Stock" UID="{49AA23FB-4679-4349-95FA-DB1933ED65BE}" Alias="stck" LocalName="Склад" LocalListName="Склады" TitleName="Name">
+        <Fields>
+            <Field UID="{E256950B-F90C-4643-9493-ADFEB2349918}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
+            <Field UID="{C2F49C31-8DAA-4A30-80F3-BE0CC9DF4730}" Name="Balance" Type="Double" ReadOnly="true" LabelName="Баланс" LocalListName="Баланс" QueryText="get_stock_balance(stck_id)"/>
+        </Fields>
+        <Indexes>
+            <Index Field="Name" Unique="true"/>
+        </Indexes>
+        <Escorts>
+            <Escort LocalName="Поступления ЖД" ClassName="ISOilSphere::StockAdmissionTrain"/>
+            <Escort LocalName="Поступления с реализаций" ClassName="ISOilSphere::StockAdmissionImplemetation"/>
+            <Escort LocalName="Списания" ClassName="ISOilSphere::StockWriteOff"/>
+        </Escorts>
+    </Table>
 
-  <Table Name="Consumption" UID="{EDDE03E1-B32C-4043-BB9A-D35F7EC78B0E}" Alias="cpmp" LocalName="Расход" LocalListName="Расходы" TitleName="Date" ObjectForm="ISOilSphere::ConsumptionObjectForm">
-    <Fields>
-      <Field UID="{15772A76-C3B6-4B69-B32F-E9A5CCEDD7CE}" Name="User" Type="BigInt" LabelName="Пользователь" LocalListName="Пользователь" NotNull="true" HideFromList="true" HideFromObject="true"/>
-      <Field UID="{F8DE1252-96EB-49A2-9A7B-2CB568A080C1}" Name="Date" Type="Date" LabelName="Дата" LocalListName="Дата" NotNull="true"/>
-      <Field UID="{08230052-D161-4D99-8D24-2D3933594F10}" Name="Sum" Type="Money" LabelName="Сумма" LocalListName="Сумма" NotNull="true"/>
-      <Field UID="{5BF97288-55EC-451D-B4CA-8808E04744F6}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
-    </Fields>
-    <Foreigns>
-      <Foreign Field="User" ForeignClass="_Users" ForeignField="ID" ForeignViewNameField="FIO"/>
-    </Foreigns>
-  </Table>
+    <Table Name="MoveWagon" UID="{C8417E41-30A5-46AC-A7C6-05E2C3520E60}" Alias="mwag" LocalName="Движения вагонов" LocalListName="Движения вагонов" TitleName="DateShipping">
+        <Fields>
+            <Field UID="{BDC812BD-2136-450D-AD39-FC986774DBC2}" Name="DateShipping" Type="Date" LabelName="Дата отгрузки" LocalListName="Дата отгрузки" NotNull="true"/>
+            <Field UID="{2A72FD16-99E4-4147-A544-513140F4B40D}" Name="Provider" Type="BigInt" LabelName="Поставщик" LocalListName="Поставщик" NotNull="true"/>
+            <Field UID="{41EB2FB9-67B7-4BAE-9CC5-A74D063516BA}" Name="Waybill" Type="String" LabelName="Накладная" LocalListName="Накладная" NotNull="true"/>
+            <Field UID="{C6DFF9F3-C4D4-456C-8EFF-77AB756A360F}" Name="PassportQuality" Type="Bool" DefaultValue="false" LabelName="Паспорт качества" LocalListName="Паспорт качества"/>
+            <Field UID="{3929B107-F2B9-4F71-B5BD-AFF1EE373876}" Name="Kilogram" Type="Double" ReadOnly="true" LabelName="Общая масса" LocalListName="Общая масса" QueryText="get_sum_weight_move_wagon_detail(mwag_id)"/>
+            <Field UID="{3A6F9BAF-1671-444F-B128-1CC990BD136E}" Name="Price" Type="Money" LabelName="Цена" LocalListName="Цена" NotNull="true"/>
+            <Field UID="{85E2A21B-337C-42DC-B82D-94A45349C65C}" Name="Sum" Type="Money" ReadOnly="true" LabelName="Сумма, руб." LocalListName="Сумма, руб." QueryText="mwag_price * (get_sum_weight_move_wagon_detail(mwag_id) / 1000)"/>
+            <Field UID="{28F1374B-CDDE-4902-B6F0-6B4DBE6A1640}" Name="Stock" Type="BigInt" LabelName="Склад" LocalListName="Склад" NotNull="true"/>
+            <Field UID="{546A0D2F-CB17-4DD2-99BD-16793CAD6501}" Name="DateArrival" Type="Date" LabelName="Дата прибытия" LocalListName="Дата прибытия"/>
+            <Field UID="{923EBDB0-819F-4D98-94C7-DEA903697850}" Name="TechnicalLosses" Type="Double" LabelName="Технические потери, %" LocalListName="Технические потери, %"/>
+            <Field UID="{C29C2DB1-840B-4D04-9A5D-0B7D57873B2E}" Name="StorageServices" Type="Money" LabelName="Услуги хранения, руб." LocalListName="Услуги хранения, руб."/>
+            <Field UID="{E25CC337-B559-401D-9827-6C578A0D642F}" Name="Transshipment" Type="Money" LabelName="Перевалка" LocalListName="Перевалка"/>
+            <Field UID="{1091D114-97FE-477C-9DD9-B8F099B4ED50}" Name="TechnicalLossesWeight" Type="Double" LabelName="Масса с учётом технических потерь" LocalListName="Масса с учётом технических потерь" QueryText="-((get_sum_weight_move_wagon_detail(mwag_id) * mwag_technicallosses / 100) - get_sum_weight_move_wagon_detail(mwag_id))"/>
+            <Field UID="{C938C8AE-946F-4577-A742-4464FF505287}" Name="PriceFull" Type="Money" LabelName="Цена с учётом хранения, подачи и уборки" LocalListName="Цена с учётом хранения, подачи и уборки" QueryText="mwag_price + mwag_storageservices + mwag_transshipment"/>
+            <Field UID="{5EE18C72-5ACB-4026-84B9-BE20252A9B00}" Name="TotalCost" Type="Money" LabelName="Итоговая стоимость" LocalListName="Итоговая стоимость" QueryText="get_sum_weight_move_wagon_detail(mwag_id) / 1000 * (mwag_price + mwag_storageservices + mwag_transshipment)"/>
+            <Field UID="{1FFBC69B-26E5-4180-AF52-DB1F5FE37201}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
+        </Fields>
+        <Foreigns>
+            <Foreign Field="Provider" ForeignClass="Counterparty" ForeignField="ID" ForeignViewNameField="Name"/>
+            <Foreign Field="Stock" ForeignClass="Stock" ForeignField="ID" ForeignViewNameField="Name"/>
+        </Foreigns>
+        <Escorts>
+            <Escort LocalName="Подробности передвижений" TableName="MoveWagonDetail" FilterField="MoveWagon"/>
+        </Escorts>
+    </Table>
 
-  <Table Name="Return" UID="{57E18310-8E74-4F64-8383-D5B084FDFBF6}" Alias="rtrn" LocalName="Возврат" LocalListName="Возвраты" TitleName="Date" ObjectForm="ISOilSphere::ReturnObjectForm">
-    <Fields>
-      <Field UID="{97586790-39D1-48DA-AA9B-B2ED0FDDC90D}" Name="User" Type="BigInt" LabelName="Пользователь" LocalListName="Пользователь" NotNull="true" HideFromList="true" HideFromObject="true"/>
-      <Field UID="{66655C52-073B-4874-99CB-6EFB5BC856E7}" Name="Date" Type="Date" DefaultValue="now()" LabelName="Дата" LocalListName="Дата" NotNull="true" HideFromObject="true"/>
-      <Field UID="{BC148A0B-5E95-4E30-A74A-A50D92F68C05}" Name="Sum" Type="Money" LabelName="Сумма" LocalListName="Сумма" NotNull="true"/>
-      <Field UID="{5A0E6B3A-A63B-42A3-9ADD-A15DFB469AB7}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
-    </Fields>
-    <Foreigns>
-      <Foreign Field="User" ForeignClass="_Users" ForeignField="ID" ForeignViewNameField="FIO"/>
-    </Foreigns>
-  </Table>
-  
-  <Table Name="Bank" UID="{AB254670-CA9A-47A3-A4B6-8924EF462622}" Alias="bank" ShowOnly="true" LocalName="Банки" LocalListName="Банки" TitleName="PurposePayment">
-    <Fields>
-      <Field UID="{5A6DC010-400F-4982-A367-416C5BBF59AF}" Name="Date" Type="Date" LabelName="Дата" LocalListName="Дата"/>
-      <Field UID="{AD4E6EC3-F7A5-432A-B97E-F1D3D749430A}" Name="Admission" Type="Money" LabelName="Поступление" LocalListName="Поступление"/>
-      <Field UID="{0C820599-EE92-4EBF-B3D6-F7F3AE62DD10}" Name="WriteOff" Type="Money" LabelName="Списание" LocalListName="Списание"/>
-      <Field UID="{267F3601-2220-4898-BD4B-79E5ADF9FF03}" Name="PurposePayment" Type="String" LabelName="Назначение платежа" LocalListName="Назначение платежа"/>
-      <Field UID="{602899C3-8067-4F7F-929A-6592E3E06584}" Name="Counterparty" Type="String" LabelName="Контрагент" LocalListName="Контрагент"/>
-      <Field UID="{53257AB8-0944-4327-B492-8837DB4323E8}" Name="CheckNumber" Type="String" LabelName="Номер чека" LocalListName="Номер чека"/>
-      <Field UID="{CF43CB3D-4D6D-4EAE-8E09-233E860E9E8C}" Name="OperationType" Type="String" LabelName="Вид операции" LocalListName="Вид операции"/>
-      <Field UID="{8CCE6880-79F8-4948-99F2-2C4992D6CDC1}" Name="IncomingNumber" Type="String" LabelName="Входящий номер" LocalListName="Входящий номер"/>
-      <Field UID="{D4139892-EAE1-43C4-BB88-F0D36FD77426}" Name="IncomingDate" Type="Date" LabelName="Входящая дата" LocalListName="Входящая дата"/>
-      <Field UID="{4C8DA9F1-B9AF-4B8B-9FB4-937A3249CD5C}" Name="BankAccount" Type="String" LabelName="Банковский счёт" LocalListName="Банковский счёт"/>
-      <Field UID="{9C164CF5-E72C-400D-B155-2F7E24EA85F4}" Name="Comment" Type="String" LabelName="Комментарий" LocalListName="Комментарий"/>
-    </Fields>
-    <Indexes>
-      <Index Field="Date;IncomingNumber" Unique="true"/>
-    </Indexes>
-  </Table>
+    <Table Name="MoveWagonDetail" UID="{5E5F2AB5-29EA-46CB-84CF-93890DF87965}" Alias="mwdt" LocalName="Детали движения вагона" LocalListName="Детали движения вагонов" TitleName="WagonNumber">
+        <Fields>
+            <Field UID="{B9AD4F3A-6AA9-485D-9B4A-4CD558392A63}" Name="MoveWagon" Type="BigInt" LabelName="Движения вагонов" LocalListName="Движения вагонов" NotNull="true" HideFromList="true" HideFromObject="true"/>
+            <Field UID="{916CDBC8-55AC-4A22-8B0D-9CA43D6A4A3F}" Name="WagonNumber" Type="Int" LabelName="Номер вагона" LocalListName="Номер вагона" NotNull="true"/>
+            <Field UID="{B94799C8-4ADB-490A-A835-83F50E36CCAE}" Name="Kilogram" Type="Double" LabelName="Килограммы" LocalListName="Килограммы" NotNull="true"/>
+            <Field UID="{1071385C-D44D-48A4-A757-DFA13AA32D27}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
+        </Fields>
+        <Indexes>
+            <Index Field="MoveWagon"/>
+        </Indexes>
+        <Foreigns>
+            <Foreign Field="MoveWagon" ForeignClass="MoveWagon" ForeignField="ID" ForeignViewNameField="DateShipping"/>
+        </Foreigns>
+    </Table>
+
+    <Table Name="DriverCost" UID="{76EA6E6B-3351-4886-B01B-58035ED361B4}" Alias="drcs" LocalName="Расход водителя" LocalListName="Расходы водителей" TitleName="Date;Driver">
+        <Fields>
+            <Field UID="{E0372DB0-2FF6-4D96-B9C8-2167450BB54C}" Name="Date" Type="Date" LabelName="Дата" LocalListName="Дата" NotNull="true" LayoutName="Date"/>
+            <Field UID="{8389F60E-67FF-42BA-A15A-7CCE9CE7D148}" Name="Driver" Type="BigInt" LabelName="Водитель" LocalListName="Водитель" NotNull="true"/>
+            <Field UID="{441F7785-D668-416C-A2AF-42C640AC1C86}" Name="Car" Type="BigInt" LabelName="Автомобиль" LocalListName="Автомобиль" NotNull="true"/>
+            <Field UID="{3A7ED027-84D2-4AA8-8AE1-143B29492290}" Name="Coming" Type="Money" LabelName="Приход" LocalListName="Приход" LayoutName="Coming"/>
+            <Field UID="{27CC10AC-B714-4A1D-83AA-D1BAB73DA04D}" Name="PreviousRemainder" Type="Money" ReadOnly="true" LabelName="Остаток с предыдущей смены" LocalListName="Остаток с предыдущей смены" LayoutName="Coming"/>
+            <Field UID="{1F704D75-C3CE-414B-ACC1-334499E99423}" Name="Consumption" Type="Money" ReadOnly="true" LabelName="Расход" LocalListName="Расход" LayoutName="Consumption" QueryText="SELECT COALESCE(sum(dcdt_price), 0) FROM drivercostdetail WHERE dcdt_drivercost = drcs_id"/>
+            <Field UID="{E1A85ECD-1BE7-4466-9458-5F5977167997}" Name="Remainder" Type="Money" ReadOnly="true" LabelName="Остаток" LocalListName="Остаток" LayoutName="Consumption" QueryText="get_driver_cost_remainder(drcs_id, drcs_coming, drcs_previousremainder)"/>
+            <Field UID="{2CA5BCCF-A93B-42AD-82B9-BE5FEDAA8B44}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
+        </Fields>
+        <Foreigns>
+            <Foreign Field="Driver" ForeignClass="Driver" ForeignField="ID" ForeignViewNameField="FIO"/>
+            <Foreign Field="Car" ForeignClass="Car" ForeignField="ID" ForeignViewNameField="Mark;Model;Number"/>
+        </Foreigns>
+        <Escorts>
+            <Escort LocalName="Расходы" TableName="DriverCostDetail" FilterField="DriverCost"/>
+        </Escorts>
+    </Table>
+
+    <Table Name="DriverCostDetail" UID="{1BC1638C-687A-4423-94AD-3E591554C911}" Alias="dcdt" LocalName="Расход" LocalListName="Расходы" TitleName="Service">
+        <Fields>
+            <Field UID="{7382BD00-C037-4B93-A0F5-A21E66C2DBD3}" Name="DriverCost" Type="BigInt" LabelName="Расход водителя" LocalListName="Расход водителя" NotNull="true" HideFromList="true" HideFromObject="true"/>
+            <Field UID="{F61804DD-00C4-4024-8446-2DBF6C27E92D}" Name="Service" Type="BigInt" LabelName="Услуга" LocalListName="Услуга" NotNull="true"/>
+            <Field UID="{3E689891-AE2A-4589-B80E-79F47B46A324}" Name="Price" Type="Money" LabelName="Стоимость" LocalListName="Стоимость" NotNull="true"/>
+            <Field UID="{B177D422-38F4-4D28-A3BC-33C0C9158B5E}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
+        </Fields>
+        <Indexes>
+            <Index Field="DriverCost"/>
+        </Indexes>
+        <Foreigns>
+            <Foreign Field="DriverCost" ForeignClass="DriverCost" ForeignField="ID"/>
+            <Foreign Field="Service" ForeignClass="DriverService" ForeignField="ID" ForeignViewNameField="Name"/>
+        </Foreigns>
+    </Table>
+
+    <Table Name="DriverService" UID="{FB317D58-F783-47F2-A8AD-E6D40CC28AC0}" Alias="dsrv" LocalName="Услуга" LocalListName="Услуги" TitleName="Name">
+        <Fields>
+            <Field UID="{7154D2FE-5091-48AD-ACD5-BD49BB39DA41}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
+        </Fields>
+        <Indexes>
+            <Index Field="Name" Unique="true"/>
+        </Indexes>
+    </Table>
+
+    <Table Name="Period" UID="{832E7C72-9D07-46D6-910F-DCB04131C968}" Alias="prod" LocalName="Период" LocalListName="Периоды" TitleName="Name">
+        <Fields>
+            <Field UID="{C2729C95-DD67-40C6-9356-64084300F124}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
+            <Field UID="{0BECAF8A-8D84-4379-BC6E-005DC6974F01}" Name="DateStart" Type="Date" LabelName="Начало периода" LocalListName="Начало периода" NotNull="true" LayoutName="DateStart"/>
+            <Field UID="{F8553578-5954-4538-B9F6-28FA61D4337A}" Name="DateEnd" Type="Date" LabelName="Конец периода" LocalListName="Конец периода" NotNull="true" LayoutName="DateStart"/>
+            <Field UID="{8B2A4D90-C051-4B18-9A4E-949D1454FDF4}" Name="Constant" Type="Double" LabelName="Константа" LocalListName="Константа" NotNull="true" LayoutName="DateStart"/>
+            <Field UID="{BC93B9AA-6A9E-4543-BA99-9C17790770D2}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
+        </Fields>
+        <Indexes>
+            <Index Field="Name" Unique="true"/>
+            <Index Field="DateStart;DateEnd"/>
+        </Indexes>
+    </Table>
+
+    <Table Name="Coming" UID="{847342A8-72B8-4581-B098-4B12CF82D5BC}" Alias="cmng" LocalName="Приход" LocalListName="Приходы" TitleName="Date" ObjectForm="ISOilSphere::ComingObjectForm">
+        <Fields>
+            <Field UID="{FB17AD0E-C832-4E6B-962B-0DFA0E5E4BB8}" Name="User" Type="BigInt" LabelName="Пользователь" LocalListName="Пользователь" NotNull="true" HideFromObject="true"/>
+            <Field UID="{127B1F45-62B4-4BEF-97CA-1F22E97687C0}" Name="Date" Type="Date" LabelName="Дата" LocalListName="Дата" NotNull="true" LayoutName="Date"/>
+            <Field UID="{C226612E-9CEA-44C5-B52B-449A7414DE09}" Name="Sum" Type="Money" LabelName="Сумма" LocalListName="Сумма" NotNull="true" LayoutName="Date"/>
+        </Fields>
+        <Foreigns>
+            <Foreign Field="User" ForeignClass="_Users" ForeignField="ID" ForeignViewNameField="FIO"/>
+        </Foreigns>
+    </Table>
+
+    <Table Name="Distribution" UID="{38693406-9F58-46E8-9DF4-EFD482208813}" Alias="dsmn" LocalName="Распределение" LocalListName="Распределение" TitleName="UserTo;Sum" ObjectForm="ISOilSphere::DistributionObjectForm">
+        <Fields>
+            <Field UID="{B843B21E-1F4B-4333-ABA0-E5A0D2657846}" Name="UserFrom" Type="BigInt" LabelName="Отправил" LocalListName="Отправил" NotNull="true" HideFromObject="true"/>
+            <Field UID="{5BDAC65D-A2CF-442B-AEB1-BE868045B84A}" Name="Date" Type="Date" DefaultValue="now()" LabelName="Дата" LocalListName="Дата" NotNull="true" HideFromObject="true"/>
+            <Field UID="{E75FB150-1D22-4B2C-AD67-C24FCA5451DE}" Name="UserTo" Type="BigInt" LabelName="Получатель" LocalListName="Получатель" NotNull="true"/>
+            <Field UID="{A0D64658-4D6E-471D-A608-A93D5B150254}" Name="Sum" Type="Money" LabelName="Сумма" LocalListName="Сумма" NotNull="true"/>
+        </Fields>
+        <Foreigns>
+            <Foreign Field="UserFrom" ForeignClass="_Users" ForeignField="ID" ForeignViewNameField="FIO"/>
+            <Foreign Field="UserTo" ForeignClass="_Users" ForeignField="ID" ForeignViewNameField="FIO"/>
+        </Foreigns>
+    </Table>
+
+    <Table Name="Consumption" UID="{EDDE03E1-B32C-4043-BB9A-D35F7EC78B0E}" Alias="cpmp" LocalName="Расход" LocalListName="Расходы" TitleName="Date" ObjectForm="ISOilSphere::ConsumptionObjectForm">
+        <Fields>
+            <Field UID="{15772A76-C3B6-4B69-B32F-E9A5CCEDD7CE}" Name="User" Type="BigInt" LabelName="Пользователь" LocalListName="Пользователь" NotNull="true" HideFromList="true" HideFromObject="true"/>
+            <Field UID="{F8DE1252-96EB-49A2-9A7B-2CB568A080C1}" Name="Date" Type="Date" LabelName="Дата" LocalListName="Дата" NotNull="true"/>
+            <Field UID="{08230052-D161-4D99-8D24-2D3933594F10}" Name="Sum" Type="Money" LabelName="Сумма" LocalListName="Сумма" NotNull="true"/>
+            <Field UID="{5BF97288-55EC-451D-B4CA-8808E04744F6}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
+        </Fields>
+        <Foreigns>
+            <Foreign Field="User" ForeignClass="_Users" ForeignField="ID" ForeignViewNameField="FIO"/>
+        </Foreigns>
+    </Table>
+
+    <Table Name="Return" UID="{57E18310-8E74-4F64-8383-D5B084FDFBF6}" Alias="rtrn" LocalName="Возврат" LocalListName="Возвраты" TitleName="Date" ObjectForm="ISOilSphere::ReturnObjectForm">
+        <Fields>
+            <Field UID="{97586790-39D1-48DA-AA9B-B2ED0FDDC90D}" Name="User" Type="BigInt" LabelName="Пользователь" LocalListName="Пользователь" NotNull="true" HideFromList="true" HideFromObject="true"/>
+            <Field UID="{66655C52-073B-4874-99CB-6EFB5BC856E7}" Name="Date" Type="Date" DefaultValue="now()" LabelName="Дата" LocalListName="Дата" NotNull="true" HideFromObject="true"/>
+            <Field UID="{BC148A0B-5E95-4E30-A74A-A50D92F68C05}" Name="Sum" Type="Money" LabelName="Сумма" LocalListName="Сумма" NotNull="true"/>
+            <Field UID="{5A0E6B3A-A63B-42A3-9ADD-A15DFB469AB7}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
+        </Fields>
+        <Foreigns>
+            <Foreign Field="User" ForeignClass="_Users" ForeignField="ID" ForeignViewNameField="FIO"/>
+        </Foreigns>
+    </Table>
+
+    <Table Name="Bank" UID="{AB254670-CA9A-47A3-A4B6-8924EF462622}" Alias="bank" ShowOnly="true" LocalName="Банки" LocalListName="Банки" TitleName="PurposePayment">
+        <Fields>
+            <Field UID="{5A6DC010-400F-4982-A367-416C5BBF59AF}" Name="Date" Type="Date" LabelName="Дата" LocalListName="Дата"/>
+            <Field UID="{AD4E6EC3-F7A5-432A-B97E-F1D3D749430A}" Name="Admission" Type="Money" LabelName="Поступление" LocalListName="Поступление"/>
+            <Field UID="{0C820599-EE92-4EBF-B3D6-F7F3AE62DD10}" Name="WriteOff" Type="Money" LabelName="Списание" LocalListName="Списание"/>
+            <Field UID="{267F3601-2220-4898-BD4B-79E5ADF9FF03}" Name="PurposePayment" Type="String" LabelName="Назначение платежа" LocalListName="Назначение платежа"/>
+            <Field UID="{602899C3-8067-4F7F-929A-6592E3E06584}" Name="Counterparty" Type="String" LabelName="Контрагент" LocalListName="Контрагент"/>
+            <Field UID="{53257AB8-0944-4327-B492-8837DB4323E8}" Name="CheckNumber" Type="String" LabelName="Номер чека" LocalListName="Номер чека"/>
+            <Field UID="{CF43CB3D-4D6D-4EAE-8E09-233E860E9E8C}" Name="OperationType" Type="String" LabelName="Вид операции" LocalListName="Вид операции"/>
+            <Field UID="{8CCE6880-79F8-4948-99F2-2C4992D6CDC1}" Name="IncomingNumber" Type="String" LabelName="Входящий номер" LocalListName="Входящий номер"/>
+            <Field UID="{D4139892-EAE1-43C4-BB88-F0D36FD77426}" Name="IncomingDate" Type="Date" LabelName="Входящая дата" LocalListName="Входящая дата"/>
+            <Field UID="{4C8DA9F1-B9AF-4B8B-9FB4-937A3249CD5C}" Name="BankAccount" Type="String" LabelName="Банковский счёт" LocalListName="Банковский счёт"/>
+            <Field UID="{9C164CF5-E72C-400D-B155-2F7E24EA85F4}" Name="Comment" Type="String" LabelName="Комментарий" LocalListName="Комментарий"/>
+        </Fields>
+        <Indexes>
+            <Index Field="Date;IncomingNumber" Unique="true"/>
+        </Indexes>
+    </Table>
 
 </XSN>

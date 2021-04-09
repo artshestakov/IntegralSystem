@@ -1,103 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
 <XSN Name="User.xsn">
-  
-  <Table Name="_Users" UID="{6027E727-3704-43FA-BA13-CF7A209ACDA8}" Alias="usrs" LocalName="Пользователь" LocalListName="Пользователи" TitleName="FIO" ObjectForm="ISUserObjectForm">
-    <Fields>
-      <Field UID="{DBE02AFE-2215-471F-825C-9670CEAAC908}" Name="Group" Type="BigInt" LabelName="Группа" LocalListName="Группа"/>
-      <Field UID="{79E27A03-6412-4236-B9A2-761DA41E80E6}" Name="FIO" Type="String" LabelName="ФИО" LocalListName="ФИО" NotNull="true"/>
-      <Field UID="{EE458F07-C0F1-4B2C-970E-DA5575AB614C}" Name="Login" Type="String" Lower="true" RegExp="^([0-9A-Za-z._]+)$" LabelName="Логин" LocalListName="Логин" NotNull="true" Hint="Допускаются буквенные символы на английском языке, цифры, точка и нижний пробел."/>
-      <Field UID="{61FDECB6-B023-4D3E-9558-56851ACCC2FF}" Name="Hash" Type="String" Size="128" LabelName="Хэш" LocalListName="Хэш" HideFromList="true" HideFromObject="true" NotSearch="true"/>
-      <Field UID="{B7548396-6540-40F1-9254-B70FF0EB324F}" Name="Salt" Type="String" Size="64" LabelName="Соль" LocalListName="Соль" HideFromList="true" HideFromObject="true" NotSearch="true"/>
-      <Field UID="{FEB51D6E-1395-4799-9049-3C9A9CE68370}" Name="AccessAllowed" Type="Bool" DefaultValueWidget="true" LabelName="Доступ разрешен" LocalListName="Доступ разрешен" Hint="Если эта опция отключена, пользователь не сможет войти в программу." SeparatorName="Учётная запись"/>
-      <Field UID="{7BBCE6E1-F154-49ED-B494-10FF96C0B140}" Name="AccountLifeTime" Type="Bool" DefaultValue="false" LabelName="Срок действия учётной записи" LocalListName="Срок действия учётной записи" HideFromList="true" Hint="Вы можете ограничить действие учётной записи пользователя указав дату начала и окончания действия учётной записи. Пользовать сможет авторизоваться в программе согласно выбронному Вами диапазону действия." LayoutName="AccountLifeTime"/>
-      <Field UID="{07CB8028-4695-4F7C-A676-8D89E38932F8}" Name="AccountLifeTimeStart" Type="Date" LabelName="Дата начала действия" LocalListName="Дата начала действия" HideFromList="true" LayoutName="AccountLifeTime"/>
-      <Field UID="{196BD860-208E-4DF7-8E4D-A65F7A9E8F35}" Name="AccountLifeTimeEnd" Type="Date" LabelName="Дата окончания действия" LocalListName="Дата окончания действия" HideFromList="true" LayoutName="AccountLifeTime"/>
-    </Fields>
-    <Indexes>
-      <Index Field="Login" Unique="true"/>
-      <Index Field="Hash" Unique="true"/>
-      <Index Field="Salt" Unique="true"/>
-    </Indexes>
-    <Foreigns>
-      <Foreign Field="Group" ForeignClass="_UserGroup" ForeignField="ID" ForeignViewNameField="Name"/>
-    </Foreigns>
-  </Table>
 
-  <Table Name="_UserGroup" UID="{5E25B938-7938-402D-A60B-6D8AAB1DF513}" Alias="usgp" LocalName="Группа пользователей" LocalListName="Группы пользователей" TitleName="Name">
-    <Fields>
-      <Field UID="{E4F2FE6C-DFA4-4B8A-AD38-1D39410DC14D}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
-      <Field UID="{0E544427-A9C1-4CC6-9741-DEA81321E9B5}" Name="FullAccess" Type="Bool" DefaultValue="false" LabelName="Полный доступ" LocalListName="Полный доступ"/>
-      <Field UID="{B864EA45-906B-498F-8489-034E80668FDC}" Name="Count" Type="Int" ReadOnly="true" LabelName="Пользователей в группе" LocalListName="Пользователей в группе" QueryText="SELECT COUNT(*) FROM _users WHERE usrs_group = usgp_id"/>
-    </Fields>
-    <Indexes>
-      <Index Field="Name" Unique="true"/>
-      <Index Field="FullAccess"/>
-    </Indexes>
-  </Table>
+    <Table Name="_Users" UID="{6027E727-3704-43FA-BA13-CF7A209ACDA8}" Alias="usrs" LocalName="Пользователь" LocalListName="Пользователи" TitleName="FIO" ObjectForm="ISUserObjectForm">
+        <Fields>
+            <Field UID="{DBE02AFE-2215-471F-825C-9670CEAAC908}" Name="Group" Type="BigInt" LabelName="Группа" LocalListName="Группа"/>
+            <Field UID="{79E27A03-6412-4236-B9A2-761DA41E80E6}" Name="FIO" Type="String" LabelName="ФИО" LocalListName="ФИО" NotNull="true"/>
+            <Field UID="{EE458F07-C0F1-4B2C-970E-DA5575AB614C}" Name="Login" Type="String" Lower="true" RegExp="^([0-9A-Za-z._]+)$" LabelName="Логин" LocalListName="Логин" NotNull="true" Hint="Допускаются буквенные символы на английском языке, цифры, точка и нижний пробел."/>
+            <Field UID="{61FDECB6-B023-4D3E-9558-56851ACCC2FF}" Name="Hash" Type="String" Size="128" LabelName="Хэш" LocalListName="Хэш" HideFromList="true" HideFromObject="true" NotSearch="true"/>
+            <Field UID="{B7548396-6540-40F1-9254-B70FF0EB324F}" Name="Salt" Type="String" Size="64" LabelName="Соль" LocalListName="Соль" HideFromList="true" HideFromObject="true" NotSearch="true"/>
+            <Field UID="{FEB51D6E-1395-4799-9049-3C9A9CE68370}" Name="AccessAllowed" Type="Bool" DefaultValueWidget="true" LabelName="Доступ разрешен" LocalListName="Доступ разрешен" Hint="Если эта опция отключена, пользователь не сможет войти в программу." SeparatorName="Учётная запись"/>
+            <Field UID="{7BBCE6E1-F154-49ED-B494-10FF96C0B140}" Name="AccountLifeTime" Type="Bool" DefaultValue="false" LabelName="Срок действия учётной записи" LocalListName="Срок действия учётной записи" HideFromList="true" Hint="Вы можете ограничить действие учётной записи пользователя указав дату начала и окончания действия учётной записи. Пользовать сможет авторизоваться в программе согласно выбронному Вами диапазону действия." LayoutName="AccountLifeTime"/>
+            <Field UID="{07CB8028-4695-4F7C-A676-8D89E38932F8}" Name="AccountLifeTimeStart" Type="Date" LabelName="Дата начала действия" LocalListName="Дата начала действия" HideFromList="true" LayoutName="AccountLifeTime"/>
+            <Field UID="{196BD860-208E-4DF7-8E4D-A65F7A9E8F35}" Name="AccountLifeTimeEnd" Type="Date" LabelName="Дата окончания действия" LocalListName="Дата окончания действия" HideFromList="true" LayoutName="AccountLifeTime"/>
+        </Fields>
+        <Indexes>
+            <Index Field="Login" Unique="true"/>
+            <Index Field="Hash" Unique="true"/>
+            <Index Field="Salt" Unique="true"/>
+        </Indexes>
+        <Foreigns>
+            <Foreign Field="Group" ForeignClass="_UserGroup" ForeignField="ID" ForeignViewNameField="Name"/>
+        </Foreigns>
+    </Table>
 
-  <Table Name="_GroupAccessSubSystem" UID="{3A73D82E-FE96-462D-B618-D21AB087B3A2}" Alias="gass" LocalName="Право доступа на подсистему" LocalListName="Права доступа на подсистемы" TitleName="Group" IsSystem="true">
-    <Fields>
-      <Field UID="{F8625938-EB8A-4C63-995E-69EE128AFDEB}" Name="Group" Type="BigInt" LabelName="Группа" LocalListName="Группа" NotNull="true"/>
-      <Field UID="{9246E78B-FF72-4517-A963-71E6014CD972}" Name="SubSystem" Type="UID" LabelName="Подсистема" LocalListName="Подсистема" NotNull="true"/>
-    </Fields>
-    <Indexes>
-      <Index Field="Group;SubSystem" Unique="true"/>
-    </Indexes>
-    <Foreigns>
-      <Foreign Field="Group" ForeignClass="_UserGroup" ForeignField="ID" ForeignViewNameField="Name"/>
-    </Foreigns>
-  </Table>
+    <Table Name="_UserGroup" UID="{5E25B938-7938-402D-A60B-6D8AAB1DF513}" Alias="usgp" LocalName="Группа пользователей" LocalListName="Группы пользователей" TitleName="Name">
+        <Fields>
+            <Field UID="{E4F2FE6C-DFA4-4B8A-AD38-1D39410DC14D}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
+            <Field UID="{0E544427-A9C1-4CC6-9741-DEA81321E9B5}" Name="FullAccess" Type="Bool" DefaultValue="false" LabelName="Полный доступ" LocalListName="Полный доступ"/>
+            <Field UID="{B864EA45-906B-498F-8489-034E80668FDC}" Name="Count" Type="Int" ReadOnly="true" LabelName="Пользователей в группе" LocalListName="Пользователей в группе" QueryText="SELECT COUNT(*) FROM _users WHERE usrs_group = usgp_id"/>
+        </Fields>
+        <Indexes>
+            <Index Field="Name" Unique="true"/>
+            <Index Field="FullAccess"/>
+        </Indexes>
+    </Table>
 
-  <Table Name="_GroupAccessTable" UID="{00F8E495-F7CB-4FF3-B2F9-C9AE120E0A5B}" Alias="gatb" LocalName="Право доступа на таблицу" LocalListName="Права доступа на таблицы" TitleName="Group" IsSystem="true">
-    <Fields>
-      <Field UID="{58C99020-7327-4A27-95D8-E64AEE79EABB}" Name="Group" Type="BigInt" LabelName="Группа" LocalListName="Группа" NotNull="true"/>
-      <Field UID="{03C407DD-8E68-46FB-81A4-45D9DA2EC642}" Name="Table" Type="String" LabelName="Таблица" LocalListName="Таблица" NotNull="true"/>
-      <Field UID="{9C8B015B-6A70-4CF8-9F66-70FBCA2DC1E7}" Name="AccessType" Type="BigInt" LabelName="Право" LocalListName="Право" NotNull="true"/>
-    </Fields>
-    <Indexes>
-      <Index Field="Group;Table;AccessType" Unique="true"/>
-    </Indexes>
-    <Foreigns>
-      <Foreign Field="Group" ForeignClass="_UserGroup" ForeignField="ID" ForeignViewNameField="Name"/>
-      <Foreign Field="AccessType" ForeignClass="_GroupAccessTableType" ForeignField="ID" ForeignViewNameField="Name"/>
-    </Foreigns>
-  </Table>
+    <Table Name="_GroupAccessSubSystem" UID="{3A73D82E-FE96-462D-B618-D21AB087B3A2}" Alias="gass" LocalName="Право доступа на подсистему" LocalListName="Права доступа на подсистемы" TitleName="Group" IsSystem="true">
+        <Fields>
+            <Field UID="{F8625938-EB8A-4C63-995E-69EE128AFDEB}" Name="Group" Type="BigInt" LabelName="Группа" LocalListName="Группа" NotNull="true"/>
+            <Field UID="{9246E78B-FF72-4517-A963-71E6014CD972}" Name="SubSystem" Type="UID" LabelName="Подсистема" LocalListName="Подсистема" NotNull="true"/>
+        </Fields>
+        <Indexes>
+            <Index Field="Group;SubSystem" Unique="true"/>
+        </Indexes>
+        <Foreigns>
+            <Foreign Field="Group" ForeignClass="_UserGroup" ForeignField="ID" ForeignViewNameField="Name"/>
+        </Foreigns>
+    </Table>
 
-  <Table Name="_GroupAccessTableType" UID="{F569718D-0C2D-40A5-8415-577D55BF646D}" Alias="gatt" LocalName="Тип права доступа на таблицу" LocalListName="Типы прав доступа на таблицу" TitleName="Name" IsSystem="true">
-    <Fields>
-      <Field UID="{A39FB3AD-80DC-412A-B657-C794163C495D}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
-      <Field UID="{61BB211B-5BAC-4232-8BB7-5078910DC27E}" Name="Icon" Type="String" LabelName="Иконка" LocalListName="Иконка"/>
-      <Field UID="{D6C1A9D5-C60E-4577-90DB-B9FA6F341CEA}" Name="Order" Type="Int" LabelName="Порядок" LocalListName="Порядок" NotNull="true"/>
-    </Fields>
-  </Table>
+    <Table Name="_GroupAccessTable" UID="{00F8E495-F7CB-4FF3-B2F9-C9AE120E0A5B}" Alias="gatb" LocalName="Право доступа на таблицу" LocalListName="Права доступа на таблицы" TitleName="Group" IsSystem="true">
+        <Fields>
+            <Field UID="{58C99020-7327-4A27-95D8-E64AEE79EABB}" Name="Group" Type="BigInt" LabelName="Группа" LocalListName="Группа" NotNull="true"/>
+            <Field UID="{03C407DD-8E68-46FB-81A4-45D9DA2EC642}" Name="Table" Type="String" LabelName="Таблица" LocalListName="Таблица" NotNull="true"/>
+            <Field UID="{9C8B015B-6A70-4CF8-9F66-70FBCA2DC1E7}" Name="AccessType" Type="BigInt" LabelName="Право" LocalListName="Право" NotNull="true"/>
+        </Fields>
+        <Indexes>
+            <Index Field="Group;Table;AccessType" Unique="true"/>
+        </Indexes>
+        <Foreigns>
+            <Foreign Field="Group" ForeignClass="_UserGroup" ForeignField="ID" ForeignViewNameField="Name"/>
+            <Foreign Field="AccessType" ForeignClass="_GroupAccessTableType" ForeignField="ID" ForeignViewNameField="Name"/>
+        </Foreigns>
+    </Table>
 
-  <Table Name="_GroupAccessSpecial" UID="{BE0E381C-7265-494E-81F6-02257399ECDD}" Alias="gasp" LocalName="Специальное право" LocalListName="Специальные права" TitleName="Group" IsSystem="true">
-    <Fields>
-      <Field UID="{8C86FCA2-DA0B-49E0-B855-648C2687650E}" Name="Group" Type="BigInt" LabelName="Группа" LocalListName="Группа" NotNull="true"/>
-      <Field UID="{5504048E-C6D9-4F16-ABF4-9D8341BECAC9}" Name="SpecialAccess" Type="BigInt" LabelName="Право" LocalListName="Право" NotNull="true"/>
-    </Fields>
-    <Indexes>
-      <Index Field="Group;SpecialAccess" Unique="true"/>
-    </Indexes>
-    <Foreigns>
-      <Foreign Field="Group" ForeignClass="_UserGroup" ForeignField="ID" ForeignViewNameField="Name"/>
-      <Foreign Field="SpecialAccess" ForeignClass="_GroupAccessSpecialType" ForeignField="ID" ForeignViewNameField="Name"/>
-    </Foreigns>
-  </Table>
-  
-  <Table Name="_GroupAccessSpecialType" UID="{20312AF0-F3FD-4ECB-8A60-828550C314A2}" Alias="gast" LocalName="Тип специального права" LocalListName="Типы специальных прав" TitleName="Name" IsSystem="true">
-    <Fields>
-      <Field UID="{3236BE03-D920-4970-A785-0C3DAD189EC2}" Name="Parent" Type="UID" LabelName="Родитель" LocalListName="Родитель"/>
-      <Field UID="{330F6C83-0485-4252-BE34-C85E9F13D158}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование"/>
-      <Field UID="{F615B7AB-2FE8-4259-9C07-25F65FDD8AD1}" Name="Hint" Type="String" LabelName="Описание" LocalListName="Описание"/>
-      <Field UID="{49D10DA1-3042-4DD6-AF6F-17F2CB836A25}" Name="Order" Type="Int" LabelName="Порядок" LocalListName="Порядок"/>
-    </Fields>
-    <Indexes>
-      <Index Field="Parent"/>
-    </Indexes>
-    <Foreigns>
-      <Foreign Field="Parent" ForeignClass="_GroupAccessSpecialType" ForeignField="UID" ForeignViewNameField="Name"/>
-    </Foreigns>
-  </Table>
-         
+    <Table Name="_GroupAccessTableType" UID="{F569718D-0C2D-40A5-8415-577D55BF646D}" Alias="gatt" LocalName="Тип права доступа на таблицу" LocalListName="Типы прав доступа на таблицу" TitleName="Name" IsSystem="true">
+        <Fields>
+            <Field UID="{A39FB3AD-80DC-412A-B657-C794163C495D}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
+            <Field UID="{61BB211B-5BAC-4232-8BB7-5078910DC27E}" Name="Icon" Type="String" LabelName="Иконка" LocalListName="Иконка"/>
+            <Field UID="{D6C1A9D5-C60E-4577-90DB-B9FA6F341CEA}" Name="Order" Type="Int" LabelName="Порядок" LocalListName="Порядок" NotNull="true"/>
+        </Fields>
+    </Table>
+
+    <Table Name="_GroupAccessSpecial" UID="{BE0E381C-7265-494E-81F6-02257399ECDD}" Alias="gasp" LocalName="Специальное право" LocalListName="Специальные права" TitleName="Group" IsSystem="true">
+        <Fields>
+            <Field UID="{8C86FCA2-DA0B-49E0-B855-648C2687650E}" Name="Group" Type="BigInt" LabelName="Группа" LocalListName="Группа" NotNull="true"/>
+            <Field UID="{5504048E-C6D9-4F16-ABF4-9D8341BECAC9}" Name="SpecialAccess" Type="BigInt" LabelName="Право" LocalListName="Право" NotNull="true"/>
+        </Fields>
+        <Indexes>
+            <Index Field="Group;SpecialAccess" Unique="true"/>
+        </Indexes>
+        <Foreigns>
+            <Foreign Field="Group" ForeignClass="_UserGroup" ForeignField="ID" ForeignViewNameField="Name"/>
+            <Foreign Field="SpecialAccess" ForeignClass="_GroupAccessSpecialType" ForeignField="ID" ForeignViewNameField="Name"/>
+        </Foreigns>
+    </Table>
+
+    <Table Name="_GroupAccessSpecialType" UID="{20312AF0-F3FD-4ECB-8A60-828550C314A2}" Alias="gast" LocalName="Тип специального права" LocalListName="Типы специальных прав" TitleName="Name" IsSystem="true">
+        <Fields>
+            <Field UID="{3236BE03-D920-4970-A785-0C3DAD189EC2}" Name="Parent" Type="UID" LabelName="Родитель" LocalListName="Родитель"/>
+            <Field UID="{330F6C83-0485-4252-BE34-C85E9F13D158}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование"/>
+            <Field UID="{F615B7AB-2FE8-4259-9C07-25F65FDD8AD1}" Name="Hint" Type="String" LabelName="Описание" LocalListName="Описание"/>
+            <Field UID="{49D10DA1-3042-4DD6-AF6F-17F2CB836A25}" Name="Order" Type="Int" LabelName="Порядок" LocalListName="Порядок"/>
+        </Fields>
+        <Indexes>
+            <Index Field="Parent"/>
+        </Indexes>
+        <Foreigns>
+            <Foreign Field="Parent" ForeignClass="_GroupAccessSpecialType" ForeignField="UID" ForeignViewNameField="Name"/>
+        </Foreigns>
+    </Table>
+
 </XSN>

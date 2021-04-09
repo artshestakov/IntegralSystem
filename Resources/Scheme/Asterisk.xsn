@@ -1,35 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <XSN Name="Asterisk.xsn">
 
-  <Table Name="_AsteriskCalls" UID="{D7F7E074-5E66-441D-9C0C-DB9ACCB7C4B2}" Alias="ascl" LocalName="Звонок" LocalListName="Звонки" TitleName="UniqueID" IsSystem="true" ShowOnly="true">
-    <Fields>
-      <Field UID="{8A0E4977-6513-42C3-A8E5-36894EDB735B}" Name="Source" Type="String" LabelName="Кто звонил" LocalListName="Кто звонил"/>
-      <Field UID="{031C924C-47D6-4256-8D20-C0E6C0407D74}" Name="Destination" Type="String" LabelName="Куда звонили" LocalListName="Куда звонили"/>
-      <Field UID="{28D5A031-482B-4E74-B305-7688F03711F2}" Name="CallerID" Type="String" LabelName="Идентификатор абонента" LocalListName="Идентификатор абонента"/>
-      <Field UID="{595865EF-CB89-488C-A619-9E2506CDFAAA}" Name="Channel" Type="String" LabelName="Входящий канал" LocalListName="Входящий канал"/>
-      <Field UID="{0239C82C-64EF-4A4F-833C-76B7376981A9}" Name="DestinationChannel" Type="String" LabelName="Исходящий канал" LocalListName="Исходящий канал"/>
-      <Field UID="{673C1D2A-22AE-4ED3-B441-31B1B09ADC2B}" Name="StartTime" Type="DateTime" LabelName="Дата и время звонка" LocalListName="Дата и время звонка"/>
-      <Field UID="{582A4259-FF22-4420-972A-456ACF38BCD0}" Name="AnswerTime" Type="DateTime" LabelName="Дата и время ответа" LocalListName="Дата и время ответа"/>
-      <Field UID="{3E375466-17C7-449A-A76B-A4F08555CD75}" Name="EndTime" Type="DateTime" LabelName="Дата и время завершения звонка" LocalListName="Дата и время завершения звонка"/>
-      <Field UID="{C3D7C7F4-2993-47D5-8EB4-8E4CD4226495}" Name="Duration" Type="BigInt" LabelName="Общая длительность" LocalListName="Общая длительность"/>
-      <Field UID="{46FC78D6-D0F0-4C96-9157-2FC785EE1CE8}" Name="BillableSeconds" Type="BigInt" LabelName="Длительность разговора" LocalListName="Длительность разговора"/>
-      <Field UID="{CFDB8EA5-0E83-4B36-B520-FCD0ABE5C9E5}" Name="Disposition" Type="BigInt" LabelName="Статус" LocalListName="Статус"/>
-      <Field UID="{70FB0880-4662-47AA-BB2A-9B9143B6F4F5}" Name="UniqueID" Type="String" LabelName="UniqueID" LocalListName="UniqueID" HideFromList="true"/>
-      <Field UID="{D793D1EC-0EC5-460D-B982-5EB46A5BBCB6}" Name="UserField" Type="String" LabelName="UserField" LocalListName="UserField" HideFromList="true"/>
-    </Fields>
-    <Foreigns>
-      <Foreign Field="Disposition" ForeignClass="_DispositionType" ForeignField="ID" ForeignViewNameField="LocalName"/>
-    </Foreigns>
-  </Table>
+    <Table Name="_AsteriskCalls" UID="{D7F7E074-5E66-441D-9C0C-DB9ACCB7C4B2}" Alias="ascl" LocalName="Звонок" LocalListName="Звонки" TitleName="UniqueID" IsSystem="true" ShowOnly="true">
+        <Fields>
+            <Field UID="{8A0E4977-6513-42C3-A8E5-36894EDB735B}" Name="Source" Type="String" LabelName="Кто звонил" LocalListName="Кто звонил"/>
+            <Field UID="{031C924C-47D6-4256-8D20-C0E6C0407D74}" Name="Destination" Type="String" LabelName="Куда звонили" LocalListName="Куда звонили"/>
+            <Field UID="{28D5A031-482B-4E74-B305-7688F03711F2}" Name="CallerID" Type="String" LabelName="Идентификатор абонента" LocalListName="Идентификатор абонента"/>
+            <Field UID="{595865EF-CB89-488C-A619-9E2506CDFAAA}" Name="Channel" Type="String" LabelName="Входящий канал" LocalListName="Входящий канал"/>
+            <Field UID="{0239C82C-64EF-4A4F-833C-76B7376981A9}" Name="DestinationChannel" Type="String" LabelName="Исходящий канал" LocalListName="Исходящий канал"/>
+            <Field UID="{673C1D2A-22AE-4ED3-B441-31B1B09ADC2B}" Name="StartTime" Type="DateTime" LabelName="Дата и время звонка" LocalListName="Дата и время звонка"/>
+            <Field UID="{582A4259-FF22-4420-972A-456ACF38BCD0}" Name="AnswerTime" Type="DateTime" LabelName="Дата и время ответа" LocalListName="Дата и время ответа"/>
+            <Field UID="{3E375466-17C7-449A-A76B-A4F08555CD75}" Name="EndTime" Type="DateTime" LabelName="Дата и время завершения звонка" LocalListName="Дата и время завершения звонка"/>
+            <Field UID="{C3D7C7F4-2993-47D5-8EB4-8E4CD4226495}" Name="Duration" Type="BigInt" LabelName="Общая длительность" LocalListName="Общая длительность"/>
+            <Field UID="{46FC78D6-D0F0-4C96-9157-2FC785EE1CE8}" Name="BillableSeconds" Type="BigInt" LabelName="Длительность разговора" LocalListName="Длительность разговора"/>
+            <Field UID="{CFDB8EA5-0E83-4B36-B520-FCD0ABE5C9E5}" Name="Disposition" Type="BigInt" LabelName="Статус" LocalListName="Статус"/>
+            <Field UID="{70FB0880-4662-47AA-BB2A-9B9143B6F4F5}" Name="UniqueID" Type="String" LabelName="UniqueID" LocalListName="UniqueID" HideFromList="true"/>
+            <Field UID="{D793D1EC-0EC5-460D-B982-5EB46A5BBCB6}" Name="UserField" Type="String" LabelName="UserField" LocalListName="UserField" HideFromList="true"/>
+        </Fields>
+        <Foreigns>
+            <Foreign Field="Disposition" ForeignClass="_DispositionType" ForeignField="ID" ForeignViewNameField="LocalName"/>
+        </Foreigns>
+    </Table>
 
-  <Table Name="_DispositionType" UID="{F0AFF1B4-9109-4533-B2B9-CA9E44FAF85F}" Alias="dstp" LocalName="Результат звонка" LocalListName="Результат звонка" TitleName="LocalName" IsSystem="true">
-    <Fields>
-      <Field UID="{06B87F24-8B2D-4311-89E6-B1FA429ADF38}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
-      <Field UID="{94FFCEDA-73AC-4DDD-9DB6-CDBD37B515A3}" Name="LocalName" Type="String" LabelName="Локальное наименование" LocalListName="Локальное наименование" NotNull="true"/>
-    </Fields>
-    <Indexes>
-      <Index Field="Name" Unique="true"/>
-    </Indexes>
-  </Table>
-  
+    <Table Name="_DispositionType" UID="{F0AFF1B4-9109-4533-B2B9-CA9E44FAF85F}" Alias="dstp" LocalName="Результат звонка" LocalListName="Результат звонка" TitleName="LocalName" IsSystem="true">
+        <Fields>
+            <Field UID="{06B87F24-8B2D-4311-89E6-B1FA429ADF38}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
+            <Field UID="{94FFCEDA-73AC-4DDD-9DB6-CDBD37B515A3}" Name="LocalName" Type="String" LabelName="Локальное наименование" LocalListName="Локальное наименование" NotNull="true"/>
+        </Fields>
+        <Indexes>
+            <Index Field="Name" Unique="true"/>
+        </Indexes>
+    </Table>
+
 </XSN>
