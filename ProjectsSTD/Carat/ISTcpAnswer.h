@@ -3,18 +3,18 @@
 #define _ISTCPANSWER_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
-#include "rapidjson\document.h"
+#include "rapidjson/document.h"
 //-----------------------------------------------------------------------------
 class ISTcpAnswer
 {
 public:
-    ISTcpAnswer(SOCKET socket_client);
+	ISTcpAnswer(ISSocket socket_client);
     ~ISTcpAnswer();
 
     bool IsError() const;
     std::string GetErrorString() const;
     void SetError(const std::string &error_string);
-    SOCKET GetSocketClient() const; //Получить дескриптор клиентского сокета
+	ISSocket GetSocketClient() const; //Получить дескриптор клиентского сокета
     std::string ToJson() const;
 
     rapidjson::Document Parameters;
@@ -22,7 +22,7 @@ public:
 private:
     std::string ErrorString;
     bool Error;
-    SOCKET SocketClient; //Клиентский сокет
+	ISSocket SocketClient; //Клиентский сокет
 };
 //-----------------------------------------------------------------------------
 #endif

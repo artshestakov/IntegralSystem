@@ -18,7 +18,7 @@ public:
     ISTcpClientInfo GetInfo() const;
 
 public:
-    SOCKET Socket;
+	ISSocket Socket;
     std::string IPAddress;
     ISTcpPort Port;
     ISDateTime DTConnected; //Дата и время подключения

@@ -1,8 +1,11 @@
 #include "ISCaratApplication.h"
 #include "ISLogger.h"
+#include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
 int main(int argc, char **argv)
 {
+    std::cout << ISAlgorithm::MD5("Hello world!") << std::endl;
+
     ISCaratApplication CaratApplication(argc, argv);
     bool Result = CaratApplication.Init();
     if (Result) //ѕриложение успешно инициализировалось

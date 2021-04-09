@@ -2,7 +2,7 @@
 #include "ISConstants.h"
 #include "ISAssert.h"
 //-----------------------------------------------------------------------------
-std::string ISAlgorithm::GetClassName(char *FunctionName)
+std::string ISAlgorithm::GetClassName(const char *FunctionName)
 {
     std::string Result(FunctionName);
     size_t Index = 0;
@@ -159,6 +159,7 @@ ISVectorString ISAlgorithm::DirFiles(const std::string &DirPath, std::string &Er
             ErrorString = ISAlgorithm::StringF("Error open path (%s): %s\n", DirPathTemp.c_str(), GetLastErrorS().c_str());
         }
 #else
+        IS_UNUSED(ErrorString);
         IS_ASSERT(false, "not support");
 #endif
     }
@@ -424,7 +425,7 @@ std::string ISAlgorithm::GenerateUuidStandart()
     uuid_generate(UUID);
 
     //Переводим его в строку
-    char Char[SIZE_UUID_STANDART] = { 0 };
+    char Char[UUID_STANDART_SIZE] = { 0 };
     uuid_unparse(UUID, Char);
     StringUID = Char;
 #endif
@@ -494,6 +495,7 @@ std::string ISAlgorithm::MD5(const std::string &String)
         CryptReleaseContext(HCryptoProv, 0);
     }
 #else
+    IS_UNUSED(String);
     IS_ASSERT(false, "not support");
 #endif
     return Result;

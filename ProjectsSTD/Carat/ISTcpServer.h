@@ -26,7 +26,7 @@ private:
 
     bool ParseMessage(const char *Buffer, size_t BufferSize, ISTcpMessage *TcpMessage);
     void CloseSocket(ISTcpClient *TcpClient);
-    void CloseSocket(SOCKET Socket);
+	void CloseSocket(ISSocket Socket);
     bool GetIsRunning(); //Проверка работы сервера
     
 private:
@@ -39,7 +39,7 @@ private:
 
 private:
     std::string ErrorString;
-    SOCKET SocketServer;
+	ISSocket SocketServer;
     bool IsRunning;
     std::vector<ISTcpWorker*> Workers;
     unsigned int WorkerCount;

@@ -34,14 +34,14 @@ bool ISResourcer::LoadFile(const std::string &FilePath)
     FILE *File = fopen(FilePath.c_str(), "rb");
     if (!File) //Не удалось открыть файл
     {
-        ErrorString = ISAlgorithm::StringF("Not open file (%s): %s", FilePath.c_str(), ISAlgorithm::GetLastErrorS());
+        ErrorString = ISAlgorithm::StringF("Not open file (%s): %s", FilePath.c_str(), ISAlgorithm::GetLastErrorS().c_str());
         return false;
     }
 
     //Смещаемся в конец файла
     if (fseek(File, 0L, SEEK_END) != 0)
     {
-        ErrorString = ISAlgorithm::StringF("Error fseek: %s", ISAlgorithm::GetLastErrorS());
+        ErrorString = ISAlgorithm::StringF("Error fseek: %s", ISAlgorithm::GetLastErrorS().c_str());
         fclose(File);
         return false;
     }
@@ -50,7 +50,7 @@ bool ISResourcer::LoadFile(const std::string &FilePath)
     SizeData = ftell(File);
     if (SizeData == -1) //Ошибка при получении размера файла
     {
-        ErrorString = ISAlgorithm::StringF("Error ftell: %s", ISAlgorithm::GetLastErrorS());
+        ErrorString = ISAlgorithm::StringF("Error ftell: %s", ISAlgorithm::GetLastErrorS().c_str());
         fclose(File);
         return false;
     }
@@ -60,7 +60,7 @@ bool ISResourcer::LoadFile(const std::string &FilePath)
     Data = (char *)malloc(SizeData);
     if (!Data) //Ошибка выделения памяти
     {
-        ErrorString = ISAlgorithm::StringF("Error malloc: %s", ISAlgorithm::GetLastErrorS());
+        ErrorString = ISAlgorithm::StringF("Error malloc: %s", ISAlgorithm::GetLastErrorS().c_str());
         fclose(File);
         return false;
     }
@@ -68,7 +68,7 @@ bool ISResourcer::LoadFile(const std::string &FilePath)
     //Читаем содержимое файла
     if ((long)fread(Data, sizeof(unsigned char), SizeData, File) != SizeData)
     {
-        ErrorString = ISAlgorithm::StringF("Error read file: %s", ISAlgorithm::GetLastErrorS());
+        ErrorString = ISAlgorithm::StringF("Error read file: %s", ISAlgorithm::GetLastErrorS().c_str());
         fclose(File);
         return false;
     }

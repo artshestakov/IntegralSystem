@@ -21,6 +21,8 @@ OBJECTS_DIR = $$PWD/$${CONFIGURATION}-$${PLATFORM}/$${TARGET}
 
 INCLUDEPATH += $$PWD/../../LibrarySTD/ISCore
 INCLUDEPATH += $$PWD/../../LibrarySTD/ISServer
+INCLUDEPATH += $$PWD/../../Components/PostgreSQL/12.0.5/Include
+INCLUDEPATH += $$PWD/../../Components/RapidJSON
 
 LIBS += -L$$DESTDIR -Wl,-rpath="'\$$ORIGIN'",-rpath-link="'\$$ORIGIN'" \
     -lISCore \
