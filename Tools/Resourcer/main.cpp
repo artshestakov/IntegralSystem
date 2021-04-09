@@ -281,6 +281,8 @@ bool ReadFile(const std::string &FilePath, size_t &SeparatorIndex, unsigned long
             Result = Readed == FileSize;
             if (Result) //Файл прочитан успешно
             {
+                Data[FileSize] = '\0'; //Отрезаем возможный мусор в конце
+
                 //Копируем путь к файлу и отрезаем лишнее
                 std::string Temp = FilePath;
                 Temp.erase(0, SeparatorIndex);
