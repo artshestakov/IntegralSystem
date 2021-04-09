@@ -139,6 +139,7 @@ bool ISResourcer::ParseFile()
 
             //Копируем контент файла в выделенную память и добавляем в список файлов
             memcpy(FileData, Data + i + 1, FileSize);
+            FileData[FileSize] = '\0';
             Files.emplace_back(ISResourceFile{ FileName, FileSize, FileData });
             PosHeaderBegin += FileSize + 2 + (i - PosHeaderBegin);
             i += ++FileSize;
