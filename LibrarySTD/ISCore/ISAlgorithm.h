@@ -141,6 +141,12 @@ namespace ISAlgorithm
     //! \param String строка
     void StringToUpper(std::string &String);
 
+    //! ѕолучить N символов строки справа
+    //! \param String строка
+    //! \param N количество символов
+    //! \return возвращает строку
+    std::string StringRight(const std::string &String, size_t N);
+
     //! ‘орматирование строки
     //! \param Format формат сообщени€
     //! \param ... аргументы

@@ -5,6 +5,7 @@
 #include "StdAfx.h"
 #include "ISAlgorithm.h"
 #include "ISDateTime.h"
+#include "ISNamespace.h"
 //-----------------------------------------------------------------------------
 struct ISConfigParameter
 {
@@ -49,6 +50,20 @@ struct ISTcpClientInfo
 {
     std::string IPAddress; //Адрес клиента
     ISDateTime DTConnected; //Дата и время подключения
+};
+//-----------------------------------------------------------------------------
+struct ISMetaType
+{
+    ISMetaType(const std::string& type_name, ISNamespace::FieldType type, const std::string& type_db, const std::string& control_widget, const std::string& search_condition_widget, bool search_allowed)
+        : TypeName(type_name), TypeField(type), TypeDB(type_db), ControlWidget(control_widget), SearchConditionWidget(search_condition_widget), SearchAllowed(search_allowed)
+    { }
+
+    std::string TypeName; //Наименование типа
+    ISNamespace::FieldType TypeField; //Тип даннных в системе
+    std::string TypeDB; //Тип данных в базе
+    std::string ControlWidget; //Имя поля редактирования
+    std::string SearchConditionWidget; //Имя поискового виджета
+    bool SearchAllowed; //Возможность поиска по полю
 };
 //-----------------------------------------------------------------------------
 #endif

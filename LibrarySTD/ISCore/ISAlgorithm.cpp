@@ -359,6 +359,16 @@ void ISAlgorithm::StringToUpper(std::string &String)
     }
 }
 //-----------------------------------------------------------------------------
+std::string ISAlgorithm::StringRight(const std::string &String, size_t N)
+{
+    std::string Result;
+    if (!String.empty())
+    {
+        Result = String.substr(String.size() - N, N);
+    }
+    return Result;
+}
+//-----------------------------------------------------------------------------
 std::string ISAlgorithm::StringF(const char *Format, ...)
 {
     //Вытаскиваем аргументы

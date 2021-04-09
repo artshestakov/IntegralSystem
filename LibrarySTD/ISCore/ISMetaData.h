@@ -5,6 +5,7 @@
 #include "ISTypedefs.h"
 #include "tinyxml2.h"
 #include "PMetaClass.h"
+#include "ISStructs.h"
 //-----------------------------------------------------------------------------
 class ISMetaData
 {
@@ -13,6 +14,7 @@ public:
 
     std::string GetErrorString() const;
     bool Init(const std::string &configuration_name, bool XSR, bool XSF);
+    ISNamespace::FieldType GetType(const std::string &type);
 
 private:
     bool InitXSN();
@@ -38,6 +40,11 @@ private:
     bool Initialized;
     std::string ConfigurationName;
     const char *CurrentXSN;
+    std::vector<ISMetaType> VectorTypes; //Перечисление типов системы
+    size_t TypesCount; //Количество типов
+    std::vector<std::string> VectorFilesXSN;
+
+    std::vector<PMetaTable*> Tables;
 };
 //-----------------------------------------------------------------------------
 #endif
