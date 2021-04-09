@@ -300,6 +300,12 @@ bool ISMetaData::InitXSNTable(tinyxml2::XMLElement *XmlElement, tinyxml2::XMLEle
         return false;
     }
 
+    //Обработаем индексы
+    if (!InitXSNIndexes(MetaTable, XmlElement->FirstChildElement("Indexes")))
+    {
+        return false;
+    }
+
     //Получаем поле-имя
     const char *TitleName = XmlElement->Attribute("TitleName");
     if (!TitleName || strlen(TitleName) == 0) //Если такого атрибута нет или он пустой - используем ID
@@ -389,6 +395,64 @@ bool ISMetaData::InitXSNTableFields(PMetaTable *MetaTable, tinyxml2::XMLElement 
         MetaField->SeparatorName = ElementField->FindAttribute("SeparatorName") ? ElementField->Attribute("SeparatorName") : std::string();
         MetaTable->Fields.emplace_back(MetaField);
         ElementField = ElementField->NextSiblingElement();
+    }
+    return true;
+}
+//-----------------------------------------------------------------------------
+bool ISMetaData::InitXSNIndexes(PMetaTable *MetaTable, tinyxml2::XMLElement *XmlElement)
+{
+    if (!XmlElement) //У этой таблицы нет индексов
+    {
+        return true;
+    }
+
+    //Переходим к индексам
+    tinyxml2::XMLElement *ElementIndex = XmlElement->FirstChildElement();
+    while (ElementIndex)
+    {
+        const char *Fields = ElementIndex->Attribute("Field");
+        if (!Fields || strlen(Fields) == 0)
+        {
+            ErrorString = ISAlgorithm::StringF("Empty index name. File: %s Line: %d", CurrentXSN, ElementIndex->GetLineNum());
+            return false;
+        }
+        bool Unique = ElementIndex->BoolAttribute("Unique");
+
+        ISVectorString VectorString = ISAlgorithm::StringSplit(Fields, ';');
+        if (VectorString.size() > 1) //Индекс составной
+        {
+            PMetaIndex *Index = new PMetaIndex(Unique, MetaTable->Alias, MetaTable->Name, std::string());
+            for (const std::string &FieldName : VectorString)
+            {
+                if (!MetaTable->GetField(FieldName))
+                {
+                    ErrorString = ISAlgorithm::StringF("Field \"%s\" not found", FieldName.c_str());
+                    return false;
+                }
+                Index->Fields.emplace_back(FieldName);
+            }
+            MetaTable->IndexesCompound.emplace_back(Index);
+        }
+        else //Индекс стандартный
+        {
+            //Получаем имя поля и мета-поле
+            std::string FieldName = VectorString.front();
+            PMetaField *MetaField = MetaTable->GetField(VectorString.front());
+            if (!MetaField) //Нет такого поля
+            {
+                ErrorString = ISAlgorithm::StringF("Field \"%s\" not found", FieldName.c_str());
+                return false;
+            }
+
+            //Проверим, если ли на этом поле уже индекс
+            if (MetaField->Index)
+            {
+                ErrorString = ISAlgorithm::StringF("Index on the field \"%s\" already exist", FieldName.c_str());
+                return false;
+            }
+            MetaField->Index = new PMetaIndex(Unique, MetaTable->Alias, MetaTable->Name, FieldName);
+        }
+        ElementIndex = ElementIndex->NextSiblingElement();
     }
     return true;
 }

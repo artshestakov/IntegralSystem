@@ -23,6 +23,7 @@ private:
     bool InitXSNTable(tinyxml2::XMLElement *XmlElement, tinyxml2::XMLElement *XmlElementTemplateXNS);
     bool InitXSNTableSystemFields(PMetaTable *MetaTable);
     bool InitXSNTableFields(PMetaTable *MetaTable, tinyxml2::XMLElement *XmlElement);
+    bool InitXSNIndexes(PMetaTable *MetaTable, tinyxml2::XMLElement *XmlElement);
 
     bool InitXSR();
     bool InitXSF();

@@ -13,6 +13,19 @@ struct PMetaBase
     std::string TypeObject; //Тип объекта
 };
 //-----------------------------------------------------------------------------
+struct PMetaIndex : public PMetaBase
+{
+    PMetaIndex(bool unique, const std::string &alias, const std::string &table_name, const std::string &field_name)
+        : PMetaBase("Index"),
+        Unique(unique), Alias(alias), TableName(table_name), FieldName(field_name) { }
+
+    bool Unique;
+    std::string Alias;
+    std::string TableName;
+    std::string FieldName;
+    ISVectorString Fields;
+};
+//-----------------------------------------------------------------------------
 struct PMetaField : public PMetaBase
 {
     PMetaField() : PMetaBase("Field"),
@@ -26,7 +39,7 @@ struct PMetaField : public PMetaBase
         HideFromList(false),
         NotSearch(false),
         IsSystem(false),
-        //Index(nullptr),
+        Index(nullptr),
         //Foreign(nullptr),
         Sequence(false),
         PrimaryKey(false)
@@ -57,7 +70,7 @@ struct PMetaField : public PMetaBase
 
     std::string QueryText; //Текст подзапроса
 
-    //PMetaIndex *Index; //Индекс
+    PMetaIndex *Index; //Индекс
     //PMetaForeign *Foreign; //Внешний ключ
 
     bool Sequence; //Последовательность поля
@@ -85,6 +98,18 @@ struct PMetaTable : public PMetaBase
         return false;
     }
 
+    PMetaField* GetField(const std::string &FieldName)
+    {
+        for (PMetaField *MetaField : Fields)
+        {
+            if (MetaField->Name == FieldName)
+            {
+                return MetaField;
+            }
+        }
+        return nullptr;
+    }
+
     std::string Name;
     std::string UID;
     std::string Alias;
@@ -93,6 +118,7 @@ struct PMetaTable : public PMetaBase
     std::string TitleName;
 
     std::vector<PMetaField*> Fields;
+    std::vector<PMetaIndex*> IndexesCompound; //Составные индексы таблицы
 };
 //-----------------------------------------------------------------------------
 #endif
