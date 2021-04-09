@@ -222,11 +222,10 @@ bool ISMetaData::XSNInit(const std::string &Content, size_t Size, const std::str
 //-----------------------------------------------------------------------------
 bool ISMetaData::XSNInitTable(tinyxml2::XMLElement *XmlElement, tinyxml2::XMLElement *XmlElementTemplateXNS)
 {
-    //Проверяем наличие атрибутов
-    const tinyxml2::XMLAttribute *XmlAttribute = XmlElement->FirstAttribute();
-    if (!XmlAttribute)
+    //Проверяем наличие атрибутов таблицы
+    if (!XmlElement->FirstAttribute())
     {
-        ErrorString = ISAlgorithm::StringF("Empty attributes. File: %s Line: %d", CurrentXSN, XmlElement->GetLineNum());
+        ErrorString = ISAlgorithm::StringF("Empty attributes table. File: %s Line: %d", CurrentXSN, XmlElement->GetLineNum());
         return false;
     }
 
@@ -350,6 +349,13 @@ bool ISMetaData::XSNInitTableFields(PMetaTable *MetaTable, tinyxml2::XMLElement 
     tinyxml2::XMLElement *ElementField = XmlElement->FirstChildElement();
     while (ElementField)
     {
+        //Проверяем наличие атрибутов поля
+        if (!ElementField->FirstAttribute())
+        {
+            ErrorString = ISAlgorithm::StringF("Empty attributes field. File: %s Line: %d", CurrentXSN, ElementField->GetLineNum());
+            return false;
+        }
+
         //Получаем идентификатор поля
         const char *UID = ElementField->Attribute("UID");
         if (!UID || strlen(UID) == 0)
@@ -417,6 +423,13 @@ bool ISMetaData::XSNInitIndexes(PMetaTable *MetaTable, tinyxml2::XMLElement *Xml
     tinyxml2::XMLElement *ElementIndex = XmlElement->FirstChildElement();
     while (ElementIndex)
     {
+        //Проверяем наличие атрибутов индекса
+        if (!ElementIndex->FirstAttribute())
+        {
+            ErrorString = ISAlgorithm::StringF("Empty attributes index. File: %s Line: %d", CurrentXSN, ElementIndex->GetLineNum());
+            return false;
+        }
+
         //Получаем поля индекса
         const char *Fields = ElementIndex->Attribute("Field");
         if (!Fields || strlen(Fields) == 0)
@@ -474,10 +487,17 @@ bool ISMetaData::XSNInitForeigns(PMetaTable *MetaTable, tinyxml2::XMLElement *Xm
         return true;
     }
 
-    //Переходим к индексам
+    //Переходим к внешним ключам
     tinyxml2::XMLElement *ElementForeign = XmlElement->FirstChildElement();
     while (ElementForeign)
     {
+        //Проверяем наличие атрибутов внешнего ключа
+        if (!ElementForeign->FirstAttribute())
+        {
+            ErrorString = ISAlgorithm::StringF("Empty attributes foreign key. File: %s Line: %d", CurrentXSN, ElementForeign->GetLineNum());
+            return false;
+        }
+
         //Получаем имя поля, на который устанавливается внешний ключ
         const char *FieldName = ElementForeign->Attribute("Field");
         if (!FieldName || strlen(FieldName) == 0)
@@ -534,10 +554,17 @@ bool ISMetaData::XSNInitEscorts(PMetaTable *MetaTable, tinyxml2::XMLElement *Xml
         return true;
     }
 
-    //Переходим к индексам
+    //Переходим к эскортам
     tinyxml2::XMLElement *ElementEscort = XmlElement->FirstChildElement();
     while (ElementEscort)
     {
+        //Проверяем наличие атрибутов внешнего ключа
+        if (!ElementEscort->FirstAttribute())
+        {
+            ErrorString = ISAlgorithm::StringF("Empty attributes escort. File: %s Line: %d", CurrentXSN, ElementEscort->GetLineNum());
+            return false;
+        }
+
         const char *LocalName = ElementEscort->Attribute("LocalName");
         const char *TableName = ElementEscort->Attribute("TableName");
         const char *FilterField = ElementEscort->Attribute("FilterField");
@@ -618,10 +645,9 @@ bool ISMetaData::XSFInit(const std::string &Content, size_t Size, const std::str
 bool ISMetaData::XSFInit(tinyxml2::XMLElement *XmlElement)
 {
     //Проверяем наличие атрибутов
-    const tinyxml2::XMLAttribute *XmlAttribute = XmlElement->FirstAttribute();
-    if (!XmlAttribute)
+    if (!XmlElement->FirstAttribute())
     {
-        ErrorString = ISAlgorithm::StringF("Empty attributes. File: %s Line: %d", CurrentXSF, XmlElement->GetLineNum());
+        ErrorString = ISAlgorithm::StringF("Empty attributes function. File: %s Line: %d", CurrentXSF, XmlElement->GetLineNum());
         return false;
     }
 
