@@ -33,7 +33,7 @@ void ISTcpAnswer::SetError(const std::string &error_string)
     ErrorString = error_string;
 }
 //-----------------------------------------------------------------------------
-SOCKET ISTcpAnswer::GetSocketClient() const
+ISSocket ISTcpAnswer::GetSocketClient() const
 {
     return SocketClient;
 }

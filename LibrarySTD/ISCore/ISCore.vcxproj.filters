@@ -52,6 +52,9 @@
     <ClCompile Include="ISMetaData.cpp">
       <Filter>MetaData</Filter>
     </ClCompile>
+    <ClCompile Include="ConvertUTF.c">
+      <Filter>Config</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StdAfx.h">
@@ -107,6 +110,9 @@
     </ClInclude>
     <ClInclude Include="PMetaClass.h">
       <Filter>MetaData</Filter>
+    </ClInclude>
+    <ClInclude Include="ConvertUTF.h">
+      <Filter>Config</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

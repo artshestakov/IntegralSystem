@@ -172,6 +172,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ConvertUTF.c" />
     <ClCompile Include="ISAlgorithm.cpp" />
     <ClCompile Include="ISAssert.cpp" />
     <ClCompile Include="ISConfig.cpp" />
@@ -186,6 +187,7 @@
     <ClCompile Include="tinyxml2.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ConvertUTF.h" />
     <ClInclude Include="ISAlgorithm.h" />
     <ClInclude Include="ISAssert.h" />
     <ClInclude Include="ISConfig.h" />
