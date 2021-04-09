@@ -73,11 +73,24 @@ struct PMetaTable : public PMetaBase
 
     }
 
-    std::string TableName;
+    bool Exist(const std::string &FieldName)
+    {
+        for (PMetaField *MetaField : Fields)
+        {
+            if (MetaField->Name == FieldName)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    std::string Name;
     std::string UID;
     std::string Alias;
     std::string LocalName;
     std::string LocalListName;
+    std::string TitleName;
 
     std::vector<PMetaField*> Fields;
 };

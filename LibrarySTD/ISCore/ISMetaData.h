@@ -15,6 +15,7 @@ public:
     std::string GetErrorString() const;
     bool Init(const std::string &configuration_name, bool XSR, bool XSF);
     ISNamespace::FieldType GetType(const std::string &type);
+    PMetaTable* GetTable(const std::string &TableName);
 
 private:
     bool InitXSN();

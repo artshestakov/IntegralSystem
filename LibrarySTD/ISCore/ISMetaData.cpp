@@ -122,6 +122,22 @@ ISNamespace::FieldType ISMetaData::GetType(const std::string &type)
     return ISNamespace::FieldType::Unknown;
 }
 //-----------------------------------------------------------------------------
+PMetaTable* ISMetaData::GetTable(const std::string &TableName)
+{
+    PMetaTable *Table = nullptr;
+    CRITICAL_SECTION_LOCK(&CS);
+    for (PMetaTable *MetaTable : Tables)
+    {
+        if (MetaTable->Name == TableName)
+        {
+            Table = MetaTable;
+            break;
+        }
+    }
+    CRITICAL_SECTION_UNLOCK(&CS);
+    return Table;
+}
+//-----------------------------------------------------------------------------
 bool ISMetaData::InitXSN()
 {
     //Читаем файл ресурсов
@@ -225,6 +241,13 @@ bool ISMetaData::InitXSNTable(tinyxml2::XMLElement *XmlElement, tinyxml2::XMLEle
         return false;
     }
 
+    //Проверим, не существует ли уже такая таблица
+    if (GetTable(TableName))
+    {
+        ErrorString == ISAlgorithm::StringF("Table \"%\" already exist", TableName);
+        return false;
+    }
+
     //Получаем идентификатор таблицы
     const char *UID = XmlElement->Attribute("UID");
     if (!UID || strlen(UID) == 0)
@@ -257,13 +280,13 @@ bool ISMetaData::InitXSNTable(tinyxml2::XMLElement *XmlElement, tinyxml2::XMLEle
         return false;
     }
 
+    //Заполняем основные поля мета-таблицы
     PMetaTable *MetaTable = new PMetaTable();
-    MetaTable->TableName = TableName;
+    MetaTable->Name = TableName;
     MetaTable->UID = UID;
     MetaTable->Alias = Alias;
     MetaTable->LocalName = LocalName;
     MetaTable->LocalListName = LocalListName;
-    Tables.emplace_back(MetaTable);
 
     //Обработаем системные поля
     if (!InitXSNTableFields(MetaTable, XmlElementTemplateXNS))
@@ -276,6 +299,29 @@ bool ISMetaData::InitXSNTable(tinyxml2::XMLElement *XmlElement, tinyxml2::XMLEle
     {
         return false;
     }
+
+    //Получаем поле-имя
+    const char *TitleName = XmlElement->Attribute("TitleName");
+    if (!TitleName || strlen(TitleName) == 0) //Если такого атрибута нет или он пустой - используем ID
+    {
+        TitleName = "ID";
+    }
+    else //Атрибут есть - прповеряем наличие указанных полей
+    {
+        ISVectorString Fields = ISAlgorithm::StringSplit(TitleName, ';');
+        for (const std::string &FieldName : Fields)
+        {
+            if (!MetaTable->Exist(FieldName))
+            {
+                ErrorString = ISAlgorithm::StringF("Invalid field name \"%s\" in title name. Table name: %s", TitleName, TableName);
+                return false;
+            }
+        }
+    }
+
+    MetaTable->TitleName = TitleName;
+
+    Tables.emplace_back(MetaTable);
     return true;
 }
 //-----------------------------------------------------------------------------
