@@ -18,15 +18,16 @@ public:
     PMetaTable* GetTable(const std::string &TableName);
 
 private:
-    bool InitXSN();
-    bool InitXSN(const std::string &Content, size_t Size, const std::string &FileName, tinyxml2::XMLElement *XmlElementTemplateXNS);
-    bool InitXSNTable(tinyxml2::XMLElement *XmlElement, tinyxml2::XMLElement *XmlElementTemplateXNS);
-    bool InitXSNTableSystemFields(PMetaTable *MetaTable);
-    bool InitXSNTableFields(PMetaTable *MetaTable, tinyxml2::XMLElement *XmlElement);
-    bool InitXSNIndexes(PMetaTable *MetaTable, tinyxml2::XMLElement *XmlElement);
+    bool XSNInit();
+    bool XSNInit(const std::string &Content, size_t Size, const std::string &FileName, tinyxml2::XMLElement *XmlElementTemplateXNS);
+    bool XSNInitTable(tinyxml2::XMLElement *XmlElement, tinyxml2::XMLElement *XmlElementTemplateXNS);
+    bool XSNInitTableSystemFields(PMetaTable *MetaTable);
+    bool XSNInitTableFields(PMetaTable *MetaTable, tinyxml2::XMLElement *XmlElement);
+    bool XSNInitIndexes(PMetaTable *MetaTable, tinyxml2::XMLElement *XmlElement);
+    bool XSNInitForeigns(PMetaTable *MetaTable, tinyxml2::XMLElement *XmlElement);
 
-    bool InitXSR();
-    bool InitXSF();
+    bool XSRInit();
+    bool XSFInit();
 
 private:
     ISMetaData();

@@ -4,6 +4,7 @@
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 #include "ISNamespace.h"
+#include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
 struct PMetaBase
 {
@@ -26,6 +27,27 @@ struct PMetaIndex : public PMetaBase
     ISVectorString Fields;
 };
 //-----------------------------------------------------------------------------
+struct PMetaForeign : public PMetaBase
+{
+    PMetaForeign(const std::string &field, const std::string &foreign_class, const std::string &foreign_field, const std::string &foreign_view_name_field, const std::string &table_name = std::string())
+        : PMetaBase("Foreign"),
+        Field(field), ForeignClass(foreign_class), ForeignField(foreign_field), ForeignViewNameField(foreign_view_name_field), TableName(table_name) { }
+
+    std::string GetName() const //Получить имя внешнего ключа
+    {
+        std::string Name = TableName + '_' + Field;
+        ISAlgorithm::StringToLower(Name);
+        return Name;
+    }
+
+    std::string Field; //Поле, на которое устанавливается внешний ключ
+    std::string ForeignClass; //На какую таблицу ссылкается внешний ключ
+    std::string ForeignField; //На какое поле ссылается внешний ключ
+    std::string ForeignViewNameField; //Какое поле (поля) отображать в запросе на выборку
+
+    std::string TableName; //Таблица, содержащая поле, на которое устанавливается внешний ключ
+};
+//-----------------------------------------------------------------------------
 struct PMetaField : public PMetaBase
 {
     PMetaField() : PMetaBase("Field"),
@@ -40,7 +62,7 @@ struct PMetaField : public PMetaBase
         NotSearch(false),
         IsSystem(false),
         Index(nullptr),
-        //Foreign(nullptr),
+        Foreign(nullptr),
         Sequence(false),
         PrimaryKey(false)
     {
@@ -71,7 +93,7 @@ struct PMetaField : public PMetaBase
     std::string QueryText; //Текст подзапроса
 
     PMetaIndex *Index; //Индекс
-    //PMetaForeign *Foreign; //Внешний ключ
+    PMetaForeign *Foreign; //Внешний ключ
 
     bool Sequence; //Последовательность поля
     bool PrimaryKey; //Первичный ключ

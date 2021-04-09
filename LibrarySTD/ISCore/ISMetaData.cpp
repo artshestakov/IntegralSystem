@@ -90,17 +90,17 @@ bool ISMetaData::Init(const std::string &configuration_name, bool XSR, bool XSF)
     }
     ConfigurationName = configuration_name;
 
-    if (!InitXSN())
+    if (!XSNInit())
     {
         return false;
     }
 
-    if (XSR && !InitXSR())
+    if (XSR && !XSNInit())
     {
         return false;
     }
 
-    if (XSF && !InitXSF())
+    if (XSF && !XSFInit())
     {
         return false;
     }
@@ -138,7 +138,7 @@ PMetaTable* ISMetaData::GetTable(const std::string &TableName)
     return Table;
 }
 //-----------------------------------------------------------------------------
-bool ISMetaData::InitXSN()
+bool ISMetaData::XSNInit()
 {
     //Читаем файл ресурсов
     ISResourcer Resourcer;
@@ -173,7 +173,7 @@ bool ISMetaData::InitXSN()
     {
         unsigned long ContentSize = 0;
         const char *Content = Resourcer.GetFile(FileName, ContentSize);
-        if (!InitXSN(Content, (size_t)ContentSize, FileName, XmlElementTemplateXNS))
+        if (!XSNInit(Content, (size_t)ContentSize, FileName, XmlElementTemplateXNS))
         {
             return false;
         }
@@ -181,7 +181,7 @@ bool ISMetaData::InitXSN()
     return true;
 }
 //-----------------------------------------------------------------------------
-bool ISMetaData::InitXSN(const std::string &Content, size_t Size, const std::string &FileName, tinyxml2::XMLElement *XmlElementTemplateXNS)
+bool ISMetaData::XSNInit(const std::string &Content, size_t Size, const std::string &FileName, tinyxml2::XMLElement *XmlElementTemplateXNS)
 {
     //Парсим содержимое файла
     tinyxml2::XMLDocument XmlDocument;
@@ -214,7 +214,7 @@ bool ISMetaData::InitXSN(const std::string &Content, size_t Size, const std::str
     XmlElement = XmlElement->FirstChildElement();
     while (XmlElement)
     {
-        if (!InitXSNTable(XmlElement, XmlElementTemplateXNS))
+        if (!XSNInitTable(XmlElement, XmlElementTemplateXNS))
         {
             return false;
         }
@@ -223,7 +223,7 @@ bool ISMetaData::InitXSN(const std::string &Content, size_t Size, const std::str
     return true;
 }
 //-----------------------------------------------------------------------------
-bool ISMetaData::InitXSNTable(tinyxml2::XMLElement *XmlElement, tinyxml2::XMLElement *XmlElementTemplateXNS)
+bool ISMetaData::XSNInitTable(tinyxml2::XMLElement *XmlElement, tinyxml2::XMLElement *XmlElementTemplateXNS)
 {
     //Проверяем наличие атрибутов
     const tinyxml2::XMLAttribute *XmlAttribute = XmlElement->FirstAttribute();
@@ -289,19 +289,24 @@ bool ISMetaData::InitXSNTable(tinyxml2::XMLElement *XmlElement, tinyxml2::XMLEle
     MetaTable->LocalListName = LocalListName;
 
     //Обработаем системные поля
-    if (!InitXSNTableFields(MetaTable, XmlElementTemplateXNS))
+    if (!XSNInitTableFields(MetaTable, XmlElementTemplateXNS))
     {
         return false;
     }
 
     //Обработаем пользовательские поля
-    if (!InitXSNTableFields(MetaTable, XmlElement->FirstChildElement("Fields")))
+    if (!XSNInitTableFields(MetaTable, XmlElement->FirstChildElement("Fields")))
     {
         return false;
     }
 
     //Обработаем индексы
-    if (!InitXSNIndexes(MetaTable, XmlElement->FirstChildElement("Indexes")))
+    if (!XSNInitIndexes(MetaTable, XmlElement->FirstChildElement("Indexes")))
+    {
+        return false;
+    }
+
+    if (!XSNInitForeigns(MetaTable, XmlElement->FirstChildElement("Foreigns")))
     {
         return false;
     }
@@ -331,13 +336,13 @@ bool ISMetaData::InitXSNTable(tinyxml2::XMLElement *XmlElement, tinyxml2::XMLEle
     return true;
 }
 //-----------------------------------------------------------------------------
-bool ISMetaData::InitXSNTableSystemFields(PMetaTable *MetaTable)
+bool ISMetaData::XSNInitTableSystemFields(PMetaTable *MetaTable)
 {
     IS_UNUSED(MetaTable);
     return true;
 }
 //-----------------------------------------------------------------------------
-bool ISMetaData::InitXSNTableFields(PMetaTable *MetaTable, tinyxml2::XMLElement *XmlElement)
+bool ISMetaData::XSNInitTableFields(PMetaTable *MetaTable, tinyxml2::XMLElement *XmlElement)
 {
     //Переходим к полям
     tinyxml2::XMLElement *ElementField = XmlElement->FirstChildElement();
@@ -399,7 +404,7 @@ bool ISMetaData::InitXSNTableFields(PMetaTable *MetaTable, tinyxml2::XMLElement 
     return true;
 }
 //-----------------------------------------------------------------------------
-bool ISMetaData::InitXSNIndexes(PMetaTable *MetaTable, tinyxml2::XMLElement *XmlElement)
+bool ISMetaData::XSNInitIndexes(PMetaTable *MetaTable, tinyxml2::XMLElement *XmlElement)
 {
     if (!XmlElement) //У этой таблицы нет индексов
     {
@@ -410,12 +415,15 @@ bool ISMetaData::InitXSNIndexes(PMetaTable *MetaTable, tinyxml2::XMLElement *Xml
     tinyxml2::XMLElement *ElementIndex = XmlElement->FirstChildElement();
     while (ElementIndex)
     {
+        //Получаем поля индекса
         const char *Fields = ElementIndex->Attribute("Field");
         if (!Fields || strlen(Fields) == 0)
         {
             ErrorString = ISAlgorithm::StringF("Empty index name. File: %s Line: %d", CurrentXSN, ElementIndex->GetLineNum());
             return false;
         }
+
+        //Получаем уникальность индекса
         bool Unique = ElementIndex->BoolAttribute("Unique");
 
         ISVectorString VectorString = ISAlgorithm::StringSplit(Fields, ';');
@@ -457,12 +465,72 @@ bool ISMetaData::InitXSNIndexes(PMetaTable *MetaTable, tinyxml2::XMLElement *Xml
     return true;
 }
 //-----------------------------------------------------------------------------
-bool ISMetaData::InitXSR()
+bool ISMetaData::XSNInitForeigns(PMetaTable *MetaTable, tinyxml2::XMLElement *XmlElement)
+{
+    if (!XmlElement) //У этой таблицы нет внешних ключей
+    {
+        return true;
+    }
+
+    //Переходим к индексам
+    tinyxml2::XMLElement *ElementForeign = XmlElement->FirstChildElement();
+    while (ElementForeign)
+    {
+        //Получаем имя поля, на который устанавливается внешний ключ
+        const char *FieldName = ElementForeign->Attribute("Field");
+        if (!FieldName || strlen(FieldName) == 0)
+        {
+            ErrorString = ISAlgorithm::StringF("Empty foreign field name. File: %s Line: %d", CurrentXSN, ElementForeign->GetLineNum());
+            return false;
+        }
+
+        //Получаем имя таблицы, на которую ссылается внешний ключ
+        const char *ForeignClass = ElementForeign->Attribute("ForeignClass");
+        if (!ForeignClass || strlen(ForeignClass) == 0)
+        {
+            ErrorString = ISAlgorithm::StringF("Empty foreign class. File: %s Line: %d", CurrentXSN, ElementForeign->GetLineNum());
+            return false;
+        }
+
+        //Получаем имя поля, на которое ссылается внешний ключ
+        const char *ForeignField = ElementForeign->Attribute("ForeignField");
+        if (!ForeignField || strlen(ForeignField) == 0)
+        {
+            ErrorString = ISAlgorithm::StringF("Empty foreign field. File: %s Line: %d", CurrentXSN, ElementForeign->GetLineNum());
+            return false;
+        }
+
+        //Проверка наличия поля - на котором делается внешний ключ
+        PMetaField *MetaField = MetaTable->GetField(FieldName);
+        if (!MetaField)
+        {
+            ErrorString = ISAlgorithm::StringF("Field \"%s\" not found", FieldName);
+            break;
+        }
+
+        //Проверка наличия внешнего ключа на этом поле
+        if (MetaField->Foreign)
+        {
+            ErrorString = ISAlgorithm::StringF("Foreign key on the field \"%s\" already exist", FieldName);
+            break;
+        }
+
+        //Получаем поля, которые будут участвовать в имени внешнего объекта
+        const char *ForeignViewFieldName = ElementForeign->Attribute("ForeignViewNameField");
+
+        MetaField->Foreign = new PMetaForeign(FieldName, ForeignClass, ForeignField,
+            ForeignViewFieldName ? ForeignViewFieldName : std::string(), MetaTable->Name);
+        ElementForeign = ElementForeign->NextSiblingElement();
+    }
+    return true;
+}
+//-----------------------------------------------------------------------------
+bool ISMetaData::XSRInit()
 {
     return true;
 }
 //-----------------------------------------------------------------------------
-bool ISMetaData::InitXSF()
+bool ISMetaData::XSFInit()
 {
     return true;
 }
