@@ -124,10 +124,32 @@ ISNamespace::FieldType ISMetaData::GetType(const std::string &type)
 //-----------------------------------------------------------------------------
 bool ISMetaData::InitXSN()
 {
+    //Читаем файл ресурсов
     ISResourcer Resourcer;
-    if (!Resourcer.LoadFile("C:\\Github\\IntegralSystem\\Components\\Resourcer\\Release-x64\\Resources.bin"))
+    if (!Resourcer.LoadFile(ISAlgorithm::GetApplicationDir() + PATH_SEPARATOR + "Resources.bin"))
     {
         ErrorString = ISAlgorithm::StringF("Not read resource file: %s", Resourcer.GetErrorString().c_str());
+        return false;
+    }
+
+    //Получаем содержимое шаблона
+    unsigned long TemplateSize = 0;
+    const char *TemplateContent = Resourcer.GetFile("Other/ClassTemplateFields.xml", TemplateSize);
+
+    //Парсим содержимое шаблона
+    tinyxml2::XMLDocument XmlDocument;
+    tinyxml2::XMLError XmlError = XmlDocument.Parse(TemplateContent, TemplateSize);
+    if (XmlError != tinyxml2::XMLError::XML_SUCCESS)
+    {
+        ErrorString = ISAlgorithm::StringF("Not parse template system fields: %s", XmlDocument.ErrorStr());
+        return false;
+    }
+
+    //Получаем главный тег шаблона
+    tinyxml2::XMLElement *XmlElementTemplateXNS = XmlDocument.FirstChildElement();
+    if (!XmlElementTemplateXNS)
+    {
+        ErrorString = ISAlgorithm::StringF("Not exist main tag in template system fields");
         return false;
     }
 
@@ -135,7 +157,7 @@ bool ISMetaData::InitXSN()
     {
         unsigned long ContentSize = 0;
         const char *Content = Resourcer.GetFile(FileName, ContentSize);
-        if (!InitXSN(Content, (size_t)ContentSize, FileName))
+        if (!InitXSN(Content, (size_t)ContentSize, FileName, XmlElementTemplateXNS))
         {
             return false;
         }
@@ -143,7 +165,7 @@ bool ISMetaData::InitXSN()
     return true;
 }
 //-----------------------------------------------------------------------------
-bool ISMetaData::InitXSN(const std::string &Content, size_t Size, const std::string &FileName)
+bool ISMetaData::InitXSN(const std::string &Content, size_t Size, const std::string &FileName, tinyxml2::XMLElement *XmlElementTemplateXNS)
 {
     //Парсим содержимое файла
     tinyxml2::XMLDocument XmlDocument;
@@ -176,7 +198,7 @@ bool ISMetaData::InitXSN(const std::string &Content, size_t Size, const std::str
     XmlElement = XmlElement->FirstChildElement();
     while (XmlElement)
     {
-        if (!InitXSNTable(XmlElement))
+        if (!InitXSNTable(XmlElement, XmlElementTemplateXNS))
         {
             return false;
         }
@@ -185,7 +207,7 @@ bool ISMetaData::InitXSN(const std::string &Content, size_t Size, const std::str
     return true;
 }
 //-----------------------------------------------------------------------------
-bool ISMetaData::InitXSNTable(tinyxml2::XMLElement *XmlElement)
+bool ISMetaData::InitXSNTable(tinyxml2::XMLElement *XmlElement, tinyxml2::XMLElement *XmlElementTemplateXNS)
 {
     //Проверяем наличие атрибутов
     const tinyxml2::XMLAttribute *XmlAttribute = XmlElement->FirstAttribute();
@@ -243,8 +265,17 @@ bool ISMetaData::InitXSNTable(tinyxml2::XMLElement *XmlElement)
     MetaTable->LocalListName = LocalListName;
     Tables.emplace_back(MetaTable);
 
-    InitXSNTableFields(MetaTable, XmlElement->FirstChildElement("Fields"));
+    //Обработаем системные поля
+    if (!InitXSNTableFields(MetaTable, XmlElementTemplateXNS))
+    {
+        return false;
+    }
 
+    //Обработаем пользовательские поля
+    if (!InitXSNTableFields(MetaTable, XmlElement->FirstChildElement("Fields")))
+    {
+        return false;
+    }
     return true;
 }
 //-----------------------------------------------------------------------------
@@ -284,22 +315,6 @@ bool ISMetaData::InitXSNTableFields(PMetaTable *MetaTable, tinyxml2::XMLElement 
             return false;
         }
 
-        //Получаем имя поля для объекта
-        const char *LabelName = ElementField->Attribute("LabelName");
-        if (!LabelName || strlen(LabelName) == 0)
-        {
-            ErrorString = ISAlgorithm::StringF("Empty label name in field. File: %s Line: %d", CurrentXSN, ElementField->GetLineNum());
-            return false;
-        }
-
-        //Получаем имя поля для списка
-        const char *LocalListName = ElementField->Attribute("LocalListName");
-        if (!LocalListName || strlen(LocalListName) == 0)
-        {
-            ErrorString = ISAlgorithm::StringF("Empty local list name in field. File: %s Line: %d", CurrentXSN, ElementField->GetLineNum());
-            return false;
-        }
-
         PMetaField *MetaField = new PMetaField();
         MetaField->UID = UID;
         MetaField->Name = FieldName;
@@ -309,8 +324,8 @@ bool ISMetaData::InitXSNTableFields(PMetaTable *MetaTable, tinyxml2::XMLElement 
         MetaField->Lower = ElementField->BoolAttribute("Lower");
         MetaField->DefaultValue = ElementField->FindAttribute("DefaultValue") ? ElementField->Attribute("DefaultValue") : std::string();
         MetaField->DefaultValueWidget = ElementField->FindAttribute("DefaultValueWidget") ? ElementField->Attribute("DefaultValueWidget") : std::string();
-        MetaField->LabelName = LabelName;
-        MetaField->LocalListName = LocalListName;
+        MetaField->LabelName = ElementField->FindAttribute("LabelName") ? ElementField->Attribute("LabelName") : FieldName;
+        MetaField->LocalListName = ElementField->FindAttribute("LocalListName") ? ElementField->Attribute("LocalListName") : FieldName;
         MetaField->NotNull = ElementField->BoolAttribute("NotNull");
         MetaField->ReadOnly = ElementField->BoolAttribute("ReadOnly");
         MetaField->HideFromObject = ElementField->BoolAttribute("HideFromObject");
