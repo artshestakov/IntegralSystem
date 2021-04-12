@@ -8,6 +8,7 @@
 #include "ISDatabase.h"
 #include "ISLocalization.h"
 #include "ISMetaData.h"
+#include "ISResourcer.h"
 //-----------------------------------------------------------------------------
 ISCaratApplication::ISCaratApplication(int argc, char **argv)
     : ErrorString(STRING_NO_ERROR),
@@ -74,6 +75,13 @@ bool ISCaratApplication::Init()
             ISLOGGER_E(__CLASS__, "Not delete shutdown file (%s): %s", FileShutdown.c_str(), ErrorString.c_str());
             return false;
         }
+    }
+
+    //Читаем файл ресурсов
+    if (!ISResourcer::Instance().LoadFile(ISAlgorithm::GetApplicationDir() + PATH_SEPARATOR + "Resources.bin"))
+    {
+        ErrorString = ISAlgorithm::StringF("Not read resource file: %s", ISResourcer::Instance().GetErrorString().c_str());
+        return false;
     }
 
     //Получаем параметры конфигурационного файла

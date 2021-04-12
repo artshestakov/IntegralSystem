@@ -2,6 +2,7 @@
 #include "ISConstants.h"
 #include "ISAlgorithm.h"
 #include "ISAssert.h"
+#include "ISResourcer.h"
 //-----------------------------------------------------------------------------
 ISMetaData::ISMetaData()
     : ErrorString(STRING_NO_ERROR),
@@ -101,25 +102,17 @@ bool ISMetaData::Init(const std::string &configuration_name, bool XSR, bool XSF)
     VectorFilesXSR.emplace_back(FileName + ".xsr");
     VectorFilesXSF.emplace_back(FileName + ".xsf");
 
-    //Читаем файл ресурсов
-    ISResourcer Resourcer;
-    if (!Resourcer.LoadFile(ISAlgorithm::GetApplicationDir() + PATH_SEPARATOR + "Resources.bin"))
-    {
-        ErrorString = ISAlgorithm::StringF("Not read resource file: %s", Resourcer.GetErrorString().c_str());
-        return false;
-    }
-
-    if (!XSNInit(&Resourcer))
+    if (!XSNInit())
     {
         return false;
     }
 
-    if (XSR && !XSRInit(&Resourcer))
+    if (XSR && !XSRInit())
     {
         return false;
     }
 
-    if (XSF && !XSFInit(&Resourcer))
+    if (XSF && !XSFInit())
     {
         return false;
     }
@@ -156,11 +149,11 @@ PMetaTable* ISMetaData::GetTable(const std::string &TableName)
     return Table;
 }
 //-----------------------------------------------------------------------------
-bool ISMetaData::XSNInit(ISResourcer *Resourcer)
+bool ISMetaData::XSNInit()
 {
     //Получаем содержимое шаблона
     unsigned long TemplateSize = 0;
-    const char *TemplateContent = Resourcer->GetFile("Other/ClassTemplateFields.xml", TemplateSize);
+    const char *TemplateContent = ISResourcer::Instance().GetFile("Other/ClassTemplateFields.xml", TemplateSize);
 
     //Парсим содержимое шаблона
     tinyxml2::XMLDocument XmlDocument;
@@ -182,7 +175,7 @@ bool ISMetaData::XSNInit(ISResourcer *Resourcer)
     for (const std::string &FileName : VectorFilesXSN)
     {
         unsigned long ContentSize = 0;
-        const char *Content = Resourcer->GetFile(FileName, ContentSize);
+        const char *Content = ISResourcer::Instance().GetFile(FileName, ContentSize);
         if (!XSNInit(Content, (size_t)ContentSize, FileName, XmlElementTemplateXNS))
         {
             return false;
@@ -587,12 +580,12 @@ bool ISMetaData::XSNInitEscorts(PMetaTable *MetaTable, tinyxml2::XMLElement *Xml
     return true;
 }
 //-----------------------------------------------------------------------------
-bool ISMetaData::XSRInit(ISResourcer *Resourcer)
+bool ISMetaData::XSRInit()
 {
     for (const std::string &FileName : VectorFilesXSR)
     {
         unsigned long ContentSize = 0;
-        const char *Content = Resourcer->GetFile(FileName, ContentSize);
+        const char *Content = ISResourcer::Instance().GetFile(FileName, ContentSize);
         if (!XSRInit(Content, ContentSize, FileName))
         {
             return false;
@@ -680,12 +673,12 @@ bool ISMetaData::XSRInit(tinyxml2::XMLElement *XmlElement)
     return true;
 }
 //-----------------------------------------------------------------------------
-bool ISMetaData::XSFInit(ISResourcer *Resourcer)
+bool ISMetaData::XSFInit()
 {
     for (const std::string &FileName : VectorFilesXSF)
     {
         unsigned long ContentSize = 0;
-        const char *Content = Resourcer->GetFile(FileName, ContentSize);
+        const char *Content = ISResourcer::Instance().GetFile(FileName, ContentSize);
         if (!XSFInit(Content, (size_t)ContentSize, FileName))
         {
             return false;

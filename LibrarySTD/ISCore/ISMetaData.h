@@ -6,7 +6,6 @@
 #include "tinyxml2.h"
 #include "PMetaClass.h"
 #include "ISStructs.h"
-#include "ISResourcer.h"
 //-----------------------------------------------------------------------------
 class ISMetaData
 {
@@ -19,7 +18,7 @@ public:
     PMetaTable* GetTable(const std::string &TableName);
 
 private:
-    bool XSNInit(ISResourcer *Resourcer);
+    bool XSNInit();
     bool XSNInit(const std::string &Content, size_t Size, const std::string &FileName, tinyxml2::XMLElement *XmlElementTemplateXNS);
     bool XSNInitTable(tinyxml2::XMLElement *XmlElement, tinyxml2::XMLElement *XmlElementTemplateXNS);
     bool XSNInitTableFields(PMetaTable *MetaTable, tinyxml2::XMLElement *XmlElement);
@@ -27,11 +26,11 @@ private:
     bool XSNInitForeigns(PMetaTable *MetaTable, tinyxml2::XMLElement *XmlElement);
     bool XSNInitEscorts(PMetaTable *MetaTable, tinyxml2::XMLElement *XmlElement);
 
-    bool XSRInit(ISResourcer *Resourcer);
+    bool XSRInit();
     bool XSRInit(const std::string &Content, size_t Size, const std::string &FileName);
     bool XSRInit(tinyxml2::XMLElement *XmlElement);
 
-    bool XSFInit(ISResourcer *Resourcer);
+    bool XSFInit();
     bool XSFInit(const std::string &Content, size_t Size, const std::string &FileName);
     bool XSFInit(tinyxml2::XMLElement *XmlElement);
 

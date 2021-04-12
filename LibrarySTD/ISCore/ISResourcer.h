@@ -7,8 +7,7 @@
 class ISResourcer
 {
 public:
-    ISResourcer();
-    ~ISResourcer();
+    static ISResourcer& Instance();
 
     std::string GetErrorString() const; //Получить текстовое описание ошибки
     bool LoadFile(const std::string &FilePath); //Загрузить файл
@@ -20,6 +19,14 @@ public:
 private:
     bool ParseFile(); //Парсинг файла
     bool ParseHeader(const std::string &StringHeader, std::string &FileName, unsigned long &FileSize); //Парсинг заголовка файла
+
+private:
+    ISResourcer();
+    ~ISResourcer();
+    ISResourcer(const ISResourcer&) = delete;
+    ISResourcer(ISResourcer&&) = delete;
+    ISResourcer& operator=(const ISResourcer&) = delete;
+    ISResourcer& operator=(ISResourcer&&) = delete;
 
 private:
     std::string ErrorString;

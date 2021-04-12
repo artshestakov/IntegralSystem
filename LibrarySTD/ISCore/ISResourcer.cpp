@@ -16,6 +16,12 @@ ISResourcer::~ISResourcer()
     Free();
 }
 //-----------------------------------------------------------------------------
+ISResourcer& ISResourcer::Instance()
+{
+    static ISResourcer Resourcer;
+    return Resourcer;
+}
+//-----------------------------------------------------------------------------
 std::string ISResourcer::GetErrorString() const
 {
     return ErrorString;
