@@ -343,7 +343,6 @@ bool ISMetaData::XSNInitTable(tinyxml2::XMLElement *XmlElement, tinyxml2::XMLEle
             }
         }
     }
-
     MetaTable->TitleName = TitleName;
 
     Tables.emplace_back(MetaTable);

@@ -6,6 +6,7 @@ ISTcpClient::ISTcpClient()
     DTConnected(ISDateTime::CurrentDateTime()),
     Authorized(false),
     UserID(0),
+    UserGroupID(0),
     UserSystem(false)
 {
 

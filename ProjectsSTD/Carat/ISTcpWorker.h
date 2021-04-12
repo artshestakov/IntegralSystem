@@ -7,6 +7,7 @@
 #include "ISTcpMessage.h"
 #include "ISTcpAnswer.h"
 #include "ISQuery.h"
+#include "ISMetaData.h"
 #include <libpq-fe.h>
 //-----------------------------------------------------------------------------
 class ISTcpWorker
@@ -29,10 +30,12 @@ private:
     bool ErrorQuery(const std::string &LocalError, ISQuery &SqlQuery);
     void Protocol(unsigned int UserID, const char *ActionUID, const std::string &TableName = std::string(), const std::string &TableLocalName = std::string(), unsigned int ObjectID = 0, const std::string &Information = std::string());
     unsigned int ExtractVersionFile(const std::string &FileName);
+    PMetaTable* GetMetaTable(const std::string &TableName); //Получить указатель на мета-таблицу
 
 private:
     bool Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
     bool Sleep(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
+    bool GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
 
 private:
     std::string ErrorString;

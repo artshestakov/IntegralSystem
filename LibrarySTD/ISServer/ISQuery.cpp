@@ -44,9 +44,19 @@ const std::string& ISQuery::GetSqlText() const
     return SqlText;
 }
 //-----------------------------------------------------------------------------
-int ISQuery::GetResultSize() const
+int ISQuery::GetResultRowCount() const
 {
     return CountRows;
+}
+//-----------------------------------------------------------------------------
+int ISQuery::GetResultColumnCount() const
+{
+    return CountColumns;
+}
+//-----------------------------------------------------------------------------
+const char* ISQuery::GetResultFieldName(int Index) const
+{
+    return PQfname(SqlResult, Index);
 }
 //-----------------------------------------------------------------------------
 bool ISQuery::GetIsSelect() const
@@ -103,6 +113,20 @@ void ISQuery::BindValue(const std::string &Value, Oid OID)
 {
     ParameterValues.emplace_back(Value);
     ParameterTypes.emplace_back(OID == InvalidOid ? VARCHAROID : OID);
+    ++ParameterCount;
+}
+//-----------------------------------------------------------------------------
+void ISQuery::BindValue(const char *Value, Oid OID)
+{
+    ParameterValues.emplace_back(Value);
+    ParameterTypes.emplace_back(OID == InvalidOid ? VARCHAROID : OID);
+    ++ParameterCount;
+}
+//-----------------------------------------------------------------------------
+void ISQuery::BindValue(bool Value, Oid OID)
+{
+    ParameterValues.emplace_back(Value ? "t" : "f");
+    ParameterTypes.emplace_back(OID == InvalidOid ? BOOLOID : OID);
     ++ParameterCount;
 }
 //-----------------------------------------------------------------------------
@@ -198,6 +222,7 @@ bool ISQuery::Execute(bool PrepareQuery, size_t ParamCount)
     case PGRES_TUPLES_OK:
         CountRows = PQntuples(SqlResult);
         CountColumns = PQnfields(SqlResult);
+        CurrentRow = -1;
         IsSelect = true;
         return true;
         break;

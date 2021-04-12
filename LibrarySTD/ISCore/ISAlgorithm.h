@@ -147,6 +147,11 @@ namespace ISAlgorithm
     //! \return возвращает строку
     std::string StringRight(const std::string &String, size_t N);
 
+    //! Удалить N символов в конце строки
+    //! \param String строка
+    //! \param N количество символов
+    void StringChop(std::string &String, size_t N);
+
     //! Форматирование строки
     //! \param Format формат сообщения
     //! \param ... аргументы

@@ -24,6 +24,7 @@ public:
     ISDateTime DTConnected; //Дата и время подключения
     bool Authorized;
     unsigned int UserID;
+    unsigned int UserGroupID;
     bool UserSystem;
 
 private:

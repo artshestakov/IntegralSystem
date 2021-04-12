@@ -16,7 +16,9 @@ public:
 
     const std::string& GetErrorString() const; //Получить текстовое описание ошибки
     const std::string& GetSqlText() const; //Получить текст запроса
-    int GetResultSize() const; //Получить размер выборки
+    int GetResultRowCount() const; //Получить размер выборки
+    int GetResultColumnCount() const; //Получить кол-во полей в выборке
+    const char* GetResultFieldName(int Index) const; //Получить имя поля из выборки
     bool GetIsSelect() const; //Проверить, является ли запрос выборкой
 
     void SetShowLongQuery(bool show_long_query);
@@ -28,6 +30,8 @@ public:
     void BindValue(int Value, Oid OID = InvalidOid);
     void BindValue(unsigned int Value, Oid OID = InvalidOid);
     void BindValue(const std::string &Value, Oid OID = InvalidOid);
+    void BindValue(const char *Value, Oid OID = InvalidOid);
+    void BindValue(bool Value, Oid OID = InvalidOid);
 
     bool Execute(bool PrepareQuery = false, size_t ParamCount = 0);
     bool ExecuteFirst();

@@ -370,6 +370,25 @@ std::string ISAlgorithm::StringRight(const std::string &String, size_t N)
     return Result;
 }
 //-----------------------------------------------------------------------------
+void ISAlgorithm::StringChop(std::string &String, size_t N)
+{
+    //Получаем размер строки
+    size_t Size = String.size();
+    if (Size == 0) //Если строка пустая - выходим
+    {
+        return;
+    }
+
+    if (N >= Size) //Если кол-во символов больше либо равно размеру строки - очищаем её
+    {
+        String.clear();
+    }
+    else //Вырезаем N символов с конце строки
+    {
+        String.erase(Size - N, N);
+    }
+}
+//-----------------------------------------------------------------------------
 std::string ISAlgorithm::StringF(const char *Format, ...)
 {
     //Вытаскиваем аргументы
