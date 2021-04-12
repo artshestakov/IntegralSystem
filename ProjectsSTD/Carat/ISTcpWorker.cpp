@@ -54,6 +54,21 @@ static std::string QS_COLUMN_SIZE = "SELECT clsz_tablename, clsz_fieldname, clsz
                                     "FROM _columnsize "
                                     "WHERE clsz_user = $1";
 //-----------------------------------------------------------------------------
+static std::string QS_SETTING_GROUP = "SELECT stgp_uid, stgp_name, stgp_localname, stgp_iconname, stgp_hint "
+                                      "FROM _settingsgroup "
+                                      "ORDER BY stgp_order";
+//-----------------------------------------------------------------------------
+static std::string QS_SETTING = "SELECT stgs_uid, stgs_name, stgs_type, stgs_widgeteditname, stgs_localname, stgs_hint, stgs_defaultvalue, "
+                                "usst_value, "
+                                "(SELECT COUNT(*) FROM _usersettings WHERE usst_user = $1 AND usst_setting = stgs_id) "
+                                "FROM _settings "
+                                "LEFT JOIN _usersettings ON usst_setting = stgs_id AND usst_user = $1 "
+                                "WHERE stgs_group = $2 "
+                                "ORDER BY stgs_order";
+//-----------------------------------------------------------------------------
+static std::string QI_USER_SETTING = "INSERT INTO _usersettings(usst_user, usst_setting, usst_value) "
+                                     "VALUES($1, (SELECT stgs_id FROM _settings WHERE stgs_uid = $2), $3)";
+//-----------------------------------------------------------------------------
 static std::string QS_PARAGRAPH = "SELECT prhs_uid, prhs_name, prhs_localname, prhs_tooltip, prhs_icon, prhs_classname "
                                   "FROM _paragraphs "
                                   "ORDER BY prhs_orderid";
@@ -830,74 +845,83 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
     }
 
     //Получаем пользовательские настройки
-    /*QVariantList Settings;
-    ISQuery qSelectSettingGroup(ISDatabase::Instance().GetDB(DBConnectionName), QS_SETTING_GROUP),
-        qSelectSettingUser(ISDatabase::Instance().GetDB(DBConnectionName), QS_SETTING);
+    rapidjson::Value SettingGroupArray(rapidjson::Type::kArrayType);
+    ISQuery qSelectSettingGroup(DBConnection, QS_SETTING_GROUP),
+        qSelectSettingUser(DBConnection, QS_SETTING);
     if (qSelectSettingGroup.Execute())
     {
         while (qSelectSettingGroup.Next())
         {
-            QString GroupUID = qSelectSettingGroup.ReadColumn("stgp_uid").toString();
-            QVariantList SettingsList;
-            qSelectSettingUser.BindValue(":UserID", TcpMessage->TcpSocket->GetUserID());
-            qSelectSettingUser.BindValue(":GroupUID", GroupUID);
+            const char *GroupUID = qSelectSettingGroup.ReadColumn(0),
+                *GroupName = qSelectSettingGroup.ReadColumn(1),
+                *GroupLocalName = qSelectSettingGroup.ReadColumn(2),
+                *GroupIconName = qSelectSettingGroup.ReadColumn(3),
+                *GroupHint = qSelectSettingGroup.ReadColumn(4);
+            
+            rapidjson::Value SettingsArray(rapidjson::Type::kArrayType);
+            qSelectSettingUser.BindValue(TcpMessage->TcpClient->UserID);
+            qSelectSettingUser.BindValue(GroupUID, UUIDOID);
             if (qSelectSettingUser.Execute())
             {
                 while (qSelectSettingUser.Next())
                 {
-                    QString SettingUID = qSelectSettingUser.ReadColumn("stgs_uid").toString();
-                    QVariant SettingDefault = qSelectSettingUser.ReadColumn("stgs_defaultvalue");
-                    QVariantMap SettingMap =
-                    {
-                        { "UID", SettingUID },
-                        { "Name", qSelectSettingUser.ReadColumn("stgs_name") },
-                        { "Type", qSelectSettingUser.ReadColumn("stgs_type") },
-                        { "WidgetEditName", qSelectSettingUser.ReadColumn("stgs_widgeteditname") },
-                        { "Local", qSelectSettingUser.ReadColumn("stgs_localname") },
-                        { "Hint", qSelectSettingUser.ReadColumn("stgs_hint") },
-                        { "Default", SettingDefault }
-                    };
+                    const char *SettingUID = qSelectSettingUser.ReadColumn(0),
+                        *SettingName = qSelectSettingUser.ReadColumn(1),
+                        *SettingType = qSelectSettingUser.ReadColumn(2),
+                        *SettingWidgetEditName = qSelectSettingUser.ReadColumn(3),
+                        *SettingLocalName = qSelectSettingUser.ReadColumn(4),
+                        *SettingHint = qSelectSettingUser.ReadColumn(5),
+                        *SettingDefault = qSelectSettingUser.ReadColumn(6);
+                    
+                    rapidjson::Value SettingObject(rapidjson::Type::kObjectType);
+                    SettingObject.AddMember("UID", rapidjson::Value(SettingUID, strlen(SettingUID)), Allocator);
+                    SettingObject.AddMember("Name", rapidjson::Value(SettingName, strlen(SettingName)), Allocator);
+                    SettingObject.AddMember("Type", rapidjson::Value(SettingType, strlen(SettingType)), Allocator);
+                    SettingObject.AddMember("WidgetEditName", rapidjson::Value(SettingWidgetEditName, strlen(SettingWidgetEditName)), Allocator);
+                    SettingObject.AddMember("Local", rapidjson::Value(SettingLocalName, strlen(SettingLocalName)), Allocator);
+                    SettingObject.AddMember("Hint", rapidjson::Value(SettingHint, strlen(SettingHint)), Allocator);
+                    SettingObject.AddMember("Default", rapidjson::Value(SettingDefault, strlen(SettingDefault)), Allocator);
 
-                    if (qSelectSettingUser.ReadColumn("count").toInt())  //Если такая настройка у пользователя уже есть - получаем её значение
+                    if (qSelectSettingUser.ReadColumn_Int(8))  //Если такая настройка у пользователя уже есть - получаем её значение
                     {
-                        SettingMap["Value"] = qSelectSettingUser.ReadColumn("usst_value");
+                        const char *SettingValue = qSelectSettingUser.ReadColumn(7);
+                        SettingObject.AddMember("Value", rapidjson::Value(SettingValue, strlen(SettingValue)), Allocator);
                     }
                     else //Такой настройки у пользователя нет - добавляем со значением по умолчанию
                     {
-                        ISQuery qInsertSetting(ISDatabase::Instance().GetDB(DBConnectionName), QI_USER_SETTING);
-                        qInsertSetting.BindValue(":UserID", TcpMessage->TcpSocket->GetUserID());
-                        qInsertSetting.BindValue(":SettingUID", SettingUID);
-                        qInsertSetting.BindValue(":Value", SettingDefault);
+                        ISQuery qInsertSetting(DBConnection, QI_USER_SETTING);
+                        qInsertSetting.BindValue(TcpMessage->TcpClient->UserID);
+                        qInsertSetting.BindValue(SettingUID, UUIDOID);
+                        qInsertSetting.BindValue(SettingDefault);
                         if (!qInsertSetting.Execute())
                         {
-                            //???
                             ErrorString = "Error inserting new user setting: " + qInsertSetting.GetErrorString();
                             return false;
                         }
-                        SettingMap["Value"] = SettingDefault;
+                        SettingObject.AddMember("Value", rapidjson::Value(SettingDefault, strlen(SettingDefault)), Allocator);
                     }
-                    SettingsList.append(SettingMap);
+                    SettingsArray.PushBack(SettingObject, Allocator);
                 }
             }
             else
             {
                 return ErrorQuery(LANG("Carat.Error.Query.GetMetaData.SettingsUser"), qSelectSettingUser);
             }
-            Settings.append(QVariantMap
-            {
-                { "UID", GroupUID },
-                { "Name", qSelectSettingGroup.ReadColumn("stgp_name").toString() },
-                { "Local", qSelectSettingGroup.ReadColumn("stgp_localname").toString() },
-                { "Icon", qSelectSettingGroup.ReadColumn("stgp_iconname").toString() },
-                { "Hint", qSelectSettingGroup.ReadColumn("stgp_hint").toString() },
-                { "Settings", SettingsList }
-            });
+
+            rapidjson::Value SettingGroupObject(rapidjson::Type::kObjectType);
+            SettingGroupObject.AddMember("UID", rapidjson::Value(GroupUID, strlen(GroupUID)), Allocator);
+            SettingGroupObject.AddMember("Name", rapidjson::Value(GroupName, strlen(GroupName)), Allocator);
+            SettingGroupObject.AddMember("Local", rapidjson::Value(GroupLocalName, strlen(GroupLocalName)), Allocator);
+            SettingGroupObject.AddMember("Icon", rapidjson::Value(GroupIconName, strlen(GroupIconName)), Allocator);
+            SettingGroupObject.AddMember("Hint", rapidjson::Value(GroupHint, strlen(GroupHint)), Allocator);
+            SettingGroupObject.AddMember("Settings", SettingsArray, Allocator);
+            SettingGroupArray.PushBack(SettingGroupObject, Allocator);
         }
     }
     else
     {
         return ErrorQuery(LANG("Carat.Error.Query.GetMetaData.SettingsGroup"), qSelectSettingGroup);
-    }*/
+    }
 
     //Получаем параграфы
     rapidjson::Value ParagraphArray(rapidjson::Type::kArrayType);
@@ -976,7 +1000,7 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
     TcpAnswer->Parameters.AddMember("SystemSubSystem", rapidjson::Value(SystemSubSystemArray, Allocator), Allocator);
     TcpAnswer->Parameters.AddMember("Favorite", rapidjson::Value(FavoriteObject, Allocator), Allocator);
     TcpAnswer->Parameters.AddMember("ColumnSize", rapidjson::Value(ColumnSizeObject, Allocator), Allocator);
-    //TcpAnswer->Parameters["Settings"] = Settings;
+    TcpAnswer->Parameters.AddMember("Settings", rapidjson::Value(SettingGroupArray, Allocator), Allocator);
     TcpAnswer->Parameters.AddMember("Paragraphs", rapidjson::Value(ParagraphArray, Allocator), Allocator);
     TcpAnswer->Parameters.AddMember("TaskPriority", rapidjson::Value(TaskPriorityArray, Allocator), Allocator);
     //TcpAnswer->Parameters["MetaData"] = MetaDataList;
