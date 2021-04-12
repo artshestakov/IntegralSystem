@@ -560,10 +560,10 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
         ISTcpClientInfo TcpClientInfo = ISTcpClients::Instance().GetInfo(UserID);
         std::string DTConnected = TcpClientInfo.DTConnected.ToString();
 
-        rapidjson::Document AlreadyConnected(rapidjson::Type::kObjectType);
-        AlreadyConnected.AddMember("DateTime", rapidjson::Value().SetString(DTConnected.c_str(), (rapidjson::SizeType)DTConnected.size(), AlreadyConnected.GetAllocator()), AlreadyConnected.GetAllocator());
-        AlreadyConnected.AddMember("IPAddress", rapidjson::Value().SetString(TcpClientInfo.IPAddress.c_str(), (rapidjson::SizeType)TcpClientInfo.IPAddress.size(), AlreadyConnected.GetAllocator()), AlreadyConnected.GetAllocator());
-        TcpAnswer->Parameters.AddMember("AlreadyConnected", rapidjson::Value(AlreadyConnected, Allocator), Allocator);
+        rapidjson::Value AlreadyConnectedObject(rapidjson::Type::kObjectType);
+        AlreadyConnectedObject.AddMember("DateTime", rapidjson::Value(DTConnected.c_str(), (rapidjson::SizeType)DTConnected.size()), Allocator);
+        AlreadyConnectedObject.AddMember("IPAddress", rapidjson::Value(TcpClientInfo.IPAddress.c_str(), (rapidjson::SizeType)TcpClientInfo.IPAddress.size()), Allocator);
+        TcpAnswer->Parameters.AddMember("AlreadyConnected", rapidjson::Value(AlreadyConnectedObject, Allocator), Allocator);
     }
 
     //Устанавливаем флаги клиенту
@@ -580,25 +580,25 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
     TcpAnswer->Parameters.AddMember("UserGroupFullAccess", GroupFullAccess, Allocator);
     
     //Информация о сервере
-    rapidjson::Document Server(rapidjson::Type::kObjectType);
-    Server.AddMember("Version", 1, Server.GetAllocator());
-    TcpAnswer->Parameters.AddMember("Server", rapidjson::Value(Server, Allocator), Allocator);
+    rapidjson::Value ServerObject(rapidjson::Type::kObjectType);
+    ServerObject.AddMember("Version", 1, Allocator);
+    TcpAnswer->Parameters.AddMember("Server", rapidjson::Value(ServerObject, Allocator), Allocator);
 
     //Информация об обновлении клиента
-    rapidjson::Document UpdateClient(rapidjson::Type::kObjectType);
-    UpdateClient.AddMember("IsNeed", IsNeedUpdate, UpdateClient.GetAllocator());
-    UpdateClient.AddMember("NewVersion", 1, UpdateClient.GetAllocator());
-    TcpAnswer->Parameters.AddMember("UpdateClient", rapidjson::Value(UpdateClient, Allocator), Allocator);
+    rapidjson::Value UpdateClientObject(rapidjson::Type::kObjectType);
+    UpdateClientObject.AddMember("IsNeed", IsNeedUpdate, Allocator);
+    UpdateClientObject.AddMember("NewVersion", 1, Allocator);
+    TcpAnswer->Parameters.AddMember("UpdateClient", rapidjson::Value(UpdateClientObject, Allocator), Allocator);
 
     //Информация о конфигурации
-    rapidjson::Document Configuration(rapidjson::Type::kObjectType);
-    Configuration.AddMember("Name", rapidjson::Value().SetNull(), Configuration.GetAllocator());
-    Configuration.AddMember("UID", rapidjson::Value().SetNull(), Configuration.GetAllocator());
-    Configuration.AddMember("LocalName", rapidjson::Value().SetNull(), Configuration.GetAllocator());
-    Configuration.AddMember("DesktopForm", rapidjson::Value().SetNull(), Configuration.GetAllocator());
-    Configuration.AddMember("DateExpired", rapidjson::Value().SetNull(), Configuration.GetAllocator());
-    Configuration.AddMember("LogoName", rapidjson::Value().SetNull(), Configuration.GetAllocator());
-    TcpAnswer->Parameters.AddMember("Configuration", rapidjson::Value(Configuration, Allocator), Allocator);
+    rapidjson::Value ConfigurationObject(rapidjson::Type::kObjectType);
+    ConfigurationObject.AddMember("Name", rapidjson::Value().SetNull(), Allocator);
+    ConfigurationObject.AddMember("UID", rapidjson::Value().SetNull(), Allocator);
+    ConfigurationObject.AddMember("LocalName", rapidjson::Value().SetNull(), Allocator);
+    ConfigurationObject.AddMember("DesktopForm", rapidjson::Value().SetNull(), Allocator);
+    ConfigurationObject.AddMember("DateExpired", rapidjson::Value().SetNull(), Allocator);
+    ConfigurationObject.AddMember("LogoName", rapidjson::Value().SetNull(), Allocator);
+    TcpAnswer->Parameters.AddMember("Configuration", rapidjson::Value(ConfigurationObject, Allocator), Allocator);
 
     Protocol(TcpMessage->TcpClient->UserID, CONST_UID_PROTOCOL_ENTER_APPLICATION);
     return true;

@@ -7,7 +7,7 @@ ISTcpAnswer::ISTcpAnswer(SOCKET socket_client)
     : ErrorString(STRING_NO_ERROR),
     Error(false),
     SocketClient(socket_client),
-    Parameters(rapidjson::Document(rapidjson::Type::kObjectType))
+    Parameters(rapidjson::Type::kObjectType)
 {
 
 }
@@ -43,8 +43,8 @@ std::string ISTcpAnswer::ToJson() const
     rapidjson::Document JsonDocument(rapidjson::Type::kObjectType);
     rapidjson::MemoryPoolAllocator<rapidjson::CrtAllocator> &Allocator = JsonDocument.GetAllocator();
 
-    JsonDocument.AddMember("Error", rapidjson::Value().SetBool(Error), Allocator);
-    JsonDocument.AddMember("ErrorString", rapidjson::Value().SetString(ErrorString.c_str(), (rapidjson::SizeType)ErrorString.size(), Allocator), Allocator);
+    JsonDocument.AddMember("Error", Error, Allocator);
+    JsonDocument.AddMember("ErrorString", rapidjson::Value(ErrorString.c_str(), (rapidjson::SizeType)ErrorString.size()), Allocator);
 
     //Если ошибки нет и есть параметры - добавляем их в ответ
     if (!Error && !Parameters.ObjectEmpty())
