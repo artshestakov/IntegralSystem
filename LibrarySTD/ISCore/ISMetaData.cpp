@@ -149,6 +149,11 @@ PMetaTable* ISMetaData::GetTable(const std::string &TableName)
     return Table;
 }
 //-----------------------------------------------------------------------------
+const ISVectorString& ISMetaData::GetVectorXSN() const
+{
+    return VectorFilesXSN;
+}
+//-----------------------------------------------------------------------------
 bool ISMetaData::XSNInit()
 {
     //Получаем содержимое шаблона

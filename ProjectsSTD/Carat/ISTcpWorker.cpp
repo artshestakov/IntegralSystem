@@ -8,6 +8,7 @@
 #include "ISDatabase.h"
 #include "ISLocalization.h"
 #include "ISTcpClients.h"
+#include "ISResourcer.h"
 //-----------------------------------------------------------------------------
 static std::string QS_USERS_HASH = "SELECT usrs_hash, usrs_salt "
                                    "FROM _users "
@@ -978,21 +979,14 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
     }
 
     //Читаем мета-данные
-    /*QVariantList MetaDataList;
-    QStringList Filter("*.xsn"); //Фильтр
-    QFileInfoList FileInfoList = QDir(":Scheme").entryInfoList(Filter, QDir::NoFilter, QDir::Name); //Загрузка мета-данных движка
-    FileInfoList.append(QDir(":_" + ISConfigurations::Instance().Get().Name).entryInfoList(Filter, QDir::NoFilter, QDir::Name)); //Загрузка мета-данных конфигурации
-    for (const QFileInfo &FileInfo : FileInfoList) //Обход всех XSN файлов
+    rapidjson::Value MetaDataArray(rapidjson::Type::kArrayType);
+    const ISVectorString &VectorString = ISMetaData::Instance().GetVectorXSN();
+    for (const std::string &FileName : VectorString)
     {
-        QFile FileXSN(FileInfo.filePath());
-        if (!FileXSN.open(QIODevice::ReadOnly)) //Не удалось открыть файл на чтение - выходим с ошибкой
-        {
-            ErrorString = LANG("Carat.Error.Query.GetMetaData.FileXSN").arg(FileInfo.fileName()).arg(FileXSN.errorString());
-            return false;
-        }
-        MetaDataList.append(FileXSN.readAll());
-        FileXSN.close();
-    }*/
+        unsigned long Size = 0;
+        const char *Content = ISResourcer::Instance().GetFile(FileName, Size);
+        MetaDataArray.PushBack(rapidjson::Value(Content, Size), Allocator);
+    }
 
     TcpAnswer->Parameters.AddMember("SettingsDB", rapidjson::Value(SettingsDBObject, Allocator), Allocator);
     TcpAnswer->Parameters.AddMember("AccessTables", rapidjson::Value(AccessTablesObject, Allocator), Allocator);
@@ -1003,7 +997,7 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
     TcpAnswer->Parameters.AddMember("Settings", rapidjson::Value(SettingGroupArray, Allocator), Allocator);
     TcpAnswer->Parameters.AddMember("Paragraphs", rapidjson::Value(ParagraphArray, Allocator), Allocator);
     TcpAnswer->Parameters.AddMember("TaskPriority", rapidjson::Value(TaskPriorityArray, Allocator), Allocator);
-    //TcpAnswer->Parameters["MetaData"] = MetaDataList;
+    TcpAnswer->Parameters.AddMember("MetaData", rapidjson::Value(MetaDataArray, Allocator), Allocator);
     return true;
 }
 //-----------------------------------------------------------------------------

@@ -19,7 +19,7 @@ ISConfig::ISConfig()
         { CONFIG_TEMPLATE_SERVER, "TCPServer",  "Port",             CONFIG_TYPE_INT,    true,   std::to_string(CARAT_TCP_PORT), 1, UINT16_MAX },
         { CONFIG_TEMPLATE_SERVER, "TCPServer",  "WorkerCount",      CONFIG_TYPE_INT,    true,   "1",                            1, (int)std::thread::hardware_concurrency() * 2 },
         { CONFIG_TEMPLATE_SERVER, "Other",      "Configuration",    CONFIG_TYPE_STRING, true,   std::string(),                  0, 0 },
-        { CONFIG_TEMPLATE_SERVER, "Other",      "UpdateClientDir",  CONFIG_TYPE_STRING, true,   std::string(),                  0, 0 },
+        { CONFIG_TEMPLATE_SERVER, "Other",      "UpdateClientDir",  CONFIG_TYPE_STRING, false,  std::string(),                  0, 0 },
 
         //Клиентский шаблон
         { CONFIG_TEMPLATE_CLIENT, "Connection",     "Host",     CONFIG_TYPE_STRING, true,   std::string(),                  0, 0 },

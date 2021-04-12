@@ -16,6 +16,7 @@ public:
     bool Init(const std::string &configuration_name, bool XSR, bool XSF);
     ISNamespace::FieldType GetType(const std::string &type);
     PMetaTable* GetTable(const std::string &TableName);
+    const ISVectorString& GetVectorXSN() const;
 
 private:
     bool XSNInit();
@@ -52,10 +53,7 @@ private:
     size_t TypesCount; //Количество типов
 
     //Списки файлов с мета-данными
-    std::vector<std::string>
-        VectorFilesXSN,
-        VectorFilesXSR,
-        VectorFilesXSF;
+    ISVectorString VectorFilesXSN, VectorFilesXSR, VectorFilesXSF;
 
     std::vector<PMetaTable*> Tables;
     std::vector<PMetaFunction*> Functions;
