@@ -11,20 +11,19 @@ ISMetaData::ISMetaData()
     CurrentXSF(nullptr),
     TypesCount(0)
 {
+    //Формируем списки файлов с мета-данными
     VectorFilesXSN.emplace_back("Scheme/Asterisk.xsn");
     VectorFilesXSN.emplace_back("Scheme/Settings.xsn");
     VectorFilesXSN.emplace_back("Scheme/SettingsDatabase.xsn");
     VectorFilesXSN.emplace_back("Scheme/System.xsn");
     VectorFilesXSN.emplace_back("Scheme/Task.xsn");
     VectorFilesXSN.emplace_back("Scheme/User.xsn");
-
     VectorFilesXSR.emplace_back("Scheme/Asterisk.xsr");
     VectorFilesXSR.emplace_back("Scheme/Settings.xsr");
     VectorFilesXSR.emplace_back("Scheme/SettingsDatabase.xsr");
     VectorFilesXSR.emplace_back("Scheme/System.xsr");
     VectorFilesXSR.emplace_back("Scheme/Task.xsr");
     VectorFilesXSR.emplace_back("Scheme/User.xsr");
-
     VectorFilesXSF.emplace_back("Scheme/Functions.xsf");
 
     VectorTypes.emplace_back(ISMetaType("Unknown", ISNamespace::FieldType::Unknown, std::string(), std::string(), std::string(), false));
@@ -95,6 +94,12 @@ bool ISMetaData::Init(const std::string &configuration_name, bool XSR, bool XSF)
         ErrorString = "Configuration name is empty";
     }
     ConfigurationName = configuration_name;
+
+    //Дополняем списки файлов с мета-данными файлами конфигурации
+    std::string FileName = '_' + ConfigurationName + '/' + ConfigurationName;
+    VectorFilesXSN.emplace_back(FileName + ".xsn");
+    VectorFilesXSR.emplace_back(FileName + ".xsr");
+    VectorFilesXSF.emplace_back(FileName + ".xsf");
 
     //Читаем файл ресурсов
     ISResourcer Resourcer;
@@ -342,12 +347,6 @@ bool ISMetaData::XSNInitTable(tinyxml2::XMLElement *XmlElement, tinyxml2::XMLEle
     MetaTable->TitleName = TitleName;
 
     Tables.emplace_back(MetaTable);
-    return true;
-}
-//-----------------------------------------------------------------------------
-bool ISMetaData::XSNInitTableSystemFields(PMetaTable *MetaTable)
-{
-    IS_UNUSED(MetaTable);
     return true;
 }
 //-----------------------------------------------------------------------------

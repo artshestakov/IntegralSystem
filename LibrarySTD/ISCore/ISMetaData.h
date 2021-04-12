@@ -22,7 +22,6 @@ private:
     bool XSNInit(ISResourcer *Resourcer);
     bool XSNInit(const std::string &Content, size_t Size, const std::string &FileName, tinyxml2::XMLElement *XmlElementTemplateXNS);
     bool XSNInitTable(tinyxml2::XMLElement *XmlElement, tinyxml2::XMLElement *XmlElementTemplateXNS);
-    bool XSNInitTableSystemFields(PMetaTable *MetaTable);
     bool XSNInitTableFields(PMetaTable *MetaTable, tinyxml2::XMLElement *XmlElement);
     bool XSNInitIndexes(PMetaTable *MetaTable, tinyxml2::XMLElement *XmlElement);
     bool XSNInitForeigns(PMetaTable *MetaTable, tinyxml2::XMLElement *XmlElement);
