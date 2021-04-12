@@ -165,4 +165,23 @@ struct PMetaFunction : public PMetaBase
     std::string Text; //Текст функции
 };
 //-----------------------------------------------------------------------------
+struct PMetaResource : public PMetaBase
+{
+    PMetaResource() : PMetaBase("Resource") { }
+
+    void AddField(const std::string &FieldName, const std::string &Value) //Добавить параметр и его значение в ресурс
+    {
+        std::string Temp = FieldName;
+        ISAlgorithm::StringToLower(Temp);
+        if (Temp != "uid")
+        {
+            Parameters.emplace(FieldName, Value);
+        }
+    }
+
+    std::string TableName;
+    std::string UID;
+    ISMapString Parameters;
+};
+//-----------------------------------------------------------------------------
 #endif

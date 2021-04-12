@@ -81,7 +81,7 @@ bool ISCaratApplication::Init()
     std::string ConfigurationName = ISConfig::Instance().GetValueString("Other", "Configuration");
 
     //Инициализируем мета-данные
-    if (!ISMetaData::Instance().Init(ConfigurationName, false, true))
+    if (!ISMetaData::Instance().Init(ConfigurationName, true, true))
     {
         ISLOGGER_E("ISMetaData", "Not init meta data: %s", ISMetaData::Instance().GetErrorString().c_str());
         return false;

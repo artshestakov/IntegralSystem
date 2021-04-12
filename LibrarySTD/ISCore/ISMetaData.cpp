@@ -7,6 +7,7 @@ ISMetaData::ISMetaData()
     : ErrorString(STRING_NO_ERROR),
     Initialized(false),
     CurrentXSN(nullptr),
+    CurrentXSR(nullptr),
     CurrentXSF(nullptr),
     TypesCount(0)
 {
@@ -16,6 +17,13 @@ ISMetaData::ISMetaData()
     VectorFilesXSN.emplace_back("Scheme/System.xsn");
     VectorFilesXSN.emplace_back("Scheme/Task.xsn");
     VectorFilesXSN.emplace_back("Scheme/User.xsn");
+
+    VectorFilesXSR.emplace_back("Scheme/Asterisk.xsr");
+    VectorFilesXSR.emplace_back("Scheme/Settings.xsr");
+    VectorFilesXSR.emplace_back("Scheme/SettingsDatabase.xsr");
+    VectorFilesXSR.emplace_back("Scheme/System.xsr");
+    VectorFilesXSR.emplace_back("Scheme/Task.xsr");
+    VectorFilesXSR.emplace_back("Scheme/User.xsr");
 
     VectorFilesXSF.emplace_back("Scheme/Functions.xsf");
 
@@ -101,7 +109,7 @@ bool ISMetaData::Init(const std::string &configuration_name, bool XSR, bool XSF)
         return false;
     }
 
-    if (XSR && !XSRInit())
+    if (XSR && !XSRInit(&Resourcer))
     {
         return false;
     }
@@ -581,8 +589,96 @@ bool ISMetaData::XSNInitEscorts(PMetaTable *MetaTable, tinyxml2::XMLElement *Xml
     return true;
 }
 //-----------------------------------------------------------------------------
-bool ISMetaData::XSRInit()
+bool ISMetaData::XSRInit(ISResourcer *Resourcer)
 {
+    for (const std::string &FileName : VectorFilesXSR)
+    {
+        unsigned long ContentSize = 0;
+        const char *Content = Resourcer->GetFile(FileName, ContentSize);
+        if (!XSRInit(Content, ContentSize, FileName))
+        {
+            return false;
+        }
+    }
+    return true;
+}
+//-----------------------------------------------------------------------------
+bool ISMetaData::XSRInit(const std::string &Content, size_t Size, const std::string &FileName)
+{
+    //Парсим содержимое файла
+    tinyxml2::XMLDocument XmlDocument;
+    tinyxml2::XMLError XmlError = XmlDocument.Parse(Content.c_str(), Size);
+    if (XmlError != tinyxml2::XMLError::XML_SUCCESS)
+    {
+        ErrorString = ISAlgorithm::StringF("Not parse file \"%s\": %s", FileName.c_str(), XmlDocument.ErrorStr());
+        return false;
+    }
+
+    //Проверим имя главного тега
+    tinyxml2::XMLElement *XmlElement = XmlDocument.FirstChildElement();
+    const char *TagName = XmlElement->Name();
+    if (strcmp(TagName, "XSR") != 0)
+    {
+        ErrorString = ISAlgorithm::StringF("Invalid tag name. \"%s\" in XSR file \"%s\"", TagName, FileName.c_str());
+        return false;
+    }
+
+    //Проверим наличие атрибута Name в главном теге
+    const tinyxml2::XMLAttribute *XmlAttribute = XmlElement->FindAttribute("Name");
+    if (!XmlAttribute)
+    {
+        ErrorString = ISAlgorithm::StringF("Not found attribute \"Name\" in a XSR file \"%s\"", FileName.c_str());
+        return false;
+    }
+    CurrentXSR = XmlAttribute->Value();
+
+    //Переходим к ресурсам и перебираем каждый
+    XmlElement = XmlElement->FirstChildElement();
+    while (XmlElement)
+    {
+        if (!XSRInit(XmlElement))
+        {
+            return false;
+        }
+        XmlElement = XmlElement->NextSiblingElement();
+    }
+    return true;
+}
+//-----------------------------------------------------------------------------
+bool ISMetaData::XSRInit(tinyxml2::XMLElement *XmlElement)
+{
+    //Получаем имя таблицы
+    const char *TableName = XmlElement->Name();
+
+    //Проверим её наличие
+    if (!GetTable(TableName))
+    {
+        ErrorString = ISAlgorithm::StringF("Table name \"%s\" not exist. File: %s Line: %d", TableName, CurrentXSR, XmlElement->GetLineNum());
+        return false;
+    }
+
+    PMetaResource *MetaResource = new PMetaResource();
+    MetaResource->TableName = TableName;
+
+    //Проверим наличие уникального идентификатора
+    const tinyxml2::XMLAttribute *XmlAttributeUID = XmlElement->FindAttribute("UID");
+    if (!XmlAttributeUID)
+    {
+        ErrorString = ISAlgorithm::StringF("Not found resource UID. File: %s Line: %d", CurrentXSR, XmlElement->GetLineNum());
+        return false;
+    }
+    MetaResource->UID = XmlElement->Attribute("UID");
+
+    //Удаляем атрибут с идентификатором, чтобы потом пройтись по всем полям
+    XmlElement->DeleteAttribute("UID");
+
+    const tinyxml2::XMLAttribute *XmlAttribute = XmlElement->FirstAttribute();
+    do 
+    {
+        MetaResource->AddField(XmlAttribute->Name(), XmlAttribute->Value());
+    } while ((XmlAttribute = XmlAttribute->Next()) != nullptr);
+
+    Resources.emplace_back(MetaResource);
     return true;
 }
 //-----------------------------------------------------------------------------

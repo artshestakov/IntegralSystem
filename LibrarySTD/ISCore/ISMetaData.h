@@ -28,7 +28,9 @@ private:
     bool XSNInitForeigns(PMetaTable *MetaTable, tinyxml2::XMLElement *XmlElement);
     bool XSNInitEscorts(PMetaTable *MetaTable, tinyxml2::XMLElement *XmlElement);
 
-    bool XSRInit();
+    bool XSRInit(ISResourcer *Resourcer);
+    bool XSRInit(const std::string &Content, size_t Size, const std::string &FileName);
+    bool XSRInit(tinyxml2::XMLElement *XmlElement);
 
     bool XSFInit(ISResourcer *Resourcer);
     bool XSFInit(const std::string &Content, size_t Size, const std::string &FileName);
@@ -47,7 +49,7 @@ private:
     ISCriticalSection CS;
     bool Initialized;
     std::string ConfigurationName;
-    const char *CurrentXSN, *CurrentXSF;
+    const char *CurrentXSN, *CurrentXSR, *CurrentXSF;
     std::vector<ISMetaType> VectorTypes; //Перечисление типов системы
     size_t TypesCount; //Количество типов
 
@@ -59,6 +61,7 @@ private:
 
     std::vector<PMetaTable*> Tables;
     std::vector<PMetaFunction*> Functions;
+    std::vector<PMetaResource*> Resources;
 };
 //-----------------------------------------------------------------------------
 #endif
