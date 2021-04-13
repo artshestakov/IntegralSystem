@@ -4,6 +4,7 @@
 //-----------------------------------------------------------------------------
 #include "ISTypedefs.h"
 #include "ISDateTime.h"
+#include "ISQueryText.h"
 #include <libpq-fe.h>
 #include <pg_type_d.h>
 //-----------------------------------------------------------------------------
@@ -33,7 +34,7 @@ public:
     void BindValue(const char *Value, Oid OID = InvalidOid);
     void BindValue(bool Value, Oid OID = InvalidOid);
 
-    bool Execute(bool PrepareQuery = false, size_t ParamCount = 0);
+    bool Execute();
     bool ExecuteFirst();
 
     char* ReadColumn(size_t Index) const;
@@ -46,7 +47,7 @@ public:
     ISDate ReadColumn_Date(size_t Index) const;
 
 private:
-    bool Prepare(size_t ParamCount);
+    bool Prepare(int ParamCount);
 
 private:
     std::string ErrorString; //Тексовое описание ошибки
@@ -57,7 +58,6 @@ private:
     std::vector<Oid> ParameterTypes; //Типы параметров запроса
     size_t ParameterCount; //Количество параметров
 
-    bool Prepared; //Флаг подготовленного запроса
     std::string StmtName; //Имя подготовленного оператора
 
     PGconn *SqlConnection; //Указатель на соединение с базой

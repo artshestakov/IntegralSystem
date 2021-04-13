@@ -10,22 +10,22 @@
 #include "ISTcpClients.h"
 #include "ISResourcer.h"
 //-----------------------------------------------------------------------------
-static std::string QS_USERS_HASH = "SELECT usrs_hash, usrs_salt "
-                                   "FROM _users "
-                                   "WHERE usrs_hash IS NOT NULL "
-                                   "AND usrs_salt IS NOT NULL";
+static std::string QS_USERS_HASH = PREPARE_QUERY("SELECT usrs_hash, usrs_salt "
+                                                 "FROM _users "
+                                                 "WHERE usrs_hash IS NOT NULL "
+                                                 "AND usrs_salt IS NOT NULL");
 //-----------------------------------------------------------------------------
-static std::string QS_USER_AUTH = "SELECT usrs_id, usrs_issystem, usrs_fio, usrs_group, usgp_fullaccess, usrs_accessallowed, usrs_accountlifetime, usrs_accountlifetimestart, usrs_accountlifetimeend, "
-                                  "(SELECT sgdb_useraccessdatabase FROM _settingsdatabase WHERE sgdb_uid = $1) "
-                                  "FROM _users "
-                                  "LEFT JOIN _usergroup ON usgp_id = usrs_group "
-                                  "WHERE usrs_hash = $2";
+static std::string QS_USER_AUTH = PREPARE_QUERYN("SELECT usrs_id, usrs_issystem, usrs_fio, usrs_group, usgp_fullaccess, usrs_accessallowed, usrs_accountlifetime, usrs_accountlifetimestart, usrs_accountlifetimeend, "
+                                                "(SELECT sgdb_useraccessdatabase FROM _settingsdatabase WHERE sgdb_uid = $1) "
+                                                "FROM _users "
+                                                "LEFT JOIN _usergroup ON usgp_id = usrs_group "
+                                                "WHERE usrs_hash = $2", 2);
 //-----------------------------------------------------------------------------
-static std::string QI_PROTOCOL = "SELECT protocol_user($1, $2, $3, $4, $5, $6)";
+static std::string QI_PROTOCOL = PREPARE_QUERYN("SELECT protocol_user($1, $2, $3, $4, $5, $6)", 6);
 //-----------------------------------------------------------------------------
-static std::string QS_SETTINGS_DATABASE = "SELECT sgdb_id, sgdb_useraccessdatabase, sgdb_numbersimbolsaftercomma, sgdb_storagefilemaxsize, sgdb_tcpmessageid "
-                                          "FROM _settingsdatabase "
-                                          "WHERE sgdb_uid = $1";
+static std::string QS_SETTINGS_DATABASE = PREPARE_QUERYN("SELECT sgdb_id, sgdb_useraccessdatabase, sgdb_numbersimbolsaftercomma, sgdb_storagefilemaxsize, sgdb_tcpmessageid "
+                                                        "FROM _settingsdatabase "
+                                                        "WHERE sgdb_uid = $1", 1);
 //-----------------------------------------------------------------------------
 static std::string QS_GROUP_ACCESS_TABLE = "SELECT gatb_table, gatt_uid "
                                            "FROM _groupaccesstable "
@@ -37,15 +37,15 @@ static std::string QS_GROUP_ACCESS_SPECIAL = "SELECT gast_uid "
                                              "LEFT JOIN _groupaccessspecialtype ON gast_id = gasp_specialaccess "
                                              "WHERE gasp_group = $1";
 //-----------------------------------------------------------------------------
-static std::string QS_SYSTEM = "SELECT stms_uid, stms_localname, stms_icon, stms_hint "
-                               "FROM _systems "
-                               "ORDER BY stms_orderid";
+static std::string QS_SYSTEM = PREPARE_QUERY("SELECT stms_uid, stms_localname, stms_icon, stms_hint "
+                                             "FROM _systems "
+                                             "ORDER BY stms_orderid");
 //-----------------------------------------------------------------------------
-static std::string QS_SUBSYSTEM = "SELECT sbsm_uid, sbsm_localname, sbsm_icon, sbsm_classname, sbsm_tablename, sbsm_hint "
-                                  "FROM _subsystems "
-                                  "WHERE sbsm_system = $1 "
-                                  "AND check_access_user_subsystem($2, $3, sbsm_uid) "
-                                  "ORDER BY sbsm_orderid";
+static std::string QS_SUBSYSTEM = PREPARE_QUERYN("SELECT sbsm_uid, sbsm_localname, sbsm_icon, sbsm_classname, sbsm_tablename, sbsm_hint "
+                                                "FROM _subsystems "
+                                                "WHERE sbsm_system = $1 "
+                                                "AND check_access_user_subsystem($2, $3, sbsm_uid) "
+                                                "ORDER BY sbsm_orderid", 3);
 //-----------------------------------------------------------------------------
 static std::string QS_FAVORITE = "SELECT fvts_tablename, fvts_objectid "
                                  "FROM _favorites "
@@ -349,7 +349,7 @@ void ISTcpWorker::Protocol(unsigned int UserID, const char *ActionUID, const std
     qProtocol->BindValue(ActionUID, UUIDOID);
     ObjectID == 0 ? qProtocol->BindValue(nullptr) : qProtocol->BindValue(ObjectID);
     Information.empty() ? qProtocol->BindValue(nullptr) : qProtocol->BindValue(Information);
-    if (!qProtocol->Execute(true, 6))
+    if (!qProtocol->Execute())
     {
         ISLOGGER_E(__CLASS__, "Not insert protocol: %s", qProtocol->GetErrorString().c_str());
     }
@@ -727,7 +727,7 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
     rapidjson::Value SystemSubSystemArray(rapidjson::Type::kArrayType);
     ISQuery qSelectSystem(DBConnection, QS_SYSTEM),
         qSelectSubSystem(DBConnection, QS_SUBSYSTEM);
-    if (qSelectSystem.Execute(true)) //Запрашиваем системы
+    if (qSelectSystem.Execute()) //Запрашиваем системы
     {
         while (qSelectSystem.Next())
         {
@@ -737,7 +737,7 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
             qSelectSubSystem.BindValue(SystemUID, UUIDOID);
             qSelectSubSystem.BindValue(TcpMessage->TcpClient->UserID);
             qSelectSubSystem.BindValue(TcpMessage->TcpClient->UserSystem);
-            if (qSelectSubSystem.Execute(true, 3)) //Запрашиваем подсистемы текущей системы
+            if (qSelectSubSystem.Execute()) //Запрашиваем подсистемы текущей системы
             {
                 while (qSelectSubSystem.Next())
                 {

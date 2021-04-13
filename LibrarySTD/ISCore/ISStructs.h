@@ -66,4 +66,14 @@ struct ISMetaType
     bool SearchAllowed; //Возможность поиска по полю
 };
 //-----------------------------------------------------------------------------
+struct ISSqlPrepare
+{
+    ISSqlPrepare(const std::string &hash, size_t parameter_count = 0)
+        : Hash(hash), ParameterCount(parameter_count), Prepared(false) { }
+
+    std::string Hash;
+    size_t ParameterCount;
+    bool Prepared;
+};
+//-----------------------------------------------------------------------------
 #endif

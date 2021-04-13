@@ -356,19 +356,13 @@ bool ISTcpServer::ParseMessage(const char *Buffer, size_t BufferSize, ISTcpMessa
     }
     TcpMessage->Type = MessageType;
 
-    //≈сли параметры в запросе есть - проверим их наличие и тип
+    //≈сли параметры в запросе есть - проверим их тип
     if (JsonDocument.HasMember("Parameters"))
     {
         rapidjson::Value &FieldParameters = JsonDocument["Parameters"];
         if (!FieldParameters.IsObject())
         {
             TcpMessage->SetErrorString("field \"Parameters\" is not a JSON-objects");
-            return false;
-        }
-
-        if (FieldParameters.GetObjectA().ObjectEmpty())
-        {
-            TcpMessage->SetErrorString("field \"Parameters\" is empty");
             return false;
         }
         TcpMessage->Parameters.CopyFrom(FieldParameters, TcpMessage->Parameters.GetAllocator());

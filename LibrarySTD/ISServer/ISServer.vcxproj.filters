@@ -13,12 +13,18 @@
     <ClCompile Include="ISQuery.cpp">
       <Filter>Database</Filter>
     </ClCompile>
+    <ClCompile Include="ISQueryText.cpp">
+      <Filter>Database</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ISDatabase.h">
       <Filter>Database</Filter>
     </ClInclude>
     <ClInclude Include="ISQuery.h">
+      <Filter>Database</Filter>
+    </ClInclude>
+    <ClInclude Include="ISQueryText.h">
       <Filter>Database</Filter>
     </ClInclude>
   </ItemGroup>

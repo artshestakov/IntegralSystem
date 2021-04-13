@@ -43,7 +43,7 @@ std::string ISTcpAnswer::ToJson() const
     rapidjson::Document JsonDocument(rapidjson::Type::kObjectType);
     rapidjson::MemoryPoolAllocator<rapidjson::CrtAllocator> &Allocator = JsonDocument.GetAllocator();
 
-    JsonDocument.AddMember("Error", Error, Allocator);
+    JsonDocument.AddMember("IsError", Error, Allocator);
     JsonDocument.AddMember("ErrorString", rapidjson::Value(ErrorString.c_str(), (rapidjson::SizeType)ErrorString.size()), Allocator);
 
     //Если ошибки нет и есть параметры - добавляем их в ответ
@@ -57,6 +57,6 @@ std::string ISTcpAnswer::ToJson() const
 
     rapidjson::Writer<rapidjson::StringBuffer> JsonWriter(JsonBuffer);
     JsonDocument.Accept(JsonWriter);
-    return std::to_string(JsonBuffer.GetSize()) + '.' + JsonBuffer.GetString() + CHAR_NULL_TERM;
+    return std::to_string(JsonBuffer.GetSize() + 1) + '.' + JsonBuffer.GetString() + CHAR_NULL_TERM;
 }
 //-----------------------------------------------------------------------------

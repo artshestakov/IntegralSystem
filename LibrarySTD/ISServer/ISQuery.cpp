@@ -9,7 +9,6 @@ ISQuery::ISQuery(PGconn *sql_connection, const std::string &sql_text)
     ShowLongQuery(true),
     SqlText(sql_text),
     ParameterCount(0),
-    Prepared(false),
     SqlConnection(sql_connection),
     SqlResult(NULL),
     CountRows(-1),
@@ -130,13 +129,16 @@ void ISQuery::BindValue(bool Value, Oid OID)
     ++ParameterCount;
 }
 //-----------------------------------------------------------------------------
-bool ISQuery::Execute(bool PrepareQuery, size_t ParamCount)
+bool ISQuery::Execute()
 {
-    if (PrepareQuery && !Prepared) //Если запрос нужно подготовить и он ещё не готов - готовим
+    //Запрос требует подготовки
+    int ParamCount = 0;
+    bool Prepared = false;
+    if (ISQueryText::Instance().IsNeedPrepare(SqlText, StmtName, ParamCount, Prepared))
     {
-        if (!Prepare(ParamCount))
+        if (!Prepared && Prepare(ParamCount))
         {
-            return false;
+            ISQueryText::Instance().SetPrepared(SqlText);
         }
     }
 
@@ -306,11 +308,10 @@ ISDate ISQuery::ReadColumn_Date(size_t Index) const
     return ISDate((unsigned short)std::atoi(Day), (unsigned short)std::atoi(Month), (unsigned short)std::atoi(Year));
 }
 //-----------------------------------------------------------------------------
-bool ISQuery::Prepare(size_t ParamCount)
+bool ISQuery::Prepare(int ParamCount)
 {
-    StmtName = ISAlgorithm::MD5(SqlText);
     PGresult *STMT = PQprepare(SqlConnection, StmtName.c_str(), SqlText.c_str(), (int)ParamCount, ParameterTypes.data());
-    Prepared = STMT ? true : false;
+    bool Prepared = STMT ? true : false;
     if (Prepared)
     {
         //Проверяем результат, очищаем память и проверяем результат
