@@ -18,7 +18,7 @@ ISQueryText& ISQueryText::Instance()
     return QueryText;
 }
 //-----------------------------------------------------------------------------
-std::string ISQueryText::Add(const std::string &SqlText, size_t ParameterCount)
+std::string ISQueryText::Add(const std::string &SqlText, int ParameterCount)
 {
     if (Map.find(SqlText) == Map.end())
     {

@@ -855,7 +855,7 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
     }
 
     //Получаем пользовательские настройки
-    rapidjson::Value SettingGroupArray(rapidjson::Type::kArrayType);
+    rapidjson::Value SettingGroupsArray(rapidjson::Type::kArrayType);
     ISQuery qSelectSettingGroup(DBConnection, QS_SETTING_GROUP),
         qSelectSettingUser(DBConnection, QS_SETTING);
     if (qSelectSettingGroup.Execute())
@@ -867,6 +867,8 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
                 *GroupLocalName = qSelectSettingGroup.ReadColumn(2),
                 *GroupIconName = qSelectSettingGroup.ReadColumn(3),
                 *GroupHint = qSelectSettingGroup.ReadColumn(4);
+
+            size_t GroupHintSize = strlen(GroupHint);
             
             rapidjson::Value SettingsArray(rapidjson::Type::kArrayType);
             qSelectSettingUser.BindValue(TcpMessage->TcpClient->UserID);
@@ -878,19 +880,23 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
                     const char *SettingUID = qSelectSettingUser.ReadColumn(0),
                         *SettingName = qSelectSettingUser.ReadColumn(1),
                         *SettingType = qSelectSettingUser.ReadColumn(2),
-                        *SettingWidgetEditName = qSelectSettingUser.ReadColumn(3),
+                        *SettingWidgetName = qSelectSettingUser.ReadColumn(3),
                         *SettingLocalName = qSelectSettingUser.ReadColumn(4),
                         *SettingHint = qSelectSettingUser.ReadColumn(5),
                         *SettingDefault = qSelectSettingUser.ReadColumn(6);
+
+                    size_t SettingWidgetNameSize = strlen(SettingWidgetName),
+                        SettingHintSize = strlen(SettingHint),
+                        SettingDefaultSize = strlen(SettingDefault);
                     
                     rapidjson::Value SettingObject(rapidjson::Type::kObjectType);
                     SettingObject.AddMember("UID", rapidjson::Value(SettingUID, (rapidjson::SizeType)strlen(SettingUID)), Allocator);
                     SettingObject.AddMember("Name", rapidjson::Value(SettingName, (rapidjson::SizeType)strlen(SettingName)), Allocator);
                     SettingObject.AddMember("Type", rapidjson::Value(SettingType, (rapidjson::SizeType)strlen(SettingType)), Allocator);
-                    SettingObject.AddMember("WidgetEdit", rapidjson::Value(SettingWidgetEditName, (rapidjson::SizeType)strlen(SettingWidgetEditName)), Allocator);
+                    SettingObject.AddMember("Widget", SettingWidgetNameSize > 0 ? rapidjson::Value(SettingWidgetName, (rapidjson::SizeType)SettingWidgetNameSize) : rapidjson::Value(), Allocator);
                     SettingObject.AddMember("Local", rapidjson::Value(SettingLocalName, (rapidjson::SizeType)strlen(SettingLocalName)), Allocator);
-                    SettingObject.AddMember("Hint", rapidjson::Value(SettingHint, (rapidjson::SizeType)strlen(SettingHint)), Allocator);
-                    SettingObject.AddMember("Default", rapidjson::Value(SettingDefault, (rapidjson::SizeType)strlen(SettingDefault)), Allocator);
+                    SettingObject.AddMember("Hint", SettingHintSize > 0 ? rapidjson::Value(SettingHint, (rapidjson::SizeType)SettingHintSize) : rapidjson::Value(), Allocator);
+                    SettingObject.AddMember("Default", SettingDefaultSize > 0 ? rapidjson::Value(SettingDefault, (rapidjson::SizeType)SettingDefaultSize) : rapidjson::Value(), Allocator);
 
                     if (qSelectSettingUser.ReadColumn_Int(8))  //Если такая настройка у пользователя уже есть - получаем её значение
                     {
@@ -918,14 +924,19 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
                 return ErrorQuery(LANG("Carat.Error.Query.GetMetaData.SettingsUser"), qSelectSettingUser);
             }
 
+            if (SettingsArray.Empty())
+            {
+                SettingsArray.SetNull();
+            }
+
             rapidjson::Value SettingGroupObject(rapidjson::Type::kObjectType);
             SettingGroupObject.AddMember("UID", rapidjson::Value(GroupUID, (rapidjson::SizeType)strlen(GroupUID)), Allocator);
             SettingGroupObject.AddMember("Name", rapidjson::Value(GroupName, (rapidjson::SizeType)strlen(GroupName)), Allocator);
             SettingGroupObject.AddMember("Local", rapidjson::Value(GroupLocalName, (rapidjson::SizeType)strlen(GroupLocalName)), Allocator);
             SettingGroupObject.AddMember("Icon", rapidjson::Value(GroupIconName, (rapidjson::SizeType)strlen(GroupIconName)), Allocator);
-            SettingGroupObject.AddMember("Hint", rapidjson::Value(GroupHint, (rapidjson::SizeType)strlen(GroupHint)), Allocator);
+            SettingGroupObject.AddMember("Hint", GroupHintSize > 0 ? rapidjson::Value(GroupHint, (rapidjson::SizeType)GroupHintSize) : rapidjson::Value(), Allocator);
             SettingGroupObject.AddMember("Settings", SettingsArray, Allocator);
-            SettingGroupArray.PushBack(SettingGroupObject, Allocator);
+            SettingGroupsArray.PushBack(SettingGroupObject, Allocator);
         }
     }
     else
@@ -995,16 +1006,16 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
     {
         const char *Content = ISResourcer::Instance().GetFile(FileName);
         std::string ContentBase64 = ISAlgorithm::Base64Encode(Content);
-        MetaDataArray.PushBack(rapidjson::Value(ContentBase64.c_str(), (rapidjson::SizeType)ContentBase64.size()), Allocator);
+        MetaDataArray.PushBack(rapidjson::Value(ContentBase64, Allocator), Allocator);
     }
 
     TcpAnswer->Parameters.AddMember("SettingsDB", SettingsDBObject, Allocator);
     TcpAnswer->Parameters.AddMember("AccessTables", AccessTablesObject, Allocator);
     TcpAnswer->Parameters.AddMember("AccessSpecial", AccessSpecialObject, Allocator);
-    TcpAnswer->Parameters.AddMember("SystemSubSystem", SystemSubSystemArray, Allocator);
+    TcpAnswer->Parameters.AddMember("Systems", SystemSubSystemArray, Allocator);
     TcpAnswer->Parameters.AddMember("Favorite", FavoriteObject, Allocator);
     TcpAnswer->Parameters.AddMember("ColumnSize", ColumnSizeObject, Allocator);
-    TcpAnswer->Parameters.AddMember("Settings", SettingGroupArray, Allocator);
+    TcpAnswer->Parameters.AddMember("SettingGroups", SettingGroupsArray, Allocator);
     TcpAnswer->Parameters.AddMember("Paragraphs", ParagraphArray, Allocator);
     TcpAnswer->Parameters.AddMember("TaskPriority", TaskPriorityArray, Allocator);
     TcpAnswer->Parameters.AddMember("MetaData", MetaDataArray, Allocator);

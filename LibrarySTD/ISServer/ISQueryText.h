@@ -10,7 +10,7 @@ class ISQueryText
 public:
     static ISQueryText& Instance();
 
-    std::string Add(const std::string &SqlText, size_t ParameterCount = 0);
+    std::string Add(const std::string &SqlText, int ParameterCount = 0);
     bool IsNeedPrepare(const std::string &SqlText, std::string &Hash, int &ParamCount, bool &Prepared);
     void SetPrepared(const std::string &SqlText);
 
