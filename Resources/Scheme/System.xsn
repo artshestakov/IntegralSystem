@@ -46,7 +46,7 @@
 
     <Table Name="_SubSystems" UID="{8F19D6C6-53BB-4272-859B-8A96939FE770}" Alias="sbsm" LocalName="Подсистема" LocalListName="Подсистемы" TitleName="LocalName" IsSystem="true">
         <Fields>
-            <Field UID="{10506C1D-D54A-4550-AB26-BF28FC9A9DD1}" Name="System" Type="UID" LabelName="Система" LocalListName="Система"/>
+            <Field UID="{10506C1D-D54A-4550-AB26-BF28FC9A9DD1}" Name="System" Type="UID" LabelName="Система" LocalListName="Система" NotNull="true"/>
             <Field UID="{B18A6DD1-3A79-4CFC-BB04-249FC57BDD25}" Name="LocalName" Type="String" LabelName="Название подсистемы" LocalListName="Название подсистемы" NotNull="true"/>
             <Field UID="{06402F71-EF53-4D64-A293-5C2EEF066E78}" Name="OrderID" Type="Int" LabelName="Порядок" LocalListName="Порядок" NotNull="true"/>
             <Field UID="{320B0FFE-6711-41A8-9F71-00CEAEB48B8C}" Name="Icon" Type="String" LabelName="Наименование картинки" LocalListName="Наименование картинки"/>
