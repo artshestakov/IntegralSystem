@@ -520,3 +520,26 @@ std::string ISAlgorithm::MD5(const std::string &String)
     return Result;
 }
 //-----------------------------------------------------------------------------
+std::string ISAlgorithm::Base64Encode(const std::string &String)
+{
+    std::string Result;
+#ifdef WIN32
+    const unsigned char *Buffer = (const unsigned char *)String.c_str();
+    DWORD BufferSize = (DWORD)String.size();
+    DWORD ResultSize = 0;
+    if (CryptBinaryToStringA(Buffer, BufferSize, CRYPT_STRING_BASE64 | CRYPT_STRING_NOCRLF, nullptr, &ResultSize) == TRUE)
+    {
+        char *BufferResult = (char *)malloc(sizeof(char) * ResultSize);
+        if (BufferResult && CryptBinaryToStringA(Buffer, BufferSize, CRYPT_STRING_BASE64 | CRYPT_STRING_NOCRLF, BufferResult, &ResultSize))
+        {
+            Result = &BufferResult[0];
+            free(BufferResult);
+        }
+    }
+#else
+    IS_UNUSED(String);
+    IS_ASSERT(false, "not support");
+#endif
+    return Result;
+}
+//-----------------------------------------------------------------------------
