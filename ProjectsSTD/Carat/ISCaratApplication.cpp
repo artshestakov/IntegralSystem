@@ -82,7 +82,7 @@ bool ISCaratApplication::Init()
     //Читаем файл ресурсов
     if (!ISResourcer::Instance().LoadFile(ISAlgorithm::GetApplicationDir() + PATH_SEPARATOR + "Resources.bin"))
     {
-        ErrorString = ISAlgorithm::StringF("Not read resource file: %s", ISResourcer::Instance().GetErrorString().c_str());
+        ISLOGGER_E("ISResourcer", "Not read resource file: %s", ISResourcer::Instance().GetErrorString().c_str());
         return false;
     }
 
