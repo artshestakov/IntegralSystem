@@ -1,6 +1,7 @@
 #include "ISAlgorithm.h"
 #include "ISConstants.h"
 #include "ISAssert.h"
+#include <openssl/md5.h>
 //-----------------------------------------------------------------------------
 std::string ISAlgorithm::GetClassName(const char *FunctionName)
 {
@@ -420,6 +421,55 @@ std::string ISAlgorithm::StringF(const char *Format, ...)
     }
 }
 //-----------------------------------------------------------------------------
+std::string ISAlgorithm::StringToMD5(const std::string &String)
+{
+    std::string Result(MD5_RESULT_SIZE, CHAR_NULL_TERM);
+    unsigned char Hash[MD5_SIZE] = { 0 };
+    bool IsOk = false;
+#ifdef WIN32
+    HCRYPTPROV HCryptoProv = 0;
+    if (CryptAcquireContext(&HCryptoProv, NULL, NULL, PROV_RSA_FULL, CRYPT_VERIFYCONTEXT) == TRUE)
+    {
+        HCRYPTHASH CryptoHash = 0;
+        if (CryptCreateHash(HCryptoProv, CALG_MD5, 0, 0, &CryptoHash) == TRUE)
+        {
+            if (CryptHashData(CryptoHash, (unsigned char *)String.c_str(), (DWORD)String.size(), 0) == TRUE)
+            {
+                unsigned long MD5Size = MD5_SIZE;
+                if (CryptGetHashParam(CryptoHash, HP_HASHVAL, Hash, &MD5Size, 0) == TRUE)
+                {
+                    IsOk = true;
+                }
+            }
+            CryptDestroyHash(CryptoHash);
+        }
+        CryptReleaseContext(HCryptoProv, 0);
+    }
+#else
+    MD5_CTX Context;
+    if (MD5_Init(&Context) == 1)
+    {
+        if (MD5_Update(&Context, String.c_str(), String.size()) == 1)
+        {
+            if (MD5_Final(Hash, &Context) == 1)
+            {
+                IsOk = true;
+            }
+        }
+    }
+#endif
+    if (IsOk)
+    {
+        size_t Index = 0;
+        for (size_t i = 0; i < MD5_SIZE; ++i, ++Index)
+        {
+            Result[Index] = MD5_DIGITS[Hash[i] >> 4];
+            Result[++Index] = MD5_DIGITS[Hash[i] & 0xF];
+        }
+    }
+    return Result;
+}
+//-----------------------------------------------------------------------------
 std::string ISAlgorithm::GenerateUuidStandart()
 {
     std::string StringUID(UUID_STANDART_SIZE, CHAR_NULL_TERM);
@@ -483,41 +533,6 @@ std::string ISAlgorithm::SaltPassword(const std::string &HashPassword, const std
     }
     std::reverse(HashResult.begin(), HashResult.end());
     return HashResult;
-}
-//-----------------------------------------------------------------------------
-std::string ISAlgorithm::MD5(const std::string &String)
-{
-    std::string Result(MD5_RESULT_SIZE, CHAR_NULL_TERM);
-#ifdef WIN32
-    HCRYPTPROV HCryptoProv = 0;
-    if (CryptAcquireContext(&HCryptoProv, NULL, NULL, PROV_RSA_FULL, CRYPT_VERIFYCONTEXT) == TRUE)
-    {
-        HCRYPTHASH CryptoHash = 0;
-        if (CryptCreateHash(HCryptoProv, CALG_MD5, 0, 0, &CryptoHash) == TRUE)
-        {
-            if (CryptHashData(CryptoHash, (unsigned char *)String.c_str(), (DWORD)String.size(), 0) == TRUE)
-            {
-                unsigned char Hash[MD5_SIZE] = { 0 };
-                unsigned long MD5Size = MD5_SIZE;
-                if (CryptGetHashParam(CryptoHash, HP_HASHVAL, Hash, &MD5Size, 0) == TRUE)
-                {
-                    size_t Index = 0;
-                    for (size_t i = 0; i < MD5_SIZE; ++i, ++Index)
-                    {
-                        Result[Index] = MD5_DIGITS[Hash[i] >> 4];
-                        Result[++Index] = MD5_DIGITS[Hash[i] & 0xF];
-                    }
-                }
-            }
-            CryptDestroyHash(CryptoHash);
-        }
-        CryptReleaseContext(HCryptoProv, 0);
-    }
-#else
-    IS_UNUSED(String);
-    IS_ASSERT(false, "not support");
-#endif
-    return Result;
 }
 //-----------------------------------------------------------------------------
 std::string ISAlgorithm::Base64Encode(const std::string &String)

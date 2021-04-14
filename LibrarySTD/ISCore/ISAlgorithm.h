@@ -157,6 +157,11 @@ namespace ISAlgorithm
     //! \param ... аргументы
     std::string StringF(const char *Format, ...);
 
+    //! Формирование MD5-хэша из строки
+    //! \param String строка, из которой будет вычислен MD5-хэш
+    //! \return возвращает MD5-хэш. Если вернулась пустая строка - значит ошибка
+    std::string StringToMD5(const std::string &String);
+
     //! Генерация стандартного уникального идентификатора в формате b75ed238-411a-4f06-85ea-a2ecca37cfa8
     //! \return возвращает стандартный уникальный идентификатор
     std::string GenerateUuidStandart();
@@ -174,11 +179,6 @@ namespace ISAlgorithm
     //! \param Salt строка, которая должна содержать соль (sha256(Login + Password))
     //! \return возвращает солёный пароль
     std::string SaltPassword(const std::string &HashPassword, const std::string &Salt); //Посолить пароль
-
-    //! Формирование MD5-хэша из строки
-    //! \param String строка, из которой будет вычислен MD5-хэш
-    //! \return возвращает MD5-хэш. Если вернулась пустая строка - значит ошибка
-    std::string MD5(const std::string &String);
 
     //! Закодировать строку в base64
     //! \param String строку, которую нужно закодировать

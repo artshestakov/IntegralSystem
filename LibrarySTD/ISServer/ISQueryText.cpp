@@ -22,7 +22,7 @@ std::string ISQueryText::Add(const std::string &SqlText, int ParameterCount)
 {
     if (Map.find(SqlText) == Map.end())
     {
-        Map.emplace(SqlText, new ISSqlPrepare(ISAlgorithm::MD5(SqlText), ParameterCount));
+        Map.emplace(SqlText, new ISSqlPrepare(ISAlgorithm::StringToMD5(SqlText), ParameterCount));
     }
     return SqlText;
 }

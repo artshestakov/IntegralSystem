@@ -20,7 +20,7 @@ DESTDIR = $$PWD/../../BinSTD/$${CONFIGURATION}-$${PLATFORM}
 MOC_DIR = $$PWD/$${CONFIGURATION}-$${PLATFORM}/$${TARGET}
 OBJECTS_DIR = $$PWD/$${CONFIGURATION}-$${PLATFORM}/$${TARGET}
 
-LIBS += -lpthread -luuid
+LIBS += -lpthread -luuid -lcrypto
 
 HEADERS += \
     ConvertUTF.h \
