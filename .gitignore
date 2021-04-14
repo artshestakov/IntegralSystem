@@ -33,3 +33,5 @@
 Build.ini.tmp
 .qmake.stash
 Makefile
+
+LibrarySTD/ISServer/ISRevision.h

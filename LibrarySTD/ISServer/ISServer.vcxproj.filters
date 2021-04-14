@@ -36,5 +36,8 @@
     <ClInclude Include="ISConfigurations.h">
       <Filter>System</Filter>
     </ClInclude>
+    <ClInclude Include="ISRevision.h">
+      <Filter>System</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

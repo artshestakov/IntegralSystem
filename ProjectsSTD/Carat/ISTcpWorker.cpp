@@ -605,7 +605,7 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
     //Информация об обновлении клиента
     rapidjson::Value UpdateClientObject(rapidjson::Type::kObjectType);
     UpdateClientObject.AddMember("IsNeed", IsNeedUpdate, Allocator);
-    UpdateClientObject.AddMember("NewVersion", JSON_NULL, Allocator);
+    UpdateClientObject.AddMember("NewVersion", VersionLast > 0 ? rapidjson::Value(VersionLast) : JSON_NULL, Allocator);
     TcpAnswer->Parameters.AddMember("UpdateClient", rapidjson::Value(UpdateClientObject, Allocator), Allocator);
 
     //Информация о конфигурации

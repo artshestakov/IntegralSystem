@@ -10,6 +10,7 @@
 #include "ISMetaData.h"
 #include "ISResourcer.h"
 #include "ISConfigurations.h"
+#include "ISRevision.h"
 //-----------------------------------------------------------------------------
 ISCaratApplication::ISCaratApplication(int argc, char **argv)
     : ErrorString(STRING_NO_ERROR),
@@ -118,12 +119,13 @@ int ISCaratApplication::Start()
         }
 
         ISLOGGER_I(__CLASS__, "Starting...\n"
-            "Version: [version] ([configuration] [platform])\n"
+            "Version: %d ([configuration] [platform])\n"
             "Branch: [branch_name] (hash)\n"
             "Host name: %s\n"
             "User name: %s\n"
             "Main thread: %d\n"
             "PID: %d",
+            CARAT_VERSION_N,
             ISAlgorithm::GetHostName().c_str(),
             ISAlgorithm::GetUserName().c_str(),
             CURRENT_THREAD_ID(),
@@ -241,7 +243,7 @@ void ISCaratApplication::Help()
 //-----------------------------------------------------------------------------
 void ISCaratApplication::Version()
 {
-    ISDEBUG_L("This flag not support");
+    ISDEBUG_L(ISAlgorithm::StringF("Carat (%d) [configuration] [platform]", CARAT_VERSION_N));
 }
 //-----------------------------------------------------------------------------
 void ISCaratApplication::ConfigCreate()

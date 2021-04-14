@@ -29,6 +29,7 @@
     <ClInclude Include="ISDatabase.h" />
     <ClInclude Include="ISQuery.h" />
     <ClInclude Include="ISQueryText.h" />
+    <ClInclude Include="ISRevision.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{77CC8439-66E0-46A6-8103-5320FF654728}</ProjectGuid>
