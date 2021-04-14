@@ -1,5 +1,6 @@
 #include "ISTcpAnswer.h"
 #include "ISConstants.h"
+#include "rapidjson\rapidjson.h"
 #include "rapidjson\stringbuffer.h"
 #include "rapidjson\writer.h"
 //-----------------------------------------------------------------------------
@@ -44,7 +45,7 @@ std::string ISTcpAnswer::ToJson() const
     rapidjson::MemoryPoolAllocator<rapidjson::CrtAllocator> &Allocator = JsonDocument.GetAllocator();
 
     JsonDocument.AddMember("IsError", Error, Allocator);
-    JsonDocument.AddMember("ErrorString", rapidjson::Value(ErrorString.c_str(), (rapidjson::SizeType)ErrorString.size()), Allocator);
+    JsonDocument.AddMember("ErrorString", JSON_STRING(ErrorString.c_str()), Allocator);
 
     //Если ошибки нет и есть параметры - добавляем их в ответ
     if (!Error && !Parameters.ObjectEmpty())

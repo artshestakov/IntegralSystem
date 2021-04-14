@@ -9,6 +9,7 @@
 #include "ISLocalization.h"
 #include "ISTcpClients.h"
 #include "ISResourcer.h"
+#include "ISConfigurations.h"
 //-----------------------------------------------------------------------------
 static std::string QS_USERS_HASH = PREPARE_QUERY("SELECT usrs_hash, usrs_salt "
                                                  "FROM _users "
@@ -274,7 +275,7 @@ bool ISTcpWorker::Execute(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
     }
     else //Функция не найдена
     {
-        ErrorString = ISAlgorithm::StringF("Not support function \"%s\"", TcpMessage->Type);
+        ErrorString = ISAlgorithm::StringF("Not support function \"%s\"", TcpMessage->Type.c_str());
     }
     return false;
 }
@@ -574,11 +575,12 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
     if (ISTcpClients::Instance().IsExistUserID(UserID))
     {
         ISTcpClientInfo TcpClientInfo = ISTcpClients::Instance().GetInfo(UserID);
-        std::string DTConnected = TcpClientInfo.DTConnected.ToString();
+        const char *DTConnected = TcpClientInfo.DTConnected.ToString().c_str(),
+            *IPAddress = TcpClientInfo.IPAddress.c_str();
 
         rapidjson::Value AlreadyConnectedObject(rapidjson::Type::kObjectType);
-        AlreadyConnectedObject.AddMember("DateTime", rapidjson::Value(DTConnected.c_str(), (rapidjson::SizeType)DTConnected.size()), Allocator);
-        AlreadyConnectedObject.AddMember("IPAddress", rapidjson::Value(TcpClientInfo.IPAddress.c_str(), (rapidjson::SizeType)TcpClientInfo.IPAddress.size()), Allocator);
+        AlreadyConnectedObject.AddMember("DateTime", JSON_STRING(DTConnected), Allocator);
+        AlreadyConnectedObject.AddMember("IPAddress", JSON_STRING(IPAddress), Allocator);
         TcpAnswer->Parameters.AddMember("AlreadyConnected", rapidjson::Value(AlreadyConnectedObject, Allocator), Allocator);
     }
 
@@ -591,29 +593,29 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
     //Отдаём информацию о пользователе и конфигурации
     TcpAnswer->Parameters.AddMember("UserID", UserID, Allocator);
     TcpAnswer->Parameters.AddMember("UserIsSystem", UserSystem, Allocator);
-    TcpAnswer->Parameters.AddMember("UserFIO", rapidjson::Value(UserFIO, (rapidjson::SizeType)strlen(UserFIO)), Allocator);
+    TcpAnswer->Parameters.AddMember("UserFIO", JSON_STRING(UserFIO), Allocator);
     TcpAnswer->Parameters.AddMember("UserGroupID", GroupID, Allocator);
     TcpAnswer->Parameters.AddMember("UserGroupFullAccess", GroupFullAccess, Allocator);
     
     //Информация о сервере
     rapidjson::Value ServerObject(rapidjson::Type::kObjectType);
-    ServerObject.AddMember("Version", 1, Allocator);
+    ServerObject.AddMember("Version", JSON_NULL, Allocator);
     TcpAnswer->Parameters.AddMember("Server", rapidjson::Value(ServerObject, Allocator), Allocator);
 
     //Информация об обновлении клиента
     rapidjson::Value UpdateClientObject(rapidjson::Type::kObjectType);
     UpdateClientObject.AddMember("IsNeed", IsNeedUpdate, Allocator);
-    UpdateClientObject.AddMember("NewVersion", 1, Allocator);
+    UpdateClientObject.AddMember("NewVersion", JSON_NULL, Allocator);
     TcpAnswer->Parameters.AddMember("UpdateClient", rapidjson::Value(UpdateClientObject, Allocator), Allocator);
 
     //Информация о конфигурации
     rapidjson::Value ConfigurationObject(rapidjson::Type::kObjectType);
-    ConfigurationObject.AddMember("Name", rapidjson::Value().SetNull(), Allocator);
-    ConfigurationObject.AddMember("UID", rapidjson::Value().SetNull(), Allocator);
-    ConfigurationObject.AddMember("LocalName", rapidjson::Value().SetNull(), Allocator);
-    ConfigurationObject.AddMember("DesktopForm", rapidjson::Value().SetNull(), Allocator);
-    ConfigurationObject.AddMember("DateExpired", rapidjson::Value().SetNull(), Allocator);
-    ConfigurationObject.AddMember("LogoName", rapidjson::Value().SetNull(), Allocator);
+    ConfigurationObject.AddMember("Name", JSON_STRING(ISConfigurations::Instance().Get().Name.c_str()), Allocator);
+    ConfigurationObject.AddMember("UID", JSON_STRING(ISConfigurations::Instance().Get().UID.c_str()), Allocator);
+    ConfigurationObject.AddMember("LocalName", JSON_STRING(ISConfigurations::Instance().Get().LocalName.c_str()), Allocator);
+    ConfigurationObject.AddMember("DesktopForm", JSON_STRING(ISConfigurations::Instance().Get().DesktopForm.c_str()), Allocator);
+    ConfigurationObject.AddMember("DateExpired", JSON_STRING(ISConfigurations::Instance().Get().DateExpired.ToString().c_str()), Allocator);
+    ConfigurationObject.AddMember("LogoName", JSON_STRING(ISConfigurations::Instance().Get().LogoName.c_str()), Allocator);
     TcpAnswer->Parameters.AddMember("Configuration", rapidjson::Value(ConfigurationObject, Allocator), Allocator);
 
     Protocol(TcpMessage->TcpClient->UserID, CONST_UID_PROTOCOL_ENTER_APPLICATION);
@@ -667,11 +669,11 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
             ErrorString = LANG("Carat.Error.Query.GetMetaData.SettingsDBNotActive");
             return false;
         }
-        SettingsDBObject.AddMember("ID", rapidjson::Value(qSelectSettingsDB.ReadColumn_UInt(0)), Allocator);
-        SettingsDBObject.AddMember("UserAccessDatabase", rapidjson::Value(qSelectSettingsDB.ReadColumn_Bool(1)), Allocator);
-        SettingsDBObject.AddMember("NumberSimbolsAfterComma", rapidjson::Value(qSelectSettingsDB.ReadColumn_Int(2)), Allocator);
-        SettingsDBObject.AddMember("StorageFileMaxSize", rapidjson::Value(qSelectSettingsDB.ReadColumn_Int(3)), Allocator);
-        SettingsDBObject.AddMember("TCPMessageID", rapidjson::Value(qSelectSettingsDB.ReadColumn_UInt64(4)), Allocator);
+        SettingsDBObject.AddMember("ID", qSelectSettingsDB.ReadColumn_UInt(0), Allocator);
+        SettingsDBObject.AddMember("UserAccessDatabase", qSelectSettingsDB.ReadColumn_Bool(1), Allocator);
+        SettingsDBObject.AddMember("NumberSimbolsAfterComma", qSelectSettingsDB.ReadColumn_Int(2), Allocator);
+        SettingsDBObject.AddMember("StorageFileMaxSize", qSelectSettingsDB.ReadColumn_Int(3), Allocator);
+        SettingsDBObject.AddMember("TCPMessageID", qSelectSettingsDB.ReadColumn_UInt64(4), Allocator);
     }
     else
     {
@@ -688,16 +690,15 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
         {
             const char *TableName = qSelectAccessTables.ReadColumn(0),
                 *AccessUID = qSelectAccessTables.ReadColumn(1);
-            rapidjson::Value AccessUIDValue(AccessUID, (rapidjson::SizeType)strlen(AccessUID), Allocator);
             if (AccessTablesObject.HasMember(TableName))
             {
-                AccessTablesObject[TableName].PushBack(AccessUIDValue, Allocator);
+                AccessTablesObject[JSON_STRING(TableName)].PushBack(JSON_STRING(AccessUID), Allocator);
             }
             else
             {
                 rapidjson::Value TempArray(rapidjson::Type::kArrayType);
-                TempArray.PushBack(AccessUIDValue, Allocator);
-                AccessTablesObject.AddMember(rapidjson::Value(TableName, (rapidjson::SizeType)strlen(TableName), Allocator), TempArray, Allocator);
+                TempArray.PushBack(JSON_STRING(AccessUID), Allocator);
+                AccessTablesObject.AddMember(JSON_STRING(TableName), TempArray, Allocator);
             }
         }
     }
@@ -714,8 +715,8 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
     {
         while (qSelectAccessSpecial.Next())
         {
-            const char *AccessSpecialUID = qSelectAccessSpecial.ReadColumn(0);
-            AccessSpecialObject.PushBack(rapidjson::Value(AccessSpecialUID, (rapidjson::SizeType)strlen(AccessSpecialUID), Allocator), Allocator);
+            const char *UID = qSelectAccessSpecial.ReadColumn(0);
+            AccessSpecialObject.PushBack(JSON_STRING(UID), Allocator);
         }
     }
     else
@@ -748,18 +749,13 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
                         *TableName = qSelectSubSystem.ReadColumn(4),
                         *Hint = qSelectSubSystem.ReadColumn(5);
 
-                    size_t IconNameSize = strlen(IconName),
-                        ClassNameSize = strlen(ClassName),
-                        TableNameSize = strlen(TableName),
-                        HintSize = strlen(Hint);
-
                     rapidjson::Value SubSystemObject(rapidjson::Type::kObjectType);
-                    SubSystemObject.AddMember("UID", rapidjson::Value(SubSystemUID, (rapidjson::SizeType)strlen(SubSystemUID)), Allocator);
-                    SubSystemObject.AddMember("Local", rapidjson::Value(LocalName, (rapidjson::SizeType)strlen(LocalName)), Allocator);
-                    SubSystemObject.AddMember("Icon", IconNameSize > 0 ? rapidjson::Value(IconName, (rapidjson::SizeType)IconNameSize) : rapidjson::Value(), Allocator);
-                    SubSystemObject.AddMember("Class", ClassNameSize > 0 ? rapidjson::Value(ClassName, (rapidjson::SizeType)ClassNameSize) : rapidjson::Value(), Allocator);
-                    SubSystemObject.AddMember("Table", TableNameSize > 0 ? rapidjson::Value(TableName, (rapidjson::SizeType)TableNameSize) : rapidjson::Value(), Allocator);
-                    SubSystemObject.AddMember("Hint", HintSize > 0 ? rapidjson::Value(Hint, (rapidjson::SizeType)HintSize) : rapidjson::Value(), Allocator);
+                    SubSystemObject.AddMember("UID", JSON_STRING(SubSystemUID), Allocator);
+                    SubSystemObject.AddMember("Local", JSON_STRING(LocalName), Allocator);
+                    SubSystemObject.AddMember("Icon", JSON_STRING(IconName), Allocator);
+                    SubSystemObject.AddMember("Class", JSON_STRING(ClassName), Allocator);
+                    SubSystemObject.AddMember("Table", JSON_STRING(TableName), Allocator);
+                    SubSystemObject.AddMember("Hint", JSON_STRING(Hint), Allocator);
                     SubSystemsArray.PushBack(SubSystemObject, Allocator);
                 }
             }
@@ -774,16 +770,13 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
                 const char *LocalName = qSelectSystem.ReadColumn(1),
                     *IconName = qSelectSystem.ReadColumn(2),
                     *Hint = qSelectSystem.ReadColumn(3);
-                
-                size_t IconNameSize = strlen(IconName),
-                    HintSize = strlen(Hint);
 
                 rapidjson::Value SystemObject(rapidjson::Type::kObjectType);
                 SystemObject.AddMember("IsSystem", qSelectSystem.ReadColumn_Bool(0), Allocator);
-                SystemObject.AddMember("UID", rapidjson::Value(SystemUID, (rapidjson::SizeType)strlen(SystemUID)), Allocator);
-                SystemObject.AddMember("Local", rapidjson::Value(LocalName, (rapidjson::SizeType)strlen(LocalName)), Allocator);
-                SystemObject.AddMember("Icon", IconNameSize > 0 ? rapidjson::Value(IconName, (rapidjson::SizeType)IconNameSize) : rapidjson::Value(), Allocator);
-                SystemObject.AddMember("Hint", HintSize > 0 ? rapidjson::Value(Hint, (rapidjson::SizeType)HintSize) : rapidjson::Value(), Allocator);
+                SystemObject.AddMember("UID", JSON_STRING(SystemUID), Allocator);
+                SystemObject.AddMember("Local", JSON_STRING(LocalName), Allocator);
+                SystemObject.AddMember("Icon", strlen(IconName) > 0 ? JSON_STRING(IconName) : JSON_NULL, Allocator);
+                SystemObject.AddMember("Hint", strlen(Hint) > 0 ? JSON_STRING(Hint) : JSON_NULL, Allocator);
                 SystemObject.AddMember("SubSystems", SubSystemsArray, Allocator);
                 SystemSubSystemArray.PushBack(SystemObject, Allocator);
             }
@@ -807,13 +800,13 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 
             if (FavoriteObject.HasMember(TableName))
             {
-                FavoriteObject[rapidjson::Value(TableName, (rapidjson::SizeType)strlen(TableName))].PushBack(ObjectID, Allocator);
+                FavoriteObject[rapidjson::Value(TableName, strlen(TableName), Allocator)].PushBack(ObjectID, Allocator);
             }
             else
             {
                 rapidjson::Value TempArray(rapidjson::Type::kArrayType);
                 TempArray.PushBack(ObjectID, Allocator);
-                FavoriteObject.AddMember(rapidjson::Value(TableName, (rapidjson::SizeType)strlen(TableName)), TempArray, Allocator);
+                FavoriteObject.AddMember(rapidjson::Value(TableName, strlen(TableName), Allocator), TempArray, Allocator);
             }
         }
     }
@@ -834,18 +827,18 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
                 *FieldName = qSelectColumnSize.ReadColumn(1);
             unsigned int Size = qSelectColumnSize.ReadColumn_UInt(2);
 
-            rapidjson::Value TableNameV(TableName, (rapidjson::SizeType)strlen(TableName)),
-                FieldNameV(FieldName, (rapidjson::SizeType)strlen(FieldName));
+            rapidjson::Value VTableName(TableName, strlen(TableName), Allocator),
+                VFieldName(FieldName, strlen(FieldName), Allocator);
 
             if (ColumnSizeObject.HasMember(TableName))
             {
-                ColumnSizeObject[TableName].AddMember(FieldNameV, Size, Allocator);
+                ColumnSizeObject[VTableName].AddMember(VFieldName, Size, Allocator);
             }
             else
             {
                 rapidjson::Value TempObject(rapidjson::Type::kObjectType);
-                TempObject.AddMember(FieldNameV, Size, Allocator);
-                ColumnSizeObject.AddMember(TableNameV, TempObject, Allocator);
+                TempObject.AddMember(VFieldName, Size, Allocator);
+                ColumnSizeObject.AddMember(VTableName, TempObject, Allocator);
             }
         }
     }
@@ -1004,9 +997,8 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
     const ISVectorString &VectorString = ISMetaData::Instance().GetVectorXSN();
     for (const std::string &FileName : VectorString)
     {
-        const char *Content = ISResourcer::Instance().GetFile(FileName);
-        std::string ContentBase64 = ISAlgorithm::Base64Encode(Content);
-        MetaDataArray.PushBack(rapidjson::Value(ContentBase64, Allocator), Allocator);
+        std::string ContentBase64 = ISAlgorithm::Base64Encode(ISResourcer::Instance().GetFile(FileName));
+        MetaDataArray.PushBack(rapidjson::Value(ContentBase64.c_str(), ContentBase64.size(), Allocator), Allocator);
     }
 
     TcpAnswer->Parameters.AddMember("SettingsDB", SettingsDBObject, Allocator);
