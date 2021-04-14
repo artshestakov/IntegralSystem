@@ -117,7 +117,7 @@
       </Command>
     </PostBuildEvent>
     <PreBuildEvent>
-      <Command>$(SolutionDir)Revision.cmd
+      <Command>$(SolutionDir)Revision.cmd $(SolutionDir)
 $(ProjectDir)..\..\Components\Resourcer\Release-x64\Resourcer.exe $(ProjectDir)..\..\Resources
 MOVE $(ProjectDir)..\..\Components\Resourcer\Release-x64\Resources.bin $(ProjectDir)..\..\BinSTD\$(Configuration)-$(Platform)\Resources.bin</Command>
     </PreBuildEvent>
@@ -146,7 +146,7 @@ MOVE $(ProjectDir)..\..\Components\Resourcer\Release-x64\Resources.bin $(Project
       </Command>
     </PostBuildEvent>
     <PreBuildEvent>
-      <Command>$(SolutionDir)Revision.cmd
+      <Command>$(SolutionDir)Revision.cmd $(SolutionDir)
 $(ProjectDir)..\..\Components\Resourcer\Release-x64\Resourcer.exe $(ProjectDir)..\..\Resources
 MOVE $(ProjectDir)..\..\Components\Resourcer\Release-x64\Resources.bin $(ProjectDir)..\..\BinSTD\$(Configuration)-$(Platform)\Resources.bin</Command>
     </PreBuildEvent>
@@ -178,7 +178,7 @@ MOVE $(ProjectDir)..\..\Components\Resourcer\Release-x64\Resources.bin $(Project
       </Command>
     </PostBuildEvent>
     <PreBuildEvent>
-      <Command>$(SolutionDir)Revision.cmd
+      <Command>$(SolutionDir)Revision.cmd $(SolutionDir)
 $(ProjectDir)..\..\Components\Resourcer\Release-x64\Resourcer.exe $(ProjectDir)..\..\Resources
 MOVE $(ProjectDir)..\..\Components\Resourcer\Release-x64\Resources.bin $(ProjectDir)..\..\BinSTD\$(Configuration)-$(Platform)\Resources.bin</Command>
     </PreBuildEvent>
@@ -210,7 +210,7 @@ MOVE $(ProjectDir)..\..\Components\Resourcer\Release-x64\Resources.bin $(Project
       </Command>
     </PostBuildEvent>
     <PreBuildEvent>
-      <Command>$(SolutionDir)Revision.cmd
+      <Command>$(SolutionDir)Revision.cmd $(SolutionDir)
 $(ProjectDir)..\..\Components\Resourcer\Release-x64\Resourcer.exe $(ProjectDir)..\..\Resources
 MOVE $(ProjectDir)..\..\Components\Resourcer\Release-x64\Resources.bin $(ProjectDir)..\..\BinSTD\$(Configuration)-$(Platform)\Resources.bin</Command>
     </PreBuildEvent>

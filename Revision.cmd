@@ -1,16 +1,18 @@
 @ECHO off
 
-git -C . rev-list HEAD --count > Revision.tmp
-SET /p REV_COUNT=<Revision.tmp
-DEL Revision.tmp
+SET SOLTION_DIR=%1
 
-ECHO #pragma once>>Revision.tmp
-ECHO #ifndef _ISREVISION_H_INCLUDED>>Revision.tmp
-ECHO #define _ISREVISION_H_INCLUDED>>Revision.tmp
-ECHO //----------------------------------------------------------------------------->>Revision.tmp
-ECHO #define CARAT_VERSION_N %REV_COUNT%>>Revision.tmp
-ECHO #define CARAT_VERSION "%REV_COUNT%">>Revision.tmp
-ECHO //----------------------------------------------------------------------------->>Revision.tmp
-ECHO #endif>>Revision.tmp
+git -C . rev-list HEAD --count > %SOLTION_DIR%Revision.tmp
+SET /p REV_COUNT=<%SOLTION_DIR%Revision.tmp
+DEL %SOLTION_DIR%Revision.tmp
 
-MOVE /Y Revision.tmp ISRevision.h
+ECHO #pragma once>>%SOLTION_DIR%Revision.tmp
+ECHO #ifndef _ISREVISION_H_INCLUDED>>%SOLTION_DIR%Revision.tmp
+ECHO #define _ISREVISION_H_INCLUDED>>%SOLTION_DIR%Revision.tmp
+ECHO //----------------------------------------------------------------------------->>%SOLTION_DIR%Revision.tmp
+ECHO #define CARAT_VERSION_N %REV_COUNT%>>%SOLTION_DIR%Revision.tmp
+ECHO #define CARAT_VERSION "%REV_COUNT%">>%SOLTION_DIR%Revision.tmp
+ECHO //----------------------------------------------------------------------------->>%SOLTION_DIR%Revision.tmp
+ECHO #endif>>%SOLTION_DIR%Revision.tmp
+
+MOVE /Y %SOLTION_DIR%Revision.tmp %SOLTION_DIR%ISRevision.h
