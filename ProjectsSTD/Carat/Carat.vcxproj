@@ -119,7 +119,7 @@
     <PreBuildEvent>
       <Command>$(ProjectDir)..\..\Components\Resourcer\Release-x64\Resourcer.exe $(ProjectDir)..\..\Resources
 MOVE $(ProjectDir)..\..\Components\Resourcer\Release-x64\Resources.bin $(ProjectDir)..\..\BinSTD\$(Configuration)-$(Platform)\Resources.bin
-$(SolutionDir)Revision.cmd $(SolutionDir)</Command>
+$(SolutionDir)Revision.cmd $(SolutionDir) $(Configuration) $(Platform)</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -148,7 +148,7 @@ $(SolutionDir)Revision.cmd $(SolutionDir)</Command>
     <PreBuildEvent>
       <Command>$(ProjectDir)..\..\Components\Resourcer\Release-x64\Resourcer.exe $(ProjectDir)..\..\Resources
 MOVE $(ProjectDir)..\..\Components\Resourcer\Release-x64\Resources.bin $(ProjectDir)..\..\BinSTD\$(Configuration)-$(Platform)\Resources.bin
-$(SolutionDir)Revision.cmd $(SolutionDir)</Command>
+$(SolutionDir)Revision.cmd $(SolutionDir) $(Configuration) $(Platform)</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -180,7 +180,7 @@ $(SolutionDir)Revision.cmd $(SolutionDir)</Command>
     <PreBuildEvent>
       <Command>$(ProjectDir)..\..\Components\Resourcer\Release-x64\Resourcer.exe $(ProjectDir)..\..\Resources
 MOVE $(ProjectDir)..\..\Components\Resourcer\Release-x64\Resources.bin $(ProjectDir)..\..\BinSTD\$(Configuration)-$(Platform)\Resources.bin
-$(SolutionDir)Revision.cmd $(SolutionDir)</Command>
+$(SolutionDir)Revision.cmd $(SolutionDir) $(Configuration) $(Platform)</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -212,7 +212,7 @@ $(SolutionDir)Revision.cmd $(SolutionDir)</Command>
     <PreBuildEvent>
       <Command>$(ProjectDir)..\..\Components\Resourcer\Release-x64\Resourcer.exe $(ProjectDir)..\..\Resources
 MOVE $(ProjectDir)..\..\Components\Resourcer\Release-x64\Resources.bin $(ProjectDir)..\..\BinSTD\$(Configuration)-$(Platform)\Resources.bin
-$(SolutionDir)Revision.cmd $(SolutionDir)</Command>
+$(SolutionDir)Revision.cmd $(SolutionDir) $(Configuration) $(Platform)</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

@@ -119,13 +119,13 @@ int ISCaratApplication::Start()
         }
 
         ISLOGGER_I(__CLASS__, "Starting...\n"
-            "Version: %d ([configuration] [platform])\n"
+            "Version: %d (%s %s)\n"
             "Branch: [branch_name] (hash)\n"
             "Host name: %s\n"
             "User name: %s\n"
             "Main thread: %d\n"
             "PID: %d",
-            CARAT_VERSION_N,
+            CARAT_VERSION_N, CARAT_CONFIGURATION, CARAT_PLATFORM,
             ISAlgorithm::GetHostName().c_str(),
             ISAlgorithm::GetUserName().c_str(),
             CURRENT_THREAD_ID(),
@@ -243,7 +243,7 @@ void ISCaratApplication::Help()
 //-----------------------------------------------------------------------------
 void ISCaratApplication::Version()
 {
-    ISDEBUG_L(ISAlgorithm::StringF("Carat (%d) [configuration] [platform]", CARAT_VERSION_N));
+    ISDEBUG_L(ISAlgorithm::StringF("Carat (%d) %s %s", CARAT_VERSION_N, CARAT_CONFIGURATION, CARAT_PLATFORM));
 }
 //-----------------------------------------------------------------------------
 void ISCaratApplication::ConfigCreate()
