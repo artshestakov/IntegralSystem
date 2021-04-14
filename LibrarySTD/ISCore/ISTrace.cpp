@@ -16,6 +16,6 @@ ISTrace::ISTrace(const std::string &function_name, const std::string &message_te
 //-----------------------------------------------------------------------------
 ISTrace::~ISTrace()
 {
-    ISLOGGER_T("End %1 %2 msec", FunctionName.c_str(), ISAlgorithm::GetTickDiff(ISAlgorithm::GetTick(), TimePoint));
+    ISLOGGER_I("End %s %d msec", FunctionName.c_str(), ISAlgorithm::GetTickDiff(ISAlgorithm::GetTick(), TimePoint));
 }
 //-----------------------------------------------------------------------------

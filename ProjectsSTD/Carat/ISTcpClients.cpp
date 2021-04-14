@@ -62,7 +62,7 @@ ISTcpClientInfo ISTcpClients::GetInfo(unsigned int UserID)
     return TcpClientInfo;
 }
 //-----------------------------------------------------------------------------
-bool ISTcpClients::IsExistSocket(SOCKET Socket)
+bool ISTcpClients::IsExistSocket(ISSocket Socket)
 {
     bool Result = false;
     CRITICAL_SECTION_LOCK(&CS);
@@ -100,6 +100,6 @@ size_t ISTcpClients::GetCount()
     CRITICAL_SECTION_LOCK(&CS);
     Result = Count;
     CRITICAL_SECTION_UNLOCK(&CS);
-    return Count;
+    return Result;
 }
 //-----------------------------------------------------------------------------

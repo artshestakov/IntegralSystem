@@ -2,8 +2,8 @@
 #include "ISConstants.h"
 #include "ISAlgorithm.h"
 #include "ISLogger.h"
-#include "rapidjson\document.h"
-#include "rapidjson\error\en.h"
+#include "rapidjson/document.h"
+#include "rapidjson/error/en.h"
 #include "ISTcpQueue.h"
 #include "ISConfig.h"
 #include "ISTcpClients.h"
@@ -37,13 +37,14 @@ bool ISTcpServer::Start()
 {
     ISLOGGER_I(__CLASS__, "Starting");
 
+#ifdef WIN32
     WSADATA WsaData;
     if (WSAStartup(MAKEWORD(2, 2), &WsaData) != 0)
     {
         ErrorString = ISAlgorithm::GetLastErrorS();
         return false;
     }
-    
+
     SOCKADDR_IN SocketAddress;
     SocketAddress.sin_addr.S_un.S_addr = INADDR_ANY; //Любой IP адресс
     SocketAddress.sin_port = htons(ISConfig::Instance().GetValueUShort("TcpServer", "Port")); //Задаём порт
@@ -83,12 +84,14 @@ bool ISTcpServer::Start()
     std::thread(&ISTcpServer::WorkerAcceptor, this).detach();
     std::thread(&ISTcpServer::WorkerBalancer, this).detach();
     std::thread(&ISTcpServer::WorkerAnswer, this).detach();
+#endif
     ISLOGGER_I(__CLASS__, "Started");
     return true;
 }
 //-----------------------------------------------------------------------------
 void ISTcpServer::Stop()
 {
+#ifdef WIN32
     if (WSACleanup() != 0) //Не удалось выгрузить WSA
     {
         ISLOGGER_E(__CLASS__, "not clean WSA: %s", ISAlgorithm::GetLastErrorS().c_str());
@@ -104,10 +107,12 @@ void ISTcpServer::Stop()
         TcpWorker->Shutdown();
         delete TcpWorker;
     }
+#endif
 }
 //-----------------------------------------------------------------------------
 void ISTcpServer::WorkerAcceptor()
 {
+#ifdef WIN32
     while (true)
     {
         SOCKADDR_IN SocketInfo = { 0 };
@@ -144,10 +149,12 @@ void ISTcpServer::WorkerAcceptor()
             ISLOGGER_C(__CLASS__, "Connect client with error: %s", ISAlgorithm::GetLastErrorS().c_str());
         }
     }
+#endif
 }
 //-----------------------------------------------------------------------------
 void ISTcpServer::WorkerReader(ISTcpClient *TcpClient)
 {
+#ifdef WIN32
     int Result = 0;
     size_t MessageSize = 0;
     char Buffer[TCP_PACKET_MAX_SIZE] = { 0 }; //Буфер для сообщения
@@ -230,10 +237,14 @@ void ISTcpServer::WorkerReader(ISTcpClient *TcpClient)
 
     //Закрываем сокет
     CloseSocket(TcpClient);
+#else
+    IS_UNUSED(TcpClient);
+#endif
 }
 //-----------------------------------------------------------------------------
 void ISTcpServer::WorkerBalancer()
 {
+#ifdef WIN32
     ISTcpMessage *TcpMessage = nullptr;
     size_t QueueSize = 0;
 
@@ -267,10 +278,12 @@ void ISTcpServer::WorkerBalancer()
             }
         }
     }
+#endif
 }
 //-----------------------------------------------------------------------------
 void ISTcpServer::WorkerAnswer()
 {
+#ifdef WIN32
     ISTcpAnswer *TcpAnswer = nullptr;
     while (true)
     {
@@ -304,6 +317,7 @@ void ISTcpServer::WorkerAnswer()
             delete TcpAnswer; //Удаляем указатель на ответ
         }
     }
+#endif
 }
 //-----------------------------------------------------------------------------
 bool ISTcpServer::ParseMessage(const char *Buffer, size_t BufferSize, ISTcpMessage *TcpMessage)
@@ -373,7 +387,7 @@ bool ISTcpServer::ParseMessage(const char *Buffer, size_t BufferSize, ISTcpMessa
 void ISTcpServer::CloseSocket(ISTcpClient *TcpClient)
 {
     //Запоминаем удаляемый сокет
-    SOCKET TcpSocket = TcpClient->Socket;
+    ISSocket TcpSocket = TcpClient->Socket;
 
     if (!ISTcpClients::Instance().Remove(TcpClient)) //Клиент не был удалён
     {
@@ -382,13 +396,17 @@ void ISTcpServer::CloseSocket(ISTcpClient *TcpClient)
     CloseSocket(TcpSocket);
 }
 //-----------------------------------------------------------------------------
-void ISTcpServer::CloseSocket(SOCKET Socket)
+void ISTcpServer::CloseSocket(ISSocket Socket)
 {
+#ifdef WIN32
     //Пытаемся закрыть сокет
     if (closesocket(Socket) == SOCKET_ERROR)
     {
         ISLOGGER_E(__CLASS__, "Not close socket %d: %s", Socket, ISAlgorithm::GetLastErrorS().c_str());
     }
+#else
+    IS_UNUSED(Socket);
+#endif
 }
 //-----------------------------------------------------------------------------
 bool ISTcpServer::GetIsRunning()

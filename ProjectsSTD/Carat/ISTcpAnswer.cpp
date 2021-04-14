@@ -1,14 +1,14 @@
 #include "ISTcpAnswer.h"
 #include "ISConstants.h"
-#include "rapidjson\rapidjson.h"
-#include "rapidjson\stringbuffer.h"
-#include "rapidjson\writer.h"
+#include "rapidjson/rapidjson.h"
+#include "rapidjson/stringbuffer.h"
+#include "rapidjson/writer.h"
 //-----------------------------------------------------------------------------
-ISTcpAnswer::ISTcpAnswer(SOCKET socket_client)
-    : ErrorString(STRING_NO_ERROR),
+ISTcpAnswer::ISTcpAnswer(ISSocket socket_client)
+    : Parameters(rapidjson::Type::kObjectType),
+    ErrorString(STRING_NO_ERROR),
     Error(false),
-    SocketClient(socket_client),
-    Parameters(rapidjson::Type::kObjectType)
+    SocketClient(socket_client)
 {
 
 }

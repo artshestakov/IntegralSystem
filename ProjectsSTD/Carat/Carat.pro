@@ -21,16 +21,35 @@ OBJECTS_DIR = $$PWD/$${CONFIGURATION}-$${PLATFORM}/$${TARGET}
 
 INCLUDEPATH += $$PWD/../../LibrarySTD/ISCore
 INCLUDEPATH += $$PWD/../../LibrarySTD/ISServer
+INCLUDEPATH += $$PWD/../../
 INCLUDEPATH += $$PWD/../../Components/PostgreSQL/12.0.5/Include
 INCLUDEPATH += $$PWD/../../Components/RapidJSON
 
-LIBS += -L$$DESTDIR -Wl,-rpath="'\$$ORIGIN'",-rpath-link="'\$$ORIGIN'" \
+LIBS += -L$$DESTDIR -L$$PWD/../../Components/PostgreSQL/12.0.5/Lib-$${PLATFORM} -Wl,-rpath="'\$$ORIGIN'",-rpath-link="'\$$ORIGIN'" \
     -lISCore \
-	-lISServer
+	-lISServer \
+	-lpq \
+	-luuid
 
 SOURCES += \
     ISCaratApplication.cpp \
+    ISTcpAnswer.cpp \
+    ISTcpClient.cpp \
+    ISTcpClients.cpp \
+    ISTcpMessage.cpp \
+    ISTcpQueue.cpp \
+    ISTcpServer.cpp \
+    ISTcpWorker.cpp \
     main.cpp
 
 HEADERS += \
-    ISCaratApplication.h
+    ../../ISRevision.h \
+    ../../Revision.h \
+    ISCaratApplication.h \
+    ISTcpAnswer.h \
+    ISTcpClient.h \
+    ISTcpClients.h \
+    ISTcpMessage.h \
+    ISTcpQueue.h \
+    ISTcpServer.h \
+    ISTcpWorker.h

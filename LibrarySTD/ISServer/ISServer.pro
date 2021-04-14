@@ -26,9 +26,13 @@ INCLUDEPATH += $$PWD/../../Components/PostgreSQL/12.0.5/Include
 LIBS += -L$$PWD/../../Components/PostgreSQL/12.0.5/Lib-$${PLATFORM} -lpq
 
 HEADERS += \
+    ISConfigurations.h \
     ISDatabase.h \
-    ISQuery.h
+    ISQuery.h \
+    ISQueryText.h
 
 SOURCES += \
+    ISConfigurations.cpp \
     ISDatabase.cpp \
-    ISQuery.cpp
+    ISQuery.cpp \
+    ISQueryText.cpp

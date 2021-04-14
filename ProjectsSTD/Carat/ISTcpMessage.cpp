@@ -4,13 +4,13 @@
 #include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
 ISTcpMessage::ISTcpMessage()
-    : ErrorString(STRING_NO_ERROR),
-    Type(API_UNKNOWN),
+    : Type(API_UNKNOWN),
     MSecParse(0),
     Size(0),
     ChunkCount(0),
-    Valid(true),
-    TcpClient(nullptr)
+    TcpClient(nullptr),
+    ErrorString(STRING_NO_ERROR),
+    Valid(true)
 {
 
 }

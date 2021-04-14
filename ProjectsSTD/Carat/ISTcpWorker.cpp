@@ -10,6 +10,7 @@
 #include "ISTcpClients.h"
 #include "ISResourcer.h"
 #include "ISConfigurations.h"
+#include "libpq-fe.h"
 //-----------------------------------------------------------------------------
 static std::string QS_USERS_HASH = PREPARE_QUERY("SELECT usrs_hash, usrs_salt "
                                                  "FROM _users "
@@ -673,7 +674,7 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
         SettingsDBObject.AddMember("UserAccessDatabase", qSelectSettingsDB.ReadColumn_Bool(1), Allocator);
         SettingsDBObject.AddMember("NumberSimbolsAfterComma", qSelectSettingsDB.ReadColumn_Int(2), Allocator);
         SettingsDBObject.AddMember("StorageFileMaxSize", qSelectSettingsDB.ReadColumn_Int(3), Allocator);
-        SettingsDBObject.AddMember("TCPMessageID", qSelectSettingsDB.ReadColumn_UInt64(4), Allocator);
+        //SettingsDBObject.AddMember("TCPMessageID", qSelectSettingsDB.ReadColumn_UInt64(4), Allocator); //???
     }
     else
     {

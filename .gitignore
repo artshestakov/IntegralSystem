@@ -27,7 +27,6 @@
 *qrc_*.cpp
 *.iss.tmp
 *.spec.tmp
-*.pro.user
 *.vcxproj.user
 *.bin
 

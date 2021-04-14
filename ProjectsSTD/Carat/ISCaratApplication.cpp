@@ -244,8 +244,9 @@ void ISCaratApplication::Help()
 //-----------------------------------------------------------------------------
 void ISCaratApplication::Version()
 {
-    ISDEBUG_L(ISAlgorithm::StringF("Carat (%d) %s %s from %s %s", CARAT_VERSION_N, CARAT_CONFIGURATION, CARAT_PLATFORM, CARAT_BUILD_DATE, CARAT_BUILD_TIME));
-    ISDEBUG_L(ISAlgorithm::StringF("%s (%s)", CARAT_BRANCH_NAME, CARAT_HASH));
+    ISDEBUG_L(ISAlgorithm::StringF("Carat (%d) %s %s from %s %s\n%s (%s)",
+        CARAT_VERSION_N, CARAT_CONFIGURATION, CARAT_PLATFORM, CARAT_BUILD_DATE, CARAT_BUILD_TIME,
+        CARAT_BRANCH_NAME, CARAT_HASH));
 }
 //-----------------------------------------------------------------------------
 void ISCaratApplication::ConfigCreate()

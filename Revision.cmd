@@ -7,7 +7,7 @@ SET PLATFORM=%3
 SET GET_UTIL_PATH=%SOLTION_DIR%Components\GET\Release-Win32\GET.exe
 
 REM Получаем ревизию
-git -C . rev-list HEAD --count > %SOLTION_DIR%Revision.tmp
+git rev-list --count HEAD > %SOLTION_DIR%Revision.tmp
 SET /p REVISION=<%SOLTION_DIR%Revision.tmp
 DEL %SOLTION_DIR%Revision.tmp
 

@@ -8,7 +8,6 @@
 #include "ISTcpAnswer.h"
 #include "ISQuery.h"
 #include "ISMetaData.h"
-#include <libpq-fe.h>
 //-----------------------------------------------------------------------------
 class ISTcpWorker
 {

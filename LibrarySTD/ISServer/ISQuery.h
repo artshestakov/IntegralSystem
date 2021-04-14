@@ -5,8 +5,8 @@
 #include "ISTypedefs.h"
 #include "ISDateTime.h"
 #include "ISQueryText.h"
-#include <libpq-fe.h>
-#include <pg_type_d.h>
+#include "libpq-fe.h"
+#include "pg_type_d.h"
 //-----------------------------------------------------------------------------
 class ISQuery
 {
