@@ -29,6 +29,7 @@
 *.spec.tmp
 *.pro.user
 *.vcxproj.user
+*.bin
 
 Build.ini.tmp
 .qmake.stash

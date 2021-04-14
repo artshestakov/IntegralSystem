@@ -23,6 +23,8 @@ const char PATH_SEPARATOR = '/';
 #endif
 const char OUTPUT_FILE_NAME[] = "Resources.bin";
 //-----------------------------------------------------------------------------
+bool IsVerbose = false;
+//-----------------------------------------------------------------------------
 bool CheckArgument(int argc, char** argv, std::string &DirPath, std::string &ApplicationDir); //Проверка аргумента
 void PreparePath(std::string &DirPath); //Подготовка пути
 bool GetFilesPath(const std::string &DirPath, std::vector<std::string> &VectorFiles); //Чтение содержимого папки
@@ -35,7 +37,6 @@ int main(int argc, char** argv)
 {
     //Установим кодироку на всякий случай
     setlocale(LC_ALL, "Russian");
-
     std::string DirPath, ApplicationDir;
 
     //Проверим аргумент
@@ -75,7 +76,19 @@ bool CheckArgument(int argc, char** argv, std::string &DirPath, std::string &App
 #endif
         return false;
     }
-    DirPath = argv[1];
+
+    //Проверим, указаны ли флаги
+    if (argc > 2)
+    {
+        for (int i = 1, c = argc - 1; i < c; ++i)
+        {
+            if (strcmp(argv[i], "-v") == 0 || strcmp(argv[i], "--verbose") == 0)
+            {
+                IsVerbose = true;
+            }
+        }
+    }
+    DirPath = argv[argc - 1];
 
     //Получаем путь к модулю
     char Buffer[256] = { 0 };
@@ -236,10 +249,16 @@ bool ReadFiles(std::vector<std::string> &VectorFiles, size_t &SeparatorIndex, st
     unsigned long long FileOutSize = 0;
 
     size_t FilesCount = VectorFiles.size();
+    printf("Reading %zu files...\n", FilesCount);
     for (size_t i = 0; i < FilesCount; ++i)
     {
         std::string FilePath = VectorFiles[i];
-        printf("Reading file (%zd of %zd): %s\n", i + 1, FilesCount, FilePath.c_str());
+
+        if (IsVerbose) //Выводим прогресс только если указан флаг
+        {
+            printf("Reading file (%zd of %zd): %s\n", i + 1, FilesCount, FilePath.c_str());
+        }
+
         if (!ReadFile(FilePath, SeparatorIndex, FileOutSize, FileOut))
         {
             (void)DeleteFile(PathOutputFile);
