@@ -11,6 +11,7 @@
 #include "ISResourcer.h"
 #include "ISConfigurations.h"
 #include "ISRevision.h"
+#include "ISConsole.h"
 //-----------------------------------------------------------------------------
 ISCaratApplication::ISCaratApplication(int argc, char **argv)
     : ErrorString(STRING_NO_ERROR),
@@ -40,7 +41,7 @@ bool ISCaratApplication::Init()
         return false;
     }
 
-    if (!ISAlgorithm::ConsoleSetEncoding(65001, ErrorString))
+    if (!ISConsole::InstallEncoding(65001, ErrorString))
     {
         ISLOGGER_W("Console", "Not setting console encoding: %s", ErrorString.c_str());
     }

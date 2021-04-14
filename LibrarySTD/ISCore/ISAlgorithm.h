@@ -53,12 +53,6 @@ namespace ISAlgorithm
     //! Получить описание последней ошибки
     std::string GetLastErrorS();
 
-    //! Установить кодовую страницу
-    //! \param CodePage номер кодовой страницы
-    //! \param ErrorString ссылка на строку с ошибкой
-    //! \return возвращает true в случае успешной установки, иначе - false
-    bool ConsoleSetEncoding(unsigned int CodePage, std::string &ErrorString);
-
     //! Проверка существования папки
     //! \param DirPath путь к папке
     //! \return возвращает true в случае существования папки, иначе - false

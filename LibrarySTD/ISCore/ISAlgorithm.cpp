@@ -60,22 +60,6 @@ std::string ISAlgorithm::GetLastErrorS()
     return ErrorString;
 }
 //-----------------------------------------------------------------------------
-bool ISAlgorithm::ConsoleSetEncoding(unsigned int CodePage, std::string &ErrorString)
-{
-#ifdef WIN32
-    if (SetConsoleOutputCP(CodePage) == FALSE) //Не удалось установить кодовую страницу
-    {
-        ErrorString = ISAlgorithm::GetLastErrorS();
-        return false;
-    }
-    return true;
-#else //Реализации под Linux не существует
-    IS_UNUSED(CodePage);
-    IS_UNUSED(ErrorString);
-    return true;
-#endif
-}
-//-----------------------------------------------------------------------------
 bool ISAlgorithm::DirExist(const std::string &DirPath)
 {
 #ifdef WIN32
