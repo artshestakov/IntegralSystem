@@ -63,5 +63,8 @@
     <ClInclude Include="ISTcpClients.h">
       <Filter>Tcp</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\ISRevision.h">
+      <Filter>System</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,4 +1,4 @@
-@echo off
+@ECHO off
 
 git -C . rev-list HEAD --count > Revision.tmp
 SET /p REV_COUNT=<Revision.tmp
@@ -13,5 +13,4 @@ ECHO #define CARAT_VERSION "%REV_COUNT%">>Revision.tmp
 ECHO //----------------------------------------------------------------------------->>Revision.tmp
 ECHO #endif>>Revision.tmp
 
-IF NOT EXIST ISRevision.h copy Revision.tmp LibrarySTD\ISServer\ISRevision.h
-DEL Revision.tmp
+MOVE /Y Revision.tmp ISRevision.h

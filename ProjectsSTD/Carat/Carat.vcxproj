@@ -227,6 +227,7 @@ MOVE $(ProjectDir)..\..\Components\Resourcer\Release-x64\Resources.bin $(Project
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\ISRevision.h" />
     <ClInclude Include="ISCaratApplication.h" />
     <ClInclude Include="ISTcpAnswer.h" />
     <ClInclude Include="ISTcpClient.h" />
