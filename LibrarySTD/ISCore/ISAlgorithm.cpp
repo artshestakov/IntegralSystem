@@ -1,7 +1,6 @@
 #include "ISAlgorithm.h"
 #include "ISConstants.h"
 #include "ISAssert.h"
-#include <openssl/md5.h>
 //-----------------------------------------------------------------------------
 std::string ISAlgorithm::GetClassName(const char *FunctionName)
 {
@@ -552,8 +551,18 @@ std::string ISAlgorithm::Base64Encode(const std::string &String)
         }
     }
 #else
-    IS_UNUSED(String);
-    IS_ASSERT(false, "not support");
+    BIO *Bio = BIO_new(BIO_s_mem()), *B64 = BIO_new(BIO_f_base64());
+    Bio = BIO_push(B64, Bio);
+
+    BIO_set_flags(Bio, BIO_FLAGS_BASE64_NO_NL);
+    BIO_write(Bio, String.c_str(), String.size());
+    BIO_flush(Bio);
+
+    BUF_MEM *Buffer = nullptr;
+    BIO_get_mem_ptr(Bio, &Buffer);
+    BIO_set_close(Bio, BIO_NOCLOSE);
+    BIO_free_all(Bio);
+    Result = &(*Buffer).data[0];
 #endif
     return Result;
 }

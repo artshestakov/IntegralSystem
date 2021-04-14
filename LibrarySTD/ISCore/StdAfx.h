@@ -17,6 +17,10 @@
 #include <uuid/uuid.h>
 #include <unistd.h>
 #include <string.h>
+#include <openssl/md5.h>
+#include <openssl/bio.h>
+#include <openssl/evp.h>
+#include <openssl/buffer.h>
 #endif
 //-----------------------------------------------------------------------------
 #include <iostream>
