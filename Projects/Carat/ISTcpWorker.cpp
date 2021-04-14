@@ -1540,10 +1540,10 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	TcpAnswer->Parameters["SettingsDB"] = SettingsDBMap;
 	TcpAnswer->Parameters["AccessTables"] = AccessTablesMap;
 	TcpAnswer->Parameters["AccessSpecial"] = AccessSpecialList;
-	TcpAnswer->Parameters["SystemSubSystem"] = SystemSubSystemList;
+	TcpAnswer->Parameters["Systems"] = SystemSubSystemList;
 	TcpAnswer->Parameters["Favorite"] = FavoriteMap;
 	TcpAnswer->Parameters["ColumnSize"] = ColumnSizeMap;
-	TcpAnswer->Parameters["Settings"] = Settings;
+	TcpAnswer->Parameters["SettingGroups"] = Settings;
 	TcpAnswer->Parameters["Paragraphs"] = ParagraphList;
 	TcpAnswer->Parameters["MetaData"] = MetaDataList;
 	TcpAnswer->Parameters["TaskPriority"] = TaskPriorityList;

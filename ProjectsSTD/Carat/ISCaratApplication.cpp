@@ -9,6 +9,7 @@
 #include "ISLocalization.h"
 #include "ISMetaData.h"
 #include "ISResourcer.h"
+#include "ISConfigurations.h"
 //-----------------------------------------------------------------------------
 ISCaratApplication::ISCaratApplication(int argc, char **argv)
     : ErrorString(STRING_NO_ERROR),
@@ -86,7 +87,14 @@ bool ISCaratApplication::Init()
 
     //Получаем параметры конфигурационного файла
     TCPServer = ISConfig::Instance().GetValueBool("TCPServer", "Include");
+    
+    //Выбираем активную конфигурацию
     std::string ConfigurationName = ISConfig::Instance().GetValueString("Other", "Configuration");
+    if (!ISConfigurations::Instance().Set(ConfigurationName))
+    {
+        ISLOGGER_E(__CLASS__, "Not found configuration \"%s\"", ConfigurationName.c_str());
+        return false;
+    }
 
     //Инициализируем мета-данные
     if (!ISMetaData::Instance().Init(ConfigurationName, true, true))

@@ -114,7 +114,13 @@ bool ISMetaData::Initialize(const QVariantList &VariantList)
 {
 	for (const QVariant &Content : VariantList)
 	{
-		if (!InitializeXSN(Content.toString()))
+        QByteArray ByteArray = Content.toByteArray();
+        if (ByteArray.left(5) != "<?xml")
+        {
+            ByteArray = QByteArray::fromBase64(ByteArray);
+        }
+
+		if (!InitializeXSN(ByteArray))
 		{
 			return false;
 		}

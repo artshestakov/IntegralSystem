@@ -76,4 +76,14 @@ struct ISSqlPrepare
     bool Prepared;
 };
 //-----------------------------------------------------------------------------
+struct ISConfigurationInfo
+{
+    std::string Name; //Наименование
+    std::string UID; //Идентификатор
+    std::string LocalName; //Локальное наименование
+    std::string DesktopForm; //Имя класса рабочего стола
+    ISDate DateExpired; //Дата, после которой программа запускаться не должна
+    std::string LogoName;
+};
+//-----------------------------------------------------------------------------
 #endif

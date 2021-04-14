@@ -5,6 +5,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="System">
+      <UniqueIdentifier>{a577a3ec-8dc0-4447-b5c4-e17de5da12a1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ISDatabase.cpp">
@@ -16,6 +19,9 @@
     <ClCompile Include="ISQueryText.cpp">
       <Filter>Database</Filter>
     </ClCompile>
+    <ClCompile Include="ISConfigurations.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ISDatabase.h">
@@ -26,6 +32,9 @@
     </ClInclude>
     <ClInclude Include="ISQueryText.h">
       <Filter>Database</Filter>
+    </ClInclude>
+    <ClInclude Include="ISConfigurations.h">
+      <Filter>System</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

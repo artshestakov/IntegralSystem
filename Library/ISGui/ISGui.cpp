@@ -121,10 +121,10 @@ bool ISGui::Startup(ISSplashScreen *SplashScreen)
 	ISSettingsDatabase::Instance().Initialize(MetaData["SettingsDB"].toMap());
 	ISUserRoleEntity::Instance().InitializeTables(MetaData["AccessTables"].toMap());
 	ISUserRoleEntity::Instance().InitializeSpecial(MetaData["AccessSpecial"].toList());
-	ISMetaSystemsEntity::Instance().Initialize(MetaData["SystemSubSystem"].toList());
+	ISMetaSystemsEntity::Instance().Initialize(MetaData["Systems"].toList());
 	ISFavorites::Instance().Initialize(MetaData["Favorite"].toMap());
 	ISColumnSizer::Instance().Initialize(MetaData["ColumnSize"].toMap());
-	ISSettings::Instance().Initialize(MetaData["Settings"].toList());
+	ISSettings::Instance().Initialize(MetaData["SettingGroups"].toList());
 	ISParagraphEntity::Instance().Initialize(MetaData["Paragraphs"].toList());
 	ISBuffer::Instance().SetTaskPriority(MetaData["TaskPriority"].toList());
 	ISObjects::Instance().GetInterface()->BeforeShowMainWindow();
