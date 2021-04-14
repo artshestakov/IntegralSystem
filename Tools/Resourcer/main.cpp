@@ -24,8 +24,10 @@ const char PATH_SEPARATOR = '/';
 const char OUTPUT_FILE_NAME[] = "Resources.bin";
 //-----------------------------------------------------------------------------
 bool IsVerbose = false;
+bool IsHelp = false;
 //-----------------------------------------------------------------------------
 bool CheckArgument(int argc, char** argv, std::string &DirPath, std::string &ApplicationDir); //Проверка аргумента
+void Help();
 void PreparePath(std::string &DirPath); //Подготовка пути
 bool GetFilesPath(const std::string &DirPath, std::vector<std::string> &VectorFiles); //Чтение содержимого папки
 bool ReadFiles(std::vector<std::string> &VectorFiles, size_t &SeparatorIndex, std::string &ApplicationDir); //Чтение файлов
@@ -43,6 +45,12 @@ int main(int argc, char** argv)
     if (!CheckArgument(argc, argv, DirPath, ApplicationDir))
     {
         return EXIT_FAILURE;
+    }
+
+    if (IsHelp)
+    {
+        Help();
+        return EXIT_SUCCESS;
     }
 
     PreparePath(DirPath);
@@ -69,11 +77,7 @@ bool CheckArgument(int argc, char** argv, std::string &DirPath, std::string &App
     if (argc < 2) //Аргумента нет - выводим ошибку, помощь и выходим
     {
         printf("Not specified dir path\n");
-#ifdef WIN32
-        printf("Example: Resourcer.exe C:\\path\\to\\dir\n");
-#else
-        printf("Example: ./Resourcer /path/to/dir\n");
-#endif
+        Help();
         return false;
     }
 
@@ -85,6 +89,10 @@ bool CheckArgument(int argc, char** argv, std::string &DirPath, std::string &App
             if (strcmp(argv[i], "-v") == 0 || strcmp(argv[i], "--verbose") == 0)
             {
                 IsVerbose = true;
+            }
+            else if (strcmp(argv[i], "-h") == 0 || strcmp(argv[i], "--help") == 0)
+            {
+                IsHelp = true;
             }
         }
     }
@@ -142,6 +150,29 @@ bool CheckArgument(int argc, char** argv, std::string &DirPath, std::string &App
         return false;
     }
     return true;
+}
+//-----------------------------------------------------------------------------
+void Help()
+{
+    printf("Resourcer - resource generation utility.\n");
+    printf("\n");
+    printf("Using:\n");
+#ifdef WIN32
+    printf("  Resourcer.exe [OPTION]... [DIR_PATH]\n");
+#else
+    printf("  /Resourcer [OPTION]... [DIR_PATH]\n");
+#endif
+    printf("\n");
+    printf("Options:\n");
+    printf("  -v,--verbose    show more info\n");
+    printf("  -h,--help       show this help info\n");
+    printf("\n");
+    printf("Example:\n");
+#ifdef WIN32
+    printf("  Resourcer.exe --verbose C:\\path\\to\\dir\n");
+#else
+    printf("  ./Resourcer --verbose /path/to/dir\n");
+#endif
 }
 //-----------------------------------------------------------------------------
 void PreparePath(std::string &DirPath)
