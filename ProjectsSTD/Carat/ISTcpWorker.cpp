@@ -801,13 +801,13 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 
             if (FavoriteObject.HasMember(TableName))
             {
-                FavoriteObject[rapidjson::Value(TableName, strlen(TableName), Allocator)].PushBack(ObjectID, Allocator);
+                FavoriteObject[rapidjson::Value(TableName, (rapidjson::SizeType)strlen(TableName), Allocator)].PushBack(ObjectID, Allocator);
             }
             else
             {
                 rapidjson::Value TempArray(rapidjson::Type::kArrayType);
                 TempArray.PushBack(ObjectID, Allocator);
-                FavoriteObject.AddMember(rapidjson::Value(TableName, strlen(TableName), Allocator), TempArray, Allocator);
+                FavoriteObject.AddMember(rapidjson::Value(TableName, (rapidjson::SizeType)strlen(TableName), Allocator), TempArray, Allocator);
             }
         }
     }
@@ -828,8 +828,8 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
                 *FieldName = qSelectColumnSize.ReadColumn(1);
             unsigned int Size = qSelectColumnSize.ReadColumn_UInt(2);
 
-            rapidjson::Value VTableName(TableName, strlen(TableName), Allocator),
-                VFieldName(FieldName, strlen(FieldName), Allocator);
+            rapidjson::Value VTableName(TableName, (rapidjson::SizeType)strlen(TableName), Allocator),
+                VFieldName(FieldName, (rapidjson::SizeType)strlen(FieldName), Allocator);
 
             if (ColumnSizeObject.HasMember(TableName))
             {
@@ -999,7 +999,7 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
     for (const std::string &FileName : VectorString)
     {
         std::string ContentBase64 = ISAlgorithm::Base64Encode(ISResourcer::Instance().GetFile(FileName));
-        MetaDataArray.PushBack(rapidjson::Value(ContentBase64.c_str(), ContentBase64.size(), Allocator), Allocator);
+        MetaDataArray.PushBack(rapidjson::Value(ContentBase64.c_str(), (rapidjson::SizeType)ContentBase64.size(), Allocator), Allocator);
     }
 
     TcpAnswer->Parameters.AddMember("SettingsDB", SettingsDBObject, Allocator);

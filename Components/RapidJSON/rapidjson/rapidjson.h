@@ -692,7 +692,7 @@ RAPIDJSON_NAMESPACE_END
 RAPIDJSON_NAMESPACE_BEGIN
 
 #define JSON_NULL rapidjson::Value(rapidjson::Type::kNullType)
-#define JSON_STRING(STR) rapidjson::Value(STR, strlen(STR))
+#define JSON_STRING(STR) rapidjson::Value(STR, (rapidjson::SizeType)strlen(STR))
 
 RAPIDJSON_NAMESPACE_END
 
