@@ -92,6 +92,12 @@ bool ISCaratApplication::Init()
     
     //Выбираем активную конфигурацию
     std::string ConfigurationName = ISConfig::Instance().GetValueString("Other", "Configuration");
+    if (ConfigurationName.empty()) //Имя конфигурации не указано
+    {
+        ISLOGGER_E("ISConfig", "Not specified configration name");
+        return false;
+    }
+
     if (!ISConfigurations::Instance().Set(ConfigurationName))
     {
         ISLOGGER_E(__CLASS__, "Not found configuration \"%s\"", ConfigurationName.c_str());
