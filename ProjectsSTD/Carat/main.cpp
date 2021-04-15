@@ -13,7 +13,7 @@ int main(int argc, char **argv)
     {
         ISLogger::Instance().Shutdown();
     }
-#ifdef DEBUG
+#if defined(DEBUG) && defined(WIN32)
     system("PAUSE");
 #endif
     return Result ? EXIT_SUCCESS : EXIT_FAILURE;
