@@ -27,12 +27,14 @@ LIBS += -L$$PWD/../../Components/PostgreSQL/12.0.5/Lib-$${PLATFORM} -lpq
 
 HEADERS += \
     ISConfigurations.h \
+    ISConsole.h \
     ISDatabase.h \
     ISQuery.h \
     ISQueryText.h
 
 SOURCES += \
     ISConfigurations.cpp \
+    ISConsole.cpp \
     ISDatabase.cpp \
     ISQuery.cpp \
     ISQueryText.cpp

@@ -200,7 +200,7 @@ std::vector<ISFileInfo> ISAlgorithm::DirFiles(const std::string &DirPath, std::s
             switch (SortType)
             {
             case ISNamespace::DirFileSorting::CreationDate:
-                std::sort(Vector.begin(), Vector.end(), [SortOrder](const auto &FileInfo1, const auto &FileInfo2)
+                std::sort(Vector.begin(), Vector.end(), [SortOrder](const ISFileInfo &FileInfo1, const ISFileInfo &FileInfo2)
                 {
                     return SortOrder == ISNamespace::SortingOrder::Ascending ?
                         FileInfo1.DateTimeCreated < FileInfo2.DateTimeCreated :
@@ -209,7 +209,7 @@ std::vector<ISFileInfo> ISAlgorithm::DirFiles(const std::string &DirPath, std::s
                 break;
 
             case ISNamespace::DirFileSorting::EditDate:
-                std::sort(Vector.begin(), Vector.end(), [SortOrder](const auto &FileInfo1, const auto &FileInfo2)
+                std::sort(Vector.begin(), Vector.end(), [SortOrder](const ISFileInfo &FileInfo1, const ISFileInfo &FileInfo2)
                 {
                     return SortOrder == ISNamespace::SortingOrder::Ascending ?
                         FileInfo1.DateTimeEdit < FileInfo2.DateTimeEdit :
@@ -218,7 +218,7 @@ std::vector<ISFileInfo> ISAlgorithm::DirFiles(const std::string &DirPath, std::s
                 break;
 
             case ISNamespace::DirFileSorting::Size:
-                std::sort(Vector.begin(), Vector.end(), [SortOrder](const auto &FileInfo1, const auto &FileInfo2)
+                std::sort(Vector.begin(), Vector.end(), [SortOrder](const ISFileInfo &FileInfo1, const ISFileInfo &FileInfo2)
                 {
                     return SortOrder == ISNamespace::SortingOrder::Ascending ?
                         FileInfo1.Size < FileInfo2.Size :

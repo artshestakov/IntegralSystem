@@ -528,7 +528,6 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
     {
         //Получаем версию клиента
         unsigned int VersionClient = TcpMessage->Parameters["Version"].GetUint();
-        VersionClient = VersionClient;
 
         //Получаем директорию с обновлениями
         std::string UpdateClientDir = ISConfig::Instance().GetValueString("Other", "UpdateClientDir");
@@ -671,7 +670,7 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
         SettingsDBObject.AddMember("UserAccessDatabase", qSelectSettingsDB.ReadColumn_Bool(1), Allocator);
         SettingsDBObject.AddMember("NumberSimbolsAfterComma", qSelectSettingsDB.ReadColumn_Int(2), Allocator);
         SettingsDBObject.AddMember("StorageFileMaxSize", qSelectSettingsDB.ReadColumn_Int(3), Allocator);
-        SettingsDBObject.AddMember("TCPMessageID", qSelectSettingsDB.ReadColumn_UInt64(4), Allocator);
+        SettingsDBObject.AddMember("TCPMessageID", (uint64_t)qSelectSettingsDB.ReadColumn_UInt64(4), Allocator);
     }
     else
     {
