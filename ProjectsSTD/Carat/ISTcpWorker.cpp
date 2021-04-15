@@ -674,7 +674,7 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
         SettingsDBObject.AddMember("UserAccessDatabase", qSelectSettingsDB.ReadColumn_Bool(1), Allocator);
         SettingsDBObject.AddMember("NumberSimbolsAfterComma", qSelectSettingsDB.ReadColumn_Int(2), Allocator);
         SettingsDBObject.AddMember("StorageFileMaxSize", qSelectSettingsDB.ReadColumn_Int(3), Allocator);
-        //SettingsDBObject.AddMember("TCPMessageID", qSelectSettingsDB.ReadColumn_UInt64(4), Allocator); //???
+        SettingsDBObject.AddMember("TCPMessageID", qSelectSettingsDB.ReadColumn_UInt64(4), Allocator);
     }
     else
     {
@@ -753,10 +753,10 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
                     rapidjson::Value SubSystemObject(rapidjson::Type::kObjectType);
                     SubSystemObject.AddMember("UID", JSON_STRING(SubSystemUID), Allocator);
                     SubSystemObject.AddMember("Local", JSON_STRING(LocalName), Allocator);
-                    SubSystemObject.AddMember("Icon", JSON_STRING(IconName), Allocator);
-                    SubSystemObject.AddMember("Class", JSON_STRING(ClassName), Allocator);
-                    SubSystemObject.AddMember("Table", JSON_STRING(TableName), Allocator);
-                    SubSystemObject.AddMember("Hint", JSON_STRING(Hint), Allocator);
+                    SubSystemObject.AddMember("Icon", strlen(IconName) > 0 ? JSON_STRING(IconName) : JSON_NULL, Allocator);
+                    SubSystemObject.AddMember("Class", strlen(ClassName) > 0 ? JSON_STRING(ClassName) : JSON_NULL, Allocator);
+                    SubSystemObject.AddMember("Table", strlen(TableName) > 0 ? JSON_STRING(TableName) : JSON_NULL, Allocator);
+                    SubSystemObject.AddMember("Hint", strlen(Hint) > 0 ? JSON_STRING(Hint) : JSON_NULL, Allocator);
                     SubSystemsArray.PushBack(SubSystemObject, Allocator);
                 }
             }
@@ -862,8 +862,6 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
                 *GroupIconName = qSelectSettingGroup.ReadColumn(3),
                 *GroupHint = qSelectSettingGroup.ReadColumn(4);
 
-            size_t GroupHintSize = strlen(GroupHint);
-            
             rapidjson::Value SettingsArray(rapidjson::Type::kArrayType);
             qSelectSettingUser.BindValue(TcpMessage->TcpClient->UserID);
             qSelectSettingUser.BindValue(GroupUID, UUIDOID);
@@ -878,19 +876,15 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
                         *SettingLocalName = qSelectSettingUser.ReadColumn(4),
                         *SettingHint = qSelectSettingUser.ReadColumn(5),
                         *SettingDefault = qSelectSettingUser.ReadColumn(6);
-
-                    size_t SettingWidgetNameSize = strlen(SettingWidgetName),
-                        SettingHintSize = strlen(SettingHint),
-                        SettingDefaultSize = strlen(SettingDefault);
                     
                     rapidjson::Value SettingObject(rapidjson::Type::kObjectType);
                     SettingObject.AddMember("UID", rapidjson::Value(SettingUID, (rapidjson::SizeType)strlen(SettingUID)), Allocator);
                     SettingObject.AddMember("Name", rapidjson::Value(SettingName, (rapidjson::SizeType)strlen(SettingName)), Allocator);
                     SettingObject.AddMember("Type", rapidjson::Value(SettingType, (rapidjson::SizeType)strlen(SettingType)), Allocator);
-                    SettingObject.AddMember("Widget", SettingWidgetNameSize > 0 ? rapidjson::Value(SettingWidgetName, (rapidjson::SizeType)SettingWidgetNameSize) : rapidjson::Value(), Allocator);
+                    SettingObject.AddMember("Widget", strlen(SettingWidgetName) > 0 ? JSON_STRING(SettingWidgetName) : JSON_NULL, Allocator);
                     SettingObject.AddMember("Local", rapidjson::Value(SettingLocalName, (rapidjson::SizeType)strlen(SettingLocalName)), Allocator);
-                    SettingObject.AddMember("Hint", SettingHintSize > 0 ? rapidjson::Value(SettingHint, (rapidjson::SizeType)SettingHintSize) : rapidjson::Value(), Allocator);
-                    SettingObject.AddMember("Default", SettingDefaultSize > 0 ? rapidjson::Value(SettingDefault, (rapidjson::SizeType)SettingDefaultSize) : rapidjson::Value(), Allocator);
+                    SettingObject.AddMember("Hint", strlen(SettingHint) > 0 ? JSON_STRING(SettingHint) : JSON_NULL, Allocator);
+                    SettingObject.AddMember("Default", strlen(SettingDefault) > 0 ? JSON_STRING(SettingDefault) : JSON_NULL, Allocator);
 
                     if (qSelectSettingUser.ReadColumn_Int(8))  //Если такая настройка у пользователя уже есть - получаем её значение
                     {
@@ -928,7 +922,7 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
             SettingGroupObject.AddMember("Name", rapidjson::Value(GroupName, (rapidjson::SizeType)strlen(GroupName)), Allocator);
             SettingGroupObject.AddMember("Local", rapidjson::Value(GroupLocalName, (rapidjson::SizeType)strlen(GroupLocalName)), Allocator);
             SettingGroupObject.AddMember("Icon", rapidjson::Value(GroupIconName, (rapidjson::SizeType)strlen(GroupIconName)), Allocator);
-            SettingGroupObject.AddMember("Hint", GroupHintSize > 0 ? rapidjson::Value(GroupHint, (rapidjson::SizeType)GroupHintSize) : rapidjson::Value(), Allocator);
+            SettingGroupObject.AddMember("Hint", strlen(GroupHint) > 0 ? JSON_STRING(GroupHint) : JSON_NULL, Allocator);
             SettingGroupObject.AddMember("Settings", SettingsArray, Allocator);
             SettingGroupsArray.PushBack(SettingGroupObject, Allocator);
         }
@@ -953,12 +947,12 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
                 *ClassName = qSelectParagraph.ReadColumn(5);
 
             rapidjson::Value ParagraphObject(rapidjson::Type::kObjectType);
-            ParagraphObject.AddMember("UID", rapidjson::Value(UID, (rapidjson::SizeType)strlen(UID)), Allocator);
-            ParagraphObject.AddMember("Name", rapidjson::Value(Name, (rapidjson::SizeType)strlen(Name)), Allocator);
-            ParagraphObject.AddMember("Local", rapidjson::Value(LocalName, (rapidjson::SizeType)strlen(LocalName)), Allocator);
-            ParagraphObject.AddMember("ToolTip", rapidjson::Value(ToolTip, (rapidjson::SizeType)strlen(ToolTip)), Allocator);
-            ParagraphObject.AddMember("Icon", rapidjson::Value(IconName, (rapidjson::SizeType)strlen(IconName)), Allocator);
-            ParagraphObject.AddMember("Class", rapidjson::Value(ClassName, (rapidjson::SizeType)strlen(ClassName)), Allocator);
+            ParagraphObject.AddMember("UID", JSON_STRING(UID), Allocator);
+            ParagraphObject.AddMember("Name", JSON_STRING(Name), Allocator);
+            ParagraphObject.AddMember("Local", JSON_STRING(LocalName), Allocator);
+            ParagraphObject.AddMember("ToolTip", JSON_STRING(ToolTip), Allocator);
+            ParagraphObject.AddMember("Icon", JSON_STRING(IconName), Allocator);
+            ParagraphObject.AddMember("Class", JSON_STRING(ClassName), Allocator);
             ParagraphArray.PushBack(ParagraphObject, Allocator);
         }
     }
@@ -981,10 +975,10 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
                 *IconName = qSelectTaskPriority.ReadColumn(4);
             rapidjson::Value TaskPriorityObject(rapidjson::Type::kObjectType);
             TaskPriorityObject.AddMember("ID", ID, Allocator);
-            TaskPriorityObject.AddMember("Local", rapidjson::Value(LocalName, (rapidjson::SizeType)strlen(LocalName)), Allocator);
-            TaskPriorityObject.AddMember("ToolTip", rapidjson::Value(ToolTip, (rapidjson::SizeType)strlen(ToolTip)), Allocator);
-            TaskPriorityObject.AddMember("Style", rapidjson::Value(StyleSheet, (rapidjson::SizeType)strlen(StyleSheet)), Allocator);
-            TaskPriorityObject.AddMember("Icon", rapidjson::Value(IconName, (rapidjson::SizeType)strlen(IconName)), Allocator);
+            TaskPriorityObject.AddMember("Local", JSON_STRING(LocalName), Allocator);
+            TaskPriorityObject.AddMember("ToolTip", JSON_STRING(ToolTip), Allocator);
+            TaskPriorityObject.AddMember("Style", JSON_STRING(StyleSheet), Allocator);
+            TaskPriorityObject.AddMember("Icon", JSON_STRING(IconName), Allocator);
             TaskPriorityArray.PushBack(TaskPriorityObject, Allocator);
         }
     }
