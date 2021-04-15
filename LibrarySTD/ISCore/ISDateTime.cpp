@@ -1,5 +1,6 @@
 #include "ISDateTime.h"
 #include "ISAlgorithm.h"
+#include "ISConstants.h"
 //-----------------------------------------------------------------------------
 ISDate::ISDate()
     : Day(0), Month(0), Year(0)
@@ -34,21 +35,21 @@ std::string ISDate::ToString() const
     return Result;
 }
 //-----------------------------------------------------------------------------
-bool ISDate::operator<(const ISDate &d)
+bool ISDate::operator<(const ISDate &Date)
 {
-    if (Year < d.Year)
+    if (Year < Date.Year)
     {
         return true;
     }
-    else if (Year == d.Year)
+    else if (Year == Date.Year)
     {
-        if (Month < d.Month)
+        if (Month < Date.Month)
         {
             return true;
         }
-        else if (Month == d.Month)
+        else if (Month == Date.Month)
         {
-            if (Day < d.Day)
+            if (Day < Date.Day)
             {
                 return true;
             }
@@ -57,21 +58,21 @@ bool ISDate::operator<(const ISDate &d)
     return false;
 }
 //-----------------------------------------------------------------------------
-bool ISDate::operator>(const ISDate &d)
+bool ISDate::operator>(const ISDate &Date)
 {
-    if (Year > d.Year)
+    if (Year > Date.Year)
     {
         return true;
     }
-    else if (Year == d.Year)
+    else if (Year == Date.Year)
     {
-        if (Month > d.Month)
+        if (Month > Date.Month)
         {
             return true;
         }
-        else if (Month == d.Month)
+        else if (Month == Date.Month)
         {
-            if (Day > d.Day)
+            if (Day > Date.Day)
             {
                 return true;
             }
@@ -115,6 +116,31 @@ std::string ISTime::ToString() const
     return Result;
 }
 //-----------------------------------------------------------------------------
+size_t ISTime::ToMSec() const
+{
+    return (Hour * 3600000) + (Minute * 60000) + (Second * 1000) + Milliseconds;
+}
+//-----------------------------------------------------------------------------
+bool ISTime::operator<(const ISTime &Time)
+{
+    size_t t1 = ToMSec(), t2 = Time.ToMSec();
+    if (t1 == t2)
+    {
+        return false;
+    }
+    return t1 < t2;
+}
+//-----------------------------------------------------------------------------
+bool ISTime::operator>(const ISTime &Time)
+{
+    size_t t1 = ToMSec(), t2 = Time.ToMSec();
+    if (t1 == t2)
+    {
+        return false;
+    }
+    return t1 > t2;
+}
+//-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 ISDateTime::ISDateTime()
@@ -124,6 +150,12 @@ ISDateTime::ISDateTime()
 //-----------------------------------------------------------------------------
 ISDateTime::ISDateTime(const ISDate &date, const ISTime &time)
     : Date(date), Time(time)
+{
+
+}
+//-----------------------------------------------------------------------------
+ISDateTime::ISDateTime(unsigned short day, unsigned short month, unsigned short year, unsigned short hour, unsigned short minute, unsigned short second, unsigned short milliseconds)
+    : ISDateTime(ISDate(day, month, year), ISTime(hour, minute, second, milliseconds))
 {
 
 }
@@ -157,5 +189,15 @@ std::string ISDateTime::ToString() const
         Result = Date.ToString() + ' ' + Time.ToString();
     }
     return Result;
+}
+//-----------------------------------------------------------------------------
+bool ISDateTime::operator<(const ISDateTime &DateTime)
+{
+    return Date < DateTime.Date && Time < DateTime.Time;
+}
+//-----------------------------------------------------------------------------
+bool ISDateTime::operator>(const ISDateTime &DateTime)
+{
+    return Date > DateTime.Date && Time > DateTime.Time;
 }
 //-----------------------------------------------------------------------------
