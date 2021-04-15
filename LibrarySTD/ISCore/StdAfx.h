@@ -15,6 +15,7 @@
 #else
 #include <sys/time.h>
 #include <sys/stat.h>
+#include <bits/local_lim.h>
 #include <uuid/uuid.h>
 #include <unistd.h>
 #include <string.h>

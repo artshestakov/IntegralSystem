@@ -332,7 +332,11 @@ std::string ISAlgorithm::GetHostName()
         HostName = Buffer;
     }
 #else
-    IS_ASSERT(false, "not support");
+    char Buffer[HOST_NAME_MAX] = { 0 };
+    if (gethostname(Buffer, HOST_NAME_MAX) == 0)
+    {
+        HostName = Buffer;
+    }
 #endif
     return HostName;
 }
