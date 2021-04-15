@@ -217,6 +217,15 @@ std::vector<ISFileInfo> ISAlgorithm::DirFiles(const std::string &DirPath, std::s
                 });
                 break;
 
+            case ISNamespace::DirFileSorting::Size:
+                std::sort(Vector.begin(), Vector.end(), [SortOrder](const auto &FileInfo1, const auto &FileInfo2)
+                {
+                    return SortOrder == ISNamespace::SortingOrder::Ascending ?
+                        FileInfo1.Size < FileInfo2.Size :
+                        FileInfo1.Size > FileInfo2.Size;
+                });
+                break;
+
             default: //Сортировка не указана
                 break;
             }
