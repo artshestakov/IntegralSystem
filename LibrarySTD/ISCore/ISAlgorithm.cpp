@@ -106,9 +106,15 @@ bool ISAlgorithm::DirCreate(const std::string &DirPath, std::string &ErrorString
     return true;
 }
 //-----------------------------------------------------------------------------
-ISVectorString ISAlgorithm::DirFiles(const std::string &DirPath, std::string &ErrorString)
+std::vector<ISFileInfo> ISAlgorithm::DirFiles(const std::string &DirPath)
 {
-    ISVectorString Vector;
+    std::string ErrorString;
+    return DirFiles(DirPath, ErrorString);
+}
+//-----------------------------------------------------------------------------
+std::vector<ISFileInfo> ISAlgorithm::DirFiles(const std::string &DirPath, std::string &ErrorString)
+{
+    std::vector<ISFileInfo> Vector;
     if (DirExist(DirPath))
     {
 #ifdef WIN32
@@ -133,7 +139,36 @@ ISVectorString ISAlgorithm::DirFiles(const std::string &DirPath, std::string &Er
 
                 if (!(FindData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)) //Файл
                 {
-                    Vector.emplace_back(FindData.cFileName);
+                    ISFileInfo FileInfo;
+                    FileInfo.Name = FindData.cFileName;
+                    FileInfo.Path = DirPathTemp.substr(0, DirPathTemp.size() - 1) + FileInfo.Name;
+                    FileInfo.Size = FindData.nFileSizeLow;
+
+                    //Получаем дату создания файла
+                    SYSTEMTIME SystemTime = { 0 };
+                    if (FileTimeToSystemTime(&FindData.ftCreationTime, &SystemTime) == TRUE)
+                    {
+                        FileInfo.DateTimeCreated.Date.Day = SystemTime.wDay;
+                        FileInfo.DateTimeCreated.Date.Month = SystemTime.wMonth;
+                        FileInfo.DateTimeCreated.Date.Year = SystemTime.wYear;
+                        FileInfo.DateTimeCreated.Time.Hour = SystemTime.wHour;
+                        FileInfo.DateTimeCreated.Time.Minute = SystemTime.wMinute;
+                        FileInfo.DateTimeCreated.Time.Second = SystemTime.wSecond;
+                        FileInfo.DateTimeCreated.Time.Milliseconds = SystemTime.wMilliseconds;
+                    }
+
+                    //Получаем дату изменения файла
+                    if (FileTimeToSystemTime(&FindData.ftLastWriteTime, &SystemTime) == TRUE)
+                    {
+                        FileInfo.DateTimeEdit.Date.Day = SystemTime.wDay;
+                        FileInfo.DateTimeEdit.Date.Month = SystemTime.wMonth;
+                        FileInfo.DateTimeEdit.Date.Year = SystemTime.wYear;
+                        FileInfo.DateTimeEdit.Time.Hour = SystemTime.wHour;
+                        FileInfo.DateTimeEdit.Time.Minute = SystemTime.wMinute;
+                        FileInfo.DateTimeEdit.Time.Second = SystemTime.wSecond;
+                        FileInfo.DateTimeEdit.Time.Milliseconds = SystemTime.wMilliseconds;
+                    }
+                    Vector.emplace_back(FileInfo);
                 }
             } while (FindNextFile(Handle, &FindData));
             FindClose(Handle);

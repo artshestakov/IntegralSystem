@@ -1,8 +1,11 @@
 #include "ISCaratApplication.h"
 #include "ISLogger.h"
+#include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
 int main(int argc, char **argv)
 {
+    ISAlgorithm::DirFiles("G:\\Shara");
+
     ISCaratApplication CaratApplication(argc, argv);
     bool Result = CaratApplication.Init();
     if (Result) //ѕриложение успешно инициализировалось

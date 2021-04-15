@@ -3,7 +3,6 @@
 #define _ISSTRUCTS_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
-#include "ISAlgorithm.h"
 #include "ISDateTime.h"
 #include "ISNamespace.h"
 //-----------------------------------------------------------------------------
@@ -84,6 +83,18 @@ struct ISConfigurationInfo
     std::string DesktopForm; //Имя класса рабочего стола
     ISDate DateExpired; //Дата, после которой программа запускаться не должна
     std::string LogoName;
+};
+//-----------------------------------------------------------------------------
+struct ISFileInfo
+{
+    ISFileInfo()
+        : Size(0) { }
+
+    std::string Path; //Путь к файлу
+    std::string Name; //Имя файла
+    ISDateTime DateTimeCreated; //Дата создания файла
+    ISDateTime DateTimeEdit; //Дата изменения файла
+    unsigned long Size; //Размер файла
 };
 //-----------------------------------------------------------------------------
 #endif

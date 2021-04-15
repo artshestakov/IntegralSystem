@@ -71,9 +71,14 @@ namespace ISAlgorithm
 
     //! Получить список файлов в папке
     //! \param DirPath путь к папке
+    //! \return возвращает список имён файлов. Если список пустой - произошла ошибка
+    std::vector<ISFileInfo> DirFiles(const std::string &DirPath);
+
+    //! Получить список файлов в папке
+    //! \param DirPath путь к папке
     //! \param ErrorString ссылка на строку с ошибкой
     //! \return возвращает список имён файлов. Если список пустой - произошла ошибка
-    ISVectorString DirFiles(const std::string &DirPath, std::string &ErrorString);
+    std::vector<ISFileInfo> DirFiles(const std::string &DirPath, std::string &ErrorString);
 
     //! Проверка существования файла
     //! \param FilePath путь к файлу

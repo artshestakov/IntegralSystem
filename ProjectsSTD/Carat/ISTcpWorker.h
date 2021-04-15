@@ -35,6 +35,7 @@ private:
     bool Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
     bool Sleep(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
     bool GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
+    bool GetLastClient(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
 
 private:
     std::string ErrorString;

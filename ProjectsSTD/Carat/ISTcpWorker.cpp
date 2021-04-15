@@ -92,6 +92,7 @@ ISTcpWorker::ISTcpWorker()
     MapFunction[API_AUTH] = &ISTcpWorker::Auth;
     MapFunction[API_SLEEP] = &ISTcpWorker::Sleep;
     MapFunction[API_GET_META_DATA] = &ISTcpWorker::GetMetaData;
+    MapFunction[API_GET_LAST_CLIENT] = &ISTcpWorker::GetLastClient;
 
     CRITICAL_SECTION_INIT(&CriticalSection);
     CRITICAL_SECTION_INIT(&CSRunning);
@@ -542,17 +543,17 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
             }
 
             //Получаем список файлов и проверяем его на пустоту
-            ISVectorString VectorString = ISAlgorithm::DirFiles(UpdateClientDir, ErrorString);
-            if (!VectorString.empty()) //Если обновления есть - ищем последнюю версию
+            std::vector<ISFileInfo> VectorFiles = ISAlgorithm::DirFiles(UpdateClientDir, ErrorString);
+            if (!VectorFiles.empty()) //Если обновления есть - ищем последнюю версию
             {
                 std::string FileNameLast;
-                for (const std::string &FileName : VectorString) //Обходим список файлов
+                for (const ISFileInfo &FileInfo : VectorFiles) //Обходим список файлов
                 {
-                    unsigned int Version = ExtractVersionFile(FileName); //Вытаскиваем версию текущего файла
+                    unsigned int Version = ExtractVersionFile(FileInfo.Name); //Вытаскиваем версию текущего файла
                     if (Version > VersionLast) //Если версия текущего файла выше последней - запоминаем
                     {
                         VersionLast = Version;
-                        FileNameLast = FileName;
+                        FileNameLast = FileInfo.Name;
                     }
                 }
 
@@ -1006,6 +1007,14 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
     TcpAnswer->Parameters.AddMember("Paragraphs", ParagraphArray, Allocator);
     TcpAnswer->Parameters.AddMember("TaskPriority", TaskPriorityArray, Allocator);
     TcpAnswer->Parameters.AddMember("MetaData", MetaDataArray, Allocator);
+    return true;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::GetLastClient(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+    IS_UNUSED(TcpMessage);
+    IS_UNUSED(TcpAnswer);
+
     return true;
 }
 //-----------------------------------------------------------------------------
