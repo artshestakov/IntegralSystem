@@ -35,7 +35,7 @@ std::string ISDate::ToString() const
     return Result;
 }
 //-----------------------------------------------------------------------------
-bool ISDate::operator<(const ISDate &Date)
+bool ISDate::operator<(const ISDate &Date) const
 {
     if (Year < Date.Year)
     {
@@ -58,7 +58,7 @@ bool ISDate::operator<(const ISDate &Date)
     return false;
 }
 //-----------------------------------------------------------------------------
-bool ISDate::operator>(const ISDate &Date)
+bool ISDate::operator>(const ISDate &Date) const
 {
     if (Year > Date.Year)
     {
@@ -79,6 +79,11 @@ bool ISDate::operator>(const ISDate &Date)
         }
     }
     return false;
+}
+//-----------------------------------------------------------------------------
+bool ISDate::operator==(const ISDate &Date) const
+{
+    return Day == Date.Day && Month == Date.Month && Year == Date.Year;
 }
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
@@ -121,7 +126,7 @@ size_t ISTime::ToMSec() const
     return (Hour * 3600000) + (Minute * 60000) + (Second * 1000) + Milliseconds;
 }
 //-----------------------------------------------------------------------------
-bool ISTime::operator<(const ISTime &Time)
+bool ISTime::operator<(const ISTime &Time) const
 {
     size_t t1 = ToMSec(), t2 = Time.ToMSec();
     if (t1 == t2)
@@ -131,7 +136,7 @@ bool ISTime::operator<(const ISTime &Time)
     return t1 < t2;
 }
 //-----------------------------------------------------------------------------
-bool ISTime::operator>(const ISTime &Time)
+bool ISTime::operator>(const ISTime &Time) const
 {
     size_t t1 = ToMSec(), t2 = Time.ToMSec();
     if (t1 == t2)
@@ -191,13 +196,35 @@ std::string ISDateTime::ToString() const
     return Result;
 }
 //-----------------------------------------------------------------------------
-bool ISDateTime::operator<(const ISDateTime &DateTime)
+bool ISDateTime::operator<(const ISDateTime &DateTime) const
 {
-    return Date < DateTime.Date && Time < DateTime.Time;
+    if (Date < DateTime.Date)
+    {
+        return true;
+    }
+    else if (Date == DateTime.Date)
+    {
+        if (Time < DateTime.Time)
+        {
+            return true;
+        }
+    }
+    return false;
 }
 //-----------------------------------------------------------------------------
-bool ISDateTime::operator>(const ISDateTime &DateTime)
+bool ISDateTime::operator>(const ISDateTime &DateTime) const
 {
-    return Date > DateTime.Date && Time > DateTime.Time;
+    if (Date > DateTime.Date)
+    {
+        return true;
+    }
+    else if (Date == DateTime.Date)
+    {
+        if (Time > DateTime.Time)
+        {
+            return true;
+        }
+    }
+    return false;
 }
 //-----------------------------------------------------------------------------

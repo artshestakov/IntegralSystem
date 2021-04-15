@@ -54,6 +54,18 @@ namespace ISNamespace
         Debug, //Отладка
         Trace //Трассировка
     };
+
+    enum class SortingOrder //Направление сортировки
+    {
+        Ascending,
+        Descending
+    };
+
+    enum class DirFileSorting //Тип сортировки файлов
+    {
+        DoNotSort, //Не сортировать
+        CreationDate //По дате создания
+    };
 };
 //-----------------------------------------------------------------------------
 #endif

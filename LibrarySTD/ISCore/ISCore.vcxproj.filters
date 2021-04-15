@@ -14,6 +14,9 @@
     <Filter Include="MetaData">
       <UniqueIdentifier>{a2e59790-67f4-4c75-9dba-3edadc2670ac}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Types">
+      <UniqueIdentifier>{43461daf-7215-41a1-b40f-af9b621c91a9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="StdAfx.cpp">
@@ -46,14 +49,14 @@
     <ClCompile Include="ISResourcer.cpp">
       <Filter>System</Filter>
     </ClCompile>
-    <ClCompile Include="ISDateTime.cpp">
-      <Filter>System</Filter>
-    </ClCompile>
     <ClCompile Include="ISMetaData.cpp">
       <Filter>MetaData</Filter>
     </ClCompile>
     <ClCompile Include="ConvertUTF.c">
       <Filter>Config</Filter>
+    </ClCompile>
+    <ClCompile Include="ISDateTime.cpp">
+      <Filter>Types</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -102,9 +105,6 @@
     <ClInclude Include="ISResourcer.h">
       <Filter>System</Filter>
     </ClInclude>
-    <ClInclude Include="ISDateTime.h">
-      <Filter>System</Filter>
-    </ClInclude>
     <ClInclude Include="ISMetaData.h">
       <Filter>MetaData</Filter>
     </ClInclude>
@@ -113,6 +113,9 @@
     </ClInclude>
     <ClInclude Include="ConvertUTF.h">
       <Filter>Config</Filter>
+    </ClInclude>
+    <ClInclude Include="ISDateTime.h">
+      <Filter>Types</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

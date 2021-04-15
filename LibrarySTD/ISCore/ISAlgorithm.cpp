@@ -106,13 +106,13 @@ bool ISAlgorithm::DirCreate(const std::string &DirPath, std::string &ErrorString
     return true;
 }
 //-----------------------------------------------------------------------------
-std::vector<ISFileInfo> ISAlgorithm::DirFiles(const std::string &DirPath)
+std::vector<ISFileInfo> ISAlgorithm::DirFiles(const std::string &DirPath, ISNamespace::DirFileSorting SortType, ISNamespace::SortingOrder SortOrder)
 {
     std::string ErrorString;
-    return DirFiles(DirPath, ErrorString);
+    return DirFiles(DirPath, ErrorString, SortType, SortOrder);
 }
 //-----------------------------------------------------------------------------
-std::vector<ISFileInfo> ISAlgorithm::DirFiles(const std::string &DirPath, std::string &ErrorString)
+std::vector<ISFileInfo> ISAlgorithm::DirFiles(const std::string &DirPath, std::string &ErrorString, ISNamespace::DirFileSorting SortType, ISNamespace::SortingOrder SortOrder)
 {
     std::vector<ISFileInfo> Vector;
     if (DirExist(DirPath))
@@ -168,6 +168,20 @@ std::vector<ISFileInfo> ISAlgorithm::DirFiles(const std::string &DirPath, std::s
                         FileInfo.DateTimeEdit.Time.Second = SystemTime.wSecond;
                         FileInfo.DateTimeEdit.Time.Milliseconds = SystemTime.wMilliseconds;
                     }
+
+                    //Получаем временной сдвиг для даты создания файла
+                    TIME_ZONE_INFORMATION TimeZoneInfo;
+                    if (GetTimeZoneInformationForYear(FileInfo.DateTimeCreated.Date.Year, NULL, &TimeZoneInfo) == TRUE)
+                    {
+                        FileInfo.DateTimeCreated.Time.Hour += (short)(TimeZoneInfo.Bias / TimeZoneInfo.DaylightBias);
+                    }
+
+                    //Получаем временной сдвиг для даты изменения файла
+                    if (GetTimeZoneInformationForYear(FileInfo.DateTimeEdit.Date.Year, NULL, &TimeZoneInfo) == TRUE)
+                    {
+                        FileInfo.DateTimeEdit.Time.Hour += (short)(TimeZoneInfo.Bias / TimeZoneInfo.DaylightBias);
+                    }
+                    
                     Vector.emplace_back(FileInfo);
                 }
             } while (FindNextFile(Handle, &FindData));
@@ -181,6 +195,23 @@ std::vector<ISFileInfo> ISAlgorithm::DirFiles(const std::string &DirPath, std::s
         IS_UNUSED(ErrorString);
         IS_ASSERT(false, "not support");
 #endif
+        if (!Vector.empty()) //Если файлы файлы - сортируем
+        {
+            switch (SortType)
+            {
+            case ISNamespace::DirFileSorting::CreationDate:
+                std::sort(Vector.begin(), Vector.end(), [SortOrder](const auto &FileInfo1, const auto &FileInfo2)
+                {
+                    return SortOrder == ISNamespace::SortingOrder::Ascending ?
+                        FileInfo1.DateTimeCreated < FileInfo2.DateTimeCreated :
+                        FileInfo1.DateTimeCreated > FileInfo2.DateTimeCreated;
+                });
+                break;
+
+            default: //Сортировка не указана
+                break;
+            }
+        }
     }
     return Vector;
 }

@@ -14,8 +14,9 @@ struct ISDate
     bool IsNull() const;
     std::string ToString() const;
 
-    bool operator<(const ISDate &Date);
-    bool operator>(const ISDate &Date);
+    bool operator<(const ISDate &Date) const;
+    bool operator>(const ISDate &Date) const;
+    bool operator==(const ISDate &Date) const;
 
     unsigned short Day;
     unsigned short Month;
@@ -35,8 +36,8 @@ struct ISTime
     std::string ToString() const; //Привести время в строку
     size_t ToMSec() const; //Привести время к миллисекундам
 
-    bool operator<(const ISTime &Time);
-    bool operator>(const ISTime &Time);
+    bool operator<(const ISTime &Time) const;
+    bool operator>(const ISTime &Time) const;
 
     unsigned short Hour;
     unsigned short Minute;
@@ -57,8 +58,8 @@ struct ISDateTime
     bool IsNull() const;
     std::string ToString() const;
 
-    bool operator<(const ISDateTime &DateTime);
-    bool operator>(const ISDateTime &DateTime);
+    bool operator<(const ISDateTime &DateTime) const;
+    bool operator>(const ISDateTime &DateTime) const;
 
     ISDate Date;
     ISTime Time;

@@ -543,23 +543,19 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
             }
 
             //Получаем список файлов и проверяем его на пустоту
-            std::vector<ISFileInfo> VectorFiles = ISAlgorithm::DirFiles(UpdateClientDir, ErrorString);
+            std::vector<ISFileInfo> VectorFiles = ISAlgorithm::DirFiles(UpdateClientDir, ErrorString,
+                ISNamespace::DirFileSorting::CreationDate, ISNamespace::SortingOrder::Descending);
             if (!VectorFiles.empty()) //Если обновления есть - ищем последнюю версию
             {
-                std::string FileNameLast;
-                for (const ISFileInfo &FileInfo : VectorFiles) //Обходим список файлов
-                {
-                    unsigned int Version = ExtractVersionFile(FileInfo.Name); //Вытаскиваем версию текущего файла
-                    if (Version > VersionLast) //Если версия текущего файла выше последней - запоминаем
-                    {
-                        VersionLast = Version;
-                        FileNameLast = FileInfo.Name;
-                    }
-                }
-
-                if (VersionLast > 0) //Если нашли версию - сравниваем её с версией клиента
+                std::string FilePath = VectorFiles.front().Path;
+                VersionLast = ExtractVersionFile(FilePath);
+                if (VersionLast > 0)
                 {
                     IsNeedUpdate = VersionLast > VersionClient;
+                }
+                else
+                {
+                    ISLOGGER_W(__CLASS__, "Invalid format update file name: %s", + FilePath.c_str());
                 }
             }
             //Обновлений нет - идём дальше
