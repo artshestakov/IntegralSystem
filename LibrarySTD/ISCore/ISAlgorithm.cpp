@@ -208,6 +208,15 @@ std::vector<ISFileInfo> ISAlgorithm::DirFiles(const std::string &DirPath, std::s
                 });
                 break;
 
+            case ISNamespace::DirFileSorting::EditDate:
+                std::sort(Vector.begin(), Vector.end(), [SortOrder](const auto &FileInfo1, const auto &FileInfo2)
+                {
+                    return SortOrder == ISNamespace::SortingOrder::Ascending ?
+                        FileInfo1.DateTimeEdit < FileInfo2.DateTimeEdit :
+                        FileInfo1.DateTimeEdit > FileInfo2.DateTimeEdit;
+                });
+                break;
+
             default: //Сортировка не указана
                 break;
             }

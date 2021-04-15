@@ -64,7 +64,8 @@ namespace ISNamespace
     enum class DirFileSorting //Тип сортировки файлов
     {
         DoNotSort, //Не сортировать
-        CreationDate //По дате создания
+        CreationDate, //По дате создания
+        EditDate //По дате изменения
     };
 };
 //-----------------------------------------------------------------------------
