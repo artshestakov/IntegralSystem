@@ -48,6 +48,7 @@ public:
 
 private:
     bool Prepare(int ParamCount);
+    void ClearResult();
 
 private:
     std::string ErrorString; //Тексовое описание ошибки

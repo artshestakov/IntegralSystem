@@ -27,10 +27,7 @@ ISQuery::ISQuery(const std::string &sql_text)
 //-----------------------------------------------------------------------------
 ISQuery::~ISQuery()
 {
-    if (SqlResult)
-    {
-        PQclear(SqlResult);
-    }
+    ClearResult();
 }
 //-----------------------------------------------------------------------------
 const std::string& ISQuery::GetErrorString() const
@@ -131,6 +128,9 @@ void ISQuery::BindValue(bool Value, Oid OID)
 //-----------------------------------------------------------------------------
 bool ISQuery::Execute()
 {
+    //Сделаем очистку (предыдущего результата) на всякий случай
+    ClearResult();
+
     //Запрос требует подготовки
     int ParamCount = 0;
     bool Prepared = false;
@@ -328,5 +328,13 @@ bool ISQuery::Prepare(int ParamCount)
         ErrorString = "Out of memory for prepare";
     }
     return Prepared;
+}
+//-----------------------------------------------------------------------------
+void ISQuery::ClearResult()
+{
+    if (SqlResult)
+    {
+        PQclear(SqlResult);
+    }
 }
 //-----------------------------------------------------------------------------
