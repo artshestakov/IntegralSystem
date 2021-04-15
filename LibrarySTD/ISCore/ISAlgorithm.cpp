@@ -352,7 +352,11 @@ std::string ISAlgorithm::GetUserName()
         UserName = Buffer;
     }
 #else
-    IS_ASSERT(false, "not support");
+    char Buffer[LOGIN_NAME_MAX] = { 0 };
+    if (getlogin_r(Buffer, LOGIN_NAME_MAX) == 0)
+    {
+        UserName = Buffer;
+    }
 #endif
     return UserName;
 }
