@@ -612,15 +612,18 @@ std::string ISAlgorithm::SaltPassword(const std::string &HashPassword, const std
 //-----------------------------------------------------------------------------
 std::string ISAlgorithm::Base64Encode(const std::string &String)
 {
+    return Base64Encode((unsigned char *)String.c_str(), String.size());
+}
+//-----------------------------------------------------------------------------
+std::string ISAlgorithm::Base64Encode(unsigned char *Data, size_t Size)
+{
     std::string Result;
 #ifdef WIN32
-    const unsigned char *Buffer = (const unsigned char *)String.c_str();
-    DWORD BufferSize = (DWORD)String.size();
     DWORD ResultSize = 0;
-    if (CryptBinaryToStringA(Buffer, BufferSize, CRYPT_STRING_BASE64 | CRYPT_STRING_NOCRLF, nullptr, &ResultSize) == TRUE)
+    if (CryptBinaryToStringA(Data, Size, CRYPT_STRING_BASE64 | CRYPT_STRING_NOCRLF, nullptr, &ResultSize) == TRUE)
     {
         char *BufferResult = (char *)malloc(sizeof(char) * ResultSize);
-        if (BufferResult && CryptBinaryToStringA(Buffer, BufferSize, CRYPT_STRING_BASE64 | CRYPT_STRING_NOCRLF, BufferResult, &ResultSize))
+        if (BufferResult && CryptBinaryToStringA(Data, Size, CRYPT_STRING_BASE64 | CRYPT_STRING_NOCRLF, BufferResult, &ResultSize))
         {
             Result = &BufferResult[0];
             free(BufferResult);

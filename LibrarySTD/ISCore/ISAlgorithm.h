@@ -184,6 +184,12 @@ namespace ISAlgorithm
     //! \return возвращает закодированную строку
     std::string Base64Encode(const std::string &String);
 
+    //! Закодировать массив в base64
+    //! \param Data массив данных
+    //! \param Size размер массив
+    //! \return возвращает закодированную строку
+    std::string Base64Encode(unsigned char *Data, size_t Size);
+
     //Извлечь элемент из вектора по заданному индексу
     template <typename T> T VectorTakeAt(std::vector<T> &Vector, size_t Index)
     {

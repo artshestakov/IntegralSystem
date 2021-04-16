@@ -51,6 +51,7 @@ const char API_SLEEP[] = "Sleep"; //Ожидание
 const char API_GET_META_DATA[] = "GetMetaData"; //Получение мета-данных
 const char API_GET_LAST_CLIENT[] = "GetLastClient"; //Получение обновления
 //PROTOCOL---------------------------------------------------------------------
-const char CONST_UID_PROTOCOL_ENTER_APPLICATION[] = "2614CB96-EC54-4D4F-B1A6-06D2444962CA";
+const char CONST_UID_PROTOCOL_ENTER_APPLICATION[] = "2614cb96-ec54-4d4f-b1a6-06d2444962ca";
+const char CONST_UID_PROTOCOL_GET_UPDATE_CLIENT[] = "0234643a-af60-44bf-a2eb-08a71307841c";
 //-----------------------------------------------------------------------------
 #endif
