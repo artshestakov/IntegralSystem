@@ -92,7 +92,6 @@ struct ISFileInfo
 
     std::string Path; //Путь к файлу
     std::string Name; //Имя файла
-    ISDateTime DateTimeCreated; //Дата создания файла
     ISDateTime DateTimeEdit; //Дата изменения файла
     unsigned long Size; //Размер файла
 };

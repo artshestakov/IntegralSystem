@@ -117,12 +117,12 @@ std::vector<ISFileInfo> ISAlgorithm::DirFiles(const std::string &DirPath, std::s
     std::vector<ISFileInfo> Vector;
     if (DirExist(DirPath))
     {
-#ifdef WIN32
         std::string DirPathTemp = DirPath;
         if (DirPathTemp.back() != PATH_SEPARATOR)
         {
             DirPathTemp.push_back(PATH_SEPARATOR);
         }
+#ifdef WIN32
         DirPathTemp.push_back('*');
 
         WIN32_FIND_DATA FindData = { 0 };
@@ -144,20 +144,8 @@ std::vector<ISFileInfo> ISAlgorithm::DirFiles(const std::string &DirPath, std::s
                     FileInfo.Path = DirPathTemp.substr(0, DirPathTemp.size() - 1) + FileInfo.Name;
                     FileInfo.Size = FindData.nFileSizeLow;
 
-                    //Получаем дату создания файла
-                    SYSTEMTIME SystemTime = { 0 };
-                    if (FileTimeToSystemTime(&FindData.ftCreationTime, &SystemTime) == TRUE)
-                    {
-                        FileInfo.DateTimeCreated.Date.Day = SystemTime.wDay;
-                        FileInfo.DateTimeCreated.Date.Month = SystemTime.wMonth;
-                        FileInfo.DateTimeCreated.Date.Year = SystemTime.wYear;
-                        FileInfo.DateTimeCreated.Time.Hour = SystemTime.wHour;
-                        FileInfo.DateTimeCreated.Time.Minute = SystemTime.wMinute;
-                        FileInfo.DateTimeCreated.Time.Second = SystemTime.wSecond;
-                        FileInfo.DateTimeCreated.Time.Milliseconds = SystemTime.wMilliseconds;
-                    }
-
                     //Получаем дату изменения файла
+                    SYSTEMTIME SystemTime = { 0 };
                     if (FileTimeToSystemTime(&FindData.ftLastWriteTime, &SystemTime) == TRUE)
                     {
                         FileInfo.DateTimeEdit.Date.Day = SystemTime.wDay;
@@ -169,19 +157,12 @@ std::vector<ISFileInfo> ISAlgorithm::DirFiles(const std::string &DirPath, std::s
                         FileInfo.DateTimeEdit.Time.Milliseconds = SystemTime.wMilliseconds;
                     }
 
-                    //Получаем временной сдвиг для даты создания файла
-                    TIME_ZONE_INFORMATION TimeZoneInfo;
-                    if (GetTimeZoneInformationForYear(FileInfo.DateTimeCreated.Date.Year, NULL, &TimeZoneInfo) == TRUE)
-                    {
-                        FileInfo.DateTimeCreated.Time.Hour += (short)(TimeZoneInfo.Bias / TimeZoneInfo.DaylightBias);
-                    }
-
                     //Получаем временной сдвиг для даты изменения файла
+                    TIME_ZONE_INFORMATION TimeZoneInfo;
                     if (GetTimeZoneInformationForYear(FileInfo.DateTimeEdit.Date.Year, NULL, &TimeZoneInfo) == TRUE)
                     {
                         FileInfo.DateTimeEdit.Time.Hour += (short)(TimeZoneInfo.Bias / TimeZoneInfo.DaylightBias);
                     }
-                    
                     Vector.emplace_back(FileInfo);
                 }
             } while (FindNextFile(Handle, &FindData));
@@ -192,22 +173,49 @@ std::vector<ISFileInfo> ISAlgorithm::DirFiles(const std::string &DirPath, std::s
             ErrorString = ISAlgorithm::StringF("Error open path (%s): %s\n", DirPathTemp.c_str(), GetLastErrorS().c_str());
         }
 #else
-        IS_UNUSED(ErrorString);
-        IS_ASSERT(false, "not support");
+        DIR *Dir = opendir(DirPathTemp.c_str());
+        if (Dir) //Директория успешно открыта
+        {
+            struct dirent *Entry = { 0 };
+
+            while ((Entry = readdir(Dir)) != NULL)
+            {
+                //Пропускаем указатели на текущий и родитеский каталоги
+                if ((strcmp(Entry->d_name, ".") == 0) || (strcmp(Entry->d_name, "..") == 0))
+                {
+                    continue;
+                }
+
+                ISFileInfo FileInfo;
+                FileInfo.Name = Entry->d_name;
+                FileInfo.Path = DirPathTemp + FileInfo.Name;
+
+                //Получаем размер файла
+                struct stat Stat;
+                stat(FileInfo.Path.c_str(), &Stat);
+                FileInfo.Size = Stat.st_size;
+
+                //Получаем дату последнего изменения файла
+                struct tm *TM = localtime(&Stat.st_mtim.tv_sec);
+                FileInfo.DateTimeEdit.Date.Day = TM->tm_mday;
+                FileInfo.DateTimeEdit.Date.Month = TM->tm_mon;
+                FileInfo.DateTimeEdit.Date.Year = TM->tm_year;
+                FileInfo.DateTimeEdit.Time.Hour = TM->tm_hour;
+                FileInfo.DateTimeEdit.Time.Minute = TM->tm_min;
+                FileInfo.DateTimeEdit.Time.Second = TM->tm_sec;
+                Vector.emplace_back(FileInfo);
+            }
+            closedir(Dir);
+        }
+        else
+        {
+            ErrorString = GetLastErrorS();
+        }
 #endif
         if (!Vector.empty()) //Если файлы файлы - сортируем
         {
             switch (SortType)
             {
-            case ISNamespace::DirFileSorting::CreationDate:
-                std::sort(Vector.begin(), Vector.end(), [SortOrder](const ISFileInfo &FileInfo1, const ISFileInfo &FileInfo2)
-                {
-                    return SortOrder == ISNamespace::SortingOrder::Ascending ?
-                        FileInfo1.DateTimeCreated < FileInfo2.DateTimeCreated :
-                        FileInfo1.DateTimeCreated > FileInfo2.DateTimeCreated;
-                });
-                break;
-
             case ISNamespace::DirFileSorting::EditDate:
                 std::sort(Vector.begin(), Vector.end(), [SortOrder](const ISFileInfo &FileInfo1, const ISFileInfo &FileInfo2)
                 {

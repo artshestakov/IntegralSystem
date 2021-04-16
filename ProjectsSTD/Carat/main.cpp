@@ -1,8 +1,10 @@
 #include "ISCaratApplication.h"
 #include "ISLogger.h"
+#include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
 int main(int argc, char **argv)
 {
+    ISAlgorithm::DirFiles("/home/artem/Yandex.Disk/Server", ISNamespace::DirFileSorting::EditDate, ISNamespace::SortingOrder::Descending);
     ISCaratApplication CaratApplication(argc, argv);
     bool Result = CaratApplication.Init();
     if (Result) //ѕриложение успешно инициализировалось

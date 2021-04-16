@@ -543,7 +543,7 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 
             //Получаем список файлов и проверяем его на пустоту
             std::vector<ISFileInfo> VectorFiles = ISAlgorithm::DirFiles(UpdateClientDir, ErrorString,
-                ISNamespace::DirFileSorting::CreationDate, ISNamespace::SortingOrder::Descending);
+                ISNamespace::DirFileSorting::EditDate, ISNamespace::SortingOrder::Descending);
             if (!VectorFiles.empty()) //Если обновления есть - ищем последнюю версию
             {
                 std::string FilePath = VectorFiles.front().Path;
@@ -1019,7 +1019,7 @@ bool ISTcpWorker::GetLastClient(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer
     //Получаем отсортированный (по дате) список файлов
     //в настроенной директории и проверяем его на пустоту
     std::vector<ISFileInfo> VectorFiles = ISAlgorithm::DirFiles(ISConfig::Instance().GetValueString("Other", "UpdateClientDir"),
-        ISNamespace::DirFileSorting::CreationDate, ISNamespace::SortingOrder::Descending);
+        ISNamespace::DirFileSorting::EditDate, ISNamespace::SortingOrder::Descending);
     if (VectorFiles.empty()) //Если обновлений нет - выходим
     {
         TcpAnswer->Parameters.AddMember("Found", false, Allocator);
