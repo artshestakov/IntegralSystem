@@ -181,14 +181,30 @@ namespace ISAlgorithm
 
     //! Закодировать строку в base64
     //! \param String строку, которую нужно закодировать
-    //! \return возвращает закодированную строку
+    //! \return возвращает закодированную строку. В случае ошибки возвращается пустая строка
     std::string Base64Encode(const std::string &String);
 
     //! Закодировать массив в base64
     //! \param Data массив данных
     //! \param Size размер массив
-    //! \return возвращает закодированную строку
+    //! \return возвращает закодированную строку. В случае ошибки возвращается пустая строка
     std::string Base64Encode(unsigned char *Data, size_t Size);
+
+    //! Прочитать файл
+    //! \param FilePath путь к файлу
+    //! \param Mode режим чтения
+    //! \param FileSize размер файла
+    //! \param ErrorString ссылка на строку с описанием ошибки
+    //! \return Возвращает массив данных файла в случае отсутствия ошибки, иначе вернётся nullptr
+    unsigned char* ReadFile(const char *FilePath, const char *Mode, long &FileSize);
+
+    //! Прочитать файл
+    //! \param FilePath путь к файлу
+    //! \param Mode режим чтения
+    //! \param FileSize размер файла
+    //! \param ErrorString ссылка на строку с описанием ошибки
+    //! \return Возвращает массив данных файла в случае отсутствия ошибки, иначе вернётся nullptr
+    unsigned char* ReadFile(const char *FilePath, const char *Mode, long &FileSize, std::string &ErrorString);
 
     //Извлечь элемент из вектора по заданному индексу
     template <typename T> T VectorTakeAt(std::vector<T> &Vector, size_t Index)

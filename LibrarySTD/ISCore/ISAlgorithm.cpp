@@ -620,10 +620,10 @@ std::string ISAlgorithm::Base64Encode(unsigned char *Data, size_t Size)
     std::string Result;
 #ifdef WIN32
     DWORD ResultSize = 0;
-    if (CryptBinaryToStringA(Data, Size, CRYPT_STRING_BASE64 | CRYPT_STRING_NOCRLF, nullptr, &ResultSize) == TRUE)
+    if (CryptBinaryToStringA(Data, (DWORD)Size, CRYPT_STRING_BASE64 | CRYPT_STRING_NOCRLF, nullptr, &ResultSize) == TRUE)
     {
         char *BufferResult = (char *)malloc(sizeof(char) * ResultSize);
-        if (BufferResult && CryptBinaryToStringA(Data, Size, CRYPT_STRING_BASE64 | CRYPT_STRING_NOCRLF, BufferResult, &ResultSize))
+        if (BufferResult && CryptBinaryToStringA(Data, (DWORD)Size, CRYPT_STRING_BASE64 | CRYPT_STRING_NOCRLF, BufferResult, &ResultSize))
         {
             Result = &BufferResult[0];
             free(BufferResult);
@@ -644,5 +644,61 @@ std::string ISAlgorithm::Base64Encode(unsigned char *Data, size_t Size)
     Result = &(*Buffer).data[0];
 #endif
     return Result;
+}
+//-----------------------------------------------------------------------------
+unsigned char* ISAlgorithm::ReadFile(const char *FilePath, const char *Mode, long &FileSize)
+{
+    std::string ErrorString;
+    return ReadFile(FilePath, Mode, FileSize, ErrorString);
+}
+//-----------------------------------------------------------------------------
+unsigned char* ISAlgorithm::ReadFile(const char *FilePath, const char *Mode, long &FileSize, std::string &ErrorString)
+{
+    //Открываем файл
+    FILE *File = fopen(FilePath, Mode);
+    if (!File) //Не удалось открыть файл
+    {
+        ErrorString = ISAlgorithm::StringF("Error open file: %s", ISAlgorithm::GetLastErrorS().c_str());
+        return nullptr;
+    }
+
+    //Смещаемся в конец файла
+    if (fseek(File, 0L, SEEK_END) != 0)
+    {
+        ErrorString = ISAlgorithm::StringF("FSeek: %s", ISAlgorithm::GetLastErrorS().c_str());
+        fclose(File);
+        return nullptr;
+    }
+
+    //Получаем размер файла
+    FileSize = ftell(File);
+    if (FileSize == -1) //Ошибка при получении размера файла
+    {
+        ErrorString = ISAlgorithm::StringF("Error ftell: %s", ISAlgorithm::GetLastErrorS().c_str());
+        fclose(File);
+        return nullptr;
+    }
+    rewind(File); //Возвращаемся в начало файла
+
+    //Выделяем память под буфер
+    unsigned char *FileData = (unsigned char *)malloc(FileSize);
+    if (!FileData) //Ошибка выделения памяти
+    {
+        ErrorString = ISAlgorithm::StringF("Error malloc: %s", ISAlgorithm::GetLastErrorS().c_str());
+        fclose(File);
+        return nullptr;
+    }
+
+    //Читаем содержимое файла
+    if ((long)fread(FileData, sizeof(unsigned char), FileSize, File) != FileSize)
+    {
+        ErrorString = ISAlgorithm::StringF("Error read file: %s", ISAlgorithm::GetLastErrorS().c_str());
+        fclose(File);
+        free(FileData);
+        FileData = nullptr;
+        return nullptr;
+    }
+    fclose(File); //Закрываем файл
+    return FileData;
 }
 //-----------------------------------------------------------------------------
