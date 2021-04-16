@@ -44,14 +44,23 @@ bool ISTcpServer::Start()
         ErrorString = ISAlgorithm::GetLastErrorS();
         return false;
     }
+#endif
 
-    SOCKADDR_IN SocketAddress;
+    ISSocketAddr SocketAddress;
+#ifdef WIN32
     SocketAddress.sin_addr.S_un.S_addr = INADDR_ANY; //Любой IP адресс
+#else
+    SocketAddress.sin_addr.s_addr = htonl(INADDR_ANY); //Любой IP адресс
+#endif
     SocketAddress.sin_port = htons(ISConfig::Instance().GetValueUShort("TcpServer", "Port")); //Задаём порт
     SocketAddress.sin_family = AF_INET; //AF_INET - Cемейство адресов для IPv4
 
     SocketServer = socket(AF_INET, SOCK_STREAM, 0);
+#ifdef WIN32
     if (SocketServer == INVALID_SOCKET)
+#else
+    if (SocketServer == SOCKET_ERROR)
+#endif
     {
         ErrorString = ISAlgorithm::GetLastErrorS();
         return false;
@@ -84,7 +93,6 @@ bool ISTcpServer::Start()
     std::thread(&ISTcpServer::WorkerAcceptor, this).detach();
     std::thread(&ISTcpServer::WorkerBalancer, this).detach();
     std::thread(&ISTcpServer::WorkerAnswer, this).detach();
-#endif
     ISLOGGER_I(__CLASS__, "Started");
     return true;
 }
@@ -96,6 +104,7 @@ void ISTcpServer::Stop()
     {
         ISLOGGER_E(__CLASS__, "not clean WSA: %s", ISAlgorithm::GetLastErrorS().c_str());
     }
+#endif
 
     CRITICAL_SECTION_LOCK(&CSRunning);
     IsRunning = false;
@@ -107,17 +116,15 @@ void ISTcpServer::Stop()
         TcpWorker->Shutdown();
         delete TcpWorker;
     }
-#endif
 }
 //-----------------------------------------------------------------------------
 void ISTcpServer::WorkerAcceptor()
 {
-#ifdef WIN32
     while (true)
     {
-        SOCKADDR_IN SocketInfo = { 0 };
-        int AddressLen = sizeof(SocketInfo);
-        SOCKET SocketClient = accept(SocketServer, (struct sockaddr*)&SocketInfo, &AddressLen);
+        ISSocketAddr SocketInfo = { 0 };
+        ISSocketLen AddressLen = sizeof(SocketInfo);
+        ISSocket SocketClient = accept(SocketServer, (struct sockaddr*)&SocketInfo, &AddressLen);
         if (SocketClient != SOCKET_ERROR) //Клиент успешно подключился
         {
             //Пытаемся получить IP-адрес клиента и если не получилось - отключаем его
@@ -139,22 +146,20 @@ void ISTcpServer::WorkerAcceptor()
             //Создаём новым поток для этого клиента
             std::thread(&ISTcpServer::WorkerReader, this, std::ref(TcpClient)).detach();
         }
-        else if (SocketClient == NPOS && GetLastError() == WSAEINTR) //Завершение работы сервера
+        //else if (SocketClient == NPOS && GetLastError() == WSAEINTR) //Завершение работы сервера
         {
-            ISLOGGER_I(__CLASS__, "Stopped");
-            break;
+            //ISLOGGER_I(__CLASS__, "Stopped");
+            //break;
         }
-        else //При подключении произошла ошибка
+        //else //При подключении произошла ошибка
         {
-            ISLOGGER_C(__CLASS__, "Connect client with error: %s", ISAlgorithm::GetLastErrorS().c_str());
+            //ISLOGGER_C(__CLASS__, "Connect client with error: %s", ISAlgorithm::GetLastErrorS().c_str());
         }
     }
-#endif
 }
 //-----------------------------------------------------------------------------
 void ISTcpServer::WorkerReader(ISTcpClient *TcpClient)
 {
-#ifdef WIN32
     int Result = 0;
     size_t MessageSize = 0;
     char Buffer[TCP_PACKET_MAX_SIZE] = { 0 }; //Буфер для сообщения
@@ -237,14 +242,10 @@ void ISTcpServer::WorkerReader(ISTcpClient *TcpClient)
 
     //Закрываем сокет
     CloseSocket(TcpClient);
-#else
-    IS_UNUSED(TcpClient);
-#endif
 }
 //-----------------------------------------------------------------------------
 void ISTcpServer::WorkerBalancer()
 {
-#ifdef WIN32
     ISTcpMessage *TcpMessage = nullptr;
     size_t QueueSize = 0;
 
@@ -278,12 +279,10 @@ void ISTcpServer::WorkerBalancer()
             }
         }
     }
-#endif
 }
 //-----------------------------------------------------------------------------
 void ISTcpServer::WorkerAnswer()
 {
-#ifdef WIN32
     ISTcpAnswer *TcpAnswer = nullptr;
     while (true)
     {
@@ -319,7 +318,6 @@ void ISTcpServer::WorkerAnswer()
             delete TcpAnswer; //Удаляем указатель на ответ
         }
     }
-#endif
 }
 //-----------------------------------------------------------------------------
 bool ISTcpServer::ParseMessage(const char *Buffer, size_t BufferSize, ISTcpMessage *TcpMessage)

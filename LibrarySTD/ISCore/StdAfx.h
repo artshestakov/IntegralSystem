@@ -13,13 +13,17 @@
 #include <windows.h>
 #include <Shlwapi.h>
 #else
+#include <unistd.h>
+#include <string.h>
 #include <sys/time.h>
 #include <sys/stat.h>
 #include <sys/dir.h>
+#include <sys/socket.h>
+#include <sys/types.h>
 #include <bits/local_lim.h>
 #include <uuid/uuid.h>
-#include <unistd.h>
-#include <string.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
 #include <openssl/md5.h>
 #include <openssl/bio.h>
 #include <openssl/evp.h>

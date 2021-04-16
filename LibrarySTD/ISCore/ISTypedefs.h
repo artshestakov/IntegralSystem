@@ -7,9 +7,13 @@
 #ifdef WIN32
 typedef CRITICAL_SECTION ISCriticalSection;
 typedef SOCKET ISSocket;
+typedef SOCKADDR_IN ISSocketAddr;
+typedef int ISSocketLen;
 #else
 typedef pthread_mutex_t ISCriticalSection;
 typedef int ISSocket;
+typedef sockaddr_in ISSocketAddr;
+typedef socklen_t ISSocketLen;
 #endif
 typedef std::vector<std::string> ISVectorString;
 typedef std::map<std::string, std::string> ISMapString;
