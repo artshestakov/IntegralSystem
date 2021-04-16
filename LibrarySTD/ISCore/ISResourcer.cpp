@@ -76,6 +76,8 @@ bool ISResourcer::LoadFile(const std::string &FilePath)
     {
         ErrorString = ISAlgorithm::StringF("Error read file: %s", ISAlgorithm::GetLastErrorS().c_str());
         fclose(File);
+        free(Data);
+        Data = nullptr;
         return false;
     }
     fclose(File); //Закрываем файл
