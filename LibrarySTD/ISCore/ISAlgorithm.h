@@ -182,13 +182,13 @@ namespace ISAlgorithm
     //! Закодировать строку в base64
     //! \param String строку, которую нужно закодировать
     //! \return возвращает закодированную строку. В случае ошибки возвращается пустая строка
-    std::string Base64Encode(const std::string &String);
+    std::string Base64Encode(const std::string &String, std::string &ErrorString);
 
     //! Закодировать массив в base64
     //! \param Data массив данных
     //! \param Size размер массив
     //! \return возвращает закодированную строку. В случае ошибки возвращается пустая строка
-    std::string Base64Encode(unsigned char *Data, size_t Size);
+    std::string Base64Encode(unsigned char *Data, size_t Size, std::string &ErrorString);
 
     //! Прочитать файл
     //! \param FilePath путь к файлу

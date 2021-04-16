@@ -988,7 +988,11 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
     const ISVectorString &VectorString = ISMetaData::Instance().GetVectorXSN();
     for (const std::string &FileName : VectorString)
     {
-        std::string ContentBase64 = ISAlgorithm::Base64Encode(ISResourcer::Instance().GetFile(FileName));
+        std::string ContentBase64 = ISAlgorithm::Base64Encode(ISResourcer::Instance().GetFile(FileName), ErrorString);
+        if (ContentBase64.empty())
+        {
+            return false;
+        }
         MetaDataArray.PushBack(rapidjson::Value(ContentBase64.c_str(), (rapidjson::SizeType)ContentBase64.size(), Allocator), Allocator);
     }
 
@@ -1025,54 +1029,25 @@ bool ISTcpWorker::GetLastClient(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer
 
     //Открываем файл
     const char *FilePath = FileInfo.Path.c_str();
-    FILE *File = fopen(FilePath, "rb");
-    if (!File) //Не удалось открыть файл
+    long FileSize = 0;
+    unsigned char *FileData = ISAlgorithm::ReadFile(FilePath, "rb", FileSize, ErrorString);
+    if (!FileData)
     {
-        ISLOGGER_E(__CLASS__, "Not read file \"%s\": %s", FilePath, ISAlgorithm::GetLastErrorS().c_str());
-        ErrorString = LANG("Carat.Error.Query.GetLastClient.Other");
         return false;
     }
-
-    //Смещаемся в конец файла
-    if (fseek(File, 0L, SEEK_END) != 0)
+    
+    //Кодируем в base64, очищаем память и проверяем результат кодирования
+    std::string Base64 = ISAlgorithm::Base64Encode(FileData, (size_t)FileSize, ErrorString);
+    free(FileData);
+    if (Base64.empty())
     {
-        ErrorString = ISAlgorithm::StringF("Error fseek: %s", ISAlgorithm::GetLastErrorS().c_str());
-        fclose(File);
         return false;
     }
-
-    //Получаем размер файла
-    long SizeData = ftell(File);
-    if (SizeData == -1) //Ошибка при получении размера файла
-    {
-        ErrorString = ISAlgorithm::StringF("Error ftell: %s", ISAlgorithm::GetLastErrorS().c_str());
-        fclose(File);
-        return false;
-    }
-    rewind(File); //Возвращаемся в начало файла
-
-    //Выделяем память под буфер
-    unsigned char *Data = (unsigned char *)malloc(SizeData);
-    if (!Data) //Ошибка выделения памяти
-    {
-        ErrorString = ISAlgorithm::StringF("Error malloc: %s", ISAlgorithm::GetLastErrorS().c_str());
-        fclose(File);
-        return false;
-    }
-
-    //Читаем содержимое файла
-    if ((long)fread(Data, sizeof(unsigned char), SizeData, File) != SizeData)
-    {
-        ErrorString = ISAlgorithm::StringF("Error read file: %s", ISAlgorithm::GetLastErrorS().c_str());
-        fclose(File);
-        return false;
-    }
-    fclose(File); //Закрываем файл
     
     //Протоколируем, конвертируем в base64 и отдаём
     Protocol(TcpMessage->TcpClient->UserID, CONST_UID_PROTOCOL_GET_UPDATE_CLIENT);
     TcpAnswer->Parameters.AddMember("FileName", JSON_STRINGA(FileInfo.Name.c_str(), Allocator), Allocator);
-    TcpAnswer->Parameters.AddMember("Data", JSON_STRINGA(ISAlgorithm::Base64Encode(Data, SizeData).c_str(), Allocator), Allocator);
+    TcpAnswer->Parameters.AddMember("Data", JSON_STRINGA(Base64.c_str(), Allocator), Allocator);
     return true;
 }
 //-----------------------------------------------------------------------------

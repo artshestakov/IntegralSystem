@@ -300,6 +300,8 @@ void ISTcpServer::WorkerAnswer()
             {
                 std::string JsonString = TcpAnswer->ToJson();
                 size_t Size = JsonString.size();
+
+                ISLOGGER_I(__CLASS__, "Sending %d bytes...", Size);
                 int Result = send(TcpAnswer->GetSocketClient(), JsonString.c_str(), (int)Size, MSG_DONTROUTE);
                 if (Result == SOCKET_ERROR) //Ошибка отправки
                 {

@@ -610,12 +610,12 @@ std::string ISAlgorithm::SaltPassword(const std::string &HashPassword, const std
     return HashResult;
 }
 //-----------------------------------------------------------------------------
-std::string ISAlgorithm::Base64Encode(const std::string &String)
+std::string ISAlgorithm::Base64Encode(const std::string &String, std::string &ErrorString)
 {
-    return Base64Encode((unsigned char *)String.c_str(), String.size());
+    return Base64Encode((unsigned char *)String.c_str(), String.size(), ErrorString);
 }
 //-----------------------------------------------------------------------------
-std::string ISAlgorithm::Base64Encode(unsigned char *Data, size_t Size)
+std::string ISAlgorithm::Base64Encode(unsigned char *Data, size_t Size, std::string &ErrorString)
 {
     std::string Result;
 #ifdef WIN32
@@ -623,11 +623,26 @@ std::string ISAlgorithm::Base64Encode(unsigned char *Data, size_t Size)
     if (CryptBinaryToStringA(Data, (DWORD)Size, CRYPT_STRING_BASE64 | CRYPT_STRING_NOCRLF, nullptr, &ResultSize) == TRUE)
     {
         char *BufferResult = (char *)malloc(sizeof(char) * ResultSize);
-        if (BufferResult && CryptBinaryToStringA(Data, (DWORD)Size, CRYPT_STRING_BASE64 | CRYPT_STRING_NOCRLF, BufferResult, &ResultSize))
+        if (BufferResult)
         {
-            Result = &BufferResult[0];
+            if (CryptBinaryToStringA(Data, (DWORD)Size, CRYPT_STRING_BASE64 | CRYPT_STRING_NOCRLF, BufferResult, &ResultSize))
+            {
+                Result = &BufferResult[0];
+            }
+            else
+            {
+                ErrorString = GetLastErrorS();
+            }
             free(BufferResult);
         }
+        else //Ошибка выделения памяти
+        {
+            ErrorString = "Error malloc";
+        }
+    }
+    else
+    {
+        ErrorString = GetLastErrorS();
     }
 #else
     BIO *Bio = BIO_new(BIO_s_mem()), *B64 = BIO_new(BIO_f_base64());
