@@ -95,6 +95,12 @@ static std::string QS_USER_IS_SYSTEM = PREPARE_QUERYN("SELECT usrs_issystem "
                                                       "FROM _users "
                                                       "WHERE usrs_id = $1", 1);
 //-----------------------------------------------------------------------------
+static std::string QU_USER_HASH = PREPARE_QUERYN("UPDATE _users SET "
+                                                 "usrs_hash = $1, "
+                                                 "usrs_salt = $2 "
+                                                 "WHERE usrs_id = $3 "
+                                                 "RETURNING usrs_fio", 3);
+//-----------------------------------------------------------------------------
 ISTcpWorker::ISTcpWorker()
     : ErrorString(STRING_NO_ERROR),
     IsBusy(false),
@@ -109,6 +115,7 @@ ISTcpWorker::ISTcpWorker()
     MapFunction[API_GET_META_DATA] = &ISTcpWorker::GetMetaData;
     MapFunction[API_GET_LAST_CLIENT] = &ISTcpWorker::GetLastClient;
     MapFunction[API_USER_PASSWORD_EXIST] = &ISTcpWorker::UserPasswordExist;
+    MapFunction[API_USER_PASSWORD_CREATE] = &ISTcpWorker::UserPasswordCreate;
     MapFunction[API_USER_PASSWORD_RESET] = &ISTcpWorker::UserPasswordReset;
 
     CRITICAL_SECTION_INIT(&CriticalSection);
@@ -1098,8 +1105,8 @@ bool ISTcpWorker::UserPasswordExist(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAn
     }
 
     //Проверим тип значения
-    rapidjson::Value &ValueTimeout = TcpMessage->Parameters["UserID"];
-    if (!ValueTimeout.IsInt())
+    rapidjson::Value &ValueUserID = TcpMessage->Parameters["UserID"];
+    if (!ValueUserID.IsInt())
     {
         ErrorString = "The value \"UserID\" is not a integer";
         return false;
@@ -1107,11 +1114,88 @@ bool ISTcpWorker::UserPasswordExist(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAn
 
     //Проверяем наличие пароля
     bool Exist = true;
-    if (!UserPasswordExist(ValueTimeout.GetUint(), Exist)) //Не удалось проверить наличие пароля
+    if (!UserPasswordExist(ValueUserID.GetUint(), Exist)) //Не удалось проверить наличие пароля
     {
         return false;
     }
     TcpAnswer->Parameters.AddMember("IsExist", Exist, TcpAnswer->Parameters.GetAllocator());
+    return true;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::UserPasswordCreate(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+    IS_UNUSED(TcpAnswer);
+
+    if (!CheckIsNull(TcpMessage, "UserID") || !CheckIsNull(TcpMessage, "Hash"))
+    {
+        return false;
+    }
+
+    //Проверим типы значений
+    rapidjson::Value &ValueUserID = TcpMessage->Parameters["UserID"],
+        &ValueHash = TcpMessage->Parameters["Hash"];
+    if (!ValueUserID.IsInt())
+    {
+        ErrorString = "The value \"UserID\" is not a integer";
+        return false;
+    }
+    unsigned int UserID = ValueUserID.GetUint();
+
+    if (!ValueHash.IsString())
+    {
+        ErrorString = "The value \"Hash\" is not a string";
+        return false;
+    }
+    std::string Hash = ValueHash.GetString();
+
+    //Проверяем пользователя на системность
+    bool IsSystem = true;
+    if (!UserIsSystem(UserID, IsSystem))
+    {
+        return false;
+    }
+
+    if (IsSystem) //Пользователь системный - отказываем в сбросе пароля
+    {
+        ErrorString = LANG("Carat.Error.Query.UserPasswordCreate.UserIsSystem");
+        return false;
+    }
+
+    //Проверяем наличие пароля
+    bool Exist = true;
+    if (!UserPasswordExist(UserID, Exist)) //Не удалось проверить наличие пароля
+    {
+        return false;
+    }
+
+    if (Exist) //Пароль уже существует - считаем за ошибку
+    {
+        ErrorString = LANG("Carat.Error.Query.UserPasswordCreate.AlreadyExist");
+        return false;
+    }
+
+    //Генерируем соль и солим пароль
+    std::string Salt;
+    if (!ISAlgorithm::GenerateSalt(Salt, ErrorString)) //Ошибка генерации
+    {
+        ErrorString = LANG("Carat.Error.Query.UserPasswordCreate.GenerateSalt");
+        return false;
+    }
+    std::string HashResult = ISAlgorithm::SaltPassword(Hash, Salt);
+
+    //Устанавливаем пароль
+    ISQuery qUpdateHash(DBConnection, QU_USER_HASH);
+    qUpdateHash.BindValue(HashResult);
+    qUpdateHash.BindValue(Salt);
+    qUpdateHash.BindValue(UserID);
+    if (!qUpdateHash.Execute())
+    {
+        return ErrorQuery(LANG("Carat.Error.Query.UserPasswordCreate.UpdateHash"), qUpdateHash);
+    }
+    qUpdateHash.First(); //Проверка не требуется, она выполняется выше
+
+    //Фиксируем создание пароля
+    Protocol(TcpMessage->TcpClient->UserID, CONST_UID_PROTOCOL_USER_PASSWORD_CREATE, "_Users", ISMetaData::Instance().GetTable("_Users")->LocalListName, UserID, qUpdateHash.ReadColumn(0));
     return true;
 }
 //-----------------------------------------------------------------------------
@@ -1125,13 +1209,13 @@ bool ISTcpWorker::UserPasswordReset(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAn
     }
 
     //Проверим тип значения
-    rapidjson::Value &ValueTimeout = TcpMessage->Parameters["UserID"];
-    if (!ValueTimeout.IsInt())
+    rapidjson::Value &ValueUserID = TcpMessage->Parameters["UserID"];
+    if (!ValueUserID.IsInt())
     {
         ErrorString = "The value \"UserID\" is not a integer";
         return false;
     }
-    unsigned int UserID = ValueTimeout.GetUint();
+    unsigned int UserID = ValueUserID.GetUint();
 
     //Проверяем пользователя на системность
     bool IsSystem = true;
@@ -1166,7 +1250,7 @@ bool ISTcpWorker::UserPasswordReset(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAn
     {
         return ErrorQuery(LANG("Carat.Error.Query.UserPasswordReset.Reset"), qUpdateHashReset);
     }
-    qUpdateHashReset.First();
+    qUpdateHashReset.First(); //???
 
     //Фиксируем сброс пароля
     Protocol(TcpMessage->TcpClient->UserID, CONST_UID_PROTOCOL_USER_PASSWORD_RESET, "_Users", ISMetaData::Instance().GetTable("_Users")->LocalListName, UserID, qUpdateHashReset.ReadColumn(0));

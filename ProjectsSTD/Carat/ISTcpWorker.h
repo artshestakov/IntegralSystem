@@ -39,6 +39,7 @@ private:
     bool GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
     bool GetLastClient(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
     bool UserPasswordExist(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
+    bool UserPasswordCreate(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
     bool UserPasswordReset(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
 
 private:

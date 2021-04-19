@@ -46,5 +46,6 @@
 #include <cstdlib>
 #include <cstdarg>
 #include <cctype>
+#include <iomanip>
 //-----------------------------------------------------------------------------
 #endif
