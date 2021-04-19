@@ -51,17 +51,17 @@
           </elementProp>
           <elementProp name="UserPasswordExist_UserID" elementType="Argument">
             <stringProp name="Argument.name">UserPasswordExist_UserID</stringProp>
-            <stringProp name="Argument.value">11</stringProp>
+            <stringProp name="Argument.value">2</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="UserPasswordCreate_UserID" elementType="Argument">
             <stringProp name="Argument.name">UserPasswordCreate_UserID</stringProp>
-            <stringProp name="Argument.value">1400501</stringProp>
+            <stringProp name="Argument.value">2</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="UserPasswordCreate_Login" elementType="Argument">
             <stringProp name="Argument.name">UserPasswordCreate_Login</stringProp>
-            <stringProp name="Argument.value">test</stringProp>
+            <stringProp name="Argument.value">shestakov</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="UserPasswordCreate_Password" elementType="Argument">
@@ -71,7 +71,7 @@
           </elementProp>
           <elementProp name="UserPasswordEdit_UserID" elementType="Argument">
             <stringProp name="Argument.name">UserPasswordEdit_UserID</stringProp>
-            <stringProp name="Argument.value">3</stringProp>
+            <stringProp name="Argument.value">2</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="UserPasswordEdit_Login" elementType="Argument">
@@ -81,17 +81,17 @@
           </elementProp>
           <elementProp name="UserPasswordEdit_OldPassword" elementType="Argument">
             <stringProp name="Argument.name">UserPasswordEdit_OldPassword</stringProp>
-            <stringProp name="Argument.value">~qwPLH34JA961_</stringProp>
+            <stringProp name="Argument.value">454Trendy_</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="UserPasswordEdit_NewPassword" elementType="Argument">
             <stringProp name="Argument.name">UserPasswordEdit_NewPassword</stringProp>
-            <stringProp name="Argument.value">454Trendy!</stringProp>
+            <stringProp name="Argument.value">454Trendy__</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="UserPasswordReset_UserID" elementType="Argument">
             <stringProp name="Argument.name">UserPasswordReset_UserID</stringProp>
-            <stringProp name="Argument.value">1400501</stringProp>
+            <stringProp name="Argument.value">2</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="GetRecordCall_RecordID" elementType="Argument">
@@ -346,41 +346,16 @@
             <stringProp name="Argument.value">2634100802</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
-          <elementProp name="UserDeviceAdd_UserID" elementType="Argument">
-            <stringProp name="Argument.name">UserDeviceAdd_UserID</stringProp>
-            <stringProp name="Argument.value">2</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
-          <elementProp name="UserDeviceAdd_Vid" elementType="Argument">
-            <stringProp name="Argument.name">UserDeviceAdd_Vid</stringProp>
-            <stringProp name="Argument.value">13FE</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
-          <elementProp name="UserDeviceAdd_Pid" elementType="Argument">
-            <stringProp name="Argument.name">UserDeviceAdd_Pid</stringProp>
-            <stringProp name="Argument.value">4300</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
-          <elementProp name="UserDeviceAdd_SN" elementType="Argument">
-            <stringProp name="Argument.name">UserDeviceAdd_SN</stringProp>
-            <stringProp name="Argument.value">0700039F239C5276</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
-          <elementProp name="UserDeviceDelete_UserID" elementType="Argument">
-            <stringProp name="Argument.name">UserDeviceDelete_UserID</stringProp>
-            <stringProp name="Argument.value">2</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
         </collectionProp>
       </Arguments>
       <hashTree/>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Thread Group" enabled="true">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Thread Group" enabled="false">
         <stringProp name="ThreadGroup.on_sample_error">stoptest</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
-          <stringProp name="LoopController.loops">1</stringProp>
+          <intProp name="LoopController.loops">-1</intProp>
         </elementProp>
-        <stringProp name="ThreadGroup.num_threads">1</stringProp>
+        <stringProp name="ThreadGroup.num_threads">2</stringProp>
         <stringProp name="ThreadGroup.ramp_time">1</stringProp>
         <boolProp name="ThreadGroup.scheduler">false</boolProp>
         <stringProp name="ThreadGroup.duration">1</stringProp>
@@ -461,7 +436,7 @@ def MapUserPasswordExist =
 	Type: &quot;UserPasswordExist&quot;,
 	Parameters:
 		[
-			UserID: vars.get(&quot;UserPasswordExist_UserID&quot;)
+			UserID: Integer.parseInt(vars.get(&quot;UserPasswordExist_UserID&quot;))
 		]
 ];
 vars.put(&quot;QueryUserPasswordExist&quot;, MapToString(MapUserPasswordExist));
@@ -472,7 +447,7 @@ def MapUserPasswordCreate =
 	Type: &quot;UserPasswordCreate&quot;,
 	Parameters:
 		[
-			UserID: vars.get(&quot;UserPasswordCreate_UserID&quot;),
+			UserID: Integer.parseInt(vars.get(&quot;UserPasswordCreate_UserID&quot;)),
 			Hash: GetSHA256(vars.get(&quot;UserPasswordCreate_Login&quot;) + vars.get(&quot;UserPasswordCreate_Password&quot;))
 		]
 ];
@@ -484,9 +459,9 @@ def MapUserPasswordEdit =
 	Type: &quot;UserPasswordEdit&quot;,
 	Parameters:
 		[
-			UserID: vars.get(&quot;UserPasswordEdit_UserID&quot;),
+			UserID: Integer.parseInt(vars.get(&quot;UserPasswordEdit_UserID&quot;)),
 			HashOld: GetSHA256(vars.get(&quot;UserPasswordEdit_Login&quot;) + vars.get(&quot;UserPasswordEdit_OldPassword&quot;)),
-			HashNew: GetSHA256(vars.get(&quot;UserPasswordEdit_Login&quot;) + vars.get(&quot;UserPasswordEdit_NewPassword&quot;))
+			Hash: GetSHA256(vars.get(&quot;UserPasswordEdit_Login&quot;) + vars.get(&quot;UserPasswordEdit_NewPassword&quot;))
 		]
 ];
 vars.put(&quot;QueryUserPasswordEdit&quot;, MapToString(MapUserPasswordEdit));
@@ -497,7 +472,7 @@ def MapUserPasswordReset =
 	Type: &quot;UserPasswordReset&quot;,
 	Parameters:
 		[
-			UserID: vars.get(&quot;UserPasswordReset_UserID&quot;)
+			UserID: Integer.parseInt(vars.get(&quot;UserPasswordReset_UserID&quot;))
 		]
 ];
 vars.put(&quot;QueryUserPasswordReset&quot;, MapToString(MapUserPasswordReset));
@@ -508,29 +483,6 @@ def MapUserSettingsReset =
 	Type: &quot;UserSettingsReset&quot;
 ];
 vars.put(&quot;QueryUserSettingsReset&quot;, MapToString(MapUserSettingsReset));
-
-//Привязка устройства к учётной записи пользователя
-def MapUserDeviceAdd =
-[
-	Type: &quot;UserDeviceAdd&quot;,
-	Parameters:
-		[
-			UserID: vars.get(&quot;UserDeviceAdd_UserID&quot;),
-			Hash: GetSHA256(vars.get(&quot;UserDeviceAdd_Vid&quot;) + vars.get(&quot;UserDeviceAdd_Pid&quot;) + vars.get(&quot;UserDeviceAdd_SN&quot;))
-		]
-];
-vars.put(&quot;QueryUserDeviceAdd&quot;, MapToString(MapUserDeviceAdd));
-
-//Отвязка устройства от учётной записи пользователя
-def MapUserDeviceDelete =
-[
-	Type: &quot;UserDeviceDelete&quot;,
-	Parameters:
-		[
-			UserID: vars.get(&quot;UserDeviceDelete_UserID&quot;)
-		]
-];
-vars.put(&quot;QueryUserDeviceDelete&quot;, MapToString(MapUserDeviceDelete));
 
 //Получение записи разговора
 def MapGetRecordCall =
@@ -1118,18 +1070,6 @@ vars.put(&quot;QueryGetMonitor&quot;, MapToString(MapGetMonitor));</stringProp>
           <boolProp name="TCPSampler.nodelay">false</boolProp>
           <stringProp name="TCPSampler.timeout"></stringProp>
           <stringProp name="TCPSampler.request">${QueryUserPasswordExist}</stringProp>
-          <boolProp name="TCPSampler.closeConnection">true</boolProp>
-          <stringProp name="ConfigTestElement.username"></stringProp>
-          <stringProp name="ConfigTestElement.password"></stringProp>
-        </TCPSampler>
-        <hashTree/>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: UserPasswordReset" enabled="false">
-          <stringProp name="TCPSampler.server"></stringProp>
-          <boolProp name="TCPSampler.reUseConnection">true</boolProp>
-          <stringProp name="TCPSampler.port"></stringProp>
-          <boolProp name="TCPSampler.nodelay">false</boolProp>
-          <stringProp name="TCPSampler.timeout"></stringProp>
-          <stringProp name="TCPSampler.request">${QueryUserPasswordReset}</stringProp>
           <boolProp name="TCPSampler.closeConnection">false</boolProp>
           <stringProp name="ConfigTestElement.username"></stringProp>
           <stringProp name="ConfigTestElement.password"></stringProp>
@@ -1142,7 +1082,7 @@ vars.put(&quot;QueryGetMonitor&quot;, MapToString(MapGetMonitor));</stringProp>
           <boolProp name="TCPSampler.nodelay">false</boolProp>
           <stringProp name="TCPSampler.timeout"></stringProp>
           <stringProp name="TCPSampler.request">${QueryUserPasswordCreate}</stringProp>
-          <boolProp name="TCPSampler.closeConnection">true</boolProp>
+          <boolProp name="TCPSampler.closeConnection">false</boolProp>
           <stringProp name="ConfigTestElement.username"></stringProp>
           <stringProp name="ConfigTestElement.password"></stringProp>
         </TCPSampler>
@@ -1154,7 +1094,19 @@ vars.put(&quot;QueryGetMonitor&quot;, MapToString(MapGetMonitor));</stringProp>
           <boolProp name="TCPSampler.nodelay">false</boolProp>
           <stringProp name="TCPSampler.timeout"></stringProp>
           <stringProp name="TCPSampler.request">${QueryUserPasswordEdit}</stringProp>
-          <boolProp name="TCPSampler.closeConnection">true</boolProp>
+          <boolProp name="TCPSampler.closeConnection">false</boolProp>
+          <stringProp name="ConfigTestElement.username"></stringProp>
+          <stringProp name="ConfigTestElement.password"></stringProp>
+        </TCPSampler>
+        <hashTree/>
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: UserPasswordReset" enabled="false">
+          <stringProp name="TCPSampler.server"></stringProp>
+          <boolProp name="TCPSampler.reUseConnection">true</boolProp>
+          <stringProp name="TCPSampler.port"></stringProp>
+          <boolProp name="TCPSampler.nodelay">false</boolProp>
+          <stringProp name="TCPSampler.timeout"></stringProp>
+          <stringProp name="TCPSampler.request">${QueryUserPasswordReset}</stringProp>
+          <boolProp name="TCPSampler.closeConnection">false</boolProp>
           <stringProp name="ConfigTestElement.username"></stringProp>
           <stringProp name="ConfigTestElement.password"></stringProp>
         </TCPSampler>
@@ -1539,14 +1491,14 @@ vars.put(&quot;QueryGetMonitor&quot;, MapToString(MapGetMonitor));</stringProp>
         </ResultCollector>
         <hashTree/>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Connect-Disconnect" enabled="false">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Connect-Disconnect" enabled="true">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
           <stringProp name="LoopController.loops">1</stringProp>
         </elementProp>
-        <stringProp name="ThreadGroup.num_threads">1</stringProp>
-        <stringProp name="ThreadGroup.ramp_time">1</stringProp>
+        <stringProp name="ThreadGroup.num_threads">5000</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">60</stringProp>
         <boolProp name="ThreadGroup.scheduler">false</boolProp>
         <stringProp name="ThreadGroup.duration"></stringProp>
         <stringProp name="ThreadGroup.delay"></stringProp>
@@ -1570,16 +1522,16 @@ vars.put(&quot;QueryGetMonitor&quot;, MapToString(MapGetMonitor));</stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
           <stringProp name="TCPSampler.port"></stringProp>
           <boolProp name="TCPSampler.nodelay">false</boolProp>
-          <stringProp name="TCPSampler.timeout">1000</stringProp>
+          <stringProp name="TCPSampler.timeout">70000</stringProp>
           <stringProp name="TCPSampler.request"></stringProp>
           <boolProp name="TCPSampler.closeConnection">true</boolProp>
           <stringProp name="ConfigTestElement.username"></stringProp>
           <stringProp name="ConfigTestElement.password"></stringProp>
         </TCPSampler>
         <hashTree>
-          <UniformRandomTimer guiclass="UniformRandomTimerGui" testclass="UniformRandomTimer" testname="Рандомная задержка (таймер)" enabled="true">
-            <stringProp name="ConstantTimer.delay">1000.0</stringProp>
-            <stringProp name="RandomTimer.range">2000.0</stringProp>
+          <UniformRandomTimer guiclass="UniformRandomTimerGui" testclass="UniformRandomTimer" testname="Рандомная задержка (таймер)" enabled="false">
+            <stringProp name="ConstantTimer.delay">60000.0</stringProp>
+            <stringProp name="RandomTimer.range">70000.0</stringProp>
           </UniformRandomTimer>
           <hashTree/>
         </hashTree>
