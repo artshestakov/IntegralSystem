@@ -24,7 +24,7 @@ public:
 
     void SetShowLongQuery(bool show_long_query);
 
-    void First();
+    bool First();
     bool Next();
 
     void BindValue(std::nullptr_t Pointer);

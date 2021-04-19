@@ -65,12 +65,14 @@ void ISQuery::SetShowLongQuery(bool show_long_query)
     ShowLongQuery = show_long_query;
 }
 //-----------------------------------------------------------------------------
-void ISQuery::First()
+bool ISQuery::First()
 {
     if (CurrentRow + 1 < CountRows)
     {
         ++CurrentRow;
+        return true;
     }
+    return false;
 }
 //-----------------------------------------------------------------------------
 bool ISQuery::Next()
@@ -252,7 +254,7 @@ bool ISQuery::ExecuteFirst()
     bool Result = Execute();
     if (Result)
     {
-        First();
+        Result = First();
     }
     return Result;
 }
