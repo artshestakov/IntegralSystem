@@ -29,62 +29,50 @@ static std::string QS_SETTINGS_DATABASE = PREPARE_QUERYN("SELECT sgdb_id, sgdb_u
                                                         "FROM _settingsdatabase "
                                                         "WHERE sgdb_uid = $1", 1);
 //-----------------------------------------------------------------------------
-static std::string QS_GROUP_ACCESS_TABLE = "SELECT gatb_table, gatt_uid "
-                                           "FROM _groupaccesstable "
-                                           "LEFT JOIN _groupaccesstabletype ON gatt_id = gatb_AccessType "
-                                           "WHERE gatb_group = $1";
+static std::string QS_GROUP_ACCESS_TABLE = PREPARE_QUERYN("SELECT gatb_table, gatt_uid "
+                                                          "FROM _groupaccesstable "
+                                                          "LEFT JOIN _groupaccesstabletype ON gatt_id = gatb_AccessType "
+                                                          "WHERE gatb_group = $1", 1);
 //-----------------------------------------------------------------------------
-static std::string QS_GROUP_ACCESS_SPECIAL = "SELECT gast_uid "
-                                             "FROM _groupaccessspecial "
-                                             "LEFT JOIN _groupaccessspecialtype ON gast_id = gasp_specialaccess "
-                                             "WHERE gasp_group = $1";
+static std::string QS_GROUP_ACCESS_SPECIAL = PREPARE_QUERYN("SELECT gast_uid "
+                                                            "FROM _groupaccessspecial "
+                                                            "LEFT JOIN _groupaccessspecialtype ON gast_id = gasp_specialaccess "
+                                                            "WHERE gasp_group = $1", 1);
 //-----------------------------------------------------------------------------
-static std::string QS_SYSTEM_SUBSYSTEM = PREPARE_QUERY("SELECT check_access_user_subsystem($1, $2, sbsm_uid), "
-                                                       "stms_uid, stms_issystem, stms_localname, stms_icon, stms_hint, "
-                                                       "sbsm_uid, sbsm_localname, sbsm_icon, sbsm_classname, sbsm_tablename, sbsm_hint "
-                                                       "FROM _systems "
-                                                       "LEFT JOIN _subsystems ON stms_uid = sbsm_system "
-                                                       "ORDER BY stms_orderid, sbsm_orderid");
+static std::string QS_SYSTEM_SUBSYSTEM = PREPARE_QUERYN("SELECT check_access_user_subsystem($1, $2, sbsm_uid), "
+                                                        "stms_uid, stms_issystem, stms_localname, stms_icon, stms_hint, "
+                                                        "sbsm_uid, sbsm_localname, sbsm_icon, sbsm_classname, sbsm_tablename, sbsm_hint "
+                                                        "FROM _systems "
+                                                        "LEFT JOIN _subsystems ON stms_uid = sbsm_system "
+                                                        "ORDER BY stms_orderid, sbsm_orderid", 2);
 //-----------------------------------------------------------------------------
-static std::string QS_FAVORITE = "SELECT fvts_tablename, fvts_objectid "
-                                 "FROM _favorites "
-                                 "WHERE fvts_user = $1";
+static std::string QS_FAVORITE = PREPARE_QUERYN("SELECT fvts_tablename, fvts_objectid "
+                                                "FROM _favorites "
+                                                "WHERE fvts_user = $1", 1);
 //-----------------------------------------------------------------------------
-static std::string QS_COLUMN_SIZE = "SELECT clsz_tablename, clsz_fieldname, clsz_size "
-                                    "FROM _columnsize "
-                                    "WHERE clsz_user = $1";
+static std::string QS_COLUMN_SIZE = PREPARE_QUERYN("SELECT clsz_tablename, clsz_fieldname, clsz_size "
+                                                   "FROM _columnsize "
+                                                   "WHERE clsz_user = $1", 1);
 //-----------------------------------------------------------------------------
-static std::string QS_SETTINGS = "SELECT stgp_uid, stgp_name, stgp_localname, stgp_iconname, stgp_hint, "
-                                 "stgs_uid, stgs_name, stgs_type, stgs_widgeteditname, stgs_localname, stgs_hint, stgs_defaultvalue, "
-                                 "usst_value, "
-                                 "(SELECT COUNT(*) FROM _usersettings WHERE usst_user = $1 AND usst_setting = stgs_id) "
-                                 "FROM _settingsgroup "
-                                 "LEFT JOIN _settings ON stgs_group = stgp_uid "
-                                 "LEFT JOIN _usersettings ON usst_setting = stgs_id AND usst_user = $1 "
-                                 "ORDER BY stgp_order, stgs_order";
-//-----------------------------------------------------------------------------
-static std::string QS_SETTING_GROUP = "SELECT stgp_uid, stgp_name, stgp_localname, stgp_iconname, stgp_hint "
-                                      "FROM _settingsgroup "
-                                      "ORDER BY stgp_order";
-//-----------------------------------------------------------------------------
-static std::string QS_SETTING = "SELECT stgs_uid, stgs_name, stgs_type, stgs_widgeteditname, stgs_localname, stgs_hint, stgs_defaultvalue, "
-                                "usst_value, "
-                                "(SELECT COUNT(*) FROM _usersettings WHERE usst_user = $1 AND usst_setting = stgs_id) "
-                                "FROM _settings "
-                                "LEFT JOIN _usersettings ON usst_setting = stgs_id AND usst_user = $1 "
-                                "WHERE stgs_group = $2 "
-                                "ORDER BY stgs_order";
+static std::string QS_SETTINGS = PREPARE_QUERYN("SELECT stgp_uid, stgp_name, stgp_localname, stgp_iconname, stgp_hint, "
+                                                "stgs_uid, stgs_name, stgs_type, stgs_widgeteditname, stgs_localname, stgs_hint, stgs_defaultvalue, "
+                                                "usst_value, "
+                                                "(SELECT COUNT(*) FROM _usersettings WHERE usst_user = $1 AND usst_setting = stgs_id) "
+                                                "FROM _settingsgroup "
+                                                "LEFT JOIN _settings ON stgs_group = stgp_uid "
+                                                "LEFT JOIN _usersettings ON usst_setting = stgs_id AND usst_user = $1 "
+                                                "ORDER BY stgp_order, stgs_order", 1);
 //-----------------------------------------------------------------------------
 static std::string QI_USER_SETTING = "INSERT INTO _usersettings(usst_user, usst_setting, usst_value) "
                                      "VALUES($1, (SELECT stgs_id FROM _settings WHERE stgs_uid = $2), $3)";
 //-----------------------------------------------------------------------------
-static std::string QS_PARAGRAPH = "SELECT prhs_uid, prhs_name, prhs_localname, prhs_tooltip, prhs_icon, prhs_classname "
-                                  "FROM _paragraphs "
-                                  "ORDER BY prhs_orderid";
+static std::string QS_PARAGRAPH = PREPARE_QUERY("SELECT prhs_uid, prhs_name, prhs_localname, prhs_tooltip, prhs_icon, prhs_classname "
+                                                "FROM _paragraphs "
+                                                "ORDER BY prhs_orderid");
 //-----------------------------------------------------------------------------
-static std::string QS_TASK_PRIORITY = "SELECT tspr_id, tspr_name, tspr_tooltip, tspr_stylesheet, tspr_icon "
-                                      "FROM _taskpriority "
-                                      "ORDER BY tspr_order";
+static std::string QS_TASK_PRIORITY = PREPARE_QUERY("SELECT tspr_id, tspr_name, tspr_tooltip, tspr_stylesheet, tspr_icon "
+                                                    "FROM _taskpriority "
+                                                    "ORDER BY tspr_order");
 //-----------------------------------------------------------------------------
 static std::string QS_USER_PASSWORD_IS_NULL = PREPARE_QUERYN("SELECT "
                                                              "( "
