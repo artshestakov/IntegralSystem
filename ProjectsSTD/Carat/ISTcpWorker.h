@@ -31,6 +31,7 @@ private:
     unsigned int ExtractVersionFile(const std::string &FileName);
     PMetaTable* GetMetaTable(const std::string &TableName); //ѕолучить указатель на мета-таблицу
     bool UserPasswordExist(unsigned int UserID, bool &Exist); //ѕроверка наличи€ парол€ у пользовател€
+    bool UserIsSystem(unsigned int UserID, bool &IsSystem); //ѕроверка пользовател€ на системность
 
 private:
     bool Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
@@ -38,6 +39,7 @@ private:
     bool GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
     bool GetLastClient(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
     bool UserPasswordExist(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
+    bool UserPasswordReset(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
 
 private:
     std::string ErrorString;

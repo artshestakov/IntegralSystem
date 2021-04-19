@@ -86,16 +86,26 @@ static std::string QS_TASK_PRIORITY = "SELECT tspr_id, tspr_name, tspr_tooltip, 
                                       "FROM _taskpriority "
                                       "ORDER BY tspr_order";
 //-----------------------------------------------------------------------------
-static std::string QS_USER_PASSWORD_IS_NULL = "SELECT "
-                                              "( "
-                                              "SELECT (COUNT(*) > 0)::BOOLEAN is_exist "
-                                              "FROM _users "
-                                              "WHERE usrs_id = $1 "
-                                              "AND usrs_hash IS NOT NULL "
-                                              "AND usrs_salt IS NOT NULL "
-                                              ") "
-                                              "FROM _users "
-                                              "WHERE usrs_id = $1";
+static std::string QS_USER_PASSWORD_IS_NULL = PREPARE_QUERYN("SELECT "
+                                                             "( "
+                                                             "SELECT (COUNT(*) > 0)::BOOLEAN is_exist "
+                                                             "FROM _users "
+                                                             "WHERE usrs_id = $1 "
+                                                             "AND usrs_hash IS NOT NULL "
+                                                             "AND usrs_salt IS NOT NULL "
+                                                             ") "
+                                                             "FROM _users "
+                                                             "WHERE usrs_id = $1", 1);
+//-----------------------------------------------------------------------------
+static std::string QU_USER_HASH_RESET = PREPARE_QUERYN("UPDATE _users SET "
+                                                       "usrs_hash = NULL, "
+                                                       "usrs_salt = NULL "
+                                                       "WHERE usrs_id = $1 "
+                                                       "RETURNING usrs_fio", 1);
+//-----------------------------------------------------------------------------
+static std::string QS_USER_IS_SYSTEM = PREPARE_QUERYN("SELECT usrs_issystem "
+                                                      "FROM _users "
+                                                      "WHERE usrs_id = $1", 1);
 //-----------------------------------------------------------------------------
 ISTcpWorker::ISTcpWorker()
     : ErrorString(STRING_NO_ERROR),
@@ -111,6 +121,7 @@ ISTcpWorker::ISTcpWorker()
     MapFunction[API_GET_META_DATA] = &ISTcpWorker::GetMetaData;
     MapFunction[API_GET_LAST_CLIENT] = &ISTcpWorker::GetLastClient;
     MapFunction[API_USER_PASSWORD_EXIST] = &ISTcpWorker::UserPasswordExist;
+    MapFunction[API_USER_PASSWORD_RESET] = &ISTcpWorker::UserPasswordReset;
 
     CRITICAL_SECTION_INIT(&CriticalSection);
     CRITICAL_SECTION_INIT(&CSRunning);
@@ -421,6 +432,24 @@ bool ISTcpWorker::UserPasswordExist(unsigned int UserID, bool &Exist)
         return false;
     }
     Exist = qSelectHashIsNull.ReadColumn_Bool(0);
+    return true;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::UserIsSystem(unsigned int UserID, bool &IsSystem)
+{
+    ISQuery qSelectIsSystem(DBConnection, QS_USER_IS_SYSTEM);
+    qSelectIsSystem.BindValue(UserID);
+    if (!qSelectIsSystem.Execute()) //Ошибка запроса
+    {
+        return ErrorQuery(LANG("Carat.Error.CheckUserIsSystem"), qSelectIsSystem);
+    }
+
+    if (!qSelectIsSystem.First())
+    {
+        ErrorString = ISAlgorithm::StringF(LANG("Carat.Error.UserNotExist").c_str(), UserID);
+        return false;
+    }
+    IsSystem = qSelectIsSystem.ReadColumn_Bool(0);
     return true;
 }
 //-----------------------------------------------------------------------------
@@ -1095,6 +1124,64 @@ bool ISTcpWorker::UserPasswordExist(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAn
         return false;
     }
     TcpAnswer->Parameters.AddMember("IsExist", Exist, TcpAnswer->Parameters.GetAllocator());
+    return true;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::UserPasswordReset(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+    IS_UNUSED(TcpAnswer);
+
+    if (!CheckIsNull(TcpMessage, "UserID"))
+    {
+        return false;
+    }
+
+    //Проверим тип значения
+    rapidjson::Value &ValueTimeout = TcpMessage->Parameters["UserID"];
+    if (!ValueTimeout.IsInt())
+    {
+        ErrorString = "The value \"UserID\" is not a integer";
+        return false;
+    }
+    unsigned int UserID = ValueTimeout.GetUint();
+
+    //Проверяем пользователя на системность
+    bool IsSystem = true;
+    if (!UserIsSystem(UserID, IsSystem))
+    {
+        return false;
+    }
+
+    if (IsSystem) //Пользователь системный - отказываем в сбросе пароля
+    {
+        ErrorString = LANG("Carat.Error.Query.UserPasswordReset.UserIsSystem");
+        return false;
+    }
+
+    //Проверяем наличие пароля
+    bool Exist = true;
+    if (!UserPasswordExist(UserID, Exist))
+    {
+        return false;
+    }
+
+    if (!Exist) //Если пароля нет - считаем ошибкой
+    {
+        ErrorString = LANG("Carat.Error.Query.UserPasswordReset.PasswordIsNull");
+        return false;
+    }
+
+    //Сбрасываем пароль
+    ISQuery qUpdateHashReset(DBConnection, QU_USER_HASH_RESET);
+    qUpdateHashReset.BindValue(UserID);
+    if (!qUpdateHashReset.Execute()) //Не удалось сбросить пароль
+    {
+        return ErrorQuery(LANG("Carat.Error.Query.UserPasswordReset.Reset"), qUpdateHashReset);
+    }
+    qUpdateHashReset.First();
+
+    //Фиксируем сброс пароля
+    Protocol(TcpMessage->TcpClient->UserID, CONST_UID_PROTOCOL_USER_PASSWORD_RESET, "_Users", ISMetaData::Instance().GetTable("_Users")->LocalListName, UserID, qUpdateHashReset.ReadColumn(0));
     return true;
 }
 //-----------------------------------------------------------------------------
