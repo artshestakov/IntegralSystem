@@ -81,7 +81,7 @@
   <Local Name="Carat.Error.Query.UserPasswordCreate.UpdateHash" Russian="Не удалось добавить пароль пользователю."/>
 
   <Local Name="Carat.Error.Query.UserPasswordEdit.SelectHash" Russian="Не удалось получить данные пользователя."/>
-  <Local Name="Carat.Error.Query.UserPasswordEdit.UserNotExist" Russian="Пользователь с идентификатором %1 не существует."/>
+  <Local Name="Carat.Error.Query.UserPasswordEdit.UserNotExist" Russian="Пользователь с идентификатором %d не существует."/>
   <Local Name="Carat.Error.Query.UserPasswordEdit.InvalidCurrentLoginOrPassword" Russian="Текущие логин или пароль указаны неверно."/>
   <Local Name="Carat.Error.Query.UserPasswordEdit.GenerateSalt" Russian="Внутренняя ошибка."/>
   <Local Name="Carat.Error.Query.UserPasswordEdit.UpdateHash" Russian="Не удалось обновить пароль."/>

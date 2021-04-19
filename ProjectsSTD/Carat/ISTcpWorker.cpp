@@ -85,6 +85,10 @@ static std::string QS_USER_PASSWORD_IS_NULL = PREPARE_QUERYN("SELECT "
                                                              "FROM _users "
                                                              "WHERE usrs_id = $1", 1);
 //-----------------------------------------------------------------------------
+static std::string QS_USER_PASSWORD = PREPARE_QUERYN("SELECT usrs_hash, usrs_salt "
+                                                     "FROM _users "
+                                                     "WHERE usrs_id = $1", 1);
+//-----------------------------------------------------------------------------
 static std::string QU_USER_HASH_RESET = PREPARE_QUERYN("UPDATE _users SET "
                                                        "usrs_hash = NULL, "
                                                        "usrs_salt = NULL "
@@ -116,6 +120,7 @@ ISTcpWorker::ISTcpWorker()
     MapFunction[API_GET_LAST_CLIENT] = &ISTcpWorker::GetLastClient;
     MapFunction[API_USER_PASSWORD_EXIST] = &ISTcpWorker::UserPasswordExist;
     MapFunction[API_USER_PASSWORD_CREATE] = &ISTcpWorker::UserPasswordCreate;
+    MapFunction[API_USER_PASSWORD_EDIT] = &ISTcpWorker::UserPasswordEdit;
     MapFunction[API_USER_PASSWORD_RESET] = &ISTcpWorker::UserPasswordReset;
 
     CRITICAL_SECTION_INIT(&CriticalSection);
@@ -1192,10 +1197,93 @@ bool ISTcpWorker::UserPasswordCreate(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpA
     {
         return ErrorQuery(LANG("Carat.Error.Query.UserPasswordCreate.UpdateHash"), qUpdateHash);
     }
-    qUpdateHash.First(); //Проверка не требуется, она выполняется выше
+    qUpdateHash.First(); //Проверка не требуется
 
     //Фиксируем создание пароля
     Protocol(TcpMessage->TcpClient->UserID, CONST_UID_PROTOCOL_USER_PASSWORD_CREATE, "_Users", ISMetaData::Instance().GetTable("_Users")->LocalListName, UserID, qUpdateHash.ReadColumn(0));
+    return true;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::UserPasswordEdit(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+    IS_UNUSED(TcpAnswer);
+
+    if (!CheckIsNull(TcpMessage, "UserID") || !CheckIsNull(TcpMessage, "HashOld") || !CheckIsNull(TcpMessage, "Hash"))
+    {
+        return false;
+    }
+
+    //Проверим типы значений
+    rapidjson::Value &ValueUserID = TcpMessage->Parameters["UserID"],
+        &ValueHashOld = TcpMessage->Parameters["HashOld"],
+        &ValueHash = TcpMessage->Parameters["Hash"];
+    if (!ValueUserID.IsInt())
+    {
+        ErrorString = "The value \"UserID\" is not a integer";
+        return false;
+    }
+    unsigned int UserID = ValueUserID.GetUint();
+
+    if (!ValueHashOld.IsString())
+    {
+        ErrorString = "The value \"HashOld\" is not a string";
+        return false;
+    }
+    std::string HashOld = ValueHashOld.GetString();
+
+    if (!ValueHash.IsString())
+    {
+        ErrorString = "The value \"Hash\" is not a string";
+        return false;
+    }
+    std::string Hash = ValueHash.GetString();
+
+    //Получаем текущий хэш и соль пользователя
+    ISQuery qSelectHash(DBConnection, QS_USER_PASSWORD);
+    qSelectHash.BindValue(UserID);
+    if (!qSelectHash.Execute()) //Ошибка запроса
+    {
+        return ErrorQuery(LANG("Carat.Error.Query.UserPasswordEdit.SelectHash"), qSelectHash);
+    }
+
+    if (!qSelectHash.First()) //Пользователя с таким UserID нет в БД
+    {
+        ErrorString = ISAlgorithm::StringF(LANG("Carat.Error.Query.UserPasswordEdit.UserNotExist").c_str(), UserID);
+        return false;
+    }
+
+    //Текущие хэш и соль
+    std::string CurrentHash = qSelectHash.ReadColumn_String(0),
+        CurrentSalt = qSelectHash.ReadColumn_String(1);
+
+    //Солим присланный хэш и проверяем. Если подсоленый хэш не соответствует тому что в БД - значит вводили неправильный текущий пароль (или логин) - ошибка
+    if (ISAlgorithm::SaltPassword(HashOld, CurrentSalt) != CurrentHash)
+    {
+        ErrorString = LANG("Carat.Error.Query.UserPasswordEdit.InvalidCurrentLoginOrPassword");
+        return false;
+    }
+
+    //Генерируем новую соль и солим новый пароль
+    if (!ISAlgorithm::GenerateSalt(CurrentSalt, ErrorString)) //Ошибка генерации
+    {
+        ErrorString = LANG("Carat.Error.Query.UserPasswordEdit.GenerateSalt");
+        return false;
+    }
+    std::string HashResult = ISAlgorithm::SaltPassword(Hash, CurrentSalt);
+
+    //Обновляем пароль
+    ISQuery qUpdateHash(DBConnection, QU_USER_HASH);
+    qUpdateHash.BindValue(HashResult);
+    qUpdateHash.BindValue(CurrentSalt);
+    qUpdateHash.BindValue(UserID);
+    if (!qUpdateHash.Execute())
+    {
+        return ErrorQuery(LANG("Carat.Error.Query.UserPasswordEdit.UpdateHash"), qUpdateHash);
+    }
+    qUpdateHash.First(); //Проверка не требуется
+
+    //Фиксируем изменение пароля
+    Protocol(TcpMessage->TcpClient->UserID, CONST_UID_PROTOCOL_USER_PASSWORD_UPDATE, "_Users", ISMetaData::Instance().GetTable("_Users")->LocalListName, UserID, qUpdateHash.ReadColumn(0));
     return true;
 }
 //-----------------------------------------------------------------------------
@@ -1250,7 +1338,7 @@ bool ISTcpWorker::UserPasswordReset(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAn
     {
         return ErrorQuery(LANG("Carat.Error.Query.UserPasswordReset.Reset"), qUpdateHashReset);
     }
-    qUpdateHashReset.First(); //???
+    qUpdateHashReset.First(); //Проверка не требуется
 
     //Фиксируем сброс пароля
     Protocol(TcpMessage->TcpClient->UserID, CONST_UID_PROTOCOL_USER_PASSWORD_RESET, "_Users", ISMetaData::Instance().GetTable("_Users")->LocalListName, UserID, qUpdateHashReset.ReadColumn(0));
