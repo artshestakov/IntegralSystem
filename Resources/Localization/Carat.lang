@@ -35,7 +35,7 @@
   <Local Name="Carat.Error.FieldNotExist" Russian="Поле &quot;%1&quot; не указано."/>
   <Local Name="Carat.Error.FieldIsEmpty" Russian="Поле &quot;%1&quot; не заполнено."/>
   <Local Name="Carat.Error.CheckExistUserPassword" Russian="Не удалось проверить наличие пароля у пользователя."/>
-  <Local Name="Carat.Error.UserNotExist" Russian="Пользователь с идентификатором %1 не существует."/>
+  <Local Name="Carat.Error.UserNotExist" Russian="Пользователь с идентификатором %d не существует."/>
   <Local Name="Carat.Error.CheckUserIsSystem" Russian="Не удалось проверить пользователя на системность."/>
   <Local Name="Carat.Error.GetObjectName" Russian="Не удалось получить имя объекта."/>
   <Local Name="Carat.Error.GetMetaTable" Russian="Таблица &quot;%s&quot; не существует."/>

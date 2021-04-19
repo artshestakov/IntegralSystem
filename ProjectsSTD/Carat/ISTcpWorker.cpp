@@ -86,6 +86,17 @@ static std::string QS_TASK_PRIORITY = "SELECT tspr_id, tspr_name, tspr_tooltip, 
                                       "FROM _taskpriority "
                                       "ORDER BY tspr_order";
 //-----------------------------------------------------------------------------
+static std::string QS_USER_PASSWORD_IS_NULL = "SELECT "
+                                              "( "
+                                              "SELECT (COUNT(*) > 0)::BOOLEAN is_exist "
+                                              "FROM _users "
+                                              "WHERE usrs_id = $1 "
+                                              "AND usrs_hash IS NOT NULL "
+                                              "AND usrs_salt IS NOT NULL "
+                                              ") "
+                                              "FROM _users "
+                                              "WHERE usrs_id = $1";
+//-----------------------------------------------------------------------------
 ISTcpWorker::ISTcpWorker()
     : ErrorString(STRING_NO_ERROR),
     IsBusy(false),
@@ -99,6 +110,7 @@ ISTcpWorker::ISTcpWorker()
     MapFunction[API_SLEEP] = &ISTcpWorker::Sleep;
     MapFunction[API_GET_META_DATA] = &ISTcpWorker::GetMetaData;
     MapFunction[API_GET_LAST_CLIENT] = &ISTcpWorker::GetLastClient;
+    MapFunction[API_USER_PASSWORD_EXIST] = &ISTcpWorker::UserPasswordExist;
 
     CRITICAL_SECTION_INIT(&CriticalSection);
     CRITICAL_SECTION_INIT(&CSRunning);
@@ -394,6 +406,24 @@ PMetaTable* ISTcpWorker::GetMetaTable(const std::string &TableName)
     return MetaTable;
 }
 //-----------------------------------------------------------------------------
+bool ISTcpWorker::UserPasswordExist(unsigned int UserID, bool &Exist)
+{
+    ISQuery qSelectHashIsNull(DBConnection, QS_USER_PASSWORD_IS_NULL);
+    qSelectHashIsNull.BindValue(UserID);
+    if (!qSelectHashIsNull.Execute()) //Ошибка запроса
+    {
+        return ErrorQuery(LANG("Carat.Error.CheckExistUserPassword"), qSelectHashIsNull);
+    }
+
+    if (!qSelectHashIsNull.First()) //Не удалось перейти на первую строку, т.к. пользователя с таким UserID не существует
+    {
+        ErrorString = ISAlgorithm::StringF(LANG("Carat.Error.UserNotExist").c_str(), UserID);
+        return false;
+    }
+    Exist = qSelectHashIsNull.ReadColumn_Bool(0);
+    return true;
+}
+//-----------------------------------------------------------------------------
 bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
     IS_UNUSED(TcpAnswer);
@@ -637,7 +667,7 @@ bool ISTcpWorker::Sleep(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
     rapidjson::Value &ValueTimeout = TcpMessage->Parameters["Timeout"];
     if (!ValueTimeout.IsInt()) //Значение не является числовым
     {
-        ErrorString = "The value is not a integer";
+        ErrorString = "The value \"Timeout\" is not a integer";
         return false;
     }
 
@@ -1040,6 +1070,31 @@ bool ISTcpWorker::GetLastClient(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer
     Protocol(TcpMessage->TcpClient->UserID, CONST_UID_PROTOCOL_GET_UPDATE_CLIENT);
     TcpAnswer->Parameters.AddMember("FileName", JSON_STRINGA(FileInfo.Name.c_str(), Allocator), Allocator);
     TcpAnswer->Parameters.AddMember("Data", JSON_STRINGA(Base64.c_str(), Allocator), Allocator);
+    return true;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::UserPasswordExist(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+    if (!CheckIsNull(TcpMessage, "UserID"))
+    {
+        return false;
+    }
+
+    //Проверим тип значения
+    rapidjson::Value &ValueTimeout = TcpMessage->Parameters["UserID"];
+    if (!ValueTimeout.IsInt())
+    {
+        ErrorString = "The value \"UserID\" is not a integer";
+        return false;
+    }
+
+    //Проверяем наличие пароля
+    bool Exist = true;
+    if (!UserPasswordExist(ValueTimeout.GetUint(), Exist)) //Не удалось проверить наличие пароля
+    {
+        return false;
+    }
+    TcpAnswer->Parameters.AddMember("IsExist", Exist, TcpAnswer->Parameters.GetAllocator());
     return true;
 }
 //-----------------------------------------------------------------------------

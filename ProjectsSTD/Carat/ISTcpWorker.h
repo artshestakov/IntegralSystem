@@ -30,12 +30,14 @@ private:
     void Protocol(unsigned int UserID, const char *ActionUID, const std::string &TableName = std::string(), const std::string &TableLocalName = std::string(), unsigned int ObjectID = 0, const std::string &Information = std::string());
     unsigned int ExtractVersionFile(const std::string &FileName);
     PMetaTable* GetMetaTable(const std::string &TableName); //ѕолучить указатель на мета-таблицу
+    bool UserPasswordExist(unsigned int UserID, bool &Exist); //ѕроверка наличи€ парол€ у пользовател€
 
 private:
     bool Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
     bool Sleep(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
     bool GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
     bool GetLastClient(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
+    bool UserPasswordExist(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
 
 private:
     std::string ErrorString;
