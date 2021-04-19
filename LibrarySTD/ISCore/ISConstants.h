@@ -56,11 +56,13 @@ const char API_USER_PASSWORD_EXIST[] = "UserPasswordExist"; //Проверка наличия п
 const char API_USER_PASSWORD_CREATE[] = "UserPasswordCreate"; //Создание пароля пользователя
 const char API_USER_PASSWORD_EDIT[] = "UserPasswordEdit"; //Изменение пароля пользователя
 const char API_USER_PASSWORD_RESET[] = "UserPasswordReset"; //Сброс пароля пользователя
+const char API_USER_SETTINGS_RESET[] = "UserSettingsReset"; //Сброс пароля пользователя
 //PROTOCOL---------------------------------------------------------------------
 const char CONST_UID_PROTOCOL_ENTER_APPLICATION[] = "2614cb96-ec54-4d4f-b1a6-06d2444962ca";
 const char CONST_UID_PROTOCOL_GET_UPDATE_CLIENT[] = "0234643a-af60-44bf-a2eb-08a71307841c";
 const char CONST_UID_PROTOCOL_USER_PASSWORD_CREATE[] = "6dd00b13-2a69-45fd-b565-3142c2d2ba97";
 const char CONST_UID_PROTOCOL_USER_PASSWORD_UPDATE[] = "0eee6d67-a0f3-4558-b7ad-173678a8c9dc";
 const char CONST_UID_PROTOCOL_USER_PASSWORD_RESET[] = "3b005c51-b44e-48c6-95f8-3ac6bd913bb3";
+const char CONST_UID_PROTOCOL_USER_SETTINGS_RESET[] = "075e58a5-5336-4a71-8d1d-91202173f4d4";
 //-----------------------------------------------------------------------------
 #endif

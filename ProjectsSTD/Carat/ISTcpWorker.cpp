@@ -105,6 +105,11 @@ static std::string QU_USER_HASH = PREPARE_QUERYN("UPDATE _users SET "
                                                  "WHERE usrs_id = $3 "
                                                  "RETURNING usrs_fio", 3);
 //-----------------------------------------------------------------------------
+static std::string QU_USER_SETTINGS_RESET = PREPARE_QUERYN("UPDATE _usersettings SET "
+                                                           "usst_value = (SELECT stgs_defaultvalue FROM _settings WHERE stgs_id = usst_setting) "
+                                                           "WHERE usst_user = $1 "
+                                                           "RETURNING (SELECT stgs_uid FROM _settings WHERE stgs_id = usst_setting), usst_value", 1);
+//-----------------------------------------------------------------------------
 ISTcpWorker::ISTcpWorker()
     : ErrorString(STRING_NO_ERROR),
     IsBusy(false),
@@ -122,6 +127,7 @@ ISTcpWorker::ISTcpWorker()
     MapFunction[API_USER_PASSWORD_CREATE] = &ISTcpWorker::UserPasswordCreate;
     MapFunction[API_USER_PASSWORD_EDIT] = &ISTcpWorker::UserPasswordEdit;
     MapFunction[API_USER_PASSWORD_RESET] = &ISTcpWorker::UserPasswordReset;
+    MapFunction[API_USER_SETTINGS_RESET] = &ISTcpWorker::UserSettingsReset;
 
     CRITICAL_SECTION_INIT(&CriticalSection);
     CRITICAL_SECTION_INIT(&CSRunning);
@@ -1342,6 +1348,29 @@ bool ISTcpWorker::UserPasswordReset(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAn
 
     //Фиксируем сброс пароля
     Protocol(TcpMessage->TcpClient->UserID, CONST_UID_PROTOCOL_USER_PASSWORD_RESET, "_Users", ISMetaData::Instance().GetTable("_Users")->LocalListName, UserID, qUpdateHashReset.ReadColumn(0));
+    return true;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::UserSettingsReset(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+    //Сбрасываем значения настроек в дефолтные
+    ISQuery qUpdate(DBConnection, QU_USER_SETTINGS_RESET);
+    qUpdate.BindValue(TcpMessage->TcpClient->UserID);
+    if (!qUpdate.Execute()) //Ошибка запроса
+    {
+        return ErrorQuery(LANG("Carat.Error.Query.UserSettingsReset.Update"), qUpdate);
+    }
+
+    //Обходим результат
+    rapidjson::Value SettingsObject(rapidjson::Type::kObjectType);
+    auto &Allocator = TcpAnswer->Parameters.GetAllocator();
+    while (qUpdate.Next())
+    {
+        const char *SettingUID = qUpdate.ReadColumn(0), *SettingValue = qUpdate.ReadColumn(1);
+        SettingsObject.AddMember(JSON_STRING(SettingUID), JSON_STRINGA(SettingValue, Allocator), Allocator);
+    }
+    TcpAnswer->Parameters.AddMember("Result", SettingsObject, Allocator);
+    Protocol(TcpMessage->TcpClient->UserID, CONST_UID_PROTOCOL_USER_SETTINGS_RESET);
     return true;
 }
 //-----------------------------------------------------------------------------
