@@ -39,15 +39,12 @@ static std::string QS_GROUP_ACCESS_SPECIAL = "SELECT gast_uid "
                                              "LEFT JOIN _groupaccessspecialtype ON gast_id = gasp_specialaccess "
                                              "WHERE gasp_group = $1";
 //-----------------------------------------------------------------------------
-static std::string QS_SYSTEM = PREPARE_QUERY("SELECT stms_uid, stms_localname, stms_icon, stms_hint "
-                                             "FROM _systems "
-                                             "ORDER BY stms_orderid");
-//-----------------------------------------------------------------------------
-static std::string QS_SUBSYSTEM = PREPARE_QUERYN("SELECT sbsm_uid, sbsm_localname, sbsm_icon, sbsm_classname, sbsm_tablename, sbsm_hint "
-                                                "FROM _subsystems "
-                                                "WHERE sbsm_system = $1 "
-                                                "AND check_access_user_subsystem($2, $3, sbsm_uid) "
-                                                "ORDER BY sbsm_orderid", 3);
+static std::string QS_SYSTEM_SUBSYSTEM = PREPARE_QUERY("SELECT check_access_user_subsystem($1, $2, sbsm_uid), "
+                                                       "stms_uid, stms_issystem, stms_localname, stms_icon, stms_hint, "
+                                                       "sbsm_uid, sbsm_localname, sbsm_icon, sbsm_classname, sbsm_tablename, sbsm_hint "
+                                                       "FROM _systems "
+                                                       "LEFT JOIN _subsystems ON stms_uid = sbsm_system "
+                                                       "ORDER BY stms_orderid, sbsm_orderid");
 //-----------------------------------------------------------------------------
 static std::string QS_FAVORITE = "SELECT fvts_tablename, fvts_objectid "
                                  "FROM _favorites "
@@ -723,65 +720,58 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 
     //Получаем системы и подсистемы
     rapidjson::Value SystemSubSystemArray(rapidjson::Type::kArrayType);
-    ISQuery qSelectSystem(DBConnection, QS_SYSTEM),
-        qSelectSubSystem(DBConnection, QS_SUBSYSTEM);
-    if (qSelectSystem.Execute()) //Запрашиваем системы
+    ISQuery qSelectSystems(DBConnection, QS_SYSTEM_SUBSYSTEM);
+    qSelectSystems.BindValue(TcpMessage->TcpClient->UserID);
+    qSelectSystems.BindValue(TcpMessage->TcpClient->UserSystem);
+    if (qSelectSystems.Execute())
     {
-        while (qSelectSystem.Next())
+        const char *CurrentSystemUID = nullptr;
+        while (qSelectSystems.Next())
         {
-            const char *SystemUID = qSelectSystem.ReadColumn(0);
-
-            rapidjson::Value SubSystemsArray(rapidjson::Type::kArrayType);
-            qSelectSubSystem.BindValue(SystemUID, UUIDOID);
-            qSelectSubSystem.BindValue(TcpMessage->TcpClient->UserID);
-            qSelectSubSystem.BindValue(TcpMessage->TcpClient->UserSystem);
-            if (qSelectSubSystem.Execute()) //Запрашиваем подсистемы текущей системы
+            //Если доступа к подсистеме нет, переходим к следующей
+            if (!qSelectSystems.ReadColumn_Bool(0))
             {
-                while (qSelectSubSystem.Next())
-                {
-                    const char *SubSystemUID = qSelectSubSystem.ReadColumn(0),
-                        *LocalName = qSelectSubSystem.ReadColumn(1),
-                        *IconName = qSelectSubSystem.ReadColumn(2),
-                        *ClassName = qSelectSubSystem.ReadColumn(3),
-                        *TableName = qSelectSubSystem.ReadColumn(4),
-                        *Hint = qSelectSubSystem.ReadColumn(5);
-
-                    rapidjson::Value SubSystemObject(rapidjson::Type::kObjectType);
-                    SubSystemObject.AddMember("UID", JSON_STRING(SubSystemUID), Allocator);
-                    SubSystemObject.AddMember("Local", JSON_STRING(LocalName), Allocator);
-                    SubSystemObject.AddMember("Icon", strlen(IconName) > 0 ? JSON_STRING(IconName) : JSON_NULL, Allocator);
-                    SubSystemObject.AddMember("Class", strlen(ClassName) > 0 ? JSON_STRING(ClassName) : JSON_NULL, Allocator);
-                    SubSystemObject.AddMember("Table", strlen(TableName) > 0 ? JSON_STRING(TableName) : JSON_NULL, Allocator);
-                    SubSystemObject.AddMember("Hint", strlen(Hint) > 0 ? JSON_STRING(Hint) : JSON_NULL, Allocator);
-                    SubSystemsArray.PushBack(SubSystemObject, Allocator);
-                }
-            }
-            else
-            {
-                return ErrorQuery(LANG("Carat.Error.Query.GetMetaData.SubSystems"), qSelectSubSystem);
+                continue;
             }
 
-            //Добавляем систему только если по ней разрешены какие-нибудь подсистемы
-            if (qSelectSubSystem.GetResultRowCount() > 0)
+            const char *SystemUID = qSelectSystems.ReadColumn(1);
+            if (!CurrentSystemUID || strcmp(SystemUID, CurrentSystemUID) != 0)
             {
-                const char *LocalName = qSelectSystem.ReadColumn(1),
-                    *IconName = qSelectSystem.ReadColumn(2),
-                    *Hint = qSelectSystem.ReadColumn(3);
+                CurrentSystemUID = SystemUID;
+                const char *SystemLocalName = qSelectSystems.ReadColumn(3),
+                    *SystemIcon = qSelectSystems.ReadColumn(4),
+                    *SystemHint = qSelectSystems.ReadColumn(5);
 
                 rapidjson::Value SystemObject(rapidjson::Type::kObjectType);
-                SystemObject.AddMember("IsSystem", qSelectSystem.ReadColumn_Bool(0), Allocator);
-                SystemObject.AddMember("UID", JSON_STRING(SystemUID), Allocator);
-                SystemObject.AddMember("Local", JSON_STRING(LocalName), Allocator);
-                SystemObject.AddMember("Icon", strlen(IconName) > 0 ? JSON_STRING(IconName) : JSON_NULL, Allocator);
-                SystemObject.AddMember("Hint", strlen(Hint) > 0 ? JSON_STRING(Hint) : JSON_NULL, Allocator);
-                SystemObject.AddMember("SubSystems", SubSystemsArray, Allocator);
+                SystemObject.AddMember("IsSystem", qSelectSystems.ReadColumn_Bool(2), Allocator);
+                SystemObject.AddMember("UID", JSON_STRINGA(SystemUID, Allocator), Allocator);
+                SystemObject.AddMember("Local", JSON_STRINGA(SystemLocalName, Allocator), Allocator);
+                SystemObject.AddMember("Icon", strlen(SystemIcon) > 0 ? JSON_STRINGA(SystemIcon, Allocator) : JSON_NULL, Allocator);
+                SystemObject.AddMember("Hint", strlen(SystemHint) > 0 ? JSON_STRINGA(SystemHint, Allocator) : JSON_NULL, Allocator);
+                SystemObject.AddMember("SubSystems", rapidjson::Value(rapidjson::Type::kArrayType), Allocator);
                 SystemSubSystemArray.PushBack(SystemObject, Allocator);
             }
+
+            const char *SubSystemUID = qSelectSystems.ReadColumn(6),
+                *SubSystemLocalName = qSelectSystems.ReadColumn(7),
+                *SubSystemIcon = qSelectSystems.ReadColumn(8),
+                *SubSystemClassName = qSelectSystems.ReadColumn(9),
+                *SubSystemTableName = qSelectSystems.ReadColumn(10),
+                *SubSystemHint = qSelectSystems.ReadColumn(11);
+
+            rapidjson::Value SubSystemObject(rapidjson::Type::kObjectType);
+            SubSystemObject.AddMember("UID", JSON_STRINGA(SubSystemUID, Allocator), Allocator);
+            SubSystemObject.AddMember("Local", JSON_STRINGA(SubSystemLocalName, Allocator), Allocator);
+            SubSystemObject.AddMember("Icon", strlen(SubSystemIcon) > 0 ? JSON_STRINGA(SubSystemIcon, Allocator) : JSON_NULL, Allocator);
+            SubSystemObject.AddMember("Class", strlen(SubSystemClassName) > 0 ? JSON_STRINGA(SubSystemClassName, Allocator) : JSON_NULL, Allocator);
+            SubSystemObject.AddMember("Table", strlen(SubSystemTableName) > 0 ? JSON_STRINGA(SubSystemTableName, Allocator) : JSON_NULL, Allocator);
+            SubSystemObject.AddMember("Hint", strlen(SubSystemHint) > 0 ? JSON_STRINGA(SubSystemHint, Allocator) : JSON_NULL, Allocator);
+            SystemSubSystemArray[SystemSubSystemArray.Size() - 1][JSON_STRING("SubSystems")].PushBack(SubSystemObject, Allocator);
         }
     }
     else
     {
-        return ErrorQuery(LANG("Carat.Error.Query.GetMetaData.Systems"), qSelectSystem);
+        return ErrorQuery(LANG("Carat.Error.Query.GetMetaData.Systems"), qSelectSystems);
     }
 
     //Получаем избранные объекты
