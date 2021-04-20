@@ -104,6 +104,12 @@ void ISTcpServer::Stop()
     {
         ISLOGGER_E(__CLASS__, "not clean WSA: %s", ISAlgorithm::GetLastErrorS().c_str());
     }
+#else
+    int r = close(SocketServer);
+    if (r != 0)
+    {
+        ISLOGGER_E(__CLASS__, "not clean WSA: %s", ISAlgorithm::GetLastErrorS().c_str());
+    }
 #endif
 
     CRITICAL_SECTION_LOCK(&CSRunning);
@@ -126,19 +132,23 @@ void ISTcpServer::WorkerAcceptor()
         ISSocketLen AddressLen = sizeof(SocketInfo);
         ISSocket SocketClient = accept(SocketServer, (struct sockaddr*)&SocketInfo, &AddressLen);
 
+        //Завершение работы сервера
+#ifdef WIN32
+        if (SocketClient == NPOS && ISAlgorithm::GetLastErrorN() == WSAEINTR)
+#else
+        if (SocketClient == SOCKET_ERROR && ISAlgorithm::GetLastErrorN() == EBADF)
+#endif
+        {
+            ISLOGGER_I(__CLASS__, "Stopped");
+            break;
+        }
+
         //При подключении произошла ошибка
         if (SocketClient == SOCKET_ERROR)
         {
             ISLOGGER_C(__CLASS__, "Connect client with error: %s", ISAlgorithm::GetLastErrorS().c_str());
             continue;
         }
-
-        //Завершение работы сервера
-        /*if (SocketClient == NPOS && ISAlgorithm::GetLastErrorN() == WSAEINTR)
-        {
-            ISLOGGER_I(__CLASS__, "Stopped");
-            break;
-        }*/
 
         //Пытаемся получить IP-адрес клиента и если не получилось - отключаем его
         char Char[15] = { 0 }; //Выделяем 15 байт для хранения IP-адреса
