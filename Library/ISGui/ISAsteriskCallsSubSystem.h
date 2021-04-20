@@ -6,14 +6,14 @@
 //-----------------------------------------------------------------------------
 class ISAsteriskCallsSubSystem : public ISListBaseForm
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	Q_INVOKABLE ISAsteriskCallsSubSystem(QWidget *parent = 0);
-	virtual ~ISAsteriskCallsSubSystem();
+    Q_INVOKABLE ISAsteriskCallsSubSystem(QWidget *parent = 0);
+    virtual ~ISAsteriskCallsSubSystem();
 
 private:
-	void PlayRecordCall();
+    void PlayRecordCall();
 };
 //-----------------------------------------------------------------------------
 #endif

@@ -7,55 +7,55 @@
 //Базовый класс контекстного меню для виджетов редактирования информации (преимущественно для полей редактирования информации IS*Edit)
 class ISContextMenuBase : public QMenu
 {
-	Q_OBJECT
+    Q_OBJECT
 
 signals:
-	void Delete();
+    void Delete();
 
 public:
-	ISContextMenuBase(QWidget *ParentEdit, bool ReadOnly, bool UndoAvailable, bool RedoAvailable, bool HasSelectedText, QLineEdit::EchoMode EchoMode, bool Empty);
-	virtual ~ISContextMenuBase();
+    ISContextMenuBase(QWidget *ParentEdit, bool ReadOnly, bool UndoAvailable, bool RedoAvailable, bool HasSelectedText, QLineEdit::EchoMode EchoMode, bool Empty);
+    virtual ~ISContextMenuBase();
 
 protected:
-	void AppendOtherAction(QAction *Action);
-	void BeforeToShow(); //Действие перед отображением меню
+    void AppendOtherAction(QAction *Action);
+    void BeforeToShow(); //Действие перед отображением меню
 
 private:
-	QAction *ActionOtherMenu;
+    QAction *ActionOtherMenu;
 };
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 class ISContextMenuImage : public QMenu
 {
-	Q_OBJECT
+    Q_OBJECT
 
 signals:
-	void Select();
-	void Cut();
-	void Copy();
-	void Paste();
-	void Save();
-	void OpenView();
+    void Select();
+    void Cut();
+    void Copy();
+    void Paste();
+    void Save();
+    void OpenView();
 
 public:
-	ISContextMenuImage(QWidget *parent, bool PixmapIsNull);
-	virtual ~ISContextMenuImage();
+    ISContextMenuImage(QWidget *parent, bool PixmapIsNull);
+    virtual ~ISContextMenuImage();
 };
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 class ISContextMenuText : public ISContextMenuBase
 {
-	Q_OBJECT
+    Q_OBJECT
 
 signals:
-	void UppercaseText();
-	void LowercaseText();
+    void UppercaseText();
+    void LowercaseText();
 
 public:
-	ISContextMenuText(QWidget *ParentEdit, bool ReadOnly, bool UndoAvailable, bool RedoAvailable, bool HasSelectedText, QLineEdit::EchoMode EchoMode, bool Empty, int SelectedTextCount);
-	virtual ~ISContextMenuText();
+    ISContextMenuText(QWidget *ParentEdit, bool ReadOnly, bool UndoAvailable, bool RedoAvailable, bool HasSelectedText, QLineEdit::EchoMode EchoMode, bool Empty, int SelectedTextCount);
+    virtual ~ISContextMenuText();
 };
 //-----------------------------------------------------------------------------
 #endif

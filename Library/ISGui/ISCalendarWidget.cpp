@@ -7,80 +7,80 @@
 //-----------------------------------------------------------------------------
 ISCalendarWidget::ISCalendarWidget(QWidget * parent) : QCalendarWidget(parent)
 {
-	setGridVisible(true);
-	setVerticalHeaderFormat(QCalendarWidget::NoVerticalHeader);
-	setHorizontalHeaderFormat(QCalendarWidget::ShortDayNames);
-	setCursor(CURSOR_POINTING_HAND);
-	setDateEditEnabled(true);
-	setFirstDayOfWeek(Qt::Monday);
+    setGridVisible(true);
+    setVerticalHeaderFormat(QCalendarWidget::NoVerticalHeader);
+    setHorizontalHeaderFormat(QCalendarWidget::ShortDayNames);
+    setCursor(CURSOR_POINTING_HAND);
+    setDateEditEnabled(true);
+    setFirstDayOfWeek(Qt::Monday);
 
-	connect(this, &ISCalendarWidget::selectionChanged, this, &ISCalendarWidget::SelectionChanged);
-	connect(this, &ISCalendarWidget::currentPageChanged, this, &ISCalendarWidget::CurrentPageChanged);
+    connect(this, &ISCalendarWidget::selectionChanged, this, &ISCalendarWidget::SelectionChanged);
+    connect(this, &ISCalendarWidget::currentPageChanged, this, &ISCalendarWidget::CurrentPageChanged);
 
-	Layout = dynamic_cast<QVBoxLayout*>(layout());
-	NavigationBar = findChild<QWidget*>("qt_calendar_navigationbar");
-	NavigationBar->setCursor(CURSOR_ARROW);
+    Layout = dynamic_cast<QVBoxLayout*>(layout());
+    NavigationBar = findChild<QWidget*>("qt_calendar_navigationbar");
+    NavigationBar->setCursor(CURSOR_ARROW);
 
-	QPalette Palette = NavigationBar->palette();
-	Palette.setColor(NavigationBar->backgroundRole(), ISDefines::Gui::COLOR_MAIN_MENU_BAR);
-	NavigationBar->setPalette(Palette);
-	
-	QIcon IconPrevMouth = BUFFER_ICONS("CalendarWidget.Button.Left");
-	IconPrevMouth.addPixmap(BUFFER_ICONS("CalendarWidget.Button.Left.Active").pixmap(ISDefines::Gui::SIZE_64_64), QIcon::Active);
+    QPalette Palette = NavigationBar->palette();
+    Palette.setColor(NavigationBar->backgroundRole(), ISDefines::Gui::COLOR_MAIN_MENU_BAR);
+    NavigationBar->setPalette(Palette);
 
-	ButtonPrevMouth = findChild<QToolButton*>("qt_calendar_prevmonth");
-	ButtonPrevMouth->setIcon(IconPrevMouth);
-	ButtonPrevMouth->setToolTip(LANG("PrevMouth"));
-	ButtonPrevMouth->setCursor(CURSOR_POINTING_HAND);
+    QIcon IconPrevMouth = BUFFER_ICONS("CalendarWidget.Button.Left");
+    IconPrevMouth.addPixmap(BUFFER_ICONS("CalendarWidget.Button.Left.Active").pixmap(ISDefines::Gui::SIZE_64_64), QIcon::Active);
 
-	ButtonMonth = findChild<QToolButton*>("qt_calendar_monthbutton");
-	ButtonMonth->setStyleSheet(BUFFER_STYLE_SHEET("ISCalendarWidget.ButtonMonth"));
-	ButtonMonth->setCursor(CURSOR_POINTING_HAND);
+    ButtonPrevMouth = findChild<QToolButton*>("qt_calendar_prevmonth");
+    ButtonPrevMouth->setIcon(IconPrevMouth);
+    ButtonPrevMouth->setToolTip(LANG("PrevMouth"));
+    ButtonPrevMouth->setCursor(CURSOR_POINTING_HAND);
 
-	int MonthID = 1;
-	for (QAction *Action : ButtonMonth->menu()->actions())
-	{
+    ButtonMonth = findChild<QToolButton*>("qt_calendar_monthbutton");
+    ButtonMonth->setStyleSheet(BUFFER_STYLE_SHEET("ISCalendarWidget.ButtonMonth"));
+    ButtonMonth->setCursor(CURSOR_POINTING_HAND);
+
+    int MonthID = 1;
+    for (QAction *Action : ButtonMonth->menu()->actions())
+    {
         QString Text = Action->text();
-		Text[0] = Text[0].toUpper();
+        Text[0] = Text[0].toUpper();
         Action->setText(QString::number(MonthID) + " - " + Text);
-		Action->setCheckable(true);
+        Action->setCheckable(true);
 
-		if (Action->data().toInt() == QDate::currentDate().month())
-		{
-			Action->setChecked(true);
-			Action->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
-		}
-		++MonthID;
-	}
+        if (Action->data().toInt() == QDate::currentDate().month())
+        {
+            Action->setChecked(true);
+            Action->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
+        }
+        ++MonthID;
+    }
 
-	ButtonYear = findChild<QToolButton*>("qt_calendar_yearbutton");
-	ButtonYear->setCursor(CURSOR_POINTING_HAND);
-	ButtonYear->setStyleSheet(BUFFER_STYLE_SHEET("ISCalendarWidget.ButtonYear"));
+    ButtonYear = findChild<QToolButton*>("qt_calendar_yearbutton");
+    ButtonYear->setCursor(CURSOR_POINTING_HAND);
+    ButtonYear->setStyleSheet(BUFFER_STYLE_SHEET("ISCalendarWidget.ButtonYear"));
 
-	QIcon IconNextMouth = BUFFER_ICONS("CalendarWidget.Button.Right");
-	IconNextMouth.addPixmap(BUFFER_ICONS("CalendarWidget.Button.Right.Active").pixmap(ISDefines::Gui::SIZE_64_64), QIcon::Active);
-	
-	ButtonNextMouth = findChild<QToolButton*>("qt_calendar_nextmonth");
-	ButtonNextMouth->setIcon(IconNextMouth);
-	ButtonNextMouth->setToolTip(LANG("NextMouth"));
-	ButtonNextMouth->setCursor(CURSOR_POINTING_HAND);
+    QIcon IconNextMouth = BUFFER_ICONS("CalendarWidget.Button.Right");
+    IconNextMouth.addPixmap(BUFFER_ICONS("CalendarWidget.Button.Right.Active").pixmap(ISDefines::Gui::SIZE_64_64), QIcon::Active);
 
-	//Формат заголовка
-	QTextCharFormat TextCharFormatHeader;
-	TextCharFormatHeader.setBackground(QBrush(ISDefines::Gui::COLOR_BACKGROUND_INTERFACE));
-	TextCharFormatHeader.setFontCapitalization(QFont::Capitalize);
-	setWeekdayTextFormat(Qt::Monday, TextCharFormatHeader);
-	setWeekdayTextFormat(Qt::Tuesday, TextCharFormatHeader);
-	setWeekdayTextFormat(Qt::Wednesday, TextCharFormatHeader);
-	setWeekdayTextFormat(Qt::Thursday, TextCharFormatHeader);
-	setWeekdayTextFormat(Qt::Friday, TextCharFormatHeader);
-	setWeekdayTextFormat(Qt::Saturday, TextCharFormatHeader);
-	setWeekdayTextFormat(Qt::Sunday, TextCharFormatHeader);
+    ButtonNextMouth = findChild<QToolButton*>("qt_calendar_nextmonth");
+    ButtonNextMouth->setIcon(IconNextMouth);
+    ButtonNextMouth->setToolTip(LANG("NextMouth"));
+    ButtonNextMouth->setCursor(CURSOR_POINTING_HAND);
 
-	//Формат заголовка
-	QTextCharFormat HeaderFormat;
-	HeaderFormat.setFontWeight(QFont::Bold);
-	setHeaderTextFormat(HeaderFormat);
+    //Формат заголовка
+    QTextCharFormat TextCharFormatHeader;
+    TextCharFormatHeader.setBackground(QBrush(ISDefines::Gui::COLOR_BACKGROUND_INTERFACE));
+    TextCharFormatHeader.setFontCapitalization(QFont::Capitalize);
+    setWeekdayTextFormat(Qt::Monday, TextCharFormatHeader);
+    setWeekdayTextFormat(Qt::Tuesday, TextCharFormatHeader);
+    setWeekdayTextFormat(Qt::Wednesday, TextCharFormatHeader);
+    setWeekdayTextFormat(Qt::Thursday, TextCharFormatHeader);
+    setWeekdayTextFormat(Qt::Friday, TextCharFormatHeader);
+    setWeekdayTextFormat(Qt::Saturday, TextCharFormatHeader);
+    setWeekdayTextFormat(Qt::Sunday, TextCharFormatHeader);
+
+    //Формат заголовка
+    QTextCharFormat HeaderFormat;
+    HeaderFormat.setFontWeight(QFont::Bold);
+    setHeaderTextFormat(HeaderFormat);
 }
 //-----------------------------------------------------------------------------
 ISCalendarWidget::~ISCalendarWidget()
@@ -90,98 +90,98 @@ ISCalendarWidget::~ISCalendarWidget()
 //-----------------------------------------------------------------------------
 QWidget* ISCalendarWidget::GetNavigationBar()
 {
-	return NavigationBar;
+    return NavigationBar;
 }
 //-----------------------------------------------------------------------------
 QToolButton* ISCalendarWidget::GetButtonPrevMonth()
 {
-	return ButtonPrevMouth;
+    return ButtonPrevMouth;
 }
 //-----------------------------------------------------------------------------
 QToolButton* ISCalendarWidget::GetButtonNextMonth()
 {
-	return ButtonNextMouth;
+    return ButtonNextMouth;
 }
 //-----------------------------------------------------------------------------
 QToolButton* ISCalendarWidget::GetButtonMonth()
 {
-	return ButtonMonth;
+    return ButtonMonth;
 }
 //-----------------------------------------------------------------------------
 QVBoxLayout* ISCalendarWidget::GetLayout()
 {
-	return Layout;
+    return Layout;
 }
 //-----------------------------------------------------------------------------
 void ISCalendarWidget::Today()
 {
-	setSelectedDate(QDate::currentDate());
-	emit clicked(QDate::currentDate());
+    setSelectedDate(QDate::currentDate());
+    emit clicked(QDate::currentDate());
 }
 //-----------------------------------------------------------------------------
 void ISCalendarWidget::SelectionChanged()
 {
-	emit DateChanged(selectedDate());
+    emit DateChanged(selectedDate());
 }
 //-----------------------------------------------------------------------------
 void ISCalendarWidget::CurrentPageChanged(int Year, int Month)
 {
-	Q_UNUSED(Year);
-	for (QAction *ActionMonth : ButtonMonth->menu()->actions())
-	{
-		if (ActionMonth->data().toInt() == Month)
-		{
-			MonthClicked(ActionMonth);
-			break;
-		}
-	}
+    Q_UNUSED(Year);
+    for (QAction *ActionMonth : ButtonMonth->menu()->actions())
+    {
+        if (ActionMonth->data().toInt() == Month)
+        {
+            MonthClicked(ActionMonth);
+            break;
+        }
+    }
 }
 //-----------------------------------------------------------------------------
 void ISCalendarWidget::paintCell(QPainter *Painter, const QRect &Rect, const QDate &Date) const
 {
-	if (Date < minimumDate() || Date > maximumDate()) //Если рисуемая дата не попадает в допустимый диапазон - выходим
-	{
-		return;
-	}
+    if (Date < minimumDate() || Date > maximumDate()) //Если рисуемая дата не попадает в допустимый диапазон - выходим
+    {
+        return;
+    }
 
-	Painter->save();
-	if (Date == QDate::currentDate()) //Если рисуется текущая дата
-	{
-		Painter->fillRect(Rect, ISDefines::Gui::COLOR_CALENDAR_SELECTED_DATE_BACKGROUND); //Заполнение фона
+    Painter->save();
+    if (Date == QDate::currentDate()) //Если рисуется текущая дата
+    {
+        Painter->fillRect(Rect, ISDefines::Gui::COLOR_CALENDAR_SELECTED_DATE_BACKGROUND); //Заполнение фона
 
-		//Рисование рамки
-		Painter->setBrush(QBrush(Qt::transparent, Qt::SolidPattern));
-		Painter->setPen(QPen(ISDefines::Gui::COLOR_MAIN_MENU_BAR, 2, Qt::SolidLine));
-		Painter->drawRect(QRect(Rect.x(), Rect.y(), Rect.width(), Rect.height()));
-	}
-	else
-	{
-		Painter->fillRect(Rect, Date == selectedDate() ? ISDefines::Gui::COLOR_CALENDAR_SELECTED_DATE_BACKGROUND : Qt::white); //Заполнение фона
-	}
+        //Рисование рамки
+        Painter->setBrush(QBrush(Qt::transparent, Qt::SolidPattern));
+        Painter->setPen(QPen(ISDefines::Gui::COLOR_MAIN_MENU_BAR, 2, Qt::SolidLine));
+        Painter->drawRect(QRect(Rect.x(), Rect.y(), Rect.width(), Rect.height()));
+    }
+    else
+    {
+        Painter->fillRect(Rect, Date == selectedDate() ? ISDefines::Gui::COLOR_CALENDAR_SELECTED_DATE_BACKGROUND : Qt::white); //Заполнение фона
+    }
 
-	if (Date.month() != monthShown()) //Если рисуются дни НЕ ТЕКУЩЕГО месяца
-	{
-		Painter->fillRect(Rect, ISDefines::Gui::COLOR_CALENDAR_CELL_BACKGROUP); //Заполнение фона
-	}
-	Painter->drawText(QRect(Rect.x() + 3, Rect.y() + 2, Rect.width(), Rect.height()), QString::number(Date.day())); //Рисование текста с датой
-	Painter->restore();
+    if (Date.month() != monthShown()) //Если рисуются дни НЕ ТЕКУЩЕГО месяца
+    {
+        Painter->fillRect(Rect, ISDefines::Gui::COLOR_CALENDAR_CELL_BACKGROUP); //Заполнение фона
+    }
+    Painter->drawText(QRect(Rect.x() + 3, Rect.y() + 2, Rect.width(), Rect.height()), QString::number(Date.day())); //Рисование текста с датой
+    Painter->restore();
 }
 //-----------------------------------------------------------------------------
 void ISCalendarWidget::hideEvent(QHideEvent *e)
 {
-	QCalendarWidget::hideEvent(e);
-	emit Hide();
+    QCalendarWidget::hideEvent(e);
+    emit Hide();
 }
 //-----------------------------------------------------------------------------
 void ISCalendarWidget::MonthClicked(QAction *ActionClicked)
 {
-	for (QAction *Action : ButtonMonth->menu()->actions())
-	{
-		Action->setFont(ISDefines::Gui::FONT_APPLICATION);
-		Action->setChecked(false);
-	}
+    for (QAction *Action : ButtonMonth->menu()->actions())
+    {
+        Action->setFont(ISDefines::Gui::FONT_APPLICATION);
+        Action->setChecked(false);
+    }
 
-	ActionClicked->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
-	ActionClicked->setChecked(true);
+    ActionClicked->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
+    ActionClicked->setChecked(true);
 }
 //-----------------------------------------------------------------------------

@@ -7,35 +7,35 @@
 #include "ISOilSphere.h"
 //-----------------------------------------------------------------------------
 ISObjects::ISObjects()
-	: ObjectInterface(nullptr)
+    : ObjectInterface(nullptr)
 {
-	qRegisterMetaType<ISEmpty::Object*>("ISEmpty::Object");
-	qRegisterMetaType<ISOilSphere::Object*>("ISOilSphere::Object");
+    qRegisterMetaType<ISEmpty::Object*>("ISEmpty::Object");
+    qRegisterMetaType<ISOilSphere::Object*>("ISOilSphere::Object");
 }
 //-----------------------------------------------------------------------------
 ISObjects::~ISObjects()
 {
-	if (ObjectInterface)
-	{
-		delete ObjectInterface;
-	}
+    if (ObjectInterface)
+    {
+        delete ObjectInterface;
+    }
 }
 //-----------------------------------------------------------------------------
 ISObjects& ISObjects::Instance()
 {
-	static ISObjects Objects;
-	return Objects;
+    static ISObjects Objects;
+    return Objects;
 }
 //-----------------------------------------------------------------------------
 void ISObjects::Initialize(const QString &ConfigurationName)
 {
-	ObjectInterface = ISAlgorithm::CreatePointer<ISObjectInterface *>("IS" + ConfigurationName + "::Object");
-	ObjectInterface->SetConfigurationName(ConfigurationName);
-	ObjectInterface->RegisterMetaTypes();
+    ObjectInterface = ISAlgorithm::CreatePointer<ISObjectInterface *>("IS" + ConfigurationName + "::Object");
+    ObjectInterface->SetConfigurationName(ConfigurationName);
+    ObjectInterface->RegisterMetaTypes();
 }
 //-----------------------------------------------------------------------------
 ISObjectInterface* ISObjects::GetInterface()
 {
-	return ObjectInterface;
+    return ObjectInterface;
 }
 //-----------------------------------------------------------------------------

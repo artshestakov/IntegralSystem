@@ -8,24 +8,24 @@
 class ISColumnSizer
 {
 public:
-	static ISColumnSizer& Instance();
+    static ISColumnSizer& Instance();
 
-	void Initialize(const QVariantMap &VariantMap);
-	QVariantMap GetColumnSize() const; //Получить данные о размерах полей
+    void Initialize(const QVariantMap &VariantMap);
+    QVariantMap GetColumnSize() const; //Получить данные о размерах полей
 
-	void SetColumnSize(const QString &TableName, const QString &FieldName, int Size); //Изменить размер поля в таблице
-	int GetColumnSize(const QString &TableName, const QString &FieldName) const; //Получить размер поля в таблице
-
-private:
-	ISColumnSizer();
-	~ISColumnSizer();
-	ISColumnSizer(const ISColumnSizer&) = delete;
-	ISColumnSizer(ISColumnSizer&&) = delete;
-	ISColumnSizer& operator=(const ISColumnSizer&) = delete;
-	ISColumnSizer& operator=(ISColumnSizer&&) = delete;
+    void SetColumnSize(const QString &TableName, const QString &FieldName, int Size); //Изменить размер поля в таблице
+    int GetColumnSize(const QString &TableName, const QString &FieldName) const; //Получить размер поля в таблице
 
 private:
-	std::map<QString, ISStringToIntMap> Tables;
+    ISColumnSizer();
+    ~ISColumnSizer();
+    ISColumnSizer(const ISColumnSizer&) = delete;
+    ISColumnSizer(ISColumnSizer&&) = delete;
+    ISColumnSizer& operator=(const ISColumnSizer&) = delete;
+    ISColumnSizer& operator=(ISColumnSizer&&) = delete;
+
+private:
+    std::map<QString, ISStringToIntMap> Tables;
 };
 //-----------------------------------------------------------------------------
 #endif

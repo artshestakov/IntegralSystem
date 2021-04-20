@@ -6,18 +6,18 @@
 //-----------------------------------------------------------------------------
 class ISStorageFilesSubSystem : public ISListBaseForm
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	Q_INVOKABLE ISStorageFilesSubSystem(QWidget *parent = 0);
-	virtual ~ISStorageFilesSubSystem();
+    Q_INVOKABLE ISStorageFilesSubSystem(QWidget *parent = 0);
+    virtual ~ISStorageFilesSubSystem();
 
 protected:
-	void Create() override;
-	void CreateCopy() override;
+    void Create() override;
+    void CreateCopy() override;
 
 private:
-	void SaveFile(); //Сохранить файл
+    void SaveFile(); //Сохранить файл
 };
 //-----------------------------------------------------------------------------
 #endif

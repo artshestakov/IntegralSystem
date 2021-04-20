@@ -4,13 +4,13 @@
 //-----------------------------------------------------------------------------
 class ISWaitWidget : public QWidget
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
     ISWaitWidget(QWidget *parent = 0, bool centerOnParent = true, bool disableParentWhenSpinning = true);
     ISWaitWidget(Qt::WindowModality modality, QWidget *parent = 0, bool centerOnParent = true, bool disableParentWhenSpinning = true);
 
-public slots:
+    public slots:
     void Start();
     void Stop();
 
@@ -37,7 +37,7 @@ public:
 
     bool isSpinning() const;
 
-private slots:
+    private slots:
     void Rotate();
 
 protected:

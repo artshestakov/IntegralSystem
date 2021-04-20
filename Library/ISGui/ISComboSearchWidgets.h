@@ -8,35 +8,35 @@
 //-----------------------------------------------------------------------------
 class ISComboSearchBase : public ISComboEdit
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	Q_INVOKABLE ISComboSearchBase(QWidget *parent);
-	virtual ~ISComboSearchBase();
+    Q_INVOKABLE ISComboSearchBase(QWidget *parent);
+    virtual ~ISComboSearchBase();
 
-	ISNamespace::SearchType GetOperator();
+    ISNamespace::SearchType GetOperator();
 };
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 class ISComboSearchNumber : public ISComboSearchBase
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	Q_INVOKABLE ISComboSearchNumber(QWidget *parent);
-	virtual ~ISComboSearchNumber();
+    Q_INVOKABLE ISComboSearchNumber(QWidget *parent);
+    virtual ~ISComboSearchNumber();
 };
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 class ISComboSearchString : public ISComboSearchBase
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	Q_INVOKABLE ISComboSearchString(QWidget *parent);
-	virtual ~ISComboSearchString();
+    Q_INVOKABLE ISComboSearchString(QWidget *parent);
+    virtual ~ISComboSearchString();
 };
 //-----------------------------------------------------------------------------
 #endif

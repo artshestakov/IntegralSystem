@@ -9,39 +9,39 @@
 //-----------------------------------------------------------------------------
 struct SearchField
 {
-	QString Name;
-	ISComboSearchBase *SearchOperator;
-	std::vector<ISFieldEditBase*> Edits;
+    QString Name;
+    ISComboSearchBase *SearchOperator;
+    std::vector<ISFieldEditBase*> Edits;
 };
 //-----------------------------------------------------------------------------
 class ISSearchForm : public ISInterfaceForm
 {
-	Q_OBJECT
+    Q_OBJECT
 
 signals:
-	void Search(const QVariantList &VariantList);
+    void Search(const QVariantList &VariantList);
 
 public:
-	ISSearchForm(PMetaTable *meta_table, QWidget *parent = 0);
-	virtual ~ISSearchForm();
+    ISSearchForm(PMetaTable *meta_table, QWidget *parent = 0);
+    virtual ~ISSearchForm();
 
 protected:
-	void closeEvent(QCloseEvent *e) override;
-	void EscapeClicked() override;
-	void EnterClicked() override;
+    void closeEvent(QCloseEvent *e) override;
+    void EscapeClicked() override;
+    void EnterClicked() override;
 
 private:
-	void AddField(PMetaField *MetaField);
-	void AddClicked();
-	void ListEditChanged(const QVariant &Value);
-	void Search();
-	
+    void AddField(PMetaField *MetaField);
+    void AddClicked();
+    void ListEditChanged(const QVariant &Value);
+    void Search();
+
 private:
-	PMetaTable *MetaTable;
-	std::vector<SearchField> VectorEdits;
-	
+    PMetaTable *MetaTable;
+    std::vector<SearchField> VectorEdits;
+
 private:
-	QGridLayout *GridLayout;
+    QGridLayout *GridLayout;
 };
 //-----------------------------------------------------------------------------
 #endif

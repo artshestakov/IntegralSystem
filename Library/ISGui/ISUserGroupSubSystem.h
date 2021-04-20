@@ -5,13 +5,13 @@
 //-----------------------------------------------------------------------------
 class ISUserGroupSubSystem : public ISListBaseForm
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	Q_INVOKABLE ISUserGroupSubSystem(QWidget *parent = 0);
-	virtual ~ISUserGroupSubSystem();
+    Q_INVOKABLE ISUserGroupSubSystem(QWidget *parent = 0);
+    virtual ~ISUserGroupSubSystem();
 
 private:
-	void SelectedGroup();
+    void SelectedGroup();
 };
 //-----------------------------------------------------------------------------

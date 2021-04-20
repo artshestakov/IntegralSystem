@@ -5,15 +5,15 @@
 //-----------------------------------------------------------------------------
 class ISCalendarPopup : public ISCalendarWidget
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	ISCalendarPopup(QWidget *parent = 0);
-	virtual ~ISCalendarPopup();
+    ISCalendarPopup(QWidget *parent = 0);
+    virtual ~ISCalendarPopup();
 
-	void showEvent(QShowEvent *ShowEvent);
+    void showEvent(QShowEvent *ShowEvent);
 
 private:
-	QToolButton *ButtonToday;
+    QToolButton *ButtonToday;
 };
 //-----------------------------------------------------------------------------

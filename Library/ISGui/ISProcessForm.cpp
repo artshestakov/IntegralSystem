@@ -6,27 +6,27 @@
 #include "ISConstants.h"
 //-----------------------------------------------------------------------------
 ISProcessForm::ISProcessForm(const QString &LabelText, QWidget *parent)
-	: ISInterfaceForm(parent, Qt::Window | Qt::MSWindowsFixedSizeDialogHint | Qt::WindowSystemMenuHint | Qt::WindowStaysOnTopHint)
+    : ISInterfaceForm(parent, Qt::Window | Qt::MSWindowsFixedSizeDialogHint | Qt::WindowSystemMenuHint | Qt::WindowStaysOnTopHint)
 {
-	setCursor(CURSOR_WAIT);
-	setWindowTitle(LANG("PleaseWait"));
-	setSizePolicy(QSizePolicy::Maximum, sizePolicy().verticalPolicy());
-	setWindowModality(Qt::WindowModality::WindowModal);
-	GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);
+    setCursor(CURSOR_WAIT);
+    setWindowTitle(LANG("PleaseWait"));
+    setSizePolicy(QSizePolicy::Maximum, sizePolicy().verticalPolicy());
+    setWindowModality(Qt::WindowModality::WindowModal);
+    GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);
 
-	QHBoxLayout *Layout = new QHBoxLayout();
-	GetMainLayout()->addLayout(Layout);
+    QHBoxLayout *Layout = new QHBoxLayout();
+    GetMainLayout()->addLayout(Layout);
 
-	QLabel *LabelImage = new QLabel(this);
-	LabelImage->setPixmap(BUFFER_ICONS("Wait").pixmap(ISDefines::Gui::SIZE_32_32));
-	Layout->addWidget(LabelImage);
+    QLabel *LabelImage = new QLabel(this);
+    LabelImage->setPixmap(BUFFER_ICONS("Wait").pixmap(ISDefines::Gui::SIZE_32_32));
+    Layout->addWidget(LabelImage);
 
-	Label = new QLabel(this);
-	Label->setText(LabelText);
-	Label->setSizePolicy(QSizePolicy::Maximum, Label->sizePolicy().verticalPolicy());
-	Layout->addWidget(Label);
+    Label = new QLabel(this);
+    Label->setText(LabelText);
+    Label->setSizePolicy(QSizePolicy::Maximum, Label->sizePolicy().verticalPolicy());
+    Layout->addWidget(Label);
 
-	Layout->addStretch();
+    Layout->addStretch();
 }
 //-----------------------------------------------------------------------------
 ISProcessForm::~ISProcessForm()
@@ -36,22 +36,22 @@ ISProcessForm::~ISProcessForm()
 //-----------------------------------------------------------------------------
 void ISProcessForm::SetText(const QString &LabelText)
 {
-	//ѕоследовательность вызова функций ниже ни в коем случае не мен€ть, иначе
-	//возникнут проблемы с изменением размера формы после изменени€ текста в QLabel
-	Label->setText(LabelText);
-	Label->adjustSize();
-	ISGui::RepaintWidget(Label);
-	adjustSize();
-	ISGui::RepaintWidget(this);
-	PROCESS_EVENTS();
+    //ѕоследовательность вызова функций ниже ни в коем случае не мен€ть, иначе
+    //возникнут проблемы с изменением размера формы после изменени€ текста в QLabel
+    Label->setText(LabelText);
+    Label->adjustSize();
+    ISGui::RepaintWidget(Label);
+    adjustSize();
+    ISGui::RepaintWidget(this);
+    PROCESS_EVENTS();
 }
 //-----------------------------------------------------------------------------
 void ISProcessForm::showEvent(QShowEvent *ShowEvent)
 {
-	adjustSize();
-	ISGui::RepaintWidget(this);
-	PROCESS_EVENTS();
-	ISGui::MoveWidgetToDesktop(this, ISNamespace::MoveWidgetDesktop::Center);
-	ISInterfaceForm::showEvent(ShowEvent);
+    adjustSize();
+    ISGui::RepaintWidget(this);
+    PROCESS_EVENTS();
+    ISGui::MoveWidgetToDesktop(this, ISNamespace::MoveWidgetDesktop::Center);
+    ISInterfaceForm::showEvent(ShowEvent);
 }
 //-----------------------------------------------------------------------------

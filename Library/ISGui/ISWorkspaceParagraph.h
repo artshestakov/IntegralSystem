@@ -8,24 +8,24 @@
 //-----------------------------------------------------------------------------
 class ISWorkspaceParagraph : public ISParagraphBaseForm
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	Q_INVOKABLE ISWorkspaceParagraph(QWidget *parent = 0);
-	virtual ~ISWorkspaceParagraph();
+    Q_INVOKABLE ISWorkspaceParagraph(QWidget *parent = 0);
+    virtual ~ISWorkspaceParagraph();
 
-	void Invoke() override;
+    void Invoke() override;
 
-public slots:
-	void AddObjectForm(QWidget *ObjectForm); //Добавить форму объекта на панель навигации
-
-private:
-	void ClickedSubSystem(const QString &SubSystemUID, const QIcon &IconSubSystem); //Обработчик события клика по подсистеме
+    public slots:
+    void AddObjectForm(QWidget *ObjectForm); //Добавить форму объекта на панель навигации
 
 private:
-	QVBoxLayout *Layout;
-	ISTabWidgetMain *TabWidget;
-	ISInterfaceMetaForm *CentralForm; //Центральная форма (рабочая)
-	QString CurrentSubSystemUID;
+    void ClickedSubSystem(const QString &SubSystemUID, const QIcon &IconSubSystem); //Обработчик события клика по подсистеме
+
+private:
+    QVBoxLayout *Layout;
+    ISTabWidgetMain *TabWidget;
+    ISInterfaceMetaForm *CentralForm; //Центральная форма (рабочая)
+    QString CurrentSubSystemUID;
 };
 //-----------------------------------------------------------------------------

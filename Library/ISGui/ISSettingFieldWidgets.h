@@ -6,44 +6,44 @@
 //-----------------------------------------------------------------------------
 class ISComboSettingEdit : public ISComboEdit
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	Q_INVOKABLE ISComboSettingEdit(QWidget *parent = 0);
-	virtual ~ISComboSettingEdit();
+    Q_INVOKABLE ISComboSettingEdit(QWidget *parent = 0);
+    virtual ~ISComboSettingEdit();
 };
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 class ISComboCalendarNoteType : public ISComboSettingEdit
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	Q_INVOKABLE ISComboCalendarNoteType(QWidget *parent = 0);
-	virtual ~ISComboCalendarNoteType();
+    Q_INVOKABLE ISComboCalendarNoteType(QWidget *parent = 0);
+    virtual ~ISComboCalendarNoteType();
 };
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 class ISComboTabBarSelectionBehavior : public ISComboSettingEdit
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	Q_INVOKABLE ISComboTabBarSelectionBehavior(QWidget *parent = 0);
-	virtual ~ISComboTabBarSelectionBehavior();
+    Q_INVOKABLE ISComboTabBarSelectionBehavior(QWidget *parent = 0);
+    virtual ~ISComboTabBarSelectionBehavior();
 };
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 class ISComboTableDoubleClickEvent : public ISComboSettingEdit
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	Q_INVOKABLE ISComboTableDoubleClickEvent(QWidget *parent = 0);
-	virtual ~ISComboTableDoubleClickEvent();
+    Q_INVOKABLE ISComboTableDoubleClickEvent(QWidget *parent = 0);
+    virtual ~ISComboTableDoubleClickEvent();
 };
 //-----------------------------------------------------------------------------
 #endif

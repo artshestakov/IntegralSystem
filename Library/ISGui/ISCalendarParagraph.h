@@ -9,51 +9,51 @@
 //-----------------------------------------------------------------------------
 class ISCalendarParagraph : public ISParagraphBaseForm
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	Q_INVOKABLE ISCalendarParagraph(QWidget *parent = 0);
-	virtual ~ISCalendarParagraph();
+    Q_INVOKABLE ISCalendarParagraph(QWidget *parent = 0);
+    virtual ~ISCalendarParagraph();
 
-	void Invoke() override;
+    void Invoke() override;
 
 protected:
-	void ReloadEvents(); //Загрузка событий на текущий месяц
-	void ReloadEvents(int Year, int Month); //Загрузка событий на месяц
-	void SelectedDateChanged(); //Событие смены выбранной даты
+    void ReloadEvents(); //Загрузка событий на текущий месяц
+    void ReloadEvents(int Year, int Month); //Загрузка событий на месяц
+    void SelectedDateChanged(); //Событие смены выбранной даты
 
-	void Create(); //Создание нового события календаря
-	void DateTo(); //Переход на дату календаря
-	void ToCurrentDate(); //Переход на текущую дату
-	void ShowSettingsForm();
-	void Edit(); //Изменение события календаря
-	void Delete(); //Удаление события календаря
-	void CloseEvent(); //Завершение события
-	
-	void ItemDoubleClicked(QListWidgetItem *ListWidgetItem); //Двойное нажатие на событие
-	void ItemSelectionChanged();
+    void Create(); //Создание нового события календаря
+    void DateTo(); //Переход на дату календаря
+    void ToCurrentDate(); //Переход на текущую дату
+    void ShowSettingsForm();
+    void Edit(); //Изменение события календаря
+    void Delete(); //Удаление события календаря
+    void CloseEvent(); //Завершение события
 
-	void EditEvent(int CalendarID);
-	void DeleteEvent(int CalendarID);
+    void ItemDoubleClicked(QListWidgetItem *ListWidgetItem); //Двойное нажатие на событие
+    void ItemSelectionChanged();
 
-	ISCalendarEventItem* AddEventItem(int CalendarID, const QString &Name, const QString &Text, const QTime &Time, bool Closed); //Добавить элемент события в список
-	
-private:
-	bool FirstUpdate;
-	std::map<unsigned int, QVariantList> EventsMap;
+    void EditEvent(int CalendarID);
+    void DeleteEvent(int CalendarID);
+
+    ISCalendarEventItem* AddEventItem(int CalendarID, const QString &Name, const QString &Text, const QTime &Time, bool Closed); //Добавить элемент события в список
 
 private:
-	QHBoxLayout *MainLayout;
-	
-	ISCalendarPanel *CalendarPanel;
-	QLabel *LabelDayNumber;
-	QLabel *LabelDayName;
-	QLabel *LabelMonthYear;
+    bool FirstUpdate;
+    std::map<unsigned int, QVariantList> EventsMap;
 
-	QAction *ActionEdit;
-	QAction *ActionDelete;
-	QAction *ActionCloseEvent;
+private:
+    QHBoxLayout *MainLayout;
 
-	ISCalendarEventsWidget *ListWidget;
+    ISCalendarPanel *CalendarPanel;
+    QLabel *LabelDayNumber;
+    QLabel *LabelDayName;
+    QLabel *LabelMonthYear;
+
+    QAction *ActionEdit;
+    QAction *ActionDelete;
+    QAction *ActionCloseEvent;
+
+    ISCalendarEventsWidget *ListWidget;
 };
 //-----------------------------------------------------------------------------

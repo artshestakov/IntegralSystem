@@ -8,145 +8,145 @@
 //-----------------------------------------------------------------------------
 class ISQComboBox : public QComboBox
 {
-	Q_OBJECT
+    Q_OBJECT
 
 signals:
-	void ShowPopup();
-	void HidePopup();
+    void ShowPopup();
+    void HidePopup();
 
 public:
-	ISQComboBox(QWidget *parent = 0);
-	virtual ~ISQComboBox();
+    ISQComboBox(QWidget *parent = 0);
+    virtual ~ISQComboBox();
 
-	void SetWheelScroll(bool wheel_scroll);
-	bool GetWheelScrool() const;
+    void SetWheelScroll(bool wheel_scroll);
+    bool GetWheelScrool() const;
 
-	void showPopup();
-	void hidePopup();
-	void wheelEvent(QWheelEvent *e);
+    void showPopup();
+    void hidePopup();
+    void wheelEvent(QWheelEvent *e);
 
 protected:
-	bool WheelScroll;
+    bool WheelScroll;
 };
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 class ISQLineEdit : public QLineEdit
 {
-	Q_OBJECT
+    Q_OBJECT
 
 signals:
-	void ClearClicked();
+    void ClearClicked();
 
 public:
-	ISQLineEdit(QWidget *parent = 0);
-	virtual ~ISQLineEdit();
+    ISQLineEdit(QWidget *parent = 0);
+    virtual ~ISQLineEdit();
 
-	void SetEnabled(bool Enabled);
-	void SetIcon(const QIcon &icon);
-	void SetVisibleClear(bool visible);
-	void AddAction(QAction *Action, QLineEdit::ActionPosition Position);
+    void SetEnabled(bool Enabled);
+    void SetIcon(const QIcon &icon);
+    void SetVisibleClear(bool visible);
+    void AddAction(QAction *Action, QLineEdit::ActionPosition Position);
 
 protected:
-	virtual void contextMenuEvent(QContextMenuEvent *e);
-	virtual void mousePressEvent(QMouseEvent *e);
-	virtual void paintEvent(QPaintEvent *e);
+    virtual void contextMenuEvent(QContextMenuEvent *e);
+    virtual void mousePressEvent(QMouseEvent *e);
+    virtual void paintEvent(QPaintEvent *e);
 
 private:
-	QPixmap PixmapEnabled;
-	QPixmap PixmapCurrent;
-	QAction *ActionClear;
+    QPixmap PixmapEnabled;
+    QPixmap PixmapCurrent;
+    QAction *ActionClear;
 };
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 class ISQDateEdit : public ISQLineEdit
 {
-	Q_OBJECT
+    Q_OBJECT
 
 signals:
-	void DateChanged();
+    void DateChanged();
 
 public:
-	ISQDateEdit(QWidget *parent = 0);
-	virtual ~ISQDateEdit();
+    ISQDateEdit(QWidget *parent = 0);
+    virtual ~ISQDateEdit();
 
-	void contextMenuEvent(QContextMenuEvent *e);
+    void contextMenuEvent(QContextMenuEvent *e);
 
-	QDate GetDate() const;
-	void SetDate(const QDate &Date);
-	void Clear();
-	void SetEnabled(bool Enabled);
-	void SetReadOnly(bool ReadOnly);
+    QDate GetDate() const;
+    void SetDate(const QDate &Date);
+    void Clear();
+    void SetEnabled(bool Enabled);
+    void SetReadOnly(bool ReadOnly);
 
-	void SetRange(const QDate &Minimum, const QDate &Maximum);
-	void SetMinimumDate(const QDate &Date);
-	void SetMaximumDate(const QDate &Date);
+    void SetRange(const QDate &Minimum, const QDate &Maximum);
+    void SetMinimumDate(const QDate &Date);
+    void SetMaximumDate(const QDate &Date);
 
 protected:
-	void showEvent(QShowEvent *ShowEvent);
-	void resizeEvent(QResizeEvent *ResizeEvent);
+    void showEvent(QShowEvent *ShowEvent);
+    void resizeEvent(QResizeEvent *ResizeEvent);
 
 private:
-	void ShowCalendar();
-	void HideCalendar();
-	void SelectionChanged();
+    void ShowCalendar();
+    void HideCalendar();
+    void SelectionChanged();
 
 private:
-	ISServiceButton *ButtonCalendar;
-	ISCalendarPopup *CalendarWidget;
-	bool IsShow;
+    ISServiceButton *ButtonCalendar;
+    ISCalendarPopup *CalendarWidget;
+    bool IsShow;
 };
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 class ISQTimeEdit : public QWidget
 {
-	Q_OBJECT
+    Q_OBJECT
 
 signals:
-	void TimeChanged();
+    void TimeChanged();
 
 public:
-	ISQTimeEdit(QWidget *parent = 0);
-	virtual ~ISQTimeEdit();
+    ISQTimeEdit(QWidget *parent = 0);
+    virtual ~ISQTimeEdit();
 
-	QTime GetTime() const;
-	void SetTime(const QTime &Time);
-	void Clear();
-	void SetReadOnly(bool ReadOnly);
+    QTime GetTime() const;
+    void SetTime(const QTime &Time);
+    void Clear();
+    void SetReadOnly(bool ReadOnly);
 
 private:
-	ISQLineEdit *EditHour;
-	ISQLineEdit *EditMinute;
-	ISQLineEdit *EditSecond;
+    ISQLineEdit *EditHour;
+    ISQLineEdit *EditMinute;
+    ISQLineEdit *EditSecond;
 };
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 class ISQTextEdit : public QTextEdit
 {
-	Q_OBJECT
+    Q_OBJECT
 
 signals:
-	void KeyPressEnter();
+    void KeyPressEnter();
 
 public:
-	ISQTextEdit(QWidget *parent = 0);
-	virtual ~ISQTextEdit();
+    ISQTextEdit(QWidget *parent = 0);
+    virtual ~ISQTextEdit();
 
-	void SetExecuteEnter(bool Enable);
+    void SetExecuteEnter(bool Enable);
 
 protected:
-	virtual void contextMenuEvent(QContextMenuEvent *e);
-	virtual void wheelEvent(QWheelEvent *e);
-	virtual void keyPressEvent(QKeyEvent *e);
-	virtual void keyReleaseEvent(QKeyEvent *e);
-	virtual void mousePressEvent(QMouseEvent *e);
+    virtual void contextMenuEvent(QContextMenuEvent *e);
+    virtual void wheelEvent(QWheelEvent *e);
+    virtual void keyPressEvent(QKeyEvent *e);
+    virtual void keyReleaseEvent(QKeyEvent *e);
+    virtual void mousePressEvent(QMouseEvent *e);
 
 private:
-	bool Wheel;
-	bool ExecEnter;
+    bool Wheel;
+    bool ExecEnter;
 };
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------

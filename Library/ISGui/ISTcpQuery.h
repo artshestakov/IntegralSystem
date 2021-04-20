@@ -7,27 +7,27 @@
 class ISTcpQuery
 {
 public:
-	ISTcpQuery(const QString &query_type);
-	~ISTcpQuery();
+    ISTcpQuery(const QString &query_type);
+    ~ISTcpQuery();
 
-	QString GetErrorString() const; //Получить текстовое описание ошибки
-	void BindValue(const QString &ParamterName, const QVariant &ParameterValue); //Вставка параметра
-	virtual bool Execute(const QString &query_type); //Выполнить запрос по имени
-	virtual bool Execute(); //Выполнить запрос
-	QVariantMap& GetAnswer(); //Получить ссылку на ответ
-	QVariantMap TakeAnswer(); //Вытащить ответ из класса
+    QString GetErrorString() const; //Получить текстовое описание ошибки
+    void BindValue(const QString &ParamterName, const QVariant &ParameterValue); //Вставка параметра
+    virtual bool Execute(const QString &query_type); //Выполнить запрос по имени
+    virtual bool Execute(); //Выполнить запрос
+    QVariantMap& GetAnswer(); //Получить ссылку на ответ
+    QVariantMap TakeAnswer(); //Вытащить ответ из класса
 
 protected:
-	QVariant GetParameter(const QString &ParameterName) const; //Получить параметр по имени
+    QVariant GetParameter(const QString &ParameterName) const; //Получить параметр по имени
 
 private:
-	bool IsValidAnswer(const QByteArray &ByteArray, QVariantMap &VariantMap); //Проверка валидности ответа
+    bool IsValidAnswer(const QByteArray &ByteArray, QVariantMap &VariantMap); //Проверка валидности ответа
 
 private:
-	QString ErrorString; //Тестовое описание ошибки
-	QString QueryType; //Тип запроса
-	QVariantMap Parameters; //Параметры запроса
-	QVariantMap TcpAnswer; //Ответ
+    QString ErrorString; //Тестовое описание ошибки
+    QString QueryType; //Тип запроса
+    QVariantMap Parameters; //Параметры запроса
+    QVariantMap TcpAnswer; //Ответ
 };
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
@@ -35,17 +35,17 @@ private:
 class ISTcpQueryTable : public ISTcpQuery
 {
 public:
-	ISTcpQueryTable();
-	virtual ~ISTcpQueryTable();
+    ISTcpQueryTable();
+    virtual ~ISTcpQueryTable();
 
-	bool Execute() override;
-	void SetSorting(const QString &SortingField, Qt::SortOrder SortingOrder); //Изменить сортировку
-	void SetSearch(const QVariantList &VariantMap); //Изменяем поисковые условия
-	void AddFilter(const QString &FieldName, const QVariant &Value); //Добавить фильтр
+    bool Execute() override;
+    void SetSorting(const QString &SortingField, Qt::SortOrder SortingOrder); //Изменить сортировку
+    void SetSearch(const QVariantList &VariantMap); //Изменяем поисковые условия
+    void AddFilter(const QString &FieldName, const QVariant &Value); //Добавить фильтр
 
 private:
-	QVariantMap FilterMap;
-	QVariantMap SortingMap;
+    QVariantMap FilterMap;
+    QVariantMap SortingMap;
 };
 //-----------------------------------------------------------------------------
 #endif

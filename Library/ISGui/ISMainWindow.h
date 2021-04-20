@@ -11,43 +11,43 @@
 //-----------------------------------------------------------------------------
 class ISGUI_EXPORT ISMainWindow : public ISInterfaceForm
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	ISMainWindow(QWidget *parent = 0);
-	virtual ~ISMainWindow();
-	
+    ISMainWindow(QWidget *parent = 0);
+    virtual ~ISMainWindow();
+
 protected:
-	void closeEvent(QCloseEvent *CloseEvent);
-	void AfterShowEvent() override;
-	void EscapeClicked() override;
+    void closeEvent(QCloseEvent *CloseEvent);
+    void AfterShowEvent() override;
+    void EscapeClicked() override;
 
 private:
-	void ParagraphClicked(const QString &ParagraphUID); //Событие нажатия на кнопку-параграф
-	void RollUp();
-	void ChangeUser(); //Смена пользователя
-	void ActivateWorkspace(); //Активация рабочей области
-	void ShowFavoritesForm(); //Открыть форму избранного
-	void ShowHistoryForm(); //Открыть форму истории
-	void ShowDatabaseSettings(); //Открыть настройки БД
-	void ShowChangePasswordForm(); //Открыть форму смены пароля
-	void ShowSettingsForm(); //Открыть форму "Настройки"
-	void ShowAboutForm(); //Открыть форму "О программе"
-	void Reconnect(); //Вызов формы переподключения
+    void ParagraphClicked(const QString &ParagraphUID); //Событие нажатия на кнопку-параграф
+    void RollUp();
+    void ChangeUser(); //Смена пользователя
+    void ActivateWorkspace(); //Активация рабочей области
+    void ShowFavoritesForm(); //Открыть форму избранного
+    void ShowHistoryForm(); //Открыть форму истории
+    void ShowDatabaseSettings(); //Открыть настройки БД
+    void ShowChangePasswordForm(); //Открыть форму смены пароля
+    void ShowSettingsForm(); //Открыть форму "Настройки"
+    void ShowAboutForm(); //Открыть форму "О программе"
+    void Reconnect(); //Вызов формы переподключения
 
 private:
-	ISMenuBar *MenuBar;
+    ISMenuBar *MenuBar;
 
-	std::map<QString, int> Paragraphs;
-	QStackedWidget *StackedWidget; //Стек-главных виджетов
-	ISDesktopParagraph *WidgetDesktop; //Виджет рабочего стола
-	ISWorkspaceParagraph *WorkspaceForm; //Виджет рабочей области
-	ISCalendarParagraph *CalendarForm; //Виджет календаря
-	
-	QString CurrentParagraphUID;
-	bool ExitConfirm; //Флаг подтверждения выхода
-	bool ExistCheckModifie; //Флаг проверки несохраненных объектов
-	QPropertyAnimation *PropertyAnimation;
+    std::map<QString, int> Paragraphs;
+    QStackedWidget *StackedWidget; //Стек-главных виджетов
+    ISDesktopParagraph *WidgetDesktop; //Виджет рабочего стола
+    ISWorkspaceParagraph *WorkspaceForm; //Виджет рабочей области
+    ISCalendarParagraph *CalendarForm; //Виджет календаря
+
+    QString CurrentParagraphUID;
+    bool ExitConfirm; //Флаг подтверждения выхода
+    bool ExistCheckModifie; //Флаг проверки несохраненных объектов
+    QPropertyAnimation *PropertyAnimation;
 };
 //-----------------------------------------------------------------------------
 #endif

@@ -6,118 +6,118 @@
 //-----------------------------------------------------------------------------
 class ISDelegateBoolean : public QStyledItemDelegate
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	Q_INVOKABLE ISDelegateBoolean(QObject *parent);
-	virtual ~ISDelegateBoolean();
+    Q_INVOKABLE ISDelegateBoolean(QObject *parent);
+    virtual ~ISDelegateBoolean();
 
 protected:
-	void paint(QPainter *Painter, const QStyleOptionViewItem &Option, const QModelIndex &Index) const;
-	void initStyleOption(QStyleOptionViewItem *Option, const QModelIndex &Index) const;
+    void paint(QPainter *Painter, const QStyleOptionViewItem &Option, const QModelIndex &Index) const;
+    void initStyleOption(QStyleOptionViewItem *Option, const QModelIndex &Index) const;
 
 private:
-	QImage Image;
-	int ImageWidth;
-	int ImageHeight;
+    QImage Image;
+    int ImageWidth;
+    int ImageHeight;
 };
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 class ISDelegateColor : public QStyledItemDelegate
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	Q_INVOKABLE ISDelegateColor(QObject *parent);
-	virtual ~ISDelegateColor();
+    Q_INVOKABLE ISDelegateColor(QObject *parent);
+    virtual ~ISDelegateColor();
 
 protected:
-	void paint(QPainter *Painter, const QStyleOptionViewItem &Option, const QModelIndex &Index) const;
+    void paint(QPainter *Painter, const QStyleOptionViewItem &Option, const QModelIndex &Index) const;
 };
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 class ISDelegateFile : public QStyledItemDelegate
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	Q_INVOKABLE ISDelegateFile(QWidget *parent = 0);
-	virtual ~ISDelegateFile();
+    Q_INVOKABLE ISDelegateFile(QWidget *parent = 0);
+    virtual ~ISDelegateFile();
 
 protected:
-	void paint(QPainter *Painter, const QStyleOptionViewItem &Option, const QModelIndex &Index) const;
-	void initStyleOption(QStyleOptionViewItem *Option, const QModelIndex &Index) const;
+    void paint(QPainter *Painter, const QStyleOptionViewItem &Option, const QModelIndex &Index) const;
+    void initStyleOption(QStyleOptionViewItem *Option, const QModelIndex &Index) const;
 
 private:
-	QImage Image;
-	int ImageWidth;
-	int ImageHeight;
+    QImage Image;
+    int ImageWidth;
+    int ImageHeight;
 };
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 class ISDelegateTaskImportant : public QStyledItemDelegate
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	Q_INVOKABLE ISDelegateTaskImportant(QWidget *parent = 0);
-	virtual ~ISDelegateTaskImportant();
+    Q_INVOKABLE ISDelegateTaskImportant(QWidget *parent = 0);
+    virtual ~ISDelegateTaskImportant();
 
 protected:
-	void paint(QPainter *Painter, const QStyleOptionViewItem &Option, const QModelIndex &Index) const;
-	void initStyleOption(QStyleOptionViewItem *Option, const QModelIndex &Index) const;
+    void paint(QPainter *Painter, const QStyleOptionViewItem &Option, const QModelIndex &Index) const;
+    void initStyleOption(QStyleOptionViewItem *Option, const QModelIndex &Index) const;
 
 private:
-	QImage Image;
-	int ImageWidth;
-	int ImageHeight;
+    QImage Image;
+    int ImageWidth;
+    int ImageHeight;
 };
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 class ISDelegateImage : public QStyledItemDelegate
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	Q_INVOKABLE ISDelegateImage(QObject *parent);
-	virtual ~ISDelegateImage();
+    Q_INVOKABLE ISDelegateImage(QObject *parent);
+    virtual ~ISDelegateImage();
 
 protected:
-	QSize sizeHint(const QStyleOptionViewItem &Option, const QModelIndex &Index) const;
-	void paint(QPainter *Painter, const QStyleOptionViewItem &Option, const QModelIndex &Index) const;
-	void initStyleOption(QStyleOptionViewItem *Option, const QModelIndex &Index) const;
+    QSize sizeHint(const QStyleOptionViewItem &Option, const QModelIndex &Index) const;
+    void paint(QPainter *Painter, const QStyleOptionViewItem &Option, const QModelIndex &Index) const;
+    void initStyleOption(QStyleOptionViewItem *Option, const QModelIndex &Index) const;
 };
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 class ISDelegateSearchField : public QStyledItemDelegate
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	ISDelegateSearchField(QObject *parent = 0);
-	virtual ~ISDelegateSearchField();
+    ISDelegateSearchField(QObject *parent = 0);
+    virtual ~ISDelegateSearchField();
 
-	QSize sizeHint(const QStyleOptionViewItem &Option, const QModelIndex &ModelIndex) const;
+    QSize sizeHint(const QStyleOptionViewItem &Option, const QModelIndex &ModelIndex) const;
 };
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 class ISPopupDelegate : public QStyledItemDelegate
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	ISPopupDelegate(QObject *parent = 0);
-	virtual ~ISPopupDelegate();
+    ISPopupDelegate(QObject *parent = 0);
+    virtual ~ISPopupDelegate();
 
 protected:
-	virtual void paint(QPainter *Painter, const QStyleOptionViewItem &Option, const QModelIndex &Index) const;
-	virtual QSize sizeHint(const QStyleOptionViewItem &Option, const QModelIndex &Index) const;
+    virtual void paint(QPainter *Painter, const QStyleOptionViewItem &Option, const QModelIndex &Index) const;
+    virtual QSize sizeHint(const QStyleOptionViewItem &Option, const QModelIndex &Index) const;
 };
 //-----------------------------------------------------------------------------
 #endif

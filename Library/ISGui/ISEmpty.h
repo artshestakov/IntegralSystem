@@ -6,17 +6,17 @@
 //-----------------------------------------------------------------------------
 namespace ISEmpty
 {
-	class Object : public ISObjectInterface
-	{
-		Q_OBJECT
+    class Object : public ISObjectInterface
+    {
+        Q_OBJECT
 
-	public:
-		Q_INVOKABLE Object();
-		virtual ~Object();
+    public:
+        Q_INVOKABLE Object();
+        virtual ~Object();
 
-		void RegisterMetaTypes() const override;
-		void BeforeShowMainWindow() const override;
-		void InitializePlugin() const override;
-	};
+        void RegisterMetaTypes() const override;
+        void BeforeShowMainWindow() const override;
+        void InitializePlugin() const override;
+    };
 }
 //-----------------------------------------------------------------------------

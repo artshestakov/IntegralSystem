@@ -4,24 +4,24 @@
 //-----------------------------------------------------------------------------
 class ISCalendarEventItem : public QWidget
 {
-	Q_OBJECT
+    Q_OBJECT
 
 signals:
-	void SizeHintChanged();
+    void SizeHintChanged();
 
 public:
-	ISCalendarEventItem(int calendar_id, const QString &Name, const QString &Text, const QTime &Time, bool closed, QWidget *parent = 0);
-	virtual ~ISCalendarEventItem();
+    ISCalendarEventItem(int calendar_id, const QString &Name, const QString &Text, const QTime &Time, bool closed, QWidget *parent = 0);
+    virtual ~ISCalendarEventItem();
 
-	int GetCalendarID() const;
-	bool GetClosed() const;
+    int GetCalendarID() const;
+    bool GetClosed() const;
 
-	void SetVisibleDate(const QDate &Date);
+    void SetVisibleDate(const QDate &Date);
 
 private:
-	int CalendarID;
-	bool Closed;
+    int CalendarID;
+    bool Closed;
 
-	QLabel *LabelDate;
+    QLabel *LabelDate;
 };
 //-----------------------------------------------------------------------------

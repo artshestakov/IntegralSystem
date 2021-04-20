@@ -6,38 +6,38 @@
 //-----------------------------------------------------------------------------
 class ISListWidget : public QListWidget
 {
-	Q_OBJECT
+    Q_OBJECT
 
 signals:
-	void ItemSelectionChanged(bool);
+    void ItemSelectionChanged(bool);
 
 public:
-	ISListWidget(QWidget *parent = 0);
-	virtual ~ISListWidget();
+    ISListWidget(QWidget *parent = 0);
+    virtual ~ISListWidget();
 
-	void Clear(); //Очистка списка
-	void RemoveBeginItem(); //Удалить первый элемент
-	void RemoveLastItem(); //Удалить последний элемент
-	void RemoveItem(int Row); //Удалить элемент по индексу
-	void RemoveItem(QListWidgetItem *ListWidgetItem); //Удалить элемент
-	void SetFontItems(const QFont &Font);
-	void SetFontItem(int Row, const QFont &Font);
-	void SetMaxVisibleItems(int max_visible_items);
-	void SetVisibleItems(bool Visible); //Изменить видимость элементов
-	void SetCheckedItems(bool Checked); //Изменить включение всех элементов
-	void SetVisibleNoData(bool Visible); //Изменить видимость надписи "Данных нет"
-	QAction* AddAction(const QIcon &Icon, const QString &Text, bool InGroup);
-	void AddAction(QAction *Action, bool InGroup); //Добавить действие
-	QListWidgetItem* BeginItem(); //Получить первый элемент
-	QListWidgetItem* LastItem(); //Получить последний элемент
+    void Clear(); //Очистка списка
+    void RemoveBeginItem(); //Удалить первый элемент
+    void RemoveLastItem(); //Удалить последний элемент
+    void RemoveItem(int Row); //Удалить элемент по индексу
+    void RemoveItem(QListWidgetItem *ListWidgetItem); //Удалить элемент
+    void SetFontItems(const QFont &Font);
+    void SetFontItem(int Row, const QFont &Font);
+    void SetMaxVisibleItems(int max_visible_items);
+    void SetVisibleItems(bool Visible); //Изменить видимость элементов
+    void SetCheckedItems(bool Checked); //Изменить включение всех элементов
+    void SetVisibleNoData(bool Visible); //Изменить видимость надписи "Данных нет"
+    QAction* AddAction(const QIcon &Icon, const QString &Text, bool InGroup);
+    void AddAction(QAction *Action, bool InGroup); //Добавить действие
+    QListWidgetItem* BeginItem(); //Получить первый элемент
+    QListWidgetItem* LastItem(); //Получить последний элемент
 
 protected:
-	void paintEvent(QPaintEvent *PaintEvent);
-	void mousePressEvent(QMouseEvent *MouseEvent);
+    void paintEvent(QPaintEvent *PaintEvent);
+    void mousePressEvent(QMouseEvent *MouseEvent);
 
 private:
-	int MaxVisibleItems; //Максимально отображаемое количество элементов
-	QLabel *LabelCenter; //Надпись посередние
+    int MaxVisibleItems; //Максимально отображаемое количество элементов
+    QLabel *LabelCenter; //Надпись посередние
 };
 //-----------------------------------------------------------------------------
 #endif

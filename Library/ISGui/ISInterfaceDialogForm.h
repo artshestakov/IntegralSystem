@@ -6,27 +6,27 @@
 //-----------------------------------------------------------------------------
 class ISGUI_EXPORT	ISInterfaceDialogForm : public ISInterfaceForm
 {
-	Q_OBJECT
+    Q_OBJECT
 
 signals:
-	void Accept();
+    void Accept();
 
 public:
-	ISInterfaceDialogForm(bool HideCloseWindow = false, QWidget *parent = 0);
-	virtual ~ISInterfaceDialogForm();
-	
-	virtual bool Exec();
+    ISInterfaceDialogForm(bool HideCloseWindow = false, QWidget *parent = 0);
+    virtual ~ISInterfaceDialogForm();
+
+    virtual bool Exec();
 
 protected:
-	virtual void closeEvent(QCloseEvent *CloseEvent);
-	virtual void EscapeClicked() override;
-	virtual void AfterShowEvent() override;
+    virtual void closeEvent(QCloseEvent *CloseEvent);
+    virtual void EscapeClicked() override;
+    virtual void AfterShowEvent() override;
 
-	void SetResult(bool result);
+    void SetResult(bool result);
 
 private:
-	bool Result;
-	QEventLoop EventLoop;
+    bool Result;
+    QEventLoop EventLoop;
 };
 //-----------------------------------------------------------------------------
 #endif

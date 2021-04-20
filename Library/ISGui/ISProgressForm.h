@@ -6,27 +6,27 @@
 //-----------------------------------------------------------------------------
 class ISProgressForm : public QProgressDialog
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	ISProgressForm(int Maximum, const QString &LabelText, QWidget *parent = 0, const QString &TitleText = QString());
-	virtual ~ISProgressForm();
+    ISProgressForm(int Maximum, const QString &LabelText, QWidget *parent = 0, const QString &TitleText = QString());
+    virtual ~ISProgressForm();
 
-	void IncrementValue(const QString &LabelText);
-	void IncrementValue();
-	bool WasCanceled() const;
-	void SetCanceled(bool canceled);
+    void IncrementValue(const QString &LabelText);
+    void IncrementValue();
+    bool WasCanceled() const;
+    void SetCanceled(bool canceled);
 
 protected:
-	void showEvent(QShowEvent *e);
+    void showEvent(QShowEvent *e);
 
 private:
-	void CancelClicked();
+    void CancelClicked();
 
 private:
-	QLabel *LabelStatus;
-	int Value;
-	bool Canceled;
+    QLabel *LabelStatus;
+    int Value;
+    bool Canceled;
 };
 //-----------------------------------------------------------------------------
 #endif

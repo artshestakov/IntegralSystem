@@ -6,16 +6,16 @@
 //-----------------------------------------------------------------------------
 class ISServerInfoSubSystem : public ISInterfaceMetaForm
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	Q_INVOKABLE ISServerInfoSubSystem(QWidget *parent);
-	virtual ~ISServerInfoSubSystem();
+    Q_INVOKABLE ISServerInfoSubSystem(QWidget *parent);
+    virtual ~ISServerInfoSubSystem();
 
-	void LoadData() override;
+    void LoadData() override;
 
 private:
-	QTabWidget *TabWidget;
+    QTabWidget *TabWidget;
 };
 //-----------------------------------------------------------------------------
 #endif

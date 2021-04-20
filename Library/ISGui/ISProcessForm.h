@@ -5,18 +5,18 @@
 //-----------------------------------------------------------------------------
 class ISProcessForm : public ISInterfaceForm
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
     ISProcessForm(const QString &LabelText = QString(), QWidget *parent = 0);
-	virtual ~ISProcessForm();
+    virtual ~ISProcessForm();
 
-	void SetText(const QString &LabelText);
+    void SetText(const QString &LabelText);
 
 protected:
-	void showEvent(QShowEvent *ShowEvent);
+    void showEvent(QShowEvent *ShowEvent);
 
 private:
-	QLabel *Label;
+    QLabel *Label;
 };
 //-----------------------------------------------------------------------------

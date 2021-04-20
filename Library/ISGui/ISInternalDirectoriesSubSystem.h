@@ -7,22 +7,22 @@
 //-----------------------------------------------------------------------------
 class ISInternalDirectoriesSubSystem : public ISInterfaceMetaForm
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	Q_INVOKABLE ISInternalDirectoriesSubSystem(QWidget *parent = 0);
-	virtual ~ISInternalDirectoriesSubSystem();
+    Q_INVOKABLE ISInternalDirectoriesSubSystem(QWidget *parent = 0);
+    virtual ~ISInternalDirectoriesSubSystem();
 
-	void LoadData() override;
+    void LoadData() override;
 
 protected:
-	void ItemSelectionChanged();
+    void ItemSelectionChanged();
 
 private:
-	ISListBaseForm *ListBaseForm;
+    ISListBaseForm *ListBaseForm;
 
-	QHBoxLayout *Layout;
-	ISListWidget *ListWidget;
-	QLabel *Label;
+    QHBoxLayout *Layout;
+    ISListWidget *ListWidget;
+    QLabel *Label;
 };
 //-----------------------------------------------------------------------------

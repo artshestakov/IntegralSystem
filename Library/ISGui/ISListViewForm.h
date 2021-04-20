@@ -8,25 +8,25 @@
 //-----------------------------------------------------------------------------
 class ISListViewForm : public ISInterfaceMetaForm
 {
-	Q_OBJECT
+    Q_OBJECT
 
 signals:
-	void Updated();
+    void Updated();
 
 public:
-	ISListViewForm(const QString &query_name, QWidget *parent = 0);
-	virtual ~ISListViewForm();
+    ISListViewForm(const QString &query_name, QWidget *parent = 0);
+    virtual ~ISListViewForm();
 
-	void BindValue(const QString &ParameterName, const QVariant &Value);
-	void LoadData() override;
-
-private:
-	ISBaseTableView *TableView;
-	ISViewModel *ViewModel;
+    void BindValue(const QString &ParameterName, const QVariant &Value);
+    void LoadData() override;
 
 private:
-	QString QueryName;
-	QVariantMap Parameters;
+    ISBaseTableView *TableView;
+    ISViewModel *ViewModel;
+
+private:
+    QString QueryName;
+    QVariantMap Parameters;
 };
 //-----------------------------------------------------------------------------
 #endif

@@ -8,11 +8,11 @@
 //-----------------------------------------------------------------------------
 ISPushButton::ISPushButton(const QIcon &Icon, const QString &Text, const QString &ToolTip, QWidget *parent) : QPushButton(Icon, Text, parent)
 {
-	setToolTip(ToolTip);
-	setStyleSheet(BUFFER_STYLE_SHEET("ISPushButton"));
-	setMinimumWidth(ISPUSHBUTTON_MINIMUM_WIDTH);
-	setFixedHeight(ISPUSHBUTTON_MINIMUM_HEIGHT);
-	setIconSize(QSize(ISPUSHBUTTON_MINIMUM_HEIGHT - 7, ISPUSHBUTTON_MINIMUM_HEIGHT - 7));
+    setToolTip(ToolTip);
+    setStyleSheet(BUFFER_STYLE_SHEET("ISPushButton"));
+    setMinimumWidth(ISPUSHBUTTON_MINIMUM_WIDTH);
+    setFixedHeight(ISPUSHBUTTON_MINIMUM_HEIGHT);
+    setIconSize(QSize(ISPUSHBUTTON_MINIMUM_HEIGHT - 7, ISPUSHBUTTON_MINIMUM_HEIGHT - 7));
 }
 //-----------------------------------------------------------------------------
 ISPushButton::ISPushButton(const QIcon &Icon, const QString &Text, QWidget *parent) : ISPushButton(Icon, Text, QString(), parent)
@@ -44,8 +44,8 @@ ISPushButton::~ISPushButton()
 //-----------------------------------------------------------------------------
 ISServiceButton::ISServiceButton(const QIcon &Icon, const QString &ToolTip, QWidget *parent) : ISPushButton(Icon, QString(), ToolTip, parent)
 {
-	setFixedSize(ISPUSHBUTTON_MINIMUM_HEIGHT, ISPUSHBUTTON_MINIMUM_HEIGHT);
-	setCursor(CURSOR_POINTING_HAND);
+    setFixedSize(ISPUSHBUTTON_MINIMUM_HEIGHT, ISPUSHBUTTON_MINIMUM_HEIGHT);
+    setCursor(CURSOR_POINTING_HAND);
 }
 //-----------------------------------------------------------------------------
 ISServiceButton::ISServiceButton(const QIcon &Icon, QWidget *parent) : ISServiceButton(Icon, QString(), parent)
@@ -72,9 +72,9 @@ ISServiceButton::~ISServiceButton()
 //-----------------------------------------------------------------------------
 ISToolButton::ISToolButton(QWidget *parent) : QToolButton(parent)
 {
-	setStyleSheet(BUFFER_STYLE_SHEET("ISPushButton"));
-	setMinimumWidth(ISPUSHBUTTON_MINIMUM_WIDTH);
-	setFixedHeight(ISPUSHBUTTON_MINIMUM_HEIGHT);
+    setStyleSheet(BUFFER_STYLE_SHEET("ISPushButton"));
+    setMinimumWidth(ISPUSHBUTTON_MINIMUM_WIDTH);
+    setFixedHeight(ISPUSHBUTTON_MINIMUM_HEIGHT);
 }
 //-----------------------------------------------------------------------------
 ISToolButton::~ISToolButton()
@@ -86,7 +86,7 @@ ISToolButton::~ISToolButton()
 //-----------------------------------------------------------------------------
 ISButtonFile::ISButtonFile(QWidget *parent) : ISPushButton(parent)
 {
-	setAcceptDrops(true);
+    setAcceptDrops(true);
 }
 //-----------------------------------------------------------------------------
 ISButtonFile::~ISButtonFile()
@@ -96,53 +96,53 @@ ISButtonFile::~ISButtonFile()
 //-----------------------------------------------------------------------------
 void ISButtonFile::dragEnterEvent(QDragEnterEvent *e)
 {
-	const QMimeData *MimeData = e->mimeData();
-	if (MimeData->hasFormat("text/uri-list"))
-	{
-		if (MimeData->urls().count() > 1) //Если пользователь перетаскивает более одного файла
-		{
-			return;
-		}
-		else
-		{
-			e->acceptProposedAction();
-		}
-	}
+    const QMimeData *MimeData = e->mimeData();
+    if (MimeData->hasFormat("text/uri-list"))
+    {
+        if (MimeData->urls().count() > 1) //Если пользователь перетаскивает более одного файла
+        {
+            return;
+        }
+        else
+        {
+            e->acceptProposedAction();
+        }
+    }
 }
 //-----------------------------------------------------------------------------
 void ISButtonFile::dropEvent(QDropEvent *e)
 {
-	const QMimeData* MimeData = e->mimeData();
-	if (MimeData->hasUrls())
-	{
-		emit DragAndDropFile(MimeData->urls()[0].toString(QUrl::PreferLocalFile));
-	}
+    const QMimeData* MimeData = e->mimeData();
+    if (MimeData->hasUrls())
+    {
+        emit DragAndDropFile(MimeData->urls()[0].toString(QUrl::PreferLocalFile));
+    }
 }
 //-----------------------------------------------------------------------------
 void ISButtonFile::dragMoveEvent(QDragMoveEvent *e)
 {
-	if (e->mimeData()->hasUrls())
-	{
-		e->acceptProposedAction();
-	}
+    if (e->mimeData()->hasUrls())
+    {
+        e->acceptProposedAction();
+    }
 }
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 ISButtonDialog::ISButtonDialog(QWidget *parent, const QString &ApplyText, const QString &CloseText) : QWidget(parent)
 {
-	QHBoxLayout *Layout = new QHBoxLayout();
-	Layout->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_5_PX);
-	Layout->addStretch();
-	setLayout(Layout);
+    QHBoxLayout *Layout = new QHBoxLayout();
+    Layout->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_5_PX);
+    Layout->addStretch();
+    setLayout(Layout);
 
-	ButtonApply = new ISPushButton(BUFFER_ICONS("Apply.Blue"), ApplyText.isEmpty() ? LANG("Apply") : ApplyText, this);
-	connect(ButtonApply, &ISPushButton::clicked, this, &ISButtonDialog::Apply);
-	Layout->addWidget(ButtonApply);
+    ButtonApply = new ISPushButton(BUFFER_ICONS("Apply.Blue"), ApplyText.isEmpty() ? LANG("Apply") : ApplyText, this);
+    connect(ButtonApply, &ISPushButton::clicked, this, &ISButtonDialog::Apply);
+    Layout->addWidget(ButtonApply);
 
-	ButtonClose = new ISPushButton(BUFFER_ICONS("Close"), CloseText.isEmpty() ? LANG("Close") : CloseText, this);
-	connect(ButtonClose, &QAbstractButton::clicked, this, &ISButtonDialog::Close);
-	Layout->addWidget(ButtonClose);
+    ButtonClose = new ISPushButton(BUFFER_ICONS("Close"), CloseText.isEmpty() ? LANG("Close") : CloseText, this);
+    connect(ButtonClose, &QAbstractButton::clicked, this, &ISButtonDialog::Close);
+    Layout->addWidget(ButtonClose);
 }
 //-----------------------------------------------------------------------------
 ISButtonDialog::~ISButtonDialog()
@@ -152,41 +152,41 @@ ISButtonDialog::~ISButtonDialog()
 //-----------------------------------------------------------------------------
 void ISButtonDialog::SetApplyIcon(const QIcon &ApplyIcon)
 {
-	ButtonApply->setIcon(ApplyIcon);
+    ButtonApply->setIcon(ApplyIcon);
 }
 //-----------------------------------------------------------------------------
 void ISButtonDialog::SetApplyEnabled(bool Enabled)
 {
-	ButtonApply->setEnabled(Enabled);
+    ButtonApply->setEnabled(Enabled);
 }
 //-----------------------------------------------------------------------------
 void ISButtonDialog::SetApplyVisible(bool Visible)
 {
-	ButtonApply->setVisible(Visible);
+    ButtonApply->setVisible(Visible);
 }
 //-----------------------------------------------------------------------------
 void ISButtonDialog::SetApplyCursor(const QCursor &Cursor)
 {
-	ButtonApply->setCursor(Cursor);
+    ButtonApply->setCursor(Cursor);
 }
 //-----------------------------------------------------------------------------
 void ISButtonDialog::SetApplyFocus()
 {
-	ButtonApply->setFocus();
+    ButtonApply->setFocus();
 }
 //-----------------------------------------------------------------------------
 void ISButtonDialog::SetCloseIcon(const QIcon &Icon)
 {
-	ButtonClose->setIcon(Icon);
+    ButtonClose->setIcon(Icon);
 }
 //-----------------------------------------------------------------------------
 void ISButtonDialog::SetCloseEnabled(bool Enabled)
 {
-	ButtonClose->setEnabled(Enabled);
+    ButtonClose->setEnabled(Enabled);
 }
 //-----------------------------------------------------------------------------
 void ISButtonDialog::SetCloseCursor(const QCursor &Cursor)
 {
-	ButtonClose->setCursor(Cursor);
+    ButtonClose->setCursor(Cursor);
 }
 //-----------------------------------------------------------------------------

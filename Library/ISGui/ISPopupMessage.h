@@ -4,48 +4,48 @@
 //-----------------------------------------------------------------------------
 class ISPopupMessage : public QWidget
 {
-	Q_OBJECT
+    Q_OBJECT
 
-	Q_PROPERTY(float PopupOpacity READ GetPopupOpacity WRITE SetPopupOpacity)
+        Q_PROPERTY(float PopupOpacity READ GetPopupOpacity WRITE SetPopupOpacity)
 
-signals:
-	void Clicked();
+        signals:
+    void Clicked();
 
 public:
-	ISPopupMessage(const QString &Title, const QString &Message, QWidget *parent = 0);
-	ISPopupMessage(const QString &Message, QWidget *parent = 0);
-	ISPopupMessage(QWidget *parent = 0);
-	virtual ~ISPopupMessage();
+    ISPopupMessage(const QString &Title, const QString &Message, QWidget *parent = 0);
+    ISPopupMessage(const QString &Message, QWidget *parent = 0);
+    ISPopupMessage(QWidget *parent = 0);
+    virtual ~ISPopupMessage();
 
-	static void ShowNotification(const QString &Title, const QString &Message);
-	static void ShowNotification(const QString &Mesage);
+    static void ShowNotification(const QString &Title, const QString &Message);
+    static void ShowNotification(const QString &Mesage);
 
-	void SetPopupOpacity(float Opacity);
-	float GetPopupOpacity() const;
+    void SetPopupOpacity(float Opacity);
+    float GetPopupOpacity() const;
 
-	void SetTitleAlignment(Qt::Alignment Alignment);
-	void SetMessageAlignment(Qt::Alignment Alignment);
+    void SetTitleAlignment(Qt::Alignment Alignment);
+    void SetMessageAlignment(Qt::Alignment Alignment);
 
-	void SetTitle(const QString &Text);
-	void SetMessage(const QString &Message);
-	void show();
+    void SetTitle(const QString &Text);
+    void SetMessage(const QString &Message);
+    void show();
 
 protected:
-	void paintEvent(QPaintEvent *e);
-	void mousePressEvent(QMouseEvent *MouseEvent);
-	void enterEvent(QEvent *e);
-	void leaveEvent(QEvent *e);
+    void paintEvent(QPaintEvent *e);
+    void mousePressEvent(QMouseEvent *MouseEvent);
+    void enterEvent(QEvent *e);
+    void leaveEvent(QEvent *e);
 
-private slots:
-	void HideAnimation();
-	void hide();
+    private slots:
+    void HideAnimation();
+    void hide();
 
 private:
-	QLabel *LabelTitle;
-	QLabel *LabelMessage;
-	QGridLayout *GridLayout;
-	QPropertyAnimation *PropertyAnimation;
-	float PopupOpacity;
-	QTimer *Timer;
+    QLabel *LabelTitle;
+    QLabel *LabelMessage;
+    QGridLayout *GridLayout;
+    QPropertyAnimation *PropertyAnimation;
+    float PopupOpacity;
+    QTimer *Timer;
 };
 //-----------------------------------------------------------------------------

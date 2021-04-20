@@ -5,29 +5,29 @@
 //-----------------------------------------------------------------------------
 class ISInterfaceMetaForm : public ISInterfaceForm
 {
-	Q_OBJECT
+    Q_OBJECT
 
 signals:
-	void AddFormFromTab(QWidget *ObjectForm);
+    void AddFormFromTab(QWidget *ObjectForm);
 
 public:
-	ISInterfaceMetaForm(QWidget *parent = 0);
-	virtual ~ISInterfaceMetaForm();
+    ISInterfaceMetaForm(QWidget *parent = 0);
+    virtual ~ISInterfaceMetaForm();
 
-	virtual void LoadData() = 0;
+    virtual void LoadData() = 0;
 
-	QString GetParentTableName() const;
-	void SetParentTableName(const QString &table_name);
+    QString GetParentTableName() const;
+    void SetParentTableName(const QString &table_name);
 
-	int GetParentObjectID() const;
-	void SetParentObjectID(int parent_object_id);
+    int GetParentObjectID() const;
+    void SetParentObjectID(int parent_object_id);
 
-	QString GetParentFilterField() const;
-	void SetParentFilterField(const QString &parent_filter_field);
+    QString GetParentFilterField() const;
+    void SetParentFilterField(const QString &parent_filter_field);
 
 private:
-	QString ParentTableName;
-	int ParentObjectID;
-	QString ParentFilterField;
+    QString ParentTableName;
+    int ParentObjectID;
+    QString ParentFilterField;
 };
 //-----------------------------------------------------------------------------

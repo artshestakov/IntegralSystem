@@ -9,20 +9,20 @@
 //-----------------------------------------------------------------------------
 class ISServerLogsSubSystem : public ISInterfaceMetaForm
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	Q_INVOKABLE ISServerLogsSubSystem(QWidget *parent = 0);
-	virtual ~ISServerLogsSubSystem();
+    Q_INVOKABLE ISServerLogsSubSystem(QWidget *parent = 0);
+    virtual ~ISServerLogsSubSystem();
 
-	void LoadData() override;
-
-private:
-	void ItemDoubleClicked(QTreeWidgetItem *TreeWidgetItem, int Column);
+    void LoadData() override;
 
 private:
-	QTreeWidget *TreeWidget;
-	QTextEdit *TextEdit;
+    void ItemDoubleClicked(QTreeWidgetItem *TreeWidgetItem, int Column);
+
+private:
+    QTreeWidget *TreeWidget;
+    QTextEdit *TextEdit;
 };
 //-----------------------------------------------------------------------------
 #endif

@@ -6,22 +6,22 @@
 //-----------------------------------------------------------------------------
 class ISHistoryForm : public ISInterfaceForm
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	ISHistoryForm(QWidget *parent = 0);
-	virtual ~ISHistoryForm();
+    ISHistoryForm(QWidget *parent = 0);
+    virtual ~ISHistoryForm();
 
 protected:
-	void AfterShowEvent() override;
-	void EscapeClicked();
+    void AfterShowEvent() override;
+    void EscapeClicked();
 
 private:
-	void Search(const QVariant &Value);
-	void Open(QListWidgetItem *ListWidgetItem);
+    void Search(const QVariant &Value);
+    void Open(QListWidgetItem *ListWidgetItem);
 
 private:
-	ISListWidget *ListWidget;
-	QLabel *LabelRowCount;
+    ISListWidget *ListWidget;
+    QLabel *LabelRowCount;
 };
 //-----------------------------------------------------------------------------

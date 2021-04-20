@@ -7,57 +7,57 @@
 //-----------------------------------------------------------------------------
 class ISGUI_EXPORT ISAudioPlayerForm : public ISInterfaceForm
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	static ISAudioPlayerForm& Instance();
+    static ISAudioPlayerForm& Instance();
 
-	void SetMedia(const QString &FilePath);
-	void SetMedia(const QByteArray &ByteArray);
+    void SetMedia(const QString &FilePath);
+    void SetMedia(const QByteArray &ByteArray);
 
 protected:
-	void closeEvent(QCloseEvent *CloseEvent);
+    void closeEvent(QCloseEvent *CloseEvent);
 
 private:
-	ISAudioPlayerForm();
-	virtual ~ISAudioPlayerForm();
-	ISAudioPlayerForm(const ISAudioPlayerForm&) = delete;
-	ISAudioPlayerForm(ISAudioPlayerForm&&) = delete;
-	ISAudioPlayerForm& operator=(const ISAudioPlayerForm&) = delete;
-	ISAudioPlayerForm& operator=(ISAudioPlayerForm&&) = delete;
+    ISAudioPlayerForm();
+    virtual ~ISAudioPlayerForm();
+    ISAudioPlayerForm(const ISAudioPlayerForm&) = delete;
+    ISAudioPlayerForm(ISAudioPlayerForm&&) = delete;
+    ISAudioPlayerForm& operator=(const ISAudioPlayerForm&) = delete;
+    ISAudioPlayerForm& operator=(ISAudioPlayerForm&&) = delete;
 
 private:
-	void PlayClicked();
-	void PauseClicked();
-	void StopClicked();
-	void PosBackClicked();
-	void PosForwardClicked();
-	void MuteClicked();
-	void SliderVolumeChanged(int Volume);
+    void PlayClicked();
+    void PauseClicked();
+    void StopClicked();
+    void PosBackClicked();
+    void PosForwardClicked();
+    void MuteClicked();
+    void SliderVolumeChanged(int Volume);
 
 private:
-	void DurationChanged(qint64 Duration);
-	void Error(QMediaPlayer::Error Error);
-	void MediaStatusChanged(QMediaPlayer::MediaStatus MediaStatus);
-	void MutedChanged(bool Muted);
-	void PositionChanged(qint64 Position);
-	void StateChanged(QMediaPlayer::State State);
+    void DurationChanged(qint64 Duration);
+    void Error(QMediaPlayer::Error Error);
+    void MediaStatusChanged(QMediaPlayer::MediaStatus MediaStatus);
+    void MutedChanged(bool Muted);
+    void PositionChanged(qint64 Position);
+    void StateChanged(QMediaPlayer::State State);
 
 private:
-	ISServiceButton *ButtonPlay;
-	ISServiceButton *ButtonPause;
-	ISServiceButton *ButtonStop;
-	ISServiceButton *ButtonPosBack;
-	ISServiceButton *ButtonPosForward;
-	ISServiceButton *ButtonMute;
-	QLabel *LabelPosition;
-	QSlider *SliderPosition;
-	QSlider *SliderVolume;
+    ISServiceButton *ButtonPlay;
+    ISServiceButton *ButtonPause;
+    ISServiceButton *ButtonStop;
+    ISServiceButton *ButtonPosBack;
+    ISServiceButton *ButtonPosForward;
+    ISServiceButton *ButtonMute;
+    QLabel *LabelPosition;
+    QSlider *SliderPosition;
+    QSlider *SliderVolume;
 
-	QMediaPlayer *MediaPlayer;
-	QByteArray *BytePointer;
-	QBuffer *Buffer;
-	QString TimeDuration;
+    QMediaPlayer *MediaPlayer;
+    QByteArray *BytePointer;
+    QBuffer *Buffer;
+    QString TimeDuration;
 };
 //-----------------------------------------------------------------------------
 #endif

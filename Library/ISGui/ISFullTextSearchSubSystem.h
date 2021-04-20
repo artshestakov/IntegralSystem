@@ -9,27 +9,27 @@
 //-----------------------------------------------------------------------------
 class ISFullTextSearchSubSystem : public ISInterfaceMetaForm
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	Q_INVOKABLE ISFullTextSearchSubSystem(QWidget *parent = 0);
-	virtual ~ISFullTextSearchSubSystem();
+    Q_INVOKABLE ISFullTextSearchSubSystem(QWidget *parent = 0);
+    virtual ~ISFullTextSearchSubSystem();
 
-	void LoadData() override;
-
-private:
-	void SetSearchInProgress(bool InProgress);
-	void Search();
-	void ClickedRecord();
+    void LoadData() override;
 
 private:
-	QWidgetList WidgetList;
+    void SetSearchInProgress(bool InProgress);
+    void Search();
+    void ClickedRecord();
 
-	ISSearchEdit *EditSearch;
-	ISWaitWidget *WaitWidget;
-	ISPushButton *ButtonSearch;
-	QLabel *LabelResult;
-	QFrame *Frame;
-	ISScrollArea *ScrollArea;
+private:
+    QWidgetList WidgetList;
+
+    ISSearchEdit *EditSearch;
+    ISWaitWidget *WaitWidget;
+    ISPushButton *ButtonSearch;
+    QLabel *LabelResult;
+    QFrame *Frame;
+    ISScrollArea *ScrollArea;
 };
 //-----------------------------------------------------------------------------

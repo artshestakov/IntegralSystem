@@ -8,52 +8,52 @@
 class ISGUI_EXPORT ISBuffer
 {
 public:
-	ISCurrentUserInfo CurrentUserInfo; //Информация о текущем пользователе
-	ISConfigurationInfo ConfigurationInfo; //Информация о конфигурации
+    ISCurrentUserInfo CurrentUserInfo; //Информация о текущем пользователе
+    ISConfigurationInfo ConfigurationInfo; //Информация о конфигурации
 
 public:
-	static ISBuffer& Instance();
+    static ISBuffer& Instance();
 
-	QVariantList GetTaskPriority() const;
-	void SetTaskPriority(const QVariantList &task_priority);
+    QVariantList GetTaskPriority() const;
+    void SetTaskPriority(const QVariantList &task_priority);
 
-	void Initialize(); //Инициализация
+    void Initialize(); //Инициализация
 
-	QMovie* GetAnimation(const QString &AnimationName, QObject *parent, const char *SourceFile, int FileLine); //Получить указатель на анимацию
-	QIcon GetIcon(const QString &IconName, const char *SourceFile, int FileLine); //Получить иконку
-	QPixmap GetPixmap(const QString &PixmapName, const char *SourceFile, int FileLine); //Получить изображение
-	QString GetAudio(const QString &AudioName); //Получить аудио
-	QString GetStyle(const QString &StyleName, const char *SourceFile, int FileLine) const; //Получить стиль
-
-private:
-	void InitializeAnimations(); //Инициализация анимаций
-	void InitializeIcons(); //Инициализация иконок
-	void InitializePixmaps(); //Инициализация изображений
-	void InitializeAudios(); //Инициализация аудио ресурсов
-	void InitializeStyleSheets(); //Инициализация CSS-стилей
-
-	void AddAnimations(const QString &AnimationName, const QString &AnimationPath); //Добавление анимации в буфер
-	void AddImageIcon(const QString &IconName, const QString &IconPath); //Добавление иконки в буфер
-	void AddImage(const QString &PixmapName, const QString &PixmapPath); //Добавление изображения в буфер
-	void AddAudio(const QString &AudioName, const QString &AudioPath); //Добавление аудио файла в буфер
-	void AddStyle(const QString &FileName, const QString &FilePath); //Добавление стиля в буфер
+    QMovie* GetAnimation(const QString &AnimationName, QObject *parent, const char *SourceFile, int FileLine); //Получить указатель на анимацию
+    QIcon GetIcon(const QString &IconName, const char *SourceFile, int FileLine); //Получить иконку
+    QPixmap GetPixmap(const QString &PixmapName, const char *SourceFile, int FileLine); //Получить изображение
+    QString GetAudio(const QString &AudioName); //Получить аудио
+    QString GetStyle(const QString &StyleName, const char *SourceFile, int FileLine) const; //Получить стиль
 
 private:
-	ISBuffer();
-	~ISBuffer();
-	ISBuffer(const ISBuffer&) = delete;
-	ISBuffer(ISBuffer&&) = delete;
-	ISBuffer& operator=(const ISBuffer&) = delete;
-	ISBuffer& operator=(ISBuffer&&) = delete;
+    void InitializeAnimations(); //Инициализация анимаций
+    void InitializeIcons(); //Инициализация иконок
+    void InitializePixmaps(); //Инициализация изображений
+    void InitializeAudios(); //Инициализация аудио ресурсов
+    void InitializeStyleSheets(); //Инициализация CSS-стилей
+
+    void AddAnimations(const QString &AnimationName, const QString &AnimationPath); //Добавление анимации в буфер
+    void AddImageIcon(const QString &IconName, const QString &IconPath); //Добавление иконки в буфер
+    void AddImage(const QString &PixmapName, const QString &PixmapPath); //Добавление изображения в буфер
+    void AddAudio(const QString &AudioName, const QString &AudioPath); //Добавление аудио файла в буфер
+    void AddStyle(const QString &FileName, const QString &FilePath); //Добавление стиля в буфер
 
 private:
-	ISStringMap Animations; //Анимации
-	std::map<QString, QIcon> Icons; //Иконки
-	std::map<QString, QPixmap> Pixmaps; //Изображения
-	ISStringMap Audios; //Звуки
-	ISStringMap StyleSheets; //CSS-стили
+    ISBuffer();
+    ~ISBuffer();
+    ISBuffer(const ISBuffer&) = delete;
+    ISBuffer(ISBuffer&&) = delete;
+    ISBuffer& operator=(const ISBuffer&) = delete;
+    ISBuffer& operator=(ISBuffer&&) = delete;
 
-	QVariantList TaskPriority; //Список приоритетов задач
+private:
+    ISStringMap Animations; //Анимации
+    std::map<QString, QIcon> Icons; //Иконки
+    std::map<QString, QPixmap> Pixmaps; //Изображения
+    ISStringMap Audios; //Звуки
+    ISStringMap StyleSheets; //CSS-стили
+
+    QVariantList TaskPriority; //Список приоритетов задач
 };
 //-----------------------------------------------------------------------------
 #define CURRENT_USER_ID ISBuffer::Instance().CurrentUserInfo.ID

@@ -6,24 +6,24 @@
 class ISUserRoleEntity
 {
 public:
-	static ISUserRoleEntity& Instance();
+    static ISUserRoleEntity& Instance();
 
-	void InitializeTables(const QVariantMap &VariantMap);
-	void InitializeSpecial(const QVariantList &VariantList);
+    void InitializeTables(const QVariantMap &VariantMap);
+    void InitializeSpecial(const QVariantList &VariantList);
 
-	bool CheckAccessTable(const QString &TableName, const QString &AccessUID);
-	bool CheckAccessSpecial(const QString &SpecialAccessUID);
-
-private:
-	ISUserRoleEntity();
-	~ISUserRoleEntity();
-	ISUserRoleEntity(const ISUserRoleEntity&) = delete;
-	ISUserRoleEntity(ISUserRoleEntity&&) = delete;
-	ISUserRoleEntity& operator=(const ISUserRoleEntity&) = delete;
-	ISUserRoleEntity& operator=(ISUserRoleEntity&&) = delete;
+    bool CheckAccessTable(const QString &TableName, const QString &AccessUID);
+    bool CheckAccessSpecial(const QString &SpecialAccessUID);
 
 private:
-	std::map<QString, ISVectorString> Tables;
-	ISVectorString Specials;
+    ISUserRoleEntity();
+    ~ISUserRoleEntity();
+    ISUserRoleEntity(const ISUserRoleEntity&) = delete;
+    ISUserRoleEntity(ISUserRoleEntity&&) = delete;
+    ISUserRoleEntity& operator=(const ISUserRoleEntity&) = delete;
+    ISUserRoleEntity& operator=(ISUserRoleEntity&&) = delete;
+
+private:
+    std::map<QString, ISVectorString> Tables;
+    ISVectorString Specials;
 };
 //-----------------------------------------------------------------------------

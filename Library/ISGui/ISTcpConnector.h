@@ -6,35 +6,35 @@
 //-----------------------------------------------------------------------------
 class ISTcpConnector : public QObject
 {
-	Q_OBJECT
+    Q_OBJECT
 
 signals:
-	void Reconnect(); //Сигнал о необходимости переподключения
+    void Reconnect(); //Сигнал о необходимости переподключения
 
 public:
-	static ISTcpConnector& Instance();
-	
-	QString GetErrorString() const; //Получить текствоое описание ошибки
-	QTcpSocket* GetSocket(); //Получить указатель на сокет
-	bool IsConnected() const; //Проверить наличие соединения
-	bool Connect(const QString &Host, quint16 Port); //Подключение
-	void Disconnect(); //Отключение
+    static ISTcpConnector& Instance();
+
+    QString GetErrorString() const; //Получить текствоое описание ошибки
+    QTcpSocket* GetSocket(); //Получить указатель на сокет
+    bool IsConnected() const; //Проверить наличие соединения
+    bool Connect(const QString &Host, quint16 Port); //Подключение
+    void Disconnect(); //Отключение
 
 private:
-	void Error(QTcpSocket::SocketError socket_error); //Событие ошибки сокета
+    void Error(QTcpSocket::SocketError socket_error); //Событие ошибки сокета
 
 private:
-	ISTcpConnector();
-	~ISTcpConnector();
-	ISTcpConnector(const ISTcpConnector &) = delete;
-	ISTcpConnector(ISTcpConnector &&) = delete;
-	ISTcpConnector& operator=(const ISTcpConnector &) = delete;
-	ISTcpConnector& operator=(ISTcpConnector &&) = delete;
+    ISTcpConnector();
+    ~ISTcpConnector();
+    ISTcpConnector(const ISTcpConnector &) = delete;
+    ISTcpConnector(ISTcpConnector &&) = delete;
+    ISTcpConnector& operator=(const ISTcpConnector &) = delete;
+    ISTcpConnector& operator=(ISTcpConnector &&) = delete;
 
 private:
-	QString ErrorString;
-	QTcpSocket *TcpSocket;
-	bool HandlingError;
+    QString ErrorString;
+    QTcpSocket *TcpSocket;
+    bool HandlingError;
 };
 //-----------------------------------------------------------------------------
 #endif

@@ -5,21 +5,21 @@
 //-----------------------------------------------------------------------------
 class ISListIndicatorWidget : public QWidget
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	ISListIndicatorWidget(QWidget *parent);
-	virtual ~ISListIndicatorWidget();
+    ISListIndicatorWidget(QWidget *parent);
+    virtual ~ISListIndicatorWidget();
 
-	void hideEvent(QHideEvent *e);
+    void hideEvent(QHideEvent *e);
 
-	void SetVisibleAnimation(bool Visible); //Изменить анимацию и её видимость
-	void SetIcon(const QIcon &Icon); //Изменить картинку
-	void SetText(const QString &Text); //Изменить текст
+    void SetVisibleAnimation(bool Visible); //Изменить анимацию и её видимость
+    void SetIcon(const QIcon &Icon); //Изменить картинку
+    void SetText(const QString &Text); //Изменить текст
 
 private:
-	ISWaitWidget *WaitWidget;
-	QLabel *LabelImage;
-	QLabel *LabelText;
+    ISWaitWidget *WaitWidget;
+    QLabel *LabelImage;
+    QLabel *LabelText;
 };
 //-----------------------------------------------------------------------------

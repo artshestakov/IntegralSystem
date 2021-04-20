@@ -6,13 +6,13 @@
 //-----------------------------------------------------------------------------
 class ISParagraphBaseForm : public QWidget
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	ISParagraphBaseForm(QWidget *parent = 0);
-	virtual ~ISParagraphBaseForm();
-	
-	virtual void Invoke() = 0;
+    ISParagraphBaseForm(QWidget *parent = 0);
+    virtual ~ISParagraphBaseForm();
+
+    virtual void Invoke() = 0;
 };
 //-----------------------------------------------------------------------------
 #endif

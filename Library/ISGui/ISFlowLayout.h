@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 class ISFlowLayout : public QLayout
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
     explicit ISFlowLayout(QWidget *parent, int margin = -1, int hSpacing = -1, int vSpacing = -1);

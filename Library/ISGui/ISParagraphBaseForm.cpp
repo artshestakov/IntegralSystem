@@ -2,7 +2,7 @@
 //-----------------------------------------------------------------------------
 ISParagraphBaseForm::ISParagraphBaseForm(QWidget *parent) : QWidget(parent)
 {
-	
+
 }
 //-----------------------------------------------------------------------------
 ISParagraphBaseForm::~ISParagraphBaseForm()

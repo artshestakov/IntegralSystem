@@ -6,16 +6,16 @@
 //-----------------------------------------------------------------------------
 class ISSettingsDatabaseObjectForm : public ISObjectFormBase
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	Q_INVOKABLE ISSettingsDatabaseObjectForm(ISNamespace::ObjectFormType form_type, PMetaTable *meta_table, QWidget *parent, int object_id = 0);
-	virtual ~ISSettingsDatabaseObjectForm();
+    Q_INVOKABLE ISSettingsDatabaseObjectForm(ISNamespace::ObjectFormType form_type, PMetaTable *meta_table, QWidget *parent, int object_id = 0);
+    virtual ~ISSettingsDatabaseObjectForm();
 
-	bool Save() override;
+    bool Save() override;
 
 private:
-	void ResetSettings();
+    void ResetSettings();
 };
 //-----------------------------------------------------------------------------
 #endif

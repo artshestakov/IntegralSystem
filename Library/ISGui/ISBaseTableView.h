@@ -5,32 +5,32 @@
 //-----------------------------------------------------------------------------
 class ISBaseTableView : public QTableView
 {
-	Q_OBJECT
+    Q_OBJECT
 
 signals:
-	void WheelUp();
-	void WheelDown();
-	void CornerClicked();
+    void WheelUp();
+    void WheelDown();
+    void CornerClicked();
 
 public:
-	ISBaseTableView(QWidget *parent = 0);
-	virtual ~ISBaseTableView();
+    ISBaseTableView(QWidget *parent = 0);
+    virtual ~ISBaseTableView();
 
-	void SetCornerText(const QString &text);
-	void SetCornerToolTip(const QString &tool_tip);
-	
-	void SetVisibleVerticalHeader(bool visible);
-	void SetVisibleHorizontalHeader(bool visible);
+    void SetCornerText(const QString &text);
+    void SetCornerToolTip(const QString &tool_tip);
 
-	void ShowRows(); //Отобразить все скрытые строки
+    void SetVisibleVerticalHeader(bool visible);
+    void SetVisibleHorizontalHeader(bool visible);
+
+    void ShowRows(); //Отобразить все скрытые строки
 
 protected:
-	void keyPressEvent(QKeyEvent *e);
-	void keyReleaseEvent(QKeyEvent *e);
-	void paintEvent(QPaintEvent *PaintEvent);
-	
+    void keyPressEvent(QKeyEvent *e);
+    void keyReleaseEvent(QKeyEvent *e);
+    void paintEvent(QPaintEvent *PaintEvent);
+
 private:
-	ISPushButton *ButtonCorner;
-	bool CtrlClicked;
+    ISPushButton *ButtonCorner;
+    bool CtrlClicked;
 };
 //-----------------------------------------------------------------------------

@@ -6,24 +6,24 @@
 //-----------------------------------------------------------------------------
 class ISUserObjectForm : public ISObjectFormBase
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	Q_INVOKABLE ISUserObjectForm(ISNamespace::ObjectFormType form_type, PMetaTable *meta_table, QWidget *parent, int object_id = 0);
-	virtual ~ISUserObjectForm();
-	
+    Q_INVOKABLE ISUserObjectForm(ISNamespace::ObjectFormType form_type, PMetaTable *meta_table, QWidget *parent, int object_id = 0);
+    virtual ~ISUserObjectForm();
+
 protected:
-	bool Save() override;
+    bool Save() override;
 
 private:
-	void PasswordManagement();
-	void PasswordReset();
-	void AccountLifeTimeChanged();
+    void PasswordManagement();
+    void PasswordReset();
+    void AccountLifeTimeChanged();
 
 private:
-	ISFieldEditBase *EditAccountLifeTime;
-	ISFieldEditBase *EditAccountLifeTimeStart;
-	ISFieldEditBase *EditAccountLifeTimeEnd;
+    ISFieldEditBase *EditAccountLifeTime;
+    ISFieldEditBase *EditAccountLifeTimeStart;
+    ISFieldEditBase *EditAccountLifeTimeEnd;
 };
 //-----------------------------------------------------------------------------
 #endif

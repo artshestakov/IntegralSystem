@@ -5,16 +5,16 @@
 //-----------------------------------------------------------------------------
 class ISDesktopParagraph : public ISParagraphBaseForm
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	Q_INVOKABLE ISDesktopParagraph(QWidget *parent = 0);
-	virtual ~ISDesktopParagraph();
+    Q_INVOKABLE ISDesktopParagraph(QWidget *parent = 0);
+    virtual ~ISDesktopParagraph();
 
-	void Invoke() override;
+    void Invoke() override;
 
 private:
-	QVBoxLayout *MainLayout;
-	QWidget *DesktopWidget;
+    QVBoxLayout *MainLayout;
+    QWidget *DesktopWidget;
 };
 //-----------------------------------------------------------------------------
