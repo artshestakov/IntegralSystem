@@ -180,7 +180,6 @@
     <ClCompile Include="ISDebug.cpp" />
     <ClCompile Include="ISLocalization.cpp" />
     <ClCompile Include="ISLogger.cpp" />
-    <ClCompile Include="ISMetaData.cpp" />
     <ClCompile Include="ISProperty.cpp" />
     <ClCompile Include="ISResourcer.cpp" />
     <ClCompile Include="ISTrace.cpp" />
@@ -197,14 +196,12 @@
     <ClInclude Include="ISDebug.h" />
     <ClInclude Include="ISLocalization.h" />
     <ClInclude Include="ISLogger.h" />
-    <ClInclude Include="ISMetaData.h" />
     <ClInclude Include="ISNamespace.h" />
     <ClInclude Include="ISProperty.h" />
     <ClInclude Include="ISResourcer.h" />
     <ClInclude Include="ISStructs.h" />
     <ClInclude Include="ISTrace.h" />
     <ClInclude Include="ISTypedefs.h" />
-    <ClInclude Include="PMetaClass.h" />
     <ClInclude Include="SimpleIni.h" />
     <ClInclude Include="StdAfx.h" />
     <ClInclude Include="tinyxml2.h" />

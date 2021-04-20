@@ -22,6 +22,7 @@
     <ClCompile Include="ISConfigurations.cpp" />
     <ClCompile Include="ISConsole.cpp" />
     <ClCompile Include="ISDatabase.cpp" />
+    <ClCompile Include="ISMetaData.cpp" />
     <ClCompile Include="ISQuery.cpp" />
     <ClCompile Include="ISQueryText.cpp" />
   </ItemGroup>
@@ -29,8 +30,10 @@
     <ClInclude Include="ISConfigurations.h" />
     <ClInclude Include="ISConsole.h" />
     <ClInclude Include="ISDatabase.h" />
+    <ClInclude Include="ISMetaData.h" />
     <ClInclude Include="ISQuery.h" />
     <ClInclude Include="ISQueryText.h" />
+    <ClInclude Include="PMetaClass.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{77CC8439-66E0-46A6-8103-5320FF654728}</ProjectGuid>

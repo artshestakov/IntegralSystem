@@ -8,6 +8,9 @@
     <Filter Include="System">
       <UniqueIdentifier>{a577a3ec-8dc0-4447-b5c4-e17de5da12a1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MetaData">
+      <UniqueIdentifier>{2f7b2111-8de0-4f5f-b5ac-7899f9027f4a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ISDatabase.cpp">
@@ -25,6 +28,9 @@
     <ClCompile Include="ISConsole.cpp">
       <Filter>System</Filter>
     </ClCompile>
+    <ClCompile Include="ISMetaData.cpp">
+      <Filter>MetaData</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ISDatabase.h">
@@ -41,6 +47,12 @@
     </ClInclude>
     <ClInclude Include="ISConsole.h">
       <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="ISMetaData.h">
+      <Filter>MetaData</Filter>
+    </ClInclude>
+    <ClInclude Include="PMetaClass.h">
+      <Filter>MetaData</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
