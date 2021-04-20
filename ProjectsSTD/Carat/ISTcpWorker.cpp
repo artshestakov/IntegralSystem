@@ -1388,3 +1388,332 @@ bool ISTcpWorker::UserSettingsReset(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAn
     return true;
 }
 //-----------------------------------------------------------------------------
+bool ISTcpWorker::GetRecordCall(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+    IS_UNUSED(TcpMessage);
+    IS_UNUSED(TcpAnswer);
+    return false;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::GetClients(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+    IS_UNUSED(TcpMessage);
+    IS_UNUSED(TcpAnswer);
+    return false;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::RecordAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+    IS_UNUSED(TcpMessage);
+    IS_UNUSED(TcpAnswer);
+    return false;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::RecordEdit(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+    IS_UNUSED(TcpMessage);
+    IS_UNUSED(TcpAnswer);
+    return false;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::RecordDelete(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+    IS_UNUSED(TcpMessage);
+    IS_UNUSED(TcpAnswer);
+    return false;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::RecordGet(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+    IS_UNUSED(TcpMessage);
+    IS_UNUSED(TcpAnswer);
+    return false;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::RecordGetInfo(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+    IS_UNUSED(TcpMessage);
+    IS_UNUSED(TcpAnswer);
+    return false;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::DiscussionAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+    IS_UNUSED(TcpMessage);
+    IS_UNUSED(TcpAnswer);
+    return false;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::DiscussionEdit(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+    IS_UNUSED(TcpMessage);
+    IS_UNUSED(TcpAnswer);
+    return false;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::DiscussionCopy(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+    IS_UNUSED(TcpMessage);
+    IS_UNUSED(TcpAnswer);
+    return false;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+    IS_UNUSED(TcpMessage);
+    IS_UNUSED(TcpAnswer);
+    return false;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::GetTableQuery(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+    IS_UNUSED(TcpMessage);
+    IS_UNUSED(TcpAnswer);
+    return false;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::NoteRecordGet(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+    IS_UNUSED(TcpMessage);
+    IS_UNUSED(TcpAnswer);
+    return false;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::NoteRecordSet(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+    IS_UNUSED(TcpMessage);
+    IS_UNUSED(TcpAnswer);
+    return false;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::FileStorageAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+    IS_UNUSED(TcpMessage);
+    IS_UNUSED(TcpAnswer);
+    return false;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::FileStorageCopy(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+    IS_UNUSED(TcpMessage);
+    IS_UNUSED(TcpAnswer);
+    return false;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::FileStorageGet(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+    IS_UNUSED(TcpMessage);
+    IS_UNUSED(TcpAnswer);
+    return false;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::SearchTaskText(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+    IS_UNUSED(TcpMessage);
+    IS_UNUSED(TcpAnswer);
+    return false;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::SearchTaskID(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+    IS_UNUSED(TcpMessage);
+    IS_UNUSED(TcpAnswer);
+    return false;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::SearchFullText(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+    IS_UNUSED(TcpMessage);
+    IS_UNUSED(TcpAnswer);
+    return false;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::GetCalendarEvents(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+    IS_UNUSED(TcpMessage);
+    IS_UNUSED(TcpAnswer);
+    return false;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::CalendarDelete(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+    IS_UNUSED(TcpMessage);
+    IS_UNUSED(TcpAnswer);
+    return false;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::GetInternalLists(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+    IS_UNUSED(TcpMessage);
+    IS_UNUSED(TcpAnswer);
+    return false;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::SaveMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+    IS_UNUSED(TcpMessage);
+    IS_UNUSED(TcpAnswer);
+    return false;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::GetGroupRights(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+    IS_UNUSED(TcpMessage);
+    IS_UNUSED(TcpAnswer);
+    return false;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::GroupRightSubSystemAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+    IS_UNUSED(TcpMessage);
+    IS_UNUSED(TcpAnswer);
+    return false;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::GroupRightSubSystemDelete(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+    IS_UNUSED(TcpMessage);
+    IS_UNUSED(TcpAnswer);
+    return false;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::GroupRightTableAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+    IS_UNUSED(TcpMessage);
+    IS_UNUSED(TcpAnswer);
+    return false;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::GroupRightTableDelete(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+    IS_UNUSED(TcpMessage);
+    IS_UNUSED(TcpAnswer);
+    return false;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::GroupRightSpecialAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+    IS_UNUSED(TcpMessage);
+    IS_UNUSED(TcpAnswer);
+    return false;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::GroupRightSpecialDelete(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+    IS_UNUSED(TcpMessage);
+    IS_UNUSED(TcpAnswer);
+    return false;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::GetRecordValue(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+    IS_UNUSED(TcpMessage);
+    IS_UNUSED(TcpAnswer);
+    return false;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::RecordFavoriteAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+    IS_UNUSED(TcpMessage);
+    IS_UNUSED(TcpAnswer);
+    return false;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::RecordFavoriteDelete(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+    IS_UNUSED(TcpMessage);
+    IS_UNUSED(TcpAnswer);
+    return false;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::GetFavoriteNames(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+    IS_UNUSED(TcpMessage);
+    IS_UNUSED(TcpAnswer);
+    return false;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::FavoritesDelete(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+    IS_UNUSED(TcpMessage);
+    IS_UNUSED(TcpAnswer);
+    return false;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::LogGetStructure(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+    IS_UNUSED(TcpMessage);
+    IS_UNUSED(TcpAnswer);
+    return false;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::LogGetContent(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+    IS_UNUSED(TcpMessage);
+    IS_UNUSED(TcpAnswer);
+    return false;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::CalendarClose(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+    IS_UNUSED(TcpMessage);
+    IS_UNUSED(TcpAnswer);
+    return false;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::GetHistoryList(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+    IS_UNUSED(TcpMessage);
+    IS_UNUSED(TcpAnswer);
+    return false;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::TaskCommentAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+    IS_UNUSED(TcpMessage);
+    IS_UNUSED(TcpAnswer);
+    return false;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::GetForeignList(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+    IS_UNUSED(TcpMessage);
+    IS_UNUSED(TcpAnswer);
+    return false;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::GetServerInfo(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+    IS_UNUSED(TcpMessage);
+    IS_UNUSED(TcpAnswer);
+    return false;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::OrganizationFormINN(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+    IS_UNUSED(TcpMessage);
+    IS_UNUSED(TcpAnswer);
+    return false;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::StatementsQueryGet(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+    IS_UNUSED(TcpMessage);
+    IS_UNUSED(TcpAnswer);
+    return false;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::StatementsQueryReset(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+    IS_UNUSED(TcpMessage);
+    IS_UNUSED(TcpAnswer);
+    return false;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::GetMonitor(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+    IS_UNUSED(TcpMessage);
+    IS_UNUSED(TcpAnswer);
+    return false;
+}
+//-----------------------------------------------------------------------------
