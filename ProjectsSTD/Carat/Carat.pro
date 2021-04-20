@@ -41,6 +41,7 @@ SOURCES += \
     ISTcpQueue.cpp \
     ISTcpServer.cpp \
     ISTcpWorker.cpp \
+    ISTcpWorkerHelper.cpp \
     main.cpp
 
 HEADERS += \
@@ -53,4 +54,5 @@ HEADERS += \
     ISTcpMessage.h \
     ISTcpQueue.h \
     ISTcpServer.h \
-    ISTcpWorker.h
+    ISTcpWorker.h \
+    ISTcpWorkerHelper.h

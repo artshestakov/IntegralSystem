@@ -69,7 +69,7 @@ std::string ISAlgorithm::GetLastErrorS()
         }
     }
 #else
-    ErrorString = strerror(errno);
+    ErrorString = strerror(GetLastErrorN());
 #endif
     return ErrorString;
 }
