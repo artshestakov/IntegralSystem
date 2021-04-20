@@ -8,6 +8,9 @@
     <Filter Include="Tcp">
       <UniqueIdentifier>{ee131c1a-2172-4050-b97a-323b5f401469}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{3199efdf-b2e1-442d-bd28-6c978b4001a2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -72,5 +75,10 @@
     <ClInclude Include="ISTcpWorkerHelper.h">
       <Filter>Tcp</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Carat.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>
