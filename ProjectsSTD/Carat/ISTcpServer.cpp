@@ -166,7 +166,8 @@ void ISTcpServer::WorkerReader(ISTcpClient *TcpClient)
     while (true)
     {
         Result = recv(TcpClient->Socket, Buffer, TCP_PACKET_MAX_SIZE, 0);
-        if (Result == 0) //Клиент отключился
+        if (Result == 0 || //Клиент отключился корректно
+            (Result == -1 && ISAlgorithm::GetLastErrorN() == WSAECONNRESET)) //Клиент отключился принудительно - не считаем это ошибкой
         {
             ISLOGGER_I(__CLASS__, "Disconnected %s", TcpClient->IPAddress.c_str());
             break;

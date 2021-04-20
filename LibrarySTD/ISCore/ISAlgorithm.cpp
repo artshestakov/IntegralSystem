@@ -38,16 +38,25 @@ ISUInt64 ISAlgorithm::GetTickDiff(const ISTimePoint &T1, const ISTimePoint &T2)
     return std::chrono::duration_cast<std::chrono::milliseconds>(T1 - T2).count();
 }
 //-----------------------------------------------------------------------------
+ISErrorNumber ISAlgorithm::GetLastErrorN()
+{
+#ifdef WIN32
+    return GetLastError();
+#else
+    return errno;
+#endif
+}
+//-----------------------------------------------------------------------------
 std::string ISAlgorithm::GetLastErrorS()
 {
     std::string ErrorString = STRING_UNKNOWN_ERROR;
 #ifdef WIN32
-    DWORD ErrorID = GetLastError();
-    if (ErrorID != 0) //Код ошибки валиден
+    ISErrorNumber ErrorNumber = GetLastErrorN();
+    if (ErrorNumber != 0) //Код ошибки валиден
     {
         LPSTR Buffer = nullptr;
         size_t MessageSize = FormatMessageA(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
-            NULL, ErrorID, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPSTR)&Buffer, 0, NULL);
+            NULL, ErrorNumber, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPSTR)&Buffer, 0, NULL);
         if (MessageSize > 0 && Buffer)
         {
             ErrorString = std::string(Buffer, MessageSize - 2);

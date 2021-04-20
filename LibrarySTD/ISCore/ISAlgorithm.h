@@ -50,6 +50,9 @@ namespace ISAlgorithm
     //! \return возвращает разницу между двумя временными метками
     ISUInt64 GetTickDiff(const ISTimePoint &T1, const ISTimePoint &T2);
 
+    //! Получить номер последней ошибки
+    ISErrorNumber GetLastErrorN();
+
     //! Получить описание последней ошибки
     std::string GetLastErrorS();
 
