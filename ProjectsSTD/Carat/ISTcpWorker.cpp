@@ -260,7 +260,7 @@ void ISTcpWorker::Process()
             //Если запрос не авторизационный и клиент ещё не авторизовался - ошибка
             if (tcp_message->Type != API_AUTH && !tcp_message->TcpClient->Authorized)
             {
-                ErrorString = "Not authorized";
+                ErrorString = LANG("Carat.Error.NotAuthorized");
             }
             else //Клиент авторизовался - продолжаем
             {
@@ -372,6 +372,30 @@ bool ISTcpWorker::CheckIsNull(ISTcpMessage *TcpMessage, const char *ParameterNam
     return true;
 }
 //-----------------------------------------------------------------------------
+bool ISTcpWorker::GetParameterUInt(ISTcpMessage *TcpMessage, const char *ParameterName, unsigned int &Value)
+{
+    rapidjson::Value &ParameterValue = TcpMessage->Parameters[ParameterName];
+    if (!ParameterValue.IsInt()) //Значение не является числовым
+    {
+        ErrorString = ISAlgorithm::StringF(LANG("Carat.Error.ParameterNotInt").c_str(), ParameterName);
+        return false;
+    }
+    Value = ParameterValue.GetUint();
+    return true;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::GetParameterString(ISTcpMessage *TcpMessage, const char *ParameterName, std::string &Value)
+{
+    rapidjson::Value &ParameterValue = TcpMessage->Parameters[ParameterName];
+    if (!ParameterValue.IsString())
+    {
+        ErrorString = ISAlgorithm::StringF(LANG("Carat.Error.ParameterNotString").c_str(), ParameterName);
+        return false;
+    }
+    Value = ParameterValue.GetString();
+    return true;
+}
+//-----------------------------------------------------------------------------
 bool ISTcpWorker::ErrorQuery(const std::string &LocalError, ISQuery &SqlQuery)
 {
     ErrorString = LocalError;
@@ -476,7 +500,11 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
     }
 
     //Получаем хэш
-    std::string Hash = TcpMessage->Parameters["Hash"].GetString();
+    std::string Hash;
+    if (!GetParameterString(TcpMessage, "Hash", Hash))
+    {
+        return false;
+    }
 
     //Проверяем размер хэша
     size_t HashSize = Hash.size();
@@ -496,7 +524,7 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
         }
         else //Иначе - хэш невалидный
         {
-            ErrorString = "Invalid hash";
+            ErrorString = LANG("Carat.Error.Query.Auth.InvalidHash");
             return false;
         }
     }
@@ -598,7 +626,11 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
     if (TcpMessage->Parameters.HasMember("Version")) //Если версия указана
     {
         //Получаем версию клиента
-        unsigned int VersionClient = TcpMessage->Parameters["Version"].GetUint();
+        unsigned int VersionClient = 0;
+        if (!GetParameterUInt(TcpMessage, "Version", VersionClient))
+        {
+            return false;
+        }
 
         //Получаем директорию с обновлениями
         std::string UpdateClientDir = ISConfig::Instance().GetValueString("Other", "UpdateClientDir");
@@ -699,23 +731,15 @@ bool ISTcpWorker::Sleep(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
         return false;
     }
 
-    rapidjson::Value &ValueTimeout = TcpMessage->Parameters["Timeout"];
-    if (!ValueTimeout.IsInt()) //Значение не является числовым
+    unsigned int Timeout = 0;
+    if (!GetParameterUInt(TcpMessage, "Timeout", Timeout))
     {
-        ErrorString = "The value \"Timeout\" is not a integer";
-        return false;
-    }
-
-    int Timeout = ValueTimeout.GetInt();
-    if (Timeout < 0) //Значение меньше нуля
-    {
-        ErrorString = "The value cannot be less than zero";
         return false;
     }
 
     if (Timeout == 0) //Значение равно нулю
     {
-        ErrorString = "The value cannot be zero";
+        ErrorString = ISAlgorithm::StringF(LANG("Carat.Error.Query.Sleep.TimeoutValueIsNull").c_str());
         return false;
     }
     ISSleep(Timeout);
@@ -1115,17 +1139,16 @@ bool ISTcpWorker::UserPasswordExist(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAn
         return false;
     }
 
-    //Проверим тип значения
-    rapidjson::Value &ValueUserID = TcpMessage->Parameters["UserID"];
-    if (!ValueUserID.IsInt())
+    //Получаем идентификатор пользователя
+    unsigned int UserID = 0;
+    if (!GetParameterUInt(TcpMessage, "UserID", UserID))
     {
-        ErrorString = "The value \"UserID\" is not a integer";
         return false;
     }
 
     //Проверяем наличие пароля
     bool Exist = true;
-    if (!UserPasswordExist(ValueUserID.GetUint(), Exist)) //Не удалось проверить наличие пароля
+    if (!UserPasswordExist(UserID, Exist)) //Не удалось проверить наличие пароля
     {
         return false;
     }
@@ -1142,22 +1165,19 @@ bool ISTcpWorker::UserPasswordCreate(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpA
         return false;
     }
 
-    //Проверим типы значений
-    rapidjson::Value &ValueUserID = TcpMessage->Parameters["UserID"],
-        &ValueHash = TcpMessage->Parameters["Hash"];
-    if (!ValueUserID.IsInt())
+    //Получаем идентификатор пользователя
+    unsigned int UserID = 0;
+    if (!GetParameterUInt(TcpMessage, "UserID", UserID))
     {
-        ErrorString = "The value \"UserID\" is not a integer";
         return false;
     }
-    unsigned int UserID = ValueUserID.GetUint();
 
-    if (!ValueHash.IsString())
+    //Получаем хэш
+    std::string Hash;
+    if (!GetParameterString(TcpMessage, "Hash", Hash))
     {
-        ErrorString = "The value \"Hash\" is not a string";
         return false;
     }
-    std::string Hash = ValueHash.GetString();
 
     //Проверяем пользователя на системность
     bool IsSystem = true;
@@ -1219,30 +1239,26 @@ bool ISTcpWorker::UserPasswordEdit(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAns
         return false;
     }
 
-    //Проверим типы значений
-    rapidjson::Value &ValueUserID = TcpMessage->Parameters["UserID"],
-        &ValueHashOld = TcpMessage->Parameters["HashOld"],
-        &ValueHash = TcpMessage->Parameters["Hash"];
-    if (!ValueUserID.IsInt())
+    //Получаем идентификатор пользователя
+    unsigned int UserID = 0;
+    if (!GetParameterUInt(TcpMessage, "UserID", UserID))
     {
-        ErrorString = "The value \"UserID\" is not a integer";
         return false;
     }
-    unsigned int UserID = ValueUserID.GetUint();
 
-    if (!ValueHashOld.IsString())
+    //Получаем старый хэш
+    std::string HashOld;
+    if (!GetParameterString(TcpMessage, "HashOld", HashOld))
     {
-        ErrorString = "The value \"HashOld\" is not a string";
         return false;
     }
-    std::string HashOld = ValueHashOld.GetString();
 
-    if (!ValueHash.IsString())
+    //Получаем хэш
+    std::string Hash;
+    if (!GetParameterString(TcpMessage, "Hash", Hash))
     {
-        ErrorString = "The value \"Hash\" is not a string";
         return false;
     }
-    std::string Hash = ValueHash.GetString();
 
     //Получаем текущий хэш и соль пользователя
     ISQuery qSelectHash(DBConnection, QS_USER_PASSWORD);
@@ -1302,14 +1318,12 @@ bool ISTcpWorker::UserPasswordReset(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAn
         return false;
     }
 
-    //Проверим тип значения
-    rapidjson::Value &ValueUserID = TcpMessage->Parameters["UserID"];
-    if (!ValueUserID.IsInt())
+    //Получаем идентификатор пользователя
+    unsigned int UserID = 0;
+    if (!GetParameterUInt(TcpMessage, "UserID", UserID))
     {
-        ErrorString = "The value \"UserID\" is not a integer";
         return false;
     }
-    unsigned int UserID = ValueUserID.GetUint();
 
     //Проверяем пользователя на системность
     bool IsSystem = true;
