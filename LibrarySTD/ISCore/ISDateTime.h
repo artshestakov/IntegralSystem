@@ -31,6 +31,7 @@ struct ISTime
     ISTime(unsigned short hour, unsigned short minute, unsigned short second = 0, unsigned short milliseconds = 0);
 
     static ISTime CurrentTime(); //Получить текущее время
+    static ISTime FromSecond(unsigned int Seconds); //Перевод секунд во время
 
     bool IsNull() const; //Проверка времени на пустоту
     std::string ToString() const; //Привести время в строку

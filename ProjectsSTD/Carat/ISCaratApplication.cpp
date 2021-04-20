@@ -12,6 +12,7 @@
 #include "ISConfigurations.h"
 #include "ISRevision.h"
 #include "ISConsole.h"
+#include "ISProperty.h"
 //-----------------------------------------------------------------------------
 ISCaratApplication::ISCaratApplication(int argc, char **argv)
     : ErrorString(STRING_NO_ERROR),
@@ -152,6 +153,9 @@ int ISCaratApplication::Start()
         //Запускаем поток контроля работы
         std::thread(&ISCaratApplication::ShutdownController, this).detach();
         ISLOGGER_I(__CLASS__, "Started");
+
+        //Установим метку времени работы
+        ISProperty::Instance().SetUptime(ISAlgorithm::GetCurrentUnixtime());
 
         //Бесконечный цикл основного потока
         while (true)

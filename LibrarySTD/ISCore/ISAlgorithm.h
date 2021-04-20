@@ -50,6 +50,10 @@ namespace ISAlgorithm
     //! \return возвращает разницу между двум€ временными метками
     ISUInt64 GetTickDiff(const ISTimePoint &T1, const ISTimePoint &T2);
 
+    //! ѕолучить текущую метку времени в формате Unixtime
+    //! \return возвращает текущую метку времени в формате Unixtime
+    ISUInt64 GetCurrentUnixtime();
+
     //! ѕолучить номер последней ошибки
     ISErrorNumber GetLastErrorN();
 

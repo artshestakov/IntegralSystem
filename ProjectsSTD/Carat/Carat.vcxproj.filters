@@ -37,6 +37,9 @@
     <ClCompile Include="ISTcpClients.cpp">
       <Filter>Tcp</Filter>
     </ClCompile>
+    <ClCompile Include="ISTcpWorkerHelper.cpp">
+      <Filter>Tcp</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ISCaratApplication.h">
@@ -65,6 +68,9 @@
     </ClInclude>
     <ClInclude Include="..\..\ISRevision.h">
       <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="ISTcpWorkerHelper.h">
+      <Filter>Tcp</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -38,6 +38,11 @@ ISUInt64 ISAlgorithm::GetTickDiff(const ISTimePoint &T1, const ISTimePoint &T2)
     return std::chrono::duration_cast<std::chrono::milliseconds>(T1 - T2).count();
 }
 //-----------------------------------------------------------------------------
+ISUInt64 ISAlgorithm::GetCurrentUnixtime()
+{
+    return std::chrono::seconds(std::chrono::seconds(std::time(NULL))).count();
+}
+//-----------------------------------------------------------------------------
 ISErrorNumber ISAlgorithm::GetLastErrorN()
 {
 #ifdef WIN32

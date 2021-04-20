@@ -58,6 +58,9 @@
     <ClCompile Include="ISDateTime.cpp">
       <Filter>Types</Filter>
     </ClCompile>
+    <ClCompile Include="ISProperty.cpp">
+      <Filter>Types</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StdAfx.h">
@@ -115,6 +118,9 @@
       <Filter>Config</Filter>
     </ClInclude>
     <ClInclude Include="ISDateTime.h">
+      <Filter>Types</Filter>
+    </ClInclude>
+    <ClInclude Include="ISProperty.h">
       <Filter>Types</Filter>
     </ClInclude>
   </ItemGroup>

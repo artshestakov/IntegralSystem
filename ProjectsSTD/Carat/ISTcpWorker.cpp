@@ -10,7 +10,6 @@
 #include "ISTcpClients.h"
 #include "ISResourcer.h"
 #include "ISConfigurations.h"
-#include "libpq-fe.h"
 //-----------------------------------------------------------------------------
 static std::string QS_USERS_HASH = PREPARE_QUERY("SELECT usrs_hash, usrs_salt "
                                                  "FROM _users "

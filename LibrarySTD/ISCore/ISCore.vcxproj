@@ -181,6 +181,7 @@
     <ClCompile Include="ISLocalization.cpp" />
     <ClCompile Include="ISLogger.cpp" />
     <ClCompile Include="ISMetaData.cpp" />
+    <ClCompile Include="ISProperty.cpp" />
     <ClCompile Include="ISResourcer.cpp" />
     <ClCompile Include="ISTrace.cpp" />
     <ClCompile Include="StdAfx.cpp" />
@@ -198,6 +199,7 @@
     <ClInclude Include="ISLogger.h" />
     <ClInclude Include="ISMetaData.h" />
     <ClInclude Include="ISNamespace.h" />
+    <ClInclude Include="ISProperty.h" />
     <ClInclude Include="ISResourcer.h" />
     <ClInclude Include="ISStructs.h" />
     <ClInclude Include="ISTrace.h" />

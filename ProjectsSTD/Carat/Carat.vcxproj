@@ -224,6 +224,7 @@ $(SolutionDir)Revision.cmd $(SolutionDir) $(Configuration) $(Platform)</Command>
     <ClCompile Include="ISTcpQueue.cpp" />
     <ClCompile Include="ISTcpServer.cpp" />
     <ClCompile Include="ISTcpWorker.cpp" />
+    <ClCompile Include="ISTcpWorkerHelper.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -236,6 +237,7 @@ $(SolutionDir)Revision.cmd $(SolutionDir) $(Configuration) $(Platform)</Command>
     <ClInclude Include="ISTcpQueue.h" />
     <ClInclude Include="ISTcpServer.h" />
     <ClInclude Include="ISTcpWorker.h" />
+    <ClInclude Include="ISTcpWorkerHelper.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

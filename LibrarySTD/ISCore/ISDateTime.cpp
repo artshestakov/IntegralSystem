@@ -27,12 +27,7 @@ bool ISDate::IsNull() const
 //-----------------------------------------------------------------------------
 std::string ISDate::ToString() const
 {
-    std::string Result;
-    if (!IsNull())
-    {
-        Result = ISAlgorithm::StringF("%02d.%02d.%d", Day, Month, Year);
-    }
-    return Result;
+    return ISAlgorithm::StringF("%02d.%02d.%d", Day, Month, Year);
 }
 //-----------------------------------------------------------------------------
 bool ISDate::operator<(const ISDate &Date) const
@@ -106,6 +101,14 @@ ISTime ISTime::CurrentTime()
     return{ DateTime.Time.Hour, DateTime.Time.Minute, DateTime.Time.Second, DateTime.Time.Milliseconds };
 }
 //-----------------------------------------------------------------------------
+ISTime ISTime::FromSecond(unsigned int Seconds)
+{
+    unsigned int Hour = Seconds / 3600,
+        Minute = (Seconds - Hour * 3600) / 60,
+        Second = Seconds - Hour * 3600 * 60;
+    return ISTime((unsigned short)Hour, (unsigned short)Minute, (unsigned short)Second);
+}
+//-----------------------------------------------------------------------------
 bool ISTime::IsNull() const
 {
     return Hour == 0 && Minute == 0 && Second == 0 && Milliseconds == 0;
@@ -113,12 +116,7 @@ bool ISTime::IsNull() const
 //-----------------------------------------------------------------------------
 std::string ISTime::ToString() const
 {
-    std::string Result;
-    if (!IsNull())
-    {
-        Result = ISAlgorithm::StringF("%02d:%02d:%02d", Hour, Minute, Second);
-    }
-    return Result;
+    return ISAlgorithm::StringF("%02d:%02d:%02d", Hour, Minute, Second);
 }
 //-----------------------------------------------------------------------------
 size_t ISTime::ToMSec() const

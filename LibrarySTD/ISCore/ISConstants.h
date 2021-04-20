@@ -21,6 +21,7 @@ const size_t    UUID_STANDART_SIZE = 36; //Размер стандартного UID
 const size_t    MD5_SIZE = 16;
 const size_t    MD5_RESULT_SIZE = 32;
 const char      MD5_DIGITS[] = "0123456789abcdef";
+const size_t    DAY_IN_SECONDS = 86400;
 //CHARS------------------------------------------------------------------------
 const char  CHAR_NULL_TERM = '\0'; //Символ конца строки
 //LOCALIZATION-----------------------------------------------------------------
