@@ -777,6 +777,7 @@ bool ISListBaseForm::Update()
 		ISMessageBox::ShowCritical(this, TcpQuery->GetErrorString());
 	}
 
+    TableView->selectRow(0);
 	ActionGroupPageNavigation->setEnabled(TcpModel->rowCount() > 0);
 	IsLoadingData = false;
 	return Result;
