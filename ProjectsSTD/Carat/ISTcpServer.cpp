@@ -125,36 +125,39 @@ void ISTcpServer::WorkerAcceptor()
         ISSocketAddr SocketInfo = { 0 };
         ISSocketLen AddressLen = sizeof(SocketInfo);
         ISSocket SocketClient = accept(SocketServer, (struct sockaddr*)&SocketInfo, &AddressLen);
-        if (SocketClient != SOCKET_ERROR) //Клиент успешно подключился
-        {
-            //Пытаемся получить IP-адрес клиента и если не получилось - отключаем его
-            char Char[15] = { 0 }; //Выделяем 15 байт для хранения IP-адреса
-            if (!inet_ntop(AF_INET, &SocketInfo.sin_addr, Char, 15))
-            {
-                CloseSocket(SocketClient);
-                continue;
-            }
 
-            //Адрес получили. Добавляем клиента в память
-            ISTcpClient *TcpClient = new ISTcpClient();
-            TcpClient->Socket = SocketClient;
-            TcpClient->IPAddress = Char;
-            TcpClient->Port = SocketInfo.sin_port;
-            ISTcpClients::Instance().Add(TcpClient);
-            ISLOGGER_I(__CLASS__, "Connected %s", TcpClient->IPAddress.c_str());
+        //При подключении произошла ошибка
+        if (SocketClient == SOCKET_ERROR)
+        {
+            ISLOGGER_C(__CLASS__, "Connect client with error: %s", ISAlgorithm::GetLastErrorS().c_str());
+            continue;
+        }
 
-            //Создаём новым поток для этого клиента
-            std::thread(&ISTcpServer::WorkerReader, this, std::ref(TcpClient)).detach();
-        }
-        //else if (SocketClient == NPOS && GetLastError() == WSAEINTR) //Завершение работы сервера
+        //Завершение работы сервера
+        if (SocketClient == NPOS && ISAlgorithm::GetLastErrorN() == WSAEINTR)
         {
-            //ISLOGGER_I(__CLASS__, "Stopped");
-            //break;
+            ISLOGGER_I(__CLASS__, "Stopped");
+            break;
         }
-        //else //При подключении произошла ошибка
+
+        //Пытаемся получить IP-адрес клиента и если не получилось - отключаем его
+        char Char[15] = { 0 }; //Выделяем 15 байт для хранения IP-адреса
+        if (!inet_ntop(AF_INET, &SocketInfo.sin_addr, Char, 15))
         {
-            //ISLOGGER_C(__CLASS__, "Connect client with error: %s", ISAlgorithm::GetLastErrorS().c_str());
+            CloseSocket(SocketClient);
+            continue;
         }
+
+        //Адрес получили. Добавляем клиента в память
+        ISTcpClient *TcpClient = new ISTcpClient();
+        TcpClient->Socket = SocketClient;
+        TcpClient->IPAddress = Char;
+        TcpClient->Port = SocketInfo.sin_port;
+        ISTcpClients::Instance().Add(TcpClient);
+        ISLOGGER_I(__CLASS__, "Connected %s", TcpClient->IPAddress.c_str());
+
+        //Создаём новым поток для этого клиента
+        std::thread(&ISTcpServer::WorkerReader, this, std::ref(TcpClient)).detach();
     }
 }
 //-----------------------------------------------------------------------------
