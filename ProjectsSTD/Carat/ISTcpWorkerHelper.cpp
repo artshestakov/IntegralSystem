@@ -3,6 +3,7 @@
 #include "ISAlgorithm.h"
 #include "ISProperty.h"
 #include "ISConstants.h"
+#include "ISMetaData.h"
 //-----------------------------------------------------------------------------
 std::string ISTcpWorkerHelper::ConvertDateTimeToString(const ISDateTime &DateTime)
 {
@@ -103,21 +104,20 @@ std::string ISTcpWorkerHelper::GetUptime()
 	return Value;
 }*/
 //-----------------------------------------------------------------------------
-/*QString ISTcpWorkerHelper::CreateSqlFromTitleName(PMetaForeign *MetaForeign, const QString &Alias, const QString &FieldName)
+std::string ISTcpWorkerHelper::CreateSqlFromTitleName(PMetaForeign *MetaForeign, const std::string &Alias, const std::string &FieldName)
 {
-	PMetaTable *MetaTableForeign = ISMetaData::Instance().GetMetaTable(MetaForeign->ForeignClass);
-	QString SqlQuery = "SELECT " + MetaTableForeign->Alias + '_' + MetaForeign->ForeignViewNameField +
+	PMetaTable *MetaTableForeign = ISMetaData::Instance().GetTable(MetaForeign->ForeignClass);
+    return "SELECT " + MetaTableForeign->Alias + '_' + MetaForeign->ForeignViewNameField +
 		" FROM " + MetaTableForeign->Name +
 		" WHERE " + MetaTableForeign->Alias + "_id = " + Alias + '_' + FieldName;
-	return SqlQuery;
-}*/
+}
 //-----------------------------------------------------------------------------
-/*QString ISTcpWorkerHelper::CreateSqlFromTable(PMetaTable *MetaTable, QVariantMap &FilterMap, const QVariantList &SearchList, QString SortingField, Qt::SortOrder SortingOrder)
+std::string ISTcpWorkerHelper::CreateSqlFromTable(PMetaTable *MetaTable, /*QVariantMap &FilterMap, const QVariantList &SearchList, */std::string SortingField, ISNamespace::SortingOrder SortingOrder)
 {
-	QString SqlText = "SELECT\n",
+    std::string SqlText = "SELECT\n",
 		SqlTextJoins;
 	size_t Index = 0;
-	ISStringMap ForeignFields;
+    ISMapString ForeignFields;
 
 	//Обходим поля мета-таблицы
 	for (PMetaField *MetaField : MetaTable->Fields)
@@ -130,27 +130,27 @@ std::string ISTcpWorkerHelper::GetUptime()
 
 		if (MetaField->Foreign) //Если на поле установлен внешний ключ
 		{
-			PMetaTable *MetaTableFK = ISMetaData::Instance().GetMetaTable(MetaField->Foreign->ForeignClass);
-			QString RandomAlias = MetaTableFK->Alias + QString::number(++Index);
-			SqlTextJoins += "LEFT JOIN " + MetaTableFK->Name.toLower() + ' ' + RandomAlias + " ON " + MetaTable->Alias + '.' + MetaTable->Alias + '_' + MetaField->Name.toLower() + " = " + RandomAlias + '.' + MetaTableFK->Alias + '_' + MetaField->Foreign->ForeignField.toLower() + "\n";
+			PMetaTable *MetaTableFK = ISMetaData::Instance().GetTable(MetaField->Foreign->ForeignClass);
+            std::string RandomAlias = MetaTableFK->Alias + std::to_string(++Index);
+			SqlTextJoins += "LEFT JOIN " + MetaTableFK->Name + ' ' + RandomAlias + " ON " + MetaTable->Alias + '.' + MetaTable->Alias + '_' + MetaField->Name + " = " + RandomAlias + '.' + MetaTableFK->Alias + '_' + MetaField->Foreign->ForeignField + "\n";
 
-			QString Temp;
-			QStringList StringList = MetaField->Foreign->ForeignViewNameField.split(';');
+            std::string Temp;
+            ISVectorString VectorString = ISAlgorithm::StringSplit(MetaField->Foreign->ForeignViewNameField, ';');
 			Temp += "concat(";
-			for (const QString &FieldName : StringList)
+			for (const std::string &FieldName : VectorString)
 			{
-				Temp += RandomAlias + '.' + MetaTableFK->Alias + '_' + FieldName.toLower() + ", ' ',";
+				Temp += RandomAlias + '.' + MetaTableFK->Alias + '_' + FieldName + ", ' ',";
 			}
-			Temp.chop(6);
+            ISAlgorithm::StringChop(Temp, 6);
 			Temp += ')';
 			SqlText += Temp;
 			ForeignFields.emplace(MetaField->Name, Temp);
 		}
 		else //Поле стандартное
 		{
-			if (MetaField->QueryText.isEmpty()) //Поле не виртуальное
+			if (MetaField->QueryText.empty()) //Поле не виртуальное
 			{
-				SqlText += MetaTable->Alias + SYMBOL_POINT + MetaTable->Alias + '_' + MetaField->Name.toLower();
+				SqlText += MetaTable->Alias + '.' + MetaTable->Alias + '_' + MetaField->Name;
 			}
 			else //Поле является виртуальным
 			{
@@ -159,25 +159,25 @@ std::string ISTcpWorkerHelper::GetUptime()
 		}
 		SqlText += " AS \"" + MetaField->Name + "\",\n";
 	}
-	SqlText.chop(2);
-	SqlTextJoins.chop(1);
+    ISAlgorithm::StringChop(SqlText, 2);
+    ISAlgorithm::StringChop(SqlTextJoins, 1);
 
-	SqlText += "\nFROM " + MetaTable->Name.toLower() + ' ' + MetaTable->Alias + '\n';
+	SqlText += "\nFROM " + MetaTable->Name + ' ' + MetaTable->Alias + '\n';
 	SqlText += SqlTextJoins;
 
 	//Если фильтрация указана - устанавливаем
-	if (!FilterMap.isEmpty())
+	/*if (!FilterMap.isEmpty())
 	{
 		SqlText += "\nWHERE ";
 		for (const auto &MapItem : FilterMap.toStdMap())
 		{
 			SqlText += MetaTable->Alias + '_' + MapItem.first + " = :" + MapItem.first + "\nAND ";
 		}
-		SqlText.chop(5);
-	}
+        ISAlgorithm::StringChop(SqlText, 5);
+	}*/
 
 	//Если указаны поисковые параметры
-	bool IsSearch = !SearchList.isEmpty();
+	/*bool IsSearch = !SearchList.isEmpty();
 	if (IsSearch)
 	{
 		SqlText += "\nWHERE\n";
@@ -225,12 +225,12 @@ std::string ISTcpWorkerHelper::GetUptime()
 			SqlText += "\nAND ";
 		}
 		SqlText.chop(5);
-	}
+	}*/
 
 	//Анализируем сортировку
 	PMetaField *MetaFieldSorting = MetaTable->GetField(SortingField);
-	bool SortingIsVirtual = !MetaFieldSorting->QueryText.isEmpty(),
-		SortingIsForeign = MetaFieldSorting->Foreign;
+	bool SortingIsVirtual = !MetaFieldSorting->QueryText.empty(),
+		SortingIsForeign = MetaFieldSorting->Foreign ? true : false;
 	if (SortingIsVirtual) //Если поле является виртуальным - в качестве сортировки будет выступать запрос
 	{
 		SortingField = '(' + MetaFieldSorting->QueryText + ')';
@@ -243,7 +243,7 @@ std::string ISTcpWorkerHelper::GetUptime()
 	//Учитываем сортировку и её направление
 	SqlText += "\nORDER BY " + (SortingIsVirtual || SortingIsForeign ? SortingField :
 		MetaTable->Alias + '.' + MetaTable->Alias + '_' + SortingField) + ' ' +
-		(SortingOrder == Qt::AscendingOrder ? "ASC" : "DESC");
+		(SortingOrder == ISNamespace::SortingOrder::Ascending ? "ASC" : "DESC");
 	return SqlText;
-}*/
+}
 //-----------------------------------------------------------------------------
