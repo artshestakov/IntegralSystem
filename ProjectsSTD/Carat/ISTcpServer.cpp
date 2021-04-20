@@ -154,6 +154,7 @@ void ISTcpServer::WorkerAcceptor()
         char Char[15] = { 0 }; //Выделяем 15 байт для хранения IP-адреса
         if (!inet_ntop(AF_INET, &SocketInfo.sin_addr, Char, 15))
         {
+            ISLOGGER_E(__CLASS__, "Not getting ip address peer: %s", ISAlgorithm::GetLastErrorS().c_str());
             CloseSocket(SocketClient);
             continue;
         }
