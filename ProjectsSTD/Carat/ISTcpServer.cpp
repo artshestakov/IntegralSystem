@@ -122,7 +122,7 @@ void ISTcpServer::WorkerAcceptor()
 {
     while (true)
     {
-        ISSocketAddr SocketInfo = { 0 };
+        ISSocketAddr SocketInfo;
         ISSocketLen AddressLen = sizeof(SocketInfo);
         ISSocket SocketClient = accept(SocketServer, (struct sockaddr*)&SocketInfo, &AddressLen);
 
@@ -134,11 +134,11 @@ void ISTcpServer::WorkerAcceptor()
         }
 
         //Завершение работы сервера
-        if (SocketClient == NPOS && ISAlgorithm::GetLastErrorN() == WSAEINTR)
+        /*if (SocketClient == NPOS && ISAlgorithm::GetLastErrorN() == WSAEINTR)
         {
             ISLOGGER_I(__CLASS__, "Stopped");
             break;
-        }
+        }*/
 
         //Пытаемся получить IP-адрес клиента и если не получилось - отключаем его
         char Char[15] = { 0 }; //Выделяем 15 байт для хранения IP-адреса
@@ -169,8 +169,13 @@ void ISTcpServer::WorkerReader(ISTcpClient *TcpClient)
     while (true)
     {
         Result = recv(TcpClient->Socket, Buffer, TCP_PACKET_MAX_SIZE, 0);
-        if (Result == 0 || //Клиент отключился корректно
-            (Result == -1 && ISAlgorithm::GetLastErrorN() == WSAECONNRESET)) //Клиент отключился принудительно - не считаем это ошибкой
+
+        //Под Windows учитываем ошибку WSAECONNRESET: клиент отключился принудительно
+#ifdef WIN32
+        if (Result == 0 || (Result == -1 && ISAlgorithm::GetLastErrorN() == WSAECONNRESET))
+#else
+        if (Result == 0) //Под Linux достаточно проверять результат
+#endif
         {
             ISLOGGER_I(__CLASS__, "Disconnected %s", TcpClient->IPAddress.c_str());
             break;
@@ -180,7 +185,7 @@ void ISTcpServer::WorkerReader(ISTcpClient *TcpClient)
             ISLOGGER_E(__CLASS__, "Socket error: %s", ISAlgorithm::GetLastErrorS().c_str());
             break;
         }
-        else if(Result > 0) //Пришли данные
+        else if (Result > 0) //Пришли данные
         {
             ISLOGGER_I(__CLASS__, "Receive data: %d bytes", Result);
             if (MessageSize == 0) //Если размер сообщения ещё не получен - получаем его
@@ -402,15 +407,16 @@ void ISTcpServer::CloseSocket(ISTcpClient *TcpClient)
 //-----------------------------------------------------------------------------
 void ISTcpServer::CloseSocket(ISSocket Socket)
 {
-#ifdef WIN32
     //Пытаемся закрыть сокет
-    if (closesocket(Socket) == SOCKET_ERROR)
+#ifdef WIN32
+    int Result = closesocket(Socket);
+#else
+    int Result = close(Socket);
+#endif
+    if (Result == SOCKET_ERROR)
     {
         ISLOGGER_E(__CLASS__, "Not close socket %d: %s", Socket, ISAlgorithm::GetLastErrorS().c_str());
     }
-#else
-    IS_UNUSED(Socket);
-#endif
 }
 //-----------------------------------------------------------------------------
 bool ISTcpServer::GetIsRunning()

@@ -34,6 +34,7 @@ HEADERS += \
     ISLogger.h \
     ISMetaData.h \
     ISNamespace.h \
+    ISProperty.h \
     ISResourcer.h \
     ISStructs.h \
     ISTrace.h \
@@ -53,6 +54,7 @@ SOURCES += \
     ISLocalization.cpp \
     ISLogger.cpp \
     ISMetaData.cpp \
+    ISProperty.cpp \
     ISResourcer.cpp \
     ISTrace.cpp \
     StdAfx.cpp \
