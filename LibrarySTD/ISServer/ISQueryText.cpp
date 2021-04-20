@@ -43,10 +43,14 @@ bool ISQueryText::IsNeedPrepare(const std::string &SqlText, std::string &Hash, i
     return Result;
 }
 //-----------------------------------------------------------------------------
-void ISQueryText::SetPrepared(const std::string &SqlText)
+void ISQueryText::SetPrepared(const std::string &SqlText, bool Prepared)
 {
     CRITICAL_SECTION_LOCK(&CS);
-    Map[SqlText]->Prepared = true;
+    auto It = Map.find(SqlText);
+    if (It != Map.end())
+    {
+        Map[SqlText]->Prepared = Prepared;
+    }
     CRITICAL_SECTION_UNLOCK(&CS);
 }
 //-----------------------------------------------------------------------------

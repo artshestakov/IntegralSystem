@@ -140,7 +140,7 @@ bool ISQuery::Execute()
     {
         if (!Prepared && Prepare(ParamCount))
         {
-            ISQueryText::Instance().SetPrepared(SqlText);
+            ISQueryText::Instance().SetPrepared(SqlText, true);
         }
     }
 

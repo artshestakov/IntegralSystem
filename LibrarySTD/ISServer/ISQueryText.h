@@ -12,7 +12,7 @@ public:
 
     std::string Add(const std::string &SqlText, int ParameterCount = 0);
     bool IsNeedPrepare(const std::string &SqlText, std::string &Hash, int &ParamCount, bool &Prepared);
-    void SetPrepared(const std::string &SqlText);
+    void SetPrepared(const std::string &SqlText, bool Prepared);
 
 private:
     ISQueryText();
