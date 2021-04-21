@@ -23,7 +23,7 @@ private:
 
 private:
     std::string ErrorString;
-    ISMapString Map;
+    std::unordered_map<std::string, std::string> MapUnordered;
 };
 //-----------------------------------------------------------------------------
 #define LANG(KEY) ISLocalization::Instance().GetString(KEY)

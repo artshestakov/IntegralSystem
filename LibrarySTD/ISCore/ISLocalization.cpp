@@ -48,10 +48,10 @@ bool ISLocalization::Init(const std::string &FileName)
     {
         //Получаем ключ перевода и проверяем на дубликат
         const char *Key = XmlElement->Attribute("Name");
-        auto It = Map.find(Key);
-        if (It == Map.end()) //Такого ключа ещё нет - добавляем
+        auto It = MapUnordered.find(Key);
+        if (It == MapUnordered.end()) //Такого ключа ещё нет - добавляем
         {
-            Map.emplace(Key, XmlElement->Attribute("Russian"));
+            MapUnordered.emplace(Key, XmlElement->Attribute("Russian"));
         }
         else //Дубликат
         {
@@ -64,11 +64,11 @@ bool ISLocalization::Init(const std::string &FileName)
 //-----------------------------------------------------------------------------
 std::string ISLocalization::GetString(const std::string &Key)
 {
-    auto It = Map.find(Key);
-    if (It == Map.end()) //Не нашли такой ключ
+    auto It = MapUnordered.find(Key);
+    if (It == MapUnordered.end()) //Не нашли такой ключ
     {
         return Key;
     }
-    return It->second;
+    return (*It).second;
 }
 //-----------------------------------------------------------------------------
