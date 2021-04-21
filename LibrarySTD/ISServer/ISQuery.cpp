@@ -259,6 +259,11 @@ bool ISQuery::ExecuteFirst()
     return Result;
 }
 //-----------------------------------------------------------------------------
+bool ISQuery::IsNull(size_t Index) const
+{
+    return PQgetisnull(SqlResult, CurrentRow, (int)Index) == 1;
+}
+//-----------------------------------------------------------------------------
 char* ISQuery::ReadColumn(size_t Index) const
 {
     return PQgetvalue(SqlResult, CurrentRow, (int)Index);
@@ -272,6 +277,11 @@ std::string ISQuery::ReadColumn_String(size_t Index) const
 int ISQuery::ReadColumn_Int(size_t Index) const
 {
     return std::atoi(ReadColumn(Index));
+}
+//-----------------------------------------------------------------------------
+double ISQuery::ReadColumn_Double(size_t Index) const
+{
+    return std::atof(ReadColumn(Index));
 }
 //-----------------------------------------------------------------------------
 unsigned int ISQuery::ReadColumn_UInt(size_t Index) const
@@ -297,7 +307,7 @@ bool ISQuery::ReadColumn_Bool(size_t Index) const
 ISDate ISQuery::ReadColumn_Date(size_t Index) const
 {
     //Если поле содержит пустое значение - возвращаем пустую структуру
-    if (PQgetisnull(SqlResult, CurrentRow, (int)Index) == 1)
+    if (IsNull(Index))
     {
         return ISDate();
     }
@@ -308,6 +318,38 @@ ISDate ISQuery::ReadColumn_Date(size_t Index) const
         Month[3] = { Value[5], Value[6], CHAR_NULL_TERM },
         Day[3] = { Value[8], Value[9], CHAR_NULL_TERM };
     return ISDate((unsigned short)std::atoi(Day), (unsigned short)std::atoi(Month), (unsigned short)std::atoi(Year));
+}
+//-----------------------------------------------------------------------------
+ISTime ISQuery::ReadColumn_Time(size_t Index) const
+{
+    if (IsNull(Index))
+    {
+        return ISTime();
+    }
+
+    char *Value = ReadColumn(Index);
+    char Hour[3] = { Value[0], Value[1] },
+        Minute[3] = { Value[3], Value[4] },
+        Second[3] = { Value[6], Value[7] };
+    return ISTime((unsigned short)std::atoi(Hour), (unsigned short)std::atoi(Minute), (unsigned short)std::atoi(Second));
+}
+//-----------------------------------------------------------------------------
+ISDateTime ISQuery::ReadColumn_DateTime(size_t Index) const
+{
+    if (IsNull(Index))
+    {
+        return ISDateTime();
+    }
+
+    char *Value = ReadColumn(Index);
+    char Year[5] = { Value[0], Value[1], Value[2], Value[3], CHAR_NULL_TERM },
+        Month[3] = { Value[5], Value[6], CHAR_NULL_TERM },
+        Day[3] = { Value[8], Value[9], CHAR_NULL_TERM },
+        Hour[3] = { Value[11], Value[12] },
+        Minute[3] = { Value[14], Value[15] },
+        Second[3] = { Value[17], Value[18] };
+    return ISDateTime((unsigned short)std::atoi(Day), (unsigned short)std::atoi(Month), (unsigned short)std::atoi(Year),
+        (unsigned short)std::atoi(Hour), (unsigned short)std::atoi(Minute), (unsigned short)std::atoi(Second));
 }
 //-----------------------------------------------------------------------------
 bool ISQuery::Prepare(int ParamCount)

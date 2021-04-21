@@ -11,7 +11,7 @@ std::string ISAlgorithm::GetClassName(const char *FunctionName)
     Index = Result.find('('); //Ищем открывающуюся скобку
     if (Index != NPOS) //Если скобку нашли - удаляем все что после неё
     {
-        Result.erase(Index, Result.size() - Index);
+        Result.erase(Index);
     }
 
     while ((Index = Result.find(' ')) != NPOS)
@@ -23,7 +23,7 @@ std::string ISAlgorithm::GetClassName(const char *FunctionName)
     Index = Result.find(':');
     if (Index != NPOS)
     {
-        Result.erase(Index, Result.size() - Index);
+        Result.erase(Index);
     }
     return Result;
 }
@@ -324,7 +324,7 @@ std::string ISAlgorithm::GetApplicationDir()
         size_t Pos = Path.rfind(PATH_SEPARATOR);
         if (Pos != NPOS)
         {
-            Path.erase(Pos, Path.size() - Pos);
+            Path.erase(Pos);
         }
     }
     return Path;
@@ -345,7 +345,7 @@ std::string ISAlgorithm::GetApplicationName()
         Pos = Path.find('.');
         if (Pos != NPOS) //Точка в названии есть - удаляем расширение
         {
-            Path.erase(Pos, Path.size() - Pos);
+            Path.erase(Pos);
         }
 #endif
     }
@@ -492,7 +492,7 @@ void ISAlgorithm::StringChop(std::string &String, size_t N)
     }
     else //Вырезаем N символов с конце строки
     {
-        String.erase(Size - N, N);
+        String.erase(Size - N);
     }
 }
 //-----------------------------------------------------------------------------
@@ -571,6 +571,56 @@ std::string ISAlgorithm::StringToMD5(const std::string &String)
         {
             Result[Index] = MD5_DIGITS[Hash[i] >> 4];
             Result[++Index] = MD5_DIGITS[Hash[i] & 0xF];
+        }
+    }
+    return Result;
+}
+//-----------------------------------------------------------------------------
+std::string ISAlgorithm::FormatNumber(long long Number, char Separator)
+{
+    std::string Result = std::to_string(Number); //Переводим число в строку
+
+    //Если число входит в диапазон [-999;999] - обходим строку
+    if ((Number > 0 && Number > 999) || (Number < 0 && Number < -999))
+    {
+        int ResultSize = Result.size(); //Получаем размер
+        for (int i = ResultSize - 1, j = 1; i >= 0; --i, ++j)
+        {
+            if (j == 3) //Если мы прошли цикл трижды (в очередной раз) - вставляем символ
+            {
+                Result.insert(i, 1, Separator);
+                ++ResultSize;
+                j = 0; //Сбрасываем счётчик проходов
+            }
+        }
+
+        if (Result[0] == Separator) //Удаляем первый пробел (если есть)
+        {
+            Result.erase(0, 1);
+        }
+    }
+
+    //Число не вошло в диапазон - возвращаем его как есть
+    return Result;
+}
+//-----------------------------------------------------------------------------
+std::string ISAlgorithm::FormatNumber(double Number, char Separator, unsigned int Precision)
+{
+    //Переводим число в строку и ищем точку
+    std::string Result = std::to_string(Number);
+    size_t PosPoint = Result.find('.');
+    if (PosPoint != NPOS) //Нашли точку
+    {
+        if (Precision != 0) //Учитываем кол-во знаков после запятой
+        {
+            Result.erase(PosPoint + Precision + 1);
+        }
+
+        bool Ok = true;
+        long long Left = std::stoll(Result.substr(0, PosPoint));
+        if (Ok)
+        {
+            Result.replace(0, PosPoint, FormatNumber(Left, Separator));
         }
     }
     return Result;

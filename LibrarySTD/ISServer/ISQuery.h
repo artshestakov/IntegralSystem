@@ -37,14 +37,18 @@ public:
     bool Execute();
     bool ExecuteFirst();
 
+    bool IsNull(size_t Index) const;
     char* ReadColumn(size_t Index) const;
     std::string ReadColumn_String(size_t Index) const;
     int ReadColumn_Int(size_t Index) const;
+    double ReadColumn_Double(size_t Index) const;
     unsigned int ReadColumn_UInt(size_t Index) const;
     ISInt64 ReadColumn_Int64(size_t Index) const;
     ISUInt64 ReadColumn_UInt64(size_t Index) const;
     bool ReadColumn_Bool(size_t Index) const;
     ISDate ReadColumn_Date(size_t Index) const;
+    ISTime ReadColumn_Time(size_t Index) const;
+    ISDateTime ReadColumn_DateTime(size_t Index) const;
 
 private:
     bool Prepare(int ParamCount);

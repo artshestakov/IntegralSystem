@@ -22,7 +22,7 @@
             <Field UID="{2329CBCC-85A3-438A-8679-C75CF1DD4CF3}" Name="Vin" Type="Vin" LayoutName="Inn"/>
             <Field UID="{96CB1395-A26F-4141-B921-C07E90BBB632}" Name="Year" Type="Year"/>
             <Field UID="{416F1A31-A8E1-4786-8439-6DF8D3AEF4DA}" Name="Phone" Type="Phone"/>
-            <Field UID="{EA2338DC-DD87-472F-A081-B3D00BD06EA7}" Name="Image" Type="Image"/>
+            <Field UID="{EA2338DC-DD87-472F-A081-B3D00BD06EA7}" Name="Image" Type="Image" HideFromList="true"/>
             <Field UID="{378E842C-061F-49BB-B731-5050362665B1}" Name="Color" Type="Color"/>
             <Field UID="{35FDD215-A544-4E0C-BBC5-466BBF8BAD00}" Name="EMail" Type="EMail"/>
             <Field UID="{78F1C5F2-80E0-4FE6-8108-3053DF1E53DE}" Name="Volume" Type="Volume"/>
@@ -31,7 +31,7 @@
             <Field UID="{03079B94-ED11-48A7-91AD-F8A483A23CC4}" Name="Month" Type="Month"/>
             <Field UID="{98253B62-FAF4-4962-B9D1-34A025B859BA}" Name="Login" Type="String"/>
             <Field UID="{EB450550-AE7E-45DC-ADFF-A2DF34AE0A77}" Name="Url" Type="Url"/>
-            <Field UID="{476D7186-BFAA-4AE9-A589-D49FD970C149}" Name="File" Type="File"/>
+            <Field UID="{476D7186-BFAA-4AE9-A589-D49FD970C149}" Name="File" Type="File" HideFromList="true"/>
         </Fields>
     </Table>
 

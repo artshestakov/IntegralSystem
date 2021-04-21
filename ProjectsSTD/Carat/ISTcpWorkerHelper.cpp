@@ -4,6 +4,8 @@
 #include "ISProperty.h"
 #include "ISConstants.h"
 #include "ISMetaData.h"
+#include "ISQuery.h"
+#include "ISLogger.h"
 //-----------------------------------------------------------------------------
 std::string ISTcpWorkerHelper::ConvertDateTimeToString(const ISDateTime &DateTime)
 {
@@ -74,12 +76,12 @@ std::string ISTcpWorkerHelper::GetUptime()
     return ISAlgorithm::StringF(LANG("Carat.Uptime").c_str(), Days, ISTime::FromSecond((unsigned int)Seconds).ToString().c_str());
 }
 //-----------------------------------------------------------------------------
-/*QVariant ISTcpWorkerHelper::GetSettingDB(const QString &DBConnectionName, const QString &SettingName)
+const char* ISTcpWorkerHelper::GetSettingDB(PGconn *DBConnection, const std::string &SettingName)
 {
-	QVariant Value;
-	ISQuery qSelectSettingDB(ISDatabase::Instance().GetDB(DBConnectionName),
-		"SELECT sgdb_" + SettingName + " FROM _settingsdatabase WHERE sgdb_uid = :SettingUID");
-	qSelectSettingDB.BindValue(":SettingUID", CONST_UID_SETTINGS_DATABASE);
+	const char *Value = nullptr;
+	ISQuery qSelectSettingDB(DBConnection,
+		"SELECT sgdb_" + SettingName + " FROM _settingsdatabase WHERE sgdb_uid = $1");
+	qSelectSettingDB.BindValue(CONST_UID_SETTINGS_DATABASE, UUIDOID);
 	if (qSelectSettingDB.Execute()) //Запрос выполнен успешно
 	{
 		if (qSelectSettingDB.First()) //Настройка нашлась
@@ -93,16 +95,16 @@ std::string ISTcpWorkerHelper::GetUptime()
 	}
 	else //Ошибка запроса
 	{
-		ISLOGGER_E(__CLASS__, "not getting setting database: " + qSelectSettingDB.GetErrorString());
+		ISLOGGER_E(__CLASS__, "not getting setting database: %s", qSelectSettingDB.GetErrorString().c_str());
 	}
 
 	//Если значение невалидное - используем указанное по умолчанию
-	if (!Value.isValid() || Value.isNull())
+	if (strlen(Value) == 0)
 	{
-		Value = ISMetaData::Instance().GetMetaTable("_SettingsDatabase")->GetField(SettingName)->DefaultValue;
+		Value = ISMetaData::Instance().GetTable("_SettingsDatabase")->GetField(SettingName)->DefaultValue.c_str();
 	}
 	return Value;
-}*/
+}
 //-----------------------------------------------------------------------------
 std::string ISTcpWorkerHelper::CreateSqlFromTitleName(PMetaForeign *MetaForeign, const std::string &Alias, const std::string &FieldName)
 {
@@ -112,8 +114,11 @@ std::string ISTcpWorkerHelper::CreateSqlFromTitleName(PMetaForeign *MetaForeign,
 		" WHERE " + MetaTableForeign->Alias + "_id = " + Alias + '_' + FieldName;
 }
 //-----------------------------------------------------------------------------
-std::string ISTcpWorkerHelper::CreateSqlFromTable(PMetaTable *MetaTable, /*QVariantMap &FilterMap, const QVariantList &SearchList, */std::string SortingField, ISNamespace::SortingOrder SortingOrder)
+std::string ISTcpWorkerHelper::CreateSqlFromTable(PMetaTable *MetaTable, rapidjson::Value &FilterObject, const rapidjson::Value &SearchArray, std::string SortingField, ISNamespace::SortingOrder SortingOrder)
 {
+    IS_UNUSED(FilterObject);
+    IS_UNUSED(SearchArray);
+
     std::string SqlText = "SELECT\n",
 		SqlTextJoins;
 	size_t Index = 0;
@@ -166,15 +171,15 @@ std::string ISTcpWorkerHelper::CreateSqlFromTable(PMetaTable *MetaTable, /*QVari
 	SqlText += SqlTextJoins;
 
 	//Если фильтрация указана - устанавливаем
-	/*if (!FilterMap.isEmpty())
+	if (FilterObject.MemberCount() > 0)
 	{
 		SqlText += "\nWHERE ";
-		for (const auto &MapItem : FilterMap.toStdMap())
+		for (const auto &MapItem : FilterObject.GetObject())
 		{
-			SqlText += MetaTable->Alias + '_' + MapItem.first + " = :" + MapItem.first + "\nAND ";
+			SqlText += MetaTable->Alias + '_' + MapItem.name.GetString() + " = :" + MapItem.name.GetString() + "\nAND ";
 		}
         ISAlgorithm::StringChop(SqlText, 5);
-	}*/
+	}
 
 	//Если указаны поисковые параметры
 	/*bool IsSearch = !SearchList.isEmpty();

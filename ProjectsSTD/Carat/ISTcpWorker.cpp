@@ -10,6 +10,7 @@
 #include "ISTcpClients.h"
 #include "ISResourcer.h"
 #include "ISConfigurations.h"
+#include "ISTcpWorkerHelper.h"
 //-----------------------------------------------------------------------------
 static std::string QS_USERS_HASH = PREPARE_QUERY("SELECT usrs_hash, usrs_salt "
                                                  "FROM _users "
@@ -109,6 +110,22 @@ static std::string QU_USER_SETTINGS_RESET = PREPARE_QUERYN("UPDATE _usersettings
                                                            "WHERE usst_user = $1 "
                                                            "RETURNING (SELECT stgs_uid FROM _settings WHERE stgs_id = usst_setting), usst_value", 1);
 //-----------------------------------------------------------------------------
+static std::string QS_RIGHT_SHOW_TABLE = PREPARE_QUERYN("SELECT check_access_user_table($1, $2, $3)", 3);
+//-----------------------------------------------------------------------------
+static std::string QS_SORTING = PREPARE_QUERYN("SELECT sgts_fieldname, sgts_sorting "
+                                               "FROM _sortingtables "
+                                               "WHERE sgts_user = $1 "
+                                               "AND sgts_tablename = $2", 2);
+//-----------------------------------------------------------------------------
+static std::string QU_SORTING = PREPARE_QUERYN("UPDATE _sortingtables SET "
+                                               "sgts_fieldname = $1, "
+                                               "sgts_sorting = $2 "
+                                               "WHERE sgts_user = $3 "
+                                               "AND sgts_tablename = $4", 4);
+//-----------------------------------------------------------------------------
+static std::string QI_SORTING = PREPARE_QUERYN("INSERT INTO _sortingtables(sgts_user, sgts_tablename, sgts_fieldname, sgts_sorting)"
+                                               "VALUES($1, $2, $3, $4)", 4);
+//-----------------------------------------------------------------------------
 ISTcpWorker::ISTcpWorker()
     : ErrorString(STRING_NO_ERROR),
     IsBusy(false),
@@ -127,6 +144,7 @@ ISTcpWorker::ISTcpWorker()
     MapFunction[API_USER_PASSWORD_EDIT] = &ISTcpWorker::UserPasswordEdit;
     MapFunction[API_USER_PASSWORD_RESET] = &ISTcpWorker::UserPasswordReset;
     MapFunction[API_USER_SETTINGS_RESET] = &ISTcpWorker::UserSettingsReset;
+    MapFunction[API_GET_TABLE_DATA] = &ISTcpWorker::GetTableData;
 
     CRITICAL_SECTION_INIT(&CriticalSection);
     CRITICAL_SECTION_INIT(&CSRunning);
@@ -667,7 +685,7 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
         }
     }
 
-    rapidjson::MemoryPoolAllocator<rapidjson::CrtAllocator> &Allocator = TcpAnswer->Parameters.GetAllocator();
+    auto &Allocator = TcpAnswer->Parameters.GetAllocator();
 
     //Проверяем, не подключен ли уже это пользователь
     //Если пользователь уже подключен - вытаскиваем информацию о подключении
@@ -1459,9 +1477,272 @@ bool ISTcpWorker::DiscussionCopy(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
-    IS_UNUSED(TcpMessage);
-    IS_UNUSED(TcpAnswer);
-    return false;
+    if (!CheckIsNull(TcpMessage, "TableName"))
+    {
+        return false;
+    }
+
+    //Получаем имя таблицы
+    std::string TableName;
+    if (!GetParameterString(TcpMessage, "TableName", TableName))
+    {
+        return false;
+    }
+
+    //Получаем мета-таблицу
+    PMetaTable *MetaTable = GetMetaTable(TableName);
+    if (!MetaTable)
+    {
+        return false;
+    }
+    unsigned int UserID = TcpMessage->TcpClient->UserID;
+
+    //Проверяем наличие права на просмотр данных
+    ISQuery qSelectRight(DBConnection, QS_RIGHT_SHOW_TABLE);
+    qSelectRight.BindValue(UserID);
+    qSelectRight.BindValue(MetaTable->Name);
+    qSelectRight.BindValue(CONST_UID_GROUP_ACCESS_TYPE_SHOW, UUIDOID);
+    if (!qSelectRight.Execute())
+    {
+        return ErrorQuery(LANG("Carat.Error.Query.GetTableData.SelectRightShow"), qSelectRight);
+    }
+    if (!qSelectRight.First())
+    {
+        ErrorString = qSelectRight.GetErrorString();
+        return false;
+    }
+
+    //Прав доступа на просмотр данных нет - ошибка
+    if (!qSelectRight.ReadColumn_Bool(0))
+    {
+        ErrorString = ISAlgorithm::StringF(LANG("Carat.Error.Query.GetTableData.NoRightShow").c_str(), MetaTable->LocalListName.c_str());
+        return false;
+    }
+
+    //Получаем сортировку для этой таблицы
+    std::string SortingField;
+    ISNamespace::SortingOrder SortingOrder = ISNamespace::SortingOrder::Ascending;
+    ISQuery qSelectSorting(DBConnection, QS_SORTING);
+    qSelectSorting.BindValue(UserID);
+    qSelectSorting.BindValue(MetaTable->Name);
+    if (!qSelectSorting.Execute()) //Ошибка запроса
+    {
+        return ErrorQuery(LANG("Carat.Error.Query.GetTableData.SelectSorting"), qSelectSorting);
+    }
+
+    if (qSelectSorting.First()) //Сортирока есть - получаем её
+    {
+        SortingField = qSelectSorting.ReadColumn(0);
+        SortingOrder = static_cast<ISNamespace::SortingOrder>(qSelectSorting.ReadColumn_Int(1));
+
+        //Проверяем не указана ли сортировка в запросе
+        //Если указана - проверяем - не нужно ли обновить её в БД
+        //QVariantMap SortingFieldQuery = TcpMessage->Parameters["Sorting"].toMap();
+        if (/*!SortingFieldQuery.isEmpty()*/TcpMessage->Parameters.HasMember("Sorting"))
+        {
+            rapidjson::Value &SortingObject = TcpMessage->Parameters["Sorting"];
+            std::string s = SortingObject["Field"].GetString();
+            ISNamespace::SortingOrder srt = static_cast<ISNamespace::SortingOrder>(SortingObject["Order"].GetInt());
+
+            //Если новая сортировка отличается от текущей - сохраняем её в БД
+            if (SortingField != /*SortingFieldQuery["Field"].toString()*/s ||
+                SortingOrder != /*static_cast<Qt::SortOrder>(SortingFieldQuery["Order"].toUInt())*/srt)
+            {
+                SortingField = /*SortingFieldQuery["Field"].toString()*/s;
+                SortingOrder = /*static_cast<Qt::SortOrder>(SortingFieldQuery["Order"].toUInt())*/srt;
+
+                ISQuery qUpdateSorting(DBConnection, QU_SORTING);
+                qUpdateSorting.BindValue(SortingField);
+                qUpdateSorting.BindValue((int)SortingOrder);
+                qUpdateSorting.BindValue(UserID);
+                qUpdateSorting.BindValue(MetaTable->Name);
+                if (!qUpdateSorting.Execute())
+                {
+                    return ErrorQuery(LANG("Carat.Error.Query.GetTableData.UpdateSorting"), qUpdateSorting);
+                }
+            }
+        }
+    }
+    else //Сортировки нет - добавляем дефолтную
+    {
+        SortingField = "ID";
+
+        ISQuery qInsertSorting(DBConnection, QI_SORTING);
+        qInsertSorting.BindValue(UserID);
+        qInsertSorting.BindValue(MetaTable->Name);
+        qInsertSorting.BindValue(SortingField);
+        qInsertSorting.BindValue((int)SortingOrder);
+        if (!qInsertSorting.Execute())
+        {
+            return ErrorQuery(LANG("Carat.Error.Query.GetTableData.InsertSorting"), qInsertSorting);
+        }
+    }
+
+    auto &Allocator = TcpAnswer->Parameters.GetAllocator();
+
+    //Заполняем служебную информацию
+    rapidjson::Value ServiceInfoObject(rapidjson::Type::kObjectType);
+    ServiceInfoObject.AddMember("SortingField", JSON_STRING(SortingField.c_str()), Allocator);
+    ServiceInfoObject.AddMember("SortingOrder", (int)SortingOrder, Allocator);
+    
+    //Получаем фильтры
+    rapidjson::Value FilterObject(rapidjson::Type::kObjectType);
+    if (TcpMessage->Parameters.FindMember("Filter") != TcpMessage->Parameters.MemberEnd())
+    {
+        FilterObject = TcpMessage->Parameters["Filter"];
+    }
+
+    //Получаем поисковые параметры
+    rapidjson::Value SearchArray(rapidjson::Type::kArrayType);
+    if (TcpMessage->Parameters.FindMember("Search") != TcpMessage->Parameters.MemberEnd())
+    {
+        SearchArray = TcpMessage->Parameters["Search"];
+    }
+    bool IsSearch = !SearchArray.Empty();
+
+    //Формируем запрос на выборку
+    std::string SqlText = ISTcpWorkerHelper::CreateSqlFromTable(MetaTable, FilterObject, SearchArray, SortingField, SortingOrder);
+
+    ISQuery qSelect(DBConnection, SqlText);
+    qSelect.SetShowLongQuery(false);
+
+    //Заполняем параметры запроса
+    /*for (const auto &MapItem : FilterMap.toStdMap())
+    {
+        qSelect.BindValue(":" + MapItem.first, MapItem.second);
+    }*/
+
+    if (!qSelect.Execute()) //Запрос не отработал
+    {
+        return ErrorQuery(LANG("Carat.Error.Query.GetTableData.Select"), qSelect);
+    }
+
+    int FieldCount = qSelect.GetResultColumnCount();
+    rapidjson::Value FieldArray(rapidjson::Type::kArrayType),
+        RecordArray(rapidjson::Type::kArrayType);
+    std::vector<ISNamespace::FieldType> VectorType(FieldCount, ISNamespace::FieldType::Unknown);
+    std::vector<bool> VectorForeign(FieldCount, false);
+
+    //Заполняем описание полей
+    for (int i = 0; i < FieldCount; ++i)
+    {
+        PMetaField *MetaField = MetaTable->GetField(qSelect.GetResultFieldName(i));
+        VectorType[i] = MetaField->Type; //Заполняем типы сейчас, чтобы использовать их ниже
+        VectorForeign[i] = MetaField->Foreign ? true : false;
+
+        rapidjson::Value FieldObject(rapidjson::Type::kObjectType);
+        FieldObject.AddMember("Index", i, Allocator);
+        FieldObject.AddMember("Name", JSON_STRING(MetaField->Name.c_str()), Allocator);
+        FieldObject.AddMember("LocalName", JSON_STRING(MetaField->LocalListName.c_str()), Allocator);
+        FieldObject.AddMember("Type", static_cast<int>(MetaField->Type), Allocator);
+        FieldObject.AddMember("IsForeign", MetaField->Foreign ? true : false, Allocator);
+        FieldObject.AddMember("IsSystem", MetaField->IsSystem, Allocator);
+        FieldArray.PushBack(FieldObject, Allocator);
+    }
+
+    if (qSelect.First()) //Данные есть
+    {
+        //Получаем необходимые настройки БД
+        //???
+        unsigned int Precision = std::atoi(ISTcpWorkerHelper::GetSettingDB(DBConnection, CONST_UID_DATABASE_SETTING_OTHER_NUMBERSIMBOLSAFTERCOMMA));
+        IS_UNUSED(Precision);
+
+        do
+        {
+            rapidjson::Value Values(rapidjson::Type::kArrayType); //Список значений
+            for (int i = 0; i < FieldCount; ++i) //Обходим поля и вытаскиваем значения
+            {
+                //Получаем тип поля и наличие внешнего ключа
+                ISNamespace::FieldType Type = VectorType[i];
+                bool IsForeign = VectorForeign[i];
+
+                //Если значение содержит NULL - добавляем пустое и переходим к следующему
+                if (qSelect.IsNull(i))
+                {
+                    Values.PushBack(JSON_NULL, Allocator);
+                    continue;
+                }
+                //Значение не содержит NULL - анализируем
+
+                if (Type == ISNamespace::FieldType::Int || Type == ISNamespace::FieldType::BigInt)
+                {
+                    if (IsForeign)
+                    {
+//Values.PushBack(JSON_STRINGA(qSelect.ReadColumn(i), Allocator), Allocator);
+                    }
+                    else
+                    {
+//Values.PushBack(JSON_STRING(ISAlgorithm::FormatNumber(qSelect.ReadColumn_Int64(i)).c_str()), Allocator);
+                    }
+                }
+                else if (Type == ISNamespace::FieldType::ID)
+                {
+                    Values.PushBack(qSelect.ReadColumn_UInt64(i), Allocator);
+                }
+                else if (Type == ISNamespace::FieldType::Bool)
+                {
+                    Values.PushBack(qSelect.ReadColumn_Bool(i), Allocator);
+                }
+                else if (Type == ISNamespace::FieldType::String || Type == ISNamespace::FieldType::Text)
+                {
+                    Values.PushBack(JSON_STRINGA(qSelect.ReadColumn(i), Allocator), Allocator);
+                }
+                else if (Type == ISNamespace::FieldType::Date)
+                {
+                    std::string String = ISTcpWorkerHelper::ConvertDateToString(qSelect.ReadColumn_Date(i));
+                    const char *CString = String.c_str();
+                    Values.PushBack(JSON_STRINGA(CString, Allocator), Allocator);
+                }
+                else if (Type == ISNamespace::FieldType::Time)
+                {
+                    std::string String = qSelect.ReadColumn_Time(i).ToString();
+                    const char *CString = String.c_str();
+                    Values.PushBack(JSON_STRINGA(CString, Allocator), Allocator);
+                }
+                else if (Type == ISNamespace::FieldType::DateTime)
+                {
+                    //Value = ISTcpWorkerHelper::ConvertDateTimeToString(Value.toDateTime(), FORMAT_TIME_V1);
+                }
+                else if (Type == ISNamespace::FieldType::Birthday)
+                {
+                    //Value = Value.toDate().toString(FORMAT_DATE_V1);
+                }
+                else if (Type == ISNamespace::FieldType::Phone)
+                {
+                    //QString PhoneNumber = Value.toString();
+                    //Value = QString("+7 (%1) %2-%3-%4").arg(PhoneNumber.left(3)).arg(PhoneNumber.mid(3, 3)).arg(PhoneNumber.mid(6, 2)).arg(PhoneNumber.right(2));
+                }
+                else if (Type == ISNamespace::FieldType::Seconds)
+                {
+                    //Value = QTime(0, 0).addSecs(Value.toInt()).toString(FORMAT_TIME_V3);
+                }
+                else if (Type == ISNamespace::FieldType::Double)
+                {
+                    //Value = ISAlgorithm::FormatNumber(Value.toDouble(), ' ', Precision);
+                }
+                else if (Type == ISNamespace::FieldType::Money)
+                {
+//std::string String = ISAlgorithm::FormatNumber(qSelect.ReadColumn_Double(i), ' ', 2);
+//const char *SString = String.c_str();
+//Values.PushBack(JSON_STRINGA(SString, Allocator), Allocator);
+                }
+                else if (Type == ISNamespace::FieldType::UID)
+                {
+                    //Value = Value.toString();
+                }
+                else if (Type == ISNamespace::FieldType::ProtocolDT)
+                {
+                    //Values.PushBack(JSON_STRING(ISTcpWorkerHelper::ConvertDateTimeToString(qSelect.ReadColumn_DateTime(i)).c_str()), Allocator);
+                }
+            }
+            RecordArray.PushBack(Values, Allocator); //Добавляем список значений в список записей
+        } while (qSelect.Next()); //Обходим выборку	
+    }
+    TcpAnswer->Parameters.AddMember("ServiceInfo", ServiceInfoObject, Allocator);
+    TcpAnswer->Parameters.AddMember("FieldList", FieldArray, Allocator);
+    TcpAnswer->Parameters.AddMember("RecordList", RecordArray, Allocator);
+    Protocol(TcpMessage->TcpClient->UserID, IsSearch ? CONST_UID_PROTOCOL_SEARCH : CONST_UID_PROTOCOL_GET_TABLE_DATA, MetaTable->Name, MetaTable->LocalListName);
+    return true;
 }
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::GetTableQuery(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)

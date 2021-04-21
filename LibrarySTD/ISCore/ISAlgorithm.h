@@ -168,6 +168,16 @@ namespace ISAlgorithm
     //! \return возвращает MD5-хэш. Если вернулась пустая строка - значит ошибка
     std::string StringToMD5(const std::string &String);
 
+    //! Форматирование целого числа. Например, число 6985473 примет вид 6 985 473
+    //! \Number целое число
+    //! \return возвращает форматированное число
+    std::string FormatNumber(long long Number, char Separator = ' ');
+
+    //! Форматирование дробного числа. Например, число 1024,965 примет вид 1 024,965
+    //! \Number дробное число
+    //! \return возвращает форматированное число
+    std::string FormatNumber(double Number, char Separator = ' ', unsigned int Precision = 0);
+
     //! Генерация стандартного уникального идентификатора в формате b75ed238-411a-4f06-85ea-a2ecca37cfa8
     //! \return возвращает стандартный уникальный идентификатор
     std::string GenerateUuidStandart();
