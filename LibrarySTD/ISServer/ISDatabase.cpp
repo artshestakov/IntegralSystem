@@ -69,8 +69,7 @@ bool ISDatabase::Connect(const std::string &ConnectionName, const std::string &H
     StringStream << "user=" << Login << ' ';
     StringStream << "password=" << Password << ' ';
     StringStream << "connect_timeout=3 ";
-    StringStream << "application_name=Carat ";
-    StringStream << "client_encoding=WIN1251";
+    StringStream << "application_name=Carat";
     std::string String = StringStream.str(); //Нужна именно такая конструкция
     const char *ConnectionInfo = String.c_str();
 
