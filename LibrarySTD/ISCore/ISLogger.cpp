@@ -80,17 +80,17 @@ void ISLogger::Log(ISNamespace::LogMessageType MessageType, char *Component, con
     }
 
     //Получаем строковый тип сообщения
-    std::string message_type_string;
+    const char *message_type = nullptr;
     switch (MessageType)
     {
     case ISNamespace::LogMessageType::Unknown: break;
-    case ISNamespace::LogMessageType::Debug: message_type_string = "Debug"; break;
-    case ISNamespace::LogMessageType::Info: message_type_string = "Info"; break;
-    case ISNamespace::LogMessageType::Warning: message_type_string = "Warning"; break;
-    case ISNamespace::LogMessageType::Error: message_type_string = "Error"; break;
-    case ISNamespace::LogMessageType::Critical: message_type_string = "Critical"; break;
-    case ISNamespace::LogMessageType::Trace: message_type_string = "Trace"; break;
-    case ISNamespace::LogMessageType::Assert: message_type_string = "Assert"; break;
+    case ISNamespace::LogMessageType::Debug: message_type = LOG_DEBUG; break;
+    case ISNamespace::LogMessageType::Info: message_type = LOG_INFO; break;
+    case ISNamespace::LogMessageType::Warning: message_type = LOG_WARNING; break;
+    case ISNamespace::LogMessageType::Error: message_type = LOG_ERROR; break;
+    case ISNamespace::LogMessageType::Critical: message_type = LOG_CRITICAL; break;
+    case ISNamespace::LogMessageType::Trace: message_type = LOG_TRACE; break;
+    case ISNamespace::LogMessageType::Assert: message_type = LOG_ASSERT; break;
     }
 
     //Получаем текущую дату и время
@@ -101,7 +101,7 @@ void ISLogger::Log(ISNamespace::LogMessageType MessageType, char *Component, con
     std::sprintf(BufferHeader, "%02d.%02d.%02d %02d:%02d:%02d:%03d\t%lu\t[%s]",
         DT.Date.Day, DT.Date.Month, DT.Date.Year % 100,
         DT.Time.Hour, DT.Time.Minute, DT.Time.Second, DT.Time.Milliseconds,
-        CURRENT_THREAD_ID(), message_type_string.c_str());
+        CURRENT_THREAD_ID(), message_type);
 
     //Если указан компонент и он не пустой - добавим его к заголовку
     if (Component && strlen(Component) > 0)

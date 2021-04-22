@@ -40,6 +40,13 @@ const size_t    LOG_ARRAY_SIZE = 20000; //Максимальный размер массива
 const size_t    LOG_TIMEOUT = 50; //Таймаут логгера
 const size_t    LOG_HEADER_SIZE = 64; //Макисмальный размер заголовка
 const size_t    LOG_BUFFER_SIZE = 10240; //Размер буфера для одного сообщения
+const char      LOG_DEBUG[] = "Debug";
+const char      LOG_INFO[] = "Info";
+const char      LOG_WARNING[] = "Warning";
+const char      LOG_ERROR[] = "Error";
+const char      LOG_CRITICAL[] = "Critical";
+const char      LOG_TRACE[] = "Trace";
+const char      LOG_ASSERT[] = "Assert";
 //ASTERISK---------------------------------------------------------------------
 const size_t    TCP_PACKET_MAX_SIZE = 65535; //Максимальный размер одного TCP-пакета
 //CARAT------------------------------------------------------------------------
