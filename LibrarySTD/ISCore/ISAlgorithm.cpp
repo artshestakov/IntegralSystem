@@ -578,30 +578,26 @@ std::string ISAlgorithm::StringToMD5(const std::string &String)
 //-----------------------------------------------------------------------------
 std::string ISAlgorithm::FormatNumber(long long Number, char Separator)
 {
-    std::string Result = std::to_string(Number); //Переводим число в строку
+    //Переводим число в строку
+    char Char[48] = { 0 };
+    _i64toa(Number, Char, 10);
 
     //Если число входит в диапазон [-999;999] - обходим строку
     if ((Number > 0 && Number > 999) || (Number < 0 && Number < -999))
     {
-        int ResultSize = Result.size(); //Получаем размер
-        for (int i = ResultSize - 1, j = 1; i >= 0; --i, ++j)
+        size_t Size = strlen(Char); //Рассчитаем размер строки
+        int X = Number > 0 ? 0 : 1; //Если число больше нуля - обходим до нулевого символа, иначе до первого (учёт минуса в начале строки)
+        for (int i = Size - 1, j = 1; i >= X; --i, ++j)
         {
-            if (j == 3) //Если мы прошли цикл трижды (в очередной раз) - вставляем символ
+            if (j == 3 && i > X) //Если мы прошли цикл трижды (в очередной раз) - вставляем символ
             {
-                Result.insert(i, 1, Separator);
-                ++ResultSize;
+                memmove(Char + i + 1, Char + i, Size++);
+                Char[i] = Separator;
                 j = 0; //Сбрасываем счётчик проходов
             }
         }
-
-        if (Result[0] == Separator) //Удаляем первый пробел (если есть)
-        {
-            Result.erase(0, 1);
-        }
     }
-
-    //Число не вошло в диапазон - возвращаем его как есть
-    return Result;
+    return Char;
 }
 //-----------------------------------------------------------------------------
 std::string ISAlgorithm::FormatNumber(double Number, char Separator, unsigned int Precision)
