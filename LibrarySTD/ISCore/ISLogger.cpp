@@ -71,7 +71,7 @@ void ISLogger::Shutdown()
     }
 }
 //-----------------------------------------------------------------------------
-void ISLogger::Log(ISNamespace::LogMessageType MessageType, const std::string &Component, const char *Format, ...)
+void ISLogger::Log(ISNamespace::LogMessageType MessageType, char *Component, const char *Format, ...)
 {
     if (!IsRunning)
     {
@@ -103,10 +103,11 @@ void ISLogger::Log(ISNamespace::LogMessageType MessageType, const std::string &C
         DT.Time.Hour, DT.Time.Minute, DT.Time.Second, DT.Time.Milliseconds,
         CURRENT_THREAD_ID(), message_type_string.c_str());
 
-    //Если указан компонент - добавим его к заголовку
-    if (!Component.empty())
+    //Если указан компонент и он не пустой - добавим его к заголовку
+    if (Component && strlen(Component) > 0)
     {
-        strcat(BufferHeader, ('[' + Component + ']').c_str());
+        strcat(BufferHeader, Component);
+        free(Component);
     }
 
     //Результирующая строка
@@ -136,9 +137,9 @@ void ISLogger::Log(ISNamespace::LogMessageType MessageType, const std::string &C
     
     CRITICAL_SECTION_LOCK(&CriticalSection);
 #ifdef DEBUG //В отладочной версии выводим строку в консоль
-    ISDEBUG_L(string_result);
+    //ISDEBUG_L(string_result);
 #ifdef WIN32 //Для Windows выводим строку в консоль Visual Studio
-    OutputDebugString((string_result + '\n').c_str());
+    //OutputDebugString((string_result + '\n').c_str());
 #endif
 #endif
     if (LastIndex == LOG_ARRAY_SIZE) //Если превысили размер массива

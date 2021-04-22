@@ -38,7 +38,7 @@ namespace ISAlgorithm
 {
     //! ѕолучить им€ класса
     //! \return возвращает им€ класса
-    std::string GetClassName(const char *FunctionName);
+    char* GetClassName(const char *FunctionName);
 
     //! ѕолучить временную метку
     //! \return возвращает временную метку

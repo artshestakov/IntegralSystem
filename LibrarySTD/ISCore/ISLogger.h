@@ -11,12 +11,11 @@ class ISLogger
 {
 public:
     static ISLogger& Instance();
-    static std::string GetClassName(char *FunctionName);
 
     std::string GetErrorString() const;
     bool Initialize();
     void Shutdown();
-    void Log(ISNamespace::LogMessageType MessageType, const std::string &Component, const char *Format, ...);
+    void Log(ISNamespace::LogMessageType MessageType, char *Component, const char *Format, ...);
 
 private:
     bool CreateLogDirectory(const ISDate &Date);
@@ -50,7 +49,7 @@ private:
 #define ISLOGGER_W(COMPONENT, FORMAT, ...) ISLogger::Instance().Log(ISNamespace::LogMessageType::Warning, COMPONENT, FORMAT, ##__VA_ARGS__) //Логировние предупреждающего сообщения
 #define ISLOGGER_E(COMPONENT, FORMAT, ...) ISLogger::Instance().Log(ISNamespace::LogMessageType::Error, COMPONENT, FORMAT, ##__VA_ARGS__) //Логирование сообщения об ошибке
 #define ISLOGGER_C(COMPONENT, FORMAT, ...) ISLogger::Instance().Log(ISNamespace::LogMessageType::Critical, COMPONENT, FORMAT, ##__VA_ARGS__) //Логирование критической ошибки
-#define ISLOGGER_T(FORMAT, ...) ISLogger::Instance().Log(ISNamespace::LogMessageType::Trace, std::string(), FORMAT, ##__VA_ARGS__) //Трассировка
-#define ISLOGGER_A(FORMAT, ...) ISLogger::Instance().Log(ISNamespace::LogMessageType::Assert, std::string(), FORMAT, ##__VA_ARGS__) //Логирование сообщения об ассерте
+#define ISLOGGER_T(FORMAT, ...) ISLogger::Instance().Log(ISNamespace::LogMessageType::Trace, nullptr, FORMAT, ##__VA_ARGS__) //Трассировка
+#define ISLOGGER_A(FORMAT, ...) ISLogger::Instance().Log(ISNamespace::LogMessageType::Assert, nullptr, FORMAT, ##__VA_ARGS__) //Логирование сообщения об ассерте
 //-----------------------------------------------------------------------------
 #endif

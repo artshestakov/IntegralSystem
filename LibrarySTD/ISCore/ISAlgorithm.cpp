@@ -2,9 +2,11 @@
 #include "ISConstants.h"
 #include "ISAssert.h"
 //-----------------------------------------------------------------------------
-std::string ISAlgorithm::GetClassName(const char *FunctionName)
+char* ISAlgorithm::GetClassName(const char *FunctionName)
 {
-    std::string Result(FunctionName);
+    size_t Size = strlen(FunctionName);
+    char *Result = (char *)malloc(sizeof(char) * Size + 1);
+    strcpy(Result, FunctionName);
     size_t Index = 0;
 
 #ifndef WIN32 //Если работаем сейчас под Linux - исключаем имя типа
@@ -20,10 +22,18 @@ std::string ISAlgorithm::GetClassName(const char *FunctionName)
     }
 #endif
 
-    Index = Result.find(':');
+    //Ищем символ двоеточия
+    for (; Index < Size; ++Index)
+    {
+        if (Result[Index] == ':')
+        {
+            break;
+        }
+    }
+
     if (Index != NPOS)
     {
-        Result.erase(Index);
+        Result[Index] = CHAR_NULL_TERM;
     }
     return Result;
 }
