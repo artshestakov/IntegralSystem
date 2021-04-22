@@ -62,19 +62,12 @@ bool ISDatabase::Connect(const std::string &ConnectionName, const ISConnectOptio
 bool ISDatabase::Connect(const std::string &ConnectionName, const std::string &Host, unsigned short Port, const std::string &Database, const std::string &Login, const std::string &Password)
 {
     //Формируем строку подключения
-    std::stringstream StringStream;
-    StringStream << "host=" << Host << ' ';
-    StringStream << "port=" << std::to_string(Port) << ' ';
-    StringStream << "dbname=" << Database << ' ';
-    StringStream << "user=" << Login << ' ';
-    StringStream << "password=" << Password << ' ';
-    StringStream << "connect_timeout=3 ";
-    StringStream << "application_name=Carat";
-    std::string String = StringStream.str(); //Нужна именно такая конструкция
-    const char *ConnectionInfo = String.c_str();
+    std::string String = ISAlgorithm::StringF("host=%s port=%d dbname=%s user=%s password=%s connect_timeout=3 application_name=Carat",
+        Host.c_str(), Port, Database.c_str(), Login.c_str(), Password.c_str());
+    const char *ConnectionString = String.c_str();
 
     //Пингуем сервер
-    PGPing Ping = PQping(ConnectionInfo);
+    PGPing Ping = PQping(ConnectionString);
     if (Ping != PQPING_OK) //Что-то не так
     {
         switch (Ping)
@@ -90,7 +83,7 @@ bool ISDatabase::Connect(const std::string &ConnectionName, const std::string &H
     }
 
     //Подключаемся и проверяем объект на NULL
-    PGconn *Connection = PQconnectdb(ConnectionInfo);
+    PGconn *Connection = PQconnectdb(ConnectionString);
     if (!Connection)
     {
         ErrorString = "Error PQconnectdb";

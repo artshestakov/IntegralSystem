@@ -57,9 +57,7 @@ std::string ISTcpWorkerHelper::ConvertDateToString(const ISDate &Date)
 		default:
 			break;
 		}
-		Result = std::to_string(Date.Day) + ' ' +
-			Result + ' ' +
-			std::to_string(Date.Year);
+		Result = ISAlgorithm::StringF("%d %s %d", Date.Day, Result.c_str(), Date.Year);
 	}
 	return Result;
 }
