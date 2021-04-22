@@ -1668,11 +1668,11 @@ bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
                 {
                     if (IsForeign)
                     {
-//Values.PushBack(JSON_STRINGA(qSelect.ReadColumn(i), Allocator), Allocator);
+                        Values.PushBack(JSON_STRINGA(qSelect.ReadColumn(i), Allocator), Allocator);
                     }
                     else
                     {
-//Values.PushBack(JSON_STRING(ISAlgorithm::FormatNumber(qSelect.ReadColumn_Int64(i)).c_str()), Allocator);
+                        Values.PushBack(JSON_STRING(ISAlgorithm::FormatNumber(qSelect.ReadColumn_Int64(i)).c_str()), Allocator);
                     }
                 }
                 else if (Type == ISNamespace::FieldType::ID)
@@ -1687,7 +1687,7 @@ bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
                 {
                     Values.PushBack(JSON_STRINGA(qSelect.ReadColumn(i), Allocator), Allocator);
                 }
-                else if (Type == ISNamespace::FieldType::Date)
+                else if (Type == ISNamespace::FieldType::Date || Type == ISNamespace::FieldType::Birthday)
                 {
                     std::string String = ISTcpWorkerHelper::ConvertDateToString(qSelect.ReadColumn_Date(i));
                     const char *CString = String.c_str();
@@ -1701,16 +1701,34 @@ bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
                 }
                 else if (Type == ISNamespace::FieldType::DateTime)
                 {
-                    //Value = ISTcpWorkerHelper::ConvertDateTimeToString(Value.toDateTime(), FORMAT_TIME_V1);
-                }
-                else if (Type == ISNamespace::FieldType::Birthday)
-                {
-                    //Value = Value.toDate().toString(FORMAT_DATE_V1);
+                    std::string String = ISTcpWorkerHelper::ConvertDateTimeToString(qSelect.ReadColumn_DateTime(i));
+                    const char *CString = String.c_str();
+                    Values.PushBack(JSON_STRINGA(CString, Allocator), Allocator);
                 }
                 else if (Type == ISNamespace::FieldType::Phone)
                 {
-                    //QString PhoneNumber = Value.toString();
-                    //Value = QString("+7 (%1) %2-%3-%4").arg(PhoneNumber.left(3)).arg(PhoneNumber.mid(3, 3)).arg(PhoneNumber.mid(6, 2)).arg(PhoneNumber.right(2));
+                    const char *String = qSelect.ReadColumn(i);
+                    char Temp[19] = { 0 };
+                    Temp[0] = '+';
+                    Temp[1] = '7';
+                    Temp[2] = ' ';
+                    Temp[3] = '(';
+                    Temp[4] = String[0];
+                    Temp[5] = String[1];
+                    Temp[6] = String[2];
+                    Temp[7] = ')';
+                    Temp[8] = ' ';
+                    Temp[9] = String[3];
+                    Temp[10] = String[4];
+                    Temp[11] = String[5];
+                    Temp[12] = '-';
+                    Temp[13] = String[6];
+                    Temp[14] = String[7];
+                    Temp[15] = '-';
+                    Temp[16] = String[8];
+                    Temp[17] = String[9];
+                    Temp[18] = CHAR_NULL_TERM;
+                    Values.PushBack(JSON_STRINGA(Temp, Allocator), Allocator);
                 }
                 else if (Type == ISNamespace::FieldType::Seconds)
                 {
@@ -1718,17 +1736,20 @@ bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
                 }
                 else if (Type == ISNamespace::FieldType::Double)
                 {
-                    //Value = ISAlgorithm::FormatNumber(Value.toDouble(), ' ', Precision);
+                    std::string String = ISAlgorithm::FormatNumber(qSelect.ReadColumn_Double(i), ' ', Precision);
+                    const char *CString = String.c_str();
+                    Values.PushBack(JSON_STRINGA(CString, Allocator), Allocator);
                 }
                 else if (Type == ISNamespace::FieldType::Money)
                 {
-//std::string String = ISAlgorithm::FormatNumber(qSelect.ReadColumn_Double(i), ' ', 2);
-//const char *SString = String.c_str();
-//Values.PushBack(JSON_STRINGA(SString, Allocator), Allocator);
+                    std::string String = ISAlgorithm::FormatNumber(qSelect.ReadColumn_Double(i), ' ', 2);
+                    const char *SString = String.c_str();
+                    Values.PushBack(JSON_STRINGA(SString, Allocator), Allocator);
                 }
                 else if (Type == ISNamespace::FieldType::UID)
                 {
-                    //Value = Value.toString();
+                    const char *String = qSelect.ReadColumn(i);
+                    Values.PushBack(JSON_STRINGA(String, Allocator), Allocator);
                 }
                 else if (Type == ISNamespace::FieldType::ProtocolDT)
                 {
