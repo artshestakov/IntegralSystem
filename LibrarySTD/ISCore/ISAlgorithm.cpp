@@ -602,73 +602,24 @@ std::string ISAlgorithm::FormatNumber(long long Number, char Separator)
 //-----------------------------------------------------------------------------
 std::string ISAlgorithm::FormatNumber(double Number, char Separator, unsigned int Precision)
 {
-    //Переводим число в строку и ищем точку
-
-    
+    //Вытаскиваем левую часть дроби
     long long ValueLeft = (long long)trunc(Number);
-    //double rv = Number - ValueLeft;
-    int Factor = 0; //Множитель
 
-    switch (Precision) //??? Попробовать заменить switch на цикл for, в котором динамически рассчитывать Factor
+    //Если знаки после разделителя дроби не нужны - выходим
+    //ВНИМАНИЕ!!! Результат функции FormatNumber(long long, ...) НЕ СОХРАНЯТЬ. ОТДАЁМ КАК ЕСТЬ.
+    //Тесты показали что так работает быстрее.
+    if (Precision == 0)
     {
-    case 1: Factor = 10; break;
-    case 2: Factor = 100; break;
-    case 3: Factor = 1000; break;
-    case 4: Factor = 10000; break;
-    case 5: Factor = 100000; break;
-    case 6: Factor = 1000000; break;
-    default:
-        break;
+        return FormatNumber(ValueLeft, Separator);
     }
-    int ValueRight = (int)((Number - ValueLeft)/*rv*/ * Factor);
-    ValueRight;
 
-    char ch[8] = { 0 };
-
-    //or stringf
-    std::string r = FormatNumber(ValueLeft, Separator) + '.' + _itoa(ValueRight, ch, 10);
-    return r;
-
-    /*
-    double i;
-    double f;
-    f = modf(3.14, &i);
-    printf("%f %f", i, f);
-    int I = (int)(f * 100);
-    I;
-    */
-
-    //char Char[48] = { 0 };
-    //_gcvt(Number, Precision, Char);
-
-    /*size_t LeftCount = 0,
-        CharSize = strlen(Char);
-    for (LeftCount = 0; LeftCount < CharSize; ++LeftCount)
+    int Factor = 1; //Множитель
+    for (unsigned int i = 0; i < Precision; ++i)
     {
-        if (Char[LeftCount] == '.')
-        {
-            break;
-        }
-    }*/
-
-    //if (LeftCount != 0) //Нашли точку
-    {
-        /*if (Precision != 0) //Учитываем кол-во знаков после запятой
-        {
-            Result.erase(PosPoint + Precision + 1);
-        }*/
-
-        //char Temp[48] = { 0 };
-        //memcpy(Temp, Char, PosPoint);
-        //memmove(Temp, Char, LeftCount);
-        //std::string s = FormatNumber(atoll(Temp), Separator);
-        
-        //memmove(Char, Char + ++LeftCount, CharSize);
-
-        //long long Left = std::stoll(Result.substr(0, PosPoint));
-        //Result.replace(0, PosPoint, FormatNumber(Left, Separator));
+        Factor *= 10;
     }
-    //return Char;
+    char Temp[16] = { 0 };
+    return FormatNumber(ValueLeft, Separator) + '.' + _itoa((int)((Number - ValueLeft) * Factor), Temp, 10);
 }
 //-----------------------------------------------------------------------------
 std::string ISAlgorithm::GenerateUuidStandart()
