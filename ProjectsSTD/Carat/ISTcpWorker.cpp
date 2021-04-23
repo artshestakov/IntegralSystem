@@ -1699,7 +1699,7 @@ bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
                     const char *CString = String.c_str();
                     Values.PushBack(JSON_STRINGA(CString, Allocator), Allocator);
                 }
-                else if (Type == ISNamespace::FieldType::DateTime)
+                else if (Type == ISNamespace::FieldType::DateTime || Type == ISNamespace::FieldType::ProtocolDT)
                 {
                     std::string String = ISTcpWorkerHelper::ConvertDateTimeToString(qSelect.ReadColumn_DateTime(i));
                     const char *CString = String.c_str();
@@ -1732,7 +1732,9 @@ bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
                 }
                 else if (Type == ISNamespace::FieldType::Seconds)
                 {
-                    //Value = QTime(0, 0).addSecs(Value.toInt()).toString(FORMAT_TIME_V3);
+                    std::string String = ISTime::FromSecond(qSelect.ReadColumn_UInt(i)).ToString();
+                    const char *CString = String.c_str();
+                    Values.PushBack(JSON_STRINGA(CString, Allocator), Allocator);
                 }
                 else if (Type == ISNamespace::FieldType::Double)
                 {
@@ -1750,10 +1752,6 @@ bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
                 {
                     const char *String = qSelect.ReadColumn(i);
                     Values.PushBack(JSON_STRINGA(String, Allocator), Allocator);
-                }
-                else if (Type == ISNamespace::FieldType::ProtocolDT)
-                {
-                    //Values.PushBack(JSON_STRING(ISTcpWorkerHelper::ConvertDateTimeToString(qSelect.ReadColumn_DateTime(i)).c_str()), Allocator);
                 }
             }
             RecordArray.PushBack(Values, Allocator); //ƒобавл€ем список значений в список записей
