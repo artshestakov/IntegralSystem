@@ -71,7 +71,7 @@ void ISLogger::Shutdown()
     }
 }
 //-----------------------------------------------------------------------------
-void ISLogger::Log(ISNamespace::LogMessageType MessageType, char *Component, const char *Format, ...)
+void ISLogger::Log(ISNamespace::LogMessageType MessageType, const std::string &Component, const char *Format, ...)
 {
     if (!IsRunning)
     {
@@ -83,7 +83,7 @@ void ISLogger::Log(ISNamespace::LogMessageType MessageType, char *Component, con
     const char *message_type = nullptr;
     switch (MessageType)
     {
-    case ISNamespace::LogMessageType::Unknown: break;
+    case ISNamespace::LogMessageType::Unknown: message_type = LOG_UNKNOWN; break;
     case ISNamespace::LogMessageType::Debug: message_type = LOG_DEBUG; break;
     case ISNamespace::LogMessageType::Info: message_type = LOG_INFO; break;
     case ISNamespace::LogMessageType::Warning: message_type = LOG_WARNING; break;
@@ -98,21 +98,14 @@ void ISLogger::Log(ISNamespace::LogMessageType MessageType, char *Component, con
 
     //Формируем заголовок
     char BufferHeader[LOG_HEADER_SIZE] = { 0 };
-    std::sprintf(BufferHeader, "%02d.%02d.%02d %02d:%02d:%02d:%03d\t%lu\t[%s]",
+    std::sprintf(BufferHeader, "%02d.%02d.%02d %02d:%02d:%02d:%03d\t%lu\t[%s][%s] ",
         DT.Date.Day, DT.Date.Month, DT.Date.Year % 100,
         DT.Time.Hour, DT.Time.Minute, DT.Time.Second, DT.Time.Milliseconds,
-        CURRENT_THREAD_ID(), message_type);
-
-    //Если указан компонент и он не пустой - добавим его к заголовку
-    if (Component && strlen(Component) > 0)
-    {
-        strcat(BufferHeader, Component);
-        free(Component);
-    }
+        CURRENT_THREAD_ID(), message_type,
+        Component.empty() ? "" : Component.c_str());
 
     //Результирующая строка
     std::string string_result(BufferHeader);
-    string_result += ' ';
 
     //Вытаскиваем аргументы
     va_list Arguments;
@@ -134,12 +127,12 @@ void ISLogger::Log(ISNamespace::LogMessageType MessageType, char *Component, con
         string_result += Buffer;
     }
     va_end(Arguments);
-    
+
     CRITICAL_SECTION_LOCK(&CriticalSection);
 #ifdef DEBUG //В отладочной версии выводим строку в консоль
-    //ISDEBUG_L(string_result);
+    ISDEBUG_L(string_result);
 #ifdef WIN32 //Для Windows выводим строку в консоль Visual Studio
-    //OutputDebugString((string_result + '\n').c_str());
+    OutputDebugString((string_result + '\n').c_str());
 #endif
 #endif
     if (LastIndex == LOG_ARRAY_SIZE) //Если превысили размер массива
@@ -164,7 +157,7 @@ bool ISLogger::CreateLogDirectory(const ISDate &Date)
     sprintf(Buffer, "%s%cLogs%c%d%c%02d%c", ISAlgorithm::GetApplicationDir().c_str(), PATH_SEPARATOR,
         PATH_SEPARATOR, CurrentYear, PATH_SEPARATOR, CurrentMonth, PATH_SEPARATOR);
     PathLogsDir = Buffer;
-    
+
     if (!ISAlgorithm::DirExist(PathLogsDir)) //Если папка с текущим месяцем не существует - создаём её
     {
         if (!ISAlgorithm::DirCreate(PathLogsDir, ErrorString)) //Ошибка создания папки

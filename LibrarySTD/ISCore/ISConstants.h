@@ -38,8 +38,9 @@ const char  CONFIG_TYPE_STRING[] = "String";
 //LOGGER-----------------------------------------------------------------------
 const size_t    LOG_ARRAY_SIZE = 20000; //Максимальный размер массива
 const size_t    LOG_TIMEOUT = 50; //Таймаут логгера
-const size_t    LOG_HEADER_SIZE = 64; //Макисмальный размер заголовка
+const size_t    LOG_HEADER_SIZE = 96; //Макисмальный размер заголовка
 const size_t    LOG_BUFFER_SIZE = 10240; //Размер буфера для одного сообщения
+const char      LOG_UNKNOWN[] = "Unknown";
 const char      LOG_DEBUG[] = "Debug";
 const char      LOG_INFO[] = "Info";
 const char      LOG_WARNING[] = "Warning";
