@@ -578,6 +578,12 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
                 break;
             }
         }
+
+        if (!IsFound)
+        {
+            ErrorString = LANG("Carat.Error.Query.Auth.InvalidLoginOrPassword");
+            return false;
+        }
     }
 
     //Проверка пользователя
