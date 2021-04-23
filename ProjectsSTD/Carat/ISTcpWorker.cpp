@@ -394,7 +394,7 @@ bool ISTcpWorker::GetParameterUInt(ISTcpMessage *TcpMessage, const char *Paramet
     rapidjson::Value &ParameterValue = TcpMessage->Parameters[ParameterName];
     if (!ParameterValue.IsInt()) //Значение не является числовым
     {
-        ErrorString = ISAlgorithm::StringF(LANG("Carat.Error.ParameterNotInt").c_str(), ParameterName);
+        ErrorString = ISAlgorithm::StringF(LANG("Carat.Error.ParameterNotInt"), ParameterName);
         return false;
     }
     Value = ParameterValue.GetUint();
@@ -406,7 +406,7 @@ bool ISTcpWorker::GetParameterString(ISTcpMessage *TcpMessage, const char *Param
     rapidjson::Value &ParameterValue = TcpMessage->Parameters[ParameterName];
     if (!ParameterValue.IsString())
     {
-        ErrorString = ISAlgorithm::StringF(LANG("Carat.Error.ParameterNotString").c_str(), ParameterName);
+        ErrorString = ISAlgorithm::StringF(LANG("Carat.Error.ParameterNotString"), ParameterName);
         return false;
     }
     Value = ParameterValue.GetString();
@@ -459,7 +459,7 @@ PMetaTable* ISTcpWorker::GetMetaTable(const std::string &TableName)
     PMetaTable *MetaTable = ISMetaData::Instance().GetTable(TableName);
     if (!MetaTable)
     {
-        ErrorString = ISAlgorithm::StringF(LANG("Carat.Error.GetMetaTable").c_str(), TableName.c_str());
+        ErrorString = ISAlgorithm::StringF(LANG("Carat.Error.GetMetaTable"), TableName.c_str());
     }
     return MetaTable;
 }
@@ -475,7 +475,7 @@ bool ISTcpWorker::UserPasswordExist(unsigned int UserID, bool &Exist)
 
     if (!qSelectHashIsNull.First()) //Не удалось перейти на первую строку, т.к. пользователя с таким UserID не существует
     {
-        ErrorString = ISAlgorithm::StringF(LANG("Carat.Error.UserNotExist").c_str(), UserID);
+        ErrorString = ISAlgorithm::StringF(LANG("Carat.Error.UserNotExist"), UserID);
         return false;
     }
     Exist = qSelectHashIsNull.ReadColumn_Bool(0);
@@ -493,7 +493,7 @@ bool ISTcpWorker::UserIsSystem(unsigned int UserID, bool &IsSystem)
 
     if (!qSelectIsSystem.First())
     {
-        ErrorString = ISAlgorithm::StringF(LANG("Carat.Error.UserNotExist").c_str(), UserID);
+        ErrorString = ISAlgorithm::StringF(LANG("Carat.Error.UserNotExist"), UserID);
         return false;
     }
     IsSystem = qSelectIsSystem.ReadColumn_Bool(0);
@@ -626,7 +626,7 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
             ISDate CurrentDate = ISDate::CurrentDate();
             if (CurrentDate < DateStart) //Срок действия учётной записи ещё не начался
             {
-                ErrorString = ISAlgorithm::StringF(LANG("Carat.Error.Query.Auth.LoginLifetimeNotStarted").c_str(), DateStart.ToString().c_str());
+                ErrorString = ISAlgorithm::StringF(LANG("Carat.Error.Query.Auth.LoginLifetimeNotStarted"), DateStart.ToString().c_str());
                 return false;
             }
             else if (CurrentDate > DateEnd) //Срок действия учётной записи закончился
@@ -756,7 +756,7 @@ bool ISTcpWorker::Sleep(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 
     if (Timeout == 0) //Значение равно нулю
     {
-        ErrorString = ISAlgorithm::StringF(LANG("Carat.Error.Query.Sleep.TimeoutValueIsNull").c_str());
+        ErrorString = ISAlgorithm::StringF(LANG("Carat.Error.Query.Sleep.TimeoutValueIsNull"));
         return false;
     }
     ISSleep(Timeout);
@@ -1287,7 +1287,7 @@ bool ISTcpWorker::UserPasswordEdit(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAns
 
     if (!qSelectHash.First()) //Пользователя с таким UserID нет в БД
     {
-        ErrorString = ISAlgorithm::StringF(LANG("Carat.Error.Query.UserPasswordEdit.UserNotExist").c_str(), UserID);
+        ErrorString = ISAlgorithm::StringF(LANG("Carat.Error.Query.UserPasswordEdit.UserNotExist"), UserID);
         return false;
     }
 
@@ -1515,7 +1515,7 @@ bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
     //Прав доступа на просмотр данных нет - ошибка
     if (!qSelectRight.ReadColumn_Bool(0))
     {
-        ErrorString = ISAlgorithm::StringF(LANG("Carat.Error.Query.GetTableData.NoRightShow").c_str(), MetaTable->LocalListName.c_str());
+        ErrorString = ISAlgorithm::StringF(LANG("Carat.Error.Query.GetTableData.NoRightShow"), MetaTable->LocalListName.c_str());
         return false;
     }
 

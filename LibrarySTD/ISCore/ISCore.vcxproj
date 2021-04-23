@@ -173,6 +173,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ConvertUTF.c" />
+    <ClCompile Include="hashmap.cpp" />
     <ClCompile Include="ISAlgorithm.cpp" />
     <ClCompile Include="ISAssert.cpp" />
     <ClCompile Include="ISConfig.cpp" />
@@ -188,6 +189,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ConvertUTF.h" />
+    <ClInclude Include="hashmap.h" />
     <ClInclude Include="ISAlgorithm.h" />
     <ClInclude Include="ISAssert.h" />
     <ClInclude Include="ISConfig.h" />

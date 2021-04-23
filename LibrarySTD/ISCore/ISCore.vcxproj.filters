@@ -55,6 +55,9 @@
     <ClCompile Include="ISProperty.cpp">
       <Filter>Types</Filter>
     </ClCompile>
+    <ClCompile Include="hashmap.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StdAfx.h">
@@ -110,6 +113,9 @@
     </ClInclude>
     <ClInclude Include="ISProperty.h">
       <Filter>Types</Filter>
+    </ClInclude>
+    <ClInclude Include="hashmap.h">
+      <Filter>System</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

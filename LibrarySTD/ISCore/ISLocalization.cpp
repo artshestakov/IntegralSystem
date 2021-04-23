@@ -5,9 +5,14 @@
 #include "ISLogger.h"
 //-----------------------------------------------------------------------------
 ISLocalization::ISLocalization()
-    : ErrorString(STRING_NO_ERROR)
+    : ErrorString(STRING_NO_ERROR),
+    Map(nullptr)
 {
-
+    Map = hashmap_new();
+    if (!Map)
+    {
+        //error
+    }
 }
 //-----------------------------------------------------------------------------
 ISLocalization::~ISLocalization()
@@ -48,10 +53,23 @@ bool ISLocalization::Init(const std::string &FileName)
     {
         //Получаем ключ перевода и проверяем на дубликат
         const char *Key = XmlElement->Attribute("Name");
-        auto It = MapUnordered.find(Key);
-        if (It == MapUnordered.end()) //Такого ключа ещё нет - добавляем
+        any_t Any;
+        if (hashmap_get(Map, (char *)Key, &Any) == MAP_MISSING) //Такого ключа ещё нет - добавляем
         {
-            MapUnordered.emplace(Key, XmlElement->Attribute("Russian"));
+            const char *Value = XmlElement->Attribute("Russian");
+
+            //Выделяем память под ключ и значение
+            char *KKey = (char *)malloc(sizeof(char) * strlen(Key) + 1),
+                *VValue = (char *)malloc(sizeof(Value) * strlen(Value) + 1);
+
+            strcpy(KKey, Key);
+            strcpy(VValue, Value);
+
+            if (hashmap_put(Map, KKey, VValue) != MAP_OK)
+            {
+                ISLOGGER_W(__CLASS__, "Error insert key \"%s\"", Key);
+                break;
+            }
         }
         else //Дубликат
         {
@@ -62,13 +80,13 @@ bool ISLocalization::Init(const std::string &FileName)
     return true;
 }
 //-----------------------------------------------------------------------------
-std::string ISLocalization::GetString(const std::string &Key)
+const char* ISLocalization::GetString(const char *Key)
 {
-    auto It = MapUnordered.find(Key);
-    if (It == MapUnordered.end()) //Не нашли такой ключ
+    ISLocal *Local = nullptr;
+    if (hashmap_get(Map, (char *)Key, (void **)&Local) == MAP_OK)
     {
-        return Key;
+        return Local->Value;
     }
-    return (*It).second;
+    return Key;
 }
 //-----------------------------------------------------------------------------

@@ -3,6 +3,7 @@
 #define _ISLOCALIZATION_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "ISTypedefs.h"
+#include "hashmap.h"
 //-----------------------------------------------------------------------------
 class ISLocalization
 {
@@ -11,7 +12,7 @@ public:
 
     std::string GetErrorString() const;
     bool Init(const std::string &FileName);
-    std::string GetString(const std::string &Key);
+    const char* GetString(const char *Key);
 
 private:
     ISLocalization();
@@ -23,7 +24,7 @@ private:
 
 private:
     std::string ErrorString;
-    std::unordered_map<std::string, std::string> MapUnordered;
+    map_t Map;
 };
 //-----------------------------------------------------------------------------
 #define LANG(KEY) ISLocalization::Instance().GetString(KEY)

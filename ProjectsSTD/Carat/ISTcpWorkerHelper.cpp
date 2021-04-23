@@ -71,7 +71,7 @@ std::string ISTcpWorkerHelper::GetUptime()
 		++Days;
         Seconds -= DAY_IN_SECONDS;
 	}
-    return ISAlgorithm::StringF(LANG("Carat.Uptime").c_str(), Days, ISTime::FromSecond((unsigned int)Seconds).ToString().c_str());
+    return ISAlgorithm::StringF(LANG("Carat.Uptime"), Days, ISTime::FromSecond((unsigned int)Seconds).ToString().c_str());
 }
 //-----------------------------------------------------------------------------
 const char* ISTcpWorkerHelper::GetSettingDB(PGconn *DBConnection, const std::string &SettingName)
