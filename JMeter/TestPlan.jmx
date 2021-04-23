@@ -13,7 +13,7 @@
     </TestPlan>
     <hashTree>
       <ConfigTestElement guiclass="TCPConfigGui" testclass="ConfigTestElement" testname="TCP Sampler Config" enabled="true">
-        <stringProp name="TCPSampler.server">192.168.88.136</stringProp>
+        <stringProp name="TCPSampler.server">127.0.0.1</stringProp>
         <boolProp name="TCPSampler.reUseConnection">true</boolProp>
         <stringProp name="TCPSampler.port">50000</stringProp>
         <boolProp name="TCPSampler.nodelay">false</boolProp>
@@ -173,7 +173,7 @@
           </elementProp>
           <elementProp name="GetTableData_TableName" elementType="Argument">
             <stringProp name="Argument.name">GetTableData_TableName</stringProp>
-            <stringProp name="Argument.value">Counterparty</stringProp>
+            <stringProp name="Argument.value">_Protocol</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="GetTableData_SortingField" elementType="Argument">
@@ -564,7 +564,7 @@ def MapRecordGetInfo =
 	Parameters:
 		[
 			TableName: vars.get(&quot;RecordGetInfo_TableName&quot;),
-			ObjectID: vars.get(&quot;RecordGetInfo_ObjectID&quot;)
+			ObjectID: Integer.parseInt(vars.get(&quot;RecordGetInfo_ObjectID&quot;))
 		]
 ];
 vars.put(&quot;QueryRecordGetInfo&quot;, MapToString(MapRecordGetInfo));
@@ -919,7 +919,7 @@ vars.put(&quot;QueryGetMonitor&quot;, MapToString(MapGetMonitor));</stringProp>
           <stringProp name="ConfigTestElement.password"></stringProp>
         </TCPSampler>
         <hashTree/>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: GetMetaData" enabled="true">
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: GetMetaData" enabled="false">
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
           <stringProp name="TCPSampler.port"></stringProp>
@@ -1003,7 +1003,7 @@ vars.put(&quot;QueryGetMonitor&quot;, MapToString(MapGetMonitor));</stringProp>
           <stringProp name="ConfigTestElement.password"></stringProp>
         </TCPSampler>
         <hashTree/>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: RecordGetInfo" enabled="false">
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: RecordGetInfo" enabled="true">
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
           <stringProp name="TCPSampler.port"></stringProp>

@@ -168,6 +168,11 @@ namespace ISAlgorithm
     //! \return возвращает MD5-хэш. Если вернулась пустая строка - значит ошибка
     std::string StringToMD5(const std::string &String);
 
+    //! Удалить указанный символ в конце
+    //! \param String строка в которой будет происходить удаление
+    //! \param Symbol символ который будет удаляться
+    void RemoveLastSymbolLoop(std::string &String, char Symbol);
+
     //! Форматирование целого числа. Например, число 6985473 примет вид 6 985 473
     //! \Number целое число
     //! \return возвращает форматированное число

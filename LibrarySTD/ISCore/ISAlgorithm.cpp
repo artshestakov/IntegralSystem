@@ -577,6 +577,14 @@ std::string ISAlgorithm::StringToMD5(const std::string &String)
     return Result;
 }
 //-----------------------------------------------------------------------------
+void ISAlgorithm::RemoveLastSymbolLoop(std::string &String, char Symbol)
+{
+    while (!String.empty() && String.back() == Symbol)
+    {
+        StringChop(String, 1);
+    }
+}
+//-----------------------------------------------------------------------------
 std::string ISAlgorithm::FormatNumber(long long Number, char Separator)
 {
     //Переводим число в строку

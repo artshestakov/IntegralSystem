@@ -50,6 +50,11 @@ int ISQuery::GetResultColumnCount() const
     return CountColumns;
 }
 //-----------------------------------------------------------------------------
+Oid ISQuery::GetResultColumnType(size_t Index) const
+{
+    return PQftype(SqlResult, (int)Index);
+}
+//-----------------------------------------------------------------------------
 const char* ISQuery::GetResultFieldName(int Index) const
 {
     return PQfname(SqlResult, Index);
@@ -218,7 +223,7 @@ bool ISQuery::Execute()
     //Если запрос выполнялся дольше DB_MAX_QUERY_TIME - выводим предупреждение
     if (ShowLongQuery && Msec > DB_MAX_QUERY_TIME)
     {
-        ISLOGGER_W(__CLASS__, "Long query msec: %d. %s", Msec, SqlText.c_str());
+        ISLOGGER_W(__CLASS__, "Long query msec: %lld. %s", Msec, SqlText.c_str());
     }
 
     switch (PQresultStatus(SqlResult)) //Проверяем результат

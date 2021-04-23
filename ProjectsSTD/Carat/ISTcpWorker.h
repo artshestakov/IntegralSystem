@@ -31,6 +31,7 @@ private:
     bool ErrorQuery(const std::string &LocalError, ISQuery &SqlQuery);
     void Protocol(unsigned int UserID, const char *ActionUID, const std::string &TableName = std::string(), const std::string &TableLocalName = std::string(), unsigned int ObjectID = 0, const std::string &Information = std::string());
     unsigned int ExtractVersionFile(const std::string &FileName);
+    bool GetObjectName(PMetaTable *MetaTable, unsigned int ObjectID, std::string &ObjectName); //Получить наименование объекта
     PMetaTable* GetMetaTable(const std::string &TableName); //Получить указатель на мета-таблицу
     bool UserPasswordExist(unsigned int UserID, bool &Exist); //Проверка наличия пароля у пользователя
     bool UserIsSystem(unsigned int UserID, bool &IsSystem); //Проверка пользователя на системность

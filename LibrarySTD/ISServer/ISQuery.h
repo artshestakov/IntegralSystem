@@ -19,6 +19,7 @@ public:
     const std::string& GetSqlText() const; //Получить текст запроса
     int GetResultRowCount() const; //Получить размер выборки
     int GetResultColumnCount() const; //Получить кол-во полей в выборке
+    Oid GetResultColumnType(size_t Index) const; //Получить тип поля в результирующей выборке
     const char* GetResultFieldName(int Index) const; //Получить имя поля из выборки
     bool GetIsSelect() const; //Проверить, является ли запрос выборкой
 

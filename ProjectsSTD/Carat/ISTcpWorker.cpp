@@ -13,118 +13,202 @@
 #include "ISTcpWorkerHelper.h"
 //-----------------------------------------------------------------------------
 static std::string QS_USERS_HASH = PREPARE_QUERY("SELECT usrs_hash, usrs_salt "
-                                                 "FROM _users "
-                                                 "WHERE usrs_hash IS NOT NULL "
-                                                 "AND usrs_salt IS NOT NULL");
+    "FROM _users "
+    "WHERE usrs_hash IS NOT NULL "
+    "AND usrs_salt IS NOT NULL");
 //-----------------------------------------------------------------------------
 static std::string QS_USER_AUTH = PREPARE_QUERYN("SELECT usrs_id, usrs_issystem, usrs_fio, usrs_group, usgp_fullaccess, usrs_accessallowed, usrs_accountlifetime, usrs_accountlifetimestart, usrs_accountlifetimeend, "
-                                                "(SELECT sgdb_useraccessdatabase FROM _settingsdatabase WHERE sgdb_uid = $1) "
-                                                "FROM _users "
-                                                "LEFT JOIN _usergroup ON usgp_id = usrs_group "
-                                                "WHERE usrs_hash = $2", 2);
+    "(SELECT sgdb_useraccessdatabase FROM _settingsdatabase WHERE sgdb_uid = $1) "
+    "FROM _users "
+    "LEFT JOIN _usergroup ON usgp_id = usrs_group "
+    "WHERE usrs_hash = $2", 2);
 //-----------------------------------------------------------------------------
 static std::string QI_PROTOCOL = PREPARE_QUERYN("SELECT protocol_user($1, $2, $3, $4, $5, $6)", 6);
 //-----------------------------------------------------------------------------
 static std::string QS_SETTINGS_DATABASE = PREPARE_QUERYN("SELECT sgdb_id, sgdb_useraccessdatabase, sgdb_numbersimbolsaftercomma, sgdb_storagefilemaxsize, sgdb_tcpmessageid "
-                                                        "FROM _settingsdatabase "
-                                                        "WHERE sgdb_uid = $1", 1);
+    "FROM _settingsdatabase "
+    "WHERE sgdb_uid = $1", 1);
 //-----------------------------------------------------------------------------
 static std::string QS_GROUP_ACCESS_TABLE = PREPARE_QUERYN("SELECT gatb_table, gatt_uid "
-                                                          "FROM _groupaccesstable "
-                                                          "LEFT JOIN _groupaccesstabletype ON gatt_id = gatb_AccessType "
-                                                          "WHERE gatb_group = $1", 1);
+    "FROM _groupaccesstable "
+    "LEFT JOIN _groupaccesstabletype ON gatt_id = gatb_AccessType "
+    "WHERE gatb_group = $1", 1);
 //-----------------------------------------------------------------------------
 static std::string QS_GROUP_ACCESS_SPECIAL = PREPARE_QUERYN("SELECT gast_uid "
-                                                            "FROM _groupaccessspecial "
-                                                            "LEFT JOIN _groupaccessspecialtype ON gast_id = gasp_specialaccess "
-                                                            "WHERE gasp_group = $1", 1);
+    "FROM _groupaccessspecial "
+    "LEFT JOIN _groupaccessspecialtype ON gast_id = gasp_specialaccess "
+    "WHERE gasp_group = $1", 1);
 //-----------------------------------------------------------------------------
 static std::string QS_SYSTEM_SUBSYSTEM = PREPARE_QUERYN("SELECT check_access_user_subsystem($1, $2, sbsm_uid), "
-                                                        "stms_uid, stms_issystem, stms_localname, stms_icon, stms_hint, "
-                                                        "sbsm_uid, sbsm_localname, sbsm_icon, sbsm_classname, sbsm_tablename, sbsm_hint "
-                                                        "FROM _systems "
-                                                        "LEFT JOIN _subsystems ON stms_uid = sbsm_system "
-                                                        "ORDER BY stms_orderid, sbsm_orderid", 2);
+    "stms_uid, stms_issystem, stms_localname, stms_icon, stms_hint, "
+    "sbsm_uid, sbsm_localname, sbsm_icon, sbsm_classname, sbsm_tablename, sbsm_hint "
+    "FROM _systems "
+    "LEFT JOIN _subsystems ON stms_uid = sbsm_system "
+    "ORDER BY stms_orderid, sbsm_orderid", 2);
 //-----------------------------------------------------------------------------
 static std::string QS_FAVORITE = PREPARE_QUERYN("SELECT fvts_tablename, fvts_objectid "
-                                                "FROM _favorites "
-                                                "WHERE fvts_user = $1", 1);
+    "FROM _favorites "
+    "WHERE fvts_user = $1", 1);
 //-----------------------------------------------------------------------------
 static std::string QS_COLUMN_SIZE = PREPARE_QUERYN("SELECT clsz_tablename, clsz_fieldname, clsz_size "
-                                                   "FROM _columnsize "
-                                                   "WHERE clsz_user = $1", 1);
+    "FROM _columnsize "
+    "WHERE clsz_user = $1", 1);
 //-----------------------------------------------------------------------------
 static std::string QS_SETTINGS = PREPARE_QUERYN("SELECT stgp_uid, stgp_name, stgp_localname, stgp_iconname, stgp_hint, "
-                                                "stgs_uid, stgs_name, stgs_type, stgs_widgeteditname, stgs_localname, stgs_hint, stgs_defaultvalue, "
-                                                "usst_value, "
-                                                "(SELECT COUNT(*) FROM _usersettings WHERE usst_user = $1 AND usst_setting = stgs_id) "
-                                                "FROM _settingsgroup "
-                                                "LEFT JOIN _settings ON stgs_group = stgp_uid "
-                                                "LEFT JOIN _usersettings ON usst_setting = stgs_id AND usst_user = $1 "
-                                                "ORDER BY stgp_order, stgs_order", 1);
+    "stgs_uid, stgs_name, stgs_type, stgs_widgeteditname, stgs_localname, stgs_hint, stgs_defaultvalue, "
+    "usst_value, "
+    "(SELECT COUNT(*) FROM _usersettings WHERE usst_user = $1 AND usst_setting = stgs_id) "
+    "FROM _settingsgroup "
+    "LEFT JOIN _settings ON stgs_group = stgp_uid "
+    "LEFT JOIN _usersettings ON usst_setting = stgs_id AND usst_user = $1 "
+    "ORDER BY stgp_order, stgs_order", 1);
 //-----------------------------------------------------------------------------
 static std::string QI_USER_SETTING = "INSERT INTO _usersettings(usst_user, usst_setting, usst_value) "
-                                     "VALUES($1, (SELECT stgs_id FROM _settings WHERE stgs_uid = $2), $3)";
+"VALUES($1, (SELECT stgs_id FROM _settings WHERE stgs_uid = $2), $3)";
 //-----------------------------------------------------------------------------
 static std::string QS_PARAGRAPH = PREPARE_QUERY("SELECT prhs_uid, prhs_name, prhs_localname, prhs_tooltip, prhs_icon, prhs_classname "
-                                                "FROM _paragraphs "
-                                                "ORDER BY prhs_orderid");
+    "FROM _paragraphs "
+    "ORDER BY prhs_orderid");
 //-----------------------------------------------------------------------------
 static std::string QS_TASK_PRIORITY = PREPARE_QUERY("SELECT tspr_id, tspr_name, tspr_tooltip, tspr_stylesheet, tspr_icon "
-                                                    "FROM _taskpriority "
-                                                    "ORDER BY tspr_order");
+    "FROM _taskpriority "
+    "ORDER BY tspr_order");
 //-----------------------------------------------------------------------------
 static std::string QS_USER_PASSWORD_IS_NULL = PREPARE_QUERYN("SELECT "
-                                                             "( "
-                                                             "SELECT (COUNT(*) > 0)::BOOLEAN is_exist "
-                                                             "FROM _users "
-                                                             "WHERE usrs_id = $1 "
-                                                             "AND usrs_hash IS NOT NULL "
-                                                             "AND usrs_salt IS NOT NULL "
-                                                             ") "
-                                                             "FROM _users "
-                                                             "WHERE usrs_id = $1", 1);
+    "( "
+    "SELECT (COUNT(*) > 0)::BOOLEAN is_exist "
+    "FROM _users "
+    "WHERE usrs_id = $1 "
+    "AND usrs_hash IS NOT NULL "
+    "AND usrs_salt IS NOT NULL "
+    ") "
+    "FROM _users "
+    "WHERE usrs_id = $1", 1);
 //-----------------------------------------------------------------------------
 static std::string QS_USER_PASSWORD = PREPARE_QUERYN("SELECT usrs_hash, usrs_salt "
-                                                     "FROM _users "
-                                                     "WHERE usrs_id = $1", 1);
+    "FROM _users "
+    "WHERE usrs_id = $1", 1);
 //-----------------------------------------------------------------------------
 static std::string QU_USER_HASH_RESET = PREPARE_QUERYN("UPDATE _users SET "
-                                                       "usrs_hash = NULL, "
-                                                       "usrs_salt = NULL "
-                                                       "WHERE usrs_id = $1 "
-                                                       "RETURNING usrs_fio", 1);
+    "usrs_hash = NULL, "
+    "usrs_salt = NULL "
+    "WHERE usrs_id = $1 "
+    "RETURNING usrs_fio", 1);
 //-----------------------------------------------------------------------------
 static std::string QS_USER_IS_SYSTEM = PREPARE_QUERYN("SELECT usrs_issystem "
-                                                      "FROM _users "
-                                                      "WHERE usrs_id = $1", 1);
+    "FROM _users "
+    "WHERE usrs_id = $1", 1);
 //-----------------------------------------------------------------------------
 static std::string QU_USER_HASH = PREPARE_QUERYN("UPDATE _users SET "
-                                                 "usrs_hash = $1, "
-                                                 "usrs_salt = $2 "
-                                                 "WHERE usrs_id = $3 "
-                                                 "RETURNING usrs_fio", 3);
+    "usrs_hash = $1, "
+    "usrs_salt = $2 "
+    "WHERE usrs_id = $3 "
+    "RETURNING usrs_fio", 3);
 //-----------------------------------------------------------------------------
 static std::string QU_USER_SETTINGS_RESET = PREPARE_QUERYN("UPDATE _usersettings SET "
-                                                           "usst_value = (SELECT stgs_defaultvalue FROM _settings WHERE stgs_id = usst_setting) "
-                                                           "WHERE usst_user = $1 "
-                                                           "RETURNING (SELECT stgs_uid FROM _settings WHERE stgs_id = usst_setting), usst_value", 1);
+    "usst_value = (SELECT stgs_defaultvalue FROM _settings WHERE stgs_id = usst_setting) "
+    "WHERE usst_user = $1 "
+    "RETURNING (SELECT stgs_uid FROM _settings WHERE stgs_id = usst_setting), usst_value", 1);
 //-----------------------------------------------------------------------------
 static std::string QS_RIGHT_SHOW_TABLE = PREPARE_QUERYN("SELECT check_access_user_table($1, $2, $3)", 3);
 //-----------------------------------------------------------------------------
 static std::string QS_SORTING = PREPARE_QUERYN("SELECT sgts_fieldname, sgts_sorting "
-                                               "FROM _sortingtables "
-                                               "WHERE sgts_user = $1 "
-                                               "AND sgts_tablename = $2", 2);
+    "FROM _sortingtables "
+    "WHERE sgts_user = $1 "
+    "AND sgts_tablename = $2", 2);
 //-----------------------------------------------------------------------------
 static std::string QU_SORTING = PREPARE_QUERYN("UPDATE _sortingtables SET "
-                                               "sgts_fieldname = $1, "
-                                               "sgts_sorting = $2 "
-                                               "WHERE sgts_user = $3 "
-                                               "AND sgts_tablename = $4", 4);
+    "sgts_fieldname = $1, "
+    "sgts_sorting = $2 "
+    "WHERE sgts_user = $3 "
+    "AND sgts_tablename = $4", 4);
 //-----------------------------------------------------------------------------
 static std::string QI_SORTING = PREPARE_QUERYN("INSERT INTO _sortingtables(sgts_user, sgts_tablename, sgts_fieldname, sgts_sorting)"
-                                               "VALUES($1, $2, $3, $4)", 4);
+    "VALUES($1, $2, $3, $4)", 4);
+//-----------------------------------------------------------------------------
+static std::string QS_RECORD_INFO = PREPARE_QUERYN("SELECT "
+    "( "
+    "SELECT prtc_datetime AS create_date "
+    "FROM _protocol "
+    "LEFT JOIN _users ON usrs_id = prtc_user "
+    "WHERE prtc_tablename = $1 "
+    "AND prtc_objectid = $2 "
+    "AND prtc_type = (SELECT prtp_id FROM _protocoltype WHERE prtp_uid = '{D1348312-298F-4A7C-B584-9BA8C4952CD3}') "
+    "ORDER BY prtc_datetime ASC "
+    "LIMIT 1 "
+    "), "
+    "( "
+    "SELECT usrs_fio AS create_user "
+    "FROM _protocol "
+    "LEFT JOIN _users ON usrs_id = prtc_user "
+    "WHERE prtc_tablename = $1 "
+    "AND prtc_objectid = $2 "
+    "AND prtc_type = (SELECT prtp_id FROM _protocoltype WHERE prtp_uid = '{D1348312-298F-4A7C-B584-9BA8C4952CD3}') "
+    "ORDER BY prtc_datetime ASC "
+    "LIMIT 1 "
+    "), "
+    "( "
+    "SELECT prtc_datetime AS edit_date "
+    "FROM _protocol "
+    "LEFT JOIN _users ON usrs_id = prtc_user "
+    "WHERE prtc_tablename = $1 "
+    "AND prtc_objectid = $2 "
+    "AND prtc_type = (SELECT prtp_id FROM _protocoltype WHERE prtp_uid = '{0361643D-0A62-4F51-84BD-313F53115EFD}') "
+    "ORDER BY prtc_datetime DESC "
+    "LIMIT 1 "
+    "), "
+    "( "
+    "SELECT usrs_fio AS edit_user "
+    "FROM _protocol "
+    "LEFT JOIN _users ON usrs_id = prtc_user "
+    "WHERE prtc_tablename = $1 "
+    "AND prtc_objectid = $2 "
+    "AND prtc_type = (SELECT prtp_id FROM _protocoltype WHERE prtp_uid = '{0361643D-0A62-4F51-84BD-313F53115EFD}') "
+    "ORDER BY prtc_datetime DESC "
+    "LIMIT 1 "
+    "), "
+    "( "
+    "SELECT COUNT(*) AS copy_count "
+    "FROM _protocol "
+    "LEFT JOIN _users ON usrs_id = prtc_user "
+    "WHERE prtc_tablename = $1 "
+    "AND prtc_objectid = $2 "
+    "AND prtc_type = (SELECT prtp_id FROM _protocoltype WHERE prtp_uid = '{EFA8FE45-1174-4D2E-BBE6-4940380961D4}') "
+    "), "
+    "( "
+    "SELECT COUNT(*) AS edit_count "
+    "FROM _protocol "
+    "LEFT JOIN _users ON usrs_id = prtc_user "
+    "WHERE prtc_tablename = $1 "
+    "AND prtc_objectid = $2 "
+    "AND prtc_type = (SELECT prtp_id FROM _protocoltype WHERE prtp_uid = '{0361643D-0A62-4F51-84BD-313F53115EFD}') "
+    "), "
+    "( "
+    "SELECT COUNT(*) AS show_count "
+    "FROM _protocol "
+    "LEFT JOIN _users ON usrs_id = prtc_user "
+    "WHERE prtc_tablename = $1 "
+    "AND prtc_objectid = $2 "
+    "AND prtc_type = (SELECT prtp_id FROM _protocoltype WHERE prtp_uid = '{117E8972-97DC-4E72-93AC-DC3BB50D11CF}') "
+    "), "
+    "( "
+    "SELECT COUNT(*) favorite_count "
+    "FROM _favorites "
+    "WHERE fvts_tablename = $1 "
+    "AND fvts_objectid = $2 "
+    "), "
+    "( "
+    "SELECT COUNT(*) AS protocol_count "
+    "FROM _protocol "
+    "WHERE prtc_tablename = $1 "
+    "AND prtc_objectid = $2 "
+    "), "
+    "( "
+    "SELECT COUNT(*) AS discussion_count "
+    "FROM _discussion "
+    "WHERE dson_tablename = $1 "
+    "AND dson_objectid = $2 "
+    ")", 2);
 //-----------------------------------------------------------------------------
 ISTcpWorker::ISTcpWorker()
     : ErrorString(STRING_NO_ERROR),
@@ -145,6 +229,7 @@ ISTcpWorker::ISTcpWorker()
     MapFunction[API_USER_PASSWORD_RESET] = &ISTcpWorker::UserPasswordReset;
     MapFunction[API_USER_SETTINGS_RESET] = &ISTcpWorker::UserSettingsReset;
     MapFunction[API_GET_TABLE_DATA] = &ISTcpWorker::GetTableData;
+    MapFunction[API_RECORD_GET_INFO] = &ISTcpWorker::RecordGetInfo;
 
     CRITICAL_SECTION_INIT(&CriticalSection);
     CRITICAL_SECTION_INIT(&CSRunning);
@@ -240,7 +325,7 @@ void ISTcpWorker::Process()
 
     //Создаём указатель на объект запроса протокола
     qProtocol = new ISQuery(DBConnection, QI_PROTOCOL);
-    
+
     SetRunning(true);
     while (true)
     {
@@ -255,13 +340,13 @@ void ISTcpWorker::Process()
         //Получаем текущее сообщение
         CRITICAL_SECTION_LOCK(&CriticalSection);
         ISTcpMessage *tcp_message = CurrentMessage;
-        if (tcp_message) 
+        if (tcp_message)
         {
             IsBusy = true;
             CurrentMessage = nullptr;
         }
         CRITICAL_SECTION_UNLOCK(&CriticalSection);
-        
+
         //Если сообщения нет - переходим на следующую итерацию
         if (!tcp_message)
         {
@@ -290,7 +375,7 @@ void ISTcpWorker::Process()
         {
             ErrorString = tcp_message->GetErrorString();
         }
-        
+
         //Формируем лог-сообщение
         std::string LogText = ISAlgorithm::StringF("%s message \"%s\"\n"
             "Size: %d, Chunk: %d, Parse msec: %llu, Execute msec: %llu",
@@ -452,6 +537,64 @@ unsigned int ISTcpWorker::ExtractVersionFile(const std::string &FileName)
         }
     }
     return Version;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::GetObjectName(PMetaTable *MetaTable, unsigned int ObjectID, std::string &ObjectName)
+{
+    //Если TitleName у мета-таблицы не заполнен - возвращаем идентификатор объекта
+    if (MetaTable->TitleName.empty())
+    {
+        ObjectName = std::to_string(ObjectID);
+        return true;
+    }
+
+    //Формируем запрос
+    std::string QueryText = "SELECT ";
+    ISVectorString VectorString = ISAlgorithm::StringSplit(MetaTable->TitleName, ';');
+    for (const std::string &FieldName : VectorString) //Обходим список полей
+    {
+        PMetaForeign *MetaForeign = MetaTable->GetField(FieldName)->Foreign;
+        QueryText += MetaForeign ?
+            ("(" + ISTcpWorkerHelper::CreateSqlFromTitleName(MetaForeign, MetaTable->Alias, FieldName) + "),") :
+            (MetaTable->Alias + '_' + FieldName + ',');
+    }
+    ISAlgorithm::StringChop(QueryText, 1);
+    QueryText += "\nFROM " + MetaTable->Name;
+    QueryText += "\nWHERE " + MetaTable->Alias + "_id = $1";
+
+    //Запрашиваем имя
+    ISQuery qSelectName(DBConnection, QueryText);
+    qSelectName.SetShowLongQuery(false);
+    qSelectName.BindValue(ObjectID);
+    if (!qSelectName.Execute()) //Ошибка запроса
+    {
+        return ErrorQuery(LANG("Carat.Error.GetObjectName"), qSelectName);
+    }
+
+    if (!qSelectName.First()) //Запись не найдена
+    {
+        return false;
+    }
+
+    //Получаем запись и анализируем её
+    for (int i = 0, c = qSelectName.GetResultColumnCount(); i < c; ++i)
+    {
+        switch (qSelectName.GetResultColumnType(i))
+        {
+        case DATEOID: ObjectName += qSelectName.ReadColumn_Date(i).ToString(); break;
+        case TIMEOID: ObjectName += qSelectName.ReadColumn_Time(i).ToString(); break;
+        case TIMESTAMPOID: ObjectName += qSelectName.ReadColumn_DateTime(i).ToString(); break;
+        default:
+            ObjectName += qSelectName.ReadColumn(i);
+        }
+
+        //На последней итерации пробел не добавляем
+        if (i != c - 1)
+        {
+            ObjectName += ' ';
+        }
+    }
+    return true;
 }
 //-----------------------------------------------------------------------------
 PMetaTable* ISTcpWorker::GetMetaTable(const std::string &TableName)
@@ -680,7 +823,7 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
                 }
                 else
                 {
-                    ISLOGGER_W(__CLASS__, "Invalid format update file name: %s", + FilePath.c_str());
+                    ISLOGGER_W(__CLASS__, "Invalid format update file name: %s", +FilePath.c_str());
                 }
             }
             //Обновлений нет - идём дальше
@@ -719,7 +862,7 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
     TcpAnswer->Parameters.AddMember("UserFIO", JSON_STRING(UserFIO), Allocator);
     TcpAnswer->Parameters.AddMember("UserGroupID", GroupID, Allocator);
     TcpAnswer->Parameters.AddMember("UserGroupFullAccess", GroupFullAccess, Allocator);
-    
+
     //Информация о сервере
     rapidjson::Value ServerObject(rapidjson::Type::kObjectType);
     ServerObject.AddMember("Version", JSON_NULL, Allocator);
@@ -1139,7 +1282,7 @@ bool ISTcpWorker::GetLastClient(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer
     {
         return false;
     }
-    
+
     //Кодируем в base64, очищаем память и проверяем результат кодирования
     std::string Base64 = ISAlgorithm::Base64Encode(FileData, (size_t)FileSize, ErrorString);
     free(FileData);
@@ -1147,7 +1290,7 @@ bool ISTcpWorker::GetLastClient(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer
     {
         return false;
     }
-    
+
     //Протоколируем, конвертируем в base64 и отдаём
     Protocol(TcpMessage->TcpClient->UserID, CONST_UID_PROTOCOL_GET_UPDATE_CLIENT);
     TcpAnswer->Parameters.AddMember("FileName", JSON_STRINGA(FileInfo.Name.c_str(), Allocator), Allocator);
@@ -1455,9 +1598,77 @@ bool ISTcpWorker::RecordGet(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::RecordGetInfo(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
-    IS_UNUSED(TcpMessage);
-    IS_UNUSED(TcpAnswer);
-    return false;
+    if (!CheckIsNull(TcpMessage, "TableName") || !CheckIsNull(TcpMessage, "ObjectID"))
+    {
+        return false;
+    }
+
+    //Получаем имя таблицы
+    std::string TableName;
+    if (!GetParameterString(TcpMessage, "TableName", TableName))
+    {
+        return false;
+    }
+
+    //Получаем идентификатор записи
+    unsigned int ObjectID = 0;
+    if (!GetParameterUInt(TcpMessage, "ObjectID", ObjectID))
+    {
+        return false;
+    }
+
+    //Получаем мета-таблицу
+    PMetaTable *MetaTable = GetMetaTable(TableName);
+    if (!MetaTable)
+    {
+        return false;
+    }
+
+    ISQuery qSelect(DBConnection, QS_RECORD_INFO);
+    qSelect.BindValue(TableName);
+    qSelect.BindValue(ObjectID);
+    if (!qSelect.Execute())
+    {
+        return ErrorQuery(LANG("Carat.Error.Query.RecordGetInfo.Select"), qSelect);
+    }
+
+    if (!qSelect.First())
+    {
+        ErrorString = LANG("Carat.Error.Query.RecordGetInfo.NotExist");
+        return false;
+    }
+
+    //Получаем имя объекта
+    std::string ObjectName;
+    if (!GetObjectName(MetaTable, ObjectID, ObjectName))
+    {
+        return false;
+    }
+
+    ISDateTime CreateDate = qSelect.ReadColumn_DateTime(0);
+    std::string CreateDateString = CreateDate.ToString();
+    const char *CreateDateCString = CreateDateString.c_str();
+    const char *CreateUser = qSelect.ReadColumn(1);
+    ISDateTime EditDate = qSelect.ReadColumn_DateTime(2);
+    std::string EditDateString = EditDate.ToString();
+    const char *EditDateCString = EditDateString.c_str();
+    const char *EditUser = qSelect.ReadColumn(3);
+
+    auto &Allocator = TcpAnswer->Parameters.GetAllocator();
+    TcpAnswer->Parameters.AddMember("TableName", JSON_STRINGA(MetaTable->LocalListName.c_str(), Allocator), Allocator);
+    TcpAnswer->Parameters.AddMember("ObjectName", JSON_STRINGA(ObjectName.c_str(), Allocator), Allocator);
+    TcpAnswer->Parameters.AddMember("CreateDate", JSON_STRINGA(CreateDate.IsNull() ? LANG("Carat.NoData") : CreateDateCString, Allocator), Allocator);
+    TcpAnswer->Parameters.AddMember("CreateUser", JSON_STRINGA(strlen(CreateUser) > 0 ? CreateUser : LANG("Carat.NoData"), Allocator), Allocator);
+    TcpAnswer->Parameters.AddMember("EditDate", JSON_STRINGA(EditDate.IsNull() ? LANG("Carat.NoData") : EditDateCString, Allocator), Allocator);
+    TcpAnswer->Parameters.AddMember("EditUser", JSON_STRINGA(strlen(EditUser) > 0 ? EditUser : LANG("Carat.NoData"), Allocator), Allocator);
+    TcpAnswer->Parameters.AddMember("CopyCount", qSelect.ReadColumn_UInt(4), Allocator);
+    TcpAnswer->Parameters.AddMember("EditCount", qSelect.ReadColumn_UInt(5), Allocator);
+    TcpAnswer->Parameters.AddMember("ShowCount", qSelect.ReadColumn_UInt(6), Allocator);
+    TcpAnswer->Parameters.AddMember("FavoriteCount", qSelect.ReadColumn_UInt(7), Allocator);
+    TcpAnswer->Parameters.AddMember("ProtocolCount", qSelect.ReadColumn_UInt(8), Allocator);
+    TcpAnswer->Parameters.AddMember("DiscussionCount", qSelect.ReadColumn_UInt(9), Allocator);
+    Protocol(TcpMessage->TcpClient->UserID, CONST_UID_PROTOCOL_RECORD_INFO, MetaTable->Name, MetaTable->LocalListName, ObjectID, ObjectName);
+    return true;
 }
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::DiscussionAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
@@ -1590,7 +1801,7 @@ bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
     rapidjson::Value ServiceInfoObject(rapidjson::Type::kObjectType);
     ServiceInfoObject.AddMember("SortingField", JSON_STRING(SortingField.c_str()), Allocator);
     ServiceInfoObject.AddMember("SortingOrder", (int)SortingOrder, Allocator);
-    
+
     //Получаем фильтры
     rapidjson::Value FilterObject(rapidjson::Type::kObjectType);
     if (TcpMessage->Parameters.FindMember("Filter") != TcpMessage->Parameters.MemberEnd())

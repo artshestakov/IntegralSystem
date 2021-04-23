@@ -9,10 +9,10 @@ struct ISDate
     ISDate();
     ISDate(unsigned short day, unsigned short month, unsigned short year);
 
-    static ISDate CurrentDate();
+    static ISDate CurrentDate(); //Получить текущую дату
 
-    bool IsNull() const;
-    std::string ToString() const;
+    bool IsNull() const; //Проверка даты на пустоту
+    std::string ToString() const; //Привести дату к строке
 
     bool operator<(const ISDate &Date) const;
     bool operator>(const ISDate &Date) const;
@@ -54,10 +54,10 @@ struct ISDateTime
     ISDateTime(const ISDate &date, const ISTime &time);
     ISDateTime(unsigned short day, unsigned short month, unsigned short year, unsigned short hour, unsigned short minute, unsigned short second = 0, unsigned short milliseconds = 0);
 
-    static ISDateTime CurrentDateTime();
+    static ISDateTime CurrentDateTime(); //Получить текущую дату и время
 
-    bool IsNull() const;
-    std::string ToString() const;
+    bool IsNull() const; //Проверка даты и времени на пустоту
+    std::string ToString() const; //Привести дату и время к строке
 
     bool operator<(const ISDateTime &DateTime) const;
     bool operator>(const ISDateTime &DateTime) const;
