@@ -106,7 +106,7 @@ private:
 
     //Список TCP-функций
     typedef bool (ISTcpWorker::*TCPFunction)(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
-    std::map<std::string, TCPFunction> MapFunction;
+    std::unordered_map<std::string, TCPFunction> MapFunction;
 };
 //-----------------------------------------------------------------------------
 #endif
