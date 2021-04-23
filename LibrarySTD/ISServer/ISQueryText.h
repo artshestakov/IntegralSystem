@@ -23,7 +23,7 @@ private:
     ISQueryText& operator=(ISQueryText&&) = delete;
 
 private:
-    std::map<std::string, ISSqlPrepare *> Map;
+    std::unordered_map<std::string, ISSqlPrepare *> Map;
     ISCriticalSection CS;
 };
 //-----------------------------------------------------------------------------

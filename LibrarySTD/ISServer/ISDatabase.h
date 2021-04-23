@@ -31,7 +31,7 @@ private:
 
 private:
     std::string ErrorString;
-    std::map<std::string, PGconn*> ConnectionsMap;
+    std::unordered_map<std::string, PGconn*> ConnectionsMap;
     ISCriticalSection CriticalSection; //Критическая секция для синхронизации
 };
 //-----------------------------------------------------------------------------

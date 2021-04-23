@@ -119,7 +119,7 @@ void ISDatabase::Disconnect(const std::string &ConnectionName)
 //-----------------------------------------------------------------------------
 void ISDatabase::DisconnectAll()
 {
-    std::vector<std::string> Keys = ISAlgorithm::ConvertMapToKeys(ConnectionsMap);
+    std::vector<std::string> Keys = ISAlgorithm::ConvertUnorderedMapToKeys(ConnectionsMap);
     for (const std::string &ConnectionName : Keys)
     {
         Disconnect(ConnectionName);

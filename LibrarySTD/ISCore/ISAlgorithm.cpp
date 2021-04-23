@@ -587,8 +587,8 @@ std::string ISAlgorithm::FormatNumber(long long Number, char Separator)
     if ((Number > 0 && Number > 999) || (Number < 0 && Number < -999))
     {
         size_t Size = strlen(Char); //Рассчитаем размер строки
-        int X = Number > 0 ? 0 : 1; //Если число больше нуля - обходим до нулевого символа, иначе до первого (учёт минуса в начале строки)
-        for (int i = Size - 1, j = 1; i >= X; --i, ++j)
+        size_t X = Number > 0 ? 0 : 1; //Если число больше нуля - обходим до нулевого символа, иначе до первого (учёт минуса в начале строки)
+        for (size_t i = Size - 1, j = 1; i >= X; --i, ++j)
         {
             if (j == 3 && i > X) //Если мы прошли цикл трижды (в очередной раз) - вставляем символ
             {
