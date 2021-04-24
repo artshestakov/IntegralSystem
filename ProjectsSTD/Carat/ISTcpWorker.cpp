@@ -1754,19 +1754,17 @@ bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 
         //Проверяем не указана ли сортировка в запросе
         //Если указана - проверяем - не нужно ли обновить её в БД
-        //QVariantMap SortingFieldQuery = TcpMessage->Parameters["Sorting"].toMap();
-        if (/*!SortingFieldQuery.isEmpty()*/TcpMessage->Parameters.HasMember("Sorting"))
+        if (TcpMessage->Parameters.HasMember("Sorting"))
         {
             rapidjson::Value &SortingObject = TcpMessage->Parameters["Sorting"];
-            std::string s = SortingObject["Field"].GetString();
-            ISNamespace::SortingOrder srt = static_cast<ISNamespace::SortingOrder>(SortingObject["Order"].GetInt());
+            std::string SortingFieldNew = SortingObject["Field"].GetString();
+            ISNamespace::SortingOrder SortingOrderNew = static_cast<ISNamespace::SortingOrder>(SortingObject["Order"].GetInt());
 
             //Если новая сортировка отличается от текущей - сохраняем её в БД
-            if (SortingField != /*SortingFieldQuery["Field"].toString()*/s ||
-                SortingOrder != /*static_cast<Qt::SortOrder>(SortingFieldQuery["Order"].toUInt())*/srt)
+            if (SortingField != SortingFieldNew || SortingOrder != SortingOrderNew)
             {
-                SortingField = /*SortingFieldQuery["Field"].toString()*/s;
-                SortingOrder = /*static_cast<Qt::SortOrder>(SortingFieldQuery["Order"].toUInt())*/srt;
+                SortingField = SortingFieldNew;
+                SortingOrder = SortingOrderNew;
 
                 ISQuery qUpdateSorting(DBConnection, QU_SORTING);
                 qUpdateSorting.BindValue(SortingField);
@@ -1799,7 +1797,7 @@ bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 
     //Заполняем служебную информацию
     rapidjson::Value ServiceInfoObject(rapidjson::Type::kObjectType);
-    ServiceInfoObject.AddMember("SortingField", JSON_STRING(SortingField.c_str()), Allocator);
+    ServiceInfoObject.AddMember("SortingField", JSON_STRINGA(SortingField.c_str(), Allocator), Allocator);
     ServiceInfoObject.AddMember("SortingOrder", (int)SortingOrder, Allocator);
 
     //Получаем фильтры
