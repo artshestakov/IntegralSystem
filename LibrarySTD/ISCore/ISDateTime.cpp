@@ -179,6 +179,19 @@ ISDateTime ISDateTime::CurrentDateTime()
 #endif
 }
 //-----------------------------------------------------------------------------
+ISUInt64 ISDateTime::GetCurrentUnixtime()
+{
+    return std::chrono::seconds(std::chrono::seconds(std::time(NULL))).count();
+}
+//-----------------------------------------------------------------------------
+ISDateTime ISDateTime::FromUnixTime(ISUInt64 Unixtime)
+{
+    time_t Time = Unixtime;
+    struct tm *TM = localtime(&Time);
+    return ISDateTime((unsigned short)TM->tm_mday, (unsigned short)TM->tm_mon + 1, (unsigned short)TM->tm_year + 1900,
+        (unsigned short)TM->tm_hour, (unsigned short)TM->tm_min, (unsigned short)TM->tm_sec);
+}
+//-----------------------------------------------------------------------------
 bool ISDateTime::IsNull() const
 {
     return Date.IsNull() && Time.IsNull();

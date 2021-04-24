@@ -50,10 +50,6 @@ namespace ISAlgorithm
     //! \return возвращает разницу между двумя временными метками
     ISUInt64 GetTickDiff(const ISTimePoint &T1, const ISTimePoint &T2);
 
-    //! Получить текущую метку времени в формате Unixtime
-    //! \return возвращает текущую метку времени в формате Unixtime
-    ISUInt64 GetCurrentUnixtime();
-
     //! Получить номер последней ошибки
     ISErrorNumber GetLastErrorN();
 
@@ -79,13 +75,24 @@ namespace ISAlgorithm
     //! Получить список файлов в папке
     //! \param DirPath путь к папке
     //! \return возвращает список имён файлов. Если список пустой - произошла ошибка
-    std::vector<ISFileInfo> DirFiles(const std::string &DirPath, ISNamespace::DirFileSorting SortType = ISNamespace::DirFileSorting::DoNotSort, ISNamespace::SortingOrder SortOrder = ISNamespace::SortingOrder::Ascending);
+    std::vector<ISFileInfo> DirFiles(bool IsRecursive, const std::string &DirPath, ISNamespace::DirFileSorting SortType = ISNamespace::DirFileSorting::DoNotSort, ISNamespace::SortingOrder SortOrder = ISNamespace::SortingOrder::Ascending);
 
     //! Получить список файлов в папке
     //! \param DirPath путь к папке
     //! \param ErrorString ссылка на строку с ошибкой
     //! \return возвращает список имён файлов. Если список пустой - произошла ошибка
-    std::vector<ISFileInfo> DirFiles(const std::string &DirPath, std::string &ErrorString, ISNamespace::DirFileSorting SortType = ISNamespace::DirFileSorting::DoNotSort, ISNamespace::SortingOrder SortOrder = ISNamespace::SortingOrder::Ascending);
+    std::vector<ISFileInfo> DirFiles(bool IsRecursive, const std::string &DirPath, std::string &ErrorString, ISNamespace::DirFileSorting SortType = ISNamespace::DirFileSorting::DoNotSort, ISNamespace::SortingOrder SortOrder = ISNamespace::SortingOrder::Ascending);
+
+    //! Получить размер директории
+    //! \param DirPath путь к папке
+    //! \return возвращает размер директории в байтах, в случае ошибки возвращается 0
+    ISUInt64 DirSize(const std::string &DirPath);
+
+    //! Получить размер директории
+    //! \param DirPath путь к папке
+    //! \param ErrorString ссылка на строку с ошибкой
+    //! \return возвращает размер директории в байтах, в случае ошибки возвращается 0
+    ISUInt64 DirSize(const std::string &DirPath, std::string &ErrorString);
 
     //! Проверка существования файла
     //! \param FilePath путь к файлу
@@ -179,14 +186,19 @@ namespace ISAlgorithm
     void RemoveLastSymbolLoop(std::string &String, char Symbol);
 
     //! Форматирование целого числа. Например, число 6985473 примет вид 6 985 473
-    //! \Number целое число
+    //! \param Number целое число
     //! \return возвращает форматированное число
-    std::string FormatNumber(long long Number, char Separator = ' ');
+    std::string FormatNumber(ISInt64 Number, char Separator = ' ');
 
     //! Форматирование дробного числа. Например, число 1024,965 примет вид 1 024,965
-    //! \Number дробное число
+    //! \param Number дробное число
     //! \return возвращает форматированное число
     std::string FormatNumber(double Number, char Separator = ' ', unsigned int Precision = 0);
+
+    //! Форматирование пути к файлу или папке
+    //! \param Path путь
+    //! \return возвращает отформатированный путь
+    std::string FormatPath(const std::string &Path);
 
     //! Генерация стандартного уникального идентификатора в формате b75ed238-411a-4f06-85ea-a2ecca37cfa8
     //! \return возвращает стандартный уникальный идентификатор

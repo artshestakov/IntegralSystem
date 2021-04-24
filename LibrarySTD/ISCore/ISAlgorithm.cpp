@@ -39,11 +39,6 @@ ISUInt64 ISAlgorithm::GetTickDiff(const ISTimePoint &T1, const ISTimePoint &T2)
     return std::chrono::duration_cast<std::chrono::milliseconds>(T1 - T2).count();
 }
 //-----------------------------------------------------------------------------
-ISUInt64 ISAlgorithm::GetCurrentUnixtime()
-{
-    return std::chrono::seconds(std::chrono::seconds(std::time(NULL))).count();
-}
-//-----------------------------------------------------------------------------
 ISErrorNumber ISAlgorithm::GetLastErrorN()
 {
 #ifdef WIN32
@@ -121,13 +116,13 @@ bool ISAlgorithm::DirCreate(const std::string &DirPath, std::string &ErrorString
     return true;
 }
 //-----------------------------------------------------------------------------
-std::vector<ISFileInfo> ISAlgorithm::DirFiles(const std::string &DirPath, ISNamespace::DirFileSorting SortType, ISNamespace::SortingOrder SortOrder)
+std::vector<ISFileInfo> ISAlgorithm::DirFiles(bool IsRecursive, const std::string &DirPath, ISNamespace::DirFileSorting SortType, ISNamespace::SortingOrder SortOrder)
 {
     std::string ErrorString;
-    return DirFiles(DirPath, ErrorString, SortType, SortOrder);
+    return DirFiles(IsRecursive, DirPath, ErrorString, SortType, SortOrder);
 }
 //-----------------------------------------------------------------------------
-std::vector<ISFileInfo> ISAlgorithm::DirFiles(const std::string &DirPath, std::string &ErrorString, ISNamespace::DirFileSorting SortType, ISNamespace::SortingOrder SortOrder)
+std::vector<ISFileInfo> ISAlgorithm::DirFiles(bool IsRecursive, const std::string &DirPath, std::string &ErrorString, ISNamespace::DirFileSorting SortType, ISNamespace::SortingOrder SortOrder)
 {
     std::vector<ISFileInfo> Vector;
     if (DirExist(DirPath))
@@ -138,10 +133,8 @@ std::vector<ISFileInfo> ISAlgorithm::DirFiles(const std::string &DirPath, std::s
             DirPathTemp.push_back(PATH_SEPARATOR);
         }
 #ifdef WIN32
-        DirPathTemp.push_back('*');
-
         WIN32_FIND_DATA FindData = { 0 };
-        HANDLE Handle = FindFirstFile(DirPathTemp.c_str(), &FindData);
+        HANDLE Handle = FindFirstFile((DirPathTemp + '*').c_str(), &FindData);
         if (Handle != INVALID_HANDLE_VALUE)
         {
             do
@@ -152,11 +145,16 @@ std::vector<ISFileInfo> ISAlgorithm::DirFiles(const std::string &DirPath, std::s
                     continue;
                 }
 
-                if (!(FindData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)) //Файл
+                if (IsRecursive && (FindData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)) //Директория
+                {
+                    std::vector<ISFileInfo> VectorChild = DirFiles(IsRecursive, DirPathTemp + std::string(FindData.cFileName), ErrorString, SortType, SortOrder);
+                    Vector.insert(Vector.end(), VectorChild.begin(), VectorChild.end());
+                }
+                else if(!(FindData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)) //Файл
                 {
                     ISFileInfo FileInfo;
                     FileInfo.Name = FindData.cFileName;
-                    FileInfo.Path = DirPathTemp.substr(0, DirPathTemp.size() - 1) + FileInfo.Name;
+                    FileInfo.Path = DirPathTemp + FileInfo.Name;
                     FileInfo.Size = FindData.nFileSizeLow;
 
                     //Получаем дату изменения файла
@@ -263,7 +261,28 @@ std::vector<ISFileInfo> ISAlgorithm::DirFiles(const std::string &DirPath, std::s
             }
         }
     }
+    else
+    {
+        ErrorString = "dir is not exist";
+    }
     return Vector;
+}
+//-----------------------------------------------------------------------------
+ISUInt64 ISAlgorithm::DirSize(const std::string &DirPath)
+{
+    std::string ErrorString;
+    return DirSize(FormatPath(DirPath), ErrorString);
+}
+//-----------------------------------------------------------------------------
+ISUInt64 ISAlgorithm::DirSize(const std::string &DirPath, std::string &ErrorString)
+{
+    ISUInt64 Result = 0;
+    std::vector<ISFileInfo> Vector = DirFiles(true, DirPath, ErrorString);
+    for (const ISFileInfo &FileInfo : Vector)
+    {
+        Result += FileInfo.Size;
+    }
+    return Result;
 }
 //-----------------------------------------------------------------------------
 bool ISAlgorithm::FileExist(const std::string &FilePath)
@@ -618,7 +637,7 @@ void ISAlgorithm::RemoveLastSymbolLoop(std::string &String, char Symbol)
     }
 }
 //-----------------------------------------------------------------------------
-std::string ISAlgorithm::FormatNumber(long long Number, char Separator)
+std::string ISAlgorithm::FormatNumber(ISInt64 Number, char Separator)
 {
     //Переводим число в строку
     char Char[48] = { 0 };
@@ -662,6 +681,21 @@ std::string ISAlgorithm::FormatNumber(double Number, char Separator, unsigned in
     }
     char Temp[16] = { 0 };
     return FormatNumber(ValueLeft, Separator) + '.' + _itoa((int)((Number - ValueLeft) * Factor), Temp, 10);
+}
+//-----------------------------------------------------------------------------
+std::string ISAlgorithm::FormatPath(const std::string &Path)
+{
+    std::string Temp = Path;
+#ifdef WIN32
+    for (size_t i = 0, c = Temp.size(); i < c; ++i)
+    {
+        if (Temp[i] == '/')
+        {
+            Temp.replace(i, 1, 1, '\\');
+        }
+    }
+#endif
+    return Temp;
 }
 //-----------------------------------------------------------------------------
 std::string ISAlgorithm::GenerateUuidStandart()

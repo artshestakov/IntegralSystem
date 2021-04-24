@@ -5,8 +5,6 @@
 #include "ISLocalization.h"
 #include "ISDefinesGui.h"
 #include "ISGui.h"
-#include "ISBaseTableView.h"
-#include "ISTcpModels.h"
 //-----------------------------------------------------------------------------
 ISServerInfoSubSystem::ISServerInfoSubSystem(QWidget *parent) : ISInterfaceMetaForm(parent)
 {
@@ -64,22 +62,15 @@ void ISServerInfoSubSystem::LoadData()
     FormLayoutDatabase->addRow(LANG("ISServerInfoSubSystem.Database.Version"), new QLabel(DatabaseMap["Version"].toString(), this));
     FormLayoutDatabase->addRow(LANG("ISServerInfoSubSystem.Database.ClusterPath"), new QLabel(DatabaseMap["ClusterPath"].toString(), this));
     FormLayoutDatabase->addRow(LANG("ISServerInfoSubSystem.Database.SizeLogs"), new QLabel(DatabaseMap["SizeLogs"].toString(), this));
-    FormLayoutDatabase->addRow(LANG("ISServerInfoSubSystem.Database.SizeXLogs"), new QLabel(DatabaseMap["SizeXLogs"].toString(), this));
     FormLayoutDatabase->addRow(LANG("ISServerInfoSubSystem.Database.CountTable"), new QLabel(DatabaseMap["CountTable"].toString(), this));
     FormLayoutDatabase->addRow(LANG("ISServerInfoSubSystem.Database.CountField"), new QLabel(DatabaseMap["CountField"].toString(), this));
     FormLayoutDatabase->addRow(LANG("ISServerInfoSubSystem.Database.CountSequence"), new QLabel(DatabaseMap["CountSequence"].toString(), this));
+    FormLayoutDatabase->addRow(LANG("ISServerInfoSubSystem.Database.CountIndexes"), new QLabel(DatabaseMap["CountIndexes"].toString(), this));
     FormLayoutDatabase->addRow(LANG("ISServerInfoSubSystem.Database.CountForeign"), new QLabel(DatabaseMap["CountForeign"].toString(), this));
     FormLayoutDatabase->addRow(LANG("ISServerInfoSubSystem.Database.RowsCount"), new QLabel(DatabaseMap["RowsCount"].toString(), this));
     FormLayoutDatabase->addRow(LANG("ISServerInfoSubSystem.Database.ProtocolCount"), new QLabel(DatabaseMap["ProtocolCount"].toString(), this));
     FormLayoutDatabase->addRow(LANG("ISServerInfoSubSystem.Database.MonitorCount"), new QLabel(DatabaseMap["MonitorCount"].toString(), this));
     FormLayoutDatabase->addRow(LANG("ISServerInfoSubSystem.Database.UsersCount"), new QLabel(DatabaseMap["UsersCount"].toString(), this));
     WidgetDatabase->setLayout(FormLayoutDatabase);
-
-    ISBaseTableView *PGSettingsView = new ISBaseTableView(TabWidget);
-    TabWidget->addTab(PGSettingsView, LANG("ISServerInfoSubSystem.PGSettings.Title"));
-
-    ISViewModel *ViewModel = new ISViewModel(PGSettingsView);
-    ViewModel->SetSource(PGSettings["FieldList"].toStringList(), PGSettings["RecordList"].toList());
-    PGSettingsView->setModel(ViewModel);
 }
 //-----------------------------------------------------------------------------

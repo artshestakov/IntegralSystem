@@ -155,7 +155,7 @@ int ISCaratApplication::Start()
         ISLOGGER_I(__CLASS__, "Started");
 
         //Установим метку времени работы
-        ISProperty::Instance().SetUptime(ISAlgorithm::GetCurrentUnixtime());
+        ISProperty::Instance().SetUptime(ISDateTime::GetCurrentUnixtime());
 
         //Бесконечный цикл основного потока
         while (true)

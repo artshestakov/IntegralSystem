@@ -68,6 +68,7 @@ const char API_USER_PASSWORD_RESET[] = "UserPasswordReset"; //Сброс пароля польз
 const char API_USER_SETTINGS_RESET[] = "UserSettingsReset"; //Сброс пароля пользователя
 const char API_GET_TABLE_DATA[] = "GetTableData"; //Получение данных из таблицы
 const char API_RECORD_GET_INFO[] = "RecordGetInfo"; //Получение информации о записи
+const char API_GET_SERVER_INFO[] = "GetServerInfo"; //Получение информации о сервере
 //PROTOCOL---------------------------------------------------------------------
 const char CONST_UID_PROTOCOL_ENTER_APPLICATION[] = "2614cb96-ec54-4d4f-b1a6-06d2444962ca";
 const char CONST_UID_PROTOCOL_GET_UPDATE_CLIENT[] = "0234643a-af60-44bf-a2eb-08a71307841c";
@@ -78,6 +79,7 @@ const char CONST_UID_PROTOCOL_USER_SETTINGS_RESET[] = "075e58a5-5336-4a71-8d1d-9
 const char CONST_UID_PROTOCOL_SEARCH[] = "179f73bf-8983-4b52-b505-af0ef4bf8093";
 const char CONST_UID_PROTOCOL_GET_TABLE_DATA[] = "2a93a14e-4ba5-4cb8-a056-0ff2b3351c5d";
 const char CONST_UID_PROTOCOL_RECORD_INFO[] = "fd98685e-d6dd-41e3-9f62-389567f58971";
+const char CONST_UID_PROTOCOL_SERVER_INFO[] = "e6f5d167-25e6-4172-8d81-219de8608647";
 //-----------------------------------------------------------------------------
 const char CONST_UID_GROUP_ACCESS_TYPE_SHOW[] = "41743776-d7ce-414f-acf3-71c42a607742"; //Просмотр данных
 const char CONST_UID_GROUP_ACCESS_TYPE_CREATE[] = "1cfa961d-08a2-4aa3-978e-ff23fc88ca08"; //Создание данных

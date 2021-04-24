@@ -64,7 +64,7 @@ std::string ISTcpWorkerHelper::ConvertDateToString(const ISDate &Date)
 //-----------------------------------------------------------------------------
 std::string ISTcpWorkerHelper::GetUptime()
 {
-    ISUInt64 Seconds = ISAlgorithm::GetCurrentUnixtime() - ISProperty::Instance().GetUptime(),
+    ISUInt64 Seconds = ISDateTime::GetCurrentUnixtime() - ISProperty::Instance().GetUptime(),
         Days = 0;
 	while (Seconds > DAY_IN_SECONDS)
 	{

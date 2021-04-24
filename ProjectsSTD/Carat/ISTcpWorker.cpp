@@ -11,6 +11,8 @@
 #include "ISResourcer.h"
 #include "ISConfigurations.h"
 #include "ISTcpWorkerHelper.h"
+#include "ISRevision.h"
+#include "ISProperty.h"
 //-----------------------------------------------------------------------------
 static std::string QS_USERS_HASH = PREPARE_QUERY("SELECT usrs_hash, usrs_salt "
     "FROM _users "
@@ -210,6 +212,26 @@ static std::string QS_RECORD_INFO = PREPARE_QUERYN("SELECT "
     "AND dson_objectid = $2 "
     ")", 2);
 //-----------------------------------------------------------------------------
+static std::string QS_SERVER_INFO = PREPARE_QUERY("SELECT "
+    "(SELECT pg_size_pretty(pg_database_size(current_database()))) AS database_size_full, "
+    "(SELECT pg_size_pretty(sum(pg_indexes_size(tablename::VARCHAR))) AS database_size_indexes FROM pg_tables WHERE schemaname = current_schema()), "
+    "(SELECT pg_size_pretty(sum(pg_relation_size(tablename::VARCHAR))) AS database_size_data FROM pg_tables WHERE schemaname = current_schema()), "
+    "(SELECT pg_catalog.pg_get_userbyid(datdba) AS database_owner FROM pg_catalog.pg_database WHERE datname = current_database()), "
+    "(SELECT pg_encoding_to_char(encoding) AS database_encoding FROM pg_database WHERE datname = current_database()), "
+    "(SELECT now() - pg_postmaster_start_time() AS database_uptime), "
+    "(SELECT pg_backend_pid() AS database_backend_pid), "
+    "(SELECT version()) AS database_version, "
+    "(SELECT setting AS database_cluster_path FROM pg_settings WHERE name = 'data_directory'), "
+    "(SELECT COUNT(*) AS table_count FROM information_schema.tables WHERE table_catalog = current_database() AND table_schema = current_schema()), "
+    "(SELECT COUNT(*) AS field_count FROM information_schema.columns WHERE table_catalog = current_database() AND table_schema = current_schema()), "
+    "(SELECT COUNT(*) AS sequence_count FROM information_schema.sequences WHERE sequence_catalog = current_database() AND sequence_schema = current_schema()), "
+    "(SELECT COUNT(*) AS index_count FROM pg_indexes WHERE schemaname = current_schema()), "
+    "(SELECT COUNT(*) AS foreign_count FROM information_schema.constraint_table_usage WHERE constraint_catalog = current_database() AND constraint_schema = current_schema()), "
+    "(SELECT get_rows_count() AS rows_count), "
+    "(SELECT COUNT(*) AS protocol_count FROM _protocol), "
+    "(SELECT COUNT(*) as monitor_count FROM _monitor), "
+    "(SELECT COUNT(*) AS users_count FROM _users)");
+//-----------------------------------------------------------------------------
 ISTcpWorker::ISTcpWorker()
     : ErrorString(STRING_NO_ERROR),
     IsBusy(false),
@@ -230,6 +252,7 @@ ISTcpWorker::ISTcpWorker()
     MapFunction[API_USER_SETTINGS_RESET] = &ISTcpWorker::UserSettingsReset;
     MapFunction[API_GET_TABLE_DATA] = &ISTcpWorker::GetTableData;
     MapFunction[API_RECORD_GET_INFO] = &ISTcpWorker::RecordGetInfo;
+    MapFunction[API_GET_SERVER_INFO] = &ISTcpWorker::GetServerInfo;
 
     CRITICAL_SECTION_INIT(&CriticalSection);
     CRITICAL_SECTION_INIT(&CSRunning);
@@ -811,7 +834,7 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
             }
 
             //Получаем список файлов и проверяем его на пустоту
-            std::vector<ISFileInfo> VectorFiles = ISAlgorithm::DirFiles(UpdateClientDir, ErrorString,
+            std::vector<ISFileInfo> VectorFiles = ISAlgorithm::DirFiles(false, UpdateClientDir, ErrorString,
                 ISNamespace::DirFileSorting::EditDate, ISNamespace::SortingOrder::Descending);
             if (!VectorFiles.empty()) //Если обновления есть - ищем последнюю версию
             {
@@ -1265,7 +1288,7 @@ bool ISTcpWorker::GetLastClient(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer
 
     //Получаем отсортированный (по дате) список файлов
     //в настроенной директории и проверяем его на пустоту
-    std::vector<ISFileInfo> VectorFiles = ISAlgorithm::DirFiles(ISConfig::Instance().GetValueString("Other", "UpdateClientDir"),
+    std::vector<ISFileInfo> VectorFiles = ISAlgorithm::DirFiles(false, ISConfig::Instance().GetValueString("Other", "UpdateClientDir"),
         ISNamespace::DirFileSorting::EditDate, ISNamespace::SortingOrder::Descending);
     if (VectorFiles.empty()) //Если обновлений нет - выходим
     {
@@ -2214,8 +2237,78 @@ bool ISTcpWorker::GetForeignList(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
 bool ISTcpWorker::GetServerInfo(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
     IS_UNUSED(TcpMessage);
-    IS_UNUSED(TcpAnswer);
-    return false;
+
+    //Делаем запрос к БД
+    ISQuery qSelect(DBConnection, QS_SERVER_INFO);
+    if (!qSelect.Execute())
+    {
+        return ErrorQuery(LANG("Carat.Error.Query.GetServerInfo.SelectInfo"), qSelect);
+    }
+
+    if (!qSelect.First())
+    {
+        ErrorString = qSelect.GetErrorString();
+        return false;
+    }
+
+    const char *DatabaseSizeFull = qSelect.ReadColumn(0);
+    const char *DatabaseSizeIndexes = qSelect.ReadColumn(1);
+    const char *DatabaseSizeData = qSelect.ReadColumn(2);
+    const char *DatabaseOwner = qSelect.ReadColumn(3);
+    const char *DatabaseEncoding = qSelect.ReadColumn(4);
+    const char *DatabaseUptime = qSelect.ReadColumn(5);
+    unsigned int DatabasePID = qSelect.ReadColumn_UInt(6);
+    const char *DatabaseVersion = qSelect.ReadColumn(7);
+    std::string DatabaseClusterPath = qSelect.ReadColumn(8);
+    std::string DatabaseSizeLogs = ISAlgorithm::StringFromSize(ISAlgorithm::DirSize(DatabaseClusterPath + PATH_SEPARATOR + "log"));
+    std::string DatabaseCountTable = ISAlgorithm::FormatNumber(qSelect.ReadColumn_Int64(9));
+    std::string DatabaseCountField = ISAlgorithm::FormatNumber(qSelect.ReadColumn_Int64(10));
+    std::string DatabaseCountSequence = ISAlgorithm::FormatNumber(qSelect.ReadColumn_Int64(11));
+    std::string DatabaseCountIndexes = ISAlgorithm::FormatNumber(qSelect.ReadColumn_Int64(12));
+    std::string DatabaseCountForeign = ISAlgorithm::FormatNumber(qSelect.ReadColumn_Int64(13));
+    std::string DatabaseRowsCount = ISAlgorithm::FormatNumber(qSelect.ReadColumn_Int64(14));
+    std::string DatabaseCountProtocol = ISAlgorithm::FormatNumber(qSelect.ReadColumn_Int64(15));
+    std::string DatabaseCountMonitor = ISAlgorithm::FormatNumber(qSelect.ReadColumn_Int64(16));
+    std::string DatabaseUsersCount = ISAlgorithm::FormatNumber(qSelect.ReadColumn_Int64(17));
+
+    std::string StartedDateTime = ISDateTime::FromUnixTime(ISProperty::Instance().GetUptime()).ToString();
+    std::string Uptime = ISTcpWorkerHelper::GetUptime();
+    std::string SizeLogs = ISAlgorithm::StringFromSize(ISAlgorithm::DirSize(ISAlgorithm::GetApplicationDir() + PATH_SEPARATOR + "Logs"));
+
+    auto &Allocator = TcpAnswer->Parameters.GetAllocator();
+
+    rapidjson::Value CaratObject(rapidjson::Type::kObjectType);
+    CaratObject.AddMember("Version", CARAT_VERSION_N, Allocator);
+    CaratObject.AddMember("StartedDateTime", JSON_STRINGA(StartedDateTime.c_str(), Allocator), Allocator);
+    CaratObject.AddMember("Uptime", JSON_STRINGA(Uptime.c_str(), Allocator), Allocator);
+    CaratObject.AddMember("SizeLogs", JSON_STRINGA(SizeLogs.c_str(), Allocator), Allocator);
+    CaratObject.AddMember("CountClients", ISTcpClients::Instance().GetCount(), Allocator);
+    TcpAnswer->Parameters.AddMember("Carat", CaratObject, Allocator);
+
+    rapidjson::Value DatabaseObject(rapidjson::Type::kObjectType);
+    DatabaseObject.AddMember("SizeFull", JSON_STRINGA(DatabaseSizeFull, Allocator), Allocator);
+    DatabaseObject.AddMember("SizeIndexes", JSON_STRINGA(DatabaseSizeIndexes, Allocator), Allocator);
+    DatabaseObject.AddMember("SizeData", JSON_STRINGA(DatabaseSizeData, Allocator), Allocator);
+    DatabaseObject.AddMember("Owner", JSON_STRINGA(DatabaseOwner, Allocator), Allocator);
+    DatabaseObject.AddMember("Encoding", JSON_STRINGA(DatabaseEncoding, Allocator), Allocator);
+    DatabaseObject.AddMember("Uptime", JSON_STRINGA(DatabaseUptime, Allocator), Allocator);
+    DatabaseObject.AddMember("PID", DatabasePID, Allocator);
+    DatabaseObject.AddMember("Version", JSON_STRINGA(DatabaseVersion, Allocator), Allocator);
+    DatabaseObject.AddMember("ClusterPath", JSON_STRINGA(DatabaseClusterPath.c_str(), Allocator), Allocator);
+    DatabaseObject.AddMember("SizeLogs", JSON_STRINGA(DatabaseSizeLogs.c_str(), Allocator), Allocator);
+    DatabaseObject.AddMember("CountTable", JSON_STRINGA(DatabaseCountTable.c_str(), Allocator), Allocator);
+    DatabaseObject.AddMember("CountField", JSON_STRINGA(DatabaseCountField.c_str(), Allocator), Allocator);
+    DatabaseObject.AddMember("CountSequence", JSON_STRINGA(DatabaseCountSequence.c_str(), Allocator), Allocator);
+    DatabaseObject.AddMember("CountIndexes", JSON_STRINGA(DatabaseCountIndexes.c_str(), Allocator), Allocator);
+    DatabaseObject.AddMember("CountForeign", JSON_STRINGA(DatabaseCountForeign.c_str(), Allocator), Allocator);
+    DatabaseObject.AddMember("RowsCount", JSON_STRINGA(DatabaseRowsCount.c_str(), Allocator), Allocator);
+    DatabaseObject.AddMember("ProtocolCount", JSON_STRINGA(DatabaseCountProtocol.c_str(), Allocator), Allocator);
+    DatabaseObject.AddMember("MonitorCount", JSON_STRINGA(DatabaseCountMonitor.c_str(), Allocator), Allocator);
+    DatabaseObject.AddMember("UsersCount", JSON_STRINGA(DatabaseUsersCount.c_str(), Allocator), Allocator);
+    TcpAnswer->Parameters.AddMember("Database", DatabaseObject, Allocator);
+
+    Protocol(TcpMessage->TcpClient->UserID, CONST_UID_PROTOCOL_SERVER_INFO);
+    return true;
 }
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::OrganizationFormINN(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
