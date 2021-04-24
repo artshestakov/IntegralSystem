@@ -168,6 +168,11 @@ namespace ISAlgorithm
     //! \return возвращает MD5-хэш. Если вернулась пустая строка - значит ошибка
     std::string StringToMD5(const std::string &String);
 
+    //! Конвертировать размер файла в строку
+    //! \param FileSize размер файла в байтах
+    //! \return размер файла строкой. В случае ошибки вернётся -1
+    std::string StringFromSize(ISUInt64 FileSize);
+
     //! Удалить указанный символ в конце
     //! \param String строка в которой будет происходить удаление
     //! \param Symbol символ который будет удаляться

@@ -577,6 +577,39 @@ std::string ISAlgorithm::StringToMD5(const std::string &String)
     return Result;
 }
 //-----------------------------------------------------------------------------
+std::string ISAlgorithm::StringFromSize(ISUInt64 FileSize)
+{
+    int Index = 0;
+    for (; FileSize > 1023; FileSize /= 1024, ++Index) {}
+    std::string String = ISAlgorithm::FormatNumber((long long)FileSize) + std::string("BKMGT")[Index];
+    if (String.find('B') != NPOS)
+    {
+        StringChop(String, 1);
+        String += " B";
+    }
+    else if (String.find('K') != NPOS)
+    {
+        StringChop(String, 1);
+        String += " Kb";
+    }
+    else if (String.find('M') != NPOS)
+    {
+        StringChop(String, 1);
+        String += " Mb";
+    }
+    else if (String.back() == 'G')
+    {
+        StringChop(String, 1);
+        String += " Gb";
+    }
+    else if (String.find('T') != NPOS)
+    {
+        StringChop(String, 1);
+        String += " Tb";
+    }
+    return String;
+}
+//-----------------------------------------------------------------------------
 void ISAlgorithm::RemoveLastSymbolLoop(std::string &String, char Symbol)
 {
     while (!String.empty() && String.back() == Symbol)
