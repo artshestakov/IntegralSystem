@@ -36,6 +36,8 @@
 //-----------------------------------------------------------------------------
 namespace ISAlgorithm
 {
+    char* itoa(int64_t Value, char *Result, int Radix);
+
     //! Получить имя класса
     //! \return возвращает имя класса
     std::string GetClassName(const char *FunctionName);
@@ -48,7 +50,7 @@ namespace ISAlgorithm
     //! \param TickA временная метка
     //! \param TickB временная метка
     //! \return возвращает разницу между двумя временными метками
-    ISUInt64 GetTickDiff(const ISTimePoint &T1, const ISTimePoint &T2);
+    uint64_t GetTickDiff(const ISTimePoint &T1, const ISTimePoint &T2);
 
     //! Получить номер последней ошибки
     ISErrorNumber GetLastErrorN();
@@ -86,13 +88,13 @@ namespace ISAlgorithm
     //! Получить размер директории
     //! \param DirPath путь к папке
     //! \return возвращает размер директории в байтах, в случае ошибки возвращается 0
-    ISUInt64 DirSize(const std::string &DirPath);
+    uint64_t DirSize(const std::string &DirPath);
 
     //! Получить размер директории
     //! \param DirPath путь к папке
     //! \param ErrorString ссылка на строку с ошибкой
     //! \return возвращает размер директории в байтах, в случае ошибки возвращается 0
-    ISUInt64 DirSize(const std::string &DirPath, std::string &ErrorString);
+    uint64_t DirSize(const std::string &DirPath, std::string &ErrorString);
 
     //! Проверка существования файла
     //! \param FilePath путь к файлу
@@ -178,7 +180,7 @@ namespace ISAlgorithm
     //! Конвертировать размер файла в строку
     //! \param FileSize размер файла в байтах
     //! \return размер файла строкой. В случае ошибки вернётся -1
-    std::string StringFromSize(ISUInt64 FileSize);
+    std::string StringFromSize(uint64_t FileSize);
 
     //! Удалить указанный символ в конце
     //! \param String строка в которой будет происходить удаление
@@ -188,7 +190,12 @@ namespace ISAlgorithm
     //! Форматирование целого числа. Например, число 6985473 примет вид 6 985 473
     //! \param Number целое число
     //! \return возвращает форматированное число
-    std::string FormatNumber(ISInt64 Number, char Separator = ' ');
+    std::string FormatNumber(uint64_t Number, char Separator = ' ');
+
+    //! Форматирование целого числа. Например, число 6985473 примет вид 6 985 473
+    //! \param Number целое число
+    //! \return возвращает форматированное число
+    std::string FormatNumber(int64_t Number, char Separator = ' ');
 
     //! Форматирование дробного числа. Например, число 1024,965 примет вид 1 024,965
     //! \param Number дробное число

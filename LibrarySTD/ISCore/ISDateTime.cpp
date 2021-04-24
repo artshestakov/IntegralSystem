@@ -179,12 +179,12 @@ ISDateTime ISDateTime::CurrentDateTime()
 #endif
 }
 //-----------------------------------------------------------------------------
-ISUInt64 ISDateTime::GetCurrentUnixtime()
+uint64_t ISDateTime::GetCurrentUnixtime()
 {
     return std::chrono::seconds(std::chrono::seconds(std::time(NULL))).count();
 }
 //-----------------------------------------------------------------------------
-ISDateTime ISDateTime::FromUnixTime(ISUInt64 Unixtime)
+ISDateTime ISDateTime::FromUnixTime(uint64_t Unixtime)
 {
     time_t Time = Unixtime;
     struct tm *TM = localtime(&Time);

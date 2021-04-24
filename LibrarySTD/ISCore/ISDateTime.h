@@ -2,7 +2,7 @@
 #ifndef _ISDATETIME_H_INCLUDED
 #define _ISDATETIME_H_INCLUDED
 //-----------------------------------------------------------------------------
-#include "ISTypedefs.h"
+#include "StdAfx.h"
 //-----------------------------------------------------------------------------
 struct ISDate
 {
@@ -55,8 +55,8 @@ struct ISDateTime
     ISDateTime(unsigned short day, unsigned short month, unsigned short year, unsigned short hour, unsigned short minute, unsigned short second = 0, unsigned short milliseconds = 0);
 
     static ISDateTime CurrentDateTime(); //Получить текущую дату и время
-    static ISUInt64 GetCurrentUnixtime(); //Получить текущую метку времени в формате Unixtime
-    static ISDateTime FromUnixTime(ISUInt64 Unixtime); //Конвертировать unixtime в дату и время
+    static uint64_t GetCurrentUnixtime(); //Получить текущую метку времени в формате Unixtime
+    static ISDateTime FromUnixTime(uint64_t Unixtime); //Конвертировать unixtime в дату и время
 
     bool IsNull() const; //Проверка даты и времени на пустоту
     std::string ToString() const; //Привести дату и время к строке

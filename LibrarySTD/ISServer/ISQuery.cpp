@@ -112,7 +112,7 @@ void ISQuery::BindValue(unsigned int Value, Oid OID)
     ++ParameterCount;
 }
 //-----------------------------------------------------------------------------
-void ISQuery::BindValue(ISUInt64 Value, Oid OID)
+void ISQuery::BindValue(uint64_t Value, Oid OID)
 {
     ParameterValues.emplace_back(std::to_string(Value));
     ParameterTypes.emplace_back(OID == InvalidOid ? INT8OID : OID);
@@ -301,12 +301,12 @@ unsigned int ISQuery::ReadColumn_UInt(size_t Index) const
     return ReadColumn_Int(Index);
 }
 //-----------------------------------------------------------------------------
-ISInt64 ISQuery::ReadColumn_Int64(size_t Index) const
+uint64_t ISQuery::ReadColumn_Int64(size_t Index) const
 {
     return std::atoll(ReadColumn(Index));
 }
 //-----------------------------------------------------------------------------
-ISUInt64 ISQuery::ReadColumn_UInt64(size_t Index) const
+uint64_t ISQuery::ReadColumn_UInt64(size_t Index) const
 {
     return ReadColumn_Int64(Index);
 }

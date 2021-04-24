@@ -31,7 +31,7 @@ public:
     void BindValue(std::nullptr_t Pointer);
     void BindValue(int Value, Oid OID = InvalidOid);
     void BindValue(unsigned int Value, Oid OID = InvalidOid);
-    void BindValue(ISUInt64 Value, Oid OID = InvalidOid);
+    void BindValue(uint64_t Value, Oid OID = InvalidOid);
     void BindValue(const std::string &Value, Oid OID = InvalidOid);
     void BindValue(const char *Value, Oid OID = InvalidOid);
     void BindValue(bool Value, Oid OID = InvalidOid);
@@ -45,8 +45,8 @@ public:
     int ReadColumn_Int(size_t Index) const;
     double ReadColumn_Double(size_t Index) const;
     unsigned int ReadColumn_UInt(size_t Index) const;
-    ISInt64 ReadColumn_Int64(size_t Index) const;
-    ISUInt64 ReadColumn_UInt64(size_t Index) const;
+    uint64_t ReadColumn_Int64(size_t Index) const;
+    uint64_t ReadColumn_UInt64(size_t Index) const;
     bool ReadColumn_Bool(size_t Index) const;
     ISDate ReadColumn_Date(size_t Index) const;
     ISTime ReadColumn_Time(size_t Index) const;

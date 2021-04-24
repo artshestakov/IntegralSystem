@@ -29,6 +29,7 @@ HEADERS += \
     ISConfigurations.h \
     ISConsole.h \
     ISDatabase.h \
+    ISMetaData.h \
     ISQuery.h \
     ISQueryText.h
 
@@ -36,5 +37,6 @@ SOURCES += \
     ISConfigurations.cpp \
     ISConsole.cpp \
     ISDatabase.cpp \
+    ISMetaData.cpp \
     ISQuery.cpp \
     ISQueryText.cpp

@@ -32,7 +32,6 @@ HEADERS += \
     ISDebug.h \
     ISLocalization.h \
     ISLogger.h \
-    ISMetaData.h \
     ISNamespace.h \
     ISProperty.h \
     ISResourcer.h \
@@ -42,6 +41,7 @@ HEADERS += \
     PMetaClass.h \
     SimpleIni.h \
 	StdAfx.h \
+    hashmap.h \
     tinyxml2.h
 
 SOURCES += \
@@ -53,9 +53,9 @@ SOURCES += \
     ISDebug.cpp \
     ISLocalization.cpp \
     ISLogger.cpp \
-    ISMetaData.cpp \
     ISProperty.cpp \
     ISResourcer.cpp \
     ISTrace.cpp \
     StdAfx.cpp \
+    hashmap.cpp \
     tinyxml2.cpp

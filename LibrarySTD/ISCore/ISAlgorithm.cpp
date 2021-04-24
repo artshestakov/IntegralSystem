@@ -2,6 +2,41 @@
 #include "ISConstants.h"
 #include "ISAssert.h"
 //-----------------------------------------------------------------------------
+char* ISAlgorithm::itoa(int64_t Value, char *Result, int Radix)
+{
+    if (Radix < 2 || Radix > 36)
+    {
+        *Result = '\0';
+        return Result;
+    }
+
+    char *ptr = Result,
+        *ptr1 = Result,
+        TempChar;
+    int TempValue;
+
+    do
+    {
+        TempValue = Value;
+        Value /= Radix;
+        *ptr++ = "zyxwvutsrqponmlkjihgfedcba9876543210123456789abcdefghijklmnopqrstuvwxyz"[35 + (TempValue - Value * Radix)];
+    } while (Value);
+
+    if (TempValue < 0)
+    {
+        *ptr++ = '-';
+    }
+    *ptr-- = '\0';
+
+    while (ptr1 < ptr)
+    {
+        TempChar = *ptr;
+        *ptr--= *ptr1;
+        *ptr1++ = TempChar;
+    }
+    return Result;
+}
+//-----------------------------------------------------------------------------
 std::string ISAlgorithm::GetClassName(const char *FunctionName)
 {
     std::string Result(FunctionName);
@@ -34,7 +69,7 @@ ISTimePoint ISAlgorithm::GetTick()
     return std::chrono::steady_clock::now();
 }
 //-----------------------------------------------------------------------------
-ISUInt64 ISAlgorithm::GetTickDiff(const ISTimePoint &T1, const ISTimePoint &T2)
+uint64_t ISAlgorithm::GetTickDiff(const ISTimePoint &T1, const ISTimePoint &T2)
 {
     return std::chrono::duration_cast<std::chrono::milliseconds>(T1 - T2).count();
 }
@@ -199,24 +234,32 @@ std::vector<ISFileInfo> ISAlgorithm::DirFiles(bool IsRecursive, const std::strin
                     continue;
                 }
 
-                ISFileInfo FileInfo;
-                FileInfo.Name = Entry->d_name;
-                FileInfo.Path = DirPathTemp + FileInfo.Name;
+                if (IsRecursive && Entry->d_type == DT_DIR) //Директория
+                {
+                    std::vector<ISFileInfo> VectorChild = DirFiles(IsRecursive, DirPathTemp + std::string(Entry->d_name), ErrorString, SortType, SortOrder);
+                    Vector.insert(Vector.end(), VectorChild.begin(), VectorChild.end());
+                }
+                else //Файл
+                {
+                    ISFileInfo FileInfo;
+                    FileInfo.Name = Entry->d_name;
+                    FileInfo.Path = DirPathTemp + FileInfo.Name;
 
-                //Получаем размер файла
-                struct stat Stat;
-                stat(FileInfo.Path.c_str(), &Stat);
-                FileInfo.Size = Stat.st_size;
+                    //Получаем размер файла
+                    struct stat Stat;
+                    stat(FileInfo.Path.c_str(), &Stat);
+                    FileInfo.Size = Stat.st_size;
 
-                //Получаем дату последнего изменения файла
-                struct tm *TM = localtime(&Stat.st_mtim.tv_sec);
-                FileInfo.DateTimeEdit.Date.Day = TM->tm_mday;
-                FileInfo.DateTimeEdit.Date.Month = TM->tm_mon;
-                FileInfo.DateTimeEdit.Date.Year = TM->tm_year;
-                FileInfo.DateTimeEdit.Time.Hour = TM->tm_hour;
-                FileInfo.DateTimeEdit.Time.Minute = TM->tm_min;
-                FileInfo.DateTimeEdit.Time.Second = TM->tm_sec;
-                Vector.emplace_back(FileInfo);
+                    //Получаем дату последнего изменения файла
+                    struct tm *TM = localtime(&Stat.st_mtim.tv_sec);
+                    FileInfo.DateTimeEdit.Date.Day = TM->tm_mday;
+                    FileInfo.DateTimeEdit.Date.Month = TM->tm_mon;
+                    FileInfo.DateTimeEdit.Date.Year = TM->tm_year;
+                    FileInfo.DateTimeEdit.Time.Hour = TM->tm_hour;
+                    FileInfo.DateTimeEdit.Time.Minute = TM->tm_min;
+                    FileInfo.DateTimeEdit.Time.Second = TM->tm_sec;
+                    Vector.emplace_back(FileInfo);
+                }
             }
             closedir(Dir);
         }
@@ -268,15 +311,15 @@ std::vector<ISFileInfo> ISAlgorithm::DirFiles(bool IsRecursive, const std::strin
     return Vector;
 }
 //-----------------------------------------------------------------------------
-ISUInt64 ISAlgorithm::DirSize(const std::string &DirPath)
+uint64_t ISAlgorithm::DirSize(const std::string &DirPath)
 {
     std::string ErrorString;
     return DirSize(FormatPath(DirPath), ErrorString);
 }
 //-----------------------------------------------------------------------------
-ISUInt64 ISAlgorithm::DirSize(const std::string &DirPath, std::string &ErrorString)
+uint64_t ISAlgorithm::DirSize(const std::string &DirPath, std::string &ErrorString)
 {
-    ISUInt64 Result = 0;
+    uint64_t Result = 0;
     std::vector<ISFileInfo> Vector = DirFiles(true, DirPath, ErrorString);
     for (const ISFileInfo &FileInfo : Vector)
     {
@@ -596,11 +639,11 @@ std::string ISAlgorithm::StringToMD5(const std::string &String)
     return Result;
 }
 //-----------------------------------------------------------------------------
-std::string ISAlgorithm::StringFromSize(ISUInt64 FileSize)
+std::string ISAlgorithm::StringFromSize(uint64_t FileSize)
 {
     int Index = 0;
     for (; FileSize > 1023; FileSize /= 1024, ++Index) {}
-    std::string String = ISAlgorithm::FormatNumber((long long)FileSize) + std::string("BKMGT")[Index];
+    std::string String = FormatNumber(FileSize) + std::string("BKMGT")[Index];
     if (String.find('B') != NPOS)
     {
         StringChop(String, 1);
@@ -637,11 +680,16 @@ void ISAlgorithm::RemoveLastSymbolLoop(std::string &String, char Symbol)
     }
 }
 //-----------------------------------------------------------------------------
-std::string ISAlgorithm::FormatNumber(ISInt64 Number, char Separator)
+std::string ISAlgorithm::FormatNumber(uint64_t Number, char Separator)
+{
+    return FormatNumber(Number, Separator);
+}
+//-----------------------------------------------------------------------------
+std::string ISAlgorithm::FormatNumber(int64_t Number, char Separator)
 {
     //Переводим число в строку
     char Char[48] = { 0 };
-    _i64toa(Number, Char, 10);
+    itoa(Number, Char, 10);
 
     //Если число входит в диапазон [-999;999] - обходим строку
     if ((Number > 0 && Number > 999) || (Number < 0 && Number < -999))
@@ -664,7 +712,7 @@ std::string ISAlgorithm::FormatNumber(ISInt64 Number, char Separator)
 std::string ISAlgorithm::FormatNumber(double Number, char Separator, unsigned int Precision)
 {
     //Вытаскиваем левую часть дроби
-    long long ValueLeft = (long long)trunc(Number);
+    int64_t ValueLeft = (int64_t)trunc(Number);
 
     //Если знаки после разделителя дроби не нужны - выходим
     //ВНИМАНИЕ!!! Результат функции FormatNumber(long long, ...) НЕ СОХРАНЯТЬ. ОТДАЁМ КАК ЕСТЬ.
@@ -680,7 +728,7 @@ std::string ISAlgorithm::FormatNumber(double Number, char Separator, unsigned in
         Factor *= 10;
     }
     char Temp[16] = { 0 };
-    return FormatNumber(ValueLeft, Separator) + '.' + _itoa((int)((Number - ValueLeft) * Factor), Temp, 10);
+    return FormatNumber(ValueLeft, Separator) + '.' + itoa((int64_t)((Number - ValueLeft) * Factor), Temp, 10);
 }
 //-----------------------------------------------------------------------------
 std::string ISAlgorithm::FormatPath(const std::string &Path)

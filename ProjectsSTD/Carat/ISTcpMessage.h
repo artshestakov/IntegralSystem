@@ -18,7 +18,7 @@ public:
 
     std::string Type; //Тип сообщения
     rapidjson::Document Parameters; //Параметры
-    ISUInt64 MSecParse; //Время парсинга
+    uint64_t MSecParse; //Время парсинга
     size_t Size;
     size_t ChunkCount; //Количетсво чанков
     ISTcpClient *TcpClient; //Клиент, от которого пришло это сообщение

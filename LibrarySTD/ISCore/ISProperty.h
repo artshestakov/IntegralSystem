@@ -9,8 +9,8 @@ class ISProperty
 public:
     static ISProperty& Instance();
 
-    const ISUInt64& GetUptime() const;
-    void SetUptime(ISUInt64 uptime);
+    const uint64_t& GetUptime() const;
+    void SetUptime(uint64_t uptime);
 
 private:
     ISProperty();
@@ -21,7 +21,7 @@ private:
     ISProperty& operator=(ISProperty&&) = delete;
 
 private:
-    ISUInt64 Uptime;
+    uint64_t Uptime;
 };
 //-----------------------------------------------------------------------------
 #endif

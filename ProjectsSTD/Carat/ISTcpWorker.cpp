@@ -377,7 +377,7 @@ void ISTcpWorker::Process()
         }
 
         bool Result = false;
-        ISUInt64 PerfomanceMsec = 0;
+        uint64_t PerfomanceMsec = 0;
         ISTcpAnswer *TcpAnswer = new ISTcpAnswer(tcp_message->TcpClient->Socket);
 
         if (tcp_message->IsValid()) //≈сли сообщение валидное - переходим к выполнению
@@ -868,8 +868,8 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
             *IPAddress = TcpClientInfo.IPAddress.c_str();
 
         rapidjson::Value AlreadyConnectedObject(rapidjson::Type::kObjectType);
-        AlreadyConnectedObject.AddMember("DateTime", JSON_STRING(DTConnected), Allocator);
-        AlreadyConnectedObject.AddMember("IPAddress", JSON_STRING(IPAddress), Allocator);
+        AlreadyConnectedObject.AddMember("DateTime", JSON_STRINGA(DTConnected, Allocator), Allocator);
+        AlreadyConnectedObject.AddMember("IPAddress", JSON_STRINGA(IPAddress, Allocator), Allocator);
         TcpAnswer->Parameters.AddMember("AlreadyConnected", rapidjson::Value(AlreadyConnectedObject, Allocator), Allocator);
     }
 
@@ -1852,7 +1852,7 @@ bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
             switch (MapItem.value.GetType())
             {
             case rapidjson::Type::kNumberType:
-                qSelect.BindValue(MapItem.value.GetUint64());
+                qSelect.BindValue((uint64_t)MapItem.value.GetUint64());
                 break;
 
             default:

@@ -17,12 +17,12 @@ ISProperty& ISProperty::Instance()
     return Property;
 }
 //-----------------------------------------------------------------------------
-const ISUInt64& ISProperty::GetUptime() const
+const uint64_t& ISProperty::GetUptime() const
 {
     return Uptime;
 }
 //-----------------------------------------------------------------------------
-void ISProperty::SetUptime(ISUInt64 uptime)
+void ISProperty::SetUptime(uint64_t uptime)
 {
     Uptime = uptime;
 }
