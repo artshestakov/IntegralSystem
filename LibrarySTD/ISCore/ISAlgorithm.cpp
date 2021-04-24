@@ -10,29 +10,29 @@ char* ISAlgorithm::itoa(int64_t Value, char *Result, int Radix)
         return Result;
     }
 
-    char *ptr = Result,
-        *ptr1 = Result,
+    char *Pointer = Result,
+        *Pointer1 = Result,
         TempChar;
-    int TempValue;
+    int64_t TempValue;
 
     do
     {
         TempValue = Value;
         Value /= Radix;
-        *ptr++ = "zyxwvutsrqponmlkjihgfedcba9876543210123456789abcdefghijklmnopqrstuvwxyz"[35 + (TempValue - Value * Radix)];
+        *Pointer++ = "zyxwvutsrqponmlkjihgfedcba9876543210123456789abcdefghijklmnopqrstuvwxyz"[35 + (TempValue - Value * Radix)];
     } while (Value);
 
     if (TempValue < 0)
     {
-        *ptr++ = '-';
+        *Pointer++ = '-';
     }
-    *ptr-- = '\0';
+    *Pointer-- = '\0';
 
-    while (ptr1 < ptr)
+    while (Pointer1 < Pointer)
     {
-        TempChar = *ptr;
-        *ptr--= *ptr1;
-        *ptr1++ = TempChar;
+        TempChar = *Pointer;
+        *Pointer--= *Pointer1;
+        *Pointer1++ = TempChar;
     }
     return Result;
 }
@@ -682,7 +682,7 @@ void ISAlgorithm::RemoveLastSymbolLoop(std::string &String, char Symbol)
 //-----------------------------------------------------------------------------
 std::string ISAlgorithm::FormatNumber(uint64_t Number, char Separator)
 {
-    return FormatNumber(Number, Separator);
+    return FormatNumber((int64_t)Number, Separator);
 }
 //-----------------------------------------------------------------------------
 std::string ISAlgorithm::FormatNumber(int64_t Number, char Separator)
