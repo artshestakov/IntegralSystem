@@ -31,6 +31,7 @@ public:
     void BindValue(std::nullptr_t Pointer);
     void BindValue(int Value, Oid OID = InvalidOid);
     void BindValue(unsigned int Value, Oid OID = InvalidOid);
+    void BindValue(ISUInt64 Value, Oid OID = InvalidOid);
     void BindValue(const std::string &Value, Oid OID = InvalidOid);
     void BindValue(const char *Value, Oid OID = InvalidOid);
     void BindValue(bool Value, Oid OID = InvalidOid);

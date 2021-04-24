@@ -114,7 +114,6 @@ std::string ISTcpWorkerHelper::CreateSqlFromTitleName(PMetaForeign *MetaForeign,
 //-----------------------------------------------------------------------------
 std::string ISTcpWorkerHelper::CreateSqlFromTable(PMetaTable *MetaTable, rapidjson::Value &FilterObject, const rapidjson::Value &SearchArray, std::string SortingField, ISNamespace::SortingOrder SortingOrder)
 {
-    IS_UNUSED(FilterObject);
     IS_UNUSED(SearchArray);
 
     std::string SqlText = "SELECT\n",
@@ -163,18 +162,22 @@ std::string ISTcpWorkerHelper::CreateSqlFromTable(PMetaTable *MetaTable, rapidjs
 		SqlText += " AS \"" + MetaField->Name + "\",\n";
 	}
     ISAlgorithm::StringChop(SqlText, 2);
-    ISAlgorithm::StringChop(SqlTextJoins, 1);
+	SqlText += "\nFROM " + MetaTable->Name + ' ' + MetaTable->Alias;
 
-	SqlText += "\nFROM " + MetaTable->Name + ' ' + MetaTable->Alias + '\n';
-	SqlText += SqlTextJoins;
+    if (!SqlTextJoins.empty())
+    {
+        ISAlgorithm::StringChop(SqlTextJoins, 1);
+        SqlText += '\n' + SqlTextJoins;
+    }
 
 	//Если фильтрация указана - устанавливаем
 	if (FilterObject.MemberCount() > 0)
 	{
 		SqlText += "\nWHERE ";
+        int ParameterNumber = 0;
 		for (const auto &MapItem : FilterObject.GetObject())
 		{
-			SqlText += MetaTable->Alias + '_' + MapItem.name.GetString() + " = :" + MapItem.name.GetString() + "\nAND ";
+			SqlText += MetaTable->Alias + '_' + MapItem.name.GetString() + " = $" + std::to_string(++ParameterNumber) + "\nAND ";
 		}
         ISAlgorithm::StringChop(SqlText, 5);
 	}

@@ -1822,10 +1822,23 @@ bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
     qSelect.SetShowLongQuery(false);
 
     //Заполняем параметры запроса
-    /*for (const auto &MapItem : FilterMap.toStdMap())
+    if (FilterObject.MemberCount() > 0)
     {
-        qSelect.BindValue(":" + MapItem.first, MapItem.second);
-    }*/
+        for (const auto &MapItem : FilterObject.GetObject())
+        {
+            switch (MapItem.value.GetType())
+            {
+            case rapidjson::Type::kNumberType:
+                qSelect.BindValue(MapItem.value.GetUint64());
+                break;
+
+            default:
+                ErrorString = ISAlgorithm::StringF(LANG("Carat.Error.Query.GetTableData.ClassFilterValueType"), MapItem.value.GetType(), MapItem.name.GetString());
+                return false;
+                break;
+            }
+        }
+    }
 
     if (!qSelect.Execute()) //Запрос не отработал
     {
@@ -1887,7 +1900,9 @@ bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
                     }
                     else
                     {
-                        Values.PushBack(JSON_STRING(ISAlgorithm::FormatNumber(qSelect.ReadColumn_Int64(i)).c_str()), Allocator);
+                        std::string String = ISAlgorithm::FormatNumber(qSelect.ReadColumn_Int64(i));
+                        const char *CString = String.c_str();
+                        Values.PushBack(JSON_STRINGA(CString, Allocator), Allocator);
                     }
                 }
                 else if (Type == ISNamespace::FieldType::ID)

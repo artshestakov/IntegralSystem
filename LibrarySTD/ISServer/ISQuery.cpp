@@ -112,6 +112,13 @@ void ISQuery::BindValue(unsigned int Value, Oid OID)
     ++ParameterCount;
 }
 //-----------------------------------------------------------------------------
+void ISQuery::BindValue(ISUInt64 Value, Oid OID)
+{
+    ParameterValues.emplace_back(std::to_string(Value));
+    ParameterTypes.emplace_back(OID == InvalidOid ? INT8OID : OID);
+    ++ParameterCount;
+}
+//-----------------------------------------------------------------------------
 void ISQuery::BindValue(const std::string &Value, Oid OID)
 {
     ParameterValues.emplace_back(Value);
