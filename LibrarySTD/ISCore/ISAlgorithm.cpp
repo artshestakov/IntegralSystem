@@ -518,7 +518,11 @@ void ISAlgorithm::StringToLower(std::string &String)
 {
     if (!String.empty())
     {
-        std::transform(String.begin(), String.end(), String.begin(), tolower);
+        std::transform(String.begin(), String.end(), String.begin(),
+            [](char Char)
+        {
+            return static_cast<char>(std::tolower(Char));
+        });
     }
 }
 //-----------------------------------------------------------------------------
@@ -526,7 +530,11 @@ void ISAlgorithm::StringToUpper(std::string &String)
 {
     if (!String.empty())
     {
-        std::transform(String.begin(), String.end(), String.begin(), toupper);
+        std::transform(String.begin(), String.end(), String.begin(),
+            [](char Char)
+        {
+            return static_cast<char>(std::toupper(Char));
+        });
     }
 }
 //-----------------------------------------------------------------------------
@@ -780,14 +788,14 @@ std::string ISAlgorithm::GenerateUuidStandart()
 std::string ISAlgorithm::GenerateUuid()
 {
     std::string UID = ISAlgorithm::GenerateUuidStandart();
-    std::transform(UID.begin(), UID.end(), UID.begin(), toupper);
+    StringToUpper(UID);
     return '{' + UID + '}';
 }
 //-----------------------------------------------------------------------------
 std::string ISAlgorithm::GenerateUuidLite()
 {
     std::string UID = ISAlgorithm::GenerateUuidStandart();
-    std::transform(UID.begin(), UID.end(), UID.begin(), tolower);
+    StringToLower(UID);
     auto Begin = UID.begin();
     for (size_t i = UID.size() - 1; i > 0; --i)
     {

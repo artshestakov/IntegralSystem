@@ -5,6 +5,7 @@
 #ifdef WIN32
 #pragma warning(disable: 6262)
 #pragma warning(disable: 4702) //for ISMetaData::GetType
+#pragma warning(disable: 4834)
 #endif
 //-----------------------------------------------------------------------------
 #ifdef WIN32
