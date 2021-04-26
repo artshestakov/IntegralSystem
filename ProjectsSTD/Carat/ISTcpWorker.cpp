@@ -256,6 +256,7 @@ ISTcpWorker::ISTcpWorker()
     MapFunction[API_GET_RECORD_VALUE] = &ISTcpWorker::GetRecordValue;
     MapFunction[API_RECORD_ADD] = &ISTcpWorker::RecordAdd;
     MapFunction[API_RECORD_GET] = &ISTcpWorker::RecordGet;
+    MapFunction[API_RECORD_EDIT] = &ISTcpWorker::RecordEdit;
 
     CRITICAL_SECTION_INIT(&CriticalSection);
     CRITICAL_SECTION_INIT(&CSRunning);
@@ -1716,9 +1717,102 @@ bool ISTcpWorker::RecordAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::RecordEdit(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
-    IS_UNUSED(TcpMessage);
-    IS_UNUSED(TcpAnswer);
-    return false;
+    if (!CheckIsNull(TcpMessage, "TableName") || !CheckIsNull(TcpMessage, "ObjectID"))
+    {
+        return false;
+    }
+
+    std::string TableName;
+    if (!GetParameterString(TcpMessage, "TableName", TableName))
+    {
+        return false;
+    }
+
+    unsigned int ObjectID = 0;
+    if (!GetParameterUInt(TcpMessage, "ObjectID", ObjectID))
+    {
+        return false;
+    }
+
+    //Получаем указатель на мета-таблицу
+    PMetaTable *MetaTable = GetMetaTable(TableName);
+    if (!MetaTable)
+    {
+        return false;
+    }
+
+    //Проверяем наличие списка значений
+    if (!TcpMessage->Parameters.HasMember("Values"))
+    {
+        ErrorString = LANG("Carat.Error.Query.RecordEdit.ValuesNotExist");
+        return false;
+    }
+
+    //Проверяем список значений на пустоту
+    rapidjson::Value &Values = TcpMessage->Parameters["Values"];
+    if (Values.GetType() != rapidjson::Type::kObjectType)
+    {
+        ErrorString = LANG("Carat.Error.Query.RecordAdd.ValuesIsNotObject");
+        return false;
+    }
+
+    if (Values.ObjectEmpty())
+    {
+        ErrorString = LANG("Carat.Error.Query.RecordEdit.EmptyValues");
+        return false;
+    }
+
+    //Обходим значения и готовим запрос
+    std::string SqlText = "UPDATE " + MetaTable->Name + " SET\n";
+    size_t ParameterPos = 0;
+    for (const auto &MapItem : Values.GetObject())
+    {
+        std::string FieldName = MapItem.name.GetString();
+        if (!MetaTable->GetField(FieldName)) //Такого поля нет - ошибка
+        {
+            ErrorString = LANG("Carat.Error.Query.RecordEdit.FieldNotFound");
+            return false;
+        }
+        SqlText += MetaTable->Alias + '_' + FieldName + " = $" + std::to_string(++ParameterPos) + ",\n";
+    }
+    ISAlgorithm::StringChop(SqlText, 2);
+    SqlText += "\nWHERE " + MetaTable->Alias + "_id = $" + std::to_string(++ParameterPos);
+
+    //Создаём объекта запроса и заполняем его параметрами
+    ISQuery qUpdate(DBConnection, SqlText);
+    for (const auto &MapItem : Values.GetObject())
+    {
+        switch (MapItem.value.GetType())
+        {
+        case rapidjson::Type::kStringType:
+            qUpdate.BindValue(MapItem.value.GetString());
+            break;
+
+        case rapidjson::Type::kTrueType:
+        case rapidjson::Type::kFalseType:
+            qUpdate.BindValue(MapItem.value.GetBool());
+            break;
+        }
+    }
+    qUpdate.BindValue(ObjectID);
+
+    //Выполняем запрос
+    if (!qUpdate.Execute())
+    {
+        return ErrorQuery(LANG("Carat.Error.Query.RecordEdit.Update"), qUpdate);
+    }
+
+    //Получаем имя объекта
+    std::string ObjectName;
+    if (!GetObjectName(MetaTable, ObjectID, ObjectName))
+    {
+        return false;
+    }
+
+    auto &Allocator = TcpAnswer->Parameters.GetAllocator();
+    TcpAnswer->Parameters.AddMember("ObjectName", JSON_STRINGA(ObjectName.c_str(), Allocator), Allocator);
+    Protocol(TcpMessage->TcpClient->UserID, CONST_UID_PROTOCOL_EDIT_OBJECT, MetaTable->Name, MetaTable->LocalListName, ObjectID, ObjectName);
+    return true;
 }
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::RecordDelete(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
