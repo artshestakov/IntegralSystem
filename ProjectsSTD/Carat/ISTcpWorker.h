@@ -28,6 +28,7 @@ private:
     bool CheckIsNull(ISTcpMessage *TcpMessage, const char *ParameterName);
     bool GetParameterUInt(ISTcpMessage *TcpMessage, const char *ParameterName, unsigned int &Value);
     bool GetParameterString(ISTcpMessage *TcpMessage, const char *ParameterName, std::string &Value);
+    bool GetParameterBool(ISTcpMessage *TcpMessage, const char *ParameterName, bool &Value);
     bool ErrorQuery(const std::string &LocalError, ISQuery &SqlQuery);
     void Protocol(unsigned int UserID, const char *ActionUID, const std::string &TableName = std::string(), const std::string &TableLocalName = std::string(), unsigned int ObjectID = 0, const std::string &Information = std::string());
     unsigned int ExtractVersionFile(const std::string &FileName);

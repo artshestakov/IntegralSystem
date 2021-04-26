@@ -254,6 +254,7 @@ ISTcpWorker::ISTcpWorker()
     MapFunction[API_RECORD_GET_INFO] = &ISTcpWorker::RecordGetInfo;
     MapFunction[API_GET_SERVER_INFO] = &ISTcpWorker::GetServerInfo;
     MapFunction[API_GET_RECORD_VALUE] = &ISTcpWorker::GetRecordValue;
+    MapFunction[API_RECORD_ADD] = &ISTcpWorker::RecordAdd;
 
     CRITICAL_SECTION_INIT(&CriticalSection);
     CRITICAL_SECTION_INIT(&CSRunning);
@@ -468,14 +469,6 @@ bool ISTcpWorker::CheckIsNull(ISTcpMessage *TcpMessage, const char *ParameterNam
         IS_ASSERT(false, "Not support type. Need of develop support");
         break;
 
-    case rapidjson::Type::kFalseType:
-        IS_ASSERT(false, "Not support type. Need of develop support");
-        break;
-
-    case rapidjson::Type::kTrueType:
-        IS_ASSERT(false, "Not support type. Need of develop support");
-        break;
-
     case rapidjson::Type::kObjectType:
         IS_ASSERT(false, "Not support type. Need of develop support");
         break;
@@ -485,7 +478,7 @@ bool ISTcpWorker::CheckIsNull(ISTcpMessage *TcpMessage, const char *ParameterNam
         break;
 
     case rapidjson::Type::kStringType: //Строковый тип
-        if (strlen(JsonValue.GetString()) == 0)
+        if (JsonValue.GetStringLength() == 0)
         {
             ErrorString = ISAlgorithm::StringF("Parameter \"%s\" is empty", ParameterName);
             return false;
@@ -519,6 +512,18 @@ bool ISTcpWorker::GetParameterString(ISTcpMessage *TcpMessage, const char *Param
         return false;
     }
     Value = ParameterValue.GetString();
+    return true;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::GetParameterBool(ISTcpMessage *TcpMessage, const char *ParameterName, bool &Value)
+{
+    rapidjson::Value &ParameterValue = TcpMessage->Parameters[ParameterName];
+    if (!ParameterValue.IsBool())
+    {
+        ErrorString = ISAlgorithm::StringF(LANG("Carat.Error.ParameterNotBool"), ParameterName);
+        return false;
+    }
+    Value = ParameterValue.GetBool();
     return true;
 }
 //-----------------------------------------------------------------------------
@@ -1594,9 +1599,118 @@ bool ISTcpWorker::GetClients(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::RecordAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
-    IS_UNUSED(TcpMessage);
-    IS_UNUSED(TcpAnswer);
-    return false;
+    if (!CheckIsNull(TcpMessage, "TableName") || !CheckIsNull(TcpMessage, "IsCopy"))
+    {
+        return false;
+    }
+
+    std::string TableName;
+    if (!GetParameterString(TcpMessage, "TableName", TableName))
+    {
+        return false;
+    }
+
+    bool IsCopy = false;
+    if (!GetParameterBool(TcpMessage, "IsCopy", IsCopy))
+    {
+        return false;
+    }
+
+    //Получаем указатель на мета-таблицу
+    PMetaTable *MetaTable = GetMetaTable(TableName);
+    if (!MetaTable)
+    {
+        return false;
+    }
+
+    //Проверяем наличие списка значений
+    if (!TcpMessage->Parameters.HasMember("Values"))
+    {
+        ErrorString = LANG("Carat.Error.Query.RecordAdd.ValuesNotExist");
+        return false;
+    }
+
+    //Проверяем список значений на пустоту
+    rapidjson::Value &Values = TcpMessage->Parameters["Values"];
+    if (Values.GetType() != rapidjson::Type::kObjectType)
+    {
+        ErrorString = LANG("Carat.Error.Query.RecordAdd.ValuesIsNotObject");
+        return false;
+    }
+
+    if (Values.ObjectEmpty())
+    {
+        ErrorString = LANG("Carat.Error.Query.RecordAdd.EmptyValues");
+        return false;
+    }
+
+    //Обходим значения и готовим запрос
+    std::string InsertText = "INSERT INTO " + MetaTable->Name + '(',
+        ValuesText = "VALUES(";
+    size_t ParameterPos = 0;
+    for (const auto &MapItem : Values.GetObject())
+    {
+        std::string FieldName = MapItem.name.GetString();
+        if (!MetaTable->GetField(FieldName)) //Такого поля нет - ошибка
+        {
+            ErrorString = ISAlgorithm::StringF(LANG("Carat.Error.Query.RecordAdd.FieldNotFound"), FieldName.c_str());
+            return false;
+        }
+        InsertText += MetaTable->Alias + '_' + FieldName + ',';
+        ValuesText += '$' + std::to_string(++ParameterPos) + ',';
+    }
+    ISAlgorithm::StringChop(InsertText, 1);
+    ISAlgorithm::StringChop(ValuesText, 1);
+
+    //Создаём объект запроса и заполняем его параметрами
+    ISQuery qInsert(DBConnection,
+        InsertText + ")\n" + ValuesText + ")\nRETURNING " + MetaTable->Alias + "_id");
+    qInsert.SetShowLongQuery(false);
+    for (const auto &MapItem : Values.GetObject())
+    {
+        switch (MapItem.value.GetType())
+        {
+        case rapidjson::Type::kStringType:
+            qInsert.BindValue(MapItem.value.GetString());
+            break;
+
+        case rapidjson::Type::kTrueType:
+        case rapidjson::Type::kFalseType:
+            qInsert.BindValue(MapItem.value.GetBool());
+            break;
+        }
+    }
+
+    //Выполняем запрос
+    if (!qInsert.Execute())
+    {
+        return ErrorQuery(LANG("Carat.Error.Query.RecordAdd.Insert"), qInsert);
+    }
+
+    //Переходим на первую запись
+    if (!qInsert.First())
+    {
+        ErrorString = LANG("Carat.Error.Query.RecordAdd.First");
+        return false;
+    }
+
+    //Вытаскиваем новый идентификатор и получаем имя записи
+    unsigned int ObjectID = qInsert.ReadColumn_UInt(0);
+    std::string ObjectName;
+    if (!GetObjectName(MetaTable, ObjectID, ObjectName))
+    {
+        return false;
+    }
+
+    //Протоколируем и записываем ответ
+    Protocol(TcpMessage->TcpClient->UserID,
+        IsCopy ? CONST_UID_PROTOCOL_CREATE_COPY_OBJECT : CONST_UID_PROTOCOL_CREATE_OBJECT,
+        MetaTable->Name, MetaTable->LocalListName, ObjectID, ObjectName);
+
+    auto &Allocator = TcpAnswer->Parameters.GetAllocator();
+    TcpAnswer->Parameters.AddMember("ObjectID", ObjectID, Allocator);
+    TcpAnswer->Parameters.AddMember("ObjectName", JSON_STRINGA(ObjectName.c_str(), Allocator), Allocator);
+    return true;
 }
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::RecordEdit(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
