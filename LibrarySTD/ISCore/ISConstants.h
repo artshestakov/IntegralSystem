@@ -69,6 +69,7 @@ const char API_USER_SETTINGS_RESET[] = "UserSettingsReset"; //Сброс пароля польз
 const char API_GET_TABLE_DATA[] = "GetTableData"; //Получение данных из таблицы
 const char API_RECORD_GET_INFO[] = "RecordGetInfo"; //Получение информации о записи
 const char API_GET_SERVER_INFO[] = "GetServerInfo"; //Получение информации о сервере
+const char API_GET_RECORD_VALUE[] = "GetRecordValue"; //Получение значения записи
 //PROTOCOL---------------------------------------------------------------------
 const char CONST_UID_PROTOCOL_ENTER_APPLICATION[] = "2614cb96-ec54-4d4f-b1a6-06d2444962ca";
 const char CONST_UID_PROTOCOL_GET_UPDATE_CLIENT[] = "0234643a-af60-44bf-a2eb-08a71307841c";

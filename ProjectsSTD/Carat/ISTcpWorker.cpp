@@ -253,6 +253,7 @@ ISTcpWorker::ISTcpWorker()
     MapFunction[API_GET_TABLE_DATA] = &ISTcpWorker::GetTableData;
     MapFunction[API_RECORD_GET_INFO] = &ISTcpWorker::RecordGetInfo;
     MapFunction[API_GET_SERVER_INFO] = &ISTcpWorker::GetServerInfo;
+    MapFunction[API_GET_RECORD_VALUE] = &ISTcpWorker::GetRecordValue;
 
     CRITICAL_SECTION_INIT(&CriticalSection);
     CRITICAL_SECTION_INIT(&CSRunning);
@@ -2159,9 +2160,76 @@ bool ISTcpWorker::GroupRightSpecialDelete(ISTcpMessage *TcpMessage, ISTcpAnswer 
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::GetRecordValue(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
-    IS_UNUSED(TcpMessage);
-    IS_UNUSED(TcpAnswer);
-    return false;
+    if (!CheckIsNull(TcpMessage, "TableName") ||
+        !CheckIsNull(TcpMessage, "FieldName") ||
+        !CheckIsNull(TcpMessage, "ObjectID"))
+    {
+        return false;
+    }
+
+    //Получаем имя таблицы
+    std::string TableName;
+    if (!GetParameterString(TcpMessage, "TableName", TableName))
+    {
+        return false;
+    }
+
+    //Получаем имя поля
+    std::string FieldName;
+    if (!GetParameterString(TcpMessage, "FieldName", FieldName))
+    {
+        return false;
+    }
+
+    //Получаем идентификатор объекта
+    unsigned int ObjectID = 0;
+    if (!GetParameterUInt(TcpMessage, "ObjectID", ObjectID))
+    {
+        return false;
+    }
+
+    //Получаем мета-таблицу
+    PMetaTable *MetaTable = GetMetaTable(TableName);
+    if (!MetaTable)
+    {
+        return false;
+    }
+
+    //Получаем мета-поле
+    PMetaField *MetaField = MetaTable->GetField(FieldName);
+    if (!MetaField)
+    {
+        ErrorString = ISAlgorithm::StringF(LANG("Carat.Error.Query.GetRecordValue.InvalidFieldName"), FieldName.c_str());
+        return false;
+    }
+
+    //Формируем запрос и выполняем его
+    ISQuery qSelectValue(DBConnection, ISAlgorithm::StringF("SELECT %s_%s FROM %s WHERE %s_id = $1",
+            MetaTable->Alias.c_str(), MetaField->Name.c_str(), MetaTable->Name.c_str(), MetaTable->Alias.c_str()));
+    qSelectValue.BindValue(ObjectID);
+    if (!qSelectValue.Execute())
+    {
+        return ErrorQuery(LANG("Carat.Error.Query.GetRecordValue.Select"), qSelectValue);
+    }
+
+    //Переходим к первой записи
+    if (!qSelectValue.First())
+    {
+        ErrorString = ISAlgorithm::StringF(LANG("Carat.Error.Query.GetRecordValue.RecordNotFound"), ObjectID);
+        return false;
+    }
+
+    auto &Allocator = TcpAnswer->Parameters.GetAllocator();
+    if (qSelectValue.IsNull(0)) //Значение NULL
+    {
+        TcpAnswer->Parameters.AddMember("Value", JSON_NULL, Allocator);
+    }
+    else //Значение не NULL
+    {
+        char *Value = qSelectValue.ReadColumn(0);
+        TcpAnswer->Parameters.AddMember("Value", JSON_STRINGA(Value, Allocator), Allocator);
+    }
+    return true;
 }
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::RecordFavoriteAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)

@@ -283,12 +283,12 @@
           </elementProp>
           <elementProp name="GetRecordValue_FieldName" elementType="Argument">
             <stringProp name="Argument.name">GetRecordValue_FieldName</stringProp>
-            <stringProp name="Argument.value">Hash</stringProp>
+            <stringProp name="Argument.value">Group</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="GetRecordValue_ObjectID" elementType="Argument">
             <stringProp name="Argument.name">GetRecordValue_ObjectID</stringProp>
-            <stringProp name="Argument.value">11</stringProp>
+            <stringProp name="Argument.value">1</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="RecordFavoriteAdd_TableName" elementType="Argument">
@@ -775,7 +775,7 @@ def MapGetRecordValue =
 		[
 			TableName: vars.get(&quot;GetRecordValue_TableName&quot;),
 			FieldName: vars.get(&quot;GetRecordValue_FieldName&quot;),
-			ObjectID: vars.get(&quot;GetRecordValue_ObjectID&quot;)
+			ObjectID: Integer.parseInt(vars.get(&quot;GetRecordValue_ObjectID&quot;))
 		]
 ];
 vars.put(&quot;QueryGetRecordValue&quot;, MapToString(MapGetRecordValue));
@@ -1003,7 +1003,7 @@ vars.put(&quot;QueryGetMonitor&quot;, MapToString(MapGetMonitor));</stringProp>
           <stringProp name="ConfigTestElement.password"></stringProp>
         </TCPSampler>
         <hashTree/>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: RecordGetInfo" enabled="true">
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: RecordGetInfo" enabled="false">
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
           <stringProp name="TCPSampler.port"></stringProp>
@@ -1291,7 +1291,7 @@ vars.put(&quot;QueryGetMonitor&quot;, MapToString(MapGetMonitor));</stringProp>
           <stringProp name="ConfigTestElement.password"></stringProp>
         </TCPSampler>
         <hashTree/>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: GetRecordValue" enabled="false">
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: GetRecordValue" enabled="true">
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
           <stringProp name="TCPSampler.port"></stringProp>
