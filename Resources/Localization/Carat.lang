@@ -125,8 +125,9 @@
     <Local Name="Carat.Error.Query.RecordDelete.Delete" Russian="Не удалось произвести удаление записей."/>
 
     <Local Name="Carat.Error.Query.RecordGet.Select" Russian="Не удалось получить запись."/>
-    <Local Name="Carat.Error.Query.RecordGet.NotExist" Russian="Запись с идентификатором %1 не существует."/>
-    <Local Name="Carat.Error.Query.RecordGet.IsSystem" Russian="Запись с идентификатором %1 является системной."/>
+    <Local Name="Carat.Error.Query.RecordGet.NotExist" Russian="Запись с идентификатором %d не существует."/>
+    <Local Name="Carat.Error.Query.RecordGet.IsSystem" Russian="Запись с идентификатором %d является системной."/>
+    <Local Name="Carat.Error.Query.RecordGet.UnsupportType" Russian="Тип &quot;%d&quot; не поддерживается."/>
 
     <Local Name="Carat.Error.Query.RecordGetInfo.Select" Russian="Не удалось получить информацию о записи."/>
     <Local Name="Carat.Error.Query.RecordGetInfo.NotExist" Russian="Информации по этой записи нет."/>

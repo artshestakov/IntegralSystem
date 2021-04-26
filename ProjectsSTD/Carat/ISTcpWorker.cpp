@@ -255,6 +255,7 @@ ISTcpWorker::ISTcpWorker()
     MapFunction[API_GET_SERVER_INFO] = &ISTcpWorker::GetServerInfo;
     MapFunction[API_GET_RECORD_VALUE] = &ISTcpWorker::GetRecordValue;
     MapFunction[API_RECORD_ADD] = &ISTcpWorker::RecordAdd;
+    MapFunction[API_RECORD_GET] = &ISTcpWorker::RecordGet;
 
     CRITICAL_SECTION_INIT(&CriticalSection);
     CRITICAL_SECTION_INIT(&CSRunning);
@@ -1729,9 +1730,156 @@ bool ISTcpWorker::RecordDelete(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::RecordGet(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
-    IS_UNUSED(TcpMessage);
-    IS_UNUSED(TcpAnswer);
-    return false;
+    if (!CheckIsNull(TcpMessage, "TableName") || !CheckIsNull(TcpMessage, "ObjectID"))
+    {
+        return false;
+    }
+
+    std::string TableName;
+    if (!GetParameterString(TcpMessage, "TableName", TableName))
+    {
+        return false;
+    }
+
+    unsigned int ObjectID = 0;
+    if (!GetParameterUInt(TcpMessage, "ObjectID", ObjectID))
+    {
+        return false;
+    }
+
+    //Получаем мета-таблицу
+    PMetaTable *MetaTable = GetMetaTable(TableName);
+    if (!MetaTable)
+    {
+        return false;
+    }
+
+    //Формируем SQL-Запрос
+    std::string SqlText = "SELECT\n";
+    for (PMetaField *MetaField : MetaTable->Fields) //Обходим поля мета-таблицы
+    {
+        //Если поле является идентификатором или оно скрыто на форме объекта - пропускаем
+        if (MetaField->IsFieldID() || MetaField->HideFromObject)
+        {
+            continue;
+        }
+
+        if (MetaField->Foreign) //Если поле ссылается на справочник
+        {
+            //Получаем мета-таблицу, на которую ссылается внешний ключ
+            PMetaTable *MetaTableForeign = ISMetaData::Instance().GetTable(MetaField->Foreign->ForeignClass);
+
+            //Формируем подзапрос
+            SqlText += "(SELECT " + MetaTableForeign->Alias + "_id || ',' || concat(";
+            ISVectorString VectorString = ISAlgorithm::StringSplit(MetaField->Foreign->ForeignViewNameField, ';');
+            for (const std::string &FieldName : VectorString)
+            {
+                SqlText += MetaTableForeign->Alias + '_' + FieldName + ',';
+            }
+            ISAlgorithm::StringChop(SqlText, 1);
+            SqlText += ") FROM " + MetaTableForeign->Name +
+                " WHERE " + MetaTableForeign->Alias + "_id = " + MetaTable->Alias + '_' + MetaField->Name + ") AS \"" + MetaField->Name + "\",\n";
+        }
+        else //Поле стандартное
+        {
+            if (MetaField->QueryText.empty()) //Поле не является виртуальным
+            {
+                SqlText += MetaTable->Alias + '_' + MetaField->Name;
+            }
+            else //Поле является виртуальным
+            {
+                SqlText += '(' + MetaField->QueryText + ')';
+            }
+            SqlText += " AS \"" + MetaField->Name + "\",\n"; //Дополняем именование поля в выборке
+        }
+    }
+    ISAlgorithm::StringChop(SqlText, 2);
+    SqlText += "\nFROM " + MetaTable->Name + "\n";
+    SqlText += "WHERE " + MetaTable->Alias + "_id = $1";
+
+    //Выполняем запрос
+    ISQuery qSelect(DBConnection, SqlText);
+    qSelect.BindValue(ObjectID);
+    if (!qSelect.Execute()) //Ошибка запроса
+    {
+        return ErrorQuery(LANG("Carat.Error.Query.RecordGet.Select"), qSelect);
+    }
+
+    //Если переход на первую строку не удался - такая запись не существует
+    if (!qSelect.First())
+    {
+        ErrorString = ISAlgorithm::StringF(LANG("Carat.Error.Query.RecordGet.NotExist"), ObjectID);
+        return false;
+    }
+
+    //Получаем запись и проверяем, не системная ли она
+    if (qSelect.ReadColumn_Bool(0))
+    {
+        ErrorString = ISAlgorithm::StringF(LANG("Carat.Error.Query.RecordGet.IsSystem"), ObjectID);
+        return false;
+    }
+
+    //Обходим поля записи
+    auto &Allocator = TcpAnswer->Parameters.GetAllocator();
+    rapidjson::Value ValuesObject(rapidjson::Type::kObjectType);
+    for (int i = 0, c = qSelect.GetResultColumnCount(); i < c; ++i)
+    {
+        const char *FieldName = qSelect.GetResultFieldName(i);
+
+        /*PMetaField *MetaField = MetaTable->GetField(FieldName);
+        if (MetaField->Type == ISNamespace::FieldType::Image) //Если поле является изображением, приводим его к base64
+        {
+            //Value = Value.toByteArray().toBase64();
+        }*/
+
+        if (qSelect.IsNull(i))
+        {
+            ValuesObject.AddMember(JSON_STRING(FieldName), JSON_NULL, Allocator);
+            continue;
+        }
+
+        Oid FieldTypeDB = qSelect.GetResultColumnType(i);
+        switch (FieldTypeDB)
+        {
+        case BOOLOID:
+            ValuesObject.AddMember(JSON_STRING(FieldName), rapidjson::Value(qSelect.ReadColumn_Bool(i)), Allocator);
+            break;
+
+        case INT2OID:
+        case INT4OID:
+        case INT8OID:
+            ValuesObject.AddMember(JSON_STRING(FieldName), rapidjson::Value(qSelect.ReadColumn_Int64(i)), Allocator);
+            break;
+
+        case NUMERICOID:
+            ValuesObject.AddMember(JSON_STRING(FieldName), rapidjson::Value(qSelect.ReadColumn_Double(i)), Allocator);
+            break;
+
+        case TEXTOID:
+        case VARCHAROID:
+        {
+            const char *String = qSelect.ReadColumn(i);
+            ValuesObject.AddMember(JSON_STRING(FieldName), JSON_STRINGA(String, Allocator), Allocator);
+        }
+        break;
+
+        default:
+            ErrorString = ISAlgorithm::StringF(LANG("Carat.Error.Query.RecordGet.UnsupportType"), FieldTypeDB);
+            return false;
+            break;
+        }
+    }
+
+    //Получаем имя объекта
+    std::string ObjectName;
+    if (!GetObjectName(MetaTable, ObjectID, ObjectName))
+    {
+        return false;
+    }
+    TcpAnswer->Parameters.AddMember("Values", ValuesObject, Allocator);
+    TcpAnswer->Parameters.AddMember("ObjectName", JSON_STRINGA(ObjectName.c_str(), Allocator), Allocator);
+    Protocol(TcpMessage->TcpClient->UserID, CONST_UID_PROTOCOL_SHOW_OBJECT, MetaTable->Name, MetaTable->LocalListName, ObjectID, ObjectName);
+    return true;
 }
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::RecordGetInfo(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)

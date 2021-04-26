@@ -69,6 +69,11 @@ struct PMetaField : public PMetaBase
 
     }
 
+    bool IsFieldID() const
+    {
+        return Type == ISNamespace::FieldType::ID;
+    }
+
     std::string UID;
     ISNamespace::FieldType Type; //Тип
     std::string Name; //Название

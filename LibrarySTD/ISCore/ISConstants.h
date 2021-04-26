@@ -71,6 +71,7 @@ const char API_RECORD_GET_INFO[] = "RecordGetInfo"; //Получение информации о зап
 const char API_GET_SERVER_INFO[] = "GetServerInfo"; //Получение информации о сервере
 const char API_GET_RECORD_VALUE[] = "GetRecordValue"; //Получение значения записи
 const char API_RECORD_ADD[] = "RecordAdd"; //Добавление новой записи
+const char API_RECORD_GET[] = "RecordGet"; //Получение записи из БД
 //PROTOCOL---------------------------------------------------------------------
 const char CONST_UID_PROTOCOL_ENTER_APPLICATION[] = "2614cb96-ec54-4d4f-b1a6-06d2444962ca";
 const char CONST_UID_PROTOCOL_GET_UPDATE_CLIENT[] = "0234643a-af60-44bf-a2eb-08a71307841c";
@@ -84,6 +85,7 @@ const char CONST_UID_PROTOCOL_RECORD_INFO[] = "fd98685e-d6dd-41e3-9f62-389567f58
 const char CONST_UID_PROTOCOL_SERVER_INFO[] = "e6f5d167-25e6-4172-8d81-219de8608647";
 const char CONST_UID_PROTOCOL_CREATE_OBJECT[] = "d1348312-298f-4a7c-b584-9ba8c4952cd3";
 const char CONST_UID_PROTOCOL_CREATE_COPY_OBJECT[] = "efa8fe45-1174-4d2e-bbe6-4940380961d4";
+const char CONST_UID_PROTOCOL_SHOW_OBJECT[] = "117e8972-97dc-4e72-93ac-dc3bb50d11cf";
 //-----------------------------------------------------------------------------
 const char CONST_UID_GROUP_ACCESS_TYPE_SHOW[] = "41743776-d7ce-414f-acf3-71c42a607742"; //Просмотр данных
 const char CONST_UID_GROUP_ACCESS_TYPE_CREATE[] = "1cfa961d-08a2-4aa3-978e-ff23fc88ca08"; //Создание данных
