@@ -10,7 +10,6 @@
 #include "ISConsole.h"
 #include "ISConfigurations.h"
 #include "ISDatabase.h"
-#include "ISCaratMonitor.h"
 //-----------------------------------------------------------------------------
 void QtLog(QtMsgType MessageType, const QMessageLogContext &MessageLogContext, const QString &Message)
 {
@@ -178,12 +177,6 @@ bool ISCaratApplication::Run()
 		return false;
 	}
 
-	//Если мониторинг включен - запуска его
-	if (CONFIG_BOOL(CONST_CONFIG_MONITOR_INCLUDE))
-	{
-		ISCaratMonitor::Instance().Start();
-	}
-
 	//Если TCP-сервер включен - запускаем его
 	if (CONFIG_BOOL(CONST_CONFIG_TCPSERVER_INCLUDE))
 	{
@@ -230,9 +223,6 @@ void ISCaratApplication::Shutdown()
 	{
 		Asterisk->quit();
 	}
-
-	//Останавливаем мониторинг
-	ISCaratMonitor::Instance().Shutdown();
 
 	//Отключаемся от БД
 	ISDatabase::Instance().Disconnect(CONNECTION_DEFAULT);

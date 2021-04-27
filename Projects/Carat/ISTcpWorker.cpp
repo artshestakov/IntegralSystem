@@ -14,7 +14,6 @@
 #include "ISVersionInfo.h"
 #include "ISProperty.h"
 #include "ISTcpWorkerHelper.h"
-#include "ISCaratMonitor.h"
 #include "ISConfigurations.h"
 //-----------------------------------------------------------------------------
 static QString QS_USERS_HASH = PREPARE_QUERY("SELECT usrs_hash, usrs_salt "
@@ -443,14 +442,9 @@ static QString QS_SERVER_INFO = PREPARE_QUERY("SELECT "
 											  "(SELECT COUNT(*) AS foreign_count FROM information_schema.constraint_table_usage WHERE constraint_catalog = current_database() AND constraint_schema = current_schema()), "
 											  "(SELECT get_rows_count() AS rows_count), "
 											  "(SELECT COUNT(*) AS protocol_count FROM _protocol), "
-											  "(SELECT COUNT(*) as monitor_count FROM _monitor), "
 											  "(SELECT COUNT(*) AS users_count FROM _users)");
 //-----------------------------------------------------------------------------
 static QString QS_DATABASE_SETTING = PREPARE_QUERY("");
-//-----------------------------------------------------------------------------
-static QString QS_MONITOR = PREPARE_QUERY("SELECT mntr_datetime, mntr_memory, mntr_clients, mntr_tcpquerytimeavg "
-										  "FROM _monitor "
-										  "ORDER BY mntr_datetime");
 //-----------------------------------------------------------------------------
 static QString QS_PERIOD = PREPARE_QUERY("SELECT prod_constant "
 										 "FROM period "
@@ -584,7 +578,6 @@ ISTcpWorker::ISTcpWorker(const QString &db_host, int db_port, const QString &db_
 	MapFunction[API_GET_FOREIGN_LIST] = &ISTcpWorker::GetForeignList;
 	MapFunction[API_GET_SERVER_INFO] = &ISTcpWorker::GetServerInfo;
 	MapFunction[API_ORGANIZATION_FROM_INN] = &ISTcpWorker::OrganizationFormINN;
-	MapFunction[API_GET_MONITOR] = &ISTcpWorker::GetMonitor;
 
 	CRITICAL_SECTION_INIT(&CriticalSection);
 }
@@ -710,7 +703,6 @@ void ISTcpWorker::Process()
 					ISTimePoint TimePoint = ISAlgorithm::GetTick(); //Запоминаем текущее время
 					Result = Execute(tcp_message, TcpAnswer); 
 					PerfomanceMsec = ISAlgorithm::GetTickDiff(ISAlgorithm::GetTick(), TimePoint);
-					ISCaratMonitor::Instance().RegisterQueryTime(PerfomanceMsec);
 				}
 			}
 			else //Сообщение не валидное
@@ -4037,7 +4029,6 @@ bool ISTcpWorker::GetServerInfo(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer
 	QString DatabaseCountForeign = ISAlgorithm::FormatNumber(qSelect.ReadColumn("foreign_count").toLongLong());
 	QString DatabaseRowsCount = ISAlgorithm::FormatNumber(qSelect.ReadColumn("rows_count").toLongLong());
 	QString DatabaseCountProtocol = ISAlgorithm::FormatNumber(qSelect.ReadColumn("protocol_count").toLongLong());
-	QString DatabaseCountMonitor = ISAlgorithm::FormatNumber(qSelect.ReadColumn("monitor_count").toLongLong());
 	QString DatabaseUsersCount = ISAlgorithm::FormatNumber(qSelect.ReadColumn("users_count").toLongLong());
 
 	TcpAnswer->Parameters["Carat"] = QVariantMap
@@ -4067,7 +4058,6 @@ bool ISTcpWorker::GetServerInfo(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer
 		{ "CountForeign", DatabaseCountForeign },
 		{ "RowsCount", DatabaseRowsCount },
 		{ "ProtocolCount", DatabaseCountProtocol },
-		{ "MonitorCount", DatabaseCountMonitor },
 		{ "UsersCount", DatabaseUsersCount },
         { "FilesCount", "0" },
         { "FilesSize", "0" }
@@ -4123,33 +4113,6 @@ bool ISTcpWorker::OrganizationFormINN(ISTcpMessage *TcpMessage, ISTcpAnswer *Tcp
 		return false;
 	}
 	TcpAnswer->Parameters["Reply"] = ReplyList.front().toMap();
-	return true;
-}
-//-----------------------------------------------------------------------------
-bool ISTcpWorker::GetMonitor(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
-{
-	IS_UNUSED(TcpMessage);
-
-	//Получаем метрики
-	ISQuery qSelect(ISDatabase::Instance().GetDB(DBConnectionName), QS_MONITOR);
-	if (!qSelect.Execute()) //Ошибка запроса
-	{
-		return ErrorQuery(LANG("Carat.Error.Query.GetMonitor.Select"), qSelect);
-	}
-
-	//Обходим результаты
-	QVariantList DateTimeList, MemoryList, ClientsList, TCPQueryTimeList;
-	while (qSelect.Next())
-	{
-		DateTimeList.push_back(qSelect.ReadColumn("mntr_datetime").toDateTime().toString(FORMAT_DATE_TIME_V4));
-		MemoryList.push_back(qSelect.ReadColumn("mntr_memory"));
-		ClientsList.push_back(qSelect.ReadColumn("mntr_clients"));
-		TCPQueryTimeList.push_back(qSelect.ReadColumn("mntr_tcpquerytimeavg"));
-	}
-	TcpAnswer->Parameters["DateTimeList"] = DateTimeList;
-	TcpAnswer->Parameters["MemoryList"] = MemoryList;
-	TcpAnswer->Parameters["ClientsList"] = ClientsList;
-	TcpAnswer->Parameters["TCPQueryTimeList"] = TCPQueryTimeList;
 	return true;
 }
 //-----------------------------------------------------------------------------

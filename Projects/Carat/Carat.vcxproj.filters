@@ -14,9 +14,6 @@
     <Filter Include="Asterisk">
       <UniqueIdentifier>{f267233e-4f66-422b-8971-9bbc11066398}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Objects">
-      <UniqueIdentifier>{60f95d74-426c-45d4-ab4e-e14a753791cf}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ISTcpQueue.cpp">
@@ -55,9 +52,6 @@
     <ClCompile Include="ISTcpWorkerHelper.cpp">
       <Filter>TcpServer</Filter>
     </ClCompile>
-    <ClCompile Include="ISCaratMonitor.cpp">
-      <Filter>System</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Carat.rc">
@@ -82,9 +76,6 @@
     </ClInclude>
     <ClInclude Include="ISTcpWorkerHelper.h">
       <Filter>TcpServer</Filter>
-    </ClInclude>
-    <ClInclude Include="ISCaratMonitor.h">
-      <Filter>System</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

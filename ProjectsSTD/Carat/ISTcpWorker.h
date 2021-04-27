@@ -89,7 +89,6 @@ private:
     bool GetForeignList(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
     bool GetServerInfo(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
     bool OrganizationFormINN(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
-    bool GetMonitor(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
 
 private:
     std::string ErrorString;

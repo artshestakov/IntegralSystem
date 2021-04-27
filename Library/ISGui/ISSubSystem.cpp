@@ -447,7 +447,6 @@ void ISServerInfoSubSystem::LoadData()
     FormLayoutDatabase->addRow(LANG("ISServerInfoSubSystem.Database.CountForeign"), new QLabel(DatabaseMap["CountForeign"].toString(), this));
     FormLayoutDatabase->addRow(LANG("ISServerInfoSubSystem.Database.RowsCount"), new QLabel(DatabaseMap["RowsCount"].toString(), this));
     FormLayoutDatabase->addRow(LANG("ISServerInfoSubSystem.Database.ProtocolCount"), new QLabel(DatabaseMap["ProtocolCount"].toString(), this));
-    FormLayoutDatabase->addRow(LANG("ISServerInfoSubSystem.Database.MonitorCount"), new QLabel(DatabaseMap["MonitorCount"].toString(), this));
     FormLayoutDatabase->addRow(LANG("ISServerInfoSubSystem.Database.UsersCount"), new QLabel(DatabaseMap["UsersCount"].toString(), this));
     FormLayoutDatabase->addRow(LANG("ISServerInfoSubSystem.Database.FilesCount"), new QLabel(DatabaseMap["FilesCount"].toString(), this));
     FormLayoutDatabase->addRow(LANG("ISServerInfoSubSystem.Database.FilesSize"), new QLabel(DatabaseMap["FilesSize"].toString(), this));

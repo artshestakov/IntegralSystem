@@ -99,7 +99,6 @@ const char SYMBOL_SPECIAL_ARRAY[] = "!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~";
 const char CONNECTION_DEFAULT[] = "DefaultDB";
 const char CONNECTION_SYSTEM[] = "SystemDB";
 const char CONNECTION_ASTERISK[] = "AsteriskDB";
-const char CONNECTION_MONITOR[] = "MonitorDB";
 //-----------------------------------------------------------------------------
 const char CONFIG_TEMPLATE_SERVER[] = "Server"; //Щаблон конфигурационного файла для сервера
 const char CONFIG_TEMPLATE_CLIENT[] = "Client"; //Щаблон конфигурационного файла для клиента
@@ -204,7 +203,6 @@ const char API_TASK_COMMENT_ADD[] = "TaskCommentAdd"; //Добавить комментарий к з
 const char API_GET_FOREIGN_LIST[] = "GetForeignList"; //Получить список значений по внешнему ключу
 const char API_GET_SERVER_INFO[] = "GetServerInfo"; //Получить информацию о сервере
 const char API_ORGANIZATION_FROM_INN[] = "OrganizationFromINN"; //Поиск организации по ИНН
-const char API_GET_MONITOR[] = "GetMonitor"; //Получить метрики мониторинга
 //-----------------------------------------------------------------------------
 const char CONST_UID_SETTINGS_DATABASE[] = "1de3449c-c700-4efc-a455-e99e38063d9b"; //Идентификатор настроек базы данных
 //-----------------------------------------------------------------------------
@@ -318,8 +316,6 @@ const char CONST_CONFIG_AMI_PORT[] = "AMI/Port";
 const char CONST_CONFIG_AMI_LOGIN[] = "AMI/Login";
 const char CONST_CONFIG_AMI_PASSWORD[] = "AMI/Password";
 const char CONST_CONFIG_AMI_RECORD_DIR[] = "AMI/RecordDir";
-const char CONST_CONFIG_MONITOR_INCLUDE[] = "Monitor/Include";
-const char CONST_CONFIG_MONITOR_TIMEOUT[] = "Monitor/Timeout";
 const char CONST_CONFIG_OTHER_UPDATE_CLIENT_DIR[] = "Other/UpdateClientDir";
 const char CONST_CONFIG_OTHER_CONFIGURATION[] = "Other/Configuration";
 //-----------------------------------------------------------------------------
