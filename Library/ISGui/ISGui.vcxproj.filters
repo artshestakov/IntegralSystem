@@ -283,27 +283,6 @@
     <ClCompile Include="ISValidators.cpp">
       <Filter>System</Filter>
     </ClCompile>
-    <ClCompile Include="ISAsteriskCallsSubSystem.cpp">
-      <Filter>SubSystem</Filter>
-    </ClCompile>
-    <ClCompile Include="ISFullTextSearchSubSystem.cpp">
-      <Filter>SubSystem</Filter>
-    </ClCompile>
-    <ClCompile Include="ISInternalDirectoriesSubSystem.cpp">
-      <Filter>SubSystem</Filter>
-    </ClCompile>
-    <ClCompile Include="ISMonitorActivitySubSystem.cpp">
-      <Filter>SubSystem</Filter>
-    </ClCompile>
-    <ClCompile Include="ISProtocolSubSystem.cpp">
-      <Filter>SubSystem</Filter>
-    </ClCompile>
-    <ClCompile Include="ISStorageFilesSubSystem.cpp">
-      <Filter>SubSystem</Filter>
-    </ClCompile>
-    <ClCompile Include="ISUserGroupSubSystem.cpp">
-      <Filter>SubSystem</Filter>
-    </ClCompile>
     <ClCompile Include="ISTcpModels.cpp">
       <Filter>Protocol</Filter>
     </ClCompile>
@@ -313,11 +292,11 @@
     <ClCompile Include="ISDialogsCommon.cpp">
       <Filter>Dialogs</Filter>
     </ClCompile>
-    <ClCompile Include="ISServerInfoSubSystem.cpp">
-      <Filter>SubSystem</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Components\QCustomPlot\qcustomplot.cpp">
       <Filter>CustomPlot</Filter>
+    </ClCompile>
+    <ClCompile Include="ISSubSystem.cpp">
+      <Filter>SubSystem</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -498,27 +477,6 @@
     <QtMoc Include="ISValidators.h">
       <Filter>System</Filter>
     </QtMoc>
-    <QtMoc Include="ISAsteriskCallsSubSystem.h">
-      <Filter>SubSystem</Filter>
-    </QtMoc>
-    <QtMoc Include="ISFullTextSearchSubSystem.h">
-      <Filter>SubSystem</Filter>
-    </QtMoc>
-    <QtMoc Include="ISInternalDirectoriesSubSystem.h">
-      <Filter>SubSystem</Filter>
-    </QtMoc>
-    <QtMoc Include="ISMonitorActivitySubSystem.h">
-      <Filter>SubSystem</Filter>
-    </QtMoc>
-    <QtMoc Include="ISProtocolSubSystem.h">
-      <Filter>SubSystem</Filter>
-    </QtMoc>
-    <QtMoc Include="ISStorageFilesSubSystem.h">
-      <Filter>SubSystem</Filter>
-    </QtMoc>
-    <QtMoc Include="ISUserGroupSubSystem.h">
-      <Filter>SubSystem</Filter>
-    </QtMoc>
     <QtMoc Include="ISTcpModels.h">
       <Filter>Protocol</Filter>
     </QtMoc>
@@ -528,11 +486,11 @@
     <QtMoc Include="ISDialogsForm.h">
       <Filter>Dialogs</Filter>
     </QtMoc>
-    <QtMoc Include="ISServerInfoSubSystem.h">
-      <Filter>SubSystem</Filter>
-    </QtMoc>
     <QtMoc Include="..\..\Components\QCustomPlot\qcustomplot.h">
       <Filter>CustomPlot</Filter>
+    </QtMoc>
+    <QtMoc Include="ISSubSystem.h">
+      <Filter>SubSystem</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>

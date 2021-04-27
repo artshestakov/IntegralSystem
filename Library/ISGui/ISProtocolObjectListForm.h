@@ -1,7 +1,8 @@
 #pragma once
+#ifndef _ISPROTOCOLOBJECTLISTFORM_H_INCLUDED
+#define _ISPROTOCOLOBJECTLISTFORM_H_INCLUDED
 //-----------------------------------------------------------------------------
-#include "StdAfx.h"
-#include "ISProtocolSubSystem.h"
+#include "ISSubSystem.h"
 //-----------------------------------------------------------------------------
 class ISProtocolObjectListForm : public ISProtocolSubSystem
 {
@@ -16,3 +17,4 @@ protected:
     void LoadData() override;
 };
 //-----------------------------------------------------------------------------
+#endif
