@@ -95,53 +95,103 @@ bool ISQuery::Next()
     return true;
 }
 //-----------------------------------------------------------------------------
-void ISQuery::BindValue(std::nullptr_t Pointer)
+void ISQuery::BindNull()
 {
-    IS_UNUSED(Pointer);
-    ParameterValues.emplace_back(std::string());
+    ParameterValues.emplace_back(nullptr);
     ParameterTypes.emplace_back(InvalidOid);
+    ParameterFormats.emplace_back(0);
+    ParameterLengths.emplace_back(0);
     ++ParameterCount;
 }
 //-----------------------------------------------------------------------------
-void ISQuery::BindValue(int Value, Oid OID)
+void ISQuery::BindString(const std::string &String)
 {
-    ParameterValues.emplace_back(std::to_string(Value));
-    ParameterTypes.emplace_back(OID == InvalidOid ? INT2OID : OID);
+    BindString(String.c_str());
+}
+//-----------------------------------------------------------------------------
+void ISQuery::BindString(const char *String)
+{
+    size_t StringSize = strlen(String);
+    if (StringSize == 0)
+    {
+        ParameterValues.emplace_back(nullptr);
+    }
+    else
+    {
+        char *Value = (char *)malloc(StringSize + 1);
+        strcpy(Value, String);
+        ParameterValues.emplace_back(Value);
+    }
+    ParameterTypes.emplace_back(VARCHAROID);
+    ParameterFormats.emplace_back(0);
+    ParameterLengths.emplace_back(0);
     ++ParameterCount;
 }
 //-----------------------------------------------------------------------------
-void ISQuery::BindValue(unsigned int Value, Oid OID)
+void ISQuery::BindUID(const std::string &UID)
 {
-    ParameterValues.emplace_back(std::to_string(Value));
-    ParameterTypes.emplace_back(OID == InvalidOid ? INT4OID : OID);
+    BindString(UID);
+    ParameterTypes[ParameterCount - 1] = UUIDOID;
+}
+//-----------------------------------------------------------------------------
+void ISQuery::BindUID(const char *UID)
+{
+    BindString(UID);
+    ParameterTypes[ParameterCount - 1] = UUIDOID;
+}
+//-----------------------------------------------------------------------------
+void ISQuery::BindBool(bool Value)
+{
+    char *Temp = (char *)malloc(2);
+    Temp[0] = Value ? 't' : 'f';
+    Temp[1] = CHAR_NULL_TERM;
+
+    ParameterValues.emplace_back(Temp);
+    ParameterTypes.emplace_back(BOOLOID);
+    ParameterFormats.emplace_back(0);
+    ParameterLengths.emplace_back(0);
     ++ParameterCount;
 }
 //-----------------------------------------------------------------------------
-void ISQuery::BindValue(uint64_t Value, Oid OID)
+void ISQuery::BindBinary(unsigned char *Data, size_t Size)
 {
-    ParameterValues.emplace_back(std::to_string(Value));
-    ParameterTypes.emplace_back(OID == InvalidOid ? INT8OID : OID);
+    char *Temp = (char *)malloc(Size + 1);
+    memcpy(Temp, Data, Size);
+
+    ParameterValues.emplace_back(Temp);
+    ParameterTypes.emplace_back(BYTEAOID);
+    ParameterFormats.emplace_back(1);
+    ParameterLengths.emplace_back(Size);
     ++ParameterCount;
 }
 //-----------------------------------------------------------------------------
-void ISQuery::BindValue(const std::string &Value, Oid OID)
+void ISQuery::BindUInt(unsigned int Value)
 {
-    ParameterValues.emplace_back(Value);
-    ParameterTypes.emplace_back(OID == InvalidOid ? VARCHAROID : OID);
-    ++ParameterCount;
+    BindUInt64(Value);
+    ParameterTypes[ParameterCount - 1] = INT4OID;
 }
 //-----------------------------------------------------------------------------
-void ISQuery::BindValue(const char *Value, Oid OID)
+void ISQuery::BindUInt64(uint64_t Value)
 {
-    ParameterValues.emplace_back(Value);
-    ParameterTypes.emplace_back(OID == InvalidOid ? VARCHAROID : OID);
-    ++ParameterCount;
+    BindInt64((int64_t)Value);
 }
 //-----------------------------------------------------------------------------
-void ISQuery::BindValue(bool Value, Oid OID)
+void ISQuery::BindInt(int Value)
 {
-    ParameterValues.emplace_back(Value ? "t" : "f");
-    ParameterTypes.emplace_back(OID == InvalidOid ? BOOLOID : OID);
+    BindInt64(Value);
+    ParameterTypes[ParameterCount - 1] = INT4OID;
+}
+//-----------------------------------------------------------------------------
+void ISQuery::BindInt64(int64_t Value)
+{
+    std::string String = std::to_string(Value);
+    char *Temp = (char *)malloc(String.size() + 1);
+    strcpy(Temp, String.c_str());
+
+    ParameterValues.emplace_back(Temp);
+    ParameterTypes.emplace_back(INT8OID);
+    ParameterFormats.emplace_back(0);
+    ParameterLengths.emplace_back(0);
     ++ParameterCount;
 }
 //-----------------------------------------------------------------------------
@@ -165,55 +215,28 @@ bool ISQuery::Execute()
     ISTimePoint TimePoint = ISAlgorithm::GetTick();
     if (ParameterCount > 0) //Есть параметры запроса - параметизированный запрос
     {
-        //Получаем размер параметров и пытаемся выделить память для них
-        char **ParamValues = (char **)malloc(ParameterCount * (sizeof(char *)));
-        if (!ParamValues) //Не удалось выделить память
-        {
-            ErrorString = "Malloc out of memory";
-            return false;
-        }
-
-        //Заполяняем параметры
-        for (size_t i = 0; i < ParameterCount; ++i)
-        {
-            //Получаем значение параметра
-            std::string String = ParameterValues[i];
-            if (String.empty()) //Если значение пустое - интерпретируем его как NULL
-            {
-                ParamValues[i] = nullptr;
-            }
-            else //Значение не пустое - анализируем его
-            {
-                //Выделяем память для параметра
-                ParamValues[i] = (char *)malloc(String.size() + 1);
-                if (!ParamValues[i]) //Не удалось выделить память
-                {
-                    free(ParamValues); //Очищаем память под массив
-                    ErrorString = "Malloc out of memory";
-                    return false;
-                }
-                strcpy(ParamValues[i], String.c_str()); //Копируем значение в память
-            }
-        }
-
         if (StmtName.empty()) //Запрос не был подготовлен - выполняем либо с параметрами, либо без
         {
-            SqlResult = ParameterCount > 0 ? PQexecParams(SqlConnection, SqlText.c_str(), (int)ParameterCount, ParameterTypes.data(), ParamValues, NULL, NULL, 0) :
+            SqlResult = ParameterCount > 0 ? PQexecParams(SqlConnection, SqlText.c_str(), (int)ParameterCount, ParameterTypes.data(), ParameterValues.data(), ParameterLengths.data(), ParameterFormats.data(), 0) :
                 PQexec(SqlConnection, SqlText.c_str());
         }
         else //Запрос был подготовлен - выполняем подготовленный оператор
         {
-            SqlResult = PQexecPrepared(SqlConnection, StmtName.c_str(), (int)ParameterCount, ParamValues, NULL, NULL, 0);
+            SqlResult = PQexecPrepared(SqlConnection, StmtName.c_str(), (int)ParameterCount, ParameterValues.data(), ParameterLengths.data(), ParameterFormats.data(), 0);
         }
 
         //Очищаем выделенную память
         for (size_t i = 0; i < ParameterCount; ++i)
         {
-            free(ParamValues[i]);
+            if (ParameterValues[i]) //Если текущий параметр не nullptr - очищаем
+            {
+                free(ParameterValues[i]);
+            }
         }
-        free(ParamValues);
         ParameterValues.clear();
         ParameterTypes.clear();
+        ParameterFormats.clear();
+        ParameterLengths.clear();
         ParameterCount = 0;
     }
     else //Параметров запроса нет - исполняем как есть
@@ -367,6 +390,17 @@ ISDateTime ISQuery::ReadColumn_DateTime(size_t Index) const
         Second[3] = { Value[17], Value[18] };
     return ISDateTime((unsigned short)std::atoi(Day), (unsigned short)std::atoi(Month), (unsigned short)std::atoi(Year),
         (unsigned short)std::atoi(Hour), (unsigned short)std::atoi(Minute), (unsigned short)std::atoi(Second));
+}
+//-----------------------------------------------------------------------------
+unsigned char* ISQuery::ReadColumn_Binary(size_t Index) const
+{
+    size_t DataSize = 0;
+    return ReadColumn_Binary(Index, DataSize);
+}
+//-----------------------------------------------------------------------------
+unsigned char* ISQuery::ReadColumn_Binary(size_t Index, size_t &DataSize) const
+{
+    return PQunescapeBytea((const unsigned char *)ReadColumn(Index), &DataSize);
 }
 //-----------------------------------------------------------------------------
 bool ISQuery::Prepare(int ParamCount)

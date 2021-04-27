@@ -29,13 +29,17 @@ public:
     bool First();
     bool Next();
 
-    void BindValue(std::nullptr_t Pointer);
-    void BindValue(int Value, Oid OID = InvalidOid);
-    void BindValue(unsigned int Value, Oid OID = InvalidOid);
-    void BindValue(uint64_t Value, Oid OID = InvalidOid);
-    void BindValue(const std::string &Value, Oid OID = InvalidOid);
-    void BindValue(const char *Value, Oid OID = InvalidOid);
-    void BindValue(bool Value, Oid OID = InvalidOid);
+    void BindNull();
+    void BindString(const std::string &String);
+    void BindString(const char *String);
+    void BindUID(const std::string &UID);
+    void BindUID(const char *UID);
+    void BindBool(bool Value);
+    void BindBinary(unsigned char *Data, size_t Size);
+    void BindUInt(unsigned int Value);
+    void BindUInt64(uint64_t Value);
+    void BindInt(int Value);
+    void BindInt64(int64_t Value);
 
     bool Execute();
     bool ExecuteFirst();
@@ -52,6 +56,8 @@ public:
     ISDate ReadColumn_Date(size_t Index) const;
     ISTime ReadColumn_Time(size_t Index) const;
     ISDateTime ReadColumn_DateTime(size_t Index) const;
+    unsigned char* ReadColumn_Binary(size_t Index) const;
+    unsigned char* ReadColumn_Binary(size_t Index, size_t &DataSize) const;
 
 private:
     bool Prepare(int ParamCount);
@@ -62,8 +68,10 @@ private:
     bool ShowLongQuery; //Показывать долгие запрос
     std::string SqlText; //Текст запроса
 
-    std::vector<std::string> ParameterValues; //Параметры запроса
+    std::vector<char *> ParameterValues; //Параметры запроса
     std::vector<Oid> ParameterTypes; //Типы параметров запроса
+    std::vector<int> ParameterFormats; //Форматы параметров
+    std::vector<int> ParameterLengths;
     size_t ParameterCount; //Количество параметров
 
     std::string StmtName; //Имя подготовленного оператора

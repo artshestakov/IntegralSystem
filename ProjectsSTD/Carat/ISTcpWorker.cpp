@@ -14,6 +14,8 @@
 #include "ISRevision.h"
 #include "ISProperty.h"
 //-----------------------------------------------------------------------------
+static std::string Q_TEST = PREPARE_QUERYN("INSERT INTO _usergroup(usgp_name, usgp_fullaccess) VALUES($1, $2)", 2);
+
 static std::string QS_USERS_HASH = PREPARE_QUERY("SELECT usrs_hash, usrs_salt "
     "FROM _users "
     "WHERE usrs_hash IS NOT NULL "
@@ -247,6 +249,10 @@ static std::string QI_FILE_STORAGE_COPY = PREPARE_QUERYN("INSERT INTO _storagefi
     "WHERE sgfs_id = $2 "
     "RETURNING sgfs_id", 2);
 //-----------------------------------------------------------------------------
+static std::string QS_FILE_STORAGE = PREPARE_QUERYN("SELECT sgfs_id, sgfs_data "
+    "FROM _storagefiles "
+    "WHERE sgfs_id = $1", 1);
+//-----------------------------------------------------------------------------
 ISTcpWorker::ISTcpWorker()
     : ErrorString(STRING_NO_ERROR),
     IsBusy(false),
@@ -275,6 +281,7 @@ ISTcpWorker::ISTcpWorker()
     MapFunction[API_RECORD_DELETE] = &ISTcpWorker::RecordDelete;
     MapFunction[API_FILE_STORAGE_ADD] = &ISTcpWorker::FileStorageAdd;
     MapFunction[API_FILE_STORAGE_COPY] = &ISTcpWorker::FileStorageCopy;
+    MapFunction[API_FILE_STORAGE_GET] = &ISTcpWorker::FileStorageGet;
 
     CRITICAL_SECTION_INIT(&CriticalSection);
     CRITICAL_SECTION_INIT(&CSRunning);
@@ -556,12 +563,12 @@ bool ISTcpWorker::ErrorQuery(const std::string &LocalError, ISQuery &SqlQuery)
 //-----------------------------------------------------------------------------
 void ISTcpWorker::Protocol(unsigned int UserID, const char *ActionUID, const std::string &TableName, const std::string &TableLocalName, unsigned int ObjectID, const std::string &Information)
 {
-    qProtocol->BindValue(UserID);
-    TableName.empty() ? qProtocol->BindValue(nullptr) : qProtocol->BindValue(TableName);
-    TableLocalName.empty() ? qProtocol->BindValue(nullptr) : qProtocol->BindValue(TableLocalName);
-    qProtocol->BindValue(ActionUID, UUIDOID);
-    ObjectID == 0 ? qProtocol->BindValue(nullptr) : qProtocol->BindValue(ObjectID);
-    Information.empty() ? qProtocol->BindValue(nullptr) : qProtocol->BindValue(Information);
+    qProtocol->BindUInt(UserID);
+    TableName.empty() ? qProtocol->BindNull() : qProtocol->BindString(TableName);
+    TableLocalName.empty() ? qProtocol->BindNull() : qProtocol->BindString(TableLocalName);
+    qProtocol->BindUID(ActionUID);
+    ObjectID == 0 ? qProtocol->BindNull() : qProtocol->BindUInt(ObjectID);
+    Information.empty() ? qProtocol->BindNull() : qProtocol->BindString(Information);
     if (!qProtocol->Execute())
     {
         ISLOGGER_E(__CLASS__, "Not insert protocol: %s", qProtocol->GetErrorString().c_str());
@@ -614,7 +621,7 @@ bool ISTcpWorker::GetObjectName(PMetaTable *MetaTable, unsigned int ObjectID, st
     //Запрашиваем имя
     ISQuery qSelectName(DBConnection, QueryText);
     qSelectName.SetShowLongQuery(false);
-    qSelectName.BindValue(ObjectID);
+    qSelectName.BindUInt(ObjectID);
     if (!qSelectName.Execute()) //Ошибка запроса
     {
         return ErrorQuery(LANG("Carat.Error.GetObjectName"), qSelectName);
@@ -659,7 +666,7 @@ PMetaTable* ISTcpWorker::GetMetaTable(const std::string &TableName)
 bool ISTcpWorker::UserPasswordExist(unsigned int UserID, bool &Exist)
 {
     ISQuery qSelectHashIsNull(DBConnection, QS_USER_PASSWORD_IS_NULL);
-    qSelectHashIsNull.BindValue(UserID);
+    qSelectHashIsNull.BindUInt(UserID);
     if (!qSelectHashIsNull.Execute()) //Ошибка запроса
     {
         return ErrorQuery(LANG("Carat.Error.CheckExistUserPassword"), qSelectHashIsNull);
@@ -677,7 +684,7 @@ bool ISTcpWorker::UserPasswordExist(unsigned int UserID, bool &Exist)
 bool ISTcpWorker::UserIsSystem(unsigned int UserID, bool &IsSystem)
 {
     ISQuery qSelectIsSystem(DBConnection, QS_USER_IS_SYSTEM);
-    qSelectIsSystem.BindValue(UserID);
+    qSelectIsSystem.BindUInt(UserID);
     if (!qSelectIsSystem.Execute()) //Ошибка запроса
     {
         return ErrorQuery(LANG("Carat.Error.CheckUserIsSystem"), qSelectIsSystem);
@@ -780,8 +787,8 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 
     //Проверка пользователя
     ISQuery qSelectAuth(DBConnection, QS_USER_AUTH);
-    qSelectAuth.BindValue(CONST_UID_SETTINGS_DATABASE, UUIDOID);
-    qSelectAuth.BindValue(Hash);
+    qSelectAuth.BindUID(CONST_UID_SETTINGS_DATABASE);
+    qSelectAuth.BindString(Hash);
     if (!qSelectAuth.ExecuteFirst()) //Запрос выполнен с ошибкой
     {
         return ErrorQuery(LANG("Carat.Error.Query.Auth.SelectLogin"), qSelectAuth);
@@ -968,7 +975,7 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
     //Получаем настройки БД
     rapidjson::Value SettingsDBObject(rapidjson::Type::kObjectType);
     ISQuery qSelectSettingsDB(DBConnection, QS_SETTINGS_DATABASE);
-    qSelectSettingsDB.BindValue(CONST_UID_SETTINGS_DATABASE, UUIDOID);
+    qSelectSettingsDB.BindUID(CONST_UID_SETTINGS_DATABASE);
     if (qSelectSettingsDB.ExecuteFirst())
     {
         if (qSelectSettingsDB.GetResultRowCount() == 0) //Если настроек в БД нет - ошибка
@@ -990,7 +997,7 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
     //Получаем права на таблицы
     rapidjson::Value AccessTablesObject(rapidjson::Type::kObjectType);
     ISQuery qSelectAccessTables(DBConnection, QS_GROUP_ACCESS_TABLE);
-    qSelectAccessTables.BindValue(TcpMessage->TcpClient->UserGroupID);
+    qSelectAccessTables.BindUInt(TcpMessage->TcpClient->UserGroupID);
     if (qSelectAccessTables.Execute())
     {
         while (qSelectAccessTables.Next())
@@ -1017,7 +1024,7 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
     //Получаем специальные права
     rapidjson::Value AccessSpecialObject(rapidjson::Type::kArrayType);
     ISQuery qSelectAccessSpecial(DBConnection, QS_GROUP_ACCESS_SPECIAL);
-    qSelectAccessSpecial.BindValue(TcpMessage->TcpClient->UserGroupID);
+    qSelectAccessSpecial.BindUInt(TcpMessage->TcpClient->UserGroupID);
     if (qSelectAccessSpecial.Execute())
     {
         while (qSelectAccessSpecial.Next())
@@ -1034,8 +1041,8 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
     //Получаем системы и подсистемы
     rapidjson::Value SystemSubSystemArray(rapidjson::Type::kArrayType);
     ISQuery qSelectSystems(DBConnection, QS_SYSTEM_SUBSYSTEM);
-    qSelectSystems.BindValue(TcpMessage->TcpClient->UserID);
-    qSelectSystems.BindValue(TcpMessage->TcpClient->UserSystem);
+    qSelectSystems.BindUInt(TcpMessage->TcpClient->UserID);
+    qSelectSystems.BindBool(TcpMessage->TcpClient->UserSystem);
     if (qSelectSystems.Execute())
     {
         const char *CurrentSystemUID = nullptr;
@@ -1090,7 +1097,7 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
     //Получаем избранные объекты
     rapidjson::Value FavoriteObject(rapidjson::Type::kObjectType);
     ISQuery qSelectFavorite(DBConnection, QS_FAVORITE);
-    qSelectFavorite.BindValue(TcpMessage->TcpClient->UserID);
+    qSelectFavorite.BindUInt(TcpMessage->TcpClient->UserID);
     if (qSelectFavorite.Execute())
     {
         while (qSelectFavorite.Next())
@@ -1118,7 +1125,7 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
     //Получаем размеры полей
     rapidjson::Value ColumnSizeObject(rapidjson::Type::kObjectType);
     ISQuery qSelectColumnSize(DBConnection, QS_COLUMN_SIZE);
-    qSelectColumnSize.BindValue(TcpMessage->TcpClient->UserID);
+    qSelectColumnSize.BindUInt(TcpMessage->TcpClient->UserID);
     if (qSelectColumnSize.Execute())
     {
         while (qSelectColumnSize.Next())
@@ -1150,7 +1157,7 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
     //Получаем пользовательские настройки
     rapidjson::Value SettingGroupsArray(rapidjson::Type::kArrayType);
     ISQuery qSelectSettings(DBConnection, QS_SETTINGS);
-    qSelectSettings.BindValue(TcpMessage->TcpClient->UserID);
+    qSelectSettings.BindUInt(TcpMessage->TcpClient->UserID);
     if (qSelectSettings.Execute())
     {
         const char *CurrentGroupUID = nullptr;
@@ -1205,9 +1212,9 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
             else //Такой настройки у пользователя нет - добавляем со значением по умолчанию
             {
                 ISQuery qInsertSetting(DBConnection, QI_USER_SETTING);
-                qInsertSetting.BindValue(TcpMessage->TcpClient->UserID);
-                qInsertSetting.BindValue(SettingUID, UUIDOID);
-                qInsertSetting.BindValue(SettingDefault);
+                qInsertSetting.BindUInt(TcpMessage->TcpClient->UserID);
+                qInsertSetting.BindUID(SettingUID);
+                qInsertSetting.BindString(SettingDefault);
                 if (!qInsertSetting.Execute())
                 {
                     ErrorString = "Error inserting new user setting: " + qInsertSetting.GetErrorString();
@@ -1431,9 +1438,9 @@ bool ISTcpWorker::UserPasswordCreate(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpA
 
     //Устанавливаем пароль
     ISQuery qUpdateHash(DBConnection, QU_USER_HASH);
-    qUpdateHash.BindValue(HashResult);
-    qUpdateHash.BindValue(Salt);
-    qUpdateHash.BindValue(UserID);
+    qUpdateHash.BindString(HashResult);
+    qUpdateHash.BindString(Salt);
+    qUpdateHash.BindUInt(UserID);
     if (!qUpdateHash.Execute())
     {
         return ErrorQuery(LANG("Carat.Error.Query.UserPasswordCreate.UpdateHash"), qUpdateHash);
@@ -1477,7 +1484,7 @@ bool ISTcpWorker::UserPasswordEdit(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAns
 
     //Получаем текущий хэш и соль пользователя
     ISQuery qSelectHash(DBConnection, QS_USER_PASSWORD);
-    qSelectHash.BindValue(UserID);
+    qSelectHash.BindUInt(UserID);
     if (!qSelectHash.Execute()) //Ошибка запроса
     {
         return ErrorQuery(LANG("Carat.Error.Query.UserPasswordEdit.SelectHash"), qSelectHash);
@@ -1510,9 +1517,9 @@ bool ISTcpWorker::UserPasswordEdit(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAns
 
     //Обновляем пароль
     ISQuery qUpdateHash(DBConnection, QU_USER_HASH);
-    qUpdateHash.BindValue(HashResult);
-    qUpdateHash.BindValue(CurrentSalt);
-    qUpdateHash.BindValue(UserID);
+    qUpdateHash.BindString(HashResult);
+    qUpdateHash.BindString(CurrentSalt);
+    qUpdateHash.BindUInt(UserID);
     if (!qUpdateHash.Execute())
     {
         return ErrorQuery(LANG("Carat.Error.Query.UserPasswordEdit.UpdateHash"), qUpdateHash);
@@ -1568,7 +1575,7 @@ bool ISTcpWorker::UserPasswordReset(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAn
 
     //Сбрасываем пароль
     ISQuery qUpdateHashReset(DBConnection, QU_USER_HASH_RESET);
-    qUpdateHashReset.BindValue(UserID);
+    qUpdateHashReset.BindUInt(UserID);
     if (!qUpdateHashReset.Execute()) //Не удалось сбросить пароль
     {
         return ErrorQuery(LANG("Carat.Error.Query.UserPasswordReset.Reset"), qUpdateHashReset);
@@ -1584,7 +1591,7 @@ bool ISTcpWorker::UserSettingsReset(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAn
 {
     //Сбрасываем значения настроек в дефолтные
     ISQuery qUpdate(DBConnection, QU_USER_SETTINGS_RESET);
-    qUpdate.BindValue(TcpMessage->TcpClient->UserID);
+    qUpdate.BindUInt(TcpMessage->TcpClient->UserID);
     if (!qUpdate.Execute()) //Ошибка запроса
     {
         return ErrorQuery(LANG("Carat.Error.Query.UserSettingsReset.Update"), qUpdate);
@@ -1691,12 +1698,12 @@ bool ISTcpWorker::RecordAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
         switch (MapItem.value.GetType())
         {
         case rapidjson::Type::kStringType:
-            qInsert.BindValue(MapItem.value.GetString());
+            qInsert.BindString(MapItem.value.GetString());
             break;
 
         case rapidjson::Type::kTrueType:
         case rapidjson::Type::kFalseType:
-            qInsert.BindValue(MapItem.value.GetBool());
+            qInsert.BindBool(MapItem.value.GetBool());
             break;
         }
     }
@@ -1803,16 +1810,16 @@ bool ISTcpWorker::RecordEdit(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
         switch (MapItem.value.GetType())
         {
         case rapidjson::Type::kStringType:
-            qUpdate.BindValue(MapItem.value.GetString());
+            qUpdate.BindString(MapItem.value.GetString());
             break;
 
         case rapidjson::Type::kTrueType:
         case rapidjson::Type::kFalseType:
-            qUpdate.BindValue(MapItem.value.GetBool());
+            qUpdate.BindBool(MapItem.value.GetBool());
             break;
         }
     }
-    qUpdate.BindValue(ObjectID);
+    qUpdate.BindUInt(ObjectID);
 
     //Выполняем запрос
     if (!qUpdate.Execute())
@@ -1922,9 +1929,9 @@ bool ISTcpWorker::RecordDelete(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
     ISQuery qDeleteFavorite(DBConnection, QD_FAVORITE);
     for (const auto &ID : Objects.GetArray())
     {
-        qDeleteFavorite.BindValue(TcpMessage->TcpClient->UserID);
-        qDeleteFavorite.BindValue(MetaTable->Name);
-        qDeleteFavorite.BindValue(ID.GetUint());
+        qDeleteFavorite.BindUInt(TcpMessage->TcpClient->UserID);
+        qDeleteFavorite.BindString(MetaTable->Name);
+        qDeleteFavorite.BindUInt(ID.GetUint());
         if (!qDeleteFavorite.Execute())
         {
             ISLOGGER_W(__CLASS__, "Error remove object with favorites: %s", qDeleteFavorite.GetErrorString().c_str());
@@ -2010,7 +2017,7 @@ bool ISTcpWorker::RecordGet(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 
     //Выполняем запрос
     ISQuery qSelect(DBConnection, SqlText);
-    qSelect.BindValue(ObjectID);
+    qSelect.BindUInt(ObjectID);
     if (!qSelect.Execute()) //Ошибка запроса
     {
         return ErrorQuery(LANG("Carat.Error.Query.RecordGet.Select"), qSelect);
@@ -2122,8 +2129,8 @@ bool ISTcpWorker::RecordGetInfo(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer
     }
 
     ISQuery qSelect(DBConnection, QS_RECORD_INFO);
-    qSelect.BindValue(TableName);
-    qSelect.BindValue(ObjectID);
+    qSelect.BindString(TableName);
+    qSelect.BindUInt(ObjectID);
     if (!qSelect.Execute())
     {
         return ErrorQuery(LANG("Carat.Error.Query.RecordGetInfo.Select"), qSelect);
@@ -2213,9 +2220,9 @@ bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 
     //Проверяем наличие права на просмотр данных
     ISQuery qSelectRight(DBConnection, QS_RIGHT_SHOW_TABLE);
-    qSelectRight.BindValue(UserID);
-    qSelectRight.BindValue(MetaTable->Name);
-    qSelectRight.BindValue(CONST_UID_GROUP_ACCESS_TYPE_SHOW, UUIDOID);
+    qSelectRight.BindUInt(UserID);
+    qSelectRight.BindString(MetaTable->Name);
+    qSelectRight.BindUID(CONST_UID_GROUP_ACCESS_TYPE_SHOW);
     if (!qSelectRight.Execute())
     {
         return ErrorQuery(LANG("Carat.Error.Query.GetTableData.SelectRightShow"), qSelectRight);
@@ -2237,8 +2244,8 @@ bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
     std::string SortingField;
     ISNamespace::SortingOrder SortingOrder = ISNamespace::SortingOrder::Ascending;
     ISQuery qSelectSorting(DBConnection, QS_SORTING);
-    qSelectSorting.BindValue(UserID);
-    qSelectSorting.BindValue(MetaTable->Name);
+    qSelectSorting.BindUInt(UserID);
+    qSelectSorting.BindString(MetaTable->Name);
     if (!qSelectSorting.Execute()) //Ошибка запроса
     {
         return ErrorQuery(LANG("Carat.Error.Query.GetTableData.SelectSorting"), qSelectSorting);
@@ -2264,10 +2271,10 @@ bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
                 SortingOrder = SortingOrderNew;
 
                 ISQuery qUpdateSorting(DBConnection, QU_SORTING);
-                qUpdateSorting.BindValue(SortingField);
-                qUpdateSorting.BindValue((int)SortingOrder);
-                qUpdateSorting.BindValue(UserID);
-                qUpdateSorting.BindValue(MetaTable->Name);
+                qUpdateSorting.BindString(SortingField);
+                qUpdateSorting.BindInt((int)SortingOrder);
+                qUpdateSorting.BindUInt(UserID);
+                qUpdateSorting.BindString(MetaTable->Name);
                 if (!qUpdateSorting.Execute())
                 {
                     return ErrorQuery(LANG("Carat.Error.Query.GetTableData.UpdateSorting"), qUpdateSorting);
@@ -2280,10 +2287,10 @@ bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
         SortingField = "ID";
 
         ISQuery qInsertSorting(DBConnection, QI_SORTING);
-        qInsertSorting.BindValue(UserID);
-        qInsertSorting.BindValue(MetaTable->Name);
-        qInsertSorting.BindValue(SortingField);
-        qInsertSorting.BindValue((int)SortingOrder);
+        qInsertSorting.BindUInt(UserID);
+        qInsertSorting.BindString(MetaTable->Name);
+        qInsertSorting.BindString(SortingField);
+        qInsertSorting.BindInt((int)SortingOrder);
         if (!qInsertSorting.Execute())
         {
             return ErrorQuery(LANG("Carat.Error.Query.GetTableData.InsertSorting"), qInsertSorting);
@@ -2326,7 +2333,7 @@ bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
             switch (MapItem.value.GetType())
             {
             case rapidjson::Type::kNumberType:
-                qSelect.BindValue((uint64_t)MapItem.value.GetUint64());
+                qSelect.BindUInt64(MapItem.value.GetUint64());
                 break;
 
             default:
@@ -2546,6 +2553,8 @@ bool ISTcpWorker::FileStorageAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
     //Декодируем данные файла
     unsigned long DataSize = 0;
     unsigned char *Data = ISAlgorithm::Base64Decode(FileData, DataSize, ErrorString);
+    FileData.clear();
+
     if (!Data)
     {
         ErrorString = ISAlgorithm::StringF(LANG("Carat.Error.Query.FileStorageAdd.Decode"), ErrorString.c_str());
@@ -2562,11 +2571,11 @@ bool ISTcpWorker::FileStorageAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
 
     ISQuery qInsert(DBConnection, QI_FILE_STORAGE);
     qInsert.SetShowLongQuery(false);
-    qInsert.BindValue(TcpMessage->TcpClient->UserID);
-    qInsert.BindValue(FileName);
-    qInsert.BindValue(Extension);
-    qInsert.BindValue(ISAlgorithm::StringFromSize(DataSize));
-    qInsert.BindValue((const char *)Data, BYTEAOID);
+    qInsert.BindUInt(TcpMessage->TcpClient->UserID);
+    qInsert.BindString(FileName);
+    qInsert.BindString(Extension);
+    qInsert.BindString(ISAlgorithm::StringFromSize(DataSize));
+    qInsert.BindBinary(Data, DataSize);
     bool Result = qInsert.ExecuteFirst();
     free(Data);
     if (!Result)
@@ -2599,8 +2608,8 @@ bool ISTcpWorker::FileStorageCopy(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnsw
     //Копируем файл
     ISQuery qInsertCopy(DBConnection, QI_FILE_STORAGE_COPY);
     qInsertCopy.SetShowLongQuery(false);
-    qInsertCopy.BindValue(Name);
-    qInsertCopy.BindValue(ID);
+    qInsertCopy.BindString(Name);
+    qInsertCopy.BindUInt(ID);
     if (!qInsertCopy.Execute()) //Ошибка запроса
     {
         return ErrorQuery(LANG("Carat.Error.Query.FileStorageCopy.Insert"), qInsertCopy);
@@ -2623,9 +2632,44 @@ bool ISTcpWorker::FileStorageCopy(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnsw
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::FileStorageGet(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
-    IS_UNUSED(TcpMessage);
-    IS_UNUSED(TcpAnswer);
-    return false;
+    if (!CheckIsNull(TcpMessage, "ID"))
+    {
+        return false;
+    }
+
+    unsigned int ID = 0;
+    if (!GetParameterUInt(TcpMessage, "ID", ID))
+    {
+        return false;
+    }
+
+    //Вытаскиваем файл
+    ISQuery qSelect(DBConnection, QS_FILE_STORAGE);
+    qSelect.SetShowLongQuery(false);
+    qSelect.BindUInt(ID);
+    if (!qSelect.Execute()) //Ошибка запроса
+    {
+        return ErrorQuery(LANG("Carat.Error.Query.FileStorageGet.Select"), qSelect);
+    }
+
+    if (!qSelect.First()) //Такой файл не существует
+    {
+        ErrorString = ISAlgorithm::StringF(LANG("Carat.Error.Query.FileStorageGet.NotExist"), ID);
+        return false;
+    }
+
+    size_t DataSize = 0;
+    unsigned char *Data = qSelect.ReadColumn_Binary(1, DataSize);
+    std::string String = ISAlgorithm::Base64Encode((unsigned char *)Data, DataSize, ErrorString);
+    if (String.empty())
+    {
+        ErrorString = LANG("Carat.Error.Query.FileStorageGet.Encode");
+        return false;
+    }
+
+    TcpAnswer->Parameters.AddMember("Data", JSON_STRINGA(String.c_str(), TcpAnswer->Parameters.GetAllocator()), TcpAnswer->Parameters.GetAllocator());
+    Protocol(TcpMessage->TcpClient->UserID, CONST_UID_PROTOCOL_FILE_STORAGE_SAVE, std::string(), std::string(), qSelect.ReadColumn_UInt(0));
+    return true;
 }
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::SearchTaskText(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
@@ -2774,7 +2818,7 @@ bool ISTcpWorker::GetRecordValue(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
     //Формируем запрос и выполняем его
     ISQuery qSelectValue(DBConnection, ISAlgorithm::StringF("SELECT %s_%s FROM %s WHERE %s_id = $1",
             MetaTable->Alias.c_str(), MetaField->Name.c_str(), MetaTable->Name.c_str(), MetaTable->Alias.c_str()));
-    qSelectValue.BindValue(ObjectID);
+    qSelectValue.BindUInt(ObjectID);
     if (!qSelectValue.Execute())
     {
         return ErrorQuery(LANG("Carat.Error.Query.GetRecordValue.Select"), qSelectValue);

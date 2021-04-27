@@ -79,7 +79,7 @@ const char* ISTcpWorkerHelper::GetSettingDB(PGconn *DBConnection, const std::str
 	const char *Value = nullptr;
 	ISQuery qSelectSettingDB(DBConnection,
 		"SELECT sgdb_" + SettingName + " FROM _settingsdatabase WHERE sgdb_uid = $1");
-	qSelectSettingDB.BindValue(CONST_UID_SETTINGS_DATABASE, UUIDOID);
+	qSelectSettingDB.BindUID(CONST_UID_SETTINGS_DATABASE);
 	if (qSelectSettingDB.Execute()) //Запрос выполнен успешно
 	{
 		if (qSelectSettingDB.First()) //Настройка нашлась
