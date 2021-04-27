@@ -10,7 +10,7 @@ ISQuery::ISQuery(PGconn *sql_connection, const std::string &sql_text)
     SqlText(sql_text),
     ParameterCount(0),
     SqlConnection(sql_connection),
-    SqlResult(NULL),
+    SqlResult(nullptr),
     CountRows(-1),
     CountColumns(-1),
     CurrentRow(-1),
