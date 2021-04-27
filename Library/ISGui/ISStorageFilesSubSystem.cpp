@@ -125,7 +125,7 @@ void ISStorageFilesSubSystem::SaveFile()
     QString Expansion = GetCurrentRecordValue("Expansion").toString(),
         Name = GetCurrentRecordValue("Name").toString();
 
-    if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.SaveFile").arg(Name + '.' + Expansion)))
+    if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.SaveFile").arg(Name)))
     {
         QString FilePath = ISFileDialog::GetSaveFileName(this, LANG("File.Filter.File").arg(Expansion), Name);
         if (FilePath.isEmpty()) //ѕользователь отказалс€ от сохранени€
