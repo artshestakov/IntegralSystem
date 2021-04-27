@@ -163,6 +163,7 @@
 
     <Local Name="Carat.Error.Query.FileStorageGet.Select" Russian="Не удалось получить файл."/>
     <Local Name="Carat.Error.Query.FileStorageGet.NotExist" Russian="Файл с идентификатором %d не существует."/>
+    <Local Name="Carat.Error.Query.FileStorageGet.Binary" Russian="Не удалось выделить память для двоичных данных."/>
     <Local Name="Carat.Error.Query.FileStorageGet.Encode" Russian="Не удалось закодировать файл."/>
 
     <Local Name="Carat.Error.Query.SearchTaskText.Select" Russian="Не удалось выполнить поисковый запрос."/>

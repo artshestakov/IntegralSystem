@@ -2662,6 +2662,12 @@ bool ISTcpWorker::FileStorageGet(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
 
     size_t DataSize = 0;
     unsigned char *Data = qSelect.ReadColumn_Binary(1, DataSize);
+    if (!Data)
+    {
+        ErrorString = LANG("Carat.Error.Query.FileStorageGet.Binary");
+        return false;
+    }
+
     std::string String = ISAlgorithm::Base64Encode((unsigned char *)Data, DataSize, ErrorString);
     if (String.empty())
     {
@@ -2671,6 +2677,7 @@ bool ISTcpWorker::FileStorageGet(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
 
     TcpAnswer->Parameters.AddMember("Data", JSON_STRINGA(String.c_str(), TcpAnswer->Parameters.GetAllocator()), TcpAnswer->Parameters.GetAllocator());
     Protocol(TcpMessage->TcpClient->UserID, CONST_UID_PROTOCOL_FILE_STORAGE_SAVE, std::string(), std::string(), qSelect.ReadColumn_UInt(0));
+    PQfreemem(Data);
     return true;
 }
 //-----------------------------------------------------------------------------
