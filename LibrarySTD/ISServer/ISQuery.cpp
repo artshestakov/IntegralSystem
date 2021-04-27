@@ -161,7 +161,7 @@ void ISQuery::BindBinary(unsigned char *Data, size_t Size)
     ParameterValues.emplace_back(Temp);
     ParameterTypes.emplace_back(BYTEAOID);
     ParameterFormats.emplace_back(1);
-    ParameterLengths.emplace_back(Size);
+    ParameterLengths.emplace_back((int)Size);
     ++ParameterCount;
 }
 //-----------------------------------------------------------------------------

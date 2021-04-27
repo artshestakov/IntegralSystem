@@ -930,7 +930,7 @@ unsigned char* ISAlgorithm::Base64Decode(char *Data, size_t Size, unsigned long 
 
 #ifdef WIN32
     DWORD Skip = 0, Flags = 0;
-    if (CryptStringToBinary(Data, Size, CRYPT_STRING_BASE64, NULL, &ResultSize, &Skip, &Flags) == FALSE)
+    if (CryptStringToBinary(Data, (DWORD)Size, CRYPT_STRING_BASE64, NULL, &ResultSize, &Skip, &Flags) == FALSE)
     {
         ErrorString = GetLastErrorS();
         return nullptr;
@@ -944,7 +944,7 @@ unsigned char* ISAlgorithm::Base64Decode(char *Data, size_t Size, unsigned long 
         return nullptr;
     }
 
-    if (CryptStringToBinary(Data, Size, CRYPT_STRING_BASE64, Result, &ResultSize, &Skip, &Flags) == FALSE)
+    if (CryptStringToBinary(Data, (DWORD)Size, CRYPT_STRING_BASE64, Result, &ResultSize, &Skip, &Flags) == FALSE)
     {
         ErrorString = GetLastErrorS();
         free(Result);
