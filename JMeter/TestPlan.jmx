@@ -238,7 +238,7 @@
           </elementProp>
           <elementProp name="FileStorageGet_ID" elementType="Argument">
             <stringProp name="Argument.name">FileStorageGet_ID</stringProp>
-            <stringProp name="Argument.value">10</stringProp>
+            <stringProp name="Argument.value">39</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="SearchTaskText_Value" elementType="Argument">
@@ -676,7 +676,7 @@ def MapFileStorageCopy =
 	Type: &quot;FileStorageCopy&quot;,
 	Parameters:
 		[
-			ID: vars.get(&quot;FileStorageCopy_ID&quot;),
+			ID: Integer.parseInt(vars.get(&quot;FileStorageCopy_ID&quot;)),
 			Name: vars.get(&quot;FileStorageCopy_Name&quot;)
 		]
 ];
@@ -688,7 +688,7 @@ def MapFileStorageGet =
 	Type: &quot;FileStorageGet&quot;,
 	Parameters:
 		[
-			ID: vars.get(&quot;FileStorageGet_ID&quot;)
+			ID: Integer.parseInt(vars.get(&quot;FileStorageGet_ID&quot;))
 		]
 ];
 vars.put(&quot;QueryFileStorageGet&quot;, MapToString(MapFileStorageGet));
@@ -991,7 +991,7 @@ vars.put(&quot;QueryGetMonitor&quot;, MapToString(MapGetMonitor));</stringProp>
           <stringProp name="ConfigTestElement.password"></stringProp>
         </TCPSampler>
         <hashTree/>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: RecordGet" enabled="true">
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: RecordGet" enabled="false">
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
           <stringProp name="TCPSampler.port"></stringProp>
@@ -1207,7 +1207,7 @@ vars.put(&quot;QueryGetMonitor&quot;, MapToString(MapGetMonitor));</stringProp>
           <stringProp name="ConfigTestElement.password"></stringProp>
         </TCPSampler>
         <hashTree/>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: FileStorageGet" enabled="false">
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: FileStorageGet" enabled="true">
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
           <stringProp name="TCPSampler.port"></stringProp>
