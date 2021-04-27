@@ -159,7 +159,7 @@
     <Local Name="Carat.Error.Query.FileStorageAdd.Insert" Russian="Не удалось добавить файл &quot;%s&quot; в хранилище: %s"/>
 
     <Local Name="Carat.Error.Query.FileStorageCopy.Insert" Russian="Не удалось скопировать файл."/>
-    <Local Name="Carat.Error.Query.FileStorageCopy.NotExist" Russian="Файл с идентификатором %1 не существует."/>
+    <Local Name="Carat.Error.Query.FileStorageCopy.NotExist" Russian="Файл с идентификатором %d не существует."/>
 
     <Local Name="Carat.Error.Query.FileStorageGet.Select" Russian="Не удалось получить файл."/>
     <Local Name="Carat.Error.Query.FileStorageGet.NotExist" Russian="Файл с идентификатором %1 не существует."/>

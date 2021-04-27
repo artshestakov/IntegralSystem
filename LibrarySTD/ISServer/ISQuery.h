@@ -21,6 +21,7 @@ public:
     int GetResultColumnCount() const; //Получить кол-во полей в выборке
     Oid GetResultColumnType(size_t Index) const; //Получить тип поля в результирующей выборке
     const char* GetResultFieldName(int Index) const; //Получить имя поля из выборки
+    size_t GetResultAffected() const; //Получить количество затронтых строк
     bool GetIsSelect() const; //Проверить, является ли запрос выборкой
 
     void SetShowLongQuery(bool show_long_query);

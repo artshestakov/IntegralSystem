@@ -60,6 +60,11 @@ const char* ISQuery::GetResultFieldName(int Index) const
     return PQfname(SqlResult, Index);
 }
 //-----------------------------------------------------------------------------
+size_t ISQuery::GetResultAffected() const
+{
+    return (size_t)std::atoi(PQcmdTuples(SqlResult));
+}
+//-----------------------------------------------------------------------------
 bool ISQuery::GetIsSelect() const
 {
     return IsSelect;

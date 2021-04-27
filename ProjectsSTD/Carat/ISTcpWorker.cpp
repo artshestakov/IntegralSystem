@@ -241,6 +241,12 @@ static std::string QI_FILE_STORAGE = PREPARE_QUERYN("INSERT INTO _storagefiles(s
     "VALUES ($1, $2, $3, $4, $5) "
     "RETURNING sgfs_id", 5);
 //-----------------------------------------------------------------------------
+static std::string QI_FILE_STORAGE_COPY = PREPARE_QUERYN("INSERT INTO _storagefiles(sgfs_owner, sgfs_name, sgfs_expansion, sgfs_size, sgfs_note, sgfs_data) "
+    "SELECT sgfs_owner, $1, sgfs_expansion, sgfs_size, sgfs_note, sgfs_data "
+    "FROM _storagefiles "
+    "WHERE sgfs_id = $2 "
+    "RETURNING sgfs_id", 2);
+//-----------------------------------------------------------------------------
 ISTcpWorker::ISTcpWorker()
     : ErrorString(STRING_NO_ERROR),
     IsBusy(false),
@@ -268,6 +274,7 @@ ISTcpWorker::ISTcpWorker()
     MapFunction[API_RECORD_EDIT] = &ISTcpWorker::RecordEdit;
     MapFunction[API_RECORD_DELETE] = &ISTcpWorker::RecordDelete;
     MapFunction[API_FILE_STORAGE_ADD] = &ISTcpWorker::FileStorageAdd;
+    MapFunction[API_FILE_STORAGE_COPY] = &ISTcpWorker::FileStorageCopy;
 
     CRITICAL_SECTION_INIT(&CriticalSection);
     CRITICAL_SECTION_INIT(&CSRunning);
@@ -2572,9 +2579,46 @@ bool ISTcpWorker::FileStorageAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::FileStorageCopy(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
-    IS_UNUSED(TcpMessage);
-    IS_UNUSED(TcpAnswer);
-    return false;
+    if (!CheckIsNull(TcpMessage, "ID") || !CheckIsNull(TcpMessage, "Name"))
+    {
+        return false;
+    }
+
+    unsigned int ID = 0;
+    if (!GetParameterUInt(TcpMessage, "ID", ID))
+    {
+        return false;
+    }
+
+    std::string Name;
+    if (!GetParameterString(TcpMessage, "Name", Name))
+    {
+        return false;
+    }
+
+    //Копируем файл
+    ISQuery qInsertCopy(DBConnection, QI_FILE_STORAGE_COPY);
+    qInsertCopy.SetShowLongQuery(false);
+    qInsertCopy.BindValue(Name);
+    qInsertCopy.BindValue(ID);
+    if (!qInsertCopy.Execute()) //Ошибка запроса
+    {
+        return ErrorQuery(LANG("Carat.Error.Query.FileStorageCopy.Insert"), qInsertCopy);
+    }
+
+    //Если файл не был скопирован, значит его не существует - ошибка
+    if (qInsertCopy.GetResultAffected() == 0)
+    {
+        ErrorString = ISAlgorithm::StringF(LANG("Carat.Error.Query.FileStorageCopy.NotExist"), ID);
+        return false;
+    }
+
+    //Если удалось перейти на первую строку - получаем новый идентификатор записи,
+    //иначе - идентификатор исходной записи
+    ID = qInsertCopy.First() ? qInsertCopy.ReadColumn_UInt(0) : ID;
+    TcpAnswer->Parameters.AddMember("NewID", ID, TcpAnswer->Parameters.GetAllocator());
+    Protocol(TcpMessage->TcpClient->UserID, CONST_UID_PROTOCOL_FILE_STORAGE_COPY, std::string(), std::string(), ID, Name);
+    return true;
 }
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::FileStorageGet(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
