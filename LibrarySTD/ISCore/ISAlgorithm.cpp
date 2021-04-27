@@ -870,12 +870,12 @@ std::string ISAlgorithm::Base64Encode(unsigned char *Data, size_t Size, std::str
     std::string Result;
 #ifdef WIN32
     DWORD ResultSize = 0;
-    if (CryptBinaryToStringA(Data, (DWORD)Size, CRYPT_STRING_BASE64 | CRYPT_STRING_NOCRLF, nullptr, &ResultSize) == TRUE)
+    if (CryptBinaryToString(Data, (DWORD)Size, CRYPT_STRING_BASE64 | CRYPT_STRING_NOCRLF, nullptr, &ResultSize) == TRUE)
     {
         char *BufferResult = (char *)malloc(sizeof(char) * ResultSize);
         if (BufferResult)
         {
-            if (CryptBinaryToStringA(Data, (DWORD)Size, CRYPT_STRING_BASE64 | CRYPT_STRING_NOCRLF, BufferResult, &ResultSize))
+            if (CryptBinaryToString(Data, (DWORD)Size, CRYPT_STRING_BASE64 | CRYPT_STRING_NOCRLF, BufferResult, &ResultSize))
             {
                 Result = &BufferResult[0];
             }
@@ -911,6 +911,51 @@ std::string ISAlgorithm::Base64Encode(unsigned char *Data, size_t Size, std::str
     {
        ErrorString = GetLastErrorS();
     }
+#endif
+    return Result;
+}
+//-----------------------------------------------------------------------------
+unsigned char* ISAlgorithm::Base64Decode(const std::string &String, unsigned long &ResultSize, std::string &ErrorString)
+{
+    return Base64Decode((char *)String.c_str(), String.size(), ResultSize, ErrorString);
+}
+//-----------------------------------------------------------------------------
+unsigned char* ISAlgorithm::Base64Decode(char *Data, size_t Size, unsigned long &ResultSize, std::string &ErrorString)
+{
+    if (!Data || Size == 0) //Проверим входные данные
+    {
+        ErrorString = "Null or empty data";
+        return nullptr;
+    }
+
+#ifdef WIN32
+    DWORD Skip = 0, Flags = 0;
+    if (CryptStringToBinary(Data, Size, CRYPT_STRING_BASE64, NULL, &ResultSize, &Skip, &Flags) == FALSE)
+    {
+        ErrorString = GetLastErrorS();
+        return nullptr;
+    }
+
+    //Выделяем память для результата декодирования
+    unsigned char *Result = (unsigned char *)malloc(sizeof(unsigned char) * ResultSize + 1);
+    if (!Result)
+    {
+        ErrorString = GetLastErrorS();
+        return nullptr;
+    }
+
+    if (CryptStringToBinary(Data, Size, CRYPT_STRING_BASE64, Result, &ResultSize, &Skip, &Flags) == FALSE)
+    {
+        ErrorString = GetLastErrorS();
+        free(Result);
+        return nullptr;
+    }
+    Result[ResultSize] = CHAR_NULL_TERM;
+#else
+    IS_UNUSED(Data);
+    IS_UNUSED(Size);
+    IS_UNUSED(ErrorString);
+    IS_ASSERT(false, "not support");
 #endif
     return Result;
 }

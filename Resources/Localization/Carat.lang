@@ -154,8 +154,9 @@
     <Local Name="Carat.Error.Query.SetNoteRecord.Update" Russian="Не удалось изменить примечание."/>
     <Local Name="Carat.Error.Query.SetNoteRecord.Insert" Russian="Не удалось добавить примечание."/>
 
-    <Local Name="Carat.Error.Query.FileStorageAdd.Size" Russian="Размер файла &quot;%1&quot; превышает ограничение в %2 MB. Файл не будет добавлен."/>
-    <Local Name="Carat.Error.Query.FileStorageAdd.Insert" Russian="Не удалось добавить файл &quot;%1&quot; в хранилище: %2"/>
+    <Local Name="Carat.Error.Query.FileStorageAdd.Decode" Russian="Не удалось декодировать данные файла: %s"/>
+    <Local Name="Carat.Error.Query.FileStorageAdd.Size" Russian="Размер файла &quot;%s&quot; превышает ограничение в %d MB. Файл не будет добавлен."/>
+    <Local Name="Carat.Error.Query.FileStorageAdd.Insert" Russian="Не удалось добавить файл &quot;%s&quot; в хранилище: %s"/>
 
     <Local Name="Carat.Error.Query.FileStorageCopy.Insert" Russian="Не удалось скопировать файл."/>
     <Local Name="Carat.Error.Query.FileStorageCopy.NotExist" Russian="Файл с идентификатором %1 не существует."/>

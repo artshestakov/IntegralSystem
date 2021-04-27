@@ -74,6 +74,7 @@ const char API_RECORD_ADD[] = "RecordAdd"; //Добавление новой записи
 const char API_RECORD_GET[] = "RecordGet"; //Получение записи из БД
 const char API_RECORD_EDIT[] = "RecordEdit"; //Изменение записи в БД
 const char API_RECORD_DELETE[] = "RecordDelete"; //Удаление записи в БД
+const char API_FILE_STORAGE_ADD[] = "FileStorageAdd"; //Добавление файла в хранилище
 //PROTOCOL---------------------------------------------------------------------
 const char CONST_UID_PROTOCOL_ENTER_APPLICATION[] = "2614cb96-ec54-4d4f-b1a6-06d2444962ca";
 const char CONST_UID_PROTOCOL_GET_UPDATE_CLIENT[] = "0234643a-af60-44bf-a2eb-08a71307841c";
@@ -90,6 +91,9 @@ const char CONST_UID_PROTOCOL_CREATE_COPY_OBJECT[] = "efa8fe45-1174-4d2e-bbe6-49
 const char CONST_UID_PROTOCOL_SHOW_OBJECT[] = "117e8972-97dc-4e72-93ac-dc3bb50d11cf";
 const char CONST_UID_PROTOCOL_EDIT_OBJECT[] = "0361643d-0a62-4f51-84bd-313f53115efd";
 const char CONST_UID_PROTOCOL_DELETE_OBJECT[] = "b6eefb63-8197-4f3a-8373-5c3b2fc409f3";
+const char CONST_UID_PROTOCOL_FILE_STORAGE_ADD[] = "7e9ff116-cf0a-4568-b048-7fab8d773d57";
+const char CONST_UID_PROTOCOL_FILE_STORAGE_COPY[] = "5cb370b6-d1aa-4e40-83a9-aeac7fea65e2";
+const char CONST_UID_PROTOCOL_FILE_STORAGE_SAVE[] = "e73bedc4-79ff-4b94-acc9-2692e1927d18";
 //-----------------------------------------------------------------------------
 const char CONST_UID_GROUP_ACCESS_TYPE_SHOW[] = "41743776-d7ce-414f-acf3-71c42a607742"; //Просмотр данных
 const char CONST_UID_GROUP_ACCESS_TYPE_CREATE[] = "1cfa961d-08a2-4aa3-978e-ff23fc88ca08"; //Создание данных

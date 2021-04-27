@@ -237,6 +237,10 @@ static std::string QD_FAVORITE = PREPARE_QUERYN("DELETE FROM _favorites "
     "AND fvts_tablename = $2 "
     "AND fvts_objectid = $3", 3);
 //-----------------------------------------------------------------------------
+static std::string QI_FILE_STORAGE = PREPARE_QUERYN("INSERT INTO _storagefiles(sgfs_owner, sgfs_name, sgfs_expansion, sgfs_size, sgfs_data) "
+    "VALUES ($1, $2, $3, $4, $5) "
+    "RETURNING sgfs_id", 5);
+//-----------------------------------------------------------------------------
 ISTcpWorker::ISTcpWorker()
     : ErrorString(STRING_NO_ERROR),
     IsBusy(false),
@@ -263,6 +267,7 @@ ISTcpWorker::ISTcpWorker()
     MapFunction[API_RECORD_GET] = &ISTcpWorker::RecordGet;
     MapFunction[API_RECORD_EDIT] = &ISTcpWorker::RecordEdit;
     MapFunction[API_RECORD_DELETE] = &ISTcpWorker::RecordDelete;
+    MapFunction[API_FILE_STORAGE_ADD] = &ISTcpWorker::FileStorageAdd;
 
     CRITICAL_SECTION_INIT(&CriticalSection);
     CRITICAL_SECTION_INIT(&CSRunning);
@@ -2502,9 +2507,67 @@ bool ISTcpWorker::NoteRecordSet(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::FileStorageAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
-    IS_UNUSED(TcpMessage);
     IS_UNUSED(TcpAnswer);
-    return false;
+
+    if (!CheckIsNull(TcpMessage, "FileName") || !CheckIsNull(TcpMessage, "Data"))
+    {
+        return false;
+    }
+
+    //Получаем имя файла
+    std::string FileName;
+    if (!GetParameterString(TcpMessage, "FileName", FileName))
+    {
+        return false;
+    }
+
+    //Вытаскиваем расширение файла
+    std::string Extension;
+    size_t Pos = FileName.rfind('.');
+    if (Pos != NPOS)
+    {
+        Extension = FileName.substr(Pos + 1, FileName.size() - Pos - 1);
+    }
+
+    //Получаем данные файла
+    std::string FileData;
+    if (!GetParameterString(TcpMessage, "Data", FileData))
+    {
+        return false;
+    }
+
+    //Декодируем данные файла
+    unsigned long DataSize = 0;
+    unsigned char *Data = ISAlgorithm::Base64Decode(FileData, DataSize, ErrorString);
+    if (!Data)
+    {
+        ErrorString = ISAlgorithm::StringF(LANG("Carat.Error.Query.FileStorageAdd.Decode"), ErrorString.c_str());
+        return false;
+    }
+
+    //Проверяем размер
+    size_t MaxSizeMB = std::atoi(ISTcpWorkerHelper::GetSettingDB(DBConnection, CONST_UID_DATABASE_SETTING_OTHER_STORAGEFILEMAXSIZE));
+    if (DataSize > (((1000 * 1024) * MaxSizeMB)))
+    {
+        ErrorString = ISAlgorithm::StringF(LANG("Carat.Error.Query.FileStorageAdd.Size"), FileName.c_str(), MaxSizeMB);
+        return false;
+    }
+
+    ISQuery qInsert(DBConnection, QI_FILE_STORAGE);
+    qInsert.SetShowLongQuery(false);
+    qInsert.BindValue(TcpMessage->TcpClient->UserID);
+    qInsert.BindValue(FileName);
+    qInsert.BindValue(Extension);
+    qInsert.BindValue(ISAlgorithm::StringFromSize(DataSize));
+    qInsert.BindValue((const char *)Data, BYTEAOID);
+    bool Result = qInsert.ExecuteFirst();
+    free(Data);
+    if (!Result)
+    {
+        return ErrorQuery(ISAlgorithm::StringF(LANG("Carat.Error.Query.FileStorageAdd.Insert"), FileName.c_str(), qInsert.GetErrorString().c_str()), qInsert);
+    }
+    Protocol(TcpMessage->TcpClient->UserID, CONST_UID_PROTOCOL_FILE_STORAGE_ADD, std::string(), std::string(), qInsert.ReadColumn_UInt(0), FileName);
+    return true;
 }
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::FileStorageCopy(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)

@@ -233,14 +233,29 @@ namespace ISAlgorithm
 
     //! «акодировать строку в base64
     //! \param String строку, которую нужно закодировать
+    //! \param ErrorString строка, в которую будет помещено описание ошибки
     //! \return возвращает закодированную строку. ¬ случае ошибки возвращаетс€ пуста€ строка
     std::string Base64Encode(const std::string &String, std::string &ErrorString);
 
     //! «акодировать массив в base64
     //! \param Data массив данных
     //! \param Size размер массив
+    //! \param ErrorString строка, в которую будет помещено описание ошибки
     //! \return возвращает закодированную строку. ¬ случае ошибки возвращаетс€ пуста€ строка
     std::string Base64Encode(unsigned char *Data, size_t Size, std::string &ErrorString);
+
+    //! ƒекодировать base64-строку
+    //! \param String строка base64
+    //! \param ErrorString строка, в которую будет помещено описание ошибки
+    //! \return возвращает декодированный массив данных
+    unsigned char* Base64Decode(const std::string &String, unsigned long &ResultSize, std::string &ErrorString);
+
+    //! ƒекодировать base64-строку
+    //! \param Data массив данных base64
+    //! \param Size размер массив
+    //! \param ErrorString строка, в которую будет помещено описание ошибки
+    //! \return возвращает декодированный массив данных
+    unsigned char* Base64Decode(char *Data, size_t Size, unsigned long &ResultSize, std::string &ErrorString);
 
     //! ѕрочитать файл
     //! \param FilePath путь к файлу
