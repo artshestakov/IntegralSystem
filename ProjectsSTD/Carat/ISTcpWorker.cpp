@@ -232,6 +232,11 @@ static std::string QS_SERVER_INFO = PREPARE_QUERY("SELECT "
     "(SELECT COUNT(*) as monitor_count FROM _monitor), "
     "(SELECT COUNT(*) AS users_count FROM _users)");
 //-----------------------------------------------------------------------------
+static std::string QD_FAVORITE = PREPARE_QUERYN("DELETE FROM _favorites "
+    "WHERE fvts_user = $1 "
+    "AND fvts_tablename = $2 "
+    "AND fvts_objectid = $3", 3);
+//-----------------------------------------------------------------------------
 ISTcpWorker::ISTcpWorker()
     : ErrorString(STRING_NO_ERROR),
     IsBusy(false),
@@ -257,6 +262,7 @@ ISTcpWorker::ISTcpWorker()
     MapFunction[API_RECORD_ADD] = &ISTcpWorker::RecordAdd;
     MapFunction[API_RECORD_GET] = &ISTcpWorker::RecordGet;
     MapFunction[API_RECORD_EDIT] = &ISTcpWorker::RecordEdit;
+    MapFunction[API_RECORD_DELETE] = &ISTcpWorker::RecordDelete;
 
     CRITICAL_SECTION_INIT(&CriticalSection);
     CRITICAL_SECTION_INIT(&CSRunning);
@@ -612,11 +618,11 @@ bool ISTcpWorker::GetObjectName(PMetaTable *MetaTable, unsigned int ObjectID, st
     {
         switch (qSelectName.GetResultColumnType(i))
         {
-        case DATEOID: ObjectName += qSelectName.ReadColumn_Date(i).ToString(); break;
-        case TIMEOID: ObjectName += qSelectName.ReadColumn_Time(i).ToString(); break;
-        case TIMESTAMPOID: ObjectName += qSelectName.ReadColumn_DateTime(i).ToString(); break;
+        case DATEOID: ObjectName = qSelectName.ReadColumn_Date(i).ToString(); break;
+        case TIMEOID: ObjectName = qSelectName.ReadColumn_Time(i).ToString(); break;
+        case TIMESTAMPOID: ObjectName = qSelectName.ReadColumn_DateTime(i).ToString(); break;
         default:
-            ObjectName += qSelectName.ReadColumn(i);
+            ObjectName = qSelectName.ReadColumn(i);
         }
 
         //На последней итерации пробел не добавляем
@@ -1817,9 +1823,108 @@ bool ISTcpWorker::RecordEdit(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::RecordDelete(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
-    IS_UNUSED(TcpMessage);
     IS_UNUSED(TcpAnswer);
-    return false;
+
+    if (!CheckIsNull(TcpMessage, "TableName"))
+    {
+        return false;
+    }
+
+    std::string TableName;
+    if (!GetParameterString(TcpMessage, "TableName", TableName))
+    {
+        return false;
+    }
+
+    PMetaTable *MetaTable = GetMetaTable(TableName);
+    if (!MetaTable)
+    {
+        return false;
+    }
+
+    //Проверяем наличие идентификаторов
+    if (!TcpMessage->Parameters.HasMember("Objects"))
+    {
+        ErrorString = LANG("Carat.Error.Query.RecordDelete.NotSpecifiedID");
+        return false;
+    }
+
+    rapidjson::Value &Objects = TcpMessage->Parameters["Objects"];
+    if (Objects.Empty())
+    {
+        ErrorString = LANG("Carat.Error.Query.RecordDelete.EmptyIDs");
+        return false;
+    }
+
+    //Формируем конструкцию IN для условия WHERE
+    std::string SqlIN;
+    for (auto &ID : Objects.GetArray())
+    {
+        SqlIN += std::to_string(ID.GetUint()) + ',';
+    }
+    ISAlgorithm::StringChop(SqlIN, 1);
+
+    //Получаем имена удаляемых записей для протокола
+    std::unordered_map<unsigned int, std::string> ObjectNameMap;
+    std::string ObjectName;
+    for (auto &ID : Objects.GetArray())
+    {
+        if (!GetObjectName(MetaTable, ID.GetUint(), ObjectName))
+        {
+            return false;
+        }
+        ObjectNameMap.emplace(ID.GetUint(), ObjectName);
+    }
+
+    //Проверяем, нет ли системных записей
+    ISQuery qSqlQuery(DBConnection, "SELECT (COUNT(*) > 0)::BOOLEAN AS is_exist FROM " + MetaTable->Name + " WHERE " + MetaTable->Alias + "_issystem AND " + MetaTable->Alias + "_id IN(" + SqlIN + ')');
+    qSqlQuery.SetShowLongQuery(false);
+    if (!qSqlQuery.Execute()) //Ошибка запроса
+    {
+        return ErrorQuery(LANG("Carat.Error.Query.RecordDelete.Select"), qSqlQuery);
+    }
+
+    if (!qSqlQuery.First())
+    {
+        ErrorString = qSqlQuery.GetErrorString();
+        return false;
+    }
+
+    if (qSqlQuery.ReadColumn_Bool(0))
+    {
+        ErrorString = Objects.Size() == 1 ?
+            LANG("Carat.Error.Query.RecordDelete.RecordIsSystem") :
+            LANG("Carat.Error.Query.RecordDelete.RecordsIsSystem");
+        return false;
+    }
+
+    //Удаляем записи
+    ISQuery qDelete(DBConnection, "DELETE FROM " + MetaTable->Name + " WHERE " + MetaTable->Alias + "_id IN(" + SqlIN + ")");
+    qDelete.SetShowLongQuery(false);
+    if (!qDelete.Execute()) //Ошибка запроса
+    {
+        return ErrorQuery(LANG("Carat.Error.Query.RecordDelete.Delete"), qDelete);
+    }
+
+    //Удаляем записи из избранного
+    ISQuery qDeleteFavorite(DBConnection, QD_FAVORITE);
+    for (const auto &ID : Objects.GetArray())
+    {
+        qDeleteFavorite.BindValue(TcpMessage->TcpClient->UserID);
+        qDeleteFavorite.BindValue(MetaTable->Name);
+        qDeleteFavorite.BindValue(ID.GetUint());
+        if (!qDeleteFavorite.Execute())
+        {
+            ISLOGGER_W(__CLASS__, "Error remove object with favorites: %s", qDeleteFavorite.GetErrorString().c_str());
+        }
+    }
+
+    //Протоколируем
+    for (const auto &ObjectID : Objects.GetArray())
+    {
+        Protocol(TcpMessage->TcpClient->UserID, CONST_UID_PROTOCOL_DELETE_OBJECT, MetaTable->Name, MetaTable->LocalListName, ObjectID.GetUint(), ObjectNameMap[ObjectID.GetUint()]);
+    }
+    return true;
 }
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::RecordGet(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
