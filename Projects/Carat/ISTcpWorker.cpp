@@ -448,18 +448,6 @@ static QString QS_SERVER_INFO = PREPARE_QUERY("SELECT "
 //-----------------------------------------------------------------------------
 static QString QS_DATABASE_SETTING = PREPARE_QUERY("");
 //-----------------------------------------------------------------------------
-static QString QS_STATEMENTS_QUERY = PREPARE_QUERY("SELECT userid, rolname, calls, total_time, query AS sql_query "
-												   "FROM pg_stat_statements "
-												   "LEFT JOIN pg_roles ON oid = userid "
-												   "ORDER BY total_time DESC");
-//-----------------------------------------------------------------------------
-static QString QS_STATEMENTS_HISTORY = PREPARE_QUERY("SELECT prtc_datetime "
-													 "FROM _protocol "
-													 "WHERE prtc_type = (SELECT prtp_id FROM _protocoltype WHERE prtp_uid = '{3660E1BE-755A-4034-89D8-15FE83776122}') "
-													 "ORDER BY prtc_datetime DESC");
-//-----------------------------------------------------------------------------
-static QString QS_STATEMENTS_RESET = PREPARE_QUERY("SELECT pg_stat_statements_reset()");
-//-----------------------------------------------------------------------------
 static QString QS_MONITOR = PREPARE_QUERY("SELECT mntr_datetime, mntr_memory, mntr_clients, mntr_tcpquerytimeavg "
 										  "FROM _monitor "
 										  "ORDER BY mntr_datetime");
@@ -596,8 +584,6 @@ ISTcpWorker::ISTcpWorker(const QString &db_host, int db_port, const QString &db_
 	MapFunction[API_GET_FOREIGN_LIST] = &ISTcpWorker::GetForeignList;
 	MapFunction[API_GET_SERVER_INFO] = &ISTcpWorker::GetServerInfo;
 	MapFunction[API_ORGANIZATION_FROM_INN] = &ISTcpWorker::OrganizationFormINN;
-	MapFunction[API_STATEMENTS_QUERY_GET] = &ISTcpWorker::StatementsQueryGet;
-	MapFunction[API_STATEMENTS_QUERY_RESET] = &ISTcpWorker::StatementsQueryReset;
 	MapFunction[API_GET_MONITOR] = &ISTcpWorker::GetMonitor;
 
 	CRITICAL_SECTION_INIT(&CriticalSection);
@@ -4137,64 +4123,6 @@ bool ISTcpWorker::OrganizationFormINN(ISTcpMessage *TcpMessage, ISTcpAnswer *Tcp
 		return false;
 	}
 	TcpAnswer->Parameters["Reply"] = ReplyList.front().toMap();
-	return true;
-}
-//-----------------------------------------------------------------------------
-bool ISTcpWorker::StatementsQueryGet(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
-{
-	IS_UNUSED(TcpMessage);
-	IS_UNUSED(TcpAnswer);
-
-	//Получаем статистику запросов
-	ISQuery qSelect(ISDatabase::Instance().GetDB(DBConnectionName), QS_STATEMENTS_QUERY);
-	if (!qSelect.Execute()) //Ошибка запроса
-	{
-		return ErrorQuery(LANG("Carat.Error.Query.StatementsQueryGet.Select"), qSelect);
-	}
-
-	//Обход запросов
-	QVariantList QueryList;
-	while (qSelect.Next())
-	{
-		QueryList.push_back(QVariantMap
-		{
-			{ "UserID", qSelect.ReadColumn("userid") },
-			{ "Login", qSelect.ReadColumn("rolname") },
-			{ "Calls", qSelect.ReadColumn("calls") },
-			{ "MSec", qSelect.ReadColumn("total_time") },
-			{ "SqlQuery", qSelect.ReadColumn("sql_query") }
-		});
-	}
-
-	//Получаем историю очистки статистики
-	ISQuery qSelectHistory(ISDatabase::Instance().GetDB(DBConnectionName), QS_STATEMENTS_HISTORY);
-	if (!qSelectHistory.Execute())
-	{
-		return ErrorQuery(LANG("Carat.Error.Query.StatementsQueryGet.SelectHistory"), qSelectHistory);
-	}
-
-	//Обход дат
-	QStringList DateList;
-	while (qSelectHistory.Next())
-	{
-		DateList.push_back(qSelectHistory.ReadColumn("prtc_datetime").toDateTime().toString(FORMAT_DATE_TIME_V2));
-	}
-	TcpAnswer->Parameters["QueryList"] = QueryList;
-	TcpAnswer->Parameters["DateList"] = DateList;
-	return true;
-}
-//-----------------------------------------------------------------------------
-bool ISTcpWorker::StatementsQueryReset(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
-{
-	IS_UNUSED(TcpMessage);
-	IS_UNUSED(TcpAnswer);
-
-	ISQuery qReset(ISDatabase::Instance().GetDB(DBConnectionName), QS_STATEMENTS_RESET);
-	if (!qReset.Execute())
-	{
-		return ErrorQuery(LANG("Carat.Error.Query.StatementsQueryReset.Select"), qReset);
-	}
-	Protocol(TcpMessage->TcpSocket->GetUserID(), CONST_UID_PROTOCOL_STATEMENTS_QUERY_RESET);
 	return true;
 }
 //-----------------------------------------------------------------------------

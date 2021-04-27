@@ -89,8 +89,6 @@ private:
     bool GetForeignList(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
     bool GetServerInfo(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
     bool OrganizationFormINN(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
-    bool StatementsQueryGet(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
-    bool StatementsQueryReset(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
     bool GetMonitor(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
 
 private:

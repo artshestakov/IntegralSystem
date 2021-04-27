@@ -13,7 +13,6 @@
     <_SubSystems IsSystem="true" UID="{A437C2ED-7885-4FAD-860B-8F04B6D2F1C4}" System="{893B111E-88AC-4C85-A7D5-E8157FCD1066}" OrderID="4" LocalName="Монитор активности" Icon="SubSystem.MonitorActivity" ClassName="ISMonitorActivitySubSystem" Hint="Мониторинг активности пользователей в системе"/>
     <_SubSystems IsSystem="true" UID="{189BC968-2A53-4193-A959-6F0C787AE453}" System="{893B111E-88AC-4C85-A7D5-E8157FCD1066}" OrderID="5" LocalName="Статистика звонков" Icon="SubSystem.AsteriskCalls" ClassName="ISAsteriskCallsSubSystem" Hint="Просмотр и прослушивание всех звонков внутри компании"/>
     <_SubSystems IsSystem="true" UID="{8C407DC6-3CC5-4338-8EF8-5070667402D1}" System="{893B111E-88AC-4C85-A7D5-E8157FCD1066}" OrderID="6" LocalName="Информация о сервере" Icon="SubSystem.Server" ClassName="ISServerInfoSubSystem"/>
-    <_SubSystems IsSystem="true" UID="{27E16D4B-8EE6-40FD-B0C7-D00C6DDB92DC}" System="{893B111E-88AC-4C85-A7D5-E8157FCD1066}" OrderID="7" LocalName="Статистика запросов" Icon="SubSystem.Query" ClassName="ISQuerySubSystem"/>
     <!--<_SubSystems IsSystem="true" UID="{15FCB3B6-EB4B-4FB4-8A45-D8ABA8AD3284}" System="{893B111E-88AC-4C85-A7D5-E8157FCD1066}" OrderID="100" LocalName="Тест" Icon="Lists" TableName="_Test"/>-->
 
     <_Systems IsSystem="true" UID="{830708DC-DDA7-42D3-9E4C-FF1CCA62D28C}" OrderID="2" LocalName="Внутреннее" Icon="System.Internal" Hint="Управление системными справочниками и внутренними функциями программы."/>
@@ -58,7 +57,6 @@
     <_ProtocolType IsSystem="true" UID="{F05B1DE1-47F6-43DB-A8C5-5D3582F7BD5F}" Name="Закрытие события календаря"/>
     <_ProtocolType IsSystem="true" UID="{2A93A14E-4BA5-4CB8-A056-0FF2B3351C5D}" Name="Просмотр данных"/>
     <_ProtocolType IsSystem="true" UID="{E6F5D167-25E6-4172-8D81-219DE8608647}" Name="Просмотр информации о сервере"/>
-    <_ProtocolType IsSystem="true" UID="{3660E1BE-755A-4034-89D8-15FE83776122}" Name="Сброс статистики запросов"/>
 
     <_InternalDirectories IsSystem="true" UID="{A57D9B44-CD09-4880-897D-3B0BACB1F093}" TableName="_TaskType" Order="1"/>
     <_InternalDirectories IsSystem="true" UID="{275E8EE8-C1EE-4495-95C2-79AB3AD98AB9}" TableName="_TaskSpace" Order="2"/>

@@ -242,11 +242,6 @@
     <Local Name="Carat.Error.Query.OrganizationFormINN.Parse" Russian="Неверный ответ."/>
     <Local Name="Carat.Error.Query.OrganizationFormINN.NotFound" Russian="Огранизация не найдена."/>
 
-    <Local Name="Carat.Error.Query.StatementsQueryGet.Select" Russian="Не удалось получить статистику запросов."/>
-    <Local Name="Carat.Error.Query.StatementsQueryGet.SelectHistory" Russian="Не удалось получить историю очистки статистики."/>
-
-    <Local Name="Carat.Error.Query.StatementsQueryReset.Select" Russian="Не удалось сбросить статистику запросов."/>
-
     <Local Name="Carat.Error.Query.GetMonitor.Select" Russian="Не удалось получить метрики."/>
 
     <Local Name="Carat.Error.Query.PeriodContains.Select" Russian="Не удалось получить константу."/>

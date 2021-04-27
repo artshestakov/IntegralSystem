@@ -52,12 +52,6 @@
     <Local Name="ISRecordInfoDialog.Field.ProtocolCount" Russian="Событий:"/>
     <Local Name="ISRecordInfoDialog.Field.DiscussionCount" Russian="Обсуждений:"/>
 
-    <!--ISQuerySubSystem-->
-    <Local Name="ISQuerySubSystem.GroupBoxQuery" Russian="Статистика запросов (%1)"/>
-    <Local Name="ISQuerySubSystem.ItemText" Russian="Идентификатор пользователя: %1&#10;Логин: %2&#10;Количество выполнений: %3&#10;Длительность: %4"/>
-    <Local Name="ISQuerySubSystem.ClearHistory" Russian="Очистить статистику"/>
-    <Local Name="ISQuerySubSystem.GroupBoxHistory" Russian="История очистки статистики"/>
-
     <!--ISServerInfoSubSystem-->
     <Local Name="ISServerInfoSubSystem.Carat.Title" Russian="Сервер"/>
     <Local Name="ISServerInfoSubSystem.Carat.Version" Russian="Версия:"/>
@@ -156,7 +150,6 @@
     <Local Name="Message.Question.UpdateAvailable" Russian="Доступно обновление программы. Загрузить его?&#10;&#10;Текущая версия: %1&#10;Новая версия: %2"/>
     <Local Name="Message.Question.PasswordReset" Russian="Вы уверены что хотите сбросить пароль?"/>
     <Local Name="Message.Question.ResetSettingDB" Russian="Сбросить настройки на стандартные?"/>
-    <Local Name="Message.Question.ClearStatementsQuery" Russian="Вы действительно хотите очистить историю запросов?&#10;&#10;Это действие нельзя отменить."/>
 
     <!--System Fields-->
     <Local Name="SystemField.ID" Russian="Код"/>

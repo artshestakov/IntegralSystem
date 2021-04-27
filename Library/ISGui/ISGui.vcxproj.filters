@@ -316,9 +316,6 @@
     <ClCompile Include="ISServerInfoSubSystem.cpp">
       <Filter>SubSystem</Filter>
     </ClCompile>
-    <ClCompile Include="ISQuerySubSystem.cpp">
-      <Filter>SubSystem</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Components\QCustomPlot\qcustomplot.cpp">
       <Filter>CustomPlot</Filter>
     </ClCompile>
@@ -532,9 +529,6 @@
       <Filter>Dialogs</Filter>
     </QtMoc>
     <QtMoc Include="ISServerInfoSubSystem.h">
-      <Filter>SubSystem</Filter>
-    </QtMoc>
-    <QtMoc Include="ISQuerySubSystem.h">
       <Filter>SubSystem</Filter>
     </QtMoc>
     <QtMoc Include="..\..\Components\QCustomPlot\qcustomplot.h">
