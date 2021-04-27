@@ -4177,7 +4177,9 @@ bool ISTcpWorker::GetServerInfo(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer
 		{ "RowsCount", DatabaseRowsCount },
 		{ "ProtocolCount", DatabaseCountProtocol },
 		{ "MonitorCount", DatabaseCountMonitor },
-		{ "UsersCount", DatabaseUsersCount }
+		{ "UsersCount", DatabaseUsersCount },
+        { "FilesCount", "0" },
+        { "FilesSize", "0" }
 	};
 	Protocol(TcpMessage->TcpSocket->GetUserID(), CONST_UID_PROTOCOL_SERVER_INFO);
 	return true;

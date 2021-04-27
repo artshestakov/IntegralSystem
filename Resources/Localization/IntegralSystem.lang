@@ -88,6 +88,8 @@
     <Local Name="ISServerInfoSubSystem.Database.ProtocolCount" Russian="Количество событий протокола:"/>
     <Local Name="ISServerInfoSubSystem.Database.MonitorCount" Russian="Количество событий мониторинга:"/>
     <Local Name="ISServerInfoSubSystem.Database.UsersCount" Russian="Количество пользователей:"/>
+    <Local Name="ISServerInfoSubSystem.Database.FilesCount" Russian="Файлов в хранилище:"/>
+    <Local Name="ISServerInfoSubSystem.Database.FilesSize" Russian="Размер хранилища:"/>
 
     <!--Messages-->
     <Local Name="Message.Information.NotSavedObjects" Russian="Есть несохранённые (%1 шт.) записи, сохраните или закройте их для выхода из программы."/>

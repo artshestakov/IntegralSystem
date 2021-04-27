@@ -232,7 +232,9 @@ static std::string QS_SERVER_INFO = PREPARE_QUERY("SELECT "
     "(SELECT get_rows_count() AS rows_count), "
     "(SELECT COUNT(*) AS protocol_count FROM _protocol), "
     "(SELECT COUNT(*) as monitor_count FROM _monitor), "
-    "(SELECT COUNT(*) AS users_count FROM _users)");
+    "(SELECT COUNT(*) AS users_count FROM _users), "
+    "(SELECT COUNT(*) AS files_count FROM _storagefiles), "
+    "(SELECT sum(length(sgfs_data)) AS files_size FROM _storagefiles)");
 //-----------------------------------------------------------------------------
 static std::string QD_FAVORITE = PREPARE_QUERYN("DELETE FROM _favorites "
     "WHERE fvts_user = $1 "
@@ -2950,6 +2952,8 @@ bool ISTcpWorker::GetServerInfo(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer
     std::string DatabaseCountProtocol = ISAlgorithm::FormatNumber(qSelect.ReadColumn_Int64(15));
     std::string DatabaseCountMonitor = ISAlgorithm::FormatNumber(qSelect.ReadColumn_Int64(16));
     std::string DatabaseUsersCount = ISAlgorithm::FormatNumber(qSelect.ReadColumn_Int64(17));
+    std::string DatabaseFilesCount = ISAlgorithm::FormatNumber(qSelect.ReadColumn_Int64(18));
+    std::string DatabaseFilesSize = ISAlgorithm::StringFromSize(qSelect.ReadColumn_UInt64(19));
 
     std::string StartedDateTime = ISDateTime::FromUnixTime(ISProperty::Instance().GetUptime()).ToString();
     std::string Uptime = ISTcpWorkerHelper::GetUptime();
@@ -2985,6 +2989,8 @@ bool ISTcpWorker::GetServerInfo(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer
     DatabaseObject.AddMember("ProtocolCount", JSON_STRINGA(DatabaseCountProtocol.c_str(), Allocator), Allocator);
     DatabaseObject.AddMember("MonitorCount", JSON_STRINGA(DatabaseCountMonitor.c_str(), Allocator), Allocator);
     DatabaseObject.AddMember("UsersCount", JSON_STRINGA(DatabaseUsersCount.c_str(), Allocator), Allocator);
+    DatabaseObject.AddMember("FilesCount", JSON_STRINGA(DatabaseFilesCount.c_str(), Allocator), Allocator);
+    DatabaseObject.AddMember("FilesSize", JSON_STRINGA(DatabaseFilesSize.c_str(), Allocator), Allocator);
     TcpAnswer->Parameters.AddMember("Database", DatabaseObject, Allocator);
 
     Protocol(TcpMessage->TcpClient->UserID, CONST_UID_PROTOCOL_SERVER_INFO);
