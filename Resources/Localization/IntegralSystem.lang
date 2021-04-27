@@ -52,9 +52,6 @@
     <Local Name="ISRecordInfoDialog.Field.ProtocolCount" Russian="Событий:"/>
     <Local Name="ISRecordInfoDialog.Field.DiscussionCount" Russian="Обсуждений:"/>
 
-    <!--ISServerLogsSubSystem-->
-    <Local Name="ISServerLogsSubSystem.Content" Russian="Содержимое файла"/>
-
     <!--ISQuerySubSystem-->
     <Local Name="ISQuerySubSystem.GroupBoxQuery" Russian="Статистика запросов (%1)"/>
     <Local Name="ISQuerySubSystem.ItemText" Russian="Идентификатор пользователя: %1&#10;Логин: %2&#10;Количество выполнений: %3&#10;Длительность: %4"/>

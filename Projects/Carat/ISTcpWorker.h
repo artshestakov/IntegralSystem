@@ -91,8 +91,6 @@ private:
 	bool RecordFavoriteDelete(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
 	bool GetFavoriteNames(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
 	bool FavoritesDelete(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
-	bool LogGetStructure(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
-	bool LogGetContent(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
 	bool CalendarClose(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
 	bool GetHistoryList(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
 	bool TaskCommentAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);

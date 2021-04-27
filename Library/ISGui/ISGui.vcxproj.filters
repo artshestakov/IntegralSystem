@@ -316,9 +316,6 @@
     <ClCompile Include="ISServerInfoSubSystem.cpp">
       <Filter>SubSystem</Filter>
     </ClCompile>
-    <ClCompile Include="ISServerLogsSubSystem.cpp">
-      <Filter>SubSystem</Filter>
-    </ClCompile>
     <ClCompile Include="ISQuerySubSystem.cpp">
       <Filter>SubSystem</Filter>
     </ClCompile>
@@ -535,9 +532,6 @@
       <Filter>Dialogs</Filter>
     </QtMoc>
     <QtMoc Include="ISServerInfoSubSystem.h">
-      <Filter>SubSystem</Filter>
-    </QtMoc>
-    <QtMoc Include="ISServerLogsSubSystem.h">
       <Filter>SubSystem</Filter>
     </QtMoc>
     <QtMoc Include="ISQuerySubSystem.h">

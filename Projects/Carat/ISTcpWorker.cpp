@@ -590,8 +590,6 @@ ISTcpWorker::ISTcpWorker(const QString &db_host, int db_port, const QString &db_
 	MapFunction[API_RECORD_FAVORITE_DELETE] = &ISTcpWorker::RecordFavoriteDelete;
 	MapFunction[API_GET_FAVORITE_NAMES] = &ISTcpWorker::GetFavoriteNames;
 	MapFunction[API_FAVORITES_DELETE] = &ISTcpWorker::FavoritesDelete;
-	MapFunction[API_LOG_GET_STRUCTURE] = &ISTcpWorker::LogGetStructure;
-	MapFunction[API_LOG_GET_CONTENT] = &ISTcpWorker::LogGetContent;
 	MapFunction[API_CALENDAR_CLOSE] = &ISTcpWorker::CalendarClose;
 	MapFunction[API_GET_HISTORY_LIST] = &ISTcpWorker::GetHistoryList;
 	MapFunction[API_TASK_COMMENT_ADD] = &ISTcpWorker::TaskCommentAdd;
@@ -3812,99 +3810,6 @@ bool ISTcpWorker::FavoritesDelete(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnsw
 	{
 		return ErrorQuery(LANG("Carat.Error.Query.FavoritesDelete.Delete"), qDelete);
 	}
-	return true;
-}
-//-----------------------------------------------------------------------------
-bool ISTcpWorker::LogGetStructure(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
-{
-	IS_UNUSED(TcpMessage);
-
-	//Формируем объект папки с логами и получаем список папок-годов
-	QDir DirYear(QCoreApplication::applicationDirPath() + "/Logs");
-	QStringList YearDirList = DirYear.entryList(QDir::AllDirs, QDir::Name);
-
-	//Обходим папки с годами
-	bool Ok = false;
-	QVariantMap VariantYearMap;
-	for (const QString &YearDirName : YearDirList)
-	{
-		(void)YearDirName.toUInt(&Ok);
-		if (!Ok) //Имя папки невалидное - идём дальше
-		{
-			continue;
-		}
-
-		//Формируем объект папки с месяцами
-		QVariantMap VariantMonthMap;
-		QDir DirMonth(DirYear.path() + "/" + YearDirName);
-		QStringList MonthDirList = DirMonth.entryList(QDir::AllDirs, QDir::Name);
-		for (const QString &MonthDirName : MonthDirList)
-		{
-			(void)MonthDirName.toUInt(&Ok);
-			if (!Ok) //Имя месяца невалидное
-			{
-				continue;
-			}
-
-			//Формируем объект папки с днями
-			QVariantList VariantDaysList;
-			QDir DirDays(DirMonth.path() + "/" + MonthDirName);
-			QStringList DayFileList = DirDays.entryList(QDir::Files, QDir::Name);
-			for (QString &FileName : DayFileList)
-			{
-				//Получаем название файла
-				int Pos = FileName.indexOf('_');
-				if (Pos == -1 || FileName.left(Pos) != QCoreApplication::applicationName()) //Имя файла невалидное
-				{
-					continue;
-				}
-				FileName.remove(0, ++Pos); //Убираем имя приложения из имени файла
-				std::reverse(FileName.begin(), FileName.end()); //Реверсируем строку
-				FileName.remove(0, FileName.indexOf('.') + 1); //Ищем и удаляем расширение в имени файла
-				std::reverse(FileName.begin(), FileName.end()); //Реверсируем обратно
-				VariantDaysList.append(FileName);
-			}
-			VariantMonthMap[MonthDirName] = VariantDaysList;
-		}
-		VariantYearMap[YearDirName] = VariantMonthMap;
-	}
-	TcpAnswer->Parameters["Years"] = VariantYearMap;
-	return true;
-}
-//-----------------------------------------------------------------------------
-bool ISTcpWorker::LogGetContent(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
-{
-	QVariant Year = CheckNullField("Year", TcpMessage),
-		Month = CheckNullField("Month", TcpMessage),
-		Day = CheckNullField("Day", TcpMessage);
-	if (!Year.isValid() || !Month.isValid() || !Day.isValid())
-	{
-		return false;
-	}
-
-	//Формируем путь к файлу и проверяем его наличие
-	QFile File(QString("%1/Logs/%2/%3/%4_%5.%3.%2.log").arg(QCoreApplication::applicationDirPath())
-		.arg(Year.toString())
-		.arg(Month.toUInt() < 10 ? "0" + Month.toString() : Month.toString())
-		.arg(QCoreApplication::applicationName())
-		.arg(Day.toUInt() < 10 ? "0" + Day.toString() : Day.toString()));
-	if (!File.exists()) //Файл не существует
-	{
-		ErrorString = LANG("Carat.Error.Query.LogGetContent.NotExist");
-		return false;
-	}
-
-	if (!File.open(QIODevice::ReadOnly)) //Файл не открывается
-	{
-		ISLOGGER_E(__CLASS__, QString("Error open file \"%1\": %2").arg(File.fileName()).arg(File.errorString()));
-		ErrorString = LANG("Carat.Error.Query.LogGetContent.NotOpen");
-		return false;
-	}
-
-	//Читаем и закрываем файл
-	QString Content = File.readAll();
-	File.close();
-	TcpAnswer->Parameters["Content"] = Content;
 	return true;
 }
 //-----------------------------------------------------------------------------
