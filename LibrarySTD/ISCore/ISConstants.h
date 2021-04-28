@@ -85,6 +85,8 @@ const char API_SET_NOTE_RECORD[] = "SetNoteRecord"; //Изменить примечание записи
 const char API_SEARCH_FULL_TEXT[] = "SearchFullText"; //Полнотекстовый поиск
 const char API_GET_INTERNAL_LISTS[] = "GetInternalLists"; //Получение списка внутренних справочников
 const char API_GET_FAVORITE_NAMES[] = "GetFavoriteNames"; //Получить локальные имена избранных объектов
+const char API_RECORD_FAVORITE_ADD[] = "RecordFavoriteAdd"; //Добавить запись в избранное
+const char API_RECORD_FAVORITE_DELETE[] = "RecordFavoriteDelete"; //Удалить запись из избранного
 //PROTOCOL---------------------------------------------------------------------
 const char CONST_UID_PROTOCOL_ENTER_APPLICATION[] = "2614cb96-ec54-4d4f-b1a6-06d2444962ca";
 const char CONST_UID_PROTOCOL_GET_UPDATE_CLIENT[] = "0234643a-af60-44bf-a2eb-08a71307841c";
@@ -109,6 +111,8 @@ const char CONST_UID_PROTOCOL_NOTE_RECORD_DELETE[] = "08904df2-3785-4454-b5e5-2d
 const char CONST_UID_PROTOCOL_NOTE_RECORD_ADD[] = "662105b6-6671-46be-8e1a-e57061c5c268";
 const char CONST_UID_PROTOCOL_NOTE_RECORD_EDIT[] = "c20634af-ef58-4d96-9215-8085c2b8c416";
 const char CONST_UID_PROTOCOL_SEARCH_FULL_TEXT[] = "b0a1ef68-2aa4-4eb2-a5a9-f8e5604f864b";
+const char CONST_UID_PROTOCOL_RECORD_FAVORITE_ADD[] = "8d08a9f9-fc50-4986-8d92-fec0d7d36da0";
+const char CONST_UID_PROTOCOL_RECORD_FAVORITE_DELETE[] = "af2641f0-6838-441c-a0a9-b62090826998";
 //-----------------------------------------------------------------------------
 const char CONST_UID_GROUP_ACCESS_TYPE_SHOW[] = "41743776-d7ce-414f-acf3-71c42a607742"; //Просмотр данных
 const char CONST_UID_GROUP_ACCESS_TYPE_CREATE[] = "1cfa961d-08a2-4aa3-978e-ff23fc88ca08"; //Создание данных

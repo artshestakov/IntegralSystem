@@ -15,7 +15,7 @@
 #include "ISProperty.h"
 //-----------------------------------------------------------------------------
 static std::string Q_TEST = PREPARE_QUERYN("INSERT INTO _usergroup(usgp_name, usgp_fullaccess) VALUES($1, $2)", 2);
-
+//-----------------------------------------------------------------------------
 static std::string QS_USERS_HASH = PREPARE_QUERY("SELECT usrs_hash, usrs_salt "
     "FROM _users "
     "WHERE usrs_hash IS NOT NULL "
@@ -300,6 +300,11 @@ static std::string QS_FAVORITE_NAMES_ALL = PREPARE_QUERYN("SELECT fvts_tablename
     "WHERE fvts_user = $1 "
     "ORDER BY fvts_tablename", 1);
 //-----------------------------------------------------------------------------
+static std::string QI_FAVORITE = PREPARE_QUERYN("INSERT INTO _favorites(fvts_user, fvts_tablename, fvts_objectid) "
+    "VALUES($1, $2, $3)", 3);
+//-----------------------------------------------------------------------------
+
+//-----------------------------------------------------------------------------
 ISTcpWorker::ISTcpWorker()
     : ErrorString(STRING_NO_ERROR),
     IsBusy(false),
@@ -337,6 +342,8 @@ ISTcpWorker::ISTcpWorker()
     MapFunction[API_SEARCH_FULL_TEXT] = &ISTcpWorker::SearchFullText;
     MapFunction[API_GET_INTERNAL_LISTS] = &ISTcpWorker::GetInternalLists;
     MapFunction[API_GET_FAVORITE_NAMES] = &ISTcpWorker::GetFavoriteNames;
+    MapFunction[API_RECORD_FAVORITE_ADD] = &ISTcpWorker::RecordFavoriteAdd;
+    MapFunction[API_RECORD_FAVORITE_DELETE] = &ISTcpWorker::RecordFavoriteDelete;
 
     CRITICAL_SECTION_INIT(&CriticalSection);
     CRITICAL_SECTION_INIT(&CSRunning);
@@ -3190,16 +3197,108 @@ bool ISTcpWorker::GetRecordValue(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::RecordFavoriteAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
-    IS_UNUSED(TcpMessage);
     IS_UNUSED(TcpAnswer);
-    return false;
+
+    if (!CheckIsNull(TcpMessage, "TableName") || !CheckIsNull(TcpMessage, "ObjectID"))
+    {
+        return false;
+    }
+
+    std::string TableName;
+    if (!GetParameterString(TcpMessage, "TableName", TableName))
+    {
+        return false;
+    }
+
+    unsigned int ObjectID = 0;
+    if (!GetParameterUInt(TcpMessage, "ObjectID", ObjectID))
+    {
+        return false;
+    }
+
+    //Получаем мета-таблицу
+    PMetaTable *MetaTable = GetMetaTable(TableName);
+    if (!MetaTable)
+    {
+        return false;
+    }
+
+    //Получаем имя записи
+    std::string ObjectName;
+    if (!GetObjectName(MetaTable, ObjectID, ObjectName))
+    {
+        return false;
+    }
+
+    //Добавляем запись в избранное
+    ISQuery qInsert(DBConnection, QI_FAVORITE);
+    qInsert.BindUInt(TcpMessage->TcpClient->UserID);
+    qInsert.BindString(MetaTable->Name);
+    qInsert.BindUInt(ObjectID);
+    if (!qInsert.Execute()) //Не удалось добавить - проверяем ошибку
+    {
+        ErrorString = qInsert.GetErrorNumber() == 23505 ?
+            LANG("Carat.Error.Query.RecordFavoriteAdd.AlreadyExist") :
+            LANG("Carat.Error.Query.RecordFavoriteAdd.Insert");
+        return false;
+    }
+    Protocol(TcpMessage->TcpClient->UserID, CONST_UID_PROTOCOL_RECORD_FAVORITE_ADD, MetaTable->Name, MetaTable->LocalListName, ObjectID, ObjectName);
+    return true;
 }
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::RecordFavoriteDelete(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
-    IS_UNUSED(TcpMessage);
     IS_UNUSED(TcpAnswer);
-    return false;
+
+    if (!CheckIsNull(TcpMessage, "TableName") || !CheckIsNull(TcpMessage, "ObjectID"))
+    {
+        return false;
+    }
+
+    std::string TableName;
+    if (!GetParameterString(TcpMessage, "TableName", TableName))
+    {
+        return false;
+    }
+
+    unsigned int ObjectID = 0;
+    if (!GetParameterUInt(TcpMessage, "ObjectID", ObjectID))
+    {
+        return false;
+    }
+
+    //Получаем мета-таблицу
+    PMetaTable *MetaTable = GetMetaTable(TableName);
+    if (!MetaTable)
+    {
+        return false;
+    }
+
+    //Получаем имя записи
+    std::string ObjectName;
+    if (!GetObjectName(MetaTable, ObjectID, ObjectName))
+    {
+        return false;
+    }
+
+    //Удаляем запись
+    ISQuery qDelete(DBConnection, QD_FAVORITE);
+    qDelete.BindUInt(TcpMessage->TcpClient->UserID);
+    qDelete.BindString(MetaTable->Name);
+    qDelete.BindUInt(ObjectID);
+    if (!qDelete.Execute()) //Не удалось удалить
+    {
+        return ErrorQuery(LANG("Carat.Error.Query.RecordFavoriteDelete.Delete"), qDelete);
+    }
+
+    //Если при удалении не была затронута ни одна строка - значит такой записи нет
+    if (qDelete.GetResultAffected() == 0)
+    {
+        ErrorString = LANG("Carat.Error.Query.RecordFavoriteDelete.NotExist");
+        return false;
+    }
+    Protocol(TcpMessage->TcpClient->UserID, CONST_UID_PROTOCOL_RECORD_FAVORITE_DELETE, MetaTable->Name, MetaTable->LocalListName, ObjectID, ObjectName);
+    return true;
 }
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::GetFavoriteNames(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
