@@ -45,7 +45,7 @@
           </elementProp>
           <elementProp name="Sleep_Timeout" elementType="Argument">
             <stringProp name="Argument.name">Sleep_Timeout</stringProp>
-            <stringProp name="Argument.value">50</stringProp>
+            <stringProp name="Argument.value">500</stringProp>
             <stringProp name="Argument.desc">Таймаут сна (мсек.)</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
@@ -102,7 +102,7 @@
           </elementProp>
           <elementProp name="RecordAdd_TableName" elementType="Argument">
             <stringProp name="Argument.name">RecordAdd_TableName</stringProp>
-            <stringProp name="Argument.value">_UserGroup</stringProp>
+            <stringProp name="Argument.value">_Users</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="RecordEdit_TableName" elementType="Argument">
@@ -349,7 +349,7 @@
         </collectionProp>
       </Arguments>
       <hashTree/>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Thread Group" enabled="true">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="StressTest" enabled="true">
         <stringProp name="ThreadGroup.on_sample_error">stoptest</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
@@ -509,9 +509,12 @@ def MapRecordAdd =
 	Parameters:
 		[
 			TableName: vars.get(&quot;RecordAdd_TableName&quot;),
+			IsCopy: false,
 			Values:
 				[
-					Name: &quot;testing1&quot;
+					FIO: &quot;Testov Test Testovich&quot;,
+					Login: &quot;testov&quot;,
+					AccessAllowed: true
 				]
 		]
 ];
@@ -907,7 +910,7 @@ vars.put(&quot;QueryGetMonitor&quot;, MapToString(MapGetMonitor));</stringProp>
           <stringProp name="ConfigTestElement.password"></stringProp>
         </TCPSampler>
         <hashTree/>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: Sleep" enabled="false">
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: Sleep" enabled="true">
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
           <stringProp name="TCPSampler.port"></stringProp>
@@ -919,13 +922,25 @@ vars.put(&quot;QueryGetMonitor&quot;, MapToString(MapGetMonitor));</stringProp>
           <stringProp name="ConfigTestElement.password"></stringProp>
         </TCPSampler>
         <hashTree/>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: GetMetaData" enabled="false">
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: GetMetaData" enabled="true">
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
           <stringProp name="TCPSampler.port"></stringProp>
           <boolProp name="TCPSampler.nodelay">false</boolProp>
           <stringProp name="TCPSampler.timeout"></stringProp>
           <stringProp name="TCPSampler.request">${QueryGetMetaData}</stringProp>
+          <boolProp name="TCPSampler.closeConnection">false</boolProp>
+          <stringProp name="ConfigTestElement.username"></stringProp>
+          <stringProp name="ConfigTestElement.password"></stringProp>
+        </TCPSampler>
+        <hashTree/>
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: RecordAdd" enabled="false">
+          <stringProp name="TCPSampler.server"></stringProp>
+          <boolProp name="TCPSampler.reUseConnection">true</boolProp>
+          <stringProp name="TCPSampler.port"></stringProp>
+          <boolProp name="TCPSampler.nodelay">false</boolProp>
+          <stringProp name="TCPSampler.timeout"></stringProp>
+          <stringProp name="TCPSampler.request">${QueryRecordAdd}</stringProp>
           <boolProp name="TCPSampler.closeConnection">true</boolProp>
           <stringProp name="ConfigTestElement.username"></stringProp>
           <stringProp name="ConfigTestElement.password"></stringProp>
@@ -943,25 +958,13 @@ vars.put(&quot;QueryGetMonitor&quot;, MapToString(MapGetMonitor));</stringProp>
           <stringProp name="ConfigTestElement.password"></stringProp>
         </TCPSampler>
         <hashTree/>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: GetInternalLists" enabled="false">
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: GetInternalLists" enabled="true">
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
           <stringProp name="TCPSampler.port"></stringProp>
           <boolProp name="TCPSampler.nodelay">false</boolProp>
           <stringProp name="TCPSampler.timeout"></stringProp>
           <stringProp name="TCPSampler.request">${QueryGetInternalLists}</stringProp>
-          <boolProp name="TCPSampler.closeConnection">true</boolProp>
-          <stringProp name="ConfigTestElement.username"></stringProp>
-          <stringProp name="ConfigTestElement.password"></stringProp>
-        </TCPSampler>
-        <hashTree/>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: RecordAdd" enabled="false">
-          <stringProp name="TCPSampler.server"></stringProp>
-          <boolProp name="TCPSampler.reUseConnection">true</boolProp>
-          <stringProp name="TCPSampler.port"></stringProp>
-          <boolProp name="TCPSampler.nodelay">false</boolProp>
-          <stringProp name="TCPSampler.timeout"></stringProp>
-          <stringProp name="TCPSampler.request">${QueryRecordAdd}</stringProp>
           <boolProp name="TCPSampler.closeConnection">true</boolProp>
           <stringProp name="ConfigTestElement.username"></stringProp>
           <stringProp name="ConfigTestElement.password"></stringProp>
@@ -1207,37 +1210,13 @@ vars.put(&quot;QueryGetMonitor&quot;, MapToString(MapGetMonitor));</stringProp>
           <stringProp name="ConfigTestElement.password"></stringProp>
         </TCPSampler>
         <hashTree/>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: FileStorageGet" enabled="true">
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: FileStorageGet" enabled="false">
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
           <stringProp name="TCPSampler.port"></stringProp>
           <boolProp name="TCPSampler.nodelay">false</boolProp>
           <stringProp name="TCPSampler.timeout"></stringProp>
           <stringProp name="TCPSampler.request">${QueryFileStorageGet}</stringProp>
-          <boolProp name="TCPSampler.closeConnection">true</boolProp>
-          <stringProp name="ConfigTestElement.username"></stringProp>
-          <stringProp name="ConfigTestElement.password"></stringProp>
-        </TCPSampler>
-        <hashTree/>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: SearchTaskText" enabled="false">
-          <stringProp name="TCPSampler.server"></stringProp>
-          <boolProp name="TCPSampler.reUseConnection">true</boolProp>
-          <stringProp name="TCPSampler.port"></stringProp>
-          <boolProp name="TCPSampler.nodelay">false</boolProp>
-          <stringProp name="TCPSampler.timeout"></stringProp>
-          <stringProp name="TCPSampler.request">${QuerySearchTaskText}</stringProp>
-          <boolProp name="TCPSampler.closeConnection">true</boolProp>
-          <stringProp name="ConfigTestElement.username"></stringProp>
-          <stringProp name="ConfigTestElement.password"></stringProp>
-        </TCPSampler>
-        <hashTree/>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: SearchTaskID" enabled="false">
-          <stringProp name="TCPSampler.server"></stringProp>
-          <boolProp name="TCPSampler.reUseConnection">true</boolProp>
-          <stringProp name="TCPSampler.port"></stringProp>
-          <boolProp name="TCPSampler.nodelay">false</boolProp>
-          <stringProp name="TCPSampler.timeout"></stringProp>
-          <stringProp name="TCPSampler.request">${QuerySearchTaskID}</stringProp>
           <boolProp name="TCPSampler.closeConnection">true</boolProp>
           <stringProp name="ConfigTestElement.username"></stringProp>
           <stringProp name="ConfigTestElement.password"></stringProp>
@@ -1363,30 +1342,6 @@ vars.put(&quot;QueryGetMonitor&quot;, MapToString(MapGetMonitor));</stringProp>
           <stringProp name="ConfigTestElement.password"></stringProp>
         </TCPSampler>
         <hashTree/>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: LogGetStructure" enabled="false">
-          <stringProp name="TCPSampler.server"></stringProp>
-          <boolProp name="TCPSampler.reUseConnection">true</boolProp>
-          <stringProp name="TCPSampler.port"></stringProp>
-          <boolProp name="TCPSampler.nodelay">false</boolProp>
-          <stringProp name="TCPSampler.timeout"></stringProp>
-          <stringProp name="TCPSampler.request">${QueryLogGetStructure}</stringProp>
-          <boolProp name="TCPSampler.closeConnection">true</boolProp>
-          <stringProp name="ConfigTestElement.username"></stringProp>
-          <stringProp name="ConfigTestElement.password"></stringProp>
-        </TCPSampler>
-        <hashTree/>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: LogGetContent" enabled="false">
-          <stringProp name="TCPSampler.server"></stringProp>
-          <boolProp name="TCPSampler.reUseConnection">true</boolProp>
-          <stringProp name="TCPSampler.port"></stringProp>
-          <boolProp name="TCPSampler.nodelay">false</boolProp>
-          <stringProp name="TCPSampler.timeout"></stringProp>
-          <stringProp name="TCPSampler.request">${QueryLogGetContent}</stringProp>
-          <boolProp name="TCPSampler.closeConnection">true</boolProp>
-          <stringProp name="ConfigTestElement.username"></stringProp>
-          <stringProp name="ConfigTestElement.password"></stringProp>
-        </TCPSampler>
-        <hashTree/>
         <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: GetForeignList" enabled="false">
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
@@ -1430,18 +1385,6 @@ vars.put(&quot;QueryGetMonitor&quot;, MapToString(MapGetMonitor));</stringProp>
           <boolProp name="TCPSampler.nodelay">false</boolProp>
           <stringProp name="TCPSampler.timeout"></stringProp>
           <stringProp name="TCPSampler.request">${QueryGetStatement}</stringProp>
-          <boolProp name="TCPSampler.closeConnection">true</boolProp>
-          <stringProp name="ConfigTestElement.username"></stringProp>
-          <stringProp name="ConfigTestElement.password"></stringProp>
-        </TCPSampler>
-        <hashTree/>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: GetMonitor" enabled="false">
-          <stringProp name="TCPSampler.server"></stringProp>
-          <boolProp name="TCPSampler.reUseConnection">true</boolProp>
-          <stringProp name="TCPSampler.port"></stringProp>
-          <boolProp name="TCPSampler.nodelay">false</boolProp>
-          <stringProp name="TCPSampler.timeout"></stringProp>
-          <stringProp name="TCPSampler.request">${QueryGetMonitor}</stringProp>
           <boolProp name="TCPSampler.closeConnection">true</boolProp>
           <stringProp name="ConfigTestElement.username"></stringProp>
           <stringProp name="ConfigTestElement.password"></stringProp>
