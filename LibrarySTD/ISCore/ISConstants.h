@@ -77,6 +77,7 @@ const char API_RECORD_DELETE[] = "RecordDelete"; //Удаление записи в БД
 const char API_FILE_STORAGE_ADD[] = "FileStorageAdd"; //Добавление файла в хранилище
 const char API_FILE_STORAGE_COPY[] = "FileStorageCopy"; //Создание копии файла в хранилище
 const char API_FILE_STORAGE_GET[] = "FileStorageGet"; //Получение файла из хранилища
+const char API_DISCUSSION_ADD[] = "DiscussionAdd"; //Добавление сообщения в обсуждение
 //PROTOCOL---------------------------------------------------------------------
 const char CONST_UID_PROTOCOL_ENTER_APPLICATION[] = "2614cb96-ec54-4d4f-b1a6-06d2444962ca";
 const char CONST_UID_PROTOCOL_GET_UPDATE_CLIENT[] = "0234643a-af60-44bf-a2eb-08a71307841c";

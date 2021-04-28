@@ -254,6 +254,10 @@ static std::string QS_FILE_STORAGE = PREPARE_QUERYN("SELECT sgfs_id, sgfs_data "
     "FROM _storagefiles "
     "WHERE sgfs_id = $1", 1);
 //-----------------------------------------------------------------------------
+static std::string QI_DISCUSSION = PREPARE_QUERYN("INSERT INTO _discussion(dson_user, dson_tablename, dson_objectid, dson_message) "
+    "VALUES($1, $2, $3, $4) "
+    "RETURNING dson_id", 4);
+//-----------------------------------------------------------------------------
 ISTcpWorker::ISTcpWorker()
     : ErrorString(STRING_NO_ERROR),
     IsBusy(false),
@@ -283,6 +287,7 @@ ISTcpWorker::ISTcpWorker()
     MapFunction[API_FILE_STORAGE_ADD] = &ISTcpWorker::FileStorageAdd;
     MapFunction[API_FILE_STORAGE_COPY] = &ISTcpWorker::FileStorageCopy;
     MapFunction[API_FILE_STORAGE_GET] = &ISTcpWorker::FileStorageGet;
+    MapFunction[API_DISCUSSION_ADD] = &ISTcpWorker::DiscussionAdd;
 
     CRITICAL_SECTION_INIT(&CriticalSection);
     CRITICAL_SECTION_INIT(&CSRunning);
@@ -2178,9 +2183,48 @@ bool ISTcpWorker::RecordGetInfo(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::DiscussionAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
-    IS_UNUSED(TcpMessage);
-    IS_UNUSED(TcpAnswer);
-    return false;
+    if (!CheckIsNull(TcpMessage, "TableName") ||
+        !CheckIsNull(TcpMessage, "ObjectID") ||
+        !CheckIsNull(TcpMessage, "Message"))
+    {
+        return false;
+    }
+
+    std::string TableName;
+    if (!GetParameterString(TcpMessage, "TableName", TableName))
+    {
+        return false;
+    }
+
+    unsigned int ObjectID = 0;
+    if (!GetParameterUInt(TcpMessage, "ObjectID", ObjectID))
+    {
+        return false;
+    }
+
+    std::string Message;
+    if (!GetParameterString(TcpMessage, "Message", Message))
+    {
+        return false;
+    }
+
+    ISQuery qInsert(DBConnection, QI_DISCUSSION);
+    qInsert.BindUInt(TcpMessage->TcpClient->UserID);
+    qInsert.BindString(TableName);
+    qInsert.BindUInt(ObjectID);
+    qInsert.BindString(Message);
+    if (!qInsert.Execute()) //Ошибка вставки
+    {
+        return ErrorQuery(LANG("Carat.Error.Query.DiscussionAdd.Insert"), qInsert);
+    }
+
+    if (!qInsert.First()) //Ошибка перехода к возвращаемому значению
+    {
+        ErrorString = qInsert.GetErrorString();
+        return false;
+    }
+    TcpAnswer->Parameters.AddMember("ID", qInsert.ReadColumn_UInt(0), TcpAnswer->Parameters.GetAllocator());
+    return true;
 }
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::DiscussionEdit(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
@@ -2335,6 +2379,10 @@ bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
             {
             case rapidjson::Type::kNumberType:
                 qSelect.BindUInt64(MapItem.value.GetUint64());
+                break;
+
+            case rapidjson::Type::kStringType:
+                qSelect.BindString(MapItem.value.GetString());
                 break;
 
             default:
@@ -2680,20 +2728,6 @@ bool ISTcpWorker::FileStorageGet(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
     return true;
 }
 //-----------------------------------------------------------------------------
-bool ISTcpWorker::SearchTaskText(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
-{
-    IS_UNUSED(TcpMessage);
-    IS_UNUSED(TcpAnswer);
-    return false;
-}
-//-----------------------------------------------------------------------------
-bool ISTcpWorker::SearchTaskID(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
-{
-    IS_UNUSED(TcpMessage);
-    IS_UNUSED(TcpAnswer);
-    return false;
-}
-//-----------------------------------------------------------------------------
 bool ISTcpWorker::SearchFullText(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
     IS_UNUSED(TcpMessage);
@@ -2888,13 +2922,6 @@ bool ISTcpWorker::CalendarClose(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer
 }
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::GetHistoryList(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
-{
-    IS_UNUSED(TcpMessage);
-    IS_UNUSED(TcpAnswer);
-    return false;
-}
-//-----------------------------------------------------------------------------
-bool ISTcpWorker::TaskCommentAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
     IS_UNUSED(TcpMessage);
     IS_UNUSED(TcpAnswer);
