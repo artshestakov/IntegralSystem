@@ -16,6 +16,7 @@ public:
     bool Init(const std::string &configuration_name, bool XSR, bool XSF);
     ISNamespace::FieldType GetType(const std::string &type);
     PMetaTable* GetTable(const std::string &TableName);
+    const std::vector<PMetaTable*>& GetTables() const;
     const ISVectorString& GetVectorXSN() const;
 
 private:

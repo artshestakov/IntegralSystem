@@ -319,6 +319,7 @@ ISTcpWorker::ISTcpWorker()
     MapFunction[API_DISCUSSION_COPY] = &ISTcpWorker::DiscussionCopy;
     MapFunction[API_GET_NOTE_RECORD] = &ISTcpWorker::GetNoteRecord;
     MapFunction[API_SET_NOTE_RECORD] = &ISTcpWorker::SetNoteRecord;
+    MapFunction[API_SEARCH_FULL_TEXT] = &ISTcpWorker::SearchFullText;
 
     CRITICAL_SECTION_INIT(&CriticalSection);
     CRITICAL_SECTION_INIT(&CSRunning);
@@ -2915,9 +2916,76 @@ bool ISTcpWorker::FileStorageGet(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::SearchFullText(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
-    IS_UNUSED(TcpMessage);
-    IS_UNUSED(TcpAnswer);
-    return false;
+    if (!CheckIsNull(TcpMessage, "Value"))
+    {
+        return false;
+    }
+
+    std::string Value;
+    if (!GetParameterString(TcpMessage, "Value", Value))
+    {
+        return false;
+    }
+
+    //Формируем запрос
+    std::string SqlText = "WITH r AS \n(\n";
+    for (PMetaTable *MetaTable : ISMetaData::Instance().GetTables()) //Обходим все таблицы
+    {
+        SqlText += "SELECT " + MetaTable->Alias + "_id AS id, '" + MetaTable->Name + "' AS table_name \n";
+        SqlText += "FROM " + MetaTable->Name + " \n";
+        SqlText += "WHERE lower(concat(";
+        for (PMetaField *MetaField : MetaTable->Fields) //Обходим поля конкретной таблицы
+        {
+            if (MetaField->IsSystem || !MetaField->QueryText.empty()) //Если поле является системным - пропускаем его
+            {
+                continue;
+            }
+            SqlText += MetaTable->Alias + '_' + MetaField->Name + ",";
+        }
+        ISAlgorithm::StringChop(SqlText, 1);
+        SqlText += ")) LIKE '%' || lower($1) || '%'\n";
+        SqlText += "UNION \n";
+    }
+    ISAlgorithm::StringChop(SqlText, 8);
+    SqlText += " \n) \n";
+    SqlText += "SELECT * \n";
+    SqlText += "FROM r \n";
+    SqlText += "ORDER BY table_name, id";
+
+    //Выполняем запрос
+    ISQuery qSelect(DBConnection, SqlText);
+    qSelect.SetShowLongQuery(false);
+    qSelect.BindString(Value);
+    if (!qSelect.Execute())
+    {
+        return ErrorQuery(LANG("Carat.Error.Query.SearchFullText.Select"), qSelect);
+    }
+
+    auto &Allocator = TcpAnswer->Parameters.GetAllocator();
+
+    //Анализируем ответ
+    rapidjson::Value JsonArray(rapidjson::Type::kArrayType);
+    while (qSelect.Next())
+    {
+        unsigned int ID = qSelect.ReadColumn_UInt(0);
+        std::string TableName = qSelect.ReadColumn_String(1);
+
+        //Получаем имя объекта
+        std::string ObjectName;
+        if (!GetObjectName(ISMetaData::Instance().GetTable(TableName), ID, ObjectName))
+        {
+            return false;
+        }
+
+        rapidjson::Value JsonObject(rapidjson::Type::kObjectType);
+        JsonObject.AddMember("ID", ID, Allocator);
+        JsonObject.AddMember("TableName", JSON_STRINGA(TableName.c_str(), Allocator), Allocator);
+        JsonObject.AddMember("ObjectName", JSON_STRINGA(ObjectName.c_str(), Allocator), Allocator);
+        JsonArray.PushBack(JsonObject, Allocator);
+    }
+    TcpAnswer->Parameters.AddMember("Result", JsonArray, Allocator);
+    Protocol(TcpMessage->TcpClient->UserID, CONST_UID_PROTOCOL_SEARCH_FULL_TEXT, std::string(), std::string(), 0, Value);
+    return true;
 }
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::GetCalendarEvents(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)

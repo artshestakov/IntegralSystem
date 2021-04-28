@@ -82,6 +82,7 @@ const char API_DISCUSSION_EDIT[] = "DiscussionEdit"; //Изменение сообщения в обс
 const char API_DISCUSSION_COPY[] = "DiscussionCopy"; //Создание копии сообщения в обсуждении
 const char API_GET_NOTE_RECORD[] = "GetNoteRecord"; //Получить примечание записи
 const char API_SET_NOTE_RECORD[] = "SetNoteRecord"; //Изменить примечание записи
+const char API_SEARCH_FULL_TEXT[] = "SearchFullText"; //Полнотекстовый поиск
 //PROTOCOL---------------------------------------------------------------------
 const char CONST_UID_PROTOCOL_ENTER_APPLICATION[] = "2614cb96-ec54-4d4f-b1a6-06d2444962ca";
 const char CONST_UID_PROTOCOL_GET_UPDATE_CLIENT[] = "0234643a-af60-44bf-a2eb-08a71307841c";
@@ -105,6 +106,7 @@ const char CONST_UID_PROTOCOL_NOTE_RECORD_SHOW[] = "0a6320b0-827b-4043-886a-1d7f
 const char CONST_UID_PROTOCOL_NOTE_RECORD_DELETE[] = "08904df2-3785-4454-b5e5-2d83a9faa231";
 const char CONST_UID_PROTOCOL_NOTE_RECORD_ADD[] = "662105b6-6671-46be-8e1a-e57061c5c268";
 const char CONST_UID_PROTOCOL_NOTE_RECORD_EDIT[] = "c20634af-ef58-4d96-9215-8085c2b8c416";
+const char CONST_UID_PROTOCOL_SEARCH_FULL_TEXT[] = "b0a1ef68-2aa4-4eb2-a5a9-f8e5604f864b";
 //-----------------------------------------------------------------------------
 const char CONST_UID_GROUP_ACCESS_TYPE_SHOW[] = "41743776-d7ce-414f-acf3-71c42a607742"; //Просмотр данных
 const char CONST_UID_GROUP_ACCESS_TYPE_CREATE[] = "1cfa961d-08a2-4aa3-978e-ff23fc88ca08"; //Создание данных

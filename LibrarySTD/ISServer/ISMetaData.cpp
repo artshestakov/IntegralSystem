@@ -149,6 +149,11 @@ PMetaTable* ISMetaData::GetTable(const std::string &TableName)
     return Table;
 }
 //-----------------------------------------------------------------------------
+const std::vector<PMetaTable*>& ISMetaData::GetTables() const
+{
+    return Tables;
+}
+//-----------------------------------------------------------------------------
 const ISVectorString& ISMetaData::GetVectorXSN() const
 {
     return VectorFilesXSN;
