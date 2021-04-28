@@ -285,6 +285,10 @@ static std::string QU_NOTE_RECORD = PREPARE_QUERYN("UPDATE _noteobject SET "
 static std::string QI_NOTE_RECORD = PREPARE_QUERYN("INSERT INTO _noteobject(nobj_note, nobj_tablename, nobj_objectid) "
     "VALUES($1, $2, $3)", 3);
 //-----------------------------------------------------------------------------
+static std::string QS_INTERNAL_LISTS = PREPARE_QUERY("SELECT intd_tablename "
+    "FROM _internaldirectories "
+    "ORDER BY intd_order");
+//-----------------------------------------------------------------------------
 ISTcpWorker::ISTcpWorker()
     : ErrorString(STRING_NO_ERROR),
     IsBusy(false),
@@ -320,6 +324,7 @@ ISTcpWorker::ISTcpWorker()
     MapFunction[API_GET_NOTE_RECORD] = &ISTcpWorker::GetNoteRecord;
     MapFunction[API_SET_NOTE_RECORD] = &ISTcpWorker::SetNoteRecord;
     MapFunction[API_SEARCH_FULL_TEXT] = &ISTcpWorker::SearchFullText;
+    MapFunction[API_GET_INTERNAL_LISTS] = &ISTcpWorker::GetInternalLists;
 
     CRITICAL_SECTION_INIT(&CriticalSection);
     CRITICAL_SECTION_INIT(&CSRunning);
@@ -3005,8 +3010,24 @@ bool ISTcpWorker::CalendarDelete(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
 bool ISTcpWorker::GetInternalLists(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
     IS_UNUSED(TcpMessage);
-    IS_UNUSED(TcpAnswer);
-    return false;
+
+    //Запрашиваем справочники
+    ISQuery qSelect(DBConnection, QS_INTERNAL_LISTS);
+    if (!qSelect.Execute()) //Ошибка запроса
+    {
+        return ErrorQuery(LANG("Carat.Error.Query.GetInternalLists.Select"), qSelect);
+    }
+
+    //Обходим результаты запроса
+    auto &Allocator = TcpAnswer->Parameters.GetAllocator();
+    rapidjson::Value JsonArray(rapidjson::Type::kArrayType);
+    while (qSelect.Next())
+    {
+        const char *Value = qSelect.ReadColumn(0);
+        JsonArray.PushBack(JSON_STRINGA(Value, Allocator), Allocator);
+    }
+    TcpAnswer->Parameters.AddMember("Lists", JsonArray, Allocator);
+    return true;
 }
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::SaveMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)

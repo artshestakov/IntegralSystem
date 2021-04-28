@@ -83,6 +83,7 @@ const char API_DISCUSSION_COPY[] = "DiscussionCopy"; //Создание копии сообщения 
 const char API_GET_NOTE_RECORD[] = "GetNoteRecord"; //Получить примечание записи
 const char API_SET_NOTE_RECORD[] = "SetNoteRecord"; //Изменить примечание записи
 const char API_SEARCH_FULL_TEXT[] = "SearchFullText"; //Полнотекстовый поиск
+const char API_GET_INTERNAL_LISTS[] = "GetInternalLists"; //Получение списка внутренних справочников
 //PROTOCOL---------------------------------------------------------------------
 const char CONST_UID_PROTOCOL_ENTER_APPLICATION[] = "2614cb96-ec54-4d4f-b1a6-06d2444962ca";
 const char CONST_UID_PROTOCOL_GET_UPDATE_CLIENT[] = "0234643a-af60-44bf-a2eb-08a71307841c";
