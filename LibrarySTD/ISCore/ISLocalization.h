@@ -10,7 +10,7 @@ class ISLocalization
 public:
     static ISLocalization& Instance();
 
-    std::string GetErrorString() const;
+    const std::string& GetErrorString() const;
     bool Init(const std::string &FileName);
     const char* GetString(const char *Key);
 

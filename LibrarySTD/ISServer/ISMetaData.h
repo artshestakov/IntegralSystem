@@ -12,7 +12,7 @@ class ISMetaData
 public:
     static ISMetaData& Instance();
 
-    std::string GetErrorString() const;
+    const std::string& GetErrorString() const;
     bool Init(const std::string &configuration_name, bool XSR, bool XSF);
     ISNamespace::FieldType GetType(const std::string &type);
     PMetaTable* GetTable(const std::string &TableName);

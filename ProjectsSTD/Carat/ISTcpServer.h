@@ -13,7 +13,7 @@ class ISTcpServer
 public:
     static ISTcpServer& Instance();
 
-    std::string GetErrorString() const;
+    const std::string& GetErrorString() const;
     
     bool Start();
     void Stop();

@@ -12,7 +12,7 @@ class ISLogger
 public:
     static ISLogger& Instance();
 
-    std::string GetErrorString() const;
+    const std::string& GetErrorString() const;
     bool Initialize();
     void Shutdown();
     void Log(ISNamespace::LogMessageType MessageType, const std::string &Component, const char *Format, ...);

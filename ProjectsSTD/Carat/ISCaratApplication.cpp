@@ -29,7 +29,7 @@ ISCaratApplication::~ISCaratApplication()
     CRITICAL_SECTION_DESTROY(&CriticalSection);
 }
 //-----------------------------------------------------------------------------
-std::string ISCaratApplication::GetErrorString() const
+const std::string& ISCaratApplication::GetErrorString() const
 {
     return ErrorString;
 }

@@ -11,7 +11,7 @@ class ISConfig
 public:
     static ISConfig& Instance();
 
-    std::string GetErrorString() const;
+    const std::string& GetErrorString() const;
     bool IsValid(); //Проверить корректность заполнения конфигурационного файла
     bool Initialize(const std::string &template_name);
     

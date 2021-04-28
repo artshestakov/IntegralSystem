@@ -28,7 +28,7 @@ ISTcpServer& ISTcpServer::Instance()
     return TcpServer;
 }
 //-----------------------------------------------------------------------------
-std::string ISTcpServer::GetErrorString() const
+const std::string& ISTcpServer::GetErrorString() const
 {
     return ErrorString;
 }

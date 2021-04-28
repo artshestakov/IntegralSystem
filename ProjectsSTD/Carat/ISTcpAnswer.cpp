@@ -23,7 +23,7 @@ bool ISTcpAnswer::IsError() const
     return Error;
 }
 //-----------------------------------------------------------------------------
-std::string ISTcpAnswer::GetErrorString() const
+const std::string& ISTcpAnswer::GetErrorString() const
 {
     return ErrorString;
 }

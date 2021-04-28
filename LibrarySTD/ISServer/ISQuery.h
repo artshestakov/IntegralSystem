@@ -16,6 +16,7 @@ public:
     ~ISQuery();
 
     const std::string& GetErrorString() const; //Получить текстовое описание ошибки
+    int GetErrorNumber() const; //Получить код ошибки
     const std::string& GetSqlText() const; //Получить текст запроса
     int GetResultRowCount() const; //Получить размер выборки
     int GetResultColumnCount() const; //Получить кол-во полей в выборке
@@ -65,6 +66,12 @@ private:
 
 private:
     std::string ErrorString; //Тексовое описание ошибки
+    int ErrorNumber; //Код ошибки
+    char *ErrorSeverity; //Серьёзность ошибки
+    char *ErrorPrimary; //Главное описание ошибки
+    char *ErrorDetail; //Детали ошибки
+    char *ErrorHint; //Подсказка по устранению ошибки
+
     bool ShowLongQuery; //Показывать долгие запрос
     std::string SqlText; //Текст запроса
 

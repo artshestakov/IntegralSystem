@@ -19,7 +19,7 @@ ISDatabase& ISDatabase::Instance()
     return Database;
 }
 //-----------------------------------------------------------------------------
-std::string ISDatabase::GetErrorString() const
+const std::string& ISDatabase::GetErrorString() const
 {
     return ErrorString;
 }

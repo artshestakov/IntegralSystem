@@ -11,7 +11,7 @@ class ISDatabase
 public:
     static ISDatabase& Instance();
 
-    std::string GetErrorString() const; //Получить описание последней ошибки
+    const std::string& GetErrorString() const; //Получить описание последней ошибки
 
     PGconn* GetDB(const std::string &ConnectionName); //Получить ссылку на экземпляр БД по имени соединения
     ISConnectOptionDB GetOption(const std::string &ConnectionName); //Получить параметры подключения к БД

@@ -11,7 +11,7 @@ public:
     ISCaratApplication(int argc, char **argv);
     ~ISCaratApplication();
 
-    std::string GetErrorString() const;
+    const std::string& GetErrorString() const;
 
     bool Init();
     int Start();

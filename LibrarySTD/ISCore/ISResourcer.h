@@ -9,7 +9,7 @@ class ISResourcer
 public:
     static ISResourcer& Instance();
 
-    std::string GetErrorString() const; //Получить текстовое описание ошибки
+    const std::string& GetErrorString() const; //Получить текстовое описание ошибки
     bool LoadFile(const std::string &FilePath); //Загрузить файл
     void Free(); //Освободить память и ресурсы
     

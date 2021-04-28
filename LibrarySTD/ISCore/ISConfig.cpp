@@ -41,7 +41,7 @@ ISConfig& ISConfig::Instance()
     return Config;
 }
 //-----------------------------------------------------------------------------
-std::string ISConfig::GetErrorString() const
+const std::string& ISConfig::GetErrorString() const
 {
     return ErrorString;
 }

@@ -25,7 +25,7 @@ ISLogger& ISLogger::Instance()
     return Logger;
 }
 //-----------------------------------------------------------------------------
-std::string ISLogger::GetErrorString() const
+const std::string& ISLogger::GetErrorString() const
 {
     return ErrorString;
 }

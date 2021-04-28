@@ -26,7 +26,7 @@ ISLocalization& ISLocalization::Instance()
     return Localization;
 }
 //-----------------------------------------------------------------------------
-std::string ISLocalization::GetErrorString() const
+const std::string& ISLocalization::GetErrorString() const
 {
     return ErrorString;
 }

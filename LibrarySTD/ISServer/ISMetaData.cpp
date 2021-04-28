@@ -77,7 +77,7 @@ ISMetaData& ISMetaData::Instance()
     return MetaData;
 }
 //-----------------------------------------------------------------------------
-std::string ISMetaData::GetErrorString() const
+const std::string& ISMetaData::GetErrorString() const
 {
     return ErrorString;
 }

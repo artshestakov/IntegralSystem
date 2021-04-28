@@ -12,7 +12,7 @@ public:
     ISTcpMessage();
     ~ISTcpMessage();
 
-    std::string GetErrorString() const;
+    const std::string& GetErrorString() const;
     void SetErrorString(const std::string &error_string);
     bool IsValid() const;
 

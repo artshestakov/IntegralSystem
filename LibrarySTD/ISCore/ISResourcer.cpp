@@ -22,7 +22,7 @@ ISResourcer& ISResourcer::Instance()
     return Resourcer;
 }
 //-----------------------------------------------------------------------------
-std::string ISResourcer::GetErrorString() const
+const std::string& ISResourcer::GetErrorString() const
 {
     return ErrorString;
 }

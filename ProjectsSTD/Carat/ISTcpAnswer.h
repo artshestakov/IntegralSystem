@@ -13,7 +13,7 @@ public:
     ~ISTcpAnswer();
 
     bool IsError() const;
-    std::string GetErrorString() const;
+    const std::string& GetErrorString() const;
     void SetError(const std::string &error_string);
 	ISSocket GetSocketClient() const; //Получить дескриптор клиентского сокета
     std::string ToJson() const;

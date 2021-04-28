@@ -20,7 +20,7 @@ ISTcpMessage::~ISTcpMessage()
 
 }
 //-----------------------------------------------------------------------------
-std::string ISTcpMessage::GetErrorString() const
+const std::string& ISTcpMessage::GetErrorString() const
 {
     return ErrorString;
 }

@@ -6,6 +6,11 @@
 //-----------------------------------------------------------------------------
 ISQuery::ISQuery(PGconn *sql_connection, const std::string &sql_text)
     : ErrorString(STRING_NO_ERROR),
+    ErrorNumber(0),
+    ErrorSeverity(nullptr),
+    ErrorPrimary(nullptr),
+    ErrorDetail(nullptr),
+    ErrorHint(nullptr),
     ShowLongQuery(true),
     SqlText(sql_text),
     ParameterCount(0),
@@ -33,6 +38,11 @@ ISQuery::~ISQuery()
 const std::string& ISQuery::GetErrorString() const
 {
     return ErrorString;
+}
+//-----------------------------------------------------------------------------
+int ISQuery::GetErrorNumber() const
+{
+    return ErrorNumber;
 }
 //-----------------------------------------------------------------------------
 const std::string& ISQuery::GetSqlText() const
@@ -284,8 +294,13 @@ bool ISQuery::Execute()
         break;
     }
 
-    //Получаем текст ошибки и выходим
+    //Получаем информацию об ошибке
     ErrorString = PQerrorMessage(SqlConnection);
+    ErrorNumber = std::atoi(PQresultErrorField(SqlResult, PG_DIAG_SQLSTATE));
+    ErrorSeverity = PQresultErrorField(SqlResult, PG_DIAG_SEVERITY);
+    ErrorPrimary = PQresultErrorField(SqlResult, PG_DIAG_MESSAGE_PRIMARY);
+    ErrorDetail = PQresultErrorField(SqlResult, PG_DIAG_MESSAGE_DETAIL);
+    ErrorHint = PQresultErrorField(SqlResult, PG_DIAG_MESSAGE_HINT);
     return false;
 }
 //-----------------------------------------------------------------------------
