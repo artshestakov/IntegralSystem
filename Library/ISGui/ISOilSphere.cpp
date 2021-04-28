@@ -50,6 +50,7 @@ void ISOilSphere::Object::RegisterMetaTypes() const
     qRegisterMetaType<ISOilSphere::ReturnMySubSystem*>("ISOilSphere::ReturnMySubSystem");
     qRegisterMetaType<ISOilSphere::ReturnObjectForm*>("ISOilSphere::ReturnObjectForm");
     qRegisterMetaType<ISOilSphere::BankListForm*>("ISOilSphere::BankListForm");
+    qRegisterMetaType<ISOilSphere::ComingSubSystem*>("ISOilSphere::ComingSubSystem");
 }
 //-----------------------------------------------------------------------------
 void ISOilSphere::Object::BeforeShowMainWindow() const
@@ -1356,5 +1357,39 @@ void ISOilSphere::BankListForm::Load()
     {
         ISMessageBox::ShowCritical(this, qLoadBanks.GetErrorString());
     }
+}
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+ISOilSphere::ComingSubSystem::ComingSubSystem(QWidget *parent) : ISInterfaceMetaForm(parent)
+{
+    QHBoxLayout *Layout = new QHBoxLayout();
+    GetMainLayout()->addLayout(Layout);
+
+    QGroupBox *GroupBoxLeft = new QGroupBox(LANG("OilSphere.CashCrediting"), this);
+    GroupBoxLeft->setLayout(new QVBoxLayout());
+    Layout->addWidget(GroupBoxLeft);
+
+    EntrollmentListForm = new ISListViewForm("SelectEntrollment", GroupBoxLeft);
+    GroupBoxLeft->layout()->addWidget(EntrollmentListForm);
+
+    QGroupBox *GroupBoxRight = new QGroupBox(LANG("OilSphere.ComingCash"), this);
+    GroupBoxRight->setLayout(new QVBoxLayout());
+    Layout->addWidget(GroupBoxRight);
+
+    ComingListForm = new ISListBaseForm("Coming", GroupBoxRight);
+    connect(ComingListForm, &ISListBaseForm::AddFormFromTab, [=](QWidget *ObjectForm) { ISGui::ShowObjectForm(ObjectForm); });
+    GroupBoxRight->layout()->addWidget(ComingListForm);
+}
+//-----------------------------------------------------------------------------
+ISOilSphere::ComingSubSystem::~ComingSubSystem()
+{
+
+}
+//-----------------------------------------------------------------------------
+void ISOilSphere::ComingSubSystem::LoadData()
+{
+    EntrollmentListForm->LoadData();
+    ComingListForm->LoadData();
 }
 //-----------------------------------------------------------------------------

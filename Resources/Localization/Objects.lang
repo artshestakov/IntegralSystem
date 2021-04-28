@@ -22,6 +22,8 @@
     <Local Name="OilSphere.Users" Russian="Пользователи"/>
     <Local Name="OilSphere.Balance" Russian="Баланс: %1"/>
     <Local Name="OilSphere.Consumption" Russian="Расходы"/>
+    <Local Name="OilSphere.CashCrediting" Russian="Зачисления наличных"/>
+    <Local Name="OilSphere.ComingCash" Russian="Приход д/с"/>
     <Local Name="OilSphere.Return" Russian="Возвраты"/>
     <Local Name="OilSphere.LoadData" Russian="Загрузить данные"/>
     <Local Name="OilSphere.TotalBalance" Russian="Приход: %1 Расход: %2 Баланс: %3"/>

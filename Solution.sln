@@ -123,6 +123,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SQL", "SQL", "{07985F92-BD9
 	ProjectSection(SolutionItems) = preProject
 		Resources\SQL\PGSettings.sql = Resources\SQL\PGSettings.sql
 		Resources\SQL\SelectCounterpartyMoveWagon.sql = Resources\SQL\SelectCounterpartyMoveWagon.sql
+		Resources\SQL\SelectEntrollment.sql = Resources\SQL\SelectEntrollment.sql
 		Resources\SQL\SelectStockAdmissionImplementation.sql = Resources\SQL\SelectStockAdmissionImplementation.sql
 		Resources\SQL\SelectStockAdmissionTrain.sql = Resources\SQL\SelectStockAdmissionTrain.sql
 		Resources\SQL\SelectStockWriteOff.sql = Resources\SQL\SelectStockWriteOff.sql
@@ -208,7 +209,7 @@ Global
 		{F8C6162A-4F9D-4C1D-8C6A-3B043AC2FB3A} = {04D21698-EEDE-414A-9D4F-62C37E85A4A5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		Qt5Version = 58_msvc2015
 		SolutionGuid = {FE207297-F8FD-441B-A6FE-4D476762D8CA}
+		Qt5Version = 58_msvc2015
 	EndGlobalSection
 EndGlobal

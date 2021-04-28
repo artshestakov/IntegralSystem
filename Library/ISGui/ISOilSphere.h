@@ -473,6 +473,21 @@ namespace ISOilSphere
     private:
         void Load();
     };
+
+    class ComingSubSystem : public ISInterfaceMetaForm
+    {
+        Q_OBJECT
+
+    public:
+        Q_INVOKABLE ComingSubSystem(QWidget *parent = 0);
+        virtual ~ComingSubSystem();
+
+        void LoadData() override;
+
+    private:
+        ISListViewForm *EntrollmentListForm;
+        ISListBaseForm *ComingListForm;
+    };
 }
 //-----------------------------------------------------------------------------
 #endif
