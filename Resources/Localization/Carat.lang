@@ -107,12 +107,14 @@
     <Local Name="Carat.Error.Query.RecordAdd.ValuesIsNotObject" Russian="Список значений не является объектом."/>
     <Local Name="Carat.Error.Query.RecordAdd.EmptyValues" Russian="Список значений пустой."/>
     <Local Name="Carat.Error.Query.RecordAdd.FieldNotFound" Russian="Поле &quot;%s&quot; не существует."/>
+	<Local Name="Carat.Error.Query.RecordAdd.TypeNotSupport" Russian="Тип &quot;%d&quot; не поддерживается."/>
     <Local Name="Carat.Error.Query.RecordAdd.Insert" Russian="Не удалось добавить запись в базу данных."/>
     <Local Name="Carat.Error.Query.RecordAdd.First" Russian="Запись была добавлена, но сервер не вернул идентификатор и имя."/>
 
     <Local Name="Carat.Error.Query.RecordEdit.ValuesNotExist" Russian="Список значений не указан."/>
     <Local Name="Carat.Error.Query.RecordEdit.EmptyValues" Russian="Список значений пустой."/>
     <Local Name="Carat.Error.Query.RecordEdit.FieldNotFound" Russian="Поле &quot;%1&quot; не существует."/>
+	<Local Name="Carat.Error.Query.RecordEdit.TypeNotSupport" Russian="Тип &quot;%d&quot; не поддерживается."/>
     <Local Name="Carat.Error.Query.RecordEdit.Update" Russian="Не удалось изменить запись."/>
 
     <Local Name="Carat.Error.Query.RecordDelete.NotSpecifiedID" Russian="Вы не указали список идентификаторов записей."/>

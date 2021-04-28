@@ -1760,6 +1760,14 @@ bool ISTcpWorker::RecordAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
         case rapidjson::Type::kFalseType:
             qInsert.BindBool(MapItem.value.GetBool());
             break;
+
+        case rapidjson::Type::kArrayType:
+        case rapidjson::Type::kNullType:
+        case rapidjson::Type::kNumberType:
+        case rapidjson::Type::kObjectType:
+            ErrorString = ISAlgorithm::StringF(LANG("Carat.Error.Query.RecordAdd.TypeNotSupport"), MapItem.value.GetType());
+            return false;
+            break;
         }
     }
 
@@ -1871,6 +1879,14 @@ bool ISTcpWorker::RecordEdit(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
         case rapidjson::Type::kTrueType:
         case rapidjson::Type::kFalseType:
             qUpdate.BindBool(MapItem.value.GetBool());
+            break;
+
+        case rapidjson::Type::kArrayType:
+        case rapidjson::Type::kNullType:
+        case rapidjson::Type::kNumberType:
+        case rapidjson::Type::kObjectType:
+            ErrorString = ISAlgorithm::StringF(LANG("Carat.Error.Query.RecordEdit.TypeNotSupport"), MapItem.value.GetType());
+            return false;
             break;
         }
     }
