@@ -262,6 +262,12 @@ static std::string QU_DISCUSSION = PREPARE_QUERYN("UPDATE _discussion SET "
     "dson_message = $1 "
     "WHERE dson_id = $2", 2);
 //-----------------------------------------------------------------------------
+static std::string QI_DISCUSSION_COPY = PREPARE_QUERYN("INSERT INTO _discussion(dson_user, dson_tablename, dson_objectid, dson_message) "
+    "SELECT dson_user, dson_tablename, dson_objectid, dson_message "
+    "FROM _discussion "
+    "WHERE dson_id = $1 "
+    "RETURNING dson_id", 1);
+//-----------------------------------------------------------------------------
 ISTcpWorker::ISTcpWorker()
     : ErrorString(STRING_NO_ERROR),
     IsBusy(false),
@@ -293,6 +299,7 @@ ISTcpWorker::ISTcpWorker()
     MapFunction[API_FILE_STORAGE_GET] = &ISTcpWorker::FileStorageGet;
     MapFunction[API_DISCUSSION_ADD] = &ISTcpWorker::DiscussionAdd;
     MapFunction[API_DISCUSSION_EDIT] = &ISTcpWorker::DiscussionEdit;
+    MapFunction[API_DISCUSSION_COPY] = &ISTcpWorker::DiscussionCopy;
 
     CRITICAL_SECTION_INIT(&CriticalSection);
     CRITICAL_SECTION_INIT(&CSRunning);
@@ -2265,9 +2272,31 @@ bool ISTcpWorker::DiscussionEdit(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::DiscussionCopy(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
-    IS_UNUSED(TcpMessage);
-    IS_UNUSED(TcpAnswer);
-    return false;
+    if (!CheckIsNull(TcpMessage, "ID"))
+    {
+        return false;
+    }
+
+    unsigned int ID = 0;
+    if (!GetParameterUInt(TcpMessage, "ID", ID))
+    {
+        return false;
+    }
+
+    ISQuery qCopy(DBConnection, QI_DISCUSSION_COPY);
+    qCopy.BindUInt(ID);
+    if (!qCopy.Execute()) //Не удалось создать копию
+    {
+        return ErrorQuery(LANG("Carat.Error.Query.DiscussionCopy.Insert"), qCopy);
+    }
+
+    if (!qCopy.First()) //Ошибка перехода к возвращаемому значению
+    {
+        ErrorString = qCopy.GetErrorString();
+        return false;
+    }
+    TcpAnswer->Parameters.AddMember("ID", qCopy.ReadColumn_UInt(0), TcpAnswer->Parameters.GetAllocator());
+    return true;
 }
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
