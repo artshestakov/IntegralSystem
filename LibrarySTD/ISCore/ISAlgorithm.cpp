@@ -1,6 +1,5 @@
 #include "ISAlgorithm.h"
 #include "ISConstants.h"
-#include "ISAssert.h"
 //-----------------------------------------------------------------------------
 char* ISAlgorithm::itoa(int64_t Value, char *Result, int Radix)
 {
@@ -928,6 +927,7 @@ unsigned char* ISAlgorithm::Base64Decode(char *Data, size_t Size, unsigned long 
         return nullptr;
     }
 
+    unsigned char *Result = nullptr;
 #ifdef WIN32
     DWORD Skip = 0, Flags = 0;
     if (CryptStringToBinary(Data, (DWORD)Size, CRYPT_STRING_BASE64, NULL, &ResultSize, &Skip, &Flags) == FALSE)
@@ -937,7 +937,7 @@ unsigned char* ISAlgorithm::Base64Decode(char *Data, size_t Size, unsigned long 
     }
 
     //Выделяем память для результата декодирования
-    unsigned char *Result = (unsigned char *)malloc(sizeof(unsigned char) * ResultSize + 1);
+    Result = (unsigned char *)malloc(sizeof(unsigned char) * ResultSize + 1);
     if (!Result)
     {
         ErrorString = GetLastErrorS();
@@ -952,10 +952,20 @@ unsigned char* ISAlgorithm::Base64Decode(char *Data, size_t Size, unsigned long 
     }
     Result[ResultSize] = CHAR_NULL_TERM;
 #else
-    IS_UNUSED(Data);
-    IS_UNUSED(Size);
-    IS_UNUSED(ErrorString);
-    IS_ASSERT(false, "not support");
+    BIO *BIO = BIO_new_mem_buf(Data, -1),
+        *B64 = BIO_new(BIO_f_base64());
+
+    //Выделяем память для результата декодирования
+    Result = (unsigned char *)malloc(sizeof(unsigned char) * Size + 1);
+    if (!Result)
+    {
+        ErrorString = GetLastErrorS();
+        return nullptr;
+    }
+    BIO = BIO_push(B64, BIO);
+    BIO_set_flags(BIO, BIO_FLAGS_BASE64_NO_NL); //Do not use newlines to flush buffer
+    ResultSize = BIO_read(BIO, Result, Size);
+    BIO_free_all(BIO);
 #endif
     return Result;
 }
