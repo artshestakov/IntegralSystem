@@ -17,7 +17,10 @@ public:
 
     const std::string& GetErrorString() const; //Получить текстовое описание ошибки
     int GetErrorNumber() const; //Получить код ошибки
+    
     const std::string& GetSqlText() const; //Получить текст запроса
+    void SetSqlQuery(const std::string &sql_text); //Изменить текст запроса
+    
     int GetResultRowCount() const; //Получить размер выборки
     int GetResultColumnCount() const; //Получить кол-во полей в выборке
     Oid GetResultColumnType(size_t Index) const; //Получить тип поля в результирующей выборке

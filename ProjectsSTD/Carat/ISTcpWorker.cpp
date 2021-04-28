@@ -289,6 +289,17 @@ static std::string QS_INTERNAL_LISTS = PREPARE_QUERY("SELECT intd_tablename "
     "FROM _internaldirectories "
     "ORDER BY intd_order");
 //-----------------------------------------------------------------------------
+static std::string QS_FAVORITE_NAMES_TABLE = PREPARE_QUERYN("SELECT fvts_tablename, fvts_objectid "
+    "FROM _favorites "
+    "WHERE fvts_tablename = $1 "
+    "AND fvts_user = $2 "
+    "ORDER BY fvts_tablename", 2);
+//-----------------------------------------------------------------------------
+static std::string QS_FAVORITE_NAMES_ALL = PREPARE_QUERYN("SELECT fvts_tablename, fvts_objectid "
+    "FROM _favorites "
+    "WHERE fvts_user = $1 "
+    "ORDER BY fvts_tablename", 1);
+//-----------------------------------------------------------------------------
 ISTcpWorker::ISTcpWorker()
     : ErrorString(STRING_NO_ERROR),
     IsBusy(false),
@@ -325,6 +336,7 @@ ISTcpWorker::ISTcpWorker()
     MapFunction[API_SET_NOTE_RECORD] = &ISTcpWorker::SetNoteRecord;
     MapFunction[API_SEARCH_FULL_TEXT] = &ISTcpWorker::SearchFullText;
     MapFunction[API_GET_INTERNAL_LISTS] = &ISTcpWorker::GetInternalLists;
+    MapFunction[API_GET_FAVORITE_NAMES] = &ISTcpWorker::GetFavoriteNames;
 
     CRITICAL_SECTION_INIT(&CriticalSection);
     CRITICAL_SECTION_INIT(&CSRunning);
@@ -3176,9 +3188,64 @@ bool ISTcpWorker::RecordFavoriteDelete(ISTcpMessage *TcpMessage, ISTcpAnswer *Tc
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::GetFavoriteNames(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
-    IS_UNUSED(TcpMessage);
-    IS_UNUSED(TcpAnswer);
-    return false;
+    //Запрашиваем избранные записи
+    ISQuery qSelectObjects(DBConnection);
+    if (TcpMessage->Parameters.HasMember("TableName")) //Если таблица указана - удаляем записи по указанной таблице
+    {
+        //Проверяем наличие такой таблицы в мета-данных
+        std::string TableName = TcpMessage->Parameters["TableName"].GetString();
+        if (!GetMetaTable(TableName))
+        {
+            return false;
+        }
+        qSelectObjects.SetSqlQuery(QS_FAVORITE_NAMES_TABLE);
+        qSelectObjects.BindString(TableName);
+    }
+    else //Таблица не указана - удаляем все записи
+    {
+        qSelectObjects.SetSqlQuery(QS_FAVORITE_NAMES_ALL);
+    }
+    qSelectObjects.BindUInt(TcpMessage->TcpClient->UserID);
+    if (!qSelectObjects.Execute()) //Ошибка запроса
+    {
+        return ErrorQuery(LANG("Carat.Error.Query.GetFavoriteNames.Select"), qSelectObjects);
+    }
+
+    PMetaTable *MetaTable = nullptr;
+    std::string ObjectName;
+
+    //Обходим
+    auto &Allocator = TcpAnswer->Parameters.GetAllocator();
+    rapidjson::Value JsonArray(rapidjson::Type::kArrayType);
+    while (qSelectObjects.Next())
+    {
+        std::string TableName = qSelectObjects.ReadColumn_String(0);
+        if (!MetaTable || MetaTable->Name != TableName) //Если мета-таблица ещё не получена или её имя сменилось - получаем её
+        {
+            MetaTable = GetMetaTable(TableName);
+            if (!MetaTable) //Не удалось получить мета-таблицу - выходим с ошибкой
+            {
+                return false;
+            }
+        }
+
+        //Получаем имя записи
+        unsigned int ObjectID = qSelectObjects.ReadColumn_UInt(1);
+        if (!GetObjectName(MetaTable, ObjectID, ObjectName))
+        {
+            return false;
+        }
+
+        //Добавляем в результирующий список
+        rapidjson::Value JsonObject(rapidjson::Type::kObjectType);
+        JsonObject.AddMember("TableName", JSON_STRINGA(TableName.c_str(), Allocator), Allocator);
+        JsonObject.AddMember("TableLocalName", JSON_STRINGA(MetaTable->LocalListName.c_str(), Allocator), Allocator);
+        JsonObject.AddMember("ObjectID", ObjectID, Allocator);
+        JsonObject.AddMember("ObjectName", JSON_STRINGA(ObjectName.c_str(), Allocator), Allocator);
+        JsonArray.PushBack(JsonObject, Allocator);
+    }
+    TcpAnswer->Parameters.AddMember("Names", JsonArray, Allocator);
+    return true;
 }
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::FavoritesDelete(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)

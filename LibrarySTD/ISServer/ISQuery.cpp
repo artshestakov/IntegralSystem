@@ -50,6 +50,11 @@ const std::string& ISQuery::GetSqlText() const
     return SqlText;
 }
 //-----------------------------------------------------------------------------
+void ISQuery::SetSqlQuery(const std::string &sql_text)
+{
+    SqlText = sql_text;
+}
+//-----------------------------------------------------------------------------
 int ISQuery::GetResultRowCount() const
 {
     return CountRows;
