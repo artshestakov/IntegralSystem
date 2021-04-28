@@ -268,6 +268,11 @@ static std::string QI_DISCUSSION_COPY = PREPARE_QUERYN("INSERT INTO _discussion(
     "WHERE dson_id = $1 "
     "RETURNING dson_id", 1);
 //-----------------------------------------------------------------------------
+static std::string QS_NOTE_RECORD = PREPARE_QUERYN("SELECT nobj_note "
+    "FROM _noteobject "
+    "WHERE nobj_tablename = $1 "
+    "AND nobj_objectid = $2", 2);
+//-----------------------------------------------------------------------------
 ISTcpWorker::ISTcpWorker()
     : ErrorString(STRING_NO_ERROR),
     IsBusy(false),
@@ -300,6 +305,7 @@ ISTcpWorker::ISTcpWorker()
     MapFunction[API_DISCUSSION_ADD] = &ISTcpWorker::DiscussionAdd;
     MapFunction[API_DISCUSSION_EDIT] = &ISTcpWorker::DiscussionEdit;
     MapFunction[API_DISCUSSION_COPY] = &ISTcpWorker::DiscussionCopy;
+    MapFunction[API_GET_NOTE_RECORD] = &ISTcpWorker::GetNoteRecord;
 
     CRITICAL_SECTION_INIT(&CriticalSection);
     CRITICAL_SECTION_INIT(&CSRunning);
@@ -2612,11 +2618,50 @@ bool ISTcpWorker::GetTableQuery(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer
     return false;
 }
 //-----------------------------------------------------------------------------
-bool ISTcpWorker::NoteRecordGet(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+bool ISTcpWorker::GetNoteRecord(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
-    IS_UNUSED(TcpMessage);
-    IS_UNUSED(TcpAnswer);
-    return false;
+    if (!CheckIsNull(TcpMessage, "TableName") || !CheckIsNull(TcpMessage, "ObjectID"))
+    {
+        return false;
+    }
+
+    std::string TableName;
+    if (!GetParameterString(TcpMessage, "TableName", TableName))
+    {
+        return false;
+    }
+
+    unsigned int ObjectID = 0;
+    if (!GetParameterUInt(TcpMessage, "ObjectID", ObjectID))
+    {
+        return false;
+    }
+
+    //Получаем мета-таблицу
+    PMetaTable *MetaTable = GetMetaTable(TableName);
+    if (!MetaTable)
+    {
+        return false;
+    }
+
+    //Получаем примечание
+    ISQuery qSelect(DBConnection, QS_NOTE_RECORD);
+    qSelect.BindString(MetaTable->Name);
+    qSelect.BindUInt(ObjectID);
+    if (!qSelect.Execute()) //Ошибка запроса
+    {
+        return ErrorQuery(LANG("Carat.Error.Query.GetNoteRecord.Select"), qSelect);
+    }
+
+    std::string Note;
+    if (qSelect.First()) //Если запись есть - вытаскиваем её
+    {
+        Note = qSelect.ReadColumn_String(0);
+    }
+    auto &Allocator = TcpAnswer->Parameters.GetAllocator();
+    TcpAnswer->Parameters.AddMember("Note", JSON_STRINGA(Note.c_str(), Allocator), Allocator);
+    Protocol(TcpMessage->TcpClient->UserID, CONST_UID_PROTOCOL_NOTE_RECORD_SHOW, MetaTable->Name, MetaTable->LocalListName, ObjectID);
+    return true;
 }
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::NoteRecordSet(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
