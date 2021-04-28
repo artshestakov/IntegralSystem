@@ -258,6 +258,10 @@ static std::string QI_DISCUSSION = PREPARE_QUERYN("INSERT INTO _discussion(dson_
     "VALUES($1, $2, $3, $4) "
     "RETURNING dson_id", 4);
 //-----------------------------------------------------------------------------
+static std::string QU_DISCUSSION = PREPARE_QUERYN("UPDATE _discussion SET "
+    "dson_message = $1 "
+    "WHERE dson_id = $2", 2);
+//-----------------------------------------------------------------------------
 ISTcpWorker::ISTcpWorker()
     : ErrorString(STRING_NO_ERROR),
     IsBusy(false),
@@ -288,6 +292,7 @@ ISTcpWorker::ISTcpWorker()
     MapFunction[API_FILE_STORAGE_COPY] = &ISTcpWorker::FileStorageCopy;
     MapFunction[API_FILE_STORAGE_GET] = &ISTcpWorker::FileStorageGet;
     MapFunction[API_DISCUSSION_ADD] = &ISTcpWorker::DiscussionAdd;
+    MapFunction[API_DISCUSSION_EDIT] = &ISTcpWorker::DiscussionEdit;
 
     CRITICAL_SECTION_INIT(&CriticalSection);
     CRITICAL_SECTION_INIT(&CSRunning);
@@ -2229,9 +2234,33 @@ bool ISTcpWorker::DiscussionAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::DiscussionEdit(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
-    IS_UNUSED(TcpMessage);
     IS_UNUSED(TcpAnswer);
-    return false;
+
+    if (!CheckIsNull(TcpMessage, "ID") || !CheckIsNull(TcpMessage, "Message"))
+    {
+        return false;
+    }
+
+    std::string Message;
+    if (!GetParameterString(TcpMessage, "Message", Message))
+    {
+        return false;
+    }
+
+    unsigned int ID = 0;
+    if (!GetParameterUInt(TcpMessage, "ID", ID))
+    {
+        return false;
+    }
+
+    ISQuery qUpdate(DBConnection, QU_DISCUSSION);
+    qUpdate.BindString(Message);
+    qUpdate.BindUInt(ID);
+    if (!qUpdate.Execute()) //Не удалось обновить запись
+    {
+        return ErrorQuery(LANG("Carat.Error.Query.DiscussionEdit.Update"), qUpdate);
+    }
+    return true;
 }
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::DiscussionCopy(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
