@@ -60,7 +60,7 @@ private:
     bool GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
     bool GetTableQuery(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
     bool GetNoteRecord(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
-    bool NoteRecordSet(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
+    bool SetNoteRecord(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
     bool FileStorageAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
     bool FileStorageCopy(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
     bool FileStorageGet(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);

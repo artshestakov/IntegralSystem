@@ -273,6 +273,18 @@ static std::string QS_NOTE_RECORD = PREPARE_QUERYN("SELECT nobj_note "
     "WHERE nobj_tablename = $1 "
     "AND nobj_objectid = $2", 2);
 //-----------------------------------------------------------------------------
+static std::string QD_NOTE_RECORD = PREPARE_QUERYN("DELETE FROM _noteobject "
+    "WHERE nobj_tablename = $1 "
+    "AND nobj_objectid = $2", 2);
+//-----------------------------------------------------------------------------
+static std::string QU_NOTE_RECORD = PREPARE_QUERYN("UPDATE _noteobject SET "
+    "nobj_note = $1 "
+    "WHERE nobj_tablename = $2 "
+    "AND nobj_objectid = $3", 3);
+//-----------------------------------------------------------------------------
+static std::string QI_NOTE_RECORD = PREPARE_QUERYN("INSERT INTO _noteobject(nobj_note, nobj_tablename, nobj_objectid) "
+    "VALUES($1, $2, $3)", 3);
+//-----------------------------------------------------------------------------
 ISTcpWorker::ISTcpWorker()
     : ErrorString(STRING_NO_ERROR),
     IsBusy(false),
@@ -306,6 +318,7 @@ ISTcpWorker::ISTcpWorker()
     MapFunction[API_DISCUSSION_EDIT] = &ISTcpWorker::DiscussionEdit;
     MapFunction[API_DISCUSSION_COPY] = &ISTcpWorker::DiscussionCopy;
     MapFunction[API_GET_NOTE_RECORD] = &ISTcpWorker::GetNoteRecord;
+    MapFunction[API_SET_NOTE_RECORD] = &ISTcpWorker::SetNoteRecord;
 
     CRITICAL_SECTION_INIT(&CriticalSection);
     CRITICAL_SECTION_INIT(&CSRunning);
@@ -2664,11 +2677,80 @@ bool ISTcpWorker::GetNoteRecord(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer
     return true;
 }
 //-----------------------------------------------------------------------------
-bool ISTcpWorker::NoteRecordSet(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+bool ISTcpWorker::SetNoteRecord(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
-    IS_UNUSED(TcpMessage);
     IS_UNUSED(TcpAnswer);
-    return false;
+
+    if (!CheckIsNull(TcpMessage, "TableName") || !CheckIsNull(TcpMessage, "ObjectID"))
+    {
+        return false;
+    }
+
+    std::string TableName;
+    if (!GetParameterString(TcpMessage, "TableName", TableName))
+    {
+        return false;
+    }
+
+    unsigned int ObjectID = 0;
+    if (!GetParameterUInt(TcpMessage, "ObjectID", ObjectID))
+    {
+        return false;
+    }
+
+    //Получаем мета-таблицу
+    PMetaTable *MetaTable = GetMetaTable(TableName);
+    if (!MetaTable)
+    {
+        return false;
+    }
+
+    //Проверяем наличие записи
+    std::string NoteDB, Note = TcpMessage->Parameters["Note"].GetString();
+    ISQuery qSelect(DBConnection, QS_NOTE_RECORD);
+    qSelect.BindString(MetaTable->Name);
+    qSelect.BindUInt(ObjectID);
+    bool Exist = qSelect.ExecuteFirst();
+    if (Exist)
+    {
+        NoteDB = qSelect.ReadColumn_String(0);
+    }
+
+    //Если примечание такое же как и в БД - ничего не делаем
+    if (Note == NoteDB)
+    {
+        return true;
+    }
+
+    //Примечания отличаются - проверяем что делать дальше
+    //Если примечание в БД есть, а новое пустое - удаляем
+    if (Exist && Note.empty())
+    {
+        ISQuery qDelete(DBConnection, QD_NOTE_RECORD);
+        qDelete.BindString(MetaTable->Name);
+        qDelete.BindUInt(ObjectID);
+        if (!qDelete.Execute())
+        {
+            return ErrorQuery(LANG("Carat.Error.Query.SetNoteRecord.Delete"), qDelete);
+        }
+        Protocol(TcpMessage->TcpClient->UserID, CONST_UID_PROTOCOL_NOTE_RECORD_DELETE, MetaTable->Name, MetaTable->LocalListName, ObjectID);
+    }
+    else //Добавляем/обновляем
+    {
+        ISQuery qUpsert(DBConnection, Exist ? QU_NOTE_RECORD : QI_NOTE_RECORD);
+        qUpsert.BindString(Note);
+        qUpsert.BindString(MetaTable->Name);
+        qUpsert.BindUInt(ObjectID);
+        if (!qUpsert.Execute()) //Ошибка запроса
+        {
+            return ErrorQuery(Exist ?
+                LANG("Carat.Error.Query.SetNoteRecord.Update") :
+                LANG("Carat.Error.Query.SetNoteRecord.Insert"), qUpsert);
+        }
+        Protocol(TcpMessage->TcpClient->UserID, Exist ? CONST_UID_PROTOCOL_NOTE_RECORD_EDIT : CONST_UID_PROTOCOL_NOTE_RECORD_ADD,
+            MetaTable->Name, MetaTable->LocalListName, ObjectID, Note);
+    }
+    return true;
 }
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::FileStorageAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
