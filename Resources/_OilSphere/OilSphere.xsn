@@ -33,10 +33,12 @@
             <Field UID="{EBEF5EA5-0AEC-4A47-A3B4-C094D6CE4247}" Name="Date" Type="Date" LabelName="Дата операции" LocalListName="Дата операции" NotNull="true"/>
             <Field UID="{E72F8D34-7317-484D-BD2F-01AF4889D8FB}" Name="Sum" Type="Money" LabelName="Сумма зачисления" LocalListName="Сумма зачисления" NotNull="true"/>
             <Field UID="{D78A509E-9B94-4C7A-8881-6B0EB99560F2}" Name="PaymentType" Type="BigInt" LabelName="Тип оплаты" LocalListName="Тип оплаты"/>
+            <Field UID="{27A52953-04BB-47EF-AD8E-8951AF72DE9E}" Name="SendToComing" Type="Bool" DefaultValue="false" LabelName="Отправить в приход" LocalListName="Отправить в приход"/>
             <Field UID="{787F2C5F-1840-4108-A5C5-EAB4AAEBE89E}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
         </Fields>
         <Indexes>
             <Index Field="Counterparty"/>
+            <Index Field="SendToComing"/>
         </Indexes>
         <Foreigns>
             <Foreign Field="Counterparty" ForeignClass="Counterparty" ForeignField="ID" ForeignViewNameField="Name"/>
