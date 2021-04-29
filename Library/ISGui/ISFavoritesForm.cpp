@@ -25,7 +25,7 @@ ISFavoritesForm::ISFavoritesForm(QWidget *parent, const QString &table_name)
     QAction *ActionOpen = ToolBar->addAction(BUFFER_ICONS("Select"), LANG("ISFavoritesForm.Open"), this, &ISFavoritesForm::Open);
     ActionOpen->setEnabled(false);
 
-    QAction *ActionClearFavorites = ToolBar->addAction(BUFFER_ICONS("Clear"), LANG("ISFavoritesForm.Clear"), this, &ISFavoritesForm::Clear);
+    ActionClearFavorites = ToolBar->addAction(BUFFER_ICONS("Clear"), LANG("ISFavoritesForm.Clear"), this, &ISFavoritesForm::Clear);
 
     ListWidget = new ISListWidget(this);
     ListWidget->AddAction(ActionOpen, true);
@@ -98,6 +98,7 @@ void ISFavoritesForm::Clear()
             ISFavorites::Instance().DeleteAll();
             ListWidget->Clear();
             LabelRowCount->setText(LANG("ISFavoritesForm.RecordCount").arg(0));
+            ActionClearFavorites->setEnabled(false);
         }
         else
         {

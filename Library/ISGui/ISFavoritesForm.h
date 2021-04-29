@@ -22,7 +22,8 @@ private:
 
 private:
     QString TableName;
-    QLabel *LabelRowCount;
+    QAction *ActionClearFavorites;
     ISListWidget *ListWidget;
+    QLabel *LabelRowCount;
 };
 //-----------------------------------------------------------------------------

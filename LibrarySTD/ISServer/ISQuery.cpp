@@ -266,7 +266,7 @@ bool ISQuery::Execute()
 
     if (!SqlResult) //Не удалось отправить запрос
     {
-        ErrorString = "Out of memory for exec";
+        ErrorString = "Out of memory for PGresult";
         return false;
     }
 

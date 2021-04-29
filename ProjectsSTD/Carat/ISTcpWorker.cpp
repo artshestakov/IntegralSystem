@@ -303,7 +303,12 @@ static std::string QS_FAVORITE_NAMES_ALL = PREPARE_QUERYN("SELECT fvts_tablename
 static std::string QI_FAVORITE = PREPARE_QUERYN("INSERT INTO _favorites(fvts_user, fvts_tablename, fvts_objectid) "
     "VALUES($1, $2, $3)", 3);
 //-----------------------------------------------------------------------------
-
+static std::string QD_FAVORITES_TABLE = PREPARE_QUERYN("DELETE FROM _favorites "
+    "WHERE fvts_tablename = $1 "
+    "AND fvts_user = $2", 2);
+//-----------------------------------------------------------------------------
+static std::string QD_FAVORITES_ALL = PREPARE_QUERYN("DELETE FROM _favorites "
+    "WHERE fvts_user = $1", 1);
 //-----------------------------------------------------------------------------
 ISTcpWorker::ISTcpWorker()
     : ErrorString(STRING_NO_ERROR),
@@ -344,6 +349,7 @@ ISTcpWorker::ISTcpWorker()
     MapFunction[API_GET_FAVORITE_NAMES] = &ISTcpWorker::GetFavoriteNames;
     MapFunction[API_RECORD_FAVORITE_ADD] = &ISTcpWorker::RecordFavoriteAdd;
     MapFunction[API_RECORD_FAVORITE_DELETE] = &ISTcpWorker::RecordFavoriteDelete;
+    MapFunction[API_FAVORITES_DELETE] = &ISTcpWorker::FavoritesDelete;
 
     CRITICAL_SECTION_INIT(&CriticalSection);
     CRITICAL_SECTION_INIT(&CSRunning);
@@ -3365,9 +3371,31 @@ bool ISTcpWorker::GetFavoriteNames(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAns
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::FavoritesDelete(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
-    IS_UNUSED(TcpMessage);
     IS_UNUSED(TcpAnswer);
-    return false;
+
+    //Удаляем избранные записи
+    ISQuery qDelete(DBConnection);
+    if (TcpMessage->Parameters.HasMember("TableName")) //Если таблица указана - удаляем записи по указанной таблице
+    {
+        //Проверяем наличие такой таблицы в мета-данных
+        std::string TableName = TcpMessage->Parameters["TableName"].GetString();
+        if (!GetMetaTable(TableName))
+        {
+            return false;
+        }
+        qDelete.SetSqlQuery(QD_FAVORITES_TABLE);
+        qDelete.BindString(TableName);
+    }
+    else //Таблица не указана - удаляем все записи
+    {
+        qDelete.SetSqlQuery(QD_FAVORITES_ALL);
+    }
+    qDelete.BindUInt(TcpMessage->TcpClient->UserID);
+    if (!qDelete.Execute()) //Ошибка запроса
+    {
+        return ErrorQuery(LANG("Carat.Error.Query.FavoritesDelete.Delete"), qDelete);
+    }
+    return true;
 }
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::CalendarClose(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
