@@ -236,8 +236,8 @@
     <Local Name="Carat.Error.Query.TaskCommentAdd.CommentIsEmpty" Russian="Комментарий не может быть пустым."/>
     <Local Name="Carat.Error.Query.TaskCommentAdd.Insert" Russian="Не удалось добавить комментарий к задаче."/>
 
-    <Local Name="Carat.Error.Query.GetForeignList.FieldNotExist" Russian="Поле &quot;%1&quot; не существует в таблице &quot;%2&quot;."/>
-    <Local Name="Carat.Error.Query.GetForeignList.FieldNotForeign" Russian="Поле &quot;%1&quot; не имеет внешнего ключа."/>
+    <Local Name="Carat.Error.Query.GetForeignList.FieldNotExist" Russian="Поле &quot;%s&quot; не существует в таблице &quot;%s&quot;."/>
+    <Local Name="Carat.Error.Query.GetForeignList.FieldNotForeign" Russian="Поле &quot;%s&quot; не имеет внешнего ключа."/>
     <Local Name="Carat.Error.Query.GetForeignList.Select" Russian="Не удалось получить данные справочника."/>
 
     <Local Name="Carat.Error.Query.GetServerInfo.SelectInfo" Russian="Не удалось получить информацию о базе данных."/>

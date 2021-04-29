@@ -357,6 +357,7 @@ ISTcpWorker::ISTcpWorker()
     MapFunction[API_RECORD_FAVORITE_DELETE] = &ISTcpWorker::RecordFavoriteDelete;
     MapFunction[API_FAVORITES_DELETE] = &ISTcpWorker::FavoritesDelete;
     MapFunction[API_GET_HISTORY_LIST] = &ISTcpWorker::GetHistoryList;
+    MapFunction[API_GET_FOREIGN_LIST] = &ISTcpWorker::GetForeignList;
 
     CRITICAL_SECTION_INIT(&CriticalSection);
     CRITICAL_SECTION_INIT(&CSRunning);
@@ -3466,9 +3467,81 @@ bool ISTcpWorker::GetHistoryList(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::GetForeignList(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
-    IS_UNUSED(TcpMessage);
-    IS_UNUSED(TcpAnswer);
-    return false;
+    if (!CheckIsNull(TcpMessage, "TableName") || !CheckIsNull(TcpMessage, "FieldName"))
+    {
+        return false;
+    }
+
+    std::string TableName;
+    if (!GetParameterString(TcpMessage, "TableName", TableName))
+    {
+        return false;
+    }
+
+    std::string FieldName;
+    if (!GetParameterString(TcpMessage, "FieldName", FieldName))
+    {
+        return false;
+    }
+
+    //Получаем мета-таблицу
+    PMetaTable *MetaTable = GetMetaTable(TableName);
+    if (!MetaTable)
+    {
+        return false;
+    }
+
+    //Получаем мета-поле
+    PMetaField *MetaField = MetaTable->GetField(FieldName);
+    if (!MetaField)
+    {
+        ErrorString = ISAlgorithm::StringF(LANG("Carat.Error.Query.GetForeignList.FieldNotExist"), FieldName.c_str(), MetaTable->Name.c_str());
+        return false;
+    }
+
+    //Проверяем наличие внешнего ключа по поле
+    if (!MetaField->Foreign)
+    {
+        ErrorString = ISAlgorithm::StringF(LANG("Carat.Error.Query.GetForeignList.FieldNotForeign"), FieldName.c_str());
+        return false;
+    }
+
+    //Формируем запрос
+    PMetaTable *MetaTableForeign = ISMetaData::Instance().GetTable(MetaField->Foreign->ForeignClass); //Таблица на которую ссылается внешний ключ
+    ISVectorString VectorString = ISAlgorithm::StringSplit(MetaField->Foreign->ForeignViewNameField, ';');
+
+    std::string SqlText = "SELECT " + MetaTableForeign->Alias + '_' + MetaField->Foreign->ForeignField + " AS ID, concat(";
+    for (const std::string &String : VectorString) //Обход полей (которые должны быть отображены)
+    {
+        SqlText += MetaTableForeign->Alias + '_' + String + ", ' ',";
+    }
+    ISAlgorithm::StringChop(SqlText, 6);
+    SqlText += ") ";
+    SqlText += "AS Value\n";
+    SqlText += "FROM " + MetaTableForeign->Name + "\n";
+    SqlText += "ORDER BY 2 ASC";
+
+    //Выполняем запрос
+    ISQuery qSelect(DBConnection, SqlText);
+    if (!qSelect.Execute()) //Ошибка запроса
+    {
+        return ErrorQuery(LANG("Carat.Error.Query.GetForeignList.Select"), qSelect);
+    }
+
+    //Обходим результаты запроса
+    auto &Allocator = TcpAnswer->Parameters.GetAllocator();
+    rapidjson::Value JsonArray(rapidjson::Type::kArrayType);
+    while (qSelect.Next())
+    {
+        const char *Value = qSelect.ReadColumn(1);
+
+        rapidjson::Value JsonObject(rapidjson::Type::kObjectType);
+        JsonObject.AddMember("ID", qSelect.ReadColumn_UInt(0), Allocator);
+        JsonObject.AddMember("Value", JSON_STRINGA(Value, Allocator), Allocator);
+        JsonArray.PushBack(JsonObject, Allocator);
+    }
+    TcpAnswer->Parameters.AddMember("List", JsonArray, Allocator);
+    return true;
 }
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::GetServerInfo(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
