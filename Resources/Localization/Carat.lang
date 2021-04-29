@@ -38,6 +38,7 @@
     <Local Name="Carat.Error.UserNotExist" Russian="Пользователь с идентификатором %d не существует."/>
     <Local Name="Carat.Error.CheckUserIsSystem" Russian="Не удалось проверить пользователя на системность."/>
     <Local Name="Carat.Error.GetObjectName" Russian="Не удалось получить имя объекта."/>
+    <Local Name="Carat.Error.GetObjectName.NotExist" Russian="Запись с кодом %d в таблице %s не существует."/>
     <Local Name="Carat.Error.GetMetaTable" Russian="Таблица &quot;%s&quot; не существует."/>
     <Local Name="Carat.Error.ParameterNotInt" Russian="Параметр &quot;%s&quot; не является числом."/>
     <Local Name="Carat.Error.ParameterNotString" Russian="Параметр &quot;%s&quot; не является строкой."/>

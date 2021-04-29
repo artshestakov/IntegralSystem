@@ -310,6 +310,12 @@ static std::string QD_FAVORITES_TABLE = PREPARE_QUERYN("DELETE FROM _favorites "
 static std::string QD_FAVORITES_ALL = PREPARE_QUERYN("DELETE FROM _favorites "
     "WHERE fvts_user = $1", 1);
 //-----------------------------------------------------------------------------
+static std::string QS_HISTORY = PREPARE_QUERYN("SELECT prtc_datetime, prtc_tablename, prtc_objectid "
+    "FROM _protocol "
+    "WHERE prtc_type = (SELECT prtp_id FROM _protocoltype WHERE prtp_uid = '{117E8972-97DC-4E72-93AC-DC3BB50D11CF}') "
+    "AND prtc_user = $1 "
+    "ORDER BY prtc_datetime DESC", 1);
+//-----------------------------------------------------------------------------
 ISTcpWorker::ISTcpWorker()
     : ErrorString(STRING_NO_ERROR),
     IsBusy(false),
@@ -350,6 +356,7 @@ ISTcpWorker::ISTcpWorker()
     MapFunction[API_RECORD_FAVORITE_ADD] = &ISTcpWorker::RecordFavoriteAdd;
     MapFunction[API_RECORD_FAVORITE_DELETE] = &ISTcpWorker::RecordFavoriteDelete;
     MapFunction[API_FAVORITES_DELETE] = &ISTcpWorker::FavoritesDelete;
+    MapFunction[API_GET_HISTORY_LIST] = &ISTcpWorker::GetHistoryList;
 
     CRITICAL_SECTION_INIT(&CriticalSection);
     CRITICAL_SECTION_INIT(&CSRunning);
@@ -697,6 +704,7 @@ bool ISTcpWorker::GetObjectName(PMetaTable *MetaTable, unsigned int ObjectID, st
 
     if (!qSelectName.First()) //Запись не найдена
     {
+        ErrorString = ISAlgorithm::StringF(LANG("Carat.Error.GetObjectName.NotExist"), ObjectID, MetaTable->Name.c_str());
         return false;
     }
 
@@ -3407,9 +3415,53 @@ bool ISTcpWorker::CalendarClose(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::GetHistoryList(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
-    IS_UNUSED(TcpMessage);
-    IS_UNUSED(TcpAnswer);
-    return false;
+    //Получаем данные
+    ISQuery qSelect(DBConnection, QS_HISTORY);
+    qSelect.BindUInt(TcpMessage->TcpClient->UserID);
+    if (!qSelect.Execute()) //Ошибка запроса
+    {
+        ErrorString = LANG("Carat.Error.Query.GetHistoryList.Select");
+        return false;
+    }
+
+    PMetaTable *MetaTable = nullptr;
+    std::string ObjectName;
+
+    //Обходим выборку
+    auto &Allocator = TcpAnswer->Parameters.GetAllocator();
+    rapidjson::Value HistoryArray(rapidjson::Type::kArrayType);
+    while (qSelect.Next())
+    {
+        std::string TableName = qSelect.ReadColumn_String(1);
+        if (!MetaTable || MetaTable->Name != TableName) //Если мета-таблица ещё не получена или её имя сменилось - получаем её
+        {
+            MetaTable = GetMetaTable(TableName);
+            if (!MetaTable) //Не удалось получить мета-таблицу - выходим с ошибкой
+            {
+                return false;
+            }
+        }
+
+        //Получаем имя записи
+        unsigned int ObjectID = qSelect.ReadColumn_UInt(2);
+        if (!GetObjectName(MetaTable, ObjectID, ObjectName))
+        {
+            return false;
+        }
+
+        std::string StringDT = ISTcpWorkerHelper::ConvertDateTimeToString(qSelect.ReadColumn_DateTime(0));
+
+        //Добавляем в результирующий список
+        rapidjson::Value JsonObject(rapidjson::Type::kObjectType);
+        JsonObject.AddMember("DateTime", JSON_STRINGA(StringDT.c_str(), Allocator), Allocator);
+        JsonObject.AddMember("TableLocalName", JSON_STRINGA(MetaTable->LocalListName.c_str(), Allocator), Allocator);
+        JsonObject.AddMember("TableName", JSON_STRINGA(MetaTable->Name.c_str(), Allocator), Allocator);
+        JsonObject.AddMember("ObjectID", ObjectID, Allocator);
+        JsonObject.AddMember("ObjectName", JSON_STRINGA(ObjectName.c_str(), Allocator), Allocator);
+        HistoryArray.PushBack(JsonObject, Allocator);
+    }
+    TcpAnswer->Parameters.AddMember("History", HistoryArray, Allocator);
+    return true;
 }
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::GetForeignList(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
