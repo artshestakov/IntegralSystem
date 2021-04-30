@@ -32,7 +32,6 @@ LIBS += -L$$DESTDIR -Wl,-rpath="'\$$ORIGIN'",-rpath-link="'\$$ORIGIN'" \
 HEADERS += \
     ISAsterisk.h \
     ISCaratApplication.h \
-    ISCaratMonitor.h \
     ISFail2Ban.h \
     ISTcpAnswer.h \
     ISTcpClients.h \
@@ -46,7 +45,6 @@ HEADERS += \
 SOURCES += \
     ISAsterisk.cpp \
     ISCaratApplication.cpp \
-    ISCaratMonitor.cpp \
     ISFail2Ban.cpp \
     ISTcpAnswer.cpp \
     ISTcpClients.cpp \
