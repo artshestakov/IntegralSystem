@@ -316,6 +316,20 @@ static std::string QS_HISTORY = PREPARE_QUERYN("SELECT prtc_datetime, prtc_table
     "AND prtc_user = $1 "
     "ORDER BY prtc_datetime DESC", 1);
 //-----------------------------------------------------------------------------
+static std::string QS_GROUP_RIGHT_SYSTEM = PREPARE_QUERY("SELECT stms_uid, stms_localname "
+    "FROM _systems "
+    "ORDER BY stms_orderid");
+//-----------------------------------------------------------------------------
+static std::string QS_GROUP_RIGHT_SUBSYSTEM = PREPARE_QUERYN("SELECT sbsm_uid, sbsm_localname, "
+    "(SELECT (COUNT(*) > 0)::BOOLEAN AS is_exist FROM _groupaccesssubsystem WHERE gass_group = $1 AND gass_subsystem = sbsm_uid) "
+    "FROM _subsystems "
+    "WHERE sbsm_system = $2 "
+    "ORDER BY sbsm_orderid", 2);
+//-----------------------------------------------------------------------------
+static std::string QS_GROUP_RIGHT_TABLE_TYPE = PREPARE_QUERY("SELECT gatt_uid, gatt_name, gatt_icon "
+    "FROM _groupaccesstabletype "
+    "ORDER BY gatt_order");
+//-----------------------------------------------------------------------------
 ISTcpWorker::ISTcpWorker()
     : ErrorString(STRING_NO_ERROR),
     IsBusy(false),
@@ -358,6 +372,7 @@ ISTcpWorker::ISTcpWorker()
     MapFunction[API_FAVORITES_DELETE] = &ISTcpWorker::FavoritesDelete;
     MapFunction[API_GET_HISTORY_LIST] = &ISTcpWorker::GetHistoryList;
     MapFunction[API_GET_FOREIGN_LIST] = &ISTcpWorker::GetForeignList;
+    MapFunction[API_GET_GROUP_RIGHTS] = &ISTcpWorker::GetGroupRights;
 
     CRITICAL_SECTION_INIT(&CriticalSection);
     CRITICAL_SECTION_INIT(&CSRunning);
@@ -3089,9 +3104,178 @@ bool ISTcpWorker::SaveMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::GetGroupRights(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
-    IS_UNUSED(TcpMessage);
-    IS_UNUSED(TcpAnswer);
-    return false;
+    if (!CheckIsNull(TcpMessage, "GroupID"))
+    {
+        return false;
+    }
+
+    unsigned int GroupID = 0;
+    if (!GetParameterUInt(TcpMessage, "GroupID", GroupID))
+    {
+        return false;
+    }
+
+    auto &Allocator = TcpAnswer->Parameters.GetAllocator();
+
+    //Получаем системы и подсистемы
+    rapidjson::Value SystemsArray(rapidjson::Type::kArrayType);
+    ISQuery qSelectSystems(DBConnection, QS_GROUP_RIGHT_SYSTEM),
+        qSelectSubSystems(DBConnection, QS_GROUP_RIGHT_SUBSYSTEM);
+    if (qSelectSystems.Execute()) //Запрашиваем список систем
+    {
+        while (qSelectSystems.Next())
+        {
+            const char *SystemLocalName = qSelectSystems.ReadColumn(1);
+
+            rapidjson::Value SystemObject(rapidjson::Type::kObjectType);
+            SystemObject.AddMember("LocalName", JSON_STRINGA(SystemLocalName, Allocator), Allocator);
+
+            qSelectSubSystems.BindUInt(GroupID);
+            qSelectSubSystems.BindUID(qSelectSystems.ReadColumn(0));
+            if (qSelectSubSystems.Execute())
+            {
+                while (qSelectSubSystems.Next())
+                {
+                    const char *SubSystemUID = qSelectSubSystems.ReadColumn(0),
+                        *SubSystemLocalName = qSelectSubSystems.ReadColumn(1);
+
+                    rapidjson::Value SubSystemObject(rapidjson::Type::kObjectType);
+                    SubSystemObject.AddMember("UID", JSON_STRINGA(SubSystemUID, Allocator), Allocator);
+                    SubSystemObject.AddMember("LocalName", JSON_STRINGA(SubSystemLocalName, Allocator), Allocator);
+                    SubSystemObject.AddMember("IsExist", qSelectSubSystems.ReadColumn_Bool(2), Allocator);
+
+                    if (SystemObject.HasMember("SubSystems"))
+                    {
+                        SystemObject["SubSystems"].PushBack(SubSystemObject, Allocator);
+                    }
+                    else
+                    {
+                        rapidjson::Value SubSystemsArray(rapidjson::Type::kArrayType);
+                        SubSystemsArray.PushBack(SubSystemObject, Allocator);
+                        SystemObject.AddMember("SubSystems", SubSystemsArray, Allocator);
+                    }
+                }
+            }
+            else
+            {
+                return ErrorQuery(LANG("Carat.Error.Query.GetGroupRights.SelectSubSystems"), qSelectSubSystems);
+            }
+            SystemsArray.PushBack(SystemObject, Allocator);
+        }
+    }
+    else //Ошибка запроса
+    {
+        return ErrorQuery(LANG("Carat.Error.Query.GetGroupRights.SelectSystems"), qSelectSystems);
+    }
+
+    //Получаем типы прав доступа на таблицы
+    rapidjson::Value RightsTableTypeArray(rapidjson::Type::kArrayType);
+    ISQuery qSelectAccessTablesType(DBConnection, QS_GROUP_RIGHT_TABLE_TYPE);
+    if (qSelectAccessTablesType.Execute())
+    {
+        while (qSelectAccessTablesType.Next())
+        {
+            const char *UID = qSelectAccessTablesType.ReadColumn(0),
+                *LocalName = qSelectAccessTablesType.ReadColumn(1),
+                *Icon = qSelectAccessTablesType.ReadColumn(2);
+            rapidjson::Value JsonObject(rapidjson::Type::kObjectType);
+            JsonObject.AddMember("UID", JSON_STRINGA(UID, Allocator), Allocator);
+            JsonObject.AddMember("LocalName", JSON_STRINGA(LocalName, Allocator), Allocator);
+            JsonObject.AddMember("Icon", JSON_STRINGA(Icon, Allocator), Allocator);
+            RightsTableTypeArray.PushBack(JsonObject, Allocator);
+        }
+    }
+    else
+    {
+        return ErrorQuery(LANG("Carat.Error.Query.GetGroupRights.RightTableType"), qSelectAccessTablesType);
+    }
+
+    //Обходим таблицы
+    /*QVariantList TablesList;
+    QVariantMap TablesMap; //Этот контейнер нужен для сортировки списка таблиц по алфавиту
+    ISQuery qSelectTables(ISDatabase::Instance().GetDB(DBConnectionName), QS_GROUP_RIGHT_TABLE);
+    for (PMetaTable *MetaTable : ISMetaData::Instance().GetTables())
+    {
+        //Если таблица является системной - идём дальше
+        if (MetaTable->IsSystem)
+        {
+            continue;
+        }
+
+        QVariantMap TableMap =
+        {
+            { "TableName", MetaTable->Name },
+            { "Rights", QVariantList() }
+        };
+        qSelectTables.BindValue(":GroupID", GroupID);
+        qSelectTables.BindValue(":TableName", MetaTable->Name);
+        if (qSelectTables.Execute()) //Запрашиваем права на текущую таблицу
+        {
+            while (qSelectTables.Next()) //Обходим права на текущую таблицу
+            {
+                QVariantList RightList = TableMap["Rights"].toList();
+                RightList.append(qSelectTables.ReadColumn("gatt_uid"));
+                TableMap["Rights"] = RightList;
+            }
+        }
+        else //Ошибка запроса
+        {
+            return ErrorQuery(LANG("Carat.Error.Query.GetGroupRights.SelectTables"), qSelectTables);
+        }
+        TablesMap[MetaTable->LocalListName] = TableMap;
+    }*/
+
+    /*for (const auto &MapItem : TablesMap.toStdMap())
+    {
+        QVariantMap TempMap = MapItem.second.toMap();
+        TempMap["LocalName"] = MapItem.first;
+        TablesList.append(TempMap);
+    }*/
+
+    //Получаем спец. права
+    /*QVariantList SpecialList;
+    ISQuery qSelectSpecialParent(ISDatabase::Instance().GetDB(DBConnectionName), QS_GROUP_RIGHT_SPECIAL_PARENT),
+        qSelectSpecial(ISDatabase::Instance().GetDB(DBConnectionName), QS_GROUP_RIGHT_SPECIAL);
+    if (qSelectSpecialParent.Execute()) //Запрашиваем группы спец. прав
+    {
+        while (qSelectSpecialParent.Next()) //Обходим группы спец. прав
+        {
+            QVariantMap SpecialGroupMap = { { "LocalName", qSelectSpecialParent.ReadColumn("gast_name") } };
+
+            qSelectSpecial.BindValue(":GroupID", GroupID);
+            qSelectSpecial.BindValue(":ParentUID", qSelectSpecialParent.ReadColumn("gast_uid"));
+            if (qSelectSpecial.Execute()) //Запрашиваем спец. права
+            {
+                while (qSelectSpecial.Next()) //Обходим спец. права
+                {
+                    QVariantList VariantList = SpecialGroupMap["Rights"].toList();
+                    VariantList.append(QVariantMap
+                    {
+                        { "UID", qSelectSpecial.ReadColumn("gast_uid") },
+                        { "LocalName", qSelectSpecial.ReadColumn("gast_name") },
+                        { "Hint", qSelectSpecial.ReadColumn("gast_hint") },
+                        { "IsExist", qSelectSpecial.ReadColumn("is_exist") }
+                    });
+                    SpecialGroupMap["Rights"] = VariantList;
+                }
+            }
+            else //Ошибка запроса к спец. правам
+            {
+                return ErrorQuery(LANG("Carat.Error.Query.GetGroupRights.SelectSpecial"), qSelectSpecial);
+            }
+            SpecialList.append(SpecialGroupMap);
+        }
+    }
+    else //Ошибка запроса к группам спец. прав
+    {
+        return ErrorQuery(LANG("Carat.Error.Query.GetGroupRights.SelectSpecialGroup"), qSelectSpecialParent);
+    }*/
+
+    TcpAnswer->Parameters.AddMember("Systems", SystemsArray, Allocator);
+    TcpAnswer->Parameters.AddMember("RightsTableType", RightsTableTypeArray, Allocator);
+    //TcpAnswer->Parameters["Tables"] = TablesList;
+    //TcpAnswer->Parameters["Special"] = SpecialList;
+    return true;
 }
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::GroupRightSubSystemAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
