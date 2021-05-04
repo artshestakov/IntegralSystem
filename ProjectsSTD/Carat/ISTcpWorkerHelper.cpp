@@ -253,3 +253,9 @@ std::string ISTcpWorkerHelper::CreateSqlFromTable(PMetaTable *MetaTable, rapidjs
 	return SqlText;
 }
 //-----------------------------------------------------------------------------
+size_t ISTcpWorkerHelper::WriteFunctionINN(void *Pointer, size_t Size, size_t NMemb, std::string *Data)
+{
+    Data->append((char*)Pointer, Size * NMemb);
+    return Size * NMemb;
+}
+//-----------------------------------------------------------------------------

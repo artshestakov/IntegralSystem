@@ -243,7 +243,10 @@
     <Local Name="Carat.Error.Query.GetServerInfo.SelectInfo" Russian="Не удалось получить информацию о базе данных."/>
 
     <Local Name="Carat.Error.Query.OrganizationFormINN.Parse" Russian="Неверный ответ."/>
-    <Local Name="Carat.Error.Query.OrganizationFormINN.NotFound" Russian="Огранизация не найдена."/>
+    <Local Name="Carat.Error.Query.OrganizationFormINN.Init" Russian="Не удалось инициализировать CURL."/>
+    <Local Name="Carat.Error.Query.OrganizationFormINN.DocumentIsNotObject" Russian="Ответ не является объектом."/>
+    <Local Name="Carat.Error.Query.OrganizationFormINN.ResultIsNotArray" Russian="Результат не является массивом."/>
+    <Local Name="Carat.Error.Query.OrganizationFormINN.NotFound" Russian="Огранизация по ИНН &quot;%s&quot; не найдена."/>
 
     <Local Name="Carat.Error.Query.PeriodContains.Select" Russian="Не удалось получить константу."/>
 

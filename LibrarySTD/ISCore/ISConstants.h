@@ -22,6 +22,7 @@ const size_t    MD5_SIZE = 16;
 const size_t    MD5_RESULT_SIZE = 32;
 const char      MD5_DIGITS[] = "0123456789abcdef";
 const size_t    DAY_IN_SECONDS = 86400;
+const char      TOKEN_DA_DATA_TOKEN[] = "f2c204cd6ba093b294324acec5d01b25fad632cf";
 //CHARS------------------------------------------------------------------------
 const char  CHAR_NULL_TERM = '\0'; //Символ конца строки
 //LOCALIZATION-----------------------------------------------------------------
@@ -91,6 +92,7 @@ const char API_FAVORITES_DELETE[] = "FavoritesDelete"; //Удалить все избранные з
 const char API_GET_HISTORY_LIST[] = "GetHistoryList"; //Получить историю открытых объектов
 const char API_GET_FOREIGN_LIST[] = "GetForeignList"; //Получить список значений по внешнему ключу
 const char API_GET_GROUP_RIGHTS[] = "GetGroupRights"; //Получить права доступа группы
+const char API_ORGANIZATION_FROM_INN[] = "OrganizationFromINN"; //Поиск организации по ИНН
 //PROTOCOL---------------------------------------------------------------------
 const char CONST_UID_PROTOCOL_ENTER_APPLICATION[] = "2614cb96-ec54-4d4f-b1a6-06d2444962ca";
 const char CONST_UID_PROTOCOL_GET_UPDATE_CLIENT[] = "0234643a-af60-44bf-a2eb-08a71307841c";

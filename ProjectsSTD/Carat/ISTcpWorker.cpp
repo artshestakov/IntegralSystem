@@ -13,6 +13,8 @@
 #include "ISTcpWorkerHelper.h"
 #include "ISRevision.h"
 #include "ISProperty.h"
+#include <curl/curl.h>
+#include <rapidjson/error/en.h>
 //-----------------------------------------------------------------------------
 static std::string Q_TEST = PREPARE_QUERYN("INSERT INTO _usergroup(usgp_name, usgp_fullaccess) VALUES($1, $2)", 2);
 //-----------------------------------------------------------------------------
@@ -373,6 +375,7 @@ ISTcpWorker::ISTcpWorker()
     MapFunction[API_GET_HISTORY_LIST] = &ISTcpWorker::GetHistoryList;
     MapFunction[API_GET_FOREIGN_LIST] = &ISTcpWorker::GetForeignList;
     MapFunction[API_GET_GROUP_RIGHTS] = &ISTcpWorker::GetGroupRights;
+    MapFunction[API_ORGANIZATION_FROM_INN] = &ISTcpWorker::OrganizationFromINN;
 
     CRITICAL_SECTION_INIT(&CriticalSection);
     CRITICAL_SECTION_INIT(&CSRunning);
@@ -3807,10 +3810,88 @@ bool ISTcpWorker::GetServerInfo(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer
     return true;
 }
 //-----------------------------------------------------------------------------
-bool ISTcpWorker::OrganizationFormINN(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+bool ISTcpWorker::OrganizationFromINN(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
-    IS_UNUSED(TcpMessage);
-    IS_UNUSED(TcpAnswer);
-    return false;
+    if (!CheckIsNull(TcpMessage, "INN"))
+    {
+        return false;
+    }
+
+    //Получаем ИНН
+    std::string INN;
+    if (!GetParameterString(TcpMessage, "INN", INN))
+    {
+        return false;
+    }
+
+    //Ошибка инициализации CURL
+    CURL *Curl = curl_easy_init();
+    if (!Curl)
+    {
+        ErrorString = LANG("Carat.Error.Query.OrganizationFormINN.Init");
+        return false;
+    }
+
+    //Формируем заголовок запроса
+    curl_slist *CurlList = nullptr;
+    CurlList = curl_slist_append(CurlList, "Host: suggestions.dadata.ru");
+    CurlList = curl_slist_append(CurlList, "Content-Type: application/json");
+    CurlList = curl_slist_append(CurlList, "Accept: application/json");
+    CurlList = curl_slist_append(CurlList, ISAlgorithm::StringF("Authorization: Token %s", TOKEN_DA_DATA_TOKEN).c_str());
+
+    std::string Result,
+        QueryString = ISAlgorithm::StringF("{\"query\":\"%s\"}", INN.c_str());
+
+    //Настраиваем запрос
+    curl_easy_setopt(Curl, CURLOPT_URL, "http://suggestions.dadata.ru/suggestions/api/4_1/rs/findById/party");
+    curl_easy_setopt(Curl, CURLOPT_HTTPHEADER, CurlList);
+    curl_easy_setopt(Curl, CURLOPT_CUSTOMREQUEST, "POST");
+    curl_easy_setopt(Curl, CURLOPT_WRITEFUNCTION, &ISTcpWorkerHelper::WriteFunctionINN);
+    curl_easy_setopt(Curl, CURLOPT_WRITEDATA, &Result);
+    curl_easy_setopt(Curl, CURLOPT_POSTFIELDS, QueryString.c_str());
+    
+    //Выполняем
+    CURLcode res = curl_easy_perform(Curl);
+    curl_easy_cleanup(Curl);
+    if (res != CURLE_OK)
+    {
+        ErrorString = curl_easy_strerror(res);
+        return false;
+    }
+    
+    rapidjson::Document JsonDocument;
+    JsonDocument.Parse(Result.c_str(), Result.size());
+    rapidjson::ParseErrorCode ParseError = JsonDocument.GetParseError();
+    if (ParseError != rapidjson::ParseErrorCode::kParseErrorNone)
+    {
+        ErrorString = GetParseError_En(ParseError);
+        return false;
+    }
+
+    if (!JsonDocument.IsObject())
+    {
+        ErrorString = LANG("Carat.Error.Query.OrganizationFormINN.DocumentIsNotObject");
+        return false;
+    }
+
+    rapidjson::Value &JsonArray = JsonDocument["suggestions"];
+    if (!JsonArray.IsArray())
+    {
+        ErrorString = LANG("Carat.Error.Query.OrganizationFormINN.ResultIsNotArray");
+        return false;
+    }
+
+    //Организация не найдена
+    if (JsonArray.Empty())
+    {
+        ErrorString = ISAlgorithm::StringF(LANG("Carat.Error.Query.OrganizationFormINN.NotFound"), INN.c_str());
+        return false;
+    }
+
+    rapidjson::Value &JsonObject = JsonArray.Begin()->GetObject();
+    rapidjson::Value Value;
+    Value.CopyFrom(JsonObject, TcpAnswer->Parameters.GetAllocator());
+    TcpAnswer->Parameters.AddMember("Reply", Value, TcpAnswer->Parameters.GetAllocator());
+    return true;
 }
 //-----------------------------------------------------------------------------
