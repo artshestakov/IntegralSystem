@@ -42,7 +42,7 @@ ISSocket ISTcpAnswer::GetSocketClient() const
 std::string ISTcpAnswer::ToJson() const
 {
     rapidjson::Document JsonDocument(rapidjson::Type::kObjectType);
-    rapidjson::MemoryPoolAllocator<rapidjson::CrtAllocator> &Allocator = JsonDocument.GetAllocator();
+    auto &Allocator = JsonDocument.GetAllocator();
 
     JsonDocument.AddMember("IsError", Error, Allocator);
     JsonDocument.AddMember("ErrorString", JSON_STRING(ErrorString.c_str()), Allocator);
