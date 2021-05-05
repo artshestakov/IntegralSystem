@@ -828,8 +828,6 @@ bool ISTcpWorker::UserIsSystem(unsigned int UserID, bool &IsSystem)
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
-    IS_UNUSED(TcpAnswer);
-
     //Проверяем, не авторизаван ли уже клиент. Если авторизован - выходим с ошибкой
     if (TcpMessage->TcpClient->Authorized)
     {
@@ -1432,7 +1430,6 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 bool ISTcpWorker::GetLastClient(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
     IS_UNUSED(TcpMessage);
-    IS_UNUSED(TcpAnswer);
 
     auto &Allocator = TcpAnswer->Parameters.GetAllocator();
 
