@@ -30,7 +30,8 @@ LIBS += -L$$DESTDIR -L$$PWD/../../Components/PostgreSQL/12.0.5/Lib-$${PLATFORM} 
 	-lISServer \
 	-lpq \
 	-luuid \
-	-lcrypto
+	-lcrypto \
+	-lcurl
 
 SOURCES += \
     ISCaratApplication.cpp \
