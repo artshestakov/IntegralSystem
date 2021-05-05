@@ -565,7 +565,7 @@ bool ISTcpWorker::Execute(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
     return false;
 }
 //-----------------------------------------------------------------------------
-bool ISTcpWorker::CheckIsNull(ISTcpMessage *TcpMessage, const char *ParameterName)
+bool ISTcpWorker::CheckIsNull(ISTcpMessage *TcpMessage, const char *ParameterName, rapidjson::Value &JsonValue)
 {
     //Получаем константное имя параметра
     if (!TcpMessage->Parameters.HasMember(ParameterName))
@@ -575,7 +575,7 @@ bool ISTcpWorker::CheckIsNull(ISTcpMessage *TcpMessage, const char *ParameterNam
     }
 
     //Получаем значение
-    rapidjson::Value &JsonValue = TcpMessage->Parameters[ParameterName];
+    JsonValue = TcpMessage->Parameters[ParameterName];
 
     //Проверяем, не пустое ли значение
     if (JsonValue.IsNull())
@@ -612,39 +612,54 @@ bool ISTcpWorker::CheckIsNull(ISTcpMessage *TcpMessage, const char *ParameterNam
     return true;
 }
 //-----------------------------------------------------------------------------
-bool ISTcpWorker::GetParameterUInt(ISTcpMessage *TcpMessage, const char *ParameterName, unsigned int &Value)
+bool ISTcpWorker::CheckIsNullString(ISTcpMessage *TcpMessage, const char *ParameterName, std::string &String)
 {
-    rapidjson::Value &ParameterValue = TcpMessage->Parameters[ParameterName];
-    if (!ParameterValue.IsInt()) //Значение не является числовым
+    rapidjson::Value JsonValue;
+    if (!CheckIsNull(TcpMessage, ParameterName, JsonValue))
     {
-        ErrorString = ISAlgorithm::StringF(LANG("Carat.Error.ParameterNotInt"), ParameterName);
         return false;
     }
-    Value = ParameterValue.GetUint();
-    return true;
-}
-//-----------------------------------------------------------------------------
-bool ISTcpWorker::GetParameterString(ISTcpMessage *TcpMessage, const char *ParameterName, std::string &Value)
-{
-    rapidjson::Value &ParameterValue = TcpMessage->Parameters[ParameterName];
-    if (!ParameterValue.IsString())
+
+    if (!JsonValue.IsString())
     {
         ErrorString = ISAlgorithm::StringF(LANG("Carat.Error.ParameterNotString"), ParameterName);
         return false;
     }
-    Value = ParameterValue.GetString();
+    String = JsonValue.GetString();
     return true;
 }
 //-----------------------------------------------------------------------------
-bool ISTcpWorker::GetParameterBool(ISTcpMessage *TcpMessage, const char *ParameterName, bool &Value)
+bool ISTcpWorker::CheckIsNullBool(ISTcpMessage *TcpMessage, const char *ParameterName, bool &Bool)
 {
-    rapidjson::Value &ParameterValue = TcpMessage->Parameters[ParameterName];
-    if (!ParameterValue.IsBool())
+    rapidjson::Value JsonValue;
+    if (!CheckIsNull(TcpMessage, ParameterName, JsonValue))
+    {
+        return false;
+    }
+
+    if (!JsonValue.IsBool())
     {
         ErrorString = ISAlgorithm::StringF(LANG("Carat.Error.ParameterNotBool"), ParameterName);
         return false;
     }
-    Value = ParameterValue.GetBool();
+    Bool = JsonValue.GetBool();
+    return true;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::CheckIsNullUInt(ISTcpMessage *TcpMessage, const char *ParameterName, unsigned int &UInt)
+{
+    rapidjson::Value JsonValue;
+    if (!CheckIsNull(TcpMessage, ParameterName, JsonValue))
+    {
+        return false;
+    }
+
+    if (!JsonValue.IsUint()) //Значение не является числовым
+    {
+        ErrorString = ISAlgorithm::StringF(LANG("Carat.Error.ParameterNotInt"), ParameterName);
+        return false;
+    }
+    UInt = JsonValue.GetUint();
     return true;
 }
 //-----------------------------------------------------------------------------
@@ -805,14 +820,9 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
         return false;
     }
 
-    if (!CheckIsNull(TcpMessage, "Hash"))
-    {
-        return false;
-    }
-
-    //Получаем хэш
+    //Проверяем и получаем хэш
     std::string Hash;
-    if (!GetParameterString(TcpMessage, "Hash", Hash))
+    if (!CheckIsNullString(TcpMessage, "Hash", Hash))
     {
         return false;
     }
@@ -944,7 +954,7 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
     {
         //Получаем версию клиента
         unsigned int VersionClient = 0;
-        if (!GetParameterUInt(TcpMessage, "Version", VersionClient))
+        if (!CheckIsNullUInt(TcpMessage, "Version", VersionClient))
         {
             return false;
         }
@@ -1043,13 +1053,8 @@ bool ISTcpWorker::Sleep(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
     IS_UNUSED(TcpAnswer);
 
-    if (!CheckIsNull(TcpMessage, "Timeout"))
-    {
-        return false;
-    }
-
     unsigned int Timeout = 0;
-    if (!GetParameterUInt(TcpMessage, "Timeout", Timeout))
+    if (!CheckIsNullUInt(TcpMessage, "Timeout", Timeout))
     {
         return false;
     }
@@ -1451,14 +1456,9 @@ bool ISTcpWorker::GetLastClient(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::UserPasswordExist(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
-    if (!CheckIsNull(TcpMessage, "UserID"))
-    {
-        return false;
-    }
-
     //Получаем идентификатор пользователя
     unsigned int UserID = 0;
-    if (!GetParameterUInt(TcpMessage, "UserID", UserID))
+    if (!CheckIsNullUInt(TcpMessage, "UserID", UserID))
     {
         return false;
     }
@@ -1477,21 +1477,10 @@ bool ISTcpWorker::UserPasswordCreate(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpA
 {
     IS_UNUSED(TcpAnswer);
 
-    if (!CheckIsNull(TcpMessage, "UserID") || !CheckIsNull(TcpMessage, "Hash"))
-    {
-        return false;
-    }
-
-    //Получаем идентификатор пользователя
-    unsigned int UserID = 0;
-    if (!GetParameterUInt(TcpMessage, "UserID", UserID))
-    {
-        return false;
-    }
-
-    //Получаем хэш
     std::string Hash;
-    if (!GetParameterString(TcpMessage, "Hash", Hash))
+    unsigned int UserID = 0;
+    if (!CheckIsNullString(TcpMessage, "Hash", Hash) ||
+        !CheckIsNullUInt(TcpMessage, "UserID", UserID))
     {
         return false;
     }
@@ -1551,28 +1540,11 @@ bool ISTcpWorker::UserPasswordEdit(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAns
 {
     IS_UNUSED(TcpAnswer);
 
-    if (!CheckIsNull(TcpMessage, "UserID") || !CheckIsNull(TcpMessage, "HashOld") || !CheckIsNull(TcpMessage, "Hash"))
-    {
-        return false;
-    }
-
-    //Получаем идентификатор пользователя
     unsigned int UserID = 0;
-    if (!GetParameterUInt(TcpMessage, "UserID", UserID))
-    {
-        return false;
-    }
-
-    //Получаем старый хэш
-    std::string HashOld;
-    if (!GetParameterString(TcpMessage, "HashOld", HashOld))
-    {
-        return false;
-    }
-
-    //Получаем хэш
-    std::string Hash;
-    if (!GetParameterString(TcpMessage, "Hash", Hash))
+    std::string HashOld, Hash;
+    if (!CheckIsNullUInt(TcpMessage, "UserID", UserID) ||
+        !CheckIsNullString(TcpMessage, "HashOld", HashOld) ||
+        !CheckIsNullString(TcpMessage, "Hash", Hash))
     {
         return false;
     }
@@ -1630,14 +1602,8 @@ bool ISTcpWorker::UserPasswordReset(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAn
 {
     IS_UNUSED(TcpAnswer);
 
-    if (!CheckIsNull(TcpMessage, "UserID"))
-    {
-        return false;
-    }
-
-    //Получаем идентификатор пользователя
     unsigned int UserID = 0;
-    if (!GetParameterUInt(TcpMessage, "UserID", UserID))
+    if (!CheckIsNullUInt(TcpMessage, "UserID", UserID))
     {
         return false;
     }
@@ -1721,19 +1687,10 @@ bool ISTcpWorker::GetClients(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::RecordAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
-    if (!CheckIsNull(TcpMessage, "TableName") || !CheckIsNull(TcpMessage, "IsCopy"))
-    {
-        return false;
-    }
-
     std::string TableName;
-    if (!GetParameterString(TcpMessage, "TableName", TableName))
-    {
-        return false;
-    }
-
     bool IsCopy = false;
-    if (!GetParameterBool(TcpMessage, "IsCopy", IsCopy))
+    if (!CheckIsNullString(TcpMessage, "TableName", TableName) ||
+        !CheckIsNullBool(TcpMessage, "IsCopy", IsCopy))
     {
         return false;
     }
@@ -1845,19 +1802,10 @@ bool ISTcpWorker::RecordAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::RecordEdit(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
-    if (!CheckIsNull(TcpMessage, "TableName") || !CheckIsNull(TcpMessage, "ObjectID"))
-    {
-        return false;
-    }
-
     std::string TableName;
-    if (!GetParameterString(TcpMessage, "TableName", TableName))
-    {
-        return false;
-    }
-
     unsigned int ObjectID = 0;
-    if (!GetParameterUInt(TcpMessage, "ObjectID", ObjectID))
+    if (!CheckIsNullString(TcpMessage, "TableName", TableName) ||
+        !CheckIsNullUInt(TcpMessage, "ObjectID", ObjectID))
     {
         return false;
     }
@@ -1955,13 +1903,8 @@ bool ISTcpWorker::RecordDelete(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
     IS_UNUSED(TcpAnswer);
 
-    if (!CheckIsNull(TcpMessage, "TableName"))
-    {
-        return false;
-    }
-
     std::string TableName;
-    if (!GetParameterString(TcpMessage, "TableName", TableName))
+    if (!CheckIsNullString(TcpMessage, "TableName", TableName))
     {
         return false;
     }
@@ -2059,19 +2002,10 @@ bool ISTcpWorker::RecordDelete(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::RecordGet(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
-    if (!CheckIsNull(TcpMessage, "TableName") || !CheckIsNull(TcpMessage, "ObjectID"))
-    {
-        return false;
-    }
-
     std::string TableName;
-    if (!GetParameterString(TcpMessage, "TableName", TableName))
-    {
-        return false;
-    }
-
     unsigned int ObjectID = 0;
-    if (!GetParameterUInt(TcpMessage, "ObjectID", ObjectID))
+    if (!CheckIsNullString(TcpMessage, "TableName", TableName) ||
+        !CheckIsNullUInt(TcpMessage, "ObjectID", ObjectID))
     {
         return false;
     }
@@ -2213,21 +2147,10 @@ bool ISTcpWorker::RecordGet(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::RecordGetInfo(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
-    if (!CheckIsNull(TcpMessage, "TableName") || !CheckIsNull(TcpMessage, "ObjectID"))
-    {
-        return false;
-    }
-
-    //Получаем имя таблицы
     std::string TableName;
-    if (!GetParameterString(TcpMessage, "TableName", TableName))
-    {
-        return false;
-    }
-
-    //Получаем идентификатор записи
     unsigned int ObjectID = 0;
-    if (!GetParameterUInt(TcpMessage, "ObjectID", ObjectID))
+    if (!CheckIsNullString(TcpMessage, "TableName", TableName) ||
+        !CheckIsNullUInt(TcpMessage, "ObjectID", ObjectID))
     {
         return false;
     }
@@ -2288,27 +2211,11 @@ bool ISTcpWorker::RecordGetInfo(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::DiscussionAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
-    if (!CheckIsNull(TcpMessage, "TableName") ||
-        !CheckIsNull(TcpMessage, "ObjectID") ||
-        !CheckIsNull(TcpMessage, "Message"))
-    {
-        return false;
-    }
-
-    std::string TableName;
-    if (!GetParameterString(TcpMessage, "TableName", TableName))
-    {
-        return false;
-    }
-
+    std::string TableName, Message;
     unsigned int ObjectID = 0;
-    if (!GetParameterUInt(TcpMessage, "ObjectID", ObjectID))
-    {
-        return false;
-    }
-
-    std::string Message;
-    if (!GetParameterString(TcpMessage, "Message", Message))
+    if (!CheckIsNullString(TcpMessage, "TableName", TableName) ||
+        !CheckIsNullUInt(TcpMessage, "ObjectID", ObjectID) ||
+        !CheckIsNullString(TcpMessage, "Message", Message))
     {
         return false;
     }
@@ -2336,19 +2243,10 @@ bool ISTcpWorker::DiscussionEdit(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
 {
     IS_UNUSED(TcpAnswer);
 
-    if (!CheckIsNull(TcpMessage, "ID") || !CheckIsNull(TcpMessage, "Message"))
-    {
-        return false;
-    }
-
-    std::string Message;
-    if (!GetParameterString(TcpMessage, "Message", Message))
-    {
-        return false;
-    }
-
     unsigned int ID = 0;
-    if (!GetParameterUInt(TcpMessage, "ID", ID))
+    std::string Message;
+    if (!CheckIsNullUInt(TcpMessage, "ID", ID) ||
+        !CheckIsNullString(TcpMessage, "Message", Message))
     {
         return false;
     }
@@ -2365,13 +2263,8 @@ bool ISTcpWorker::DiscussionEdit(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::DiscussionCopy(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
-    if (!CheckIsNull(TcpMessage, "ID"))
-    {
-        return false;
-    }
-
     unsigned int ID = 0;
-    if (!GetParameterUInt(TcpMessage, "ID", ID))
+    if (!CheckIsNullUInt(TcpMessage, "ID", ID))
     {
         return false;
     }
@@ -2394,14 +2287,8 @@ bool ISTcpWorker::DiscussionCopy(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
-    if (!CheckIsNull(TcpMessage, "TableName"))
-    {
-        return false;
-    }
-
-    //Получаем имя таблицы
     std::string TableName;
-    if (!GetParameterString(TcpMessage, "TableName", TableName))
+    if (!CheckIsNullString(TcpMessage, "TableName", TableName))
     {
         return false;
     }
@@ -2707,19 +2594,10 @@ bool ISTcpWorker::GetTableQuery(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::GetNoteRecord(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
-    if (!CheckIsNull(TcpMessage, "TableName") || !CheckIsNull(TcpMessage, "ObjectID"))
-    {
-        return false;
-    }
-
     std::string TableName;
-    if (!GetParameterString(TcpMessage, "TableName", TableName))
-    {
-        return false;
-    }
-
     unsigned int ObjectID = 0;
-    if (!GetParameterUInt(TcpMessage, "ObjectID", ObjectID))
+    if (!CheckIsNullString(TcpMessage, "TableName", TableName) ||
+        !CheckIsNullUInt(TcpMessage, "ObjectID", ObjectID))
     {
         return false;
     }
@@ -2755,19 +2633,10 @@ bool ISTcpWorker::SetNoteRecord(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer
 {
     IS_UNUSED(TcpAnswer);
 
-    if (!CheckIsNull(TcpMessage, "TableName") || !CheckIsNull(TcpMessage, "ObjectID"))
-    {
-        return false;
-    }
-
     std::string TableName;
-    if (!GetParameterString(TcpMessage, "TableName", TableName))
-    {
-        return false;
-    }
-
     unsigned int ObjectID = 0;
-    if (!GetParameterUInt(TcpMessage, "ObjectID", ObjectID))
+    if (!CheckIsNullString(TcpMessage, "TableName", TableName) ||
+        !CheckIsNullUInt(TcpMessage, "ObjectID", ObjectID))
     {
         return false;
     }
@@ -2831,14 +2700,9 @@ bool ISTcpWorker::FileStorageAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
 {
     IS_UNUSED(TcpAnswer);
 
-    if (!CheckIsNull(TcpMessage, "FileName") || !CheckIsNull(TcpMessage, "Data"))
-    {
-        return false;
-    }
-
-    //Получаем имя файла
-    std::string FileName;
-    if (!GetParameterString(TcpMessage, "FileName", FileName))
+    std::string FileName, FileData;
+    if (!CheckIsNullString(TcpMessage, "FileName", FileName) ||
+        !CheckIsNullString(TcpMessage, "Data", FileData))
     {
         return false;
     }
@@ -2849,13 +2713,6 @@ bool ISTcpWorker::FileStorageAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
     if (Pos != NPOS)
     {
         Extension = FileName.substr(Pos + 1, FileName.size() - Pos - 1);
-    }
-
-    //Получаем данные файла
-    std::string FileData;
-    if (!GetParameterString(TcpMessage, "Data", FileData))
-    {
-        return false;
     }
 
     //Декодируем данные файла
@@ -2896,19 +2753,10 @@ bool ISTcpWorker::FileStorageAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::FileStorageCopy(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
-    if (!CheckIsNull(TcpMessage, "ID") || !CheckIsNull(TcpMessage, "Name"))
-    {
-        return false;
-    }
-
     unsigned int ID = 0;
-    if (!GetParameterUInt(TcpMessage, "ID", ID))
-    {
-        return false;
-    }
-
     std::string Name;
-    if (!GetParameterString(TcpMessage, "Name", Name))
+    if (!CheckIsNullUInt(TcpMessage, "ID", ID) ||
+        !CheckIsNullString(TcpMessage, "Name", Name))
     {
         return false;
     }
@@ -2940,13 +2788,8 @@ bool ISTcpWorker::FileStorageCopy(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnsw
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::FileStorageGet(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
-    if (!CheckIsNull(TcpMessage, "ID"))
-    {
-        return false;
-    }
-
     unsigned int ID = 0;
-    if (!GetParameterUInt(TcpMessage, "ID", ID))
+    if (!CheckIsNullUInt(TcpMessage, "ID", ID))
     {
         return false;
     }
@@ -2989,13 +2832,8 @@ bool ISTcpWorker::FileStorageGet(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::SearchFullText(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
-    if (!CheckIsNull(TcpMessage, "Value"))
-    {
-        return false;
-    }
-
     std::string Value;
-    if (!GetParameterString(TcpMessage, "Value", Value))
+    if (!CheckIsNullString(TcpMessage, "Value", Value))
     {
         return false;
     }
@@ -3107,17 +2945,11 @@ bool ISTcpWorker::SaveMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::GetGroupRights(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
-    if (!CheckIsNull(TcpMessage, "GroupID"))
-    {
-        return false;
-    }
-
     unsigned int GroupID = 0;
-    if (!GetParameterUInt(TcpMessage, "GroupID", GroupID))
+    if (!CheckIsNullUInt(TcpMessage, "GroupID", GroupID))
     {
         return false;
     }
-
     auto &Allocator = TcpAnswer->Parameters.GetAllocator();
 
     //Получаем системы и подсистемы
@@ -3325,30 +3157,11 @@ bool ISTcpWorker::GroupRightSpecialDelete(ISTcpMessage *TcpMessage, ISTcpAnswer 
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::GetRecordValue(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
-    if (!CheckIsNull(TcpMessage, "TableName") ||
-        !CheckIsNull(TcpMessage, "FieldName") ||
-        !CheckIsNull(TcpMessage, "ObjectID"))
-    {
-        return false;
-    }
-
-    //Получаем имя таблицы
-    std::string TableName;
-    if (!GetParameterString(TcpMessage, "TableName", TableName))
-    {
-        return false;
-    }
-
-    //Получаем имя поля
-    std::string FieldName;
-    if (!GetParameterString(TcpMessage, "FieldName", FieldName))
-    {
-        return false;
-    }
-
-    //Получаем идентификатор объекта
+    std::string TableName, FieldName;
     unsigned int ObjectID = 0;
-    if (!GetParameterUInt(TcpMessage, "ObjectID", ObjectID))
+    if (!CheckIsNullString(TcpMessage, "TableName", TableName) ||
+        !CheckIsNullString(TcpMessage, "FieldName", FieldName) ||
+        !CheckIsNullUInt(TcpMessage, "ObjectID", ObjectID))
     {
         return false;
     }
@@ -3401,19 +3214,10 @@ bool ISTcpWorker::RecordFavoriteAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAn
 {
     IS_UNUSED(TcpAnswer);
 
-    if (!CheckIsNull(TcpMessage, "TableName") || !CheckIsNull(TcpMessage, "ObjectID"))
-    {
-        return false;
-    }
-
     std::string TableName;
-    if (!GetParameterString(TcpMessage, "TableName", TableName))
-    {
-        return false;
-    }
-
     unsigned int ObjectID = 0;
-    if (!GetParameterUInt(TcpMessage, "ObjectID", ObjectID))
+    if (!CheckIsNullString(TcpMessage, "TableName", TableName) ||
+        !CheckIsNullUInt(TcpMessage, "ObjectID", ObjectID))
     {
         return false;
     }
@@ -3452,19 +3256,10 @@ bool ISTcpWorker::RecordFavoriteDelete(ISTcpMessage *TcpMessage, ISTcpAnswer *Tc
 {
     IS_UNUSED(TcpAnswer);
 
-    if (!CheckIsNull(TcpMessage, "TableName") || !CheckIsNull(TcpMessage, "ObjectID"))
-    {
-        return false;
-    }
-
     std::string TableName;
-    if (!GetParameterString(TcpMessage, "TableName", TableName))
-    {
-        return false;
-    }
-
     unsigned int ObjectID = 0;
-    if (!GetParameterUInt(TcpMessage, "ObjectID", ObjectID))
+    if (!CheckIsNullString(TcpMessage, "TableName", TableName) ||
+        !CheckIsNullUInt(TcpMessage, "ObjectID", ObjectID))
     {
         return false;
     }
@@ -3654,19 +3449,9 @@ bool ISTcpWorker::GetHistoryList(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::GetForeignList(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
-    if (!CheckIsNull(TcpMessage, "TableName") || !CheckIsNull(TcpMessage, "FieldName"))
-    {
-        return false;
-    }
-
-    std::string TableName;
-    if (!GetParameterString(TcpMessage, "TableName", TableName))
-    {
-        return false;
-    }
-
-    std::string FieldName;
-    if (!GetParameterString(TcpMessage, "FieldName", FieldName))
+    std::string TableName, FieldName;
+    if (!CheckIsNullString(TcpMessage, "TableName", TableName) ||
+        !CheckIsNullString(TcpMessage, "FieldName", FieldName))
     {
         return false;
     }
@@ -3812,14 +3597,8 @@ bool ISTcpWorker::GetServerInfo(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::OrganizationFromINN(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
-    if (!CheckIsNull(TcpMessage, "INN"))
-    {
-        return false;
-    }
-
-    //Получаем ИНН
     std::string INN;
-    if (!GetParameterString(TcpMessage, "INN", INN))
+    if (!CheckIsNullString(TcpMessage, "INN", INN))
     {
         return false;
     }
