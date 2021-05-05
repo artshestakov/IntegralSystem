@@ -332,6 +332,23 @@ static std::string QS_GROUP_RIGHT_TABLE_TYPE = PREPARE_QUERY("SELECT gatt_uid, g
     "FROM _groupaccesstabletype "
     "ORDER BY gatt_order");
 //-----------------------------------------------------------------------------
+static std::string QS_GROUP_RIGHT_TABLE = PREPARE_QUERYN("SELECT gatt_uid "
+    "FROM _groupaccesstable "
+    "LEFT JOIN _groupaccesstabletype ON gatt_id = gatb_accesstype "
+    "WHERE gatb_group = $1 "
+    "AND gatb_table = $2", 2);
+//-----------------------------------------------------------------------------
+static std::string QS_GROUP_RIGHT_SPECIAL_PARENT = PREPARE_QUERY("SELECT gast_uid, gast_name "
+    "FROM _groupaccessspecialtype "
+    "WHERE gast_parent IS NULL "
+    "ORDER BY gast_order");
+//-----------------------------------------------------------------------------
+static std::string QS_GROUP_RIGHT_SPECIAL = PREPARE_QUERYN("SELECT gast_uid, gast_name, gast_hint, "
+    "(SELECT (COUNT(*) > 0)::BOOLEAN AS is_exist FROM _groupaccessspecial WHERE gasp_group = $1 AND gasp_specialaccess = gast_id) "
+    "FROM _groupaccessspecialtype "
+    "WHERE gast_parent = $2 "
+    "ORDER BY gast_order", 2);
+//-----------------------------------------------------------------------------
 ISTcpWorker::ISTcpWorker()
     : ErrorString(STRING_NO_ERROR),
     IsBusy(false),
@@ -3026,9 +3043,9 @@ bool ISTcpWorker::GetGroupRights(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
     }
 
     //Обходим таблицы
-    /*QVariantList TablesList;
-    QVariantMap TablesMap; //Этот контейнер нужен для сортировки списка таблиц по алфавиту
-    ISQuery qSelectTables(ISDatabase::Instance().GetDB(DBConnectionName), QS_GROUP_RIGHT_TABLE);
+    rapidjson::Value TablesArray(rapidjson::Type::kArrayType);
+    //QVariantMap TablesMap; //Этот контейнер нужен для сортировки списка таблиц по алфавиту
+    ISQuery qSelectTables(DBConnection, QS_GROUP_RIGHT_TABLE);
     for (PMetaTable *MetaTable : ISMetaData::Instance().GetTables())
     {
         //Если таблица является системной - идём дальше
@@ -3037,28 +3054,34 @@ bool ISTcpWorker::GetGroupRights(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
             continue;
         }
 
-        QVariantMap TableMap =
-        {
-            { "TableName", MetaTable->Name },
-            { "Rights", QVariantList() }
-        };
-        qSelectTables.BindValue(":GroupID", GroupID);
-        qSelectTables.BindValue(":TableName", MetaTable->Name);
+        rapidjson::Value TableObject(rapidjson::Type::kObjectType);
+        TableObject.AddMember("TableName", JSON_STRINGA(MetaTable->Name.c_str(), Allocator), Allocator);
+
+        qSelectTables.BindUInt(GroupID);
+        qSelectTables.BindString(MetaTable->Name);
         if (qSelectTables.Execute()) //Запрашиваем права на текущую таблицу
         {
             while (qSelectTables.Next()) //Обходим права на текущую таблицу
             {
-                QVariantList RightList = TableMap["Rights"].toList();
-                RightList.append(qSelectTables.ReadColumn("gatt_uid"));
-                TableMap["Rights"] = RightList;
+                const char *UID = qSelectTables.ReadColumn(0);
+                if (TableObject.HasMember("Rights"))
+                {
+                    TableObject["Rights"].PushBack(JSON_STRINGA(UID, Allocator), Allocator);
+                }
+                else
+                {
+                    rapidjson::Value RightsArray(rapidjson::Type::kArrayType);
+                    RightsArray.PushBack(JSON_STRINGA(UID, Allocator), Allocator);
+                    TableObject.AddMember("Rights", RightsArray, Allocator);
+                }
             }
         }
         else //Ошибка запроса
         {
             return ErrorQuery(LANG("Carat.Error.Query.GetGroupRights.SelectTables"), qSelectTables);
         }
-        TablesMap[MetaTable->LocalListName] = TableMap;
-    }*/
+        TablesArray.PushBack(TableObject, Allocator);
+    }
 
     /*for (const auto &MapItem : TablesMap.toStdMap())
     {
@@ -3068,48 +3091,61 @@ bool ISTcpWorker::GetGroupRights(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
     }*/
 
     //Получаем спец. права
-    /*QVariantList SpecialList;
-    ISQuery qSelectSpecialParent(ISDatabase::Instance().GetDB(DBConnectionName), QS_GROUP_RIGHT_SPECIAL_PARENT),
-        qSelectSpecial(ISDatabase::Instance().GetDB(DBConnectionName), QS_GROUP_RIGHT_SPECIAL);
+    rapidjson::Value SpecialArray(rapidjson::Type::kArrayType);
+    ISQuery qSelectSpecialParent(DBConnection, QS_GROUP_RIGHT_SPECIAL_PARENT),
+        qSelectSpecial(DBConnection, QS_GROUP_RIGHT_SPECIAL);
     if (qSelectSpecialParent.Execute()) //Запрашиваем группы спец. прав
     {
         while (qSelectSpecialParent.Next()) //Обходим группы спец. прав
         {
-            QVariantMap SpecialGroupMap = { { "LocalName", qSelectSpecialParent.ReadColumn("gast_name") } };
+            const char *LocalNameParent = qSelectSpecialParent.ReadColumn(1);
+            rapidjson::Value SpecialGroupObject(rapidjson::Type::kObjectType);
+            SpecialGroupObject.AddMember("LocalName", JSON_STRINGA(LocalNameParent, Allocator), Allocator);
 
-            qSelectSpecial.BindValue(":GroupID", GroupID);
-            qSelectSpecial.BindValue(":ParentUID", qSelectSpecialParent.ReadColumn("gast_uid"));
+            qSelectSpecial.BindUInt(GroupID);
+            qSelectSpecial.BindUID(qSelectSpecialParent.ReadColumn(0));
             if (qSelectSpecial.Execute()) //Запрашиваем спец. права
             {
                 while (qSelectSpecial.Next()) //Обходим спец. права
                 {
-                    QVariantList VariantList = SpecialGroupMap["Rights"].toList();
-                    VariantList.append(QVariantMap
+                    const char *UID = qSelectSpecial.ReadColumn(0),
+                        *LocalName = qSelectSpecial.ReadColumn(1),
+                        *Hint = qSelectSpecial.ReadColumn(2);
+
+                    rapidjson::Value JsonObject(rapidjson::Type::kObjectType);
+                    JsonObject.AddMember("UID", JSON_STRINGA(UID, Allocator), Allocator);
+                    JsonObject.AddMember("LocalName", JSON_STRINGA(LocalName, Allocator), Allocator);
+                    JsonObject.AddMember("Hint", JSON_STRINGA(Hint, Allocator), Allocator);
+                    JsonObject.AddMember("IsExist", qSelectSpecial.ReadColumn_Bool(3), Allocator);
+
+                    if (SpecialGroupObject.HasMember("Rights"))
                     {
-                        { "UID", qSelectSpecial.ReadColumn("gast_uid") },
-                        { "LocalName", qSelectSpecial.ReadColumn("gast_name") },
-                        { "Hint", qSelectSpecial.ReadColumn("gast_hint") },
-                        { "IsExist", qSelectSpecial.ReadColumn("is_exist") }
-                    });
-                    SpecialGroupMap["Rights"] = VariantList;
+                        SpecialGroupObject["Rights"].PushBack(JsonObject, Allocator);
+                    }
+                    else
+                    {
+                        rapidjson::Value JsonArray(rapidjson::Type::kArrayType);
+                        JsonArray.PushBack(JsonObject, Allocator);
+                        SpecialGroupObject.AddMember("Rights", JsonArray, Allocator);
+                    }
                 }
             }
             else //Ошибка запроса к спец. правам
             {
                 return ErrorQuery(LANG("Carat.Error.Query.GetGroupRights.SelectSpecial"), qSelectSpecial);
             }
-            SpecialList.append(SpecialGroupMap);
+            SpecialArray.PushBack(SpecialGroupObject, Allocator);
         }
     }
     else //Ошибка запроса к группам спец. прав
     {
         return ErrorQuery(LANG("Carat.Error.Query.GetGroupRights.SelectSpecialGroup"), qSelectSpecialParent);
-    }*/
+    }
 
     TcpAnswer->Parameters.AddMember("Systems", SystemsArray, Allocator);
     TcpAnswer->Parameters.AddMember("RightsTableType", RightsTableTypeArray, Allocator);
-    //TcpAnswer->Parameters["Tables"] = TablesList;
-    //TcpAnswer->Parameters["Special"] = SpecialList;
+    TcpAnswer->Parameters.AddMember("Tables", TablesArray, Allocator);
+    TcpAnswer->Parameters.AddMember("Special", SpecialArray, Allocator);
     return true;
 }
 //-----------------------------------------------------------------------------

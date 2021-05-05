@@ -348,6 +348,15 @@ bool ISMetaData::XSNInitTable(tinyxml2::XMLElement *XmlElement, tinyxml2::XMLEle
     }
     MetaTable->TitleName = TitleName;
 
+    //Получаем флаг системности поля
+    const char *IsSystem = XmlElement->Attribute("IsSystem");
+    if (IsSystem && strlen(IsSystem) > 0)
+    {
+        std::string Temp(IsSystem);
+        ISAlgorithm::StringToLower(Temp);
+        MetaTable->IsSystem = Temp == "true";
+    }
+
     Tables.emplace_back(MetaTable);
     return true;
 }

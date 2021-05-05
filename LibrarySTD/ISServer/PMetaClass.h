@@ -118,7 +118,9 @@ struct PMetaEscort : public PMetaBase
 //-----------------------------------------------------------------------------
 struct PMetaTable : public PMetaBase
 {
-    PMetaTable() : PMetaBase("Table")
+    PMetaTable()
+        : PMetaBase("Table"),
+        IsSystem(false)
     {
 
     }
@@ -153,6 +155,7 @@ struct PMetaTable : public PMetaBase
     std::string LocalName;
     std::string LocalListName;
     std::string TitleName;
+    bool IsSystem;
 
     std::vector<PMetaField*> Fields;
     std::vector<PMetaIndex*> IndexesCompound; //Составные индексы таблицы
