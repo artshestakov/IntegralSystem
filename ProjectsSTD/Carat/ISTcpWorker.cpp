@@ -3121,6 +3121,7 @@ bool ISTcpWorker::GetGroupRights(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
 
         rapidjson::Value TableObject(rapidjson::Type::kObjectType);
         TableObject.AddMember("TableName", JSON_STRINGA(MetaTable->Name.c_str(), Allocator), Allocator);
+        TableObject.AddMember("LocalName", JSON_STRINGA(MetaTable->LocalListName.c_str(), Allocator), Allocator);
 
         qSelectTables.BindUInt(GroupID);
         qSelectTables.BindString(MetaTable->Name);
