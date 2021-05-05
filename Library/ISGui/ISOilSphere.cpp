@@ -1239,7 +1239,10 @@ void ISOilSphere::ConsumptionAllSubSystem::BalanceClicked()
 //-----------------------------------------------------------------------------
 ISOilSphere::ConsumptionMySubSystem::ConsumptionMySubSystem(QWidget *parent) : ISListBaseForm("Consumption", parent)
 {
+    GetToolBar()->addWidget(ISControls::CreateVerticalLine(GetToolBar()));
 
+    LabelBalance = new QLabel(GetToolBar());
+    GetToolBar()->addWidget(LabelBalance);
 }
 //-----------------------------------------------------------------------------
 ISOilSphere::ConsumptionMySubSystem::~ConsumptionMySubSystem()
@@ -1250,7 +1253,20 @@ ISOilSphere::ConsumptionMySubSystem::~ConsumptionMySubSystem()
 bool ISOilSphere::ConsumptionMySubSystem::Update()
 {
     GetTcpQuery()->AddFilter("User", CURRENT_USER_ID);
-    return ISListBaseForm::Update();
+    bool Result = ISListBaseForm::Update();
+    if (Result)
+    {
+        ISTcpQuery qGetBalance("OilSphere_GetUserBalance");
+        if (qGetBalance.Execute())
+        {
+            LabelBalance->setText(LANG("OilSphere.MyBalance").arg(qGetBalance.GetAnswer()["Balance"].toString()));
+        }
+        else
+        {
+            ISMessageBox::ShowCritical(this, qGetBalance.GetErrorString());
+        }
+    }
+    return Result;
 }
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------

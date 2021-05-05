@@ -423,6 +423,9 @@ namespace ISOilSphere
         virtual ~ConsumptionMySubSystem();
 
         bool Update() override;
+
+    private:
+        QLabel *LabelBalance;
     };
 
     //Форма объекта расходов

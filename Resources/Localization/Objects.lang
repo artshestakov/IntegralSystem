@@ -25,6 +25,7 @@
     <Local Name="OilSphere.CashCrediting" Russian="Зачисления наличных"/>
     <Local Name="OilSphere.ComingCash" Russian="Приход д/с"/>
     <Local Name="OilSphere.Return" Russian="Возвраты"/>
+    <Local Name="OilSphere.MyBalance" Russian="Мой баланс: %1"/>
     <Local Name="OilSphere.LoadData" Russian="Загрузить данные"/>
     <Local Name="OilSphere.TotalBalance" Russian="Приход: %1 Расход: %2 Баланс: %3"/>
     <Local Name="OilSphere.Message.Warning.LoadCounterpartyAndStockIsEmpty" Russian="Вы не выбрали место загрузки."/>

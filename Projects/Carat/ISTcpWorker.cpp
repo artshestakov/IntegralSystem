@@ -512,6 +512,8 @@ static QString QS_BANK = PREPARE_QUERY("SELECT COUNT(*) "
 static QString QI_BANK = PREPARE_QUERY("INSERT INTO bank(bank_date, bank_admission, bank_writeoff, bank_purposepayment, bank_counterparty, bank_checknumber, bank_operationtype, bank_incomingnumber, bank_incomingdate, bank_bankaccount, bank_comment) "
 									   "VALUES(:Date, :Admission, :WriteOff, :PurposePayment, :Counterparty, :CheckNumber, :OperationType, :IncomingNumber, :IncomingDate, :BankAccount, :Comment)");
 //-----------------------------------------------------------------------------
+static QString QS_USER_BALANCE = PREPARE_QUERY("SELECT get_user_balance(:UserID)");
+//-----------------------------------------------------------------------------
 ISTcpWorker::ISTcpWorker(const QString &db_host, int db_port, const QString &db_name, const QString &db_user, const QString &db_password)
 	: QObject(),
 	ErrorString(NO_ERROR_STRING),
@@ -915,6 +917,7 @@ void ISTcpWorker::RegisterOilSphere()
 	MapFunction["OilSphere_GetDebtCounterparty"] = &ISTcpWorker::OilSphere_GetDebtCounterparty;
 	MapFunction["OilSphere_GetUserConsumption"] = &ISTcpWorker::OilSphere_GetUserConsumption;
 	MapFunction["OilSphere_LoadBanks"] = &ISTcpWorker::OilSphere_LoadBanks;
+    MapFunction["OilSphere_GetUserBalance"] = &ISTcpWorker::OilSphere_GetUserBalance;
 }
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
@@ -4473,5 +4476,23 @@ bool ISTcpWorker::OilSphere_LoadBanks(ISTcpMessage *TcpMessage, ISTcpAnswer *Tcp
 	TcpAnswer->Parameters["Total"] = StringList.size();
 	Protocol(TcpMessage->TcpSocket->GetUserID(), "{85DCCA5C-723E-4E18-8286-FF33D12C6F4D}");
 	return true;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::OilSphere_GetUserBalance(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+    ISQuery qSelect(ISDatabase::Instance().GetDB(DBConnectionName), QS_USER_BALANCE);
+    qSelect.BindValue(":UserID", TcpMessage->TcpSocket->GetUserID());
+    if (!qSelect.Execute())
+    {
+        return ErrorQuery(LANG("Carat.Error.Query.GetUserBalance.Select"), qSelect);
+    }
+
+    if (!qSelect.First())
+    {
+        ErrorString = qSelect.GetErrorString();
+        return false;
+    }
+    TcpAnswer->Parameters["Balance"] = DOUBLE_PREPAREM(qSelect.ReadColumn(0).toDouble());
+    return true;
 }
 //-----------------------------------------------------------------------------

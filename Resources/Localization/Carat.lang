@@ -272,4 +272,6 @@
     <Local Name="Carat.Error.Query.LoadBank.Select" Russian="Не удалось проверить наличие записи."/>
     <Local Name="Carat.Error.Query.LoadBank.Insert" Russian="Не удалось добавить запись: %1"/>
 
+    <Local Name="Carat.Error.Query.GetUserBalance.Select" Russian="Не удалось получить баланс пользователя."/>
+
 </LANG>
