@@ -93,6 +93,7 @@ const char API_GET_HISTORY_LIST[] = "GetHistoryList"; //Получить историю открыты
 const char API_GET_FOREIGN_LIST[] = "GetForeignList"; //Получить список значений по внешнему ключу
 const char API_GET_GROUP_RIGHTS[] = "GetGroupRights"; //Получить права доступа группы
 const char API_ORGANIZATION_FROM_INN[] = "OrganizationFromINN"; //Поиск организации по ИНН
+const char API_GET_TABLE_QUERY[] = "GetTableQuery"; //Получить данные запроса
 //PROTOCOL---------------------------------------------------------------------
 const char CONST_UID_PROTOCOL_ENTER_APPLICATION[] = "2614cb96-ec54-4d4f-b1a6-06d2444962ca";
 const char CONST_UID_PROTOCOL_GET_UPDATE_CLIENT[] = "0234643a-af60-44bf-a2eb-08a71307841c";

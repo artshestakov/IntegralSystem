@@ -56,6 +56,16 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Other", "Other", "{BDB9A397
 		Resources\Other\Configurator.xml = Resources\Other\Configurator.xml
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SQL", "SQL", "{01593E22-B203-4723-AA8F-A42CE596ECD9}"
+	ProjectSection(SolutionItems) = preProject
+		Resources\SQL\PGSettings.sql = Resources\SQL\PGSettings.sql
+		Resources\SQL\SelectCounterpartyMoveWagon.sql = Resources\SQL\SelectCounterpartyMoveWagon.sql
+		Resources\SQL\SelectEntrollment.sql = Resources\SQL\SelectEntrollment.sql
+		Resources\SQL\SelectStockAdmissionImplementation.sql = Resources\SQL\SelectStockAdmissionImplementation.sql
+		Resources\SQL\SelectStockAdmissionTrain.sql = Resources\SQL\SelectStockAdmissionTrain.sql
+		Resources\SQL\SelectStockWriteOff.sql = Resources\SQL\SelectStockWriteOff.sql
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -108,5 +118,6 @@ Global
 		{FD28AD7F-8FAF-45B3-84E7-0250312B3CA1} = {0CE26878-D0B6-4E9E-9F60-E489DD645582}
 		{329A818C-EF46-4F3F-8465-AB65BEB9198E} = {0CE26878-D0B6-4E9E-9F60-E489DD645582}
 		{BDB9A397-87F1-474C-B3AA-B4D3EBE8DECD} = {0CE26878-D0B6-4E9E-9F60-E489DD645582}
+		{01593E22-B203-4723-AA8F-A42CE596ECD9} = {0CE26878-D0B6-4E9E-9F60-E489DD645582}
 	EndGlobalSection
 EndGlobal

@@ -8,4 +8,4 @@ FROM movewagon
 LEFT JOIN counterparty ON cnpr_id = mwag_provider 
 LEFT JOIN movewagondetail ON mwdt_movewagon = mwag_id 
 WHERE mwag_datearrival IS NOT NULL 
-AND mwag_stock = :StockID
+AND mwag_stock = $1

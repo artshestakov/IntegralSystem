@@ -393,6 +393,7 @@ ISTcpWorker::ISTcpWorker()
     MapFunction[API_GET_FOREIGN_LIST] = &ISTcpWorker::GetForeignList;
     MapFunction[API_GET_GROUP_RIGHTS] = &ISTcpWorker::GetGroupRights;
     MapFunction[API_ORGANIZATION_FROM_INN] = &ISTcpWorker::OrganizationFromINN;
+    MapFunction[API_GET_TABLE_QUERY] = &ISTcpWorker::GetTableQuery;
 
     CRITICAL_SECTION_INIT(&CriticalSection);
     CRITICAL_SECTION_INIT(&CSRunning);
@@ -2601,9 +2602,76 @@ bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::GetTableQuery(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
-    IS_UNUSED(TcpMessage);
-    IS_UNUSED(TcpAnswer);
-    return false;
+    std::string QueryName;
+    if (!CheckIsNullString(TcpMessage, "QueryName", QueryName))
+    {
+        return false;
+    }
+
+    const char *SqlText = ISResourcer::Instance().GetFile("SQL/" + QueryName + ".sql");
+    if (!SqlText) //Запрос не найден - ошибка
+    {
+        ErrorString = ISAlgorithm::StringF(LANG("Carat.Error.Query.GetTableQuery.NotFound"), QueryName.c_str());
+        return false;
+    }
+
+    ISQuery qSelect(DBConnection, SqlText);
+    if (TcpMessage->Parameters.HasMember("Parameters"))
+    {
+        rapidjson::Value &ParametersObject = TcpMessage->Parameters["Parameters"];
+        for (const auto &MapItem : ParametersObject.GetObject())
+        {
+            switch (MapItem.value.GetType())
+            {
+            case rapidjson::Type::kNumberType:
+                qSelect.BindUInt64(MapItem.value.GetUint64());
+                break;
+
+            case rapidjson::Type::kStringType:
+                qSelect.BindString(MapItem.value.GetString());
+                break;
+
+            default:
+                ErrorString = ISAlgorithm::StringF(LANG("Carat.Error.Query.GetTableQuery.ClassFilterValueType"), MapItem.value.GetType(), MapItem.name.GetString());
+                return false;
+                break;
+            }
+        }
+    }
+
+    if (!qSelect.Execute()) //Ошибка запроса
+    {
+        return ErrorQuery(LANG("Carat.Error.Query.GetTableQuery.Select"), qSelect);
+    }
+
+    auto &Allocator = TcpAnswer->Parameters.GetAllocator();
+
+    //Обходим поля
+    rapidjson::Value FieldArray(rapidjson::Type::kArrayType);
+    int ColumnCount = qSelect.GetResultColumnCount();
+    for (int i = 0; i < ColumnCount; ++i)
+    {
+        const char *FieldName = qSelect.GetResultFieldName(i);
+        FieldArray.PushBack(JSON_STRINGA(FieldName, Allocator), Allocator);
+    }
+
+    rapidjson::Value RecordArray(rapidjson::Type::kArrayType);
+    if (qSelect.First()) //Данные есть - обходим записи
+    {
+        do
+        {
+            rapidjson::Value ValuesArray(rapidjson::Type::kArrayType);
+            for (int i = 0; i < ColumnCount; ++i)
+            {
+                char *Value = qSelect.ReadColumn(i);
+                ValuesArray.PushBack(JSON_STRINGA(Value, Allocator), Allocator);
+            }
+            RecordArray.PushBack(ValuesArray, Allocator);
+        } while (qSelect.Next());
+    }
+    TcpAnswer->Parameters.AddMember("FieldList", FieldArray, Allocator);
+    TcpAnswer->Parameters.AddMember("RecordList", RecordArray, Allocator);
+    return true;
 }
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::GetNoteRecord(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
