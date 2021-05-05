@@ -501,7 +501,8 @@ static QString QS_USER_RETURN = PREPARE_QUERY("SELECT rtrn_date, rtrn_sum, rtrn_
 											  "ORDER BY rtrn_date DESC");
 //-----------------------------------------------------------------------------
 static QString QS_TOTAL_BALANCE = PREPARE_QUERY("SELECT "
-												"(SELECT COALESCE(sum(cmng_sum), 0) AS total_coming FROM coming), "
+												"(SELECT COALESCE(sum(cmng_sum), 0) FROM coming) + "
+                                                "(SELECT COALESCE(sum(cpen_sum), 0) FROM counterpartyenrollment WHERE cpen_sendtocoming) AS total_coming,"
 												"(SELECT COALESCE(sum(cpmp_sum), 0) AS total_consumption FROM consumption)");
 //-----------------------------------------------------------------------------
 static QString QS_BANK = PREPARE_QUERY("SELECT COUNT(*) "
