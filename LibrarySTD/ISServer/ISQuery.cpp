@@ -220,8 +220,12 @@ bool ISQuery::Execute()
     bool Prepared = false;
     if (ISQueryText::Instance().IsNeedPrepare(SqlText, StmtName, ParamCount, Prepared))
     {
-        if (!Prepared && Prepare(ParamCount))
+        if (!Prepared)
         {
+            if (!Prepare(ParamCount))
+            {
+                return false;
+            }
             ISQueryText::Instance().SetPrepared(SqlText, true);
         }
     }
