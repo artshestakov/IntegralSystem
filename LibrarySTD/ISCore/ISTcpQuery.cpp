@@ -8,10 +8,11 @@
 #include "rapidjson/writer.h"
 #include <rapidjson/error/en.h>
 //-----------------------------------------------------------------------------
-ISTcpQuery::ISTcpQuery(const std::string &query_type)
+ISTcpQuery::ISTcpQuery(const char *query_type)
     : ErrorString(STRING_NO_ERROR),
     QueryType(query_type),
     Parameters(rapidjson::Type::kObjectType),
+    ParametersCount(0),
     AnswerObject(rapidjson::Type::kObjectType)
 {
 
@@ -31,9 +32,10 @@ void ISTcpQuery::BindString(const std::string &ParamterName, const std::string &
 {
     auto &Allocator = Parameters.GetAllocator();
     Parameters.AddMember(JSON_STRINGA(ParamterName.c_str(), Allocator), JSON_STRINGA(String.c_str(), Allocator), Allocator);
+    ++ParametersCount;
 }
 //-----------------------------------------------------------------------------
-bool ISTcpQuery::Execute(const std::string &query_type)
+bool ISTcpQuery::Execute(const char *query_type)
 {
     QueryType = query_type;
     return ISTcpQuery::Execute();
@@ -41,22 +43,20 @@ bool ISTcpQuery::Execute(const std::string &query_type)
 //-----------------------------------------------------------------------------
 bool ISTcpQuery::Execute()
 {
-    //Проверяем наличие соединения
-    if (!CheckConnection())
-    {
-        return false;
-    }
-
     //Запоминаем текущее время
     ISTimePoint TimePoint = ISAlgorithm::GetTick();
 
     //Формируем JSON
-    ISLOGGER_I(__CLASS__, "Build \"%s\"", QueryType.c_str());
+    ISLOGGER_I(__CLASS__, "Build \"%s\"", QueryType);
     rapidjson::Document JsonObject(rapidjson::Type::kObjectType);
     auto &Allocator = JsonObject.GetAllocator();
 
-    JsonObject.AddMember("Type", JSON_STRINGA(QueryType.c_str(), Allocator), Allocator);
-    JsonObject.AddMember("Parameters", Parameters.GetObject(), Allocator);
+    JsonObject.AddMember("Type", JSON_STRINGA(QueryType, Allocator), Allocator);
+
+    if (ParametersCount > 0) //Если есть параметры - добавляем их в JSON-объект
+    {
+        JsonObject.AddMember("Parameters", Parameters.GetObject(), Allocator);
+    }
 
     rapidjson::StringBuffer JsonBuffer;
     JsonBuffer.Clear();
@@ -66,7 +66,7 @@ bool ISTcpQuery::Execute()
     JsonObject.Accept(JsonWriter);
     std::string StringBuffer = std::to_string(JsonBuffer.GetSize() + 1) + '.' + JsonBuffer.GetString() + CHAR_NULL_TERM;
 
-    //Проверяем наличие соединения ещё раз
+    //Проверяем наличие соединения
     if (!CheckConnection())
     {
         return false;
@@ -129,44 +129,34 @@ bool ISTcpQuery::Execute()
     }
 
     //Проверяем валидность ответа
-    rapidjson::Value ValueIsError, ValueErrorString;
-    if (IsValidAnswer(StringBuffer, AnswerSize, ValueIsError, ValueErrorString)) //Ответ валиден
+    bool ValueIsError = false;
+    std::string ValueErrorString;
+    if (IsValidAnswer(StringBuffer, AnswerSize, ValueIsError, ErrorString)) //Ответ валиден
     {
         ISLOGGER_I(__CLASS__, "Validated answer");
-
-        //Проверяем запрос на ошибку
-        if (ValueIsError.GetBool())
+        if (ValueIsError) //Проверяем запрос на ошибку
         {
-            ErrorString = AnswerObject["ErrorString"].GetString();
             ISLOGGER_E(__CLASS__, "Query failed: %s", ErrorString.c_str());
         }
         else
         {
-            AnswerObject = AnswerObject["Parameters"].GetObject();
-            ISLOGGER_I(__CLASS__, "Query success (%d msec)", ISAlgorithm::GetTickDiff(ISAlgorithm::GetTick(), TimePoint));
+            ISLOGGER_I(__CLASS__, "Query \"%s\" success (%d msec)", QueryType, ISAlgorithm::GetTickDiff(ISAlgorithm::GetTick(), TimePoint));
         }
     }
     else //Ответ невалидный - очищаем структуру ответа (вдруг там что-то есть)
     {
         ISLOGGER_E(__CLASS__, "Not validated answer: %s", ErrorString.c_str());
-        //TcpAnswer.clear();
     }
-    //Parameters.clear(); //Очищаем список параметров запроса
+    QueryType = nullptr;
+    ParametersCount = 0;
     StringBuffer.clear(); //Очищаем временный буфер
-    return true;
+    return !ValueIsError;
 }
 //-----------------------------------------------------------------------------
-/*QVariantMap& ISTcpQuery::GetAnswer()
+const rapidjson::Value& ISTcpQuery::GetAnswer() const
 {
-    return TcpAnswer;
-}*/
-//-----------------------------------------------------------------------------
-/*QVariantMap ISTcpQuery::TakeAnswer()
-{
-    QVariantMap Answer = TcpAnswer;
-    TcpAnswer.clear();
-    return Answer;
-}*/
+    return AnswerObject;
+}
 //-----------------------------------------------------------------------------
 /*QVariant ISTcpQuery::GetParameter(const QString &ParameterName) const
 {
@@ -178,14 +168,14 @@ bool ISTcpQuery::Execute()
     return Value;
 }*/
 //-----------------------------------------------------------------------------
-bool ISTcpQuery::IsValidAnswer(const std::string &StringBuffer, size_t Size, rapidjson::Value &ValueIsError, rapidjson::Value &ValueErrorString)
+bool ISTcpQuery::IsValidAnswer(const std::string &StringBuffer, size_t Size, bool &ValueIsError, std::string &ValueErrorString)
 {
     rapidjson::Document JsonDocument;
-    JsonDocument.Parse(StringBuffer.c_str(), Size);
-    rapidjson::ParseErrorCode ParseError = JsonDocument.GetParseError();
-    if (ParseError != rapidjson::ParseErrorCode::kParseErrorNone)
+    rapidjson::ParseResult Result = JsonDocument.Parse(StringBuffer.c_str(), Size);
+    if (Result.Code() != rapidjson::ParseErrorCode::kParseErrorNone)
     {
-        ErrorString = GetParseError_En(ParseError);
+        
+        ErrorString = GetParseError_En(Result.Code());
         return false;
     }
 
@@ -195,14 +185,15 @@ bool ISTcpQuery::IsValidAnswer(const std::string &StringBuffer, size_t Size, rap
         return false;
     }
 
-    ValueIsError = JsonDocument["IsError"];
-    if (!ValueIsError.IsBool()) //Неверный тип
+    rapidjson::Value &JsonValue = JsonDocument["IsError"];
+    if (!JsonValue.IsBool()) //Неверный тип
     {
         ErrorString = "Invalid type field \"IsError\"";
         return false;
     }
 
-    if (ValueIsError.GetBool()) //Если ошибка действительно есть, только тогда проверяем наличие её описания
+    ValueIsError = JsonValue.GetBool();
+    if (ValueIsError) //Если ошибка действительно есть, только тогда проверяем наличие её описания
     {
         if (!JsonDocument.HasMember("ErrorString")) //Если поле с описанием ошибки отсутствует
         {
@@ -210,23 +201,20 @@ bool ISTcpQuery::IsValidAnswer(const std::string &StringBuffer, size_t Size, rap
             return false;
         }
 
-        ValueErrorString = JsonDocument["ErrorString"];
-        if (!ValueErrorString.IsString()) //Если поле с описанием ошибки пустое
+        JsonValue = JsonDocument["ErrorString"];
+        if (!JsonValue.IsString()) //Если поле с описанием ошибки пустое
         {
             ErrorString = "Invalid type field \"ErrorString\"";
             return false;
         }
-
-        if (ValueErrorString.GetStringLength() == 0)
-        {
-            ErrorString = "Empty field \"ErrorString\"";
-            return false;
-        }
+        ValueErrorString = JsonValue.GetString();
     }
-    AnswerObject = JsonDocument.GetObject();
+    else
+    {
+        AnswerObject.CopyFrom(JsonDocument["Parameters"], AnswerObject.GetAllocator());
+    }
     return true;
 }
-//-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 bool ISTcpQuery::CheckConnection()
 {
@@ -238,6 +226,7 @@ bool ISTcpQuery::CheckConnection()
     }
     return true;
 }
+//-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 /*ISTcpQueryTable::ISTcpQueryTable() : ISTcpQuery(API_GET_TABLE_DATA)
