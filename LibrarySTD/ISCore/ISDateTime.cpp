@@ -27,7 +27,7 @@ bool ISDate::IsNull() const
 //-----------------------------------------------------------------------------
 std::string ISDate::ToString() const
 {
-    return ISAlgorithm::StringF("%02d.%02d.%d", Day, Month, Year);
+    return ISAlgorithm::StringF("%02d.%02d.%04d", Day, Month, Year);
 }
 //-----------------------------------------------------------------------------
 bool ISDate::operator<(const ISDate &Date) const
