@@ -14,7 +14,7 @@ int main(int argc, char **argv)
     {
         ISLogger::Instance().Shutdown();
     }
-#if defined(DEBUG) && defined(WIN32) //???
+#if defined(DEBUG) && defined(WIN32)
     ISConsole::Pause();
 #endif
     return Result ? EXIT_SUCCESS : EXIT_FAILURE;

@@ -30,7 +30,7 @@ bool ISConsole::Question(const std::string &QuestionText)
 //-----------------------------------------------------------------------------
 void ISConsole::Pause()
 {
-	ISDEBUG_L("To continue, press \"Enter\" buttons...");
+	ISDEBUG_L("To continue, press \"Enter\" button...");
 	(void)getchar();
 }
 //-----------------------------------------------------------------------------
