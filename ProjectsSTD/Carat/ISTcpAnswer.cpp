@@ -45,14 +45,16 @@ std::string ISTcpAnswer::ToJson() const
     auto &Allocator = JsonDocument.GetAllocator();
 
     JsonDocument.AddMember("IsError", Error, Allocator);
-    JsonDocument.AddMember("ErrorString", JSON_STRING(ErrorString.c_str()), Allocator);
 
-    //Если ошибки нет и есть параметры - добавляем их в ответ
-    if (!Error && !Parameters.ObjectEmpty())
+    if (Error) //Ошибка есть добавим её описание в ответ
+    {
+        JsonDocument.AddMember("ErrorString", JSON_STRINGA(ErrorString.c_str(), Allocator), Allocator);
+    }
+    else if (!Parameters.ObjectEmpty()) //Ошибки нет, если параметры в ответе есть - добавим их в ответ
     {
         JsonDocument.AddMember("Parameters", rapidjson::Value(Parameters, Allocator), Allocator);
     }
-    
+
     rapidjson::StringBuffer JsonBuffer;
     JsonBuffer.Clear();
 
