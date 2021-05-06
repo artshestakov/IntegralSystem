@@ -106,7 +106,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(ProjectDir)..\..\BinSTD\$(Configuration)-$(Platform)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Crypt32.lib;Shlwapi.lib;Rpcrt4.lib;ISCore.lib;ISServer.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Ws2_32.lib;Shlwapi.lib;Rpcrt4.lib;Crypt32.lib;ISCore.lib;ISServer.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -126,7 +126,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(ProjectDir)..\..\BinSTD\$(Configuration)-$(Platform)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Crypt32.lib;Shlwapi.lib;Rpcrt4.lib;ISCore.lib;ISServer.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Ws2_32.lib;Shlwapi.lib;Rpcrt4.lib;Crypt32.lib;ISCore.lib;ISServer.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -149,7 +149,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(ProjectDir)..\..\BinSTD\$(Configuration)-$(Platform)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Crypt32.lib;Shlwapi.lib;Rpcrt4.lib;ISCore.lib;ISServer.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Ws2_32.lib;Shlwapi.lib;Rpcrt4.lib;Crypt32.lib;ISCore.lib;ISServer.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -172,11 +172,15 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(ProjectDir)..\..\BinSTD\$(Configuration)-$(Platform)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Crypt32.lib;Shlwapi.lib;Rpcrt4.lib;ISCore.lib;ISServer.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Ws2_32.lib;Shlwapi.lib;Rpcrt4.lib;Crypt32.lib;ISCore.lib;ISServer.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ISTcpConnector.cpp" />
     <ClCompile Include="main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ISTcpConnector.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
