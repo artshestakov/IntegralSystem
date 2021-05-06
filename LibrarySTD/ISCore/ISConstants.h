@@ -33,6 +33,7 @@ const char              DB_CONNECTION_DEFAULT[] = "DefaultDB";
 //CONFIG-----------------------------------------------------------------------
 const char  CONFIG_TEMPLATE_SERVER[] = "Server"; //Шаблон сервера
 const char  CONFIG_TEMPLATE_CLIENT[] = "Client"; //Шаблон клиента
+const char  CONFIG_TEMPLATE_TESTER[] = "Tester"; //Шаблон тестера
 const char  CONFIG_TYPE_INT[] = "Int";
 const char  CONFIG_TYPE_BOOL[] = "Bool";
 const char  CONFIG_TYPE_STRING[] = "String";
