@@ -66,7 +66,7 @@ QVariant ISSettings::GetValue(const QString &SettingUID)
 void ISSettings::SetValue(const QString &SettingUID, const QVariant &Value)
 {
 	GetMetaSetting(SettingUID)->Value = Value;
-	SettingsChanged[SettingUID] = Value;
+	SettingsChanged[SettingUID] = Value.toString();
 }
 //-----------------------------------------------------------------------------
 std::vector<ISMetaSettingsGroup*> ISSettings::GetSettingGroups()

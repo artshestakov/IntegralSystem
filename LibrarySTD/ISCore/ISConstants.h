@@ -100,6 +100,7 @@ const char API_GROUP_RIGHT_TABLE_ADD[] = "GroupRightTableAdd"; //Добавить группе
 const char API_GROUP_RIGHT_TABLE_DELETE[] = "GroupRightTableDelete"; //Удалить у группы право на таблицу
 const char API_GROUP_RIGHT_SPECIAL_ADD[] = "GroupRightSpecialAdd"; //Добавить спец. право группе
 const char API_GROUP_RIGHT_SPECIAL_DELETE[] = "GroupRightSpecialDelete"; //Удалить спец. право у группы
+const char API_SAVE_META_DATA[] = "SaveMetaData"; //Сохранение мета-данных
 //PROTOCOL---------------------------------------------------------------------
 const char CONST_UID_PROTOCOL_ENTER_APPLICATION[] = "2614cb96-ec54-4d4f-b1a6-06d2444962ca";
 const char CONST_UID_PROTOCOL_GET_UPDATE_CLIENT[] = "0234643a-af60-44bf-a2eb-08a71307841c";
@@ -132,6 +133,7 @@ const char CONST_UID_PROTOCOL_ADD_ACCESS_TO_TABLE[] = "44fdda11-9f7b-4006-8178-9
 const char CONST_UID_PROTOCOL_DEL_ACCESS_TO_TABLE[] = "9d4e8104-33f9-4f9e-a6aa-272dda7c1a52";
 const char CONST_UID_PROTOCOL_ADD_ACCESS_TO_SPECIAL[] = "fb494e8e-bdf3-4804-af42-43487af8a871";
 const char CONST_UID_PROTOCOL_DEL_ACCESS_TO_SPECIAL[] = "4e7c34e5-c7fe-4c0d-bb4d-7b4a1d4cf9d2";
+const char CONST_UID_PROTOCOL_EXIT_APPLICATION[] = "e9461667-e1ca-4c22-907b-fdc350a931c4";
 //-----------------------------------------------------------------------------
 const char CONST_UID_GROUP_ACCESS_TYPE_SHOW[] = "41743776-d7ce-414f-acf3-71c42a607742"; //Просмотр данных
 const char CONST_UID_GROUP_ACCESS_TYPE_CREATE[] = "1cfa961d-08a2-4aa3-978e-ff23fc88ca08"; //Создание данных

@@ -377,6 +377,20 @@ static std::string QD_GROUP_RIGHT_SPECIAL = PREPARE_QUERYN("DELETE FROM _groupac
     "AND gasp_specialaccess = (SELECT gast_id FROM _groupaccessspecialtype WHERE gast_uid = $2) "
     "RETURNING (SELECT gast_name FROM _groupaccessspecialtype WHERE gast_uid = $2)", 2);
 //-----------------------------------------------------------------------------
+static std::string QI_COLUMN_SIZE = PREPARE_QUERYN("INSERT INTO _columnsize(clsz_user, clsz_tablename, clsz_fieldname, clsz_size) "
+    "VALUES($1, $2, $3, $4)", 4);
+//-----------------------------------------------------------------------------
+static std::string QU_COLUMN_SIZE = PREPARE_QUERYN("UPDATE _columnsize SET "
+    "clsz_size = $1 "
+    "WHERE clsz_user = $2 "
+    "AND clsz_tablename = $3 "
+    "AND clsz_fieldname = $4", 4);
+//-----------------------------------------------------------------------------
+static std::string QU_SETTING = PREPARE_QUERYN("UPDATE _usersettings SET "
+    "usst_value = $1 "
+    "WHERE usst_user = $2 "
+    "AND usst_setting = (SELECT stgs_id FROM _settings WHERE stgs_uid = $3)", 3);
+//-----------------------------------------------------------------------------
 ISTcpWorker::ISTcpWorker()
     : ErrorString(STRING_NO_ERROR),
     IsBusy(false),
@@ -428,6 +442,7 @@ ISTcpWorker::ISTcpWorker()
     MapFunction[API_GROUP_RIGHT_TABLE_DELETE] = &ISTcpWorker::GroupRightTableDelete;
     MapFunction[API_GROUP_RIGHT_SPECIAL_ADD] = &ISTcpWorker::GroupRightSpecialAdd;
     MapFunction[API_GROUP_RIGHT_SPECIAL_DELETE] = &ISTcpWorker::GroupRightSpecialDelete;
+    MapFunction[API_SAVE_META_DATA] = &ISTcpWorker::SaveMetaData;
 
     CRITICAL_SECTION_INIT(&CriticalSection);
     CRITICAL_SECTION_INIT(&CSRunning);
@@ -3054,9 +3069,74 @@ bool ISTcpWorker::GetInternalLists(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAns
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::SaveMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
-    IS_UNUSED(TcpMessage);
     IS_UNUSED(TcpAnswer);
-    return false;
+
+    //Протоколируем в начале, вдруг где-то дальше будет ошибка
+    Protocol(TcpMessage->TcpClient->UserID, CONST_UID_PROTOCOL_EXIT_APPLICATION);
+
+    //Готовим запросы для размеров полей
+    ISQuery qInsertColumnSize(DBConnection, QI_COLUMN_SIZE),
+        qUpdateColumnSize(DBConnection, QU_COLUMN_SIZE);
+
+    //Размеры полей указаны
+    if (TcpMessage->Parameters.HasMember("ColumnSize"))
+    {
+        //Получаем размеры полей и обходим их
+        rapidjson::Value &ColumnSizeObject = TcpMessage->Parameters["ColumnSize"];
+        for (const auto &TableItem : ColumnSizeObject.GetObject())
+        {
+            for (const auto &FieldItem : TableItem.value.GetObject())
+            {
+                //Пытаем добавить размер поля
+                qInsertColumnSize.BindUInt(TcpMessage->TcpClient->UserID);
+                qInsertColumnSize.BindString(TableItem.name.GetString());
+                qInsertColumnSize.BindString(FieldItem.name.GetString());
+                qInsertColumnSize.BindUInt(FieldItem.value.GetUint());
+                if (!qInsertColumnSize.Execute()) //Если вставка не удалась - проверяем причину
+                {
+                    if (qInsertColumnSize.GetErrorNumber() == 23505) //Причина - наружение уникальности - обновляем
+                    {
+                        qUpdateColumnSize.BindUInt(FieldItem.value.GetUint());
+                        qUpdateColumnSize.BindUInt(TcpMessage->TcpClient->UserID);
+                        qUpdateColumnSize.BindString(TableItem.name.GetString());
+                        qUpdateColumnSize.BindString(FieldItem.name.GetString());
+                        if (!qUpdateColumnSize.Execute()) //Обновить не получилось
+                        {
+                            return ErrorQuery(LANG("Carat.Error.Query.SaveMetaData.UpdateColumnSize"), qUpdateColumnSize);
+                        }
+                    }
+                    else //Вставка не удалась по другой причине
+                    {
+                        return ErrorQuery(LANG("Carat.Error.Query.SaveMetaData.InsertColumnSize"), qInsertColumnSize);
+                    }
+                }
+            }
+        }
+    }
+
+    //Пользовательские настройки указаны
+    if (TcpMessage->Parameters.HasMember("Settings"))
+    {
+        //Получаем изменные настройки
+        rapidjson::Value &SettingsObject = TcpMessage->Parameters["Settings"];
+        if (SettingsObject.MemberCount() > 0)
+        {
+            //Готовим запрос для обновления настроек
+            ISQuery qUpdateSetting(DBConnection, QU_SETTING);
+            for (const auto &MapItem : SettingsObject.GetObject())
+            {
+                qUpdateSetting.BindString(MapItem.value.GetString());
+                qUpdateSetting.BindUInt(TcpMessage->TcpClient->UserID);
+                qUpdateSetting.BindUID(MapItem.name.GetString());
+                if (!qUpdateSetting.Execute())
+                {
+                    return ErrorQuery(LANG("Carat.Error.Query.SaveMetaData.UpdateSetting"), qUpdateSetting);
+                }
+            }
+        }
+    }
+
+    return true;
 }
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::GetGroupRights(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
