@@ -177,6 +177,11 @@ namespace ISAlgorithm
     //! \return возвращает MD5-хэш. Если вернулась пустая строка - значит ошибка
     std::string StringToMD5(const std::string &String);
 
+    //! Кодировать строку в хэш SHA 256
+    //! \param String строка, которая будет кодирована
+    //! \return возвращает хэш строки. Если вернулась пустая строка - значит ошибка
+    std::string StringToSHA256(const std::string &String);
+
     //! Конвертировать размер файла в строку
     //! \param FileSize размер файла в байтах
     //! \return размер файла строкой. В случае ошибки вернётся -1

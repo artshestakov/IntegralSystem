@@ -631,8 +631,46 @@ std::string ISAlgorithm::StringToMD5(const std::string &String)
         size_t Index = 0;
         for (size_t i = 0; i < MD5_SIZE; ++i, ++Index)
         {
-            Result[Index] = MD5_DIGITS[Hash[i] >> 4];
-            Result[++Index] = MD5_DIGITS[Hash[i] & 0xF];
+            Result[Index] = HEX_CHARS[Hash[i] >> 4];
+            Result[++Index] = HEX_CHARS[Hash[i] & 0xF];
+        }
+    }
+    return Result;
+}
+//-----------------------------------------------------------------------------
+std::string ISAlgorithm::StringToSHA256(const std::string &String)
+{
+    std::string Result(SHA256_RESULT_SIZE, CHAR_NULL_TERM);
+    unsigned char Hash[SHA256_SIZE] = { 0 };
+    bool IsOk = false;
+#ifdef WIN32
+    HCRYPTPROV HCryptoProv = 0;
+    if (CryptAcquireContext(&HCryptoProv, NULL, NULL, PROV_RSA_AES, CRYPT_VERIFYCONTEXT) == TRUE)
+    {
+        HCRYPTHASH CryptoHash = 0;
+        if (CryptCreateHash(HCryptoProv, CALG_SHA_256, 0, 0, &CryptoHash) == TRUE)
+        {
+            if (CryptHashData(CryptoHash, (unsigned char *)String.c_str(), (DWORD)String.size(), 0) == TRUE)
+            {
+                unsigned long SHA256Size = SHA256_SIZE;
+                if (CryptGetHashParam(CryptoHash, HP_HASHVAL, Hash, &SHA256Size, 0) == TRUE)
+                {
+                    IsOk = true;
+                }
+            }
+            CryptDestroyHash(CryptoHash);
+        }
+        CryptReleaseContext(HCryptoProv, 0);
+    }
+#else
+#endif
+    if (IsOk)
+    {
+        size_t Index = 0;
+        for (size_t i = 0; i < SHA256_SIZE; ++i, ++Index)
+        {
+            Result[Index] = HEX_CHARS[Hash[i] >> 4];
+            Result[++Index] = HEX_CHARS[Hash[i] & 0xF];
         }
     }
     return Result;
