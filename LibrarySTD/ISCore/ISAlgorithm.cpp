@@ -942,11 +942,11 @@ std::string ISAlgorithm::Base64Encode(unsigned char *Data, size_t Size, std::str
 
     BIO_set_flags(Bio, BIO_FLAGS_BASE64_NO_NL);
     BIO_write(Bio, Data, Size);
-    BIO_flush(Bio);
+    (void)BIO_flush(Bio);
 
     BUF_MEM *Buffer = nullptr;
     BIO_get_mem_ptr(Bio, &Buffer);
-    BIO_set_close(Bio, BIO_NOCLOSE);
+    (void)BIO_set_close(Bio, BIO_NOCLOSE);
     BIO_free_all(Bio);
     Result = &(*Buffer).data[0];
     if (Result.empty())
