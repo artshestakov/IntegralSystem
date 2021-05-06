@@ -349,6 +349,34 @@ static std::string QS_GROUP_RIGHT_SPECIAL = PREPARE_QUERYN("SELECT gast_uid, gas
     "WHERE gast_parent = $2 "
     "ORDER BY gast_order", 2);
 //-----------------------------------------------------------------------------
+static std::string QI_GROUP_RIGHT_SUBSYSTEM = PREPARE_QUERYN("INSERT INTO _groupaccesssubsystem(gass_group, gass_subsystem) "
+    "VALUES($1, $2) "
+    "RETURNING (SELECT sbsm_localname FROM _subsystems WHERE sbsm_uid = $2)", 2);
+//-----------------------------------------------------------------------------
+static std::string QD_GROUP_RIGHT_SUBSYSTEM = PREPARE_QUERYN("DELETE FROM _groupaccesssubsystem "
+    "WHERE gass_group = $1 "
+    "AND gass_subsystem = $2 "
+    "RETURNING (SELECT sbsm_localname FROM _subsystems WHERE sbsm_uid = $2)", 2);
+//-----------------------------------------------------------------------------
+static std::string QI_GROUP_RIGHT_TABLE = PREPARE_QUERYN("INSERT INTO _groupaccesstable(gatb_group, gatb_table, gatb_accesstype) "
+    "VALUES($1, $2, (SELECT gatt_id FROM _groupaccesstabletype WHERE gatt_uid = $3)) "
+    "RETURNING (SELECT gatt_name FROM _groupaccesstabletype WHERE gatt_uid = $3)", 3);
+//-----------------------------------------------------------------------------
+static std::string QD_GROUP_RIGHT_TABLE = PREPARE_QUERYN("DELETE FROM _groupaccesstable "
+    "WHERE gatb_group = $1 "
+    "AND gatb_table = $2 "
+    "AND gatb_accesstype = (SELECT gatt_id FROM _groupaccesstabletype WHERE gatt_uid = $3) "
+    "RETURNING (SELECT gatt_name FROM _groupaccesstabletype WHERE gatt_uid = $3)", 3);
+//-----------------------------------------------------------------------------
+static std::string QI_GROUP_RIGHT_SPECIAL = PREPARE_QUERYN("INSERT INTO _groupaccessspecial(gasp_group, gasp_specialaccess) "
+    "VALUES($1, (SELECT gast_id FROM _groupaccessspecialtype WHERE gast_uid = $2)) "
+    "RETURNING (SELECT gast_name FROM _groupaccessspecialtype WHERE gast_uid = $2)", 2);
+//-----------------------------------------------------------------------------
+static std::string QD_GROUP_RIGHT_SPECIAL = PREPARE_QUERYN("DELETE FROM _groupaccessspecial "
+    "WHERE gasp_group = $1 "
+    "AND gasp_specialaccess = (SELECT gast_id FROM _groupaccessspecialtype WHERE gast_uid = $2) "
+    "RETURNING (SELECT gast_name FROM _groupaccessspecialtype WHERE gast_uid = $2)", 2);
+//-----------------------------------------------------------------------------
 ISTcpWorker::ISTcpWorker()
     : ErrorString(STRING_NO_ERROR),
     IsBusy(false),
@@ -394,6 +422,12 @@ ISTcpWorker::ISTcpWorker()
     MapFunction[API_GET_GROUP_RIGHTS] = &ISTcpWorker::GetGroupRights;
     MapFunction[API_ORGANIZATION_FROM_INN] = &ISTcpWorker::OrganizationFromINN;
     MapFunction[API_GET_TABLE_QUERY] = &ISTcpWorker::GetTableQuery;
+    MapFunction[API_GROUP_RIGHT_SUBSYSTEM_ADD] = &ISTcpWorker::GroupRightSubSystemAdd;
+    MapFunction[API_GROUP_RIGHT_SUBSYSTEM_DELETE] = &ISTcpWorker::GroupRightSubSystemDelete;
+    MapFunction[API_GROUP_RIGHT_TABLE_ADD] = &ISTcpWorker::GroupRightTableAdd;
+    MapFunction[API_GROUP_RIGHT_TABLE_DELETE] = &ISTcpWorker::GroupRightTableDelete;
+    MapFunction[API_GROUP_RIGHT_SPECIAL_ADD] = &ISTcpWorker::GroupRightSpecialAdd;
+    MapFunction[API_GROUP_RIGHT_SPECIAL_DELETE] = &ISTcpWorker::GroupRightSpecialDelete;
 
     CRITICAL_SECTION_INIT(&CriticalSection);
     CRITICAL_SECTION_INIT(&CSRunning);
@@ -3217,44 +3251,246 @@ bool ISTcpWorker::GetGroupRights(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::GroupRightSubSystemAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
-    IS_UNUSED(TcpMessage);
     IS_UNUSED(TcpAnswer);
-    return false;
+
+    unsigned int GroupID = 0;
+    std::string SubSystemUID;
+    if (!CheckIsNullUInt(TcpMessage, "GroupID", GroupID) ||
+        !CheckIsNullString(TcpMessage, "UID", SubSystemUID))
+    {
+        return false;
+    }
+
+    //Добавляем право
+    ISQuery qInsertSubSystemRight(DBConnection, QI_GROUP_RIGHT_SUBSYSTEM);
+    qInsertSubSystemRight.BindUInt(GroupID);
+    qInsertSubSystemRight.BindUID(SubSystemUID);
+    if (!qInsertSubSystemRight.Execute()) //Ошибка запроса
+    {
+        if (qInsertSubSystemRight.GetErrorNumber() == 23505)
+        {
+            ErrorString = LANG("Carat.Error.Query.GroupRightSubSystemAdd.AlreadyExist");
+            return false;
+        }
+        else
+        {
+            return ErrorQuery(LANG("Carat.Error.Query.GroupRightSubSystemAdd.Insert"), qInsertSubSystemRight);
+        }
+    }
+
+    //Не удалось прочитать имя подсистемы
+    if (!qInsertSubSystemRight.First())
+    {
+        ErrorString = qInsertSubSystemRight.GetErrorString();
+        return false;
+    }
+    Protocol(TcpMessage->TcpClient->UserID, CONST_UID_PROTOCOL_ADD_ACCESS_TO_SUBSYSTEM, std::string(), std::string(), 0, qInsertSubSystemRight.ReadColumn(0));
+    return true;
 }
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::GroupRightSubSystemDelete(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
-    IS_UNUSED(TcpMessage);
     IS_UNUSED(TcpAnswer);
-    return false;
+
+    unsigned int GroupID = 0;
+    std::string SubSystemUID;
+    if (!CheckIsNullUInt(TcpMessage, "GroupID", GroupID) ||
+        !CheckIsNullString(TcpMessage, "UID", SubSystemUID))
+    {
+        return false;
+    }
+
+    //Удаляем право
+    ISQuery qDeleteSubSystemRight(DBConnection, QD_GROUP_RIGHT_SUBSYSTEM);
+    qDeleteSubSystemRight.BindUInt(GroupID);
+    qDeleteSubSystemRight.BindUID(SubSystemUID);
+    if (!qDeleteSubSystemRight.Execute()) //Ошибка запроса
+    {
+        return ErrorQuery(LANG("Carat.Error.Query.GroupRightSubSystemDelete.Delete"), qDeleteSubSystemRight);
+    }
+
+    //Если ни одна строка не была затронута, значит такого права нет - ошибка
+    if (qDeleteSubSystemRight.GetResultAffected() == 0)
+    {
+        ErrorString = LANG("Carat.Error.Query.GroupRightSubSystemDelete.NotExist");
+        return false;
+    }
+
+    if (!qDeleteSubSystemRight.First()) //Не удалось переместиться на первую строку
+    {
+        ErrorString = qDeleteSubSystemRight.GetErrorString();
+        return false;
+    }
+    Protocol(TcpMessage->TcpClient->UserID, CONST_UID_PROTOCOL_DEL_ACCESS_TO_SUBSYSTEM, std::string(), std::string(), 0, qDeleteSubSystemRight.ReadColumn(0));
+    return true;
 }
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::GroupRightTableAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
-    IS_UNUSED(TcpMessage);
     IS_UNUSED(TcpAnswer);
-    return false;
+
+    unsigned int GroupID = 0;
+    std::string TableName, AccessUID;
+    if (!CheckIsNullUInt(TcpMessage, "GroupID", GroupID) ||
+        !CheckIsNullString(TcpMessage, "TableName", TableName) ||
+        !CheckIsNullString(TcpMessage, "AccessUID", AccessUID))
+    {
+        return false;
+    }
+
+    //Получаем мета-таблицу
+    PMetaTable *MetaTable = GetMetaTable(TableName);
+    if (!MetaTable)
+    {
+        return false;
+    }
+
+    //Добавляем право
+    ISQuery qInsertTableRight(DBConnection, QI_GROUP_RIGHT_TABLE);
+    qInsertTableRight.BindUInt(GroupID);
+    qInsertTableRight.BindString(MetaTable->Name);
+    qInsertTableRight.BindUID(AccessUID);
+    if (!qInsertTableRight.Execute()) //Вставка не удалась
+    {
+        if (qInsertTableRight.GetErrorNumber() == 23505)
+        {
+            ErrorString = LANG("Carat.Error.Query.GroupRightTableAdd.AlreadyExist");
+            return false;
+        }
+        else
+        {
+            return ErrorQuery(LANG("Carat.Error.Query.GroupRightTableAdd.Insert"), qInsertTableRight);
+        }
+    }
+
+    //Не удалось прочитать
+    if (!qInsertTableRight.First())
+    {
+        return false;
+    }
+    Protocol(TcpMessage->TcpClient->UserID, CONST_UID_PROTOCOL_ADD_ACCESS_TO_TABLE, MetaTable->Name, MetaTable->LocalListName, 0, qInsertTableRight.ReadColumn(0));
+    return true;
 }
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::GroupRightTableDelete(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
-    IS_UNUSED(TcpMessage);
     IS_UNUSED(TcpAnswer);
-    return false;
+
+    unsigned int GroupID = 0;
+    std::string TableName, AccessUID;
+    if (!CheckIsNullUInt(TcpMessage, "GroupID", GroupID) ||
+        !CheckIsNullString(TcpMessage, "TableName", TableName) ||
+        !CheckIsNullString(TcpMessage, "AccessUID", AccessUID))
+    {
+        return false;
+    }
+
+    //Получаем мета-таблицу
+    PMetaTable *MetaTable = GetMetaTable(TableName);
+    if (!MetaTable)
+    {
+        return false;
+    }
+
+    //Удаляем право
+    ISQuery qDeleteTableRight(DBConnection, QD_GROUP_RIGHT_TABLE);
+    qDeleteTableRight.BindUInt(GroupID);
+    qDeleteTableRight.BindString(MetaTable->Name);
+    qDeleteTableRight.BindUID(AccessUID);
+    if (!qDeleteTableRight.Execute())
+    {
+        return ErrorQuery(LANG("Carat.Error.Query.GroupRightTableDelete.Delete"), qDeleteTableRight);
+    }
+
+    //Если ни одна строка не была затронута, значит такого права нет - ошибка
+    if (qDeleteTableRight.GetResultAffected() == 0)
+    {
+        ErrorString = LANG("Carat.Error.Query.GroupRightTableDelete.NotExist");
+        return false;
+    }
+
+    if (!qDeleteTableRight.First()) //Не удалось переместиться на первую строку
+    {
+        ErrorString = qDeleteTableRight.GetErrorString();
+        return false;
+    }
+    Protocol(TcpMessage->TcpClient->UserID, CONST_UID_PROTOCOL_DEL_ACCESS_TO_TABLE, MetaTable->Name, MetaTable->LocalListName, 0, qDeleteTableRight.ReadColumn(0));
+    return true;
 }
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::GroupRightSpecialAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
-    IS_UNUSED(TcpMessage);
     IS_UNUSED(TcpAnswer);
-    return false;
+
+    unsigned int GroupID = 0;
+    std::string SpecialRightUID;
+    if (!CheckIsNullUInt(TcpMessage, "GroupID", GroupID) ||
+        !CheckIsNullString(TcpMessage, "SpecialRightUID", SpecialRightUID))
+    {
+        return false;
+    }
+
+    //Добавляем спец. право
+    ISQuery qInsertSpecialRight(DBConnection, QI_GROUP_RIGHT_SPECIAL);
+    qInsertSpecialRight.BindUInt(GroupID);
+    qInsertSpecialRight.BindUID(SpecialRightUID);
+    if (!qInsertSpecialRight.Execute()) //Вставка не удалась и ошибка говорит о наружении уникальности
+    {
+        if (qInsertSpecialRight.GetErrorNumber() == 23505)
+        {
+            ErrorString = LANG("Carat.Error.Query.GroupRightSpecialAdd.AlreadyExist");
+            return false;
+        }
+        else
+        {
+            return ErrorQuery(LANG("Carat.Error.Query.GroupRightSpecialAdd.Insert"), qInsertSpecialRight);
+        }
+    }
+
+    if (!qInsertSpecialRight.First())
+    {
+        ErrorString = qInsertSpecialRight.GetErrorString();
+        return false;
+    }
+    Protocol(TcpMessage->TcpClient->UserID, CONST_UID_PROTOCOL_ADD_ACCESS_TO_SPECIAL, std::string(), std::string(), 0, qInsertSpecialRight.ReadColumn(0));
+    return true;
 }
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::GroupRightSpecialDelete(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
-    IS_UNUSED(TcpMessage);
     IS_UNUSED(TcpAnswer);
-    return false;
+
+    unsigned int GroupID = 0;
+    std::string SpecialRightUID;
+    if (!CheckIsNullUInt(TcpMessage, "GroupID", GroupID) ||
+        !CheckIsNullString(TcpMessage, "SpecialRightUID", SpecialRightUID))
+    {
+        return false;
+    }
+
+    //Удаляем спец. право
+    ISQuery qDeleteSpecialRight(DBConnection, QD_GROUP_RIGHT_SPECIAL);
+    qDeleteSpecialRight.BindUInt(GroupID);
+    qDeleteSpecialRight.BindUID(SpecialRightUID);
+    if (!qDeleteSpecialRight.Execute()) //Ошибка запроса
+    {
+        return ErrorQuery(LANG("Carat.Error.Query.GroupRightSpecialDelete.Delete"), qDeleteSpecialRight);
+    }
+
+    //Если ни одна строка не была затронута, значит такого права нет - ошибка
+    if (qDeleteSpecialRight.GetResultAffected() == 0)
+    {
+        ErrorString = LANG("Carat.Error.Query.GroupRightSpecialDelete.NotExist");
+        return false;
+    }
+
+    if (!qDeleteSpecialRight.First()) //Не удалось переместиться на первую строку
+    {
+        ErrorString = qDeleteSpecialRight.GetErrorString();
+        return false;
+    }
+    Protocol(TcpMessage->TcpClient->UserID, CONST_UID_PROTOCOL_DEL_ACCESS_TO_SPECIAL, std::string(), std::string(), 0, qDeleteSpecialRight.ReadColumn(0));
+    return true;
 }
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::GetRecordValue(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)

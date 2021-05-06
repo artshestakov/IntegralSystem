@@ -94,6 +94,12 @@ const char API_GET_FOREIGN_LIST[] = "GetForeignList"; //Получить список значений
 const char API_GET_GROUP_RIGHTS[] = "GetGroupRights"; //Получить права доступа группы
 const char API_ORGANIZATION_FROM_INN[] = "OrganizationFromINN"; //Поиск организации по ИНН
 const char API_GET_TABLE_QUERY[] = "GetTableQuery"; //Получить данные запроса
+const char API_GROUP_RIGHT_SUBSYSTEM_ADD[] = "GroupRightSubSystemAdd"; //Добавить группу право на подсистему
+const char API_GROUP_RIGHT_SUBSYSTEM_DELETE[] = "GroupRightSubSystemDelete"; //Удалить у группы право на подсистему
+const char API_GROUP_RIGHT_TABLE_ADD[] = "GroupRightTableAdd"; //Добавить группе право на таблицу
+const char API_GROUP_RIGHT_TABLE_DELETE[] = "GroupRightTableDelete"; //Удалить у группы право на таблицу
+const char API_GROUP_RIGHT_SPECIAL_ADD[] = "GroupRightSpecialAdd"; //Добавить спец. право группе
+const char API_GROUP_RIGHT_SPECIAL_DELETE[] = "GroupRightSpecialDelete"; //Удалить спец. право у группы
 //PROTOCOL---------------------------------------------------------------------
 const char CONST_UID_PROTOCOL_ENTER_APPLICATION[] = "2614cb96-ec54-4d4f-b1a6-06d2444962ca";
 const char CONST_UID_PROTOCOL_GET_UPDATE_CLIENT[] = "0234643a-af60-44bf-a2eb-08a71307841c";
@@ -120,6 +126,12 @@ const char CONST_UID_PROTOCOL_NOTE_RECORD_EDIT[] = "c20634af-ef58-4d96-9215-8085
 const char CONST_UID_PROTOCOL_SEARCH_FULL_TEXT[] = "b0a1ef68-2aa4-4eb2-a5a9-f8e5604f864b";
 const char CONST_UID_PROTOCOL_RECORD_FAVORITE_ADD[] = "8d08a9f9-fc50-4986-8d92-fec0d7d36da0";
 const char CONST_UID_PROTOCOL_RECORD_FAVORITE_DELETE[] = "af2641f0-6838-441c-a0a9-b62090826998";
+const char CONST_UID_PROTOCOL_ADD_ACCESS_TO_SUBSYSTEM[] = "ea765447-6811-43ad-8cfc-9b2e758a5b4e";
+const char CONST_UID_PROTOCOL_DEL_ACCESS_TO_SUBSYSTEM[] = "5e5ec969-0d11-41fb-9652-7e2add466782";
+const char CONST_UID_PROTOCOL_ADD_ACCESS_TO_TABLE[] = "44fdda11-9f7b-4006-8178-944da65fb7aa";
+const char CONST_UID_PROTOCOL_DEL_ACCESS_TO_TABLE[] = "9d4e8104-33f9-4f9e-a6aa-272dda7c1a52";
+const char CONST_UID_PROTOCOL_ADD_ACCESS_TO_SPECIAL[] = "fb494e8e-bdf3-4804-af42-43487af8a871";
+const char CONST_UID_PROTOCOL_DEL_ACCESS_TO_SPECIAL[] = "4e7c34e5-c7fe-4c0d-bb4d-7b4a1d4cf9d2";
 //-----------------------------------------------------------------------------
 const char CONST_UID_GROUP_ACCESS_TYPE_SHOW[] = "41743776-d7ce-414f-acf3-71c42a607742"; //Просмотр данных
 const char CONST_UID_GROUP_ACCESS_TYPE_CREATE[] = "1cfa961d-08a2-4aa3-978e-ff23fc88ca08"; //Создание данных
