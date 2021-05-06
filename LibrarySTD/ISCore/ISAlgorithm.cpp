@@ -619,10 +619,7 @@ std::string ISAlgorithm::StringToMD5(const std::string &String)
     {
         if (MD5_Update(&Context, String.c_str(), String.size()) == 1)
         {
-            if (MD5_Final(Hash, &Context) == 1)
-            {
-                IsOk = true;
-            }
+            IsOk = MD5_Final(Hash, &Context) == 1;
         }
     }
 #endif
@@ -663,6 +660,14 @@ std::string ISAlgorithm::StringToSHA256(const std::string &String)
         CryptReleaseContext(HCryptoProv, 0);
     }
 #else
+    SHA256_CTX Context;
+    if (SHA256_Init(&Context) == 1)
+    {
+        if (SHA256_Update(&Context, String.c_str(), String.size()) == 1)
+        {
+            IsOk = SHA256_Final(Hash, &Context) == 1;
+        }
+    }
 #endif
     if (IsOk)
     {
