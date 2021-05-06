@@ -118,7 +118,8 @@ bool ISTcpQuery::Execute()
             }
         }
 
-        StringBuffer += Buffer;
+        //Добавляем порцию данных в буфер и увеличиваем его размер
+        StringBuffer += std::string(Buffer, Result);
         CurrentSize += Result;
 
         if (AnswerSize == CurrentSize) //Запрос пришёл полностью
@@ -174,7 +175,6 @@ bool ISTcpQuery::IsValidAnswer(const std::string &StringBuffer, size_t Size, boo
     rapidjson::ParseResult Result = JsonDocument.Parse(StringBuffer.c_str(), Size);
     if (Result.Code() != rapidjson::ParseErrorCode::kParseErrorNone)
     {
-        
         ErrorString = GetParseError_En(Result.Code());
         return false;
     }

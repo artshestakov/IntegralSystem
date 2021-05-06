@@ -54,11 +54,16 @@ int main(int argc, char **argv)
         return EXIT_FAILURE;
     }
 
+    std::string h = ISAlgorithm::StringToSHA256("postgresadm777");
+    ISAlgorithm::StringToUpper(h);
+
     //Авторизация
     ISTcpQuery qAuth(API_AUTH);
-    qAuth.BindString("Login", "postgres");
-    qAuth.BindString("Password", "adm777");
-    qAuth.Execute();
+    qAuth.BindString("Hash", h);
+    if (qAuth.Execute())
+    {
+        qAuth.Execute(API_GET_META_DATA);
+    }
 
     //Отключаемся от сервера
     ISTcpConnector::Instance().Disconnect();
