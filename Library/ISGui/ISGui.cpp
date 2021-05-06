@@ -104,7 +104,7 @@ bool ISGui::Startup(ISSplashScreen *SplashScreen)
     ISTcpQuery qAuth(API_GET_META_DATA);
     if (!qAuth.Execute()) //Не удалось получить мета-данные - выходим с ошибкой
     {
-        ISMessageBox::ShowCritical(SplashScreen, qAuth.GetErrorString());
+        ISMessageBox::ShowCritical(SplashScreen, qAuth.GetErrorString(), LANG("ApplicationWillBeClose"));
         return false;
     }
     QVariantMap MetaData = qAuth.TakeAnswer();
