@@ -9,7 +9,7 @@ const char PATH_SEPARATOR = '\\';
 #else
 const size_t MAX_PATH = 260;
 const char PATH_SEPARATOR = '/';
-const int SOCKET_ERROR = -1;
+const int SOCKET_ERROR = -1; //???
 #endif
 //-----------------------------------------------------------------------------
 const size_t    NPOS = std::string::npos;
@@ -23,6 +23,7 @@ const size_t    MD5_RESULT_SIZE = 32;
 const char      MD5_DIGITS[] = "0123456789abcdef";
 const size_t    DAY_IN_SECONDS = 86400;
 const char      TOKEN_DA_DATA_TOKEN[] = "f2c204cd6ba093b294324acec5d01b25fad632cf";
+const size_t    MAX_DIGIT_LENGHT = 20; //Максимальная длинна числа
 //CHARS------------------------------------------------------------------------
 const char  CHAR_NULL_TERM = '\0'; //Символ конца строки
 //LOCALIZATION-----------------------------------------------------------------
@@ -50,7 +51,7 @@ const char      LOG_ERROR[] = "Error";
 const char      LOG_CRITICAL[] = "Critical";
 const char      LOG_TRACE[] = "Trace";
 const char      LOG_ASSERT[] = "Assert";
-//ASTERISK---------------------------------------------------------------------
+//TCP--------------------------------------------------------------------------
 const size_t    TCP_PACKET_MAX_SIZE = 65535; //Максимальный размер одного TCP-пакета
 //CARAT------------------------------------------------------------------------
 const unsigned short    CARAT_TCP_PORT = 50000; //Стандартный порт TCP-сервера

@@ -25,6 +25,11 @@ const std::string& ISTcpConnector::GetErrorString() const
     return ErrorString;
 }
 //-----------------------------------------------------------------------------
+const ISSocket& ISTcpConnector::GetSocket() const
+{
+    return Socket;
+}
+//-----------------------------------------------------------------------------
 bool ISTcpConnector::IsConnected() const
 {
     return Socket != 0;

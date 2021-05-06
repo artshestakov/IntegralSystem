@@ -637,7 +637,7 @@ bool ISTcpWorker::CheckIsNull(ISTcpMessage *TcpMessage, const char *ParameterNam
     //Получаем константное имя параметра
     if (!TcpMessage->Parameters.HasMember(ParameterName))
     {
-        ErrorString = ISAlgorithm::StringF("Parameter \"%s\" not exist", ParameterName);
+        ErrorString = ISAlgorithm::StringF("Parameter '%s' not exist", ParameterName);
         return false;
     }
 
@@ -647,7 +647,7 @@ bool ISTcpWorker::CheckIsNull(ISTcpMessage *TcpMessage, const char *ParameterNam
     //Проверяем, не пустое ли значение
     if (JsonValue.IsNull())
     {
-        ErrorString = ISAlgorithm::StringF("Parameter \"%s\" is null", ParameterName);
+        ErrorString = ISAlgorithm::StringF("Parameter '%s' is null", ParameterName);
         return false;
     }
 
@@ -668,7 +668,7 @@ bool ISTcpWorker::CheckIsNull(ISTcpMessage *TcpMessage, const char *ParameterNam
     case rapidjson::Type::kStringType: //Строковый тип
         if (JsonValue.GetStringLength() == 0)
         {
-            ErrorString = ISAlgorithm::StringF("Parameter \"%s\" is empty", ParameterName);
+            ErrorString = ISAlgorithm::StringF("Parameter '%s' is empty", ParameterName);
             return false;
         }
         break;

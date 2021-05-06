@@ -205,7 +205,7 @@ void ISTcpServer::WorkerReader(ISTcpClient *TcpClient)
                 {
                     if (Buffer[i] == '.') //Нашли точку
                     {
-                        char Char[20] = { 0 };
+                        char Char[MAX_DIGIT_LENGHT] = { 0 };
                         std::memcpy(Char, Buffer, i); //Получаем размер строкой
                         MessageSize = std::atoi(Char); //Приводим строку с размером к целому числу
                         if (MessageSize > 0) //Приведение прошло успешно
@@ -216,7 +216,8 @@ void ISTcpServer::WorkerReader(ISTcpClient *TcpClient)
                         break;
                     }
                 }
-                if (!MessageSize) //Размер не найден - сообщение не валидное - отключаем клиента
+
+                if (MessageSize == 0) //Размер не найден - сообщение не валидное - отключаем клиента
                 {
                     ISLOGGER_C(__CLASS__, "Not get message size. Client will be disconnected. Invalid message:\n%s", Buffer);
                     break;

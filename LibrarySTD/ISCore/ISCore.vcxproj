@@ -103,6 +103,7 @@
       <TreatWarningAsError>true</TreatWarningAsError>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <MinimalRebuild>false</MinimalRebuild>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\Components\RapidJSON</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -121,6 +122,7 @@
       <TreatWarningAsError>true</TreatWarningAsError>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <MinimalRebuild>false</MinimalRebuild>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\Components\RapidJSON</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -140,6 +142,7 @@
       <PreprocessorDefinitions>WIN32;ISCORE_LIBRARY;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <TreatWarningAsError>true</TreatWarningAsError>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\Components\RapidJSON</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -161,6 +164,7 @@
       <PreprocessorDefinitions>WIN32;ISCORE_LIBRARY;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <TreatWarningAsError>true</TreatWarningAsError>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\Components\RapidJSON</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -183,6 +187,8 @@
     <ClCompile Include="ISLogger.cpp" />
     <ClCompile Include="ISProperty.cpp" />
     <ClCompile Include="ISResourcer.cpp" />
+    <ClCompile Include="ISTcpConnector.cpp" />
+    <ClCompile Include="ISTcpQuery.cpp" />
     <ClCompile Include="ISTrace.cpp" />
     <ClCompile Include="StdAfx.cpp" />
     <ClCompile Include="tinyxml2.cpp" />
@@ -202,6 +208,8 @@
     <ClInclude Include="ISProperty.h" />
     <ClInclude Include="ISResourcer.h" />
     <ClInclude Include="ISStructs.h" />
+    <ClInclude Include="ISTcpConnector.h" />
+    <ClInclude Include="ISTcpQuery.h" />
     <ClInclude Include="ISTrace.h" />
     <ClInclude Include="ISTypedefs.h" />
     <ClInclude Include="SimpleIni.h" />

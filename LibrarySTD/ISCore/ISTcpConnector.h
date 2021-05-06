@@ -10,12 +10,10 @@ public:
     static ISTcpConnector& Instance();
 
     const std::string& GetErrorString() const; //Получить текствоое описание ошибки
+    const ISSocket& GetSocket() const; //Получить сокет
     bool IsConnected() const; //Проверить наличие соединения
     bool Connect(const std::string &Host, unsigned short Port); //Подключение
     void Disconnect(); //Отключение
-
-private:
-    //void Error(QTcpSocket::SocketError socket_error); //Событие ошибки сокета
 
 private:
     ISTcpConnector();

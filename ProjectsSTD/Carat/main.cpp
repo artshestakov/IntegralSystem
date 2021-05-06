@@ -1,5 +1,6 @@
 #include "ISCaratApplication.h"
 #include "ISLogger.h"
+#include "ISConsole.h"
 //-----------------------------------------------------------------------------
 int main(int argc, char **argv)
 {
@@ -13,8 +14,8 @@ int main(int argc, char **argv)
     {
         ISLogger::Instance().Shutdown();
     }
-#if defined(DEBUG) && defined(WIN32)
-    system("PAUSE");
+#if defined(DEBUG) && defined(WIN32) //???
+    ISConsole::Pause();
 #endif
     return Result ? EXIT_SUCCESS : EXIT_FAILURE;
 }
