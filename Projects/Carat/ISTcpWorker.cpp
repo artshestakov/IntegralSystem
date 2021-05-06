@@ -1426,9 +1426,7 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 						qInsertSetting.BindValue(":Value", SettingDefault);
 						if (!qInsertSetting.Execute())
 						{
-							//???
-							ErrorString = "Error inserting new user setting: " + qInsertSetting.GetErrorString();
-							return false;
+							return ErrorQuery(LANG("Carat.Error.Query.GetMetaData.InsertSetting"), qInsertSetting);
 						}
 						SettingMap["Value"] = SettingDefault;
 					}

@@ -74,6 +74,7 @@
     <Local Name="Carat.Error.Query.GetMetaData.Favorite" Russian="Не удалось получить избранные записи."/>
     <Local Name="Carat.Error.Query.GetMetaData.ColumnSize" Russian="Не удалось получить размеры полей."/>
     <Local Name="Carat.Error.Query.GetMetaData.SettingsGroup" Russian="Не удалось получить группы настроек."/>
+    <Local Name="Carat.Error.Query.GetMetaData.InsertSetting" Russian="Не удалось добавить новую пользовательскую настройку."/>
     <Local Name="Carat.Error.Query.GetMetaData.SettingsUser" Russian="Не удалось получить настроки пользователя."/>
     <Local Name="Carat.Error.Query.GetMetaData.Paragraph" Russian="Не удалось получить параграфы."/>
     <Local Name="Carat.Error.Query.GetMetaData.TaskPriority" Russian="Не удалось получить приоритеты задач."/>
