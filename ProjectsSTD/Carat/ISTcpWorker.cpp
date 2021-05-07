@@ -1917,13 +1917,6 @@ bool ISTcpWorker::GetRecordCall(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer
     return true;
 }
 //-----------------------------------------------------------------------------
-bool ISTcpWorker::GetClients(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
-{
-    IS_UNUSED(TcpMessage);
-    IS_UNUSED(TcpAnswer);
-    return false;
-}
-//-----------------------------------------------------------------------------
 bool ISTcpWorker::RecordAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
     std::string TableName;
@@ -3224,7 +3217,6 @@ bool ISTcpWorker::SearchFullText(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
 
     //Выполняем запрос
     ISQuery qSelect(DBConnection, SqlText);
-    qSelect.SetShowLongQuery(false);
     qSelect.BindString(Value);
     if (!qSelect.Execute())
     {
