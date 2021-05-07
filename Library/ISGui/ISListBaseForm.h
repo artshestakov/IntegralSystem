@@ -39,7 +39,6 @@ public:
     ISVectorInt GetSelectedRowIndexes(); //Получить список индексов выделенных строк
     void SetSelectObjectAfterUpdate(unsigned int ObjectID); //Изменить код объекта, который будет выделен после операции (создание, создание копии, изменение) над ним 
     void SetSelectObjectAfterUpdate(const ISVectorUInt &Objects); //Изменить код объекта, который будет выделен после операции (создание, создание копии, изменение) над ним 
-    PMetaTable* GetMetaTable(); //Получить указатель на мета-таблицу
     ISTcpModel* GetTcpModel(); //Получить указатель на модель
     QStatusBar* GetStatusBar(); //Получить указатель на статус-бар
     ISTcpQueryTable* GetTcpQuery(); //Получить указатель на объекта запроса
@@ -101,6 +100,10 @@ private:
 
 private:
     PMetaTable *MetaTable;
+    QString MetaTableName;
+    QString MetaTableLocalListName;
+    bool MetaTableShowOnly;
+    QString MetaTableTitleName;
     ISTcpQueryTable *TcpQuery;
     bool IsLoadingData; //Флаг загрузки данных
     ISVectorUInt SelectObjectAfterUpdate; //Вектор записей, которые нужно выделить после обновления таблицы

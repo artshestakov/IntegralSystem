@@ -357,6 +357,15 @@ bool ISMetaData::XSNInitTable(tinyxml2::XMLElement *XmlElement, tinyxml2::XMLEle
         MetaTable->IsSystem = Temp == "true";
     }
 
+    //Получаем флаг "Только просмотр"
+    const char *ShowOnly = XmlElement->Attribute("ShowOnly");
+    if (ShowOnly && strlen(ShowOnly) > 0)
+    {
+        std::string Temp(ShowOnly);
+        ISAlgorithm::StringToLower(Temp);
+        MetaTable->ShowOnly = Temp == "true";
+    }
+
     Tables.emplace_back(MetaTable);
     return true;
 }

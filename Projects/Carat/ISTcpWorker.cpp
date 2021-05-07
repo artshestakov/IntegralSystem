@@ -2494,7 +2494,10 @@ bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	QVariantMap ServiceInfoMap =
 	{
 		{ "SortingField", SortingField },
-		{ "SortingOrder", SortingOrder }
+		{ "SortingOrder", SortingOrder },
+        { "TableLocalListName", MetaTable->LocalListName },
+        { "TableShowOnly", MetaTable->ShowOnly },
+        { "TableTitleName", MetaTable->TitleName }
 	};
 
 	//Формируем запрос на выборку

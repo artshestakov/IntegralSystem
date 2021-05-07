@@ -25,6 +25,8 @@
 ISListBaseForm::ISListBaseForm(const QString &TableName, QWidget *parent)
     : ISInterfaceMetaForm(parent),
     MetaTable(ISMetaData::Instance().GetMetaTable(TableName)),
+    MetaTableName(TableName),
+    MetaTableShowOnly(false),
     TcpQuery(new ISTcpQueryTable()),
     IsLoadingData(false),
     SelectObjectAfterUpdate(0),
@@ -205,7 +207,7 @@ ISObjectPair ISListBaseForm::GetObject()
 {
     ISModelRecord CurrentRecord = GetCurrentRecord();
     QString ObjectName;
-    QStringList TitleNameFields = MetaTable->TitleName.split(';');
+    QStringList TitleNameFields = MetaTableTitleName.split(';');
     for (const QString &FieldName : TitleNameFields)
     {
         ObjectName += TcpModel->data(TcpModel->index(GetCurrentRowIndex(), TcpModel->GetFieldIndex(FieldName))).toString() + " ";
@@ -251,7 +253,7 @@ QVariant ISListBaseForm::GetCurrentRecordValueDB(const QString &FieldName)
 {
     QVariant Value;
     ISTcpQuery qGetRecordValue(API_GET_RECORD_VALUE);
-    qGetRecordValue.BindValue("TableName", MetaTable->Name);
+    qGetRecordValue.BindValue("TableName", MetaTableName);
     qGetRecordValue.BindValue("FieldName", FieldName);
     qGetRecordValue.BindValue("ObjectID", GetObjectID());
     if (qGetRecordValue.Execute())
@@ -313,11 +315,6 @@ void ISListBaseForm::SetSelectObjectAfterUpdate(const ISVectorUInt &Objects)
     SelectObjectAfterUpdate = Objects;
 }
 //-----------------------------------------------------------------------------
-PMetaTable* ISListBaseForm::GetMetaTable()
-{
-    return MetaTable;
-}
-//-----------------------------------------------------------------------------
 ISTcpModel* ISListBaseForm::GetTcpModel()
 {
     return TcpModel;
@@ -349,7 +346,7 @@ void ISListBaseForm::FieldResized(bool Include)
 void ISListBaseForm::FieldResized(int LogicalIndex, int WidthOld, int WidthNew)
 {
     Q_UNUSED(WidthOld);
-    ISColumnSizer::Instance().SetColumnSize(MetaTable->Name, TcpModel->headerData(LogicalIndex, Qt::Horizontal, Qt::UserRole).toString(), WidthNew);
+    ISColumnSizer::Instance().SetColumnSize(MetaTableName, TcpModel->headerData(LogicalIndex, Qt::Horizontal, Qt::UserRole).toString(), WidthNew);
 }
 //-----------------------------------------------------------------------------
 void ISListBaseForm::SortingChanged(int LogicalIndex, Qt::SortOrder SortingOrder)
@@ -432,7 +429,7 @@ void ISListBaseForm::CornerButtonClicked()
 void ISListBaseForm::AfterShowEvent()
 {
     ISInterfaceMetaForm::AfterShowEvent();
-    SetShowOnly(MetaTable->ShowOnly);
+    SetShowOnly(MetaTableShowOnly);
 }
 //-----------------------------------------------------------------------------
 void ISListBaseForm::AddAction(QAction *Action, bool AddingToActionGroup, bool AddingToContextMenu)
@@ -521,12 +518,12 @@ void ISListBaseForm::CreateDelegates()
     for (int i = 0; i < TcpModel->columnCount(); ++i) //Обход полей
     {
         QString HeaderData = TcpModel->headerData(i, Qt::Horizontal, Qt::UserRole).toString();
-        PMetaField *MetaField = MetaTable->GetField(HeaderData);
+        ISModelField ModelField = TcpModel->GetField(HeaderData);
 
         QAbstractItemDelegate *AbstractItemDelegate = TableView->itemDelegateForColumn(i);
         if (!AbstractItemDelegate)
         {
-            switch (MetaField->Type)
+            switch (ModelField.Type)
             {
             case ISNamespace::FieldType::Bool: AbstractItemDelegate = new ISDelegateBoolean(TableView); break;
             case ISNamespace::FieldType::Image: AbstractItemDelegate = new ISDelegateImage(TableView); break;
@@ -618,13 +615,13 @@ void ISListBaseForm::SetEnabledActions(bool Enabled)
 //-----------------------------------------------------------------------------
 void ISListBaseForm::Create()
 {
-    if (!ISUserRoleEntity::Instance().CheckAccessTable(MetaTable->Name, CONST_UID_GROUP_ACCESS_TYPE_CREATE))
+    if (!ISUserRoleEntity::Instance().CheckAccessTable(MetaTableName, CONST_UID_GROUP_ACCESS_TYPE_CREATE))
     {
-        ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.Create").arg(MetaTable->LocalListName));
+        ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.Create").arg(MetaTableLocalListName));
         return;
     }
 
-    ISObjectFormBase *ObjectFormBase = ISGui::CreateObjectForm(ISNamespace::ObjectFormType::New, MetaTable->Name, 0, parentWidget());
+    ISObjectFormBase *ObjectFormBase = ISGui::CreateObjectForm(ISNamespace::ObjectFormType::New, MetaTableName, 0, parentWidget());
     ObjectFormBase->SetParentObjectID(GetParentObjectID(), GetParentFilterField());
     connect(ObjectFormBase, &ISObjectFormBase::SavedObject, this, static_cast<void(ISListBaseForm::*)(unsigned int)>(&ISListBaseForm::SetSelectObjectAfterUpdate));
     connect(ObjectFormBase, &ISObjectFormBase::SavedObject, this, &ISListBaseForm::Updated);
@@ -642,13 +639,13 @@ void ISListBaseForm::CreateCopy()
         return;
     }
 
-    if (!ISUserRoleEntity::Instance().CheckAccessTable(MetaTable->Name, CONST_UID_GROUP_ACCESS_TYPE_CREATE))
+    if (!ISUserRoleEntity::Instance().CheckAccessTable(MetaTableName, CONST_UID_GROUP_ACCESS_TYPE_CREATE))
     {
-        ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.CreateCopy").arg(MetaTable->LocalListName));
+        ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.CreateCopy").arg(MetaTableLocalListName));
         return;
     }
 
-    ISObjectFormBase *ObjectFormBase = ISGui::CreateObjectForm(ISNamespace::ObjectFormType::Copy, MetaTable->Name, GetObjectID(), parentWidget());
+    ISObjectFormBase *ObjectFormBase = ISGui::CreateObjectForm(ISNamespace::ObjectFormType::Copy, MetaTableName, GetObjectID(), parentWidget());
     ObjectFormBase->SetParentObjectID(GetParentObjectID(), GetParentFilterField());
     connect(ObjectFormBase, &ISObjectFormBase::SavedObject, this, static_cast<void(ISListBaseForm::*)(unsigned int)>(&ISListBaseForm::SetSelectObjectAfterUpdate));
     connect(ObjectFormBase, &ISObjectFormBase::SavedObject, this, &ISListBaseForm::Updated);
@@ -666,7 +663,7 @@ void ISListBaseForm::Edit()
         return;
     }
 
-    ISObjectFormBase *ObjectFormBase = ISGui::CreateObjectForm(ISNamespace::ObjectFormType::Edit, MetaTable->Name, GetObjectID(), parentWidget());
+    ISObjectFormBase *ObjectFormBase = ISGui::CreateObjectForm(ISNamespace::ObjectFormType::Edit, MetaTableName, GetObjectID(), parentWidget());
     ObjectFormBase->SetParentObjectID(GetParentObjectID(), GetParentFilterField());
     connect(ObjectFormBase, &ISObjectFormBase::SavedObject, this, static_cast<void(ISListBaseForm::*)(unsigned int)>(&ISListBaseForm::SetSelectObjectAfterUpdate));
     connect(ObjectFormBase, &ISObjectFormBase::SavedObject, this, &ISListBaseForm::Updated);
@@ -702,7 +699,7 @@ bool ISListBaseForm::Update()
     SetEnabledActions(false);
 
     //Готовим запрос и исполняем
-    TcpQuery->BindValue("TableName", MetaTable->Name);
+    TcpQuery->BindValue("TableName", MetaTableName);
     bool Result = TcpQuery->Execute();
 
     //Очередные операции с интерфейсом после загрузки
@@ -727,6 +724,9 @@ bool ISListBaseForm::Update()
         QVariantMap ServiceInfo = AnswerMap["ServiceInfo"].toMap();
         QString SortingField = ServiceInfo["SortingField"].toString();
         Qt::SortOrder SortingOrder = static_cast<Qt::SortOrder>(ServiceInfo["SortingOrder"].toUInt());
+        MetaTableLocalListName = ServiceInfo["TableLocalListName"].toString();
+        MetaTableShowOnly = ServiceInfo["TableShowOnly"].toBool();
+        MetaTableTitleName = ServiceInfo["TableTitleName"].toString();
         TcpModel->SetSorting(SortingField, SortingOrder);
 
         //Устанавливаем индикатор сортировки
@@ -738,7 +738,7 @@ bool ISListBaseForm::Update()
         FieldResized(false);
         for (int i = 0, c = TcpModel->columnCount(); i < c; ++i)
         {
-            int ColumnSize = ISColumnSizer::Instance().GetColumnSize(MetaTable->Name,
+            int ColumnSize = ISColumnSizer::Instance().GetColumnSize(MetaTableName,
                 TcpModel->headerData(i, Qt::Horizontal, Qt::UserRole).toString());
             if (ColumnSize)
             {
@@ -785,9 +785,9 @@ bool ISListBaseForm::Update()
 //-----------------------------------------------------------------------------
 bool ISListBaseForm::Delete()
 {
-    if (!ISUserRoleEntity::Instance().CheckAccessTable(MetaTable->Name, CONST_UID_GROUP_ACCESS_TYPE_DELETE))
+    if (!ISUserRoleEntity::Instance().CheckAccessTable(MetaTableName, CONST_UID_GROUP_ACCESS_TYPE_DELETE))
     {
-        ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.Delete").arg(MetaTable->LocalListName));
+        ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.Delete").arg(MetaTableLocalListName));
         return false;
     }
 
@@ -798,7 +798,7 @@ bool ISListBaseForm::Delete()
     if (Result) //Получили подтверждение от пользователя
     {
         QString ErrorString;
-        Result = ISGui::RecordsDelete(MetaTable->Name, VectorInt, ErrorString);
+        Result = ISGui::RecordsDelete(MetaTableName, VectorInt, ErrorString);
         if (Result)
         {
             for (unsigned int ObjectID : VectorInt)
@@ -833,9 +833,9 @@ void ISListBaseForm::SearchClear()
 //-----------------------------------------------------------------------------
 void ISListBaseForm::Export()
 {
-    if (!ISUserRoleEntity::Instance().CheckAccessTable(MetaTable->Name, CONST_UID_GROUP_ACCESS_TYPE_EXPORT))
+    if (!ISUserRoleEntity::Instance().CheckAccessTable(MetaTableName, CONST_UID_GROUP_ACCESS_TYPE_EXPORT))
     {
-        ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.Export").arg(MetaTable->LocalListName));
+        ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.Export").arg(MetaTableLocalListName));
         return;
     }
 
@@ -875,8 +875,8 @@ void ISListBaseForm::Export()
         if (Exported)
         {
             ProgressForm.close();
-            //ISProtocol::Insert(CONST_UID_PROTOCOL_EXPORT_TABLE, MetaTable->Name, MetaTable->LocalListName, QVariant(), ExportForm.GetSelectTypeName());
-            ISMessageBox::ShowInformation(this, LANG("Export.Completed").arg(MetaTable->LocalListName).arg(ExportForm.GetSelectTypeName()));
+            //ISProtocol::Insert(CONST_UID_PROTOCOL_EXPORT_TABLE, MetaTableName, MetaTableLocalListName, QVariant(), ExportForm.GetSelectTypeName());
+            ISMessageBox::ShowInformation(this, LANG("Export.Completed").arg(MetaTableLocalListName).arg(ExportForm.GetSelectTypeName()));
         }
         else
         {
@@ -892,30 +892,30 @@ void ISListBaseForm::Export()
 //-----------------------------------------------------------------------------
 void ISListBaseForm::ShowFavorites()
 {
-    ISGui::ShowFavoritesForm(MetaTable->Name);
+    ISGui::ShowFavoritesForm(MetaTableName);
 }
 //-----------------------------------------------------------------------------
 void ISListBaseForm::RecordInfo()
 {
-    ISGui::ShowRecordInfoForm(this, MetaTable->Name, GetObjectID());
+    ISGui::ShowRecordInfoForm(this, MetaTableName, GetObjectID());
 }
 //-----------------------------------------------------------------------------
 void ISListBaseForm::FavoriteObject()
 {
     bool IsExist = true;
-    ISGui::FavoriteObject(MetaTable->Name, GetObjectID(), IsExist);
+    ISGui::FavoriteObject(MetaTableName, GetObjectID(), IsExist);
 }
 //-----------------------------------------------------------------------------
 void ISListBaseForm::NoteObject()
 {
-    ISGui::ShowNoteObject(this, MetaTable->Name, GetObjectID());
+    ISGui::ShowNoteObject(this, MetaTableName, GetObjectID());
 }
 //-----------------------------------------------------------------------------
 void ISListBaseForm::ShowContextMenu(const QPoint &Point)
 {
     if (!IsLoadingData)
     {
-        GetSpecialAction(ISNamespace::ActionSpecialType::Favorite)->setChecked(ISFavorites::Instance().Exist(MetaTable->Name, GetObjectID()));
+        GetSpecialAction(ISNamespace::ActionSpecialType::Favorite)->setChecked(ISFavorites::Instance().Exist(MetaTableName, GetObjectID()));
         ContextMenu->exec(TableView->viewport()->mapToGlobal(Point));
     }
 }

@@ -120,7 +120,8 @@ struct PMetaTable : public PMetaBase
 {
     PMetaTable()
         : PMetaBase("Table"),
-        IsSystem(false)
+        IsSystem(false),
+        ShowOnly(false)
     {
 
     }
@@ -156,6 +157,7 @@ struct PMetaTable : public PMetaBase
     std::string LocalListName;
     std::string TitleName;
     bool IsSystem;
+    bool ShowOnly;
 
     std::vector<PMetaField*> Fields;
     std::vector<PMetaIndex*> IndexesCompound; //Составные индексы таблицы
