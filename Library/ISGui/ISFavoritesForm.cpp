@@ -4,16 +4,15 @@
 #include "ISFavorites.h"
 #include "ISBuffer.h"
 #include "ISDialogsCommon.h"
-#include "ISMetaData.h"
 #include "ISButtons.h"
 #include "ISGui.h"
 #include "ISTcpQuery.h"
 //-----------------------------------------------------------------------------
-ISFavoritesForm::ISFavoritesForm(QWidget *parent, const QString &table_name)
+ISFavoritesForm::ISFavoritesForm(QWidget *parent, const QString &table_name, const QString &table_local_name)
     : ISInterfaceForm(parent),
     TableName(table_name)
 {
-    setWindowTitle(table_name.isEmpty() ? LANG("ISFavoritesForm.Title") : LANG("ISFavoritesForm.Title.Table").arg(ISMetaData::Instance().GetMetaTable(TableName)->LocalListName));
+    setWindowTitle(table_name.isEmpty() ? LANG("ISFavoritesForm.Title") : LANG("ISFavoritesForm.Title.Table").arg(table_local_name));
     setWindowIcon(BUFFER_ICONS("Favorites"));
     resize(ISDefines::Gui::SIZE_640_480);
     GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);

@@ -101,7 +101,7 @@ private:
 private:
     PMetaTable *MetaTable;
     QString MetaTableName;
-    QString MetaTableLocalListName;
+    QString TableLocalName;
     bool MetaTableShowOnly;
     QString MetaTableTitleName;
     ISTcpQueryTable *TcpQuery;

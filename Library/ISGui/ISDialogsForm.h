@@ -151,7 +151,7 @@ class ISSelectListDialog : public ISInterfaceDialogForm
     Q_OBJECT
 
 public:
-    ISSelectListDialog(ISNamespace::SelectListMode SelectMode, const QString &TableName, int SelectObjectID);
+    ISSelectListDialog(ISNamespace::SelectListMode SelectMode, const QString &TableName, const QString &TableLocalName, int SelectObjectID);
     virtual ~ISSelectListDialog();
 
     bool Exec() override;

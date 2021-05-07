@@ -9,7 +9,7 @@ class ISFavoritesForm : public ISInterfaceForm
     Q_OBJECT
 
 public:
-    ISFavoritesForm(QWidget *parent = 0, const QString &table_name = QString());
+    ISFavoritesForm(QWidget *parent = 0, const QString &table_name = QString(), const QString &table_local_name = QString());
     virtual ~ISFavoritesForm();
 
 private:

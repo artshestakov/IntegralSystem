@@ -2514,7 +2514,7 @@ bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
     rapidjson::Value ServiceInfoObject(rapidjson::Type::kObjectType);
     ServiceInfoObject.AddMember("SortingField", JSON_STRINGA(SortingField.c_str(), Allocator), Allocator);
     ServiceInfoObject.AddMember("SortingOrder", (int)SortingOrder, Allocator);
-    ServiceInfoObject.AddMember("TableLocalListName", JSON_STRINGA(MetaTable->LocalListName.c_str(), Allocator), Allocator);
+    ServiceInfoObject.AddMember("TableLocalName", JSON_STRINGA(MetaTable->LocalListName.c_str(), Allocator), Allocator);
     ServiceInfoObject.AddMember("TableShowOnly", MetaTable->ShowOnly, Allocator);
     ServiceInfoObject.AddMember("TableTitleName", JSON_STRINGA(MetaTable->TitleName.c_str(), Allocator), Allocator);
 

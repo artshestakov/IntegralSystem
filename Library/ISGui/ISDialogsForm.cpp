@@ -766,9 +766,9 @@ void ISReconnectDialog::Timeout()
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-ISSelectListDialog::ISSelectListDialog(ISNamespace::SelectListMode SelectMode, const QString &TableName, int SelectObjectID) : ISInterfaceDialogForm()
+ISSelectListDialog::ISSelectListDialog(ISNamespace::SelectListMode SelectMode, const QString &TableName, const QString &TableLocalName, int SelectObjectID) : ISInterfaceDialogForm()
 {
-    setWindowTitle(ISMetaData::Instance().GetMetaTable(TableName)->LocalListName);
+    setWindowTitle(TableLocalName);
     GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);
 
     QLabel *LabelInfo = new QLabel(this);

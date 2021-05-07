@@ -5,7 +5,6 @@
 #include "ISSystemsPanel.h"
 #include "ISAssert.h"
 #include "ISListBaseForm.h"
-#include "ISMetaData.h"
 #include "ISObjectFormBase.h"
 #include "ISGui.h"
 #include "ISLocalization.h"

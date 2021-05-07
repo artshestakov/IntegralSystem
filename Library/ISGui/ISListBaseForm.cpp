@@ -617,7 +617,7 @@ void ISListBaseForm::Create()
 {
     if (!ISUserRoleEntity::Instance().CheckAccessTable(MetaTableName, CONST_UID_GROUP_ACCESS_TYPE_CREATE))
     {
-        ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.Create").arg(MetaTableLocalListName));
+        ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.Create").arg(TableLocalName));
         return;
     }
 
@@ -641,7 +641,7 @@ void ISListBaseForm::CreateCopy()
 
     if (!ISUserRoleEntity::Instance().CheckAccessTable(MetaTableName, CONST_UID_GROUP_ACCESS_TYPE_CREATE))
     {
-        ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.CreateCopy").arg(MetaTableLocalListName));
+        ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.CreateCopy").arg(TableLocalName));
         return;
     }
 
@@ -724,7 +724,7 @@ bool ISListBaseForm::Update()
         QVariantMap ServiceInfo = AnswerMap["ServiceInfo"].toMap();
         QString SortingField = ServiceInfo["SortingField"].toString();
         Qt::SortOrder SortingOrder = static_cast<Qt::SortOrder>(ServiceInfo["SortingOrder"].toUInt());
-        MetaTableLocalListName = ServiceInfo["TableLocalListName"].toString();
+        TableLocalName = ServiceInfo["TableLocalName"].toString();
         MetaTableShowOnly = ServiceInfo["TableShowOnly"].toBool();
         MetaTableTitleName = ServiceInfo["TableTitleName"].toString();
         TcpModel->SetSorting(SortingField, SortingOrder);
@@ -787,7 +787,7 @@ bool ISListBaseForm::Delete()
 {
     if (!ISUserRoleEntity::Instance().CheckAccessTable(MetaTableName, CONST_UID_GROUP_ACCESS_TYPE_DELETE))
     {
-        ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.Delete").arg(MetaTableLocalListName));
+        ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.Delete").arg(TableLocalName));
         return false;
     }
 
@@ -835,7 +835,7 @@ void ISListBaseForm::Export()
 {
     if (!ISUserRoleEntity::Instance().CheckAccessTable(MetaTableName, CONST_UID_GROUP_ACCESS_TYPE_EXPORT))
     {
-        ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.Export").arg(MetaTableLocalListName));
+        ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.Export").arg(TableLocalName));
         return;
     }
 
@@ -876,7 +876,7 @@ void ISListBaseForm::Export()
         {
             ProgressForm.close();
             //ISProtocol::Insert(CONST_UID_PROTOCOL_EXPORT_TABLE, MetaTableName, MetaTableLocalListName, QVariant(), ExportForm.GetSelectTypeName());
-            ISMessageBox::ShowInformation(this, LANG("Export.Completed").arg(MetaTableLocalListName).arg(ExportForm.GetSelectTypeName()));
+            ISMessageBox::ShowInformation(this, LANG("Export.Completed").arg(TableLocalName).arg(ExportForm.GetSelectTypeName()));
         }
         else
         {
@@ -892,7 +892,7 @@ void ISListBaseForm::Export()
 //-----------------------------------------------------------------------------
 void ISListBaseForm::ShowFavorites()
 {
-    ISGui::ShowFavoritesForm(MetaTableName);
+    ISGui::ShowFavoritesForm(MetaTableName, TableLocalName);
 }
 //-----------------------------------------------------------------------------
 void ISListBaseForm::RecordInfo()

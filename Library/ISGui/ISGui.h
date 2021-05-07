@@ -48,8 +48,8 @@ public:
     static ISFieldEditBase* CreateColumnForField(QWidget *ParentWidget, ISNamespace::FieldType DataType, const QString &ControlWidget = QString());
     static ISObjectFormBase* CreateObjectForm(ISNamespace::ObjectFormType FormType, const QString &TableName, int ObjectID = 0, QWidget *parent = 0);
 
-    static ISObjectPair SelectObject(const QString &TableName, int SelectObjectID = 0); //Выбор одной записи из таблицы
-    static ISVectorUInt SelectObjects(const QString &TableName); //Выбор нескольких записей из таблицы
+    static ISObjectPair SelectObject(const QString &TableName, const QString &TableLocalName, int SelectObjectID = 0); //Выбор одной записи из таблицы
+    static ISVectorUInt SelectObjects(const QString &TableName, const QString &TableLocalName); //Выбор нескольких записей из таблицы
 
     static void ShowSettingsForm(const QString &SettingGroupUID = QString()); //Открыть форму настроек
     static void ShowUserPasswordForm(unsigned int UserID, const QString &UserFIO, const QString &UserLogin); //Открыть форму изменения пароля для пользователя
@@ -62,7 +62,7 @@ public:
     static ISImageViewerForm* ShowImageForm(const QByteArray &ByteArray); //Показать изображение
 
     static void ShowNoteObject(QWidget *parent, const QString &TableName, int ObjectID);
-    static void ShowFavoritesForm(const QString &TableName = QString());
+    static void ShowFavoritesForm(const QString &TableName = QString(), const QString &TableLocalName = QString());
     static void ShowHistoryForm();
 
     //static void ShowTaskViewForm(int TaskID); //Показать форму просмотра задачи по идентификатору

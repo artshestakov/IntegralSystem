@@ -573,7 +573,7 @@ void ISOilSphere::GasStationStatementObjectForm::AfterShowEvent()
 //-----------------------------------------------------------------------------
 void ISOilSphere::GasStationStatementObjectForm::FillInBased()
 {
-    ISObjectPair SelectedObject = ISGui::SelectObject("GasStationStatement");
+    ISObjectPair SelectedObject = ISGui::SelectObject("GasStationStatement", GetMetaTable()->LocalListName);
     if (SelectedObject.first) //Если запись была выбрана - заполняем
     {
         if (SelectedObject.first == GetObjectID())

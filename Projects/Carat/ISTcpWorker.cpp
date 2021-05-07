@@ -2495,7 +2495,7 @@ bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 	{
 		{ "SortingField", SortingField },
 		{ "SortingOrder", SortingOrder },
-        { "TableLocalListName", MetaTable->LocalListName },
+        { "TableLocalName", MetaTable->LocalListName },
         { "TableShowOnly", MetaTable->ShowOnly },
         { "TableTitleName", MetaTable->TitleName }
 	};

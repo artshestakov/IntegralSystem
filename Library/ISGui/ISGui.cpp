@@ -491,19 +491,19 @@ ISObjectFormBase* ISGui::CreateObjectForm(ISNamespace::ObjectFormType FormType, 
     return ObjectForm;
 }
 //-----------------------------------------------------------------------------
-ISObjectPair ISGui::SelectObject(const QString &TableName, int SelectObjectID)
+ISObjectPair ISGui::SelectObject(const QString &TableName, const QString &TableLocalName, int SelectObjectID)
 {
     SetWaitGlobalCursor(true);
-    ISSelectListDialog SelectDialogForm(ISNamespace::SelectListMode::Single, TableName, SelectObjectID);
+    ISSelectListDialog SelectDialogForm(ISNamespace::SelectListMode::Single, TableName, TableLocalName, SelectObjectID);
     SetWaitGlobalCursor(false);
     return SelectDialogForm.Exec() ? SelectDialogForm.GetSelectedObject() : ISObjectPair();
 }
 //-----------------------------------------------------------------------------
-ISVectorUInt ISGui::SelectObjects(const QString &TableName)
+ISVectorUInt ISGui::SelectObjects(const QString &TableName, const QString &TableLocalName)
 {
     ISVectorUInt VectorInt;
     SetWaitGlobalCursor(true);
-    ISSelectListDialog SelectDialogForm(ISNamespace::SelectListMode::Multi, TableName, 0);
+    ISSelectListDialog SelectDialogForm(ISNamespace::SelectListMode::Multi, TableName, TableLocalName, 0);
     SetWaitGlobalCursor(false);
     if (SelectDialogForm.Exec())
     {
@@ -602,10 +602,10 @@ void ISGui::ShowNoteObject(QWidget *parent, const QString &TableName, int Object
     }
 }
 //-----------------------------------------------------------------------------
-void ISGui::ShowFavoritesForm(const QString &TableName)
+void ISGui::ShowFavoritesForm(const QString &TableName, const QString &TableLocalName)
 {
     ISGui::SetWaitGlobalCursor(true);
-    (new ISFavoritesForm(nullptr, TableName))->show();
+    (new ISFavoritesForm(nullptr, TableName, TableLocalName))->show();
     ISGui::SetWaitGlobalCursor(false);
 }
 //-----------------------------------------------------------------------------

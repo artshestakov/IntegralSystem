@@ -1,5 +1,4 @@
 #include "ISProtocolObjectListForm.h"
-#include "ISMetaData.h"
 //-----------------------------------------------------------------------------
 ISProtocolObjectListForm::ISProtocolObjectListForm(QWidget *parent) : ISProtocolSubSystem(parent)
 {
