@@ -1962,9 +1962,10 @@ void ISListEditPopup::ItemClicked(QListWidgetItem *ListWidgetItem)
 void ISListEditPopup::Add()
 {
     hide();
-    ISObjectFormBase *ObjectFormBase = ISGui::CreateObjectForm(ISNamespace::ObjectFormType::New, MetaTableForeign->Name);
-    connect(ObjectFormBase, &ISObjectFormBase::SavedObject, this, &ISListEditPopup::Created);
-    ISGui::ShowObjectForm(ObjectFormBase);
+    emit AddSignal();
+    //ISObjectFormBase *ObjectFormBase = ISGui::CreateObjectForm(ISNamespace::ObjectFormType::New, MetaTableForeign->Name);
+    //connect(ObjectFormBase, &ISObjectFormBase::SavedObject, this, &ISListEditPopup::Created);
+    //ISGui::ShowObjectForm(ObjectFormBase);
 }
 //-----------------------------------------------------------------------------
 void ISListEditPopup::LoadDataFromQuery()
@@ -2119,7 +2120,7 @@ void ISListEdit::InvokeList(PMetaForeign *meta_foreign)
 
     ListEditPopup = new ISListEditPopup(MetaForeign, this);
     connect(ListEditPopup, &ISListEditPopup::Selected, this, &ISListEdit::SelectedValue);
-    connect(ListEditPopup, &ISListEditPopup::Created, this, &ISListEdit::SetValue);
+    connect(ListEditPopup, &ISListEditPopup::AddSignal, this, &ISListEdit::CreateObject);
     connect(ListEditPopup, &ISListEditPopup::Hided, this, &ISListEdit::HidedPopup);
 
     if (MetaTable->ShowOnly)

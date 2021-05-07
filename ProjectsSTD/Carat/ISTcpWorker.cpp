@@ -825,12 +825,19 @@ bool ISTcpWorker::CheckIsNullDouble(ISTcpMessage *TcpMessage, const char *Parame
         return false;
     }
 
-    if (!JsonValue.IsDouble())
+    if (JsonValue.IsDouble())
+    {
+        Double = JsonValue.GetDouble();
+    }
+    else if (JsonValue.IsInt64())
+    {
+        Double = (double)JsonValue.GetInt64();
+    }
+    else
     {
         ErrorString = ISAlgorithm::StringF(LANG("Carat.Error.ParameterNotDouble"), ParameterName);
         return false;
     }
-    Double = JsonValue.GetDouble();
     return true;
 }
 //-----------------------------------------------------------------------------
@@ -1995,8 +2002,11 @@ bool ISTcpWorker::RecordAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
             qInsert.BindInt64(MapItem.value.GetInt64());
             break;
 
-        case rapidjson::Type::kArrayType:
         case rapidjson::Type::kNullType:
+            qInsert.BindNull();
+            break;
+
+        case rapidjson::Type::kArrayType:
         case rapidjson::Type::kObjectType:
             ErrorString = ISAlgorithm::StringF(LANG("Carat.Error.Query.RecordAdd.TypeNotSupport"), MapItem.value.GetType());
             return false;
@@ -2110,9 +2120,12 @@ bool ISTcpWorker::RecordEdit(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
         case rapidjson::Type::kNumberType:
             qUpdate.BindInt64(MapItem.value.GetInt64());
             break;
+        
+        case rapidjson::Type::kNullType:
+            qUpdate.BindNull();
+            break;
 
         case rapidjson::Type::kArrayType:
-        case rapidjson::Type::kNullType:
         case rapidjson::Type::kObjectType:
             ErrorString = ISAlgorithm::StringF(LANG("Carat.Error.Query.RecordEdit.TypeNotSupport"), MapItem.value.GetType());
             return false;
@@ -4456,7 +4469,7 @@ bool ISTcpWorker::OilSphere_GetDebtImplementation(ISTcpMessage *TcpMessage, ISTc
         JsonObject.AddMember("Cost", qSelectLoadUnload.ReadColumn_Double(4), Allocator);
         LoadUnloadArray.PushBack(JsonObject, Allocator);
     }
-    TcpAnswer->Parameters["LoadUnload"] = LoadUnloadArray;
+    TcpAnswer->Parameters.AddMember("LoadUnload", LoadUnloadArray, Allocator);
     return true;
 }
 //-----------------------------------------------------------------------------

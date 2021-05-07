@@ -3,6 +3,18 @@
 //-----------------------------------------------------------------------------
 char* ISAlgorithm::itoa(int64_t Value, char *Result, int Radix)
 {
+    size_t ResultSize = 0;
+    return ISAlgorithm::itoa(Value, Result, Radix, ResultSize);
+}
+//-----------------------------------------------------------------------------
+char* ISAlgorithm::itoa(int64_t Value, char *Result, int Radix, size_t &ResultSize)
+{
+    //Если нужно - обнуляем переменную с размером результата
+    if (ResultSize != 0)
+    {
+        ResultSize = 0;
+    }
+
     if (Radix < 2 || Radix > 36)
     {
         *Result = '\0';
@@ -19,6 +31,7 @@ char* ISAlgorithm::itoa(int64_t Value, char *Result, int Radix)
         TempValue = Value;
         Value /= Radix;
         *Pointer++ = "zyxwvutsrqponmlkjihgfedcba9876543210123456789abcdefghijklmnopqrstuvwxyz"[35 + (TempValue - Value * Radix)];
+        ++ResultSize;
     } while (Value);
 
     if (TempValue < 0)
@@ -771,6 +784,12 @@ std::string ISAlgorithm::FormatNumber(int64_t Number, char Separator)
 //-----------------------------------------------------------------------------
 std::string ISAlgorithm::FormatNumber(double Number, char Separator, unsigned int Precision)
 {
+    //Если значение фактически ноль - отдаём сразу
+    if (Number == 0.0)
+    {
+        return "0";
+    }
+
     //Вытаскиваем левую часть дроби
     int64_t ValueLeft = (int64_t)trunc(Number);
 
@@ -787,8 +806,19 @@ std::string ISAlgorithm::FormatNumber(double Number, char Separator, unsigned in
     {
         Factor *= 10;
     }
-    char Temp[16] = { 0 };
-    return FormatNumber(ValueLeft, Separator) + '.' + itoa((int64_t)((Number - ValueLeft) * Factor), Temp, 10);
+    
+    char RightPart[16] = { 0 }; //Правая часть дроби
+    size_t RightPartSize = 0;
+    ISAlgorithm::itoa((int64_t)((Number - ValueLeft) * Factor), RightPart, 10, RightPartSize);
+    
+    //Убираем возможные нули и точку в конце правой части
+    while (RightPart[RightPartSize - 1] == '0' ||
+           RightPart[RightPartSize - 1] == '.')
+    {
+        RightPart[RightPartSize - 1] = CHAR_NULL_TERM;
+        --RightPartSize;
+    }
+    return FormatNumber(ValueLeft, Separator) + '.' + RightPart;
 }
 //-----------------------------------------------------------------------------
 std::string ISAlgorithm::FormatPath(const std::string &Path)

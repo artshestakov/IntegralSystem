@@ -37,6 +37,7 @@
 namespace ISAlgorithm
 {
     char* itoa(int64_t Value, char *Result, int Radix);
+    char* itoa(int64_t Value, char *Result, int Radix, size_t &ResultSize);
 
     //! Проверить, работаем под Windows или нет
     //! \return Возвращает true если да, иначе false
