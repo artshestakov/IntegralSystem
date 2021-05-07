@@ -1962,13 +1962,14 @@ bool ISTcpWorker::RecordAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
     for (const auto &MapItem : Values.GetObject())
     {
         std::string FieldName = MapItem.name.GetString();
-        if (!MetaTable->GetField(FieldName)) //Такого поля нет - ошибка
+        PMetaField *MetaField = MetaTable->GetField(FieldName);
+        if (!MetaField) //Такого поля нет - ошибка
         {
             ErrorString = ISAlgorithm::StringF(LANG("Carat.Error.Query.RecordAdd.FieldNotFound"), FieldName.c_str());
             return false;
         }
         InsertText += MetaTable->Alias + '_' + FieldName + ',';
-        ValuesText += '$' + std::to_string(++ParameterPos) + ',';
+        ValuesText += '$' + std::to_string(++ParameterPos) + "::" + ISMetaData::Instance().GetTypeDB(MetaField->Type) + ',';
     }
     ISAlgorithm::StringChop(InsertText, 1);
     ISAlgorithm::StringChop(ValuesText, 1);
@@ -2079,12 +2080,14 @@ bool ISTcpWorker::RecordEdit(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
     for (const auto &MapItem : Values.GetObject())
     {
         std::string FieldName = MapItem.name.GetString();
-        if (!MetaTable->GetField(FieldName)) //Такого поля нет - ошибка
+        PMetaField *MetaField = MetaTable->GetField(FieldName);
+        if (!MetaField) //Такого поля нет - ошибка
         {
             ErrorString = LANG("Carat.Error.Query.RecordEdit.FieldNotFound");
             return false;
         }
-        SqlText += MetaTable->Alias + '_' + FieldName + " = $" + std::to_string(++ParameterPos) + ",\n";
+        SqlText += MetaTable->Alias + '_' + FieldName + " = $" + std::to_string(++ParameterPos) + "::" +
+            ISMetaData::Instance().GetTypeDB(MetaField->Type) + ",\n";
     }
     ISAlgorithm::StringChop(SqlText, 2);
     SqlText += "\nWHERE " + MetaTable->Alias + "_id = $" + std::to_string(++ParameterPos);
@@ -2104,9 +2107,12 @@ bool ISTcpWorker::RecordEdit(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
             qUpdate.BindBool(MapItem.value.GetBool());
             break;
 
+        case rapidjson::Type::kNumberType:
+            qUpdate.BindInt64(MapItem.value.GetInt64());
+            break;
+
         case rapidjson::Type::kArrayType:
         case rapidjson::Type::kNullType:
-        case rapidjson::Type::kNumberType:
         case rapidjson::Type::kObjectType:
             ErrorString = ISAlgorithm::StringF(LANG("Carat.Error.Query.RecordEdit.TypeNotSupport"), MapItem.value.GetType());
             return false;
@@ -2332,7 +2338,7 @@ bool ISTcpWorker::RecordGet(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 
         if (qSelect.IsNull(i))
         {
-            ValuesObject.AddMember(JSON_STRING(FieldName), JSON_NULL, Allocator);
+            ValuesObject.AddMember(JSON_STRINGA(FieldName, Allocator), JSON_NULL, Allocator);
             continue;
         }
 
@@ -2340,24 +2346,40 @@ bool ISTcpWorker::RecordGet(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
         switch (FieldTypeDB)
         {
         case BOOLOID:
-            ValuesObject.AddMember(JSON_STRING(FieldName), rapidjson::Value(qSelect.ReadColumn_Bool(i)), Allocator);
+            ValuesObject.AddMember(JSON_STRINGA(FieldName, Allocator), rapidjson::Value(qSelect.ReadColumn_Bool(i)), Allocator);
             break;
 
         case INT2OID:
         case INT4OID:
         case INT8OID:
-            ValuesObject.AddMember(JSON_STRING(FieldName), rapidjson::Value(qSelect.ReadColumn_Int64(i)), Allocator);
+            ValuesObject.AddMember(JSON_STRINGA(FieldName, Allocator), rapidjson::Value(qSelect.ReadColumn_Int64(i)), Allocator);
             break;
 
         case NUMERICOID:
-            ValuesObject.AddMember(JSON_STRING(FieldName), rapidjson::Value(qSelect.ReadColumn_Double(i)), Allocator);
+            ValuesObject.AddMember(JSON_STRINGA(FieldName, Allocator), rapidjson::Value(qSelect.ReadColumn_Double(i)), Allocator);
             break;
+
+        case DATEOID:
+        case TIMEOID:
+        case TIMESTAMPOID:
+        {
+            std::string String;
+            switch (FieldTypeDB)
+            {
+            case DATEOID: String = qSelect.ReadColumn_Date(i).ToString(); break;
+            case TIMEOID: String = qSelect.ReadColumn_Time(i).ToString(); break;
+            case TIMESTAMPOID: String = qSelect.ReadColumn_DateTime(i).ToString(); break;
+            }
+            ValuesObject.AddMember(JSON_STRINGA(FieldName, Allocator), JSON_STRINGA(String.c_str(), Allocator), Allocator);
+        }
+        break;
 
         case TEXTOID:
         case VARCHAROID:
+        case UUIDOID:
         {
             const char *String = qSelect.ReadColumn(i);
-            ValuesObject.AddMember(JSON_STRING(FieldName), JSON_STRINGA(String, Allocator), Allocator);
+            ValuesObject.AddMember(JSON_STRINGA(FieldName, Allocator), JSON_STRINGA(String, Allocator), Allocator);
         }
         break;
 
@@ -2721,7 +2743,11 @@ bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
                 }
                 //Значение не содержит NULL - анализируем
 
-                if (Type == ISNamespace::FieldType::Int || Type == ISNamespace::FieldType::BigInt)
+                if (Type == ISNamespace::FieldType::Int ||
+                    Type == ISNamespace::FieldType::BigInt ||
+                    Type == ISNamespace::FieldType::Year ||
+                    Type == ISNamespace::FieldType::Volume ||
+                    Type == ISNamespace::FieldType::Month)
                 {
                     if (IsForeign)
                     {
@@ -2742,7 +2768,17 @@ bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
                 {
                     Values.PushBack(qSelect.ReadColumn_Bool(i), Allocator);
                 }
-                else if (Type == ISNamespace::FieldType::String || Type == ISNamespace::FieldType::Text)
+                else if (Type == ISNamespace::FieldType::String ||
+                    Type == ISNamespace::FieldType::Text ||
+                    Type == ISNamespace::FieldType::Inn ||
+                    Type == ISNamespace::FieldType::Kpp ||
+                    Type == ISNamespace::FieldType::Ogrn ||
+                    Type == ISNamespace::FieldType::Okpo ||
+                    Type == ISNamespace::FieldType::Bik ||
+                    Type == ISNamespace::FieldType::Vin ||
+                    Type == ISNamespace::FieldType::Color ||
+                    Type == ISNamespace::FieldType::EMail ||
+                    Type == ISNamespace::FieldType::Url)
                 {
                     Values.PushBack(JSON_STRINGA(qSelect.ReadColumn(i), Allocator), Allocator);
                 }
@@ -2811,6 +2847,11 @@ bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
                 {
                     const char *String = qSelect.ReadColumn(i);
                     Values.PushBack(JSON_STRINGA(String, Allocator), Allocator);
+                }
+                else //Тип не определён
+                {
+                    ErrorString = ISAlgorithm::StringF(LANG("Carat.Error.Query.GetTableData.UnknownType"), Type);
+                    return false;
                 }
             }
             RecordArray.PushBack(Values, Allocator); //Добавляем список значений в список записей

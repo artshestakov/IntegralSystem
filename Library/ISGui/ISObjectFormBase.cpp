@@ -415,7 +415,7 @@ void ISObjectFormBase::CreateWidgetObject()
             for (const auto &MapItem : AnswerMap.toStdMap())
             {
                 //≈сли значение невалидное - перехолим к следующему
-                if (!MapItem.second.isValid())
+                if (MapItem.second.isNull())
                 {
                     continue;
                 }

@@ -15,6 +15,7 @@ public:
     const std::string& GetErrorString() const;
     bool Init(const std::string &configuration_name, bool XSR, bool XSF);
     ISNamespace::FieldType GetType(const std::string &type);
+    std::string GetTypeDB(ISNamespace::FieldType FieldType) const;
     PMetaTable* GetTable(const std::string &TableName);
     const std::vector<PMetaTable*>& GetTables() const;
     const ISVectorString& GetVectorXSN() const;

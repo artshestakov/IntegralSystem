@@ -105,7 +105,7 @@ ISTime ISTime::FromSecond(unsigned int Seconds)
 {
     unsigned int Hour = Seconds / 3600,
         Minute = (Seconds - Hour * 3600) / 60,
-        Second = Seconds - Hour * 3600 * 60;
+        Second = int(Seconds % 60);
     return ISTime((unsigned short)Hour, (unsigned short)Minute, (unsigned short)Second);
 }
 //-----------------------------------------------------------------------------

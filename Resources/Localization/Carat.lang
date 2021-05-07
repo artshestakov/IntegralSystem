@@ -147,6 +147,7 @@
     <Local Name="Carat.Error.Query.GetTableData.InsertSorting" Russian="Не удалось добавить сортировку."/>
     <Local Name="Carat.Error.Query.GetTableData.ClassFilterValueType" Russian="Тип данных (%d) значения фильтра (%s) не поддерживается."/>
     <Local Name="Carat.Error.Query.GetTableData.Select" Russian="Не удалось получить данные."/>
+    <Local Name="Carat.Error.Query.GetTableData.UnknownType" Russian="Тип %d не распознан."/>
 
     <Local Name="Carat.Error.Query.GetTableQuery.FileOpen" Russian="Не удалось прочитать запрос: %1"/>
     <Local Name="Carat.Error.Query.GetTableQuery.NotFound" Russian="Запрос &quot;%s&quot; не найден."/>
