@@ -12,6 +12,7 @@ public:
     ~ISCaratApplication();
 
     const std::string& GetErrorString() const;
+    bool GetServiceMode() const;
 
     bool Init();
     int Start();
@@ -26,6 +27,7 @@ private:
 private:
     std::string ErrorString;
     bool IsRunning;
+    bool ServiceMode; //Флаг работы как служба
     ISCriticalSection CriticalSection;
     ISVectorString Arguments;
     std::string FileShutdown;

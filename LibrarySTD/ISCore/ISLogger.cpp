@@ -178,7 +178,7 @@ std::string ISLogger::GetPathFile(const ISDate &Date) const
 //-----------------------------------------------------------------------------
 void ISLogger::Worker()
 {
-    while (IsRunning)
+    while (true)
     {
         ISSleep(LOG_TIMEOUT);
         CRITICAL_SECTION_LOCK(&CriticalSection);
@@ -192,7 +192,13 @@ void ISLogger::Worker()
             LastIndex = 0;
             File.flush();
         }
+        bool is_running = IsRunning;
         CRITICAL_SECTION_UNLOCK(&CriticalSection);
+
+        if (!is_running)
+        {
+            break;
+        }
 
         //Если сменился месяц или год - создаём недостающие папки
         ISDate CurrentDate = ISDate::CurrentDate();

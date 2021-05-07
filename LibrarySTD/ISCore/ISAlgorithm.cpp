@@ -36,6 +36,24 @@ char* ISAlgorithm::itoa(int64_t Value, char *Result, int Radix)
     return Result;
 }
 //-----------------------------------------------------------------------------
+bool ISAlgorithm::IsWin32()
+{
+#ifdef WIN32
+    return true;
+#else
+    return false;
+#endif
+}
+//-----------------------------------------------------------------------------
+bool ISAlgorithm::IsDebug()
+{
+#ifdef DEBUG
+    return true;
+#else
+    return false;
+#endif
+}
+//-----------------------------------------------------------------------------
 std::string ISAlgorithm::GetClassName(const char *FunctionName)
 {
     std::string Result(FunctionName);

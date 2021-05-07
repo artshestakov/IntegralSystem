@@ -38,6 +38,14 @@ namespace ISAlgorithm
 {
     char* itoa(int64_t Value, char *Result, int Radix);
 
+    //! Проверить, работаем под Windows или нет
+    //! \return Возвращает true если да, иначе false
+    bool IsWin32();
+
+    //! Проверить, отладочная ли версия сейчас запущена
+    //! \return Возвращает true если да, иначе false
+    bool IsDebug();
+
     //! Получить имя класса
     //! \return возвращает имя класса
     std::string GetClassName(const char *FunctionName);

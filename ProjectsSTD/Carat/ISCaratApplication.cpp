@@ -17,6 +17,7 @@
 ISCaratApplication::ISCaratApplication(int argc, char **argv)
     : ErrorString(STRING_NO_ERROR),
     IsRunning(true),
+    ServiceMode(false),
     Arguments(ISAlgorithm::ParseArgs(argc, argv)),
     FileShutdown(ISAlgorithm::GetApplicationDir() + PATH_SEPARATOR + "Temp" + PATH_SEPARATOR + "Carat.stop"),
     TCPServer(false)
@@ -32,6 +33,11 @@ ISCaratApplication::~ISCaratApplication()
 const std::string& ISCaratApplication::GetErrorString() const
 {
     return ErrorString;
+}
+//-----------------------------------------------------------------------------
+bool ISCaratApplication::GetServiceMode() const
+{
+    return ServiceMode;
 }
 //-----------------------------------------------------------------------------
 bool ISCaratApplication::Init()
@@ -117,7 +123,8 @@ bool ISCaratApplication::Init()
 int ISCaratApplication::Start()
 {
     std::string Argument = Arguments.empty() ? std::string() : Arguments.front();
-    if (Argument.empty()) //Режим службы
+    ServiceMode = Argument.empty();
+    if (ServiceMode) //Режим службы
     {
         //Проверяем валидность конфигурационного файла
         if (!ISConfig::Instance().IsValid())
@@ -180,9 +187,8 @@ int ISCaratApplication::Start()
                 ISDatabase::Instance().DisconnectAll();
 
                 //На всякий случай немного подождём и завершим работу логгера
-                ISSleep(500);
+                ISSleep(100);
                 ISLOGGER_I(__CLASS__, "Stopped server");
-                ISLogger::Instance().Shutdown();
                 break;
             }
         }
