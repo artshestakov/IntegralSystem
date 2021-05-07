@@ -29,6 +29,7 @@ private:
     bool CheckIsNullString(ISTcpMessage *TcpMessage, const char *ParameterName, std::string &String);
     bool CheckIsNullBool(ISTcpMessage *TcpMessage, const char *ParameterName, bool &Bool);
     bool CheckIsNullUInt(ISTcpMessage *TcpMessage, const char *ParameterName, unsigned int &UInt);
+    bool CheckIsNullDouble(ISTcpMessage *TcpMessage, const char *ParameterName, double &Double);
     bool ErrorQuery(const std::string &LocalError, ISQuery &SqlQuery);
     void Protocol(unsigned int UserID, const char *ActionUID, const std::string &TableName = std::string(), const std::string &TableLocalName = std::string(), unsigned int ObjectID = 0, const std::string &Information = std::string());
     unsigned int ExtractVersionFile(const std::string &FileName);
@@ -36,6 +37,9 @@ private:
     PMetaTable* GetMetaTable(const std::string &TableName); //Получить указатель на мета-таблицу
     bool UserPasswordExist(unsigned int UserID, bool &Exist); //Проверка наличия пароля у пользователя
     bool UserIsSystem(unsigned int UserID, bool &IsSystem); //Проверка пользователя на системность
+
+private:
+    void RegisterOilSphere();
 
 private:
     bool Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
@@ -86,6 +90,17 @@ private:
     bool GetForeignList(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
     bool GetServerInfo(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
     bool OrganizationFromINN(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
+
+    //Нефтесфера
+    bool OilSphere_PeriodContains(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
+    bool OilSphere_GetStockList(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
+    bool OilSphere_StatementAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
+    bool OilSphere_GetGasStation(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
+    bool OilSphere_GetDebtImplementation(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
+    bool OilSphere_GetDebtCounterparty(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
+    bool OilSphere_GetUserConsumption(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
+    bool OilSphere_LoadBanks(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
+    bool OilSphere_GetUserBalance(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
 
 private:
     std::string ErrorString;

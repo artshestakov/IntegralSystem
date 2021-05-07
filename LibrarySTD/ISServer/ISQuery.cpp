@@ -210,6 +210,19 @@ void ISQuery::BindInt64(int64_t Value)
     ++ParameterCount;
 }
 //-----------------------------------------------------------------------------
+void ISQuery::BindDouble(double Value)
+{
+    std::string String = std::to_string(Value);
+    char *Temp = (char *)malloc(String.size() + 1);
+    strcpy(Temp, String.c_str());
+
+    ParameterValues.emplace_back(Temp);
+    ParameterTypes.emplace_back(NUMERICOID);
+    ParameterFormats.emplace_back(0);
+    ParameterLengths.emplace_back(0);
+    ++ParameterCount;
+}
+//-----------------------------------------------------------------------------
 bool ISQuery::Execute()
 {
     //Сделаем очистку (предыдущего результата) на всякий случай

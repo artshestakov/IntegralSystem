@@ -395,6 +395,75 @@ static std::string QU_SETTING = PREPARE_QUERYN("UPDATE _usersettings SET "
     "WHERE usst_user = $2 "
     "AND usst_setting = (SELECT stgs_id FROM _settings WHERE stgs_uid = $3)", 3);
 //-----------------------------------------------------------------------------
+static std::string QS_PERIOD = PREPARE_QUERY("SELECT prod_constant "
+    "FROM period "
+    "WHERE CURRENT_DATE BETWEEN prod_datestart AND prod_dateend");
+//-----------------------------------------------------------------------------
+static std::string QS_STOCK = PREPARE_QUERY("SELECT stck_id, stck_name "
+    "FROM stock "
+    "ORDER BY stck_name");
+//-----------------------------------------------------------------------------
+static std::string QS_STATEMENT = PREPARE_QUERYN("SELECT COUNT(*) "
+    "FROM gasstationstatement "
+    "WHERE gsts_implementationunload = $1", 1);
+//-----------------------------------------------------------------------------
+static std::string QI_STATEMENT = PREPARE_QUERYN("INSERT INTO gasstationstatement(gsts_implementationunload, gsts_stock, gsts_date, gsts_volumeincome) "
+    "VALUES($1, $2, "
+    "(SELECT impl_date FROM implementation WHERE impl_id = (SELECT iunl_implementation FROM implementationunload WHERE iunl_id = $1)), "
+    "(SELECT iunl_weightnet * $3 FROM implementationunload WHERE iunl_id = $1))", 3);
+//-----------------------------------------------------------------------------
+static std::string QS_FILL_IN_BASED = PREPARE_QUERYN("SELECT "
+    "COALESCE(gsts_balanceendchange, 0) AS gsts_balanceendchange, "
+    "COALESCE(gsts_cashboxtotalpayment, 0) AS gsts_cashboxtotalpayment, "
+    "COALESCE(gsts_cashboxtotalactually, 0) AS gsts_cashboxtotalactually, "
+    "COALESCE(gsts_cashboxkkmtotal, 0) AS gsts_cashboxkkmtotal "
+    "FROM gasstationstatement "
+    "WHERE gsts_id = $1", 1);
+//-----------------------------------------------------------------------------
+static std::string QS_IMPLEMENTATION_UNLOAD = PREPARE_QUERYN("SELECT true AS is_load, ilod_implementation AS implementation_id, ilod_id AS id, impl_date AS date, ilod_cost AS cost "
+    "FROM implementationload "
+    "LEFT JOIN implementation ON ilod_implementation = impl_id "
+    "WHERE ilod_counterparty = $1 "
+    ""
+    "UNION "
+    ""
+    "SELECT false AS is_load, iunl_implementation AS implementation_id, iunl_id AS id, impl_date AS date, iunl_cost AS cost "
+    "FROM implementationunload "
+    "LEFT JOIN implementation ON iunl_implementation = impl_id "
+    "WHERE iunl_counterparty = $1 "
+    "ORDER BY is_load, date DESC", 1);
+//-----------------------------------------------------------------------------
+static std::string QS_COUNTERPARTY_DEBT = PREPARE_QUERYN("SELECT get_counterparty_unload($1), get_counterparty_load($1), get_counterparty_entrollment($1), get_counterparty_move_wagon($1)", 1);
+//-----------------------------------------------------------------------------
+static std::string QS_USERS_CONSUMPTION = PREPARE_QUERY("SELECT usrs_id, usrs_fio, get_user_balance(usrs_id) "
+    "FROM _users "
+    "ORDER BY usrs_fio");
+//-----------------------------------------------------------------------------
+static std::string QS_USER_CONSUMPTION = PREPARE_QUERYN("SELECT cpmp_date, cpmp_sum, cpmp_note "
+    "FROM consumption "
+    "WHERE cpmp_user = $1 "
+    "ORDER BY cpmp_date DESC", 1);
+//-----------------------------------------------------------------------------
+static std::string QS_USER_RETURN = PREPARE_QUERYN("SELECT rtrn_date, rtrn_sum, rtrn_note "
+    "FROM return "
+    "WHERE rtrn_user = $1 "
+    "ORDER BY rtrn_date DESC", 1);
+//-----------------------------------------------------------------------------
+static std::string QS_TOTAL_BALANCE = PREPARE_QUERY("SELECT "
+    "(SELECT COALESCE(sum(cmng_sum), 0) FROM coming) + "
+    "(SELECT COALESCE(sum(cpen_sum), 0) FROM counterpartyenrollment WHERE cpen_sendtocoming) AS total_coming,"
+    "(SELECT COALESCE(sum(cpmp_sum), 0) AS total_consumption FROM consumption)");
+//-----------------------------------------------------------------------------
+static std::string QS_BANK = PREPARE_QUERY("SELECT COUNT(*) "
+    "FROM bank "
+    "WHERE bank_date = :Date "
+    "AND bank_incomingnumber = :IncomingNumber");
+//-----------------------------------------------------------------------------
+static std::string QI_BANK = PREPARE_QUERY("INSERT INTO bank(bank_date, bank_admission, bank_writeoff, bank_purposepayment, bank_counterparty, bank_checknumber, bank_operationtype, bank_incomingnumber, bank_incomingdate, bank_bankaccount, bank_comment) "
+    "VALUES(:Date, :Admission, :WriteOff, :PurposePayment, :Counterparty, :CheckNumber, :OperationType, :IncomingNumber, :IncomingDate, :BankAccount, :Comment)");
+//-----------------------------------------------------------------------------
+static std::string QS_USER_BALANCE = PREPARE_QUERYN("SELECT get_user_balance($1)", 1);
+//-----------------------------------------------------------------------------
 ISTcpWorker::ISTcpWorker()
     : ErrorString(STRING_NO_ERROR),
     IsBusy(false),
@@ -448,6 +517,19 @@ ISTcpWorker::ISTcpWorker()
     MapFunction[API_GROUP_RIGHT_SPECIAL_DELETE] = &ISTcpWorker::GroupRightSpecialDelete;
     MapFunction[API_SAVE_META_DATA] = &ISTcpWorker::SaveMetaData;
     MapFunction[API_GET_RECORD_CALL] = &ISTcpWorker::GetRecordCall;
+
+    if (ISConfigurations::Instance().Get().Name == "OilSphere")
+    {
+        MapFunction["OilSphere_PeriodContains"] = &ISTcpWorker::OilSphere_PeriodContains;
+        MapFunction["OilSphere_GetStockList"] = &ISTcpWorker::OilSphere_GetStockList;
+        MapFunction["OilSphere_StatementAdd"] = &ISTcpWorker::OilSphere_StatementAdd;
+        MapFunction["OilSphere_GetGasStation"] = &ISTcpWorker::OilSphere_GetGasStation;
+        MapFunction["OilSphere_GetDebtImplementation"] = &ISTcpWorker::OilSphere_GetDebtImplementation;
+        MapFunction["OilSphere_GetDebtCounterparty"] = &ISTcpWorker::OilSphere_GetDebtCounterparty;
+        MapFunction["OilSphere_GetUserConsumption"] = &ISTcpWorker::OilSphere_GetUserConsumption;
+        MapFunction["OilSphere_LoadBanks"] = &ISTcpWorker::OilSphere_LoadBanks;
+        MapFunction["OilSphere_GetUserBalance"] = &ISTcpWorker::OilSphere_GetUserBalance;
+    }
 
     CRITICAL_SECTION_INIT(&CriticalSection);
     CRITICAL_SECTION_INIT(&CSRunning);
@@ -735,6 +817,23 @@ bool ISTcpWorker::CheckIsNullUInt(ISTcpMessage *TcpMessage, const char *Paramete
     return true;
 }
 //-----------------------------------------------------------------------------
+bool ISTcpWorker::CheckIsNullDouble(ISTcpMessage *TcpMessage, const char *ParameterName, double &Double)
+{
+    rapidjson::Value JsonValue;
+    if (!CheckIsNull(TcpMessage, ParameterName, JsonValue))
+    {
+        return false;
+    }
+
+    if (!JsonValue.IsDouble())
+    {
+        ErrorString = ISAlgorithm::StringF(LANG("Carat.Error.ParameterNotDouble"), ParameterName);
+        return false;
+    }
+    Double = JsonValue.GetDouble();
+    return true;
+}
+//-----------------------------------------------------------------------------
 bool ISTcpWorker::ErrorQuery(const std::string &LocalError, ISQuery &SqlQuery)
 {
     ErrorString = LocalError;
@@ -879,6 +978,11 @@ bool ISTcpWorker::UserIsSystem(unsigned int UserID, bool &IsSystem)
     }
     IsSystem = qSelectIsSystem.ReadColumn_Bool(0);
     return true;
+}
+//-----------------------------------------------------------------------------
+void ISTcpWorker::RegisterOilSphere()
+{
+
 }
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
@@ -1886,9 +1990,12 @@ bool ISTcpWorker::RecordAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
             qInsert.BindBool(MapItem.value.GetBool());
             break;
 
+        case rapidjson::Type::kNumberType:
+            qInsert.BindInt64(MapItem.value.GetInt64());
+            break;
+
         case rapidjson::Type::kArrayType:
         case rapidjson::Type::kNullType:
-        case rapidjson::Type::kNumberType:
         case rapidjson::Type::kObjectType:
             ErrorString = ISAlgorithm::StringF(LANG("Carat.Error.Query.RecordAdd.TypeNotSupport"), MapItem.value.GetType());
             return false;
@@ -4156,6 +4263,405 @@ bool ISTcpWorker::OrganizationFromINN(ISTcpMessage *TcpMessage, ISTcpAnswer *Tcp
     rapidjson::Value Value;
     Value.CopyFrom(JsonObject, TcpAnswer->Parameters.GetAllocator());
     TcpAnswer->Parameters.AddMember("Reply", Value, TcpAnswer->Parameters.GetAllocator());
+    return true;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::OilSphere_PeriodContains(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+    IS_UNUSED(TcpMessage);
+
+    ISQuery qSelect(DBConnection, QS_PERIOD);
+    if (!qSelect.Execute()) //Ошибка запроса
+    {
+        return ErrorQuery(LANG("Carat.Error.Query.PeriodContains.Select"), qSelect);
+    }
+    bool IsExist = qSelect.First();
+    auto &Allocator = TcpAnswer->Parameters.GetAllocator();
+    TcpAnswer->Parameters.AddMember("Exist", IsExist, Allocator);
+    TcpAnswer->Parameters.AddMember("Value", IsExist ? rapidjson::Value(qSelect.ReadColumn_Double(0)) : JSON_NULL, Allocator);
+    return true;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::OilSphere_GetStockList(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+    IS_UNUSED(TcpMessage);
+
+    ISQuery qSelect(DBConnection, QS_STOCK);
+    if (!qSelect.Execute()) //Ошибка запроса
+    {
+        return ErrorQuery(LANG("Carat.Error.Query.GetStockList.Select"), qSelect);
+    }
+
+    auto &Allocator = TcpAnswer->Parameters.GetAllocator();
+
+    //Обходим результаты выборки
+    rapidjson::Value StockArray(rapidjson::Type::kArrayType);
+    while (qSelect.Next())
+    {
+        const char *StockName = qSelect.ReadColumn(1);
+
+        rapidjson::Value StockObject(rapidjson::Type::kObjectType);
+        StockObject.AddMember("ID", qSelect.ReadColumn_UInt(0), Allocator);
+        StockObject.AddMember("Name", JSON_STRINGA(StockName, Allocator), Allocator);
+        StockArray.PushBack(StockObject, Allocator);
+    }
+    TcpAnswer->Parameters.AddMember("List", StockArray, Allocator);
+    return true;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::OilSphere_StatementAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+    IS_UNUSED(TcpAnswer);
+
+    unsigned int ImplementationUnload = 0, UnloadStock = 0;
+    double ValumeIncome = 0;
+    if (!CheckIsNullUInt(TcpMessage, "ImplementationUnload", ImplementationUnload) ||
+        !CheckIsNullUInt(TcpMessage, "UnloadStock", UnloadStock) ||
+        !CheckIsNullDouble(TcpMessage, "ValumeIncome", ValumeIncome))
+    {
+        return false;
+    }
+
+    //Проверяем наличие такой записи
+    ISQuery qSelectUnload(DBConnection, QS_STATEMENT);
+    qSelectUnload.BindUInt(ImplementationUnload);
+    if (!qSelectUnload.Execute()) //Ошибка запроса
+    {
+        return ErrorQuery(LANG("Carat.Error.Query.StatementAdd.Select"), qSelectUnload);
+    }
+
+    if (!qSelectUnload.First()) //Не удалось перейти на первую запись
+    {
+        ErrorString = qSelectUnload.GetErrorString();
+        return false;
+    }
+
+    //Если выгрузки в ведомостях АЗС нет - добавляем
+    if (qSelectUnload.ReadColumn_UInt(0) == 0)
+    {
+        ISQuery qInsert(DBConnection, QI_STATEMENT);
+        qInsert.BindUInt(ImplementationUnload);
+        qInsert.BindUInt(UnloadStock);
+        qInsert.BindDouble(ValumeIncome);
+        if (!qInsert.Execute()) //Не удалось добавить
+        {
+            return ErrorQuery(LANG("Carat.Error.Query.StatementAdd.Insert"), qInsert);
+        }
+    }
+
+    //Выгрузка уже существует - все окей
+    return true;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::OilSphere_GetGasStation(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+    unsigned int StatementID = 0;
+    if (!CheckIsNullUInt(TcpMessage, "StatementID", StatementID))
+    {
+        return false;
+    }
+
+    //Вытаскиваем значения
+    ISQuery qSelect(DBConnection, QS_FILL_IN_BASED);
+    qSelect.BindUInt(StatementID);
+    if (!qSelect.Execute()) //Ошибка запроса
+    {
+        return ErrorQuery(LANG("Carat.Error.Query.GetGasStation.Select"), qSelect);
+    }
+
+    if (!qSelect.First()) //Такая запись не существует
+    {
+        ErrorString = LANG("Carat.Error.Query.GetGasStation.NotExist");
+        return false;
+    }
+
+    auto &Allocator = TcpAnswer->Parameters.GetAllocator();
+    TcpAnswer->Parameters.AddMember("BalanceEndChange", qSelect.ReadColumn_Double(0), Allocator);
+    TcpAnswer->Parameters.AddMember("CashboxTotalPayment", qSelect.ReadColumn_Double(1), Allocator);
+    TcpAnswer->Parameters.AddMember("CashboxTotalActually", qSelect.ReadColumn_Double(2), Allocator);
+    TcpAnswer->Parameters.AddMember("CashboxKKMTotal", qSelect.ReadColumn_Double(3), Allocator);
+    return true;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::OilSphere_GetDebtImplementation(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+    unsigned int CounterpartyID = 0;
+    if (!CheckIsNullUInt(TcpMessage, "CounterpartyID", CounterpartyID))
+    {
+        return false;
+    }
+
+    //Вытаскиваем загрузки и выгрузки
+    ISQuery qSelectLoadUnload(DBConnection, QS_IMPLEMENTATION_UNLOAD);
+    qSelectLoadUnload.BindUInt(CounterpartyID);
+    if (!qSelectLoadUnload.Execute()) //Ошибка запроса
+    {
+        return ErrorQuery(LANG("Carat.Error.Query.GetDebtImplementation.Select"), qSelectLoadUnload);
+    }
+
+    auto &Allocator = TcpAnswer->Parameters.GetAllocator();
+
+    //Обходим результаты выборки
+    rapidjson::Value LoadUnloadArray(rapidjson::Type::kArrayType);
+    while (qSelectLoadUnload.Next())
+    {
+        std::string Date = qSelectLoadUnload.ReadColumn_Date(3).ToString();
+
+        rapidjson::Value JsonObject(rapidjson::Type::kObjectType);
+        JsonObject.AddMember("IsLoad", qSelectLoadUnload.ReadColumn_Bool(0), Allocator);
+        JsonObject.AddMember("ImplementationID", qSelectLoadUnload.ReadColumn_UInt(1), Allocator);
+        JsonObject.AddMember("LoadUnloadID", qSelectLoadUnload.ReadColumn_UInt(2), Allocator);
+        JsonObject.AddMember("Date", JSON_STRINGA(Date.c_str(), Allocator), Allocator);
+        JsonObject.AddMember("Cost", qSelectLoadUnload.ReadColumn_Double(4), Allocator);
+        LoadUnloadArray.PushBack(JsonObject, Allocator);
+    }
+    TcpAnswer->Parameters["LoadUnload"] = LoadUnloadArray;
+    return true;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::OilSphere_GetDebtCounterparty(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+    unsigned int CounterpartyID = 0;
+    if (!CheckIsNullUInt(TcpMessage, "CounterpartyID", CounterpartyID))
+    {
+        return false;
+    }
+
+    //Запрашиваем итоговые цифры
+    ISQuery qSelectTitle(DBConnection, QS_COUNTERPARTY_DEBT);
+    qSelectTitle.BindUInt(CounterpartyID);
+    if (!qSelectTitle.Execute()) //Ошибка запроса
+    {
+        return ErrorQuery(LANG("Carat.Error.Query.GetDebtCounterparty.Select"), qSelectTitle);
+    }
+
+    if (!qSelectTitle.First()) //Такая запись не существует
+    {
+        ErrorString = LANG("Carat.Error.Query.GetDebtCounterparty.NotExist");
+        return false;
+    }
+    auto &Allocator = TcpAnswer->Parameters.GetAllocator();
+    TcpAnswer->Parameters.AddMember("TotalUnload", qSelectTitle.ReadColumn_Double(0), Allocator);
+    TcpAnswer->Parameters.AddMember("TotalLoad", qSelectTitle.ReadColumn_Double(1), Allocator);
+    TcpAnswer->Parameters.AddMember("TotalEntrollment", qSelectTitle.ReadColumn_Double(2), Allocator);
+    TcpAnswer->Parameters.AddMember("MoveWagonSum", qSelectTitle.ReadColumn_Double(3), Allocator);
+    return true;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::OilSphere_GetUserConsumption(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+    IS_UNUSED(TcpMessage);
+
+    //Запрашиваем всех пользователей и их балансы
+    ISQuery qSelectUsers(DBConnection, QS_USERS_CONSUMPTION);
+    if (!qSelectUsers.Execute()) //Ошибка запроса
+    {
+        return ErrorQuery(LANG("Carat.Error.Query.GetUserConsumption.SelectUsers"), qSelectUsers);
+    }
+
+    auto &Allocator = TcpAnswer->Parameters.GetAllocator();
+
+    //Обходим пользователей
+    rapidjson::Value UserArray(rapidjson::Type::kArrayType);
+    while (qSelectUsers.Next())
+    {
+        unsigned int UserID = qSelectUsers.ReadColumn_UInt(0);
+
+        //Запрашиваем все расходы пользователя
+        ISQuery qSelectUserConsumption(DBConnection, QS_USER_CONSUMPTION);
+        qSelectUserConsumption.BindUInt(UserID);
+        if (!qSelectUserConsumption.Execute()) //Ошибка запроса
+        {
+            return ErrorQuery(LANG("Carat.Error.Query.GetUserConsumption.UserConsumption"), qSelectUserConsumption);
+        }
+
+        //Обходим расходы пользователя
+        rapidjson::Value ConsumptionArray(rapidjson::Type::kArrayType);
+        while (qSelectUserConsumption.Next())
+        {
+            std::string Date = ISTcpWorkerHelper::ConvertDateToString(qSelectUserConsumption.ReadColumn_Date(0)),
+                Note = qSelectUserConsumption.ReadColumn_String(2);
+
+            rapidjson::Value ConsumptionObject(rapidjson::Type::kObjectType);
+            ConsumptionObject.AddMember("Date", JSON_STRINGA(Date.c_str(), Allocator), Allocator);
+            ConsumptionObject.AddMember("Sum", qSelectUserConsumption.ReadColumn_Double(1), Allocator);
+            ConsumptionObject.AddMember("Note", JSON_STRINGA(Note.c_str(), Allocator), Allocator);
+            ConsumptionArray.PushBack(ConsumptionObject, Allocator);
+        }
+
+        //Запрашиваем все возвраты пользователя
+        ISQuery qSelectUserReturn(DBConnection, QS_USER_RETURN);
+        qSelectUserReturn.BindUInt(UserID);
+        if (!qSelectUserReturn.Execute())
+        {
+            return ErrorQuery(LANG("Carat.Error.Query.GetUserConsumption.UserReturn"), qSelectUserReturn);
+        }
+
+        //Обходим возраты пользователя
+        rapidjson::Value ReturnArray(rapidjson::Type::kArrayType);
+        while (qSelectUserReturn.Next())
+        {
+            std::string Date = ISTcpWorkerHelper::ConvertDateToString(qSelectUserReturn.ReadColumn_Date(0)),
+                Note = qSelectUserReturn.ReadColumn_String(2);
+
+            rapidjson::Value ReturnObject(rapidjson::Type::kObjectType);
+            ReturnObject.AddMember("Date", JSON_STRINGA(Date.c_str(), Allocator), Allocator);
+            ReturnObject.AddMember("Sum", qSelectUserReturn.ReadColumn_Double(1), Allocator);
+            ReturnObject.AddMember("Note", JSON_STRINGA(Note.c_str(), Allocator), Allocator);
+        }
+
+        const char *UserFIO = qSelectUsers.ReadColumn(1);
+        std::string Balance = ISAlgorithm::FormatNumber(qSelectUsers.ReadColumn_Double(2), ' ', 2);
+
+        rapidjson::Value UserObject(rapidjson::Type::kObjectType);
+        UserObject.AddMember("ID", UserID, Allocator);
+        UserObject.AddMember("FIO", JSON_STRINGA(UserFIO, Allocator), Allocator);
+        UserObject.AddMember("Balance", JSON_STRINGA(Balance.c_str(), Allocator), Allocator);
+        UserObject.AddMember("ConsumptionList", ConsumptionArray, Allocator);
+        UserObject.AddMember("ReturnList", ReturnArray, Allocator);
+        UserArray.PushBack(UserObject, Allocator);
+    }
+
+    //Получаем итоговые цифры
+    ISQuery qSelectTotalBalance(DBConnection, QS_TOTAL_BALANCE);
+    if (!qSelectTotalBalance.Execute())
+    {
+        return ErrorQuery(LANG("Carat.Error.Query.GetUserConsumption.SelectTotal"), qSelectTotalBalance);
+    }
+    qSelectTotalBalance.First();
+
+    double TotalComing = qSelectTotalBalance.ReadColumn_Double(0),
+        TotalConsumption = qSelectTotalBalance.ReadColumn_Double(1);
+    TcpAnswer->Parameters.AddMember("TotalComing", TotalComing, Allocator);
+    TcpAnswer->Parameters.AddMember("TotalConsumption", TotalConsumption, Allocator);
+    TcpAnswer->Parameters.AddMember("Balance", TotalComing - TotalConsumption, Allocator);
+    TcpAnswer->Parameters.AddMember("UserList", UserArray, Allocator);
+    return true;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::OilSphere_LoadBanks(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+    IS_UNUSED(TcpMessage);
+    IS_UNUSED(TcpAnswer);
+
+    /*QVariant ByteArray = CheckNullField("ByteArray", TcpMessage);
+    if (!ByteArray.isValid())
+    {
+        return false;
+    }
+
+    QByteArray b = QByteArray::fromBase64(ByteArray.toByteArray());
+    QString Content = QString::fromUtf8(b);
+
+    QStringList StringList = Content.split('\n');
+    StringList.removeFirst(); //Удаляем заголовки
+    StringList.removeAll(QString()); //Удаляем пустые строки
+
+    int Loaded = 0, Invalid = 0;
+
+    //Подготовим запросы и обойдём все записи
+    ISQuery qInsert(ISDatabase::Instance().GetDB(DBConnectionName), QI_BANK),
+        qSelect(ISDatabase::Instance().GetDB(DBConnectionName), QS_BANK);
+    for (QString &String : StringList)
+    {
+        QStringList Values = String.split('\t');
+        Values.removeFirst(); //Удаляем первое поле "Есть файлы"
+        if (Values.size() != 11) //Запись не валидная
+        {
+            ++Invalid;
+            continue;
+        }
+
+        QString StringDate = Values[0],
+            StringAdmission = Values[1],
+            StringWriteOff = Values[2],
+            StringPurposePayment = Values[3],
+            StringCounterparty = Values[4],
+            StringCheckNumber = Values[5],
+            StringOperationType = Values[6],
+            StringIncomingNumber = Values[7],
+            StringIncomingDate = Values[8],
+            StringBankAccount = Values[9],
+            StringComment = Values[10];
+
+        //Дата
+        QDate Date = QDate::fromString(Values[0], FORMAT_DATE_V2);
+
+        //Поступление
+        bool AdmissionOK = false;
+        StringAdmission.remove(160);
+        StringAdmission.replace(',', '.');
+        double Admission = StringAdmission.toDouble(&AdmissionOK);
+
+        //Списание
+        bool WriteOffOK = false;
+        StringWriteOff.remove(160);
+        StringWriteOff.replace(',', '.');
+        double WriteOff = StringWriteOff.toDouble(&WriteOffOK);
+
+        //Входящая дата
+        QDate IncomingDate = QDate::fromString(StringIncomingDate, FORMAT_DATE_V2);
+
+        //Проверяем наличие такой записи
+        qSelect.BindValue(":Date", Date);
+        qSelect.BindValue(":IncomingNumber", StringIncomingNumber);
+        if (!qSelect.Execute()) //Не удалось проверить наличие записи
+        {
+            return ErrorQuery(LANG("Carat.Error.Query.LoadBank.Select"), qSelect);
+        }
+
+        if (!qSelect.First()) //Не удалось перейти на первую запись
+        {
+            ErrorString = qSelect.GetErrorString();
+            return false;
+        }
+
+        //Если такая запись уже есть - переходим к следующей
+        if (qSelect.ReadColumn("count").toInt() > 0)
+        {
+            continue;
+        }
+
+        qInsert.BindValue(":Date", Date);
+        qInsert.BindValue(":Admission", AdmissionOK ? Admission : QVariant());
+        qInsert.BindValue(":WriteOff", WriteOffOK ? WriteOff : QVariant());
+        qInsert.BindValue(":PurposePayment", StringPurposePayment.isEmpty() ? QVariant() : StringPurposePayment);
+        qInsert.BindValue(":Counterparty", StringCounterparty.isEmpty() ? QVariant() : StringCounterparty);
+        qInsert.BindValue(":CheckNumber", StringCheckNumber.isEmpty() ? QVariant() : StringCheckNumber);
+        qInsert.BindValue(":OperationType", StringOperationType.isEmpty() ? QVariant() : StringOperationType);
+        qInsert.BindValue(":IncomingNumber", StringIncomingNumber.isEmpty() ? QVariant() : StringIncomingNumber);
+        qInsert.BindValue(":IncomingDate", IncomingDate);
+        qInsert.BindValue(":BankAccount", StringBankAccount.isEmpty() ? QVariant() : StringBankAccount);
+        qInsert.BindValue(":Comment", StringComment.isEmpty() ? QVariant() : StringComment);
+        if (!qInsert.Execute()) //Не удалось добавить запись
+        {
+            return ErrorQuery(LANG("Carat.Error.Query.LoadBank.Insert").arg(Values.join(' ')), qInsert);
+        }
+        ++Loaded;
+    }
+    TcpAnswer->Parameters["Loaded"] = Loaded;
+    TcpAnswer->Parameters["Invalid"] = Invalid;
+    TcpAnswer->Parameters["Total"] = StringList.size();
+    Protocol(TcpMessage->TcpSocket->GetUserID(), "{85DCCA5C-723E-4E18-8286-FF33D12C6F4D}");*/
+    return true;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::OilSphere_GetUserBalance(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+    ISQuery qSelect(DBConnection, QS_USER_BALANCE);
+    qSelect.BindUInt(TcpMessage->TcpClient->UserID);
+    if (!qSelect.Execute())
+    {
+        return ErrorQuery(LANG("Carat.Error.Query.GetUserBalance.Select"), qSelect);
+    }
+
+    if (!qSelect.First())
+    {
+        ErrorString = qSelect.GetErrorString();
+        return false;
+    }
+    std::string String = ISAlgorithm::FormatNumber(qSelect.ReadColumn_Double(0), ' ', 2);
+    TcpAnswer->Parameters.AddMember("Balance", JSON_STRINGA(String.c_str(), TcpAnswer->Parameters.GetAllocator()), TcpAnswer->Parameters.GetAllocator());
     return true;
 }
 //-----------------------------------------------------------------------------

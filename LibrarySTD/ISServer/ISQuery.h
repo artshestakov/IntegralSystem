@@ -44,6 +44,7 @@ public:
     void BindUInt64(uint64_t Value);
     void BindInt(int Value);
     void BindInt64(int64_t Value);
+    void BindDouble(double Value);
 
     bool Execute();
     bool ExecuteFirst();

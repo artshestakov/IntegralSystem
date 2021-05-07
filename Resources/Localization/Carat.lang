@@ -43,6 +43,7 @@
     <Local Name="Carat.Error.ParameterNotInt" Russian="Параметр &quot;%s&quot; не является числом."/>
     <Local Name="Carat.Error.ParameterNotString" Russian="Параметр &quot;%s&quot; не является строкой."/>
     <Local Name="Carat.Error.ParameterNotBool" Russian="Параметр &quot;%s&quot; не является логическим типом."/>
+    <Local Name="Carat.Error.ParameterNotDouble" Russian="Параметр &quot;%s&quot; не является десятичной дробью."/>
 
     <!--Ошибки протокола-->
     <Local Name="Carat.Error.Query.Auth.AlreadyAuthorized" Russian="Вы уже авторизованы!"/>

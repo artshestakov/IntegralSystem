@@ -3,7 +3,6 @@
 #include "ISConstants.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
-#include "ISMetaData.h"
 #include "ISSettings.h"
 #include "ISGui.h"
 #include "ISControls.h"

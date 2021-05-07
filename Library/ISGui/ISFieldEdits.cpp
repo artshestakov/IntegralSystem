@@ -1432,7 +1432,10 @@ void ISYearEdit::SelectCurrentYear()
 ISPhoneEdit::ISPhoneEdit(QWidget *parent) : ISLineEdit(parent)
 {
     QString InputMask = "(000) 000-00-00;_";
+    disconnect(GetLineEdit(), &ISQLineEdit::textChanged, this, &ISPhoneEdit::TextChanged);
     SetInputMask(InputMask);
+    connect(GetLineEdit(), &ISQLineEdit::textChanged, this, &ISPhoneEdit::TextChanged);
+
     SetFixedWidth(ISGui::GetStringWidth(InputMask, ISDefines::Gui::FONT_APPLICATION) + 50);
     SetSizePolicyHorizontal(QSizePolicy::Maximum);
     SetIcon(BUFFER_ICONS("PhoneEdit"));
