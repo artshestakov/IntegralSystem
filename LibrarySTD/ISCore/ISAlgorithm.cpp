@@ -818,7 +818,12 @@ std::string ISAlgorithm::FormatNumber(double Number, char Separator, unsigned in
         RightPart[RightPartSize - 1] = CHAR_NULL_TERM;
         --RightPartSize;
     }
-    return FormatNumber(ValueLeft, Separator) + '.' + RightPart;
+
+    if (RightPartSize > 0)
+    {
+        return FormatNumber(ValueLeft, Separator) + '.' + RightPart;
+    }
+    return FormatNumber(ValueLeft, Separator);
 }
 //-----------------------------------------------------------------------------
 std::string ISAlgorithm::FormatPath(const std::string &Path)
