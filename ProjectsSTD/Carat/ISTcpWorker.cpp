@@ -116,6 +116,10 @@ static std::string QU_USER_SETTINGS_RESET = PREPARE_QUERYN("UPDATE _usersettings
     "WHERE usst_user = $1 "
     "RETURNING (SELECT stgs_uid FROM _settings WHERE stgs_id = usst_setting), usst_value", 1);
 //-----------------------------------------------------------------------------
+static std::string QS_ASTERISK_RECORD = PREPARE_QUERYN("SELECT ascl_uniqueid "
+    "FROM _asteriskcalls "
+    "WHERE ascl_id = $1", 1);
+//-----------------------------------------------------------------------------
 static std::string QS_RIGHT_SHOW_TABLE = PREPARE_QUERYN("SELECT check_access_user_table($1, $2, $3)", 3);
 //-----------------------------------------------------------------------------
 static std::string QS_SORTING = PREPARE_QUERYN("SELECT sgts_fieldname, sgts_sorting "
@@ -443,6 +447,7 @@ ISTcpWorker::ISTcpWorker()
     MapFunction[API_GROUP_RIGHT_SPECIAL_ADD] = &ISTcpWorker::GroupRightSpecialAdd;
     MapFunction[API_GROUP_RIGHT_SPECIAL_DELETE] = &ISTcpWorker::GroupRightSpecialDelete;
     MapFunction[API_SAVE_META_DATA] = &ISTcpWorker::SaveMetaData;
+    MapFunction[API_GET_RECORD_CALL] = &ISTcpWorker::GetRecordCall;
 
     CRITICAL_SECTION_INIT(&CriticalSection);
     CRITICAL_SECTION_INIT(&CSRunning);
@@ -1739,9 +1744,66 @@ bool ISTcpWorker::UserSettingsReset(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAn
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::GetRecordCall(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
-    IS_UNUSED(TcpMessage);
-    IS_UNUSED(TcpAnswer);
-    return false;
+    //Получаем директорию с записями разговоров
+    std::string RecordDir = ISConfig::Instance().GetValueString("AMI", "RecordDir");
+    if (RecordDir.empty()) //Директория не настроена - ошибка
+    {
+        ErrorString = LANG("Carat.Error.Query.GetRecordCall.RecordDirIsEmpty");
+        return false;
+    }
+
+    //По необходимости дополняем путь разделителем
+    if (RecordDir.back() != PATH_SEPARATOR)
+    {
+        RecordDir.push_back(PATH_SEPARATOR);
+    }
+
+    unsigned int RecordID;
+    if (!CheckIsNullUInt(TcpMessage, "RecordID", RecordID))
+    {
+        return false;
+    }
+
+    //Получаем идентификатор записи по её коду
+    ISQuery qSelectRecord(DBConnection, QS_ASTERISK_RECORD);
+    qSelectRecord.BindUInt(RecordID);
+    if (!qSelectRecord.Execute())
+    {
+        return ErrorQuery(LANG("Carat.Error.Query.GetRecordCall.SelectUniqueID"), qSelectRecord);
+    }
+
+    if (!qSelectRecord.First())
+    {
+        ErrorString = ISAlgorithm::StringF(LANG("Carat.Error.Query.GetRecordCall.NotFoundUniqueID"), RecordID);
+        return false;
+    }
+    const char *UniqueID = qSelectRecord.ReadColumn(0);
+
+    std::string FilePath = RecordDir + UniqueID + ".wav";
+    if (!ISAlgorithm::FileExist(FilePath)) //Файл не существует
+    {
+        ErrorString = LANG("Carat.Error.Query.GetRecordCall.NotFoundRecordCall");
+        return false;
+    }
+
+    long FileSize = 0;
+    unsigned char *FileData = ISAlgorithm::ReadFile(FilePath.c_str(), "rb", FileSize, ErrorString);
+    if (!FileData)
+    {
+        return false;
+    }
+
+    //Кодируем в base64, очищаем память и проверяем результат кодирования
+    std::string Base64 = ISAlgorithm::Base64Encode(FileData, (size_t)FileSize, ErrorString);
+    free(FileData);
+    if (Base64.empty())
+    {
+        return false;
+    }
+
+    //Читаем файл, закрываем и выходим
+    TcpAnswer->Parameters.AddMember("Data", JSON_STRINGA(Base64.c_str(), TcpAnswer->Parameters.GetAllocator()), TcpAnswer->Parameters.GetAllocator());
+    return true;
 }
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::GetClients(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)

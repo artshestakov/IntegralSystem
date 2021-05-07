@@ -99,9 +99,8 @@
 
     <Local Name="Carat.Error.Query.GetRecordCall.RecordDirIsEmpty" Russian="На сервере не настроена директория хранения записей разговоров."/>
     <Local Name="Carat.Error.Query.GetRecordCall.SelectUniqueID" Russian="Не удалось получить уникальный идентификатор записи разговора."/>
-    <Local Name="Carat.Error.Query.GetRecordCall.NotFoundUniqueID" Russian="Запись с кодом %1 не найдена."/>
+    <Local Name="Carat.Error.Query.GetRecordCall.NotFoundUniqueID" Russian="Запись с кодом %d не найдена в базе данных."/>
     <Local Name="Carat.Error.Query.GetRecordCall.NotFoundRecordCall" Russian="Запись разговора не найдена на сервере."/>
-    <Local Name="Carat.Error.Query.GetRecordCall.OpenRecordCall" Russian="Не удалось прочитать файл с записью разговора: %1"/>
 
     <Local Name="Carat.Error.Query.GetClients.Select" Russian="Не удалось получить список пользователей."/>
 

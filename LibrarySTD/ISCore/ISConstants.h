@@ -105,6 +105,7 @@ const char API_GROUP_RIGHT_TABLE_DELETE[] = "GroupRightTableDelete"; //Удалить у
 const char API_GROUP_RIGHT_SPECIAL_ADD[] = "GroupRightSpecialAdd"; //Добавить спец. право группе
 const char API_GROUP_RIGHT_SPECIAL_DELETE[] = "GroupRightSpecialDelete"; //Удалить спец. право у группы
 const char API_SAVE_META_DATA[] = "SaveMetaData"; //Сохранение мета-данных
+const char API_GET_RECORD_CALL[] = "GetRecordCall"; //Получить запись разговора
 //PROTOCOL---------------------------------------------------------------------
 const char CONST_UID_PROTOCOL_ENTER_APPLICATION[] = "2614cb96-ec54-4d4f-b1a6-06d2444962ca";
 const char CONST_UID_PROTOCOL_GET_UPDATE_CLIENT[] = "0234643a-af60-44bf-a2eb-08a71307841c";
