@@ -370,9 +370,9 @@
             <Field UID="{923EBDB0-819F-4D98-94C7-DEA903697850}" Name="TechnicalLosses" Type="Double" LabelName="Технические потери, %" LocalListName="Технические потери, %"/>
             <Field UID="{C29C2DB1-840B-4D04-9A5D-0B7D57873B2E}" Name="StorageServices" Type="Money" LabelName="Услуги хранения, руб." LocalListName="Услуги хранения, руб."/>
             <Field UID="{E25CC337-B559-401D-9827-6C578A0D642F}" Name="Transshipment" Type="Money" LabelName="Перевалка" LocalListName="Перевалка"/>
-            <Field UID="{1091D114-97FE-477C-9DD9-B8F099B4ED50}" Name="TechnicalLossesWeight" Type="Double" LabelName="Масса с учётом технических потерь" LocalListName="Масса с учётом технических потерь" QueryText="-((get_sum_weight_move_wagon_detail(mwag_id) * mwag_technicallosses / 100) - get_sum_weight_move_wagon_detail(mwag_id))"/>
-            <Field UID="{C938C8AE-946F-4577-A742-4464FF505287}" Name="PriceFull" Type="Money" LabelName="Цена с учётом хранения, подачи и уборки" LocalListName="Цена с учётом хранения, подачи и уборки" QueryText="mwag_price + mwag_storageservices + mwag_transshipment"/>
-            <Field UID="{5EE18C72-5ACB-4026-84B9-BE20252A9B00}" Name="TotalCost" Type="Money" LabelName="Итоговая стоимость" LocalListName="Итоговая стоимость" QueryText="get_sum_weight_move_wagon_detail(mwag_id) / 1000 * (mwag_price + mwag_storageservices + mwag_transshipment)"/>
+            <Field UID="{1091D114-97FE-477C-9DD9-B8F099B4ED50}" Name="TechnicalLossesWeight" Type="Double" ReadOnly="true" LabelName="Масса с учётом технических потерь" LocalListName="Масса с учётом технических потерь" QueryText="-((get_sum_weight_move_wagon_detail(mwag_id) * mwag_technicallosses / 100) - get_sum_weight_move_wagon_detail(mwag_id))"/>
+            <Field UID="{C938C8AE-946F-4577-A742-4464FF505287}" Name="PriceFull" Type="Money" ReadOnly="true" LabelName="Цена с учётом хранения, подачи и уборки" LocalListName="Цена с учётом хранения, подачи и уборки" QueryText="mwag_price + mwag_storageservices + mwag_transshipment"/>
+            <Field UID="{5EE18C72-5ACB-4026-84B9-BE20252A9B00}" Name="TotalCost" Type="Money" ReadOnly="true" LabelName="Итоговая стоимость" LocalListName="Итоговая стоимость" QueryText="get_sum_weight_move_wagon_detail(mwag_id) / 1000 * (mwag_price + mwag_storageservices + mwag_transshipment)"/>
             <Field UID="{1FFBC69B-26E5-4180-AF52-DB1F5FE37201}" Name="Note" Type="Text" LabelName="Примечание" LocalListName="Примечание"/>
         </Fields>
         <Foreigns>
