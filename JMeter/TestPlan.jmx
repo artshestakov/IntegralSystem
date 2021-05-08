@@ -308,7 +308,7 @@
         <stringProp name="ThreadGroup.on_sample_error">stoptest</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
-          <stringProp name="LoopController.loops">1</stringProp>
+          <intProp name="LoopController.loops">-1</intProp>
         </elementProp>
         <stringProp name="ThreadGroup.num_threads">1</stringProp>
         <stringProp name="ThreadGroup.ramp_time">1</stringProp>
@@ -341,19 +341,6 @@ def MapGetRecordCall =
 		]
 ];
 vars.put(&quot;QueryGetRecordCall&quot;, MapToString(MapGetRecordCall));
-
-//Получить данные таблицы
-def MapGetTableData =
-[
-	Type: &quot;GetTableData&quot;,
-	Parameters:
-		[
-			TableName: vars.get(&quot;GetTableData_TableName&quot;),
-			SortingField: vars.get(&quot;GetTableData_SortingField&quot;),
-			SortingOrder: vars.get(&quot;GetTableData_SortingOrder&quot;)
-		]
-];
-vars.put(&quot;QueryGetTableData&quot;, MapToString(MapGetTableData));
 
 //Получить данные запроса
 def MapGetTableQuery =
@@ -405,62 +392,6 @@ def MapFileStorageGet =
 ];
 vars.put(&quot;QueryFileStorageGet&quot;, MapToString(MapFileStorageGet));
 
-//Поиск задачи по тексту
-def MapSearchTaskText =
-[
-	Type: &quot;SearchTaskText&quot;,
-	Parameters:
-		[
-			Value: vars.get(&quot;SearchTaskText_Value&quot;)
-		]
-];
-vars.put(&quot;QuerySearchTaskText&quot;, MapToString(MapSearchTaskText));
-
-//Поиск задачи по номеру
-def MapSearchTaskID =
-[
-	Type: &quot;SearchTaskID&quot;,
-	Parameters:
-		[
-			ID: vars.get(&quot;SearchTaskID_ID&quot;)
-		]
-];
-vars.put(&quot;QuerySearchTaskID&quot;, MapToString(MapSearchTaskID));
-
-//Поиск задачи по номеру
-def MapSearchFullText =
-[
-	Type: &quot;SearchFullText&quot;,
-	Parameters:
-		[
-			Value: vars.get(&quot;SearchFullText_Value&quot;)
-		]
-];
-vars.put(&quot;QuerySearchFullText&quot;, MapToString(MapSearchFullText));
-
-//Получение событий календаря
-def MapGetCalendarEvents =
-[
-	Type: &quot;GetCalendarEvents&quot;,
-	Parameters:
-		[
-			Month: vars.get(&quot;GetCalendarEvents_Month&quot;),
-			Year: vars.get(&quot;GetCalendarEvents_Year&quot;)
-		]
-];
-vars.put(&quot;QueryGetCalendarEvents&quot;, MapToString(MapGetCalendarEvents));
-
-//Удаление события календаря
-def MapCalendarDelete =
-[
-	Type: &quot;CalendarDelete&quot;,
-	Parameters:
-		[
-			ID: vars.get(&quot;CalendarDelete_ID&quot;)
-		]
-];
-vars.put(&quot;QueryCalendarDelete&quot;, MapToString(MapCalendarDelete));
-
 //Получить права доступа группы
 def MapGetGroupRights =
 [
@@ -472,68 +403,6 @@ def MapGetGroupRights =
 ];
 vars.put(&quot;QueryGetGroupRights&quot;, MapToString(MapGetGroupRights));
 
-//Получить значение поля записи
-def MapGetRecordValue =
-[
-	Type: &quot;GetRecordValue&quot;,
-	Parameters:
-		[
-			TableName: vars.get(&quot;GetRecordValue_TableName&quot;),
-			FieldName: vars.get(&quot;GetRecordValue_FieldName&quot;),
-			ObjectID: Integer.parseInt(vars.get(&quot;GetRecordValue_ObjectID&quot;))
-		]
-];
-vars.put(&quot;QueryGetRecordValue&quot;, MapToString(MapGetRecordValue));
-
-//Добавить запись в избранное
-def MapRecordFavoriteAdd =
-[
-	Type: &quot;RecordFavoriteAdd&quot;,
-	Parameters:
-		[
-			TableName: vars.get(&quot;RecordFavoriteAdd_TableName&quot;),
-			ObjectID: vars.get(&quot;RecordFavoriteAdd_ObjectID&quot;)
-		]
-];
-vars.put(&quot;QueryRecordFavoriteAdd&quot;, MapToString(MapRecordFavoriteAdd));
-
-//Удалить запись из избранного
-def MapRecordFavoriteDelete =
-[
-	Type: &quot;RecordFavoriteDelete&quot;,
-	Parameters:
-		[
-			TableName: vars.get(&quot;RecordFavoriteDelete_TableName&quot;),
-			ObjectID: vars.get(&quot;RecordFavoriteDelete_ObjectID&quot;)
-		]
-];
-vars.put(&quot;QueryRecordFavoriteDelete&quot;, MapToString(MapRecordFavoriteDelete));
-
-//Получаем имена избранных записей
-def MapGetFavoriteNames =
-[
-	Type: &quot;GetFavoriteNames&quot;,
-];
-vars.put(&quot;QueryGetFavoriteNames&quot;, MapToString(MapGetFavoriteNames));
-
-//Удалить избранные записи у пользователя
-def MapFavoritesDelete =
-[
-	Type: &quot;FavoritesDelete&quot;
-];
-vars.put(&quot;QueryFavoritesDelete&quot;, MapToString(MapFavoritesDelete));
-
-//Закрытие события календаря
-def MapCalendarClose =
-[
-	Type: &quot;CalendarClose&quot;,
-	Parameters:
-		[
-			CalendarID: vars.get(&quot;CalendarClose_CalendarID&quot;)
-		]
-];
-vars.put(&quot;QueryCalendarClose&quot;, MapToString(MapCalendarClose));
-
 //Получить значения справочника для поля
 def MapGetForeignList =
 [
@@ -544,14 +413,7 @@ def MapGetForeignList =
 			FieldName: vars.get(&quot;GetForeignList_FieldName&quot;)
 		]
 ];
-vars.put(&quot;QueryGetForeignList&quot;, MapToString(MapGetForeignList));
-
-//Получить значения справочника для поля
-def MapGetServerInfo =
-[
-	Type: &quot;GetServerInfo&quot;
-];
-vars.put(&quot;QueryGetServerInfo&quot;, MapToString(MapGetServerInfo));</stringProp>
+vars.put(&quot;QueryGetForeignList&quot;, MapToString(MapGetForeignList));</stringProp>
           <stringProp name="scriptLanguage">groovy</stringProp>
         </JSR223Sampler>
         <hashTree/>
@@ -696,7 +558,7 @@ vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR
           </JSR223PreProcessor>
           <hashTree/>
         </hashTree>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: GetServerInfo" enabled="false">
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: GetServerInfo" enabled="true">
           <stringProp name="TestPlan.comments">Получить информацию о сервере</stringProp>
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
@@ -758,7 +620,7 @@ vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR
           </JSR223PreProcessor>
           <hashTree/>
         </hashTree>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: SearchFullText" enabled="false">
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: SearchFullText" enabled="true">
           <stringProp name="TestPlan.comments">Полнотекстовый поиск</stringProp>
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
@@ -1363,7 +1225,7 @@ vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR
           <boolProp name="TCPSampler.nodelay">false</boolProp>
           <stringProp name="TCPSampler.timeout"></stringProp>
           <stringProp name="TCPSampler.request">${Query}</stringProp>
-          <boolProp name="TCPSampler.closeConnection">true</boolProp>
+          <boolProp name="TCPSampler.closeConnection">false</boolProp>
           <stringProp name="ConfigTestElement.username"></stringProp>
           <stringProp name="ConfigTestElement.password"></stringProp>
         </TCPSampler>
@@ -1389,8 +1251,7 @@ vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR
           </JSR223PreProcessor>
           <hashTree/>
         </hashTree>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: RecordDelete (User)" enabled="false">
-          <stringProp name="TestPlan.comments">Удаление пользователя</stringProp>
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: GetRecordValue" enabled="true">
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
           <stringProp name="TCPSampler.port"></stringProp>
@@ -1410,11 +1271,242 @@ vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR
 
 def Map =
 [
+	Type: &quot;GetRecordValue&quot;,
+	Parameters:
+		[
+			TableName: &quot;_Users&quot;,
+			FieldName: &quot;Login&quot;,
+			ObjectID: Integer.parseInt(vars.get(&quot;UserID&quot;))
+		]
+];
+String STR = new JsonBuilder(Map).toString() + &apos;\0&apos;
+vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR);</stringProp>
+            <stringProp name="scriptLanguage">groovy</stringProp>
+          </JSR223PreProcessor>
+          <hashTree/>
+        </hashTree>
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: GetTableData" enabled="true">
+          <stringProp name="TCPSampler.server"></stringProp>
+          <boolProp name="TCPSampler.reUseConnection">true</boolProp>
+          <stringProp name="TCPSampler.port"></stringProp>
+          <boolProp name="TCPSampler.nodelay">false</boolProp>
+          <stringProp name="TCPSampler.timeout"></stringProp>
+          <stringProp name="TCPSampler.request">${Query}</stringProp>
+          <boolProp name="TCPSampler.closeConnection">false</boolProp>
+          <stringProp name="ConfigTestElement.username"></stringProp>
+          <stringProp name="ConfigTestElement.password"></stringProp>
+        </TCPSampler>
+        <hashTree>
+          <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="JSR223 PreProcessor" enabled="true">
+            <stringProp name="cacheKey">true</stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="script">import groovy.json.JsonBuilder;
+
+def Map =
+[
+	Type: &quot;GetTableData&quot;,
+	Parameters:
+		[
+			TableName: &quot;_Users&quot;
+		]
+];
+String STR = new JsonBuilder(Map).toString() + &apos;\0&apos;
+vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR);</stringProp>
+            <stringProp name="scriptLanguage">groovy</stringProp>
+          </JSR223PreProcessor>
+          <hashTree/>
+        </hashTree>
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: RecordFavoriteAdd" enabled="true">
+          <stringProp name="TCPSampler.server"></stringProp>
+          <boolProp name="TCPSampler.reUseConnection">true</boolProp>
+          <stringProp name="TCPSampler.port"></stringProp>
+          <boolProp name="TCPSampler.nodelay">false</boolProp>
+          <stringProp name="TCPSampler.timeout"></stringProp>
+          <stringProp name="TCPSampler.request">${Query}</stringProp>
+          <boolProp name="TCPSampler.closeConnection">false</boolProp>
+          <stringProp name="ConfigTestElement.username"></stringProp>
+          <stringProp name="ConfigTestElement.password"></stringProp>
+        </TCPSampler>
+        <hashTree>
+          <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="JSR223 PreProcessor" enabled="true">
+            <stringProp name="cacheKey">true</stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="script">import groovy.json.JsonBuilder;
+
+def Map =
+[
+	Type: &quot;RecordFavoriteAdd&quot;,
+	Parameters:
+		[
+			TableName: &quot;_Users&quot;,
+			ObjectID: Integer.parseInt(vars.get(&quot;UserID&quot;))
+		]
+];
+String STR = new JsonBuilder(Map).toString() + &apos;\0&apos;
+vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR);</stringProp>
+            <stringProp name="scriptLanguage">groovy</stringProp>
+          </JSR223PreProcessor>
+          <hashTree/>
+        </hashTree>
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: GetFavoriteNames" enabled="true">
+          <stringProp name="TCPSampler.server"></stringProp>
+          <boolProp name="TCPSampler.reUseConnection">true</boolProp>
+          <stringProp name="TCPSampler.port"></stringProp>
+          <boolProp name="TCPSampler.nodelay">false</boolProp>
+          <stringProp name="TCPSampler.timeout"></stringProp>
+          <stringProp name="TCPSampler.request">${Query}</stringProp>
+          <boolProp name="TCPSampler.closeConnection">false</boolProp>
+          <stringProp name="ConfigTestElement.username"></stringProp>
+          <stringProp name="ConfigTestElement.password"></stringProp>
+        </TCPSampler>
+        <hashTree>
+          <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="JSR223 PreProcessor" enabled="true">
+            <stringProp name="cacheKey">true</stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="script">import groovy.json.JsonBuilder;
+
+def Map =
+[
+	Type: &quot;GetFavoriteNames&quot;,
+	Parameters:
+		[
+			Null: null //Нужно чтобы параметры были в запросе &quot;пустыми&quot;
+		]
+];
+String STR = new JsonBuilder(Map).toString() + &apos;\0&apos;
+vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR);</stringProp>
+            <stringProp name="scriptLanguage">groovy</stringProp>
+          </JSR223PreProcessor>
+          <hashTree/>
+        </hashTree>
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: RecordFavoriteDelete" enabled="true">
+          <stringProp name="TCPSampler.server"></stringProp>
+          <boolProp name="TCPSampler.reUseConnection">true</boolProp>
+          <stringProp name="TCPSampler.port"></stringProp>
+          <boolProp name="TCPSampler.nodelay">false</boolProp>
+          <stringProp name="TCPSampler.timeout"></stringProp>
+          <stringProp name="TCPSampler.request">${Query}</stringProp>
+          <boolProp name="TCPSampler.closeConnection">false</boolProp>
+          <stringProp name="ConfigTestElement.username"></stringProp>
+          <stringProp name="ConfigTestElement.password"></stringProp>
+        </TCPSampler>
+        <hashTree>
+          <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="JSR223 PreProcessor" enabled="true">
+            <stringProp name="cacheKey">true</stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="script">import groovy.json.JsonBuilder;
+
+def Map =
+[
+	Type: &quot;RecordFavoriteDelete&quot;,
+	Parameters:
+		[
+			TableName: &quot;_Users&quot;,
+			ObjectID: Integer.parseInt(vars.get(&quot;UserID&quot;))
+		]
+];
+String STR = new JsonBuilder(Map).toString() + &apos;\0&apos;
+vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR);</stringProp>
+            <stringProp name="scriptLanguage">groovy</stringProp>
+          </JSR223PreProcessor>
+          <hashTree/>
+        </hashTree>
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: FavoritesDelete (Users)" enabled="true">
+          <stringProp name="TestPlan.comments">Удаление избранных записей из таблицы пользователей</stringProp>
+          <stringProp name="TCPSampler.server"></stringProp>
+          <boolProp name="TCPSampler.reUseConnection">true</boolProp>
+          <stringProp name="TCPSampler.port"></stringProp>
+          <boolProp name="TCPSampler.nodelay">false</boolProp>
+          <stringProp name="TCPSampler.timeout"></stringProp>
+          <stringProp name="TCPSampler.request">${Query}</stringProp>
+          <boolProp name="TCPSampler.closeConnection">false</boolProp>
+          <stringProp name="ConfigTestElement.username"></stringProp>
+          <stringProp name="ConfigTestElement.password"></stringProp>
+        </TCPSampler>
+        <hashTree>
+          <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="JSR223 PreProcessor" enabled="true">
+            <stringProp name="cacheKey">true</stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="script">import groovy.json.JsonBuilder;
+
+def Map =
+[
+	Type: &quot;FavoritesDelete&quot;,
+	Parameters:
+		[
+			TableName: &quot;_Users&quot;
+		]
+];
+String STR = new JsonBuilder(Map).toString() + &apos;\0&apos;
+vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR);</stringProp>
+            <stringProp name="scriptLanguage">groovy</stringProp>
+          </JSR223PreProcessor>
+          <hashTree/>
+        </hashTree>
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: FavoritesDelete (All)" enabled="true">
+          <stringProp name="TestPlan.comments">Удаление всех избранных записей</stringProp>
+          <stringProp name="TCPSampler.server"></stringProp>
+          <boolProp name="TCPSampler.reUseConnection">true</boolProp>
+          <stringProp name="TCPSampler.port"></stringProp>
+          <boolProp name="TCPSampler.nodelay">false</boolProp>
+          <stringProp name="TCPSampler.timeout"></stringProp>
+          <stringProp name="TCPSampler.request">${Query}</stringProp>
+          <boolProp name="TCPSampler.closeConnection">false</boolProp>
+          <stringProp name="ConfigTestElement.username"></stringProp>
+          <stringProp name="ConfigTestElement.password"></stringProp>
+        </TCPSampler>
+        <hashTree>
+          <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="JSR223 PreProcessor" enabled="true">
+            <stringProp name="cacheKey">true</stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="script">import groovy.json.JsonBuilder;
+
+def Map =
+[
+	Type: &quot;FavoritesDelete&quot;,
+	Parameters:
+		[
+			Null: null //Нужно чтобы параметры были в запросе &quot;пустыми&quot;
+		]
+];
+String STR = new JsonBuilder(Map).toString() + &apos;\0&apos;
+vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR);</stringProp>
+            <stringProp name="scriptLanguage">groovy</stringProp>
+          </JSR223PreProcessor>
+          <hashTree/>
+        </hashTree>
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: RecordDelete (User)" enabled="true">
+          <stringProp name="TestPlan.comments">Удаление пользователя</stringProp>
+          <stringProp name="TCPSampler.server"></stringProp>
+          <boolProp name="TCPSampler.reUseConnection">true</boolProp>
+          <stringProp name="TCPSampler.port"></stringProp>
+          <boolProp name="TCPSampler.nodelay">false</boolProp>
+          <stringProp name="TCPSampler.timeout"></stringProp>
+          <stringProp name="TCPSampler.request">${Query}</stringProp>
+          <boolProp name="TCPSampler.closeConnection">true</boolProp>
+          <stringProp name="ConfigTestElement.username"></stringProp>
+          <stringProp name="ConfigTestElement.password"></stringProp>
+        </TCPSampler>
+        <hashTree>
+          <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="JSR223 PreProcessor" enabled="true">
+            <stringProp name="cacheKey">true</stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="script">import groovy.json.JsonBuilder;
+
+def Map =
+[
 	Type: &quot;RecordDelete&quot;,
 	Parameters:
 		[
 			TableName: &quot;_Users&quot;,
-			Objects: [ Integer.parseInt(vars.get(&quot;ObjectID&quot;)) ]
+			Objects: [ Integer.parseInt(vars.get(&quot;UserID&quot;)) ]
 		]
 ];
 String STR = new JsonBuilder(Map).toString() + &apos;\0&apos;
@@ -1443,18 +1535,6 @@ vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR
           <stringProp name="TCPSampler.timeout"></stringProp>
           <stringProp name="TCPSampler.request">${QueryGetRecordCall}</stringProp>
           <boolProp name="TCPSampler.closeConnection">false</boolProp>
-          <stringProp name="ConfigTestElement.username"></stringProp>
-          <stringProp name="ConfigTestElement.password"></stringProp>
-        </TCPSampler>
-        <hashTree/>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: GetTableData" enabled="false">
-          <stringProp name="TCPSampler.server"></stringProp>
-          <boolProp name="TCPSampler.reUseConnection">true</boolProp>
-          <stringProp name="TCPSampler.port"></stringProp>
-          <boolProp name="TCPSampler.nodelay">false</boolProp>
-          <stringProp name="TCPSampler.timeout"></stringProp>
-          <stringProp name="TCPSampler.request">${QueryGetTableData}</stringProp>
-          <boolProp name="TCPSampler.closeConnection">true</boolProp>
           <stringProp name="ConfigTestElement.username"></stringProp>
           <stringProp name="ConfigTestElement.password"></stringProp>
         </TCPSampler>
@@ -1514,102 +1594,6 @@ vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR
           <boolProp name="TCPSampler.nodelay">false</boolProp>
           <stringProp name="TCPSampler.timeout"></stringProp>
           <stringProp name="TCPSampler.request">${QueryFileStorageGet}</stringProp>
-          <boolProp name="TCPSampler.closeConnection">true</boolProp>
-          <stringProp name="ConfigTestElement.username"></stringProp>
-          <stringProp name="ConfigTestElement.password"></stringProp>
-        </TCPSampler>
-        <hashTree/>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: GetCalendarEvents" enabled="false">
-          <stringProp name="TCPSampler.server"></stringProp>
-          <boolProp name="TCPSampler.reUseConnection">true</boolProp>
-          <stringProp name="TCPSampler.port"></stringProp>
-          <boolProp name="TCPSampler.nodelay">false</boolProp>
-          <stringProp name="TCPSampler.timeout"></stringProp>
-          <stringProp name="TCPSampler.request">${QueryGetCalendarEvents}</stringProp>
-          <boolProp name="TCPSampler.closeConnection">true</boolProp>
-          <stringProp name="ConfigTestElement.username"></stringProp>
-          <stringProp name="ConfigTestElement.password"></stringProp>
-        </TCPSampler>
-        <hashTree/>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: CalendarDelete" enabled="false">
-          <stringProp name="TCPSampler.server"></stringProp>
-          <boolProp name="TCPSampler.reUseConnection">true</boolProp>
-          <stringProp name="TCPSampler.port"></stringProp>
-          <boolProp name="TCPSampler.nodelay">false</boolProp>
-          <stringProp name="TCPSampler.timeout"></stringProp>
-          <stringProp name="TCPSampler.request">${QueryCalendarDelete}</stringProp>
-          <boolProp name="TCPSampler.closeConnection">true</boolProp>
-          <stringProp name="ConfigTestElement.username"></stringProp>
-          <stringProp name="ConfigTestElement.password"></stringProp>
-        </TCPSampler>
-        <hashTree/>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: GetRecordValue" enabled="false">
-          <stringProp name="TCPSampler.server"></stringProp>
-          <boolProp name="TCPSampler.reUseConnection">true</boolProp>
-          <stringProp name="TCPSampler.port"></stringProp>
-          <boolProp name="TCPSampler.nodelay">false</boolProp>
-          <stringProp name="TCPSampler.timeout"></stringProp>
-          <stringProp name="TCPSampler.request">${QueryGetRecordValue}</stringProp>
-          <boolProp name="TCPSampler.closeConnection">true</boolProp>
-          <stringProp name="ConfigTestElement.username"></stringProp>
-          <stringProp name="ConfigTestElement.password"></stringProp>
-        </TCPSampler>
-        <hashTree/>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: RecordFavoriteAdd" enabled="false">
-          <stringProp name="TCPSampler.server"></stringProp>
-          <boolProp name="TCPSampler.reUseConnection">true</boolProp>
-          <stringProp name="TCPSampler.port"></stringProp>
-          <boolProp name="TCPSampler.nodelay">false</boolProp>
-          <stringProp name="TCPSampler.timeout"></stringProp>
-          <stringProp name="TCPSampler.request">${QueryRecordFavoriteAdd}</stringProp>
-          <boolProp name="TCPSampler.closeConnection">true</boolProp>
-          <stringProp name="ConfigTestElement.username"></stringProp>
-          <stringProp name="ConfigTestElement.password"></stringProp>
-        </TCPSampler>
-        <hashTree/>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: RecordFavoriteDelete" enabled="false">
-          <stringProp name="TCPSampler.server"></stringProp>
-          <boolProp name="TCPSampler.reUseConnection">true</boolProp>
-          <stringProp name="TCPSampler.port"></stringProp>
-          <boolProp name="TCPSampler.nodelay">false</boolProp>
-          <stringProp name="TCPSampler.timeout"></stringProp>
-          <stringProp name="TCPSampler.request">${QueryRecordFavoriteDelete}</stringProp>
-          <boolProp name="TCPSampler.closeConnection">true</boolProp>
-          <stringProp name="ConfigTestElement.username"></stringProp>
-          <stringProp name="ConfigTestElement.password"></stringProp>
-        </TCPSampler>
-        <hashTree/>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: GetFavoriteNames" enabled="false">
-          <stringProp name="TCPSampler.server"></stringProp>
-          <boolProp name="TCPSampler.reUseConnection">true</boolProp>
-          <stringProp name="TCPSampler.port"></stringProp>
-          <boolProp name="TCPSampler.nodelay">false</boolProp>
-          <stringProp name="TCPSampler.timeout"></stringProp>
-          <stringProp name="TCPSampler.request">${QueryGetFavoriteNames}</stringProp>
-          <boolProp name="TCPSampler.closeConnection">true</boolProp>
-          <stringProp name="ConfigTestElement.username"></stringProp>
-          <stringProp name="ConfigTestElement.password"></stringProp>
-        </TCPSampler>
-        <hashTree/>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: FavoritesDelete" enabled="false">
-          <stringProp name="TCPSampler.server"></stringProp>
-          <boolProp name="TCPSampler.reUseConnection">true</boolProp>
-          <stringProp name="TCPSampler.port"></stringProp>
-          <boolProp name="TCPSampler.nodelay">false</boolProp>
-          <stringProp name="TCPSampler.timeout"></stringProp>
-          <stringProp name="TCPSampler.request">${QueryFavoritesDelete}</stringProp>
-          <boolProp name="TCPSampler.closeConnection">true</boolProp>
-          <stringProp name="ConfigTestElement.username"></stringProp>
-          <stringProp name="ConfigTestElement.password"></stringProp>
-        </TCPSampler>
-        <hashTree/>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: CalendarClose" enabled="false">
-          <stringProp name="TCPSampler.server"></stringProp>
-          <boolProp name="TCPSampler.reUseConnection">true</boolProp>
-          <stringProp name="TCPSampler.port"></stringProp>
-          <boolProp name="TCPSampler.nodelay">false</boolProp>
-          <stringProp name="TCPSampler.timeout"></stringProp>
-          <stringProp name="TCPSampler.request">${QueryCalendarClose}</stringProp>
           <boolProp name="TCPSampler.closeConnection">true</boolProp>
           <stringProp name="ConfigTestElement.username"></stringProp>
           <stringProp name="ConfigTestElement.password"></stringProp>
