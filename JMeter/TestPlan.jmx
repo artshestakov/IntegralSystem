@@ -60,26 +60,6 @@
             <stringProp name="Argument.value">postgres</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
-          <elementProp name="UserPasswordExist_UserID" elementType="Argument">
-            <stringProp name="Argument.name">UserPasswordExist_UserID</stringProp>
-            <stringProp name="Argument.value">2</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
-          <elementProp name="UserPasswordCreate_UserID" elementType="Argument">
-            <stringProp name="Argument.name">UserPasswordCreate_UserID</stringProp>
-            <stringProp name="Argument.value">2</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
-          <elementProp name="UserPasswordCreate_Login" elementType="Argument">
-            <stringProp name="Argument.name">UserPasswordCreate_Login</stringProp>
-            <stringProp name="Argument.value">shestakov</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
-          <elementProp name="UserPasswordCreate_Password" elementType="Argument">
-            <stringProp name="Argument.name">UserPasswordCreate_Password</stringProp>
-            <stringProp name="Argument.value">454Trendy_</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
           <elementProp name="UserPasswordEdit_UserID" elementType="Argument">
             <stringProp name="Argument.name">UserPasswordEdit_UserID</stringProp>
             <stringProp name="Argument.value">2</stringProp>
@@ -350,53 +330,6 @@ def MapGetLastClient =
 	Type: &quot;GetLastClient&quot;
 ];
 vars.put(&quot;QueryGetLastClient&quot;, MapToString(MapGetLastClient));
-
-//Проверка наличия пароля
-def MapUserPasswordExist =
-[
-	Type: &quot;UserPasswordExist&quot;,
-	Parameters:
-		[
-			UserID: Integer.parseInt(vars.get(&quot;UserPasswordExist_UserID&quot;))
-		]
-];
-vars.put(&quot;QueryUserPasswordExist&quot;, MapToString(MapUserPasswordExist));
-
-//Создание пароля пользователя
-def MapUserPasswordCreate =
-[
-	Type: &quot;UserPasswordCreate&quot;,
-	Parameters:
-		[
-			UserID: Integer.parseInt(vars.get(&quot;UserPasswordCreate_UserID&quot;)),
-			Hash: GetSHA256(vars.get(&quot;UserPasswordCreate_Login&quot;) + vars.get(&quot;UserPasswordCreate_Password&quot;))
-		]
-];
-vars.put(&quot;QueryUserPasswordCreate&quot;, MapToString(MapUserPasswordCreate));
-
-//Изменение пароля пользователя
-def MapUserPasswordEdit =
-[
-	Type: &quot;UserPasswordEdit&quot;,
-	Parameters:
-		[
-			UserID: Integer.parseInt(vars.get(&quot;UserPasswordEdit_UserID&quot;)),
-			HashOld: GetSHA256(vars.get(&quot;UserPasswordEdit_Login&quot;) + vars.get(&quot;UserPasswordEdit_OldPassword&quot;)),
-			Hash: GetSHA256(vars.get(&quot;UserPasswordEdit_Login&quot;) + vars.get(&quot;UserPasswordEdit_NewPassword&quot;))
-		]
-];
-vars.put(&quot;QueryUserPasswordEdit&quot;, MapToString(MapUserPasswordEdit));
-
-//Сброс пароля пользователя
-def MapUserPasswordReset =
-[
-	Type: &quot;UserPasswordReset&quot;,
-	Parameters:
-		[
-			UserID: Integer.parseInt(vars.get(&quot;UserPasswordReset_UserID&quot;))
-		]
-];
-vars.put(&quot;QueryUserPasswordReset&quot;, MapToString(MapUserPasswordReset));
 
 //Получение записи разговора
 def MapGetRecordCall =
@@ -1112,7 +1045,170 @@ vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR
           </JSR223PreProcessor>
           <hashTree/>
         </hashTree>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: RecordDelete (User)" enabled="true">
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: UserPasswordExist" enabled="true">
+          <stringProp name="TCPSampler.server"></stringProp>
+          <boolProp name="TCPSampler.reUseConnection">true</boolProp>
+          <stringProp name="TCPSampler.port"></stringProp>
+          <boolProp name="TCPSampler.nodelay">false</boolProp>
+          <stringProp name="TCPSampler.timeout"></stringProp>
+          <stringProp name="TCPSampler.request">${Query}</stringProp>
+          <boolProp name="TCPSampler.closeConnection">false</boolProp>
+          <stringProp name="ConfigTestElement.username"></stringProp>
+          <stringProp name="ConfigTestElement.password"></stringProp>
+        </TCPSampler>
+        <hashTree>
+          <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="JSR223 PreProcessor" enabled="true">
+            <stringProp name="cacheKey">true</stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="script">import groovy.json.JsonBuilder;
+
+def Map =
+[
+	Type: &quot;UserPasswordExist&quot;,
+	Parameters:
+		[
+			UserID: Integer.parseInt(vars.get(&quot;ObjectID&quot;))
+		]
+];
+String STR = new JsonBuilder(Map).toString() + &apos;\0&apos;
+vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR);</stringProp>
+            <stringProp name="scriptLanguage">groovy</stringProp>
+          </JSR223PreProcessor>
+          <hashTree/>
+        </hashTree>
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: UserPasswordCreate" enabled="true">
+          <stringProp name="TCPSampler.server"></stringProp>
+          <boolProp name="TCPSampler.reUseConnection">true</boolProp>
+          <stringProp name="TCPSampler.port"></stringProp>
+          <boolProp name="TCPSampler.nodelay">false</boolProp>
+          <stringProp name="TCPSampler.timeout"></stringProp>
+          <stringProp name="TCPSampler.request">${Query}</stringProp>
+          <boolProp name="TCPSampler.closeConnection">false</boolProp>
+          <stringProp name="ConfigTestElement.username"></stringProp>
+          <stringProp name="ConfigTestElement.password"></stringProp>
+        </TCPSampler>
+        <hashTree>
+          <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="JSR223 PreProcessor" enabled="true">
+            <stringProp name="cacheKey">true</stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="script">import groovy.json.JsonBuilder;
+import java.security.MessageDigest;
+import java.nio.charset.StandardCharsets;
+
+//Получаем SHA256-хэш строки
+String GetSHA256(String string)
+{
+	MessageDigest Digest = MessageDigest.getInstance(&quot;SHA-256&quot;);
+	byte[] HashBytes = Digest.digest(string.getBytes(StandardCharsets.UTF_8));
+
+	StringBuilder string_builder = new StringBuilder();
+	for (byte b : HashBytes)
+	{
+		string_builder.append(String.format(&quot;%02x&quot;, b));
+	}
+	return string_builder.toString().toUpperCase();
+};
+
+def Map =
+[
+	Type: &quot;UserPasswordCreate&quot;,
+	Parameters:
+		[
+			UserID: Integer.parseInt(vars.get(&quot;ObjectID&quot;)),
+			Hash: GetSHA256(&quot;Testov_Test_Testovich454Trendy_)&quot;)
+		]
+];
+String STR = new JsonBuilder(Map).toString() + &apos;\0&apos;
+vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR);</stringProp>
+            <stringProp name="scriptLanguage">groovy</stringProp>
+          </JSR223PreProcessor>
+          <hashTree/>
+        </hashTree>
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: UserPasswordEdit" enabled="true">
+          <stringProp name="TCPSampler.server"></stringProp>
+          <boolProp name="TCPSampler.reUseConnection">true</boolProp>
+          <stringProp name="TCPSampler.port"></stringProp>
+          <boolProp name="TCPSampler.nodelay">false</boolProp>
+          <stringProp name="TCPSampler.timeout"></stringProp>
+          <stringProp name="TCPSampler.request">${Query}</stringProp>
+          <boolProp name="TCPSampler.closeConnection">false</boolProp>
+          <stringProp name="ConfigTestElement.username"></stringProp>
+          <stringProp name="ConfigTestElement.password"></stringProp>
+        </TCPSampler>
+        <hashTree>
+          <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="JSR223 PreProcessor" enabled="true">
+            <stringProp name="cacheKey">true</stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="script">import groovy.json.JsonBuilder;
+import java.security.MessageDigest;
+import java.nio.charset.StandardCharsets;
+
+//Получаем SHA256-хэш строки
+String GetSHA256(String string)
+{
+	MessageDigest Digest = MessageDigest.getInstance(&quot;SHA-256&quot;);
+	byte[] HashBytes = Digest.digest(string.getBytes(StandardCharsets.UTF_8));
+
+	StringBuilder string_builder = new StringBuilder();
+	for (byte b : HashBytes)
+	{
+		string_builder.append(String.format(&quot;%02x&quot;, b));
+	}
+	return string_builder.toString().toUpperCase();
+};
+
+def Map =
+[
+	Type: &quot;UserPasswordEdit&quot;,
+	Parameters:
+		[
+			UserID: Integer.parseInt(vars.get(&quot;ObjectID&quot;)),
+			HashOld: GetSHA256(&quot;Testov_Test_Testovich454Trendy_)&quot;),
+			Hash: GetSHA256(&quot;Testov_Test_Testovich454Trendy__)&quot;)
+		]
+];
+String STR = new JsonBuilder(Map).toString() + &apos;\0&apos;
+vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR);</stringProp>
+            <stringProp name="scriptLanguage">groovy</stringProp>
+          </JSR223PreProcessor>
+          <hashTree/>
+        </hashTree>
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: UserPasswordReset" enabled="true">
+          <stringProp name="TCPSampler.server"></stringProp>
+          <boolProp name="TCPSampler.reUseConnection">true</boolProp>
+          <stringProp name="TCPSampler.port"></stringProp>
+          <boolProp name="TCPSampler.nodelay">false</boolProp>
+          <stringProp name="TCPSampler.timeout"></stringProp>
+          <stringProp name="TCPSampler.request">${Query}</stringProp>
+          <boolProp name="TCPSampler.closeConnection">true</boolProp>
+          <stringProp name="ConfigTestElement.username"></stringProp>
+          <stringProp name="ConfigTestElement.password"></stringProp>
+        </TCPSampler>
+        <hashTree>
+          <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="JSR223 PreProcessor" enabled="true">
+            <stringProp name="cacheKey">true</stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="script">import groovy.json.JsonBuilder;
+
+def Map =
+[
+	Type: &quot;UserPasswordReset&quot;,
+	Parameters:
+		[
+			UserID: Integer.parseInt(vars.get(&quot;ObjectID&quot;))
+		]
+];
+String STR = new JsonBuilder(Map).toString() + &apos;\0&apos;
+vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR);</stringProp>
+            <stringProp name="scriptLanguage">groovy</stringProp>
+          </JSR223PreProcessor>
+          <hashTree/>
+        </hashTree>
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: RecordDelete (User)" enabled="false">
           <stringProp name="TestPlan.comments">Удаление пользователя</stringProp>
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
@@ -1201,54 +1297,6 @@ vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR
           <boolProp name="TCPSampler.nodelay">false</boolProp>
           <stringProp name="TCPSampler.timeout"></stringProp>
           <stringProp name="TCPSampler.request">${QueryGetRecordCall}</stringProp>
-          <boolProp name="TCPSampler.closeConnection">false</boolProp>
-          <stringProp name="ConfigTestElement.username"></stringProp>
-          <stringProp name="ConfigTestElement.password"></stringProp>
-        </TCPSampler>
-        <hashTree/>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: UserPasswordExist" enabled="false">
-          <stringProp name="TCPSampler.server"></stringProp>
-          <boolProp name="TCPSampler.reUseConnection">true</boolProp>
-          <stringProp name="TCPSampler.port"></stringProp>
-          <boolProp name="TCPSampler.nodelay">false</boolProp>
-          <stringProp name="TCPSampler.timeout"></stringProp>
-          <stringProp name="TCPSampler.request">${QueryUserPasswordExist}</stringProp>
-          <boolProp name="TCPSampler.closeConnection">false</boolProp>
-          <stringProp name="ConfigTestElement.username"></stringProp>
-          <stringProp name="ConfigTestElement.password"></stringProp>
-        </TCPSampler>
-        <hashTree/>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: UserPasswordCreate" enabled="false">
-          <stringProp name="TCPSampler.server"></stringProp>
-          <boolProp name="TCPSampler.reUseConnection">true</boolProp>
-          <stringProp name="TCPSampler.port"></stringProp>
-          <boolProp name="TCPSampler.nodelay">false</boolProp>
-          <stringProp name="TCPSampler.timeout"></stringProp>
-          <stringProp name="TCPSampler.request">${QueryUserPasswordCreate}</stringProp>
-          <boolProp name="TCPSampler.closeConnection">false</boolProp>
-          <stringProp name="ConfigTestElement.username"></stringProp>
-          <stringProp name="ConfigTestElement.password"></stringProp>
-        </TCPSampler>
-        <hashTree/>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: UserPasswordEdit" enabled="false">
-          <stringProp name="TCPSampler.server"></stringProp>
-          <boolProp name="TCPSampler.reUseConnection">true</boolProp>
-          <stringProp name="TCPSampler.port"></stringProp>
-          <boolProp name="TCPSampler.nodelay">false</boolProp>
-          <stringProp name="TCPSampler.timeout"></stringProp>
-          <stringProp name="TCPSampler.request">${QueryUserPasswordEdit}</stringProp>
-          <boolProp name="TCPSampler.closeConnection">false</boolProp>
-          <stringProp name="ConfigTestElement.username"></stringProp>
-          <stringProp name="ConfigTestElement.password"></stringProp>
-        </TCPSampler>
-        <hashTree/>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: UserPasswordReset" enabled="false">
-          <stringProp name="TCPSampler.server"></stringProp>
-          <boolProp name="TCPSampler.reUseConnection">true</boolProp>
-          <stringProp name="TCPSampler.port"></stringProp>
-          <boolProp name="TCPSampler.nodelay">false</boolProp>
-          <stringProp name="TCPSampler.timeout"></stringProp>
-          <stringProp name="TCPSampler.request">${QueryUserPasswordReset}</stringProp>
           <boolProp name="TCPSampler.closeConnection">false</boolProp>
           <stringProp name="ConfigTestElement.username"></stringProp>
           <stringProp name="ConfigTestElement.password"></stringProp>
