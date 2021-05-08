@@ -59,247 +59,25 @@
             <stringProp name="Argument.name">SearchFullText_Value</stringProp>
             <stringProp name="Argument.value">postgres</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
+            <stringProp name="Argument.desc">Значение для полнотекстового поиска</stringProp>
           </elementProp>
-          <elementProp name="UserPasswordEdit_UserID" elementType="Argument">
-            <stringProp name="Argument.name">UserPasswordEdit_UserID</stringProp>
-            <stringProp name="Argument.value">2</stringProp>
+          <elementProp name="RecordAdd_User_FIO" elementType="Argument">
+            <stringProp name="Argument.name">RecordAdd_User_FIO</stringProp>
+            <stringProp name="Argument.value">Testov Test Testovich</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
+            <stringProp name="Argument.desc">ФИО добавляемого пользователя</stringProp>
           </elementProp>
-          <elementProp name="UserPasswordEdit_Login" elementType="Argument">
-            <stringProp name="Argument.name">UserPasswordEdit_Login</stringProp>
-            <stringProp name="Argument.value">shestakov</stringProp>
+          <elementProp name="RecordAdd_User_Login" elementType="Argument">
+            <stringProp name="Argument.name">RecordAdd_User_Login</stringProp>
+            <stringProp name="Argument.value">Testov_Test_Testovich</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
+            <stringProp name="Argument.desc">Логин добавляемого пользователя</stringProp>
           </elementProp>
-          <elementProp name="UserPasswordEdit_OldPassword" elementType="Argument">
-            <stringProp name="Argument.name">UserPasswordEdit_OldPassword</stringProp>
-            <stringProp name="Argument.value">454Trendy_</stringProp>
+          <elementProp name="RecordAdd_User_AccessAllowed" elementType="Argument">
+            <stringProp name="Argument.name">RecordAdd_User_AccessAllowed</stringProp>
+            <stringProp name="Argument.value">true</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
-          <elementProp name="UserPasswordEdit_NewPassword" elementType="Argument">
-            <stringProp name="Argument.name">UserPasswordEdit_NewPassword</stringProp>
-            <stringProp name="Argument.value">454Trendy__</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
-          <elementProp name="UserPasswordReset_UserID" elementType="Argument">
-            <stringProp name="Argument.name">UserPasswordReset_UserID</stringProp>
-            <stringProp name="Argument.value">2</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
-          <elementProp name="GetRecordCall_RecordID" elementType="Argument">
-            <stringProp name="Argument.name">GetRecordCall_RecordID</stringProp>
-            <stringProp name="Argument.value">1028</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-            <stringProp name="Argument.desc">Код записи разговора из статистики</stringProp>
-          </elementProp>
-          <elementProp name="RecordEdit_TableName" elementType="Argument">
-            <stringProp name="Argument.name">RecordEdit_TableName</stringProp>
-            <stringProp name="Argument.value">_UserGroup</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
-          <elementProp name="RecordEdit_ObjectID" elementType="Argument">
-            <stringProp name="Argument.name">RecordEdit_ObjectID</stringProp>
-            <stringProp name="Argument.value">50011</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
-          <elementProp name="RecordGet_TableName" elementType="Argument">
-            <stringProp name="Argument.name">RecordGet_TableName</stringProp>
-            <stringProp name="Argument.value">_Users</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
-          <elementProp name="RecordGet_ObjectID" elementType="Argument">
-            <stringProp name="Argument.name">RecordGet_ObjectID</stringProp>
-            <stringProp name="Argument.value">2</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
-          <elementProp name="RecordGetInfo_TableName" elementType="Argument">
-            <stringProp name="Argument.name">RecordGetInfo_TableName</stringProp>
-            <stringProp name="Argument.value">_Users</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
-          <elementProp name="RecordGetInfo_ObjectID" elementType="Argument">
-            <stringProp name="Argument.name">RecordGetInfo_ObjectID</stringProp>
-            <stringProp name="Argument.value">2</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
-          <elementProp name="DiscussionAdd_TableName" elementType="Argument">
-            <stringProp name="Argument.name">DiscussionAdd_TableName</stringProp>
-            <stringProp name="Argument.value">_Users</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
-          <elementProp name="DiscussionAdd_ObjectID" elementType="Argument">
-            <stringProp name="Argument.name">DiscussionAdd_ObjectID</stringProp>
-            <stringProp name="Argument.value">2</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
-          <elementProp name="DiscussionAdd_Message" elementType="Argument">
-            <stringProp name="Argument.name">DiscussionAdd_Message</stringProp>
-            <stringProp name="Argument.value">Hello world!</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
-          <elementProp name="DiscussionEdit_ID" elementType="Argument">
-            <stringProp name="Argument.name">DiscussionEdit_ID</stringProp>
-            <stringProp name="Argument.value">1</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
-          <elementProp name="DiscussionEdit_Message" elementType="Argument">
-            <stringProp name="Argument.name">DiscussionEdit_Message</stringProp>
-            <stringProp name="Argument.value">123</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
-          <elementProp name="DiscussionCopy_ID" elementType="Argument">
-            <stringProp name="Argument.name">DiscussionCopy_ID</stringProp>
-            <stringProp name="Argument.value">1</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
-          <elementProp name="GetTableData_TableName" elementType="Argument">
-            <stringProp name="Argument.name">GetTableData_TableName</stringProp>
-            <stringProp name="Argument.value">_Protocol</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
-          <elementProp name="GetTableData_SortingField" elementType="Argument">
-            <stringProp name="Argument.name">GetTableData_SortingField</stringProp>
-            <stringProp name="Argument.value"></stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
-          <elementProp name="GetTableData_SortingOrder" elementType="Argument">
-            <stringProp name="Argument.name">GetTableData_SortingOrder</stringProp>
-            <stringProp name="Argument.value"></stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
-          <elementProp name="GetTableQuery_QueryName" elementType="Argument">
-            <stringProp name="Argument.name">GetTableQuery_QueryName</stringProp>
-            <stringProp name="Argument.value">test</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
-          <elementProp name="GetNoteRecord_TableName" elementType="Argument">
-            <stringProp name="Argument.name">GetNoteRecord_TableName</stringProp>
-            <stringProp name="Argument.value">_Users</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
-          <elementProp name="GetNoteRecord_ObjectID" elementType="Argument">
-            <stringProp name="Argument.name">GetNoteRecord_ObjectID</stringProp>
-            <stringProp name="Argument.value">2</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
-          <elementProp name="SetNoteRecord_TableName" elementType="Argument">
-            <stringProp name="Argument.name">SetNoteRecord_TableName</stringProp>
-            <stringProp name="Argument.value">_Users</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
-          <elementProp name="SetNoteRecord_ObjectID" elementType="Argument">
-            <stringProp name="Argument.name">SetNoteRecord_ObjectID</stringProp>
-            <stringProp name="Argument.value">2</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
-          <elementProp name="SetNoteRecord_Note" elementType="Argument">
-            <stringProp name="Argument.name">SetNoteRecord_Note</stringProp>
-            <stringProp name="Argument.value"></stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
-          <elementProp name="FileStorageAdd_FileName" elementType="Argument">
-            <stringProp name="Argument.name">FileStorageAdd_FileName</stringProp>
-            <stringProp name="Argument.value">Задачи.csv</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
-          <elementProp name="FileStorageAdd_Data" elementType="Argument">
-            <stringProp name="Argument.name">FileStorageAdd_Data</stringProp>
-            <stringProp name="Argument.value">yu7kO8fg4+7r7uLu6g0KMTM70uXx8ujw7uLg7ejlDQoyMTvR4v/n4O3t4P9f5+Dk4PfgINHi/+fg7e3g/1/n4OTg9+Ag0eL/5+Dt7eD/X+fg5OD34CDR4v/n4O3t4P9f5+Dk4PfgINHi/+fg7e3g/1/n4OTg9+Ag0eL/5+Dt7eD/X+fg5OD34CDn4OTg9+Ag5+Dk4PfgIOfg5OD34CDn4OTg9+Ag5+Dk4PfgIOfg5OD34CDn4OTg9+Ag5+Dk4PfgIOfg5OD34CDn4OTg9+Ag5+Dk4PfgIOfg5OD34CDn4OTg9+Ag5+Dk4PfgIOfg5OD34CDn4OTg9+Ag5+Dk4PfgIOfg5OD34CDn4OTg9+Ag5+Dk4PfgIOfg5OD34CDn4OTg9+Ag5+Dk4PfgIOfg5OD34CDn4OTg9+Ag5+Dk4PfgIOfg5OD34CDn4OTg9+Ag5+Dk4PfgIOfg5OD34CDn4OTg9+Ag5+Dk4PfgIOfg5OD34CDn4OTg9+ANCjIyOzEyMw0KMjM7x+Dk4PfgIOTr/yDy5fHy7uIgx+Dk4PfgIOTr/yDy5fHy7uIgx+Dk4PfgIOTr/yDy5fHy7uIgx+Dk4PfgIOTr/yDy5fHy7uINCjI0O8/u5Ofg5OD34CAyDQo=</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
-          <elementProp name="FileStorageCopy_ID" elementType="Argument">
-            <stringProp name="Argument.name">FileStorageCopy_ID</stringProp>
-            <stringProp name="Argument.value">10</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
-          <elementProp name="FileStorageCopy_Name" elementType="Argument">
-            <stringProp name="Argument.name">FileStorageCopy_Name</stringProp>
-            <stringProp name="Argument.value">Test6</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
-          <elementProp name="FileStorageGet_ID" elementType="Argument">
-            <stringProp name="Argument.name">FileStorageGet_ID</stringProp>
-            <stringProp name="Argument.value">39</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
-          <elementProp name="SearchTaskText_Value" elementType="Argument">
-            <stringProp name="Argument.name">SearchTaskText_Value</stringProp>
-            <stringProp name="Argument.value">тест</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
-          <elementProp name="SearchTaskID_ID" elementType="Argument">
-            <stringProp name="Argument.name">SearchTaskID_ID</stringProp>
-            <stringProp name="Argument.value">1</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
-          <elementProp name="CalendarDelete_ID" elementType="Argument">
-            <stringProp name="Argument.name">CalendarDelete_ID</stringProp>
-            <stringProp name="Argument.value">3</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
-          <elementProp name="GetCalendarEvents_Month" elementType="Argument">
-            <stringProp name="Argument.name">GetCalendarEvents_Month</stringProp>
-            <stringProp name="Argument.value">1</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
-          <elementProp name="GetCalendarEvents_Year" elementType="Argument">
-            <stringProp name="Argument.name">GetCalendarEvents_Year</stringProp>
-            <stringProp name="Argument.value">2021</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
-          <elementProp name="GetGroupRights_GroupID" elementType="Argument">
-            <stringProp name="Argument.name">GetGroupRights_GroupID</stringProp>
-            <stringProp name="Argument.value">2</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
-          <elementProp name="GetRecordValue_TableName" elementType="Argument">
-            <stringProp name="Argument.name">GetRecordValue_TableName</stringProp>
-            <stringProp name="Argument.value">_Users</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
-          <elementProp name="GetRecordValue_FieldName" elementType="Argument">
-            <stringProp name="Argument.name">GetRecordValue_FieldName</stringProp>
-            <stringProp name="Argument.value">Group</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
-          <elementProp name="GetRecordValue_ObjectID" elementType="Argument">
-            <stringProp name="Argument.name">GetRecordValue_ObjectID</stringProp>
-            <stringProp name="Argument.value">1</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
-          <elementProp name="RecordFavoriteAdd_TableName" elementType="Argument">
-            <stringProp name="Argument.name">RecordFavoriteAdd_TableName</stringProp>
-            <stringProp name="Argument.value">_Users</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
-          <elementProp name="RecordFavoriteAdd_ObjectID" elementType="Argument">
-            <stringProp name="Argument.name">RecordFavoriteAdd_ObjectID</stringProp>
-            <stringProp name="Argument.value">2</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
-          <elementProp name="RecordFavoriteDelete_TableName" elementType="Argument">
-            <stringProp name="Argument.name">RecordFavoriteDelete_TableName</stringProp>
-            <stringProp name="Argument.value">_Users</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
-          <elementProp name="RecordFavoriteDelete_ObjectID" elementType="Argument">
-            <stringProp name="Argument.name">RecordFavoriteDelete_ObjectID</stringProp>
-            <stringProp name="Argument.value">2</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
-          <elementProp name="CalendarClose_CalendarID" elementType="Argument">
-            <stringProp name="Argument.name">CalendarClose_CalendarID</stringProp>
-            <stringProp name="Argument.value">50</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
-          <elementProp name="GetForeignList_TableName" elementType="Argument">
-            <stringProp name="Argument.name">GetForeignList_TableName</stringProp>
-            <stringProp name="Argument.value">_Users</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
-          <elementProp name="GetForeignList_FieldName" elementType="Argument">
-            <stringProp name="Argument.name">GetForeignList_FieldName</stringProp>
-            <stringProp name="Argument.value">Group</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
+            <stringProp name="Argument.desc">Доступ разрешён</stringProp>
           </elementProp>
         </collectionProp>
       </Arguments>
@@ -308,7 +86,7 @@
         <stringProp name="ThreadGroup.on_sample_error">stoptest</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
-          <intProp name="LoopController.loops">-1</intProp>
+          <stringProp name="LoopController.loops">1</stringProp>
         </elementProp>
         <stringProp name="ThreadGroup.num_threads">1</stringProp>
         <stringProp name="ThreadGroup.ramp_time">1</stringProp>
@@ -710,9 +488,9 @@ def Map =
 			IsCopy: false,
 			Values:
 				[
-					FIO: &quot;Testov Test Testovich&quot;,
-					Login: &quot;Testov_Test_Testovich&quot;,
-					AccessAllowed: true
+					FIO: vars.get(&quot;RecordAdd_User_FIO&quot;),
+					Login: vars.get(&quot;RecordAdd_User_Login&quot;),
+					AccessAllowed: Boolean.parseBoolean(vars.get(&quot;RecordAdd_User_AccessAllowed&quot;))
 				]
 		]
 ];
