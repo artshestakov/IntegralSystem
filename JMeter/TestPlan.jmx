@@ -120,21 +120,6 @@ def MapGetRecordCall =
 ];
 vars.put(&quot;QueryGetRecordCall&quot;, MapToString(MapGetRecordCall));
 
-//Получить данные запроса
-def MapGetTableQuery =
-[
-	Type: &quot;GetTableQuery&quot;,
-	Parameters:
-		[
-			QueryName: vars.get(&quot;GetTableQuery_QueryName&quot;),
-			Parameters:
-				[
-
-				]
-		]
-];
-vars.put(&quot;QueryGetTableQuery&quot;, MapToString(MapGetTableQuery));
-
 //Добавить файл в хранилище
 def MapFileStorageAdd =
 [
@@ -169,17 +154,6 @@ def MapFileStorageGet =
 		]
 ];
 vars.put(&quot;QueryFileStorageGet&quot;, MapToString(MapFileStorageGet));
-
-//Получить права доступа группы
-def MapGetGroupRights =
-[
-	Type: &quot;GetGroupRights&quot;,
-	Parameters:
-		[
-			GroupID: vars.get(&quot;GetGroupRights_GroupID&quot;)
-		]
-];
-vars.put(&quot;QueryGetGroupRights&quot;, MapToString(MapGetGroupRights));
 
 //Получить значения справочника для поля
 def MapGetForeignList =
@@ -336,7 +310,7 @@ vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR
           </JSR223PreProcessor>
           <hashTree/>
         </hashTree>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: GetServerInfo" enabled="true">
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: GetServerInfo" enabled="false">
           <stringProp name="TestPlan.comments">Получить информацию о сервере</stringProp>
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
@@ -365,7 +339,7 @@ vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR
           </JSR223PreProcessor>
           <hashTree/>
         </hashTree>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: OrganizationFromINN" enabled="true">
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: OrganizationFromINN" enabled="false">
           <stringProp name="TestPlan.comments">Поиск организации по ИНН</stringProp>
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
@@ -398,7 +372,7 @@ vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR
           </JSR223PreProcessor>
           <hashTree/>
         </hashTree>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: SearchFullText" enabled="true">
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: SearchFullText" enabled="false">
           <stringProp name="TestPlan.comments">Полнотекстовый поиск</stringProp>
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
@@ -520,7 +494,7 @@ if (Pos != -1)
           <hashTree/>
         </hashTree>
         <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: RecordGet (User)" enabled="true">
-          <stringProp name="TestPlan.comments">Получить пользователя</stringProp>
+          <stringProp name="TestPlan.comments">Получение пользователя</stringProp>
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
           <stringProp name="TCPSampler.port"></stringProp>
@@ -554,6 +528,7 @@ vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR
           <hashTree/>
         </hashTree>
         <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: RecordEdit (User)" enabled="true">
+          <stringProp name="TestPlan.comments">Изменение пользователя</stringProp>
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
           <stringProp name="TCPSampler.port"></stringProp>
@@ -590,7 +565,7 @@ vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR
           </JSR223PreProcessor>
           <hashTree/>
         </hashTree>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: RecordGetInfo (User)" enabled="true">
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: RecordGetInfo (User)" enabled="false">
           <stringProp name="TestPlan.comments">Получить системную информацию о пользователе</stringProp>
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
@@ -625,6 +600,7 @@ vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR
           <hashTree/>
         </hashTree>
         <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: UserPasswordExist" enabled="true">
+          <stringProp name="TestPlan.comments">Проверка наличия пароля у пользователя</stringProp>
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
           <stringProp name="TCPSampler.port"></stringProp>
@@ -657,6 +633,7 @@ vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR
           <hashTree/>
         </hashTree>
         <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: UserPasswordCreate" enabled="true">
+          <stringProp name="TestPlan.comments">Создание пароля пользователю</stringProp>
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
           <stringProp name="TCPSampler.port"></stringProp>
@@ -706,6 +683,7 @@ vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR
           <hashTree/>
         </hashTree>
         <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: UserPasswordEdit" enabled="true">
+          <stringProp name="TestPlan.comments">Изменение пароля пользователя</stringProp>
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
           <stringProp name="TCPSampler.port"></stringProp>
@@ -756,6 +734,7 @@ vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR
           <hashTree/>
         </hashTree>
         <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: UserPasswordReset" enabled="true">
+          <stringProp name="TestPlan.comments">Сброс пароля пользователя</stringProp>
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
           <stringProp name="TCPSampler.port"></stringProp>
@@ -788,6 +767,7 @@ vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR
           <hashTree/>
         </hashTree>
         <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: DiscussionAdd" enabled="true">
+          <stringProp name="TestPlan.comments">Добавить обсуждение</stringProp>
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
           <stringProp name="TCPSampler.port"></stringProp>
@@ -841,6 +821,7 @@ if (Pos != -1)
           <hashTree/>
         </hashTree>
         <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: DiscussionEdit" enabled="true">
+          <stringProp name="TestPlan.comments">Изменить обсуждение</stringProp>
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
           <stringProp name="TCPSampler.port"></stringProp>
@@ -874,6 +855,7 @@ vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR
           <hashTree/>
         </hashTree>
         <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: DiscussionCopy" enabled="true">
+          <stringProp name="TestPlan.comments">Создать копию обсуждения</stringProp>
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
           <stringProp name="TCPSampler.port"></stringProp>
@@ -925,7 +907,7 @@ if (Pos != -1)
           <hashTree/>
         </hashTree>
         <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: RecordDelete (Discussion)" enabled="true">
-          <stringProp name="TestPlan.comments">Удаление пользователя</stringProp>
+          <stringProp name="TestPlan.comments">Удаление обсуждений</stringProp>
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
           <stringProp name="TCPSampler.port"></stringProp>
@@ -963,6 +945,7 @@ vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR
           <hashTree/>
         </hashTree>
         <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: SetNoteRecord" enabled="true">
+          <stringProp name="TestPlan.comments">Изменить примечание</stringProp>
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
           <stringProp name="TCPSampler.port"></stringProp>
@@ -997,6 +980,7 @@ vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR
           <hashTree/>
         </hashTree>
         <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: GetNoteRecord" enabled="true">
+          <stringProp name="TestPlan.comments">Получить примечание</stringProp>
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
           <stringProp name="TCPSampler.port"></stringProp>
@@ -1030,6 +1014,7 @@ vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR
           <hashTree/>
         </hashTree>
         <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: GetRecordValue" enabled="true">
+          <stringProp name="TestPlan.comments">Получить значение записи</stringProp>
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
           <stringProp name="TCPSampler.port"></stringProp>
@@ -1064,6 +1049,7 @@ vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR
           <hashTree/>
         </hashTree>
         <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: GetTableData" enabled="true">
+          <stringProp name="TestPlan.comments">Получить данные из таблицы</stringProp>
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
           <stringProp name="TCPSampler.port"></stringProp>
@@ -1096,6 +1082,7 @@ vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR
           <hashTree/>
         </hashTree>
         <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: RecordFavoriteAdd" enabled="true">
+          <stringProp name="TestPlan.comments">Добавить запись в избранное</stringProp>
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
           <stringProp name="TCPSampler.port"></stringProp>
@@ -1129,6 +1116,7 @@ vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR
           <hashTree/>
         </hashTree>
         <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: GetFavoriteNames" enabled="true">
+          <stringProp name="TestPlan.comments">Получить избранные записи</stringProp>
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
           <stringProp name="TCPSampler.port"></stringProp>
@@ -1161,6 +1149,7 @@ vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR
           <hashTree/>
         </hashTree>
         <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: RecordFavoriteDelete" enabled="true">
+          <stringProp name="TestPlan.comments">Удалить запись из избранного</stringProp>
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
           <stringProp name="TCPSampler.port"></stringProp>
@@ -1267,7 +1256,7 @@ vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR
           <boolProp name="TCPSampler.nodelay">false</boolProp>
           <stringProp name="TCPSampler.timeout"></stringProp>
           <stringProp name="TCPSampler.request">${Query}</stringProp>
-          <boolProp name="TCPSampler.closeConnection">true</boolProp>
+          <boolProp name="TCPSampler.closeConnection">false</boolProp>
           <stringProp name="ConfigTestElement.username"></stringProp>
           <stringProp name="ConfigTestElement.password"></stringProp>
         </TCPSampler>
@@ -1293,7 +1282,131 @@ vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR
           </JSR223PreProcessor>
           <hashTree/>
         </hashTree>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: GetGroupRights" enabled="false">
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: GetTableQuery" enabled="true">
+          <stringProp name="TestPlan.comments">Получить данные запроса</stringProp>
+          <stringProp name="TCPSampler.server"></stringProp>
+          <boolProp name="TCPSampler.reUseConnection">true</boolProp>
+          <stringProp name="TCPSampler.port"></stringProp>
+          <boolProp name="TCPSampler.nodelay">false</boolProp>
+          <stringProp name="TCPSampler.timeout"></stringProp>
+          <stringProp name="TCPSampler.request">${Query}</stringProp>
+          <boolProp name="TCPSampler.closeConnection">false</boolProp>
+          <stringProp name="ConfigTestElement.username"></stringProp>
+          <stringProp name="ConfigTestElement.password"></stringProp>
+        </TCPSampler>
+        <hashTree>
+          <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="JSR223 PreProcessor" enabled="true">
+            <stringProp name="cacheKey">true</stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="script">import groovy.json.JsonBuilder;
+
+def Map =
+[
+	Type: &quot;GetTableQuery&quot;,
+	Parameters:
+		[
+			QueryName: &quot;PGSettings&quot;
+		]
+];
+String STR = new JsonBuilder(Map).toString() + &apos;\0&apos;
+vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR);</stringProp>
+            <stringProp name="scriptLanguage">groovy</stringProp>
+          </JSR223PreProcessor>
+          <hashTree/>
+        </hashTree>
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: RecordAdd (UserGroup)" enabled="true">
+          <stringProp name="TestPlan.comments">Добавление группы пользователей</stringProp>
+          <stringProp name="TCPSampler.server"></stringProp>
+          <boolProp name="TCPSampler.reUseConnection">true</boolProp>
+          <stringProp name="TCPSampler.port"></stringProp>
+          <boolProp name="TCPSampler.nodelay">false</boolProp>
+          <stringProp name="TCPSampler.timeout"></stringProp>
+          <stringProp name="TCPSampler.request">${Query}</stringProp>
+          <boolProp name="TCPSampler.closeConnection">false</boolProp>
+          <stringProp name="ConfigTestElement.username"></stringProp>
+          <stringProp name="ConfigTestElement.password"></stringProp>
+        </TCPSampler>
+        <hashTree>
+          <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="JSR223 PreProcessor" enabled="true">
+            <stringProp name="cacheKey">true</stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="script">import groovy.json.JsonBuilder;
+
+def Map =
+[
+	Type: &quot;RecordAdd&quot;,
+	Parameters:
+		[
+			TableName: &quot;_UserGroup&quot;,
+			IsCopy: false,
+			Values:
+				[
+					Name: &quot;UserGroup&quot;
+				]
+		]
+];
+String STR = new JsonBuilder(Map).toString() + &apos;\0&apos;
+vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR);</stringProp>
+            <stringProp name="scriptLanguage">groovy</stringProp>
+          </JSR223PreProcessor>
+          <hashTree/>
+          <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="BeanShell PostProcessor" enabled="true">
+            <stringProp name="filename"></stringProp>
+            <stringProp name="parameters"></stringProp>
+            <boolProp name="resetInterpreter">false</boolProp>
+            <stringProp name="script">import org.json.JSONObject;
+
+//Получаем ответ
+String JsonString = prev.getResponseDataAsString();
+int Pos = JsonString.indexOf(&apos;.&apos;);
+if (Pos != -1)
+{
+	JsonString = JsonString.substring(Pos + 1);
+	JSONObject JsonObject = new JSONObject(JsonString);
+	JsonObject = JsonObject.getJSONObject(&quot;Parameters&quot;);
+	int UserGroupID = JsonObject.getInt(&quot;ObjectID&quot;);
+	vars.put(&quot;UserGroupID&quot;, Integer.toString(UserGroupID));
+}</stringProp>
+          </BeanShellPostProcessor>
+          <hashTree/>
+        </hashTree>
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: GetGroupRights" enabled="true">
+          <stringProp name="TestPlan.comments">Получить права доступа группы</stringProp>
+          <stringProp name="TCPSampler.server"></stringProp>
+          <boolProp name="TCPSampler.reUseConnection">true</boolProp>
+          <stringProp name="TCPSampler.port"></stringProp>
+          <boolProp name="TCPSampler.nodelay">false</boolProp>
+          <stringProp name="TCPSampler.timeout"></stringProp>
+          <stringProp name="TCPSampler.request">${Query}</stringProp>
+          <boolProp name="TCPSampler.closeConnection">false</boolProp>
+          <stringProp name="ConfigTestElement.username"></stringProp>
+          <stringProp name="ConfigTestElement.password"></stringProp>
+        </TCPSampler>
+        <hashTree>
+          <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="JSR223 PreProcessor" enabled="true">
+            <stringProp name="cacheKey">true</stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="script">import groovy.json.JsonBuilder;
+
+def Map =
+[
+	Type: &quot;GetGroupRights&quot;,
+	Parameters:
+		[
+			GroupID: Integer.parseInt(vars.get(&quot;UserGroupID&quot;))
+		]
+];
+String STR = new JsonBuilder(Map).toString() + &apos;\0&apos;
+vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR);</stringProp>
+            <stringProp name="scriptLanguage">groovy</stringProp>
+          </JSR223PreProcessor>
+          <hashTree/>
+        </hashTree>
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: RecordDelete (UserGroup)" enabled="true">
+          <stringProp name="TestPlan.comments">Удаление группы пользователей</stringProp>
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
           <stringProp name="TCPSampler.port"></stringProp>
@@ -1304,7 +1417,28 @@ vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR
           <stringProp name="ConfigTestElement.username"></stringProp>
           <stringProp name="ConfigTestElement.password"></stringProp>
         </TCPSampler>
-        <hashTree/>
+        <hashTree>
+          <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="JSR223 PreProcessor" enabled="true">
+            <stringProp name="cacheKey">true</stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="script">import groovy.json.JsonBuilder;
+
+def Map =
+[
+	Type: &quot;RecordDelete&quot;,
+	Parameters:
+		[
+			TableName: &quot;_UserGroup&quot;,
+			Objects: [ Integer.parseInt(vars.get(&quot;UserGroupID&quot;)) ]
+		]
+];
+String STR = new JsonBuilder(Map).toString() + &apos;\0&apos;
+vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR);</stringProp>
+            <stringProp name="scriptLanguage">groovy</stringProp>
+          </JSR223PreProcessor>
+          <hashTree/>
+        </hashTree>
         <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: GetRecordCall" enabled="false">
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
@@ -1313,18 +1447,6 @@ vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR
           <stringProp name="TCPSampler.timeout"></stringProp>
           <stringProp name="TCPSampler.request">${QueryGetRecordCall}</stringProp>
           <boolProp name="TCPSampler.closeConnection">false</boolProp>
-          <stringProp name="ConfigTestElement.username"></stringProp>
-          <stringProp name="ConfigTestElement.password"></stringProp>
-        </TCPSampler>
-        <hashTree/>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: GetTableQuery" enabled="false">
-          <stringProp name="TCPSampler.server"></stringProp>
-          <boolProp name="TCPSampler.reUseConnection">true</boolProp>
-          <stringProp name="TCPSampler.port"></stringProp>
-          <boolProp name="TCPSampler.nodelay">false</boolProp>
-          <stringProp name="TCPSampler.timeout"></stringProp>
-          <stringProp name="TCPSampler.request">${QueryGetTableQuery}</stringProp>
-          <boolProp name="TCPSampler.closeConnection">true</boolProp>
           <stringProp name="ConfigTestElement.username"></stringProp>
           <stringProp name="ConfigTestElement.password"></stringProp>
         </TCPSampler>
@@ -1396,6 +1518,80 @@ vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR
         </DebugSampler>
         <hashTree/>
         <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
+          <boolProp name="ResultCollector.error_logging">false</boolProp>
+          <objProp>
+            <name>saveConfig</name>
+            <value class="SampleSaveConfiguration">
+              <time>true</time>
+              <latency>true</latency>
+              <timestamp>true</timestamp>
+              <success>true</success>
+              <label>true</label>
+              <code>true</code>
+              <message>true</message>
+              <threadName>true</threadName>
+              <dataType>true</dataType>
+              <encoding>false</encoding>
+              <assertions>true</assertions>
+              <subresults>true</subresults>
+              <responseData>false</responseData>
+              <samplerData>false</samplerData>
+              <xml>false</xml>
+              <fieldNames>true</fieldNames>
+              <responseHeaders>false</responseHeaders>
+              <requestHeaders>false</requestHeaders>
+              <responseDataOnError>false</responseDataOnError>
+              <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+              <assertionsResultsToSave>0</assertionsResultsToSave>
+              <bytes>true</bytes>
+              <sentBytes>true</sentBytes>
+              <url>true</url>
+              <threadCounts>true</threadCounts>
+              <idleTime>true</idleTime>
+              <connectTime>true</connectTime>
+            </value>
+          </objProp>
+          <stringProp name="filename"></stringProp>
+        </ResultCollector>
+        <hashTree/>
+        <ResultCollector guiclass="GraphVisualizer" testclass="ResultCollector" testname="Graph Results" enabled="true">
+          <boolProp name="ResultCollector.error_logging">false</boolProp>
+          <objProp>
+            <name>saveConfig</name>
+            <value class="SampleSaveConfiguration">
+              <time>true</time>
+              <latency>true</latency>
+              <timestamp>true</timestamp>
+              <success>true</success>
+              <label>true</label>
+              <code>true</code>
+              <message>true</message>
+              <threadName>true</threadName>
+              <dataType>true</dataType>
+              <encoding>false</encoding>
+              <assertions>true</assertions>
+              <subresults>true</subresults>
+              <responseData>false</responseData>
+              <samplerData>false</samplerData>
+              <xml>false</xml>
+              <fieldNames>true</fieldNames>
+              <responseHeaders>false</responseHeaders>
+              <requestHeaders>false</requestHeaders>
+              <responseDataOnError>false</responseDataOnError>
+              <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+              <assertionsResultsToSave>0</assertionsResultsToSave>
+              <bytes>true</bytes>
+              <sentBytes>true</sentBytes>
+              <url>true</url>
+              <threadCounts>true</threadCounts>
+              <idleTime>true</idleTime>
+              <connectTime>true</connectTime>
+            </value>
+          </objProp>
+          <stringProp name="filename"></stringProp>
+        </ResultCollector>
+        <hashTree/>
+        <ResultCollector guiclass="SummaryReport" testclass="ResultCollector" testname="Summary Report" enabled="true">
           <boolProp name="ResultCollector.error_logging">false</boolProp>
           <objProp>
             <name>saveConfig</name>
