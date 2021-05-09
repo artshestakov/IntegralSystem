@@ -3090,7 +3090,7 @@ bool ISTcpWorker::FileStorageAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
     qInsert.SetShowLongQuery(false);
     qInsert.BindUInt(TcpMessage->TcpClient->UserID);
     qInsert.BindString(FileName);
-    qInsert.BindString(Extension);
+    Extension.empty() ? qInsert.BindNull() : qInsert.BindString(Extension);
     qInsert.BindString(ISAlgorithm::StringFromSize(DataSize));
     qInsert.BindBinary(Data, DataSize);
     bool Result = qInsert.ExecuteFirst();
@@ -3099,7 +3099,9 @@ bool ISTcpWorker::FileStorageAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
     {
         return ErrorQuery(ISAlgorithm::StringF(LANG("Carat.Error.Query.FileStorageAdd.Insert"), FileName.c_str(), qInsert.GetErrorString().c_str()), qInsert);
     }
-    Protocol(TcpMessage->TcpClient->UserID, CONST_UID_PROTOCOL_FILE_STORAGE_ADD, std::string(), std::string(), qInsert.ReadColumn_UInt(0), FileName);
+    unsigned int ID = qInsert.ReadColumn_UInt(0);
+    TcpAnswer->Parameters.AddMember("ID", ID, TcpAnswer->Parameters.GetAllocator());
+    Protocol(TcpMessage->TcpClient->UserID, CONST_UID_PROTOCOL_FILE_STORAGE_ADD, std::string(), std::string(), ID, FileName);
     return true;
 }
 //-----------------------------------------------------------------------------
