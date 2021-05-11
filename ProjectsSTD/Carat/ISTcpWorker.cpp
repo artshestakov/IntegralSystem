@@ -666,6 +666,7 @@ void ISTcpWorker::Process()
             }
             else //Клиент авторизовался - продолжаем
             {
+                ISLOGGER_I(__CLASS__, "Incoming message \"%s\"", tcp_message->Type.c_str());
                 ISTimePoint TimePoint = ISAlgorithm::GetTick(); //Запоминаем текущее время
                 Result = Execute(tcp_message, TcpAnswer);
                 PerfomanceMsec = ISAlgorithm::GetTickDiff(ISAlgorithm::GetTick(), TimePoint);

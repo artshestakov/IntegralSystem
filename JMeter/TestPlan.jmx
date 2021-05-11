@@ -43,42 +43,6 @@
             <stringProp name="Argument.desc">Версия клиента</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
-          <elementProp name="Sleep_Timeout" elementType="Argument">
-            <stringProp name="Argument.name">Sleep_Timeout</stringProp>
-            <stringProp name="Argument.value">50</stringProp>
-            <stringProp name="Argument.desc">Таймаут сна (мсек.)</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
-          <elementProp name="OrganizationFromINN_INN" elementType="Argument">
-            <stringProp name="Argument.name">OrganizationFromINN_INN</stringProp>
-            <stringProp name="Argument.value">2634100802</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-            <stringProp name="Argument.desc">ИНН организации для поиска в DaData.ru</stringProp>
-          </elementProp>
-          <elementProp name="SearchFullText_Value" elementType="Argument">
-            <stringProp name="Argument.name">SearchFullText_Value</stringProp>
-            <stringProp name="Argument.value">postgres</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-            <stringProp name="Argument.desc">Значение для полнотекстового поиска</stringProp>
-          </elementProp>
-          <elementProp name="RecordAdd_User_FIO" elementType="Argument">
-            <stringProp name="Argument.name">RecordAdd_User_FIO</stringProp>
-            <stringProp name="Argument.value">Testov Test Testovich</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-            <stringProp name="Argument.desc">ФИО добавляемого пользователя</stringProp>
-          </elementProp>
-          <elementProp name="RecordAdd_User_Login" elementType="Argument">
-            <stringProp name="Argument.name">RecordAdd_User_Login</stringProp>
-            <stringProp name="Argument.value">Testov_Test_Testovich</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-            <stringProp name="Argument.desc">Логин добавляемого пользователя</stringProp>
-          </elementProp>
-          <elementProp name="RecordAdd_User_AccessAllowed" elementType="Argument">
-            <stringProp name="Argument.name">RecordAdd_User_AccessAllowed</stringProp>
-            <stringProp name="Argument.value">true</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-            <stringProp name="Argument.desc">Доступ разрешён</stringProp>
-          </elementProp>
         </collectionProp>
       </Arguments>
       <hashTree/>
@@ -88,18 +52,30 @@
           <boolProp name="LoopController.continue_forever">false</boolProp>
           <intProp name="LoopController.loops">-1</intProp>
         </elementProp>
-        <stringProp name="ThreadGroup.num_threads">20</stringProp>
-        <stringProp name="ThreadGroup.ramp_time">60</stringProp>
+        <stringProp name="ThreadGroup.num_threads">8</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">1</stringProp>
         <boolProp name="ThreadGroup.scheduler">false</boolProp>
         <stringProp name="ThreadGroup.duration">1</stringProp>
         <stringProp name="ThreadGroup.delay">1</stringProp>
         <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
       </ThreadGroup>
       <hashTree>
-        <UniformRandomTimer guiclass="UniformRandomTimerGui" testclass="UniformRandomTimer" testname="Uniform Random Timer" enabled="true">
-          <stringProp name="ConstantTimer.delay">300</stringProp>
-          <stringProp name="RandomTimer.range">3000</stringProp>
+        <UniformRandomTimer guiclass="UniformRandomTimerGui" testclass="UniformRandomTimer" testname="Uniform Random Timer" enabled="false">
+          <stringProp name="ConstantTimer.delay">100</stringProp>
+          <stringProp name="RandomTimer.range">200</stringProp>
         </UniformRandomTimer>
+        <hashTree/>
+        <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="JSR223 Sampler: Create var ID" enabled="true">
+          <stringProp name="TestPlan.comments">Создание адентификатора для переменных</stringProp>
+          <stringProp name="scriptLanguage">groovy</stringProp>
+          <stringProp name="parameters"></stringProp>
+          <stringProp name="filename"></stringProp>
+          <stringProp name="cacheKey">true</stringProp>
+          <stringProp name="script">String ID = UUID.randomUUID().toString().toUpperCase();
+String[] Array = ID.split(&quot;-&quot;);
+ID = Array[Array.length - 1];
+vars.put(&quot;VarID&quot;, ID);</stringProp>
+        </JSR223Sampler>
         <hashTree/>
         <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: Auth" enabled="true">
           <stringProp name="TestPlan.comments">Авторизация</stringProp>
@@ -108,7 +84,7 @@
           <stringProp name="TCPSampler.port"></stringProp>
           <boolProp name="TCPSampler.nodelay">false</boolProp>
           <stringProp name="TCPSampler.timeout"></stringProp>
-          <stringProp name="TCPSampler.request">${Query}</stringProp>
+          <stringProp name="TCPSampler.request"></stringProp>
           <boolProp name="TCPSampler.closeConnection">false</boolProp>
           <stringProp name="ConfigTestElement.username"></stringProp>
           <stringProp name="ConfigTestElement.password"></stringProp>
@@ -145,8 +121,8 @@ def Map =
 			Version: Integer.parseInt(vars.get(&quot;Auth_Version&quot;))
 		]
 ];
-String STR = new JsonBuilder(Map).toString() + &apos;\0&apos;
-vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR);</stringProp>
+String STR = new JsonBuilder(Map).toString() + &apos;\0&apos;;
+sampler.setRequestData(Integer.toString(STR.length()) + &apos;.&apos; + STR);</stringProp>
             <stringProp name="scriptLanguage">groovy</stringProp>
           </JSR223PreProcessor>
           <hashTree/>
@@ -158,7 +134,7 @@ vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR
           <stringProp name="TCPSampler.port"></stringProp>
           <boolProp name="TCPSampler.nodelay">false</boolProp>
           <stringProp name="TCPSampler.timeout"></stringProp>
-          <stringProp name="TCPSampler.request">${Query}</stringProp>
+          <stringProp name="TCPSampler.request"></stringProp>
           <boolProp name="TCPSampler.closeConnection">false</boolProp>
           <stringProp name="ConfigTestElement.username"></stringProp>
           <stringProp name="ConfigTestElement.password"></stringProp>
@@ -175,11 +151,11 @@ def Map =
 	Type: &quot;Sleep&quot;,
 	Parameters:
 		[
-			Timeout: Integer.parseInt(vars.get(&quot;Sleep_Timeout&quot;))
+			Timeout: 50
 		]
 ];
-String STR = new JsonBuilder(Map).toString() + &apos;\0&apos;
-vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR);</stringProp>
+String STR = new JsonBuilder(Map).toString() + &apos;\0&apos;;
+sampler.setRequestData(Integer.toString(STR.length()) + &apos;.&apos; + STR);</stringProp>
             <stringProp name="scriptLanguage">groovy</stringProp>
           </JSR223PreProcessor>
           <hashTree/>
@@ -191,7 +167,7 @@ vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR
           <stringProp name="TCPSampler.port"></stringProp>
           <boolProp name="TCPSampler.nodelay">false</boolProp>
           <stringProp name="TCPSampler.timeout"></stringProp>
-          <stringProp name="TCPSampler.request">${Query}</stringProp>
+          <stringProp name="TCPSampler.request"></stringProp>
           <boolProp name="TCPSampler.closeConnection">false</boolProp>
           <stringProp name="ConfigTestElement.username"></stringProp>
           <stringProp name="ConfigTestElement.password"></stringProp>
@@ -207,8 +183,8 @@ def Map =
 [
 	Type: &quot;GetMetaData&quot;
 ];
-String STR = new JsonBuilder(Map).toString() + &apos;\0&apos;
-vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR);</stringProp>
+String STR = new JsonBuilder(Map).toString() + &apos;\0&apos;;
+sampler.setRequestData(Integer.toString(STR.length()) + &apos;.&apos; + STR);</stringProp>
             <stringProp name="scriptLanguage">groovy</stringProp>
           </JSR223PreProcessor>
           <hashTree/>
@@ -220,7 +196,7 @@ vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR
           <stringProp name="TCPSampler.port"></stringProp>
           <boolProp name="TCPSampler.nodelay">false</boolProp>
           <stringProp name="TCPSampler.timeout"></stringProp>
-          <stringProp name="TCPSampler.request">${Query}</stringProp>
+          <stringProp name="TCPSampler.request"></stringProp>
           <boolProp name="TCPSampler.closeConnection">false</boolProp>
           <stringProp name="ConfigTestElement.username"></stringProp>
           <stringProp name="ConfigTestElement.password"></stringProp>
@@ -236,8 +212,8 @@ def Map =
 [
 	Type: &quot;GetInternalLists&quot;
 ];
-String STR = new JsonBuilder(Map).toString() + &apos;\0&apos;
-vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR);</stringProp>
+String STR = new JsonBuilder(Map).toString() + &apos;\0&apos;;
+sampler.setRequestData(Integer.toString(STR.length()) + &apos;.&apos; + STR);</stringProp>
             <stringProp name="scriptLanguage">groovy</stringProp>
           </JSR223PreProcessor>
           <hashTree/>
@@ -249,7 +225,7 @@ vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR
           <stringProp name="TCPSampler.port"></stringProp>
           <boolProp name="TCPSampler.nodelay">false</boolProp>
           <stringProp name="TCPSampler.timeout"></stringProp>
-          <stringProp name="TCPSampler.request">${Query}</stringProp>
+          <stringProp name="TCPSampler.request"></stringProp>
           <boolProp name="TCPSampler.closeConnection">false</boolProp>
           <stringProp name="ConfigTestElement.username"></stringProp>
           <stringProp name="ConfigTestElement.password"></stringProp>
@@ -265,8 +241,8 @@ def Map =
 [
 	Type: &quot;GetServerInfo&quot;
 ];
-String STR = new JsonBuilder(Map).toString() + &apos;\0&apos;
-vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR);</stringProp>
+String STR = new JsonBuilder(Map).toString() + &apos;\0&apos;;
+sampler.setRequestData(Integer.toString(STR.length()) + &apos;.&apos; + STR);</stringProp>
             <stringProp name="scriptLanguage">groovy</stringProp>
           </JSR223PreProcessor>
           <hashTree/>
@@ -278,7 +254,7 @@ vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR
           <stringProp name="TCPSampler.port"></stringProp>
           <boolProp name="TCPSampler.nodelay">false</boolProp>
           <stringProp name="TCPSampler.timeout"></stringProp>
-          <stringProp name="TCPSampler.request">${Query}</stringProp>
+          <stringProp name="TCPSampler.request"></stringProp>
           <boolProp name="TCPSampler.closeConnection">false</boolProp>
           <stringProp name="ConfigTestElement.username"></stringProp>
           <stringProp name="ConfigTestElement.password"></stringProp>
@@ -295,11 +271,11 @@ def Map =
 	Type: &quot;OrganizationFromINN&quot;,
 	Parameters:
 		[
-			INN: vars.get(&quot;OrganizationFromINN_INN&quot;)
+			INN: &quot;2634100802&quot;
 		]
 ];
-String STR = new JsonBuilder(Map).toString() + &apos;\0&apos;
-vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR);</stringProp>
+String STR = new JsonBuilder(Map).toString() + &apos;\0&apos;;
+sampler.setRequestData(Integer.toString(STR.length()) + &apos;.&apos; + STR);</stringProp>
             <stringProp name="scriptLanguage">groovy</stringProp>
           </JSR223PreProcessor>
           <hashTree/>
@@ -311,7 +287,7 @@ vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR
           <stringProp name="TCPSampler.port"></stringProp>
           <boolProp name="TCPSampler.nodelay">false</boolProp>
           <stringProp name="TCPSampler.timeout"></stringProp>
-          <stringProp name="TCPSampler.request">${Query}</stringProp>
+          <stringProp name="TCPSampler.request"></stringProp>
           <boolProp name="TCPSampler.closeConnection">false</boolProp>
           <stringProp name="ConfigTestElement.username"></stringProp>
           <stringProp name="ConfigTestElement.password"></stringProp>
@@ -328,11 +304,11 @@ def Map =
 	Type: &quot;SearchFullText&quot;,
 	Parameters:
 		[
-			Value: vars.get(&quot;SearchFullText_Value&quot;)
+			Value: &quot;postgres&quot;
 		]
 ];
-String STR = new JsonBuilder(Map).toString() + &apos;\0&apos;
-vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR);</stringProp>
+String STR = new JsonBuilder(Map).toString() + &apos;\0&apos;;
+sampler.setRequestData(Integer.toString(STR.length()) + &apos;.&apos; + STR);</stringProp>
             <stringProp name="scriptLanguage">groovy</stringProp>
           </JSR223PreProcessor>
           <hashTree/>
@@ -344,7 +320,7 @@ vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR
           <stringProp name="TCPSampler.port"></stringProp>
           <boolProp name="TCPSampler.nodelay">false</boolProp>
           <stringProp name="TCPSampler.timeout"></stringProp>
-          <stringProp name="TCPSampler.request">${Query}</stringProp>
+          <stringProp name="TCPSampler.request"></stringProp>
           <boolProp name="TCPSampler.closeConnection">false</boolProp>
           <stringProp name="ConfigTestElement.username"></stringProp>
           <stringProp name="ConfigTestElement.password"></stringProp>
@@ -360,8 +336,8 @@ def Map =
 [
 	Type: &quot;UserSettingsReset&quot;
 ];
-String STR = new JsonBuilder(Map).toString() + &apos;\0&apos;
-vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR);</stringProp>
+String STR = new JsonBuilder(Map).toString() + &apos;\0&apos;;
+sampler.setRequestData(Integer.toString(STR.length()) + &apos;.&apos; + STR);</stringProp>
             <stringProp name="scriptLanguage">groovy</stringProp>
           </JSR223PreProcessor>
           <hashTree/>
@@ -373,7 +349,7 @@ vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR
           <stringProp name="TCPSampler.port"></stringProp>
           <boolProp name="TCPSampler.nodelay">false</boolProp>
           <stringProp name="TCPSampler.timeout"></stringProp>
-          <stringProp name="TCPSampler.request">${Query}</stringProp>
+          <stringProp name="TCPSampler.request"></stringProp>
           <boolProp name="TCPSampler.closeConnection">false</boolProp>
           <stringProp name="ConfigTestElement.username"></stringProp>
           <stringProp name="ConfigTestElement.password"></stringProp>
@@ -396,12 +372,12 @@ def Map =
 				[
 					FIO: UUID.randomUUID().toString(),
 					Login: UUID.randomUUID().toString(),
-					AccessAllowed: Boolean.parseBoolean(vars.get(&quot;RecordAdd_User_AccessAllowed&quot;))
+					AccessAllowed: true
 				]
 		]
 ];
-String STR = new JsonBuilder(Map).toString() + &apos;\0&apos;
-vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR);</stringProp>
+String STR = new JsonBuilder(Map).toString() + &apos;\0&apos;;
+sampler.setRequestData(Integer.toString(STR.length()) + &apos;.&apos; + STR);</stringProp>
             <stringProp name="scriptLanguage">groovy</stringProp>
           </JSR223PreProcessor>
           <hashTree/>
@@ -419,8 +395,8 @@ if (Pos != -1)
 	JsonString = JsonString.substring(Pos + 1);
 	JSONObject JsonObject = new JSONObject(JsonString);
 	JsonObject = JsonObject.getJSONObject(&quot;Parameters&quot;);
-	int ObjectID = JsonObject.getInt(&quot;ObjectID&quot;);
-	vars.put(&quot;UserID&quot;, Integer.toString(ObjectID));
+	int UserID = JsonObject.getInt(&quot;ObjectID&quot;);
+	vars.put(&quot;UserID&quot; + vars.get(&quot;VarID&quot;), Integer.toString(UserID));
 }</stringProp>
           </BeanShellPostProcessor>
           <hashTree/>
@@ -432,7 +408,7 @@ if (Pos != -1)
           <stringProp name="TCPSampler.port"></stringProp>
           <boolProp name="TCPSampler.nodelay">false</boolProp>
           <stringProp name="TCPSampler.timeout"></stringProp>
-          <stringProp name="TCPSampler.request">${Query}</stringProp>
+          <stringProp name="TCPSampler.request"></stringProp>
           <boolProp name="TCPSampler.closeConnection">false</boolProp>
           <stringProp name="ConfigTestElement.username"></stringProp>
           <stringProp name="ConfigTestElement.password"></stringProp>
@@ -450,11 +426,11 @@ def Map =
 	Parameters:
 		[
 			TableName: &quot;_Users&quot;,
-			ObjectID: Integer.parseInt(vars.get(&quot;UserID&quot;))
+			ObjectID: Integer.parseInt(vars.get(&quot;UserID&quot; + vars.get(&quot;VarID&quot;)))
 		]
 ];
-String STR = new JsonBuilder(Map).toString() + &apos;\0&apos;
-vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR);</stringProp>
+String STR = new JsonBuilder(Map).toString() + &apos;\0&apos;;
+sampler.setRequestData(Integer.toString(STR.length()) + &apos;.&apos; + STR);</stringProp>
             <stringProp name="scriptLanguage">groovy</stringProp>
           </JSR223PreProcessor>
           <hashTree/>
@@ -466,7 +442,7 @@ vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR
           <stringProp name="TCPSampler.port"></stringProp>
           <boolProp name="TCPSampler.nodelay">false</boolProp>
           <stringProp name="TCPSampler.timeout"></stringProp>
-          <stringProp name="TCPSampler.request">${Query}</stringProp>
+          <stringProp name="TCPSampler.request"></stringProp>
           <boolProp name="TCPSampler.closeConnection">false</boolProp>
           <stringProp name="ConfigTestElement.username"></stringProp>
           <stringProp name="ConfigTestElement.password"></stringProp>
@@ -484,15 +460,15 @@ def Map =
 	Parameters:
 		[
 			TableName: &quot;_Users&quot;,
-			ObjectID: Integer.parseInt(vars.get(&quot;UserID&quot;)),
+			ObjectID: Integer.parseInt(vars.get(&quot;UserID&quot; + vars.get(&quot;VarID&quot;))),
 			Values:
 				[
 					FIO: &quot;Edited&quot;
 				]
 		]
 ];
-String STR = new JsonBuilder(Map).toString() + &apos;\0&apos;
-vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR);</stringProp>
+String STR = new JsonBuilder(Map).toString() + &apos;\0&apos;;
+sampler.setRequestData(Integer.toString(STR.length()) + &apos;.&apos; + STR);</stringProp>
             <stringProp name="scriptLanguage">groovy</stringProp>
           </JSR223PreProcessor>
           <hashTree/>
@@ -504,7 +480,7 @@ vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR
           <stringProp name="TCPSampler.port"></stringProp>
           <boolProp name="TCPSampler.nodelay">false</boolProp>
           <stringProp name="TCPSampler.timeout"></stringProp>
-          <stringProp name="TCPSampler.request">${Query}</stringProp>
+          <stringProp name="TCPSampler.request"></stringProp>
           <boolProp name="TCPSampler.closeConnection">false</boolProp>
           <stringProp name="ConfigTestElement.username"></stringProp>
           <stringProp name="ConfigTestElement.password"></stringProp>
@@ -522,11 +498,11 @@ def Map =
 	Parameters:
 		[
 			TableName: &quot;_Users&quot;,
-			ObjectID: Integer.parseInt(vars.get(&quot;UserID&quot;))
+			ObjectID: Integer.parseInt(vars.get(&quot;UserID&quot; + vars.get(&quot;VarID&quot;)))
 		]
 ];
-String STR = new JsonBuilder(Map).toString() + &apos;\0&apos;
-vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR);</stringProp>
+String STR = new JsonBuilder(Map).toString() + &apos;\0&apos;;
+sampler.setRequestData(Integer.toString(STR.length()) + &apos;.&apos; + STR);</stringProp>
             <stringProp name="scriptLanguage">groovy</stringProp>
           </JSR223PreProcessor>
           <hashTree/>
@@ -538,7 +514,7 @@ vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR
           <stringProp name="TCPSampler.port"></stringProp>
           <boolProp name="TCPSampler.nodelay">false</boolProp>
           <stringProp name="TCPSampler.timeout"></stringProp>
-          <stringProp name="TCPSampler.request">${Query}</stringProp>
+          <stringProp name="TCPSampler.request"></stringProp>
           <boolProp name="TCPSampler.closeConnection">false</boolProp>
           <stringProp name="ConfigTestElement.username"></stringProp>
           <stringProp name="ConfigTestElement.password"></stringProp>
@@ -555,11 +531,11 @@ def Map =
 	Type: &quot;UserPasswordExist&quot;,
 	Parameters:
 		[
-			UserID: Integer.parseInt(vars.get(&quot;UserID&quot;))
+			UserID: Integer.parseInt(vars.get(&quot;UserID&quot; + vars.get(&quot;VarID&quot;)))
 		]
 ];
-String STR = new JsonBuilder(Map).toString() + &apos;\0&apos;
-vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR);</stringProp>
+String STR = new JsonBuilder(Map).toString() + &apos;\0&apos;;
+sampler.setRequestData(Integer.toString(STR.length()) + &apos;.&apos; + STR);</stringProp>
             <stringProp name="scriptLanguage">groovy</stringProp>
           </JSR223PreProcessor>
           <hashTree/>
@@ -571,7 +547,7 @@ vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR
           <stringProp name="TCPSampler.port"></stringProp>
           <boolProp name="TCPSampler.nodelay">false</boolProp>
           <stringProp name="TCPSampler.timeout"></stringProp>
-          <stringProp name="TCPSampler.request">${Query}</stringProp>
+          <stringProp name="TCPSampler.request"></stringProp>
           <boolProp name="TCPSampler.closeConnection">false</boolProp>
           <stringProp name="ConfigTestElement.username"></stringProp>
           <stringProp name="ConfigTestElement.password"></stringProp>
@@ -604,12 +580,12 @@ def Map =
 	Type: &quot;UserPasswordCreate&quot;,
 	Parameters:
 		[
-			UserID: Integer.parseInt(vars.get(&quot;UserID&quot;)),
+			UserID: Integer.parseInt(vars.get(&quot;UserID&quot; + vars.get(&quot;VarID&quot;))),
 			Hash: GetSHA256(&quot;Testov_Test_Testovich454Trendy_)&quot;)
 		]
 ];
-String STR = new JsonBuilder(Map).toString() + &apos;\0&apos;
-vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR);</stringProp>
+String STR = new JsonBuilder(Map).toString() + &apos;\0&apos;;
+sampler.setRequestData(Integer.toString(STR.length()) + &apos;.&apos; + STR);</stringProp>
             <stringProp name="scriptLanguage">groovy</stringProp>
           </JSR223PreProcessor>
           <hashTree/>
@@ -621,7 +597,7 @@ vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR
           <stringProp name="TCPSampler.port"></stringProp>
           <boolProp name="TCPSampler.nodelay">false</boolProp>
           <stringProp name="TCPSampler.timeout"></stringProp>
-          <stringProp name="TCPSampler.request">${Query}</stringProp>
+          <stringProp name="TCPSampler.request"></stringProp>
           <boolProp name="TCPSampler.closeConnection">false</boolProp>
           <stringProp name="ConfigTestElement.username"></stringProp>
           <stringProp name="ConfigTestElement.password"></stringProp>
@@ -654,13 +630,13 @@ def Map =
 	Type: &quot;UserPasswordEdit&quot;,
 	Parameters:
 		[
-			UserID: Integer.parseInt(vars.get(&quot;UserID&quot;)),
+			UserID: Integer.parseInt(vars.get(&quot;UserID&quot; + vars.get(&quot;VarID&quot;))),
 			HashOld: GetSHA256(&quot;Testov_Test_Testovich454Trendy_)&quot;),
 			Hash: GetSHA256(&quot;Testov_Test_Testovich454Trendy__)&quot;)
 		]
 ];
-String STR = new JsonBuilder(Map).toString() + &apos;\0&apos;
-vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR);</stringProp>
+String STR = new JsonBuilder(Map).toString() + &apos;\0&apos;;
+sampler.setRequestData(Integer.toString(STR.length()) + &apos;.&apos; + STR);</stringProp>
             <stringProp name="scriptLanguage">groovy</stringProp>
           </JSR223PreProcessor>
           <hashTree/>
@@ -672,7 +648,7 @@ vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR
           <stringProp name="TCPSampler.port"></stringProp>
           <boolProp name="TCPSampler.nodelay">false</boolProp>
           <stringProp name="TCPSampler.timeout"></stringProp>
-          <stringProp name="TCPSampler.request">${Query}</stringProp>
+          <stringProp name="TCPSampler.request"></stringProp>
           <boolProp name="TCPSampler.closeConnection">false</boolProp>
           <stringProp name="ConfigTestElement.username"></stringProp>
           <stringProp name="ConfigTestElement.password"></stringProp>
@@ -689,11 +665,11 @@ def Map =
 	Type: &quot;UserPasswordReset&quot;,
 	Parameters:
 		[
-			UserID: Integer.parseInt(vars.get(&quot;UserID&quot;))
+			UserID: Integer.parseInt(vars.get(&quot;UserID&quot; + vars.get(&quot;VarID&quot;)))
 		]
 ];
-String STR = new JsonBuilder(Map).toString() + &apos;\0&apos;
-vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR);</stringProp>
+String STR = new JsonBuilder(Map).toString() + &apos;\0&apos;;
+sampler.setRequestData(Integer.toString(STR.length()) + &apos;.&apos; + STR);</stringProp>
             <stringProp name="scriptLanguage">groovy</stringProp>
           </JSR223PreProcessor>
           <hashTree/>
@@ -705,7 +681,7 @@ vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR
           <stringProp name="TCPSampler.port"></stringProp>
           <boolProp name="TCPSampler.nodelay">false</boolProp>
           <stringProp name="TCPSampler.timeout"></stringProp>
-          <stringProp name="TCPSampler.request">${Query}</stringProp>
+          <stringProp name="TCPSampler.request"></stringProp>
           <boolProp name="TCPSampler.closeConnection">false</boolProp>
           <stringProp name="ConfigTestElement.username"></stringProp>
           <stringProp name="ConfigTestElement.password"></stringProp>
@@ -723,12 +699,12 @@ def Map =
 	Parameters:
 		[
 			TableName: &quot;_Users&quot;,
-			ObjectID: Integer.parseInt(vars.get(&quot;UserID&quot;)),
+			ObjectID: Integer.parseInt(vars.get(&quot;UserID&quot; + vars.get(&quot;VarID&quot;))),
 			Message: UUID.randomUUID().toString()
 		]
 ];
-String STR = new JsonBuilder(Map).toString() + &apos;\0&apos;
-vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR);</stringProp>
+String STR = new JsonBuilder(Map).toString() + &apos;\0&apos;;
+sampler.setRequestData(Integer.toString(STR.length()) + &apos;.&apos; + STR);</stringProp>
             <stringProp name="scriptLanguage">groovy</stringProp>
           </JSR223PreProcessor>
           <hashTree/>
@@ -747,7 +723,7 @@ if (Pos != -1)
 	JSONObject JsonObject = new JSONObject(JsonString);
 	JsonObject = JsonObject.getJSONObject(&quot;Parameters&quot;);
 	int DiscussionID = JsonObject.getInt(&quot;ID&quot;);
-	vars.put(&quot;DiscussionID&quot;, Integer.toString(DiscussionID));
+	vars.put(&quot;DiscussionID&quot; + vars.get(&quot;VarID&quot;), Integer.toString(DiscussionID));
 }</stringProp>
           </BeanShellPostProcessor>
           <hashTree/>
@@ -759,7 +735,7 @@ if (Pos != -1)
           <stringProp name="TCPSampler.port"></stringProp>
           <boolProp name="TCPSampler.nodelay">false</boolProp>
           <stringProp name="TCPSampler.timeout"></stringProp>
-          <stringProp name="TCPSampler.request">${Query}</stringProp>
+          <stringProp name="TCPSampler.request"></stringProp>
           <boolProp name="TCPSampler.closeConnection">false</boolProp>
           <stringProp name="ConfigTestElement.username"></stringProp>
           <stringProp name="ConfigTestElement.password"></stringProp>
@@ -776,12 +752,12 @@ def Map =
 	Type: &quot;DiscussionEdit&quot;,
 	Parameters:
 		[
-			ID: Integer.parseInt(vars.get(&quot;DiscussionID&quot;)),
+			ID: Integer.parseInt(vars.get(&quot;DiscussionID&quot; + vars.get(&quot;VarID&quot;))),
 			Message: &quot;Hello world! 2&quot;
 		]
 ];
-String STR = new JsonBuilder(Map).toString() + &apos;\0&apos;
-vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR);</stringProp>
+String STR = new JsonBuilder(Map).toString() + &apos;\0&apos;;
+sampler.setRequestData(Integer.toString(STR.length()) + &apos;.&apos; + STR);</stringProp>
             <stringProp name="scriptLanguage">groovy</stringProp>
           </JSR223PreProcessor>
           <hashTree/>
@@ -793,7 +769,7 @@ vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR
           <stringProp name="TCPSampler.port"></stringProp>
           <boolProp name="TCPSampler.nodelay">false</boolProp>
           <stringProp name="TCPSampler.timeout"></stringProp>
-          <stringProp name="TCPSampler.request">${Query}</stringProp>
+          <stringProp name="TCPSampler.request"></stringProp>
           <boolProp name="TCPSampler.closeConnection">false</boolProp>
           <stringProp name="ConfigTestElement.username"></stringProp>
           <stringProp name="ConfigTestElement.password"></stringProp>
@@ -810,11 +786,11 @@ def Map =
 	Type: &quot;DiscussionCopy&quot;,
 	Parameters:
 		[
-			ID: Integer.parseInt(vars.get(&quot;DiscussionID&quot;))
+			ID: Integer.parseInt(vars.get(&quot;DiscussionID&quot; + vars.get(&quot;VarID&quot;)))
 		]
 ];
-String STR = new JsonBuilder(Map).toString() + &apos;\0&apos;
-vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR);</stringProp>
+String STR = new JsonBuilder(Map).toString() + &apos;\0&apos;;
+sampler.setRequestData(Integer.toString(STR.length()) + &apos;.&apos; + STR);</stringProp>
             <stringProp name="scriptLanguage">groovy</stringProp>
           </JSR223PreProcessor>
           <hashTree/>
@@ -832,8 +808,8 @@ if (Pos != -1)
 	JsonString = JsonString.substring(Pos + 1);
 	JSONObject JsonObject = new JSONObject(JsonString);
 	JsonObject = JsonObject.getJSONObject(&quot;Parameters&quot;);
-	int DiscussionID = JsonObject.getInt(&quot;ID&quot;);
-	vars.put(&quot;DiscussionCopyID&quot;, Integer.toString(DiscussionID));
+	int DiscussionCopyID = JsonObject.getInt(&quot;ID&quot;);
+	vars.put(&quot;DiscussionCopyID&quot; + vars.get(&quot;VarID&quot;), Integer.toString(DiscussionCopyID));
 }</stringProp>
           </BeanShellPostProcessor>
           <hashTree/>
@@ -845,7 +821,7 @@ if (Pos != -1)
           <stringProp name="TCPSampler.port"></stringProp>
           <boolProp name="TCPSampler.nodelay">false</boolProp>
           <stringProp name="TCPSampler.timeout"></stringProp>
-          <stringProp name="TCPSampler.request">${Query}</stringProp>
+          <stringProp name="TCPSampler.request"></stringProp>
           <boolProp name="TCPSampler.closeConnection">false</boolProp>
           <stringProp name="ConfigTestElement.username"></stringProp>
           <stringProp name="ConfigTestElement.password"></stringProp>
@@ -865,13 +841,13 @@ def Map =
 			TableName: &quot;_Discussion&quot;,
 			Objects:
 				[
-					Integer.parseInt(vars.get(&quot;DiscussionID&quot;)),
-					Integer.parseInt(vars.get(&quot;DiscussionCopyID&quot;))
+					Integer.parseInt(vars.get(&quot;DiscussionID&quot; + vars.get(&quot;VarID&quot;))),
+					Integer.parseInt(vars.get(&quot;DiscussionCopyID&quot; + vars.get(&quot;VarID&quot;)))
 				]
 		]
 ];
-String STR = new JsonBuilder(Map).toString() + &apos;\0&apos;
-vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR);</stringProp>
+String STR = new JsonBuilder(Map).toString() + &apos;\0&apos;;
+sampler.setRequestData(Integer.toString(STR.length()) + &apos;.&apos; + STR);</stringProp>
             <stringProp name="scriptLanguage">groovy</stringProp>
           </JSR223PreProcessor>
           <hashTree/>
@@ -883,7 +859,7 @@ vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR
           <stringProp name="TCPSampler.port"></stringProp>
           <boolProp name="TCPSampler.nodelay">false</boolProp>
           <stringProp name="TCPSampler.timeout"></stringProp>
-          <stringProp name="TCPSampler.request">${Query}</stringProp>
+          <stringProp name="TCPSampler.request"></stringProp>
           <boolProp name="TCPSampler.closeConnection">false</boolProp>
           <stringProp name="ConfigTestElement.username"></stringProp>
           <stringProp name="ConfigTestElement.password"></stringProp>
@@ -901,12 +877,12 @@ def Map =
 	Parameters:
 		[
 			TableName: &quot;_Users&quot;,
-			ObjectID: Integer.parseInt(vars.get(&quot;UserID&quot;)),
+			ObjectID: Integer.parseInt(vars.get(&quot;UserID&quot; + vars.get(&quot;VarID&quot;))),
 			Note: UUID.randomUUID().toString()
 		]
 ];
-String STR = new JsonBuilder(Map).toString() + &apos;\0&apos;
-vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR);</stringProp>
+String STR = new JsonBuilder(Map).toString() + &apos;\0&apos;;
+sampler.setRequestData(Integer.toString(STR.length()) + &apos;.&apos; + STR);</stringProp>
             <stringProp name="scriptLanguage">groovy</stringProp>
           </JSR223PreProcessor>
           <hashTree/>
@@ -918,7 +894,7 @@ vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR
           <stringProp name="TCPSampler.port"></stringProp>
           <boolProp name="TCPSampler.nodelay">false</boolProp>
           <stringProp name="TCPSampler.timeout"></stringProp>
-          <stringProp name="TCPSampler.request">${Query}</stringProp>
+          <stringProp name="TCPSampler.request"></stringProp>
           <boolProp name="TCPSampler.closeConnection">false</boolProp>
           <stringProp name="ConfigTestElement.username"></stringProp>
           <stringProp name="ConfigTestElement.password"></stringProp>
@@ -936,11 +912,11 @@ def Map =
 	Parameters:
 		[
 			TableName: &quot;_Users&quot;,
-			ObjectID: Integer.parseInt(vars.get(&quot;UserID&quot;))
+			ObjectID: Integer.parseInt(vars.get(&quot;UserID&quot; + vars.get(&quot;VarID&quot;)))
 		]
 ];
-String STR = new JsonBuilder(Map).toString() + &apos;\0&apos;
-vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR);</stringProp>
+String STR = new JsonBuilder(Map).toString() + &apos;\0&apos;;
+sampler.setRequestData(Integer.toString(STR.length()) + &apos;.&apos; + STR);</stringProp>
             <stringProp name="scriptLanguage">groovy</stringProp>
           </JSR223PreProcessor>
           <hashTree/>
@@ -952,7 +928,7 @@ vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR
           <stringProp name="TCPSampler.port"></stringProp>
           <boolProp name="TCPSampler.nodelay">false</boolProp>
           <stringProp name="TCPSampler.timeout"></stringProp>
-          <stringProp name="TCPSampler.request">${Query}</stringProp>
+          <stringProp name="TCPSampler.request"></stringProp>
           <boolProp name="TCPSampler.closeConnection">false</boolProp>
           <stringProp name="ConfigTestElement.username"></stringProp>
           <stringProp name="ConfigTestElement.password"></stringProp>
@@ -971,11 +947,11 @@ def Map =
 		[
 			TableName: &quot;_Users&quot;,
 			FieldName: &quot;Login&quot;,
-			ObjectID: Integer.parseInt(vars.get(&quot;UserID&quot;))
+			ObjectID: Integer.parseInt(vars.get(&quot;UserID&quot; + vars.get(&quot;VarID&quot;)))
 		]
 ];
-String STR = new JsonBuilder(Map).toString() + &apos;\0&apos;
-vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR);</stringProp>
+String STR = new JsonBuilder(Map).toString() + &apos;\0&apos;;
+sampler.setRequestData(Integer.toString(STR.length()) + &apos;.&apos; + STR);</stringProp>
             <stringProp name="scriptLanguage">groovy</stringProp>
           </JSR223PreProcessor>
           <hashTree/>
@@ -987,7 +963,7 @@ vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR
           <stringProp name="TCPSampler.port"></stringProp>
           <boolProp name="TCPSampler.nodelay">false</boolProp>
           <stringProp name="TCPSampler.timeout"></stringProp>
-          <stringProp name="TCPSampler.request">${Query}</stringProp>
+          <stringProp name="TCPSampler.request"></stringProp>
           <boolProp name="TCPSampler.closeConnection">false</boolProp>
           <stringProp name="ConfigTestElement.username"></stringProp>
           <stringProp name="ConfigTestElement.password"></stringProp>
@@ -1007,8 +983,8 @@ def Map =
 			TableName: &quot;_Users&quot;
 		]
 ];
-String STR = new JsonBuilder(Map).toString() + &apos;\0&apos;
-vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR);</stringProp>
+String STR = new JsonBuilder(Map).toString() + &apos;\0&apos;;
+sampler.setRequestData(Integer.toString(STR.length()) + &apos;.&apos; + STR);</stringProp>
             <stringProp name="scriptLanguage">groovy</stringProp>
           </JSR223PreProcessor>
           <hashTree/>
@@ -1020,7 +996,7 @@ vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR
           <stringProp name="TCPSampler.port"></stringProp>
           <boolProp name="TCPSampler.nodelay">false</boolProp>
           <stringProp name="TCPSampler.timeout"></stringProp>
-          <stringProp name="TCPSampler.request">${Query}</stringProp>
+          <stringProp name="TCPSampler.request"></stringProp>
           <boolProp name="TCPSampler.closeConnection">false</boolProp>
           <stringProp name="ConfigTestElement.username"></stringProp>
           <stringProp name="ConfigTestElement.password"></stringProp>
@@ -1038,11 +1014,11 @@ def Map =
 	Parameters:
 		[
 			TableName: &quot;_Users&quot;,
-			ObjectID: Integer.parseInt(vars.get(&quot;UserID&quot;))
+			ObjectID: Integer.parseInt(vars.get(&quot;UserID&quot; + vars.get(&quot;VarID&quot;)))
 		]
 ];
-String STR = new JsonBuilder(Map).toString() + &apos;\0&apos;
-vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR);</stringProp>
+String STR = new JsonBuilder(Map).toString() + &apos;\0&apos;;
+sampler.setRequestData(Integer.toString(STR.length()) + &apos;.&apos; + STR);</stringProp>
             <stringProp name="scriptLanguage">groovy</stringProp>
           </JSR223PreProcessor>
           <hashTree/>
@@ -1054,7 +1030,7 @@ vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR
           <stringProp name="TCPSampler.port"></stringProp>
           <boolProp name="TCPSampler.nodelay">false</boolProp>
           <stringProp name="TCPSampler.timeout"></stringProp>
-          <stringProp name="TCPSampler.request">${Query}</stringProp>
+          <stringProp name="TCPSampler.request"></stringProp>
           <boolProp name="TCPSampler.closeConnection">false</boolProp>
           <stringProp name="ConfigTestElement.username"></stringProp>
           <stringProp name="ConfigTestElement.password"></stringProp>
@@ -1074,8 +1050,8 @@ def Map =
 			Null: null //Нужно чтобы параметры были в запросе &quot;пустыми&quot;
 		]
 ];
-String STR = new JsonBuilder(Map).toString() + &apos;\0&apos;
-vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR);</stringProp>
+String STR = new JsonBuilder(Map).toString() + &apos;\0&apos;;
+sampler.setRequestData(Integer.toString(STR.length()) + &apos;.&apos; + STR);</stringProp>
             <stringProp name="scriptLanguage">groovy</stringProp>
           </JSR223PreProcessor>
           <hashTree/>
@@ -1087,7 +1063,7 @@ vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR
           <stringProp name="TCPSampler.port"></stringProp>
           <boolProp name="TCPSampler.nodelay">false</boolProp>
           <stringProp name="TCPSampler.timeout"></stringProp>
-          <stringProp name="TCPSampler.request">${Query}</stringProp>
+          <stringProp name="TCPSampler.request"></stringProp>
           <boolProp name="TCPSampler.closeConnection">false</boolProp>
           <stringProp name="ConfigTestElement.username"></stringProp>
           <stringProp name="ConfigTestElement.password"></stringProp>
@@ -1105,11 +1081,11 @@ def Map =
 	Parameters:
 		[
 			TableName: &quot;_Users&quot;,
-			ObjectID: Integer.parseInt(vars.get(&quot;UserID&quot;))
+			ObjectID: Integer.parseInt(vars.get(&quot;UserID&quot; + vars.get(&quot;VarID&quot;)))
 		]
 ];
-String STR = new JsonBuilder(Map).toString() + &apos;\0&apos;
-vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR);</stringProp>
+String STR = new JsonBuilder(Map).toString() + &apos;\0&apos;;
+sampler.setRequestData(Integer.toString(STR.length()) + &apos;.&apos; + STR);</stringProp>
             <stringProp name="scriptLanguage">groovy</stringProp>
           </JSR223PreProcessor>
           <hashTree/>
@@ -1121,7 +1097,7 @@ vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR
           <stringProp name="TCPSampler.port"></stringProp>
           <boolProp name="TCPSampler.nodelay">false</boolProp>
           <stringProp name="TCPSampler.timeout"></stringProp>
-          <stringProp name="TCPSampler.request">${Query}</stringProp>
+          <stringProp name="TCPSampler.request"></stringProp>
           <boolProp name="TCPSampler.closeConnection">false</boolProp>
           <stringProp name="ConfigTestElement.username"></stringProp>
           <stringProp name="ConfigTestElement.password"></stringProp>
@@ -1141,8 +1117,8 @@ def Map =
 			TableName: &quot;_Users&quot;
 		]
 ];
-String STR = new JsonBuilder(Map).toString() + &apos;\0&apos;
-vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR);</stringProp>
+String STR = new JsonBuilder(Map).toString() + &apos;\0&apos;;
+sampler.setRequestData(Integer.toString(STR.length()) + &apos;.&apos; + STR);</stringProp>
             <stringProp name="scriptLanguage">groovy</stringProp>
           </JSR223PreProcessor>
           <hashTree/>
@@ -1154,7 +1130,7 @@ vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR
           <stringProp name="TCPSampler.port"></stringProp>
           <boolProp name="TCPSampler.nodelay">false</boolProp>
           <stringProp name="TCPSampler.timeout"></stringProp>
-          <stringProp name="TCPSampler.request">${Query}</stringProp>
+          <stringProp name="TCPSampler.request"></stringProp>
           <boolProp name="TCPSampler.closeConnection">false</boolProp>
           <stringProp name="ConfigTestElement.username"></stringProp>
           <stringProp name="ConfigTestElement.password"></stringProp>
@@ -1174,8 +1150,8 @@ def Map =
 			Null: null //Нужно чтобы параметры были в запросе &quot;пустыми&quot;
 		]
 ];
-String STR = new JsonBuilder(Map).toString() + &apos;\0&apos;
-vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR);</stringProp>
+String STR = new JsonBuilder(Map).toString() + &apos;\0&apos;;
+sampler.setRequestData(Integer.toString(STR.length()) + &apos;.&apos; + STR);</stringProp>
             <stringProp name="scriptLanguage">groovy</stringProp>
           </JSR223PreProcessor>
           <hashTree/>
@@ -1187,7 +1163,7 @@ vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR
           <stringProp name="TCPSampler.port"></stringProp>
           <boolProp name="TCPSampler.nodelay">false</boolProp>
           <stringProp name="TCPSampler.timeout"></stringProp>
-          <stringProp name="TCPSampler.request">${Query}</stringProp>
+          <stringProp name="TCPSampler.request"></stringProp>
           <boolProp name="TCPSampler.closeConnection">false</boolProp>
           <stringProp name="ConfigTestElement.username"></stringProp>
           <stringProp name="ConfigTestElement.password"></stringProp>
@@ -1205,11 +1181,11 @@ def Map =
 	Parameters:
 		[
 			TableName: &quot;_Users&quot;,
-			Objects: [ Integer.parseInt(vars.get(&quot;UserID&quot;)) ]
+			Objects: [ Integer.parseInt(vars.get(&quot;UserID&quot; + vars.get(&quot;VarID&quot;))) ]
 		]
 ];
-String STR = new JsonBuilder(Map).toString() + &apos;\0&apos;
-vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR);</stringProp>
+String STR = new JsonBuilder(Map).toString() + &apos;\0&apos;;
+sampler.setRequestData(Integer.toString(STR.length()) + &apos;.&apos; + STR);</stringProp>
             <stringProp name="scriptLanguage">groovy</stringProp>
           </JSR223PreProcessor>
           <hashTree/>
@@ -1221,7 +1197,7 @@ vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR
           <stringProp name="TCPSampler.port"></stringProp>
           <boolProp name="TCPSampler.nodelay">false</boolProp>
           <stringProp name="TCPSampler.timeout"></stringProp>
-          <stringProp name="TCPSampler.request">${Query}</stringProp>
+          <stringProp name="TCPSampler.request"></stringProp>
           <boolProp name="TCPSampler.closeConnection">false</boolProp>
           <stringProp name="ConfigTestElement.username"></stringProp>
           <stringProp name="ConfigTestElement.password"></stringProp>
@@ -1241,8 +1217,8 @@ def Map =
 			QueryName: &quot;PGSettings&quot;
 		]
 ];
-String STR = new JsonBuilder(Map).toString() + &apos;\0&apos;
-vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR);</stringProp>
+String STR = new JsonBuilder(Map).toString() + &apos;\0&apos;;
+sampler.setRequestData(Integer.toString(STR.length()) + &apos;.&apos; + STR);</stringProp>
             <stringProp name="scriptLanguage">groovy</stringProp>
           </JSR223PreProcessor>
           <hashTree/>
@@ -1254,7 +1230,7 @@ vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR
           <stringProp name="TCPSampler.port"></stringProp>
           <boolProp name="TCPSampler.nodelay">false</boolProp>
           <stringProp name="TCPSampler.timeout"></stringProp>
-          <stringProp name="TCPSampler.request">${Query}</stringProp>
+          <stringProp name="TCPSampler.request"></stringProp>
           <boolProp name="TCPSampler.closeConnection">false</boolProp>
           <stringProp name="ConfigTestElement.username"></stringProp>
           <stringProp name="ConfigTestElement.password"></stringProp>
@@ -1279,8 +1255,8 @@ def Map =
 				]
 		]
 ];
-String STR = new JsonBuilder(Map).toString() + &apos;\0&apos;
-vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR);</stringProp>
+String STR = new JsonBuilder(Map).toString() + &apos;\0&apos;;
+sampler.setRequestData(Integer.toString(STR.length()) + &apos;.&apos; + STR);</stringProp>
             <stringProp name="scriptLanguage">groovy</stringProp>
           </JSR223PreProcessor>
           <hashTree/>
@@ -1299,7 +1275,7 @@ if (Pos != -1)
 	JSONObject JsonObject = new JSONObject(JsonString);
 	JsonObject = JsonObject.getJSONObject(&quot;Parameters&quot;);
 	int UserGroupID = JsonObject.getInt(&quot;ObjectID&quot;);
-	vars.put(&quot;UserGroupID&quot;, Integer.toString(UserGroupID));
+	vars.put(&quot;UserGroupID&quot; + vars.get(&quot;VarID&quot;), Integer.toString(UserGroupID));
 }</stringProp>
           </BeanShellPostProcessor>
           <hashTree/>
@@ -1311,7 +1287,7 @@ if (Pos != -1)
           <stringProp name="TCPSampler.port"></stringProp>
           <boolProp name="TCPSampler.nodelay">false</boolProp>
           <stringProp name="TCPSampler.timeout"></stringProp>
-          <stringProp name="TCPSampler.request">${Query}</stringProp>
+          <stringProp name="TCPSampler.request"></stringProp>
           <boolProp name="TCPSampler.closeConnection">false</boolProp>
           <stringProp name="ConfigTestElement.username"></stringProp>
           <stringProp name="ConfigTestElement.password"></stringProp>
@@ -1328,11 +1304,11 @@ def Map =
 	Type: &quot;GetGroupRights&quot;,
 	Parameters:
 		[
-			GroupID: Integer.parseInt(vars.get(&quot;UserGroupID&quot;))
+			GroupID: Integer.parseInt(vars.get(&quot;UserGroupID&quot; + vars.get(&quot;VarID&quot;)))
 		]
 ];
-String STR = new JsonBuilder(Map).toString() + &apos;\0&apos;
-vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR);</stringProp>
+String STR = new JsonBuilder(Map).toString() + &apos;\0&apos;;
+sampler.setRequestData(Integer.toString(STR.length()) + &apos;.&apos; + STR);</stringProp>
             <stringProp name="scriptLanguage">groovy</stringProp>
           </JSR223PreProcessor>
           <hashTree/>
@@ -1344,7 +1320,7 @@ vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR
           <stringProp name="TCPSampler.port"></stringProp>
           <boolProp name="TCPSampler.nodelay">false</boolProp>
           <stringProp name="TCPSampler.timeout"></stringProp>
-          <stringProp name="TCPSampler.request">${Query}</stringProp>
+          <stringProp name="TCPSampler.request"></stringProp>
           <boolProp name="TCPSampler.closeConnection">false</boolProp>
           <stringProp name="ConfigTestElement.username"></stringProp>
           <stringProp name="ConfigTestElement.password"></stringProp>
@@ -1362,11 +1338,11 @@ def Map =
 	Parameters:
 		[
 			TableName: &quot;_UserGroup&quot;,
-			Objects: [ Integer.parseInt(vars.get(&quot;UserGroupID&quot;)) ]
+			Objects: [ Integer.parseInt(vars.get(&quot;UserGroupID&quot; + vars.get(&quot;VarID&quot;))) ]
 		]
 ];
-String STR = new JsonBuilder(Map).toString() + &apos;\0&apos;
-vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR);</stringProp>
+String STR = new JsonBuilder(Map).toString() + &apos;\0&apos;;
+sampler.setRequestData(Integer.toString(STR.length()) + &apos;.&apos; + STR);</stringProp>
             <stringProp name="scriptLanguage">groovy</stringProp>
           </JSR223PreProcessor>
           <hashTree/>
@@ -1377,7 +1353,7 @@ vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR
           <stringProp name="TCPSampler.port"></stringProp>
           <boolProp name="TCPSampler.nodelay">false</boolProp>
           <stringProp name="TCPSampler.timeout"></stringProp>
-          <stringProp name="TCPSampler.request">${Query}</stringProp>
+          <stringProp name="TCPSampler.request"></stringProp>
           <boolProp name="TCPSampler.closeConnection">false</boolProp>
           <stringProp name="ConfigTestElement.username"></stringProp>
           <stringProp name="ConfigTestElement.password"></stringProp>
@@ -1406,8 +1382,8 @@ def Map =
 			Data: Base64String
 		]
 ];
-String STR = new JsonBuilder(Map).toString() + &apos;\0&apos;
-vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR);</stringProp>
+String STR = new JsonBuilder(Map).toString() + &apos;\0&apos;;
+sampler.setRequestData(Integer.toString(STR.length()) + &apos;.&apos; + STR);</stringProp>
             <stringProp name="scriptLanguage">groovy</stringProp>
           </JSR223PreProcessor>
           <hashTree/>
@@ -1426,7 +1402,7 @@ if (Pos != -1)
 	JSONObject JsonObject = new JSONObject(JsonString);
 	JsonObject = JsonObject.getJSONObject(&quot;Parameters&quot;);
 	int FileID = JsonObject.getInt(&quot;ID&quot;);
-	vars.put(&quot;FileID&quot;, Integer.toString(FileID));
+	vars.put(&quot;FileID&quot; + vars.get(&quot;VarID&quot;), Integer.toString(FileID));
 }</stringProp>
           </BeanShellPostProcessor>
           <hashTree/>
@@ -1437,7 +1413,7 @@ if (Pos != -1)
           <stringProp name="TCPSampler.port"></stringProp>
           <boolProp name="TCPSampler.nodelay">false</boolProp>
           <stringProp name="TCPSampler.timeout"></stringProp>
-          <stringProp name="TCPSampler.request">${Query}</stringProp>
+          <stringProp name="TCPSampler.request"></stringProp>
           <boolProp name="TCPSampler.closeConnection">false</boolProp>
           <stringProp name="ConfigTestElement.username"></stringProp>
           <stringProp name="ConfigTestElement.password"></stringProp>
@@ -1455,12 +1431,12 @@ def Map =
 	Type: &quot;FileStorageCopy&quot;,
 	Parameters:
 		[
-			ID: Integer.parseInt(vars.get(&quot;FileID&quot;)),
+			ID: Integer.parseInt(vars.get(&quot;FileID&quot; + vars.get(&quot;VarID&quot;))),
 			Name: UUID.randomUUID().toString()
 		]
 ];
-String STR = new JsonBuilder(Map).toString() + &apos;\0&apos;
-vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR);</stringProp>
+String STR = new JsonBuilder(Map).toString() + &apos;\0&apos;;
+sampler.setRequestData(Integer.toString(STR.length()) + &apos;.&apos; + STR);</stringProp>
             <stringProp name="scriptLanguage">groovy</stringProp>
           </JSR223PreProcessor>
           <hashTree/>
@@ -1479,7 +1455,7 @@ if (Pos != -1)
 	JSONObject JsonObject = new JSONObject(JsonString);
 	JsonObject = JsonObject.getJSONObject(&quot;Parameters&quot;);
 	int FileCopyID = JsonObject.getInt(&quot;NewID&quot;);
-	vars.put(&quot;FileCopyID&quot;, Integer.toString(FileCopyID));
+	vars.put(&quot;FileCopyID&quot; + vars.get(&quot;VarID&quot;), Integer.toString(FileCopyID));
 }</stringProp>
           </BeanShellPostProcessor>
           <hashTree/>
@@ -1490,7 +1466,7 @@ if (Pos != -1)
           <stringProp name="TCPSampler.port"></stringProp>
           <boolProp name="TCPSampler.nodelay">false</boolProp>
           <stringProp name="TCPSampler.timeout"></stringProp>
-          <stringProp name="TCPSampler.request">${Query}</stringProp>
+          <stringProp name="TCPSampler.request"></stringProp>
           <boolProp name="TCPSampler.closeConnection">false</boolProp>
           <stringProp name="ConfigTestElement.username"></stringProp>
           <stringProp name="ConfigTestElement.password"></stringProp>
@@ -1508,11 +1484,11 @@ def Map =
 	Type: &quot;FileStorageGet&quot;,
 	Parameters:
 		[
-			ID: Integer.parseInt(vars.get(&quot;FileID&quot;))
+			ID: Integer.parseInt(vars.get(&quot;FileID&quot; + vars.get(&quot;VarID&quot;)))
 		]
 ];
-String STR = new JsonBuilder(Map).toString() + &apos;\0&apos;
-vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR);</stringProp>
+String STR = new JsonBuilder(Map).toString() + &apos;\0&apos;;
+sampler.setRequestData(Integer.toString(STR.length()) + &apos;.&apos; + STR);</stringProp>
             <stringProp name="scriptLanguage">groovy</stringProp>
           </JSR223PreProcessor>
           <hashTree/>
@@ -1524,7 +1500,7 @@ vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR
           <stringProp name="TCPSampler.port"></stringProp>
           <boolProp name="TCPSampler.nodelay">false</boolProp>
           <stringProp name="TCPSampler.timeout"></stringProp>
-          <stringProp name="TCPSampler.request">${Query}</stringProp>
+          <stringProp name="TCPSampler.request"></stringProp>
           <boolProp name="TCPSampler.closeConnection">false</boolProp>
           <stringProp name="ConfigTestElement.username"></stringProp>
           <stringProp name="ConfigTestElement.password"></stringProp>
@@ -1544,13 +1520,13 @@ def Map =
 			TableName: &quot;_StorageFiles&quot;,
 			Objects:
 				[
-					Integer.parseInt(vars.get(&quot;FileID&quot;)),
-					Integer.parseInt(vars.get(&quot;FileCopyID&quot;))
+					Integer.parseInt(vars.get(&quot;FileID&quot; + vars.get(&quot;VarID&quot;))),
+					Integer.parseInt(vars.get(&quot;FileCopyID&quot; + vars.get(&quot;VarID&quot;)))
 				]
 		]
 ];
-String STR = new JsonBuilder(Map).toString() + &apos;\0&apos;
-vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR);</stringProp>
+String STR = new JsonBuilder(Map).toString() + &apos;\0&apos;;
+sampler.setRequestData(Integer.toString(STR.length()) + &apos;.&apos; + STR);</stringProp>
             <stringProp name="scriptLanguage">groovy</stringProp>
           </JSR223PreProcessor>
           <hashTree/>
@@ -1561,7 +1537,7 @@ vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR
           <stringProp name="TCPSampler.port"></stringProp>
           <boolProp name="TCPSampler.nodelay">false</boolProp>
           <stringProp name="TCPSampler.timeout"></stringProp>
-          <stringProp name="TCPSampler.request">${Query}</stringProp>
+          <stringProp name="TCPSampler.request"></stringProp>
           <boolProp name="TCPSampler.closeConnection">true</boolProp>
           <stringProp name="ConfigTestElement.username"></stringProp>
           <stringProp name="ConfigTestElement.password"></stringProp>
@@ -1582,8 +1558,8 @@ def Map =
 			FieldName: &quot;Group&quot;
 		]
 ];
-String STR = new JsonBuilder(Map).toString() + &apos;\0&apos;
-vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR);</stringProp>
+String STR = new JsonBuilder(Map).toString() + &apos;\0&apos;;
+sampler.setRequestData(Integer.toString(STR.length()) + &apos;.&apos; + STR);</stringProp>
             <stringProp name="scriptLanguage">groovy</stringProp>
           </JSR223PreProcessor>
           <hashTree/>
@@ -1669,6 +1645,72 @@ vars.put(&quot;Query&quot;, Integer.toString(STR.length()) + &apos;.&apos; + STR
         </ResultCollector>
         <hashTree/>
         <ResultCollector guiclass="SummaryReport" testclass="ResultCollector" testname="Summary Report" enabled="true">
+          <boolProp name="ResultCollector.error_logging">false</boolProp>
+          <objProp>
+            <name>saveConfig</name>
+            <value class="SampleSaveConfiguration">
+              <time>true</time>
+              <latency>true</latency>
+              <timestamp>true</timestamp>
+              <success>true</success>
+              <label>true</label>
+              <code>true</code>
+              <message>true</message>
+              <threadName>true</threadName>
+              <dataType>true</dataType>
+              <encoding>false</encoding>
+              <assertions>true</assertions>
+              <subresults>true</subresults>
+              <responseData>false</responseData>
+              <samplerData>false</samplerData>
+              <xml>false</xml>
+              <fieldNames>true</fieldNames>
+              <responseHeaders>false</responseHeaders>
+              <requestHeaders>false</requestHeaders>
+              <responseDataOnError>false</responseDataOnError>
+              <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+              <assertionsResultsToSave>0</assertionsResultsToSave>
+              <bytes>true</bytes>
+              <sentBytes>true</sentBytes>
+              <url>true</url>
+              <threadCounts>true</threadCounts>
+              <idleTime>true</idleTime>
+              <connectTime>true</connectTime>
+            </value>
+          </objProp>
+          <stringProp name="filename"></stringProp>
+        </ResultCollector>
+        <hashTree/>
+      </hashTree>
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Thread Group" enabled="false">
+        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+          <stringProp name="LoopController.loops">1</stringProp>
+        </elementProp>
+        <stringProp name="ThreadGroup.num_threads">1</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">1</stringProp>
+        <boolProp name="ThreadGroup.scheduler">false</boolProp>
+        <stringProp name="ThreadGroup.duration"></stringProp>
+        <stringProp name="ThreadGroup.delay"></stringProp>
+        <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
+      </ThreadGroup>
+      <hashTree>
+        <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="JSR223 Sampler" enabled="true">
+          <stringProp name="scriptLanguage">groovy</stringProp>
+          <stringProp name="parameters"></stringProp>
+          <stringProp name="filename"></stringProp>
+          <stringProp name="cacheKey">true</stringProp>
+          <stringProp name="script">vars.put(&quot;.TEST&quot;, String.valueOf(Thread.currentThread().getId()));</stringProp>
+        </JSR223Sampler>
+        <hashTree/>
+        <DebugSampler guiclass="TestBeanGUI" testclass="DebugSampler" testname="Debug Sampler" enabled="true">
+          <boolProp name="displayJMeterProperties">false</boolProp>
+          <boolProp name="displayJMeterVariables">true</boolProp>
+          <boolProp name="displaySystemProperties">false</boolProp>
+        </DebugSampler>
+        <hashTree/>
+        <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
           <boolProp name="ResultCollector.error_logging">false</boolProp>
           <objProp>
             <name>saveConfig</name>
