@@ -10,6 +10,14 @@ ISQueryText::ISQueryText()
 ISQueryText::~ISQueryText()
 {
     CRITICAL_SECTION_DESTROY(&CS);
+
+    //Очищаем карту запросов
+    std::vector<ISSqlPrepare *> Vector = ISAlgorithm::ConvertUnorderedMapToValues(Map);
+    while (!Vector.empty())
+    {
+        delete ISAlgorithm::VectorTakeBack(Vector);
+    }
+    Map.clear();
 }
 //-----------------------------------------------------------------------------
 ISQueryText& ISQueryText::Instance()
