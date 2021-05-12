@@ -11,8 +11,8 @@ public:
     static ISQueryText& Instance();
 
     std::string Add(const std::string &SqlText, int ParameterCount = 0);
-    bool IsNeedPrepare(const std::string &SqlText, std::string &Hash, int &ParamCount, bool &Prepared);
-    void SetPrepared(const std::string &SqlText, bool Prepared);
+    void IsNeedPrepare(const std::string &SqlText, std::string &Hash, int &ParamCount, bool &Prepared);
+    void AddPrepared(const std::string &SqlText, const std::string &Hash, int ParamCount);
 
 private:
     ISQueryText();
@@ -23,7 +23,9 @@ private:
     ISQueryText& operator=(ISQueryText&&) = delete;
 
 private:
-    std::unordered_map<std::string, ISSqlPrepare *> Map;
+    std::unordered_map<std::string, int> Map; // арта запросов с количеством параметров
+    std::vector<ISSqlPrepare> VectorPrepared;
+    int PreparedCount;
     ISCriticalSection CS;
 };
 //-----------------------------------------------------------------------------

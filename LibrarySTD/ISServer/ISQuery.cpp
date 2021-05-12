@@ -231,16 +231,14 @@ bool ISQuery::Execute()
     //Запрос требует подготовки
     int ParamCount = 0;
     bool Prepared = false;
-    if (ISQueryText::Instance().IsNeedPrepare(SqlText, StmtName, ParamCount, Prepared))
+    ISQueryText::Instance().IsNeedPrepare(SqlText, StmtName, ParamCount, Prepared);
+    if (!Prepared)
     {
-        if (!Prepared)
+        if (!Prepare(ParamCount))
         {
-            if (!Prepare(ParamCount))
-            {
-                return false;
-            }
-            ISQueryText::Instance().SetPrepared(SqlText, true);
+            return false;
         }
+        ISQueryText::Instance().AddPrepared(SqlText, StmtName, ParamCount);
     }
 
     //Засекаем время и выполняем запрос
@@ -442,6 +440,7 @@ unsigned char* ISQuery::ReadColumn_Binary(size_t Index, size_t &DataSize) const
 //-----------------------------------------------------------------------------
 bool ISQuery::Prepare(int ParamCount)
 {
+    StmtName = std::to_string(CURRENT_THREAD_ID()) + '_' + ISAlgorithm::StringToMD5(SqlText);
     PGresult *STMT = PQprepare(SqlConnection, StmtName.c_str(), SqlText.c_str(), (int)ParamCount, ParameterTypes.data());
     bool Prepared = STMT ? true : false;
     if (Prepared)

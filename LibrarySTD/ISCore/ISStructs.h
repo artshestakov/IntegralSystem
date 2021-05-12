@@ -67,12 +67,10 @@ struct ISMetaType
 //-----------------------------------------------------------------------------
 struct ISSqlPrepare
 {
-    ISSqlPrepare(const std::string &hash, int parameter_count = 0)
-        : Hash(hash), ParameterCount(parameter_count), Prepared(false) { }
-
+    std::string SqlText;
     std::string Hash;
+    unsigned ThreadID;
     int ParameterCount;
-    bool Prepared;
 };
 //-----------------------------------------------------------------------------
 struct ISConfigurationInfo
