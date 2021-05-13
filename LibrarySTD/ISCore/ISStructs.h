@@ -63,7 +63,11 @@ struct ISSqlPrepare
 {
     std::string SqlText;
     std::string Hash;
+#ifdef WIN32
     unsigned ThreadID;
+#else
+    pthread_t ThreadID;
+#endif
     int ParameterCount;
 };
 //-----------------------------------------------------------------------------
