@@ -473,6 +473,7 @@ ISTcpWorker::ISTcpWorker()
     DBConnection(nullptr),
     qProtocol(nullptr)
 {
+    MapFunction[API_PING] = &ISTcpWorker::Ping;
     MapFunction[API_AUTH] = &ISTcpWorker::Auth;
     MapFunction[API_SLEEP] = &ISTcpWorker::Sleep;
     MapFunction[API_GET_META_DATA] = &ISTcpWorker::GetMetaData;
@@ -660,7 +661,7 @@ void ISTcpWorker::Process()
         if (tcp_message->IsValid()) //Если сообщение валидное - переходим к выполнению
         {
             //Если запрос не авторизационный и клиент ещё не авторизовался - ошибка
-            if (tcp_message->Type != API_AUTH && !tcp_message->TcpClient->Authorized)
+            if (tcp_message->Type != API_AUTH && tcp_message->Type != API_PING && !tcp_message->TcpClient->Authorized)
             {
                 ErrorString = LANG("Carat.Error.NotAuthorized");
             }
@@ -991,6 +992,13 @@ bool ISTcpWorker::UserIsSystem(unsigned int UserID, bool &IsSystem)
 void ISTcpWorker::RegisterOilSphere()
 {
 
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::Ping(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+    IS_UNUSED(TcpMessage);
+    TcpAnswer->Parameters.AddMember("Pong", true, TcpAnswer->Parameters.GetAllocator());
+    return true;
 }
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
