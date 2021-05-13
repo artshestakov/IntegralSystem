@@ -2742,10 +2742,8 @@ bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
     if (qSelect.First()) //Данные есть
     {
         //Получаем необходимые настройки БД
-        //???
         unsigned int Precision = std::atoi(ISTcpWorkerHelper::GetSettingDB(DBConnection, CONST_UID_DATABASE_SETTING_OTHER_NUMBERSIMBOLSAFTERCOMMA));
-        IS_UNUSED(Precision);
-
+        
         do
         {
             rapidjson::Value Values(rapidjson::Type::kArrayType); //Список значений
