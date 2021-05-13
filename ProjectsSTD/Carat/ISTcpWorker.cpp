@@ -3954,7 +3954,7 @@ bool ISTcpWorker::GetFavoriteNames(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAns
 {
     //«апрашиваем избранные записи
     ISQuery qSelectObjects(DBConnection);
-    if (TcpMessage->Parameters.HasMember("TableName")) //≈сли таблица указана - удал€ем записи по указанной таблице
+    if (!TcpMessage->Parameters.IsNull() && TcpMessage->Parameters.HasMember("TableName")) //≈сли таблица указана - удал€ем записи по указанной таблице
     {
         //ѕровер€ем наличие такой таблицы в мета-данных
         std::string TableName = TcpMessage->Parameters["TableName"].GetString();
