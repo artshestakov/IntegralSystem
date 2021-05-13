@@ -13,7 +13,7 @@
     </TestPlan>
     <hashTree>
       <ConfigTestElement guiclass="TCPConfigGui" testclass="ConfigTestElement" testname="TCP Sampler Config" enabled="true">
-        <stringProp name="TCPSampler.server">127.0.0.1</stringProp>
+        <stringProp name="TCPSampler.server">192.168.88.136</stringProp>
         <boolProp name="TCPSampler.reUseConnection">true</boolProp>
         <stringProp name="TCPSampler.port">50000</stringProp>
         <boolProp name="TCPSampler.nodelay">false</boolProp>
@@ -47,12 +47,12 @@
       </Arguments>
       <hashTree/>
       <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="StressTest" enabled="true">
-        <stringProp name="ThreadGroup.on_sample_error">stoptest</stringProp>
+        <stringProp name="ThreadGroup.on_sample_error">stoptestnow</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
-          <stringProp name="LoopController.loops">1</stringProp>
+          <intProp name="LoopController.loops">-1</intProp>
         </elementProp>
-        <stringProp name="ThreadGroup.num_threads">1</stringProp>
+        <stringProp name="ThreadGroup.num_threads">4</stringProp>
         <stringProp name="ThreadGroup.ramp_time">1</stringProp>
         <boolProp name="ThreadGroup.scheduler">false</boolProp>
         <stringProp name="ThreadGroup.duration">1</stringProp>
@@ -60,9 +60,9 @@
         <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
       </ThreadGroup>
       <hashTree>
-        <UniformRandomTimer guiclass="UniformRandomTimerGui" testclass="UniformRandomTimer" testname="Uniform Random Timer" enabled="false">
-          <stringProp name="ConstantTimer.delay">100</stringProp>
-          <stringProp name="RandomTimer.range">200</stringProp>
+        <UniformRandomTimer guiclass="UniformRandomTimerGui" testclass="UniformRandomTimer" testname="Uniform Random Timer" enabled="true">
+          <stringProp name="ConstantTimer.delay">10</stringProp>
+          <stringProp name="RandomTimer.range">50</stringProp>
         </UniformRandomTimer>
         <hashTree/>
         <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="JSR223 Sampler: Create var ID" enabled="true">
@@ -160,7 +160,7 @@ sampler.setRequestData(Integer.toString(STR.length()) + &apos;.&apos; + STR);</s
           </JSR223PreProcessor>
           <hashTree/>
         </hashTree>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: GetMetaData" enabled="false">
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: GetMetaData" enabled="true">
           <stringProp name="TestPlan.comments">Получение мета-данных</stringProp>
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
@@ -189,7 +189,7 @@ sampler.setRequestData(Integer.toString(STR.length()) + &apos;.&apos; + STR);</s
           </JSR223PreProcessor>
           <hashTree/>
         </hashTree>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: GetInternalLists" enabled="false">
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: GetInternalLists" enabled="true">
           <stringProp name="TestPlan.comments">Получить список внутренних справочников</stringProp>
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
@@ -247,7 +247,7 @@ sampler.setRequestData(Integer.toString(STR.length()) + &apos;.&apos; + STR);</s
           </JSR223PreProcessor>
           <hashTree/>
         </hashTree>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: OrganizationFromINN" enabled="false">
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: OrganizationFromINN" enabled="true">
           <stringProp name="TestPlan.comments">Поиск организации по ИНН</stringProp>
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
@@ -313,7 +313,7 @@ sampler.setRequestData(Integer.toString(STR.length()) + &apos;.&apos; + STR);</s
           </JSR223PreProcessor>
           <hashTree/>
         </hashTree>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: UserSettingsReset" enabled="false">
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: UserSettingsReset" enabled="true">
           <stringProp name="TestPlan.comments">Сброс настроек пользователя</stringProp>
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
@@ -342,7 +342,7 @@ sampler.setRequestData(Integer.toString(STR.length()) + &apos;.&apos; + STR);</s
           </JSR223PreProcessor>
           <hashTree/>
         </hashTree>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: RecordAdd (User)" enabled="false">
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: RecordAdd (User)" enabled="true">
           <stringProp name="TestPlan.comments">Добавление пользователя</stringProp>
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
@@ -401,7 +401,7 @@ if (Pos != -1)
           </BeanShellPostProcessor>
           <hashTree/>
         </hashTree>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: RecordGet (User)" enabled="false">
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: RecordGet (User)" enabled="true">
           <stringProp name="TestPlan.comments">Получение пользователя</stringProp>
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
@@ -435,7 +435,7 @@ sampler.setRequestData(Integer.toString(STR.length()) + &apos;.&apos; + STR);</s
           </JSR223PreProcessor>
           <hashTree/>
         </hashTree>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: RecordEdit (User)" enabled="false">
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: RecordEdit (User)" enabled="true">
           <stringProp name="TestPlan.comments">Изменение пользователя</stringProp>
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
@@ -507,7 +507,7 @@ sampler.setRequestData(Integer.toString(STR.length()) + &apos;.&apos; + STR);</s
           </JSR223PreProcessor>
           <hashTree/>
         </hashTree>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: UserPasswordExist" enabled="false">
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: UserPasswordExist" enabled="true">
           <stringProp name="TestPlan.comments">Проверка наличия пароля у пользователя</stringProp>
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
@@ -540,7 +540,7 @@ sampler.setRequestData(Integer.toString(STR.length()) + &apos;.&apos; + STR);</s
           </JSR223PreProcessor>
           <hashTree/>
         </hashTree>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: UserPasswordCreate" enabled="false">
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: UserPasswordCreate" enabled="true">
           <stringProp name="TestPlan.comments">Создание пароля пользователю</stringProp>
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
@@ -590,7 +590,7 @@ sampler.setRequestData(Integer.toString(STR.length()) + &apos;.&apos; + STR);</s
           </JSR223PreProcessor>
           <hashTree/>
         </hashTree>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: UserPasswordEdit" enabled="false">
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: UserPasswordEdit" enabled="true">
           <stringProp name="TestPlan.comments">Изменение пароля пользователя</stringProp>
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
@@ -641,7 +641,7 @@ sampler.setRequestData(Integer.toString(STR.length()) + &apos;.&apos; + STR);</s
           </JSR223PreProcessor>
           <hashTree/>
         </hashTree>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: UserPasswordReset" enabled="false">
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: UserPasswordReset" enabled="true">
           <stringProp name="TestPlan.comments">Сброс пароля пользователя</stringProp>
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
@@ -674,7 +674,7 @@ sampler.setRequestData(Integer.toString(STR.length()) + &apos;.&apos; + STR);</s
           </JSR223PreProcessor>
           <hashTree/>
         </hashTree>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: DiscussionAdd" enabled="false">
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: DiscussionAdd" enabled="true">
           <stringProp name="TestPlan.comments">Добавить обсуждение</stringProp>
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
@@ -728,7 +728,7 @@ if (Pos != -1)
           </BeanShellPostProcessor>
           <hashTree/>
         </hashTree>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: DiscussionEdit" enabled="false">
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: DiscussionEdit" enabled="true">
           <stringProp name="TestPlan.comments">Изменить обсуждение</stringProp>
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
@@ -762,7 +762,7 @@ sampler.setRequestData(Integer.toString(STR.length()) + &apos;.&apos; + STR);</s
           </JSR223PreProcessor>
           <hashTree/>
         </hashTree>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: DiscussionCopy" enabled="false">
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: DiscussionCopy" enabled="true">
           <stringProp name="TestPlan.comments">Создать копию обсуждения</stringProp>
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
@@ -814,7 +814,7 @@ if (Pos != -1)
           </BeanShellPostProcessor>
           <hashTree/>
         </hashTree>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: RecordDelete (Discussion)" enabled="false">
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: RecordDelete (Discussion)" enabled="true">
           <stringProp name="TestPlan.comments">Удаление обсуждений</stringProp>
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
@@ -852,7 +852,7 @@ sampler.setRequestData(Integer.toString(STR.length()) + &apos;.&apos; + STR);</s
           </JSR223PreProcessor>
           <hashTree/>
         </hashTree>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: SetNoteRecord" enabled="false">
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: SetNoteRecord" enabled="true">
           <stringProp name="TestPlan.comments">Изменить примечание</stringProp>
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
@@ -887,7 +887,7 @@ sampler.setRequestData(Integer.toString(STR.length()) + &apos;.&apos; + STR);</s
           </JSR223PreProcessor>
           <hashTree/>
         </hashTree>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: GetNoteRecord" enabled="false">
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: GetNoteRecord" enabled="true">
           <stringProp name="TestPlan.comments">Получить примечание</stringProp>
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
@@ -921,7 +921,7 @@ sampler.setRequestData(Integer.toString(STR.length()) + &apos;.&apos; + STR);</s
           </JSR223PreProcessor>
           <hashTree/>
         </hashTree>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: GetRecordValue" enabled="false">
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: GetRecordValue" enabled="true">
           <stringProp name="TestPlan.comments">Получить значение записи</stringProp>
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
@@ -956,7 +956,7 @@ sampler.setRequestData(Integer.toString(STR.length()) + &apos;.&apos; + STR);</s
           </JSR223PreProcessor>
           <hashTree/>
         </hashTree>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: GetTableData" enabled="false">
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: GetTableData" enabled="true">
           <stringProp name="TestPlan.comments">Получить данные из таблицы</stringProp>
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
@@ -989,7 +989,7 @@ sampler.setRequestData(Integer.toString(STR.length()) + &apos;.&apos; + STR);</s
           </JSR223PreProcessor>
           <hashTree/>
         </hashTree>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: RecordFavoriteAdd" enabled="false">
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: RecordFavoriteAdd" enabled="true">
           <stringProp name="TestPlan.comments">Добавить запись в избранное</stringProp>
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
@@ -1023,7 +1023,7 @@ sampler.setRequestData(Integer.toString(STR.length()) + &apos;.&apos; + STR);</s
           </JSR223PreProcessor>
           <hashTree/>
         </hashTree>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: GetFavoriteNames" enabled="false">
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: GetFavoriteNames" enabled="true">
           <stringProp name="TestPlan.comments">Получить избранные записи</stringProp>
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
@@ -1056,7 +1056,7 @@ sampler.setRequestData(Integer.toString(STR.length()) + &apos;.&apos; + STR);</s
           </JSR223PreProcessor>
           <hashTree/>
         </hashTree>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: RecordFavoriteDelete" enabled="false">
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: RecordFavoriteDelete" enabled="true">
           <stringProp name="TestPlan.comments">Удалить запись из избранного</stringProp>
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
@@ -1090,7 +1090,7 @@ sampler.setRequestData(Integer.toString(STR.length()) + &apos;.&apos; + STR);</s
           </JSR223PreProcessor>
           <hashTree/>
         </hashTree>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: FavoritesDelete (Users)" enabled="false">
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: FavoritesDelete (Users)" enabled="true">
           <stringProp name="TestPlan.comments">Удаление избранных записей из таблицы пользователей</stringProp>
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
@@ -1123,7 +1123,7 @@ sampler.setRequestData(Integer.toString(STR.length()) + &apos;.&apos; + STR);</s
           </JSR223PreProcessor>
           <hashTree/>
         </hashTree>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: FavoritesDelete (All)" enabled="false">
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: FavoritesDelete (All)" enabled="true">
           <stringProp name="TestPlan.comments">Удаление всех избранных записей</stringProp>
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
@@ -1156,7 +1156,7 @@ sampler.setRequestData(Integer.toString(STR.length()) + &apos;.&apos; + STR);</s
           </JSR223PreProcessor>
           <hashTree/>
         </hashTree>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: RecordDelete (User)" enabled="false">
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: RecordDelete (User)" enabled="true">
           <stringProp name="TestPlan.comments">Удаление пользователя</stringProp>
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
@@ -1190,7 +1190,7 @@ sampler.setRequestData(Integer.toString(STR.length()) + &apos;.&apos; + STR);</s
           </JSR223PreProcessor>
           <hashTree/>
         </hashTree>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: GetTableQuery" enabled="false">
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: GetTableQuery" enabled="true">
           <stringProp name="TestPlan.comments">Получить данные запроса</stringProp>
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
@@ -1223,7 +1223,7 @@ sampler.setRequestData(Integer.toString(STR.length()) + &apos;.&apos; + STR);</s
           </JSR223PreProcessor>
           <hashTree/>
         </hashTree>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: RecordAdd (UserGroup)" enabled="false">
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: RecordAdd (UserGroup)" enabled="true">
           <stringProp name="TestPlan.comments">Добавление группы пользователей</stringProp>
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
@@ -1280,7 +1280,7 @@ if (Pos != -1)
           </BeanShellPostProcessor>
           <hashTree/>
         </hashTree>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: GetGroupRights" enabled="false">
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: GetGroupRights" enabled="true">
           <stringProp name="TestPlan.comments">Получить права доступа группы</stringProp>
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
@@ -1313,7 +1313,7 @@ sampler.setRequestData(Integer.toString(STR.length()) + &apos;.&apos; + STR);</s
           </JSR223PreProcessor>
           <hashTree/>
         </hashTree>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: RecordDelete (UserGroup)" enabled="false">
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: RecordDelete (UserGroup)" enabled="true">
           <stringProp name="TestPlan.comments">Удаление группы пользователей</stringProp>
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
@@ -1347,7 +1347,7 @@ sampler.setRequestData(Integer.toString(STR.length()) + &apos;.&apos; + STR);</s
           </JSR223PreProcessor>
           <hashTree/>
         </hashTree>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: FileStorageAdd" enabled="false">
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: FileStorageAdd" enabled="true">
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
           <stringProp name="TCPSampler.port"></stringProp>
@@ -1407,7 +1407,7 @@ if (Pos != -1)
           </BeanShellPostProcessor>
           <hashTree/>
         </hashTree>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: FileStorageCopy" enabled="false">
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: FileStorageCopy" enabled="true">
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
           <stringProp name="TCPSampler.port"></stringProp>
@@ -1460,7 +1460,7 @@ if (Pos != -1)
           </BeanShellPostProcessor>
           <hashTree/>
         </hashTree>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: FileStorageGet" enabled="false">
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: FileStorageGet" enabled="true">
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
           <stringProp name="TCPSampler.port"></stringProp>
@@ -1493,7 +1493,7 @@ sampler.setRequestData(Integer.toString(STR.length()) + &apos;.&apos; + STR);</s
           </JSR223PreProcessor>
           <hashTree/>
         </hashTree>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: RecordDelete (StorageFiles)" enabled="false">
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: RecordDelete (StorageFiles)" enabled="true">
           <stringProp name="TestPlan.comments">Удаление группы пользователей</stringProp>
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
