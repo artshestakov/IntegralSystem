@@ -43,6 +43,7 @@ public:
     static void FavoriteObject(const QString &TableName, unsigned int ObjectID, bool &IsExist); //Добавить/удалить объект из избранного
 
     static void ExitApplication(); //Выход из программы
+    static void ExecLoop(unsigned long Milliseconds); //Остановка потока событий
 
     static ISFieldEditBase* CreateColumnForField(QWidget *ParentWidget, PMetaField *MetaField);
     static ISFieldEditBase* CreateColumnForField(QWidget *ParentWidget, ISNamespace::FieldType DataType, const QString &ControlWidget = QString());
