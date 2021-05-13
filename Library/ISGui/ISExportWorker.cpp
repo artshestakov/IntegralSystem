@@ -3,10 +3,11 @@
 #include "ISDialogsCommon.h"
 #include "ISSystem.h"
 //-----------------------------------------------------------------------------
-ISExportWorker::ISExportWorker(PMetaTable *meta_table, ISTcpModel *tcp_model, QObject *parent)
+ISExportWorker::ISExportWorker(const QString &table_name, const QString &table_local_list_name, ISTcpModel *tcp_model, QObject *parent)
     : QObject(parent),
     ErrorString(LANG("Export.Error.NoError")),
-    MetaTable(meta_table),
+    TableName(table_name),
+    TableLocalListName(table_local_list_name),
     TcpModel(tcp_model),
     Header(false),
     Canceled(false)
@@ -63,8 +64,8 @@ QVariant ISExportWorker::PrepareValue(ISNamespace::FieldType Type, const QVarian
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-ISExportCSV::ISExportCSV(PMetaTable *meta_table, ISTcpModel *tcp_model, QObject *parent)
-    : ISExportWorker(meta_table, tcp_model, parent),
+ISExportCSV::ISExportCSV(const QString &table_name, const QString &table_local_list_name, ISTcpModel *tcp_model, QObject *parent)
+    : ISExportWorker(table_name, table_local_list_name, tcp_model, parent),
     FileCSV(nullptr)
 {
 
@@ -77,7 +78,7 @@ ISExportCSV::~ISExportCSV()
 //-----------------------------------------------------------------------------
 bool ISExportCSV::Prepare()
 {
-    QString FilePath = ISFileDialog::GetSaveFileName(nullptr, LANG("File.Filter.Csv"), MetaTable->LocalListName);
+    QString FilePath = ISFileDialog::GetSaveFileName(nullptr, LANG("File.Filter.Csv"), TableLocalListName);
     if (FilePath.isEmpty())
     {
         return false;
@@ -164,8 +165,8 @@ bool ISExportCSV::Export()
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-ISExportHTML::ISExportHTML(PMetaTable *meta_table, ISTcpModel *tcp_model, QObject *parent)
-    : ISExportWorker(meta_table, tcp_model, parent),
+ISExportHTML::ISExportHTML(const QString &table_name, const QString &table_local_list_name, ISTcpModel *tcp_model, QObject *parent)
+    : ISExportWorker(table_name, table_local_list_name, tcp_model, parent),
     FileHTML(nullptr)
 {
 
@@ -178,7 +179,7 @@ ISExportHTML::~ISExportHTML()
 //-----------------------------------------------------------------------------
 bool ISExportHTML::Prepare()
 {
-    QString FilePath = ISFileDialog::GetSaveFileName(nullptr, LANG("File.Filter.Html"), MetaTable->LocalListName);
+    QString FilePath = ISFileDialog::GetSaveFileName(nullptr, LANG("File.Filter.Html"), TableLocalListName);
     if (FilePath.isEmpty())
     {
         return false;
@@ -210,7 +211,7 @@ bool ISExportHTML::Export()
     FileHTML->write("<html>\r\n");
     FileHTML->write(" <head>\r\n");
     FileHTML->write("  <meta charset=\"utf-8\">\r\n");
-    FileHTML->write("  <title>" + MetaTable->LocalListName.toUtf8() + "</title>\r\n");
+    FileHTML->write("  <title>" + TableLocalListName.toUtf8() + "</title>\r\n");
     FileHTML->write("  <style type=\"text/css\">\r\n");
     FileHTML->write("   table, td, th { border-collapse: collapse; border: 1px solid black; }\r\n");
     FileHTML->write("   th { background: lightGray; font-weight: normal; padding: 10px 15px; }\r\n");
@@ -220,7 +221,7 @@ bool ISExportHTML::Export()
     FileHTML->write(" </head>\r\n");
     FileHTML->write(" <body>\r\n");
     FileHTML->write("  <table>\r\n");
-    FileHTML->write("   <caption>" + MetaTable->LocalListName.toUtf8() + "</caption>\r\n");
+    FileHTML->write("   <caption>" + TableLocalListName.toUtf8() + "</caption>\r\n");
 
     if (Header) //Если в экспортируемый файл нужно добавить заголовки колонок
     {
@@ -281,8 +282,8 @@ bool ISExportHTML::Export()
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-ISExportJSON::ISExportJSON(PMetaTable *meta_table, ISTcpModel *tcp_model, QObject *parent)
-    : ISExportWorker(meta_table, tcp_model, parent),
+ISExportJSON::ISExportJSON(const QString &table_name, const QString &table_local_list_name, ISTcpModel *tcp_model, QObject *parent)
+    : ISExportWorker(table_name, table_local_list_name, tcp_model, parent),
     FileJSON(nullptr)
 {
 
@@ -295,7 +296,7 @@ ISExportJSON::~ISExportJSON()
 //-----------------------------------------------------------------------------
 bool ISExportJSON::Prepare()
 {
-    QString FilePath = ISFileDialog::GetSaveFileName(nullptr, LANG("File.Filter.Json"), MetaTable->LocalListName);
+    QString FilePath = ISFileDialog::GetSaveFileName(nullptr, LANG("File.Filter.Json"), TableLocalListName);
     if (FilePath.isEmpty())
     {
         return false;
@@ -362,8 +363,8 @@ bool ISExportJSON::Export()
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-ISExportXML::ISExportXML(PMetaTable *meta_table, ISTcpModel *tcp_model, QObject *parent)
-    : ISExportWorker(meta_table, tcp_model, parent),
+ISExportXML::ISExportXML(const QString &table_name, const QString &table_local_list_name, ISTcpModel *tcp_model, QObject *parent)
+    : ISExportWorker(table_name, table_local_list_name, tcp_model, parent),
     FileXML(nullptr)
 {
 
@@ -376,7 +377,7 @@ ISExportXML::~ISExportXML()
 //-----------------------------------------------------------------------------
 bool ISExportXML::Prepare()
 {
-    QString FilePath = ISFileDialog::GetSaveFileName(nullptr, LANG("File.Filter.Xml"), MetaTable->LocalListName);
+    QString FilePath = ISFileDialog::GetSaveFileName(nullptr, LANG("File.Filter.Xml"), TableLocalListName);
     if (FilePath.isEmpty())
     {
         return false;
@@ -401,8 +402,8 @@ bool ISExportXML::Prepare()
 //-----------------------------------------------------------------------------
 bool ISExportXML::Export()
 {
-    QDomDocument DomDocument(MetaTable->Name);
-    QDomElement DomElement = DomDocument.createElement(MetaTable->Name);
+    QDomDocument DomDocument(TableName);
+    QDomElement DomElement = DomDocument.createElement(TableName);
     DomDocument.appendChild(DomElement);
 
     for (int Row = 0; Row < TcpModel->rowCount(); ++Row) //Обход строк
@@ -429,7 +430,7 @@ bool ISExportXML::Export()
             }
         }
 
-        QDomElement TagRow = DomDocument.createElement(MetaTable->Name);
+        QDomElement TagRow = DomDocument.createElement(TableName);
         ISModelRecord Record = TcpModel->GetRecord(Row); //Текущая строка
         for (const unsigned int &Index : Fields) //Обход колонок
         {
