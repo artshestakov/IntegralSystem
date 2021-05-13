@@ -138,7 +138,7 @@ int ISCaratApplication::Start()
             "Branch: %s (%s)\n"
             "Host name: %s\n"
             "User name: %s\n"
-            "Main thread: %d\n"
+            "Main thread: %lu\n"
             "PID: %d",
             CARAT_VERSION_N, CARAT_CONFIGURATION, CARAT_PLATFORM, CARAT_BUILD_DATE, CARAT_BUILD_TIME,
             CARAT_BRANCH_NAME, CARAT_HASH,

@@ -42,6 +42,7 @@ private:
     void RegisterOilSphere();
 
 private:
+    bool Ping(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
     bool Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
     bool Sleep(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
     bool GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);

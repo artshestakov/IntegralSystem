@@ -1002,6 +1002,7 @@ std::string ISAlgorithm::Base64Encode(unsigned char *Data, size_t Size, std::str
     (void)BIO_set_close(Bio, BIO_NOCLOSE);
     BIO_free_all(Bio);
     Result = &(*Buffer).data[0];
+    BUF_MEM_free(Buffer);
     if (Result.empty())
     {
        ErrorString = GetLastErrorS();

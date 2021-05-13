@@ -18,13 +18,6 @@ QDomElement ISSystem::GetDomElement(const QString &Content)
     return DomElement;
 }
 //-----------------------------------------------------------------------------
-void ISSystem::ExecLoop(unsigned long Milliseconds)
-{
-    QEventLoop EventLoop;
-    QTimer::singleShot(Milliseconds, &EventLoop, &QEventLoop::quit);
-    EventLoop.exec();
-}
-//-----------------------------------------------------------------------------
 bool ISSystem::CreateDir(const QString &DirPath)
 {
     QString ErrorString;

@@ -464,6 +464,13 @@ void ISGui::ExitApplication()
     qApp->closeAllWindows();
 }
 //-----------------------------------------------------------------------------
+void ISGui::ExecLoop(unsigned long Milliseconds)
+{
+    QEventLoop EventLoop;
+    QTimer::singleShot(Milliseconds, &EventLoop, &QEventLoop::quit);
+    EventLoop.exec();
+}
+//-----------------------------------------------------------------------------
 ISFieldEditBase* ISGui::CreateColumnForField(QWidget *ParentWidget, PMetaField *MetaField)
 {
     return CreateFieldEditBase(ParentWidget, MetaField);

@@ -1,7 +1,7 @@
 #include "ISInterfaceForm.h"
 #include "ISDefinesGui.h"
 #include "ISControls.h"
-#include "ISSystem.h"
+#include "ISGui.h"
 #include "ISConstants.h"
 #include "ISAlgorithm.h"
 #include "ISBuffer.h"
@@ -155,7 +155,7 @@ void ISInterfaceForm::FlashingStop()
         ISControls::SetBackgroundColorWidget(this, ISDefines::Gui::COLOR_WHITE);
         FlashingTimer->stop();
 
-        ISSystem::ExecLoop(100);
+        ISGui::ExecLoop(100);
         POINTER_DELETE(FlashingTimer);
     }
 }

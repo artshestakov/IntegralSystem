@@ -62,6 +62,7 @@ const size_t            CARAT_WAIT_WORKERS_MSEC = 1000; //Ожидание освобождения 
 const unsigned long     CARAT_SALT_SIZE = 32; //фиксированный размер соли
 //CARAT_API--------------------------------------------------------------------
 const char API_UNKNOWN[] = "Unknown"; //Неизвестное сообщение
+const char API_PING[] = "Ping"; //Пинг
 const char API_AUTH[] = "Auth"; //Авторизация
 const char API_SLEEP[] = "Sleep"; //Ожидание
 const char API_GET_META_DATA[] = "GetMetaData"; //Получение мета-данных

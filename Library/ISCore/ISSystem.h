@@ -13,7 +13,6 @@ public:
 //ОСНОВНЫЕ
     static QDomElement GetDomElement(QFile &File); //Получить элемент файла схемы из файла
 	static QDomElement GetDomElement(const QString &Content); //Получить элемент файла схемы из контента
-	static void ExecLoop(unsigned long Milliseconds); //Остановка потока событий
 	static bool CreateDir(const QString &DirPath);
 	static bool CreateDir(const QString &DirPath, QString &ErrorString);
 

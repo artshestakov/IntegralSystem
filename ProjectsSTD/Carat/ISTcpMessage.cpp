@@ -5,6 +5,7 @@
 //-----------------------------------------------------------------------------
 ISTcpMessage::ISTcpMessage()
     : Type(API_UNKNOWN),
+    Parameters(rapidjson::Type::kNullType),
     MSecParse(0),
     Size(0),
     ChunkCount(0),

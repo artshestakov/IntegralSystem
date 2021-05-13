@@ -45,12 +45,6 @@ struct ISResourceFile
     char *Data;
 };
 //-----------------------------------------------------------------------------
-struct ISTcpClientInfo
-{
-    std::string IPAddress; //Адрес клиента
-    ISDateTime DTConnected; //Дата и время подключения
-};
-//-----------------------------------------------------------------------------
 struct ISMetaType
 {
     ISMetaType(const std::string& type_name, ISNamespace::FieldType type, const std::string& type_db, const std::string& control_widget, const std::string& search_condition_widget, bool search_allowed)
@@ -69,7 +63,11 @@ struct ISSqlPrepare
 {
     std::string SqlText;
     std::string Hash;
+#ifdef WIN32
     unsigned ThreadID;
+#else
+    pthread_t ThreadID;
+#endif
     int ParameterCount;
 };
 //-----------------------------------------------------------------------------

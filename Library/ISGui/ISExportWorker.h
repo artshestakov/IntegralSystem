@@ -2,7 +2,6 @@
 #ifndef _ISEXPORTWORKER_H_INCLUDED
 #define _ISEXPORTWORKER_H_INCLUDED
 //-----------------------------------------------------------------------------
-#include "PMetaClass.h"
 #include "ISTcpModels.h"
 //-----------------------------------------------------------------------------
 class ISExportWorker : public QObject
@@ -14,7 +13,7 @@ signals:
     void Message(const QString &Message);
 
 public:
-    ISExportWorker(PMetaTable *meta_table, ISTcpModel *tcp_model, QObject *parent = 0);
+    ISExportWorker(const QString &table_name, const QString &table_local_list_name, ISTcpModel *tcp_model, QObject *parent = 0);
     virtual ~ISExportWorker();
 
     virtual bool Prepare() = 0; //Подготовка экспорта
@@ -33,7 +32,8 @@ protected:
 
 protected:
     QString ErrorString;
-    PMetaTable *MetaTable;
+    QString TableName;
+    QString TableLocalListName;
     ISTcpModel *TcpModel;
     ISVectorUInt Fields;
     bool Header;
@@ -48,7 +48,7 @@ class ISExportCSV : public ISExportWorker
     Q_OBJECT
 
 public:
-    ISExportCSV(PMetaTable *meta_table, ISTcpModel *tcp_model, QObject *parent = 0);
+    ISExportCSV(const QString &table_name, const QString &table_local_list_name, ISTcpModel *tcp_model, QObject *parent = 0);
     virtual ~ISExportCSV();
 
     bool Prepare() override;
@@ -65,7 +65,7 @@ class ISExportHTML : public ISExportWorker
     Q_OBJECT
 
 public:
-    ISExportHTML(PMetaTable *meta_table, ISTcpModel *tcp_model, QObject *parent = 0);
+    ISExportHTML(const QString &table_name, const QString &table_local_list_name, ISTcpModel *tcp_model, QObject *parent = 0);
     virtual ~ISExportHTML();
 
     bool Prepare() override;
@@ -82,7 +82,7 @@ class ISExportJSON : public ISExportWorker
     Q_OBJECT
 
 public:
-    ISExportJSON(PMetaTable *meta_table, ISTcpModel *tcp_model, QObject *parent = 0);
+    ISExportJSON(const QString &table_name, const QString &table_local_list_name, ISTcpModel *tcp_model, QObject *parent = 0);
     virtual ~ISExportJSON();
 
     bool Prepare() override;
@@ -99,7 +99,7 @@ class ISExportXML : public ISExportWorker
     Q_OBJECT
 
 public:
-    ISExportXML(PMetaTable *meta_table, ISTcpModel *tcp_model, QObject *parent = 0);
+    ISExportXML(const QString &table_name, const QString &table_local_list_name, ISTcpModel *tcp_model, QObject *parent = 0);
     virtual ~ISExportXML();
 
     bool Prepare() override;

@@ -23,7 +23,7 @@ static std::string QS_USERS_HASH = PREPARE_QUERY("SELECT usrs_hash, usrs_salt "
     "WHERE usrs_hash IS NOT NULL "
     "AND usrs_salt IS NOT NULL");
 //-----------------------------------------------------------------------------
-static std::string QS_USER_AUTH = PREPARE_QUERYN("SELECT usrs_id, usrs_issystem, usrs_fio, usrs_group, usgp_fullaccess, usrs_accessallowed, usrs_accountlifetime, usrs_accountlifetimestart, usrs_accountlifetimeend, "
+static std::string QS_USER_AUTH = PREPARE_QUERYN("SELECT usrs_id, usrs_issystem, usrs_login, usrs_fio, usrs_group, usgp_fullaccess, usrs_accessallowed, usrs_accountlifetime, usrs_accountlifetimestart, usrs_accountlifetimeend, "
     "(SELECT sgdb_useraccessdatabase FROM _settingsdatabase WHERE sgdb_uid = $1) "
     "FROM _users "
     "LEFT JOIN _usergroup ON usgp_id = usrs_group "
@@ -473,6 +473,7 @@ ISTcpWorker::ISTcpWorker()
     DBConnection(nullptr),
     qProtocol(nullptr)
 {
+    MapFunction[API_PING] = &ISTcpWorker::Ping;
     MapFunction[API_AUTH] = &ISTcpWorker::Auth;
     MapFunction[API_SLEEP] = &ISTcpWorker::Sleep;
     MapFunction[API_GET_META_DATA] = &ISTcpWorker::GetMetaData;
@@ -660,13 +661,19 @@ void ISTcpWorker::Process()
         if (tcp_message->IsValid()) //Если сообщение валидное - переходим к выполнению
         {
             //Если запрос не авторизационный и клиент ещё не авторизовался - ошибка
-            if (tcp_message->Type != API_AUTH && !tcp_message->TcpClient->Authorized)
+            if (tcp_message->Type != API_AUTH && tcp_message->Type != API_PING && !tcp_message->TcpClient->Authorized)
             {
                 ErrorString = LANG("Carat.Error.NotAuthorized");
             }
             else //Клиент авторизовался - продолжаем
             {
-                ISLOGGER_I(__CLASS__, "Incoming message \"%s\"", tcp_message->Type.c_str());
+                ISLOGGER_I(__CLASS__,
+                    "Incoming message \"%s\"\n"
+                    "Peer: %s:%d, Size: %d (chunk - %d), User: %s (ID - %d)",
+                    tcp_message->Type.c_str(), //Тип сообщения
+                    tcp_message->TcpClient->IPAddress.c_str(), tcp_message->TcpClient->Port, //Адрес и порт клиента
+                    tcp_message->Size, tcp_message->ChunkCount, //Размер запроса
+                    tcp_message->TcpClient->UserLogin.c_str(), tcp_message->TcpClient->UserID); //Логин и идентификатор пользователя
                 ISTimePoint TimePoint = ISAlgorithm::GetTick(); //Запоминаем текущее время
                 Result = Execute(tcp_message, TcpAnswer);
                 PerfomanceMsec = ISAlgorithm::GetTickDiff(ISAlgorithm::GetTick(), TimePoint);
@@ -678,10 +685,8 @@ void ISTcpWorker::Process()
         }
 
         //Формируем лог-сообщение
-        std::string LogText = ISAlgorithm::StringF("%s message \"%s\"\n"
-            "Size: %d, Chunk: %d, Parse msec: %llu, Execute msec: %llu",
-            (Result ? "Done" : "Failed"), tcp_message->Type.c_str(),
-            tcp_message->Size, tcp_message->ChunkCount, tcp_message->MSecParse, PerfomanceMsec);
+        std::string LogText = ISAlgorithm::StringF("%s message \"%s\" with %llu msec",
+            (Result ? "Done" : "Failed"), tcp_message->Type.c_str(), PerfomanceMsec);
         if (!Result) //Запрос выполнен с ошибкой - устанавливаем текст ошибки в ответе и лог-сообщении, а так же очищаем потенциально не пустые параметры ответа
         {
             TcpAnswer->SetError(ErrorString);
@@ -993,6 +998,13 @@ void ISTcpWorker::RegisterOilSphere()
 
 }
 //-----------------------------------------------------------------------------
+bool ISTcpWorker::Ping(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+    IS_UNUSED(TcpMessage);
+    TcpAnswer->Parameters.AddMember("Pong", true, TcpAnswer->Parameters.GetAllocator());
+    return true;
+}
+//-----------------------------------------------------------------------------
 bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
     //Проверяем, не авторизаван ли уже клиент. Если авторизован - выходим с ошибкой
@@ -1083,19 +1095,20 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 
     unsigned int UserID = qSelectAuth.ReadColumn_UInt(0);
     bool UserSystem = qSelectAuth.ReadColumn_Bool(1);
-    const char *UserFIO = qSelectAuth.ReadColumn(2);
-    unsigned int GroupID = qSelectAuth.ReadColumn_UInt(3);
-    bool GroupFullAccess = qSelectAuth.ReadColumn_Bool(4);
+    const char *UserLogin = qSelectAuth.ReadColumn(2);
+    const char *UserFIO = qSelectAuth.ReadColumn(3);
+    unsigned int GroupID = qSelectAuth.ReadColumn_UInt(4);
+    bool GroupFullAccess = qSelectAuth.ReadColumn_Bool(5);
 
     //Доступ к БД запрещен
-    if (!qSelectAuth.ReadColumn_Bool(9) && !UserSystem)
+    if (!qSelectAuth.ReadColumn_Bool(10) && !UserSystem)
     {
         ErrorString = LANG("Carat.Error.Query.Auth.ConnectionBan");
         return false;
     }
 
     //Если у пользователя нет права доступа
-    if (!qSelectAuth.ReadColumn_Bool(5))
+    if (!qSelectAuth.ReadColumn_Bool(6))
     {
         ErrorString = LANG("Carat.Error.Query.Auth.LoginNoAccess");
         return false;
@@ -1109,10 +1122,10 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
     }
 
     //Если для пользователя настроено ограничение срока действия учётной записи
-    if (qSelectAuth.ReadColumn_Bool(6))
+    if (qSelectAuth.ReadColumn_Bool(7))
     {
-        ISDate DateStart = qSelectAuth.ReadColumn_Date(7),
-            DateEnd = qSelectAuth.ReadColumn_Date(8);
+        ISDate DateStart = qSelectAuth.ReadColumn_Date(8),
+            DateEnd = qSelectAuth.ReadColumn_Date(9);
         if (!DateStart.IsNull() && !DateEnd.IsNull()) //Если дата начала и окончания срока действия установлена
         {
             ISDate CurrentDate = ISDate::CurrentDate();
@@ -1183,9 +1196,8 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
     //Если пользователь уже подключен - вытаскиваем информацию о подключении
     if (ISTcpClients::Instance().IsExistUserID(UserID))
     {
-        ISTcpClientInfo TcpClientInfo = ISTcpClients::Instance().GetInfo(UserID);
-        const char *DTConnected = TcpClientInfo.DTConnected.ToString().c_str(),
-            *IPAddress = TcpClientInfo.IPAddress.c_str();
+        const char *DTConnected = TcpMessage->TcpClient->DTConnected.ToString().c_str(),
+            *IPAddress = TcpMessage->TcpClient->IPAddress.c_str();
 
         rapidjson::Value AlreadyConnectedObject(rapidjson::Type::kObjectType);
         AlreadyConnectedObject.AddMember("DateTime", JSON_STRINGA(DTConnected, Allocator), Allocator);
@@ -1196,6 +1208,7 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
     //Устанавливаем флаги клиенту
     TcpMessage->TcpClient->Authorized = true;
     TcpMessage->TcpClient->UserID = UserID;
+    TcpMessage->TcpClient->UserLogin = UserLogin;
     TcpMessage->TcpClient->UserGroupID = GroupID;
     TcpMessage->TcpClient->UserSystem = UserSystem;
 
@@ -2729,10 +2742,8 @@ bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
     if (qSelect.First()) //Данные есть
     {
         //Получаем необходимые настройки БД
-        //???
         unsigned int Precision = std::atoi(ISTcpWorkerHelper::GetSettingDB(DBConnection, CONST_UID_DATABASE_SETTING_OTHER_NUMBERSIMBOLSAFTERCOMMA));
-        IS_UNUSED(Precision);
-
+        
         do
         {
             rapidjson::Value Values(rapidjson::Type::kArrayType); //Список значений
@@ -3943,7 +3954,7 @@ bool ISTcpWorker::GetFavoriteNames(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAns
 {
     //Запрашиваем избранные записи
     ISQuery qSelectObjects(DBConnection);
-    if (TcpMessage->Parameters.HasMember("TableName")) //Если таблица указана - удаляем записи по указанной таблице
+    if (!TcpMessage->Parameters.IsNull() && TcpMessage->Parameters.HasMember("TableName")) //Если таблица указана - удаляем записи по указанной таблице
     {
         //Проверяем наличие такой таблицы в мета-данных
         std::string TableName = TcpMessage->Parameters["TableName"].GetString();

@@ -4,7 +4,6 @@
 //-----------------------------------------------------------------------------
 #include "ISTypedefs.h"
 #include "ISDateTime.h"
-#include "ISStructs.h"
 //-----------------------------------------------------------------------------
 class ISTcpClient
 {
@@ -15,8 +14,6 @@ public:
     void AddData(const char *Data, int Size);
     void GetBuffer(std::vector<char> &Vector);
 
-    ISTcpClientInfo GetInfo() const;
-
 public:
 	ISSocket Socket;
     std::string IPAddress;
@@ -26,6 +23,7 @@ public:
     unsigned int UserID;
     unsigned int UserGroupID;
     bool UserSystem;
+    std::string UserLogin;
 
 private:
     std::vector<std::vector<char>> Buffer;

@@ -854,10 +854,10 @@ void ISListBaseForm::Export()
     ISExportWorker *ExportWorker = nullptr;
     switch (ExportForm.GetSelectedType())
     {
-    case ISNamespace::ExportType::CSV: ExportWorker = new ISExportCSV(MetaTable, TcpModel, this); break;
-    case ISNamespace::ExportType::HTML: ExportWorker = new ISExportHTML(MetaTable, TcpModel, this); break;
-    case ISNamespace::ExportType::XML: ExportWorker = new ISExportXML(MetaTable, TcpModel, this); break;
-    case ISNamespace::ExportType::JSON: ExportWorker = new ISExportJSON(MetaTable, TcpModel, this); break;
+    case ISNamespace::ExportType::CSV: ExportWorker = new ISExportCSV(MetaTableName, TableLocalName, TcpModel, this); break;
+    case ISNamespace::ExportType::HTML: ExportWorker = new ISExportHTML(MetaTableName, TableLocalName, TcpModel, this); break;
+    case ISNamespace::ExportType::XML: ExportWorker = new ISExportXML(MetaTableName, TableLocalName, TcpModel, this); break;
+    case ISNamespace::ExportType::JSON: ExportWorker = new ISExportJSON(MetaTableName, TableLocalName, TcpModel, this); break;
     }
     ExportWorker->SetFields(ExportForm.GetSelectedFields());
     ExportWorker->SetHeader(ExportForm.GetHeader());
