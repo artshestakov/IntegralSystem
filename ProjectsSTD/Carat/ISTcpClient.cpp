@@ -7,7 +7,8 @@ ISTcpClient::ISTcpClient()
     Authorized(false),
     UserID(0),
     UserGroupID(0),
-    UserSystem(false)
+    UserSystem(false),
+    UserLogin("unknown")
 {
 
 }
@@ -29,10 +30,5 @@ void ISTcpClient::GetBuffer(std::vector<char> &Vector)
         Vector.insert(Vector.end(), Buffer[i].begin(), Buffer[i].end());
     }
     Buffer.clear();
-}
-//-----------------------------------------------------------------------------
-ISTcpClientInfo ISTcpClient::GetInfo() const
-{
-    return{ IPAddress, DTConnected };
 }
 //-----------------------------------------------------------------------------
