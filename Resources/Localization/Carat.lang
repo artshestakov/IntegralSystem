@@ -48,13 +48,14 @@
     <!--Ошибки протокола-->
     <Local Name="Carat.Error.Query.Auth.AlreadyAuthorized" Russian="Вы уже авторизованы!"/>
     <Local Name="Carat.Error.Query.Auth.AuthDenied" Russian="Авторизация запрещена."/>
-    <Local Name="Carat.Error.Query.Auth.AddressIsLocked" Russian="Ваш IP-адрес (%1) заблокирован до %2. Обратитесь к системному администратору для разблокировки."/>
+    <Local Name="Carat.Error.Query.Auth.AddressIsLocked" Russian="Ваш IP-адрес (%s) заблокирован. Автоматическая разблокировка через %d мин. Дождитесь автоматической разблокировки или обратитесь к системному администратору."/>
     <Local Name="Carat.Error.Query.Auth.InvalidHashSize" Russian="Неверный размер авторизационных данных!"/>
     <Local Name="Carat.Error.Query.Auth.InvalidHash" Russian="Невалидные авторизационные данные!"/>
     <Local Name="Carat.Error.Query.Auth.SelectHash" Russian="Не удалось получить информацию о пользователе."/>
     <Local Name="Carat.Error.Query.Auth.NoUsers" Russian="Нет зарегистрированных пользователей."/>
     <Local Name="Carat.Error.Query.Auth.Fail2Ban" Russian="ВНИМАНИЕ! Вы ввели неправильно логин или пароль %1 раз. Ваш IP-адрес (%2) был заблокирован до %3. Для разблокировки обратитесь к системному администратору."/>
-    <Local Name="Carat.Error.Query.Auth.InvalidLoginOrPassword" Russian="Неверный логин или пароль."/>
+    <Local Name="Carat.Error.Query.Auth.AddressLock" Russian="Вы исчерпали допустимое количество попыток для входа. Ваш IP-адрес (%s) будет заблокирован на %d минут."/>
+    <Local Name="Carat.Error.Query.Auth.InvalidLoginOrPassword" Russian="Неверный логин или пароль.&#10;Осталось попыток: %d"/>
     <Local Name="Carat.Error.Query.Auth.SelectLogin" Russian="Не удалось получить информацию о пользователе."/>
     <Local Name="Carat.Error.Query.Auth.ConnectionBan" Russian="На подключение пользователей к базе данных наложен запрет."/>
     <Local Name="Carat.Error.Query.Auth.LoginNoAccess" Russian="У Вас нет доступа к базе данных."/>

@@ -59,7 +59,9 @@ const size_t    TCP_PACKET_MAX_SIZE = 65535; //Максимальный размер одного TCP-па
 const unsigned short    CARAT_TCP_PORT = 50000; //Стандартный порт TCP-сервера
 const size_t            CARAT_HASH_SIZE = 64; //Фиксированный размер хэша SHA256 для авторизации
 const size_t            CARAT_WAIT_WORKERS_MSEC = 1000; //Ожидание освобождения воркеров в милисекундах
-const unsigned long     CARAT_SALT_SIZE = 32; //фиксированный размер соли
+const unsigned long     CARAT_SALT_SIZE = 32; //Фиксированный размер соли
+const size_t            CARAT_AUTH_FAIL_LIMIT = 5; //Допустимое количество ошибок авторизации
+const size_t            CARAT_AUTH_MINUTE_LOCK = 15; //Кол-во минут на блокировку IP-адреса
 //CARAT_API--------------------------------------------------------------------
 const char API_UNKNOWN[] = "Unknown"; //Неизвестное сообщение
 const char API_PING[] = "Ping"; //Пинг

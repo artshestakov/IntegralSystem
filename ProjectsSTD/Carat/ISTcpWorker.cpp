@@ -15,6 +15,7 @@
 #include "ISProperty.h"
 #include <curl/curl.h>
 #include <rapidjson/error/en.h>
+#include "ISFail2Ban.h"
 //-----------------------------------------------------------------------------
 static std::string Q_TEST = PREPARE_QUERYN("INSERT INTO _usergroup(usgp_name, usgp_fullaccess) VALUES($1, $2)", 2);
 //-----------------------------------------------------------------------------
@@ -1014,6 +1015,25 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
         return false;
     }
 
+    //Проверяем, не заблокирован ли IP-адрес клиента
+    //Считаем адрес заблокированным, если у него не осталось попыток для авторизации
+    std::string IPAddress = TcpMessage->TcpClient->IPAddress;
+    uint64_t DateTimeUnlock = 0;
+    if (ISFail2Ban::Instance().IsEmptyAttempts(IPAddress, DateTimeUnlock))
+    {
+        uint64_t CurrentUnixtime = ISDateTime::GetCurrentUnixtime();
+        if (CurrentUnixtime > DateTimeUnlock) //Если текущее время больше чем время разблокировки - разблокируем
+        {
+            ISFail2Ban::Instance().Remove(IPAddress);
+        }
+        else //Время разблокировки ещё не настало - ошибка
+        {
+            ErrorString = ISAlgorithm::StringF(LANG("Carat.Error.Query.Auth.AddressIsLocked"),
+                IPAddress.c_str(), int((DateTimeUnlock - CurrentUnixtime) / 60));
+            return false;
+        }
+    }
+
     //Проверяем и получаем хэш
     std::string Hash;
     if (!CheckIsNullString(TcpMessage, "Hash", Hash))
@@ -1070,16 +1090,22 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
             //Солим присланный хэш текущей солью
             std::string HashResult = ISAlgorithm::SaltPassword(Hash, CurrentSalt);
             IsFound = HashResult == CurrentHash;
-            if (IsFound) //Нашли
+            if (IsFound) //Нашли такого пользователя
             {
                 Hash = HashResult;
                 break;
             }
         }
 
-        if (!IsFound)
+        if (!IsFound) //Не нашли пользователя: он ввёл неправильный логин или пароль
         {
-            ErrorString = LANG("Carat.Error.Query.Auth.InvalidLoginOrPassword");
+            //Увеличиваем кол-во неуспешных авторизаций
+            size_t AttemptLeft = 0;
+            ISFail2Ban::Instance().FailAuth(IPAddress, AttemptLeft);
+
+            ErrorString = ISFail2Ban::Instance().IsEmptyAttempts(IPAddress) ?
+                ISAlgorithm::StringF(LANG("Carat.Error.Query.Auth.AddressLock"), IPAddress.c_str(), CARAT_AUTH_MINUTE_LOCK) : //Попыток не осталось
+                ISAlgorithm::StringF(LANG("Carat.Error.Query.Auth.InvalidLoginOrPassword"), AttemptLeft); //Попытки ещё есть
             return false;
         }
     }
@@ -1196,12 +1222,11 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
     //Если пользователь уже подключен - вытаскиваем информацию о подключении
     if (ISTcpClients::Instance().IsExistUserID(UserID))
     {
-        const char *DTConnected = TcpMessage->TcpClient->DTConnected.ToString().c_str(),
-            *IPAddress = TcpMessage->TcpClient->IPAddress.c_str();
+        const char *DTConnected = TcpMessage->TcpClient->DTConnected.ToString().c_str();
 
         rapidjson::Value AlreadyConnectedObject(rapidjson::Type::kObjectType);
         AlreadyConnectedObject.AddMember("DateTime", JSON_STRINGA(DTConnected, Allocator), Allocator);
-        AlreadyConnectedObject.AddMember("IPAddress", JSON_STRINGA(IPAddress, Allocator), Allocator);
+        AlreadyConnectedObject.AddMember("IPAddress", JSON_STRINGA(IPAddress.c_str(), Allocator), Allocator);
         TcpAnswer->Parameters.AddMember("AlreadyConnected", rapidjson::Value(AlreadyConnectedObject, Allocator), Allocator);
     }
 

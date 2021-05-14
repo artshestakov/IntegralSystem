@@ -2,9 +2,9 @@
 #ifndef _ISSTRUCTS_H_INCLUDED
 #define _ISSTRUCTS_H_INCLUDED
 //-----------------------------------------------------------------------------
-#include "StdAfx.h"
 #include "ISDateTime.h"
 #include "ISNamespace.h"
+#include "ISConstants.h"
 //-----------------------------------------------------------------------------
 struct ISConfigParameter
 {
@@ -99,6 +99,19 @@ struct ISLocal
 
     char Value[256];
     int Number;
+};
+//-----------------------------------------------------------------------------
+struct ISLockedIP
+{
+    ISLockedIP(const std::string &ip_address)
+        : IPAddress(ip_address),
+        AttemptLeft(CARAT_AUTH_FAIL_LIMIT),
+        DateTimeUnlock(ISDateTime::GetCurrentUnixtime() + (CARAT_AUTH_MINUTE_LOCK * 60))
+    { }
+
+    std::string IPAddress; //IP-адрес
+    size_t AttemptLeft; //Осталось попыток
+    uint64_t DateTimeUnlock; //Дата и время разблокировки
 };
 //-----------------------------------------------------------------------------
 #endif

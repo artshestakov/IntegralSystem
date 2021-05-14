@@ -217,6 +217,7 @@ $(SolutionDir)Revision.cmd $(SolutionDir) $(Configuration) $(Platform)</Command>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ISCaratApplication.cpp" />
+    <ClCompile Include="ISFail2Ban.cpp" />
     <ClCompile Include="ISTcpAnswer.cpp" />
     <ClCompile Include="ISTcpClient.cpp" />
     <ClCompile Include="ISTcpClients.cpp" />
@@ -230,6 +231,7 @@ $(SolutionDir)Revision.cmd $(SolutionDir) $(Configuration) $(Platform)</Command>
   <ItemGroup>
     <ClInclude Include="..\..\ISRevision.h" />
     <ClInclude Include="ISCaratApplication.h" />
+    <ClInclude Include="ISFail2Ban.h" />
     <ClInclude Include="ISTcpAnswer.h" />
     <ClInclude Include="ISTcpClient.h" />
     <ClInclude Include="ISTcpClients.h" />
