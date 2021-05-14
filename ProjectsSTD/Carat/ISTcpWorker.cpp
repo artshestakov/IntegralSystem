@@ -1097,7 +1097,11 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
             }
         }
 
-        if (!IsFound) //Не нашли пользователя: он ввёл неправильный логин или пароль
+        if (IsFound) //Нашли - удаляем его из Fail2Ban
+        {
+            ISFail2Ban::Instance().Remove(IPAddress);
+        }
+        else //Не нашли пользователя: он ввёл неправильный логин или пароль
         {
             //Увеличиваем кол-во неуспешных авторизаций
             size_t AttemptLeft = 0;
