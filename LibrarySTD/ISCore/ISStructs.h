@@ -109,6 +109,11 @@ struct ISLockedIP
         DateTimeUnlock(ISDateTime::GetCurrentUnixtime() + (CARAT_AUTH_MINUTE_LOCK * 60))
     { }
 
+    bool IsLock() const
+    {
+        return AttemptLeft == 0;
+    }
+
     std::string IPAddress; //IP-адрес
     size_t AttemptLeft; //Осталось попыток
     uint64_t DateTimeUnlock; //Дата и время разблокировки

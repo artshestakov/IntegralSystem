@@ -66,7 +66,7 @@ bool ISFail2Ban::IsEmptyAttempts(const std::string &IPAddress, uint64_t &DateTim
     {
         const ISLockedIP &LockedIP = Vector[Index];
         DateTimeUnlock = LockedIP.DateTimeUnlock;
-        return LockedIP.AttemptLeft == 0;
+        return LockedIP.IsLock();
     }
     return false;
 }

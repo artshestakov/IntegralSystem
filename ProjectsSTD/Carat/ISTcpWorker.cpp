@@ -1029,7 +1029,7 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
         else //Время разблокировки ещё не настало - ошибка
         {
             ErrorString = ISAlgorithm::StringF(LANG("Carat.Error.Query.Auth.AddressIsLocked"),
-                IPAddress.c_str(), int((DateTimeUnlock - CurrentUnixtime) / 60));
+                int((DateTimeUnlock - CurrentUnixtime) / 60));
             return false;
         }
     }
@@ -1104,7 +1104,7 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
             ISFail2Ban::Instance().FailAuth(IPAddress, AttemptLeft);
 
             ErrorString = ISFail2Ban::Instance().IsEmptyAttempts(IPAddress) ?
-                ISAlgorithm::StringF(LANG("Carat.Error.Query.Auth.AddressLock"), IPAddress.c_str(), CARAT_AUTH_MINUTE_LOCK) : //Попыток не осталось
+                ISAlgorithm::StringF(LANG("Carat.Error.Query.Auth.AddressLock"), CARAT_AUTH_MINUTE_LOCK) : //Попыток не осталось
                 ISAlgorithm::StringF(LANG("Carat.Error.Query.Auth.InvalidLoginOrPassword"), AttemptLeft); //Попытки ещё есть
             return false;
         }
