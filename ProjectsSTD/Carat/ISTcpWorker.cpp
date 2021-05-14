@@ -1222,10 +1222,10 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
     //Если пользователь уже подключен - вытаскиваем информацию о подключении
     if (ISTcpClients::Instance().IsExistUserID(UserID))
     {
-        const char *DTConnected = TcpMessage->TcpClient->DTConnected.ToString().c_str();
+        std::string DTConnected = TcpMessage->TcpClient->DTConnected.ToString();
 
         rapidjson::Value AlreadyConnectedObject(rapidjson::Type::kObjectType);
-        AlreadyConnectedObject.AddMember("DateTime", JSON_STRINGA(DTConnected, Allocator), Allocator);
+        AlreadyConnectedObject.AddMember("DateTime", JSON_STRINGA(DTConnected.c_str(), Allocator), Allocator);
         AlreadyConnectedObject.AddMember("IPAddress", JSON_STRINGA(IPAddress.c_str(), Allocator), Allocator);
         TcpAnswer->Parameters.AddMember("AlreadyConnected", rapidjson::Value(AlreadyConnectedObject, Allocator), Allocator);
     }
