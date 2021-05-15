@@ -461,7 +461,7 @@ static std::string QS_BANK = PREPARE_QUERY("SELECT COUNT(*) "
     "AND bank_incomingnumber = $2");
 //-----------------------------------------------------------------------------
 static std::string QI_BANK = PREPARE_QUERY("INSERT INTO bank(bank_date, bank_admission, bank_writeoff, bank_purposepayment, bank_counterparty, bank_checknumber, bank_operationtype, bank_incomingnumber, bank_incomingdate, bank_bankaccount, bank_comment) "
-    "VALUES(:Date, :Admission, :WriteOff, :PurposePayment, :Counterparty, :CheckNumber, :OperationType, :IncomingNumber, :IncomingDate, :BankAccount, :Comment)");
+    "VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)");
 //-----------------------------------------------------------------------------
 static std::string QS_USER_BALANCE = PREPARE_QUERYN("SELECT get_user_balance($1)", 1);
 //-----------------------------------------------------------------------------
@@ -4682,17 +4682,34 @@ bool ISTcpWorker::OilSphere_LoadBanks(ISTcpMessage *TcpMessage, ISTcpAnswer *Tcp
         ISDate Date = ISDate::FromString(StringDate.c_str(), "%d.%d.%d");
 
         //Поступление
-        /*bool AdmissionOK = false;
-        StringAdmission.remove(160);
-        StringAdmission.replace(',', '.');
-        double Admission = StringAdmission.toDouble(&AdmissionOK);*/
-        //double Admission = ISAlgorithm::FormatNumber()
+        std::replace(StringAdmission.begin(), StringAdmission.end(), ',', '.'); //Заменяем символ запятой на точку
+
+        //Удаляем все кроме точки и цифр
+        for (size_t i = 0, c = StringAdmission.size(); i < c; ++i)
+        {
+            if (std::isdigit(StringAdmission[i]) != 0 || StringAdmission[i] == '.')
+            {
+                continue;
+            }
+            StringAdmission.erase(StringAdmission.begin() + i);
+            --i; --c;
+        }
+        double Admission = atof(StringAdmission.c_str());
 
         //Списание
-        /*bool WriteOffOK = false;
-        StringWriteOff.remove(160);
-        StringWriteOff.replace(',', '.');
-        double WriteOff = StringWriteOff.toDouble(&WriteOffOK);*/
+        std::replace(StringWriteOff.begin(), StringWriteOff.end(), ',', '.'); //Заменяем символ запятой на точку
+
+        //Удаляем все кроме точки и цифр
+        for (size_t i = 0, c = StringWriteOff.size(); i < c; ++i)
+        {
+            if (std::isdigit(StringWriteOff[i]) != 0 || StringWriteOff[i] == '.')
+            {
+                continue;
+            }
+            StringWriteOff.erase(StringWriteOff.begin() + i);
+            --i; --c;
+        }
+        double WriteOff = atof(StringWriteOff.c_str());
 
         //Входящая дата
         ISDate IncomingDate = ISDate::FromString(StringIncomingDate.c_str(), "%d.%d.%d");
@@ -4717,20 +4734,26 @@ bool ISTcpWorker::OilSphere_LoadBanks(ISTcpMessage *TcpMessage, ISTcpAnswer *Tcp
             continue;
         }
 
-        //qInsert.BindValue(":Date", Date);
-        //qInsert.BindValue(":Admission", AdmissionOK ? Admission : QVariant());
-        //qInsert.BindValue(":WriteOff", WriteOffOK ? WriteOff : QVariant());
-        //qInsert.BindValue(":PurposePayment", StringPurposePayment.isEmpty() ? QVariant() : StringPurposePayment);
-        //qInsert.BindValue(":Counterparty", StringCounterparty.isEmpty() ? QVariant() : StringCounterparty);
-        //qInsert.BindValue(":CheckNumber", StringCheckNumber.isEmpty() ? QVariant() : StringCheckNumber);
-        //qInsert.BindValue(":OperationType", StringOperationType.isEmpty() ? QVariant() : StringOperationType);
-        //qInsert.BindValue(":IncomingNumber", StringIncomingNumber.isEmpty() ? QVariant() : StringIncomingNumber);
-        //qInsert.BindValue(":IncomingDate", IncomingDate);
-        //qInsert.BindValue(":BankAccount", StringBankAccount.isEmpty() ? QVariant() : StringBankAccount);
-        //qInsert.BindValue(":Comment", StringComment.isEmpty() ? QVariant() : StringComment);
+        qInsert.BindDate(Date);
+        qInsert.BindDouble(Admission);
+        qInsert.BindDouble(WriteOff);
+        StringPurposePayment.empty() ? qInsert.BindNull() : qInsert.BindString(StringPurposePayment);
+        StringCounterparty.empty() ? qInsert.BindNull() : qInsert.BindString(StringCounterparty);
+        StringCheckNumber.empty() ? qInsert.BindNull() : qInsert.BindString(StringCheckNumber);
+        StringOperationType.empty() ? qInsert.BindNull() : qInsert.BindString(StringOperationType);
+        StringIncomingNumber.empty() ? qInsert.BindNull() : qInsert.BindString(StringIncomingNumber);
+        qInsert.BindDate(IncomingDate);
+        StringBankAccount.empty() ? qInsert.BindNull() : qInsert.BindString(StringBankAccount);
+        StringComment.empty() ? qInsert.BindNull() : qInsert.BindString(StringComment);
         if (!qInsert.Execute()) //Не удалось добавить запись
         {
-            //return ErrorQuery(LANG("Carat.Error.Query.LoadBank.Insert").arg(Values.join(' ')), qInsert);
+            std::string Temp;
+            for (const std::string &String : Values)
+            {
+                Temp += String + ' ';
+            }
+            ISAlgorithm::StringChop(Temp, 1);
+            return ErrorQuery(ISAlgorithm::StringF(LANG("Carat.Error.Query.LoadBank.Insert"), Temp.c_str()), qInsert);
         }
         ++Loaded;
     }
