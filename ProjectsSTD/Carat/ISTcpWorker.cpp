@@ -4687,6 +4687,13 @@ bool ISTcpWorker::OilSphere_LoadBanks(ISTcpMessage *TcpMessage, ISTcpAnswer *Tcp
         //Удаляем все кроме точки и цифр
         for (size_t i = 0, c = StringAdmission.size(); i < c; ++i)
         {
+#ifdef WIN32
+            if (StringAdmission[i] < 0)
+            {
+                StringAdmission.erase(StringAdmission.begin() + i);
+                --i; --c;
+            }
+#endif
             if (std::isdigit(StringAdmission[i]) != 0 || StringAdmission[i] == '.')
             {
                 continue;
@@ -4702,6 +4709,13 @@ bool ISTcpWorker::OilSphere_LoadBanks(ISTcpMessage *TcpMessage, ISTcpAnswer *Tcp
         //Удаляем все кроме точки и цифр
         for (size_t i = 0, c = StringWriteOff.size(); i < c; ++i)
         {
+#ifdef WIN32
+            if (StringWriteOff[i] < 0)
+            {
+                StringWriteOff.erase(StringWriteOff.begin() + i);
+                --i; --c;
+            }
+#endif
             if (std::isdigit(StringWriteOff[i]) != 0 || StringWriteOff[i] == '.')
             {
                 continue;
@@ -4748,9 +4762,9 @@ bool ISTcpWorker::OilSphere_LoadBanks(ISTcpMessage *TcpMessage, ISTcpAnswer *Tcp
         if (!qInsert.Execute()) //Не удалось добавить запись
         {
             std::string Temp;
-            for (const std::string &String : Values)
+            for (const std::string &Value : Values)
             {
-                Temp += String + ' ';
+                Temp += Value + ' ';
             }
             ISAlgorithm::StringChop(Temp, 1);
             return ErrorQuery(ISAlgorithm::StringF(LANG("Carat.Error.Query.LoadBank.Insert"), Temp.c_str()), qInsert);
