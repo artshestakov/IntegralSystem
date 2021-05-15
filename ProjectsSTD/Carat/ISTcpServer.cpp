@@ -217,11 +217,11 @@ void ISTcpServer::WorkerReader(ISTcpClient *TcpClient)
                     }
                 }
 
-                if (MessageSize != (size_t)Result) //–азмер тела сообщени€ не соответствует за€вленному
+                /*if (MessageSize != (size_t)Result) //–азмер тела сообщени€ не соответствует за€вленному
                 {
                     ISLOGGER_C(__CLASS__, "Size body message not equal specified");
                     break;
-                }
+                }*/
 
                 if (MessageSize == 0) //–азмер не найден - сообщение не валидное - отключаем клиента
                 {

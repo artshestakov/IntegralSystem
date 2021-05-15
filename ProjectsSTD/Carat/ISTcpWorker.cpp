@@ -457,8 +457,8 @@ static std::string QS_TOTAL_BALANCE = PREPARE_QUERY("SELECT "
 //-----------------------------------------------------------------------------
 static std::string QS_BANK = PREPARE_QUERY("SELECT COUNT(*) "
     "FROM bank "
-    "WHERE bank_date = :Date "
-    "AND bank_incomingnumber = :IncomingNumber");
+    "WHERE bank_date = $1 "
+    "AND bank_incomingnumber = $2");
 //-----------------------------------------------------------------------------
 static std::string QI_BANK = PREPARE_QUERY("INSERT INTO bank(bank_date, bank_admission, bank_writeoff, bank_purposepayment, bank_counterparty, bank_checknumber, bank_operationtype, bank_incomingnumber, bank_incomingdate, bank_bankaccount, bank_comment) "
     "VALUES(:Date, :Admission, :WriteOff, :PurposePayment, :Counterparty, :CheckNumber, :OperationType, :IncomingNumber, :IncomingDate, :BankAccount, :Comment)");
@@ -4633,35 +4633,40 @@ bool ISTcpWorker::OilSphere_LoadBanks(ISTcpMessage *TcpMessage, ISTcpAnswer *Tcp
     IS_UNUSED(TcpMessage);
     IS_UNUSED(TcpAnswer);
 
-    /*QVariant ByteArray = CheckNullField("ByteArray", TcpMessage);
-    if (!ByteArray.isValid())
+    std::string ByteArray;
+    if (!CheckIsNullString(TcpMessage, "ByteArray", ByteArray))
     {
         return false;
     }
 
-    QByteArray b = QByteArray::fromBase64(ByteArray.toByteArray());
-    QString Content = QString::fromUtf8(b);
+    unsigned long ResultSize = 0;
+    unsigned char *Data = ISAlgorithm::Base64Decode(ByteArray, ResultSize, ErrorString);
+    if (!Data)
+    {
+        ErrorString = ISAlgorithm::StringF(LANG("Carat.Error.Query.LoadBank.Decode"), ErrorString.c_str());
+        return false;
+    }
 
-    QStringList StringList = Content.split('\n');
-    StringList.removeFirst(); //Удаляем заголовки
-    StringList.removeAll(QString()); //Удаляем пустые строки
+    ISVectorString VectorString = ISAlgorithm::StringSplit(std::string((const char *)Data), '\n');
+    VectorString.erase(VectorString.begin()); //Удаляем заголовки
+    //ISAlgorithm::VectorRemoveAll(VectorString, std::string()); //Удаляем пустые строки
 
     int Loaded = 0, Invalid = 0;
 
     //Подготовим запросы и обойдём все записи
-    ISQuery qInsert(ISDatabase::Instance().GetDB(DBConnectionName), QI_BANK),
-        qSelect(ISDatabase::Instance().GetDB(DBConnectionName), QS_BANK);
-    for (QString &String : StringList)
+    ISQuery qInsert(DBConnection, QI_BANK),
+        qSelect(DBConnection, QS_BANK);
+    for (const std::string &String : VectorString)
     {
-        QStringList Values = String.split('\t');
-        Values.removeFirst(); //Удаляем первое поле "Есть файлы"
+        ISVectorString Values = ISAlgorithm::StringSplit(String, '\t');
+        Values.erase(Values.begin()); //Удаляем первое поле "Есть файлы"
         if (Values.size() != 11) //Запись не валидная
         {
             ++Invalid;
             continue;
         }
 
-        QString StringDate = Values[0],
+        std::string StringDate = Values[0],
             StringAdmission = Values[1],
             StringWriteOff = Values[2],
             StringPurposePayment = Values[3],
@@ -4674,26 +4679,27 @@ bool ISTcpWorker::OilSphere_LoadBanks(ISTcpMessage *TcpMessage, ISTcpAnswer *Tcp
             StringComment = Values[10];
 
         //Дата
-        QDate Date = QDate::fromString(Values[0], FORMAT_DATE_V2);
+        ISDate Date = ISDate::FromString(StringDate.c_str(), "%d.%d.%d");
 
         //Поступление
-        bool AdmissionOK = false;
+        /*bool AdmissionOK = false;
         StringAdmission.remove(160);
         StringAdmission.replace(',', '.');
-        double Admission = StringAdmission.toDouble(&AdmissionOK);
+        double Admission = StringAdmission.toDouble(&AdmissionOK);*/
+        //double Admission = ISAlgorithm::FormatNumber()
 
         //Списание
-        bool WriteOffOK = false;
+        /*bool WriteOffOK = false;
         StringWriteOff.remove(160);
         StringWriteOff.replace(',', '.');
-        double WriteOff = StringWriteOff.toDouble(&WriteOffOK);
+        double WriteOff = StringWriteOff.toDouble(&WriteOffOK);*/
 
         //Входящая дата
-        QDate IncomingDate = QDate::fromString(StringIncomingDate, FORMAT_DATE_V2);
+        ISDate IncomingDate = ISDate::FromString(StringIncomingDate.c_str(), "%d.%d.%d");
 
         //Проверяем наличие такой записи
-        qSelect.BindValue(":Date", Date);
-        qSelect.BindValue(":IncomingNumber", StringIncomingNumber);
+        qSelect.BindDate(Date);
+        qSelect.BindString(StringIncomingNumber);
         if (!qSelect.Execute()) //Не удалось проверить наличие записи
         {
             return ErrorQuery(LANG("Carat.Error.Query.LoadBank.Select"), qSelect);
@@ -4706,32 +4712,34 @@ bool ISTcpWorker::OilSphere_LoadBanks(ISTcpMessage *TcpMessage, ISTcpAnswer *Tcp
         }
 
         //Если такая запись уже есть - переходим к следующей
-        if (qSelect.ReadColumn("count").toInt() > 0)
+        if (qSelect.ReadColumn_UInt(0) > 0)
         {
             continue;
         }
 
-        qInsert.BindValue(":Date", Date);
-        qInsert.BindValue(":Admission", AdmissionOK ? Admission : QVariant());
-        qInsert.BindValue(":WriteOff", WriteOffOK ? WriteOff : QVariant());
-        qInsert.BindValue(":PurposePayment", StringPurposePayment.isEmpty() ? QVariant() : StringPurposePayment);
-        qInsert.BindValue(":Counterparty", StringCounterparty.isEmpty() ? QVariant() : StringCounterparty);
-        qInsert.BindValue(":CheckNumber", StringCheckNumber.isEmpty() ? QVariant() : StringCheckNumber);
-        qInsert.BindValue(":OperationType", StringOperationType.isEmpty() ? QVariant() : StringOperationType);
-        qInsert.BindValue(":IncomingNumber", StringIncomingNumber.isEmpty() ? QVariant() : StringIncomingNumber);
-        qInsert.BindValue(":IncomingDate", IncomingDate);
-        qInsert.BindValue(":BankAccount", StringBankAccount.isEmpty() ? QVariant() : StringBankAccount);
-        qInsert.BindValue(":Comment", StringComment.isEmpty() ? QVariant() : StringComment);
+        //qInsert.BindValue(":Date", Date);
+        //qInsert.BindValue(":Admission", AdmissionOK ? Admission : QVariant());
+        //qInsert.BindValue(":WriteOff", WriteOffOK ? WriteOff : QVariant());
+        //qInsert.BindValue(":PurposePayment", StringPurposePayment.isEmpty() ? QVariant() : StringPurposePayment);
+        //qInsert.BindValue(":Counterparty", StringCounterparty.isEmpty() ? QVariant() : StringCounterparty);
+        //qInsert.BindValue(":CheckNumber", StringCheckNumber.isEmpty() ? QVariant() : StringCheckNumber);
+        //qInsert.BindValue(":OperationType", StringOperationType.isEmpty() ? QVariant() : StringOperationType);
+        //qInsert.BindValue(":IncomingNumber", StringIncomingNumber.isEmpty() ? QVariant() : StringIncomingNumber);
+        //qInsert.BindValue(":IncomingDate", IncomingDate);
+        //qInsert.BindValue(":BankAccount", StringBankAccount.isEmpty() ? QVariant() : StringBankAccount);
+        //qInsert.BindValue(":Comment", StringComment.isEmpty() ? QVariant() : StringComment);
         if (!qInsert.Execute()) //Не удалось добавить запись
         {
-            return ErrorQuery(LANG("Carat.Error.Query.LoadBank.Insert").arg(Values.join(' ')), qInsert);
+            //return ErrorQuery(LANG("Carat.Error.Query.LoadBank.Insert").arg(Values.join(' ')), qInsert);
         }
         ++Loaded;
     }
-    TcpAnswer->Parameters["Loaded"] = Loaded;
-    TcpAnswer->Parameters["Invalid"] = Invalid;
-    TcpAnswer->Parameters["Total"] = StringList.size();
-    Protocol(TcpMessage->TcpSocket->GetUserID(), "{85DCCA5C-723E-4E18-8286-FF33D12C6F4D}");*/
+
+    auto &Allocator = TcpAnswer->Parameters.GetAllocator();
+    TcpAnswer->Parameters.AddMember("Loaded", Loaded, Allocator);
+    TcpAnswer->Parameters.AddMember("Invalid", Invalid, Allocator);
+    //TcpAnswer->Parameters["Total"] = StringList.size();
+    Protocol(TcpMessage->TcpClient->UserID, "{85DCCA5C-723E-4E18-8286-FF33D12C6F4D}");
     return true;
 }
 //-----------------------------------------------------------------------------
