@@ -223,6 +223,19 @@ void ISQuery::BindDouble(double Value)
     ++ParameterCount;
 }
 //-----------------------------------------------------------------------------
+void ISQuery::BindDate(const ISDate &Date)
+{
+    std::string String = Date.ToString();
+    char *Temp = (char *)malloc(String.size() + 1);
+    strcpy(Temp, String.c_str());
+
+    ParameterValues.emplace_back(Temp);
+    ParameterTypes.emplace_back(DATEOID);
+    ParameterFormats.emplace_back(0);
+    ParameterLengths.emplace_back(0);
+    ++ParameterCount;
+}
+//-----------------------------------------------------------------------------
 bool ISQuery::Execute()
 {
     //Сделаем очистку (предыдущего результата) на всякий случай

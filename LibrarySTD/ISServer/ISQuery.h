@@ -45,6 +45,7 @@ public:
     void BindInt(int Value);
     void BindInt64(int64_t Value);
     void BindDouble(double Value);
+    void BindDate(const ISDate &Date);
 
     bool Execute();
     bool ExecuteFirst();
