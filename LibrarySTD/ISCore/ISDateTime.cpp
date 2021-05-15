@@ -20,6 +20,13 @@ ISDate ISDate::CurrentDate()
     return{ DateTime.Date.Day, DateTime.Date.Month, DateTime.Date.Year };
 }
 //-----------------------------------------------------------------------------
+ISDate ISDate::FromString(const char *String, const char *Format)
+{
+    int Day = 0, Month = 0, Year = 0;
+    sscanf(String, Format, &Day, &Month, &Year);
+    return ISDate((unsigned short)Day, (unsigned short)Month, (unsigned short)Year);
+}
+//-----------------------------------------------------------------------------
 bool ISDate::IsNull() const
 {
     return Day == 0 && Month == 0 && Year == 0;

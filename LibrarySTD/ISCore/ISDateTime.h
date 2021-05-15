@@ -10,6 +10,7 @@ struct ISDate
     ISDate(unsigned short day, unsigned short month, unsigned short year);
 
     static ISDate CurrentDate(); //Получить текущую дату
+    static ISDate FromString(const char *String, const char *Format);
 
     bool IsNull() const; //Проверка даты на пустоту
     std::string ToString() const; //Привести дату к строке
