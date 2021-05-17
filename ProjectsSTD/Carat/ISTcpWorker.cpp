@@ -3124,6 +3124,7 @@ bool ISTcpWorker::FileStorageAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
     if (DataSize > (((1000 * 1024) * MaxSizeMB)))
     {
         ErrorString = ISAlgorithm::StringF(LANG("Carat.Error.Query.FileStorageAdd.Size"), FileName.c_str(), MaxSizeMB);
+        free(Data);
         return false;
     }
 
