@@ -26,6 +26,7 @@ const size_t    SHA256_RESULT_SIZE = SHA256_SIZE * 2;
 const size_t    DAY_IN_SECONDS = 86400;
 const char      TOKEN_DA_DATA_TOKEN[] = "f2c204cd6ba093b294324acec5d01b25fad632cf";
 const size_t    MAX_DIGIT_LENGHT = 20; //Максимальная длинна числа
+const size_t    STRING_IPV4_SIZE = INET_ADDRSTRLEN; //Максимальный размер строки с IPv4-адресом
 //CHARS------------------------------------------------------------------------
 const char  CHAR_NULL_TERM = '\0'; //Символ конца строки
 //LOCALIZATION-----------------------------------------------------------------
@@ -41,18 +42,20 @@ const char  CONFIG_TYPE_INT[] = "Int";
 const char  CONFIG_TYPE_BOOL[] = "Bool";
 const char  CONFIG_TYPE_STRING[] = "String";
 //LOGGER-----------------------------------------------------------------------
-const size_t    LOG_ARRAY_SIZE = 20000; //Максимальный размер массива
-const size_t    LOG_TIMEOUT = 50; //Таймаут логгера
-const size_t    LOG_HEADER_SIZE = 96; //Макисмальный размер заголовка
-const size_t    LOG_BUFFER_SIZE = 10240; //Размер буфера для одного сообщения
-const char      LOG_UNKNOWN[] = "Unknown";
-const char      LOG_DEBUG[] = "Debug";
-const char      LOG_INFO[] = "Info";
-const char      LOG_WARNING[] = "Warning";
-const char      LOG_ERROR[] = "Error";
-const char      LOG_CRITICAL[] = "Critical";
-const char      LOG_TRACE[] = "Trace";
-const char      LOG_ASSERT[] = "Assert";
+const size_t            LOG_ARRAY_SIZE = 20000; //Максимальный размер массива
+const size_t            LOG_TIMEOUT = 50; //Таймаут логгера
+const size_t            LOG_HEADER_SIZE = 96; //Макисмальный размер заголовка
+const size_t            LOG_BUFFER_SIZE = 10240; //Размер буфера для одного сообщения
+const unsigned short    LOG_UDP_PORT = 50001; //Стандартный UDP-порт для логгера
+const size_t            LOG_UDP_BUFFER_SIZE = 4;
+const char              LOG_UNKNOWN[] = "Unknown";
+const char              LOG_DEBUG[] = "Debug";
+const char              LOG_INFO[] = "Info";
+const char              LOG_WARNING[] = "Warning";
+const char              LOG_ERROR[] = "Error";
+const char              LOG_CRITICAL[] = "Critical";
+const char              LOG_TRACE[] = "Trace";
+const char              LOG_ASSERT[] = "Assert";
 //TCP--------------------------------------------------------------------------
 const size_t    TCP_PACKET_MAX_SIZE = 65535; //Максимальный размер одного TCP-пакета
 //CARAT------------------------------------------------------------------------

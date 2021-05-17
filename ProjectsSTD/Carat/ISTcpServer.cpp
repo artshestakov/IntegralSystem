@@ -37,15 +37,6 @@ bool ISTcpServer::Start()
 {
     ISLOGGER_I(__CLASS__, "Starting");
 
-#ifdef WIN32
-    WSADATA WsaData;
-    if (WSAStartup(MAKEWORD(2, 2), &WsaData) != 0)
-    {
-        ErrorString = ISAlgorithm::GetLastErrorS();
-        return false;
-    }
-#endif
-
     ISSocketAddr SocketAddress;
 #ifdef WIN32
     SocketAddress.sin_addr.S_un.S_addr = INADDR_ANY; //Любой IP адресс
@@ -151,7 +142,7 @@ void ISTcpServer::WorkerAcceptor()
         }
 
         //Пытаемся получить IP-адрес клиента и если не получилось - отключаем его
-        char Char[15] = { 0 }; //Выделяем 15 байт для хранения IP-адреса
+        char Char[STRING_IPV4_SIZE] = { 0 }; //Выделяем 15 байт для хранения IP-адреса
         if (!inet_ntop(AF_INET, &SocketInfo.sin_addr, Char, 15))
         {
             ISLOGGER_E(__CLASS__, "Not getting ip address peer: %s", ISAlgorithm::GetLastErrorS().c_str());
