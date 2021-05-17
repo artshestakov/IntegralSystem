@@ -994,11 +994,6 @@ bool ISTcpWorker::UserIsSystem(unsigned int UserID, bool &IsSystem)
     return true;
 }
 //-----------------------------------------------------------------------------
-void ISTcpWorker::RegisterOilSphere()
-{
-
-}
-//-----------------------------------------------------------------------------
 bool ISTcpWorker::Ping(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
     IS_UNUSED(TcpMessage);
