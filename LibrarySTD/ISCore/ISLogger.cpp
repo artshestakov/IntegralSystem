@@ -2,6 +2,7 @@
 #include "ISAlgorithm.h"
 #include "ISDebug.h"
 #include "ISTypedefs.h"
+#include "ISLoggerUDP.h"
 //-----------------------------------------------------------------------------
 ISLogger::ISLogger()
     : ErrorString(STRING_NO_ERROR),
@@ -10,9 +11,7 @@ ISLogger::ISLogger()
     IsFinished(false),
     CurrentDay(0),
     CurrentMonth(0),
-    CurrentYear(0),
-    UDPUse(false),
-    UDPSocket(0)
+    CurrentYear(0)
 {
     CRITICAL_SECTION_INIT(&CriticalSection);
 }
@@ -33,10 +32,8 @@ const std::string& ISLogger::GetErrorString() const
     return ErrorString;
 }
 //-----------------------------------------------------------------------------
-bool ISLogger::Initialize(bool udp_use)
+bool ISLogger::Initialize()
 {
-    UDPUse = udp_use;
-
     //Получаем текущую дату и запоминаем текущий день
     ISDate CurrentDate = ISDate::CurrentDate();
     CurrentDay = CurrentDate.Day;
@@ -56,11 +53,6 @@ bool ISLogger::Initialize(bool udp_use)
 
     //Запускаем основной поток логгера
     std::thread(&ISLogger::Worker, this).detach();
-    
-    if (UDPUse) //Запускаем UDP-логгер
-    {
-        std::thread(&ISLogger::WorkerUDP, this).detach();
-    }
     IsRunning = true;
     return IsRunning;
 }
@@ -200,15 +192,7 @@ void ISLogger::Worker()
             {
                 std::string LogMessage = Array[i];
                 File << LogMessage << std::endl;
-                if (UDPUse)
-                {
-                    for (size_t j = 0; j < UDPClients.size(); ++j)
-                    {
-                        ISSocketAddr ClientAddres = UDPClients[j];
-                        LogMessage.push_back('\n');
-                        sendto(UDPSocket, LogMessage.c_str(), LogMessage.size(), 0, (struct sockaddr*)&ClientAddres, sizeof(ClientAddres));
-                    }
-                }
+                ISLoggerUDP::Instance().Add(LogMessage);
                 Array[i].clear(); //Очищаем текущую строку
             }
             LastIndex = 0;
@@ -258,65 +242,5 @@ void ISLogger::Worker()
         }
     }
     IsFinished = true;
-}
-//-----------------------------------------------------------------------------
-void ISLogger::WorkerUDP()
-{
-    UDPSocket = socket(AF_INET, SOCK_DGRAM, 0);
-    if (UDPSocket == SOCKET_ERROR)
-    {
-        ISLOGGER_W(__CLASS__, "Error socket(): %s", ISAlgorithm::GetLastErrorS().c_str());
-        return;
-    }
-
-    ISSocketAddr ServerAddress;
-    ServerAddress.sin_addr.s_addr = htonl(INADDR_ANY);
-    ServerAddress.sin_port = htons(LOG_UDP_PORT);
-    ServerAddress.sin_family = AF_INET;
-
-    if (bind(UDPSocket, (struct sockaddr*)&ServerAddress, sizeof(ServerAddress)) == SOCKET_ERROR)
-    {
-        ISLOGGER_W(__CLASS__, "Error bind(): %s", ISAlgorithm::GetLastErrorS().c_str());
-        return;
-    }
-
-    ISSocketAddr ClientAddress;
-    int Len = sizeof(ClientAddress), Result = 0;
-
-    char Buffer[LOG_UDP_BUFFER_SIZE] = { 0 };
-    while (true)
-    {
-        Result = recvfrom(UDPSocket, Buffer, LOG_UDP_BUFFER_SIZE, 0, (struct sockaddr*)&ClientAddress, &Len);
-        if (Result == SOCKET_ERROR) //Ошибка
-        {
-            ISLOGGER_E(__CLASS__, "Error recvfrom(): %s", ISAlgorithm::GetLastErrorS().c_str());
-        }
-        else if (Result == 0) //Клиент отключился
-        {
-            ISLOGGER_I(__CLASS__, "UDP-client disconnected");
-            for (size_t i = 0, c = UDPClients.size(); i < c; ++i)
-            {
-                if (UDPClients[i].sin_port == ClientAddress.sin_port)
-                {
-                    ISAlgorithm::VectorTakeAt(UDPClients, i);
-                }
-            }
-        }
-        else //Пришли данные
-        {
-            Buffer[Result] = '\0';
-            if (Buffer[0] == '.')
-            {
-                char IPAddress[STRING_IPV4_SIZE] = { 0 };
-                inet_ntop(AF_INET, &ClientAddress.sin_addr, IPAddress, STRING_IPV4_SIZE);
-                ISLOGGER_I(__CLASS__, "New UDP-client from %s", IPAddress);
-                UDPClients.emplace_back(ClientAddress);
-            }
-            else
-            {
-                ISLOGGER_W(__CLASS__, "Invalid UDP query");
-            }
-        }
-    }
 }
 //-----------------------------------------------------------------------------

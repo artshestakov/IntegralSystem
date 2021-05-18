@@ -13,6 +13,7 @@
 #include "ISRevision.h"
 #include "ISConsole.h"
 #include "ISProperty.h"
+#include "ISLoggerUDP.h"
 //-----------------------------------------------------------------------------
 ISCaratApplication::ISCaratApplication(int argc, char **argv)
     : ErrorString(STRING_NO_ERROR),
@@ -51,10 +52,27 @@ bool ISCaratApplication::Init()
     }
 #endif
 
-    if (!ISLogger::Instance().Initialize(true)) //Не удалось иницилизировать логгер
+    //Получаем аргумент запуска
+    Argument = Arguments.empty() ? std::string() : Arguments.front();
+    ServiceMode = Argument.empty();
+
+    if (!ISLogger::Instance().Initialize()) //Не удалось иницилизировать логгер
     {
         ISDEBUG_E("Error initialize logger: " + ISLogger::Instance().GetErrorString());
         return false;
+    }
+
+    if (ServiceMode)
+    {
+        if (ISLoggerUDP::Instance().Init())
+        {
+            //ISLogger::Instance().SetCallback(&ISLoggerUDP::Instance().Add);
+        }
+        else
+        {
+            ISLOGGER_E("ISLoggerUDP", "Errir init: %s", ISLoggerUDP::Instance().GetErrorString().c_str());
+            return false;
+        }
     }
 
     if (!ISConsole::InstallEncoding(65001, ErrorString))
@@ -131,8 +149,6 @@ bool ISCaratApplication::Init()
 //-----------------------------------------------------------------------------
 int ISCaratApplication::Start()
 {
-    std::string Argument = Arguments.empty() ? std::string() : Arguments.front();
-    ServiceMode = Argument.empty();
     if (ServiceMode) //Режим службы
     {
         //Проверяем валидность конфигурационного файла
@@ -218,6 +234,10 @@ int ISCaratApplication::Start()
     {
         ConfigCreate();
     }
+    else if (Argument == "--debug" || Argument == "-d") //Отладочный режим
+    {
+        Debug();
+    }
     else //Аргумент неопознан
     {
         ISDEBUG_L("Invalid argument: " + Argument);
@@ -259,6 +279,7 @@ void ISCaratApplication::Help()
     ISDEBUG_L("  -v,\t--version\t\tshow version and exit");
     ISDEBUG_L("  -s,\t--shutdown\t\tshutdown service");
     ISDEBUG_L("  -cc,\t--conf-create\t\tcreate config");
+    ISDEBUG_L("  -d,\t--debug\t\t\tdebug mode");
     ISDEBUG;
 #ifdef WIN32
     ISDEBUG_L("Example: Carat.exe (service mode)");
@@ -279,5 +300,80 @@ void ISCaratApplication::ConfigCreate()
 {
     //Функция должна быть пустой
     //Конфыигурационный файл создаётся автоматически в функции ISCaratApplication::Init()
+}
+//-----------------------------------------------------------------------------
+#define BUFLEN 512	//Max length of buffer
+#define PORT 8888	//The port on which to listen for incoming data
+void ISCaratApplication::Debug()
+{
+    struct sockaddr_in si_other;
+    int s, slen = sizeof(si_other);
+    char buf[BUFLEN];
+    char message[BUFLEN];
+    WSADATA wsa;
+
+    //Initialise winsock
+    //printf("\nInitialising Winsock...");
+    if (WSAStartup(MAKEWORD(2, 2), &wsa) != 0)
+    {
+        printf("Failed. Error Code : %d", WSAGetLastError());
+        exit(EXIT_FAILURE);
+    }
+    //printf("Initialised.\n");
+
+    //create socket
+    if ((s = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP)) == SOCKET_ERROR)
+    {
+        printf("socket() failed with error code : %d", WSAGetLastError());
+        exit(EXIT_FAILURE);
+    }
+
+    //setup address structure
+    memset((char *)&si_other, 0, sizeof(si_other));
+    si_other.sin_family = AF_INET;
+    si_other.sin_port = htons(PORT);
+    si_other.sin_addr.S_un.S_addr = inet_addr("127.0.0.1");
+
+    //start communication
+    while (1)
+    {
+        //printf("Enter message : ");
+        //gets(message);
+        message[0] = '.';
+        message[1] = '\0';
+
+        //send the message
+        if (sendto(s, message, strlen(message), 0, (struct sockaddr *) &si_other, slen) == SOCKET_ERROR)
+        {
+            printf("sendto() failed with error code : %d", WSAGetLastError());
+            exit(EXIT_FAILURE);
+        }
+
+        int r = 0;
+        while (true)
+        {
+            r = recvfrom(s, buf, BUFLEN, 0, (struct sockaddr *) &si_other, &slen);
+            if (r == SOCKET_ERROR)
+            {
+                printf("recvfrom() failed with error code : %d", WSAGetLastError());
+            }
+            buf[r] = '\0';
+        }
+
+        //receive a reply and print it
+        //clear the buffer by filling null, it might have previously received data
+        memset(buf, '\0', BUFLEN);
+        //try to receive some data, this is a blocking call
+        if (recvfrom(s, buf, BUFLEN, 0, (struct sockaddr *) &si_other, &slen) == SOCKET_ERROR)
+        {
+            printf("recvfrom() failed with error code : %d", WSAGetLastError());
+            exit(EXIT_FAILURE);
+        }
+
+        puts(buf);
+    }
+
+    closesocket(s);
+    WSACleanup();
 }
 //-----------------------------------------------------------------------------

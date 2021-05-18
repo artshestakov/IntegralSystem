@@ -17,15 +17,15 @@
     <Filter Include="Tcp">
       <UniqueIdentifier>{0b2239ea-2157-4d19-8aa7-7ca122a6a516}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Logger">
+      <UniqueIdentifier>{cf750c94-7349-40f8-a9ec-950cd6b7a136}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="StdAfx.cpp">
       <Filter>System</Filter>
     </ClCompile>
     <ClCompile Include="ISAlgorithm.cpp">
-      <Filter>System</Filter>
-    </ClCompile>
-    <ClCompile Include="ISLogger.cpp">
       <Filter>System</Filter>
     </ClCompile>
     <ClCompile Include="ISDebug.cpp">
@@ -67,6 +67,12 @@
     <ClCompile Include="ISTcpQuery.cpp">
       <Filter>Tcp</Filter>
     </ClCompile>
+    <ClCompile Include="ISLogger.cpp">
+      <Filter>Logger</Filter>
+    </ClCompile>
+    <ClCompile Include="ISLoggerUDP.cpp">
+      <Filter>Logger</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StdAfx.h">
@@ -79,9 +85,6 @@
       <Filter>System</Filter>
     </ClInclude>
     <ClInclude Include="ISTypedefs.h">
-      <Filter>System</Filter>
-    </ClInclude>
-    <ClInclude Include="ISLogger.h">
       <Filter>System</Filter>
     </ClInclude>
     <ClInclude Include="ISNamespace.h">
@@ -131,6 +134,12 @@
     </ClInclude>
     <ClInclude Include="ISTcpQuery.h">
       <Filter>Tcp</Filter>
+    </ClInclude>
+    <ClInclude Include="ISLogger.h">
+      <Filter>Logger</Filter>
+    </ClInclude>
+    <ClInclude Include="ISLoggerUDP.h">
+      <Filter>Logger</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

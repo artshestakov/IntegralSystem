@@ -13,7 +13,7 @@ public:
     static ISLogger& Instance();
 
     const std::string& GetErrorString() const;
-    bool Initialize(bool udp_use = false);
+    bool Initialize();
     void Shutdown();
     void Log(ISNamespace::LogMessageType MessageType, const std::string &Component, const char *Format, ...);
 
@@ -21,7 +21,6 @@ private:
     bool CreateLogDirectory(const ISDate &Date);
     std::string GetPathFile(const ISDate &Date) const;
     void Worker();
-    void WorkerUDP();
 
 private:
     ISLogger();
@@ -43,10 +42,6 @@ private:
     unsigned short CurrentMonth; //Текущий месяц
     unsigned short CurrentYear; //Текущий год
     ISCriticalSection CriticalSection; //Критическая секция для синхронизации
-    
-    bool UDPUse; //Флаг работы UDP-логгера
-    ISSocket UDPSocket; //UDP-сокет
-    std::vector<ISSocketAddr> UDPClients; //UDP-клиенты
 };
 //-----------------------------------------------------------------------------
 #define ISLOGGER_D(COMPONENT, FORMAT, ...) ISLogger::Instance().Log(ISNamespace::LogMessageType::Debug, COMPONENT, FORMAT, ##__VA_ARGS__) //Логирование отладочного сообщения
