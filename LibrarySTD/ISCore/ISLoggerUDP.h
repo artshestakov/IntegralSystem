@@ -13,11 +13,11 @@ public:
 
     const std::string& GetErrorString() const;
     bool Init();
+    void Shutdown();
     void Add(const std::string &String);
 
 private:
     void Worker();
-    void Test();
 
 private:
     ISLoggerUDP();
@@ -30,11 +30,10 @@ private:
 private:
     std::string ErrorString;
     ISNamespace::Started Flag;
+    HANDLE HandlePipe;
     ISCriticalSection CS;
-    std::deque<std::string> Deque;
-    ISSocket Socket;
-    std::vector<ISSocketAddr *> Clients;
     std::queue<std::string> Queue;
+    bool ClientActive;
 };
 //-----------------------------------------------------------------------------
 #endif

@@ -56,23 +56,23 @@ bool ISCaratApplication::Init()
     Argument = Arguments.empty() ? std::string() : Arguments.front();
     ServiceMode = Argument.empty();
 
-    if (!ISLogger::Instance().Initialize()) //Не удалось иницилизировать логгер
-    {
-        ISDEBUG_E("Error initialize logger: " + ISLogger::Instance().GetErrorString());
-        return false;
-    }
-
     if (ServiceMode)
     {
         if (ISLoggerUDP::Instance().Init())
         {
-            //ISLogger::Instance().SetCallback(&ISLoggerUDP::Instance().Add);
+
         }
         else
         {
-            ISLOGGER_E("ISLoggerUDP", "Errir init: %s", ISLoggerUDP::Instance().GetErrorString().c_str());
+            ISLOGGER_E("ISLoggerUDP", "Error init: %s", ISLoggerUDP::Instance().GetErrorString().c_str());
             return false;
         }
+    }
+
+    if (!ISLogger::Instance().Initialize()) //Не удалось иницилизировать логгер
+    {
+        ISDEBUG_E("Error initialize logger: " + ISLogger::Instance().GetErrorString());
+        return false;
     }
 
     if (!ISConsole::InstallEncoding(65001, ErrorString))
@@ -211,8 +211,7 @@ int ISCaratApplication::Start()
                 //Отключаемся от всех БД
                 ISDatabase::Instance().DisconnectAll();
 
-                //На всякий случай немного подождём и завершим работу логгера
-                ISSleep(100);
+                //Логируем остановку
                 ISLOGGER_I(__CLASS__, "Stopped server");
                 break;
             }
@@ -358,6 +357,7 @@ void ISCaratApplication::Debug()
                 printf("recvfrom() failed with error code : %d", WSAGetLastError());
             }
             buf[r] = '\0';
+            std::cout << buf << std::endl;
         }
 
         //receive a reply and print it
