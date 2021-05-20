@@ -68,6 +68,14 @@ namespace ISNamespace
         Size, //По размеру
         Name //По имени
     };
+
+    enum class Started
+    {
+        Unknown,
+        Starting,
+        Started,
+        Error
+    };
 };
 //-----------------------------------------------------------------------------
 #endif
