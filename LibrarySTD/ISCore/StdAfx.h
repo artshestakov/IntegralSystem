@@ -10,7 +10,6 @@
 #ifdef WIN32
 #include <WinSock2.h>
 #include <WS2tcpip.h>
-#include <windows.h>
 #include <Shlwapi.h>
 #else
 #include <unistd.h>

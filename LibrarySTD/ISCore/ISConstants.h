@@ -26,7 +26,6 @@ const size_t    SHA256_RESULT_SIZE = SHA256_SIZE * 2;
 const size_t    DAY_IN_SECONDS = 86400;
 const char      TOKEN_DA_DATA_TOKEN[] = "f2c204cd6ba093b294324acec5d01b25fad632cf";
 const size_t    MAX_DIGIT_LENGHT = 20; //Максимальная длинна числа
-const size_t    STRING_IPV4_SIZE = INET_ADDRSTRLEN; //Максимальный размер строки с IPv4-адресом
 //CHARS------------------------------------------------------------------------
 const char  CHAR_NULL_TERM = '\0'; //Символ конца строки
 //LOCALIZATION-----------------------------------------------------------------

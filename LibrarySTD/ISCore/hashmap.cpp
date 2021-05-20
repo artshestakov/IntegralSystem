@@ -2,10 +2,7 @@
  * Generic map implementation.
  */
 #include "hashmap.h"
-
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
+#include "StdAfx.h"
 
 #define INITIAL_SIZE (256)
 #define MAX_CHAIN_LENGTH (8)
