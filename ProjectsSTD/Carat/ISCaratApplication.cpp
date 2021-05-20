@@ -48,6 +48,15 @@ bool ISCaratApplication::Init()
         return false;
     }
 
+#ifdef WIN32 //Для Windows инициализируем библиотеку WSA
+    WSADATA WsaData;
+    if (WSAStartup(MAKEWORD(2, 2), &WsaData) != 0)
+    {
+        ErrorString = ISAlgorithm::GetLastErrorS();
+        return false;
+    }
+#endif
+
     if (!ISConsole::InstallEncoding(65001, ErrorString))
     {
         ISLOGGER_W("Console", "Not setting console encoding: %s", ErrorString.c_str());
