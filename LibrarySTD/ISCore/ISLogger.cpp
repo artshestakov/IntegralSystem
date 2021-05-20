@@ -1,8 +1,6 @@
 #include "ISLogger.h"
 #include "ISAlgorithm.h"
 #include "ISDebug.h"
-#include "ISTypedefs.h"
-#include "ISLoggerUDP.h"
 //-----------------------------------------------------------------------------
 ISLogger::ISLogger()
     : ErrorString(STRING_NO_ERROR),
@@ -50,11 +48,9 @@ bool ISLogger::Initialize()
         ErrorString = "not open file \"" + path_file + "\": " + ISAlgorithm::GetLastErrorS();
         return false;
     }
-
-    //Запускаем основной поток логгера
-    std::thread(&ISLogger::Worker, this).detach();
     IsRunning = true;
-    return IsRunning;
+    std::thread(&ISLogger::Worker, this).detach();
+    return true;
 }
 //-----------------------------------------------------------------------------
 void ISLogger::Shutdown()
@@ -190,9 +186,7 @@ void ISLogger::Worker()
         {
             for (size_t i = 0; i < LastIndex; ++i)
             {
-                std::string LogMessage = Array[i];
-                File << LogMessage << std::endl;
-                ISLoggerUDP::Instance().Add(LogMessage);
+                File << Array[i] << std::endl;
                 Array[i].clear(); //Очищаем текущую строку
             }
             LastIndex = 0;

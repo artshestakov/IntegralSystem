@@ -99,7 +99,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level4</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;DEBUG;ISCORE_LIBRARY;_CRT_SECURE_NO_WARNINGS;_WINSOCK_DEPRECATED_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;DEBUG;ISCORE_LIBRARY;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <TreatWarningAsError>true</TreatWarningAsError>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <MinimalRebuild>false</MinimalRebuild>
@@ -185,7 +185,6 @@
     <ClCompile Include="ISDebug.cpp" />
     <ClCompile Include="ISLocalization.cpp" />
     <ClCompile Include="ISLogger.cpp" />
-    <ClCompile Include="ISLoggerUDP.cpp" />
     <ClCompile Include="ISProperty.cpp" />
     <ClCompile Include="ISResourcer.cpp" />
     <ClCompile Include="ISTcpConnector.cpp" />
@@ -205,7 +204,6 @@
     <ClInclude Include="ISDebug.h" />
     <ClInclude Include="ISLocalization.h" />
     <ClInclude Include="ISLogger.h" />
-    <ClInclude Include="ISLoggerUDP.h" />
     <ClInclude Include="ISNamespace.h" />
     <ClInclude Include="ISProperty.h" />
     <ClInclude Include="ISResourcer.h" />

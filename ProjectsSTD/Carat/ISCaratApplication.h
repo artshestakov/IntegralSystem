@@ -23,12 +23,10 @@ private:
     void Help();
     void Version();
     void ConfigCreate();
-    void Debug();
 
 private:
     std::string ErrorString;
     bool IsRunning;
-    std::string Argument;
     bool ServiceMode; //Флаг работы как служба
     ISCriticalSection CriticalSection;
     ISVectorString Arguments;
