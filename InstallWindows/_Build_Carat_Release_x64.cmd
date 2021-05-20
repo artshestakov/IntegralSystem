@@ -1,4 +1,4 @@
 @ECHO off
 SetLocal
 
-CALL Build.cmd Release x64 Carat %QTDIR64%
+CALL Build_Carat.cmd Release x64

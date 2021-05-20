@@ -109,7 +109,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(ProjectDir)..\..\BinSTD\$(Configuration)-$(Platform);$(ProjectDir)..\..\Components\PostgreSQL\12.0.5\Lib-$(Platform);$(ProjectDir)..\..\Components\CURL\Bin\$(Configuration)-Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\..\BinSTD\$(Configuration)-$(Platform);$(ProjectDir)..\..\Deploy\$(Configuration)-$(Platform);$(ProjectDir)..\..\Components\PostgreSQL\12.0.5\Lib-$(Platform);$(ProjectDir)..\..\Components\CURL\Bin\$(Configuration)-$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>Ws2_32.lib;Shlwapi.lib;Rpcrt4.lib;Crypt32.lib;libpq.lib;libcurld.lib;ISCore.lib;ISServer.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
@@ -138,7 +138,7 @@ $(SolutionDir)Revision.cmd $(SolutionDir) $(Configuration) $(Platform)</Command>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(ProjectDir)..\..\BinSTD\$(Configuration)-$(Platform);$(ProjectDir)..\..\Components\PostgreSQL\12.0.5\Lib-$(Platform);$(ProjectDir)..\..\Components\CURL\Bin\$(Configuration)-Win64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\..\BinSTD\$(Configuration)-$(Platform);$(ProjectDir)..\..\Deploy\$(Configuration)-$(Platform);$(ProjectDir)..\..\Components\PostgreSQL\12.0.5\Lib-$(Platform);$(ProjectDir)..\..\Components\CURL\Bin\$(Configuration)-$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>Ws2_32.lib;Shlwapi.lib;Rpcrt4.lib;Crypt32.lib;libpq.lib;libcurld.lib;ISCore.lib;ISServer.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
@@ -170,7 +170,7 @@ $(SolutionDir)Revision.cmd $(SolutionDir) $(Configuration) $(Platform)</Command>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(ProjectDir)..\..\BinSTD\$(Configuration)-$(Platform);$(ProjectDir)..\..\Components\PostgreSQL\12.0.5\Lib-$(Platform);$(ProjectDir)..\..\Components\CURL\Bin\$(Configuration)-Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\..\BinSTD\$(Configuration)-$(Platform);$(ProjectDir)..\..\Deploy\$(Configuration)-$(Platform);$(ProjectDir)..\..\Components\PostgreSQL\12.0.5\Lib-$(Platform);$(ProjectDir)..\..\Components\CURL\Bin\$(Configuration)-$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>Ws2_32.lib;Shlwapi.lib;Rpcrt4.lib;Crypt32.lib;libpq.lib;libcurl.lib;ISCore.lib;ISServer.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
@@ -202,7 +202,7 @@ $(SolutionDir)Revision.cmd $(SolutionDir) $(Configuration) $(Platform)</Command>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(ProjectDir)..\..\BinSTD\$(Configuration)-$(Platform);$(ProjectDir)..\..\Components\PostgreSQL\12.0.5\Lib-$(Platform);$(ProjectDir)..\..\Components\CURL\Bin\$(Configuration)-Win64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\..\BinSTD\$(Configuration)-$(Platform);$(ProjectDir)..\..\Deploy\$(Configuration)-$(Platform);$(ProjectDir)..\..\Components\PostgreSQL\12.0.5\Lib-$(Platform);$(ProjectDir)..\..\Components\CURL\Bin\$(Configuration)-$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>Ws2_32.lib;Shlwapi.lib;Rpcrt4.lib;Crypt32.lib;libpq.lib;libcurl.lib;ISCore.lib;ISServer.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>

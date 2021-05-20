@@ -39,20 +39,12 @@ Name: "{group}\Удалить Carat"; Filename: "{app}\unins000.exe"; WorkingDir
 Filename: "{app}\Configurator.exe"; Description: "Запустить конфигуратор после выхода из установщика"; Flags: postinstall shellexec skipifsilent;
 
 [Files]
-Source: ..\Deploy\${CONFIGURATION}-${PLATFORM}\ISCore.dll; DestDir: {app}; Flags: ignoreversion recursesubdirs;
-Source: ..\Deploy\${CONFIGURATION}-${PLATFORM}\ISServer.dll; DestDir: {app}; Flags: ignoreversion recursesubdirs;
+;Source: ..\Deploy\${CONFIGURATION}-${PLATFORM}\ISCore.dll; DestDir: {app}; Flags: ignoreversion recursesubdirs;
+;Source: ..\Deploy\${CONFIGURATION}-${PLATFORM}\ISServer.dll; DestDir: {app}; Flags: ignoreversion recursesubdirs;
 Source: ..\Deploy\${CONFIGURATION}-${PLATFORM}\Carat.exe; DestDir: {app}; Flags: ignoreversion recursesubdirs;
 Source: ..\Deploy\${CONFIGURATION}-${PLATFORM}\Configurator.exe; DestDir: {app}; Flags: ignoreversion recursesubdirs;
 
-Source: ${QTDIR}\bin\Qt5Core${IS_DEBUG}.dll; DestDir: {app}; Flags: ignoreversion recursesubdirs;
-Source: ${QTDIR}\bin\Qt5Network${IS_DEBUG}.dll; DestDir: {app}; Flags: ignoreversion recursesubdirs;
-Source: ${QTDIR}\bin\Qt5Sql${IS_DEBUG}.dll; DestDir: {app}; Flags: ignoreversion recursesubdirs;
-Source: ${QTDIR}\bin\Qt5Xml${IS_DEBUG}.dll; DestDir: {app}; Flags: ignoreversion recursesubdirs;
-
-Source: ${QTDIR}\plugins\platforms\qwindows${IS_DEBUG}.dll; DestDir: {app}\platforms; Flags: ignoreversion recursesubdirs;
-Source: ${QTDIR}\plugins\sqldrivers\qsqlpsql${IS_DEBUG}.dll; DestDir: {app}\sqldrivers; Flags: ignoreversion recursesubdirs;
-
-Source: ..\Components\PostgreSQL\9.4\Bin-${PLATFORM}\*; DestDir: {app}; Flags: ignoreversion recursesubdirs;
+Source: ..\Components\PostgreSQL\12.0.5\Bin-${PLATFORM}\*; DestDir: {app}; Flags: ignoreversion recursesubdirs;
 Source: ..\Components\BackuperDB\${CONFIGURATION}-${PLATFORM}\BackuperDB.exe; DestDir: {app}; Flags: ignoreversion recursesubdirs;
 Source: ..\Resources\Icons\Carat.ico; DestDir: {app}; Flags: ignoreversion recursesubdirs;
 Source: ..\Resources\Icons\Configurator.ico; DestDir: {app}; Flags: ignoreversion recursesubdirs;
