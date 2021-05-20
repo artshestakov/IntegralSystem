@@ -126,6 +126,13 @@ int ISCaratApplication::Start()
     ServiceMode = Argument.empty();
     if (ServiceMode) //Режим службы
     {
+        //Проверим, не запущен ли уже сервис
+        if (CheckRunning())
+        {
+            ISLOGGER_E(__CLASS__, "Service already running");
+            return EXIT_FAILURE;
+        }
+
         //Проверяем валидность конфигурационного файла
         if (!ISConfig::Instance().IsValid())
         {
@@ -214,6 +221,26 @@ int ISCaratApplication::Start()
         ISDEBUG_L("Invalid argument: " + Argument);
     }
     return EXIT_SUCCESS;
+}
+//-----------------------------------------------------------------------------
+bool ISCaratApplication::CheckRunning()
+{
+    bool Result = false;
+    std::string Temp = ISAlgorithm::GetApplicationName();
+    const char *ApplicationName = Temp.c_str();
+#ifdef WIN32
+    HANDLE HandleMutex = OpenMutex(MUTEX_ALL_ACCESS, 0, ApplicationName);
+    Result = HandleMutex ? true : false;
+    if (!Result) //Мьютекс не существует - значит это первый экземлпяр
+    {
+        HandleMutex = CreateMutex(0, 0, ApplicationName);
+    }
+#else
+    IS_UNUSED(Temp);
+    IS_UNUSED(ApplicationName);
+    IS_ASSERT(false, "Not support");
+#endif
+    return Result;
 }
 //-----------------------------------------------------------------------------
 void ISCaratApplication::ShutdownController()

@@ -18,6 +18,7 @@ public:
     int Start();
 
 private:
+    bool CheckRunning();
     void ShutdownController();
     void Shutdown();
     void Help();
