@@ -48,6 +48,7 @@ bool ISCaratApplication::Init()
         return false;
     }
 
+
     if (!ISConsole::InstallEncoding(65001, ErrorString))
     {
         ISLOGGER_W("Console", "Not setting console encoding: %s", ErrorString.c_str());
