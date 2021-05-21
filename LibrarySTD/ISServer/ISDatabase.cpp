@@ -1,6 +1,7 @@
 #include "ISDatabase.h"
 #include "ISConstants.h"
 #include "ISAlgorithm.h"
+#include "ISQuery.h"
 //-----------------------------------------------------------------------------
 ISDatabase::ISDatabase()
     : ErrorString(STRING_NO_ERROR)
@@ -94,6 +95,15 @@ bool ISDatabase::Connect(const std::string &ConnectionName, const std::string &H
     {
         ErrorString = PQerrorMessage(Connection);
         PQfinish(Connection);
+        return false;
+    }
+
+    //Меняем формат даты
+    ISQuery qDateStyle(Connection, "SET datestyle TO 'iso, dmy'");
+    if (!qDateStyle.Execute())
+    {
+        Disconnect(ConnectionName);
+        ErrorString = "Error setting date style: " + qDateStyle.GetErrorString();
         return false;
     }
 
