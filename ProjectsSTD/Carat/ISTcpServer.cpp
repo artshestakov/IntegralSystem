@@ -43,11 +43,7 @@ bool ISTcpServer::Start()
     SocketAddress.sin_family = AF_INET; //AF_INET - Cемейство адресов для IPv4
 
     SocketServer = socket(AF_INET, SOCK_STREAM, 0);
-#ifdef WIN32
     if (SocketServer == INVALID_SOCKET)
-#else
-    if (SocketServer == SOCKET_ERROR)
-#endif
     {
         ErrorString = ISAlgorithm::GetLastErrorS();
         return false;
