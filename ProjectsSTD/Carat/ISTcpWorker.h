@@ -24,6 +24,7 @@ private:
     void SetRunning(bool is_running);
     bool GetRunning();
     void Process();
+    void GetLogParameters(ISTcpMessage *TcpMessage, std::string &String);
     bool Execute(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
     bool CheckIsNull(ISTcpMessage *TcpMessage, const char *ParameterName, rapidjson::Value &JsonValue);
     bool CheckIsNullString(ISTcpMessage *TcpMessage, const char *ParameterName, std::string &String);

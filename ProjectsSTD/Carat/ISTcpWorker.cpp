@@ -668,13 +668,18 @@ void ISTcpWorker::Process()
             }
             else //Клиент авторизовался - продолжаем
             {
+                std::string StringParameters;
+                GetLogParameters(tcp_message, StringParameters);
+
                 ISLOGGER_I(__CLASS__,
                     "Incoming message \"%s\"\n"
-                    "Peer: %s:%d, Size: %d (chunk - %d), User: %s (ID - %d)",
+                    "Peer: %s:%d, Size: %d (chunk - %d), User: %s (ID - %d)\n"
+                    "%s",
                     tcp_message->Type.c_str(), //Тип сообщения
                     tcp_message->TcpClient->IPAddress.c_str(), tcp_message->TcpClient->Port, //Адрес и порт клиента
                     tcp_message->Size, tcp_message->ChunkCount, //Размер запроса
-                    tcp_message->TcpClient->UserLogin.c_str(), tcp_message->TcpClient->UserID); //Логин и идентификатор пользователя
+                    tcp_message->TcpClient->UserLogin.c_str(), tcp_message->TcpClient->UserID, //Логин и идентификатор пользователя
+                    StringParameters.c_str());
                 ISTimePoint TimePoint = ISAlgorithm::GetTick(); //Запоминаем текущее время
                 Result = Execute(tcp_message, TcpAnswer);
                 PerfomanceMsec = ISAlgorithm::GetTickDiff(ISAlgorithm::GetTick(), TimePoint);
@@ -709,6 +714,59 @@ void ISTcpWorker::Process()
     CRITICAL_SECTION_LOCK(&CriticalSection);
     IsFinished = true;
     CRITICAL_SECTION_UNLOCK(&CriticalSection);
+}
+//-----------------------------------------------------------------------------
+void ISTcpWorker::GetLogParameters(ISTcpMessage *TcpMessage, std::string &String)
+{
+    if (TcpMessage->Parameters.IsNull()) //Параметры в запросе не указаны
+    {
+        return;
+    }
+    
+    if (TcpMessage->Parameters.MemberCount() == 0) //Секция параметров указана, но в ней ничего нет
+    {
+        return;
+    }
+
+    for (auto &JsonValue : TcpMessage->Parameters.GetObject())
+    {
+        String += std::string(JsonValue.name.GetString()) + ": ";
+        switch (JsonValue.value.GetType()) //Получаем тип параметра
+        {
+        case rapidjson::Type::kStringType: //Параметр является строкой
+            String += std::string(JsonValue.value.GetString());
+            break;
+
+        case rapidjson::Type::kNumberType: //Параметр является числом
+            if (JsonValue.value.IsDouble()) //Число с плавающей запятой
+            {
+                String += std::to_string(JsonValue.value.GetDouble());
+            }
+            else if (JsonValue.value.IsInt()) //Целое число
+            {
+                String += std::to_string(JsonValue.value.GetInt());
+            }
+            else //Подтип числа не известен
+            {
+                String += "sub type not support";
+            }
+            break;
+
+        case rapidjson::Type::kTrueType:
+        case rapidjson::Type::kFalseType:
+            String += JsonValue.value.GetBool() ? "true" : "false";
+            break;
+
+        case rapidjson::Type::kNullType:
+            String += "null";
+            break;
+
+        default:
+            String += "type not support";
+        }
+        String.push_back('\n');
+    }
+    ISAlgorithm::StringChop(String, 1);
 }
 //-----------------------------------------------------------------------------
 bool ISTcpWorker::Execute(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
