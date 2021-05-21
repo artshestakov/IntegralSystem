@@ -136,7 +136,14 @@ int ISCaratApplication::Start()
     if (ServiceMode) //Режим службы
     {
         //Проверим, не запущен ли уже сервис
-        if (CheckRunning())
+        bool AlreadyRunning = false;
+        if (!CheckRunning(AlreadyRunning)) //Ошибка проверки
+        {
+            ISLOGGER_E(__CLASS__, ErrorString.c_str());
+            return EXIT_FAILURE;
+        }
+
+        if (AlreadyRunning) //Сервис уже запущен - выходим
         {
             ISLOGGER_E(__CLASS__, "Service already running");
             return EXIT_FAILURE;
@@ -232,29 +239,42 @@ int ISCaratApplication::Start()
     return EXIT_SUCCESS;
 }
 //-----------------------------------------------------------------------------
-bool ISCaratApplication::CheckRunning()
+bool ISCaratApplication::CheckRunning(bool &AlreadyRunning)
 {
-    bool Result = false;
-    std::string Temp = ISAlgorithm::GetApplicationName();
-#ifdef WIN32
-    const char *ApplicationName = Temp.c_str();
+    AlreadyRunning = false;
 
-    HANDLE HandleMutex = OpenMutex(MUTEX_ALL_ACCESS, 0, ApplicationName);
-    Result = HandleMutex ? true : false;
-    if (!Result) //Мьютекс не существует - значит это первый экземлпяр
+    ISSocketAddr SocketAddress;
+    //SocketAddress.sin_addr.s_addr = inet_addr("127.0.0.1"); //Только локальный адрес
+
+    int Inet = inet_pton(AF_INET, "127.0.0.1", &SocketAddress.sin_addr.s_addr);
+    if (Inet != 1)
     {
-        HandleMutex = CreateMutex(0, 0, ApplicationName);
+        ErrorString = Inet == 0 ? "Invalid address" : ISAlgorithm::GetLastErrorS();
+        return false;
     }
-#else
-    Temp = ISAlgorithm::GetApplicationDir() + PATH_SEPARATOR + Temp + ".pid";
-    int PidFile = open(Temp.c_str(), O_CREAT | O_RDWR, 0666);
-    int RC = flock(PidFile, LOCK_EX | LOCK_NB);
-    if (RC)
+    SocketAddress.sin_port = htons(/*ISConfig::Instance().GetValueUShort("TcpServer", "Port")*/49999); //Задаём порт
+    SocketAddress.sin_family = AF_INET;
+    
+    ISSocket Socket = socket(AF_INET, SOCK_STREAM, 0);
+    if (Socket == INVALID_SOCKET)
     {
-        Result = ISAlgorithm::GetLastErrorN() == EWOULDBLOCK;
+        ErrorString = ISAlgorithm::GetLastErrorS();
+        return false;
     }
-#endif
-    return Result;
+
+    if (bind(Socket, (struct sockaddr*)&SocketAddress, sizeof(SocketAddress)) == SOCKET_ERROR)
+    {
+        if (ISAlgorithm::GetLastErrorN() == WSAEADDRINUSE)
+        {
+            AlreadyRunning = true;
+        }
+        else
+        {
+            ErrorString = ISAlgorithm::GetLastErrorS();
+            return false;
+        }
+    }
+    return true;
 }
 //-----------------------------------------------------------------------------
 void ISCaratApplication::ShutdownController()
