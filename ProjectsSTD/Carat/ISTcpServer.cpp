@@ -38,11 +38,7 @@ bool ISTcpServer::Start()
     ISLOGGER_I(__CLASS__, "Starting");
 
     ISSocketAddr SocketAddress;
-#ifdef WIN32
-    SocketAddress.sin_addr.S_un.S_addr = INADDR_ANY; //Любой IP адресс
-#else
-    SocketAddress.sin_addr.s_addr = htonl(INADDR_ANY); //Любой IP адресс
-#endif
+    SocketAddress.sin_addr.s_addr = INADDR_ANY; //Любой IP адресс
     SocketAddress.sin_port = htons(ISConfig::Instance().GetValueUShort("TcpServer", "Port")); //Задаём порт
     SocketAddress.sin_family = AF_INET; //AF_INET - Cемейство адресов для IPv4
 
