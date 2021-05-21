@@ -83,17 +83,14 @@ bool ISTcpServer::Start()
 void ISTcpServer::Stop()
 {
 #ifdef WIN32
-    if (WSACleanup() != 0) //Не удалось выгрузить WSA
-    {
-        ISLOGGER_E(__CLASS__, "not clean WSA: %s", ISAlgorithm::GetLastErrorS().c_str());
-    }
+    int Closed = closesocket(SocketServer);
 #else
-    int r = close(SocketServer);
-    if (r != 0)
+    int Closed = close(SocketServer);
+#endif
+    if (Closed != 0)
     {
         ISLOGGER_E(__CLASS__, "not clean WSA: %s", ISAlgorithm::GetLastErrorS().c_str());
     }
-#endif
 
     CRITICAL_SECTION_LOCK(&CSRunning);
     IsRunning = false;

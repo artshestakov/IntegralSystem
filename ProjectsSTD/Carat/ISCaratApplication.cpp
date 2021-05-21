@@ -209,6 +209,13 @@ int ISCaratApplication::Start()
                 //Отключаемся от всех БД
                 ISDatabase::Instance().DisconnectAll();
 
+                //Выгружаем WSA
+#ifdef WIN32
+                if (WSACleanup() != 0) 
+                {
+                    ISLOGGER_E(__CLASS__, "not clean WSA: %s", ISAlgorithm::GetLastErrorS().c_str());
+                }
+#endif
                 //На всякий случай немного подождём и завершим работу логгера
                 ISSleep(100);
                 ISLOGGER_I(__CLASS__, "Stopped server");
