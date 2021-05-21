@@ -10,6 +10,7 @@ const char PATH_SEPARATOR = '\\';
 const size_t MAX_PATH = 260;
 const char PATH_SEPARATOR = '/';
 const int SOCKET_ERROR = -1; //???
+const int INVALID_SOCKET = -1;
 #endif
 //-----------------------------------------------------------------------------
 const size_t    NPOS = std::string::npos;

@@ -244,8 +244,6 @@ bool ISCaratApplication::CheckRunning(bool &AlreadyRunning)
     AlreadyRunning = false;
 
     ISSocketAddr SocketAddress;
-    //SocketAddress.sin_addr.s_addr = inet_addr("127.0.0.1"); //Только локальный адрес
-
     int Inet = inet_pton(AF_INET, "127.0.0.1", &SocketAddress.sin_addr.s_addr);
     if (Inet != 1)
     {
@@ -264,11 +262,16 @@ bool ISCaratApplication::CheckRunning(bool &AlreadyRunning)
 
     if (bind(Socket, (struct sockaddr*)&SocketAddress, sizeof(SocketAddress)) == SOCKET_ERROR)
     {
+        //Адрес уже используется
+#ifdef WIN32
         if (ISAlgorithm::GetLastErrorN() == WSAEADDRINUSE)
+#else
+        if (ISAlgorithm::GetLastErrorN() == EADDRINUSE)
+#endif
         {
             AlreadyRunning = true;
         }
-        else
+        else //Неизвестная ошибка
         {
             ErrorString = ISAlgorithm::GetLastErrorS();
             return false;
