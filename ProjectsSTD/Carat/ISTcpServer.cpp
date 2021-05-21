@@ -37,15 +37,6 @@ bool ISTcpServer::Start()
 {
     ISLOGGER_I(__CLASS__, "Starting");
 
-#ifdef WIN32
-    WSADATA WsaData;
-    if (WSAStartup(MAKEWORD(2, 2), &WsaData) != 0)
-    {
-        ErrorString = ISAlgorithm::GetLastErrorS();
-        return false;
-    }
-#endif
-
     ISSocketAddr SocketAddress;
 #ifdef WIN32
     SocketAddress.sin_addr.S_un.S_addr = INADDR_ANY; //Любой IP адресс

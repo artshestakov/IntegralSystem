@@ -42,6 +42,15 @@ bool ISCaratApplication::GetServiceMode() const
 //-----------------------------------------------------------------------------
 bool ISCaratApplication::Init()
 {
+#ifdef WIN32 //Для Windows инициализируем библиотеку WSA
+    WSADATA WsaData;
+    if (WSAStartup(MAKEWORD(2, 2), &WsaData) != 0)
+    {
+        ErrorString = ISAlgorithm::GetLastErrorS();
+        return false;
+    }
+#endif
+
     if (!ISLogger::Instance().Initialize()) //Не удалось иницилизировать логгер
     {
         ISDEBUG_E("Error initialize logger: " + ISLogger::Instance().GetErrorString());
