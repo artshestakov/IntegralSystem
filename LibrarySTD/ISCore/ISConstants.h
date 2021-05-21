@@ -9,7 +9,7 @@ const char PATH_SEPARATOR = '\\';
 #else
 const size_t MAX_PATH = 260;
 const char PATH_SEPARATOR = '/';
-const int SOCKET_ERROR = -1; //???
+const int SOCKET_ERROR = -1;
 const int INVALID_SOCKET = -1;
 #endif
 //-----------------------------------------------------------------------------
