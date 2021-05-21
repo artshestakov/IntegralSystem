@@ -227,8 +227,9 @@ bool ISCaratApplication::CheckRunning()
 {
     bool Result = false;
     std::string Temp = ISAlgorithm::GetApplicationName();
-    const char *ApplicationName = Temp.c_str();
 #ifdef WIN32
+    const char *ApplicationName = Temp.c_str();
+
     HANDLE HandleMutex = OpenMutex(MUTEX_ALL_ACCESS, 0, ApplicationName);
     Result = HandleMutex ? true : false;
     if (!Result) //ћьютекс не существует - значит это первый экземлп€р
@@ -236,9 +237,13 @@ bool ISCaratApplication::CheckRunning()
         HandleMutex = CreateMutex(0, 0, ApplicationName);
     }
 #else
-    IS_UNUSED(Temp);
-    IS_UNUSED(ApplicationName);
-    IS_ASSERT(false, "Not support");
+    Temp = ISAlgorithm::GetApplicationDir() + PATH_SEPARATOR + Temp + ".pid";
+    int PidFile = open(Temp.c_str(), O_CREAT | O_RDWR, 0666);
+    int RC = flock(PidFile, LOCK_EX | LOCK_NB);
+    if (RC)
+    {
+        Result = ISAlgorithm::GetLastErrorN() == EWOULDBLOCK;
+    }
 #endif
     return Result;
 }
