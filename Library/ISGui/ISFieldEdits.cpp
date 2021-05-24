@@ -853,7 +853,7 @@ ISDateEdit::~ISDateEdit()
 //-----------------------------------------------------------------------------
 void ISDateEdit::SetValue(const QVariant &value)
 {
-    ISDateTimeEdit::SetValue(QDateTime(value.toDate(), QTime()));
+    ISDateTimeEdit::SetValue(QDateTime(QDate::fromString(value.toString(), FORMAT_DATE_V2), QTime()));
 }
 //-----------------------------------------------------------------------------
 QVariant ISDateEdit::GetValue() const
