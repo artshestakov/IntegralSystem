@@ -16,6 +16,7 @@
 #include <curl/curl.h>
 #include <rapidjson/error/en.h>
 #include "ISFail2Ban.h"
+#include "ISBlockedIP.h"
 //-----------------------------------------------------------------------------
 static std::string Q_TEST = PREPARE_QUERYN("INSERT INTO _usergroup(usgp_name, usgp_fullaccess) VALUES($1, $2)", 2);
 //-----------------------------------------------------------------------------
@@ -396,6 +397,8 @@ static std::string QU_SETTING = PREPARE_QUERYN("UPDATE _usersettings SET "
     "WHERE usst_user = $2 "
     "AND usst_setting = (SELECT stgs_id FROM _settings WHERE stgs_uid = $3)", 3);
 //-----------------------------------------------------------------------------
+static std::string QI_BLOCKED_IP = PREPARE_QUERYN("INSERT INTO _blockedip(blip_ip) VALUES($1)", 1);
+//-----------------------------------------------------------------------------
 static std::string QS_PERIOD = PREPARE_QUERY("SELECT prod_constant "
     "FROM period "
     "WHERE CURRENT_DATE BETWEEN prod_datestart AND prod_dateend");
@@ -519,6 +522,7 @@ ISTcpWorker::ISTcpWorker()
     MapFunction[API_GROUP_RIGHT_SPECIAL_DELETE] = &ISTcpWorker::GroupRightSpecialDelete;
     MapFunction[API_SAVE_META_DATA] = &ISTcpWorker::SaveMetaData;
     MapFunction[API_GET_RECORD_CALL] = &ISTcpWorker::GetRecordCall;
+    MapFunction[API_BLOCKED_IP_ADD] = &ISTcpWorker::BlockedIPAdd;
 
     if (ISConfigurations::Instance().Get().Name == "OilSphere")
     {
@@ -4406,6 +4410,58 @@ bool ISTcpWorker::OrganizationFromINN(ISTcpMessage *TcpMessage, ISTcpAnswer *Tcp
     rapidjson::Value Value;
     Value.CopyFrom(JsonObject, TcpAnswer->Parameters.GetAllocator());
     TcpAnswer->Parameters.AddMember("Reply", Value, TcpAnswer->Parameters.GetAllocator());
+    return true;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::BlockedIPAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+    IS_UNUSED(TcpAnswer);
+
+    std::string IP;
+    if (!CheckIsNullString(TcpMessage, "IP", IP))
+    {
+        return false;
+    }
+
+    //Проверим, нет ли такого адреса
+    if (ISBlockedIP::Instance().IsLock(IP))
+    {
+        ErrorString = LANG("Carat.Error.Query.BlockedIPAdd.AlreadyLocked");
+        return false;
+    }
+
+    //Проверим длинну адреса
+    if (IP.size() > LEN_IP_ADDRESS)
+    {
+        ErrorString = LANG("Carat.Error.Query.BlockedIPAdd.AddressIsBig");
+        return false;
+    }
+
+    //Проверим первичный формат: кол-во октетов должно быть равно 4
+    ISVectorString VectorString = ISAlgorithm::StringSplit(IP, '.');
+    if (VectorString.size() != 4)
+    {
+        ErrorString = LANG("Carat.Error.Query.BlockedIPAdd.InvalidFormat");
+        return false;
+    }
+
+    //Проверим каждый октет
+    for (const std::string &OctetString : VectorString)
+    {
+        if (!ISAlgorithm::StringIsNumber(OctetString))
+        {
+            ErrorString = LANG("Carat.Error.Query.BlockedIPAdd.InvalidFormat");
+            return false;
+        }
+    }
+
+    ISQuery qInsert(DBConnection, QI_BLOCKED_IP);
+    qInsert.BindString(IP);
+    if (!qInsert.Execute())
+    {
+        return ErrorQuery(LANG("Carat.Error.Query.BlockedIPAdd.NotInsert"), qInsert);
+    }
+    ISBlockedIP::Instance().Add(IP);
     return true;
 }
 //-----------------------------------------------------------------------------

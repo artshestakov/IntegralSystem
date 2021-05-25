@@ -88,6 +88,7 @@ private:
     bool GetForeignList(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
     bool GetServerInfo(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
     bool OrganizationFromINN(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
+    bool BlockedIPAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
 
     //ֽופעוספונא
     bool OilSphere_PeriodContains(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);

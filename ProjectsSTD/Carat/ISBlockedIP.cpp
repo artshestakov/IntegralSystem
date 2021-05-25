@@ -3,7 +3,7 @@
 #include "ISAlgorithm.h"
 #include "ISQuery.h"
 //-----------------------------------------------------------------------------
-static std::string QS_IP = PREPARE_QUERY("SELECT blip_ip FROM blockedip");
+static std::string QS_IP = PREPARE_QUERY("SELECT blip_ip FROM _blockedip");
 //-----------------------------------------------------------------------------
 ISBlockedIP::ISBlockedIP()
     : ErrorString(STRING_NO_ERROR),
@@ -49,7 +49,7 @@ bool ISBlockedIP::IsLock(const std::string &IPAddress)
 {
     //Проверим наличие такого адреса
     CRITICAL_SECTION_LOCK(&CS);
-    bool Result = ISAlgorithm::VectorContains(Vector, IPAddress);
+    bool Result = VectorSize > 0 ? ISAlgorithm::VectorContains(Vector, IPAddress) : false;
     CRITICAL_SECTION_UNLOCK(&CS);
     
     if (!Result) //Такого адреса нет, проверим маску
@@ -58,5 +58,13 @@ bool ISBlockedIP::IsLock(const std::string &IPAddress)
     }
     //Такой адрес есть
     return Result;
+}
+//-----------------------------------------------------------------------------
+void ISBlockedIP::Add(const std::string &IPAddress)
+{
+    CRITICAL_SECTION_LOCK(&CS);
+    Vector.emplace_back(IPAddress);
+    ++VectorSize;
+    CRITICAL_SECTION_UNLOCK(&CS);
 }
 //-----------------------------------------------------------------------------

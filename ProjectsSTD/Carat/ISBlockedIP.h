@@ -12,6 +12,7 @@ public:
     const std::string& GetErrorString() const;
     bool Init();
     bool IsLock(const std::string &IPAddress);
+    void Add(const std::string &IPAddress);
 
 private:
     ISBlockedIP();

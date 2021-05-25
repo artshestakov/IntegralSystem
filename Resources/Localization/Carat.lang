@@ -252,6 +252,11 @@
     <Local Name="Carat.Error.Query.OrganizationFormINN.ResultIsNotArray" Russian="Результат не является массивом."/>
     <Local Name="Carat.Error.Query.OrganizationFormINN.NotFound" Russian="Огранизация по ИНН &quot;%s&quot; не найдена."/>
 
+    <Local Name="Carat.Error.Query.BlockedIPAdd.AlreadyLocked" Russian="Такой адрес уже заблокирован."/>
+    <Local Name="Carat.Error.Query.BlockedIPAdd.AddressIsBig" Russian="Размер адреса больше допустимого."/>
+    <Local Name="Carat.Error.Query.BlockedIPAdd.InvalidFormat" Russian="Адрес не соответствует формату."/>
+    <Local Name="Carat.Error.Query.BlockedIPAdd.NotInsert" Russian="Не удалось добавить адрес."/>
+
     <Local Name="Carat.Error.Query.PeriodContains.Select" Russian="Не удалось получить константу."/>
 
     <Local Name="Carat.Error.Query.GetStockList.Select" Russian="Не удалось получить список складов."/>
