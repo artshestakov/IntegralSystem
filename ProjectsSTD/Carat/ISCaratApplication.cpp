@@ -13,6 +13,7 @@
 #include "ISRevision.h"
 #include "ISConsole.h"
 #include "ISProperty.h"
+#include "ISBlockedIP.h"
 //-----------------------------------------------------------------------------
 ISCaratApplication::ISCaratApplication(int argc, char **argv)
     : ErrorString(STRING_NO_ERROR),
@@ -124,6 +125,25 @@ bool ISCaratApplication::Init()
     if (!ISMetaData::Instance().Init(ConfigurationName, true, true))
     {
         ISLOGGER_E("ISMetaData", "Not init meta data: %s", ISMetaData::Instance().GetErrorString().c_str());
+        return false;
+    }
+
+    //Получаем параметры подключения к БД и подключаемся
+    std::string DBHost = ISConfig::Instance().GetValueString("Database", "Host"),
+        DBName = ISConfig::Instance().GetValueString("Database", "Name"),
+        DBUser = ISConfig::Instance().GetValueString("Database", "User"),
+        DBPassword = ISConfig::Instance().GetValueString("Database", "Password");
+    unsigned short DBPort = ISConfig::Instance().GetValueUShort("Database", "Port");
+    if (!ISDatabase::Instance().Connect(DB_CONNECTION_DEFAULT, DBHost, DBPort, DBName, DBUser, DBPassword))
+    {
+        ISLOGGER_E("ISDatabase", "Error connection: %s", ISDatabase::Instance().GetErrorString().c_str());
+        return false;
+    }
+
+    //Загружаем заблокированные IP-адреса
+    if (!ISBlockedIP::Instance().Init())
+    {
+        ISLOGGER_E("ISBlockedIP", "Error load blocked ip: %s", ISBlockedIP::Instance().GetErrorString().c_str());
         return false;
     }
     return true;

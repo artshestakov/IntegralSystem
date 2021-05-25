@@ -7,6 +7,7 @@
 #include "ISTcpQueue.h"
 #include "ISConfig.h"
 #include "ISTcpClients.h"
+#include "ISBlockedIP.h"
 //-----------------------------------------------------------------------------
 ISTcpServer::ISTcpServer()
     : ErrorString(STRING_NO_ERROR),
@@ -131,13 +132,31 @@ void ISTcpServer::WorkerAcceptor()
         }
 
         //Пытаемся получить IP-адрес клиента и если не получилось - отключаем его
-        char Char[15] = { 0 }; //Выделяем 15 байт для хранения IP-адреса
-        if (!inet_ntop(AF_INET, &SocketInfo.sin_addr, Char, 15))
+        char Char[LEN_IP_ADDRESS] = { 0 }; //Выделяем 15 байт для хранения IP-адреса
+        if (!inet_ntop(AF_INET, &SocketInfo.sin_addr, Char, LEN_IP_ADDRESS))
         {
             ISLOGGER_E(__CLASS__, "Not getting ip address peer: %s", ISAlgorithm::GetLastErrorS().c_str());
             CloseSocket(SocketClient);
             continue;
         }
+
+        //Проверим, не заблокирован ли адрес
+        if (ISBlockedIP::Instance().IsLock(Char)) //Адрес заблокирован
+        {
+            //Логируемся
+            ISLOGGER_W(__CLASS__, "An attempt to connect from a blocked address: %s", Char);
+
+            //Пытаемся отправить клиенту ошибку
+            if (send(SocketClient, CARAT_LOCKED_IP_STRING, CARAT_LOCKED_IP_STRING_SIZE, MSG_DONTROUTE) != CARAT_LOCKED_IP_STRING_SIZE)
+            {
+                ISLOGGER_W(__CLASS__, "Not sending error to client");
+            }
+
+            //Отключаем его и ждём очередное подключение
+            CloseSocket(SocketClient);
+            continue;
+        }
+        //Адрес не заблокирован - все в порядке
 
         //Адрес получили. Добавляем клиента в память
         ISTcpClient *TcpClient = new ISTcpClient();

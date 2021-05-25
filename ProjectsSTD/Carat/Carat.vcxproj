@@ -216,6 +216,7 @@ $(SolutionDir)Revision.cmd $(SolutionDir) $(Configuration) $(Platform)</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ISBlockedIP.cpp" />
     <ClCompile Include="ISCaratApplication.cpp" />
     <ClCompile Include="ISFail2Ban.cpp" />
     <ClCompile Include="ISTcpAnswer.cpp" />
@@ -230,6 +231,7 @@ $(SolutionDir)Revision.cmd $(SolutionDir) $(Configuration) $(Platform)</Command>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\ISRevision.h" />
+    <ClInclude Include="ISBlockedIP.h" />
     <ClInclude Include="ISCaratApplication.h" />
     <ClInclude Include="ISFail2Ban.h" />
     <ClInclude Include="ISTcpAnswer.h" />

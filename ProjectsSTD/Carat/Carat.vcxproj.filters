@@ -46,6 +46,9 @@
     <ClCompile Include="ISFail2Ban.cpp">
       <Filter>Tcp</Filter>
     </ClCompile>
+    <ClCompile Include="ISBlockedIP.cpp">
+      <Filter>Tcp</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ISCaratApplication.h">
@@ -79,6 +82,9 @@
       <Filter>Tcp</Filter>
     </ClInclude>
     <ClInclude Include="ISFail2Ban.h">
+      <Filter>Tcp</Filter>
+    </ClInclude>
+    <ClInclude Include="ISBlockedIP.h">
       <Filter>Tcp</Filter>
     </ClInclude>
   </ItemGroup>

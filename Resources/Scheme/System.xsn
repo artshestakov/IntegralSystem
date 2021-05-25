@@ -203,4 +203,13 @@
         </Fields>
     </Table>
 
+    <Table Name="BlockedIP" UID="{EB62C214-DCBE-47E7-816B-96A9C2A4E413}" Alias="blip" LocalName="Заблокированный адрес" LocalListName="Заблокированные адреса" TitleName="IP" IsSystem="true">
+        <Fields>
+            <Field UID="{B4D7EABD-E214-4821-8306-6FD16869297E}" Name="IP" Type="String" LabelName="IP-адрес" LocalListName="IP-адрес" NotNull="true"/>
+        </Fields>
+        <Indexes>
+            <Index Field="IP" Unique="true"/>
+        </Indexes>
+    </Table>
+
 </XSN>

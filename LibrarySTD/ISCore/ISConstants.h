@@ -27,6 +27,7 @@ const size_t    SHA256_RESULT_SIZE = SHA256_SIZE * 2;
 const size_t    DAY_IN_SECONDS = 86400;
 const char      TOKEN_DA_DATA_TOKEN[] = "f2c204cd6ba093b294324acec5d01b25fad632cf";
 const size_t    MAX_DIGIT_LENGHT = 20; //Максимальная длинна числа
+const size_t    LEN_IP_ADDRESS = 15; //Максимальная длинна IPv4-адреса
 //CHARS------------------------------------------------------------------------
 const char  CHAR_NULL_TERM = '\0'; //Символ конца строки
 //LOCALIZATION-----------------------------------------------------------------
@@ -67,6 +68,8 @@ const size_t            CARAT_WAIT_WORKERS_MSEC = 1000; //Ожидание освобождения 
 const unsigned long     CARAT_SALT_SIZE = 32; //Фиксированный размер соли
 const size_t            CARAT_AUTH_FAIL_LIMIT = 5; //Допустимое количество ошибок авторизации
 const size_t            CARAT_AUTH_MINUTE_LOCK = 15; //Кол-во минут на блокировку IP-адреса
+const char              CARAT_LOCKED_IP_STRING[] = "You IP-address is locked!";
+const int               CARAT_LOCKED_IP_STRING_SIZE = (int)strlen(CARAT_LOCKED_IP_STRING);
 //CARAT_API--------------------------------------------------------------------
 const char API_UNKNOWN[] = "Unknown"; //Неизвестное сообщение
 const char API_PING[] = "Ping"; //Пинг

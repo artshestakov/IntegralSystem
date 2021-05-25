@@ -44,6 +44,7 @@ SOURCES += \
     ISTcpServer.cpp \
     ISTcpWorker.cpp \
     ISTcpWorkerHelper.cpp \
+    ISBlockedIP.cpp \
     main.cpp
 
 HEADERS += \
@@ -58,4 +59,5 @@ HEADERS += \
     ISTcpQueue.h \
     ISTcpServer.h \
     ISTcpWorker.h \
-    ISTcpWorkerHelper.h
+    ISTcpWorkerHelper.h \
+    ISBlockedIP.h
