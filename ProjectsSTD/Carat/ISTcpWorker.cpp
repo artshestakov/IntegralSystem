@@ -4448,7 +4448,11 @@ bool ISTcpWorker::BlockedIPAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
     //Проверим каждый октет
     for (const std::string &OctetString : VectorString)
     {
-        if (!ISAlgorithm::StringIsNumber(OctetString))
+        if (OctetString == "*")
+        {
+            continue;
+        }
+        else if (!ISAlgorithm::StringIsNumber(OctetString))
         {
             ErrorString = LANG("Carat.Error.Query.BlockedIPAdd.InvalidFormat");
             return false;
