@@ -25,18 +25,21 @@ std::string ISQueryText::Add(const std::string &SqlText, int ParameterCount)
     return SqlText;
 }
 //-----------------------------------------------------------------------------
-void ISQueryText::IsNeedPrepare(const std::string &SqlText, std::string &Hash, int &ParamCount, bool &Prepared)
+void ISQueryText::IsNeedPrepare(const std::string &SqlText, std::string &Hash, int &ParamCount, bool &IsNeed)
 {
+    //Проверим, нужно ли готовить такой запрос
+    //Запросы, которые необходимо готовить содержатся в Map
+    IsNeed = Map.find(SqlText) != Map.end();
+
     CRITICAL_SECTION_LOCK(&CS);
-    Prepared = false;
-    for (int i = 0; i < PreparedCount; ++i)
+    for (int i = 0; i < PreparedCount; ++i) //Обойдём уже подготовленные запросы
     {
         const ISSqlPrepare &SqlPrepare = VectorPrepared[i];
         if (SqlPrepare.SqlText == SqlText && SqlPrepare.ThreadID == CURRENT_THREAD_ID())
         {
             Hash = SqlPrepare.Hash;
             ParamCount = Map[SqlText];
-            Prepared = true;
+            IsNeed = false; //Отметим, что этот запрос готовить не нужно т.к. он уже подготовлен
             break;
         }
     }

@@ -11,7 +11,7 @@ public:
     static ISQueryText& Instance();
 
     std::string Add(const std::string &SqlText, int ParameterCount = 0);
-    void IsNeedPrepare(const std::string &SqlText, std::string &Hash, int &ParamCount, bool &Prepared);
+    void IsNeedPrepare(const std::string &SqlText, std::string &Hash, int &ParamCount, bool &IsNeed);
     void AddPrepared(const std::string &SqlText, const std::string &Hash, int ParamCount);
 
 private:

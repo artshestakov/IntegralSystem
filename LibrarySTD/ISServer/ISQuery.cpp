@@ -241,16 +241,17 @@ bool ISQuery::Execute()
     //Сделаем очистку (предыдущего результата) на всякий случай
     ClearResult();
 
-    //Запрос требует подготовки
+    //Проверим, не трубуется ли подготовить запрос
     int ParamCount = 0;
-    bool Prepared = false;
-    ISQueryText::Instance().IsNeedPrepare(SqlText, StmtName, ParamCount, Prepared);
-    if (!Prepared)
+    bool IsNeed = false;
+    ISQueryText::Instance().IsNeedPrepare(SqlText, StmtName, ParamCount, IsNeed);
+    if (IsNeed) //Запрос нуждается в подготовке
     {
-        if (!Prepare(ParamCount))
+        if (!Prepare(ParamCount)) //Ошибка подготовки
         {
             return false;
         }
+        //Запрос подготовлен, запомним это
         ISQueryText::Instance().AddPrepared(SqlText, StmtName, ParamCount);
     }
 
