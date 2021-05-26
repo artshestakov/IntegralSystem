@@ -119,4 +119,17 @@ struct ISLockedIP
     uint64_t DateTimeUnlock; //Дата и время разблокировки
 };
 //-----------------------------------------------------------------------------
+struct CGSectionItem
+{
+    std::string Function;
+    std::string Description;
+};
+//-----------------------------------------------------------------------------
+struct CGSection
+{
+    std::string Name;
+    std::string ClassName;
+    std::vector<CGSectionItem> Items;
+};
+//-----------------------------------------------------------------------------
 #endif

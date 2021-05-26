@@ -287,6 +287,12 @@ namespace ISAlgorithm
     //! \return Возвращает массив данных файла в случае отсутствия ошибки, иначе вернётся nullptr
     unsigned char* ReadFile(const char *FilePath, const char *Mode, long &FileSize, std::string &ErrorString);
 
+    //! Запустить процесс
+    //! \param Path путь к приложению
+    //! \param ErrorString ссылка на строку с описанием ошибки
+    //! \return возвращает true в случае успешного запуска, иначе - false
+    bool StartProcess(const std::string &Path, std::string &ErrorString);
+
     //Извлечь элемент из вектора по заданному индексу
     template <typename T> T VectorTakeAt(std::vector<T> &Vector, size_t Index)
     {

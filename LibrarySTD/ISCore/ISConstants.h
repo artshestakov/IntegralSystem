@@ -34,7 +34,9 @@ const char  CHAR_NULL_TERM = '\0'; //Символ конца строки
 const char  LOCALIZATION_FILE_CARAT[] = "Carat";
 //DATABASE---------------------------------------------------------------------
 const long long         DB_MAX_QUERY_TIME = 50; //Максимальное время (в милисекундах) выполнения SQL-запроса
+const char              DB_SYSTEM_NAME[] = "postgres"; //Имя системной БД
 const char              DB_CONNECTION_DEFAULT[] = "DefaultDB";
+const char              DB_CONNECTION_SYSTEM[] = "SystemDB";
 //CONFIG-----------------------------------------------------------------------
 const char  CONFIG_TEMPLATE_SERVER[] = "Server"; //Шаблон сервера
 const char  CONFIG_TEMPLATE_CLIENT[] = "Client"; //Шаблон клиента

@@ -1123,3 +1123,20 @@ unsigned char* ISAlgorithm::ReadFile(const char *FilePath, const char *Mode, lon
     return FileData;
 }
 //-----------------------------------------------------------------------------
+bool ISAlgorithm::StartProcess(const std::string &Path, std::string &ErrorString)
+{
+#ifdef WIN32
+    STARTUPINFO StartupInfo = { 0 };
+    PROCESS_INFORMATION ProcessInfo = { 0 };
+    bool Result = CreateProcess(Path.c_str(), NULL, NULL, NULL, NULL, NULL, NULL, NULL, &StartupInfo, &ProcessInfo) == TRUE;
+    if (!Result)
+    {
+        ErrorString = ISAlgorithm::GetLastErrorS();
+    }
+#else
+    bool Result = false;
+    IS_ASSERT(false, "not support");
+#endif
+    return Result;
+}
+//-----------------------------------------------------------------------------

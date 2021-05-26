@@ -38,7 +38,7 @@ std::string ISConsole::GetString(const std::string &OutputString)
 {
 	if (!OutputString.empty())
 	{
-        ISDEBUG_L(OutputString);
+        std::cout << OutputString;
 	}
 	std::string String;
 	std::getline(std::cin, String);
