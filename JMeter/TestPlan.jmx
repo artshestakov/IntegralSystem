@@ -1741,7 +1741,7 @@ sampler.setRequestData(Integer.toString(STR.length()) + &apos;.&apos; + STR);</s
           </JSR223PreProcessor>
           <hashTree/>
         </hashTree>
-        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: BlockedIPAdd" enabled="true">
+        <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCP Sampler: BlockedIPAdd" enabled="false">
           <stringProp name="TCPSampler.server"></stringProp>
           <boolProp name="TCPSampler.reUseConnection">true</boolProp>
           <stringProp name="TCPSampler.port"></stringProp>
@@ -1764,7 +1764,7 @@ def Map =
 	Type: &quot;BlockedIPAdd&quot;,
 	Parameters:
 		[
-			IP: &quot;127.0.0.2&quot;
+			RegExp: &quot;127\\.0\\.0\\.\\d{1,3}&quot;
 		]
 ];
 String STR = new JsonBuilder(Map).toString() + &apos;\0&apos;;

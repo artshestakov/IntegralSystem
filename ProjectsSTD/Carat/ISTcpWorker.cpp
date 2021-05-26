@@ -397,7 +397,7 @@ static std::string QU_SETTING = PREPARE_QUERYN("UPDATE _usersettings SET "
     "WHERE usst_user = $2 "
     "AND usst_setting = (SELECT stgs_id FROM _settings WHERE stgs_uid = $3)", 3);
 //-----------------------------------------------------------------------------
-static std::string QI_BLOCKED_IP = PREPARE_QUERYN("INSERT INTO _blockedip(blip_ip) VALUES($1)", 1);
+static std::string QI_BLOCKED_IP = PREPARE_QUERYN("INSERT INTO _blockedip(blip_regexp) VALUES($1)", 1);
 //-----------------------------------------------------------------------------
 static std::string QS_PERIOD = PREPARE_QUERY("SELECT prod_constant "
     "FROM period "
@@ -4417,55 +4417,37 @@ bool ISTcpWorker::BlockedIPAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
     IS_UNUSED(TcpAnswer);
 
-    std::string IP;
-    if (!CheckIsNullString(TcpMessage, "IP", IP))
+    std::string RegExpString;
+    if (!CheckIsNullString(TcpMessage, "RegExp", RegExpString))
     {
         return false;
     }
 
-    //Проверим, нет ли такого адреса
-    if (ISBlockedIP::Instance().IsLock(IP))
+    //Проверим, нет ли регулярного выражения
+    if (ISBlockedIP::Instance().IsLock(RegExpString))
     {
-        ErrorString = LANG("Carat.Error.Query.BlockedIPAdd.AlreadyLocked");
+        ErrorString = LANG("Carat.Error.Query.BlockedIPAdd.AlreadyExist");
         return false;
     }
 
-    //Проверим длинну адреса
-    if (IP.size() > LEN_IP_ADDRESS)
+    //Проверим, корректное ли выражение
+    try
     {
-        ErrorString = LANG("Carat.Error.Query.BlockedIPAdd.AddressIsBig");
-        return false;
+        std::regex(RegExpString.c_str());
     }
-
-    //Проверим первичный формат: кол-во октетов должно быть равно 4
-    ISVectorString VectorString = ISAlgorithm::StringSplit(IP, '.');
-    if (VectorString.size() != 4)
+    catch (const std::regex_error &e) //Исключение - значит выражение не корректное
     {
-        ErrorString = LANG("Carat.Error.Query.BlockedIPAdd.InvalidFormat");
+        ErrorString = ISAlgorithm::StringF(LANG("Carat.Error.Query.BlockedIPAdd.InvalidFormat"), e.what());
         return false;
-    }
-
-    //Проверим каждый октет
-    for (const std::string &OctetString : VectorString)
-    {
-        if (OctetString == "*")
-        {
-            continue;
-        }
-        else if (!ISAlgorithm::StringIsNumber(OctetString))
-        {
-            ErrorString = LANG("Carat.Error.Query.BlockedIPAdd.InvalidFormat");
-            return false;
-        }
     }
 
     ISQuery qInsert(DBConnection, QI_BLOCKED_IP);
-    qInsert.BindString(IP);
+    qInsert.BindString(RegExpString);
     if (!qInsert.Execute())
     {
         return ErrorQuery(LANG("Carat.Error.Query.BlockedIPAdd.NotInsert"), qInsert);
     }
-    ISBlockedIP::Instance().Add(IP);
+    ISBlockedIP::Instance().Add(RegExpString);
     return true;
 }
 //-----------------------------------------------------------------------------

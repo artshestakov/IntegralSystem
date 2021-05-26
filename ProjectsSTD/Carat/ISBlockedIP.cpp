@@ -3,11 +3,10 @@
 #include "ISAlgorithm.h"
 #include "ISQuery.h"
 //-----------------------------------------------------------------------------
-static std::string QS_IP = PREPARE_QUERY("SELECT blip_ip FROM _blockedip");
+static std::string QS_REGEXP = PREPARE_QUERY("SELECT blip_regexp FROM _blockedip");
 //-----------------------------------------------------------------------------
 ISBlockedIP::ISBlockedIP()
-    : ErrorString(STRING_NO_ERROR),
-    VectorSize(0)
+    : ErrorString(STRING_NO_ERROR)
 {
     CRITICAL_SECTION_INIT(&CS);
 }
@@ -30,13 +29,12 @@ const std::string& ISBlockedIP::GetErrorString() const
 //-----------------------------------------------------------------------------
 bool ISBlockedIP::Init()
 {
-    ISQuery qSelect(QS_IP);
+    ISQuery qSelect(QS_REGEXP);
     if (!qSelect.Execute())
     {
         ErrorString = qSelect.GetErrorString();
         return false;
     }
-    VectorSize = (size_t)qSelect.GetResultRowCount();
 
     while (qSelect.Next())
     {
@@ -47,24 +45,29 @@ bool ISBlockedIP::Init()
 //-----------------------------------------------------------------------------
 bool ISBlockedIP::IsLock(const std::string &IPAddress)
 {
-    //Проверим наличие такого адреса
+    bool Result = false;
     CRITICAL_SECTION_LOCK(&CS);
-    bool Result = VectorSize > 0 ? ISAlgorithm::VectorContains(Vector, IPAddress) : false;
-    CRITICAL_SECTION_UNLOCK(&CS);
-    
-    if (!Result) //Такого адреса нет, проверим маску
-    {
 
+    //Переменные для проверки
+    std::regex RegExp;
+    std::smatch Match;
+    for (const std::string &RegExpString : Vector) //Обходим все выражения
+    {
+        RegExp = RegExpString; //Выбираем текущее выражение
+        Result = regex_match(IPAddress, Match, RegExp);
+        if (Result) //Если адрес подходит под текущее выражение - выходим
+        {
+            break;
+        }
     }
-    //Такой адрес есть
+    CRITICAL_SECTION_UNLOCK(&CS);
     return Result;
 }
 //-----------------------------------------------------------------------------
-void ISBlockedIP::Add(const std::string &IPAddress)
+void ISBlockedIP::Add(const std::string &RegExp)
 {
     CRITICAL_SECTION_LOCK(&CS);
-    Vector.emplace_back(IPAddress);
-    ++VectorSize;
+    Vector.emplace_back(RegExp);
     CRITICAL_SECTION_UNLOCK(&CS);
 }
 //-----------------------------------------------------------------------------

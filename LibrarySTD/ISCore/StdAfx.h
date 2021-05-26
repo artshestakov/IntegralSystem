@@ -48,5 +48,6 @@
 #include <cstdarg>
 #include <cctype>
 #include <iomanip>
+#include <regex>
 //-----------------------------------------------------------------------------
 #endif

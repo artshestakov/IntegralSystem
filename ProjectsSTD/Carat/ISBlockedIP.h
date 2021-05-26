@@ -12,7 +12,7 @@ public:
     const std::string& GetErrorString() const;
     bool Init();
     bool IsLock(const std::string &IPAddress);
-    void Add(const std::string &IPAddress);
+    void Add(const std::string &RegExp);
 
 private:
     ISBlockedIP();
@@ -26,7 +26,6 @@ private:
     std::string ErrorString;
     ISCriticalSection CS;
     std::vector<std::string> Vector;
-    size_t VectorSize;
 };
 //-----------------------------------------------------------------------------
 #endif
