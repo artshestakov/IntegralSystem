@@ -9,7 +9,8 @@
 //-----------------------------------------------------------------------------
 ISTcpQuery::ISTcpQuery(const QString &query_type)
     : ErrorString(NO_ERROR_STRING),
-    QueryType(query_type)
+    QueryType(query_type),
+    Version(0)
 {
 
 }
@@ -22,6 +23,11 @@ ISTcpQuery::~ISTcpQuery()
 QString ISTcpQuery::GetErrorString() const
 {
     return ErrorString;
+}
+//-----------------------------------------------------------------------------
+unsigned int ISTcpQuery::GetVersion() const
+{
+    return Version;
 }
 //-----------------------------------------------------------------------------
 void ISTcpQuery::BindValue(const QString &ParamterName, const QVariant &ParameterValue)
@@ -112,6 +118,9 @@ bool ISTcpQuery::Execute()
     if (Result) //Ответ валиден
     {
         ISLOGGER_I(__CLASS__, "Validated answer");
+
+        //Получаем версию протокола
+        Version = TcpAnswer["Version"].toUInt();
 
         //Проверяем запрос на ошибку
         Result = !TcpAnswer["IsError"].toBool();

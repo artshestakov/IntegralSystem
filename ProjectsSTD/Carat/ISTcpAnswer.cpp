@@ -45,6 +45,7 @@ std::string ISTcpAnswer::ToJson() const
     auto &Allocator = JsonDocument.GetAllocator();
 
     JsonDocument.AddMember("IsError", Error, Allocator);
+    JsonDocument.AddMember("Version", CARAT_TCP_VERSION, Allocator);
 
     if (Error) //Ошибка есть добавим её описание в ответ
     {

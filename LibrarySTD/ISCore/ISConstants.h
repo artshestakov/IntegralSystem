@@ -62,6 +62,7 @@ const char              LOG_ASSERT[] = "Assert";
 //TCP--------------------------------------------------------------------------
 const size_t    TCP_PACKET_MAX_SIZE = 65535; //Максимальный размер одного TCP-пакета
 //CARAT------------------------------------------------------------------------
+const size_t            CARAT_TCP_VERSION = 1; //Версия протокола
 const unsigned short    CARAT_TCP_PORT = 50000; //Стандартный порт TCP-сервера
 const size_t            CARAT_HASH_SIZE = 64; //Фиксированный размер хэша SHA256 для авторизации
 const size_t            CARAT_WAIT_WORKERS_MSEC = 1000; //Ожидание освобождения воркеров в милисекундах

@@ -11,6 +11,7 @@ public:
     ~ISTcpQuery();
 
     QString GetErrorString() const; //Получить текстовое описание ошибки
+    unsigned int GetVersion() const; //Получить версию протокола
     void BindValue(const QString &ParamterName, const QVariant &ParameterValue); //Вставка параметра
     virtual bool Execute(const QString &query_type); //Выполнить запрос по имени
     virtual bool Execute(); //Выполнить запрос
@@ -28,6 +29,7 @@ private:
     QString QueryType; //Тип запроса
     QVariantMap Parameters; //Параметры запроса
     QVariantMap TcpAnswer; //Ответ
+    unsigned int Version; //Версия протокола
 };
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
