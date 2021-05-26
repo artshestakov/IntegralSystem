@@ -399,6 +399,10 @@ static std::string QU_SETTING = PREPARE_QUERYN("UPDATE _usersettings SET "
 //-----------------------------------------------------------------------------
 static std::string QI_BLOCKED_IP = PREPARE_QUERYN("INSERT INTO _blockedip(blip_regexp) VALUES($1)", 1);
 //-----------------------------------------------------------------------------
+static std::string QS_BLOCKED_IP = PREPARE_QUERY("SELECT blip_id, blip_regexp "
+                                                 "FROM _blockedip "
+                                                 "ORDER BY blip_id");
+//-----------------------------------------------------------------------------
 static std::string QS_PERIOD = PREPARE_QUERY("SELECT prod_constant "
     "FROM period "
     "WHERE CURRENT_DATE BETWEEN prod_datestart AND prod_dateend");
@@ -523,6 +527,7 @@ ISTcpWorker::ISTcpWorker()
     MapFunction[API_SAVE_META_DATA] = &ISTcpWorker::SaveMetaData;
     MapFunction[API_GET_RECORD_CALL] = &ISTcpWorker::GetRecordCall;
     MapFunction[API_BLOCKED_IP_ADD] = &ISTcpWorker::BlockedIPAdd;
+    MapFunction[API_BLOCKED_IP_GET] = &ISTcpWorker::BlockedIPGet;
 
     if (ISConfigurations::Instance().Get().Name == "OilSphere")
     {
@@ -4448,6 +4453,27 @@ bool ISTcpWorker::BlockedIPAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
         return ErrorQuery(LANG("Carat.Error.Query.BlockedIPAdd.NotInsert"), qInsert);
     }
     ISBlockedIP::Instance().Add(RegExpString);
+    return true;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::BlockedIPGet(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+    IS_UNUSED(TcpMessage);
+
+    auto &Allocator = TcpAnswer->Parameters.GetAllocator();
+
+    ISQuery qSelect(DBConnection, QS_BLOCKED_IP);
+    if (!qSelect.Execute())
+    {
+        return ErrorQuery(LANG("Carat.Error.Query.BlockedIPGet.Select"), qSelect);
+    }
+
+    while (qSelect.Next())
+    {
+        const char *ID = qSelect.ReadColumn(0),
+            *RegExp = qSelect.ReadColumn(1);
+        TcpAnswer->Parameters.AddMember(JSON_STRING(ID), JSON_STRINGA(RegExp, Allocator), Allocator);
+    }
     return true;
 }
 //-----------------------------------------------------------------------------
