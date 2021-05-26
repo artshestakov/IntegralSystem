@@ -200,6 +200,14 @@ $(SolutionDir)Revision.cmd $(SolutionDir) $(Configuration) $(Platform)</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CGConfigurator.cpp" />
+    <ClCompile Include="CGConfiguratorBase.cpp" />
+    <ClCompile Include="CGConfiguratorCreate.cpp" />
+    <ClCompile Include="CGConfiguratorDelete.cpp" />
+    <ClCompile Include="CGConfiguratorService.cpp" />
+    <ClCompile Include="CGConfiguratorShow.cpp" />
+    <ClCompile Include="CGConfiguratorUpdate.cpp" />
+    <ClCompile Include="CGDatabase.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -207,6 +215,14 @@ $(SolutionDir)Revision.cmd $(SolutionDir) $(Configuration) $(Platform)</Command>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\ISRevision.h" />
+    <ClInclude Include="CGConfigurator.h" />
+    <ClInclude Include="CGConfiguratorBase.h" />
+    <ClInclude Include="CGConfiguratorCreate.h" />
+    <ClInclude Include="CGConfiguratorDelete.h" />
+    <ClInclude Include="CGConfiguratorService.h" />
+    <ClInclude Include="CGConfiguratorShow.h" />
+    <ClInclude Include="CGConfiguratorUpdate.h" />
+    <ClInclude Include="CGDatabase.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

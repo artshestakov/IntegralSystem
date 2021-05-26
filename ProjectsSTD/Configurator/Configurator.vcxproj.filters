@@ -8,10 +8,37 @@
     <Filter Include="Resource Files">
       <UniqueIdentifier>{26e44933-5321-4d97-af3f-7a6e75ca4459}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Command">
+      <UniqueIdentifier>{bdb7332c-ee3d-421e-a1a8-0cac6e52ca54}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="CGDatabase.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="CGConfigurator.cpp">
+      <Filter>Command</Filter>
+    </ClCompile>
+    <ClCompile Include="CGConfiguratorBase.cpp">
+      <Filter>Command</Filter>
+    </ClCompile>
+    <ClCompile Include="CGConfiguratorCreate.cpp">
+      <Filter>Command</Filter>
+    </ClCompile>
+    <ClCompile Include="CGConfiguratorDelete.cpp">
+      <Filter>Command</Filter>
+    </ClCompile>
+    <ClCompile Include="CGConfiguratorService.cpp">
+      <Filter>Command</Filter>
+    </ClCompile>
+    <ClCompile Include="CGConfiguratorShow.cpp">
+      <Filter>Command</Filter>
+    </ClCompile>
+    <ClCompile Include="CGConfiguratorUpdate.cpp">
+      <Filter>Command</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -22,6 +49,30 @@
   <ItemGroup>
     <ClInclude Include="..\..\ISRevision.h">
       <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="CGDatabase.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="CGConfigurator.h">
+      <Filter>Command</Filter>
+    </ClInclude>
+    <ClInclude Include="CGConfiguratorBase.h">
+      <Filter>Command</Filter>
+    </ClInclude>
+    <ClInclude Include="CGConfiguratorCreate.h">
+      <Filter>Command</Filter>
+    </ClInclude>
+    <ClInclude Include="CGConfiguratorDelete.h">
+      <Filter>Command</Filter>
+    </ClInclude>
+    <ClInclude Include="CGConfiguratorService.h">
+      <Filter>Command</Filter>
+    </ClInclude>
+    <ClInclude Include="CGConfiguratorShow.h">
+      <Filter>Command</Filter>
+    </ClInclude>
+    <ClInclude Include="CGConfiguratorUpdate.h">
+      <Filter>Command</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

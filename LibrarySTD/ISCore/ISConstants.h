@@ -6,9 +6,11 @@
 //-----------------------------------------------------------------------------
 #ifdef WIN32
 const char PATH_SEPARATOR = '\\';
+const char EXTENSION_BINARY[] = ".exe"; //Расширение исполняемого файла для текущей операционной системы
 #else
 const size_t MAX_PATH = 260;
 const char PATH_SEPARATOR = '/';
+const char EXTENSION_BINARY[] = ""; //Расширение исполняемого файла для текущей операционной системы
 const int SOCKET_ERROR = -1;
 const int INVALID_SOCKET = -1;
 #endif
