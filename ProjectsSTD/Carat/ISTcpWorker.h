@@ -89,6 +89,7 @@ private:
     bool GetServerInfo(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
     bool OrganizationFromINN(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
     bool BlockedIPAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
+    bool BlockedIPDelete(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
     bool BlockedIPGet(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer);
 
     //ֽופעוספונא

@@ -118,6 +118,7 @@ const char API_GROUP_RIGHT_SPECIAL_DELETE[] = "GroupRightSpecialDelete"; //Удали
 const char API_SAVE_META_DATA[] = "SaveMetaData"; //Сохранение мета-данных
 const char API_GET_RECORD_CALL[] = "GetRecordCall"; //Получить запись разговора
 const char API_BLOCKED_IP_ADD[] = "BlockedIPAdd"; //Добавить выражение
+const char API_BLOCKED_IP_DELETE[] = "BlockedIPDelete"; //Удалить выражение
 const char API_BLOCKED_IP_GET[] = "BlockedIPGet"; //Получить список выражений
 //PROTOCOL---------------------------------------------------------------------
 const char CONST_UID_PROTOCOL_ENTER_APPLICATION[] = "2614cb96-ec54-4d4f-b1a6-06d2444962ca";

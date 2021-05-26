@@ -256,6 +256,9 @@
     <Local Name="Carat.Error.Query.BlockedIPAdd.InvalidFormat" Russian="Выражение некорректное: %s"/>
     <Local Name="Carat.Error.Query.BlockedIPAdd.NotInsert" Russian="Не удалось добавить выражение."/>
 
+    <Local Name="Carat.Error.Query.BlockedIPDelete.NotExist" Russian="Выражение с кодом %d не существует."/>
+    <Local Name="Carat.Error.Query.BlockedIPDelete.Delete" Russian="Не удалось удалить выражение."/>
+
     <Local Name="Carat.Error.Query.BlockedIPGet.Select" Russian="Не удалось получить выражения."/>
 
     <Local Name="Carat.Error.Query.PeriodContains.Select" Russian="Не удалось получить константу."/>

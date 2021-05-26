@@ -13,6 +13,7 @@ public:
     bool Init();
     bool IsLock(const std::string &IPAddress);
     void Add(const std::string &RegExp);
+    void Delete(const std::string &RegExp);
 
 private:
     ISBlockedIP();

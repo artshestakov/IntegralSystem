@@ -71,3 +71,10 @@ void ISBlockedIP::Add(const std::string &RegExp)
     CRITICAL_SECTION_UNLOCK(&CS);
 }
 //-----------------------------------------------------------------------------
+void ISBlockedIP::Delete(const std::string &RegExp)
+{
+    CRITICAL_SECTION_LOCK(&CS);
+    ISAlgorithm::VectorRemoveAll(Vector, RegExp);
+    CRITICAL_SECTION_UNLOCK(&CS);
+}
+//-----------------------------------------------------------------------------

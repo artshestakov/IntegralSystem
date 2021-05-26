@@ -399,6 +399,10 @@ static std::string QU_SETTING = PREPARE_QUERYN("UPDATE _usersettings SET "
 //-----------------------------------------------------------------------------
 static std::string QI_BLOCKED_IP = PREPARE_QUERYN("INSERT INTO _blockedip(blip_regexp) VALUES($1)", 1);
 //-----------------------------------------------------------------------------
+static std::string QD_BLOCKED_IP = PREPARE_QUERYN("DELETE FROM _blockedip "
+                                                  "WHERE blip_id = $1 "
+                                                  "RETURNING blip_regexp", 1);
+//-----------------------------------------------------------------------------
 static std::string QS_BLOCKED_IP = PREPARE_QUERY("SELECT blip_id, blip_regexp "
                                                  "FROM _blockedip "
                                                  "ORDER BY blip_id");
@@ -527,6 +531,7 @@ ISTcpWorker::ISTcpWorker()
     MapFunction[API_SAVE_META_DATA] = &ISTcpWorker::SaveMetaData;
     MapFunction[API_GET_RECORD_CALL] = &ISTcpWorker::GetRecordCall;
     MapFunction[API_BLOCKED_IP_ADD] = &ISTcpWorker::BlockedIPAdd;
+    MapFunction[API_BLOCKED_IP_DELETE] = &ISTcpWorker::BlockedIPDelete;
     MapFunction[API_BLOCKED_IP_GET] = &ISTcpWorker::BlockedIPGet;
 
     if (ISConfigurations::Instance().Get().Name == "OilSphere")
@@ -4453,6 +4458,35 @@ bool ISTcpWorker::BlockedIPAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
         return ErrorQuery(LANG("Carat.Error.Query.BlockedIPAdd.NotInsert"), qInsert);
     }
     ISBlockedIP::Instance().Add(RegExpString);
+    return true;
+}
+//-----------------------------------------------------------------------------
+bool ISTcpWorker::BlockedIPDelete(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
+{
+    IS_UNUSED(TcpAnswer);
+
+    unsigned int ID = 0;
+    if (!CheckIsNullUInt(TcpMessage, "ID", ID))
+    {
+        return false;
+    }
+
+    //Пытаемся удалить выражение
+    ISQuery qDelete(DBConnection, QD_BLOCKED_IP);
+    qDelete.BindUInt(ID);
+    if (!qDelete.Execute()) //Ошибка запроса
+    {
+        return ErrorQuery(LANG("Carat.Error.Query.BlockedIPDelete.Delete"), qDelete);
+    }
+
+    //Запрос не затронул ни одной записи - считаем ошибкой
+    if (!qDelete.First())
+    {
+        ErrorString = ISAlgorithm::StringF(LANG("Carat.Error.Query.BlockedIPDelete.NotExist"), ID);
+        return false;
+    }
+    //Запрос прошёл, выражение удалилось, теперь удаляем его из памяти
+    ISBlockedIP::Instance().Delete(qDelete.ReadColumn(0));
     return true;
 }
 //-----------------------------------------------------------------------------
