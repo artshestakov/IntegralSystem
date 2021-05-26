@@ -1311,7 +1311,7 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
     //Отдаём информацию о пользователе и конфигурации
     TcpAnswer->Parameters.AddMember("UserID", UserID, Allocator);
     TcpAnswer->Parameters.AddMember("UserIsSystem", UserSystem, Allocator);
-    TcpAnswer->Parameters.AddMember("UserFIO", JSON_STRING(UserFIO), Allocator);
+    TcpAnswer->Parameters.AddMember("UserFIO", JSON_STRINGA(UserFIO, Allocator), Allocator);
     TcpAnswer->Parameters.AddMember("UserGroupID", GroupID, Allocator);
     TcpAnswer->Parameters.AddMember("UserGroupFullAccess", GroupFullAccess, Allocator);
 
