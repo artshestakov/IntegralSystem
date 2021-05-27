@@ -4,6 +4,7 @@
 //-----------------------------------------------------------------------------
 ISLogger::ISLogger()
     : ErrorString(STRING_NO_ERROR),
+    HeaderUse(true),
     LastIndex(0),
     IsRunning(false),
     IsFinished(false),
@@ -30,8 +31,10 @@ const std::string& ISLogger::GetErrorString() const
     return ErrorString;
 }
 //-----------------------------------------------------------------------------
-bool ISLogger::Initialize()
+bool ISLogger::Initialize(bool header_use)
 {
+    HeaderUse = header_use;
+
     //Получаем текущую дату и запоминаем текущий день
     ISDate CurrentDate = ISDate::CurrentDate();
     CurrentDay = CurrentDate.Day;
@@ -96,16 +99,20 @@ void ISLogger::Log(ISNamespace::LogMessageType MessageType, const std::string &C
     //Получаем текущую дату и время
     ISDateTime DT = ISDateTime::CurrentDateTime();
 
-    //Формируем заголовок
-    char BufferHeader[LOG_HEADER_SIZE] = { 0 };
-    std::sprintf(BufferHeader, "%02d.%02d.%02d %02d:%02d:%02d:%03d\t%lu\t[%s][%s] ",
-        DT.Date.Day, DT.Date.Month, DT.Date.Year % 100,
-        DT.Time.Hour, DT.Time.Minute, DT.Time.Second, DT.Time.Milliseconds,
-        CURRENT_THREAD_ID(), message_type,
-        Component.empty() ? "" : Component.c_str());
-
     //Результирующая строка
-    std::string string_result(BufferHeader);
+    std::string string_result;
+
+    //Если заголовок используется - формируем его
+    if (HeaderUse)
+    {
+        char BufferHeader[LOG_HEADER_SIZE] = { 0 };
+        std::sprintf(BufferHeader, "%02d.%02d.%02d %02d:%02d:%02d:%03d\t%lu\t[%s][%s] ",
+            DT.Date.Day, DT.Date.Month, DT.Date.Year % 100,
+            DT.Time.Hour, DT.Time.Minute, DT.Time.Second, DT.Time.Milliseconds,
+            CURRENT_THREAD_ID(), message_type,
+            Component.empty() ? "" : Component.c_str());
+        string_result = BufferHeader;
+    }
 
     //Вытаскиваем аргументы
     va_list Arguments;

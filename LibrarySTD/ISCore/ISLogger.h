@@ -13,7 +13,7 @@ public:
     static ISLogger& Instance();
 
     const std::string& GetErrorString() const;
-    bool Initialize();
+    bool Initialize(bool header_use);
     void Shutdown();
     void Log(ISNamespace::LogMessageType MessageType, const std::string &Component, const char *Format, ...);
 
@@ -32,6 +32,7 @@ private:
 
 private:
     std::string ErrorString; //Описание ошибки
+    bool HeaderUse;
     std::array<std::string, LOG_ARRAY_SIZE> Array; //Массив сообщений (очередь)
     size_t LastIndex; //Последняя позиция в очереди
     bool IsRunning; //Флаг работы

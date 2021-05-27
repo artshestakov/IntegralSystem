@@ -52,7 +52,7 @@ bool ISCaratApplication::Init()
     }
 #endif
 
-    if (!ISLogger::Instance().Initialize()) //Не удалось иницилизировать логгер
+    if (!ISLogger::Instance().Initialize(true)) //Не удалось иницилизировать логгер
     {
         ISDEBUG_E("Error initialize logger: " + ISLogger::Instance().GetErrorString());
         return false;

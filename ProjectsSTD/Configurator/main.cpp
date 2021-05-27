@@ -38,7 +38,7 @@ CGConfiguratorBase* CreateClass(const std::string &ClassName); //Создать класс
 //-----------------------------------------------------------------------------
 int main(int argc, char **argv)
 {
-    if (!ISLogger::Instance().Initialize())
+    if (!ISLogger::Instance().Initialize(false))
     {
         ISDEBUG_L("Error init logger: " + ISLogger::Instance().GetErrorString());
         return EXIT_FAILURE;
