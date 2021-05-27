@@ -25,7 +25,7 @@ static std::string QS_PROTOCOL = PREPARE_QUERY("SELECT DISTINCT prtc_tablename "
     "ORDER BY prtc_tablename");
 //-----------------------------------------------------------------------------
 static std::string QD_PROTOCOL = PREPARE_QUERY("DELETE FROM _protocol "
-    "WHERE prtc_tablename = :TableName");
+    "WHERE prtc_tablename = $1");
 //-----------------------------------------------------------------------------
 CGConfiguratorUpdate::CGConfiguratorUpdate() : CGConfiguratorBase()
 {
@@ -37,6 +37,7 @@ CGConfiguratorUpdate::CGConfiguratorUpdate() : CGConfiguratorBase()
     RegisterFunction("foreigns", static_cast<Function>(&CGConfiguratorUpdate::foreigns));
     RegisterFunction("resources", static_cast<Function>(&CGConfiguratorUpdate::resources));
     RegisterFunction("databasesettings", static_cast<Function>(&CGConfiguratorUpdate::databasesettings));
+    RegisterFunction("protocol", static_cast<Function>(&CGConfiguratorUpdate::protocol));
 }
 //-----------------------------------------------------------------------------
 CGConfiguratorUpdate::~CGConfiguratorUpdate()
@@ -79,7 +80,7 @@ bool CGConfiguratorUpdate::database()
 
     if (Result)
     {
-        //Result = protocol();
+        Result = protocol();
     }
 
     return Result;
@@ -297,7 +298,7 @@ bool CGConfiguratorUpdate::databasesettings()
     return Result;
 }
 //-----------------------------------------------------------------------------
-/*bool CGConfiguratorUpdate::protocol()
+bool CGConfiguratorUpdate::protocol()
 {
     ISQuery qSelect(QS_PROTOCOL);
     if (!qSelect.Execute())
@@ -310,30 +311,30 @@ bool CGConfiguratorUpdate::databasesettings()
     while (qSelect.Next())
     {
         //Получаем мета-таблицу
-        QString TableName = qSelect.ReadColumn("prtc_tablename").toString();
-        if (ISMetaData::Instance().GetMetaTable(TableName)) //Мета-таблица нашлась - переходим в следующей
+        std::string TableName = qSelect.ReadColumn_String(0);
+        if (ISMetaData::Instance().GetTable(TableName)) //Мета-таблица нашлась - переходим в следующей
         {
             continue;
         }
 
         //Мета-таблица не нашлась - предлагаем удалить
-        if (!ISConsole::Question(QString("Delete old record with table \"%1\"?").arg(TableName))) //Пользователь не согласился - идём дальше
+        if (!ISConsole::Question(ISAlgorithm::StringF("Delete old record with table \"%s\"?", TableName.c_str()))) //Пользователь не согласился - идём дальше
         {
             continue;
         }
 
         //Пользователь согласился - удаляем
         ISQuery qDelete(QD_PROTOCOL);
-        qDelete.BindValue(":TableName", TableName);
+        qDelete.BindString(TableName);
         if (qDelete.Execute()) //Удаление прошло успешно
         {
-            ISDEBUG_L(QString("Deleted success %1 records").arg(qDelete.GetCountAffected()));
+            ISLOGGER_I(__CLASS__, "Deleted success %s records", qDelete.GetResultAffected());
         }
         else //Ошибка запроса
         {
-            ISDEBUG_L("Error deleting records: " + qDelete.GetErrorString());
+            ISLOGGER_I("Error deleting records: %s", qDelete.GetErrorString().c_str());
         }
     }
     return true;
-}*/
+}
 //-----------------------------------------------------------------------------
