@@ -135,11 +135,11 @@ static std::string QS_OLD_COLUMNS = PREPARE_QUERY("SELECT "
     return Result;
 }*/
 //-----------------------------------------------------------------------------
-/*bool CGDatabase::Function_Create(PMetaFunction *MetaFunction, QString &ErrorString)
+bool CGDatabase::Function_Create(PMetaFunction *MetaFunction, std::string &ErrorString)
 {
-    ISQuery qCreateFunction;
+    ISQuery qCreateFunction(MetaFunction->Text);
     qCreateFunction.SetShowLongQuery(false);
-    bool Result = qCreateFunction.Execute(MetaFunction->Text);
+    bool Result = qCreateFunction.Execute();
     if (Result)
     {
         Result = Helper_CommentFunction(MetaFunction, ErrorString);
@@ -149,9 +149,9 @@ static std::string QS_OLD_COLUMNS = PREPARE_QUERY("SELECT "
         ErrorString = qCreateFunction.GetErrorString();
     }
     return Result;
-}*/
+}
 //-----------------------------------------------------------------------------
-/*bool CGDatabase::Function_Delete(QString &ErrorString)
+bool CGDatabase::Function_Delete(std::string &ErrorString)
 {
     ISQuery qSelectFunction(QS_FUNCTION);
     qSelectFunction.SetShowLongQuery(false);
@@ -160,12 +160,12 @@ static std::string QS_OLD_COLUMNS = PREPARE_QUERY("SELECT "
     {
         while (qSelectFunction.Next()) //Обходим функции из БД
         {
-            QString FunctionName = qSelectFunction.ReadColumn("function_name").toString();
+            std::string FunctionName = qSelectFunction.ReadColumn_String(0);
 
             //Ищем такую функцию в мета-данных
             for (PMetaFunction *MetaFunction : ISMetaData::Instance().GetFunctions())
             {
-                if (MetaFunction->Name.toLower() == FunctionName) //Функций найдена - выходим из цикла
+                if (MetaFunction->Name == FunctionName) //Функций найдена - выходим из цикла
                 {
                     Founded = true;
                     break;
@@ -174,11 +174,11 @@ static std::string QS_OLD_COLUMNS = PREPARE_QUERY("SELECT "
 
             if (!Founded) //Если функция не найдена - предлагаем удалить
             {
-                if (ISConsole::Question(QString("Delete old function \"%1\"?").arg(FunctionName))) //Согласились на удаление
+                if (ISConsole::Question(ISAlgorithm::StringF("Delete old function \"%s\"?", FunctionName.c_str()))) //Согласились на удаление
                 {
-                    ISQuery qDelete;
+                    ISQuery qDelete("DROP FUNCTION " + FunctionName);
                     qDelete.SetShowLongQuery(false);
-                    Result = qDelete.Execute("DROP FUNCTION " + FunctionName);
+                    Result = qDelete.Execute();
                     if (!Result)
                     {
                         ErrorString = qDelete.GetErrorString();
@@ -194,7 +194,7 @@ static std::string QS_OLD_COLUMNS = PREPARE_QUERY("SELECT "
         ErrorString = qSelectFunction.GetErrorString();
     }
     return Result;
-}*/
+}
 //-----------------------------------------------------------------------------
 /*bool CGDatabase::Index_Create(PMetaIndex *Index, QString &ErrorString)
 {
@@ -861,15 +861,16 @@ bool CGDatabase::Resource_UpdateField(const std::string &TableName, const std::s
     return Result;
 }*/
 //-----------------------------------------------------------------------------
-/*bool CGDatabase::Helper_CommentFunction(PMetaFunction *MetaFunction, QString &ErrorString)
+bool CGDatabase::Helper_CommentFunction(PMetaFunction *MetaFunction, std::string &ErrorString)
 {
-    ISQuery qComment;
+    ISQuery qComment(ISAlgorithm::StringF("COMMENT ON FUNCTION %s IS '%s'",
+        MetaFunction->Name.c_str(), MetaFunction->Comment.c_str()));
     qComment.SetShowLongQuery(false);
-    bool Result = qComment.Execute(QString("COMMENT ON FUNCTION " + MetaFunction->Name + " IS '" + MetaFunction->Comment + "'"));
+    bool Result = qComment.Execute();
     if (!Result)
     {
         ErrorString = qComment.GetErrorString();
     }
     return Result;
-}*/
+}
 //-----------------------------------------------------------------------------

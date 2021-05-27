@@ -19,6 +19,7 @@ public:
     PMetaTable* GetTable(const std::string &TableName);
     const std::vector<PMetaTable*>& GetTables() const;
     const std::vector<PMetaResource*>& GetResources() const;
+    const std::vector<PMetaFunction*>& GetFunctions() const;
     const ISVectorString& GetVectorXSN() const;
     bool ISMetaData::CheckExistResource(const std::string &UID) const;
 

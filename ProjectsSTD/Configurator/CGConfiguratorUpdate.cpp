@@ -29,6 +29,7 @@ static std::string QD_PROTOCOL = PREPARE_QUERY("DELETE FROM _protocol "
 //-----------------------------------------------------------------------------
 CGConfiguratorUpdate::CGConfiguratorUpdate() : CGConfiguratorBase()
 {
+    RegisterFunction("functions", static_cast<Function>(&CGConfiguratorUpdate::functions));
     RegisterFunction("resources", static_cast<Function>(&CGConfiguratorUpdate::resources));
 }
 //-----------------------------------------------------------------------------
@@ -78,7 +79,7 @@ CGConfiguratorUpdate::~CGConfiguratorUpdate()
     return Result;
 }*/
 //-----------------------------------------------------------------------------
-/*bool CGConfiguratorUpdate::functions()
+bool CGConfiguratorUpdate::functions()
 {
     bool Result = true;
 
@@ -100,7 +101,7 @@ CGConfiguratorUpdate::~CGConfiguratorUpdate()
     }
 
     return Result;
-}*/
+}
 //-----------------------------------------------------------------------------
 /*bool CGConfiguratorUpdate::tables()
 {

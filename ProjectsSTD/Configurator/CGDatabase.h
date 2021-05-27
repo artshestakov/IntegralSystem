@@ -12,8 +12,8 @@ public: //Внешние ключи
     //static bool Foreign_Exist(PMetaForeign *MetaForeign, bool &Exist, QString &ErrorString); //Проверка существования внешнего ключа
 
 public: //Функции
-    //static bool Function_Create(PMetaFunction *MetaFunction, QString &ErrorString); //Создание функции
-    //static bool Function_Delete(QString &ErrorString); //Удаление устаревших функций
+    static bool Function_Create(PMetaFunction *MetaFunction, std::string &ErrorString); //Создание функции
+    static bool Function_Delete(std::string &ErrorString); //Удаление устаревших функций
 
 public: //Индексы
     //static bool Index_Create(PMetaIndex *Index, QString &ErrorString); //Создание индекса
@@ -47,7 +47,7 @@ public: //Служебные функции
     //static bool Helper_ExistField(PMetaTable *MetaTable, const QString &ColumnName, bool &Exist, QString &ErrorString); //Проверить существование поля в таблице базы
     //static bool Helper_CommentTable(PMetaTable *MetaTable, QString &ErrorString); //Изменить описание у таблицы
     //static bool Helper_CommentField(PMetaTable *MetaTable, PMetaField *MetaField, QString &ErrorString); //Изменить описание у поля
-    //static bool Helper_CommentFunction(PMetaFunction *MetaFunction, QString &ErrorString); //Изменить описание функции
+    static bool Helper_CommentFunction(PMetaFunction *MetaFunction, std::string &ErrorString); //Изменить описание функции
 };
 //-----------------------------------------------------------------------------
 #endif

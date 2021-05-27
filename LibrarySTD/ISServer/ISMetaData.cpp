@@ -172,6 +172,11 @@ const std::vector<PMetaResource*>& ISMetaData::GetResources() const
     return Resources;
 }
 //-----------------------------------------------------------------------------
+const std::vector<PMetaFunction*>& ISMetaData::GetFunctions() const
+{
+    return Functions;
+}
+//-----------------------------------------------------------------------------
 const ISVectorString& ISMetaData::GetVectorXSN() const
 {
     return VectorFilesXSN;

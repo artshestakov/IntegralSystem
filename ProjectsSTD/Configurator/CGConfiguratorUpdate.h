@@ -11,7 +11,7 @@ public:
     virtual ~CGConfiguratorUpdate();
 
     //bool database(); //Обновление базы данных
-    //bool functions(); //Обновление функций
+    bool functions(); //Обновление функций
     //bool tables(); //Обновление таблиц
     //bool comment(); //Комментирование таблиц
     //bool indexes(); //Обновление индексов
