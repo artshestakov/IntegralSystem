@@ -24,11 +24,11 @@ public: //Индексы
     //static bool Index_ReIndex(PMetaIndex *Index, QString &ErrorString); //Перестроить индекс
 
 public: //Ресурсы
-    //static bool Resource_Insert(PMetaResource *MetaResource, QString &ErrorString);
-    //static bool Resource_Update(PMetaResource *MetaResource, QString &ErrorString);
-    //static bool Resource_Exist(PMetaResource *MetaResource, bool &Exist, QString &ErrorString);
-    //static bool Resource_ResetField(const QString &TableName, const QString &TableAlias, const QString &FieldName, const QString &ResourceUID, QString &ErrorString); //Обнулить поле ресурса в таблице
-    //static bool Resource_UpdateField(const QString &TableName, const QString &TableAlias, const QString &FieldName, const QVariant &Value, const QString &ResourceUID, QString &ErrorString); //Обновить поле ресурса в таблице
+    static bool Resource_Insert(PMetaResource *MetaResource, std::string &ErrorString);
+    static bool Resource_Update(PMetaResource *MetaResource, std::string &ErrorString);
+    static bool Resource_Exist(PMetaResource *MetaResource, bool &Exist, std::string &ErrorString);
+    static bool Resource_ResetField(const std::string &TableName, const std::string &TableAlias, const std::string &FieldName, const std::string &ResourceUID, std::string &ErrorString); //Обнулить поле ресурса в таблице
+    static bool Resource_UpdateField(const std::string &TableName, const std::string &TableAlias, const std::string &FieldName, const std::string &Value, const std::string &ResourceUID, std::string &ErrorString); //Обновить поле ресурса в таблице
 
 public: //Последовательности
     //static bool Sequence_Create(const QString &TableName, QString &ErrorString); //Создание последовательности

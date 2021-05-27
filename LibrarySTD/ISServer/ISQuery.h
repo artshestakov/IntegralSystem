@@ -33,6 +33,7 @@ public:
     bool First();
     bool Next();
 
+    void Bind(const std::string &String);
     void BindNull();
     void BindString(const std::string &String);
     void BindString(const char *String);

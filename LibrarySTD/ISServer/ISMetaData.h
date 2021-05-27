@@ -18,7 +18,9 @@ public:
     std::string GetTypeDB(ISNamespace::FieldType FieldType) const;
     PMetaTable* GetTable(const std::string &TableName);
     const std::vector<PMetaTable*>& GetTables() const;
+    const std::vector<PMetaResource*>& GetResources() const;
     const ISVectorString& GetVectorXSN() const;
+    bool ISMetaData::CheckExistResource(const std::string &UID) const;
 
 private:
     bool XSNInit();

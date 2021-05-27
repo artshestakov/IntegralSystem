@@ -167,9 +167,26 @@ const std::vector<PMetaTable*>& ISMetaData::GetTables() const
     return Tables;
 }
 //-----------------------------------------------------------------------------
+const std::vector<PMetaResource*>& ISMetaData::GetResources() const
+{
+    return Resources;
+}
+//-----------------------------------------------------------------------------
 const ISVectorString& ISMetaData::GetVectorXSN() const
 {
     return VectorFilesXSN;
+}
+//-----------------------------------------------------------------------------
+bool ISMetaData::CheckExistResource(const std::string &UID) const
+{
+    for (PMetaResource *MetaResource : Resources)
+    {
+        if (MetaResource->UID == UID)
+        {
+            return true;
+        }
+    }
+    return false;
 }
 //-----------------------------------------------------------------------------
 bool ISMetaData::XSNInit()
@@ -699,7 +716,12 @@ bool ISMetaData::XSRInit(tinyxml2::XMLElement *XmlElement)
         ErrorString = ISAlgorithm::StringF("Not found resource UID. File: %s Line: %d", CurrentXSR, XmlElement->GetLineNum());
         return false;
     }
-    MetaResource->UID = XmlElement->Attribute("UID");
+
+    //Получаем идентификатор ресурса, переводим в нижний регистр и обрезаем фигурные скобки
+    std::string ResourceUID = XmlElement->Attribute("UID");
+    ISAlgorithm::StringToLower(ResourceUID);
+    ResourceUID = ResourceUID.substr(1, ResourceUID.size() - 2);
+    MetaResource->UID = ResourceUID;
 
     //Удаляем атрибут с идентификатором, чтобы потом пройтись по всем полям
     XmlElement->DeleteAttribute("UID");

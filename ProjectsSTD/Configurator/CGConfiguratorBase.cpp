@@ -33,7 +33,7 @@ bool CGConfiguratorBase::ExistFunction(const std::string &FunctionName)
 //-----------------------------------------------------------------------------
 void CGConfiguratorBase::Progress(const std::string &ObjectTypeName, size_t Step, size_t TotalStep, const std::string &Description)
 {
-    ISLOGGER_I(__CLASS__, "Progress \"%s\": %d of %d%s", ObjectTypeName, Step + 1, TotalStep, !Description.empty() ? ". " + Description : std::string());
+    ISLOGGER_I(__CLASS__, "Progress \"%s\": %d of %d%s", ObjectTypeName.c_str(), Step + 1, TotalStep, !Description.empty() ? (". " + Description).c_str() : "");
 }
 //-----------------------------------------------------------------------------
 void CGConfiguratorBase::RegisterFunction(const std::string &FunctionName, Function f)

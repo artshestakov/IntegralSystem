@@ -6,6 +6,7 @@
 #include "ISDebug.h"
 #include "ISLocalization.h"
 #include "ISConsole.h"
+#include "ISLogger.h"
 //-----------------------------------------------------------------------------
 static std::string QS_SETTINGS_DATABASE = PREPARE_QUERY("SELECT COUNT(*) "
     "FROM _settingsdatabase "
@@ -28,7 +29,7 @@ static std::string QD_PROTOCOL = PREPARE_QUERY("DELETE FROM _protocol "
 //-----------------------------------------------------------------------------
 CGConfiguratorUpdate::CGConfiguratorUpdate() : CGConfiguratorBase()
 {
-
+    RegisterFunction("resources", static_cast<Function>(&CGConfiguratorUpdate::resources));
 }
 //-----------------------------------------------------------------------------
 CGConfiguratorUpdate::~CGConfiguratorUpdate()
@@ -196,7 +197,7 @@ CGConfiguratorUpdate::~CGConfiguratorUpdate()
     return Result;
 }*/
 //-----------------------------------------------------------------------------
-/*bool CGConfiguratorUpdate::resources()
+bool CGConfiguratorUpdate::resources()
 {
     bool Result = true, Exist = true;
     for (size_t i = 0, CountResources = ISMetaData::Instance().GetResources().size(); i < CountResources; ++i)
@@ -226,25 +227,26 @@ CGConfiguratorUpdate::~CGConfiguratorUpdate()
             }
         }
 
-        for (const QString &TableName : Tables) //Обходим таблицы
+        for (const std::string &TableName : Tables) //Обходим таблицы
         {
-            QString TableAlias = ISMetaData::Instance().GetMetaTable(TableName)->Alias;
+            std::string TableAlias = ISMetaData::Instance().GetTable(TableName)->Alias;
 
-            ISQuery qSelectResources(QString("SELECT %1_uid AS uid FROM %2 WHERE %1_issystem").arg(TableAlias).arg(TableName));
+            ISQuery qSelectResources(ISAlgorithm::StringF("SELECT %s_uid AS uid FROM %s WHERE %s_issystem", TableAlias.c_str(), TableName.c_str(), TableAlias.c_str()));
             Result = qSelectResources.Execute();
             if (Result)
             {
                 while (qSelectResources.Next()) //Обходим ресурсы конкретной таблицы
                 {
-                    QString ResourceUID = qSelectResources.ReadColumn("uid").toString();
+                    std::string ResourceUID = qSelectResources.ReadColumn_String(0);
                     if (!ISMetaData::Instance().CheckExistResource(ResourceUID)) //Если ресурс не существует в мета-данных - предлагаем удалить его из БД
                     {
-                        if (ISConsole::Question(QString("Delete old resource %1 in table %2?").arg(ResourceUID).arg(TableName))) //Пользователь согласился удалить ресурс из БД
+                        if (ISConsole::Question(ISAlgorithm::StringF("Delete old resource %s in table %s?", ResourceUID.c_str(), TableName.c_str()))) //Пользователь согласился удалить ресурс из БД
                         {
-                            ISQuery qDeleteResource;
-                            if (!qDeleteResource.Execute(QString("DELETE FROM %1 WHERE %2_uid = '%3'").arg(TableName).arg(TableAlias).arg(ResourceUID)))
+                            ISQuery qDeleteResource(ISAlgorithm::StringF("DELETE FROM %s WHERE %s_uid = $1", TableName.c_str(), TableAlias.c_str()));
+                            qDeleteResource.BindUID(ResourceUID);
+                            if (!qDeleteResource.Execute())
                             {
-                                ISDEBUG_L(QString("Error delete resource %1: %2").arg(ResourceUID).arg(qDeleteResource.GetErrorString()));
+                                ISLOGGER_I(__CLASS__, "Error delete resource %s: %s", ResourceUID.c_str(), qDeleteResource.GetErrorString().c_str());
                             }
                         }
                     }
@@ -258,7 +260,7 @@ CGConfiguratorUpdate::~CGConfiguratorUpdate()
         }
     }
     return Result;
-}*/
+}
 //-----------------------------------------------------------------------------
 /*bool CGConfiguratorUpdate::databasesettings()
 {

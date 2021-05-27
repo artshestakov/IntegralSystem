@@ -34,7 +34,7 @@ bool CheckExistDatabase(const std::string &Database, bool &Exist); //Проверить с
 void InterpreterMode(bool &IsRunning); //Режим интерпретатора
 bool Execute(std::string &Argument); //Выполнить одиночную команду
 bool Execute(std::string &Argument, std::string &SubArgument); //Выполнить двойную команду
-std::string GetClassName(const std::string &Argument); //Получить имя класса
+CGConfiguratorBase* CreateClass(const std::string &ClassName); //Создать класс
 //-----------------------------------------------------------------------------
 int main(int argc, char **argv)
 {
@@ -333,57 +333,46 @@ bool Execute(std::string &Argument, std::string &SubArgument)
     ISAlgorithm::StringToLower(Argument);
     ISAlgorithm::StringToLower(SubArgument);
 
-    /*QString ClassName = GetClassName(Argument);
-    if (ClassName.isEmpty())
-    {
-        ISDEBUG_E("Not found class name with argument: " + Argument);
-        return false;
-    }
-
-    CGConfiguratorBase *CommandBase = ISAlgorithm::CreatePointer<CGConfiguratorBase *>(ClassName);
-    bool Result = CheckExistSlot(CommandBase, SubArgument);
+    CGConfiguratorBase *CommandBase = CreateClass(Argument);
+    bool Result = CommandBase->ExistFunction(SubArgument);
     if (Result)
     {
-        bool ReturnValue = true;
         ISTimePoint TimePoint = ISAlgorithm::GetTick();
-        Result = QMetaObject::invokeMethod(CommandBase, SubArgument.toLocal8Bit().constData(), Q_RETURN_ARG(bool, ReturnValue));
-        if (Result)
-        {
-            if (ReturnValue)
-            {
-                ISDEBUG_L(QString("Command \"%1 %2\" executed with %3 msec").arg(Argument).arg(SubArgument).arg(ISAlgorithm::GetTickDiff(ISAlgorithm::GetTick(), TimePoint)));
-            }
-            else
-            {
-                ISDEBUG_E(QString("Command \"%1 %2\" executed with error: %3").arg(Argument).arg(SubArgument).arg(CommandBase->GetErrorString()));
-            }
-        }
-        else
-        {
-            ISDEBUG_E(QString("Command \"%1 %2\" not executed.").arg(Argument).arg(SubArgument));
-        }
-        Result = ReturnValue;
+        Result = CommandBase->Invoke(SubArgument);
+        Result ?
+            ISLOGGER_I(__CLASS__, "Command \"%s %s\" executed with %d msec", Argument.c_str(), SubArgument.c_str(), ISAlgorithm::GetTickDiff(ISAlgorithm::GetTick(), TimePoint)) :
+            ISLOGGER_I(__CLASS__, "Command \"%s %s\" executed with error: %s", Argument.c_str(), SubArgument.c_str(), CommandBase->GetErrorString().c_str());
     }
     else
     {
         ISDEBUG_E("Command \"" + SubArgument + "\" not found");
     }
     delete CommandBase;
-    return Result;*/
-    return true;
+    return Result;
 }
 //-----------------------------------------------------------------------------
-std::string GetClassName(const std::string &Argument)
+CGConfiguratorBase* CreateClass(const std::string &ClassName)
 {
-    IS_UNUSED(Argument);
-
-    /*for (CGSection *Section : Arguments)
+    if (ClassName == "create")
     {
-        if (Section->Name.toLower() == Argument)
-        {
-            return Section->ClassName;
-        }
-    }*/
-    return std::string();
+        return new CGConfiguratorCreate();
+    }
+    else if (ClassName == "delete")
+    {
+        return new CGConfiguratorDelete();
+    }
+    else if (ClassName == "service")
+    {
+        return new CGConfiguratorService();
+    }
+    else if (ClassName == "show")
+    {
+        return new CGConfiguratorShow();
+    }
+    else if (ClassName == "update")
+    {
+        return new CGConfiguratorUpdate();
+    }
+    return nullptr;
 }
 //-----------------------------------------------------------------------------

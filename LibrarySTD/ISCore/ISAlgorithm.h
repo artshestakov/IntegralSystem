@@ -345,6 +345,19 @@ namespace ISAlgorithm
         return Vector;
     }
 
+    //Получить все значения словаря
+    template <typename TKey, typename TValue> std::vector<TValue> ConvertMapToValues(const std::map<TKey, TValue> &Map)
+    {
+        std::vector<TValue> Vector(Map.size());
+        size_t Index = 0;
+        for (const auto &MapItem : Map)
+        {
+            Vector[Index] = MapItem.second;
+            ++Index;
+        }
+        return Vector;
+    }
+
     //Получить все ключи словаря
     template <typename TKey, typename TValue> std::vector<TKey> ConvertUnorderedMapToKeys(const std::unordered_map<TKey, TValue> &UnorderedMap)
     {

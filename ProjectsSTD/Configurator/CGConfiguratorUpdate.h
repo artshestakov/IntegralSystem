@@ -16,7 +16,7 @@ public:
     //bool comment(); //Комментирование таблиц
     //bool indexes(); //Обновление индексов
     //bool foreigns(); //Обновление внешних ключей
-    //bool resources(); //Обновление ресурсов
+    bool resources(); //Обновление ресурсов
     //bool databasesettings(); //Обновление настроек БД
     //bool protocol(); //Очистка протокола
 };

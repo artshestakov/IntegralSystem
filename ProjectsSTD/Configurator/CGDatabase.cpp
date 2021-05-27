@@ -4,6 +4,7 @@
 //#include "ISSystem.h"
 #include "ISConsole.h"
 #include "ISDebug.h"
+#include "ISAssert.h"
 //-----------------------------------------------------------------------------
 static std::string QS_FOREIGN = PREPARE_QUERY("SELECT COUNT(*) "
     "FROM information_schema.constraint_table_usage "
@@ -47,12 +48,6 @@ static std::string QS_INDEX = PREPARE_QUERY("SELECT indisunique "
 static std::string QD_INDEX = PREPARE_QUERY("DROP INDEX public.%1");
 //-----------------------------------------------------------------------------
 static std::string Q_REINDEX = "REINDEX INDEX %1";
-//-----------------------------------------------------------------------------
-static std::string QS_RESOURCE = "SELECT COUNT(*) FROM %1 WHERE %2_uid = :ResourceUID";
-//-----------------------------------------------------------------------------
-static std::string QU_RESET_RESOURCE_FIELD = "UPDATE %1 SET %2 = NULL WHERE %3_uid = :ResourceUID";
-//-----------------------------------------------------------------------------
-static std::string QU_RESOURCE_FIELD = "UPDATE %1 SET %2 = :ResourceValue WHERE %3_uid = :ResourceUID";
 //-----------------------------------------------------------------------------
 static std::string QS_SEQUENCES = PREPARE_QUERY("SELECT COUNT(*) "
     "FROM information_schema.sequences "
@@ -313,135 +308,139 @@ static std::string QS_OLD_COLUMNS = PREPARE_QUERY("SELECT "
     return Result;
 }*/
 //-----------------------------------------------------------------------------
-/*bool CGDatabase::Resource_Insert(PMetaResource *MetaResource, QString &ErrorString)
+bool CGDatabase::Resource_Insert(PMetaResource *MetaResource, std::string &ErrorString)
 {
-    QString TableAlias = ISMetaData::Instance().GetMetaTable(MetaResource->TableName)->Alias;
+    std::string TableAlias = ISMetaData::Instance().GetTable(MetaResource->TableName)->Alias;
 
-    QString InsertText = "INSERT INTO " + MetaResource->TableName.toLower() + '(' + TableAlias + "_uid, ";
-    QString ValuesText = "VALUES(:UID, ";
+    std::string InsertText = "INSERT INTO " + MetaResource->TableName + '(' + TableAlias + "_uid, ";
+    std::string ValuesText = "VALUES($1, ";
 
     size_t CountParameters = MetaResource->Parameters.size();
     for (size_t i = 0; i < CountParameters; ++i)
     {
-        QString FieldName = TableAlias + '_' + ISAlgorithm::ConvertMapToKeys(MetaResource->Parameters)[i].toLower();
+        std::string FieldName = TableAlias + '_' + ISAlgorithm::ConvertMapToKeys(MetaResource->Parameters)[i];
         InsertText += FieldName + ", ";
-        ValuesText += ':' + FieldName + ", ";
+        ValuesText += '$' + std::to_string(i + 2) + ", ";
     }
 
-    InsertText.chop(2);
+    ISAlgorithm::StringChop(InsertText, 2);
     InsertText += ") \n";
 
-    ValuesText.chop(2);
-    ValuesText += ");";
+    ISAlgorithm::StringChop(ValuesText, 2);
+    ValuesText += ")";
 
     ISQuery qInsertResource(InsertText + ValuesText);
     qInsertResource.SetShowLongQuery(false);
-
-    bool BindValueUID = qInsertResource.BindValue(":UID", MetaResource->UID);
-    IS_ASSERT(BindValueUID, QString("Not BindValue Field UID. UID: %1").arg(MetaResource->UID));
+    qInsertResource.BindUID(MetaResource->UID);
 
     for (size_t i = 0; i < CountParameters; ++i)
     {
-        QString FieldName = TableAlias + '_' + ISAlgorithm::ConvertMapToKeys(MetaResource->Parameters)[i].toLower();
-        QString FieldValue = ISAlgorithm::ConvertMapToValues(MetaResource->Parameters)[i];
-        bool BindValue = qInsertResource.BindValue(':' + FieldName, FieldValue);
-        IS_ASSERT(BindValue, QString("Not BindValue. TableName: %1. FieldName: %2").arg(MetaResource->TableName).arg(FieldName));
+        qInsertResource.Bind(ISAlgorithm::ConvertMapToValues(MetaResource->Parameters)[i]);
     }
 
-    bool Result = qInsertResource.Execute();
-    if (!Result)
+    if (!qInsertResource.Execute())
     {
         ErrorString = qInsertResource.GetErrorString();
+        return false;
     }
-    return Result;
-}*/
+    return true;
+}
 //-----------------------------------------------------------------------------
-/*bool CGDatabase::Resource_Update(PMetaResource *MetaResource, QString &ErrorString)
+bool CGDatabase::Resource_Update(PMetaResource *MetaResource, std::string &ErrorString)
 {
-    QString TableName = MetaResource->TableName;
-    QString TableAlias = ISMetaData::Instance().GetMetaTable(TableName)->Alias;
-    QString ResourceUID = MetaResource->UID;
+    std::string TableName = MetaResource->TableName,
+        TableAlias = ISMetaData::Instance().GetTable(TableName)->Alias,
+        ResourceUID = MetaResource->UID;
 
-    bool Result = Resource_UpdateField(TableName, TableAlias, TableAlias + "_issystem", false, ResourceUID, ErrorString);
-    IS_ASSERT(Result, QString("Error update resource field. TableName: %1 FieldName: %2 UID: %3 Error: %4").arg(TableName).arg(TableAlias + "_issystem").arg(ResourceUID).arg(ErrorString));
+    if (!Resource_UpdateField(TableName, TableAlias, TableAlias + "_issystem", "false", ResourceUID, ErrorString))
+    {
+        IS_ASSERT(false, ISAlgorithm::StringF("Error update resource field. TableName: %s FieldName: %s UID: %s Error: %s",
+            TableName.c_str(), (TableAlias + "_issystem").c_str(), ResourceUID.c_str(), ErrorString.c_str()));
+    }
 
     for (const auto &Resource : MetaResource->Parameters) //ќбход параметров ресурса
     {
-        QString FieldName = Resource.first;
-        QString FieldNameComplete = QString(TableAlias + '_' + Resource.first).toLower();
-        QString FieldValue = Resource.second;
+        std::string FieldName = Resource.first,
+            FieldNameComplete = TableAlias + '_' + Resource.first,
+            FieldValue = Resource.second;
 
-        PMetaField *MetaField = ISMetaData::Instance().GetMetaField(TableName, FieldName);
+        PMetaField *MetaField = ISMetaData::Instance().GetTable(TableName)->GetField(FieldName);
         if (!MetaField->NotNull) //≈сли поле Ќ≈ я¬Ћя≈“—я об€зательным дл€ заполнени€ - обнулить его
         {
-            bool ResetField = Resource_ResetField(TableName, TableAlias, FieldNameComplete, ResourceUID, ErrorString);
-            IS_ASSERT(ResetField, QString("Not reset resource field. TableName: %1. FieldName: %2. UID: %3. Error: %4").arg(TableName).arg(FieldNameComplete).arg(ResourceUID).arg(ErrorString));
+            IS_ASSERT(Resource_ResetField(TableName, TableAlias, FieldNameComplete, ResourceUID, ErrorString),
+                ISAlgorithm::StringF("Not reset resource field. TableName: %s. FieldName: %s. UID: %s. Error: %s",
+                TableName.c_str(), FieldNameComplete.c_str(), ResourceUID.c_str(), ErrorString.c_str()));
         }
 
-        Result = Resource_UpdateField(TableName, TableAlias, FieldNameComplete, FieldValue, ResourceUID, ErrorString);
-        IS_ASSERT(Result, QString("Not update resource. TableName: %1. FieldName: %2. UID: %3. Error: %4").arg(TableName).arg(FieldNameComplete).arg(ResourceUID).arg(ErrorString));
+        IS_ASSERT(Resource_UpdateField(TableName, TableAlias, FieldNameComplete, FieldValue, ResourceUID, ErrorString),
+            ISAlgorithm::StringF("Not update resource. TableName: %s. FieldName: %s. UID: %s. Error: %s",
+                TableName.c_str(), FieldNameComplete.c_str(), ResourceUID.c_str(), ErrorString.c_str()));
     }
 
-    PMetaTable *MetaTable = ISMetaData::Instance().GetMetaTable(TableName);
+    PMetaTable *MetaTable = ISMetaData::Instance().GetTable(TableName);
     for (PMetaField *MetaField : MetaTable->Fields) //ќбход пользовательских полей таблицы и их очистка
     {
-        if (MetaField->NotNull || !MetaField->QueryText.isEmpty() || MetaField->IsSystem)
+        if (MetaField->NotNull || !MetaField->QueryText.empty() || MetaField->IsSystem)
         {
             continue;
         }
 
         if (!ISAlgorithm::VectorContains(ISAlgorithm::ConvertMapToKeys(MetaResource->Parameters), MetaField->Name))
         {
-            bool ResetUserField = Resource_ResetField(TableName, TableAlias, TableAlias + '_' + MetaField->Name, ResourceUID, ErrorString);
-            IS_ASSERT(ResetUserField, QString("Not reset resource field. TableName: %1. FieldName: %2. UID: %3. Error: %4").arg(TableName).arg(TableAlias + '_' + MetaField->Name).arg(ResourceUID).arg(ErrorString));
+            IS_ASSERT(Resource_ResetField(TableName, TableAlias, TableAlias + '_' + MetaField->Name, ResourceUID, ErrorString),
+                ISAlgorithm::StringF("Not reset resource field. TableName: %s. FieldName: %s. UID: %s. Error: %s",
+                    TableName.c_str(), (TableAlias + '_' + MetaField->Name).c_str(), ResourceUID.c_str(), ErrorString.c_str()));
         }
     }
-    return Result;
-}*/
+    return true;
+}
 //-----------------------------------------------------------------------------
-/*bool CGDatabase::Resource_Exist(PMetaResource *MetaResource, bool &Exist, QString &ErrorString)
+bool CGDatabase::Resource_Exist(PMetaResource *MetaResource, bool &Exist, std::string &ErrorString)
 {
-    ISQuery qSelectResource(QS_RESOURCE.arg(MetaResource->TableName).arg(ISMetaData::Instance().GetMetaTable(MetaResource->TableName)->Alias));
+    ISQuery qSelectResource(ISAlgorithm::StringF("SELECT COUNT(*) FROM %s WHERE %s_uid = $1",
+        MetaResource->TableName.c_str(), ISMetaData::Instance().GetTable(MetaResource->TableName)->Alias.c_str()));
     qSelectResource.SetShowLongQuery(false);
-    qSelectResource.BindValue(":ResourceUID", MetaResource->UID);
+    qSelectResource.BindUID(MetaResource->UID);
     bool Result = qSelectResource.ExecuteFirst();
     if (Result)
     {
-        Exist = qSelectResource.ReadColumn("count").toInt() > 0;
+        Exist = qSelectResource.ReadColumn_Int(0) > 0;
     }
     else
     {
         ErrorString = qSelectResource.GetErrorString();
     }
     return Result;
-}*/
+}
 //-----------------------------------------------------------------------------
-/*bool CGDatabase::Resource_ResetField(const QString &TableName, const QString &TableAlias, const QString &FieldName, const QString &ResourceUID, QString &ErrorString)
+bool CGDatabase::Resource_ResetField(const std::string &TableName, const std::string &TableAlias, const std::string &FieldName, const std::string &ResourceUID, std::string &ErrorString)
 {
-    ISQuery qReset(QU_RESET_RESOURCE_FIELD.arg(TableName).arg(FieldName).arg(TableAlias));
+    ISQuery qReset(ISAlgorithm::StringF("UPDATE %s SET %s = NULL WHERE %s_uid = $1",
+        TableName.c_str(), FieldName.c_str(), TableAlias.c_str()));
     qReset.SetShowLongQuery(false);
-    qReset.BindValue(":ResourceUID", ResourceUID);
-    bool Result = qReset.Execute();
-    if (!Result)
+    qReset.BindUID(ResourceUID);
+    if (!qReset.Execute())
     {
         ErrorString = qReset.GetErrorString();
+        return false;
     }
-    return Result;
-}*/
+    return true;
+}
 //-----------------------------------------------------------------------------
-/*bool CGDatabase::Resource_UpdateField(const QString &TableName, const QString &TableAlias, const QString &FieldName, const QVariant &Value, const QString &ResourceUID, QString &ErrorString)
+bool CGDatabase::Resource_UpdateField(const std::string &TableName, const std::string &TableAlias, const std::string &FieldName, const std::string &Value, const std::string &ResourceUID, std::string &ErrorString)
 {
-    ISQuery qUpdate(QU_RESOURCE_FIELD.arg(TableName).arg(FieldName).arg(TableAlias));
+    ISQuery qUpdate(ISAlgorithm::StringF("UPDATE %s SET %s = $1 WHERE %s_uid = $2",
+        TableName.c_str(), FieldName.c_str(), TableAlias.c_str()));
     qUpdate.SetShowLongQuery(false);
-    qUpdate.BindValue(":ResourceValue", Value);
-    qUpdate.BindValue(":ResourceUID", ResourceUID);
-    bool Result = qUpdate.Execute();
-    if (!Result)
+    qUpdate.Bind(Value);
+    qUpdate.BindUID(ResourceUID);
+    if (!qUpdate.Execute())
     {
         ErrorString = qUpdate.GetErrorString();
+        return false;
     }
-    return Result;
-}*/
+    return true;
+}
 //-----------------------------------------------------------------------------
 /*bool CGDatabase::Sequence_Create(const QString &TableName, QString &ErrorString)
 {

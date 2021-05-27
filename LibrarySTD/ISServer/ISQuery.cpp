@@ -110,6 +110,19 @@ bool ISQuery::Next()
     return true;
 }
 //-----------------------------------------------------------------------------
+void ISQuery::Bind(const std::string &String)
+{
+    size_t StringSize = String.size();
+    char *Value = (char *)malloc(StringSize + 1);
+    strcpy(Value, String.c_str());
+
+    ParameterValues.emplace_back(Value);
+    ParameterTypes.emplace_back(InvalidOid);
+    ParameterFormats.emplace_back(0);
+    ParameterLengths.emplace_back(0);
+    ++ParameterCount;
+}
+//-----------------------------------------------------------------------------
 void ISQuery::BindNull()
 {
     ParameterValues.emplace_back(nullptr);
