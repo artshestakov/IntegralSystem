@@ -45,8 +45,8 @@ public: //Таблицы
 
 public: //Служебные функции
     static bool Helper_ExistField(PMetaTable *MetaTable, const std::string &ColumnName, bool &Exist, std::string &ErrorString); //Проверить существование поля в таблице базы
-    //static bool Helper_CommentTable(PMetaTable *MetaTable, QString &ErrorString); //Изменить описание у таблицы
-    //static bool Helper_CommentField(PMetaTable *MetaTable, PMetaField *MetaField, QString &ErrorString); //Изменить описание у поля
+    static bool Helper_CommentTable(PMetaTable *MetaTable, std::string &ErrorString); //Изменить описание у таблицы
+    static bool Helper_CommentField(PMetaTable *MetaTable, PMetaField *MetaField, std::string &ErrorString); //Изменить описание у поля
     static bool Helper_CommentFunction(PMetaFunction *MetaFunction, std::string &ErrorString); //Изменить описание функции
 };
 //-----------------------------------------------------------------------------

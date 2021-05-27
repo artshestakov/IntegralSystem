@@ -32,6 +32,7 @@ CGConfiguratorUpdate::CGConfiguratorUpdate() : CGConfiguratorBase()
     RegisterFunction("database", static_cast<Function>(&CGConfiguratorUpdate::database));
     RegisterFunction("functions", static_cast<Function>(&CGConfiguratorUpdate::functions));
     RegisterFunction("tables", static_cast<Function>(&CGConfiguratorUpdate::tables));
+    RegisterFunction("comment", static_cast<Function>(&CGConfiguratorUpdate::comment));
     RegisterFunction("foreigns", static_cast<Function>(&CGConfiguratorUpdate::foreigns));
     RegisterFunction("resources", static_cast<Function>(&CGConfiguratorUpdate::resources));
 }
@@ -51,7 +52,7 @@ bool CGConfiguratorUpdate::database()
 
     if (Result)
     {
-        //Result = comment();
+        Result = comment();
     }
 
     if (Result)
@@ -127,7 +128,7 @@ bool CGConfiguratorUpdate::tables()
     return Result;
 }
 //-----------------------------------------------------------------------------
-/*bool CGConfiguratorUpdate::comment()
+bool CGConfiguratorUpdate::comment()
 {
     bool Result = true;
     for (size_t i = 0, CountTables = ISMetaData::Instance().GetTables().size(); i < CountTables; ++i) //Обход таблиц
@@ -156,7 +157,7 @@ bool CGConfiguratorUpdate::tables()
         }
     }
     return Result;
-}*/
+}
 //-----------------------------------------------------------------------------
 /*bool CGConfiguratorUpdate::indexes()
 {

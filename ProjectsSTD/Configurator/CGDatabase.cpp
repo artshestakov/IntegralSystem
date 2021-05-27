@@ -1,11 +1,13 @@
 #include "CGDatabase.h"
 #include "ISQuery.h"
 #include "ISMetaData.h"
-//#include "ISSystem.h"
 #include "ISConsole.h"
 #include "ISDebug.h"
 #include "ISAssert.h"
 #include "ISLogger.h"
+#include <rapidjson/document.h>
+#include <rapidjson/prettywriter.h>
+#include <rapidjson/stringbuffer.h>
 //-----------------------------------------------------------------------------
 static std::string QS_FOREIGN = PREPARE_QUERY("SELECT COUNT(*) "
     "FROM information_schema.constraint_table_usage "
@@ -801,63 +803,78 @@ bool CGDatabase::Helper_ExistField(PMetaTable *MetaTable, const std::string &Col
     return Result;
 }
 //-----------------------------------------------------------------------------
-/*bool CGDatabase::Helper_CommentTable(PMetaTable *MetaTable, QString &ErrorString)
+bool CGDatabase::Helper_CommentTable(PMetaTable *MetaTable, std::string &ErrorString)
 {
-    QString CommentText = ISSystem::VariantMapToJsonString(
-    {
-        { "Name", MetaTable->Name },
-        { "UID", MetaTable->UID },
-        { "Alias", MetaTable->Alias },
-        { "LocalName", MetaTable->LocalName },
-        { "LocalListName", MetaTable->LocalListName },
-        { "TitleName", MetaTable->TitleName },
-        { "ObjectForm", MetaTable->ObjectForm },
-        { "ShowOnly", MetaTable->ShowOnly },
-        { "IsSystem", MetaTable->IsSystem }
-    });
+    rapidjson::Document JsonDocument(rapidjson::Type::kObjectType);
+    auto &Allocator = JsonDocument.GetAllocator();
 
-    ISQuery qComment;
+    JsonDocument.AddMember("Name", JSON_STRINGA(MetaTable->Name.c_str(), Allocator), Allocator);
+    JsonDocument.AddMember("UID", JSON_STRINGA(MetaTable->UID.c_str(), Allocator), Allocator);
+    JsonDocument.AddMember("Alias", JSON_STRINGA(MetaTable->Alias.c_str(), Allocator), Allocator);
+    JsonDocument.AddMember("LocalName", JSON_STRINGA(MetaTable->LocalName.c_str(), Allocator), Allocator);
+    JsonDocument.AddMember("LocalListName", JSON_STRINGA(MetaTable->LocalListName.c_str(), Allocator), Allocator);
+    JsonDocument.AddMember("TitleName", JSON_STRINGA(MetaTable->TitleName.c_str(), Allocator), Allocator);
+    JsonDocument.AddMember("ShowOnly", MetaTable->ShowOnly, Allocator);
+    JsonDocument.AddMember("IsSystem", MetaTable->IsSystem, Allocator);
+
+    rapidjson::StringBuffer JsonBuffer;
+    JsonBuffer.Clear();
+
+    rapidjson::PrettyWriter<rapidjson::StringBuffer> JsonWriter(JsonBuffer);
+    JsonDocument.Accept(JsonWriter);
+    std::string CommentText = JsonBuffer.GetString();
+
+    ISQuery qComment(ISAlgorithm::StringF("COMMENT ON TABLE public.%s IS '%s'",
+        MetaTable->Name.c_str(), CommentText.c_str()));
     qComment.SetShowLongQuery(false);
-    bool Result = qComment.Execute(QString("COMMENT ON TABLE public.%1 IS '%2'").arg(MetaTable->Name.toLower()).arg(CommentText));
+    bool Result = qComment.Execute();
     if (!Result)
     {
         ErrorString = qComment.GetErrorString();
     }
     return Result;
-}*/
+}
 //-----------------------------------------------------------------------------
-/*bool CGDatabase::Helper_CommentField(PMetaTable *MetaTable, PMetaField *MetaField, QString &ErrorString)
+bool CGDatabase::Helper_CommentField(PMetaTable *MetaTable, PMetaField *MetaField, std::string &ErrorString)
 {
-    if (!MetaField->QueryText.isEmpty()) //Если поле является виртуальным - выходим с положительным результатом
+    if (!MetaField->QueryText.empty()) //Если поле является виртуальным - выходим с положительным результатом
     {
         return true;
     }
 
-    QString CommentText = ISSystem::VariantMapToJsonString(
-    {
-        { "UID", MetaField->UID },
-        { "Name", MetaField->Name },
-        { "Type", ISMetaData::Instance().GetType(MetaField->Type).TypeDB },
-        { "Size", MetaField->Size },
-        { "LabelName", MetaField->LabelName },
-        { "LocalListName", MetaField->LocalListName },
-        { "NotNull", MetaField->NotNull },
-        { "ReadOnly", MetaField->ReadOnly },
-        { "HideFromObject", MetaField->HideFromObject },
-        { "HideFromList", MetaField->HideFromList },
-        { "Hint", MetaField->Hint },
-        { "IsSystem", MetaField->IsSystem }
-    });
+    rapidjson::Document JsonDocument(rapidjson::Type::kObjectType);
+    auto &Allocator = JsonDocument.GetAllocator();
 
-    ISQuery qComment;
+    JsonDocument.AddMember("UID", JSON_STRINGA(MetaField->UID.c_str(), Allocator), Allocator);
+    JsonDocument.AddMember("Name", JSON_STRINGA(MetaField->Name.c_str(), Allocator), Allocator);
+    JsonDocument.AddMember("Type", JSON_STRINGA(ISMetaData::Instance().GetTypeDB(MetaField->Type).c_str(), Allocator), Allocator);
+    JsonDocument.AddMember("Size", MetaField->Size, Allocator);
+    JsonDocument.AddMember("LabelName", JSON_STRINGA(MetaField->LabelName.c_str(), Allocator), Allocator);
+    JsonDocument.AddMember("LocalListName", JSON_STRINGA(MetaField->LocalListName.c_str(), Allocator), Allocator);
+    JsonDocument.AddMember("NotNull", MetaField->NotNull, Allocator);
+    JsonDocument.AddMember("ReadOnly", MetaField->ReadOnly, Allocator);
+    JsonDocument.AddMember("HideFromObject", MetaField->HideFromObject, Allocator);
+    JsonDocument.AddMember("HideFromList", MetaField->HideFromList, Allocator);
+    JsonDocument.AddMember("Hint", JSON_STRINGA(MetaField->Hint.c_str(), Allocator), Allocator);
+    JsonDocument.AddMember("IsSystem", MetaField->IsSystem, Allocator);
+
+    rapidjson::StringBuffer JsonBuffer;
+    JsonBuffer.Clear();
+
+    rapidjson::PrettyWriter<rapidjson::StringBuffer> JsonWriter(JsonBuffer);
+    JsonDocument.Accept(JsonWriter);
+    std::string CommentText = JsonBuffer.GetString();
+
+    ISQuery qComment(ISAlgorithm::StringF("COMMENT ON COLUMN public.%s.%s IS '%s'",
+        MetaTable->Name.c_str(), (MetaTable->Alias + '_' + MetaField->Name).c_str(), CommentText.c_str()));
     qComment.SetShowLongQuery(false);
-    bool Result = qComment.Execute(QString("COMMENT ON COLUMN public.%1.%2 IS '%3'").arg(MetaTable->Name.toLower()).arg(MetaTable->Alias + '_' + MetaField->Name.toLower()).arg(CommentText));
+    bool Result = qComment.Execute();
     if (!Result)
     {
         ErrorString = qComment.GetErrorString();
     }
     return Result;
-}*/
+}
 //-----------------------------------------------------------------------------
 bool CGDatabase::Helper_CommentFunction(PMetaFunction *MetaFunction, std::string &ErrorString)
 {

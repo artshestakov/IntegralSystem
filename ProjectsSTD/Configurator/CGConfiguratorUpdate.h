@@ -13,7 +13,7 @@ public:
     bool database(); //Обновление базы данных
     bool functions(); //Обновление функций
     bool tables(); //Обновление таблиц
-    //bool comment(); //Комментирование таблиц
+    bool comment(); //Комментирование таблиц
     //bool indexes(); //Обновление индексов
     bool foreigns(); //Обновление внешних ключей
     bool resources(); //Обновление ресурсов

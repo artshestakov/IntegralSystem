@@ -103,7 +103,7 @@
       <TreatWarningAsError>true</TreatWarningAsError>
       <SDLCheck>true</SDLCheck>
       <MinimalRebuild>false</MinimalRebuild>
-      <AdditionalIncludeDirectories>$(SolutionDir);$(ProjectDir)..\..\Components\PostgreSQL\12.0.5\Include;$(ProjectDir)..\..\LibrarySTD\ISCore;$(ProjectDir)..\..\LibrarySTD\ISServer;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir);$(ProjectDir)..\..\Components\RapidJSON;$(ProjectDir)..\..\Components\PostgreSQL\12.0.5\Include;$(ProjectDir)..\..\LibrarySTD\ISCore;$(ProjectDir)..\..\LibrarySTD\ISServer;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
@@ -128,7 +128,7 @@ $(SolutionDir)Revision.cmd $(SolutionDir) $(Configuration) $(Platform)</Command>
       <TreatWarningAsError>true</TreatWarningAsError>
       <SDLCheck>true</SDLCheck>
       <MinimalRebuild>false</MinimalRebuild>
-      <AdditionalIncludeDirectories>$(SolutionDir);$(ProjectDir)..\..\Components\PostgreSQL\12.0.5\Include;$(ProjectDir)..\..\LibrarySTD\ISCore;$(ProjectDir)..\..\LibrarySTD\ISServer;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir);$(ProjectDir)..\..\Components\RapidJSON;$(ProjectDir)..\..\Components\PostgreSQL\12.0.5\Include;$(ProjectDir)..\..\LibrarySTD\ISCore;$(ProjectDir)..\..\LibrarySTD\ISServer;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
@@ -154,7 +154,7 @@ $(SolutionDir)Revision.cmd $(SolutionDir) $(Configuration) $(Platform)</Command>
       <PreprocessorDefinitions>WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <TreatWarningAsError>true</TreatWarningAsError>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir);$(ProjectDir)..\..\Components\PostgreSQL\12.0.5\Include;$(ProjectDir)..\..\LibrarySTD\ISCore;$(ProjectDir)..\..\LibrarySTD\ISServer;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir);$(ProjectDir)..\..\Components\RapidJSON;$(ProjectDir)..\..\Components\PostgreSQL\12.0.5\Include;$(ProjectDir)..\..\LibrarySTD\ISCore;$(ProjectDir)..\..\LibrarySTD\ISServer;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
@@ -182,7 +182,7 @@ $(SolutionDir)Revision.cmd $(SolutionDir) $(Configuration) $(Platform)</Command>
       <PreprocessorDefinitions>WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <TreatWarningAsError>true</TreatWarningAsError>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir);$(ProjectDir)..\..\Components\PostgreSQL\12.0.5\Include;$(ProjectDir)..\..\LibrarySTD\ISCore;$(ProjectDir)..\..\LibrarySTD\ISServer;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir);$(ProjectDir)..\..\Components\RapidJSON;$(ProjectDir)..\..\Components\PostgreSQL\12.0.5\Include;$(ProjectDir)..\..\LibrarySTD\ISCore;$(ProjectDir)..\..\LibrarySTD\ISServer;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
