@@ -10,12 +10,12 @@
 #include "ISRevision.h"
 #include "ISResourcer.h"
 //-----------------------------------------------------------------------------
-//#include "CGConfigurator.h"
-//#include "CGConfiguratorCreate.h"
-//#include "CGConfiguratorUpdate.h"
-//#include "CGConfiguratorDelete.h"
-//#include "CGConfiguratorService.h"
-//#include "CGConfiguratorShow.h"
+#include "CGConfigurator.h"
+#include "CGConfiguratorCreate.h"
+#include "CGConfiguratorUpdate.h"
+#include "CGConfiguratorDelete.h"
+#include "CGConfiguratorService.h"
+#include "CGConfiguratorShow.h"
 //-----------------------------------------------------------------------------
 static std::string QS_DATABASE = PREPARE_QUERYN("SELECT COUNT(*) "
     "FROM pg_database "
@@ -35,7 +35,6 @@ void InterpreterMode(bool &IsRunning); //Режим интерпретатора
 bool Execute(std::string &Argument); //Выполнить одиночную команду
 bool Execute(std::string &Argument, std::string &SubArgument); //Выполнить двойную команду
 std::string GetClassName(const std::string &Argument); //Получить имя класса
-//bool CheckExistSlot(QObject *Object, const std::string &SlotName); //Проверить наличие слота в объекте
 //-----------------------------------------------------------------------------
 int main(int argc, char **argv)
 {
@@ -303,18 +302,18 @@ bool Execute(std::string &Argument)
 {
     ISAlgorithm::StringToLower(Argument);
 
-    /*CGConfigurator Configurator(Arguments);
-    bool Result = CheckExistSlot(&Configurator, Argument);
+    CGConfigurator Configurator(Arguments);
+    bool Result = Configurator.ExistFunction(Argument);
     if (Result)
     {
         bool ReturnValue = true;
         ISTimePoint TimePoint = ISAlgorithm::GetTick();
-        Result = QMetaObject::invokeMethod(&Configurator, Argument.toUtf8().data(), Q_RETURN_ARG(bool, ReturnValue));
+        Result = Configurator.Invoke(Argument);
         if (Result)
         {
             ReturnValue ?
-                ISDEBUG_L("Command \"" + Argument + "\" executed with " + QString::number(ISAlgorithm::GetTickDiff(ISAlgorithm::GetTick(), TimePoint)) + " msec") :
-                ISDEBUG_L("Command \"" + Argument + "\" executed with error " + Configurator.GetErrorString());
+                ISLOGGER_I(__CLASS__, "Commnd \"%s\" executed with %d msec", Argument.c_str(), ISAlgorithm::GetTickDiff(ISAlgorithm::GetTick(), TimePoint)) :
+                ISLOGGER_I(__CLASS__, "Command \"%s\" executed with error: %s", Argument.c_str(), Configurator.GetErrorString().c_str());
         }
         else
         {
@@ -326,8 +325,7 @@ bool Execute(std::string &Argument)
     {
         ISDEBUG_L("Command \"" + Argument + "\" not found");
     }
-    return Result;*/
-    return true;
+    return Result;
 }
 //-----------------------------------------------------------------------------
 bool Execute(std::string &Argument, std::string &SubArgument)
@@ -388,18 +386,4 @@ std::string GetClassName(const std::string &Argument)
     }*/
     return std::string();
 }
-//-----------------------------------------------------------------------------
-/*bool CheckExistSlot(QObject *Object, const std::string &SlotName)
-{
-    bool Result = false;
-    for (int i = 0; i < Object->metaObject()->methodCount(); ++i)
-    {
-        Result = Object->metaObject()->method(i).name() == SlotName;
-        if (Result)
-        {
-            break;
-        }
-    }
-    return Result;
-}*/
 //-----------------------------------------------------------------------------

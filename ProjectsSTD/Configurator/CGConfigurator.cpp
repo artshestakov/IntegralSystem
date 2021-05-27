@@ -7,7 +7,7 @@ CGConfigurator::CGConfigurator(const std::vector<CGSection> &arguments)
     : CGConfiguratorBase(),
     Arguments(arguments)
 {
-
+    RegisterFunction("help", static_cast<Function>(&CGConfigurator::help));
 }
 //-----------------------------------------------------------------------------
 CGConfigurator::~CGConfigurator()
@@ -24,7 +24,7 @@ bool CGConfigurator::help()
     {
         for (CGSectionItem SectionItem : Section.Items)
         {
-            ISLOGGER_I("%s %s - %s", Section.Name.c_str(), SectionItem.Function.c_str(), SectionItem.Description.c_str());
+            ISLOGGER_I(__CLASS__, "%s %s - %s", Section.Name.c_str(), SectionItem.Function.c_str(), SectionItem.Description.c_str());
         }
     }
     return true;
