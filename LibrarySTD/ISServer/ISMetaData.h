@@ -21,6 +21,7 @@ public:
     const std::vector<PMetaResource*>& GetResources() const;
     const std::vector<PMetaFunction*>& GetFunctions() const;
     std::vector<PMetaForeign*> GetForeigns() const;
+    std::vector<PMetaIndex*> GetIndexes() const;
     const ISVectorString& GetVectorXSN() const;
     bool ISMetaData::CheckExistResource(const std::string &UID) const;
 

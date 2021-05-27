@@ -193,6 +193,25 @@ std::vector<PMetaForeign*> ISMetaData::GetForeigns() const
     return Foreigns;
 }
 //-----------------------------------------------------------------------------
+std::vector<PMetaIndex*> ISMetaData::GetIndexes() const
+{
+    std::vector<PMetaIndex*> Indexes;
+    for (PMetaTable *MetaTable : GetTables()) //Обход таблиц
+    {
+        for (PMetaField *MetaField : MetaTable->Fields) //Обход полей
+        {
+            if (MetaField->Index)
+            {
+                Indexes.emplace_back(MetaField->Index);
+            }
+        }
+
+        //Добавляем составные индексы
+        Indexes.insert(Indexes.end(), MetaTable->IndexesCompound.begin(), MetaTable->IndexesCompound.end());
+    }
+    return Indexes;
+}
+//-----------------------------------------------------------------------------
 const ISVectorString& ISMetaData::GetVectorXSN() const
 {
     return VectorFilesXSN;

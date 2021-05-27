@@ -33,6 +33,7 @@ CGConfiguratorUpdate::CGConfiguratorUpdate() : CGConfiguratorBase()
     RegisterFunction("functions", static_cast<Function>(&CGConfiguratorUpdate::functions));
     RegisterFunction("tables", static_cast<Function>(&CGConfiguratorUpdate::tables));
     RegisterFunction("comment", static_cast<Function>(&CGConfiguratorUpdate::comment));
+    RegisterFunction("indexes", static_cast<Function>(&CGConfiguratorUpdate::indexes));
     RegisterFunction("foreigns", static_cast<Function>(&CGConfiguratorUpdate::foreigns));
     RegisterFunction("resources", static_cast<Function>(&CGConfiguratorUpdate::resources));
 }
@@ -57,7 +58,7 @@ bool CGConfiguratorUpdate::database()
 
     if (Result)
     {
-        //Result = indexes();
+        Result = indexes();
     }
 
     if (Result)
@@ -159,7 +160,7 @@ bool CGConfiguratorUpdate::comment()
     return Result;
 }
 //-----------------------------------------------------------------------------
-/*bool CGConfiguratorUpdate::indexes()
+bool CGConfiguratorUpdate::indexes()
 {
     bool Result = true, Exist = true;
     std::vector<PMetaIndex*> Indexes = ISMetaData::Instance().GetIndexes();
@@ -179,7 +180,7 @@ bool CGConfiguratorUpdate::comment()
         }
     }
     return Result;
-}*/
+}
 //-----------------------------------------------------------------------------
 bool CGConfiguratorUpdate::foreigns()
 {

@@ -35,18 +35,18 @@ static std::string QS_COLUMN = PREPARE_QUERY("SELECT COUNT(*) "
     "AND lower(table_name) = lower($1) "
     "AND lower(column_name) = lower($2)");
 //-----------------------------------------------------------------------------
-static std::string QS_INDEXES = PREPARE_QUERY("SELECT COUNT(*) FROM pg_indexes WHERE schemaname = current_schema() AND tablename = :TableName AND indexname = :IndexName");
-//-----------------------------------------------------------------------------
-static std::string QC_INDEX = "CREATE %1 INDEX %2 ON public.%3 USING btree(%4)";
+static std::string QS_INDEXES = PREPARE_QUERY("SELECT COUNT(*) "
+    "FROM pg_indexes "
+    "WHERE schemaname = current_schema() "
+    "AND lower(tablename) = lower($1) "
+    "AND indexname = $2");
 //-----------------------------------------------------------------------------
 static std::string QS_INDEX = PREPARE_QUERY("SELECT indisunique "
     "FROM pg_indexes "
     "JOIN pg_class c ON c.relname = indexname "
     "JOIN pg_index ON indexrelid = c.oid "
     "WHERE schemaname = current_schema() "
-    "AND indexname = :IndexName");
-//-----------------------------------------------------------------------------
-static std::string QD_INDEX = PREPARE_QUERY("DROP INDEX public.%1");
+    "AND indexname = $1");
 //-----------------------------------------------------------------------------
 static std::string Q_REINDEX = "REINDEX INDEX %1";
 //-----------------------------------------------------------------------------
@@ -196,43 +196,43 @@ bool CGDatabase::Function_Delete(std::string &ErrorString)
     return Result;
 }
 //-----------------------------------------------------------------------------
-/*bool CGDatabase::Index_Create(PMetaIndex *Index, QString &ErrorString)
+bool CGDatabase::Index_Create(PMetaIndex *Index, std::string &ErrorString)
 {
-    QString Fields, SqlText = QC_INDEX.arg(Index->Unique ? "UNIQUE" : QString()).arg(Index->GetName()).arg(Index->TableName);
+    std::string Fields;
     if (!Index->Fields.empty())
     {
-        for (const QString &String : Index->Fields)
+        for (const std::string &String : Index->Fields)
         {
-            Fields += (Index->Alias + '_' + String).toLower() + ", ";
+            Fields += ISAlgorithm::StringToLowerGet(Index->Alias + '_' + String) + ", ";
         }
-        Fields.chop(2);
-        SqlText = SqlText.arg(Fields);
+        ISAlgorithm::StringChop(Fields, 2);
     }
     else
     {
-        SqlText = SqlText.arg(Index->Alias + '_' + Index->FieldName.toLower());
+        Fields = ISAlgorithm::StringToLowerGet(Index->Alias + '_' + Index->FieldName);
     }
 
-    ISQuery qCreateIndex;
+    ISQuery qCreateIndex(ISAlgorithm::StringF("CREATE %s INDEX %s ON public.%s USING btree(%s)",
+        Index->Unique ? "UNIQUE" : "", Index->GetName().c_str(), Index->TableName.c_str(), Fields.c_str()));
     qCreateIndex.SetShowLongQuery(false);
-    bool Result = qCreateIndex.Execute(SqlText);
+    bool Result = qCreateIndex.Execute();
     if (!Result)
     {
         ErrorString = qCreateIndex.GetErrorString();
     }
     return Result;
-}*/
+}
 //-----------------------------------------------------------------------------
-/*bool CGDatabase::Index_Update(PMetaIndex *Index, QString &ErrorString)
+bool CGDatabase::Index_Update(PMetaIndex *Index, std::string &ErrorString)
 {
     ISQuery qSelect(QS_INDEX);
-    qSelect.BindValue(":IndexName", Index->GetName());
+    qSelect.BindString(Index->GetName().c_str());
     qSelect.SetShowLongQuery(false);
     bool Result = qSelect.ExecuteFirst();
     if (Result)
     {
         //Если уникальность индекса в БД не совпадает с мета-данными - обновляем
-        if (qSelect.ReadColumn("indisunique").toBool() != Index->Unique)
+        if (qSelect.ReadColumn_Bool(0) != Index->Unique)
         {
             Result = Index_Delete(Index, ErrorString);
             if (Result)
@@ -246,36 +246,36 @@ bool CGDatabase::Function_Delete(std::string &ErrorString)
         ErrorString = qSelect.GetErrorString();
     }
     return Result;
-}*/
+}
 //-----------------------------------------------------------------------------
-/*bool CGDatabase::Index_Delete(PMetaIndex *Index, QString &ErrorString)
+bool CGDatabase::Index_Delete(PMetaIndex *Index, std::string &ErrorString)
 {
-    ISQuery qDelete;
-    bool Result = qDelete.Execute(QD_INDEX.arg(Index->GetName()));
+    ISQuery qDelete(ISAlgorithm::StringF("DROP INDEX public.%s", Index->GetName().c_str()));
+    bool Result = qDelete.Execute();
     if (!Result)
     {
         ErrorString = qDelete.GetErrorString();
     }
     return Result;
-}*/
+}
 //-----------------------------------------------------------------------------
-/*bool CGDatabase::Index_Exist(PMetaIndex *Index, bool &Exist, QString &ErrorString)
+bool CGDatabase::Index_Exist(PMetaIndex *Index, bool &Exist, std::string &ErrorString)
 {
     ISQuery qSelectIndex(QS_INDEXES);
     qSelectIndex.SetShowLongQuery(false);
-    qSelectIndex.BindValue(":TableName", Index->TableName.toLower());
-    qSelectIndex.BindValue(":IndexName", Index->GetName());
+    qSelectIndex.BindString(Index->TableName);
+    qSelectIndex.BindString(Index->GetName());
     bool Result = qSelectIndex.ExecuteFirst();
     if (Result)
     {
-        Exist = qSelectIndex.ReadColumn("count").toInt() > 0;
+        Exist = qSelectIndex.ReadColumn_Int(0) > 0;
     }
     else
     {
         ErrorString = qSelectIndex.GetErrorString();
     }
     return Result;
-}*/
+}
 //-----------------------------------------------------------------------------
 /*bool CGDatabase::Index_CheckForeign(PMetaIndex *Index)
 {

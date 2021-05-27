@@ -20,6 +20,25 @@ struct PMetaIndex : public PMetaBase
         : PMetaBase("Index"),
         Unique(unique), Alias(alias), TableName(table_name), FieldName(field_name) { }
 
+    std::string GetName() //Получить имя индекса
+    {
+        std::string IndexName;
+        if (!Fields.empty()) //Если индекс составной
+        {
+            IndexName += TableName + '_';
+            for (const std::string &String : Fields)
+            {
+                IndexName += String + '_';
+            }
+            ISAlgorithm::StringChop(IndexName, 1);
+        }
+        else
+        {
+            IndexName = TableName + '_' + FieldName;
+        }
+        return ISAlgorithm::StringToLowerGet(IndexName);
+    }
+
     bool Unique;
     std::string Alias;
     std::string TableName;

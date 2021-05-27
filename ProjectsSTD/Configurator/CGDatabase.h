@@ -16,10 +16,10 @@ public: //Функции
     static bool Function_Delete(std::string &ErrorString); //Удаление устаревших функций
 
 public: //Индексы
-    //static bool Index_Create(PMetaIndex *Index, QString &ErrorString); //Создание индекса
-    //static bool Index_Update(PMetaIndex *Index, QString &ErrorString); //Обновляем индекс
-    //static bool Index_Delete(PMetaIndex *Index, QString &ErrorString); //Удалить индекс
-    //static bool Index_Exist(PMetaIndex *Index, bool &Exist, QString &ErrorString); //Проверка существования индекса
+    static bool Index_Create(PMetaIndex *Index, std::string &ErrorString); //Создание индекса
+    static bool Index_Update(PMetaIndex *Index, std::string &ErrorString); //Обновляем индекс
+    static bool Index_Delete(PMetaIndex *Index, std::string &ErrorString); //Удалить индекс
+    static bool Index_Exist(PMetaIndex *Index, bool &Exist, std::string &ErrorString); //Проверка существования индекса
     //static bool Index_CheckForeign(PMetaIndex *Index); //Проверить ссылается ли на этот индекс внешний ключ
     //static bool Index_ReIndex(PMetaIndex *Index, QString &ErrorString); //Перестроить индекс
 

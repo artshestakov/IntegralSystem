@@ -14,7 +14,7 @@ public:
     bool functions(); //Обновление функций
     bool tables(); //Обновление таблиц
     bool comment(); //Комментирование таблиц
-    //bool indexes(); //Обновление индексов
+    bool indexes(); //Обновление индексов
     bool foreigns(); //Обновление внешних ключей
     bool resources(); //Обновление ресурсов
     //bool databasesettings(); //Обновление настроек БД
