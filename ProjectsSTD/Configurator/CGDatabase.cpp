@@ -773,7 +773,7 @@ bool CGDatabase::Table_DeleteFields(PMetaTable *MetaTable, std::string &ErrorStr
                 }
                 else //Не согласен удалять поле - пропускаем и идём дальше
                 {
-                    ISLOGGER_I(__CLASS__, "Skip deletion field: %s", FieldFullName);
+                    ISLOGGER_I(__CLASS__, "Skip deletion field: %s", FieldFullName.c_str());
                 }
             }
         }

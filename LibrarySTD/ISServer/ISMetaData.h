@@ -23,7 +23,7 @@ public:
     std::vector<PMetaForeign*> GetForeigns() const;
     std::vector<PMetaIndex*> GetIndexes() const;
     const ISVectorString& GetVectorXSN() const;
-    bool ISMetaData::CheckExistResource(const std::string &UID) const;
+    bool CheckExistResource(const std::string &UID) const;
 
 private:
     bool XSNInit();

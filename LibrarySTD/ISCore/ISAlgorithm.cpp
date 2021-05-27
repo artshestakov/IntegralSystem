@@ -1149,7 +1149,7 @@ bool ISAlgorithm::StartProcess(const std::string &Path, std::string &ErrorString
     }
 #else
     bool Result = false;
-    IS_ASSERT(false, "not support");
+    //IS_ASSERT(false, "not support");
 #endif
     return Result;
 }

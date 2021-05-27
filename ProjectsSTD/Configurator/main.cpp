@@ -62,7 +62,7 @@ int main(int argc, char **argv)
     if (!ISConfig::Instance().IsValid())
     {
         ISLOGGER_E(__CLASS__, "Config file is not valid: %s", ISConfig::Instance().GetErrorString().c_str());
-        return false;
+        return EXIT_FAILURE;
     }
 
     DBHost = ISConfig::Instance().GetValueString("Database", "Host");
@@ -75,7 +75,7 @@ int main(int argc, char **argv)
     if (!ISResourcer::Instance().LoadFile(ISAlgorithm::GetApplicationDir() + PATH_SEPARATOR + "Resources.bin"))
     {
         ISLOGGER_E("ISResourcer", "Not read resource file: %s", ISResourcer::Instance().GetErrorString().c_str());
-        return false;
+        return EXIT_FAILURE;
     }
 
     //Загрузка локализации //???
@@ -234,7 +234,7 @@ bool CreateDatabase()
     }
     else //Не удалось проверить наличие БД
     {
-        ISLOGGER_E(__CLASS__, "Checking exist database \"%s\": %s", DBName, ISDatabase::Instance().GetErrorString().c_str());
+        ISLOGGER_E(__CLASS__, "Checking exist database \"%s\": %s", DBName.c_str(), ISDatabase::Instance().GetErrorString().c_str());
     }
 
     //Отключаемся от системной БД и выходим
