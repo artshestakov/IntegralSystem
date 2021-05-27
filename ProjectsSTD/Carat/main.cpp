@@ -12,8 +12,9 @@ int main(int argc, char **argv)
         Result = Carat.Start() == EXIT_SUCCESS;
     }
     
+    //Временно закоментировано
     //Остановим логгер
-    ISLogger::Instance().Shutdown();
+    //ISLogger::Instance().Shutdown();
 
     //Проверим, нужно ли нам остановиться перед выходом
     if (ISAlgorithm::IsDebug() && ISAlgorithm::IsWin32() && Carat.GetServiceMode())
