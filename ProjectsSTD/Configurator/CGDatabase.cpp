@@ -657,11 +657,11 @@ bool CGDatabase::Table_AlterFields(PMetaTable *MetaTable, std::string &ErrorStri
                 std::string QueryText;
                 if (!ColumnNotNull && MetaField->NotNull)
                 {
-                    QueryText = "ALTER TABLE public." + MetaTable->Name + " ALTER COLUMN \"" + MetaTable->Alias + '_' + MetaField->Name + "\" SET NOT NULL";
+                    QueryText = "ALTER TABLE public." + MetaTable->Name + " ALTER COLUMN \"" + MetaTable->Alias + '_' + ISAlgorithm::StringToLowerGet(MetaField->Name) + "\" SET NOT NULL";
                 }
                 else if (ColumnNotNull && !MetaField->NotNull)
                 {
-                    QueryText = "ALTER TABLE public." + MetaTable->Name + " ALTER COLUMN \"" + MetaTable->Alias + '_' + MetaField->Name + "\" DROP NOT NULL";
+                    QueryText = "ALTER TABLE public." + MetaTable->Name + " ALTER COLUMN \"" + MetaTable->Alias + '_' + ISAlgorithm::StringToLowerGet(MetaField->Name) + "\" DROP NOT NULL";
                 }
 
                 ISQuery qAlterNotNull(QueryText);
