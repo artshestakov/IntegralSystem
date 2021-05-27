@@ -5,6 +5,7 @@
 #include "ISConsole.h"
 #include "ISDebug.h"
 #include "ISAssert.h"
+#include "ISLogger.h"
 //-----------------------------------------------------------------------------
 static std::string QS_FOREIGN = PREPARE_QUERY("SELECT COUNT(*) "
     "FROM information_schema.constraint_table_usage "
@@ -31,8 +32,8 @@ static std::string QS_COLUMN = PREPARE_QUERY("SELECT COUNT(*) "
     "FROM information_schema.columns "
     "WHERE table_catalog = current_database() "
     "AND table_schema = current_schema() "
-    "AND table_name = :TableName "
-    "AND column_name = :ColumnName");
+    "AND lower(table_name) = lower($1) "
+    "AND lower(column_name) = lower($2)");
 //-----------------------------------------------------------------------------
 static std::string QS_INDEXES = PREPARE_QUERY("SELECT COUNT(*) FROM pg_indexes WHERE schemaname = current_schema() AND tablename = :TableName AND indexname = :IndexName");
 //-----------------------------------------------------------------------------
@@ -52,20 +53,18 @@ static std::string Q_REINDEX = "REINDEX INDEX %1";
 static std::string QS_SEQUENCES = PREPARE_QUERY("SELECT COUNT(*) "
     "FROM information_schema.sequences "
     "WHERE sequence_catalog = current_database() "
-    "AND sequence_name = :SequenceName");
+    "AND sequence_name = $1");
 //-----------------------------------------------------------------------------
-static std::string QC_SEQUENCE = "CREATE SEQUENCE public.%1 "
-"INCREMENT 1 MINVALUE 1 "
-"START 1 "
-"CACHE 1";
-//-----------------------------------------------------------------------------
-static std::string QS_TABLE = PREPARE_QUERY("SELECT COUNT(*) FROM pg_tables WHERE schemaname = current_schema() AND tablename = :TableName");
+static std::string QS_TABLE = PREPARE_QUERY("SELECT COUNT(*) "
+    "FROM pg_tables "
+    "WHERE schemaname = current_schema() "
+    "AND lower(tablename) = lower($1)");
 //-----------------------------------------------------------------------------
 static std::string QS_COLUMNS = PREPARE_QUERY("SELECT column_name AS column_full_name, split_part(column_name, '_', 2) AS column_name, column_default, is_nullable::BOOLEAN, data_type, character_maximum_length "
     "FROM information_schema.columns "
     "WHERE table_catalog = current_database() "
     "AND table_schema = current_schema() "
-    "AND table_name = :TableName "
+    "AND lower(table_name) = lower($1) "
     "ORDER BY ordinal_position");
 //-----------------------------------------------------------------------------
 static std::string QS_OLD_COLUMNS = PREPARE_QUERY("SELECT "
@@ -74,7 +73,7 @@ static std::string QS_OLD_COLUMNS = PREPARE_QUERY("SELECT "
     "FROM information_schema.columns "
     "WHERE table_catalog = current_database() "
     "AND table_schema = current_schema() "
-    "AND table_name = :TableName "
+    "AND lower(table_name) = lower($1) "
     "ORDER BY ordinal_position");
 //-----------------------------------------------------------------------------
 /*bool CGDatabase::Foreign_Create(PMetaForeign *MetaForeign, QString &ErrorString)
@@ -442,51 +441,52 @@ bool CGDatabase::Resource_UpdateField(const std::string &TableName, const std::s
     return true;
 }
 //-----------------------------------------------------------------------------
-/*bool CGDatabase::Sequence_Create(const QString &TableName, QString &ErrorString)
+bool CGDatabase::Sequence_Create(const std::string &TableName, std::string &ErrorString)
 {
-    ISQuery qCreateSequence;
+    ISQuery qCreateSequence(ISAlgorithm::StringF("CREATE SEQUENCE public.%s INCREMENT 1 MINVALUE 1 START 1 CACHE 1", Sequence_GetName(TableName).c_str()));
     qCreateSequence.SetShowLongQuery(false);
-    bool Result = qCreateSequence.Execute(QC_SEQUENCE.arg(Sequence_GetName(TableName)));
+    bool Result = qCreateSequence.Execute();
     if (!Result)
     {
         ErrorString = qCreateSequence.GetErrorString();
     }
     return Result;
-}*/
+}
 //-----------------------------------------------------------------------------
-/*bool CGDatabase::Sequence_Exist(const QString &TableName, bool &Exist, QString &ErrorString)
+bool CGDatabase::Sequence_Exist(const std::string &TableName, bool &Exist, std::string &ErrorString)
 {
     ISQuery qSelectSequences(QS_SEQUENCES);
     qSelectSequences.SetShowLongQuery(false);
-    qSelectSequences.BindValue(":SequenceName", Sequence_GetName(TableName));
+    qSelectSequences.BindString(Sequence_GetName(TableName));
     bool Result = qSelectSequences.ExecuteFirst();
     if (Result)
     {
-        Exist = qSelectSequences.ReadColumn("count").toInt() > 0;
+        Exist = qSelectSequences.ReadColumn_Int(0) > 0;
     }
     else
     {
         ErrorString = qSelectSequences.GetErrorString();
     }
     return Result;
-}*/
+}
 //-----------------------------------------------------------------------------
-/*QString CGDatabase::Sequence_GetName(const QString &TableName)
+std::string CGDatabase::Sequence_GetName(const std::string &TableName)
 {
-    return TableName + "_sequence";
-}*/
+    return ISAlgorithm::StringToLowerGet(TableName + "_sequence");
+}
 //-----------------------------------------------------------------------------
-/*bool CGDatabase::Table_Create(PMetaTable *MetaTable, QString &ErrorString)
+bool CGDatabase::Table_Create(PMetaTable *MetaTable, std::string &ErrorString)
 {
-    QString TableName = MetaTable->Name.toLower(), TableAlias = MetaTable->Alias.toLower();
+    std::string TableName = MetaTable->Name,
+        TableAlias = MetaTable->Alias;
 
     bool Exist = true;
-    bool Result = CGDatabase::Sequence_Exist(TableName, Exist, ErrorString);
+    bool Result = Sequence_Exist(TableName, Exist, ErrorString);
     if (Result)
     {
         if (!Exist)
         {
-            Result = CGDatabase::Sequence_Create(TableName, ErrorString);
+            Result = Sequence_Create(TableName, ErrorString);
         }
     }
 
@@ -496,37 +496,34 @@ bool CGDatabase::Resource_UpdateField(const std::string &TableName, const std::s
     }
 
     //Заголовок запроса
-    QString SqlText = "CREATE TABLE public." + MetaTable->Name.toLower() + " \n( \n";
+    std::string SqlText = "CREATE TABLE public." + MetaTable->Name + " \n( \n";
 
     //Формирование запроса на создание таблицы
     for (PMetaField *MetaField : MetaTable->Fields) //Обход полей таблицы
     {
-        if (!MetaField->QueryText.isEmpty())
+        if (!MetaField->QueryText.empty())
         {
             continue;
         }
 
-        QString FieldName = MetaField->Name; //Имя поля
         ISNamespace::FieldType FieldType = MetaField->Type; //Тип поля
-        int FieldSize = MetaField->Size; //Размер поля
-        QString FieldDefalutValue = MetaField->DefaultValue.toString(); //Значение по умолчанию для поля
         bool FieldNotNull = MetaField->NotNull; //Статус обязательного заполнения поля
 
-        SqlText += "\t" + TableAlias + '_' + FieldName.toLower() + SYMBOL_SPACE + ISMetaData::Instance().GetType(FieldType).TypeDB;
+        SqlText += "\t" + TableAlias + '_' + MetaField->Name + ' ' + ISMetaData::Instance().GetTypeDB(FieldType);
 
-        if (FieldSize > 0) //Если указан размер поля
+        if (MetaField->Size > 0) //Если указан размер поля
         {
-            SqlText += QString("(%1)").arg(FieldSize);
+            SqlText += ISAlgorithm::StringF("(%d)", MetaField->Size);
         }
 
         if (MetaField->Sequence) //Если поле является последовательностью - устанавливаем счётчик значением по умолчанию
         {
-            SqlText += QString(" DEFAULT nextval('%1'::regclass)").arg(CGDatabase::Sequence_GetName(TableName));
+            SqlText += ISAlgorithm::StringF(" DEFAULT nextval('%s'::regclass)", Sequence_GetName(TableName).c_str());
         }
         else //Поле не является поледовательностью - устанавливаем указанное значение по умолчанию
         {
             //Если значние по умолчанию не указано - ставим NULL, иначе - то что указали
-            SqlText += " DEFAULT " + (FieldDefalutValue.isEmpty() ? "NULL" : FieldDefalutValue);
+            SqlText += " DEFAULT " + (MetaField->DefaultValue.empty() ? "NULL" : MetaField->DefaultValue);
         }
 
         if (FieldNotNull) //Если поле обязательно для заполнения
@@ -542,21 +539,21 @@ bool CGDatabase::Resource_UpdateField(const std::string &TableName, const std::s
     }
 
     //Завершение формирования запроса на создание таблицы
-    SqlText.chop(2);
+    ISAlgorithm::StringChop(SqlText, 2);
     SqlText += "\n);";
 
     //Исполнение запроса
-    ISQuery qCreateTable;
+    ISQuery qCreateTable(SqlText);
     qCreateTable.SetShowLongQuery(false);
-    Result = qCreateTable.Execute(SqlText);
+    Result = qCreateTable.Execute();
     if (!Result)
     {
         ErrorString = qCreateTable.GetErrorString();
     }
     return Result;
-}*/
+}
 //-----------------------------------------------------------------------------
-/*bool CGDatabase::Table_Update(PMetaTable *MetaTable, QString &ErrorString)
+bool CGDatabase::Table_Update(PMetaTable *MetaTable, std::string &ErrorString)
 {
     bool Result = Table_AlterFields(MetaTable, ErrorString);
     if (Result)
@@ -569,64 +566,61 @@ bool CGDatabase::Resource_UpdateField(const std::string &TableName, const std::s
         Result = Table_DeleteFields(MetaTable, ErrorString);
     }
     return Result;
-}*/
+}
 //-----------------------------------------------------------------------------
-/*bool CGDatabase::Table_Exist(PMetaTable *MetaTable, bool &Exist, QString &ErrorString)
+bool CGDatabase::Table_Exist(PMetaTable *MetaTable, bool &Exist, std::string &ErrorString)
 {
     ISQuery qSelectTable(QS_TABLE);
     qSelectTable.SetShowLongQuery(false);
-    qSelectTable.BindValue(":TableName", MetaTable->Name.toLower());
+    qSelectTable.BindString(MetaTable->Name);
     bool Result = qSelectTable.ExecuteFirst();
     if (Result)
     {
-        Exist = qSelectTable.ReadColumn("count").toInt() > 0;
+        Exist = qSelectTable.ReadColumn_Int(0) > 0;
     }
     else
     {
         ErrorString = qSelectTable.GetErrorString();
     }
     return Result;
-}*/
+}
 //-----------------------------------------------------------------------------
-/*bool CGDatabase::Table_AlterFields(PMetaTable *MetaTable, QString &ErrorString)
+bool CGDatabase::Table_AlterFields(PMetaTable *MetaTable, std::string &ErrorString)
 {
     ISQuery qSelectColumns(QS_COLUMNS);
     qSelectColumns.SetShowLongQuery(false);
-    qSelectColumns.BindValue(":TableName", MetaTable->Name.toLower());
+    qSelectColumns.BindString(MetaTable->Name);
     bool Result = qSelectColumns.Execute();
     if (Result)
     {
         while (qSelectColumns.Next())
         {
-            QString ColumnNameFull = qSelectColumns.ReadColumn("column_full_name").toString();
-            QString ColumnName = qSelectColumns.ReadColumn("column_name").toString();
-            QString ColumnDefaultValue = qSelectColumns.ReadColumn("column_default").toString();
-            bool ColumnNotNull = !qSelectColumns.ReadColumn("is_nullable").toBool();
-            QString ColumnType = qSelectColumns.ReadColumn("data_type").toString().toUpper();
-            int ColumnSize = qSelectColumns.ReadColumn("character_maximum_length").toInt();
+            std::string ColumnNameFull = qSelectColumns.ReadColumn_String(0);
+            std::string ColumnName = qSelectColumns.ReadColumn_String(1);
+            std::string ColumnDefaultValue = qSelectColumns.ReadColumn_String(2);
+            bool ColumnNotNull = !qSelectColumns.ReadColumn_Bool(3);
+            std::string ColumnType = ISAlgorithm::StringToUpperGet(qSelectColumns.ReadColumn_String(4));
+            int ColumnSize = qSelectColumns.ReadColumn_Int(5);
 
-            if (!ISMetaData::Instance().CheckExitField(MetaTable, ColumnName))
+            PMetaField *MetaField = ISMetaData::Instance().GetTable(MetaTable->Name)->GetField(ColumnName);
+            if (!MetaField)
             {
                 continue;
             }
 
-            PMetaField *MetaField = ISMetaData::Instance().GetMetaField(MetaTable, ColumnName);
-            QString MetaType = ISMetaData::Instance().GetType(MetaField->Type).TypeDB;
-            QString MetaDefaultValue = MetaField->DefaultValue.toString();
-            bool MetaNotNull = MetaField->NotNull;
-            int MetaSize = MetaField->Size;
+            std::string MetaType = ISMetaData::Instance().GetTypeDB(MetaField->Type);
 
             //Проверка соответствия типов
-            if (ColumnType != MetaType || ColumnSize != MetaSize)
+            if (ColumnType != MetaType || ColumnSize != MetaField->Size)
             {
-                QString QueryText = "ALTER TABLE public." + MetaTable->Name.toLower() + " \n";
-                QueryText += "ALTER COLUMN " + MetaTable->Alias + '_' + MetaField->Name.toLower() + " TYPE " + MetaType;
-                QueryText += MetaSize > 0 ? QString("(%1) \n").arg(MetaSize) : " \n";
-                QueryText += "USING " + MetaTable->Alias + '_' + MetaField->Name.toLower() + "::" + MetaType;
+                std::string QueryText = "ALTER TABLE public." + MetaTable->Name + " \n";
+                QueryText += "ALTER COLUMN \"" + MetaTable->Alias + '_' + MetaField->Name + "\" TYPE " + MetaType;
+                QueryText += MetaField->Size > 0 ? ISAlgorithm::StringF("(%d) \n", MetaField->Size) : " \n";
+                QueryText += "USING \"" + MetaTable->Alias + '_' + MetaField->Name + "\"::" + MetaType;
 
-                ISQuery qAlterType;
+                ISQuery qAlterType(QueryText);
                 qAlterType.SetShowLongQuery(false);
-                Result = qAlterType.Execute(QueryText);
+                Result = qAlterType.Execute();
                 if (!Result)
                 {
                     ErrorString = qAlterType.GetErrorString();
@@ -641,14 +635,14 @@ bool CGDatabase::Resource_UpdateField(const std::string &TableName, const std::s
             }
 
             //Проверка соответствия значения по умолчанию
-            if (ColumnDefaultValue != MetaDefaultValue)
+            if (ColumnDefaultValue != MetaField->DefaultValue)
             {
                 //Если в мета-данных значение по умолчанию не указано - удаляем текущее (даже если его нет), иначе - изменяем
-                QString QueryText = "ALTER TABLE public." + MetaTable->Name +
-                    " ALTER COLUMN " + ColumnNameFull + (MetaDefaultValue.isEmpty() ? " DROP DEFAULT" : (" SET DEFAULT " + MetaDefaultValue));
-                ISQuery qAlterColumn;
+                std::string QueryText = "ALTER TABLE public." + MetaTable->Name +
+                    " ALTER COLUMN \"" + ColumnNameFull + "\"" + (MetaField->DefaultValue.empty() ? " DROP DEFAULT" : (" SET DEFAULT " + MetaField->DefaultValue));
+                ISQuery qAlterColumn(QueryText);
                 qAlterColumn.SetShowLongQuery(false);
-                Result = qAlterColumn.Execute(QueryText);
+                Result = qAlterColumn.Execute();
                 if (!Result)
                 {
                     ErrorString = qAlterColumn.GetErrorString();
@@ -657,21 +651,21 @@ bool CGDatabase::Resource_UpdateField(const std::string &TableName, const std::s
             }
 
             //Проверка соответствия флага обязательного заполнения
-            if (ColumnNotNull != MetaNotNull)
+            if (ColumnNotNull != MetaField->NotNull)
             {
-                QString QueryText;
-                if (!ColumnNotNull && MetaNotNull)
+                std::string QueryText;
+                if (!ColumnNotNull && MetaField->NotNull)
                 {
-                    QueryText = "ALTER TABLE public." + MetaTable->Name + " ALTER COLUMN " + MetaTable->Alias + '_' + MetaField->Name + " SET NOT NULL";
+                    QueryText = "ALTER TABLE public." + MetaTable->Name + " ALTER COLUMN \"" + MetaTable->Alias + '_' + MetaField->Name + "\" SET NOT NULL";
                 }
-                else if (ColumnNotNull && !MetaNotNull)
+                else if (ColumnNotNull && !MetaField->NotNull)
                 {
-                    QueryText = "ALTER TABLE public." + MetaTable->Name + " ALTER COLUMN " + MetaTable->Alias + '_' + MetaField->Name + " DROP NOT NULL";
+                    QueryText = "ALTER TABLE public." + MetaTable->Name + " ALTER COLUMN \"" + MetaTable->Alias + '_' + MetaField->Name + "\" DROP NOT NULL";
                 }
 
-                ISQuery qAlterNotNull;
+                ISQuery qAlterNotNull(QueryText);
                 qAlterNotNull.SetShowLongQuery(false);
-                Result = qAlterNotNull.Execute(QueryText);
+                Result = qAlterNotNull.Execute();
                 if (!Result)
                 {
                     ErrorString = qAlterNotNull.GetErrorString();
@@ -685,53 +679,56 @@ bool CGDatabase::Resource_UpdateField(const std::string &TableName, const std::s
         ErrorString = qSelectColumns.GetErrorString();
     }
     return Result;
-}*/
+}
 //-----------------------------------------------------------------------------
-/*bool CGDatabase::Table_CreateFields(PMetaTable *MetaTable, QString &ErrorString)
+bool CGDatabase::Table_CreateFields(PMetaTable *MetaTable, std::string &ErrorString)
 {
     bool Result = true, Exist = true;
     for (PMetaField *MetaField : MetaTable->Fields) //Обход полей
     {
-        if (!MetaField->QueryText.isEmpty())
+        if (!MetaField->QueryText.empty())
         {
             continue;
         }
 
-        QString FieldName = MetaTable->Alias + '_' + MetaField->Name.toLower();
-        if (CGDatabase::Helper_ExistField(MetaTable, FieldName, Exist, ErrorString))
+        std::string FieldName = MetaTable->Alias + '_' + MetaField->Name;
+        if (Helper_ExistField(MetaTable, FieldName, Exist, ErrorString))
         {
-            if (!Exist)//Если поле не существует
+            if (Exist) //Если поле существует - идём к следующему
             {
-                QString AddColumn = "ALTER TABLE public." + MetaTable->Name + " \n" +
-                    "ADD COLUMN \"" + FieldName + "\" " + ISMetaData::Instance().GetType(MetaField->Type).TypeDB;
+                continue;
+            }
+            //Поле не существует - создаём
 
-                if (MetaField->Size) //Если указан размер поля
-                {
-                    AddColumn += QString("(%1)").arg(MetaField->Size);
-                }
+            std::string AddColumn = "ALTER TABLE public." + MetaTable->Name + " \n" +
+                "ADD COLUMN \"" + FieldName + "\" " + ISMetaData::Instance().GetTypeDB(MetaField->Type);
 
-                if (MetaField->DefaultValue.isValid()) //Если указано значение по умолчанию
-                {
-                    AddColumn += " DEFAULT " + MetaField->DefaultValue.toString(); //Указание NULL без кавычек
-                }
+            if (MetaField->Size) //Если указан размер поля
+            {
+                AddColumn += ISAlgorithm::StringF("(%d)", MetaField->Size);
+            }
 
-                if (MetaField->NotNull)
-                {
-                    AddColumn += " NOT NULL";
-                }
+            if (!MetaField->DefaultValue.empty()) //Если указано значение по умолчанию
+            {
+                AddColumn += " DEFAULT " + MetaField->DefaultValue; //Указание NULL без кавычек
+            }
 
-                ISQuery qAddColumn;
-                qAddColumn.SetShowLongQuery(false);
-                Result = qAddColumn.Execute(AddColumn);
-                if (Result)
-                {
-                    ISDEBUG_L(QString("Add field: %1_%2").arg(MetaTable->Alias).arg(MetaField->Name));
-                }
-                else
-                {
-                    ErrorString = qAddColumn.GetErrorString();
-                    break;
-                }
+            if (MetaField->NotNull)
+            {
+                AddColumn += " NOT NULL";
+            }
+
+            ISQuery qAddColumn(AddColumn);
+            qAddColumn.SetShowLongQuery(false);
+            Result = qAddColumn.Execute();
+            if (Result)
+            {
+                ISLOGGER_I(__CLASS__, "Add field: %s_%s", MetaTable->Alias.c_str(), MetaField->Name.c_str());
+            }
+            else
+            {
+                ErrorString = qAddColumn.GetErrorString();
+                break;
             }
         }
         else
@@ -740,31 +737,33 @@ bool CGDatabase::Resource_UpdateField(const std::string &TableName, const std::s
         }
     }
     return Result;
-}*/
+}
 //-----------------------------------------------------------------------------
-/*bool CGDatabase::Table_DeleteFields(PMetaTable *MetaTable, QString &ErrorString)
+bool CGDatabase::Table_DeleteFields(PMetaTable *MetaTable, std::string &ErrorString)
 {
     ISQuery qSelectColumns(QS_OLD_COLUMNS);
     qSelectColumns.SetShowLongQuery(false);
-    qSelectColumns.BindValue(":TableName", MetaTable->Name.toLower());
+    qSelectColumns.BindString(MetaTable->Name);
     bool Result = qSelectColumns.Execute();
     if (Result)
     {
         while (qSelectColumns.Next())
         {
-            QString FieldFullName = qSelectColumns.ReadColumn("column_full_name").toString();
-            QString FieldName = qSelectColumns.ReadColumn("column_name").toString();
+            std::string FieldFullName = qSelectColumns.ReadColumn_String(0);
+            std::string FieldName = qSelectColumns.ReadColumn_String(1);
 
             //Если поле существует в базе, но не существует в мета-данных - предлагаем удалить
             //или если это поле есть в базе и оно имеет мета-запрос (т.е. оно виртуальное) - предлагаем удалить
             //Во второму случае такое условие можно объяснить так: было поле в базе, потом его сделали виртуальным - соответственно оно в базе на ни к чему - удаляем
-            if (!MetaTable->ContainsField(FieldName) || (MetaTable->ContainsField(FieldName) && !MetaTable->GetField(FieldName)->QueryText.isEmpty()))
+            if (!MetaTable->GetField(FieldName) || (MetaTable->GetField(FieldName) && !MetaTable->GetField(FieldName)->QueryText.empty()))
             {
-                if (ISConsole::Question(QString("The field \"%1\" in the table \"%2\" is out of date, delete?").arg(FieldFullName).arg(MetaTable->Name))) //Пользователь согласился удалить поле - удаляем
+                if (ISConsole::Question(ISAlgorithm::StringF("The field \"%s\" in the table \"%s\" is out of date, delete?",
+                    FieldFullName.c_str(), MetaTable->Name.c_str()))) //Пользователь согласился удалить поле - удаляем
                 {
-                    ISQuery qDropColumn;
+                    ISQuery qDropColumn(ISAlgorithm::StringF("ALTER TABLE public.%s DROP COLUMN \"%s\"",
+                        MetaTable->Name.c_str(), FieldFullName.c_str()));
                     qDropColumn.SetShowLongQuery(false);
-                    Result = qDropColumn.Execute("ALTER TABLE public." + MetaTable->Name + " DROP COLUMN " + FieldFullName);
+                    Result = qDropColumn.Execute();
                     if (!Result)
                     {
                         ErrorString = qDropColumn.GetErrorString();
@@ -773,7 +772,7 @@ bool CGDatabase::Resource_UpdateField(const std::string &TableName, const std::s
                 }
                 else //Не согласен удалять поле - пропускаем и идём дальше
                 {
-                    ISDEBUG_L("Skip deletion field " + FieldFullName);
+                    ISLOGGER_I(__CLASS__, "Skip deletion field: %s", FieldFullName);
                 }
             }
         }
@@ -783,25 +782,25 @@ bool CGDatabase::Resource_UpdateField(const std::string &TableName, const std::s
         ErrorString = qSelectColumns.GetErrorString();
     }
     return Result;
-}*/
+}
 //-----------------------------------------------------------------------------
-/*bool CGDatabase::Helper_ExistField(PMetaTable *MetaTable, const QString &ColumnName, bool &Exist, QString &ErrorString)
+bool CGDatabase::Helper_ExistField(PMetaTable *MetaTable, const std::string &ColumnName, bool &Exist, std::string &ErrorString)
 {
     ISQuery qSelectColumn(QS_COLUMN);
     qSelectColumn.SetShowLongQuery(false);
-    qSelectColumn.BindValue(":TableName", MetaTable->Name.toLower());
-    qSelectColumn.BindValue(":ColumnName", ColumnName);
+    qSelectColumn.BindString(MetaTable->Name);
+    qSelectColumn.BindString(ColumnName);
     bool Result = qSelectColumn.ExecuteFirst();
     if (Result)
     {
-        Exist = qSelectColumn.ReadColumn("count").toInt() > 0;
+        Exist = qSelectColumn.ReadColumn_Int(0) > 0;
     }
     else
     {
         ErrorString = qSelectColumn.GetErrorString();
     }
     return Result;
-}*/
+}
 //-----------------------------------------------------------------------------
 /*bool CGDatabase::Helper_CommentTable(PMetaTable *MetaTable, QString &ErrorString)
 {

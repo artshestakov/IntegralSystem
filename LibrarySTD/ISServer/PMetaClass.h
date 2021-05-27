@@ -142,7 +142,7 @@ struct PMetaTable : public PMetaBase
     {
         for (PMetaField *MetaField : Fields)
         {
-            if (MetaField->Name == FieldName)
+            if (ISAlgorithm::StringToLowerGet(MetaField->Name) == ISAlgorithm::StringToLowerGet(FieldName))
             {
                 return MetaField;
             }

@@ -552,12 +552,26 @@ void ISAlgorithm::StringToLower(std::string &String)
     }
 }
 //-----------------------------------------------------------------------------
+std::string ISAlgorithm::StringToLowerGet(const std::string &String)
+{
+    std::string Temp = String;
+    StringToLower(Temp);
+    return Temp;
+}
+//-----------------------------------------------------------------------------
 void ISAlgorithm::StringToUpper(std::string &String)
 {
     if (!String.empty())
     {
         std::transform(String.begin(), String.end(), String.begin(), toupper);
     }
+}
+//-----------------------------------------------------------------------------
+std::string ISAlgorithm::StringToUpperGet(const std::string &String)
+{
+    std::string Temp = String;
+    StringToUpper(Temp);
+    return Temp;
 }
 //-----------------------------------------------------------------------------
 std::string ISAlgorithm::StringRight(const std::string &String, size_t N)

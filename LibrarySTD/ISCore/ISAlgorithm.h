@@ -161,9 +161,19 @@ namespace ISAlgorithm
     //! \param String строка
     void StringToLower(std::string &String);
 
+    //! Приведение строки к нижнему регистру
+    //! \param String строка
+    //! \return возвращает строку в нижнем регистре
+    std::string StringToLowerGet(const std::string &String);
+
     //! Приведение строки к верхнему регистру
     //! \param String строка
     void StringToUpper(std::string &String);
+
+    //! Приведение строки к верхнему регистру
+    //! \param String строка
+    //! \return возвращает строку в верхнем регистре
+    std::string StringToUpperGet(const std::string &String);
 
     //! Получить N символов строки справа
     //! \param String строка

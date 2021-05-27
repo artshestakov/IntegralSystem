@@ -30,6 +30,7 @@ static std::string QD_PROTOCOL = PREPARE_QUERY("DELETE FROM _protocol "
 CGConfiguratorUpdate::CGConfiguratorUpdate() : CGConfiguratorBase()
 {
     RegisterFunction("functions", static_cast<Function>(&CGConfiguratorUpdate::functions));
+    RegisterFunction("tables", static_cast<Function>(&CGConfiguratorUpdate::tables));
     RegisterFunction("resources", static_cast<Function>(&CGConfiguratorUpdate::resources));
 }
 //-----------------------------------------------------------------------------
@@ -103,7 +104,7 @@ bool CGConfiguratorUpdate::functions()
     return Result;
 }
 //-----------------------------------------------------------------------------
-/*bool CGConfiguratorUpdate::tables()
+bool CGConfiguratorUpdate::tables()
 {
     bool Result = true, Exist = true;
     for (size_t i = 0, CountTables = ISMetaData::Instance().GetTables().size(); i < CountTables; ++i) //Обход таблиц
@@ -122,7 +123,7 @@ bool CGConfiguratorUpdate::functions()
         }
     }
     return Result;
-}*/
+}
 //-----------------------------------------------------------------------------
 /*bool CGConfiguratorUpdate::comment()
 {
