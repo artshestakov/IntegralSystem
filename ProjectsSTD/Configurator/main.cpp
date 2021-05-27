@@ -272,19 +272,6 @@ void InterpreterMode(bool &IsRunning)
                 IsRunning = false;
                 return;
             }
-            else if (VectorString.front() == "restart") //Перезапуск
-            {
-                std::string ErrorString;
-                if (ISAlgorithm::StartProcess(ISAlgorithm::GetApplicationPath(), ErrorString))
-                {
-                    IsRunning = false;
-                    return;
-                }
-                else
-                {
-                    ISLOGGER_E(__CLASS__, ErrorString.c_str());
-                }
-            }
             Execute(VectorString.front());
         }
         else if (VectorString.size() == 2)
