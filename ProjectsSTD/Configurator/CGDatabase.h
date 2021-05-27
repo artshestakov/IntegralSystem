@@ -7,9 +7,9 @@
 class CGDatabase
 {
 public: //Внешние ключи
-    //static bool Foreign_Create(PMetaForeign *MetaForeign, QString &ErrorString); //Создание внешнего ключа
-    //static bool Foreign_Update(PMetaForeign *MetaForeign, QString &ErrorString); //Обновление внешнего ключа
-    //static bool Foreign_Exist(PMetaForeign *MetaForeign, bool &Exist, QString &ErrorString); //Проверка существования внешнего ключа
+    static bool Foreign_Create(PMetaForeign *MetaForeign, std::string &ErrorString); //Создание внешнего ключа
+    static bool Foreign_Update(PMetaForeign *MetaForeign, std::string &ErrorString); //Обновление внешнего ключа
+    static bool Foreign_Exist(PMetaForeign *MetaForeign, bool &Exist, std::string &ErrorString); //Проверка существования внешнего ключа
 
 public: //Функции
     static bool Function_Create(PMetaFunction *MetaFunction, std::string &ErrorString); //Создание функции

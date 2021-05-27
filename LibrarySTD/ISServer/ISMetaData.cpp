@@ -177,6 +177,22 @@ const std::vector<PMetaFunction*>& ISMetaData::GetFunctions() const
     return Functions;
 }
 //-----------------------------------------------------------------------------
+std::vector<PMetaForeign*> ISMetaData::GetForeigns() const
+{
+    std::vector<PMetaForeign*> Foreigns;
+    for (PMetaTable *MetaTable : GetTables()) //Обход таблиц
+    {
+        for (PMetaField *MetaField : MetaTable->Fields) //Обход полей
+        {
+            if (MetaField->Foreign)
+            {
+                Foreigns.emplace_back(MetaField->Foreign);
+            }
+        }
+    }
+    return Foreigns;
+}
+//-----------------------------------------------------------------------------
 const ISVectorString& ISMetaData::GetVectorXSN() const
 {
     return VectorFilesXSN;

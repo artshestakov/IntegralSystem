@@ -29,8 +29,10 @@ static std::string QD_PROTOCOL = PREPARE_QUERY("DELETE FROM _protocol "
 //-----------------------------------------------------------------------------
 CGConfiguratorUpdate::CGConfiguratorUpdate() : CGConfiguratorBase()
 {
+    RegisterFunction("database", static_cast<Function>(&CGConfiguratorUpdate::database));
     RegisterFunction("functions", static_cast<Function>(&CGConfiguratorUpdate::functions));
     RegisterFunction("tables", static_cast<Function>(&CGConfiguratorUpdate::tables));
+    RegisterFunction("foreigns", static_cast<Function>(&CGConfiguratorUpdate::foreigns));
     RegisterFunction("resources", static_cast<Function>(&CGConfiguratorUpdate::resources));
 }
 //-----------------------------------------------------------------------------
@@ -39,7 +41,7 @@ CGConfiguratorUpdate::~CGConfiguratorUpdate()
 
 }
 //-----------------------------------------------------------------------------
-/*bool CGConfiguratorUpdate::database()
+bool CGConfiguratorUpdate::database()
 {
     bool Result = functions();
     if (Result)
@@ -49,12 +51,12 @@ CGConfiguratorUpdate::~CGConfiguratorUpdate()
 
     if (Result)
     {
-        Result = comment();
+        //Result = comment();
     }
 
     if (Result)
     {
-        Result = indexes();
+        //Result = indexes();
     }
 
     if (Result)
@@ -69,16 +71,16 @@ CGConfiguratorUpdate::~CGConfiguratorUpdate()
 
     if (Result)
     {
-        Result = databasesettings();
+        //Result = databasesettings();
     }
 
     if (Result)
     {
-        Result = protocol();
+        //Result = protocol();
     }
 
     return Result;
-}*/
+}
 //-----------------------------------------------------------------------------
 bool CGConfiguratorUpdate::functions()
 {
@@ -178,12 +180,14 @@ bool CGConfiguratorUpdate::tables()
     return Result;
 }*/
 //-----------------------------------------------------------------------------
-/*bool CGConfiguratorUpdate::foreigns()
+bool CGConfiguratorUpdate::foreigns()
 {
     bool Result = true, Exist = true;
-    for (size_t i = 0, CountForeigns = ISMetaData::Instance().GetForeigns().size(); i < CountForeigns; ++i)
+
+    std::vector<PMetaForeign*> Foreigns = ISMetaData::Instance().GetForeigns();
+    for (size_t i = 0, CountForeigns = Foreigns.size(); i < CountForeigns; ++i)
     {
-        PMetaForeign *MetaForeign = ISMetaData::Instance().GetForeigns()[i];
+        PMetaForeign *MetaForeign = Foreigns[i];
         Progress("Foreign", i, CountForeigns, "Table: " + MetaForeign->TableName + ". ForeignName: " + MetaForeign->GetName());
         Result = CGDatabase::Foreign_Exist(MetaForeign, Exist, ErrorString);
         if (Result)
@@ -197,7 +201,7 @@ bool CGConfiguratorUpdate::tables()
         }
     }
     return Result;
-}*/
+}
 //-----------------------------------------------------------------------------
 bool CGConfiguratorUpdate::resources()
 {

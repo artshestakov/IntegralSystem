@@ -35,9 +35,7 @@ struct PMetaForeign : public PMetaBase
 
     std::string GetName() const //Получить имя внешнего ключа
     {
-        std::string Name = TableName + '_' + Field;
-        ISAlgorithm::StringToLower(Name);
-        return Name;
+        return ISAlgorithm::StringToLowerGet(TableName + '_' + Field);
     }
 
     std::string Field; //Поле, на которое устанавливается внешний ключ

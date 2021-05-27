@@ -11,7 +11,7 @@ static std::string QS_FOREIGN = PREPARE_QUERY("SELECT COUNT(*) "
     "FROM information_schema.constraint_table_usage "
     "WHERE table_catalog = current_database() "
     "AND table_schema = current_schema() "
-    "AND constraint_name = :ForeignName");
+    "AND constraint_name = $1");
 //-----------------------------------------------------------------------------
 static std::string QC_FOREIGN = "ALTER TABLE public.%1 "
 "ADD CONSTRAINT %2 FOREIGN KEY (%3) "
@@ -25,8 +25,6 @@ static std::string QS_FUNCTION = PREPARE_QUERY("SELECT proname || '(' || pg_get_
     "WHERE pronamespace = (SELECT oid FROM pg_namespace WHERE nspname = current_schema()) "
     "AND probin IS NULL "
     "ORDER BY function_name");
-//-----------------------------------------------------------------------------
-static std::string QD_FOREIGN = "ALTER TABLE public.%1 DROP CONSTRAINT %2 RESTRICT";
 //-----------------------------------------------------------------------------
 static std::string QS_COLUMN = PREPARE_QUERY("SELECT COUNT(*) "
     "FROM information_schema.columns "
@@ -76,36 +74,37 @@ static std::string QS_OLD_COLUMNS = PREPARE_QUERY("SELECT "
     "AND lower(table_name) = lower($1) "
     "ORDER BY ordinal_position");
 //-----------------------------------------------------------------------------
-/*bool CGDatabase::Foreign_Create(PMetaForeign *MetaForeign, QString &ErrorString)
+bool CGDatabase::Foreign_Create(PMetaForeign *MetaForeign, std::string &ErrorString)
 {
-    PMetaTable *MetaTable = ISMetaData::Instance().GetMetaTable(MetaForeign->TableName);
-    PMetaTable *MetaTableForeign = ISMetaData::Instance().GetMetaTable(MetaForeign->ForeignClass);
+    PMetaTable *MetaTable = ISMetaData::Instance().GetTable(MetaForeign->TableName);
+    PMetaTable *MetaTableForeign = ISMetaData::Instance().GetTable(MetaForeign->ForeignClass);
 
-    QString SqlText;
-    SqlText += "ALTER TABLE public." + MetaTable->Name.toLower() + " \n";
-    SqlText += "ADD CONSTRAINT " + MetaForeign->GetName() + " FOREIGN KEY (" + MetaTable->Alias + '_' + MetaForeign->Field.toLower() + ") \n";
-    SqlText += "REFERENCES public." + MetaTableForeign->Name.toLower() + '(' + MetaTableForeign->Alias.toLower() + '_' + MetaForeign->ForeignField.toLower() + ") \n";
+    std::string SqlText;
+    SqlText += "ALTER TABLE public." + MetaTable->Name + " \n";
+    SqlText += "ADD CONSTRAINT " + MetaForeign->GetName() + " FOREIGN KEY (" + MetaTable->Alias + '_' + MetaForeign->Field + ") \n";
+    SqlText += "REFERENCES public." + MetaTableForeign->Name + '(' + MetaTableForeign->Alias + '_' + MetaForeign->ForeignField + ") \n";
     SqlText += "ON DELETE CASCADE \n";
     SqlText += "ON UPDATE NO ACTION \n";
     SqlText += "NOT DEFERRABLE;";
 
-    ISQuery qCreateForeign;
+    ISQuery qCreateForeign(SqlText);
     qCreateForeign.SetShowLongQuery(false);
-    bool Result = qCreateForeign.Execute(SqlText);
+    bool Result = qCreateForeign.Execute();
     if (!Result)
     {
         ErrorString = qCreateForeign.GetErrorString();
     }
     return Result;
-}*/
+}
 //-----------------------------------------------------------------------------
-/*bool CGDatabase::Foreign_Update(PMetaForeign *MetaForeign, QString &ErrorString)
+bool CGDatabase::Foreign_Update(PMetaForeign *MetaForeign, std::string &ErrorString)
 {
-    PMetaTable *MetaTable = ISMetaData::Instance().GetMetaTable(MetaForeign->TableName);
+    PMetaTable *MetaTable = ISMetaData::Instance().GetTable(MetaForeign->TableName);
 
-    ISQuery qDeleteForeign;
+    ISQuery qDeleteForeign(ISAlgorithm::StringF("ALTER TABLE public.%s DROP CONSTRAINT %s RESTRICT",
+        MetaTable->Name.c_str(), MetaForeign->GetName().c_str()));
     qDeleteForeign.SetShowLongQuery(false);
-    bool Result = qDeleteForeign.Execute(QD_FOREIGN.arg(MetaTable->Name.toLower()).arg(MetaForeign->GetName()));
+    bool Result = qDeleteForeign.Execute();
     if (Result)
     {
         Result = Foreign_Create(MetaForeign, ErrorString);
@@ -115,24 +114,24 @@ static std::string QS_OLD_COLUMNS = PREPARE_QUERY("SELECT "
         ErrorString = qDeleteForeign.GetErrorString();
     }
     return Result;
-}*/
+}
 //-----------------------------------------------------------------------------
-/*bool CGDatabase::Foreign_Exist(PMetaForeign *MetaForeign, bool &Exist, QString &ErrorString)
+bool CGDatabase::Foreign_Exist(PMetaForeign *MetaForeign, bool &Exist, std::string &ErrorString)
 {
     ISQuery qSelect(QS_FOREIGN);
     qSelect.SetShowLongQuery(false);
-    qSelect.BindValue(":ForeignName", MetaForeign->GetName());
+    qSelect.BindString(MetaForeign->GetName());
     bool Result = qSelect.ExecuteFirst();
     if (Result)
     {
-        Exist = qSelect.ReadColumn("count").toInt() > 0;
+        Exist = qSelect.ReadColumn_Int(0) > 0;
     }
     else
     {
         ErrorString = qSelect.GetErrorString();
     }
     return Result;
-}*/
+}
 //-----------------------------------------------------------------------------
 bool CGDatabase::Function_Create(PMetaFunction *MetaFunction, std::string &ErrorString)
 {
@@ -614,9 +613,9 @@ bool CGDatabase::Table_AlterFields(PMetaTable *MetaTable, std::string &ErrorStri
             if (ColumnType != MetaType || ColumnSize != MetaField->Size)
             {
                 std::string QueryText = "ALTER TABLE public." + MetaTable->Name + " \n";
-                QueryText += "ALTER COLUMN \"" + MetaTable->Alias + '_' + MetaField->Name + "\" TYPE " + MetaType;
+                QueryText += "ALTER COLUMN \"" + MetaTable->Alias + '_' + ISAlgorithm::StringToLowerGet(MetaField->Name) + "\" TYPE " + MetaType;
                 QueryText += MetaField->Size > 0 ? ISAlgorithm::StringF("(%d) \n", MetaField->Size) : " \n";
-                QueryText += "USING \"" + MetaTable->Alias + '_' + MetaField->Name + "\"::" + MetaType;
+                QueryText += "USING \"" + MetaTable->Alias + '_' + ISAlgorithm::StringToLowerGet(MetaField->Name) + "\"::" + MetaType;
 
                 ISQuery qAlterType(QueryText);
                 qAlterType.SetShowLongQuery(false);
@@ -701,7 +700,7 @@ bool CGDatabase::Table_CreateFields(PMetaTable *MetaTable, std::string &ErrorStr
             //Поле не существует - создаём
 
             std::string AddColumn = "ALTER TABLE public." + MetaTable->Name + " \n" +
-                "ADD COLUMN \"" + FieldName + "\" " + ISMetaData::Instance().GetTypeDB(MetaField->Type);
+                "ADD COLUMN \"" + ISAlgorithm::StringToLowerGet(FieldName) + "\" " + ISMetaData::Instance().GetTypeDB(MetaField->Type);
 
             if (MetaField->Size) //Если указан размер поля
             {
