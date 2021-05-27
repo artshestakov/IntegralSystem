@@ -10,14 +10,14 @@
 //-----------------------------------------------------------------------------
 static std::string QS_SETTINGS_DATABASE = PREPARE_QUERY("SELECT COUNT(*) "
     "FROM _settingsdatabase "
-    "WHERE sgdb_uid = :UID");
+    "WHERE sgdb_uid = $1");
 //-----------------------------------------------------------------------------
 static std::string QU_SETTINGS_DATABASE = PREPARE_QUERY("UPDATE _settingsdatabase SET "
     "sgdb_issystem = true "
-    "WHERE sgdb_uid = :UID");
+    "WHERE sgdb_uid = $1");
 //-----------------------------------------------------------------------------
 static std::string QI_SETTINGS_DATABASE = PREPARE_QUERY("INSERT INTO _settingsdatabase(sgdb_uid, sgdb_issystem) "
-    "VALUES(:UID, true)");
+    "VALUES($1, true)");
 //-----------------------------------------------------------------------------
 static std::string QS_PROTOCOL = PREPARE_QUERY("SELECT DISTINCT prtc_tablename "
     "FROM _protocol "
@@ -36,6 +36,7 @@ CGConfiguratorUpdate::CGConfiguratorUpdate() : CGConfiguratorBase()
     RegisterFunction("indexes", static_cast<Function>(&CGConfiguratorUpdate::indexes));
     RegisterFunction("foreigns", static_cast<Function>(&CGConfiguratorUpdate::foreigns));
     RegisterFunction("resources", static_cast<Function>(&CGConfiguratorUpdate::resources));
+    RegisterFunction("databasesettings", static_cast<Function>(&CGConfiguratorUpdate::databasesettings));
 }
 //-----------------------------------------------------------------------------
 CGConfiguratorUpdate::~CGConfiguratorUpdate()
@@ -73,7 +74,7 @@ bool CGConfiguratorUpdate::database()
 
     if (Result)
     {
-        //Result = databasesettings();
+        Result = databasesettings();
     }
 
     if (Result)
@@ -270,17 +271,18 @@ bool CGConfiguratorUpdate::resources()
     return Result;
 }
 //-----------------------------------------------------------------------------
-/*bool CGConfiguratorUpdate::databasesettings()
+bool CGConfiguratorUpdate::databasesettings()
 {
     ISQuery qSelect(QS_SETTINGS_DATABASE);
     qSelect.SetShowLongQuery(false);
-    qSelect.BindValue(":UID", CONST_UID_SETTINGS_DATABASE);
+    qSelect.BindUID(CONST_UID_SETTINGS_DATABASE);
     bool Result = qSelect.ExecuteFirst();
     if (Result)
     {
-        bool IsExist = qSelect.ReadColumn("count").toInt() > 0;
+        bool IsExist = qSelect.ReadColumn_Int(0) > 0;
+
         ISQuery qUpsert(IsExist ? QU_SETTINGS_DATABASE : QI_SETTINGS_DATABASE);
-        qUpsert.BindValue(":UID", CONST_UID_SETTINGS_DATABASE);
+        qUpsert.BindUID(CONST_UID_SETTINGS_DATABASE);
         qUpsert.SetShowLongQuery(false);
         Result = qUpsert.Execute();
         if (Result)
@@ -293,7 +295,7 @@ bool CGConfiguratorUpdate::resources()
         }
     }
     return Result;
-}*/
+}
 //-----------------------------------------------------------------------------
 /*bool CGConfiguratorUpdate::protocol()
 {
