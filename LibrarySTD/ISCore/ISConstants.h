@@ -42,7 +42,7 @@ const char              DB_SYSTEM_NAME[] = "postgres"; //Имя системной БД
 const char              DB_CONNECTION_DEFAULT[] = "DefaultDB";
 const char              DB_CONNECTION_SYSTEM[] = "SystemDB";
 const char              DB_SYSTEM_USER_UID[] = "f400ecfa-185e-4587-8961-8731deac3b5e"; //Идентификатор главного пользователя
-const char              DB_SYSTEM_USER_FIO[] = "Administrator"; //ФИО главного администратора
+const char              DB_SYSTEM_USER_FIO[] = "System User"; //ФИО главного администратора
 const char              DB_SYSTEM_USER_LOGIN[] = "postgres"; //Логин главного администратора
 //CONFIG-----------------------------------------------------------------------
 const char  CONFIG_TEMPLATE_SERVER[] = "Server"; //Шаблон сервера
