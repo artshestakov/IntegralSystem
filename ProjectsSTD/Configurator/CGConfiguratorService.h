@@ -10,11 +10,10 @@ public:
     CGConfiguratorService();
     virtual ~CGConfiguratorService();
 
-    //bool reindex();
-    //bool vacuum();
-    //bool vacuumanalyze();
-    //bool vacuumfull();
-    //bool cleartable();
+    bool reindex();
+    bool vacuum();
+    bool vacuumanalyze();
+    bool vacuumfull();
 };
 //-----------------------------------------------------------------------------
 #endif
