@@ -11,9 +11,9 @@ public:
     virtual ~CGConfiguratorCreate();
 
 public:
-    //bool adminaccount();
-    //bool adminpassword();
-    //bool resources();
+    bool adminaccount();
+    bool adminpassword();
+    bool resources();
 };
 //-----------------------------------------------------------------------------
 #endif

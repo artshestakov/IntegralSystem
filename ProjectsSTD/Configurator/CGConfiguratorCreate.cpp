@@ -5,21 +5,22 @@
 #include "ISDebug.h"
 #include "ISMetaData.h"
 #include "ISConsole.h"
-//#include "ISSystem.h"
 #include "CGDatabase.h"
-#include "ISLocalization.h"
+#include "ISLogger.h"
 //-----------------------------------------------------------------------------
 static std::string QI_SYSTEM_USER = PREPARE_QUERY("INSERT INTO _users(usrs_uid, usrs_issystem, usrs_fio, usrs_login, usrs_accessallowed) "
-    "VALUES(:UID, true, :FIO, :Login, true)");
+    "VALUES($1, true, $2, $3, true)");
 //-----------------------------------------------------------------------------
 static std::string QU_SYSTEM_USER_PASSWORD = PREPARE_QUERY("UPDATE _users SET "
-    "usrs_hash = :Hash, "
-    "usrs_salt = :Salt "
-    "WHERE usrs_uid = :UID");
+    "usrs_hash = $1, "
+    "usrs_salt = $2 "
+    "WHERE usrs_uid = $3");
 //-----------------------------------------------------------------------------
 CGConfiguratorCreate::CGConfiguratorCreate() : CGConfiguratorBase()
 {
-
+    RegisterFunction("adminaccount", static_cast<Function>(&CGConfiguratorCreate::adminaccount));
+    RegisterFunction("adminpassword", static_cast<Function>(&CGConfiguratorCreate::adminpassword));
+    RegisterFunction("resources", static_cast<Function>(&CGConfiguratorCreate::resources));
 }
 //-----------------------------------------------------------------------------
 CGConfiguratorCreate::~CGConfiguratorCreate()
@@ -27,17 +28,17 @@ CGConfiguratorCreate::~CGConfiguratorCreate()
 
 }
 //-----------------------------------------------------------------------------
-/*bool CGConfiguratorCreate::adminaccount()
+bool CGConfiguratorCreate::adminaccount()
 {
     ISQuery qInsertAccount(QI_SYSTEM_USER);
-    qInsertAccount.BindValue(":UID", SYSTEM_USER_UID);
-    qInsertAccount.BindValue(":FIO", LANG("Configurator.AdminAccountFIO"));
-    qInsertAccount.BindValue(":Login", SYSTEM_USER_LOGIN);
+    qInsertAccount.BindUID(DB_SYSTEM_USER_UID);
+    qInsertAccount.BindString(DB_SYSTEM_USER_FIO);
+    qInsertAccount.BindString(DB_SYSTEM_USER_LOGIN);
     qInsertAccount.SetShowLongQuery(false);
     bool Result = qInsertAccount.Execute();
     if (Result) //Учётная запись была успешно добавлена - предлагаем создать пароль
     {
-        ISDEBUG_L("Admin account created successfully!");
+        ISLOGGER_I(__CLASS__, "Admin account created successfully!");
         Result = adminpassword();
     }
     else //Ошибка запроса
@@ -52,52 +53,53 @@ CGConfiguratorCreate::~CGConfiguratorCreate()
         }
     }
     return Result;
-}*/
+}
 //-----------------------------------------------------------------------------
-/*bool CGConfiguratorCreate::adminpassword()
+bool CGConfiguratorCreate::adminpassword()
 {
     //Просим ввести пароль
-    QString Password;
+    std::string Password;
     while (true)
     {
         Password = ISConsole::GetString("Create password for system administrator: ");
-        if (Password.isEmpty()) //Если пароль не был введён - выходим с ошибкой
+        if (Password.empty()) //Если пароль не был введён - выходим с ошибкой
         {
-            ISDEBUG_L("Password was not entered!");
+            ISLOGGER_I(__CLASS__, "Password was not entered!");
             return false;
         }
 
         if (ISAlgorithm::PasswordVerification(Password))
         {
-            ISDEBUG_L("WARNING! Keep password in a safe place.");
+            ISLOGGER_I(__CLASS__, "WARNING! Keep password in a safe place.");
             break;
         }
         else
         {
-            ISDEBUG_L("Invalid password!");
+            ISLOGGER_I(__CLASS__, "Invalid password!");
         }
     }
 
     //Формируем хэш, генерируем соль и солим пароль
-    QString Hash = QString::fromStdString(ISAlgorithm::StringToSha256(std::string(SYSTEM_USER_LOGIN) + Password.toStdString())), Salt;
+    std::string Hash = ISAlgorithm::StringToSHA256(DB_SYSTEM_USER_LOGIN + Password), Salt;
     if (!ISAlgorithm::GenerateSalt(Salt, ErrorString))
     {
         return false;
     }
-    QString HashResult = ISAlgorithm::SaltPassword(Hash, Salt);
+    std::string HashResult = ISAlgorithm::SaltPassword(Hash, Salt);
 
     ISQuery qUpdatePassword(QU_SYSTEM_USER_PASSWORD);
-    qUpdatePassword.BindValue(":Hash", HashResult);
-    qUpdatePassword.BindValue(":Salt", Salt);
-    qUpdatePassword.BindValue(":UID", SYSTEM_USER_UID);
+    qUpdatePassword.BindString(HashResult);
+    qUpdatePassword.BindString(Salt);
+    qUpdatePassword.BindUID(DB_SYSTEM_USER_UID);
     qUpdatePassword.SetShowLongQuery(false);
     if (qUpdatePassword.Execute())
     {
-        if (qUpdatePassword.GetCountAffected() == 1) //Пароль успешно установлен
+        size_t AffectedRows = qUpdatePassword.GetResultAffected();
+        if (AffectedRows == 1) //Пароль успешно установлен
         {
-            ISDEBUG_L("Password created successfully");
+            ISLOGGER_I(__CLASS__, "Password created successfully");
         }
-        else if (qUpdatePassword.GetCountAffected() == 0) //Учётная запись администратора не существует
+        else if (AffectedRows == 0) //Учётная запись администратора не существует
         {
             ErrorString = "The administrator account does not exist";
             return false;
@@ -113,9 +115,9 @@ CGConfiguratorCreate::~CGConfiguratorCreate()
         ErrorString = qUpdatePassword.GetErrorString();
     }
     return true;
-}*/
+}
 //-----------------------------------------------------------------------------
-/*bool CGConfiguratorCreate::resources()
+bool CGConfiguratorCreate::resources()
 {
     bool Result = true, Exist = true;
     for (size_t i = 0, CountResources = ISMetaData::Instance().GetResources().size(); i < CountResources; ++i)
@@ -137,5 +139,5 @@ CGConfiguratorCreate::~CGConfiguratorCreate()
         }
     }
     return Result;
-}*/
+}
 //-----------------------------------------------------------------------------

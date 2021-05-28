@@ -255,6 +255,11 @@ namespace ISAlgorithm
     //! \return возвращает солЄный пароль
     std::string SaltPassword(const std::string &HashPassword, const std::string &Salt); //ѕосолить пароль
 
+    //! ѕроверка парол€ на соответствие требовани€м сложности
+    //! \param Password строка, содержаща€ пароль
+    //! \return возвращает true в случае если пароль прошЄл проверку, в противном случае - false
+    bool PasswordVerification(const std::string &Password);
+
     //! «акодировать строку в base64
     //! \param String строку, которую нужно закодировать
     //! \param ErrorString строка, в которую будет помещено описание ошибки

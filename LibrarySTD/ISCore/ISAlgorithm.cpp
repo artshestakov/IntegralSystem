@@ -969,6 +969,76 @@ std::string ISAlgorithm::SaltPassword(const std::string &HashPassword, const std
     return HashResult;
 }
 //-----------------------------------------------------------------------------
+bool ISAlgorithm::PasswordVerification(const std::string &Password)
+{
+    //Проверяем размер пароля
+    if (Password.size() < MINIMUM_PASSWORD_LENGHT)
+    {
+        return false;
+    }
+
+    //Ищем цифры
+    bool FoundDigit = false;
+    for (const char &Char : Password)
+    {
+        if (std::isdigit(Char) != 0) //Нашли
+        {
+            FoundDigit = true;
+            break;
+        }
+    }
+    if (!FoundDigit) //Не нашли
+    {
+        return false;
+    }
+
+    //Ищем буквы в верхнем регистре
+    bool FoundUpper = false;
+    for (const char &Char : Password)
+    {
+        if (std::isupper(Char) != 0) //Нашли
+        {
+            FoundUpper = true;
+            break;
+        }
+    }
+    if (!FoundUpper) //Не нашли
+    {
+        return false;
+    }
+
+    //Ищем буквы в нижнем регистре
+    bool FoundLower = false;
+    for (const char &Char : Password)
+    {
+        if (std::islower(Char) != 0) //Нашли
+        {
+            FoundLower = true;
+            break;
+        }
+    }
+    if (!FoundLower) //Не нашли
+    {
+        return false;
+    }
+
+    //Ищем спец. символы
+    bool FoundSpecial = false;
+    for (const char &Symbol : SYMBOL_SPECIAL_ARRAY)
+    {
+        if (Password.find(Symbol) != NPOS)
+        {
+            FoundSpecial = true;
+            break;
+        }
+    }
+    if (!FoundSpecial)
+    {
+        return false;
+    }
+    return true;
+}
+//-----------------------------------------------------------------------------
 std::string ISAlgorithm::Base64Encode(const std::string &String, std::string &ErrorString)
 {
     return Base64Encode((unsigned char *)String.c_str(), String.size(), ErrorString);
