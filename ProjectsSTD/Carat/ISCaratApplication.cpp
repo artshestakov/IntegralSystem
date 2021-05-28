@@ -63,6 +63,13 @@ bool ISCaratApplication::Init()
         ISLOGGER_W("Console", "Not setting console encoding: %s", ErrorString.c_str());
     }
 
+    //Читаем файл ресурсов
+    if (!ISResourcer::Instance().LoadFile(ISAlgorithm::GetApplicationDir() + PATH_SEPARATOR + "Resources.bin"))
+    {
+        ISLOGGER_E("ISResourcer", "Not read resource file: %s", ISResourcer::Instance().GetErrorString().c_str());
+        return false;
+    }
+
     if (!ISLocalization::Instance().Init(LOCALIZATION_FILE_CARAT))
     {
         ISLOGGER_E("ISLocalization", "Not init file \"%s\": %s", LOCALIZATION_FILE_CARAT, ISLocalization::Instance().GetErrorString().c_str());
@@ -95,13 +102,6 @@ bool ISCaratApplication::Init()
             ISLOGGER_E(__CLASS__, "Not delete shutdown file (%s): %s", FileShutdown.c_str(), ErrorString.c_str());
             return false;
         }
-    }
-
-    //Читаем файл ресурсов
-    if (!ISResourcer::Instance().LoadFile(ISAlgorithm::GetApplicationDir() + PATH_SEPARATOR + "Resources.bin"))
-    {
-        ISLOGGER_E("ISResourcer", "Not read resource file: %s", ISResourcer::Instance().GetErrorString().c_str());
-        return false;
     }
 
     //Получаем параметры конфигурационного файла

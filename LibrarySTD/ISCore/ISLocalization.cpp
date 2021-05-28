@@ -3,6 +3,7 @@
 #include "ISAlgorithm.h"
 #include "tinyxml2.h"
 #include "ISLogger.h"
+#include "ISResourcer.h"
 //-----------------------------------------------------------------------------
 ISLocalization::ISLocalization()
     : ErrorString(STRING_NO_ERROR),
@@ -33,12 +34,13 @@ const std::string& ISLocalization::GetErrorString() const
 //-----------------------------------------------------------------------------
 bool ISLocalization::Init(const std::string &FileName)
 {
-    //Формируем путь к файлу
-    std::string Path = ISAlgorithm::GetApplicationDir() + PATH_SEPARATOR + ".." + PATH_SEPARATOR + ".." + PATH_SEPARATOR + "Resources" + PATH_SEPARATOR + "Localization" + PATH_SEPARATOR + FileName + ".lang";
+    //Получаем содержимое файла
+    unsigned long FileSize = 0;
+    const char *Data = ISResourcer::Instance().GetFile(ISAlgorithm::StringF("Localization/%s.lang", FileName.c_str()), FileSize);
 
     //Парсим
     tinyxml2::XMLDocument XmlDocument;
-    tinyxml2::XMLError Error = XmlDocument.LoadFile(Path.c_str());
+    tinyxml2::XMLError Error = XmlDocument.Parse(Data, FileSize);
     if (Error != tinyxml2::XMLError::XML_SUCCESS)
     {
         ErrorString = XmlDocument.ErrorStr();
