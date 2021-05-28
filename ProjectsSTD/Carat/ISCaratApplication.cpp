@@ -14,6 +14,7 @@
 #include "ISConsole.h"
 #include "ISProperty.h"
 #include "ISBlockedIP.h"
+#include "ISCrashDumper.h"
 //-----------------------------------------------------------------------------
 ISCaratApplication::ISCaratApplication(int argc, char **argv)
     : ErrorString(STRING_NO_ERROR),
@@ -52,9 +53,17 @@ bool ISCaratApplication::Init()
     }
 #endif
 
-    if (!ISLogger::Instance().Initialize(true)) //Не удалось иницилизировать логгер
+    //Инициализируем логгер
+    if (!ISLogger::Instance().Initialize(true))
     {
         ISDEBUG_E("Error initialize logger: " + ISLogger::Instance().GetErrorString());
+        return false;
+    }
+
+    //Установим обработчик ошибок
+    if (!ISCrashDumper::Install())
+    {
+        ISLOGGER_E(__CLASS__, "Not installer crash dumper");
         return false;
     }
 

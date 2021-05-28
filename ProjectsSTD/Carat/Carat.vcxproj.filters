@@ -11,6 +11,9 @@
     <Filter Include="Resource Files">
       <UniqueIdentifier>{3199efdf-b2e1-442d-bd28-6c978b4001a2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="StackWalker">
+      <UniqueIdentifier>{4692fb7b-2f1a-41ef-9945-92f8c8fec9a4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -49,6 +52,15 @@
     <ClCompile Include="ISBlockedIP.cpp">
       <Filter>Tcp</Filter>
     </ClCompile>
+    <ClCompile Include="ISStackWalker.cpp">
+      <Filter>StackWalker</Filter>
+    </ClCompile>
+    <ClCompile Include="StackWalker.cpp">
+      <Filter>StackWalker</Filter>
+    </ClCompile>
+    <ClCompile Include="ISCrashDumper.cpp">
+      <Filter>StackWalker</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ISCaratApplication.h">
@@ -86,6 +98,15 @@
     </ClInclude>
     <ClInclude Include="ISBlockedIP.h">
       <Filter>Tcp</Filter>
+    </ClInclude>
+    <ClInclude Include="ISStackWalker.h">
+      <Filter>StackWalker</Filter>
+    </ClInclude>
+    <ClInclude Include="StackWalker.h">
+      <Filter>StackWalker</Filter>
+    </ClInclude>
+    <ClInclude Include="ISCrashDumper.h">
+      <Filter>StackWalker</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

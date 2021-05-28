@@ -218,7 +218,9 @@ $(SolutionDir)Revision.cmd $(SolutionDir) $(Configuration) $(Platform)</Command>
   <ItemGroup>
     <ClCompile Include="ISBlockedIP.cpp" />
     <ClCompile Include="ISCaratApplication.cpp" />
+    <ClCompile Include="ISCrashDumper.cpp" />
     <ClCompile Include="ISFail2Ban.cpp" />
+    <ClCompile Include="ISStackWalker.cpp" />
     <ClCompile Include="ISTcpAnswer.cpp" />
     <ClCompile Include="ISTcpClient.cpp" />
     <ClCompile Include="ISTcpClients.cpp" />
@@ -228,12 +230,15 @@ $(SolutionDir)Revision.cmd $(SolutionDir) $(Configuration) $(Platform)</Command>
     <ClCompile Include="ISTcpWorker.cpp" />
     <ClCompile Include="ISTcpWorkerHelper.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="StackWalker.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\ISRevision.h" />
     <ClInclude Include="ISBlockedIP.h" />
     <ClInclude Include="ISCaratApplication.h" />
+    <ClInclude Include="ISCrashDumper.h" />
     <ClInclude Include="ISFail2Ban.h" />
+    <ClInclude Include="ISStackWalker.h" />
     <ClInclude Include="ISTcpAnswer.h" />
     <ClInclude Include="ISTcpClient.h" />
     <ClInclude Include="ISTcpClients.h" />
@@ -242,6 +247,7 @@ $(SolutionDir)Revision.cmd $(SolutionDir) $(Configuration) $(Platform)</Command>
     <ClInclude Include="ISTcpServer.h" />
     <ClInclude Include="ISTcpWorker.h" />
     <ClInclude Include="ISTcpWorkerHelper.h" />
+    <ClInclude Include="StackWalker.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Carat.rc" />
