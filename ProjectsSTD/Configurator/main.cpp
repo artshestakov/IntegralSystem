@@ -78,12 +78,6 @@ int main(int argc, char **argv)
         return EXIT_FAILURE;
     }
 
-    //Загрузка локализации //???
-    /*if (!ISLocalization::Instance().LoadResourceFile(LOCALIZATION_FILE_CONFIGURATOR))
-    {
-        ISDEBUG_E("Not load localization: " + ISLocalization::Instance().GetErrorString());
-    }*/
-
     if (!InitConfiguratorScheme(ErrorString))
     {
         ISLOGGER_E(__CLASS__, "Error init configurator schema: %s", ErrorString.c_str());
