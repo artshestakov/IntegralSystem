@@ -1,6 +1,6 @@
 #include "CGConfiguratorShow.h"
 #include "ISConfig.h"
-#include "ISDebug.h"
+#include "ISLogger.h"
 #include "ISQuery.h"
 #include "ISMetaData.h"
 #include "ISDatabase.h"
@@ -52,7 +52,7 @@ static std::string QS_INFO = PREPARE_QUERY("SELECT "
 //-----------------------------------------------------------------------------
 CGConfiguratorShow::CGConfiguratorShow() : CGConfiguratorBase()
 {
-
+    RegisterFunction("databaseinfo", static_cast<Function>(&CGConfiguratorShow::databaseinfo));
 }
 //-----------------------------------------------------------------------------
 CGConfiguratorShow::~CGConfiguratorShow()
@@ -94,32 +94,32 @@ CGConfiguratorShow::~CGConfiguratorShow()
     return Result;
 }*/
 //-----------------------------------------------------------------------------
-/*bool CGConfiguratorShow::databaseinfo()
+bool CGConfiguratorShow::databaseinfo()
 {
     ISQuery qSelectInfo(QS_INFO);
     qSelectInfo.SetShowLongQuery(false);
     bool Result = qSelectInfo.ExecuteFirst();
     if (Result)
     {
-        ISDEBUG_L("Size:\t\t" + qSelectInfo.ReadColumn("database_size").toString());
-        ISDEBUG_L("Owner:\t\t" + qSelectInfo.ReadColumn("database_owner").toString());
-        ISDEBUG_L("Encoding:\t" + qSelectInfo.ReadColumn("database_encoding").toString());
-        ISDEBUG_L("Uptime:\t\t" + qSelectInfo.ReadColumn("database_uptime").toString());
-        ISDEBUG_L("Backend PID:\t" + qSelectInfo.ReadColumn("database_backend_pid").toString());
-        ISDEBUG_L("Version:\t" + qSelectInfo.ReadColumn("database_version").toString());
-        ISDEBUG_L("Cluster path:\t" + qSelectInfo.ReadColumn("database_cluster_path").toString());
-        ISDEBUG_L("Count tables:\t" + qSelectInfo.ReadColumn("table_count").toString());
-        ISDEBUG_L("Count fields:\t" + qSelectInfo.ReadColumn("field_count").toString());
-        ISDEBUG_L("Count sequence:\t" + qSelectInfo.ReadColumn("sequence_count").toString());
-        ISDEBUG_L("Count foreigns:\t" + qSelectInfo.ReadColumn("foreign_count").toString());
+        ISLOGGER_I(__CLASS__, "Size:\t\t%s", qSelectInfo.ReadColumn(0));
+        ISLOGGER_I(__CLASS__, "Owner:\t\t%s", qSelectInfo.ReadColumn(1));
+        ISLOGGER_I(__CLASS__, "Encoding:\t%s", qSelectInfo.ReadColumn(2));
+        ISLOGGER_I(__CLASS__, "Uptime:\t\t%s", qSelectInfo.ReadColumn(3));
+        ISLOGGER_I(__CLASS__, "Backend PID:\t%d", qSelectInfo.ReadColumn_Int(4));
+        ISLOGGER_I(__CLASS__, "Version:\t%s", qSelectInfo.ReadColumn(5));
+        ISLOGGER_I(__CLASS__, "Cluster path:\t%s", qSelectInfo.ReadColumn(6));
+        ISLOGGER_I(__CLASS__, "Count tables:\t%d", qSelectInfo.ReadColumn_Int(7));
+        ISLOGGER_I(__CLASS__, "Count fields:\t%d", qSelectInfo.ReadColumn_Int(8));
+        ISLOGGER_I(__CLASS__, "Count sequence:\t%d", qSelectInfo.ReadColumn_Int(9));
+        ISLOGGER_I(__CLASS__, "Count foreigns:\t%d", qSelectInfo.ReadColumn_Int(10));
 
         //Готовим запрос для расчёта количества строк
-        QString SqlQueryCount = "WITH r AS(\n";
+        std::string SqlQueryCount = "WITH r AS(\n";
         for (PMetaTable *MetaTable : ISMetaData::Instance().GetTables())
         {
-            SqlQueryCount += QString("SELECT COUNT(*) FROM %1\nUNION\n").arg(MetaTable->Name);
+            SqlQueryCount += ISAlgorithm::StringF("SELECT COUNT(*) FROM %s\nUNION\n", MetaTable->Name.c_str());
         }
-        SqlQueryCount.chop(6);
+        ISAlgorithm::StringChop(SqlQueryCount, 6);
         SqlQueryCount += ") SELECT sum(count) FROM r";
 
         //Выполняем запрос
@@ -127,19 +127,19 @@ CGConfiguratorShow::~CGConfiguratorShow()
         qSelectCount.SetShowLongQuery(false);
         if (qSelectCount.ExecuteFirst())
         {
-            ISDEBUG_L("Count records:\t" + qSelectCount.ReadColumn("sum").toString());
+            ISLOGGER_I(__CLASS__, "Count records:\t%d", qSelectCount.ReadColumn_Int(0));
         }
         else
         {
-            ISDEBUG_L("Error getting count records: " + qSelectCount.GetErrorString());
+            ISLOGGER_I(__CLASS__, "Error getting count records: %s", qSelectCount.GetErrorString().c_str());
         }
     }
     else
     {
-        ISDEBUG_L(qSelectInfo.GetErrorString());
+        ISLOGGER_I(__CLASS__, qSelectInfo.GetErrorString().c_str());
     }
     return Result;
-}*/
+}
 //-----------------------------------------------------------------------------
 /*bool CGConfiguratorShow::oldtables(int &Count)
 {

@@ -12,7 +12,7 @@ public:
     virtual ~CGConfiguratorShow();
 
     //bool oldobjects();
-    //bool databaseinfo();
+    bool databaseinfo();
 
 private:
     //bool oldtables(int &Count);
