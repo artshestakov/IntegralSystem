@@ -5,38 +5,32 @@
 #include "ISMetaData.h"
 #include "ISDatabase.h"
 //-----------------------------------------------------------------------------
-static std::string QS_TABLES = PREPARE_QUERY("SELECT tablename "
+static std::string QS_TABLES = "SELECT lower(tablename) "
     "FROM pg_tables "
     "WHERE schemaname = current_schema() "
-    "ORDER BY tablename");
+    "ORDER BY tablename";
 //-----------------------------------------------------------------------------
-static std::string QS_COLUMNS = PREPARE_QUERY("SELECT column_name "
+static std::string QS_COLUMNS = "SELECT lower(column_name) "
     "FROM information_schema.columns "
     "WHERE table_catalog = current_database() "
     "AND table_schema = current_schema() "
-    "AND table_name = :TableName "
-    "ORDER BY column_name");
+    "AND table_name = $1 "
+    "ORDER BY column_name";
 //-----------------------------------------------------------------------------
-static std::string QS_SEQUENCES = PREPARE_QUERY("SELECT sequence_name "
-    "FROM information_schema.sequences "
-    "WHERE sequence_catalog = current_database() "
-    "AND sequence_name NOT IN(:Where) "
-    "ORDER BY sequence_name");
-//-----------------------------------------------------------------------------
-static std::string QS_INDEX = PREPARE_QUERY("SELECT indexname "
+static std::string QS_INDEX = "SELECT indexname "
     "FROM pg_indexes "
     "JOIN pg_class c ON c.relname = indexname "
     "JOIN pg_index ON indexrelid = c.oid "
     "WHERE schemaname = current_schema() "
-    "AND right(indexname, 4) != 'pkey'");
+    "AND right(indexname, 4) != 'pkey'";
 //-----------------------------------------------------------------------------
-static std::string QS_FOREIGN = PREPARE_QUERY("SELECT constraint_name "
+static std::string QS_FOREIGN = "SELECT constraint_name "
     "FROM information_schema.table_constraints "
     "WHERE constraint_type = 'FOREIGN KEY' "
     "AND table_schema = current_schema() "
-    "ORDER BY constraint_name");
+    "ORDER BY constraint_name";
 //-----------------------------------------------------------------------------
-static std::string QS_INFO = PREPARE_QUERY("SELECT "
+static std::string QS_INFO = "SELECT "
     "(SELECT pg_size_pretty(pg_database_size(current_database()))) AS \"database_size\", "
     "(SELECT pg_catalog.pg_get_userbyid(datdba) AS \"database_owner\" FROM pg_catalog.pg_database WHERE datname = current_database()), "
     "(SELECT pg_encoding_to_char(encoding) AS \"database_encoding\" FROM pg_database WHERE datname = current_database()), "
@@ -48,10 +42,11 @@ static std::string QS_INFO = PREPARE_QUERY("SELECT "
     "(SELECT COUNT(*) AS \"field_count\" FROM information_schema.columns WHERE table_catalog = current_database() AND table_schema = current_schema()), "
     "(SELECT COUNT(*) AS \"sequence_count\" FROM information_schema.sequences WHERE sequence_catalog = current_database() AND sequence_schema = current_schema()), "
     "(SELECT COUNT(*) AS \"index_count\" FROM pg_indexes WHERE schemaname = current_schema()), "
-    "(SELECT COUNT(*) AS \"foreign_count\" FROM information_schema.constraint_table_usage WHERE constraint_catalog = current_database() AND constraint_schema = current_schema())");
+    "(SELECT COUNT(*) AS \"foreign_count\" FROM information_schema.constraint_table_usage WHERE constraint_catalog = current_database() AND constraint_schema = current_schema())";
 //-----------------------------------------------------------------------------
 CGConfiguratorShow::CGConfiguratorShow() : CGConfiguratorBase()
 {
+    RegisterFunction("oldobjects", static_cast<Function>(&CGConfiguratorShow::oldobjects));
     RegisterFunction("databaseinfo", static_cast<Function>(&CGConfiguratorShow::databaseinfo));
 }
 //-----------------------------------------------------------------------------
@@ -60,7 +55,7 @@ CGConfiguratorShow::~CGConfiguratorShow()
 
 }
 //-----------------------------------------------------------------------------
-/*bool CGConfiguratorShow::oldobjects()
+bool CGConfiguratorShow::oldobjects()
 {
     int Tables = 0, Fields = 0, Resources = 0, Sequences = 0, Indexes = 0, Foreigns = 0;
     bool Result = oldtables(Tables);
@@ -89,10 +84,10 @@ CGConfiguratorShow::~CGConfiguratorShow()
         Result = oldforeigns(Foreigns);
     }
 
-    ISDEBUG_L(QString("Tables: %1 Fields: %2 Resources: %3 Sequences: %4 Indexes: %5 Foreigns: %6")
-        .arg(Tables).arg(Fields).arg(Resources).arg(Sequences).arg(Indexes).arg(Foreigns));
+    ISLOGGER_I(__CLASS__, "Tables: %d Fields: %d Resources: %d Sequences: %d Indexes: %d Foreigns: %d",
+        Tables, Fields, Resources, Sequences, Indexes, Foreigns);
     return Result;
-}*/
+}
 //-----------------------------------------------------------------------------
 bool CGConfiguratorShow::databaseinfo()
 {
@@ -141,9 +136,9 @@ bool CGConfiguratorShow::databaseinfo()
     return Result;
 }
 //-----------------------------------------------------------------------------
-/*bool CGConfiguratorShow::oldtables(int &Count)
+bool CGConfiguratorShow::oldtables(int &Count)
 {
-    ISDEBUG_L("Search tables...");
+    ISLOGGER_I(__CLASS__, "Search tables...");
     ISQuery qSelectTables(QS_TABLES);
     qSelectTables.SetShowLongQuery(false);
     bool Result = qSelectTables.Execute();
@@ -151,11 +146,11 @@ bool CGConfiguratorShow::databaseinfo()
     {
         while (qSelectTables.Next()) //Обход таблиц базы
         {
-            QString TableName = qSelectTables.ReadColumn("tablename").toString().toLower();
+            std::string TableName = qSelectTables.ReadColumn_String(0);
             PMetaTable *MetaTable = FoundTable(TableName);
             if (!MetaTable)
             {
-                ISDEBUG_L(TableName);
+                ISLOGGER_I(__CLASS__, TableName.c_str());
                 ++Count;
             }
         }
@@ -164,13 +159,13 @@ bool CGConfiguratorShow::databaseinfo()
     {
         ErrorString = qSelectTables.GetErrorString();
     }
-    ISDEBUG();
+    ISLOGGER_I(__CLASS__, "");
     return Result;
-}*/
+}
 //-----------------------------------------------------------------------------
-/*bool CGConfiguratorShow::oldfields(int &Count)
+bool CGConfiguratorShow::oldfields(int &Count)
 {
-    ISDEBUG_L("Search fields...");
+    ISLOGGER_I(__CLASS__, "Search fields...");
     ISQuery qSelectTables(QS_TABLES);
     qSelectTables.SetShowLongQuery(false);
     bool Result = qSelectTables.Execute();
@@ -178,23 +173,23 @@ bool CGConfiguratorShow::databaseinfo()
     {
         while (qSelectTables.Next()) //Обход таблиц базы
         {
-            QString TableName = qSelectTables.ReadColumn("tablename").toString().toLower();
+            std::string TableName = qSelectTables.ReadColumn_String(0);
             PMetaTable *MetaTable = FoundTable(TableName);
             if (MetaTable)
             {
                 ISQuery qSelectColumns(QS_COLUMNS);
                 qSelectColumns.SetShowLongQuery(false);
-                qSelectColumns.BindValue(":TableName", TableName);
+                qSelectColumns.BindString(TableName);
                 Result = qSelectColumns.Execute();
                 if (Result)
                 {
                     while (qSelectColumns.Next()) //Обход полей таблицы
                     {
-                        QString ColumnName = qSelectColumns.ReadColumn("column_name").toString().toLower();
+                        std::string ColumnName = qSelectColumns.ReadColumn_String(0);
                         PMetaField *MetaField = FoundField(MetaTable, ColumnName);
                         if (!MetaField)
                         {
-                            ISDEBUG_L(TableName + ": " + ColumnName);
+                            ISLOGGER_I(__CLASS__, "%s: %s", TableName.c_str(), ColumnName.c_str());
                             ++Count;
                         }
                     }
@@ -211,18 +206,18 @@ bool CGConfiguratorShow::databaseinfo()
     {
         ErrorString = qSelectTables.GetErrorString();
     }
-    ISDEBUG();
+    ISLOGGER_I(__CLASS__, "");
     return Result;
-}*/
+}
 //-----------------------------------------------------------------------------
-/*bool CGConfiguratorShow::oldresources(int &Count)
+bool CGConfiguratorShow::oldresources(int &Count)
 {
-    ISDEBUG_L("Search resources...");
-    std::map<QString, ISVectorString> Map, MapOutput;
+    ISLOGGER_I(__CLASS__, "Search resources...");
+    std::map<std::string, ISVectorString> Map, MapOutput;
     for (PMetaResource *MetaResource : ISMetaData::Instance().GetResources())
     {
-        QString TableName = MetaResource->TableName;
-        QString ResourceUID = MetaResource->UID.toLower();
+        std::string TableName = MetaResource->TableName;
+        std::string ResourceUID = MetaResource->UID; //to lower?
         if (!Map.count(TableName))
         {
             Map.emplace(TableName, ISVectorString());
@@ -231,17 +226,19 @@ bool CGConfiguratorShow::databaseinfo()
     }
     for (const auto &MapItem : Map)
     {
-        QString TableName = MapItem.first;
+        std::string TableName = MapItem.first;
         ISVectorString Vector = MapItem.second;
 
-        QString SqlText = QString("SELECT %1_uid FROM %2 WHERE %1_uid NOT IN(%3)").arg(ISMetaData::Instance().GetMetaTable(TableName)->Alias).arg(TableName);
-        QString NotIN;
-        for (const QString &String : Vector)
+        std::string NotIN;
+        for (const std::string &String : Vector)
         {
             NotIN += '\'' + String + "', ";
         }
-        NotIN.chop(2);
-        SqlText = SqlText.arg(NotIN);
+        ISAlgorithm::StringChop(NotIN, 2);
+
+        std::string TableAlias = ISMetaData::Instance().GetTable(TableName)->Alias;
+        std::string SqlText = ISAlgorithm::StringF("SELECT %s_uid FROM %s WHERE %s_uid NOT IN(%s)",
+            TableAlias.c_str(), TableName.c_str(), TableAlias.c_str(), NotIN.c_str());
 
         ISQuery qSelect(SqlText);
         qSelect.SetShowLongQuery(false);
@@ -253,7 +250,7 @@ bool CGConfiguratorShow::databaseinfo()
                 {
                     MapOutput.emplace(TableName, ISVectorString());
                 }
-                MapOutput[TableName].emplace_back(qSelect.ReadColumn(0).toString());
+                MapOutput[TableName].emplace_back(qSelect.ReadColumn_String(0));
             }
         }
         else
@@ -264,33 +261,38 @@ bool CGConfiguratorShow::databaseinfo()
     }
     for (const auto &OutputItem : MapOutput)
     {
-        for (const QString &String : OutputItem.second)
+        for (const std::string &String : OutputItem.second)
         {
-            ISDEBUG_L(OutputItem.first + ": " + String);
+            ISLOGGER_I(__CLASS__, "%s: %s", OutputItem.first.c_str(), String.c_str());
             ++Count;
         }
     }
-    ISDEBUG();
+    ISLOGGER_I(__CLASS__, "");
     return true;
-}*/
+}
 //-----------------------------------------------------------------------------
-/*bool CGConfiguratorShow::oldsequence(int &Count)
+bool CGConfiguratorShow::oldsequence(int &Count)
 {
-    ISDEBUG_L("Search sequences...");
-    QString Where;
+    ISLOGGER_I(__CLASS__, "Search sequences...");
+    std::string Where;
     for (PMetaTable *MetaTable : ISMetaData::Instance().GetTables())
     {
-        Where += '\'' + MetaTable->Name.toLower() + "_sequence" + "', ";
+        Where += '\'' + ISAlgorithm::StringToLowerGet(MetaTable->Name) + "_sequence" + "', ";
     }
-    Where.chop(2);
-    ISQuery qSelectSequences(QS_SEQUENCES.replace(":Where", Where));
+    ISAlgorithm::StringChop(Where, 2);
+    ISQuery qSelectSequences(ISAlgorithm::StringF(
+        "SELECT sequence_name "
+        "FROM information_schema.sequences "
+        "WHERE sequence_catalog = current_database() "
+        "AND sequence_name NOT IN(%s) "
+        "ORDER BY sequence_name", Where.c_str()));
     qSelectSequences.SetShowLongQuery(false);
     bool Result = qSelectSequences.Execute();
     if (Result)
     {
         while (qSelectSequences.Next())
         {
-            ISDEBUG_L(qSelectSequences.ReadColumn("sequence_name").toString());
+            ISLOGGER_I(__CLASS__, qSelectSequences.ReadColumn(0));
             ++Count;
         }
     }
@@ -298,13 +300,13 @@ bool CGConfiguratorShow::databaseinfo()
     {
         ErrorString = qSelectSequences.GetErrorString();
     }
-    ISDEBUG();
+    ISLOGGER_I(__CLASS__, "");
     return Result;
-}*/
+}
 //-----------------------------------------------------------------------------
-/*bool CGConfiguratorShow::oldindexes(int &Count)
+bool CGConfiguratorShow::oldindexes(int &Count)
 {
-    ISDEBUG_L("Search indexes...");
+    ISLOGGER_I(__CLASS__, "Search indexes...");
     ISQuery qSelectIndexes(QS_INDEX);
     qSelectIndexes.SetShowLongQuery(false);
     bool Result = qSelectIndexes.Execute();
@@ -318,10 +320,10 @@ bool CGConfiguratorShow::databaseinfo()
 
         while (qSelectIndexes.Next())
         {
-            QString IndexName = qSelectIndexes.ReadColumn("indexname").toString();
+            std::string IndexName = qSelectIndexes.ReadColumn_String(0);
             if (!ISAlgorithm::VectorContains(IndexNames, IndexName))
             {
-                ISDEBUG_L(IndexName);
+                ISLOGGER_I(__CLASS__, IndexName.c_str());
                 ++Count;
             }
         }
@@ -330,13 +332,13 @@ bool CGConfiguratorShow::databaseinfo()
     {
         ErrorString = qSelectIndexes.GetErrorString();
     }
-    ISDEBUG();
+    ISLOGGER_I(__CLASS__, "");
     return Result;
-}*/
+}
 //-----------------------------------------------------------------------------
-/*bool CGConfiguratorShow::oldforeigns(int &Count)
+bool CGConfiguratorShow::oldforeigns(int &Count)
 {
-    ISDEBUG_L("Search foreigns...");
+    ISLOGGER_I(__CLASS__, "Search foreigns...");
     ISQuery qSelectForeigns(QS_FOREIGN);
     qSelectForeigns.SetShowLongQuery(false);
     bool Result = qSelectForeigns.Execute();
@@ -350,10 +352,10 @@ bool CGConfiguratorShow::databaseinfo()
 
         while (qSelectForeigns.Next())
         {
-            QString ForeignName = qSelectForeigns.ReadColumn("constraint_name").toString();
+            std::string ForeignName = qSelectForeigns.ReadColumn_String(0);
             if (!ISAlgorithm::VectorContains(Foreigns, ForeignName))
             {
-                ISDEBUG_L(ForeignName);
+                ISLOGGER_I(__CLASS__, ForeignName.c_str());
                 ++Count;
             }
         }
@@ -362,31 +364,31 @@ bool CGConfiguratorShow::databaseinfo()
     {
         ErrorString = qSelectForeigns.GetErrorString();
     }
-    ISDEBUG();
+    ISLOGGER_I(__CLASS__, "");
     return Result;
-}*/
+}
 //-----------------------------------------------------------------------------
-/*PMetaTable* CGConfiguratorShow::FoundTable(const QString &TableName)
+PMetaTable* CGConfiguratorShow::FoundTable(const std::string &TableName)
 {
     for (PMetaTable *MetaTable : ISMetaData::Instance().GetTables())
     {
-        if (MetaTable->Name.toLower() == TableName)
+        if (ISAlgorithm::StringToLowerGet(MetaTable->Name) == TableName)
         {
             return MetaTable;
         }
     }
     return nullptr;
-}*/
+}
 //-----------------------------------------------------------------------------
-/*PMetaField* CGConfiguratorShow::FoundField(PMetaTable *MetaTable, const QString &ColumnName)
+PMetaField* CGConfiguratorShow::FoundField(PMetaTable *MetaTable, const std::string &ColumnName)
 {
     for (PMetaField *MetaField : MetaTable->Fields)
     {
-        if (QString(MetaTable->Alias + '_' + MetaField->Name).toLower() == ColumnName)
+        if (ISAlgorithm::StringToLowerGet(MetaTable->Alias + '_' + MetaField->Name) == ColumnName)
         {
             return MetaField;
         }
     }
     return nullptr;
-}*/
+}
 //-----------------------------------------------------------------------------
