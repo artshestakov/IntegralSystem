@@ -63,7 +63,7 @@ bool ISCaratApplication::Init()
     //Установим обработчик ошибок
     if (!ISCrashDumper::Install())
     {
-        ISLOGGER_E(__CLASS__, "Not installer crash dumper");
+        ISLOGGER_E(__CLASS__, "Not installed crash dumper");
         return false;
     }
 

@@ -35,6 +35,7 @@ LIBS += -L$$DESTDIR -L$$PWD/../../Components/PostgreSQL/12.0.5/Lib-$${PLATFORM} 
 
 SOURCES += \
     ISCaratApplication.cpp \
+    ISCrashDumper.cpp \
     ISFail2Ban.cpp \
     ISTcpAnswer.cpp \
     ISTcpClient.cpp \
@@ -50,6 +51,7 @@ SOURCES += \
 HEADERS += \
     ../../ISRevision.h \
     ISCaratApplication.h \
+    ISCrashDumper.h \
     ISFail2Ban.h \
     ISTcpAnswer.h \
     ISTcpClient.h \
