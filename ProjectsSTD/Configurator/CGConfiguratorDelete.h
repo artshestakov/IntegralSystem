@@ -11,9 +11,9 @@ public:
     CGConfiguratorDelete();
     virtual ~CGConfiguratorDelete();
 
-    //bool adminpassword();
-    //bool indexes();
-    //bool foreigns();
+    bool adminpassword();
+    bool indexes();
+    bool foreigns();
     //bool oldtables();
     //bool oldfields();
     //bool oldresources();

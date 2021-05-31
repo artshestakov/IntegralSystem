@@ -1,6 +1,6 @@
 #include "CGConfiguratorDelete.h"
 #include "ISQuery.h"
-#include "ISDebug.h"
+#include "ISLogger.h"
 #include "ISMetaData.h"
 #include "ISConstants.h"
 #include "ISConsole.h"
@@ -9,22 +9,18 @@
 static std::string QU_ADMIN_PASSWORD = PREPARE_QUERY("UPDATE _users SET "
     "usrs_hash = NULL, "
     "usrs_salt = NULL "
-    "WHERE usrs_uid = :UID");
+    "WHERE usrs_uid = $1");
 //-----------------------------------------------------------------------------
 static std::string QS_INDEXES = PREPARE_QUERY("SELECT indexname "
     "FROM pg_indexes "
     "WHERE schemaname = current_schema() "
     "AND right(indexname, 4) != 'pkey'");
 //-----------------------------------------------------------------------------
-static std::string QD_INDEX = "DROP INDEX public.%1 CASCADE";
-//-----------------------------------------------------------------------------
 static std::string QS_FOREIGNS = PREPARE_QUERY("SELECT constraint_name "
     "FROM information_schema.constraint_table_usage "
     "WHERE table_catalog = current_database() "
     "AND table_schema = current_schema() "
     "AND right(constraint_name, 4) != 'pkey'");
-//-----------------------------------------------------------------------------
-static std::string QD_FOREIGN = "ALTER TABLE public.%1 DROP CONSTRAINT %2 RESTRICT";
 //-----------------------------------------------------------------------------
 static std::string QS_TABLES = PREPARE_QUERY("SELECT tablename "
     "FROM pg_tables "
@@ -60,7 +56,9 @@ static std::string QS_FOREIGN = PREPARE_QUERY("SELECT table_name, constraint_nam
 //-----------------------------------------------------------------------------
 CGConfiguratorDelete::CGConfiguratorDelete() : CGConfiguratorBase()
 {
-
+    RegisterFunction("adminpassword", static_cast<Function>(&CGConfiguratorDelete::adminpassword));
+    RegisterFunction("indexes", static_cast<Function>(&CGConfiguratorDelete::indexes));
+    RegisterFunction("foreigns", static_cast<Function>(&CGConfiguratorDelete::foreigns));
 }
 //-----------------------------------------------------------------------------
 CGConfiguratorDelete::~CGConfiguratorDelete()
@@ -68,20 +66,20 @@ CGConfiguratorDelete::~CGConfiguratorDelete()
 
 }
 //-----------------------------------------------------------------------------
-/*bool CGConfiguratorDelete::adminpassword()
+bool CGConfiguratorDelete::adminpassword()
 {
     if (ISConsole::Question("Are you sure?"))
     {
         ISQuery qUpdatePassword(QU_ADMIN_PASSWORD);
-        qUpdatePassword.BindValue(":UID", SYSTEM_USER_UID);
+        qUpdatePassword.BindUID(DB_SYSTEM_USER_UID);
         qUpdatePassword.SetShowLongQuery(false);
         bool Result = qUpdatePassword.Execute();
         if (Result) //Запрос прошёл успешно
         {
-            Result = qUpdatePassword.GetCountAffected() > 0;
+            Result = qUpdatePassword.GetResultAffected() > 0;
             if (Result) //Пароль был удалён
             {
-                ISDEBUG_I("Password deleted successfully");
+                ISLOGGER_I(__CLASS__, "Password deleted successfully");
             }
             else //Админ в БД не существует - ошибка
             {
@@ -96,24 +94,25 @@ CGConfiguratorDelete::~CGConfiguratorDelete()
     }
     ErrorString = "You refused";
     return false;
-}*/
+}
 //-----------------------------------------------------------------------------
-/*bool CGConfiguratorDelete::indexes()
+bool CGConfiguratorDelete::indexes()
 {
     ISQuery qSelectIndexes(QS_INDEXES);
     qSelectIndexes.SetShowLongQuery(false);
     bool Result = qSelectIndexes.Execute();
     if (Result)
     {
-        int Deleted = 0, CountIndexes = qSelectIndexes.GetCountResultRows();
+        int Deleted = 0, CountIndexes = qSelectIndexes.GetResultRowCount();
         while (qSelectIndexes.Next())
         {
-            ISQuery qDeleteIndex;
+            ISQuery qDeleteIndex(ISAlgorithm::StringF("DROP INDEX public.%s CASCADE",
+                qSelectIndexes.ReadColumn(0)));
             qDeleteIndex.SetShowLongQuery(false);
-            Result = qDeleteIndex.Execute(QD_INDEX.arg(qSelectIndexes.ReadColumn("indexname").toString()));
+            Result = qDeleteIndex.Execute();
             if (Result)
             {
-                ISDEBUG_I(QString("Deleted %1 of %2 indexes").arg(++Deleted).arg(CountIndexes));
+                ISLOGGER_I(__CLASS__, "Deleted %d of %d indexes", ++Deleted, CountIndexes);
             }
             else
             {
@@ -127,40 +126,41 @@ CGConfiguratorDelete::~CGConfiguratorDelete()
         ErrorString = qSelectIndexes.GetErrorString();
     }
     return Result;
-}*/
+}
 //-----------------------------------------------------------------------------
-/*bool CGConfiguratorDelete::foreigns()
+bool CGConfiguratorDelete::foreigns()
 {
-    ISDEBUG_D("Deleting foreigns...");
+    ISLOGGER_I(__CLASS__, "Deleting foreigns...");
 
     ISQuery qSelectForeigns(QS_FOREIGNS);
     qSelectForeigns.SetShowLongQuery(false);
     bool Result = qSelectForeigns.Execute();
     if (Result)
     {
-        int Deleted = 0, CountForeigns = qSelectForeigns.GetCountResultRows();
+        int Deleted = 0, CountForeigns = qSelectForeigns.GetResultRowCount();
         while (qSelectForeigns.Next())
         {
-            QString ForeignName = qSelectForeigns.ReadColumn("constraint_name").toString();
-            QString TableName;
+            std::string ForeignName = qSelectForeigns.ReadColumn_String(0);
+            std::string TableName;
 
-            QStringList StringList = ForeignName.split('_');
-            if (StringList[0].length())
+            ISVectorString VectorString = ISAlgorithm::StringSplit(ForeignName, '_');
+            if (VectorString[0].length())
             {
-                TableName = StringList[0];
+                TableName = VectorString[0];
             }
             else
             {
-                TableName = '_' + StringList[1];
+                TableName = '_' + VectorString[1];
             }
 
 
-            ISQuery qDeleteForeign;
+            ISQuery qDeleteForeign(ISAlgorithm::StringF("ALTER TABLE public.%s DROP CONSTRAINT %s RESTRICT",
+                TableName.c_str(), ForeignName.c_str()));
             qDeleteForeign.SetShowLongQuery(false);
-            Result = qDeleteForeign.Execute(QD_FOREIGN.arg(TableName).arg(ForeignName));
+            Result = qDeleteForeign.Execute();
             if (Result)
             {
-                ISDEBUG_I(QString("Deleted %1 of %2 foreigns").arg(++Deleted).arg(CountForeigns));
+                ISLOGGER_I(__CLASS__, "Deleted %d of %d foreigns", ++Deleted, CountForeigns);
             }
             else
             {
@@ -174,7 +174,7 @@ CGConfiguratorDelete::~CGConfiguratorDelete()
         ErrorString = qSelectForeigns.GetErrorString();
     }
     return Result;
-}*/
+}
 //-----------------------------------------------------------------------------
 /*bool CGConfiguratorDelete::oldtables()
 {
