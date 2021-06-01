@@ -189,7 +189,6 @@
     <ClCompile Include="ISButtons.cpp" />
     <ClCompile Include="ISCalendarEventItem.cpp" />
     <ClCompile Include="ISCalendarEventsWidget.cpp" />
-    <ClCompile Include="ISCalendarParagraph.cpp" />
     <ClCompile Include="ISCalendarObjectForm.cpp" />
     <ClCompile Include="ISCalendarPanel.cpp" />
     <ClCompile Include="ISCalendarPopup.cpp" />
@@ -201,7 +200,6 @@
     <ClCompile Include="ISCreatedObjectsEntity.cpp" />
     <ClCompile Include="ISDefinesGui.cpp" />
     <ClCompile Include="ISDelegates.cpp" />
-    <ClCompile Include="ISDesktopParagraph.cpp" />
     <ClCompile Include="ISDialogsCommon.cpp" />
     <ClCompile Include="ISDialogsForm.cpp" />
     <ClCompile Include="ISDiscussionListForm.cpp" />
@@ -233,8 +231,8 @@
     <ClCompile Include="ISObjectInterface.cpp" />
     <ClCompile Include="ISObjects.cpp" />
     <ClCompile Include="ISOilSphere.cpp" />
-    <ClCompile Include="ISParagraphBaseForm.cpp" />
     <ClCompile Include="ISParagraphEntity.cpp" />
+    <ClCompile Include="ISParagraphs.cpp" />
     <ClCompile Include="ISPopupMessage.cpp" />
     <ClCompile Include="ISProcessForm.cpp" />
     <ClCompile Include="ISProgressForm.cpp" />
@@ -256,7 +254,6 @@
     <ClCompile Include="ISUserRoleEntity.cpp" />
     <ClCompile Include="ISValidators.cpp" />
     <ClCompile Include="ISWaitWidget.cpp" />
-    <ClCompile Include="ISWorkspaceParagraph.cpp" />
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ISProcessForm.h" />
@@ -293,16 +290,12 @@
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ISValidators.h" />
-    <QtMoc Include="ISWorkspaceParagraph.h" />
-    <QtMoc Include="ISCalendarParagraph.h" />
     <QtMoc Include="ISCalendarObjectForm.h" />
-    <QtMoc Include="ISDesktopParagraph.h" />
     <QtMoc Include="ISDiscussionListForm.h" />
     <QtMoc Include="ISFavoritesForm.h" />
     <QtMoc Include="ISHistoryForm.h" />
     <QtMoc Include="ISImageViewerForm.h" />
     <QtMoc Include="ISMainWindow.h" />
-    <QtMoc Include="ISParagraphBaseForm.h" />
     <QtMoc Include="ISProtocolObjectListForm.h" />
     <QtMoc Include="ISSearchForm.h" />
     <QtMoc Include="ISUserObjectForm.h" />
@@ -337,6 +330,7 @@
     <QtMoc Include="ISTcpConnector.h" />
     <QtMoc Include="ISTcpModels.h" />
     <QtMoc Include="ISSubSystem.h" />
+    <QtMoc Include="ISParagraphs.h" />
     <ClInclude Include="ISTcpQuery.h" />
     <ClInclude Include="ISUserRoleEntity.h" />
     <QtMoc Include="ISWaitWidget.h" />

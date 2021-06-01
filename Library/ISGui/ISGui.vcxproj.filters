@@ -175,9 +175,6 @@
     <ClCompile Include="ISMainWindow.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
-    <ClCompile Include="ISParagraphBaseForm.cpp">
-      <Filter>Forms</Filter>
-    </ClCompile>
     <ClCompile Include="ISProtocolObjectListForm.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
@@ -268,15 +265,6 @@
     <ClCompile Include="ISAudioPlayerForm.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
-    <ClCompile Include="ISCalendarParagraph.cpp">
-      <Filter>Paragraphs</Filter>
-    </ClCompile>
-    <ClCompile Include="ISWorkspaceParagraph.cpp">
-      <Filter>Paragraphs</Filter>
-    </ClCompile>
-    <ClCompile Include="ISDesktopParagraph.cpp">
-      <Filter>Paragraphs</Filter>
-    </ClCompile>
     <ClCompile Include="ISSettingsDatabaseObjectForm.cpp">
       <Filter>Forms</Filter>
     </ClCompile>
@@ -297,6 +285,9 @@
     </ClCompile>
     <ClCompile Include="ISSubSystem.cpp">
       <Filter>SubSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="ISParagraphs.cpp">
+      <Filter>Paragraphs</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -370,9 +361,6 @@
       <Filter>Forms</Filter>
     </QtMoc>
     <QtMoc Include="ISMainWindow.h">
-      <Filter>Forms</Filter>
-    </QtMoc>
-    <QtMoc Include="ISParagraphBaseForm.h">
       <Filter>Forms</Filter>
     </QtMoc>
     <QtMoc Include="ISProtocolObjectListForm.h">
@@ -462,15 +450,6 @@
     <QtMoc Include="ISAudioPlayerForm.h">
       <Filter>Forms</Filter>
     </QtMoc>
-    <QtMoc Include="ISCalendarParagraph.h">
-      <Filter>Paragraphs</Filter>
-    </QtMoc>
-    <QtMoc Include="ISWorkspaceParagraph.h">
-      <Filter>Paragraphs</Filter>
-    </QtMoc>
-    <QtMoc Include="ISDesktopParagraph.h">
-      <Filter>Paragraphs</Filter>
-    </QtMoc>
     <QtMoc Include="ISSettingsDatabaseObjectForm.h">
       <Filter>Forms</Filter>
     </QtMoc>
@@ -491,6 +470,9 @@
     </QtMoc>
     <QtMoc Include="ISSubSystem.h">
       <Filter>SubSystem</Filter>
+    </QtMoc>
+    <QtMoc Include="ISParagraphs.h">
+      <Filter>Paragraphs</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>

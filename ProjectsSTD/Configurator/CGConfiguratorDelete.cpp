@@ -16,30 +16,20 @@ static std::string QS_INDEXES = PREPARE_QUERY("SELECT indexname "
     "WHERE schemaname = current_schema() "
     "AND right(indexname, 4) != 'pkey'");
 //-----------------------------------------------------------------------------
-static std::string QS_FOREIGNS = PREPARE_QUERY("SELECT constraint_name "
-    "FROM information_schema.constraint_table_usage "
-    "WHERE table_catalog = current_database() "
-    "AND table_schema = current_schema() "
-    "AND right(constraint_name, 4) != 'pkey'");
+static std::string QS_FOREIGNS = PREPARE_QUERY("SELECT lower(table_name), lower(constraint_name) "
+    "FROM information_schema.table_constraints "
+    "WHERE constraint_type = 'FOREIGN KEY'");
 //-----------------------------------------------------------------------------
-static std::string QS_TABLES = PREPARE_QUERY("SELECT tablename "
+static std::string QS_TABLES = PREPARE_QUERY("SELECT lower(tablename) "
     "FROM pg_tables "
     "WHERE schemaname = current_schema() "
     "ORDER BY tablename");
 //-----------------------------------------------------------------------------
-static std::string QS_COLUMNS = PREPARE_QUERY("SELECT table_name, column_name "
+static std::string QS_COLUMNS = PREPARE_QUERY("SELECT lower(table_name), lower(column_name) "
     "FROM information_schema.columns "
     "WHERE table_catalog = current_database() "
     "AND table_schema = current_schema() "
     "ORDER BY table_name, ordinal_position");
-//-----------------------------------------------------------------------------
-static std::string QS_SEQUENCES = PREPARE_QUERY("SELECT sequence_name "
-    "FROM information_schema.sequences "
-    "WHERE sequence_catalog = current_database() "
-    "AND sequence_name NOT IN(:Where) "
-    "ORDER BY sequence_name");
-//-----------------------------------------------------------------------------
-static std::string QD_SEQUENCE = "DROP SEQUENCE public.%1";
 //-----------------------------------------------------------------------------
 static std::string QS_INDEX = PREPARE_QUERY("SELECT indexname "
     "FROM pg_indexes "
@@ -59,6 +49,12 @@ CGConfiguratorDelete::CGConfiguratorDelete() : CGConfiguratorBase()
     RegisterFunction("adminpassword", static_cast<Function>(&CGConfiguratorDelete::adminpassword));
     RegisterFunction("indexes", static_cast<Function>(&CGConfiguratorDelete::indexes));
     RegisterFunction("foreigns", static_cast<Function>(&CGConfiguratorDelete::foreigns));
+    RegisterFunction("oldtables", static_cast<Function>(&CGConfiguratorDelete::oldtables));
+    RegisterFunction("oldfields", static_cast<Function>(&CGConfiguratorDelete::oldfields));
+    RegisterFunction("oldresources", static_cast<Function>(&CGConfiguratorDelete::oldresources));
+    RegisterFunction("oldsequence", static_cast<Function>(&CGConfiguratorDelete::oldsequence));
+    RegisterFunction("oldindexes", static_cast<Function>(&CGConfiguratorDelete::oldindexes));
+    RegisterFunction("oldforeigns", static_cast<Function>(&CGConfiguratorDelete::oldforeigns));
 }
 //-----------------------------------------------------------------------------
 CGConfiguratorDelete::~CGConfiguratorDelete()
@@ -140,19 +136,8 @@ bool CGConfiguratorDelete::foreigns()
         int Deleted = 0, CountForeigns = qSelectForeigns.GetResultRowCount();
         while (qSelectForeigns.Next())
         {
-            std::string ForeignName = qSelectForeigns.ReadColumn_String(0);
-            std::string TableName;
-
-            ISVectorString VectorString = ISAlgorithm::StringSplit(ForeignName, '_');
-            if (VectorString[0].length())
-            {
-                TableName = VectorString[0];
-            }
-            else
-            {
-                TableName = '_' + VectorString[1];
-            }
-
+            std::string TableName = qSelectForeigns.ReadColumn_String(0);
+            std::string ForeignName = qSelectForeigns.ReadColumn_String(1);
 
             ISQuery qDeleteForeign(ISAlgorithm::StringF("ALTER TABLE public.%s DROP CONSTRAINT %s RESTRICT",
                 TableName.c_str(), ForeignName.c_str()));
@@ -176,13 +161,13 @@ bool CGConfiguratorDelete::foreigns()
     return Result;
 }
 //-----------------------------------------------------------------------------
-/*bool CGConfiguratorDelete::oldtables()
+bool CGConfiguratorDelete::oldtables()
 {
     ISVectorString VectorString;
     std::vector<PMetaTable*> Tables = ISMetaData::Instance().GetTables();
     for (PMetaTable *MetaTable : Tables)
     {
-        VectorString.emplace_back(MetaTable->Name.toLower());
+        VectorString.emplace_back(ISAlgorithm::StringToLowerGet(MetaTable->Name));
     }
 
     ISQuery qSelectTables(QS_TABLES);
@@ -192,16 +177,20 @@ bool CGConfiguratorDelete::foreigns()
     {
         while (qSelectTables.Next())
         {
-            QString TableName = qSelectTables.ReadColumn("tablename").toString();
+            std::string TableName = qSelectTables.ReadColumn_String(0);
             if (!ISAlgorithm::VectorContains(VectorString, TableName))
             {
-                if (ISConsole::Question(QString("Remove table \"%1\"?").arg(TableName)))
+                if (ISConsole::Question(ISAlgorithm::StringF("Remove table \"%s\"?", TableName.c_str())))
                 {
-                    ISDEBUG_L(QString("Removing table \"%1\"...").arg(TableName));
-                    ISQuery qDeleteTable;
+                    ISLOGGER_I(__CLASS__, "Removing table \"%s\"...", TableName.c_str());
+                    ISQuery qDeleteTable(ISAlgorithm::StringF("DROP TABLE public.%s", TableName.c_str()));
                     qDeleteTable.SetShowLongQuery(false);
-                    Result = qDeleteTable.Execute("DROP TABLE public." + TableName);
-                    if (!Result)
+                    Result = qDeleteTable.Execute();
+                    if (Result)
+                    {
+                        ISLOGGER_I(__CLASS__, "Table removed");
+                    }
+                    else
                     {
                         ErrorString = qDeleteTable.GetErrorString();
                     }
@@ -214,20 +203,20 @@ bool CGConfiguratorDelete::foreigns()
         ErrorString = qSelectTables.GetErrorString();
     }
     return Result;
-}*/
+}
 //-----------------------------------------------------------------------------
-/*bool CGConfiguratorDelete::oldfields()
+bool CGConfiguratorDelete::oldfields()
 {
-    QMap<QString, ISVectorString> Map;
+    std::map<std::string, ISVectorString> Map;
     std::vector<PMetaTable*> Tables = ISMetaData::Instance().GetTables();
     for (PMetaTable *MetaTable : Tables)
     {
-        QString TableName = MetaTable->Name.toLower();
-        Map.insert(TableName, ISVectorString());
+        std::string TableName = ISAlgorithm::StringToLowerGet(MetaTable->Name);
+        Map.emplace(TableName, ISVectorString());
 
         for (PMetaField* MetaField : MetaTable->Fields)
         {
-            Map[TableName].emplace_back(MetaTable->Alias.toLower() + '_' + MetaField->Name.toLower());
+            Map[TableName].emplace_back(ISAlgorithm::StringToLowerGet(MetaTable->Alias + '_' + MetaField->Name));
         }
     }
 
@@ -238,21 +227,25 @@ bool CGConfiguratorDelete::foreigns()
     {
         while (qSelectColumns.Next())
         {
-            QString TableName = qSelectColumns.ReadColumn("table_name").toString();
-            QString ColumnName = qSelectColumns.ReadColumn("column_name").toString();
-            if (Map.contains(TableName))
+            std::string TableName = qSelectColumns.ReadColumn_String(0);
+            std::string ColumnName = qSelectColumns.ReadColumn_String(1);
+            if (Map.find(TableName) != Map.end())
             {
-                if (!ISAlgorithm::VectorContains(Map.value(TableName), ColumnName))
+                if (!ISAlgorithm::VectorContains(Map[TableName], ColumnName))
                 {
-                    if (ISConsole::Question(QString("Remove column \"%1\" in table \"%2\"?").arg(ColumnName).arg(TableName)))
+                    if (ISConsole::Question(ISAlgorithm::StringF("Remove column \"%s\" in table \"%s\"?", ColumnName.c_str(), TableName.c_str())))
                     {
-                        ISDEBUG_L(QString("Removing column \"%1\"...").arg(ColumnName));
-                        ISQuery qDeleteField;
+                        ISLOGGER_I(__CLASS__, "Removing column \"%s\"...", ColumnName.c_str());
+                        ISQuery qDeleteField(ISAlgorithm::StringF("ALTER TABLE public.%s DROP COLUMN %s", TableName.c_str(), ColumnName.c_str()));
                         qDeleteField.SetShowLongQuery(false);
-                        Result = qDeleteField.Execute("ALTER TABLE public." + TableName + " DROP COLUMN " + ColumnName);
-                        if (!Result)
+                        Result = qDeleteField.Execute();
+                        if (Result)
                         {
                             ErrorString = qDeleteField.GetErrorString();
+                        }
+                        else
+                        {
+                            ISLOGGER_I(__CLASS__, "Field removed");
                         }
                     }
                 }
@@ -264,44 +257,46 @@ bool CGConfiguratorDelete::foreigns()
         ErrorString = qSelectColumns.GetErrorString();
     }
     return Result;
-}*/
+}
 //-----------------------------------------------------------------------------
-/*bool CGConfiguratorDelete::oldresources()
+bool CGConfiguratorDelete::oldresources()
 {
-    QMap<QString, ISVectorString> Map;
+    std::map<std::string, ISVectorString> Map;
     for (PMetaResource *MetaResource : ISMetaData::Instance().GetResources())
     {
-        if (Map.contains(MetaResource->TableName))
+        if (Map.find(MetaResource->TableName) != Map.end())
         {
             Map[MetaResource->TableName].emplace_back(MetaResource->UID);
         }
         else
         {
-            Map.insert(MetaResource->TableName, { MetaResource->UID });
+            Map.emplace(MetaResource->TableName, ISVectorString{ MetaResource->UID });
         }
     }
 
-    for (const auto &MapItem : Map.toStdMap())
+    for (const auto &MapItem : Map)
     {
-        QString TableName = MapItem.first;
+        std::string TableName = MapItem.first;
         ISVectorString UIDs = MapItem.second;
-        PMetaTable *MetaTable = ISMetaData::Instance().GetMetaTable(TableName);
+        PMetaTable *MetaTable = ISMetaData::Instance().GetTable(TableName);
 
-        ISQuery qSelect("SELECT " + MetaTable->Alias + "_uid FROM " + TableName);
+        ISQuery qSelect(ISAlgorithm::StringF("SELECT %s_uid FROM %s",
+            MetaTable->Alias.c_str(), TableName.c_str()));
         qSelect.SetShowLongQuery(false);
         if (qSelect.Execute())
         {
             while (qSelect.Next())
             {
-                QString ResourceUID = qSelect.ReadColumn(MetaTable->Alias + "_uid").toString();
-                if (!ISAlgorithm::VectorContains<QString>(UIDs, ResourceUID))
+                std::string ResourceUID = qSelect.ReadColumn_String(0);
+                if (!ISAlgorithm::VectorContains(UIDs, ResourceUID))
                 {
                     ShowResourceConsole(MetaTable, ResourceUID);
-                    if (ISConsole::Question(QString("Remove resource \"%1\" in table \"%2\"?").arg(ResourceUID).arg(TableName)))
+                    if (ISConsole::Question(ISAlgorithm::StringF("Remove resource \"%s\" in table \"%s\"?", ResourceUID.c_str(), TableName.c_str())))
                     {
-                        ISQuery qDeleteResources("DELETE FROM " + TableName + " WHERE " + MetaTable->Alias + "_uid = :ResourceUID");
+                        ISQuery qDeleteResources(ISAlgorithm::StringF("DELETE FROM %s WHERE %s_uid = $1",
+                            TableName.c_str(), MetaTable->Alias.c_str()));
                         qDeleteResources.SetShowLongQuery(false);
-                        qDeleteResources.BindValue(":ResourceUID", ResourceUID);
+                        qDeleteResources.BindUID(ResourceUID);
                         if (!qDeleteResources.Execute())
                         {
                             ErrorString = qDeleteResources.GetErrorString();
@@ -313,33 +308,40 @@ bool CGConfiguratorDelete::foreigns()
         else
         {
             ErrorString = qSelect.GetErrorString();
+            return false;
         }
     }
     return true;
-}*/
+}
 //-----------------------------------------------------------------------------
-/*bool CGConfiguratorDelete::oldsequence()
+bool CGConfiguratorDelete::oldsequence()
 {
-    QString Where;
+    std::string Where;
     for (PMetaTable *MetaTable : ISMetaData::Instance().GetTables())
     {
-        Where += '\'' + MetaTable->Name.toLower() + "_sequence" + "', ";
+        Where += ISAlgorithm::StringF("\'%s_sequence\', ",
+            ISAlgorithm::StringToLowerGet(MetaTable->Name).c_str());
     }
-    Where.chop(2);
+    ISAlgorithm::StringChop(Where, 2);
 
-    ISQuery qSelect(QS_SEQUENCES.replace(":Where", Where));
+    ISQuery qSelect(ISAlgorithm::StringF("SELECT lower(sequence_name) "
+        "FROM information_schema.sequences "
+        "WHERE sequence_catalog = current_database() "
+        "AND sequence_name NOT IN(%s) "
+        "ORDER BY sequence_name",
+        Where.c_str()));
     qSelect.SetShowLongQuery(false);
     bool Result = qSelect.Execute();
     if (Result)
     {
         while (qSelect.Next())
         {
-            QString SequenceName = qSelect.ReadColumn("sequence_name").toString();
-            if (ISConsole::Question(QString("Delete sequence \"%1\"?").arg(SequenceName)))
+            std::string SequenceName = qSelect.ReadColumn_String(0);
+            if (ISConsole::Question(ISAlgorithm::StringF("Delete sequence \"%s\"?", SequenceName.c_str())))
             {
-                ISQuery qDelete;
+                ISQuery qDelete(ISAlgorithm::StringF("DROP SEQUENCE public.%s", SequenceName.c_str()));
                 qDelete.SetShowLongQuery(false);
-                Result = qDelete.Execute(QD_SEQUENCE.arg(SequenceName));
+                Result = qDelete.Execute();
                 if (!Result)
                 {
                     ErrorString = qDelete.GetErrorString();
@@ -352,9 +354,9 @@ bool CGConfiguratorDelete::foreigns()
         ErrorString = qSelect.GetErrorString();
     }
     return Result;
-}*/
+}
 //-----------------------------------------------------------------------------
-/*bool CGConfiguratorDelete::oldindexes()
+bool CGConfiguratorDelete::oldindexes()
 {
     ISQuery qSelectIndexes(QS_INDEX);
     qSelectIndexes.SetShowLongQuery(false);
@@ -369,13 +371,13 @@ bool CGConfiguratorDelete::foreigns()
 
         while (qSelectIndexes.Next())
         {
-            QString IndexName = qSelectIndexes.ReadColumn("indexname").toString();
+            std::string IndexName = qSelectIndexes.ReadColumn_String(0);
             if (!ISAlgorithm::VectorContains(IndexNames, IndexName))
             {
-                if (ISConsole::Question(QString("Delete index %1?").arg(IndexName)))
+                if (ISConsole::Question(ISAlgorithm::StringF("Delete index %s?", IndexName.c_str())))
                 {
-                    ISQuery qDeleteIndex;
-                    Result = qDeleteIndex.Execute(QD_INDEX.arg(IndexName));
+                    ISQuery qDeleteIndex(ISAlgorithm::StringF("DROP INDEX public.%s CASCADE", IndexName.c_str()));
+                    Result = qDeleteIndex.Execute();
                     if (!Result)
                     {
                         ErrorString = qDeleteIndex.GetErrorString();
@@ -390,9 +392,9 @@ bool CGConfiguratorDelete::foreigns()
         ErrorString = qSelectIndexes.GetErrorString();
     }
     return Result;
-}*/
+}
 //-----------------------------------------------------------------------------
-/*bool CGConfiguratorDelete::oldforeigns()
+bool CGConfiguratorDelete::oldforeigns()
 {
     ISQuery qSelectForeigns(QS_FOREIGN);
     qSelectForeigns.SetShowLongQuery(false);
@@ -407,15 +409,16 @@ bool CGConfiguratorDelete::foreigns()
 
         while (qSelectForeigns.Next())
         {
-            QString TableName = qSelectForeigns.ReadColumn("table_name").toString();
-            QString ForeignName = qSelectForeigns.ReadColumn("constraint_name").toString();
+            std::string TableName = qSelectForeigns.ReadColumn_String(0);
+            std::string ForeignName = qSelectForeigns.ReadColumn_String(1);
             if (!ISAlgorithm::VectorContains(ForeignNames, ForeignName))
             {
-                if (ISConsole::Question(QString("Delete foreign %1?").arg(ForeignName)))
+                if (ISConsole::Question(ISAlgorithm::StringF("Delete foreign %s?", ForeignName.c_str())))
                 {
-                    ISQuery qDeleteForeign;
+                    ISQuery qDeleteForeign(ISAlgorithm::StringF("ALTER TABLE public.%s DROP CONSTRAINT %s RESTRICT",
+                        TableName.c_str(), ForeignName.c_str()));
                     qDeleteForeign.SetShowLongQuery(false);
-                    Result = qDeleteForeign.Execute(QD_FOREIGN.arg(TableName).arg(ForeignName));
+                    Result = qDeleteForeign.Execute();
                     if (!Result)
                     {
                         ErrorString = qDeleteForeign.GetErrorString();
@@ -430,21 +433,21 @@ bool CGConfiguratorDelete::foreigns()
         ErrorString = qSelectForeigns.GetErrorString();
     }
     return Result;
-}*/
+}
 //-----------------------------------------------------------------------------
-/*void CGConfiguratorDelete::ShowResourceConsole(PMetaTable *MetaTable, const QString &ResourceUID)
+void CGConfiguratorDelete::ShowResourceConsole(PMetaTable *MetaTable, const std::string &ResourceUID)
 {
-    ISDEBUG();
-    ISDEBUG_L("Table name: " + MetaTable->Name);
-    ISQuery qSelect("SELECT * FROM " + MetaTable->Name + " WHERE " + MetaTable->Alias + "_uid = :ResourceUID");
-    qSelect.BindValue(":ResourceUID", ResourceUID);
+    ISLOGGER_I(__CLASS__, "\nTable name: %s", MetaTable->Name.c_str());
+
+    ISQuery qSelect(ISAlgorithm::StringF("SELECT * FROM %s WHERE %s_uid = $1",
+        MetaTable->Name.c_str(), MetaTable->Alias.c_str()));
+    qSelect.BindUID(ResourceUID);
     if (qSelect.ExecuteFirst())
     {
-        QSqlRecord SqlRecord = qSelect.GetRecord();
-        for (int i = 0; i < SqlRecord.count(); ++i)
+        for (int i = 0, c = qSelect.GetResultColumnCount(); i < c; ++i)
         {
-            ISDEBUG_L(QString("%1: %2").arg(SqlRecord.field(i).name()).arg(SqlRecord.value(i).toString()));
+            ISLOGGER_I(__CLASS__, "%s: %s", qSelect.GetResultFieldName(i), qSelect.ReadColumn(i));
         }
     }
-}*/
+}
 //-----------------------------------------------------------------------------

@@ -14,15 +14,15 @@ public:
     bool adminpassword();
     bool indexes();
     bool foreigns();
-    //bool oldtables();
-    //bool oldfields();
-    //bool oldresources();
-    //bool oldsequence();
-    //bool oldindexes();
-    //bool oldforeigns();
+    bool oldtables();
+    bool oldfields();
+    bool oldresources();
+    bool oldsequence();
+    bool oldindexes();
+    bool oldforeigns();
 
 private:
-    //void ShowResourceConsole(PMetaTable *MetaTable, const QString &ResourceUID);
+    void ShowResourceConsole(PMetaTable *MetaTable, const std::string &ResourceUID);
 };
 //-----------------------------------------------------------------------------
 #endif
