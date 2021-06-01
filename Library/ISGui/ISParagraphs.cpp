@@ -1,13 +1,186 @@
-#include "ISCalendarParagraph.h"
-#include "ISConstants.h"
+#include "ISParagraphs.h"
 #include "ISBuffer.h"
+#include "ISDefinesGui.h"
 #include "ISLocalization.h"
-#include "ISControls.h"
 #include "ISGui.h"
+#include "ISControls.h"
+#include "ISDialogsCommon.h"
+#include "ISMetaSystemsEntity.h"
 #include "ISCalendarObjectForm.h"
 #include "ISTcpQuery.h"
-#include "ISDialogsCommon.h"
-#include "ISDefinesGui.h"
+#include "ISListBaseForm.h"
+#include "ISSystemsPanel.h"
+#include "ISUserRoleEntity.h"
+//-----------------------------------------------------------------------------
+ISParagraphBaseForm::ISParagraphBaseForm(QWidget *parent) : QWidget(parent)
+{
+
+}
+//-----------------------------------------------------------------------------
+ISParagraphBaseForm::~ISParagraphBaseForm()
+{
+
+}
+//-----------------------------------------------------------------------------
+void ISParagraphBaseForm::Invoke()
+{
+
+}
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+ISDesktopParagraph::ISDesktopParagraph(QWidget *parent)
+    : ISParagraphBaseForm(parent),
+    DesktopWidget(nullptr)
+{
+    MainLayout = new QVBoxLayout();
+    setLayout(MainLayout);
+
+    QString DesktopFormName = ISBuffer::Instance().ConfigurationInfo.DesktopForm;
+    if (DesktopFormName.isEmpty())
+    {
+        MainLayout->addStretch();
+
+        QLabel *LabelLogo = new QLabel(this);
+        LabelLogo->setPixmap(ISBuffer::Instance().ConfigurationInfo.LogoName.isEmpty() ?
+            BUFFER_PIXMAPS("DesktopLogo") :
+            QPixmap(":_" + ISBuffer::Instance().ConfigurationInfo.Name + '/' + ISBuffer::Instance().ConfigurationInfo.LogoName));
+        MainLayout->addWidget(LabelLogo, 0, Qt::AlignCenter);
+
+        if (!ISBuffer::Instance().ConfigurationInfo.LocalName.isEmpty())
+        {
+            QLabel *LabelLocalName = new QLabel(this);
+            LabelLocalName->setText(ISBuffer::Instance().ConfigurationInfo.LocalName);
+            LabelLocalName->setFont(ISDefines::Gui::FONT_TAHOMA_15_BOLD);
+            LabelLocalName->setStyleSheet(BUFFER_STYLE_SHEET("QLabel.Color.Gray"));
+            MainLayout->addWidget(LabelLocalName, 0, Qt::AlignCenter);
+        }
+        MainLayout->addStretch();
+    }
+    else
+    {
+        if (ISUserRoleEntity::Instance().CheckAccessSpecial(CONST_UID_GROUP_ACCESS_SPECIAL_DESKTOP))
+        {
+            DesktopWidget = ISAlgorithm::CreatePointer<QWidget *>(DesktopFormName, Q_ARG(QWidget *, this));
+            MainLayout->addWidget(DesktopWidget);
+        }
+        else
+        {
+            QLabel *Label = new QLabel(this);
+            Label->setText(LANG("NotAccessSpecialDesktop"));
+            Label->setFont(ISDefines::Gui::FONT_TAHOMA_12_BOLD);
+            MainLayout->addWidget(Label, 0, Qt::AlignCenter);
+        }
+    }
+}
+//-----------------------------------------------------------------------------
+ISDesktopParagraph::~ISDesktopParagraph()
+{
+
+}
+//-----------------------------------------------------------------------------
+void ISDesktopParagraph::Invoke()
+{
+    ISParagraphBaseForm::Invoke();
+    if (DesktopWidget)
+    {
+        DesktopWidget->show();
+    }
+}
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+ISWorkspaceParagraph::ISWorkspaceParagraph(QWidget *parent)
+    : ISParagraphBaseForm(parent),
+    CentralForm(nullptr)
+{
+    Layout = new QVBoxLayout();
+    Layout->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_NULL);
+    Layout->setSpacing(0);
+    setLayout(Layout);
+
+    ISSystemsPanel *SystemsPanel = new ISSystemsPanel(this);
+    connect(SystemsPanel, &ISSystemsPanel::ClickedSubSystem, this, &ISWorkspaceParagraph::ClickedSubSystem);
+    Layout->addWidget(SystemsPanel);
+
+    //Заполнение систем в виджете
+    for (ISMetaSystem *MetaSystem : ISMetaSystemsEntity::Instance().GetSystems())
+    {
+        SystemsPanel->AddSystem(MetaSystem);
+    }
+
+    TabWidget = new ISTabWidgetMain(this);
+    TabWidget->setSizePolicy(QSizePolicy::Ignored, TabWidget->sizePolicy().verticalPolicy());
+    connect(TabWidget, &ISTabWidgetMain::Duplicate, this, &ISWorkspaceParagraph::AddObjectForm);
+    Layout->addWidget(TabWidget);
+
+    //Если у пользователя нет доступа ни к одной из систем
+    if (ISMetaSystemsEntity::Instance().GetSystems().empty())
+    {
+        QLabel *Label = new QLabel(TabWidget);
+        Label->setText(LANG("NotAccessSystems"));
+        Label->setFont(ISDefines::Gui::FONT_TAHOMA_12_BOLD);
+        Label->setAlignment(Qt::AlignCenter);
+        TabWidget->addTab(Label, QString());
+    }
+}
+//-----------------------------------------------------------------------------
+ISWorkspaceParagraph::~ISWorkspaceParagraph()
+{
+
+}
+//-----------------------------------------------------------------------------
+void ISWorkspaceParagraph::Invoke()
+{
+    ISParagraphBaseForm::Invoke();
+}
+//-----------------------------------------------------------------------------
+void ISWorkspaceParagraph::AddObjectForm(QWidget *ObjectForm)
+{
+    connect(ObjectForm, &ISObjectFormBase::windowTitleChanged, [=](const QString &WindowTitle)
+    {
+        TabWidget->setTabText(TabWidget->indexOf(ObjectForm), WindowTitle);
+    });
+    connect(ObjectForm, &ISObjectFormBase::windowIconChanged, [=](const QIcon &WindowIcon)
+    {
+        TabWidget->setTabIcon(TabWidget->indexOf(ObjectForm), WindowIcon);
+    });
+    connect(dynamic_cast<ISObjectFormBase*>(ObjectForm), &ISObjectFormBase::CurrentObjectTab, [=]
+    {
+        TabWidget->setCurrentWidget(ObjectForm);
+    });
+    TabWidget->addTab(ObjectForm, ObjectForm->windowIcon(), ObjectForm->windowTitle());
+    TabWidget->setCurrentWidget(ObjectForm);
+}
+//-----------------------------------------------------------------------------
+void ISWorkspaceParagraph::ClickedSubSystem(const QString &SubSystemUID, const QIcon &IconSubSystem)
+{
+    if (SubSystemUID == CurrentSubSystemUID)
+    {
+        TabWidget->setCurrentIndex(0);
+        return;
+    }
+    CurrentSubSystemUID = SubSystemUID;
+
+    ISGui::SetWaitGlobalCursor(true);
+    ISMetaSubSystem *MetaSubSystem = ISMetaSystemsEntity::Instance().GetSubSystem(SubSystemUID);
+    POINTER_DELETE(CentralForm);
+    if (!MetaSubSystem->TableName.isEmpty()) //Открытие таблицы
+    {
+        CentralForm = new ISListBaseForm(MetaSubSystem->TableName, this);
+    }
+    else if (!MetaSubSystem->ClassName.isEmpty()) //Открытие класса (виджета)
+    {
+        CentralForm = ISAlgorithm::CreatePointer<ISInterfaceMetaForm *>(MetaSubSystem->ClassName, Q_ARG(QWidget *, this));
+    }
+    connect(CentralForm, &ISListBaseForm::AddFormFromTab, this, &ISWorkspaceParagraph::AddObjectForm);
+    TabWidget->insertTab(0, CentralForm, IconSubSystem, MetaSubSystem->LocalName);
+    TabWidget->setCurrentIndex(0);
+    ISGui::SetWaitGlobalCursor(false);
+    QTimer::singleShot(WAIT_LOAD_DATA_LIST_FORM, Qt::PreciseTimer, CentralForm, &ISInterfaceMetaForm::LoadData);
+}
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 ISCalendarParagraph::ISCalendarParagraph(QWidget *parent)
     : ISParagraphBaseForm(parent),

@@ -4,10 +4,8 @@
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 #include "ISInterfaceForm.h"
-#include "ISDesktopParagraph.h"
+#include "ISParagraphs.h"
 #include "ISMenuBar.h"
-#include "ISCalendarParagraph.h"
-#include "ISWorkspaceParagraph.h"
 //-----------------------------------------------------------------------------
 class ISGUI_EXPORT ISMainWindow : public ISInterfaceForm
 {
