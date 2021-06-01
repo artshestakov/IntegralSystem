@@ -16,11 +16,9 @@ static std::string QS_INDEXES = PREPARE_QUERY("SELECT indexname "
     "WHERE schemaname = current_schema() "
     "AND right(indexname, 4) != 'pkey'");
 //-----------------------------------------------------------------------------
-static std::string QS_FOREIGNS = PREPARE_QUERY("SELECT constraint_name "
-    "FROM information_schema.constraint_table_usage "
-    "WHERE table_catalog = current_database() "
-    "AND table_schema = current_schema() "
-    "AND right(constraint_name, 4) != 'pkey'");
+static std::string QS_FOREIGNS = PREPARE_QUERY("SELECT lower(table_name), lower(constraint_name) "
+    "FROM information_schema.table_constraints "
+    "WHERE constraint_type = 'FOREIGN KEY'");
 //-----------------------------------------------------------------------------
 static std::string QS_TABLES = PREPARE_QUERY("SELECT lower(tablename) "
     "FROM pg_tables "
@@ -138,19 +136,8 @@ bool CGConfiguratorDelete::foreigns()
         int Deleted = 0, CountForeigns = qSelectForeigns.GetResultRowCount();
         while (qSelectForeigns.Next())
         {
-            std::string ForeignName = qSelectForeigns.ReadColumn_String(0);
-            std::string TableName;
-
-            ISVectorString VectorString = ISAlgorithm::StringSplit(ForeignName, '_');
-            if (VectorString[0].length())
-            {
-                TableName = VectorString[0];
-            }
-            else
-            {
-                TableName = '_' + VectorString[1];
-            }
-
+            std::string TableName = qSelectForeigns.ReadColumn_String(0);
+            std::string ForeignName = qSelectForeigns.ReadColumn_String(1);
 
             ISQuery qDeleteForeign(ISAlgorithm::StringF("ALTER TABLE public.%s DROP CONSTRAINT %s RESTRICT",
                 TableName.c_str(), ForeignName.c_str()));
