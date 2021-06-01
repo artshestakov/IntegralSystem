@@ -11,7 +11,6 @@ void ISCrashDumper::Install()
 {
 #ifdef WIN32
     SetUnhandledExceptionFilter(CrashHandlerExceptionFilter);
-    return true;
 #else
     signal(SIGSEGV, OnSystemSignal);
     signal(SIGTERM, OnSystemSignal);
@@ -21,7 +20,7 @@ void ISCrashDumper::Install()
 }
 //-----------------------------------------------------------------------------
 #ifdef WIN32
-void ISCrashDumper::CrashHandlerExceptionFilter(EXCEPTION_POINTERS* pExPtrs)
+LONG ISCrashDumper::CrashHandlerExceptionFilter(EXCEPTION_POINTERS* pExPtrs)
 {
     //Получаем стек
     ISStackWalker stack_walker;
@@ -33,6 +32,8 @@ void ISCrashDumper::CrashHandlerExceptionFilter(EXCEPTION_POINTERS* pExPtrs)
     //Ждём пока запишется и выходим
     ISSleep(500);
     exit(EXIT_FAILURE);
+
+    return EXCEPTION_EXECUTE_HANDLER;
 }
 //-----------------------------------------------------------------------------
 #else

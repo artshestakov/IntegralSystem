@@ -11,7 +11,7 @@ public:
 
 private:
 #ifdef WIN32
-    static void __stdcall CrashHandlerExceptionFilter(EXCEPTION_POINTERS* pExPtrs);
+    static LONG __stdcall CrashHandlerExceptionFilter(EXCEPTION_POINTERS* pExPtrs);
 #else
     static void OnSystemSignal(int Signal);
 #endif
