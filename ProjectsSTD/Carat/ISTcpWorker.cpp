@@ -772,11 +772,16 @@ void ISTcpWorker::GetLogParameters(ISTcpMessage *TcpMessage, std::string &String
             break;
 
         case rapidjson::Type::kNullType:
-            String += "null";
+            String += "(null)";
             break;
 
-        default:
-            String += "type not support";
+        case rapidjson::kObjectType:
+            String += "(object)";
+            break;
+
+        case rapidjson::kArrayType:
+            String += "(array)";
+            break;
         }
         String.push_back('\n');
     }
