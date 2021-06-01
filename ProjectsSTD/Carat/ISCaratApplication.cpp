@@ -61,11 +61,7 @@ bool ISCaratApplication::Init()
     }
 
     //Установим обработчик ошибок
-    if (!ISCrashDumper::Install())
-    {
-        ISLOGGER_E(__CLASS__, "Not installed crash dumper");
-        return false;
-    }
+    ISCrashDumper::Install();
 
     if (!ISConsole::InstallEncoding(65001, ErrorString))
     {

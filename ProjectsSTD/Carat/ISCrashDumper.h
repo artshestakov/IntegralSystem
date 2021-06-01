@@ -7,12 +7,13 @@
 class ISCrashDumper
 {
 public:
-    static bool Install();
+    static void Install();
 
 private:
 #ifdef WIN32
-    static LONG __stdcall CrashHandlerExceptionFilter(EXCEPTION_POINTERS* pExPtrs);
+    static void __stdcall CrashHandlerExceptionFilter(EXCEPTION_POINTERS* pExPtrs);
 #else
+    static void OnSystemSignal(int Signal);
 #endif
 };
 //-----------------------------------------------------------------------------

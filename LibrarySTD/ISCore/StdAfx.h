@@ -28,6 +28,8 @@
 #include <openssl/bio.h>
 #include <openssl/evp.h>
 #include <openssl/buffer.h>
+#include <signal.h>
+#include <execinfo.h>
 #endif
 //-----------------------------------------------------------------------------
 #include <iostream>

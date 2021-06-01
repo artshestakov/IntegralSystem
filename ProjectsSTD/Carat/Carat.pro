@@ -3,6 +3,7 @@ TEMPLATE = app
 CONFIG += c++11
 CONFIG -= app_bundle
 CONFIG -= qt
+QMAKE_CXXFLAGS += -g
 
 CONFIG(debug, debug|release){
     CONFIGURATION = Debug
