@@ -115,9 +115,10 @@ void ISLogger::Log(ISNamespace::LogMessageType MessageType, const std::string &C
         string_result = BufferHeader;
     }
 
-    //Вытаскиваем аргументы
-    va_list Arguments;
+    //Вытаскиваем аргументы и делаем копию
+    va_list Arguments, Arguments2;
     va_start(Arguments, Format);
+    va_copy(Arguments2, Arguments);
 
     //Форматируем строку
     char Buffer[LOG_BUFFER_SIZE] = { 0 };
@@ -127,14 +128,17 @@ void ISLogger::Log(ISNamespace::LogMessageType MessageType, const std::string &C
         int NewSize = ++Writed + LOG_HEADER_SIZE;
         std::vector<char> Vector;
         Vector.resize(NewSize);
-        std::vsnprintf(&Vector[0], NewSize, Format, Arguments);
+        std::vsnprintf(&Vector[0], NewSize, Format, Arguments2);
         string_result += &Vector[0];
     }
     else
     {
         string_result += Buffer;
     }
+
+    //Освобождаем аргументы
     va_end(Arguments);
+    va_end(Arguments2);
 
     CRITICAL_SECTION_LOCK(&CriticalSection);
 #ifdef DEBUG //В отладочной версии выводим строку в консоль
