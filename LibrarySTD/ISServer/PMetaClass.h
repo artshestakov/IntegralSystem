@@ -157,9 +157,10 @@ struct PMetaTable : public PMetaBase
 
     PMetaField* GetField(const std::string &FieldName)
     {
+        std::string field_name = ISAlgorithm::StringToLowerGet(FieldName);
         for (PMetaField *MetaField : Fields)
         {
-            if (ISAlgorithm::StringToLowerGet(MetaField->Name) == ISAlgorithm::StringToLowerGet(FieldName))
+            if (ISAlgorithm::StringToLowerGet(MetaField->Name) == field_name)
             {
                 return MetaField;
             }

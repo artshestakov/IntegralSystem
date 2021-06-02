@@ -161,8 +161,9 @@ bool ISResourcer::ParseFile()
 bool ISResourcer::ParseHeader(const std::string &StringHeader, std::string &FileName, unsigned long &FileSize)
 {
     //Получаем секции параметров
-    ISVectorString Vector = ISAlgorithm::StringSplit(StringHeader, ' ');
-    if (Vector.size() != 2)
+    size_t VectorSize = 0;
+    ISVectorString Vector = ISAlgorithm::StringSplit(StringHeader, ' ', VectorSize);
+    if (VectorSize != 2)
     {
         ErrorString = "Invalid header: " + StringHeader;
         return false;

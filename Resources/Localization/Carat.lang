@@ -111,7 +111,8 @@
     <Local Name="Carat.Error.Query.RecordAdd.EmptyValues" Russian="Список значений пустой."/>
     <Local Name="Carat.Error.Query.RecordAdd.FieldNotFound" Russian="Поле &quot;%s&quot; не существует."/>
 	<Local Name="Carat.Error.Query.RecordAdd.TypeNotSupport" Russian="Тип &quot;%d&quot; не поддерживается."/>
-    <Local Name="Carat.Error.Query.RecordAdd.Insert" Russian="Не удалось добавить запись в базу данных."/>
+    <Local Name="Carat.Error.Query.RecordAdd.Insert.23505" Russian="Нарушение уникальности. Следующие значения уже существуют:&#10;&#10;%s"/>
+    <Local Name="Carat.Error.Query.RecordAdd.Insert" Russian="Не удалось добавить запись в базу данных.&#10;Код ошибки: %d"/>
     <Local Name="Carat.Error.Query.RecordAdd.First" Russian="Запись была добавлена, но сервер не вернул идентификатор и имя."/>
 
     <Local Name="Carat.Error.Query.RecordEdit.ValuesNotExist" Russian="Список значений не указан."/>

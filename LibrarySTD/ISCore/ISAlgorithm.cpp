@@ -503,6 +503,14 @@ ISVectorString ISAlgorithm::ParseArgs(int argc, char **argv)
 //-----------------------------------------------------------------------------
 ISVectorString ISAlgorithm::StringSplit(const std::string &String, char Separator)
 {
+    size_t Count = 0;
+    return StringSplit(String, Separator, Count);
+}
+//-----------------------------------------------------------------------------
+ISVectorString ISAlgorithm::StringSplit(const std::string &String, char Separator, size_t &Count)
+{
+    Count = 0;
+
     ISVectorString VectorString;
     if (!String.empty()) //Если строка не пустая - анализируем
     {
@@ -513,6 +521,7 @@ ISVectorString ISAlgorithm::StringSplit(const std::string &String, char Separato
             {
                 VectorString.emplace_back(String.substr(LastPos, Pos - LastPos));
                 LastPos = ++Pos;
+                ++Count;
             }
             else
             {
@@ -526,6 +535,7 @@ ISVectorString ISAlgorithm::StringSplit(const std::string &String, char Separato
             if (LastPos < Size)
             {
                 VectorString.emplace_back(String.substr(LastPos, Size - LastPos));
+                ++Count;
             }
         }
     }
@@ -600,6 +610,15 @@ void ISAlgorithm::StringChop(std::string &String, size_t N)
     else //Вырезаем N символов с конце строки
     {
         String.erase(Size - N);
+    }
+}
+//-----------------------------------------------------------------------------
+void ISAlgorithm::StringRemoveAllChar(std::string &String, char Char)
+{
+    size_t Pos = 0;
+    while ((Pos = String.find(Char)) != NPOS)
+    {
+        String.erase(String.begin() + Pos);
     }
 }
 //-----------------------------------------------------------------------------

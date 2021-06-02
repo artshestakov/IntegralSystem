@@ -40,6 +40,11 @@ const std::string& ISQuery::GetErrorString() const
     return ErrorString;
 }
 //-----------------------------------------------------------------------------
+const char* ISQuery::GetErrorDetail() const
+{
+    return ErrorDetail;
+}
+//-----------------------------------------------------------------------------
 int ISQuery::GetErrorNumber() const
 {
     return ErrorNumber;

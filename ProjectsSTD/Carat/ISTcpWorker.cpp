@@ -2125,7 +2125,16 @@ bool ISTcpWorker::RecordAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
     //Выполняем запрос
     if (!qInsert.Execute())
     {
-        return ErrorQuery(LANG("Carat.Error.Query.RecordAdd.Insert"), qInsert);
+        int ErrorNumber = qInsert.GetErrorNumber();
+        if (ErrorNumber == 23505) //Нарушение уникальности
+        {
+            ISTcpWorkerHelper::ParseErrorSQL23505(MetaTable, qInsert.GetErrorDetail(), ErrorString);
+            return false;
+        }
+        else //Неизвестная ошибка
+        {
+            return ErrorQuery(ISAlgorithm::StringF(LANG("Carat.Error.Query.RecordAdd.Insert"), ErrorNumber), qInsert);
+        }
     }
 
     //Переходим на первую запись

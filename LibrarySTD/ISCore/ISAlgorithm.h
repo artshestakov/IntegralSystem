@@ -148,9 +148,17 @@ namespace ISAlgorithm
     ISVectorString ParseArgs(int argc, char **argv);
 
     //! Разделить строку
+    //! \param String строка
     //! \param Separator разделитель
     //! \return возвращает вектор разделённых строк
     ISVectorString StringSplit(const std::string &String, char Separator);
+
+    //! Разделить строку
+    //! \param String строка
+    //! \param Separator разделитель
+    //! \param Count количество строк на выходе
+    //! \return возвращает вектор разделённых строк
+    ISVectorString StringSplit(const std::string &String, char Separator, size_t &Count);
 
     //! Проверка строки на число
     //! \param String строка
@@ -185,6 +193,11 @@ namespace ISAlgorithm
     //! \param String строка
     //! \param N количество символов
     void StringChop(std::string &String, size_t N);
+
+    //! Удалить все вхождения символа
+    //! \param String строка
+    //! \param Char удаляемый символ
+    void StringRemoveAllChar(std::string &String, char Char);
 
     //! Форматирование строки
     //! \param Format формат сообщения

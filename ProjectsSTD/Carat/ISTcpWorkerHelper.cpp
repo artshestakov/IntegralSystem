@@ -259,3 +259,79 @@ size_t ISTcpWorkerHelper::WriteFunctionINN(void *Pointer, size_t Size, size_t NM
     return Size * NMemb;
 }
 //-----------------------------------------------------------------------------
+bool ISTcpWorkerHelper::ParseErrorSQL23505(PMetaTable *MetaTable, const std::string &ErrorDetail, std::string &ErrorString)
+{
+    //Ищем кавычки
+    size_t PosL = ErrorDetail.find('"'),
+        PosR = ErrorDetail.rfind('"');
+
+    //Если кавычки слева или справа не найдены - ошибка
+    if (PosL == NPOS || PosR == NPOS)
+    {
+        return false;
+    }
+
+    //Вытаскиваем строку из кавычек и делим её пополам
+    std::string Temp = ErrorDetail.substr(PosL + 1, PosR - PosL - 1);
+    ISVectorString VectorString = ISAlgorithm::StringSplit(Temp, '=');
+    if (VectorString.size() != 2)
+    {
+        return false;
+    }
+
+    //Вытаскиваем имена полей
+    std::string FieldName = VectorString.front();
+    FieldName = FieldName.substr(1, FieldName.size() - 2);
+    ISAlgorithm::StringRemoveAllChar(FieldName, ' ');
+
+    size_t FieldCount = 0;
+    ISVectorString Fields = ISAlgorithm::StringSplit(FieldName, ',', FieldCount);
+
+    //Обходим поля и получаем локальные имена
+    for (size_t i = 0, c = FieldCount; i < c; ++i)
+    {
+        FieldName = Fields[i];
+        PosL = FieldName.find('_');
+        if (PosL == NPOS) //Не нашли разделитель
+        {
+            return false;
+        }
+        FieldName = FieldName.substr(++PosL); //Убираем разделитель
+
+        //Ищем поле и заменяем обычное имя на локальное
+        PMetaField *MetaField = MetaTable->GetField(FieldName);
+        if (!MetaField)
+        {
+            return false;
+        }
+        Fields[i] = MetaField->LabelName;
+    }
+
+    //Вытаскиваем значения полей
+    std::string Value = VectorString.back();
+    Value = Value.substr(1, Value.size() - 2);
+
+    size_t ValuesCount = 0;
+    ISVectorString Values = ISAlgorithm::StringSplit(Value, ',', ValuesCount);
+
+    if (FieldCount != ValuesCount) //Что-то пошло не так
+    {
+        return false;
+    }
+
+    ErrorString.clear(); //Обязательно чистим
+    for (size_t i = 0; i < FieldCount; ++i)
+    {
+        //Удалим возможный пробем вначале
+        Temp = Values[i];
+        if (Temp.front() == ' ')
+        {
+            Temp.erase(Temp.begin());
+        }
+        ErrorString += ISAlgorithm::StringF("%s = %s\n", Fields[i].c_str(), Temp.c_str());
+    }
+    ISAlgorithm::StringChop(ErrorString, 1);
+    ErrorString = ISAlgorithm::StringF(LANG("Carat.Error.Query.RecordAdd.Insert.23505"), ErrorString.c_str());
+    return true;
+}
+//-----------------------------------------------------------------------------

@@ -16,6 +16,7 @@ public:
     ~ISQuery();
 
     const std::string& GetErrorString() const; //Получить текстовое описание ошибки
+    const char* GetErrorDetail() const; //Получить детальное описание ошибки
     int GetErrorNumber() const; //Получить код ошибки
     
     const std::string& GetSqlText() const; //Получить текст запроса
