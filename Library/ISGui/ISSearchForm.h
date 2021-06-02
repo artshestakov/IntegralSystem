@@ -6,6 +6,7 @@
 #include "PMetaClass.h"
 #include "ISComboSearchWidgets.h"
 #include "ISFieldEditBase.h"
+#include "ISTcpModels.h"
 //-----------------------------------------------------------------------------
 struct SearchField
 {
@@ -22,7 +23,7 @@ signals:
     void Search(const QVariantList &VariantList);
 
 public:
-    ISSearchForm(PMetaTable *meta_table, QWidget *parent = 0);
+    ISSearchForm(ISTcpModel *tcp_model, const QString &LocalListName, QWidget *parent = 0);
     virtual ~ISSearchForm();
 
 protected:
@@ -31,13 +32,13 @@ protected:
     void EnterClicked() override;
 
 private:
-    void AddField(PMetaField *MetaField);
+    void AddField(const ISModelField &ModelField);
     void AddClicked();
     void ListEditChanged(const QVariant &Value);
     void Search();
 
 private:
-    PMetaTable *MetaTable;
+    ISTcpModel *TcpModel;
     std::vector<SearchField> VectorEdits;
 
 private:

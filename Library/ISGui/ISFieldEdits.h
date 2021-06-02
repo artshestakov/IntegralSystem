@@ -737,7 +737,7 @@ signals:
     void Hided();
 
 public:
-    ISListEditPopup(PMetaForeign *meta_foreign, QWidget *ComboBox = 0);
+    ISListEditPopup(const ISModelForeign &model_foreign, QWidget *ComboBox = 0);
     virtual ~ISListEditPopup();
 
     void showEvent(QShowEvent *e);
@@ -762,8 +762,7 @@ private:
     QLabel *LabelSearch;
     QLabel *LabelEmpty;
 
-    PMetaForeign *MetaForeign;
-    PMetaTable *MetaTableForeign;
+    ISModelForeign ModelForeign;
     QVariant CurrentValue;
 };
 //-----------------------------------------------------------------------------
@@ -783,7 +782,7 @@ public:
 
     void SetReadOnly(bool read_only) override;
 
-    virtual void InvokeList(PMetaForeign *meta_foreign);
+    virtual void InvokeList(const ISModelForeign &model_foreign);
 
     QString GetCurrentText() const; //Получить локальное наименование объекта
     void SetEnabled(bool Enabled);
@@ -800,8 +799,7 @@ private:
     void EditObject();
 
 private:
-    PMetaForeign *MetaForeign;
-    PMetaTable *MetaTable;
+    ISModelForeign ModelForeign;
 
     ISPushButton *ButtonMain;
     QToolButton *ButtonList;

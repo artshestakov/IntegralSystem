@@ -3,18 +3,17 @@
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISGui.h"
-#include "ISMetaData.h"
 #include "ISDelegates.h"
 #include "ISDialogsCommon.h"
 #include "ISAlgorithm.h"
 #include "ISButtons.h"
 #include "ISScrollArea.h"
 //-----------------------------------------------------------------------------
-ISSearchForm::ISSearchForm(PMetaTable *meta_table, QWidget *parent)
+ISSearchForm::ISSearchForm(ISTcpModel *tcp_model, const QString &LocalListName, QWidget *parent)
     : ISInterfaceForm(parent),
-    MetaTable(meta_table)
+    TcpModel(tcp_model)
 {
-    setWindowTitle(LANG("ISSearchForm.Title") + " - " + MetaTable->LocalListName);
+    setWindowTitle(LANG("ISSearchForm.Title") + " - " + LocalListName);
     setWindowIcon(BUFFER_ICONS("Search"));
     resize(800, 600);
     GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);
@@ -25,20 +24,16 @@ ISSearchForm::ISSearchForm(PMetaTable *meta_table, QWidget *parent)
     GridLayout = new QGridLayout();
     ScrollArea->widget()->setLayout(GridLayout);
 
-    for (PMetaField *MetaField : MetaTable->Fields)
+    for (int i = 0, c = TcpModel->columnCount(); i < c; ++i)
     {
-        //Проверяем возможность поиска в движке
-        if (!ISMetaData::Instance().GetType(MetaField->Type).SearchAllowed)
-        {
-            continue;
-        }
+        const ISModelField &ModelField = TcpModel->GetField(i);
 
         //Пропускаем системные поля и поля по которым поиск зарещён
-        if (MetaField->IsSystem || MetaField->NotSearch)
+        if (ModelField.IsSystem || ModelField.NotSearch)
         {
             continue;
         }
-        AddField(MetaField);
+        AddField(ModelField);
     }
 
     QHBoxLayout *LayoutBottom = new QHBoxLayout();
@@ -78,28 +73,28 @@ void ISSearchForm::EnterClicked()
     Search();
 }
 //-----------------------------------------------------------------------------
-void ISSearchForm::AddField(PMetaField *MetaField)
+void ISSearchForm::AddField(const ISModelField &ModelField)
 {
     int RowIndex = GridLayout->rowCount();
 
     //Заголовок поискового поля
-    QLabel *LabelName = new QLabel(MetaField->LabelName + ':', this);
+    QLabel *LabelName = new QLabel(ModelField.LocalName + ':', this);
     ISGui::SetFontWidgetBold(LabelName, true);
     GridLayout->addWidget(LabelName, RowIndex, 0);
 
     //Виджет с выбором оператора
-    QString SearchOperatorWidget = MetaField->Type == ISNamespace::FieldType::BigInt && MetaField->Foreign
+    QString SearchOperatorWidget = ModelField.Type == ISNamespace::FieldType::BigInt && ModelField.IsForeign
         ? "ISComboSearchBase" :
-        ISMetaData::Instance().GetType(MetaField->Type).SearchConditionWidget;
+        ModelField.SearchConditionWidget;
     ISComboSearchBase *ComboSearchOperator = ISAlgorithm::CreatePointer<ISComboSearchBase *>(SearchOperatorWidget, Q_ARG(QWidget *, this));
     GridLayout->addWidget(ComboSearchOperator, RowIndex, 1);
 
     //Поле редактирования
-    ISFieldEditBase *FieldEditBase = ISGui::CreateColumnForField(this, MetaField);
-    if (MetaField->Foreign)
+    ISFieldEditBase *FieldEditBase = ISGui::CreateColumnForField(this, ModelField.Type, ModelField.ControlWidget);
+    if (ModelField.IsForeign)
     {
         FieldEditBase->setProperty("MainEdit", true);
-        dynamic_cast<ISListEdit*>(FieldEditBase)->InvokeList(MetaField->Foreign);
+        dynamic_cast<ISListEdit*>(FieldEditBase)->InvokeList(ModelField.Foreign);
         connect(FieldEditBase, &ISFieldEditBase::ValueChange, this, &ISSearchForm::ListEditChanged);
 
         QVBoxLayout *Layout = new QVBoxLayout();
@@ -110,7 +105,9 @@ void ISSearchForm::AddField(PMetaField *MetaField)
 
         ISPushButton *ButtonAdd = new ISPushButton(BUFFER_ICONS("Add"), LANG("ISSearchForm.AddValue"), Widget);
         ButtonAdd->setFlat(true);
-        ButtonAdd->setProperty("FieldName", MetaField->Name);
+        ButtonAdd->setProperty("FieldName", ModelField.Name);
+        ButtonAdd->setProperty("FieldType", (int)ModelField.Type);
+        ButtonAdd->setProperty("FieldControlWidget", ModelField.ControlWidget);
         connect(ButtonAdd, &ISPushButton::clicked, this, &ISSearchForm::AddClicked);
         Layout->addWidget(ButtonAdd, 0, Qt::AlignLeft);
     }
@@ -118,22 +115,21 @@ void ISSearchForm::AddField(PMetaField *MetaField)
     {
         GridLayout->addWidget(FieldEditBase, RowIndex, 2);
     }
-    VectorEdits.push_back({ MetaField->Name, ComboSearchOperator, std::vector<ISFieldEditBase*>{FieldEditBase} });
+    VectorEdits.push_back({ ModelField.Name, ComboSearchOperator, std::vector<ISFieldEditBase*>{FieldEditBase} });
 }
 //-----------------------------------------------------------------------------
 void ISSearchForm::AddClicked()
 {
     ISPushButton *ButtonSender = dynamic_cast<ISPushButton*>(sender());
-    PMetaField *MetaField = MetaTable->GetField(ButtonSender->property("FieldName").toString());
 
-    ISFieldEditBase *FieldEditBase = ISGui::CreateColumnForField(this, MetaField);
+    ISFieldEditBase *FieldEditBase = ISGui::CreateColumnForField(this, (ISNamespace::FieldType)ButtonSender->property("FieldType").toInt(), ButtonSender->property("FieldControlWidget").toString());
     FieldEditBase->setProperty("MainEdit", false);
-    dynamic_cast<ISListEdit*>(FieldEditBase)->InvokeList(MetaField->Foreign);
+    //dynamic_cast<ISListEdit*>(FieldEditBase)->InvokeList(MetaField->Foreign);
     connect(FieldEditBase, &ISFieldEditBase::ValueChange, this, &ISSearchForm::ListEditChanged);
 
     for (SearchField &Field : VectorEdits)
     {
-        if (Field.Name == MetaField->Name)
+        if (Field.Name == ButtonSender->property("FieldName").toString())
         {
             Field.Edits.push_back(FieldEditBase);
         }
