@@ -3407,7 +3407,11 @@ bool ISTcpWorker::GetInternalLists(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAns
     while (qSelect.Next())
     {
         const char *Value = qSelect.ReadColumn(0);
-        JsonArray.PushBack(JSON_STRINGA(Value, Allocator), Allocator);
+
+        rapidjson::Value JsonObject(rapidjson::Type::kObjectType);
+        JsonObject.AddMember("TableName", JSON_STRINGA(Value, Allocator), Allocator);
+        JsonObject.AddMember("LocalListName", JSON_STRINGA(ISMetaData::Instance().GetTable(Value)->LocalListName.c_str(), Allocator), Allocator);
+        JsonArray.PushBack(JsonObject, Allocator);
     }
     TcpAnswer->Parameters.AddMember("Lists", JsonArray, Allocator);
     return true;

@@ -205,11 +205,13 @@ ISInternalDirectoriesSubSystem::ISInternalDirectoriesSubSystem(QWidget *parent)
     if (qGetInternalLists.Execute())
     {
         QVariantList Lists = qGetInternalLists.GetAnswer()["Lists"].toList();
-        for (const QVariant &ListName : Lists)
+        for (const QVariant &ListItem : Lists)
         {
+            QVariantMap VariantMap = ListItem.toMap();
+
             QListWidgetItem *ListWidgetItem = new QListWidgetItem(ListWidget);
-            ListWidgetItem->setText(ISMetaData::Instance().GetMetaTable(ListName.toString())->LocalListName);
-            ListWidgetItem->setData(Qt::UserRole, ListName);
+            ListWidgetItem->setText(VariantMap["LocalListName"].toString());
+            ListWidgetItem->setData(Qt::UserRole, VariantMap["TableName"]);
             ListWidgetItem->setSizeHint(QSize(ListWidgetItem->sizeHint().width(), 30));
             ListWidgetItem->setFont(ISDefines::Gui::FONT_APPLICATION);
         }
