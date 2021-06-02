@@ -949,8 +949,9 @@ void ISTcpWorker::Protocol(unsigned int UserID, const char *ActionUID, const std
 unsigned int ISTcpWorker::ExtractVersionFile(const std::string &FileName)
 {
     unsigned int Version = 0;
-    ISVectorString VectorString = ISAlgorithm::StringSplit(FileName, '_');
-    if (VectorString.size() == 4) //Формат вроде валиден
+    size_t VectorSize = 0;
+    ISVectorString VectorString = ISAlgorithm::StringSplit(FileName, '_', VectorSize);
+    if (VectorSize == 4) //Формат вроде валиден
     {
         std::string Temp = VectorString.back();
         size_t Pos = Temp.find('.');

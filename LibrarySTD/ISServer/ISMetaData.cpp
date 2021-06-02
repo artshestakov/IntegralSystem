@@ -538,8 +538,9 @@ bool ISMetaData::XSNInitIndexes(PMetaTable *MetaTable, tinyxml2::XMLElement *Xml
         //Получаем уникальность индекса
         bool Unique = ElementIndex->BoolAttribute("Unique");
 
-        ISVectorString VectorString = ISAlgorithm::StringSplit(Fields, ';');
-        if (VectorString.size() > 1) //Индекс составной
+        size_t FieldsCount = 0;
+        ISVectorString VectorString = ISAlgorithm::StringSplit(Fields, ';', FieldsCount);
+        if (FieldsCount > 1) //Индекс составной
         {
             PMetaIndex *Index = new PMetaIndex(Unique, MetaTable->Alias, MetaTable->Name, std::string());
             for (const std::string &FieldName : VectorString)

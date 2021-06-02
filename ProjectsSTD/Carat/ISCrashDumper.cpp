@@ -54,8 +54,10 @@ void ISCrashDumper::OnSystemSignal(int Signal)
     {
         //Получаем текущее сообщение и делим на строки
         char *Message = Messages[i];
-        ISVectorString VectorString = ISAlgorithm::StringSplit(Message, ' ');
-        if (VectorString.size() != 2) //Что-то пошло не так
+
+        size_t Size = 0;
+        ISVectorString VectorString = ISAlgorithm::StringSplit(Message, ' ', Size);
+        if (Size != 2) //Что-то пошло не так
         {
             std::cout << "Invalid message format: " << Message << std::endl;
             continue;
