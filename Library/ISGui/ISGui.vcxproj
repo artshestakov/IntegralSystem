@@ -182,7 +182,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\Components\QCustomPlot\qcustomplot.cpp" />
     <ClCompile Include="ISAudioPlayerForm.cpp" />
     <ClCompile Include="ISBaseTableView.cpp" />
     <ClCompile Include="ISBuffer.cpp" />
@@ -322,7 +321,6 @@
     <QtMoc Include="ISAudioPlayerForm.h" />
     <QtMoc Include="ISDialogsCommon.h" />
     <QtMoc Include="ISDialogsForm.h" />
-    <QtMoc Include="..\..\Components\QCustomPlot\qcustomplot.h" />
     <ClInclude Include="isgui_global.h" />
     <QtMoc Include="ISProgressForm.h" />
     <QtMoc Include="ISSettingsDatabaseObjectForm.h" />
