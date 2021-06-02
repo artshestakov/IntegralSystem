@@ -8,7 +8,6 @@
 #include "ISGui.h"
 #include "ISControls.h"
 #include "ISDefinesGui.h"
-#include "ISMetaData.h"
 #include "ISAlgorithm.h"
 #include "ISFlowLayout.h"
 #include "ISProgressForm.h"
@@ -156,12 +155,11 @@ void ISFullTextSearchSubSystem::Search()
         for (const QVariant &Variant : ResultList) //Обходим результаты поиска
         {
             QVariantMap ResultMap = Variant.toMap();
-            PMetaTable *MetaTable = ISMetaData::Instance().GetMetaTable(ResultMap["TableName"].toString());
 
-            ISQLabel *LabelLink = new ISQLabel(QString("%1. %2: %3").arg(++Index).arg(MetaTable->LocalName).arg(ResultMap["ObjectName"].toString()), ScrollArea);
+            ISQLabel *LabelLink = new ISQLabel(QString("%1. %2: %3").arg(++Index).arg(ResultMap["TableLocalName"].toString()).arg(ResultMap["ObjectName"].toString()), ScrollArea);
             LabelLink->SetIsLinked(true);
             LabelLink->setSizePolicy(QSizePolicy::Maximum, LabelLink->sizePolicy().verticalPolicy());
-            LabelLink->setProperty("TableName", MetaTable->Name);
+            LabelLink->setProperty("TableName", ResultMap["TableName"]);
             LabelLink->setProperty("ObjectID", ResultMap["ID"]);
             connect(LabelLink, &ISQLabel::Clicked, this, &ISFullTextSearchSubSystem::ClickedRecord);
             dynamic_cast<QVBoxLayout*>(ScrollArea->widget()->layout())->addWidget(LabelLink);

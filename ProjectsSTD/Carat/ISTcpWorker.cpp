@@ -3368,6 +3368,7 @@ bool ISTcpWorker::SearchFullText(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
         rapidjson::Value JsonObject(rapidjson::Type::kObjectType);
         JsonObject.AddMember("ID", ID, Allocator);
         JsonObject.AddMember("TableName", JSON_STRINGA(TableName.c_str(), Allocator), Allocator);
+        JsonObject.AddMember("TableLocalName", JSON_STRINGA(ISMetaData::Instance().GetTable(TableName)->LocalName.c_str(), Allocator), Allocator);
         JsonObject.AddMember("ObjectName", JSON_STRINGA(ObjectName.c_str(), Allocator), Allocator);
         JsonArray.PushBack(JsonObject, Allocator);
     }
