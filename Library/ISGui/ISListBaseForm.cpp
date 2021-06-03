@@ -805,6 +805,7 @@ bool ISListBaseForm::Delete()
             {
                 TcpModel->RemoveRecordID(ObjectID);
             }
+            LabelSelectedRow->setVisible(false);
         }
         else
         {
