@@ -6,7 +6,6 @@
 #include "ISDialogsCommon.h"
 #include "ISGui.h"
 #include "ISPopupMessage.h"
-#include "ISDefinesGui.h"
 #include "ISSettingsDatabase.h"
 #include "ISSettings.h"
 #include "ISUserRoleEntity.h"
@@ -14,6 +13,7 @@
 #include "ISMetaData.h"
 #include "ISDelegates.h"
 #include "ISTcpQuery.h"
+#include "ISConstantsGui.h"
 //-----------------------------------------------------------------------------
 ISCheckEdit::ISCheckEdit(QWidget *parent) : ISFieldEditBase(parent)
 {
@@ -293,7 +293,7 @@ ISComboEdit::ISComboEdit(QWidget *parent) : ISFieldEditBase(parent)
     ComboBox->setLineEdit(LineEdit);
     ComboBox->setItemDelegate(new ISPopupDelegate(ComboBox));
     ComboBox->setMinimumHeight(SIZE_MINIMUM_HEIGHT_EDIT_FIELD);
-    ComboBox->setIconSize(ISDefines::Gui::SIZE_22_22);
+    ComboBox->setIconSize(QSize(22, 22));
     connect(ComboBox, static_cast<void(ISQComboBox::*)(int Index)>(&ISQComboBox::currentIndexChanged), this, &ISComboEdit::ValueChanged);
     AddWidgetEdit(ComboBox, this);
 }
@@ -404,7 +404,7 @@ ISRadioEdit::ISRadioEdit(QWidget *parent) : ISFieldEditBase(parent)
     setSizePolicy(QSizePolicy::Maximum, sizePolicy().verticalPolicy());
 
     LayoutPanel = new QHBoxLayout();
-    LayoutPanel->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_NULL);
+    LayoutPanel->setContentsMargins(QMargins());
     LayoutPanel->addStretch();
 
     WidgetPanel = new QWidget(this);
@@ -595,7 +595,7 @@ ISBIKEdit::ISBIKEdit(QWidget *parent) : ISLineEdit(parent)
 {
     SetSizePolicyHorizontal(QSizePolicy::Maximum);
     SetMaxLength(9);
-    SetFixedWidth(ISGui::GetStringWidth("123456789", ISDefines::Gui::FONT_APPLICATION) + 35);
+    SetFixedWidth(ISGui::GetStringWidth("123456789", FONT_APPLICATION) + 35);
     SetPlaceholderText(LANG("Field.Bik.PlaceholderText"));
 }
 //-----------------------------------------------------------------------------
@@ -616,7 +616,7 @@ ISKPPEdit::ISKPPEdit(QWidget *parent) : ISLineEdit(parent)
 {
     SetSizePolicyHorizontal(QSizePolicy::Maximum);
     SetMaxLength(9);
-    SetFixedWidth(ISGui::GetStringWidth("123456789", ISDefines::Gui::FONT_APPLICATION) + 35);
+    SetFixedWidth(ISGui::GetStringWidth("123456789", FONT_APPLICATION) + 35);
     SetPlaceholderText(LANG("Field.Kpp.PlaceholderText"));
 }
 //-----------------------------------------------------------------------------
@@ -637,7 +637,7 @@ ISOGRNEdit::ISOGRNEdit(QWidget *parent) : ISLineEdit(parent)
 {
     SetSizePolicyHorizontal(QSizePolicy::Maximum);
     SetMaxLength(13);
-    SetFixedWidth(ISGui::GetStringWidth("1234567890123", ISDefines::Gui::FONT_APPLICATION) + 35);
+    SetFixedWidth(ISGui::GetStringWidth("1234567890123", FONT_APPLICATION) + 35);
     SetPlaceholderText(LANG("Field.Ogrn.PlaceholderText"));
 }
 //-----------------------------------------------------------------------------
@@ -658,7 +658,7 @@ ISOKPOEdit::ISOKPOEdit(QWidget *parent) : ISLineEdit(parent)
 {
     SetSizePolicyHorizontal(QSizePolicy::Maximum);
     SetMaxLength(8);
-    SetFixedWidth(ISGui::GetStringWidth("12345678", ISDefines::Gui::FONT_APPLICATION) + 35);
+    SetFixedWidth(ISGui::GetStringWidth("12345678", FONT_APPLICATION) + 35);
     SetPlaceholderText(LANG("Field.Okpo.PlaceholderText"));
 }
 //-----------------------------------------------------------------------------
@@ -678,7 +678,7 @@ bool ISOKPOEdit::IsValid() const
 ISUuidEdit::ISUuidEdit(QWidget *parent) : ISLineEdit(parent)
 {
     SetPlaceholderText(UUID_PLACEHOLDER_TEXT);
-    SetFixedWidth(ISGui::GetStringWidth(UUID_PLACEHOLDER_TEXT, ISDefines::Gui::FONT_APPLICATION) + 40);
+    SetFixedWidth(ISGui::GetStringWidth(UUID_PLACEHOLDER_TEXT, FONT_APPLICATION) + 40);
     SetUppercase(true);
     SetSizePolicyHorizontal(QSizePolicy::Maximum);
 
@@ -720,7 +720,7 @@ ISVINEdit::ISVINEdit(QWidget *parent) : ISLineEdit(parent)
 {
     SetSizePolicyHorizontal(QSizePolicy::Maximum);
     SetMaxLength(17);
-    SetFixedWidth(ISGui::GetStringWidth("12345678901234567", ISDefines::Gui::FONT_APPLICATION) + 35);
+    SetFixedWidth(ISGui::GetStringWidth("12345678901234567", FONT_APPLICATION) + 35);
     SetPlaceholderText(LANG("Field.Vin.PlaceholderText"));
 }
 //-----------------------------------------------------------------------------
@@ -743,7 +743,7 @@ ISDateTimeEdit::ISDateTimeEdit(QWidget *parent) : ISFieldEditBase(parent)
     CreateButtonClear();
 
     QHBoxLayout *Layout = new QHBoxLayout();
-    Layout->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_NULL);
+    Layout->setContentsMargins(QMargins());
 
     QWidget *Widget = new QWidget(this);
     Widget->setLayout(Layout);
@@ -947,7 +947,7 @@ ISINNEdit::ISINNEdit(QWidget *parent) : ISLineEdit(parent)
     SetSizePolicyHorizontal(QSizePolicy::Maximum);
     SetPlaceholderText(LANG("Field.Inn.PlaceholderText"));
     SetMaxLength(12);
-    SetFixedWidth(ISGui::GetStringWidth("123456789012", ISDefines::Gui::FONT_APPLICATION) + 50);
+    SetFixedWidth(ISGui::GetStringWidth("123456789012", FONT_APPLICATION) + 50);
 
     ButtonSearch = new ISServiceButton(BUFFER_ICONS("Taxation"), LANG("SearchFromINN"), this);
     ButtonSearch->setVisible(false);
@@ -1243,7 +1243,7 @@ ISTaskPriorityEdit::ISTaskPriorityEdit(QWidget *parent) : ISRadioEdit(parent)
         ButtonPriority->setToolTip(TaskPriorityMap["ToolTip"].toString());
         ButtonPriority->setIcon(BUFFER_ICONS(TaskPriorityMap["Icon"].toString()));
         ButtonPriority->setStyleSheet(BUFFER_STYLE_SHEET(TaskPriorityMap["StyleSheet"].toString()));
-        ButtonPriority->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
+        ButtonPriority->setFont(FONT_APPLICATION_BOLD);
         AddButton(ButtonPriority, TaskPriorityMap["ID"]);
 
         if (!ButtonLow)
@@ -1434,7 +1434,7 @@ ISPhoneEdit::ISPhoneEdit(QWidget *parent) : ISLineEdit(parent)
 {
     QString InputMask = "(000) 000-00-00;_";
     SetInputMask(InputMask);
-    SetFixedWidth(ISGui::GetStringWidth(InputMask, ISDefines::Gui::FONT_APPLICATION) + 50);
+    SetFixedWidth(ISGui::GetStringWidth(InputMask, FONT_APPLICATION) + 50);
     SetSizePolicyHorizontal(QSizePolicy::Maximum);
     SetIcon(BUFFER_ICONS("PhoneEdit"));
     SetModificationFlag(false);
@@ -1480,7 +1480,7 @@ ISColorEdit::ISColorEdit(QWidget *parent) : ISFieldEditBase(parent)
 
     QGroupBox *GroupBox = new QGroupBox(this);
     GroupBox->setLayout(new QHBoxLayout());
-    GroupBox->layout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_NULL);
+    GroupBox->layout()->setContentsMargins(QMargins());
     GroupBox->setMinimumWidth(ISPUSHBUTTON_MINIMUM_WIDTH);
     GroupBox->setMinimumHeight(SIZE_MINIMUM_HEIGHT_EDIT_FIELD);
     AddWidgetEdit(GroupBox, this);
@@ -1624,7 +1624,7 @@ void ISFileEdit::SelectFile()
             ISGui::SetWaitGlobalCursor(true);
             QIcon IconFile = ISGui::GetIconFile(FilePath);
             VariantMap[FILE_EDIT_PROPERTY_NAME] = FileInfo.fileName();
-            VariantMap[FILE_EDIT_PROPERTY_LOGO] = ISGui::PixmapToByteArray(IconFile.pixmap(ISDefines::Gui::SIZE_32_32)).toBase64();
+            VariantMap[FILE_EDIT_PROPERTY_LOGO] = ISGui::PixmapToByteArray(IconFile.pixmap(QSize(32, 32))).toBase64();
             VariantMap[FILE_EDIT_PROPERTY_DATA] = File.readAll().toBase64();
             File.close();
             ButtonFile->setMenu(Menu);
@@ -1729,7 +1729,7 @@ ISVolumeEdit::ISVolumeEdit(QWidget *parent) : ISFieldEditBase(parent)
     SetSizePolicyHorizontal(QSizePolicy::Maximum);
 
     QLabel *LabelImageMinimum = new QLabel(this);
-    LabelImageMinimum->setPixmap(BUFFER_ICONS("Volume.Minimum").pixmap(ISDefines::Gui::SIZE_20_20));
+    LabelImageMinimum->setPixmap(BUFFER_ICONS("Volume.Minimum").pixmap(QSize(20, 20)));
     LabelImageMinimum->setContentsMargins(0, 0, 0, 5);
     AddWidgetToLeft(LabelImageMinimum);
 
@@ -1742,7 +1742,7 @@ ISVolumeEdit::ISVolumeEdit(QWidget *parent) : ISFieldEditBase(parent)
     AddWidgetEdit(Slider, this);
 
     QLabel *LabelImageMaximum = new QLabel(this);
-    LabelImageMaximum->setPixmap(BUFFER_ICONS("Volume.Maximum").pixmap(ISDefines::Gui::SIZE_20_20));
+    LabelImageMaximum->setPixmap(BUFFER_ICONS("Volume.Maximum").pixmap(QSize(20, 20)));
     LabelImageMaximum->setContentsMargins(0, 0, 0, 5);
     AddWidgetToRight(LabelImageMaximum);
 
@@ -1819,7 +1819,7 @@ ISListEditPopup::ISListEditPopup(PMetaForeign *meta_foreign, QWidget *ComboBox)
     setAttribute(Qt::WA_DeleteOnClose, false);
 
     QVBoxLayout *LayoutFrame = new QVBoxLayout();
-    LayoutFrame->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_5_PX);
+    LayoutFrame->setContentsMargins(QMargins(5, 5, 5, 5));
 
     QFrame *Frame = new QFrame(this);
     Frame->setFrameShape(QFrame::Box);
@@ -1834,7 +1834,7 @@ ISListEditPopup::ISListEditPopup(PMetaForeign *meta_foreign, QWidget *ComboBox)
     LayoutFrame->addWidget(LineEdit);
 
     LabelName = new QLabel(MetaTableForeign->LocalListName + ':', this);
-    LabelName->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
+    LabelName->setFont(FONT_APPLICATION_BOLD);
     LabelName->setStyleSheet(BUFFER_STYLE_SHEET("QLabel.Color.Gray"));
     LayoutFrame->addWidget(LabelName);
 
@@ -1866,7 +1866,7 @@ ISListEditPopup::ISListEditPopup(PMetaForeign *meta_foreign, QWidget *ComboBox)
     StatusBar->addPermanentWidget(ButtonHide);
 
     LabelEmpty = new QLabel(LANG("ListIsEmpty"), this);
-    LabelEmpty->setFont(ISDefines::Gui::FONT_TAHOMA_12_BOLD);
+    LabelEmpty->setFont(FONT_TAHOMA_12_BOLD);
     LabelEmpty->setStyleSheet(BUFFER_STYLE_SHEET("QLabel.Color.Gray"));
     LabelEmpty->setVisible(false);
 }
@@ -1998,7 +1998,7 @@ void ISListEditPopup::LoadDataFromQuery()
         {
             ListWidget->setItemSelected(CurrentItem, true);
             ListWidget->scrollToItem(CurrentItem, QAbstractItemView::ScrollHint::PositionAtCenter);
-            CurrentItem->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
+            CurrentItem->setFont(FONT_APPLICATION_BOLD);
             CurrentItem->setSelected(true);
         }
         LabelCountRow->setText(LANG("RecordsCount") + ": " + QString::number(ListWidget->count()));

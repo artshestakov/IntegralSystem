@@ -1,5 +1,4 @@
 #include "ISProgressForm.h"
-#include "ISDefinesGui.h"
 #include "ISBuffer.h"
 #include "ISLocalization.h"
 #include "ISControls.h"
@@ -12,7 +11,7 @@ ISProgressForm::ISProgressForm(int Maximum, const QString &LabelText, QWidget *p
 {
     setWindowTitle(TitleText.isEmpty() ? LANG("PleaseWait") : TitleText);
     setWindowModality(Qt::WindowModal);
-    setFixedSize(ISDefines::Gui::SIZE_PROGRESS_FORM);
+    setFixedSize(QSize(550, 100));
     setValue(Value);
     setMinimumDuration(0);
     setAutoClose(true);
@@ -21,7 +20,7 @@ ISProgressForm::ISProgressForm(int Maximum, const QString &LabelText, QWidget *p
     connect(ButtonClose, &ISPushButton::clicked, this, &ISProgressForm::CancelClicked);
     setCancelButton(ButtonClose);
 
-    ISControls::SetBackgroundColorWidget(this, ISDefines::Gui::COLOR_WHITE);
+    ISControls::SetBackgroundColorWidget(this, QColor(Qt::white));
 }
 //-----------------------------------------------------------------------------
 ISProgressForm::~ISProgressForm()

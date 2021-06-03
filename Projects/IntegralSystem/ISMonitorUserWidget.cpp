@@ -1,10 +1,10 @@
 #include "ISMonitorUserWidget.h"
-#include "ISDefinesGui.h"
 #include "ISConstants.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISGui.h"
 #include "ISInterfaceDialogForm.h"
+#include "ISConstantsGui.h"
 //-----------------------------------------------------------------------------
 ISMonitorUserWidget::ISMonitorUserWidget(const QVariantMap &VariantMap, QWidget *parent) : QFrame(parent)
 {
@@ -27,15 +27,15 @@ ISMonitorUserWidget::ISMonitorUserWidget(const QVariantMap &VariantMap, QWidget 
     setProperty("UserName", UserFIO);
 
     QPalette Palette(palette());
-    Palette.setColor(QPalette::Background, ISDefines::Gui::COLOR_MONITOR_USER);
+    Palette.setColor(QPalette::Background, QColor(210, 210, 210));
     setPalette(Palette);
 
     QVBoxLayout *Layout = new QVBoxLayout();
-    Layout->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_5_PX);
+    Layout->setContentsMargins(QMargins(5, 5, 5, 5));
     setLayout(Layout);
 
     QLabel *LabelIcon = new QLabel(this);
-    LabelIcon->setPixmap(BUFFER_ICONS("User").pixmap(ISDefines::Gui::SIZE_32_32));
+    LabelIcon->setPixmap(BUFFER_ICONS("User").pixmap(QSize(32, 32)));
     Layout->addWidget(LabelIcon, 0, Qt::AlignHCenter);
 
     QLabel *LabelUserFIO = new QLabel(UserFIO.split(SYMBOL_SPACE, QString::SkipEmptyParts).join('\n'), this);
@@ -46,7 +46,7 @@ ISMonitorUserWidget::ISMonitorUserWidget(const QVariantMap &VariantMap, QWidget 
     ISGui::SetFontWidgetBold(LabelUserFIO, UserID == CURRENT_USER_ID);
 
     QAction *ActionUser = new QAction(BUFFER_ICONS("User"), UserFIO, this);
-    ActionUser->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
+    ActionUser->setFont(FONT_APPLICATION_BOLD);
     connect(ActionUser, &QAction::triggered, this, &ISMonitorUserWidget::ShowUserCard);
     addAction(ActionUser);
 
@@ -86,7 +86,7 @@ void ISMonitorUserWidget::ServiceClicked()
 {
     ISInterfaceDialogForm InterfaceDialogForm;
     InterfaceDialogForm.setWindowTitle(LANG("ISMonitorUserWidget.SessionDetails"));
-    dynamic_cast<QVBoxLayout*>(InterfaceDialogForm.layout())->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);
+    dynamic_cast<QVBoxLayout*>(InterfaceDialogForm.layout())->setContentsMargins(QMargins(10, 10, 10, 10));
 
     QFormLayout FormLayout;
     dynamic_cast<QVBoxLayout*>(InterfaceDialogForm.layout())->addLayout(&FormLayout);

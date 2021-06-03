@@ -1,7 +1,6 @@
 #include "ISDialogsForm.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
-#include "ISDefinesGui.h"
 #include "ISDialogsCommon.h"
 #include "ISConfig.h"
 #include "ISGui.h"
@@ -15,12 +14,13 @@
 #include "ISProcessForm.h"
 #include "ISProperty.h"
 #include "ISRevision.h"
+#include "ISConstantsGui.h"
 //-----------------------------------------------------------------------------
 ISAboutDialog::ISAboutDialog() : ISInterfaceDialogForm()
 {
     setWindowTitle(LANG("AboutForm.AboutApplication"));
-    setMinimumSize(ISDefines::Gui::SIZE_MAIN_WINDOW_MINIMUM);
-    GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);
+    setMinimumSize(SIZE_MAIN_WINDOW_MINIMUM);
+    GetMainLayout()->setContentsMargins(QMargins(10, 10, 10, 10));
 
     QHBoxLayout *Layout = new QHBoxLayout();
     GetMainLayout()->addLayout(Layout);
@@ -175,18 +175,18 @@ void ISAboutDialog::CreateOtherTab()
 void ISAboutDialog::AddLabel(QWidget *parent, const QString &LabelText, const QString &Text)
 {
     QHBoxLayout *LayoutRow = new QHBoxLayout();
-    LayoutRow->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_NULL);
+    LayoutRow->setContentsMargins(QMargins());
 
     QWidget *WidgetRow = new QWidget(parent);
     WidgetRow->setLayout(LayoutRow);
 
     QLabel *LabelRow = new QLabel(parent);
-    LabelRow->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
+    LabelRow->setFont(FONT_APPLICATION_BOLD);
     LabelRow->setText(LabelText + ':');
     LayoutRow->addWidget(LabelRow);
 
     QLabel *Label = new QLabel(parent);
-    Label->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
+    Label->setFont(FONT_APPLICATION_BOLD);
     Label->setText(Text);
     LayoutRow->addWidget(Label);
 
@@ -214,7 +214,7 @@ ISAuthDialog::ISAuthDialog()
 {
     setWindowTitle(LANG("InputInSystem"));
     ForbidResize();
-    GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_NULL);
+    GetMainLayout()->setContentsMargins(QMargins());
 
     QLabel *LableImage = new QLabel(this);
     LableImage->setScaledContents(true);
@@ -222,7 +222,7 @@ ISAuthDialog::ISAuthDialog()
     GetMainLayout()->addWidget(LableImage);
 
     QVBoxLayout *LayoutFields = new QVBoxLayout();
-    LayoutFields->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);
+    LayoutFields->setContentsMargins(QMargins(10, 10, 10, 10));
     GetMainLayout()->addLayout(LayoutFields);
 
     LayoutFields->addWidget(new QLabel(LANG("InputLoginAndPassword") + ':', this));
@@ -479,7 +479,7 @@ void ISAuthDialog::SetConnecting(bool Connecting)
 ISConnectDialog::ISConnectDialog() : ISInterfaceDialogForm()
 {
     setWindowTitle(LANG("ConnectionSettings"));
-    GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);
+    GetMainLayout()->setContentsMargins(QMargins(10, 10, 10, 10));
     resize(650, 300);
 
     QFormLayout *FormLayout = new QFormLayout();
@@ -536,8 +536,8 @@ ISExportDialog::ISExportDialog(ISTcpModel *TcpModel)
 {
     setWindowIcon(BUFFER_ICONS("ExportTable"));
     setWindowTitle(LANG("Export.Table"));
-    setFixedSize(ISDefines::Gui::SIZE_640_480);
-    GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);
+    setFixedSize(QSize(640, 480));
+    GetMainLayout()->setContentsMargins(QMargins(10, 10, 10, 10));
 
     QLabel *LabelText = new QLabel(this);
     LabelText->setText(LANG("SelectExportType") + ':');
@@ -613,7 +613,7 @@ void ISExportDialog::CreateTabFields(ISTcpModel *TcpModel)
     TabWidget->addTab(TabFields, LANG("Export.Fields"));
 
     QToolBar *ToolBar = new QToolBar(TabFields);
-    ToolBar->setIconSize(ISDefines::Gui::SIZE_22_22);
+    ToolBar->setIconSize(QSize(22, 22));
     LayoutFields->addWidget(ToolBar);
 
     QAction *ActionSelectAll = new QAction(BUFFER_ICONS("CheckAll"), LANG("SelectAllFields"), ToolBar);
@@ -709,7 +709,7 @@ ISReconnectDialog::ISReconnectDialog()
     setWindowTitle(LANG("ReconnectForm.Title"));
     setWindowIcon(BUFFER_ICONS("Update"));
     setCursor(CURSOR_BUSY);
-    GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);
+    GetMainLayout()->setContentsMargins(QMargins(10, 10, 10, 10));
     resize(300, 165);
 
     QLabel *LabelInfo = new QLabel(LANG("ReconnectForm.Info"), this);
@@ -768,10 +768,10 @@ void ISReconnectDialog::Timeout()
 ISSelectListDialog::ISSelectListDialog(ISNamespace::SelectListMode SelectMode, const QString &TableName, const QString &TableLocalName, int SelectObjectID) : ISInterfaceDialogForm()
 {
     setWindowTitle(TableLocalName);
-    GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);
+    GetMainLayout()->setContentsMargins(QMargins(10, 10, 10, 10));
 
     QLabel *LabelInfo = new QLabel(this);
-    LabelInfo->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
+    LabelInfo->setFont(FONT_APPLICATION_BOLD);
     ISGui::SetFontWidgetUnderline(LabelInfo, true);
     GetMainLayout()->addWidget(LabelInfo);
 
@@ -832,7 +832,7 @@ ISSettingsDialog::ISSettingsDialog(const QString &SettingGroupUID) : ISInterface
     setMinimumSize(900, 600);
 
     Layout = new QHBoxLayout();
-    Layout->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);
+    Layout->setContentsMargins(QMargins(10, 10, 10, 10));
     GetMainLayout()->addLayout(Layout);
 
     ListWidget = new ISListWidget(this);
@@ -849,7 +849,7 @@ ISSettingsDialog::ISSettingsDialog(const QString &SettingGroupUID) : ISInterface
     GetMainLayout()->addWidget(ISControls::CreateHorizontalLine(this));
 
     QHBoxLayout *LayoutBottom = new QHBoxLayout();
-    LayoutBottom->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);
+    LayoutBottom->setContentsMargins(QMargins(10, 10, 10, 10));
     GetMainLayout()->addLayout(LayoutBottom);
 
     ISPushButton *ButtonDefault = new ISPushButton(this);
@@ -862,7 +862,7 @@ ISSettingsDialog::ISSettingsDialog(const QString &SettingGroupUID) : ISInterface
 
     ButtonDialog = new ISButtonDialog(this);
     ButtonDialog->SetApplyEnabled(false);
-    ButtonDialog->layout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_NULL);
+    ButtonDialog->layout()->setContentsMargins(QMargins());
     connect(ButtonDialog, &ISButtonDialog::Apply, this, &ISSettingsDialog::Save);
     connect(ButtonDialog, &ISButtonDialog::Close, this, &ISSettingsDialog::close);
     LayoutBottom->addWidget(ButtonDialog, 0, Qt::AlignRight);
@@ -897,7 +897,7 @@ void ISSettingsDialog::CreateCentralPanel()
     LayoutCentral->addWidget(WidgetTitle);
 
     LabelCurrentGroup = new QLabel(WidgetTitle);
-    LabelCurrentGroup->setFont(ISDefines::Gui::FONT_TAHOMA_12_BOLD);
+    LabelCurrentGroup->setFont(FONT_TAHOMA_12_BOLD);
     LayoutTitle->addWidget(LabelCurrentGroup, 0, Qt::AlignLeft);
 
     LabelCurrentGroupHint = new QLabel(WidgetTitle);
@@ -1000,9 +1000,9 @@ QListWidgetItem* ISSettingsDialog::CreateItemGroup(ISMetaSettingsGroup *MetaGrou
 //-----------------------------------------------------------------------------
 void ISSettingsDialog::ItemSelectionChanged()
 {
-    ListWidget->SetFontItems(ISDefines::Gui::FONT_TAHOMA_9);
+    ListWidget->SetFontItems(FONT_TAHOMA_9);
     QListWidgetItem *ClickedItem = ListWidget->currentItem();
-    ClickedItem->setFont(ISDefines::Gui::FONT_TAHOMA_9_BOLD);
+    ClickedItem->setFont(FONT_TAHOMA_9_BOLD);
     TabWidget->setCurrentIndex(ListWidget->row(ClickedItem));
     LabelCurrentGroup->setText(ClickedItem->text());
 
@@ -1024,7 +1024,7 @@ ISUserGroupRightDialog::ISUserGroupRightDialog(int group_id, const QString &grou
 {
     setMinimumSize(800, 750);
     setWindowTitle(LANG("AccessRights.SettingAcceessFromGroup").arg(group_name));
-    GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);
+    GetMainLayout()->setContentsMargins(QMargins(10, 10, 10, 10));
 
     TabWidget = new QTabWidget(this);
     GetMainLayout()->addWidget(TabWidget);
@@ -1101,7 +1101,7 @@ void ISUserGroupRightDialog::CreateTables(const QVariantList &RightTableType, co
 
         QToolBar *ToolBar = new QToolBar(ScrollArea);
         ToolBar->setToolButtonStyle(Qt::ToolButtonIconOnly);
-        ToolBar->setIconSize(ISDefines::Gui::SIZE_20_20);
+        ToolBar->setIconSize(QSize(20, 20));
         connect(ToolBar, &QToolBar::actionTriggered, this, &ISUserGroupRightDialog::TableClicked);
         FormLayout->addRow(TableMap["LocalName"].toString() + ':', ToolBar);
 
@@ -1215,7 +1215,7 @@ ISUserPasswordDialog::ISUserPasswordDialog(unsigned int user_id, const QString &
 
     setWindowTitle(PasswordExist ? LANG("UserPasswordForm.Title.Change") : LANG("UserPasswordForm.Title.Creating"));
     ForbidResize();
-    GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);
+    GetMainLayout()->setContentsMargins(QMargins(10, 10, 10, 10));
 
     QLabel *LabelUser = new QLabel(LANG("User") + ": " + UserFIO, this);
     LabelUser->setStyleSheet(BUFFER_STYLE_SHEET("QLabel.Color.Gray"));
@@ -1329,7 +1329,7 @@ ISRecordInfoDialog::ISRecordInfoDialog(QWidget *parent, const QString &TableName
 {
     setWindowTitle(LANG("ISRecordInfoDialog.Title"));
     setWindowIcon(BUFFER_ICONS("RecordInfo"));
-    GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);
+    GetMainLayout()->setContentsMargins(QMargins(10, 10, 10, 10));
 
     QFormLayout *FormLayout = new QFormLayout();
     GetMainLayout()->addLayout(FormLayout);

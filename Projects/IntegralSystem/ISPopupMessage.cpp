@@ -1,8 +1,8 @@
 #include "ISPopupMessage.h"
-#include "ISDefinesGui.h"
 #include "ISLocalization.h"
 #include "ISGui.h"
 #include "ISBuffer.h"
+#include "ISConstantsGui.h"
 //-----------------------------------------------------------------------------
 ISPopupMessage::ISPopupMessage(const QString &Title, const QString &Message, QWidget *parent) : QWidget(parent)
 {
@@ -19,13 +19,13 @@ ISPopupMessage::ISPopupMessage(const QString &Title, const QString &Message, QWi
     LabelTitle->setVisible(false);
     LabelTitle->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
     LabelTitle->setStyleSheet(BUFFER_STYLE_SHEET("ISPopup"));
-    LabelTitle->setFont(ISDefines::Gui::FONT_TAHOMA_12_BOLD);
+    LabelTitle->setFont(FONT_TAHOMA_12_BOLD);
     SetTitle(Title);
 
     LabelMessage = new QLabel(Message, this);
     LabelMessage->setVisible(false);
     LabelMessage->setStyleSheet(BUFFER_STYLE_SHEET("ISPopup"));
-    LabelMessage->setFont(ISDefines::Gui::FONT_TAHOMA_11);
+    LabelMessage->setFont(QFont("Tahoma", 11));
     SetMessage(Message);
 
     GridLayout = new QGridLayout(this);
@@ -126,7 +126,7 @@ void ISPopupMessage::paintEvent(QPaintEvent *e)
     Painter.setRenderHint(QPainter::Antialiasing); // Включаем сглаживание
 
 
-    Painter.setBrush(QBrush(ISDefines::Gui::COLOR_POPUP_BRUSH));
+    Painter.setBrush(QBrush(QColor(0, 0, 0, 180)));
     Painter.setPen(Qt::NoPen); // Край уведомления не будет выделен
 
     QRect RoundedRect;

@@ -1,5 +1,4 @@
 #include "ISProcessForm.h"
-#include "ISDefinesGui.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISGui.h"
@@ -12,13 +11,13 @@ ISProcessForm::ISProcessForm(const QString &LabelText, QWidget *parent)
     setWindowTitle(LANG("PleaseWait"));
     setSizePolicy(QSizePolicy::Maximum, sizePolicy().verticalPolicy());
     setWindowModality(Qt::WindowModality::WindowModal);
-    GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);
+    GetMainLayout()->setContentsMargins(QMargins(10, 10, 10, 10));
 
     QHBoxLayout *Layout = new QHBoxLayout();
     GetMainLayout()->addLayout(Layout);
 
     QLabel *LabelImage = new QLabel(this);
-    LabelImage->setPixmap(BUFFER_ICONS("Wait").pixmap(ISDefines::Gui::SIZE_32_32));
+    LabelImage->setPixmap(BUFFER_ICONS("Wait").pixmap(QSize(32, 32)));
     Layout->addWidget(LabelImage);
 
     Label = new QLabel(this);

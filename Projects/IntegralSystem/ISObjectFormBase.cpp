@@ -1,5 +1,4 @@
 #include "ISObjectFormBase.h"
-#include "ISDefinesGui.h"
 #include "ISConstants.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
@@ -15,6 +14,7 @@
 #include "ISUserRoleEntity.h"
 #include "ISAlgorithm.h"
 #include "ISTcpQuery.h"
+#include "ISConstantsGui.h"
 //-----------------------------------------------------------------------------
 ISObjectFormBase::ISObjectFormBase(ISNamespace::ObjectFormType form_type, PMetaTable *meta_table, QWidget *parent, int object_id)
     : ISInterfaceForm(parent),
@@ -193,7 +193,7 @@ void ISObjectFormBase::AfterShowEvent()
 void ISObjectFormBase::CreateToolBarEscorts()
 {
     ToolBarEscort = new QToolBar(this);
-    ToolBarEscort->setIconSize(ISDefines::Gui::SIZE_20_20);
+    ToolBarEscort->setIconSize(QSize(20, 20));
     ToolBarEscort->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
     connect(ToolBarEscort, &QToolBar::actionTriggered, this, &ISObjectFormBase::ToolBarClicked);
     GetMainLayout()->addWidget(ToolBarEscort);
@@ -205,7 +205,7 @@ void ISObjectFormBase::CreateToolBarEscorts()
 
     //Действие объекта
     QAction *ActionObject = ToolBarEscort->addAction(BUFFER_ICONS("Document"), MetaTable->LocalName);
-    ActionObject->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
+    ActionObject->setFont(FONT_APPLICATION_BOLD);
     ActionObject->setCheckable(true);
     ActionObject->setChecked(true);
     ActionObject->setProperty("IsChecked", true);
@@ -317,7 +317,7 @@ void ISObjectFormBase::CreateWidgetObject()
     BeginFieldEdit = nullptr;
 
     QVBoxLayout *LayoutObject = new QVBoxLayout();
-    LayoutObject->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_NULL);
+    LayoutObject->setContentsMargins(QMargins());
 
     POINTER_DELETE(CentralWidget); //Удаляем центральный видджет (если есть)
     CentralWidget = new QWidget(this);
@@ -336,7 +336,7 @@ void ISObjectFormBase::CreateWidgetObject()
     {
         QLabel *LabelObjectID = new QLabel(CentralWidget);
         LabelObjectID->setText(LANG("SystemField.ID") + ':');
-        LabelObjectID->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
+        LabelObjectID->setFont(FONT_APPLICATION_BOLD);
 
         EditObjectID = new ISLineEdit(CentralWidget);
         EditObjectID->SetValue(LANG("SystemField.ID.NotAssigned"));
@@ -511,10 +511,10 @@ void ISObjectFormBase::AddColumnForField(PMetaField *MetaField, ISFieldEditBase 
     {
         QLabel *LabelTab = new QLabel(CentralWidget);
         LabelTab->setText(MetaField->SeparatorName);
-        LabelTab->setFont(ISDefines::Gui::FONT_TAHOMA_10_BOLD);
+        LabelTab->setFont(QFont("Tahoma", 10, QFont::Bold));
 
         QHBoxLayout *LayoutLine = new QHBoxLayout();
-        LayoutLine->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_NULL);
+        LayoutLine->setContentsMargins(QMargins());
 
         QWidget *WidgetLine = new QWidget(CentralWidget);
         WidgetLine->setLayout(LayoutLine);
@@ -563,13 +563,13 @@ void ISObjectFormBase::ToolBarClicked(QAction *ActionClicked)
             }
             else //Иначе - устанавливаем жирный шрифт
             {
-                Action->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
+                Action->setFont(FONT_APPLICATION_BOLD);
                 Action->setProperty("IsChecked", true);
             }
         }
         else //Другое действие - отключаем выдлеение и устанавливаем обычный шрифт
         {
-            Action->setFont(ISDefines::Gui::FONT_APPLICATION);
+            Action->setFont(FONT_APPLICATION);
             Action->setChecked(false);
             Action->setProperty("IsChecked", false);
         }

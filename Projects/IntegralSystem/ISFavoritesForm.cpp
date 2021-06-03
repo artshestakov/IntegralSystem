@@ -1,5 +1,4 @@
 #include "ISFavoritesForm.h"
-#include "ISDefinesGui.h"
 #include "ISLocalization.h"
 #include "ISFavorites.h"
 #include "ISBuffer.h"
@@ -14,8 +13,8 @@ ISFavoritesForm::ISFavoritesForm(QWidget *parent, const QString &table_name, con
 {
     setWindowTitle(table_name.isEmpty() ? LANG("ISFavoritesForm.Title") : LANG("ISFavoritesForm.Title.Table").arg(table_local_name));
     setWindowIcon(BUFFER_ICONS("Favorites"));
-    resize(ISDefines::Gui::SIZE_640_480);
-    GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);
+    resize(QSize(640, 480));
+    GetMainLayout()->setContentsMargins(QMargins(10, 10, 10, 10));
 
     QToolBar *ToolBar = new QToolBar(this);
     ToolBar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);

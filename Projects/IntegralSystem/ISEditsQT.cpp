@@ -6,7 +6,6 @@
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISControls.h"
-#include "ISDefinesGui.h"
 //-----------------------------------------------------------------------------
 ISQComboBox::ISQComboBox(QWidget *parent)
     : QComboBox(parent),

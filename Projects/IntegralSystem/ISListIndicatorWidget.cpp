@@ -1,5 +1,4 @@
 #include "ISListIndicatorWidget.h"
-#include "ISDefinesGui.h"
 #include "ISBuffer.h"
 //-----------------------------------------------------------------------------
 ISListIndicatorWidget::ISListIndicatorWidget(QWidget *parent) : QWidget(parent)
@@ -23,7 +22,7 @@ ISListIndicatorWidget::ISListIndicatorWidget(QWidget *parent) : QWidget(parent)
 
     LabelText = new QLabel(this);
     LabelText->setStyleSheet(BUFFER_STYLE_SHEET("QLabel.Color.Gray"));
-    LabelText->setFont(ISDefines::Gui::FONT_TAHOMA_14_BOLD);
+    LabelText->setFont(QFont("Tahoma", 14, QFont::Bold));
     Layout->addWidget(LabelText);
 }
 //-----------------------------------------------------------------------------
@@ -49,7 +48,7 @@ void ISListIndicatorWidget::SetVisibleAnimation(bool Visible)
 //-----------------------------------------------------------------------------
 void ISListIndicatorWidget::SetIcon(const QIcon &Icon)
 {
-    LabelImage->setPixmap(Icon.isNull() ? QPixmap() : Icon.pixmap(ISDefines::Gui::SIZE_32_32));
+    LabelImage->setPixmap(Icon.isNull() ? QPixmap() : Icon.pixmap(QSize(32, 32)));
     adjustSize();
 }
 //-----------------------------------------------------------------------------

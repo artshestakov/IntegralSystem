@@ -7,11 +7,11 @@
 #include "ISLabels.h"
 #include "ISGui.h"
 #include "ISControls.h"
-#include "ISDefinesGui.h"
 #include "ISAlgorithm.h"
 #include "ISFlowLayout.h"
 #include "ISProgressForm.h"
 #include "ISDialogsForm.h"
+#include "ISConstantsGui.h"
 //-----------------------------------------------------------------------------
 ISAsteriskCallsSubSystem::ISAsteriskCallsSubSystem(QWidget *parent) : ISListBaseForm("_AsteriskCalls", parent)
 {
@@ -49,13 +49,13 @@ void ISAsteriskCallsSubSystem::PlayRecordCall()
 //-----------------------------------------------------------------------------
 ISFullTextSearchSubSystem::ISFullTextSearchSubSystem(QWidget *parent) : ISInterfaceMetaForm(parent)
 {
-    GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);
+    GetMainLayout()->setContentsMargins(QMargins(10, 10, 10, 10));
 
     QHBoxLayout *LayoutTitle = new QHBoxLayout();
     GetMainLayout()->addLayout(LayoutTitle);
 
     EditSearch = new ISSearchEdit(this);
-    EditSearch->SetFont(ISDefines::Gui::FONT_TAHOMA_10);
+    EditSearch->SetFont(FONT_TAHOMA_10);
     LayoutTitle->addWidget(EditSearch);
 
     WaitWidget = new ISWaitWidget(this, false, false);
@@ -211,7 +211,7 @@ ISInternalDirectoriesSubSystem::ISInternalDirectoriesSubSystem(QWidget *parent)
             ListWidgetItem->setText(VariantMap["LocalListName"].toString());
             ListWidgetItem->setData(Qt::UserRole, VariantMap["TableName"]);
             ListWidgetItem->setSizeHint(QSize(ListWidgetItem->sizeHint().width(), 30));
-            ListWidgetItem->setFont(ISDefines::Gui::FONT_APPLICATION);
+            ListWidgetItem->setFont(FONT_APPLICATION);
         }
     }
     else
@@ -223,7 +223,7 @@ ISInternalDirectoriesSubSystem::ISInternalDirectoriesSubSystem(QWidget *parent)
     Label->setWordWrap(true);
     Label->setText(LANG("ClickFromViewList"));
     Label->setStyleSheet(BUFFER_STYLE_SHEET("QLabel.Color.Gray"));
-    Label->setFont(ISDefines::Gui::FONT_TAHOMA_14_BOLD);
+    Label->setFont(QFont("Tahoma", 14, QFont::Bold));
     Layout->addWidget(Label, 0, Qt::AlignCenter);
 }
 //-----------------------------------------------------------------------------
@@ -243,9 +243,9 @@ void ISInternalDirectoriesSubSystem::ItemSelectionChanged()
     POINTER_DELETE(Label);
     POINTER_DELETE(ListBaseForm);
 
-    ListWidget->SetFontItems(ISDefines::Gui::FONT_APPLICATION);
+    ListWidget->SetFontItems(FONT_APPLICATION);
     QListWidgetItem *CurrentItem = ListWidget->currentItem();
-    CurrentItem->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
+    CurrentItem->setFont(FONT_APPLICATION_BOLD);
 
     ListBaseForm = new ISListBaseForm(CurrentItem->data(Qt::UserRole).toString(), this);
     connect(ListBaseForm, &ISListBaseForm::AddFormFromTab, [=](QWidget *ObjectForm) { ISGui::ShowObjectForm(ObjectForm); });
@@ -285,7 +285,7 @@ void ISProtocolSubSystem::DoubleClickedTable(const QModelIndex &ModelIndex)
 //-----------------------------------------------------------------------------
 ISMonitorActivitySubSystem::ISMonitorActivitySubSystem(QWidget *parent) : ISInterfaceMetaForm(parent)
 {
-    GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);
+    GetMainLayout()->setContentsMargins(QMargins(10, 10, 10, 10));
 
     QHBoxLayout *LayoutTitle = new QHBoxLayout();
     GetMainLayout()->addLayout(LayoutTitle);
@@ -303,7 +303,7 @@ ISMonitorActivitySubSystem::ISMonitorActivitySubSystem(QWidget *parent) : ISInte
 
     ScrollArea = new ISScrollArea(this);
     ScrollArea->widget()->setLayout(new ISFlowLayout());
-    ScrollArea->widget()->layout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_NULL);
+    ScrollArea->widget()->layout()->setContentsMargins(QMargins());
     Layout->addWidget(ScrollArea);
 
     QAction *ActionUpdate = new QAction(this);
@@ -386,7 +386,7 @@ void ISMonitorActivitySubSystem::ShowProtocol()
 //-----------------------------------------------------------------------------
 ISServerInfoSubSystem::ISServerInfoSubSystem(QWidget *parent) : ISInterfaceMetaForm(parent)
 {
-    GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);
+    GetMainLayout()->setContentsMargins(QMargins(10, 10, 10, 10));
 
     TabWidget = new QTabWidget(this);
     GetMainLayout()->addWidget(TabWidget);

@@ -4,7 +4,6 @@
 #include "ISBuffer.h"
 #include "ISLocalization.h"
 #include "ISControls.h"
-#include "ISDefinesGui.h"
 //-----------------------------------------------------------------------------
 ISQLabel::ISQLabel(const QString &Text, QWidget *parent)
     : QLabel(Text, parent),
@@ -137,7 +136,7 @@ void ISLabelSelectionText::CopySelectedText()
 ISLabelPixmapText::ISLabelPixmapText(const QPixmap &Pixmap, const QString &Text, QWidget *parent) : QWidget(parent)
 {
     Layout = new QBoxLayout(QBoxLayout::Direction::LeftToRight);
-    Layout->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_NULL);
+    Layout->setContentsMargins(QMargins());
     setLayout(Layout);
 
     LabelPixmap = new QLabel(this);
@@ -227,7 +226,7 @@ ISLabelElided::ISLabelElided(const QString &Text, QWidget *parent)
     Elided(false),
     ElidedToolTip(false),
     Content(Text),
-    ColorText(ISDefines::Gui::COLOR_BLACK)
+    ColorText(QColor(Qt::black))
 {
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 }

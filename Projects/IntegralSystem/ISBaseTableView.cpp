@@ -1,5 +1,4 @@
 #include "ISBaseTableView.h"
-#include "ISDefinesGui.h"
 #include "ISConstants.h"
 #include "ISBuffer.h"
 //-----------------------------------------------------------------------------
@@ -28,7 +27,7 @@ ISBaseTableView::ISBaseTableView(QWidget *parent)
     ButtonCorner = new ISPushButton(this);
     ButtonCorner->setCursor(CURSOR_POINTING_HAND);
     ButtonCorner->setFlat(true);
-    ButtonCorner->setFont(ISDefines::Gui::FONT_TAHOMA_8);
+    ButtonCorner->setFont(QFont("Tahoma", 8));
     connect(ButtonCorner, &QPushButton::clicked, this, &ISBaseTableView::CornerClicked);
 }
 //-----------------------------------------------------------------------------

@@ -1,6 +1,5 @@
 #include "ISParagraphs.h"
 #include "ISBuffer.h"
-#include "ISDefinesGui.h"
 #include "ISLocalization.h"
 #include "ISGui.h"
 #include "ISControls.h"
@@ -11,6 +10,7 @@
 #include "ISListBaseForm.h"
 #include "ISSystemsPanel.h"
 #include "ISUserRoleEntity.h"
+#include "ISConstantsGui.h"
 //-----------------------------------------------------------------------------
 ISParagraphBaseForm::ISParagraphBaseForm(QWidget *parent) : QWidget(parent)
 {
@@ -51,7 +51,7 @@ ISDesktopParagraph::ISDesktopParagraph(QWidget *parent)
         {
             QLabel *LabelLocalName = new QLabel(this);
             LabelLocalName->setText(ISBuffer::Instance().ConfigurationInfo.LocalName);
-            LabelLocalName->setFont(ISDefines::Gui::FONT_TAHOMA_15_BOLD);
+            LabelLocalName->setFont(QFont("Tahoma", 15, QFont::Bold));
             LabelLocalName->setStyleSheet(BUFFER_STYLE_SHEET("QLabel.Color.Gray"));
             MainLayout->addWidget(LabelLocalName, 0, Qt::AlignCenter);
         }
@@ -68,7 +68,7 @@ ISDesktopParagraph::ISDesktopParagraph(QWidget *parent)
         {
             QLabel *Label = new QLabel(this);
             Label->setText(LANG("NotAccessSpecialDesktop"));
-            Label->setFont(ISDefines::Gui::FONT_TAHOMA_12_BOLD);
+            Label->setFont(FONT_TAHOMA_12_BOLD);
             MainLayout->addWidget(Label, 0, Qt::AlignCenter);
         }
     }
@@ -95,7 +95,7 @@ ISWorkspaceParagraph::ISWorkspaceParagraph(QWidget *parent)
     CentralForm(nullptr)
 {
     Layout = new QVBoxLayout();
-    Layout->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_NULL);
+    Layout->setContentsMargins(QMargins());
     Layout->setSpacing(0);
     setLayout(Layout);
 
@@ -119,7 +119,7 @@ ISWorkspaceParagraph::ISWorkspaceParagraph(QWidget *parent)
     {
         QLabel *Label = new QLabel(TabWidget);
         Label->setText(LANG("NotAccessSystems"));
-        Label->setFont(ISDefines::Gui::FONT_TAHOMA_12_BOLD);
+        Label->setFont(FONT_TAHOMA_12_BOLD);
         Label->setAlignment(Qt::AlignCenter);
         TabWidget->addTab(Label, QString());
     }
@@ -254,13 +254,13 @@ ISCalendarParagraph::ISCalendarParagraph(QWidget *parent)
     MainLayout->addWidget(Panel);
 
     QHBoxLayout *LayoutSelectedDate = new QHBoxLayout();
-    LayoutSelectedDate->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_NULL);
+    LayoutSelectedDate->setContentsMargins(QMargins());
     LayoutRight->addLayout(LayoutSelectedDate);
 
     QDate CurrentDate = QDate::currentDate();
 
     LabelDayNumber = new QLabel(QString::number(CurrentDate.day()), Panel);
-    LabelDayNumber->setFont(ISDefines::Gui::FONT_TAHOMA_35);
+    LabelDayNumber->setFont(QFont("Tahoma", 35));
     LayoutSelectedDate->addWidget(LabelDayNumber, 0, Qt::AlignVCenter);
 
     QVBoxLayout *LayoutSelectedDateRight = new QVBoxLayout();
@@ -269,11 +269,11 @@ ISCalendarParagraph::ISCalendarParagraph(QWidget *parent)
     LabelDayName = new QLabel(CurrentDate == QDate::currentDate() ?
         QString("%1 (%2)").arg(CurrentDate.longDayName(CurrentDate.dayOfWeek())).arg(LANG("Today")) :
         CurrentDate.longDayName(CurrentDate.dayOfWeek()), this);
-    LabelDayName->setFont(ISDefines::Gui::FONT_TAHOMA_18);
+    LabelDayName->setFont(QFont("Tahoma", 18));
     LayoutSelectedDateRight->addWidget(LabelDayName);
 
     LabelMonthYear = new QLabel(QString("%1 %2").arg(CurrentDate.longMonthName(CurrentDate.month())).arg(CurrentDate.year()), this);
-    LabelMonthYear->setFont(ISDefines::Gui::FONT_TAHOMA_12);
+    LabelMonthYear->setFont(QFont("Tahoma", 12));
     LayoutSelectedDateRight->addWidget(LabelMonthYear);
 
     LayoutSelectedDate->addStretch();

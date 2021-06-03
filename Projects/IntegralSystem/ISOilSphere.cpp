@@ -3,7 +3,6 @@
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISDialogsCommon.h"
-#include "ISDefinesGui.h"
 #include "ISControls.h"
 #include "ISObjects.h"
 #include "ISLabels.h"
@@ -93,7 +92,7 @@ ISOilSphere::CounterpartyDebtForm::CounterpartyDebtForm(int counterparty_id, con
     setWindowTitle(LANG("OilSphere.Debts.Title").arg(counterparty_name));
     setWindowIcon(ISObjects::Instance().GetInterface()->GetIcon("Debt"));
     resize(800, 600);
-    GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_5_PX);
+    GetMainLayout()->setContentsMargins(QMargins(5, 5, 5, 5));
 
     LabelTotal = new QLabel(this);
     ISGui::SetFontWidgetBold(LabelTotal, true);
@@ -107,11 +106,11 @@ ISOilSphere::CounterpartyDebtForm::CounterpartyDebtForm(int counterparty_id, con
 
     QGroupBox *GroupBoxLoad = new QGroupBox(LANG("OilSphere.Implementation.Loads"), this);
     GroupBoxLoad->setLayout(new QVBoxLayout());
-    GroupBoxLoad->layout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_5_PX);
+    GroupBoxLoad->layout()->setContentsMargins(QMargins(5, 5, 5, 5));
     LayoutLeft->addWidget(GroupBoxLoad);
 
     QVBoxLayout *LayoutScrollLoad = new QVBoxLayout();
-    LayoutScrollLoad->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_NULL);
+    LayoutScrollLoad->setContentsMargins(QMargins());
 
     ISScrollArea *ScrollAreaLoad = new ISScrollArea(GroupBoxLoad);
     ScrollAreaLoad->widget()->setLayout(LayoutScrollLoad);
@@ -119,11 +118,11 @@ ISOilSphere::CounterpartyDebtForm::CounterpartyDebtForm(int counterparty_id, con
 
     QGroupBox *GroupBoxUnload = new QGroupBox(LANG("OilSphere.Implementation.Unloads"), this);
     GroupBoxUnload->setLayout(new QVBoxLayout());
-    GroupBoxUnload->layout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_5_PX);
+    GroupBoxUnload->layout()->setContentsMargins(QMargins(5, 5, 5, 5));
     LayoutLeft->addWidget(GroupBoxUnload);
 
     QVBoxLayout *LayoutScrollUnload = new QVBoxLayout();
-    LayoutScrollUnload->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_NULL);
+    LayoutScrollUnload->setContentsMargins(QMargins());
 
     ISScrollArea *ScrollAreaUnload = new ISScrollArea(GroupBoxUnload);
     ScrollAreaUnload->widget()->setLayout(LayoutScrollUnload);
@@ -145,7 +144,7 @@ ISOilSphere::CounterpartyDebtForm::CounterpartyDebtForm(int counterparty_id, con
             double Cost = LoadUnloadMap["Cost"].toDouble();
 
             QHBoxLayout *LayoutWidget = new QHBoxLayout();
-            LayoutWidget->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_5_PX);
+            LayoutWidget->setContentsMargins(QMargins(5, 5, 5, 5));
 
             QWidget *WidgetLoadUnload = new QWidget(IsLoad ? ScrollAreaLoad : ScrollAreaUnload);
             WidgetLoadUnload->setLayout(LayoutWidget);
@@ -629,7 +628,7 @@ void ISOilSphere::GasStationStatementObjectForm::CalculateCashboxDiscrepancies()
     if (CashboxDiscrepancies)
     {
         SetFieldValue("CashboxDiscrepancies", CashboxDiscrepancies);
-        GetFieldWidget("CashboxDiscrepancies")->SetColorText(CashboxDiscrepancies > 0 ? ISDefines::Gui::COLOR_BLACK : ISDefines::Gui::COLOR_RED);
+        GetFieldWidget("CashboxDiscrepancies")->SetColorText(CashboxDiscrepancies > 0 ? QColor(Qt::black) : QColor(Qt::red));
     }
     else
     {
@@ -666,7 +665,7 @@ void ISOilSphere::GasStationStatementObjectForm::CaclulateCashboxDiscrepanciesTo
     if (CashboxDiscrepanciesTotals)
     {
         SetFieldValue("CashboxDiscrepanciesTotals", CashboxDiscrepanciesTotals);
-        GetFieldWidget("CashboxDiscrepanciesTotals")->SetColorText(CashboxDiscrepanciesTotals > 0 ? ISDefines::Gui::COLOR_BLACK : ISDefines::Gui::COLOR_RED);
+        GetFieldWidget("CashboxDiscrepanciesTotals")->SetColorText(CashboxDiscrepanciesTotals > 0 ? QColor(Qt::black) : QColor(Qt::red));
     }
     else
     {
@@ -1099,7 +1098,7 @@ bool ISOilSphere::DistributionObjectForm::Save()
 //-----------------------------------------------------------------------------
 ISOilSphere::ConsumptionAllSubSystem::ConsumptionAllSubSystem(QWidget *parent) : ISInterfaceMetaForm(parent)
 {
-    GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);
+    GetMainLayout()->setContentsMargins(QMargins(10, 10, 10, 10));
 
     LabelTitle = new QLabel(LANG("OilSphere.TotalBalance").arg(0).arg(0).arg(0), this);
     ISGui::SetFontWidgetBold(LabelTitle, true);
@@ -1118,7 +1117,7 @@ ISOilSphere::ConsumptionAllSubSystem::ConsumptionAllSubSystem(QWidget *parent) :
 
     QGroupBox *GroupBoxConsumption = new QGroupBox(LANG("OilSphere.Consumption"), this);
     GroupBoxConsumption->setLayout(new QVBoxLayout());
-    GroupBoxConsumption->layout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_1_PX);
+    GroupBoxConsumption->layout()->setContentsMargins(QMargins(1, 1, 1, 1));
     LayoutRight->addWidget(GroupBoxConsumption);
 
     ListConsumption = new ISListWidget(GroupBoxConsumption);
@@ -1128,7 +1127,7 @@ ISOilSphere::ConsumptionAllSubSystem::ConsumptionAllSubSystem(QWidget *parent) :
 
     QGroupBox *GroupBoxReturn = new QGroupBox(LANG("OilSphere.Return"), this);
     GroupBoxReturn->setLayout(new QVBoxLayout());
-    GroupBoxReturn->layout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_1_PX);
+    GroupBoxReturn->layout()->setContentsMargins(QMargins(1, 1, 1, 1));
     LayoutRight->addWidget(GroupBoxReturn);
 
     ListReturn = new ISListWidget(GroupBoxReturn);

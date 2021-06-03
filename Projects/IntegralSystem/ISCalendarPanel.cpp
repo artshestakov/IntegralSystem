@@ -1,14 +1,14 @@
 #include "ISCalendarPanel.h"
-#include "ISDefinesGui.h"
 #include "ISBuffer.h"
 #include "ISAlgorithm.h"
+#include "ISConstantsGui.h"
 //-----------------------------------------------------------------------------
 ISCalendarPanel::ISCalendarPanel(QWidget *parent)
     : ISCalendarWidget(parent),
-    PixmapIndicator(BUFFER_ICONS("CalendarMain.Indicator").pixmap(ISDefines::Gui::SIZE_45_45))
+    PixmapIndicator(BUFFER_ICONS("CalendarMain.Indicator").pixmap(QSize(45, 45)))
 {
     setHorizontalHeaderFormat(QCalendarWidget::LongDayNames);
-    setFont(ISDefines::Gui::FONT_TAHOMA_14);
+    setFont(QFont("Tahoma", 14));
     GetNavigationBar()->setMinimumHeight(GetNavigationBar()->height() * 1.5);
     GetButtonPrevMonth()->setIconSize(GetButtonPrevMonth()->iconSize() * 1.5);
     GetButtonNextMonth()->setIconSize(GetButtonNextMonth()->iconSize() * 1.5);
@@ -32,23 +32,23 @@ void ISCalendarPanel::paintCell(QPainter *Painter, const QRect &Rect, const QDat
     {
         if (Date == selectedDate())
         {
-            Painter->fillRect(Rect, ISDefines::Gui::COLOR_CALENDAR_SELECTED_DATE_BACKGROUND); //Заполнение фона
+            Painter->fillRect(Rect, COLOR_CALENDAR_SELECTED_DATE_BACKGROUND); //Заполнение фона
         }
 
         //Рисование рамки
         Painter->setBrush(QBrush(Qt::transparent, Qt::SolidPattern));
-        Painter->setPen(QPen(ISDefines::Gui::COLOR_MAIN_MENU_BAR, 3, Qt::SolidLine));
+        Painter->setPen(QPen(COLOR_MAIN_MENU_BAR, 3, Qt::SolidLine));
         Painter->drawRect(QRect(Rect.x() + 1, Rect.y() + 1, Rect.width() - 3, Rect.height() - 3));
     }
     else
     {
         //Если рисуется выделенная пользоваелем дата - заполняем фон одним цветом, иначе - другим
-        Painter->fillRect(Rect, Date == selectedDate() ? ISDefines::Gui::COLOR_CALENDAR_SELECTED_DATE_BACKGROUND : Qt::white);
+        Painter->fillRect(Rect, Date == selectedDate() ? COLOR_CALENDAR_SELECTED_DATE_BACKGROUND : Qt::white);
     }
 
     if (Date.month() != monthShown()) //Если рисуются дни НЕ ТЕКУЩЕГО месяца
     {
-        Painter->fillRect(Rect, ISDefines::Gui::COLOR_CAALENDAR_DAY_NOT_CURRENT_MONTH); //Заполнение фона
+        Painter->fillRect(Rect, QColor(245, 245, 245)); //Заполнение фона
     }
 
     QRect RectText(Rect.x() + 3, Rect.y() + 3, Rect.width(), Rect.height()); //Расположение текста

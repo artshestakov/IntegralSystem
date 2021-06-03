@@ -1,11 +1,10 @@
 #include "ISDelegates.h"
-#include "ISDefinesGui.h"
 #include "ISBuffer.h"
 #include "ISGui.h"
 //-----------------------------------------------------------------------------
 ISDelegateBoolean::ISDelegateBoolean(QObject *parent)
     : QStyledItemDelegate(parent),
-    Image(BUFFER_ICONS("Delegate.Boolean").pixmap(ISDefines::Gui::SIZE_16_16).toImage()),
+    Image(BUFFER_ICONS("Delegate.Boolean").pixmap(QSize(16, 16)).toImage()),
     ImageWidth(Image.width()),
     ImageHeight(Image.height())
 {
@@ -81,7 +80,7 @@ void ISDelegateColor::paint(QPainter *Painter, const QStyleOptionViewItem &Optio
 //-----------------------------------------------------------------------------
 ISDelegateFile::ISDelegateFile(QWidget *parent)
     : QStyledItemDelegate(parent),
-    Image(BUFFER_ICONS("Delegate.File").pixmap(ISDefines::Gui::SIZE_16_16).toImage()),
+    Image(BUFFER_ICONS("Delegate.File").pixmap(QSize(16, 16)).toImage()),
     ImageWidth(Image.width()),
     ImageHeight(Image.height())
 {
@@ -120,7 +119,7 @@ void ISDelegateFile::initStyleOption(QStyleOptionViewItem *Option, const QModelI
 //-----------------------------------------------------------------------------
 ISDelegateTaskImportant::ISDelegateTaskImportant(QWidget *parent)
     : QStyledItemDelegate(parent),
-    Image(BUFFER_ICONS("Task.Important.Checked").pixmap(ISDefines::Gui::SIZE_22_22).toImage()),
+    Image(BUFFER_ICONS("Task.Important.Checked").pixmap(QSize(22, 22)).toImage()),
     ImageWidth(Image.width()),
     ImageHeight(Image.height())
 {
@@ -202,7 +201,7 @@ void ISDelegateImage::paint(QPainter *Painter, const QStyleOptionViewItem &Optio
         }
     }
 
-    Image = Image.scaled(ISDefines::Gui::SIZE_100_100, Qt::KeepAspectRatio);
+    Image = Image.scaled(QSize(100, 100), Qt::KeepAspectRatio);
     const int x = Option.rect.center().x() - Image.rect().width() / 2;
     const int y = Option.rect.center().y() - Image.rect().height() / 2;
     Painter->drawImage(QRect(x, y, Image.rect().width(), Image.rect().height()), Image);

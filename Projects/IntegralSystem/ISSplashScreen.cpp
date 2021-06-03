@@ -1,5 +1,4 @@
 #include "ISSplashScreen.h"
-#include "ISDefinesGui.h"
 #include "ISGui.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
@@ -9,7 +8,7 @@
 ISSplashScreen::ISSplashScreen(const QString &Message)
     : QWidget(nullptr, Qt::SplashScreen | Qt::WindowStaysOnTopHint | Qt::FramelessWindowHint)
 {
-    setFont(ISDefines::Gui::FONT_TAHOMA_12);
+    setFont(QFont("Tahoma", 12));
     setCursor(CURSOR_WAIT);
 
     QPixmap Pixmap = BUFFER_PIXMAPS("BannerSplashScreen");
@@ -20,7 +19,7 @@ ISSplashScreen::ISSplashScreen(const QString &Message)
     setPalette(Palette);
 
     QVBoxLayout *MainLayout = new QVBoxLayout();
-    MainLayout->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_5_PX);
+    MainLayout->setContentsMargins(QMargins(5, 5, 5, 5));
     MainLayout->addStretch();
     setLayout(MainLayout);
 
@@ -28,9 +27,11 @@ ISSplashScreen::ISSplashScreen(const QString &Message)
     LabelText->setText(Message);
     MainLayout->addWidget(LabelText, 0, Qt::AlignCenter);
 
+    QColor ColorLabelText(37, 77, 158);
+
     QPalette PaletteLabel = LabelText->palette();
-    PaletteLabel.setColor(LabelText->backgroundRole(), ISDefines::Gui::COLOR_SPLASH_SCREEN_TEXT);
-    PaletteLabel.setColor(LabelText->foregroundRole(), ISDefines::Gui::COLOR_SPLASH_SCREEN_TEXT);
+    PaletteLabel.setColor(LabelText->backgroundRole(), ColorLabelText);
+    PaletteLabel.setColor(LabelText->foregroundRole(), ColorLabelText);
     LabelText->setPalette(PaletteLabel);
 }
 //-----------------------------------------------------------------------------

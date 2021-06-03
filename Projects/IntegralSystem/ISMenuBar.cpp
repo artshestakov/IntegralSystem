@@ -1,34 +1,34 @@
 #include "ISMenuBar.h"
-#include "ISDefinesGui.h"
 #include "ISConstants.h"
 #include "ISBuffer.h"
 #include "ISLocalization.h"
 #include "ISSettings.h"
 #include "ISParagraphEntity.h"
 #include "ISUserRoleEntity.h"
+#include "ISConstantsGui.h"
 //-----------------------------------------------------------------------------
 ISMenuBar::ISMenuBar(QWidget *parent) : QWidget(parent)
 {
     setAutoFillBackground(true);
 
     QPalette Palette(palette());
-    Palette.setColor(QPalette::Background, ISDefines::Gui::COLOR_MAIN_MENU_BAR);
+    Palette.setColor(QPalette::Background, COLOR_MAIN_MENU_BAR);
     setPalette(Palette);
 
     QHBoxLayout *MainLayout = new QHBoxLayout();
-    MainLayout->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_NULL);
+    MainLayout->setContentsMargins(QMargins());
     setLayout(MainLayout);
 
     QIcon IconMainMenu;
-    IconMainMenu.addPixmap(BUFFER_ICONS("MainPanel.Menu").pixmap(ISDefines::Gui::SIZE_25_25), QIcon::Normal, QIcon::Off);
-    IconMainMenu.addPixmap(BUFFER_ICONS("MainPanel.Menu.Hover").pixmap(ISDefines::Gui::SIZE_25_25), QIcon::Active, QIcon::Off);
+    IconMainMenu.addPixmap(BUFFER_ICONS("MainPanel.Menu").pixmap(QSize(25, 25)), QIcon::Normal, QIcon::Off);
+    IconMainMenu.addPixmap(BUFFER_ICONS("MainPanel.Menu.Hover").pixmap(QSize(25, 25)), QIcon::Active, QIcon::Off);
 
     QToolButton *ButtonMenu = new QToolButton(this);
     ButtonMenu->setText(LANG("MainMenu"));
-    ButtonMenu->setFont(ISDefines::Gui::FONT_TAHOMA_10);
+    ButtonMenu->setFont(FONT_TAHOMA_10);
     ButtonMenu->setAutoRaise(true);
     ButtonMenu->setIcon(IconMainMenu);
-    ButtonMenu->setIconSize(ISDefines::Gui::SIZE_25_25);
+    ButtonMenu->setIconSize(QSize(25, 25));
     ButtonMenu->setCursor(CURSOR_POINTING_HAND);
     ButtonMenu->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
     ButtonMenu->setStyleSheet(BUFFER_STYLE_SHEET("QToolButtonMainMenu"));
@@ -66,12 +66,12 @@ ISMenuBar::ISMenuBar(QWidget *parent) : QWidget(parent)
     //Установка шрифта для всех элементов главного меню
     for (QAction *ActionMainItem : ButtonMenu->menu()->actions())
     {
-        ActionMainItem->setFont(ISDefines::Gui::FONT_TAHOMA_10);
+        ActionMainItem->setFont(FONT_TAHOMA_10);
         if (ActionMainItem->menu())
         {
             for (QAction *ActionChildItem : ActionMainItem->menu()->actions())
             {
-                ActionChildItem->setFont(ISDefines::Gui::FONT_TAHOMA_10);
+                ActionChildItem->setFont(FONT_TAHOMA_10);
             }
         }
     }
@@ -97,7 +97,7 @@ ISMenuBar::ISMenuBar(QWidget *parent) : QWidget(parent)
     MainLayout->addStretch();
 
     LayoutButtons = new QHBoxLayout();
-    LayoutButtons->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_4_PX);
+    LayoutButtons->setContentsMargins(QMargins(4, 4, 4, 4));
     MainLayout->addLayout(LayoutButtons);
 
     //Создание панели с кнопками справа
@@ -113,14 +113,14 @@ ISMenuBar::~ISMenuBar()
 QToolButton* ISMenuBar::CreateButton(const QString &ToolTip, const QString &IconName)
 {
     QIcon Icon;
-    Icon.addPixmap(BUFFER_ICONS(IconName).pixmap(ISDefines::Gui::SIZE_25_25));
-    Icon.addPixmap(BUFFER_ICONS(IconName + ".Hover").pixmap(ISDefines::Gui::SIZE_25_25), QIcon::Active);
+    Icon.addPixmap(BUFFER_ICONS(IconName).pixmap(QSize(25, 25)));
+    Icon.addPixmap(BUFFER_ICONS(IconName + ".Hover").pixmap(QSize(25, 25)), QIcon::Active);
 
     QToolButton *ToolButton = new QToolButton(this);
     ToolButton->setToolTip(ToolTip);
     ToolButton->setIcon(Icon);
     ToolButton->setAutoRaise(true);
-    ToolButton->setIconSize(ISDefines::Gui::SIZE_25_25);
+    ToolButton->setIconSize(QSize(25, 25));
     ToolButton->setCursor(CURSOR_POINTING_HAND);
     ToolButton->setStyleSheet(BUFFER_STYLE_SHEET("ISMenuBar.Button"));
     LayoutButtons->addWidget(ToolButton);
@@ -156,9 +156,9 @@ QToolButton* ISMenuBar::CreateParagraphButton(ISMetaParagraph *MetaParagraph)
     QIcon IconDeSelected = BUFFER_ICONS(MetaParagraph->Icon),
         IconSelected = BUFFER_ICONS(MetaParagraph->Icon + ".Selected"),
         IconHover = BUFFER_ICONS(MetaParagraph->Icon + ".Hover");
-    QPixmap PixmapDeSelected = IconDeSelected.pixmap(ISDefines::Gui::SIZE_45_45),
-        PixmapSelected = IconSelected.pixmap(ISDefines::Gui::SIZE_45_45),
-        PixmapHover = IconHover.pixmap(ISDefines::Gui::SIZE_45_45);
+    QPixmap PixmapDeSelected = IconDeSelected.pixmap(QSize(45, 45)),
+        PixmapSelected = IconSelected.pixmap(QSize(45, 45)),
+        PixmapHover = IconHover.pixmap(QSize(45, 45));
     QIcon Icon;
     Icon.addPixmap(PixmapDeSelected, QIcon::Normal, QIcon::Off);
     Icon.addPixmap(PixmapSelected, QIcon::Normal, QIcon::On);
@@ -170,7 +170,7 @@ QToolButton* ISMenuBar::CreateParagraphButton(ISMetaParagraph *MetaParagraph)
     ToolButton->setCheckable(true);
     ToolButton->setIcon(Icon);
     ToolButton->setAutoRaise(true);
-    ToolButton->setIconSize(ISDefines::Gui::SIZE_45_45);
+    ToolButton->setIconSize(QSize(45, 45));
     ToolButton->setCursor(CURSOR_POINTING_HAND);
     ToolButton->setStyleSheet(BUFFER_STYLE_SHEET("ISParagraphButton"));
     LayoutWidget->addWidget(ToolButton, 0, Qt::AlignHCenter);

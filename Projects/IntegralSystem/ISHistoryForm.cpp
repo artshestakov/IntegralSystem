@@ -1,5 +1,4 @@
 #include "ISHistoryForm.h"
-#include "ISDefinesGui.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISSettings.h"
@@ -12,8 +11,8 @@ ISHistoryForm::ISHistoryForm(QWidget *parent) : ISInterfaceForm(parent)
 {
     setWindowTitle(LANG("ISHistoryForm.Title"));
     setWindowIcon(BUFFER_ICONS("History"));
-    resize(ISDefines::Gui::SIZE_640_480);
-    GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);
+    resize(QSize(640, 480));
+    GetMainLayout()->setContentsMargins(QMargins(10, 10, 10, 10));
 
     ISSearchEdit *EditSearch = new ISSearchEdit(this);
     connect(EditSearch, &ISLineEdit::ValueChange, this, &ISHistoryForm::Search);

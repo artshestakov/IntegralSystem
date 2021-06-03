@@ -1,6 +1,5 @@
 #include "ISButtons.h"
 #include "ISConstants.h"
-#include "ISDefinesGui.h"
 #include "ISBuffer.h"
 #include "ISLocalization.h"
 #include "ISGui.h"
@@ -132,7 +131,7 @@ void ISButtonFile::dragMoveEvent(QDragMoveEvent *e)
 ISButtonDialog::ISButtonDialog(QWidget *parent, const QString &ApplyText, const QString &CloseText) : QWidget(parent)
 {
     QHBoxLayout *Layout = new QHBoxLayout();
-    Layout->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_5_PX);
+    Layout->setContentsMargins(QMargins(5, 5, 5, 5));
     Layout->addStretch();
     setLayout(Layout);
 

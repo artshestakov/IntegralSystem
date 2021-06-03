@@ -1,5 +1,4 @@
 #include "ISFieldEditBase.h"
-#include "ISDefinesGui.h"
 #include "ISConstants.h"
 #include "ISAssert.h"
 #include "ISLocalization.h"
@@ -22,7 +21,7 @@ ISFieldEditBase::ISFieldEditBase(QWidget *parent)
 
     //Главный компоновщик
     MainLayout = new QHBoxLayout();
-    MainLayout->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_NULL);
+    MainLayout->setContentsMargins(QMargins());
     MainLayout->setSpacing(EDIT_FIELD_SPACING);
     setLayout(MainLayout);
 
@@ -32,7 +31,7 @@ ISFieldEditBase::ISFieldEditBase(QWidget *parent)
 
     //Компоновщик редактора
     LayoutEdit = new QHBoxLayout();
-    LayoutEdit->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_2_PX);
+    LayoutEdit->setContentsMargins(QMargins(2, 2, 2, 2));
     MainLayout->addLayout(LayoutEdit);
 
     //Правый компоновщик
@@ -154,7 +153,7 @@ void ISFieldEditBase::SetFixedWidth(int Width)
 //-----------------------------------------------------------------------------
 void ISFieldEditBase::BlinkRed()
 {
-    Blink(ISDefines::Gui::EDIT_WIDGET_COLOR_RED);
+    Blink(QColor(236, 99, 99));
 }
 //-----------------------------------------------------------------------------
 void ISFieldEditBase::Blink(const QColor &Color)
@@ -190,7 +189,7 @@ void ISFieldEditBase::CreateHint(const QString &Hint)
             ButtonHint->setFocusPolicy(Qt::NoFocus);
             ButtonHint->setIcon(BUFFER_ICONS("Hint"));
             ButtonHint->setAutoRaise(true);
-            ButtonHint->setFixedSize(ISDefines::Gui::SIZE_22_22);
+            ButtonHint->setFixedSize(QSize(22, 22));
             ButtonHint->setCursor(CURSOR_POINTING_HAND);
             ButtonHint->setToolTip(LANG("ClickToViewHelp"));
             connect(ButtonHint, &QToolButton::clicked, this, &ISFieldEditBase::ShowHint);

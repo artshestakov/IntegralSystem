@@ -4,7 +4,6 @@
 #include "ISBuffer.h"
 #include "ISFieldEdits.h"
 #include "ISGui.h"
-#include "ISDefinesGui.h"
 //-----------------------------------------------------------------------------
 ISFileDialog::ISFileDialog(QWidget *parent) : QFileDialog(parent)
 {
@@ -116,7 +115,7 @@ ISInputDialog::ISInputDialog(ISNamespace::FieldType DataType, const QString &Tit
     Label(nullptr)
 {
     setWindowTitle(Title);
-    GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);
+    GetMainLayout()->setContentsMargins(QMargins(10, 10, 10, 10));
 
     if (!LabelText.isEmpty())
     {

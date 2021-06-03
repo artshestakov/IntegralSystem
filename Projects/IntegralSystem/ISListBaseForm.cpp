@@ -1,5 +1,4 @@
 #include "ISListBaseForm.h"
-#include "ISDefinesGui.h"
 #include "ISAssert.h"
 #include "ISSettings.h"
 #include "ISLocalization.h"
@@ -21,6 +20,7 @@
 #include "ISTcpQuery.h"
 #include "ISDialogsForm.h"
 #include "ISFavorites.h"
+#include "ISConstantsGui.h"
 //-----------------------------------------------------------------------------
 ISListBaseForm::ISListBaseForm(const QString &TableName, QWidget *parent)
     : ISInterfaceMetaForm(parent),
@@ -37,7 +37,7 @@ ISListBaseForm::ISListBaseForm(const QString &TableName, QWidget *parent)
     {//Создание действий
         //Создать
         QAction *ActionCreate = ISControls::CreateActionCreate(this);
-        ActionCreate->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
+        ActionCreate->setFont(FONT_APPLICATION_BOLD);
         connect(ActionCreate, &QAction::triggered, this, &ISListBaseForm::Create);
         Actions[ISNamespace::ActionType::Create] = ActionCreate;
 

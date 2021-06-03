@@ -40,5 +40,6 @@ private:
 
 private:
     QByteArray ByteArray;
+    QStringList ImageExtensionList;
 };
 //-----------------------------------------------------------------------------

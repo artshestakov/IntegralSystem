@@ -1,21 +1,21 @@
 #include "ISSystemsPanel.h"
-#include "ISDefinesGui.h"
 #include "ISConstants.h"
 #include "ISBuffer.h"
 #include "ISControls.h"
 #include "ISMetaSystemsEntity.h"
 #include "ISObjects.h"
 #include "ISGui.h"
+#include "ISConstantsGui.h"
 //-----------------------------------------------------------------------------
 ISSystemsPanel::ISSystemsPanel(QWidget *parent) : QWidget(parent)
 {
     Layout = new QVBoxLayout();
-    Layout->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_NULL);
+    Layout->setContentsMargins(QMargins());
     Layout->setSpacing(0);
     setLayout(Layout);
 
     SystemsBar = new QToolBar(this);
-    SystemsBar->setIconSize(ISDefines::Gui::SIZE_32_32);
+    SystemsBar->setIconSize(QSize(32, 32));
     SystemsBar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
     Layout->addWidget(SystemsBar);
 
@@ -23,12 +23,12 @@ ISSystemsPanel::ISSystemsPanel(QWidget *parent) : QWidget(parent)
     Layout->addWidget(LineSystems);
 
     QPalette PaletteSystems = LineSystems->palette();
-    PaletteSystems.setColor(QPalette::Dark, ISDefines::Gui::COLOR_MAIN_MENU_BAR);
+    PaletteSystems.setColor(QPalette::Dark, COLOR_MAIN_MENU_BAR);
     LineSystems->setPalette(PaletteSystems);
 
     SubSystemBar = new QToolBar(this);
     SubSystemBar->setVisible(false);
-    SubSystemBar->setIconSize(ISDefines::Gui::SIZE_25_25);
+    SubSystemBar->setIconSize(QSize(25, 25));
     SubSystemBar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
     Layout->addWidget(SubSystemBar);
 
@@ -37,7 +37,7 @@ ISSystemsPanel::ISSystemsPanel(QWidget *parent) : QWidget(parent)
     Layout->addWidget(LineSubSystems);
 
     QPalette PaletteSubSystems = LineSubSystems->palette();
-    PaletteSubSystems.setColor(QPalette::Dark, ISDefines::Gui::COLOR_MAIN_MENU_BAR);
+    PaletteSubSystems.setColor(QPalette::Dark, COLOR_MAIN_MENU_BAR);
     LineSubSystems->setPalette(PaletteSubSystems);
 
     ActionSystemGroup = new QActionGroup(this);
@@ -53,7 +53,7 @@ void ISSystemsPanel::AddSystem(ISMetaSystem *MetaSystem)
 {
     QAction *ActionSystem = SystemsBar->addAction(GetSystemIcon(MetaSystem), MetaSystem->LocalName, this, &ISSystemsPanel::SystemClicked);
     ActionSystem->setToolTip(GetSystemToolTip(MetaSystem));
-    ActionSystem->setFont(ISDefines::Gui::FONT_TAHOMA_15);
+    ActionSystem->setFont(QFont("Tahoma", 15));
     ActionSystem->setCheckable(true);
     SystemsBar->widgetForAction(ActionSystem)->setCursor(CURSOR_POINTING_HAND);
 

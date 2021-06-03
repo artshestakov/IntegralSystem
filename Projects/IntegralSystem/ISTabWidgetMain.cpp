@@ -1,11 +1,11 @@
 #include "ISTabWidgetMain.h"
-#include "ISDefinesGui.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISConstants.h"
 #include "ISObjectFormBase.h"
 #include "ISGui.h"
 #include "ISDialogsCommon.h"
+#include "ISConstantsGui.h"
 //-----------------------------------------------------------------------------
 ISTabWidgetMain::ISTabWidgetMain(QWidget *parent) : QTabWidget(parent)
 {
@@ -29,7 +29,7 @@ ISTabWidgetMain::ISTabWidgetMain(QWidget *parent) : QTabWidget(parent)
     ButtonMenu->setAutoRaise(true);
     ButtonMenu->setToolTip(LANG("AllTabs"));
     ButtonMenu->setIcon(BUFFER_ICONS("AllTabs"));
-    ButtonMenu->setFixedSize(ISDefines::Gui::SIZE_32_32);
+    ButtonMenu->setFixedSize(QSize(32, 32));
     ButtonMenu->setPopupMode(QToolButton::InstantPopup);
     ButtonMenu->setStyleSheet(BUFFER_STYLE_SHEET("QToolButtonMenu"));
     connect(ButtonMenu, &QToolButton::clicked, this, &ISTabWidgetMain::MenuClicked);
@@ -54,7 +54,7 @@ void ISTabWidgetMain::tabInserted(int Index)
         ButtonClose->setAutoRaise(true);
         ButtonClose->setProperty("ID", ID);
         ButtonClose->setCursor(CURSOR_POINTING_HAND);
-        ButtonClose->setFixedSize(ISDefines::Gui::SIZE_18_18);
+        ButtonClose->setFixedSize(QSize(18, 18));
         connect(ButtonClose, &QToolButton::clicked, this, &ISTabWidgetMain::CloseCliciked);
         tabBar()->setTabButton(Index, QTabBar::RightSide, ButtonClose);
     }
@@ -84,7 +84,7 @@ void ISTabWidgetMain::MenuClicked()
         if (i == currentIndex())
         {
             ActionTab->setChecked(true);
-            ActionTab->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
+            ActionTab->setFont(FONT_APPLICATION_BOLD);
         }
     }
     connect(&Menu, &QMenu::triggered, this, &ISTabWidgetMain::TabsMenuTriggered);

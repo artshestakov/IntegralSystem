@@ -1,6 +1,5 @@
 #include "ISTcpModels.h"
 #include "ISBuffer.h"
-#include "ISDefinesGui.h"
 //-----------------------------------------------------------------------------
 ISTcpModel::ISTcpModel(QObject *parent)
     : QAbstractItemModel(parent),
@@ -192,7 +191,7 @@ QVariant ISTcpModel::data(const QModelIndex &ModelIndex, int Role) const
     {
         if (Records[ModelIndex.row()].Values[GetFieldIndex("IsSystem")].toBool())
         {
-            return qVariantFromValue(ISDefines::Gui::COLOR_BLUE);
+            return qVariantFromValue(QColor(Qt::blue));
         }
     }
     else if (Role == Qt::DisplayRole)

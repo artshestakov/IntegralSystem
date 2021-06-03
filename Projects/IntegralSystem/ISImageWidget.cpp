@@ -1,5 +1,4 @@
 #include "ISImageWidget.h"
-#include "ISDefinesGui.h"
 #include "ISContextMenu.h"
 #include "ISDialogsCommon.h"
 #include "ISLocalization.h"
@@ -8,7 +7,10 @@
 #include "ISProcessForm.h"
 #include "ISGui.h"
 //-----------------------------------------------------------------------------
-ISImageWidget::ISImageWidget(QWidget *parent) : QLabel(parent)
+ISImageWidget::ISImageWidget(QWidget *parent)
+    : QLabel(parent),
+    ImageExtensionList(QStringList() << EXTENSION_PNG << EXTENSION_JPEG << EXTENSION_JPG << EXTENSION_DDS << EXTENSION_GIF << EXTENSION_ICNS
+        << EXTENSION_ICO << EXTENSION_SVG << EXTENSION_TGA << EXTENSION_TIFF << EXTENSION_WBMP << EXTENSION_BMP << EXTENSION_WEBP)
 {
     setFocusPolicy(Qt::StrongFocus);
     setStyleSheet(BUFFER_STYLE_SHEET("ISLabelImage"));
@@ -49,7 +51,7 @@ void ISImageWidget::dragEnterEvent(QDragEnterEvent *e)
         }
 
         QString FilePath = MimeData->urls().first().toString();
-        if (!QStringList(ISDefines::Gui::AVIABLE_IMAGE_EXTENSION).contains(QFileInfo(FilePath).suffix().toLower())) //≈сли происходит перетаскивание не изображени€
+        if (!QStringList(ImageExtensionList).contains(QFileInfo(FilePath).suffix().toLower())) //≈сли происходит перетаскивание не изображени€
         {
             return;
         }

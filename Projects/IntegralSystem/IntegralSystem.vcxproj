@@ -34,7 +34,6 @@
     <ClCompile Include="ISContextMenu.cpp" />
     <ClCompile Include="ISControls.cpp" />
     <ClCompile Include="ISCreatedObjectsEntity.cpp" />
-    <ClCompile Include="ISDefinesGui.cpp" />
     <ClCompile Include="ISDelegates.cpp" />
     <ClCompile Include="ISDialogsCommon.cpp" />
     <ClCompile Include="ISDialogsForm.cpp" />
@@ -145,8 +144,8 @@
     <QtMoc Include="ISCalendarWidget.h" />
     <QtMoc Include="ISCalendarPopup.h" />
     <ClInclude Include="ISColumnSizer.h" />
+    <ClInclude Include="ISConstantsGui.h" />
     <ClInclude Include="ISControls.h" />
-    <ClInclude Include="ISDefinesGui.h" />
     <QtMoc Include="ISEmpty.h" />
     <ClInclude Include="ISFavorites.h" />
     <QtMoc Include="ISFlowLayout.h" />

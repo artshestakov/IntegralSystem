@@ -1,5 +1,4 @@
 #include "ISSearchForm.h"
-#include "ISDefinesGui.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISGui.h"
@@ -17,7 +16,7 @@ ISSearchForm::ISSearchForm(PMetaTable *meta_table, QWidget *parent)
     setWindowTitle(LANG("ISSearchForm.Title") + " - " + MetaTable->LocalListName);
     setWindowIcon(BUFFER_ICONS("Search"));
     resize(800, 600);
-    GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);
+    GetMainLayout()->setContentsMargins(QMargins(10, 10, 10, 10));
 
     ISScrollArea *ScrollArea = new ISScrollArea(this);
     GetMainLayout()->addWidget(ScrollArea);

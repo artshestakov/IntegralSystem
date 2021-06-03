@@ -1,6 +1,5 @@
 #include "ISAudioPlayerForm.h"
 #include "ISBuffer.h"
-#include "ISDefinesGui.h"
 #include "ISLocalization.h"
 #include "ISDialogsCommon.h"
 #include "ISAlgorithm.h"
@@ -14,7 +13,7 @@ ISAudioPlayerForm::ISAudioPlayerForm()
     setWindowTitle(LANG("AudioPlayer.Title"));
     resize(500, 150);
     ForbidResize();
-    GetMainLayout()->setContentsMargins(ISDefines::Gui::MARGINS_LAYOUT_10_PX);
+    GetMainLayout()->setContentsMargins(QMargins(10, 10, 10, 10));
 
     QHBoxLayout *LayoutTitle = new QHBoxLayout();
     GetMainLayout()->addLayout(LayoutTitle);

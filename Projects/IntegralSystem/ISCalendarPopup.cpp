@@ -1,8 +1,8 @@
 #include "ISCalendarPopup.h"
-#include "ISDefinesGui.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISConstants.h"
+#include "ISConstantsGui.h"
 //-----------------------------------------------------------------------------
 ISCalendarPopup::ISCalendarPopup(QWidget *parent) : ISCalendarWidget(parent)
 {
@@ -14,7 +14,7 @@ ISCalendarPopup::ISCalendarPopup(QWidget *parent) : ISCalendarWidget(parent)
     ButtonToday->setToolTip(LANG("ClickFromSelectCurrentDay"));
     ButtonToday->setIcon(BUFFER_ICONS("Today"));
     ButtonToday->setCursor(CURSOR_POINTING_HAND);
-    ButtonToday->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
+    ButtonToday->setFont(FONT_APPLICATION_BOLD);
     connect(ButtonToday, &QToolButton::clicked, this, &ISCalendarWidget::Today);
     GetLayout()->addWidget(ButtonToday, 0, Qt::AlignHCenter);
 

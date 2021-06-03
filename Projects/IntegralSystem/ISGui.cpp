@@ -1,5 +1,4 @@
 #include "ISGui.h"
-#include "ISDefinesGui.h"
 #include "ISConstants.h"
 #include "ISAssert.h"
 #include "ISLocalization.h"
@@ -38,6 +37,7 @@
 #include "ISColumnSizer.h"
 #include "ISParagraphEntity.h"
 #include "ISSubSystem.h"
+#include "ISConstantsGui.h"
 //-----------------------------------------------------------------------------
 bool ISGui::Startup(QString &ErrorString)
 {
@@ -60,8 +60,6 @@ bool ISGui::Startup(QString &ErrorString)
     {
         return false;
     }
-
-    ISDefines::Gui::Init();
 
     //Загрузка локализации клиента
     if (!ISLocalization::Instance().LoadResourceFile(LOCALIZATION_FILE_INTEGRAL_SYSTEM))
@@ -92,8 +90,8 @@ bool ISGui::Startup(QString &ErrorString)
     qApp->setWindowIcon(BUFFER_ICONS("Logo"));
     qApp->setApplicationName("IntegralSystem");
     qApp->setApplicationVersion(CARAT_VERSION);
-    qApp->setFont(ISDefines::Gui::FONT_APPLICATION);
-    QToolTip::setFont(ISDefines::Gui::FONT_APPLICATION);
+    qApp->setFont(FONT_APPLICATION);
+    QToolTip::setFont(FONT_APPLICATION);
     return true;
 }
 //-----------------------------------------------------------------------------
@@ -269,7 +267,7 @@ QFont ISGui::StringToFont(const QString &FontText)
 //-----------------------------------------------------------------------------
 QByteArray ISGui::IconToByteArray(const QIcon &Icon)
 {
-    QPixmap PixmapIcon = Icon.pixmap(ISDefines::Gui::SIZE_16_16);
+    QPixmap PixmapIcon = Icon.pixmap(QSize(16, 16));
     QByteArray ByteArray;
     QBuffer Buffer(&ByteArray);
     if (Buffer.open(QIODevice::WriteOnly))

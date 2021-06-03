@@ -1,7 +1,7 @@
 #include "ISCalendarEventsWidget.h"
-#include "ISDefinesGui.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
+#include "ISConstantsGui.h"
 //-----------------------------------------------------------------------------
 ISCalendarEventsWidget::ISCalendarEventsWidget(QWidget *parent) : ISListWidget(parent)
 {
@@ -12,7 +12,7 @@ ISCalendarEventsWidget::ISCalendarEventsWidget(QWidget *parent) : ISListWidget(p
 
     LabelEmpty = new QLabel(this);
     LabelEmpty->setStyleSheet(BUFFER_STYLE_SHEET("QLabel.Color.Gray"));
-    LabelEmpty->setFont(ISDefines::Gui::FONT_TAHOMA_12_BOLD);
+    LabelEmpty->setFont(FONT_TAHOMA_12_BOLD);
     LabelEmpty->setText(LANG("NotEventsWithSelectedDay"));
     LabelEmpty->setWordWrap(true);
     LabelEmpty->setAlignment(Qt::AlignCenter);

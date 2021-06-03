@@ -1,5 +1,4 @@
 #include "ISMainWindow.h"
-#include "ISDefinesGui.h"
 #include "ISGui.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
@@ -20,6 +19,7 @@
 #include "ISPopupMessage.h"
 #include "ISTcpQuery.h"
 #include "ISAlgorithm.h"
+#include "ISConstantsGui.h"
 //-----------------------------------------------------------------------------
 ISMainWindow::ISMainWindow(QWidget *parent)
     : ISInterfaceForm(parent),
@@ -34,8 +34,8 @@ ISMainWindow::ISMainWindow(QWidget *parent)
         setWindowTitle("IntegralSystem - " + ISBuffer::Instance().ConfigurationInfo.LocalName + " : " + ISBuffer::Instance().CurrentUserInfo.FIO);
     setAttribute(Qt::WA_DeleteOnClose, false);
     setWindowIcon(BUFFER_ICONS("Logo"));
-    resize(ISDefines::Gui::SIZE_MAIN_WINDOW);
-    setMinimumSize(ISDefines::Gui::SIZE_MAIN_WINDOW_MINIMUM);
+    resize(QSize(800, 559));
+    setMinimumSize(SIZE_MAIN_WINDOW_MINIMUM);
     GetMainLayout()->setSpacing(0);
 
     MenuBar = new ISMenuBar(this);
