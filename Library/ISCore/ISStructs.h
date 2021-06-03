@@ -247,9 +247,25 @@ struct ISFailAuthInfo
 	QDateTime DTUnlock; //Дата и время разблокировки
 };
 //-----------------------------------------------------------------------------
+struct ISCORE_EXPORT ISModelForeign
+{
+    ISModelForeign()
+        : ShowOnly(false)
+    {
+
+    }
+
+    QString Field; //Поле, на которое устанавливается внешний ключ
+    QString ForeignClass; //На какую таблицу ссылкается внешний ключ
+    QString ForeignField; //На какое поле ссылается внешний ключ
+    bool ShowOnly;
+    QString LocalListName;
+    QString TableName;
+};
+//-----------------------------------------------------------------------------
 struct ISCORE_EXPORT ISModelField
 {
-	ISModelField() : Index(0), Type(ISNamespace::FieldType::Unknown), IsForeign(false), IsSystem(false) { }
+	ISModelField() : Index(0), Type(ISNamespace::FieldType::Unknown), IsForeign(false), IsSystem(false), NotSearch(false) { }
 
 	size_t Index; //Индекс
 	QString Name; //Имя
@@ -257,6 +273,10 @@ struct ISCORE_EXPORT ISModelField
 	ISNamespace::FieldType Type; //Тип
 	bool IsForeign; //Флаг внешнего ключа
 	bool IsSystem; //Флаг системного поля
+    bool NotSearch; //Флаг запрета поиска по полю
+    QString SearchConditionWidget;
+    QString ControlWidget;
+    ISModelForeign Foreign;
 };
 //-----------------------------------------------------------------------------
 struct ISCORE_EXPORT ISModelRecord
