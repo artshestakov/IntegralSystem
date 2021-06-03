@@ -1810,9 +1810,10 @@ void ISVolumeEdit::MediaStateChanged(QMediaPlayer::State NewState)
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-ISListEditPopup::ISListEditPopup(const ISModelForeign &model_foreign, QWidget *ComboBox)
+ISListEditPopup::ISListEditPopup(PMetaForeign *meta_foreign, QWidget *ComboBox)
     : ISInterfaceForm(ComboBox),
-    ModelForeign(model_foreign)
+    MetaForeign(meta_foreign),
+    MetaTableForeign(ISMetaData::Instance().GetMetaTable(MetaForeign->ForeignClass))
 {
     setWindowFlags(Qt::Popup);
     setAttribute(Qt::WA_DeleteOnClose, false);
@@ -1832,7 +1833,7 @@ ISListEditPopup::ISListEditPopup(const ISModelForeign &model_foreign, QWidget *C
     connect(LineEdit, &ISLineEdit::ValueChange, this, &ISListEditPopup::Search);
     LayoutFrame->addWidget(LineEdit);
 
-    LabelName = new QLabel(ModelForeign.LocalListName + ':', this);
+    LabelName = new QLabel(MetaTableForeign->LocalListName + ':', this);
     LabelName->setFont(ISDefines::Gui::FONT_APPLICATION_BOLD);
     LabelName->setStyleSheet(BUFFER_STYLE_SHEET("QLabel.Color.Gray"));
     LayoutFrame->addWidget(LabelName);
@@ -1852,7 +1853,7 @@ ISListEditPopup::ISListEditPopup(const ISModelForeign &model_foreign, QWidget *C
     LabelSearch->setVisible(false);
     StatusBar->addWidget(LabelSearch);
 
-    if (!ModelForeign.ShowOnly)
+    if (!MetaTableForeign->ShowOnly)
     {
         ISPushButton *ButtonAdd = new ISPushButton(BUFFER_ICONS("Add"), LANG("AddRecord"), this);
         connect(ButtonAdd, &ISServiceButton::clicked, this, &ISListEditPopup::Add);
@@ -1970,8 +1971,8 @@ void ISListEditPopup::Add()
 void ISListEditPopup::LoadDataFromQuery()
 {
     ISTcpQuery qGetForeignList(API_GET_FOREIGN_LIST);
-    qGetForeignList.BindValue("TableName", ModelForeign.TableName);
-    qGetForeignList.BindValue("FieldName", ModelForeign.Field);
+    qGetForeignList.BindValue("TableName", MetaForeign->TableName);
+    qGetForeignList.BindValue("FieldName", MetaForeign->Field);
     if (qGetForeignList.Execute())
     {
         QListWidgetItem *CurrentItem = nullptr;
@@ -2112,16 +2113,17 @@ void ISListEdit::SetReadOnly(bool read_only)
         connect(ButtonMain, &ISPushButton::clicked, this, &ISListEdit::ShowPopup);
 }
 //-----------------------------------------------------------------------------
-void ISListEdit::InvokeList(const ISModelForeign &model_foreign)
+void ISListEdit::InvokeList(PMetaForeign *meta_foreign)
 {
-    ModelForeign = model_foreign;
+    MetaForeign = meta_foreign;
+    MetaTable = ISMetaData::Instance().GetMetaTable(MetaForeign->ForeignClass);
 
-    ListEditPopup = new ISListEditPopup(ModelForeign, this);
+    ListEditPopup = new ISListEditPopup(MetaForeign, this);
     connect(ListEditPopup, &ISListEditPopup::Selected, this, &ISListEdit::SelectedValue);
     connect(ListEditPopup, &ISListEditPopup::AddSignal, this, &ISListEdit::CreateObject);
     connect(ListEditPopup, &ISListEditPopup::Hided, this, &ISListEdit::HidedPopup);
 
-    if (ModelForeign.ShowOnly)
+    if (MetaTable->ShowOnly)
     {
         ButtonList->setPopupMode(QToolButton::DelayedPopup);
         ActionCreate = nullptr;
@@ -2205,7 +2207,7 @@ void ISListEdit::HidedPopup()
 //-----------------------------------------------------------------------------
 void ISListEdit::ShowListForm()
 {
-    ISObjectPair SelectedObject = ISGui::SelectObject(ModelForeign.ForeignClass, ModelForeign.LocalListName, GetValue().toInt());
+    ISObjectPair SelectedObject = ISGui::SelectObject(MetaTable->Name, MetaTable->LocalListName, GetValue().toInt());
     if (SelectedObject.first != 0) //Если запись была выбрана
     {
         SetValue(QString("%1,%2").arg(SelectedObject.first).arg(SelectedObject.second));
@@ -2214,29 +2216,29 @@ void ISListEdit::ShowListForm()
 //-----------------------------------------------------------------------------
 void ISListEdit::CreateObject()
 {
-    if (ISUserRoleEntity::Instance().CheckAccessTable(ModelForeign.ForeignClass, CONST_UID_GROUP_ACCESS_TYPE_CREATE))
+    if (ISUserRoleEntity::Instance().CheckAccessTable(MetaTable->Name, CONST_UID_GROUP_ACCESS_TYPE_CREATE))
     {
-        ISObjectFormBase *ObjectFormBase = ISGui::CreateObjectForm(ISNamespace::ObjectFormType::New, ModelForeign.ForeignClass);
+        ISObjectFormBase *ObjectFormBase = ISGui::CreateObjectForm(ISNamespace::ObjectFormType::New, MetaTable->Name);
         connect(ObjectFormBase, &ISObjectFormBase::SavedWithListEdit, this, &ISListEdit::SelectedValue);
         ISGui::ShowObjectForm(ObjectFormBase);
     }
     else
     {
-        ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.Create").arg(ModelForeign.LocalListName));
+        ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.Create").arg(MetaTable->LocalListName));
     }
 }
 //-----------------------------------------------------------------------------
 void ISListEdit::EditObject()
 {
-    if (ISUserRoleEntity::Instance().CheckAccessTable(ModelForeign.ForeignClass, CONST_UID_GROUP_ACCESS_TYPE_EDIT))
+    if (ISUserRoleEntity::Instance().CheckAccessTable(MetaTable->Name, CONST_UID_GROUP_ACCESS_TYPE_EDIT))
     {
-        ISObjectFormBase *ObjectFormBase = ISGui::CreateObjectForm(ISNamespace::ObjectFormType::Edit, ModelForeign.ForeignClass, GetValue().toInt());
+        ISObjectFormBase *ObjectFormBase = ISGui::CreateObjectForm(ISNamespace::ObjectFormType::Edit, MetaTable->Name, GetValue().toInt());
         connect(ObjectFormBase, &ISObjectFormBase::SavedWithListEdit, this, &ISListEdit::SelectedValue);
         ISGui::ShowObjectForm(ObjectFormBase);
     }
     else
     {
-        ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.Edit").arg(ModelForeign.LocalListName));
+        ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.Edit").arg(MetaTable->LocalListName));
     }
 }
 //-----------------------------------------------------------------------------

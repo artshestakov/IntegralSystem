@@ -2774,7 +2774,7 @@ bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
     rapidjson::Value ServiceInfoObject(rapidjson::Type::kObjectType);
     ServiceInfoObject.AddMember("SortingField", JSON_STRINGA(SortingField.c_str(), Allocator), Allocator);
     ServiceInfoObject.AddMember("SortingOrder", (int)SortingOrder, Allocator);
-    ServiceInfoObject.AddMember("TableLocalListName", JSON_STRINGA(MetaTable->LocalListName.c_str(), Allocator), Allocator);
+    ServiceInfoObject.AddMember("TableLocalName", JSON_STRINGA(MetaTable->LocalListName.c_str(), Allocator), Allocator);
     ServiceInfoObject.AddMember("TableShowOnly", MetaTable->ShowOnly, Allocator);
     ServiceInfoObject.AddMember("TableTitleName", JSON_STRINGA(MetaTable->TitleName.c_str(), Allocator), Allocator);
 
@@ -2847,24 +2847,6 @@ bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
         FieldObject.AddMember("Type", static_cast<int>(MetaField->Type), Allocator);
         FieldObject.AddMember("IsForeign", MetaField->Foreign ? true : false, Allocator);
         FieldObject.AddMember("IsSystem", MetaField->IsSystem, Allocator);
-        FieldObject.AddMember("NotSearch", ISMetaData::Instance().GetMetaType(MetaField->Type)->SearchAllowed ? MetaField->NotSearch : false, Allocator);
-        FieldObject.AddMember("SearchConditionWidget", JSON_STRINGA(ISMetaData::Instance().GetMetaType(MetaField->Type)->SearchConditionWidget.c_str(), Allocator), Allocator);
-        FieldObject.AddMember("ControlWidget", JSON_STRINGA(MetaField->ControlWidget.c_str(), Allocator), Allocator);
-
-        if (MetaField->Foreign)
-        {
-            PMetaTable *MetaTableForeign = ISMetaData::Instance().GetTable(MetaField->Foreign->ForeignClass);
-
-            rapidjson::Value ForeignObject(rapidjson::Type::kObjectType);
-            ForeignObject.AddMember("Field", JSON_STRINGA(MetaField->Foreign->Field.c_str(), Allocator), Allocator);
-            ForeignObject.AddMember("ForeignClass", JSON_STRINGA(MetaField->Foreign->ForeignClass.c_str(), Allocator), Allocator);
-            ForeignObject.AddMember("ForeignField", JSON_STRINGA(MetaField->Foreign->ForeignField.c_str(), Allocator), Allocator);
-            ForeignObject.AddMember("ShowOnly", MetaTableForeign->ShowOnly, Allocator);
-            ForeignObject.AddMember("LocalListName", JSON_STRINGA(MetaTableForeign->LocalListName.c_str(), Allocator), Allocator);
-            ForeignObject.AddMember("TableName", JSON_STRINGA(MetaTable->Name.c_str(), Allocator), Allocator);
-            FieldObject.AddMember("Foreign", ForeignObject, Allocator);
-        }
-
         FieldArray.PushBack(FieldObject, Allocator);
     }
 

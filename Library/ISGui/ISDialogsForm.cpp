@@ -12,6 +12,7 @@
 #include "ISSystem.h"
 #include "ISAlgorithm.h"
 #include "ISPopupMessage.h"
+#include "ISMetaData.h"
 #include "ISProcessForm.h"
 #include "ISProperty.h"
 //-----------------------------------------------------------------------------

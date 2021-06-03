@@ -99,8 +99,9 @@ private:
     void ShowContextMenu(const QPoint &Point); //Отображение контекстного меню
 
 private:
+    PMetaTable *MetaTable;
     QString MetaTableName;
-    QString TableLocalListName;
+    QString TableLocalName;
     bool MetaTableShowOnly;
     QString MetaTableTitleName;
     ISTcpQueryTable *TcpQuery;
