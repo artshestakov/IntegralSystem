@@ -5,7 +5,7 @@
 #include "ISInterfaceForm.h"
 #include "ISButtons.h"
 //-----------------------------------------------------------------------------
-class ISGUI_EXPORT ISAudioPlayerForm : public ISInterfaceForm
+class ISAudioPlayerForm : public ISInterfaceForm
 {
     Q_OBJECT
 

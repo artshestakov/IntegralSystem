@@ -15,15 +15,511 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
+    <Filter Include="AdditionalForms">
+      <UniqueIdentifier>{ae3377b9-e953-4dda-937d-baab070497e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Calendar">
+      <UniqueIdentifier>{0aeabe90-c0a8-491f-8ea9-c7593162030d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common Forms">
+      <UniqueIdentifier>{b3d4306d-bb08-4cb9-b6f9-ebf761122547}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Controls">
+      <UniqueIdentifier>{4f9f554f-91ef-486d-9093-8886894925f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Controls\ListEdit">
+      <UniqueIdentifier>{c32c8c81-dbb1-4617-8db6-9809fd21cdea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Controls\MailCalendar">
+      <UniqueIdentifier>{be7e883e-40cb-4e6d-b297-1ff246fe2ae5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Controls\SearchCondition">
+      <UniqueIdentifier>{441ccaf5-7bb8-42d7-a564-cd77f4fc2afa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Controls\TabNavigation">
+      <UniqueIdentifier>{5b24af8e-952b-4b61-82ef-082db4cfae8a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dialogs">
+      <UniqueIdentifier>{2fa10ac2-a9fe-465b-ab50-1180d6d0de5a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Export">
+      <UniqueIdentifier>{2793de43-88f8-44b1-9a9a-1732bf5c1e64}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fields">
+      <UniqueIdentifier>{e2eb02a8-a4a6-4b40-88ed-700bcf2dc287}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Forms">
+      <UniqueIdentifier>{285ae3a1-3e14-4934-9477-97300ae8a2eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Layouts">
+      <UniqueIdentifier>{28cea9e3-2b80-4ea6-a85e-9a8002c15fd0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects">
+      <UniqueIdentifier>{4e73f50d-5b98-42b3-b9c6-a87cd5f051e8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects\Empty">
+      <UniqueIdentifier>{2c1d35f4-f197-494d-add1-d8c34847ed9c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects\OilSphere">
+      <UniqueIdentifier>{645b49bf-0124-4354-b1b5-c7e3c97c1c24}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Paragraphs">
+      <UniqueIdentifier>{8d2af202-2210-4fe1-9337-6b34ff27914f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Protocol">
+      <UniqueIdentifier>{9461c166-6694-4250-9cf6-1add7698c9cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SubSystem">
+      <UniqueIdentifier>{84a34f03-136d-4270-87bd-922589499fd8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Widgets">
+      <UniqueIdentifier>{040c871f-6705-4cf0-a3e0-1835e0ebd0dd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="ISBuffer.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="ISColumnSizer.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="ISControls.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="ISCreatedObjectsEntity.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="ISDefinesGui.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="ISFavorites.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="ISGui.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="ISMetaSystemsEntity.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="ISParagraphEntity.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="ISUserRoleEntity.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="ISValidators.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="ISProcessForm.cpp">
+      <Filter>AdditionalForms</Filter>
+    </ClCompile>
+    <ClCompile Include="ISProgressForm.cpp">
+      <Filter>AdditionalForms</Filter>
+    </ClCompile>
+    <ClCompile Include="ISCalendarPopup.cpp">
+      <Filter>Calendar</Filter>
+    </ClCompile>
+    <ClCompile Include="ISCalendarWidget.cpp">
+      <Filter>Calendar</Filter>
+    </ClCompile>
+    <ClCompile Include="ISInterfaceDialogForm.cpp">
+      <Filter>Common Forms</Filter>
+    </ClCompile>
+    <ClCompile Include="ISInterfaceForm.cpp">
+      <Filter>Common Forms</Filter>
+    </ClCompile>
+    <ClCompile Include="ISInterfaceMetaForm.cpp">
+      <Filter>Common Forms</Filter>
+    </ClCompile>
+    <ClCompile Include="ISListBaseForm.cpp">
+      <Filter>Common Forms</Filter>
+    </ClCompile>
+    <ClCompile Include="ISListViewForm.cpp">
+      <Filter>Common Forms</Filter>
+    </ClCompile>
+    <ClCompile Include="ISObjectFormBase.cpp">
+      <Filter>Common Forms</Filter>
+    </ClCompile>
+    <ClCompile Include="ISSelectListForm.cpp">
+      <Filter>Common Forms</Filter>
+    </ClCompile>
+    <ClCompile Include="ISListIndicatorWidget.cpp">
+      <Filter>Controls\ListEdit</Filter>
+    </ClCompile>
+    <ClCompile Include="ISCalendarEventItem.cpp">
+      <Filter>Controls\MailCalendar</Filter>
+    </ClCompile>
+    <ClCompile Include="ISCalendarEventsWidget.cpp">
+      <Filter>Controls\MailCalendar</Filter>
+    </ClCompile>
+    <ClCompile Include="ISCalendarPanel.cpp">
+      <Filter>Controls\MailCalendar</Filter>
+    </ClCompile>
+    <ClCompile Include="ISComboSearchWidgets.cpp">
+      <Filter>Controls\SearchCondition</Filter>
+    </ClCompile>
+    <ClCompile Include="ISTabBarMain.cpp">
+      <Filter>Controls\TabNavigation</Filter>
+    </ClCompile>
+    <ClCompile Include="ISTabWidgetMain.cpp">
+      <Filter>Controls\TabNavigation</Filter>
+    </ClCompile>
+    <ClCompile Include="ISButtons.cpp">
+      <Filter>Controls</Filter>
+    </ClCompile>
+    <ClCompile Include="ISContextMenu.cpp">
+      <Filter>Controls</Filter>
+    </ClCompile>
+    <ClCompile Include="ISDelegates.cpp">
+      <Filter>Controls</Filter>
+    </ClCompile>
+    <ClCompile Include="ISImageWidget.cpp">
+      <Filter>Controls</Filter>
+    </ClCompile>
+    <ClCompile Include="ISLabels.cpp">
+      <Filter>Controls</Filter>
+    </ClCompile>
+    <ClCompile Include="ISMenuBar.cpp">
+      <Filter>Controls</Filter>
+    </ClCompile>
+    <ClCompile Include="ISMonitorUserWidget.cpp">
+      <Filter>Controls</Filter>
+    </ClCompile>
+    <ClCompile Include="ISPopupMessage.cpp">
+      <Filter>Controls</Filter>
+    </ClCompile>
+    <ClCompile Include="ISSplashScreen.cpp">
+      <Filter>Controls</Filter>
+    </ClCompile>
+    <ClCompile Include="ISSystemsPanel.cpp">
+      <Filter>Controls</Filter>
+    </ClCompile>
+    <ClCompile Include="ISDialogsCommon.cpp">
+      <Filter>Dialogs</Filter>
+    </ClCompile>
+    <ClCompile Include="ISDialogsForm.cpp">
+      <Filter>Dialogs</Filter>
+    </ClCompile>
+    <ClCompile Include="ISExportWorker.cpp">
+      <Filter>Export</Filter>
+    </ClCompile>
+    <ClCompile Include="ISEditsQT.cpp">
+      <Filter>Fields</Filter>
+    </ClCompile>
+    <ClCompile Include="ISFieldEditBase.cpp">
+      <Filter>Fields</Filter>
+    </ClCompile>
+    <ClCompile Include="ISFieldEdits.cpp">
+      <Filter>Fields</Filter>
+    </ClCompile>
+    <ClCompile Include="ISSettingFieldWidgets.cpp">
+      <Filter>Fields</Filter>
+    </ClCompile>
+    <ClCompile Include="ISAudioPlayerForm.cpp">
+      <Filter>Forms</Filter>
+    </ClCompile>
+    <ClCompile Include="ISCalendarObjectForm.cpp">
+      <Filter>Forms</Filter>
+    </ClCompile>
+    <ClCompile Include="ISDiscussionListForm.cpp">
+      <Filter>Forms</Filter>
+    </ClCompile>
+    <ClCompile Include="ISFavoritesForm.cpp">
+      <Filter>Forms</Filter>
+    </ClCompile>
+    <ClCompile Include="ISHistoryForm.cpp">
+      <Filter>Forms</Filter>
+    </ClCompile>
+    <ClCompile Include="ISImageViewerForm.cpp">
+      <Filter>Forms</Filter>
+    </ClCompile>
+    <ClCompile Include="ISMainWindow.cpp">
+      <Filter>Forms</Filter>
+    </ClCompile>
+    <ClCompile Include="ISProtocolObjectListForm.cpp">
+      <Filter>Forms</Filter>
+    </ClCompile>
+    <ClCompile Include="ISSearchForm.cpp">
+      <Filter>Forms</Filter>
+    </ClCompile>
+    <ClCompile Include="ISSettingsDatabaseObjectForm.cpp">
+      <Filter>Forms</Filter>
+    </ClCompile>
+    <ClCompile Include="ISUserObjectForm.cpp">
+      <Filter>Forms</Filter>
+    </ClCompile>
+    <ClCompile Include="ISFlowLayout.cpp">
+      <Filter>Layouts</Filter>
+    </ClCompile>
+    <ClCompile Include="ISEmpty.cpp">
+      <Filter>Objects\Empty</Filter>
+    </ClCompile>
+    <ClCompile Include="ISOilSphere.cpp">
+      <Filter>Objects\OilSphere</Filter>
+    </ClCompile>
+    <ClCompile Include="ISObjectInterface.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="ISObjects.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="ISParagraphs.cpp">
+      <Filter>Paragraphs</Filter>
+    </ClCompile>
+    <ClCompile Include="ISTcpConnector.cpp">
+      <Filter>Protocol</Filter>
+    </ClCompile>
+    <ClCompile Include="ISTcpModels.cpp">
+      <Filter>Protocol</Filter>
+    </ClCompile>
+    <ClCompile Include="ISTcpQuery.cpp">
+      <Filter>Protocol</Filter>
+    </ClCompile>
+    <ClCompile Include="ISSubSystem.cpp">
+      <Filter>SubSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="ISBaseTableView.cpp">
+      <Filter>Widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="ISListWidget.cpp">
+      <Filter>Widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="ISScrollArea.cpp">
+      <Filter>Widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="ISWaitWidget.cpp">
+      <Filter>Widgets</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="IntegralSystem.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ISBuffer.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="ISColumnSizer.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="ISControls.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="ISDefinesGui.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="ISFavorites.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="ISGui.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="ISMetaSystemsEntity.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="ISParagraphEntity.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="ISUserRoleEntity.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="ISObjects.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="ISTcpQuery.h">
+      <Filter>Protocol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ISRevision.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="ISCreatedObjectsEntity.h">
+      <Filter>System</Filter>
+    </QtMoc>
+    <QtMoc Include="ISValidators.h">
+      <Filter>System</Filter>
+    </QtMoc>
+    <QtMoc Include="ISProcessForm.h">
+      <Filter>AdditionalForms</Filter>
+    </QtMoc>
+    <QtMoc Include="ISProgressForm.h">
+      <Filter>AdditionalForms</Filter>
+    </QtMoc>
+    <QtMoc Include="ISCalendarPopup.h">
+      <Filter>Calendar</Filter>
+    </QtMoc>
+    <QtMoc Include="ISCalendarWidget.h">
+      <Filter>Calendar</Filter>
+    </QtMoc>
+    <QtMoc Include="ISInterfaceDialogForm.h">
+      <Filter>Common Forms</Filter>
+    </QtMoc>
+    <QtMoc Include="ISInterfaceForm.h">
+      <Filter>Common Forms</Filter>
+    </QtMoc>
+    <QtMoc Include="ISInterfaceMetaForm.h">
+      <Filter>Common Forms</Filter>
+    </QtMoc>
+    <QtMoc Include="ISListBaseForm.h">
+      <Filter>Common Forms</Filter>
+    </QtMoc>
+    <QtMoc Include="ISListViewForm.h">
+      <Filter>Common Forms</Filter>
+    </QtMoc>
+    <QtMoc Include="ISObjectFormBase.h">
+      <Filter>Common Forms</Filter>
+    </QtMoc>
+    <QtMoc Include="ISSelectListForm.h">
+      <Filter>Common Forms</Filter>
+    </QtMoc>
+    <QtMoc Include="ISListIndicatorWidget.h">
+      <Filter>Controls\ListEdit</Filter>
+    </QtMoc>
+    <QtMoc Include="ISCalendarEventItem.h">
+      <Filter>Controls\MailCalendar</Filter>
+    </QtMoc>
+    <QtMoc Include="ISCalendarEventsWidget.h">
+      <Filter>Controls\MailCalendar</Filter>
+    </QtMoc>
+    <QtMoc Include="ISCalendarPanel.h">
+      <Filter>Controls\MailCalendar</Filter>
+    </QtMoc>
+    <QtMoc Include="ISComboSearchWidgets.h">
+      <Filter>Controls\SearchCondition</Filter>
+    </QtMoc>
+    <QtMoc Include="ISTabBarMain.h">
+      <Filter>Controls\TabNavigation</Filter>
+    </QtMoc>
+    <QtMoc Include="ISTabWidgetMain.h">
+      <Filter>Controls\TabNavigation</Filter>
+    </QtMoc>
+    <QtMoc Include="ISButtons.h">
+      <Filter>Controls</Filter>
+    </QtMoc>
+    <QtMoc Include="ISContextMenu.h">
+      <Filter>Controls</Filter>
+    </QtMoc>
+    <QtMoc Include="ISDelegates.h">
+      <Filter>Controls</Filter>
+    </QtMoc>
+    <QtMoc Include="ISImageWidget.h">
+      <Filter>Controls</Filter>
+    </QtMoc>
+    <QtMoc Include="ISLabels.h">
+      <Filter>Controls</Filter>
+    </QtMoc>
+    <QtMoc Include="ISMenuBar.h">
+      <Filter>Controls</Filter>
+    </QtMoc>
+    <QtMoc Include="ISMonitorUserWidget.h">
+      <Filter>Controls</Filter>
+    </QtMoc>
+    <QtMoc Include="ISPopupMessage.h">
+      <Filter>Controls</Filter>
+    </QtMoc>
+    <QtMoc Include="ISSplashScreen.h">
+      <Filter>Controls</Filter>
+    </QtMoc>
+    <QtMoc Include="ISSystemsPanel.h">
+      <Filter>Controls</Filter>
+    </QtMoc>
+    <QtMoc Include="ISDialogsCommon.h">
+      <Filter>Dialogs</Filter>
+    </QtMoc>
+    <QtMoc Include="ISDialogsForm.h">
+      <Filter>Dialogs</Filter>
+    </QtMoc>
+    <QtMoc Include="ISExportWorker.h">
+      <Filter>Export</Filter>
+    </QtMoc>
+    <QtMoc Include="ISEditsQT.h">
+      <Filter>Fields</Filter>
+    </QtMoc>
+    <QtMoc Include="ISFieldEditBase.h">
+      <Filter>Fields</Filter>
+    </QtMoc>
+    <QtMoc Include="ISFieldEdits.h">
+      <Filter>Fields</Filter>
+    </QtMoc>
+    <QtMoc Include="ISSettingFieldWidgets.h">
+      <Filter>Fields</Filter>
+    </QtMoc>
+    <QtMoc Include="ISAudioPlayerForm.h">
+      <Filter>Forms</Filter>
+    </QtMoc>
+    <QtMoc Include="ISCalendarObjectForm.h">
+      <Filter>Forms</Filter>
+    </QtMoc>
+    <QtMoc Include="ISDiscussionListForm.h">
+      <Filter>Forms</Filter>
+    </QtMoc>
+    <QtMoc Include="ISFavoritesForm.h">
+      <Filter>Forms</Filter>
+    </QtMoc>
+    <QtMoc Include="ISHistoryForm.h">
+      <Filter>Forms</Filter>
+    </QtMoc>
+    <QtMoc Include="ISImageViewerForm.h">
+      <Filter>Forms</Filter>
+    </QtMoc>
+    <QtMoc Include="ISMainWindow.h">
+      <Filter>Forms</Filter>
+    </QtMoc>
+    <QtMoc Include="ISProtocolObjectListForm.h">
+      <Filter>Forms</Filter>
+    </QtMoc>
+    <QtMoc Include="ISSearchForm.h">
+      <Filter>Forms</Filter>
+    </QtMoc>
+    <QtMoc Include="ISSettingsDatabaseObjectForm.h">
+      <Filter>Forms</Filter>
+    </QtMoc>
+    <QtMoc Include="ISUserObjectForm.h">
+      <Filter>Forms</Filter>
+    </QtMoc>
+    <QtMoc Include="ISFlowLayout.h">
+      <Filter>Layouts</Filter>
+    </QtMoc>
+    <QtMoc Include="ISEmpty.h">
+      <Filter>Objects\Empty</Filter>
+    </QtMoc>
+    <QtMoc Include="ISOilSphere.h">
+      <Filter>Objects\OilSphere</Filter>
+    </QtMoc>
+    <QtMoc Include="ISObjectInterface.h">
+      <Filter>Objects</Filter>
+    </QtMoc>
+    <QtMoc Include="ISParagraphs.h">
+      <Filter>Paragraphs</Filter>
+    </QtMoc>
+    <QtMoc Include="ISTcpConnector.h">
+      <Filter>Protocol</Filter>
+    </QtMoc>
+    <QtMoc Include="ISTcpModels.h">
+      <Filter>Protocol</Filter>
+    </QtMoc>
+    <QtMoc Include="ISSubSystem.h">
+      <Filter>SubSystem</Filter>
+    </QtMoc>
+    <QtMoc Include="ISBaseTableView.h">
+      <Filter>Widgets</Filter>
+    </QtMoc>
+    <QtMoc Include="ISListWidget.h">
+      <Filter>Widgets</Filter>
+    </QtMoc>
+    <QtMoc Include="ISScrollArea.h">
+      <Filter>Widgets</Filter>
+    </QtMoc>
+    <QtMoc Include="ISWaitWidget.h">
+      <Filter>Widgets</Filter>
+    </QtMoc>
+  </ItemGroup>
+  <ItemGroup>
+    <QtRcc Include="..\..\Resources\IntegralSystem.qrc">
+      <Filter>Resource Files</Filter>
+    </QtRcc>
   </ItemGroup>
 </Project>

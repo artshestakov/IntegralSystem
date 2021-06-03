@@ -1,9 +1,8 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "isgui_global.h"
 #include "ISObjectInterface.h"
 //-----------------------------------------------------------------------------
-class ISGUI_EXPORT ISObjects
+class ISObjects
 {
 public:
     static ISObjects& Instance();

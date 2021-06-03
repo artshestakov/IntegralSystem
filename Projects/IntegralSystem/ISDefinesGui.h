@@ -2,11 +2,11 @@
 #ifndef _ISDEFINESGUI_H_INCLUDED
 #define _ISDEFINESGUI_H_INCLUDED
 //-----------------------------------------------------------------------------
-#include "isgui_global.h"
+#include "StdAfx.h"
 //-----------------------------------------------------------------------------
 namespace ISDefines
 {
-    class ISGUI_EXPORT Gui
+    class Gui
     {
     public:
         static void Init(); //Инициализация

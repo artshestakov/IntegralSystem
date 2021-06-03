@@ -5,7 +5,7 @@
 #include "ISInterfaceDialogForm.h"
 #include "ISFieldEditBase.h"
 //-----------------------------------------------------------------------------
-class ISGUI_EXPORT ISFileDialog : public QFileDialog
+class ISFileDialog : public QFileDialog
 {
     Q_OBJECT
 
@@ -61,7 +61,7 @@ private:
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-class ISGUI_EXPORT	ISMessageBox : public QMessageBox
+class ISMessageBox : public QMessageBox
 {
     Q_OBJECT
 

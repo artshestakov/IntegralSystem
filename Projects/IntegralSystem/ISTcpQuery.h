@@ -2,7 +2,7 @@
 #ifndef _ISTCPQUERY_H_INCLUDED
 #define _ISTCPQUERY_H_INCLUDED
 //-----------------------------------------------------------------------------
-#include "isgui_global.h"
+#include "StdAfx.h"
 //-----------------------------------------------------------------------------
 class ISTcpQuery
 {

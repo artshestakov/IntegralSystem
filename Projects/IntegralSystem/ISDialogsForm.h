@@ -33,7 +33,7 @@ private:
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-class ISGUI_EXPORT	ISAuthDialog : public ISInterfaceDialogForm
+class ISAuthDialog : public ISInterfaceDialogForm
 {
     Q_OBJECT
 

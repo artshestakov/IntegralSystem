@@ -40,7 +40,6 @@ Filename: "{app}\IntegralSystem.exe"; Description: "Запустить прог�
 
 [Files]
 Source: ..\Deploy\${CONFIGURATION}-${PLATFORM}\ISCore.dll; DestDir: {app}; Flags: ignoreversion recursesubdirs;
-Source: ..\Deploy\${CONFIGURATION}-${PLATFORM}\ISGui.dll; DestDir: {app}; Flags: ignoreversion recursesubdirs;
 Source: ..\Deploy\${CONFIGURATION}-${PLATFORM}\IntegralSystem.exe; DestDir: {app}; Flags: ignoreversion recursesubdirs;
 
 Source: ${QTDIR}\bin\libEGL${IS_DEBUG}.dll; DestDir: {app}; Flags: ignoreversion recursesubdirs;

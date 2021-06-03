@@ -2,10 +2,10 @@
 #ifndef _ISINTERFACEFORM_H_INCLUDED
 #define _ISINTERFACEFORM_H_INCLUDED
 //-----------------------------------------------------------------------------
-#include "isgui_global.h"
+#include "StdAfx.h"
 //-----------------------------------------------------------------------------
 //!Базовый класс формы интерфейса
-class ISGUI_EXPORT ISInterfaceForm : public QWidget
+class ISInterfaceForm : public QWidget
 {
     Q_OBJECT
 

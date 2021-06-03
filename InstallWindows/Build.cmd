@@ -4,7 +4,7 @@ SetLocal
 REM Главный скрипт сборки
 
 REM Настройка переменных среды
-REM CALL vcvars32.bat
+CALL vcvars32.bat
 
 REM Подготовка переменных для скрипта
 SET CONFIGURATION=%1

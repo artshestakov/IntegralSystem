@@ -9,7 +9,7 @@
 #include "ISImageViewerForm.h"
 #include "ISSplashScreen.h"
 //-----------------------------------------------------------------------------
-class ISGUI_EXPORT ISGui
+class ISGui
 {
 public:
     static bool Startup(QString &ErrorString);

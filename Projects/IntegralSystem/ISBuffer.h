@@ -2,10 +2,9 @@
 #ifndef _ISBUFFER_H_INCLUDED
 #define _ISBUFFER_H_INCLUDED
 //-----------------------------------------------------------------------------
-#include "isgui_global.h"
 #include "ISStructs.h"
 //-----------------------------------------------------------------------------
-class ISGUI_EXPORT ISBuffer
+class ISBuffer
 {
 public:
     ISCurrentUserInfo CurrentUserInfo; //Информация о текущем пользователе

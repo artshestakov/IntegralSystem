@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 #include "ISInterfaceForm.h"
 //-----------------------------------------------------------------------------
-class ISGUI_EXPORT	ISInterfaceDialogForm : public ISInterfaceForm
+class ISInterfaceDialogForm : public ISInterfaceForm
 {
     Q_OBJECT
 

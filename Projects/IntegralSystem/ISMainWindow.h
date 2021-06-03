@@ -7,7 +7,7 @@
 #include "ISParagraphs.h"
 #include "ISMenuBar.h"
 //-----------------------------------------------------------------------------
-class ISGUI_EXPORT ISMainWindow : public ISInterfaceForm
+class ISMainWindow : public ISInterfaceForm
 {
     Q_OBJECT
 

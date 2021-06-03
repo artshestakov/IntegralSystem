@@ -1,0 +1,14 @@
+<RCC>
+  <qresource>
+
+    <file>_OilSphere/</file>
+
+    <file>Animation/</file>
+    <file>Audio/</file>
+    <file>CSS/</file>
+    <file>ImageIcons/</file>
+    <file>Images/</file>
+    <file>Licenses/</file>
+
+  </qresource>
+</RCC>
