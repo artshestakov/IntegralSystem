@@ -87,9 +87,6 @@
     <ClInclude Include="ISTcpClients.h">
       <Filter>Tcp</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\ISRevision.h">
-      <Filter>System</Filter>
-    </ClInclude>
     <ClInclude Include="ISTcpWorkerHelper.h">
       <Filter>Tcp</Filter>
     </ClInclude>
@@ -108,6 +105,7 @@
     <ClInclude Include="ISCrashDumper.h">
       <Filter>StackWalker</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\ISRevision.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Carat.rc">

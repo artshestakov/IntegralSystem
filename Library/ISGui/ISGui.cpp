@@ -10,11 +10,11 @@
 //#include "ISTaskViewForm.h"
 #include "ISConfig.h"
 #include "ISBuffer.h"
-#include "ISVersionInfo.h"
 #include "ISSettings.h"
 #include "ISLogger.h"
 #include "ISUserObjectForm.h"
 #include "ISAlgorithm.h"
+#include "ISRevision.h"
 #include "ISUserRoleEntity.h"
 #include "ISFavoritesForm.h"
 #include "ISHistoryForm.h"
@@ -91,7 +91,7 @@ bool ISGui::Startup(QString &ErrorString)
     qApp->setStyleSheet(BUFFER_STYLE_SHEET("QToolTip"));
     qApp->setWindowIcon(BUFFER_ICONS("Logo"));
     qApp->setApplicationName("IntegralSystem");
-    qApp->setApplicationVersion(QString::number(ISVersionInfo::Instance().Info.Version));
+    qApp->setApplicationVersion(CARAT_VERSION);
     qApp->setFont(ISDefines::Gui::FONT_APPLICATION);
     QToolTip::setFont(ISDefines::Gui::FONT_APPLICATION);
     return true;

@@ -231,7 +231,6 @@
     <ClCompile Include="ISSystem.cpp" />
     <ClCompile Include="ISTcp.cpp" />
     <ClCompile Include="ISTrace.cpp" />
-    <ClCompile Include="ISVersionInfo.cpp" />
     <ClCompile Include="StdAfx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -255,7 +254,6 @@
     <ClInclude Include="ISTcp.h" />
     <ClInclude Include="ISTrace.h" />
     <ClInclude Include="ISTypedefs.h" />
-    <ClInclude Include="ISVersionInfo.h" />
     <ClInclude Include="StdAfx.h" />
     <ClInclude Include="ISSettings.h" />
     <ClInclude Include="ISSettingsDatabase.h" />
@@ -268,7 +266,9 @@
     <None Include="..\..\Resources\_OilSphere\OilSphere.xsr" />
   </ItemGroup>
   <ItemGroup>
-    <QtRcc Include="..\..\Resources\ISCore.qrc" />
+    <QtRcc Include="..\..\Resources\ISCore.qrc">
+      <SubType>Designer</SubType>
+    </QtRcc>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

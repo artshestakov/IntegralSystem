@@ -47,9 +47,6 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\ISRevision.h">
-      <Filter>System</Filter>
-    </ClInclude>
     <ClInclude Include="CGDatabase.h">
       <Filter>System</Filter>
     </ClInclude>
@@ -74,5 +71,6 @@
     <ClInclude Include="CGConfiguratorUpdate.h">
       <Filter>Command</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\ISRevision.h" />
   </ItemGroup>
 </Project>

@@ -73,7 +73,6 @@ const char TOKEN_DA_DATA_TOKEN[] = "f2c204cd6ba093b294324acec5d01b25fad632cf";
 //-----------------------------------------------------------------------------
 const char PATH_SCHEMA_TEMPLATE_FIELDS[] = ":Other/ClassTemplateFields.xml";
 const char PATH_CONFIGURATOR_SCHEME[] = ":Other/Configurator.xml";
-const char PATH_BUILD_INFO[] = ":Build/Build.ini.tmp";
 //REPORT_TYPE------------------------------------------------------------------
 const char REPORT_TYPE_HTML[] = "Html";
 //CURSORS----------------------------------------------------------------------

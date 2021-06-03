@@ -106,7 +106,7 @@
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
       <PreprocessorDefinitions>WIN32;DEBUG;ISGUI_LIBRARY;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;$(ProjectDir)..\..\Components\QCustomPlot;$(ProjectDir)..\ISCore;$(QTDIR)\include\QtCore\;$(QTDIR)\include\QtGui\;$(QTDIR)\include\QtMultimedia\;$(QTDIR)\include\QtNetwork\;$(QTDIR)\include\QtWidgets\;$(QTDIR)\include\QtPrintSupport\;$(QTDIR)\include\QtXml\;$(QTDIR)\include\;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir);.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;$(ProjectDir)..\..\Components\QCustomPlot;$(ProjectDir)..\ISCore;$(QTDIR)\include\QtCore\;$(QTDIR)\include\QtGui\;$(QTDIR)\include\QtMultimedia\;$(QTDIR)\include\QtNetwork\;$(QTDIR)\include\QtWidgets\;$(QTDIR)\include\QtPrintSupport\;$(QTDIR)\include\QtXml\;$(QTDIR)\include\;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <WarningLevel>Level4</WarningLevel>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <TreatWarningAsError>true</TreatWarningAsError>
@@ -118,6 +118,9 @@
       <AdditionalLibraryDirectories>$(QTDIR)\lib\;$(ProjectDir)..\..\Bin\$(Configuration)-$(Platform);$(ProjectDir)..\..\Deploy\$(Configuration)-$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>ISCore.lib;qtmaind.lib;Qt5Cored.lib;Qt5Guid.lib;Qt5Multimediad.lib;Qt5Networkd.lib;Qt5Widgetsd.lib;Qt5PrintSupportd.lib;Qt5Xmld.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PreBuildEvent>
+      <Command>$(SolutionDir)Revision.cmd $(SolutionDir) $(Configuration) $(Platform)</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -127,7 +130,7 @@
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
       <PreprocessorDefinitions>WIN32;DEBUG;ISGUI_LIBRARY;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;$(ProjectDir)..\ISCore;$(QTDIR64)\include\QtCore\;$(QTDIR64)\include\QtGui\;$(QTDIR64)\include\QtMultimedia\;$(QTDIR64)\include\QtNetwork\;$(QTDIR64)\include\QtSql\;$(QTDIR64)\include\QtWidgets\;$(QTDIR64)\include\QtPrintSupport\;$(QTDIR64)\include\QtXml\;$(QTDIR64)\include\;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir);.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;$(ProjectDir)..\ISCore;$(QTDIR64)\include\QtCore\;$(QTDIR64)\include\QtGui\;$(QTDIR64)\include\QtMultimedia\;$(QTDIR64)\include\QtNetwork\;$(QTDIR64)\include\QtSql\;$(QTDIR64)\include\QtWidgets\;$(QTDIR64)\include\QtPrintSupport\;$(QTDIR64)\include\QtXml\;$(QTDIR64)\include\;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <WarningLevel>Level4</WarningLevel>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <TreatWarningAsError>true</TreatWarningAsError>
@@ -139,6 +142,9 @@
       <AdditionalLibraryDirectories>$(QTDIR64)\lib\;$(ProjectDir)..\..\Bin\$(Configuration)-$(Platform);$(ProjectDir)..\..\Deploy\$(Configuration)-$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>ISCore.lib;qtmaind.lib;Qt5Cored.lib;Qt5Guid.lib;Qt5Multimediad.lib;Qt5Networkd.lib;Qt5Widgetsd.lib;Qt5PrintSupportd.lib;Qt5Xmld.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PreBuildEvent>
+      <Command>$(SolutionDir)Revision.cmd $(SolutionDir) $(Configuration) $(Platform)</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -147,7 +153,7 @@
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
       <PreprocessorDefinitions>WIN32;ISGUI_LIBRARY;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;$(ProjectDir)..\ISCore;$(QTDIR)\include\QtCore\;$(QTDIR)\include\QtGui\;$(QTDIR)\include\QtMultimedia\;$(QTDIR)\include\QtNetwork\;$(QTDIR)\include\QtWidgets\;$(QTDIR)\include\QtPrintSupport\;$(QTDIR)\include\QtXml\;$(QTDIR)\include\;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir);.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;$(ProjectDir)..\ISCore;$(QTDIR)\include\QtCore\;$(QTDIR)\include\QtGui\;$(QTDIR)\include\QtMultimedia\;$(QTDIR)\include\QtNetwork\;$(QTDIR)\include\QtWidgets\;$(QTDIR)\include\QtPrintSupport\;$(QTDIR)\include\QtXml\;$(QTDIR)\include\;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <WarningLevel>Level4</WarningLevel>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <TreatWarningAsError>true</TreatWarningAsError>
@@ -159,6 +165,9 @@
       <AdditionalLibraryDirectories>$(QTDIR)\lib\;$(ProjectDir)..\..\Bin\$(Configuration)-$(Platform);$(ProjectDir)..\..\Deploy\$(Configuration)-$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>ISCore.lib;qtmain.lib;Qt5Core.lib;Qt5Gui.lib;Qt5Multimedia.lib;Qt5Network.lib;Qt5Widgets.lib;Qt5PrintSupport.lib;Qt5Xml.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PreBuildEvent>
+      <Command>$(SolutionDir)Revision.cmd $(SolutionDir) $(Configuration) $(Platform)</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -168,7 +177,7 @@
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
       <PreprocessorDefinitions>WIN32;ISGUI_LIBRARY;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;$(ProjectDir)..\ISCore;$(QTDIR64)\include\QtCore\;$(QTDIR64)\include\QtGui\;$(QTDIR64)\include\QtMultimedia\;$(QTDIR64)\include\QtNetwork\;$(QTDIR64)\include\QtSql\;$(QTDIR64)\include\QtWidgets\;$(QTDIR64)\include\QtPrintSupport\;$(QTDIR64)\include\QtXml\;$(QTDIR64)\include\;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir);.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;$(ProjectDir)..\ISCore;$(QTDIR64)\include\QtCore\;$(QTDIR64)\include\QtGui\;$(QTDIR64)\include\QtMultimedia\;$(QTDIR64)\include\QtNetwork\;$(QTDIR64)\include\QtSql\;$(QTDIR64)\include\QtWidgets\;$(QTDIR64)\include\QtPrintSupport\;$(QTDIR64)\include\QtXml\;$(QTDIR64)\include\;.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <WarningLevel>Level4</WarningLevel>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <TreatWarningAsError>true</TreatWarningAsError>
@@ -180,6 +189,9 @@
       <AdditionalLibraryDirectories>$(QTDIR64)\lib\;$(ProjectDir)..\..\Bin\$(Configuration)-$(Platform);$(ProjectDir)..\..\Deploy\$(Configuration)-$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>ISCore.lib;qtmain.lib;Qt5Core.lib;Qt5Gui.lib;Qt5Multimedia.lib;Qt5Network.lib;Qt5Widgets.lib;Qt5PrintSupport.lib;Qt5Xml.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PreBuildEvent>
+      <Command>$(SolutionDir)Revision.cmd $(SolutionDir) $(Configuration) $(Platform)</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ISAudioPlayerForm.cpp" />
@@ -321,6 +333,7 @@
     <QtMoc Include="ISAudioPlayerForm.h" />
     <QtMoc Include="ISDialogsCommon.h" />
     <QtMoc Include="ISDialogsForm.h" />
+    <ClInclude Include="..\..\ISRevision.h" />
     <ClInclude Include="isgui_global.h" />
     <QtMoc Include="ISProgressForm.h" />
     <QtMoc Include="ISSettingsDatabaseObjectForm.h" />

@@ -4,7 +4,6 @@
 #include "ISDefinesGui.h"
 #include "ISDialogsCommon.h"
 #include "ISConfig.h"
-#include "ISVersionInfo.h"
 #include "ISGui.h"
 #include "ISTcpConnector.h"
 #include "ISControls.h"
@@ -15,6 +14,7 @@
 #include "ISMetaData.h"
 #include "ISProcessForm.h"
 #include "ISProperty.h"
+#include "ISRevision.h"
 //-----------------------------------------------------------------------------
 ISAboutDialog::ISAboutDialog() : ISInterfaceDialogForm()
 {
@@ -73,13 +73,12 @@ void ISAboutDialog::CreateCommonTab()
     TabWidget->addTab(TabCommon, LANG("AboutForm.Tab.Common"));
 
     AddLabel(TabCommon, LANG("AboutForm.Tab.Common.ProductName"), QCoreApplication::applicationName());
-    AddLabel(TabCommon, LANG("AboutForm.Tab.Common.Cofiguration"), ISVersionInfo::Instance().Info.Configuration);
-    AddLabel(TabCommon, LANG("AboutForm.Tab.Common.Platform"), ISVersionInfo::Instance().Info.Platform);
-    AddLabel(TabCommon, LANG("AboutForm.Tab.Common.Version"), QString::number(ISVersionInfo::Instance().Info.Version));
-    AddLabel(TabCommon, LANG("AboutForm.Tab.Common.ReleaseDateTime"),
-        ISVersionInfo::Instance().Info.Date + " " + LANG("In") + " " + ISVersionInfo::Instance().Info.Time);
-    AddLabel(TabCommon, LANG("AboutForm.Tab.Common.Hash"), ISVersionInfo::Instance().Info.Hash);
-    AddLabel(TabCommon, LANG("AboutForm.Tab.Common.Branch"), ISVersionInfo::Instance().Info.BranchName);
+    AddLabel(TabCommon, LANG("AboutForm.Tab.Common.Cofiguration"), CARAT_CONFIGURATION);
+    AddLabel(TabCommon, LANG("AboutForm.Tab.Common.Platform"), CARAT_PLATFORM);
+    AddLabel(TabCommon, LANG("AboutForm.Tab.Common.Version"), CARAT_VERSION);
+    AddLabel(TabCommon, LANG("AboutForm.Tab.Common.ReleaseDateTime"), QString("%1 %2").arg(CARAT_BUILD_DATE).arg(CARAT_BUILD_TIME));
+    AddLabel(TabCommon, LANG("AboutForm.Tab.Common.Hash"), CARAT_HASH);
+    AddLabel(TabCommon, LANG("AboutForm.Tab.Common.Branch"), CARAT_BRANCH_NAME);
     AddLabel(TabCommon, LANG("AboutForm.Tab.Common.QtVersion"), qVersion());
     AddLabel(TabCommon, LANG("AboutForm.Tab.Common.Server"), CONFIG_STRING(CONST_CONFIG_CONNECTION_SERVER));
     AddLabel(TabCommon, LANG("AboutForm.Tab.Common.Port"), CONFIG_STRING(CONST_CONFIG_CONNECTION_PORT));
@@ -375,7 +374,7 @@ void ISAuthDialog::Input()
 
     ISTcpQuery qAuth(API_AUTH);
     qAuth.BindValue("Hash", ISAlgorithm::StringToSha256(EditLogin->GetValue().toString().toStdString() + EditPassword->GetValue().toString().toStdString()).c_str());
-    qAuth.BindValue("Version", ISVersionInfo::Instance().Info.Version);
+    qAuth.BindValue("Version", CARAT_VERSION_N);
     if (qAuth.Execute()) //Авторизация прошла успешно
     {
         QVariantMap AnswerMap = qAuth.GetAnswer(); //Получаем ответ
@@ -395,7 +394,7 @@ void ISAuthDialog::Input()
         {
             SetConnecting(false);
             if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.UpdateAvailable")
-                .arg(ISVersionInfo::Instance().Info.Version).arg(UpdateClientMap["NewVersion"].toUInt()))) //Пользователь согласился
+                .arg(CARAT_VERSION_N).arg(UpdateClientMap["NewVersion"].toUInt()))) //Пользователь согласился
             {
                 ISProcessForm ProcessForm(LANG("UploadingUpdate"), this);
                 ProcessForm.show();

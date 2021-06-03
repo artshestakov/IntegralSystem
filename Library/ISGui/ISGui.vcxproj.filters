@@ -501,6 +501,7 @@
     <ClInclude Include="ISTcpQuery.h">
       <Filter>Protocol</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\ISRevision.h" />
   </ItemGroup>
   <ItemGroup>
     <QtRcc Include="..\..\Resources\ISGui.qrc" />

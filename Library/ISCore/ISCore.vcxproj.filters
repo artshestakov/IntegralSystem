@@ -61,9 +61,6 @@
     <ClCompile Include="ISAlgorithm.cpp">
       <Filter>System</Filter>
     </ClCompile>
-    <ClCompile Include="ISVersionInfo.cpp">
-      <Filter>System</Filter>
-    </ClCompile>
     <ClCompile Include="ISDebug.cpp">
       <Filter>System</Filter>
     </ClCompile>
@@ -123,9 +120,6 @@
     </ClInclude>
     <ClInclude Include="ISSettings.h">
       <Filter>Settings</Filter>
-    </ClInclude>
-    <ClInclude Include="ISVersionInfo.h">
-      <Filter>System</Filter>
     </ClInclude>
     <ClInclude Include="ISDebug.h">
       <Filter>System</Filter>

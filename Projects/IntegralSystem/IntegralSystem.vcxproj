@@ -127,6 +127,10 @@
     <PostBuildEvent>
       <Command>$(ProjectDir)..\..\Components\LocalSearcher\$(Configuration)-$(Platform)\LocalSearcher.exe -L $(ProjectDir)..\..\Resources\Localization\IntegralSystem.lang $(ProjectDir)..\..\Resources\Localization\Objects.lang $(ProjectDir)..\..\Resources\Localization\Carat.lang -D $(ProjectDir)..\..\Library\ISCore $(ProjectDir)..\..\Library\ISServer $(ProjectDir)..\..\Library\ISGui $(ProjectDir)..\..\Projects\IntegralSystem</Command>
     </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>
+      </Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -151,6 +155,10 @@
     <PostBuildEvent>
       <Command>$(ProjectDir)..\..\Components\LocalSearcher\$(Configuration)-$(Platform)\LocalSearcher.exe -L $(ProjectDir)..\..\Resources\Localization\IntegralSystem.lang $(ProjectDir)..\..\Resources\Localization\Objects.lang $(ProjectDir)..\..\Resources\Localization\Carat.lang -D $(ProjectDir)..\..\Library\ISCore $(ProjectDir)..\..\Library\ISServer $(ProjectDir)..\..\Library\ISGui $(ProjectDir)..\..\Projects\IntegralSystem</Command>
     </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>
+      </Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -174,6 +182,10 @@
     <PostBuildEvent>
       <Command>$(ProjectDir)..\..\Components\LocalSearcher\$(Configuration)-$(Platform)\LocalSearcher.exe -L $(ProjectDir)..\..\Resources\Localization\IntegralSystem.lang $(ProjectDir)..\..\Resources\Localization\Objects.lang $(ProjectDir)..\..\Resources\Localization\Carat.lang -D $(ProjectDir)..\..\Library\ISCore $(ProjectDir)..\..\Library\ISServer $(ProjectDir)..\..\Library\ISGui $(ProjectDir)..\..\Projects\IntegralSystem</Command>
     </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>
+      </Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -198,6 +210,10 @@
     <PostBuildEvent>
       <Command>$(ProjectDir)..\..\Components\LocalSearcher\$(Configuration)-$(Platform)\LocalSearcher.exe -L $(ProjectDir)..\..\Resources\Localization\IntegralSystem.lang $(ProjectDir)..\..\Resources\Localization\Objects.lang $(ProjectDir)..\..\Resources\Localization\Carat.lang -D $(ProjectDir)..\..\Library\ISCore $(ProjectDir)..\..\Library\ISServer $(ProjectDir)..\..\Library\ISGui $(ProjectDir)..\..\Projects\IntegralSystem</Command>
     </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>
+      </Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
