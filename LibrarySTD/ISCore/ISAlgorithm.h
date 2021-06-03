@@ -141,6 +141,11 @@ namespace ISAlgorithm
     //! \return возвращает им€ текущего пользовател€ в ќ—
     std::string GetUserName();
 
+    //! ѕроверка валидности UUID
+    //! \param UID строка с идентификатором
+    //! \return возвращает true в случае если UID валиден, в ином случае false
+    bool IsValidUUID(const std::string &UID);
+
     //! ѕарсинг аргументов командной строки
     //! \param argc количество аргументов
     //! \param argv массив аргументов

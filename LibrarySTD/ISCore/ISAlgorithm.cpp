@@ -485,6 +485,28 @@ std::string ISAlgorithm::GetUserName()
     return UserName;
 }
 //-----------------------------------------------------------------------------
+bool ISAlgorithm::IsValidUUID(const std::string &UID)
+{
+    std::string Temp = UID;
+    
+    //Если открывающей фигурной скобки нет - добавим её
+    if (Temp.front() != '{')
+    {
+        Temp.insert(Temp.begin(), '{');
+    }
+
+    //Если закрывающей фигурной скобки нет - добавим её
+    if (Temp.back() != '}')
+    {
+        Temp.push_back('}');
+    }
+
+    std::wstring WString(Temp.begin(), Temp.end());
+    GUID guid = { 0 };
+
+    return CLSIDFromString(WString.c_str(), (LPCLSID)&guid) == S_OK;
+}
+//-----------------------------------------------------------------------------
 ISVectorString ISAlgorithm::ParseArgs(int argc, char **argv)
 {
     ISVectorString VectorString;
