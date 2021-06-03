@@ -43,20 +43,6 @@ void ISTcpModel::SetSource(const QVariantList &fields, const QVariantList &recor
         FieldModel.Type = static_cast<ISNamespace::FieldType>(FieldMap["Type"].toInt());
         FieldModel.IsForeign = FieldMap["IsForeign"].toBool();
         FieldModel.IsSystem = FieldMap["IsSystem"].toBool();
-        FieldModel.NotSearch = FieldMap["NotSearch"].toBool();
-        FieldModel.SearchConditionWidget = FieldMap["SearchConditionWidget"].toString();
-        FieldModel.ControlWidget = FieldMap["ControlWidget"].toString();
-
-        if (FieldModel.IsForeign)
-        {
-            QVariantMap Map = FieldMap["Foreign"].toMap();
-            FieldModel.Foreign.Field = Map["Field"].toString();
-            FieldModel.Foreign.ForeignClass = Map["ForeignClass"].toString();
-            FieldModel.Foreign.ForeignField = Map["ForeignField"].toString();
-            FieldModel.Foreign.ShowOnly = Map["ShowOnly"].toBool();
-            FieldModel.Foreign.LocalListName = Map["LocalListName"].toString();
-            FieldModel.Foreign.TableName = Map["TableName"].toString();
-        }
         Fields.emplace_back(FieldModel);
     }
 
@@ -147,12 +133,12 @@ int ISTcpModel::GetFieldIndex(const QString &FieldName) const
     return -1;
 }
 //-----------------------------------------------------------------------------
-const ISModelField& ISTcpModel::GetField(const QString &FieldName) const
+ISModelField ISTcpModel::GetField(const QString &FieldName)
 {
     return GetField(GetFieldIndex(FieldName));
 }
 //-----------------------------------------------------------------------------
-const ISModelField& ISTcpModel::GetField(unsigned int Index) const
+ISModelField ISTcpModel::GetField(unsigned int Index)
 {
     return Fields[Index];
 }
