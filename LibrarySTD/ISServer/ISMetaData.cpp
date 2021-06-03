@@ -146,6 +146,19 @@ std::string ISMetaData::GetTypeDB(ISNamespace::FieldType FieldType) const
     return std::string();
 }
 //-----------------------------------------------------------------------------
+const ISMetaType* ISMetaData::GetMetaType(ISNamespace::FieldType FieldType) const
+{
+    for (size_t i = 0; i < TypesCount; ++i)
+    {
+        if (VectorTypes[i].TypeField == FieldType)
+        {
+            return &VectorTypes[i];
+        }
+    }
+    IS_ASSERT(false, ISAlgorithm::StringF("Not found type db by type %d", FieldType));
+    return nullptr;
+}
+//-----------------------------------------------------------------------------
 PMetaTable* ISMetaData::GetTable(const std::string &TableName)
 {
     PMetaTable *Table = nullptr;
