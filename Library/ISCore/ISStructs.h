@@ -83,8 +83,6 @@ struct ISMetaParagraph
 //-----------------------------------------------------------------------------
 struct ISMetaSubSystem
 {
-	ISMetaSubSystem() { }
-
 	QString UID; //Идентификатор подсистемы
 	QString LocalName; //Локальное имя подсистемы
 	QString IconName; //Имя иконки подсистемы
