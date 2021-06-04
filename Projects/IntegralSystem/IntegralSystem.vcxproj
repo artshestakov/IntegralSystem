@@ -272,7 +272,7 @@
       <AdditionalDependencies>ISCore.lib;qtmaind.lib;Qt5Cored.lib;Qt5Guid.lib;Qt5Multimediad.lib;Qt5Networkd.lib;Qt5Sqld.lib;Qt5Widgetsd.lib;Qt5Xmld.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>$(ProjectDir)..\..\Components\LocalSearcher\$(Configuration)-$(Platform)\LocalSearcher.exe -L $(ProjectDir)..\..\Resources\Localization\IntegralSystem.lang $(ProjectDir)..\..\Resources\Localization\Objects.lang $(ProjectDir)..\..\Resources\Localization\Carat.lang -D $(ProjectDir)..\..\Library\ISCore $(ProjectDir)..\..\Library\ISServer $(ProjectDir)..\..\Projects\IntegralSystem</Command>
+      <Command>$(ProjectDir)..\..\Components\LocalSearcher\$(Configuration)-$(Platform)\LocalSearcher.exe -L $(ProjectDir)..\..\Resources\Localization\IntegralSystem.lang $(ProjectDir)..\..\Resources\Localization\Objects.lang $(ProjectDir)..\..\Resources\Localization\Carat.lang -D $(ProjectDir)..\..\Library\ISCore $(ProjectDir)..\..\Projects\IntegralSystem</Command>
     </PostBuildEvent>
     <PreBuildEvent>
       <Command>$(SolutionDir)Revision.cmd $(SolutionDir) $(Configuration) $(Platform)</Command>
@@ -299,7 +299,7 @@
       <AdditionalDependencies>ISCore.lib;qtmaind.lib;Qt5Cored.lib;Qt5Guid.lib;Qt5Multimediad.lib;Qt5Networkd.lib;Qt5Sqld.lib;Qt5Widgetsd.lib;Qt5Xmld.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>$(ProjectDir)..\..\Components\LocalSearcher\$(Configuration)-$(Platform)\LocalSearcher.exe -L $(ProjectDir)..\..\Resources\Localization\IntegralSystem.lang $(ProjectDir)..\..\Resources\Localization\Objects.lang $(ProjectDir)..\..\Resources\Localization\Carat.lang -D $(ProjectDir)..\..\Library\ISCore $(ProjectDir)..\..\Library\ISServer $(ProjectDir)..\..\Projects\IntegralSystem</Command>
+      <Command>$(ProjectDir)..\..\Components\LocalSearcher\$(Configuration)-$(Platform)\LocalSearcher.exe -L $(ProjectDir)..\..\Resources\Localization\IntegralSystem.lang $(ProjectDir)..\..\Resources\Localization\Objects.lang $(ProjectDir)..\..\Resources\Localization\Carat.lang -D $(ProjectDir)..\..\Library\ISCore $(ProjectDir)..\..\Projects\IntegralSystem</Command>
     </PostBuildEvent>
     <PreBuildEvent>
       <Command>$(SolutionDir)Revision.cmd $(SolutionDir) $(Configuration) $(Platform)</Command>
@@ -325,7 +325,7 @@
       <AdditionalDependencies>ISCore.lib;qtmain.lib;Qt5Core.lib;Qt5Gui.lib;Qt5Multimedia.lib;Qt5Network.lib;Qt5Sql.lib;Qt5Widgets.lib;Qt5Xml.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>$(ProjectDir)..\..\Components\LocalSearcher\$(Configuration)-$(Platform)\LocalSearcher.exe -L $(ProjectDir)..\..\Resources\Localization\IntegralSystem.lang $(ProjectDir)..\..\Resources\Localization\Objects.lang $(ProjectDir)..\..\Resources\Localization\Carat.lang -D $(ProjectDir)..\..\Library\ISCore $(ProjectDir)..\..\Library\ISServer $(ProjectDir)..\..\Projects\IntegralSystem</Command>
+      <Command>$(ProjectDir)..\..\Components\LocalSearcher\$(Configuration)-$(Platform)\LocalSearcher.exe -L $(ProjectDir)..\..\Resources\Localization\IntegralSystem.lang $(ProjectDir)..\..\Resources\Localization\Objects.lang $(ProjectDir)..\..\Resources\Localization\Carat.lang -D $(ProjectDir)..\..\Library\ISCore $(ProjectDir)..\..\Projects\IntegralSystem</Command>
     </PostBuildEvent>
     <PreBuildEvent>
       <Command>$(SolutionDir)Revision.cmd $(SolutionDir) $(Configuration) $(Platform)</Command>
@@ -352,7 +352,7 @@
       <AdditionalDependencies>ISCore.lib;qtmain.lib;Qt5Core.lib;Qt5Gui.lib;Qt5Multimedia.lib;Qt5Network.lib;Qt5Sql.lib;Qt5Widgets.lib;Qt5Xml.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>$(ProjectDir)..\..\Components\LocalSearcher\$(Configuration)-$(Platform)\LocalSearcher.exe -L $(ProjectDir)..\..\Resources\Localization\IntegralSystem.lang $(ProjectDir)..\..\Resources\Localization\Objects.lang $(ProjectDir)..\..\Resources\Localization\Carat.lang -D $(ProjectDir)..\..\Library\ISCore $(ProjectDir)..\..\Library\ISServer $(ProjectDir)..\..\Projects\IntegralSystem</Command>
+      <Command>$(ProjectDir)..\..\Components\LocalSearcher\$(Configuration)-$(Platform)\LocalSearcher.exe -L $(ProjectDir)..\..\Resources\Localization\IntegralSystem.lang $(ProjectDir)..\..\Resources\Localization\Objects.lang $(ProjectDir)..\..\Resources\Localization\Carat.lang -D $(ProjectDir)..\..\Library\ISCore $(ProjectDir)..\..\Projects\IntegralSystem</Command>
     </PostBuildEvent>
     <PreBuildEvent>
       <Command>$(SolutionDir)Revision.cmd $(SolutionDir) $(Configuration) $(Platform)</Command>
