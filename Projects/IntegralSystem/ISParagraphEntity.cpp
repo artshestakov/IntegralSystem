@@ -1,5 +1,5 @@
 #include "ISParagraphEntity.h"
-#include "ISConstants.h"
+#include "ISConstantsOld.h"
 #include "ISSettings.h"
 #include "ISAssert.h"
 #include "ISAlgorithmOld.h"

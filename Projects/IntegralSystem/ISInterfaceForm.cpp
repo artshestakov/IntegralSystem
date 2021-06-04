@@ -1,7 +1,7 @@
 #include "ISInterfaceForm.h"
 #include "ISControls.h"
 #include "ISGui.h"
-#include "ISConstants.h"
+#include "ISConstantsOld.h"
 #include "ISAlgorithmOld.h"
 #include "ISBuffer.h"
 //-----------------------------------------------------------------------------

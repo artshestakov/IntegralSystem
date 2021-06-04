@@ -2,7 +2,7 @@
 #ifndef _ISLOCALIZATION_H_INCLUDED
 #define _ISLOCALIZATION_H_INCLUDED
 //-----------------------------------------------------------------------------
-#include "ISTypedefs.h"
+#include "ISTypedefsOld.h"
 //-----------------------------------------------------------------------------
 class ISLocalization
 {

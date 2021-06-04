@@ -2,7 +2,7 @@
 #ifndef _ISCONFIG_H_INCLUDED
 #define _ISCONFIG_H_INCLUDED
 //-----------------------------------------------------------------------------
-#include "ISStructs.h"
+#include "ISStructsOld.h"
 //-----------------------------------------------------------------------------
 class ISConfig
 {

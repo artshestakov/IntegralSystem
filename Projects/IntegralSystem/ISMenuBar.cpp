@@ -1,5 +1,5 @@
 #include "ISMenuBar.h"
-#include "ISConstants.h"
+#include "ISConstantsOld.h"
 #include "ISBuffer.h"
 #include "ISLocalization.h"
 #include "ISSettings.h"

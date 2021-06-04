@@ -2,8 +2,8 @@
 #ifndef _ISLOGGER_H_INCLUDED
 #define _ISLOGGER_H_INCLUDED
 //-----------------------------------------------------------------------------
-#include "ISConstants.h"
-#include "ISTypedefs.h"
+#include "ISConstantsOld.h"
+#include "ISTypedefsOld.h"
 #include "ISNamespace.h"
 //-----------------------------------------------------------------------------
 class ISLogger

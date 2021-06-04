@@ -109,13 +109,13 @@
     <ClInclude Include="ISAlgorithmOld.h" />
     <ClInclude Include="ISAssert.h" />
     <ClInclude Include="ISConfig.h" />
-    <ClInclude Include="ISConstants.h" />
+    <ClInclude Include="ISConstantsOld.h" />
     <ClInclude Include="ISDebug.h" />
     <ClInclude Include="ISLocalization.h" />
     <ClInclude Include="ISLogger.h" />
-    <ClInclude Include="ISStructs.h" />
+    <ClInclude Include="ISStructsOld.h" />
     <ClInclude Include="ISTrace.h" />
-    <ClInclude Include="ISTypedefs.h" />
+    <ClInclude Include="ISTypedefsOld.h" />
     <ClInclude Include="PMetaClass.h" />
     <QtMoc Include="ISWaitWidget.h" />
     <QtMoc Include="ISUserObjectForm.h" />

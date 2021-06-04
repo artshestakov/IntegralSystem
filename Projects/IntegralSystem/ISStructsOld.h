@@ -4,9 +4,9 @@
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 #include "ISNamespace.h"
-#include "ISConstants.h"
+#include "ISConstantsOld.h"
 #include "ISAssert.h"
-#include "ISTypedefs.h"
+#include "ISTypedefsOld.h"
 #include "ISAlgorithmOld.h"
 //-----------------------------------------------------------------------------
 struct ISMetaType

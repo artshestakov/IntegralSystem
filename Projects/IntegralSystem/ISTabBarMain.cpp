@@ -2,7 +2,7 @@
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISSettings.h"
-#include "ISConstants.h"
+#include "ISConstantsOld.h"
 #include "ISGui.h"
 //-----------------------------------------------------------------------------
 ISTabBarMain::ISTabBarMain(QWidget *parent)

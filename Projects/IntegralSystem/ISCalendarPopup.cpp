@@ -1,7 +1,7 @@
 #include "ISCalendarPopup.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
-#include "ISConstants.h"
+#include "ISConstantsOld.h"
 #include "ISConstantsGui.h"
 //-----------------------------------------------------------------------------
 ISCalendarPopup::ISCalendarPopup(QWidget *parent) : ISCalendarWidget(parent)

@@ -1,5 +1,5 @@
 #include "ISConfig.h"
-#include "ISConstants.h"
+#include "ISConstantsOld.h"
 #include "ISAlgorithmOld.h"
 //-----------------------------------------------------------------------------
 ISConfig::ISConfig()

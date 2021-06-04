@@ -1,7 +1,7 @@
 #include "ISTcpQuery.h"
 #include "ISTcpConnector.h"
 #include "ISTcp.h"
-#include "ISConstants.h"
+#include "ISConstantsOld.h"
 #include "ISAlgorithmOld.h"
 #include "ISLocalization.h"
 #include "ISLogger.h"

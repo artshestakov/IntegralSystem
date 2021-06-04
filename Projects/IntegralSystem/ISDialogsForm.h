@@ -3,7 +3,7 @@
 #define _ISDIALOGSFORM_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "ISInterfaceDialogForm.h"
-#include "ISStructs.h"
+#include "ISStructsOld.h"
 #include "ISFieldEdits.h"
 #include "ISSelectListForm.h"
 //-----------------------------------------------------------------------------

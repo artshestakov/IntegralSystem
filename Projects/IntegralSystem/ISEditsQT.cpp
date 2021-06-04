@@ -1,6 +1,6 @@
 #include "ISEditsQT.h"
 #include "ISGui.h"
-#include "ISConstants.h"
+#include "ISConstantsOld.h"
 #include "ISContextMenu.h"
 #include "ISProperty.h"
 #include "ISLocalization.h"

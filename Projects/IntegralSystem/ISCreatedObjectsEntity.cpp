@@ -2,7 +2,7 @@
 #include "ISDialogsCommon.h"
 #include "ISLocalization.h"
 #include "ISInterfaceForm.h"
-#include "ISConstants.h"
+#include "ISConstantsOld.h"
 #include "ISAlgorithmOld.h"
 #include "ISGui.h"
 //-----------------------------------------------------------------------------

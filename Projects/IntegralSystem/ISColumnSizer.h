@@ -3,7 +3,7 @@
 #define _ISCOLUMNSIZER_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
-#include "ISStructs.h"
+#include "ISStructsOld.h"
 //-----------------------------------------------------------------------------
 class ISColumnSizer
 {

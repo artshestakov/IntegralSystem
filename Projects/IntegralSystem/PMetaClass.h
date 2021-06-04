@@ -3,7 +3,7 @@
 #define _PMETACLASS_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "ISNamespace.h"
-#include "ISTypedefs.h"
+#include "ISTypedefsOld.h"
 //-----------------------------------------------------------------------------
 struct PMetaBase
 {

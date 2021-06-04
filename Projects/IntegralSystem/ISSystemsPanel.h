@@ -1,7 +1,7 @@
 #pragma once
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
-#include "ISStructs.h"
+#include "ISStructsOld.h"
 //-----------------------------------------------------------------------------
 class ISSystemsPanel : public QWidget
 {

@@ -1,5 +1,5 @@
 #include "ISBaseTableView.h"
-#include "ISConstants.h"
+#include "ISConstantsOld.h"
 #include "ISBuffer.h"
 //-----------------------------------------------------------------------------
 ISBaseTableView::ISBaseTableView(QWidget *parent)

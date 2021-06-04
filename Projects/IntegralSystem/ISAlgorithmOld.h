@@ -3,7 +3,7 @@
 #define _ISALGORITHMOLD_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "ISSettingsDatabase.h"
-#include "ISTypedefs.h"
+#include "ISTypedefsOld.h"
 //-----------------------------------------------------------------------------
 #define POINTER_DELETE(POINTER) \
 if (POINTER) \

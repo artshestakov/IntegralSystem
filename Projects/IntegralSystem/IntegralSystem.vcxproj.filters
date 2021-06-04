@@ -403,9 +403,6 @@
     <ClInclude Include="ISConfig.h">
       <Filter>ISCORE\System</Filter>
     </ClInclude>
-    <ClInclude Include="ISConstants.h">
-      <Filter>ISCORE\System</Filter>
-    </ClInclude>
     <ClInclude Include="ISDebug.h">
       <Filter>ISCORE\System</Filter>
     </ClInclude>
@@ -415,16 +412,19 @@
     <ClInclude Include="ISLogger.h">
       <Filter>ISCORE\System</Filter>
     </ClInclude>
-    <ClInclude Include="ISStructs.h">
-      <Filter>ISCORE\System</Filter>
-    </ClInclude>
     <ClInclude Include="ISTrace.h">
       <Filter>ISCORE\System</Filter>
     </ClInclude>
-    <ClInclude Include="ISTypedefs.h">
+    <ClInclude Include="ISAlgorithmOld.h">
       <Filter>ISCORE\System</Filter>
     </ClInclude>
-    <ClInclude Include="ISAlgorithmOld.h">
+    <ClInclude Include="ISConstantsOld.h">
+      <Filter>ISCORE\System</Filter>
+    </ClInclude>
+    <ClInclude Include="ISTypedefsOld.h">
+      <Filter>ISCORE\System</Filter>
+    </ClInclude>
+    <ClInclude Include="ISStructsOld.h">
       <Filter>ISCORE\System</Filter>
     </ClInclude>
   </ItemGroup>

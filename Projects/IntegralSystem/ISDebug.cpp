@@ -1,5 +1,4 @@
 #include "ISDebug.h"
-#include "ISConstants.h"
 //-----------------------------------------------------------------------------
 void ShowDebugString(const char *Severity, const QString &String)
 {

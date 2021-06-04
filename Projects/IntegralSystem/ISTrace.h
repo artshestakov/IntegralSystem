@@ -2,7 +2,7 @@
 #ifndef _ISTRACE_H_INCLUDED
 #define _ISTRACE_H_INCLUDED
 //-----------------------------------------------------------------------------
-#include "ISTypedefs.h"
+#include "ISTypedefsOld.h"
 //-----------------------------------------------------------------------------
 #define ISTRACE_MSG(MESSAGE) ISTrace __trace_helper(__FUNCTION__, MESSAGE);
 #define ISTRACE() ISTrace __trace_helper(__FUNCTION__, QString());

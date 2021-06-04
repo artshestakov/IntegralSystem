@@ -2,7 +2,7 @@
 #include "ISGui.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
-#include "ISConstants.h"
+#include "ISConstantsOld.h"
 #include "ISLogger.h"
 //-----------------------------------------------------------------------------
 ISSplashScreen::ISSplashScreen(const QString &Message)

@@ -12,7 +12,7 @@
 #include "ISUserRoleEntity.h"
 #include "ISDelegates.h"
 #include "ISMetaData.h"
-#include "ISConstants.h"
+#include "ISConstantsOld.h"
 #include "ISColumnSizer.h"
 #include "ISExportWorker.h"
 #include "ISGui.h"

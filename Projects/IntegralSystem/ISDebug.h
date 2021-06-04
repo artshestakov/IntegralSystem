@@ -2,7 +2,7 @@
 #ifndef _ISDEBUG_H_INCLUDED
 #define _ISDEBUG_H_INCLUDED
 //-----------------------------------------------------------------------------
-#include "ISConstants.h"
+#include "ISConstantsOld.h"
 //-----------------------------------------------------------------------------
 void ShowDebugString(const char *Severity, const QString &String);
 void ShowDebugString(const QString &String);
