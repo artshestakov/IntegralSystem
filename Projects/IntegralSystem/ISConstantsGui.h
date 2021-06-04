@@ -17,5 +17,6 @@ const QFont   FONT_TAHOMA_9 = QFont("Tahoma", 9);
 const QFont   FONT_TAHOMA_9_BOLD = QFont("Tahoma", 9, QFont::Bold);
 const QFont   FONT_APPLICATION = FONT_TAHOMA_9;
 const QFont   FONT_APPLICATION_BOLD = FONT_TAHOMA_9_BOLD;
+
 //-----------------------------------------------------------------------------
 #endif
