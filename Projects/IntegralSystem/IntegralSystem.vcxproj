@@ -19,6 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ISAlgorithm.cpp" />
+    <ClCompile Include="ISAssert.cpp" />
     <ClCompile Include="ISAudioPlayerForm.cpp" />
     <ClCompile Include="ISBaseTableView.cpp" />
     <ClCompile Include="ISBuffer.cpp" />
@@ -31,9 +33,11 @@
     <ClCompile Include="ISCalendarWidget.cpp" />
     <ClCompile Include="ISColumnSizer.cpp" />
     <ClCompile Include="ISComboSearchWidgets.cpp" />
+    <ClCompile Include="ISConfig.cpp" />
     <ClCompile Include="ISContextMenu.cpp" />
     <ClCompile Include="ISControls.cpp" />
     <ClCompile Include="ISCreatedObjectsEntity.cpp" />
+    <ClCompile Include="ISDebug.cpp" />
     <ClCompile Include="ISDelegates.cpp" />
     <ClCompile Include="ISDialogsCommon.cpp" />
     <ClCompile Include="ISDialogsForm.cpp" />
@@ -58,8 +62,11 @@
     <ClCompile Include="ISListIndicatorWidget.cpp" />
     <ClCompile Include="ISListViewForm.cpp" />
     <ClCompile Include="ISListWidget.cpp" />
+    <ClCompile Include="ISLocalization.cpp" />
+    <ClCompile Include="ISLogger.cpp" />
     <ClCompile Include="ISMainWindow.cpp" />
     <ClCompile Include="ISMenuBar.cpp" />
+    <ClCompile Include="ISMetaData.cpp" />
     <ClCompile Include="ISMetaSystemsEntity.cpp" />
     <ClCompile Include="ISMonitorUserWidget.cpp" />
     <ClCompile Include="ISObjectFormBase.cpp" />
@@ -71,30 +78,57 @@
     <ClCompile Include="ISPopupMessage.cpp" />
     <ClCompile Include="ISProcessForm.cpp" />
     <ClCompile Include="ISProgressForm.cpp" />
+    <ClCompile Include="ISProperty.cpp" />
     <ClCompile Include="ISProtocolObjectListForm.cpp" />
     <ClCompile Include="ISScrollArea.cpp" />
     <ClCompile Include="ISSearchForm.cpp" />
     <ClCompile Include="ISSelectListForm.cpp" />
     <ClCompile Include="ISSettingFieldWidgets.cpp" />
+    <ClCompile Include="ISSettings.cpp" />
+    <ClCompile Include="ISSettingsDatabase.cpp" />
     <ClCompile Include="ISSettingsDatabaseObjectForm.cpp" />
     <ClCompile Include="ISSplashScreen.cpp" />
     <ClCompile Include="ISSubSystem.cpp" />
+    <ClCompile Include="ISSystem.cpp" />
     <ClCompile Include="ISSystemsPanel.cpp" />
     <ClCompile Include="ISTabBarMain.cpp" />
     <ClCompile Include="ISTabWidgetMain.cpp" />
+    <ClCompile Include="ISTcp.cpp" />
     <ClCompile Include="ISTcpConnector.cpp" />
     <ClCompile Include="ISTcpModels.cpp" />
     <ClCompile Include="ISTcpQuery.cpp" />
+    <ClCompile Include="ISTrace.cpp" />
     <ClCompile Include="ISUserObjectForm.cpp" />
     <ClCompile Include="ISUserRoleEntity.cpp" />
     <ClCompile Include="ISValidators.cpp" />
     <ClCompile Include="ISWaitWidget.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="StdAfx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="IntegralSystem.rc" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ISAlgorithm.h" />
+    <ClInclude Include="ISAssert.h" />
+    <ClInclude Include="ISConfig.h" />
+    <ClInclude Include="ISConstants.h" />
+    <ClInclude Include="ISDebug.h" />
+    <ClInclude Include="ISLocalization.h" />
+    <ClInclude Include="ISLogger.h" />
+    <ClInclude Include="ISNamespace.h" />
+    <ClInclude Include="ISProperty.h" />
+    <ClInclude Include="ISStructs.h" />
+    <ClInclude Include="ISSystem.h" />
+    <ClInclude Include="ISTrace.h" />
+    <ClInclude Include="ISTypedefs.h" />
+    <ClInclude Include="PMetaClass.h" />
+    <ClInclude Include="StdAfx.h" />
     <QtMoc Include="ISWaitWidget.h" />
     <QtMoc Include="ISUserObjectForm.h" />
     <QtMoc Include="ISSettingsDatabaseObjectForm.h" />
@@ -151,6 +185,7 @@
     <QtMoc Include="ISFlowLayout.h" />
     <ClInclude Include="ISGui.h" />
     <QtMoc Include="ISListWidget.h" />
+    <ClInclude Include="ISMetaData.h" />
     <ClInclude Include="ISMetaSystemsEntity.h" />
     <QtMoc Include="ISOilSphere.h" />
     <QtMoc Include="ISObjectInterface.h" />
@@ -163,6 +198,9 @@
     <QtMoc Include="ISTcpModels.h" />
     <QtMoc Include="ISSubSystem.h" />
     <QtMoc Include="ISScrollArea.h" />
+    <ClInclude Include="ISSettings.h" />
+    <ClInclude Include="ISSettingsDatabase.h" />
+    <ClInclude Include="ISTcp.h" />
     <ClInclude Include="ISTcpQuery.h" />
     <ClInclude Include="ISUserRoleEntity.h" />
     <QtMoc Include="ISValidators.h" />
@@ -170,6 +208,11 @@
   </ItemGroup>
   <ItemGroup>
     <QtRcc Include="..\..\Resources\IntegralSystem.qrc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\Resources\_OilSphere\OilSphere.xsf" />
+    <None Include="..\..\Resources\_OilSphere\OilSphere.xsn" />
+    <None Include="..\..\Resources\_OilSphere\OilSphere.xsr" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{C053A5FD-33FA-4841-B964-3C8CC6AF3F23}</ProjectGuid>
@@ -258,7 +301,7 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
-      <AdditionalIncludeDirectories>$(SolutionDir);.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;$(ProjectDir)..\..\Library\ISCore;$(QTDIR)\include;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtXml;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir);.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;$(QTDIR)\include;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtXml;$(SolutionDir)Components\OpenSSL\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;DEBUG</PreprocessorDefinitions>
       <WarningLevel>Level4</WarningLevel>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -268,11 +311,11 @@
       <SubSystem>Windows</SubSystem>
       <OutputFile>$(OutDir)\$(ProjectName).exe</OutputFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(QTDIR)\lib\;$(ProjectDir)..\..\Bin\$(Configuration)-$(Platform);$(ProjectDir)..\..\Deploy\$(Configuration)-$(Platform)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>ISCore.lib;qtmaind.lib;Qt5Cored.lib;Qt5Guid.lib;Qt5Multimediad.lib;Qt5Networkd.lib;Qt5Sqld.lib;Qt5Widgetsd.lib;Qt5Xmld.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(QTDIR)\lib\;$(ProjectDir)..\..\Components\OpenSSL\Lib-$(Platform);$(ProjectDir)..\..\Bin\$(Configuration)-$(Platform);$(ProjectDir)..\..\Deploy\$(Configuration)-$(Platform)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>qtmaind.lib;Qt5Cored.lib;Qt5Guid.lib;Qt5Multimediad.lib;Qt5Networkd.lib;Qt5Sqld.lib;Qt5Widgetsd.lib;Qt5Xmld.lib;Rpcrt4.lib;libcrypto.lib;libssl.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>$(ProjectDir)..\..\Components\LocalSearcher\$(Configuration)-$(Platform)\LocalSearcher.exe -L $(ProjectDir)..\..\Resources\Localization\IntegralSystem.lang $(ProjectDir)..\..\Resources\Localization\Objects.lang $(ProjectDir)..\..\Resources\Localization\Carat.lang -D $(ProjectDir)..\..\Library\ISCore $(ProjectDir)..\..\Projects\IntegralSystem</Command>
+      <Command>$(ProjectDir)..\..\Components\LocalSearcher\$(Configuration)-$(Platform)\LocalSearcher.exe -L $(ProjectDir)..\..\Resources\Localization\IntegralSystem.lang $(ProjectDir)..\..\Resources\Localization\Objects.lang $(ProjectDir)..\..\Resources\Localization\Carat.lang -D $(ProjectDir)..\..\Projects\IntegralSystem</Command>
     </PostBuildEvent>
     <PreBuildEvent>
       <Command>$(SolutionDir)Revision.cmd $(SolutionDir) $(Configuration) $(Platform)</Command>
@@ -285,7 +328,7 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
-      <AdditionalIncludeDirectories>$(SolutionDir);.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;$(ProjectDir)..\..\Library\ISCore;$(QTDIR64)\include;$(QTDIR64)\include\QtCore;$(QTDIR64)\include\QtGui;$(QTDIR64)\include\QtMultimedia;$(QTDIR64)\include\QtNetwork;$(QTDIR64)\include\QtSql;$(QTDIR64)\include\QtWidgets;$(QTDIR64)\include\QtXml;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir);.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;$(QTDIR64)\include;$(QTDIR64)\include\QtCore;$(QTDIR64)\include\QtGui;$(QTDIR64)\include\QtMultimedia;$(QTDIR64)\include\QtNetwork;$(QTDIR64)\include\QtSql;$(QTDIR64)\include\QtWidgets;$(QTDIR64)\include\QtXml;$(SolutionDir)Components\OpenSSL\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;DEBUG</PreprocessorDefinitions>
       <WarningLevel>Level4</WarningLevel>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -295,11 +338,11 @@
       <SubSystem>Windows</SubSystem>
       <OutputFile>$(OutDir)\$(ProjectName).exe</OutputFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(QTDIR64)\lib\;$(ProjectDir)..\..\Bin\$(Configuration)-$(Platform);$(ProjectDir)..\..\Deploy\$(Configuration)-$(Platform)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>ISCore.lib;qtmaind.lib;Qt5Cored.lib;Qt5Guid.lib;Qt5Multimediad.lib;Qt5Networkd.lib;Qt5Sqld.lib;Qt5Widgetsd.lib;Qt5Xmld.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(QTDIR64)\lib\;$(ProjectDir)..\..\Components\OpenSSL\Lib-$(Platform);$(ProjectDir)..\..\Bin\$(Configuration)-$(Platform);$(ProjectDir)..\..\Deploy\$(Configuration)-$(Platform)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>qtmaind.lib;Qt5Cored.lib;Qt5Guid.lib;Qt5Multimediad.lib;Qt5Networkd.lib;Qt5Sqld.lib;Qt5Widgetsd.lib;Qt5Xmld.lib;Rpcrt4.lib;libcrypto.lib;libssl.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>$(ProjectDir)..\..\Components\LocalSearcher\$(Configuration)-$(Platform)\LocalSearcher.exe -L $(ProjectDir)..\..\Resources\Localization\IntegralSystem.lang $(ProjectDir)..\..\Resources\Localization\Objects.lang $(ProjectDir)..\..\Resources\Localization\Carat.lang -D $(ProjectDir)..\..\Library\ISCore $(ProjectDir)..\..\Projects\IntegralSystem</Command>
+      <Command>$(ProjectDir)..\..\Components\LocalSearcher\$(Configuration)-$(Platform)\LocalSearcher.exe -L $(ProjectDir)..\..\Resources\Localization\IntegralSystem.lang $(ProjectDir)..\..\Resources\Localization\Objects.lang $(ProjectDir)..\..\Resources\Localization\Carat.lang -D $(ProjectDir)..\..\Projects\IntegralSystem</Command>
     </PostBuildEvent>
     <PreBuildEvent>
       <Command>$(SolutionDir)Revision.cmd $(SolutionDir) $(Configuration) $(Platform)</Command>
@@ -311,7 +354,7 @@
       <DebugInformationFormat />
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
-      <AdditionalIncludeDirectories>$(SolutionDir);.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;$(ProjectDir)..\..\Library\ISCore;$(QTDIR)\include;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtXml;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir);.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;$(QTDIR)\include;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtXml;$(SolutionDir)Components\OpenSSL\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32</PreprocessorDefinitions>
       <WarningLevel>Level4</WarningLevel>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -321,11 +364,11 @@
       <SubSystem>Windows</SubSystem>
       <OutputFile>$(OutDir)\$(ProjectName).exe</OutputFile>
       <GenerateDebugInformation>false</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(QTDIR)\lib\;$(ProjectDir)..\..\Bin\$(Configuration)-$(Platform);$(ProjectDir)..\..\Deploy\$(Configuration)-$(Platform)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>ISCore.lib;qtmain.lib;Qt5Core.lib;Qt5Gui.lib;Qt5Multimedia.lib;Qt5Network.lib;Qt5Sql.lib;Qt5Widgets.lib;Qt5Xml.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(QTDIR)\lib\;$(ProjectDir)..\..\Components\OpenSSL\Lib-$(Platform);$(ProjectDir)..\..\Bin\$(Configuration)-$(Platform);$(ProjectDir)..\..\Deploy\$(Configuration)-$(Platform)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>qtmain.lib;Qt5Core.lib;Qt5Gui.lib;Qt5Multimedia.lib;Qt5Network.lib;Qt5Sql.lib;Qt5Widgets.lib;Qt5Xml.lib;Rpcrt4.lib;libcrypto.lib;libssl.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>$(ProjectDir)..\..\Components\LocalSearcher\$(Configuration)-$(Platform)\LocalSearcher.exe -L $(ProjectDir)..\..\Resources\Localization\IntegralSystem.lang $(ProjectDir)..\..\Resources\Localization\Objects.lang $(ProjectDir)..\..\Resources\Localization\Carat.lang -D $(ProjectDir)..\..\Library\ISCore $(ProjectDir)..\..\Projects\IntegralSystem</Command>
+      <Command>$(ProjectDir)..\..\Components\LocalSearcher\$(Configuration)-$(Platform)\LocalSearcher.exe -L $(ProjectDir)..\..\Resources\Localization\IntegralSystem.lang $(ProjectDir)..\..\Resources\Localization\Objects.lang $(ProjectDir)..\..\Resources\Localization\Carat.lang -D $(ProjectDir)..\..\Projects\IntegralSystem</Command>
     </PostBuildEvent>
     <PreBuildEvent>
       <Command>$(SolutionDir)Revision.cmd $(SolutionDir) $(Configuration) $(Platform)</Command>
@@ -338,7 +381,7 @@
       </DebugInformationFormat>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
-      <AdditionalIncludeDirectories>$(SolutionDir);.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;$(ProjectDir)..\..\Library\ISCore;$(QTDIR64)\include;$(QTDIR64)\include\QtCore;$(QTDIR64)\include\QtGui;$(QTDIR64)\include\QtMultimedia;$(QTDIR64)\include\QtNetwork;$(QTDIR64)\include\QtSql;$(QTDIR64)\include\QtWidgets;$(QTDIR64)\include\QtXml;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir);.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;$(QTDIR64)\include;$(QTDIR64)\include\QtCore;$(QTDIR64)\include\QtGui;$(QTDIR64)\include\QtMultimedia;$(QTDIR64)\include\QtNetwork;$(QTDIR64)\include\QtSql;$(QTDIR64)\include\QtWidgets;$(QTDIR64)\include\QtXml;$(SolutionDir)Components\OpenSSL\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32</PreprocessorDefinitions>
       <WarningLevel>Level4</WarningLevel>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -348,11 +391,11 @@
       <SubSystem>Windows</SubSystem>
       <OutputFile>$(OutDir)\$(ProjectName).exe</OutputFile>
       <GenerateDebugInformation>false</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(QTDIR64)\lib\;$(ProjectDir)..\..\Bin\$(Configuration)-$(Platform);$(ProjectDir)..\..\Deploy\$(Configuration)-$(Platform)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>ISCore.lib;qtmain.lib;Qt5Core.lib;Qt5Gui.lib;Qt5Multimedia.lib;Qt5Network.lib;Qt5Sql.lib;Qt5Widgets.lib;Qt5Xml.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(QTDIR64)\lib\;$(ProjectDir)..\..\Components\OpenSSL\Lib-$(Platform);$(ProjectDir)..\..\Bin\$(Configuration)-$(Platform);$(ProjectDir)..\..\Deploy\$(Configuration)-$(Platform)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>qtmain.lib;Qt5Core.lib;Qt5Gui.lib;Qt5Multimedia.lib;Qt5Network.lib;Qt5Sql.lib;Qt5Widgets.lib;Qt5Xml.lib;Rpcrt4.lib;libcrypto.lib;libssl.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>$(ProjectDir)..\..\Components\LocalSearcher\$(Configuration)-$(Platform)\LocalSearcher.exe -L $(ProjectDir)..\..\Resources\Localization\IntegralSystem.lang $(ProjectDir)..\..\Resources\Localization\Objects.lang $(ProjectDir)..\..\Resources\Localization\Carat.lang -D $(ProjectDir)..\..\Library\ISCore $(ProjectDir)..\..\Projects\IntegralSystem</Command>
+      <Command>$(ProjectDir)..\..\Components\LocalSearcher\$(Configuration)-$(Platform)\LocalSearcher.exe -L $(ProjectDir)..\..\Resources\Localization\IntegralSystem.lang $(ProjectDir)..\..\Resources\Localization\Objects.lang $(ProjectDir)..\..\Resources\Localization\Carat.lang -D $(ProjectDir)..\..\Projects\IntegralSystem</Command>
     </PostBuildEvent>
     <PreBuildEvent>
       <Command>$(SolutionDir)Revision.cmd $(SolutionDir) $(Configuration) $(Platform)</Command>

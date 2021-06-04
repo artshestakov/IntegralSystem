@@ -1,0 +1,81 @@
+#pragma once
+#ifndef _ISMETADATA_H_INCLUDED
+#define _ISMETADATA_H_INCLUDED
+//-----------------------------------------------------------------------------
+#include "PMetaClass.h"
+#include "ISStructs.h"
+//-----------------------------------------------------------------------------
+class ISMetaData
+{
+public:
+    static ISMetaData& Instance();
+
+    QString GetErrorString() const;
+    bool Initialize(const QString &configuration_name, bool InitXSR, bool InitXSF); //Инициализация
+	bool Initialize(const QVariantList &VariantList); //Инициализация
+
+    PMetaTable* GetMetaTable(const QString &TableName); //Получить мета-таблицу по имени
+    PMetaField* GetMetaField(PMetaTable *MetaTable, const QString &FieldName); //Получить мета-поле из указанной таблицы
+    PMetaField* GetMetaField(const QString &TableName, const QString &FieldName); //Получить мета-поле из указанной таблицы
+
+    std::vector<PMetaFunction*> GetFunctions(); //Получить список всех функций
+    std::vector<PMetaTable*> GetTables(); //Получить список всех таблиц
+    std::vector<PMetaIndex*> GetIndexes(); //Получить список индексов для пользовательских полей
+    std::vector<PMetaForeign*> GetForeigns(); //Получить список внешних ключей
+    std::vector<PMetaResource*> GetResources(); //Получить ресурсы
+
+    bool CheckExistTable(const QString &TableName) const; //Проверить наличие указанной таблицы в базе
+    bool CheckExitField(PMetaTable *MetaTable, const QString &FieldName) const; //Проверить наличие указанного поля в указанной таблице
+	bool CheckExistResource(const QString &UID) const; //Проверить наличие ресурса по его идентификатору
+
+	const ISMetaType& GetType(const QString &type_name); //Получить тип по имени
+	const ISMetaType& GetType(ISNamespace::FieldType type); //Получить тип по типа
+
+protected:
+    bool CheckUniqueAllIdentifiers(bool InitXSR); //Проверка уникальности всех идентификаторов
+    bool CheckUniqueAllAliases(); //Проверка уникальности всех псевдонимов таблиц
+
+    bool InitializeXSN(); //Инициализация XSN
+    bool InitializeXSN(const QString &Content); //Инициализация контента XSN
+
+    bool InitializeXSNTable(QDomNode &DomNode); //Инициализация таблицы
+    void InitializeXSNTableSystemFields(PMetaTable *MetaTable); //Инициализация системных полей для таблицы
+    bool InitializeXSNTableFields(PMetaTable *MetaTable, const QDomNode &DomNode); //Инициализация полей таблицы
+    bool InitializeXSNTableIndexes(PMetaTable *MetaTable, const QDomNode &DomNode); //Инициализация индексов полей таблицы
+    bool InitializeXSNTableForeigns(PMetaTable *MetaTable, const QDomNode &DomNode); //Инициализация внешних ключей полей таблицы
+    bool InitializeXSNTableEscorts(PMetaTable *MetaTable, const QDomNode &DomNode); //Инициализация эскортов таблицы
+
+    bool InitializeXSR(); //Инициализация XSR
+    bool InitializeXSR(const QString &Content); //Инициализация файла XSR
+
+    bool InitializeXSF(); //Иницилизация XSF
+    bool InitializeXSF(const QString &Content); //Инициализация файла XSF
+
+private:
+    ISMetaData();
+    ~ISMetaData();
+	ISMetaData(const ISMetaData &) = delete;
+	ISMetaData(ISMetaData &&) = delete;
+	ISMetaData& operator=(const ISMetaData &) = delete;
+	ISMetaData& operator=(ISMetaData &&) = delete;
+
+private:
+    QString ErrorString;
+    QString ConfigurationName;
+
+    QDomNode GetChildDomNode(QDomNode &TableNode, const QString &TagName) const;
+
+    std::map<QString, PMetaFunction *> FunctionsMap; //Функции
+    std::map<QString, PMetaTable *> TablesMap; //Таблицы
+    std::vector<PMetaResource *> Resources; //Ресурсы
+
+    QString CurrentXSN; //Текущий обрабатываемый XSN
+    QString CurrentXSR; //Текущий обрабатываемый XSR
+    QString CurrentXSF; //Текущий обрабатываемый XSF
+    bool Initialized; //Флаг инициализации
+    std::vector<ISMetaType> VectorTypes; //Перечисление типов системы
+
+	ISCriticalSection CriticalSection;
+};
+//-----------------------------------------------------------------------------
+#endif

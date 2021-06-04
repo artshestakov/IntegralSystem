@@ -75,6 +75,24 @@
     <Filter Include="Widgets">
       <UniqueIdentifier>{040c871f-6705-4cf0-a3e0-1835e0ebd0dd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Settings">
+      <UniqueIdentifier>{d68e7d6c-3a7e-4e56-8c6f-42f4f4a28dd9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ISCORE">
+      <UniqueIdentifier>{033b37af-651d-4b29-bc73-e93b72432c37}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ISCORE\MetaData">
+      <UniqueIdentifier>{6a0b3a04-4f56-4202-b15f-710d8fa77b31}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ISCORE\Resources">
+      <UniqueIdentifier>{36325662-190f-4078-8011-517354fa1496}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ISCORE\Resources\OilSphere">
+      <UniqueIdentifier>{b293f2f6-ac72-4ef5-8e1d-66991d71d408}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ISCORE\System">
+      <UniqueIdentifier>{e5fbd065-57d0-4002-8a89-2ff81bb65895}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -290,6 +308,48 @@
     <ClCompile Include="ISWaitWidget.cpp">
       <Filter>Widgets</Filter>
     </ClCompile>
+    <ClCompile Include="ISTcp.cpp">
+      <Filter>Protocol</Filter>
+    </ClCompile>
+    <ClCompile Include="ISSettings.cpp">
+      <Filter>Settings</Filter>
+    </ClCompile>
+    <ClCompile Include="ISSettingsDatabase.cpp">
+      <Filter>Settings</Filter>
+    </ClCompile>
+    <ClCompile Include="ISMetaData.cpp">
+      <Filter>ISCORE\MetaData</Filter>
+    </ClCompile>
+    <ClCompile Include="ISAlgorithm.cpp">
+      <Filter>ISCORE\System</Filter>
+    </ClCompile>
+    <ClCompile Include="ISAssert.cpp">
+      <Filter>ISCORE\System</Filter>
+    </ClCompile>
+    <ClCompile Include="ISConfig.cpp">
+      <Filter>ISCORE\System</Filter>
+    </ClCompile>
+    <ClCompile Include="ISDebug.cpp">
+      <Filter>ISCORE\System</Filter>
+    </ClCompile>
+    <ClCompile Include="ISLocalization.cpp">
+      <Filter>ISCORE\System</Filter>
+    </ClCompile>
+    <ClCompile Include="ISLogger.cpp">
+      <Filter>ISCORE\System</Filter>
+    </ClCompile>
+    <ClCompile Include="ISProperty.cpp">
+      <Filter>ISCORE\System</Filter>
+    </ClCompile>
+    <ClCompile Include="ISSystem.cpp">
+      <Filter>ISCORE\System</Filter>
+    </ClCompile>
+    <ClCompile Include="ISTrace.cpp">
+      <Filter>ISCORE\System</Filter>
+    </ClCompile>
+    <ClCompile Include="StdAfx.cpp">
+      <Filter>ISCORE\System</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="IntegralSystem.rc">
@@ -330,6 +390,63 @@
     <ClInclude Include="..\..\ISRevision.h" />
     <ClInclude Include="ISConstantsGui.h">
       <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="ISTcp.h">
+      <Filter>Protocol</Filter>
+    </ClInclude>
+    <ClInclude Include="ISSettings.h">
+      <Filter>Settings</Filter>
+    </ClInclude>
+    <ClInclude Include="ISSettingsDatabase.h">
+      <Filter>Settings</Filter>
+    </ClInclude>
+    <ClInclude Include="ISMetaData.h">
+      <Filter>ISCORE\MetaData</Filter>
+    </ClInclude>
+    <ClInclude Include="PMetaClass.h">
+      <Filter>ISCORE\MetaData</Filter>
+    </ClInclude>
+    <ClInclude Include="ISAlgorithm.h">
+      <Filter>ISCORE\System</Filter>
+    </ClInclude>
+    <ClInclude Include="ISAssert.h">
+      <Filter>ISCORE\System</Filter>
+    </ClInclude>
+    <ClInclude Include="ISConfig.h">
+      <Filter>ISCORE\System</Filter>
+    </ClInclude>
+    <ClInclude Include="ISConstants.h">
+      <Filter>ISCORE\System</Filter>
+    </ClInclude>
+    <ClInclude Include="ISDebug.h">
+      <Filter>ISCORE\System</Filter>
+    </ClInclude>
+    <ClInclude Include="ISLocalization.h">
+      <Filter>ISCORE\System</Filter>
+    </ClInclude>
+    <ClInclude Include="ISLogger.h">
+      <Filter>ISCORE\System</Filter>
+    </ClInclude>
+    <ClInclude Include="ISNamespace.h">
+      <Filter>ISCORE\System</Filter>
+    </ClInclude>
+    <ClInclude Include="ISProperty.h">
+      <Filter>ISCORE\System</Filter>
+    </ClInclude>
+    <ClInclude Include="ISStructs.h">
+      <Filter>ISCORE\System</Filter>
+    </ClInclude>
+    <ClInclude Include="ISSystem.h">
+      <Filter>ISCORE\System</Filter>
+    </ClInclude>
+    <ClInclude Include="ISTrace.h">
+      <Filter>ISCORE\System</Filter>
+    </ClInclude>
+    <ClInclude Include="ISTypedefs.h">
+      <Filter>ISCORE\System</Filter>
+    </ClInclude>
+    <ClInclude Include="StdAfx.h">
+      <Filter>ISCORE\System</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -518,5 +635,16 @@
     <QtRcc Include="..\..\Resources\IntegralSystem.qrc">
       <Filter>Resource Files</Filter>
     </QtRcc>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\Resources\_OilSphere\OilSphere.xsf">
+      <Filter>ISCORE\Resources\OilSphere</Filter>
+    </None>
+    <None Include="..\..\Resources\_OilSphere\OilSphere.xsn">
+      <Filter>ISCORE\Resources\OilSphere</Filter>
+    </None>
+    <None Include="..\..\Resources\_OilSphere\OilSphere.xsr">
+      <Filter>ISCORE\Resources\OilSphere</Filter>
+    </None>
   </ItemGroup>
 </Project>

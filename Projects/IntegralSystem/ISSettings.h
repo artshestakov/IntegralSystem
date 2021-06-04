@@ -2,10 +2,9 @@
 #ifndef _ISSETTINGS_H_INCLUDED
 #define _ISSETTINGS_H_INCLUDED
 //-----------------------------------------------------------------------------
-#include "iscore_global.h"
 #include "ISStructs.h"
 //-----------------------------------------------------------------------------
-class ISCORE_EXPORT ISSettings
+class ISSettings
 {
 public:
 	static ISSettings& Instance();

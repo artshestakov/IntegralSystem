@@ -1,9 +1,8 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "iscore_global.h"
 #include "ISTypedefs.h"
 //-----------------------------------------------------------------------------
-class ISCORE_EXPORT ISSettingsDatabase
+class ISSettingsDatabase
 {
 public:
 	static ISSettingsDatabase& Instance();

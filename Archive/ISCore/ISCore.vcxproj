@@ -226,10 +226,7 @@
     <ClCompile Include="ISLogger.cpp" />
     <ClCompile Include="ISMetaData.cpp" />
     <ClCompile Include="ISProperty.cpp" />
-    <ClCompile Include="ISSettings.cpp" />
-    <ClCompile Include="ISSettingsDatabase.cpp" />
     <ClCompile Include="ISSystem.cpp" />
-    <ClCompile Include="ISTcp.cpp" />
     <ClCompile Include="ISTrace.cpp" />
     <ClCompile Include="StdAfx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -251,12 +248,9 @@
     <ClInclude Include="ISProperty.h" />
     <ClInclude Include="ISStructs.h" />
     <ClInclude Include="ISSystem.h" />
-    <ClInclude Include="ISTcp.h" />
     <ClInclude Include="ISTrace.h" />
     <ClInclude Include="ISTypedefs.h" />
     <ClInclude Include="StdAfx.h" />
-    <ClInclude Include="ISSettings.h" />
-    <ClInclude Include="ISSettingsDatabase.h" />
     <ClInclude Include="ISMetaData.h" />
     <ClInclude Include="PMetaClass.h" />
   </ItemGroup>

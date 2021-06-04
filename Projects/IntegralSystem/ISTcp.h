@@ -2,11 +2,10 @@
 #ifndef _ISTCP_H_INCLUDED
 #define _ISTCP_H_INCLUDED
 //-----------------------------------------------------------------------------
-#include "iscore_global.h"
 #include "StdAfx.h"
 #include "ISNamespace.h"
 //-----------------------------------------------------------------------------
-class ISCORE_EXPORT ISTcp
+class ISTcp
 {
 public:
 	static unsigned int GetQuerySizeFromBuffer(QByteArray &ByteArray, bool &Ok); //ѕолучить размер запроса из его содержимого

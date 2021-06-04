@@ -11,25 +11,13 @@
     <Filter Include="Resources\_OilSphere">
       <UniqueIdentifier>{922d7d9c-d456-48a0-864f-b5de44c10fc1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Settings">
-      <UniqueIdentifier>{c2230eda-9c5a-49e6-bb10-cf55dc2c5a61}</UniqueIdentifier>
-    </Filter>
     <Filter Include="System">
       <UniqueIdentifier>{058f6e61-3fee-4c74-8f53-c52804ffc704}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Protocol">
-      <UniqueIdentifier>{a1892984-fec4-4959-954d-64dc25248b0d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ISMetaData.cpp">
       <Filter>MetaData</Filter>
-    </ClCompile>
-    <ClCompile Include="ISSettings.cpp">
-      <Filter>Settings</Filter>
-    </ClCompile>
-    <ClCompile Include="ISSettingsDatabase.cpp">
-      <Filter>Settings</Filter>
     </ClCompile>
     <ClCompile Include="ISAssert.cpp">
       <Filter>System</Filter>
@@ -55,9 +43,6 @@
     <ClCompile Include="StdAfx.cpp">
       <Filter>System</Filter>
     </ClCompile>
-    <ClCompile Include="ISTcp.cpp">
-      <Filter>Protocol</Filter>
-    </ClCompile>
     <ClCompile Include="ISAlgorithm.cpp">
       <Filter>System</Filter>
     </ClCompile>
@@ -71,9 +56,6 @@
     </ClInclude>
     <ClInclude Include="PMetaClass.h">
       <Filter>MetaData</Filter>
-    </ClInclude>
-    <ClInclude Include="ISSettingsDatabase.h">
-      <Filter>Settings</Filter>
     </ClInclude>
     <ClInclude Include="iscore_global.h" />
     <ClInclude Include="ISAlgorithm.h">
@@ -114,12 +96,6 @@
     </ClInclude>
     <ClInclude Include="StdAfx.h">
       <Filter>System</Filter>
-    </ClInclude>
-    <ClInclude Include="ISTcp.h">
-      <Filter>Protocol</Filter>
-    </ClInclude>
-    <ClInclude Include="ISSettings.h">
-      <Filter>Settings</Filter>
     </ClInclude>
     <ClInclude Include="ISDebug.h">
       <Filter>System</Filter>
