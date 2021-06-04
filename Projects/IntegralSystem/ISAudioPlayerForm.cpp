@@ -2,7 +2,7 @@
 #include "ISBuffer.h"
 #include "ISLocalization.h"
 #include "ISDialogsCommon.h"
-#include "ISAlgorithm.h"
+#include "ISAlgorithmOld.h"
 //-----------------------------------------------------------------------------
 ISAudioPlayerForm::ISAudioPlayerForm()
     : ISInterfaceForm(nullptr),

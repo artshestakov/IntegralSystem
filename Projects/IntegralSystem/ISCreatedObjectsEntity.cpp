@@ -3,7 +3,7 @@
 #include "ISLocalization.h"
 #include "ISInterfaceForm.h"
 #include "ISConstants.h"
-#include "ISAlgorithm.h"
+#include "ISAlgorithmOld.h"
 #include "ISGui.h"
 //-----------------------------------------------------------------------------
 ISCreatedObjectsEntity::ISCreatedObjectsEntity() : QObject()
@@ -38,7 +38,7 @@ void ISCreatedObjectsEntity::UnregisterForm(const QString &FormUID)
 //-----------------------------------------------------------------------------
 bool ISCreatedObjectsEntity::CheckExistForms()
 {
-    std::vector<ISObjectFormBase*> Forms = ISAlgorithm::ConvertMapToValues<QString, ISObjectFormBase*>(ObjectForms);
+    std::vector<ISObjectFormBase*> Forms = ISAlgorithmOld::ConvertMapToValues<QString, ISObjectFormBase*>(ObjectForms);
     int CountNotSaved = 0;
     QString DetailedText;
 

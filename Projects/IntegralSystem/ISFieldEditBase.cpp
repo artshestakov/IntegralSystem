@@ -4,7 +4,7 @@
 #include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISDialogsCommon.h"
-#include "ISAlgorithm.h"
+#include "ISAlgorithmOld.h"
 //-----------------------------------------------------------------------------
 ISFieldEditBase::ISFieldEditBase(QWidget *parent)
     : QWidget(parent),

@@ -11,7 +11,7 @@ ISMetaSystemsEntity::~ISMetaSystemsEntity()
 {
     while (!Systems.empty())
     {
-        delete ISAlgorithm::VectorTakeBack(Systems);
+        delete ISAlgorithmOld::VectorTakeBack(Systems);
     }
 }
 //-----------------------------------------------------------------------------

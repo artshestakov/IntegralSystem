@@ -19,7 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ISAlgorithm.cpp" />
+    <ClCompile Include="ISAlgorithmOld.cpp" />
     <ClCompile Include="ISAssert.cpp" />
     <ClCompile Include="ISAudioPlayerForm.cpp" />
     <ClCompile Include="ISBaseTableView.cpp" />
@@ -106,7 +106,7 @@
     <ResourceCompile Include="IntegralSystem.rc" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ISAlgorithm.h" />
+    <ClInclude Include="ISAlgorithmOld.h" />
     <ClInclude Include="ISAssert.h" />
     <ClInclude Include="ISConfig.h" />
     <ClInclude Include="ISConstants.h" />
@@ -299,7 +299,7 @@
       <SubSystem>Windows</SubSystem>
       <OutputFile>$(OutDir)\$(ProjectName).exe</OutputFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(QTDIR)\lib\;$(ProjectDir)..\..\BinSTD\$(Configuration)-$(Platform);$(ProjectDir)..\..\Components\OpenSSL\Lib-$(Platform);$(ProjectDir)..\..\Bin\$(Configuration)-$(Platform);$(ProjectDir)..\..\Deploy\$(Configuration)-$(Platform)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(QTDIR)\lib\;$(ProjectDir)..\..\Bin\$(Configuration)-$(Platform);$(ProjectDir)..\..\Components\OpenSSL\Lib-$(Platform);$(ProjectDir)..\..\Bin\$(Configuration)-$(Platform);$(ProjectDir)..\..\Deploy\$(Configuration)-$(Platform)</AdditionalLibraryDirectories>
       <AdditionalDependencies>ISCore.lib;qtmaind.lib;Qt5Cored.lib;Qt5Guid.lib;Qt5Multimediad.lib;Qt5Networkd.lib;Qt5Sqld.lib;Qt5Widgetsd.lib;Qt5Xmld.lib;Rpcrt4.lib;libcrypto.lib;libssl.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
@@ -316,8 +316,8 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
-      <AdditionalIncludeDirectories>$(SolutionDir);.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;$(QTDIR64)\include;$(QTDIR64)\include\QtCore;$(QTDIR64)\include\QtGui;$(QTDIR64)\include\QtMultimedia;$(QTDIR64)\include\QtNetwork;$(QTDIR64)\include\QtSql;$(QTDIR64)\include\QtWidgets;$(QTDIR64)\include\QtXml;$(SolutionDir)Components\OpenSSL\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;DEBUG</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir);.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;$(SolutionDir)LibrarySTD\ISCore;$(QTDIR64)\include;$(QTDIR64)\include\QtCore;$(QTDIR64)\include\QtGui;$(QTDIR64)\include\QtMultimedia;$(QTDIR64)\include\QtNetwork;$(QTDIR64)\include\QtSql;$(QTDIR64)\include\QtWidgets;$(QTDIR64)\include\QtXml;$(SolutionDir)Components\OpenSSL\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;DEBUG;QT_USE;_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
       <WarningLevel>Level4</WarningLevel>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <TreatWarningAsError>true</TreatWarningAsError>
@@ -326,8 +326,8 @@
       <SubSystem>Windows</SubSystem>
       <OutputFile>$(OutDir)\$(ProjectName).exe</OutputFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(QTDIR64)\lib\;$(ProjectDir)..\..\Components\OpenSSL\Lib-$(Platform);$(ProjectDir)..\..\Bin\$(Configuration)-$(Platform);$(ProjectDir)..\..\Deploy\$(Configuration)-$(Platform)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>qtmaind.lib;Qt5Cored.lib;Qt5Guid.lib;Qt5Multimediad.lib;Qt5Networkd.lib;Qt5Sqld.lib;Qt5Widgetsd.lib;Qt5Xmld.lib;Rpcrt4.lib;libcrypto.lib;libssl.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(QTDIR64)\lib\;$(ProjectDir)..\..\Bin\$(Configuration)-$(Platform);$(ProjectDir)..\..\Components\OpenSSL\Lib-$(Platform);$(ProjectDir)..\..\Bin\$(Configuration)-$(Platform);$(ProjectDir)..\..\Deploy\$(Configuration)-$(Platform)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>ISCore.lib;qtmaind.lib;Qt5Cored.lib;Qt5Guid.lib;Qt5Multimediad.lib;Qt5Networkd.lib;Qt5Sqld.lib;Qt5Widgetsd.lib;Qt5Xmld.lib;Rpcrt4.lib;libcrypto.lib;libssl.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>$(ProjectDir)..\..\Components\LocalSearcher\$(Configuration)-$(Platform)\LocalSearcher.exe -L $(ProjectDir)..\..\Resources\Localization\IntegralSystem.lang $(ProjectDir)..\..\Resources\Localization\Objects.lang $(ProjectDir)..\..\Resources\Localization\Carat.lang -D $(ProjectDir)..\..\Projects\IntegralSystem</Command>
@@ -342,8 +342,8 @@
       <DebugInformationFormat />
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
-      <AdditionalIncludeDirectories>$(SolutionDir);.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;$(QTDIR)\include;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtXml;$(SolutionDir)Components\OpenSSL\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir);.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;$(SolutionDir)LibrarySTD\ISCore;$(QTDIR)\include;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtXml;$(SolutionDir)Components\OpenSSL\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;QT_USE;_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
       <WarningLevel>Level4</WarningLevel>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <TreatWarningAsError>true</TreatWarningAsError>
@@ -353,7 +353,7 @@
       <OutputFile>$(OutDir)\$(ProjectName).exe</OutputFile>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(QTDIR)\lib\;$(ProjectDir)..\..\Components\OpenSSL\Lib-$(Platform);$(ProjectDir)..\..\Bin\$(Configuration)-$(Platform);$(ProjectDir)..\..\Deploy\$(Configuration)-$(Platform)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>qtmain.lib;Qt5Core.lib;Qt5Gui.lib;Qt5Multimedia.lib;Qt5Network.lib;Qt5Sql.lib;Qt5Widgets.lib;Qt5Xml.lib;Rpcrt4.lib;libcrypto.lib;libssl.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>ISCore.lib;qtmain.lib;Qt5Core.lib;Qt5Gui.lib;Qt5Multimedia.lib;Qt5Network.lib;Qt5Sql.lib;Qt5Widgets.lib;Qt5Xml.lib;Rpcrt4.lib;libcrypto.lib;libssl.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>$(ProjectDir)..\..\Components\LocalSearcher\$(Configuration)-$(Platform)\LocalSearcher.exe -L $(ProjectDir)..\..\Resources\Localization\IntegralSystem.lang $(ProjectDir)..\..\Resources\Localization\Objects.lang $(ProjectDir)..\..\Resources\Localization\Carat.lang -D $(ProjectDir)..\..\Projects\IntegralSystem</Command>
@@ -369,8 +369,8 @@
       </DebugInformationFormat>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
-      <AdditionalIncludeDirectories>$(SolutionDir);.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;$(QTDIR64)\include;$(QTDIR64)\include\QtCore;$(QTDIR64)\include\QtGui;$(QTDIR64)\include\QtMultimedia;$(QTDIR64)\include\QtNetwork;$(QTDIR64)\include\QtSql;$(QTDIR64)\include\QtWidgets;$(QTDIR64)\include\QtXml;$(SolutionDir)Components\OpenSSL\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir);.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;$(SolutionDir)LibrarySTD\ISCore;$(QTDIR64)\include;$(QTDIR64)\include\QtCore;$(QTDIR64)\include\QtGui;$(QTDIR64)\include\QtMultimedia;$(QTDIR64)\include\QtNetwork;$(QTDIR64)\include\QtSql;$(QTDIR64)\include\QtWidgets;$(QTDIR64)\include\QtXml;$(SolutionDir)Components\OpenSSL\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;QT_USE;_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
       <WarningLevel>Level4</WarningLevel>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <TreatWarningAsError>true</TreatWarningAsError>
@@ -379,8 +379,8 @@
       <SubSystem>Windows</SubSystem>
       <OutputFile>$(OutDir)\$(ProjectName).exe</OutputFile>
       <GenerateDebugInformation>false</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(QTDIR64)\lib\;$(ProjectDir)..\..\Components\OpenSSL\Lib-$(Platform);$(ProjectDir)..\..\Bin\$(Configuration)-$(Platform);$(ProjectDir)..\..\Deploy\$(Configuration)-$(Platform)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>qtmain.lib;Qt5Core.lib;Qt5Gui.lib;Qt5Multimedia.lib;Qt5Network.lib;Qt5Sql.lib;Qt5Widgets.lib;Qt5Xml.lib;Rpcrt4.lib;libcrypto.lib;libssl.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(QTDIR64)\lib\;$(ProjectDir)..\..\Bin\$(Configuration)-$(Platform);$(ProjectDir)..\..\Components\OpenSSL\Lib-$(Platform);$(ProjectDir)..\..\Bin\$(Configuration)-$(Platform);$(ProjectDir)..\..\Deploy\$(Configuration)-$(Platform)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>ISCore.lib;qtmain.lib;Qt5Core.lib;Qt5Gui.lib;Qt5Multimedia.lib;Qt5Network.lib;Qt5Sql.lib;Qt5Widgets.lib;Qt5Xml.lib;Rpcrt4.lib;libcrypto.lib;libssl.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>$(ProjectDir)..\..\Components\LocalSearcher\$(Configuration)-$(Platform)\LocalSearcher.exe -L $(ProjectDir)..\..\Resources\Localization\IntegralSystem.lang $(ProjectDir)..\..\Resources\Localization\Objects.lang $(ProjectDir)..\..\Resources\Localization\Carat.lang -D $(ProjectDir)..\..\Projects\IntegralSystem</Command>

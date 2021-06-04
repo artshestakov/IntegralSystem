@@ -61,7 +61,7 @@ ISDesktopParagraph::ISDesktopParagraph(QWidget *parent)
     {
         if (ISUserRoleEntity::Instance().CheckAccessSpecial(CONST_UID_GROUP_ACCESS_SPECIAL_DESKTOP))
         {
-            DesktopWidget = ISAlgorithm::CreatePointer<QWidget *>(DesktopFormName, Q_ARG(QWidget *, this));
+            DesktopWidget = ISAlgorithmOld::CreatePointer<QWidget *>(DesktopFormName, Q_ARG(QWidget *, this));
             MainLayout->addWidget(DesktopWidget);
         }
         else
@@ -171,7 +171,7 @@ void ISWorkspaceParagraph::ClickedSubSystem(const QString &SubSystemUID, const Q
     }
     else if (!MetaSubSystem->ClassName.isEmpty()) //Открытие класса (виджета)
     {
-        CentralForm = ISAlgorithm::CreatePointer<ISInterfaceMetaForm *>(MetaSubSystem->ClassName, Q_ARG(QWidget *, this));
+        CentralForm = ISAlgorithmOld::CreatePointer<ISInterfaceMetaForm *>(MetaSubSystem->ClassName, Q_ARG(QWidget *, this));
     }
     connect(CentralForm, &ISListBaseForm::AddFormFromTab, this, &ISWorkspaceParagraph::AddObjectForm);
     TabWidget->insertTab(0, CentralForm, IconSubSystem, MetaSubSystem->LocalName);
@@ -335,7 +335,7 @@ void ISCalendarParagraph::ReloadEvents(int Year, int Month)
             unsigned int Day = EventMap.take("Day").toUInt();
             EventsMap[Day].append(EventMap);
         }
-        CalendarPanel->SetDays(ISAlgorithm::ConvertMapToKeys(EventsMap));
+        CalendarPanel->SetDays(ISAlgorithmOld::ConvertMapToKeys(EventsMap));
         SelectedDateChanged();
     }
     else

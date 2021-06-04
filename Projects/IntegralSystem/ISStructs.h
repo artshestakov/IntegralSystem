@@ -7,7 +7,7 @@
 #include "ISConstants.h"
 #include "ISAssert.h"
 #include "ISTypedefs.h"
-#include "ISAlgorithm.h"
+#include "ISAlgorithmOld.h"
 //-----------------------------------------------------------------------------
 struct ISMetaType
 {
@@ -58,7 +58,7 @@ struct ISMetaSettingsGroup
 	{
 		while (!Settings.empty())
 		{
-			delete ISAlgorithm::VectorTakeBack(Settings);
+			delete ISAlgorithmOld::VectorTakeBack(Settings);
 		}
 	}
 
@@ -102,7 +102,7 @@ struct ISMetaSystem
 	{
 		while (!SubSystems.empty())
 		{
-			delete ISAlgorithm::VectorTakeBack(SubSystems);
+			delete ISAlgorithmOld::VectorTakeBack(SubSystems);
 		}
 	}
 

@@ -1,5 +1,5 @@
 #include "ISColumnSizer.h"
-#include "ISAlgorithm.h"
+#include "ISAlgorithmOld.h"
 //-----------------------------------------------------------------------------
 ISColumnSizer::ISColumnSizer()
 {

@@ -1,6 +1,6 @@
 #include "ISConfig.h"
 #include "ISConstants.h"
-#include "ISAlgorithm.h"
+#include "ISAlgorithmOld.h"
 //-----------------------------------------------------------------------------
 ISConfig::ISConfig()
 	: ErrorString(NO_ERROR_STRING),

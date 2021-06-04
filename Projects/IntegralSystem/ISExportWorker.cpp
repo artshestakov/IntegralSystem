@@ -137,7 +137,7 @@ bool ISExportCSV::Export()
 
         if (!SelectedRows.empty()) //Если есть выделенные строки
         {
-            if (!ISAlgorithm::VectorContains(SelectedRows, Row))
+            if (!ISAlgorithmOld::VectorContains(SelectedRows, Row))
             {
                 continue;
             }
@@ -251,7 +251,7 @@ bool ISExportHTML::Export()
 
         if (!SelectedRows.empty()) //Если есть выделенные строки
         {
-            if (!ISAlgorithm::VectorContains(SelectedRows, Row))
+            if (!ISAlgorithmOld::VectorContains(SelectedRows, Row))
             {
                 continue;
             }
@@ -340,7 +340,7 @@ bool ISExportJSON::Export()
 
         if (!SelectedRows.empty()) //Если есть выделенные строки
         {
-            if (!ISAlgorithm::VectorContains(SelectedRows, Row))
+            if (!ISAlgorithmOld::VectorContains(SelectedRows, Row))
             {
                 continue;
             }
@@ -424,7 +424,7 @@ bool ISExportXML::Export()
 
         if (!SelectedRows.empty()) //Если есть выделенные строки
         {
-            if (!ISAlgorithm::VectorContains(SelectedRows, Row))
+            if (!ISAlgorithmOld::VectorContains(SelectedRows, Row))
             {
                 continue;
             }

@@ -1,6 +1,6 @@
 #include "ISTrace.h"
 #include "ISLogger.h"
-#include "ISAlgorithm.h"
+#include "ISAlgorithmOld.h"
 //-----------------------------------------------------------------------------
 ISTrace::ISTrace(const QString &function_name, const QString &message_text)
 	: FunctionName(function_name)
@@ -11,11 +11,11 @@ ISTrace::ISTrace(const QString &function_name, const QString &message_text)
 		MessageText += " | " + message_text;
 	}
 	ISLOGGER_T(MessageText);
-	TimePoint = ISAlgorithm::GetTick();
+	TimePoint = ISAlgorithmOld::GetTick();
 }
 //-----------------------------------------------------------------------------
 ISTrace::~ISTrace()
 {
-	ISLOGGER_T(QString("End %1 %2 msec").arg(FunctionName).arg(ISAlgorithm::GetTickDiff(ISAlgorithm::GetTick(), TimePoint)));
+	ISLOGGER_T(QString("End %1 %2 msec").arg(FunctionName).arg(ISAlgorithmOld::GetTickDiff(ISAlgorithmOld::GetTick(), TimePoint)));
 }
 //-----------------------------------------------------------------------------

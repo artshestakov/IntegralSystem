@@ -320,9 +320,6 @@
     <ClCompile Include="ISMetaData.cpp">
       <Filter>ISCORE\MetaData</Filter>
     </ClCompile>
-    <ClCompile Include="ISAlgorithm.cpp">
-      <Filter>ISCORE\System</Filter>
-    </ClCompile>
     <ClCompile Include="ISAssert.cpp">
       <Filter>ISCORE\System</Filter>
     </ClCompile>
@@ -339,6 +336,9 @@
       <Filter>ISCORE\System</Filter>
     </ClCompile>
     <ClCompile Include="ISTrace.cpp">
+      <Filter>ISCORE\System</Filter>
+    </ClCompile>
+    <ClCompile Include="ISAlgorithmOld.cpp">
       <Filter>ISCORE\System</Filter>
     </ClCompile>
   </ItemGroup>
@@ -397,9 +397,6 @@
     <ClInclude Include="PMetaClass.h">
       <Filter>ISCORE\MetaData</Filter>
     </ClInclude>
-    <ClInclude Include="ISAlgorithm.h">
-      <Filter>ISCORE\System</Filter>
-    </ClInclude>
     <ClInclude Include="ISAssert.h">
       <Filter>ISCORE\System</Filter>
     </ClInclude>
@@ -425,6 +422,9 @@
       <Filter>ISCORE\System</Filter>
     </ClInclude>
     <ClInclude Include="ISTypedefs.h">
+      <Filter>ISCORE\System</Filter>
+    </ClInclude>
+    <ClInclude Include="ISAlgorithmOld.h">
       <Filter>ISCORE\System</Filter>
     </ClInclude>
   </ItemGroup>

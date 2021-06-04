@@ -11,14 +11,14 @@
 #include "ISPopupMessage.h"
 #include "ISCreatedObjectsEntity.h"
 #include "ISObjects.h"
-#include "ISAlgorithm.h"
+#include "ISAlgorithmOld.h"
 #include "ISProperty.h"
 #include "ISConfig.h"
 #include "ISTcpConnector.h"
 #include "ISDialogsForm.h"
 #include "ISPopupMessage.h"
 #include "ISTcpQuery.h"
-#include "ISAlgorithm.h"
+#include "ISAlgorithmOld.h"
 #include "ISConstantsGui.h"
 //-----------------------------------------------------------------------------
 ISMainWindow::ISMainWindow(QWidget *parent)
@@ -54,7 +54,7 @@ ISMainWindow::ISMainWindow(QWidget *parent)
     GetMainLayout()->addWidget(StackedWidget);
     for (ISMetaParagraph *MetaParagraph : ISParagraphEntity::Instance().GetParagraphs())
     {
-        Paragraphs[MetaParagraph->UID] = StackedWidget->addWidget(ISAlgorithm::CreatePointer<ISParagraphBaseForm *>(MetaParagraph->ClassName, Q_ARG(QWidget *, this)));
+        Paragraphs[MetaParagraph->UID] = StackedWidget->addWidget(ISAlgorithmOld::CreatePointer<ISParagraphBaseForm *>(MetaParagraph->ClassName, Q_ARG(QWidget *, this)));
     }
 
     connect(&ISTcpConnector::Instance(), &ISTcpConnector::Reconnect, this, &ISMainWindow::Reconnect);
@@ -191,7 +191,7 @@ void ISMainWindow::Reconnect()
         ISGui::SetWaitGlobalCursor(false);
 
         ISTcpQuery qReAuth(API_AUTH);
-        qReAuth.BindValue("Hash", ISAlgorithm::StringToSha256(ISBuffer::Instance().CurrentUserInfo.Login.toStdString() + ISBuffer::Instance().CurrentUserInfo.Password.toStdString()).c_str());
+        qReAuth.BindValue("Hash", ISAlgorithmOld::StringToSha256(ISBuffer::Instance().CurrentUserInfo.Login.toStdString() + ISBuffer::Instance().CurrentUserInfo.Password.toStdString()).c_str());
         Result = qReAuth.Execute();
         if (Result)
         {

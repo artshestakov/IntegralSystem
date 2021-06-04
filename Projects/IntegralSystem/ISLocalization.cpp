@@ -1,7 +1,7 @@
 #include "ISLocalization.h"
 #include "ISConstants.h"
 #include "ISAssert.h"
-#include "ISAlgorithm.h"
+#include "ISAlgorithmOld.h"
 #include "ISLogger.h"
 #include "ISGui.h"
 //-----------------------------------------------------------------------------

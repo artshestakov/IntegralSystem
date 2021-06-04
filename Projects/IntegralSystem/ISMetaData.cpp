@@ -1,7 +1,7 @@
 #include "ISMetaData.h"
 #include "ISAssert.h"
 #include "ISConstants.h"
-#include "ISAlgorithm.h"
+#include "ISAlgorithmOld.h"
 #include "ISGui.h"
 //-----------------------------------------------------------------------------
 ISMetaData::ISMetaData()
@@ -50,7 +50,7 @@ ISMetaData::~ISMetaData()
 {
 	while (!Resources.empty())
 	{
-		delete ISAlgorithm::VectorTakeBack(Resources);
+		delete ISAlgorithmOld::VectorTakeBack(Resources);
 	}
 	CRITICAL_SECTION_DESTROY(&CriticalSection);
 }
@@ -160,12 +160,12 @@ PMetaField* ISMetaData::GetMetaField(const QString &TableName, const QString &Fi
 //-----------------------------------------------------------------------------
 std::vector<PMetaFunction*> ISMetaData::GetFunctions()
 {
-	return ISAlgorithm::ConvertMapToValues<QString, PMetaFunction *>(FunctionsMap);
+	return ISAlgorithmOld::ConvertMapToValues<QString, PMetaFunction *>(FunctionsMap);
 }
 //-----------------------------------------------------------------------------
 std::vector<PMetaTable*> ISMetaData::GetTables()
 {
-	return ISAlgorithm::ConvertMapToValues<QString, PMetaTable *>(TablesMap);
+	return ISAlgorithmOld::ConvertMapToValues<QString, PMetaTable *>(TablesMap);
 }
 //-----------------------------------------------------------------------------
 std::vector<PMetaIndex*> ISMetaData::GetIndexes()
@@ -304,7 +304,7 @@ bool ISMetaData::CheckUniqueAllIdentifiers(bool InitXSR)
 			FindedUID.remove(0, 5);
 			FindedUID.chop(1);
 
-			Result = !ISAlgorithm::VectorContains(VectorString, FindedUID);
+			Result = !ISAlgorithmOld::VectorContains(VectorString, FindedUID);
 			if (!Result)
 			{
 				ErrorString = QString("UID \"%1\" already exist.").arg(FindedUID);

@@ -16,7 +16,7 @@
 #include "ISColumnSizer.h"
 #include "ISExportWorker.h"
 #include "ISGui.h"
-#include "ISAlgorithm.h"
+#include "ISAlgorithmOld.h"
 #include "ISTcpQuery.h"
 #include "ISDialogsForm.h"
 #include "ISFavorites.h"

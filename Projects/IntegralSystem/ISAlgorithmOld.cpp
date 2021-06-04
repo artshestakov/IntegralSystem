@@ -1,9 +1,9 @@
 #include "ISConstants.h"
-#include "ISAlgorithm.h"
+#include "ISAlgorithmOld.h"
 #include <openssl/sha.h>
 #include <openssl/md5.h>
 //-----------------------------------------------------------------------------
-std::string ISAlgorithm::GetFileNameFromPath(const std::string &FilePath)
+std::string ISAlgorithmOld::GetFileNameFromPath(const std::string &FilePath)
 {
 	size_t Pos = FilePath.rfind(PATH_SEPARATOR);
 	if (Pos != std::string::npos)
@@ -13,11 +13,11 @@ std::string ISAlgorithm::GetFileNameFromPath(const std::string &FilePath)
 	return FilePath;
 }
 //-----------------------------------------------------------------------------
-QString ISAlgorithm::StringFromSize(qint64 FileSize)
+QString ISAlgorithmOld::StringFromSize(qint64 FileSize)
 {
     int Index = 0;
     for (; FileSize > 1023; FileSize /= 1024, ++Index) {}
-    QString String = ISAlgorithm::FormatNumber(FileSize) + "BKMGT"[Index];
+    QString String = ISAlgorithmOld::FormatNumber(FileSize) + "BKMGT"[Index];
 	if (String.contains("B"))
 	{
 		String.replace("B", " B");
@@ -41,7 +41,7 @@ QString ISAlgorithm::StringFromSize(qint64 FileSize)
 	return String;
 }
 //-----------------------------------------------------------------------------
-quint64 ISAlgorithm::DirSize(const QString &PathDir, const QStringList &Filter)
+quint64 ISAlgorithmOld::DirSize(const QString &PathDir, const QStringList &Filter)
 {
 	quint64 Size = 0;
 	QDirIterator DirIterator(PathDir, Filter, QDir::Files, QDirIterator::Subdirectories);
@@ -53,17 +53,17 @@ quint64 ISAlgorithm::DirSize(const QString &PathDir, const QStringList &Filter)
 	return Size;
 }
 //-----------------------------------------------------------------------------
-ISTimePoint ISAlgorithm::GetTick()
+ISTimePoint ISAlgorithmOld::GetTick()
 {
 	return std::chrono::steady_clock::now();
 }
 //-----------------------------------------------------------------------------
-unsigned long long ISAlgorithm::GetTickDiff(const ISTimePoint &T1, const ISTimePoint &T2)
+unsigned long long ISAlgorithmOld::GetTickDiff(const ISTimePoint &T1, const ISTimePoint &T2)
 {
 	return std::chrono::duration_cast<std::chrono::milliseconds>(T1 - T2).count();
 }
 //-----------------------------------------------------------------------------
-std::string ISAlgorithm::GetClassName(const std::string &FunctionName)
+std::string ISAlgorithmOld::GetClassName(const std::string &FunctionName)
 {
 	std::string Result(FunctionName);
     size_t Index = 0;
@@ -89,7 +89,7 @@ std::string ISAlgorithm::GetClassName(const std::string &FunctionName)
 	return Result;
 }
 //-----------------------------------------------------------------------------
-void ISAlgorithm::RemoveBeginSymbolLoop(QString &String, char Char)
+void ISAlgorithmOld::RemoveBeginSymbolLoop(QString &String, char Char)
 {
 	if (!String.isEmpty())
 	{
@@ -100,7 +100,7 @@ void ISAlgorithm::RemoveBeginSymbolLoop(QString &String, char Char)
 	}
 }
 //-----------------------------------------------------------------------------
-void ISAlgorithm::RemoveLastSymbolLoop(QString &String, char Char)
+void ISAlgorithmOld::RemoveLastSymbolLoop(QString &String, char Char)
 {
 	if (!String.isEmpty())
 	{
@@ -111,7 +111,7 @@ void ISAlgorithm::RemoveLastSymbolLoop(QString &String, char Char)
 	}
 }
 //-----------------------------------------------------------------------------
-QString ISAlgorithm::GetLastErrorString()
+QString ISAlgorithmOld::GetLastErrorString()
 {
 	QString ErrorString;
 #ifdef WIN32
@@ -133,7 +133,7 @@ QString ISAlgorithm::GetLastErrorString()
 	return ErrorString;
 }
 //-----------------------------------------------------------------------------
-bool ISAlgorithm::GenerateSalt(QString &Salt, QString &ErrorString)
+bool ISAlgorithmOld::GenerateSalt(QString &Salt, QString &ErrorString)
 {
 	//Объявляем результирующую строку и буфер
 	unsigned char Buffer[CARAT_SALT_SIZE] = { 0 };
@@ -149,12 +149,12 @@ bool ISAlgorithm::GenerateSalt(QString &Salt, QString &ErrorString)
 		}
 		else //Ошибка генерации
 		{
-			ErrorString = ISAlgorithm::GetLastErrorString();
+			ErrorString = ISAlgorithmOld::GetLastErrorString();
 		}
 	}
 	else //Не удалось создать контекст
 	{
-		ErrorString = ISAlgorithm::GetLastErrorString();
+		ErrorString = ISAlgorithmOld::GetLastErrorString();
 	}
 #else //Формирование соли под Linux
 	FILE *FileDevice = fopen("/dev/random", "r");
@@ -166,7 +166,7 @@ bool ISAlgorithm::GenerateSalt(QString &Salt, QString &ErrorString)
 	}
 	else
 	{
-		ErrorString = ISAlgorithm::GetLastErrorString();
+		ErrorString = ISAlgorithmOld::GetLastErrorString();
 	}
 #endif
 	if (Result) //Если все хорошо - формируем соль в HEX
@@ -180,7 +180,7 @@ bool ISAlgorithm::GenerateSalt(QString &Salt, QString &ErrorString)
 	return true;
 }
 //-----------------------------------------------------------------------------
-QString ISAlgorithm::SaltPassword(const QString &HashPassword, const QString &Salt)
+QString ISAlgorithmOld::SaltPassword(const QString &HashPassword, const QString &Salt)
 {
 	QString HashResult;
 	for (int i = 0; i < (int)CARAT_HASH_SIZE; ++i)
@@ -192,7 +192,7 @@ QString ISAlgorithm::SaltPassword(const QString &HashPassword, const QString &Sa
 	return HashResult;
 }
 //-----------------------------------------------------------------------------
-bool ISAlgorithm::PasswordVerification(const QString &Password)
+bool ISAlgorithmOld::PasswordVerification(const QString &Password)
 {
 	//Проверяем размер пароля
 	if (Password.size() < MINIMUM_PASSWORD_LENGHT)
@@ -262,7 +262,7 @@ bool ISAlgorithm::PasswordVerification(const QString &Password)
 	return true;
 }
 //-----------------------------------------------------------------------------
-void ISAlgorithm::ConvertSecondToTime(unsigned int Seconds, unsigned int &Day, unsigned int &Hour, unsigned int &Minute, unsigned int &Second)
+void ISAlgorithmOld::ConvertSecondToTime(unsigned int Seconds, unsigned int &Day, unsigned int &Hour, unsigned int &Minute, unsigned int &Second)
 {
 	Day = Seconds / (24 * 3600);
 	Seconds = Seconds % (24 * 3600);
@@ -273,7 +273,7 @@ void ISAlgorithm::ConvertSecondToTime(unsigned int Seconds, unsigned int &Day, u
 	Second = Seconds;
 }
 //-----------------------------------------------------------------------------
-unsigned int ISAlgorithm::ExtractVersionFile(const QString &FilePath)
+unsigned int ISAlgorithmOld::ExtractVersionFile(const QString &FilePath)
 {
 	unsigned int Version = 0;
 	QStringList StringList = QFileInfo(FilePath).completeBaseName().split('_');
@@ -286,7 +286,7 @@ unsigned int ISAlgorithm::ExtractVersionFile(const QString &FilePath)
 	return Version;
 }
 //-----------------------------------------------------------------------------
-void ISAlgorithm::FormatPhoneNumber(QString &PhoneNumber)
+void ISAlgorithmOld::FormatPhoneNumber(QString &PhoneNumber)
 {
 	for (int i = 0; i < PhoneNumber.size(); ++i) //Обходим строку с номером телефона
 	{
@@ -298,7 +298,7 @@ void ISAlgorithm::FormatPhoneNumber(QString &PhoneNumber)
 	}
 }
 //-----------------------------------------------------------------------------
-QString ISAlgorithm::FormatNumber(long long Number, char Separator)
+QString ISAlgorithmOld::FormatNumber(long long Number, char Separator)
 {
 	QString Result = QString::number(Number); //Переводим число в строку
 
@@ -326,7 +326,7 @@ QString ISAlgorithm::FormatNumber(long long Number, char Separator)
 	return Result;
 }
 //-----------------------------------------------------------------------------
-QString ISAlgorithm::FormatNumber(double Number, char Separator, unsigned int Precision)
+QString ISAlgorithmOld::FormatNumber(double Number, char Separator, unsigned int Precision)
 {
     QString Result = DOUBLE_PREPAREN(Number, Precision); //Переводим число в строку
 	int PosPoint = Result.indexOf('.');
@@ -342,7 +342,7 @@ QString ISAlgorithm::FormatNumber(double Number, char Separator, unsigned int Pr
 	return Result;
 }
 //-----------------------------------------------------------------------------
-std::string ISAlgorithm::GenerateUuidStandart()
+std::string ISAlgorithmOld::GenerateUuidStandart()
 {
 	std::string StringUID;
 #ifdef WIN32
@@ -374,16 +374,16 @@ std::string ISAlgorithm::GenerateUuidStandart()
 	return StringUID;
 }
 //-----------------------------------------------------------------------------
-std::string ISAlgorithm::GenerateUuid()
+std::string ISAlgorithmOld::GenerateUuid()
 {
-	std::string UID = ISAlgorithm::GenerateUuidStandart();
+	std::string UID = ISAlgorithmOld::GenerateUuidStandart();
 	std::transform(UID.begin(), UID.end(), UID.begin(), toupper);
 	return '{' + UID + '}';
 }
 //-----------------------------------------------------------------------------
-std::string ISAlgorithm::GenerateUuidLite()
+std::string ISAlgorithmOld::GenerateUuidLite()
 {
-	std::string UID = ISAlgorithm::GenerateUuidStandart();
+	std::string UID = ISAlgorithmOld::GenerateUuidStandart();
 	std::transform(UID.begin(), UID.end(), UID.begin(), tolower);
 	auto Begin = UID.begin();
 	for (size_t i = UID.size() - 1; i > 0; --i)
@@ -396,7 +396,7 @@ std::string ISAlgorithm::GenerateUuidLite()
 	return UID;
 }
 //-----------------------------------------------------------------------------
-std::string ISAlgorithm::StringToSha256(const std::string &String)
+std::string ISAlgorithmOld::StringToSha256(const std::string &String)
 {
 	//Формируем хеш
     SHA256_CTX SHA256;
@@ -418,7 +418,7 @@ std::string ISAlgorithm::StringToSha256(const std::string &String)
 	return Result;
 }
 //-----------------------------------------------------------------------------
-std::string ISAlgorithm::StringToMD5(const std::string &String)
+std::string ISAlgorithmOld::StringToMD5(const std::string &String)
 {
 	//Формируем хеш
     MD5_CTX MD5Context;
@@ -440,14 +440,14 @@ std::string ISAlgorithm::StringToMD5(const std::string &String)
 	return Result;
 }
 //-----------------------------------------------------------------------------
-QString ISAlgorithm::StringTake(QString &String, int Pos, int N)
+QString ISAlgorithmOld::StringTake(QString &String, int Pos, int N)
 {
 	QString Result = String.mid(Pos, N);
 	String.remove(Pos, N);
 	return Result;
 }
 //-----------------------------------------------------------------------------
-ISVectorString ISAlgorithm::ParseCommandArgs(int argc, char **argv)
+ISVectorString ISAlgorithmOld::ParseCommandArgs(int argc, char **argv)
 {
 	ISVectorString Vector(argc);
 	for (int i = 0; i < argc; ++i)

@@ -1,5 +1,5 @@
 #include "ISLogger.h"
-#include "ISAlgorithm.h"
+#include "ISAlgorithmOld.h"
 #include "ISDebug.h"
 //-----------------------------------------------------------------------------
 ISLogger::ISLogger()

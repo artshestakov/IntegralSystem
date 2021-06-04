@@ -12,7 +12,7 @@
 #include "ISFavorites.h"
 #include "ISCreatedObjectsEntity.h"
 #include "ISUserRoleEntity.h"
-#include "ISAlgorithm.h"
+#include "ISAlgorithmOld.h"
 #include "ISTcpQuery.h"
 #include "ISConstantsGui.h"
 //-----------------------------------------------------------------------------
@@ -437,7 +437,7 @@ void ISObjectFormBase::CreateWidgetObject()
     }
 
     //Подключаем необходиые сигналы к полям
-    for (ISFieldEditBase *FieldEditBase : ISAlgorithm::ConvertMapToValues(FieldsMap))
+    for (ISFieldEditBase *FieldEditBase : ISAlgorithmOld::ConvertMapToValues(FieldsMap))
     {
         connect(FieldEditBase, &ISFieldEditBase::DataChanged, this, &ISObjectFormBase::DataChanged);
     }
@@ -601,7 +601,7 @@ void ISObjectFormBase::ToolBarClicked(QAction *ActionClicked)
         }
         else //Открытие виджета
         {
-            WidgetEscort = ISAlgorithm::CreatePointer<ISInterfaceMetaForm *>(ClassName, Q_ARG(QWidget *, this));
+            WidgetEscort = ISAlgorithmOld::CreatePointer<ISInterfaceMetaForm *>(ClassName, Q_ARG(QWidget *, this));
         }
         WidgetEscort->SetParentObjectID(ObjectID);
         WidgetEscort->SetParentFilterField(parent_filter_field);

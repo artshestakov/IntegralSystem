@@ -1,5 +1,5 @@
 #include "ISFavorites.h"
-#include "ISAlgorithm.h"
+#include "ISAlgorithmOld.h"
 //-----------------------------------------------------------------------------
 ISFavorites::ISFavorites()
 {
@@ -54,7 +54,7 @@ void ISFavorites::Add(const QString &TableName, unsigned int ObjectID)
 //-----------------------------------------------------------------------------
 void ISFavorites::Delete(const QString &TableName, unsigned int ObjectID)
 {
-    ISAlgorithm::VectorRemoveAll(Favorites[TableName], ObjectID);
+    ISAlgorithmOld::VectorRemoveAll(Favorites[TableName], ObjectID);
     if (Favorites[TableName].empty())
     {
         Favorites.erase(TableName);
@@ -71,7 +71,7 @@ bool ISFavorites::Exist(const QString &TableName, unsigned int ObjectID)
     auto It = Favorites.find(TableName);
     if (It != Favorites.end())
     {
-        return ISAlgorithm::VectorContains(It->second, ObjectID);
+        return ISAlgorithmOld::VectorContains(It->second, ObjectID);
     }
     return false;
 }

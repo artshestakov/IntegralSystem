@@ -1,6 +1,6 @@
 #include "ISValidators.h"
 #include "ISTypedefs.h"
-#include "ISAlgorithm.h"
+#include "ISAlgorithmOld.h"
 #include "ISConstants.h"
 //-----------------------------------------------------------------------------
 ISIntValidator::ISIntValidator(int Bottom, int Top, QObject *parent) : QIntValidator(Bottom, Top, parent)
@@ -40,7 +40,7 @@ QIntValidator::State ISIntValidator::validate(QString &String, int &Pos) const
     Pos -= (int)VectorInt.size(); //Отнимаем у позиции размер найденных НЕ цифр
     while (!VectorInt.empty()) //Удаляем не цифры
     {
-        String.remove(ISAlgorithm::VectorTakeBack(VectorInt), 1);
+        String.remove(ISAlgorithmOld::VectorTakeBack(VectorInt), 1);
     }
 
     //Проверяем "длину" числа: оно не должно быть длинее MAX_INTEGER_LEN
@@ -126,7 +126,7 @@ QDoubleValidator::State ISDoubleValidator::validate(QString &String, int &Pos) c
     //Удаляем не цифры
     while (!VectorInt.empty())
     {
-        String.remove(ISAlgorithm::VectorTakeBack(VectorInt), 1);
+        String.remove(ISAlgorithmOld::VectorTakeBack(VectorInt), 1);
     }
 
     //Ищем индекс первого попавшегося разделителя

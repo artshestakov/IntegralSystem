@@ -1,6 +1,6 @@
 #pragma once
-#ifndef _ISALGORITHM_H_INCLUDED
-#define _ISALGORITHM_H_INCLUDED
+#ifndef _ISALGORITHMOLD_H_INCLUDED
+#define _ISALGORITHMOLD_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "ISSettingsDatabase.h"
 #include "ISTypedefs.h"
@@ -26,13 +26,13 @@ if (POINTER) \
 #define PROCESS_EVENTS qApp->processEvents
 
 //Сгенерировать стандартный уникальный идентификатор
-#define GENERATE_UUID_STANDART ISAlgorithm::GenerateUuidStandart
+#define GENERATE_UUID_STANDART ISAlgorithmOld::GenerateUuidStandart
 
 //Сгенерировать уникальный идентификатор
-#define GENERATE_UUID ISAlgorithm::GenerateUuid
+#define GENERATE_UUID ISAlgorithmOld::GenerateUuid
 
 //Сгенерировать упрощенный уникальный идентификатор
-#define GENERATE_UUID_LITE ISAlgorithm::GenerateUuidLite
+#define GENERATE_UUID_LITE ISAlgorithmOld::GenerateUuidLite
 
 //Заглушка для SQL-запросов
 #define PREPARE_QUERY(x) x
@@ -41,9 +41,9 @@ if (POINTER) \
 #define IS_UNUSED(x) (void)x
 
 #ifdef WIN32
-#define __CLASS__ ISAlgorithm::GetClassName(__FUNCTION__)
+#define __CLASS__ ISAlgorithmOld::GetClassName(__FUNCTION__)
 #else
-#define __CLASS__ ISAlgorithm::GetClassName(__PRETTY_FUNCTION__)
+#define __CLASS__ ISAlgorithmOld::GetClassName(__PRETTY_FUNCTION__)
 #endif
 //-----------------------------------------------------------------------------
 #ifdef WIN32
@@ -62,7 +62,7 @@ if (POINTER) \
 #define CURRENT_PID getpid
 #endif
 //-----------------------------------------------------------------------------
-namespace ISAlgorithm
+namespace ISAlgorithmOld
 {
 	//! Вытаскивание имени файла из пути к нему
 	//! \param FilePath путь к файлу

@@ -12,7 +12,7 @@
 #include "ISSettings.h"
 #include "ISLogger.h"
 #include "ISUserObjectForm.h"
-#include "ISAlgorithm.h"
+#include "ISAlgorithmOld.h"
 #include "ISRevision.h"
 #include "ISUserRoleEntity.h"
 #include "ISFavoritesForm.h"
@@ -483,7 +483,7 @@ ISObjectFormBase* ISGui::CreateObjectForm(ISNamespace::ObjectFormType FormType, 
     PMetaTable *MetaTable = ISMetaData::Instance().GetMetaTable(TableName);
     if (!MetaTable->ObjectForm.isEmpty()) //Если у мета-таблицы есть переопределенная форма объекта
     {
-        ObjectForm = ISAlgorithm::CreatePointer<ISObjectFormBase *>(MetaTable->ObjectForm, Q_ARG(ISNamespace::ObjectFormType, FormType), Q_ARG(PMetaTable *, MetaTable), Q_ARG(QWidget *, parent), Q_ARG(int, ObjectID));
+        ObjectForm = ISAlgorithmOld::CreatePointer<ISObjectFormBase *>(MetaTable->ObjectForm, Q_ARG(ISNamespace::ObjectFormType, FormType), Q_ARG(PMetaTable *, MetaTable), Q_ARG(QWidget *, parent), Q_ARG(int, ObjectID));
     }
     else //У мета-таблицы нет переопределенной формы объекта - создаем базовую
     {
@@ -698,7 +698,7 @@ ISFieldEditBase* ISGui::CreateFieldEditBase(QWidget *ParentWidget, PMetaField *M
     QString Temp = ControlWidget;
     if (!Temp.isEmpty())
     {
-        FieldEditBase = ISAlgorithm::CreatePointer<ISFieldEditBase *>(Temp, Q_ARG(QWidget *, ParentWidget));
+        FieldEditBase = ISAlgorithmOld::CreatePointer<ISFieldEditBase *>(Temp, Q_ARG(QWidget *, ParentWidget));
     }
     else
     {

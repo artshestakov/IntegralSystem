@@ -5,7 +5,7 @@
 #include "ISMetaData.h"
 #include "ISDelegates.h"
 #include "ISDialogsCommon.h"
-#include "ISAlgorithm.h"
+#include "ISAlgorithmOld.h"
 #include "ISButtons.h"
 #include "ISScrollArea.h"
 //-----------------------------------------------------------------------------
@@ -90,7 +90,7 @@ void ISSearchForm::AddField(PMetaField *MetaField)
     QString SearchOperatorWidget = MetaField->Type == ISNamespace::FieldType::BigInt && MetaField->Foreign
         ? "ISComboSearchBase" :
         ISMetaData::Instance().GetType(MetaField->Type).SearchConditionWidget;
-    ISComboSearchBase *ComboSearchOperator = ISAlgorithm::CreatePointer<ISComboSearchBase *>(SearchOperatorWidget, Q_ARG(QWidget *, this));
+    ISComboSearchBase *ComboSearchOperator = ISAlgorithmOld::CreatePointer<ISComboSearchBase *>(SearchOperatorWidget, Q_ARG(QWidget *, this));
     GridLayout->addWidget(ComboSearchOperator, RowIndex, 1);
 
     //Поле редактирования

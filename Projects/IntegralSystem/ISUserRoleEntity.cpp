@@ -1,5 +1,5 @@
 #include "ISUserRoleEntity.h"
-#include "ISAlgorithm.h"
+#include "ISAlgorithmOld.h"
 #include "ISBuffer.h"
 //-----------------------------------------------------------------------------
 ISUserRoleEntity::ISUserRoleEntity()
@@ -40,12 +40,12 @@ void ISUserRoleEntity::InitializeSpecial(const QVariantList &VariantList)
 bool ISUserRoleEntity::CheckAccessTable(const QString &TableName, const QString &AccessUID)
 {
     return ISBuffer::Instance().CurrentUserInfo.System || ISBuffer::Instance().CurrentUserInfo.GroupFullAccess ?
-        true : ISAlgorithm::VectorContains(Tables[TableName], AccessUID);
+        true : ISAlgorithmOld::VectorContains(Tables[TableName], AccessUID);
 }
 //-----------------------------------------------------------------------------
 bool ISUserRoleEntity::CheckAccessSpecial(const QString &SpecialAccessUID)
 {
     return ISBuffer::Instance().CurrentUserInfo.System || ISBuffer::Instance().CurrentUserInfo.GroupFullAccess ?
-        true : ISAlgorithm::VectorContains(Specials, SpecialAccessUID);
+        true : ISAlgorithmOld::VectorContains(Specials, SpecialAccessUID);
 }
 //-----------------------------------------------------------------------------

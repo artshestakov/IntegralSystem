@@ -7,7 +7,7 @@
 #include "ISLabels.h"
 #include "ISGui.h"
 #include "ISControls.h"
-#include "ISAlgorithm.h"
+#include "ISAlgorithmOld.h"
 #include "ISFlowLayout.h"
 #include "ISProgressForm.h"
 #include "ISDialogsForm.h"
@@ -321,7 +321,7 @@ void ISMonitorActivitySubSystem::LoadData()
 {
     while (!VectorUsers.empty())
     {
-        delete ISAlgorithm::VectorTakeBack(VectorUsers);
+        delete ISAlgorithmOld::VectorTakeBack(VectorUsers);
     }
 
     QSize SizeWidget;

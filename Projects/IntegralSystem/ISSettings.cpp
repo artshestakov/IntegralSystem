@@ -1,7 +1,7 @@
 #include "ISSettings.h"
 #include "ISMetaData.h"
 #include "ISAssert.h"
-#include "ISAlgorithm.h"
+#include "ISAlgorithmOld.h"
 //-----------------------------------------------------------------------------
 ISSettings::ISSettings()
 {
@@ -12,7 +12,7 @@ ISSettings::~ISSettings()
 {
 	while (!SettingGroups.empty())
 	{
-		delete ISAlgorithm::VectorTakeBack(SettingGroups);
+		delete ISAlgorithmOld::VectorTakeBack(SettingGroups);
 	}
 }
 //-----------------------------------------------------------------------------

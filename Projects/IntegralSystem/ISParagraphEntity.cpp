@@ -2,7 +2,7 @@
 #include "ISConstants.h"
 #include "ISSettings.h"
 #include "ISAssert.h"
-#include "ISAlgorithm.h"
+#include "ISAlgorithmOld.h"
 //-----------------------------------------------------------------------------
 ISParagraphEntity::ISParagraphEntity()
 {
@@ -13,7 +13,7 @@ ISParagraphEntity::~ISParagraphEntity()
 {
     while (!Paragraphs.empty())
     {
-        delete ISAlgorithm::VectorTakeBack(Paragraphs);
+        delete ISAlgorithmOld::VectorTakeBack(Paragraphs);
     }
 }
 //-----------------------------------------------------------------------------
