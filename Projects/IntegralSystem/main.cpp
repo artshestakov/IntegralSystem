@@ -25,7 +25,7 @@ int main(int argc, char **argv)
         QMessageBox::critical(nullptr, "Error", ErrorString, QMessageBox::Ok, QMessageBox::Ok);
         return EXIT_FAILURE;
     }
-    PROPERTY_SET("PathLastDirectory", QDir::homePath());
+    ISProperty::Instance().SetPathLastDirectory(QDir::homePath().toStdString());
 
     ISAuthDialog AuthForm;
     Result = AuthForm.Exec();
@@ -47,7 +47,7 @@ int main(int argc, char **argv)
             ISGui::Shutdown(&SplashScreen);
 
             //Если была смена пользователя - запускаем программу
-            if (PROPERTY_GET("is_change_user").toBool())
+            if (ISProperty::Instance().GetChangeUser())
             {
                 QProcess::startDetached(QCoreApplication::applicationFilePath());
             }

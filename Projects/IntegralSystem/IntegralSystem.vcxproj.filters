@@ -338,9 +338,6 @@
     <ClCompile Include="ISLogger.cpp">
       <Filter>ISCORE\System</Filter>
     </ClCompile>
-    <ClCompile Include="ISProperty.cpp">
-      <Filter>ISCORE\System</Filter>
-    </ClCompile>
     <ClCompile Include="ISSystem.cpp">
       <Filter>ISCORE\System</Filter>
     </ClCompile>
@@ -425,9 +422,6 @@
       <Filter>ISCORE\System</Filter>
     </ClInclude>
     <ClInclude Include="ISLogger.h">
-      <Filter>ISCORE\System</Filter>
-    </ClInclude>
-    <ClInclude Include="ISProperty.h">
       <Filter>ISCORE\System</Filter>
     </ClInclude>
     <ClInclude Include="ISStructs.h">

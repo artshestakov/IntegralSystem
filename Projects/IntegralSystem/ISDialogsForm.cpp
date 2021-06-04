@@ -388,7 +388,7 @@ void ISAuthDialog::Input()
         }
 
         QVariantMap UpdateClientMap = AnswerMap["UpdateClient"].toMap();
-        PROPERTY_SET("ServerVersion", AnswerMap["Server"].toMap()["Version"].toUInt());
+        ISProperty::Instance().SetServerVersion(AnswerMap["Server"].toMap()["Version"].toUInt());
 
         if (UpdateClientMap["IsNeed"].toBool()) //Если требуется обновление - предлагаем скачать и установить
         {

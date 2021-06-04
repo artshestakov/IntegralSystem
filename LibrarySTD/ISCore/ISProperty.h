@@ -12,6 +12,15 @@ public:
     const uint64_t& GetUptime() const;
     void SetUptime(uint64_t uptime);
 
+    const unsigned int& GetServerVersion() const;
+    void SetServerVersion(unsigned int server_version);
+
+    bool GetChangeUser() const;
+    void SetChangeUser(bool change_version);
+
+    const std::string& GetPathLastDirectory() const;
+    void SetPathLastDirectory(const std::string &path_last_directory);
+
 private:
     ISProperty();
     ~ISProperty();
@@ -22,6 +31,9 @@ private:
 
 private:
     uint64_t Uptime;
+    unsigned int ServerVersion;
+    bool ChangeUser;
+    std::string PathLastDirectory;
 };
 //-----------------------------------------------------------------------------
 #endif

@@ -126,7 +126,7 @@ void ISMainWindow::ChangeUser()
     if (Change)
     {
         ExitConfirm = false;
-        PROPERTY_SET("is_change_user", true);
+        ISProperty::Instance().SetChangeUser(true);
         close();
     }
     else
@@ -198,7 +198,7 @@ void ISMainWindow::Reconnect()
             ISPopupMessage::ShowNotification(LANG("ReconnectingDone"));
 
             //ѕровер€ем, не повысилась ли верси€ сервера
-            if (qReAuth.GetAnswer()["Server"].toMap()["Version"].toUInt() > PROPERTY_GET("ServerVersion").toUInt())
+            if (qReAuth.GetAnswer()["Server"].toMap()["Version"].toUInt() > ISProperty::Instance().GetServerVersion())
             {
                 ISMessageBox::ShowInformation(this, LANG("Message.Information.RestartAfterReconnect"));
             }

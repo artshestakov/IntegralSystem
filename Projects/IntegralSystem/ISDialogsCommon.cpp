@@ -32,11 +32,11 @@ QString ISFileDialog::GetOpenFileNameImage(QWidget *parent)
         << LANG("File.Filter.Image.WBMP")
         << LANG("File.Filter.Image.BMP")
         << LANG("File.Filter.Image.WEBP");
-
-    QString Path = ISFileDialog::getOpenFileName(parent, LANG("FileDialog.Image.Select.Title"), PROPERTY_GET("PathLastDirectory").toString(), FilterList.join(";;"));
+    
+    QString Path = ISFileDialog::getOpenFileName(parent, LANG("FileDialog.Image.Select.Title"), QString::fromStdString(ISProperty::Instance().GetPathLastDirectory()), FilterList.join(";;"));
     if (!Path.isEmpty())
     {
-        PROPERTY_SET("PathLastDirectory", QFileInfo(Path).dir().path());
+        ISProperty::Instance().SetPathLastDirectory(QFileInfo(Path).dir().path().toStdString());
     }
     return Path;
 }
@@ -59,50 +59,50 @@ QString ISFileDialog::GetSaveFileNameImage(QWidget *parent, const QString &FileN
         << LANG("File.Filter.Image.BMP")
         << LANG("File.Filter.Image.WEBP");
 
-    QString Path = ISFileDialog::getSaveFileName(parent, LANG("FileDialog.Image.Save.Title"), PROPERTY_GET("PathLastDirectory").toString() + (FileName.isEmpty() ? QString() : '/' + FileName), FilterList.join(";;"));
+    QString Path = ISFileDialog::getSaveFileName(parent, LANG("FileDialog.Image.Save.Title"), QString::fromStdString(ISProperty::Instance().GetPathLastDirectory()) + (FileName.isEmpty() ? QString() : '/' + FileName), FilterList.join(";;"));
     if (!Path.isEmpty())
     {
-        PROPERTY_SET("PathLastDirectory", QFileInfo(Path).dir().path());
+        ISProperty::Instance().SetPathLastDirectory(QFileInfo(Path).dir().path().toStdString());
     }
     return Path;
 }
 //-----------------------------------------------------------------------------
 QString ISFileDialog::GetOpenFileName(QWidget *parent, const QString &FilePath, const QString &FilterName)
 {
-    QString Path = ISFileDialog::getOpenFileName(parent, LANG("FileDialog.File.Open.Title"), FilePath.isEmpty() ? PROPERTY_GET("PathLastDirectory").toString() : FilePath, FilterName);
+    QString Path = ISFileDialog::getOpenFileName(parent, LANG("FileDialog.File.Open.Title"), FilePath.isEmpty() ? QString::fromStdString(ISProperty::Instance().GetPathLastDirectory()) : FilePath, FilterName);
     if (!Path.isEmpty())
     {
-        PROPERTY_SET("PathLastDirectory", QFileInfo(Path).dir().path());
+        ISProperty::Instance().SetPathLastDirectory(QFileInfo(Path).dir().path().toStdString());
     }
     return Path;
 }
 //-----------------------------------------------------------------------------
 QString ISFileDialog::GetSaveFileName(QWidget *parent, const QString &FilterName, const QString &FileName)
 {
-    QString Path = ISFileDialog::getSaveFileName(parent, LANG("FileDialog.File.Save.Title"), PROPERTY_GET("PathLastDirectory").toString() + (FileName.isEmpty() ? QString() : '/' + FileName), FilterName);
+    QString Path = ISFileDialog::getSaveFileName(parent, LANG("FileDialog.File.Save.Title"), QString::fromStdString(ISProperty::Instance().GetPathLastDirectory()) + (FileName.isEmpty() ? QString() : '/' + FileName), FilterName);
     if (!Path.isEmpty())
     {
-        PROPERTY_SET("PathLastDirectory", QFileInfo(Path).dir().path());
+        ISProperty::Instance().SetPathLastDirectory(QFileInfo(Path).dir().path().toStdString());
     }
     return Path;
 }
 //-----------------------------------------------------------------------------
 QString ISFileDialog::GetDirectoryPath(QWidget *parent)
 {
-    QString Path = ISFileDialog::getExistingDirectory(parent, LANG("FileDialog.Directory.Title"), PROPERTY_GET("PathLastDirectory").toString(), ISFileDialog::ShowDirsOnly);
+    QString Path = ISFileDialog::getExistingDirectory(parent, LANG("FileDialog.Directory.Title"), QString::fromStdString(ISProperty::Instance().GetPathLastDirectory()), ISFileDialog::ShowDirsOnly);
     if (!Path.isEmpty())
     {
-        PROPERTY_SET("PathLastDirectory", QFileInfo(Path).dir().path());
+        ISProperty::Instance().SetPathLastDirectory(QFileInfo(Path).dir().path().toStdString());
     }
     return Path;
 }
 //-----------------------------------------------------------------------------
 QStringList ISFileDialog::GetOpenFileNames(QWidget *parent, const QString &FilterName)
 {
-    QStringList StringList = ISFileDialog::getOpenFileNames(parent, LANG("FileDialog.Files.Open.Title"), PROPERTY_GET("PathLastDirectory").toString(), FilterName);
+    QStringList StringList = ISFileDialog::getOpenFileNames(parent, LANG("FileDialog.Files.Open.Title"), QString::fromStdString(ISProperty::Instance().GetPathLastDirectory()), FilterName);
     if (!StringList.isEmpty())
     {
-        PROPERTY_SET("PathLastDirectory", QFileInfo(StringList.front()).dir().path());
+        ISProperty::Instance().SetPathLastDirectory(QFileInfo(StringList.front()).dir().path().toStdString());
     }
     return StringList;
 }

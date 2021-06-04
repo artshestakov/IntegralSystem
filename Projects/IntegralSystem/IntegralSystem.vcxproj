@@ -78,7 +78,6 @@
     <ClCompile Include="ISPopupMessage.cpp" />
     <ClCompile Include="ISProcessForm.cpp" />
     <ClCompile Include="ISProgressForm.cpp" />
-    <ClCompile Include="ISProperty.cpp" />
     <ClCompile Include="ISProtocolObjectListForm.cpp" />
     <ClCompile Include="ISScrollArea.cpp" />
     <ClCompile Include="ISSearchForm.cpp" />
@@ -121,7 +120,6 @@
     <ClInclude Include="ISDebug.h" />
     <ClInclude Include="ISLocalization.h" />
     <ClInclude Include="ISLogger.h" />
-    <ClInclude Include="ISProperty.h" />
     <ClInclude Include="ISStructs.h" />
     <ClInclude Include="ISSystem.h" />
     <ClInclude Include="ISTrace.h" />
