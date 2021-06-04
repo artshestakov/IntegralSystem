@@ -94,7 +94,7 @@ void ISLogger::Log(bool is_format, ISNamespace::LogMessageType message_type, con
 		case ISNamespace::LogMessageType::Critical: message_type_string = "Critical"; break;
 		case ISNamespace::LogMessageType::Trace: message_type_string = "Trace"; break;
 		case ISNamespace::LogMessageType::Assert: message_type_string = "Assert"; break;
-		case ISNamespace::LogMessageType::QT: message_type_string = "QT"; break;
+		//case ISNamespace::LogMessageType::QT: message_type_string = "QT"; break;
 		}
 
         //Получаем текущую дату и время

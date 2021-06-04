@@ -43,6 +43,27 @@ namespace ISNamespace
         ProtocolDT, //Дата события в протоколе
     };
 
+    enum class ObjectFormType //Типы формы объекта
+    {
+        New, //Новый объект
+        Copy, //Копия объекта
+        Edit, //Изменение объекта
+    };
+
+    enum class SearchType //Типы операторов поиска
+    {
+        Unknown, //Неизвестно
+        Equally, //Равно
+        NotEqually, //Не равно
+        Begins, //Начинается
+        Ends, //Заканчивается
+        Contains, //Содержит
+        More, //Больше
+        Less, //Меньше
+        MoreOrEqual, //Больше или равно
+        LessOrEqual, //Меньше или равно
+    };
+
     enum class LogMessageType //Типы сообщений логгера
     {
         Unknown, //Неизвестное сообщение
@@ -69,12 +90,49 @@ namespace ISNamespace
         Name //По имени
     };
 
-    enum class Started
+    enum class ExportType //Типы базового экспорта данных
     {
         Unknown,
-        Starting,
-        Started,
-        Error
+        CSV,
+        HTML,
+        XML,
+        JSON,
+    };
+
+    enum class ActionType
+    {
+        Create,
+        CreateCopy,
+        Edit,
+        Delete,
+        Update,
+        Search,
+        SearchClear,
+        Export,
+        Favorites,
+        Reference,
+    };
+
+    enum class ActionSpecialType
+    {
+        RecordInfo,
+        Favorite,
+        Note,
+    };
+
+    enum class MoveWidgetDesktop //Тип перемещения виджета
+    {
+        LeftUp, //Левый верхний угол
+        LeftBottom, //Левый нижний угол
+        RightUp, //Правый верхний угол
+        RightBottom, //Правый нижний угол
+        Center, //Центр экрана
+    };
+
+    enum class SelectListMode //Режим выбора формы списка
+    {
+        Single, //Выбор одной записи
+        Multi, //Выбор нескольких записей
     };
 };
 //-----------------------------------------------------------------------------

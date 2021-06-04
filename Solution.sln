@@ -87,6 +87,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scheme", "Scheme", "{EDC6FC
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "IntegralSystem", "Projects\IntegralSystem\IntegralSystem.vcxproj", "{C053A5FD-33FA-4841-B964-3C8CC6AF3F23}"
+	ProjectSection(ProjectDependencies) = postProject
+		{23417504-DDF5-47E3-A6F6-55D58230CA58} = {23417504-DDF5-47E3-A6F6-55D58230CA58}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Licenses", "Licenses", "{3BE791E4-23C3-4D11-A390-9964ED39A461}"
 	ProjectSection(SolutionItems) = preProject
