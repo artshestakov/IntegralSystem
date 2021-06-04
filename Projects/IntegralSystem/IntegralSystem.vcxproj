@@ -101,12 +101,6 @@
     <ClCompile Include="ISValidators.cpp" />
     <ClCompile Include="ISWaitWidget.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="StdAfx.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="IntegralSystem.rc" />
@@ -123,7 +117,6 @@
     <ClInclude Include="ISTrace.h" />
     <ClInclude Include="ISTypedefs.h" />
     <ClInclude Include="PMetaClass.h" />
-    <ClInclude Include="StdAfx.h" />
     <QtMoc Include="ISWaitWidget.h" />
     <QtMoc Include="ISUserObjectForm.h" />
     <QtMoc Include="ISSettingsDatabaseObjectForm.h" />
@@ -297,7 +290,7 @@
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
       <AdditionalIncludeDirectories>$(SolutionDir);.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;$(SolutionDir)LibrarySTD\ISCore;$(QTDIR)\include;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtXml;$(SolutionDir)Components\OpenSSL\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;DEBUG</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;DEBUG;QT_USE;_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
       <WarningLevel>Level4</WarningLevel>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <TreatWarningAsError>true</TreatWarningAsError>

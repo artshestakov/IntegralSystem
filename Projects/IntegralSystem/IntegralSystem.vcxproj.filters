@@ -341,9 +341,6 @@
     <ClCompile Include="ISTrace.cpp">
       <Filter>ISCORE\System</Filter>
     </ClCompile>
-    <ClCompile Include="StdAfx.cpp">
-      <Filter>ISCORE\System</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="IntegralSystem.rc">
@@ -428,9 +425,6 @@
       <Filter>ISCORE\System</Filter>
     </ClInclude>
     <ClInclude Include="ISTypedefs.h">
-      <Filter>ISCORE\System</Filter>
-    </ClInclude>
-    <ClInclude Include="StdAfx.h">
       <Filter>ISCORE\System</Filter>
     </ClInclude>
   </ItemGroup>
