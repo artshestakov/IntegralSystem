@@ -1,7 +1,7 @@
 #include "ISObjects.h"
 #include "ISAssert.h"
 #include "ISConstantsOld.h"
-#include "ISAlgorithmOld.h"
+#include "ISGui.h"
 //-----------------------------------------------------------------------------
 #include "ISEmpty.h"
 #include "ISOilSphere.h"
@@ -29,7 +29,7 @@ ISObjects& ISObjects::Instance()
 //-----------------------------------------------------------------------------
 void ISObjects::Initialize(const QString &ConfigurationName)
 {
-    ObjectInterface = ISAlgorithmOld::CreatePointer<ISObjectInterface *>("IS" + ConfigurationName + "::Object");
+    ObjectInterface = ISGui::CreatePointer<ISObjectInterface *>("IS" + ConfigurationName + "::Object");
     ObjectInterface->SetConfigurationName(ConfigurationName);
     ObjectInterface->RegisterMetaTypes();
 }

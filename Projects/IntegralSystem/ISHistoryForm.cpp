@@ -1,5 +1,5 @@
 #include "ISHistoryForm.h"
-#include "ISLocalization.h"
+#include "ISLocalizationOld.h"
 #include "ISBuffer.h"
 #include "ISSettings.h"
 #include "ISConstantsOld.h"

@@ -1,6 +1,6 @@
 #include "ISOilSphere.h"
 #include "ISGui.h"
-#include "ISLocalization.h"
+#include "ISLocalizationOld.h"
 #include "ISBuffer.h"
 #include "ISDialogsCommon.h"
 #include "ISControls.h"

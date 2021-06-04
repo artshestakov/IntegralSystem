@@ -1,5 +1,5 @@
 #include "ISExportWorker.h"
-#include "ISLocalization.h"
+#include "ISLocalizationOld.h"
 #include "ISDialogsCommon.h"
 #include "ISGui.h"
 //-----------------------------------------------------------------------------

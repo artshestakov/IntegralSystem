@@ -3,7 +3,7 @@
 #include "ISBuffer.h"
 #include "ISGui.h"
 #include "ISSettings.h"
-#include "ISLocalization.h"
+#include "ISLocalizationOld.h"
 #include "ISConstantsGui.h"
 //-----------------------------------------------------------------------------
 ISCalendarEventItem::ISCalendarEventItem(int calendar_id, const QString &Name, const QString &Text, const QTime &Time, bool closed, QWidget *parent) : QWidget(parent)

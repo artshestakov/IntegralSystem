@@ -1,6 +1,6 @@
 #include "ISFieldEdits.h"
 #include "ISConstantsOld.h"
-#include "ISLocalization.h"
+#include "ISLocalizationOld.h"
 #include "ISBuffer.h"
 #include "ISDialogsCommon.h"
 #include "ISGui.h"

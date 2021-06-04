@@ -41,7 +41,7 @@ struct PMetaIndex : public PMetaBase
 	QString Alias;
 	QString TableName;
 	QString FieldName;
-	ISVectorString Fields;
+    ISVectorQString Fields;
 };
 //-----------------------------------------------------------------------------
 struct PMetaForeign : public PMetaBase

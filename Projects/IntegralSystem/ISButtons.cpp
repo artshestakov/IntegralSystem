@@ -1,7 +1,7 @@
 #include "ISButtons.h"
 #include "ISConstantsOld.h"
 #include "ISBuffer.h"
-#include "ISLocalization.h"
+#include "ISLocalizationOld.h"
 #include "ISGui.h"
 #include "ISControls.h"
 //-----------------------------------------------------------------------------

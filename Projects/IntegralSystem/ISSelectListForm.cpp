@@ -1,5 +1,5 @@
 #include "ISSelectListForm.h"
-#include "ISLocalization.h"
+#include "ISLocalizationOld.h"
 #include "ISBuffer.h"
 //-----------------------------------------------------------------------------
 ISSelectListForm::ISSelectListForm(ISNamespace::SelectListMode select_mode, const QString &table_name, QWidget *parent)

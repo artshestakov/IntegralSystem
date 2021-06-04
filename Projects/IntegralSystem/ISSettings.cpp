@@ -86,7 +86,7 @@ ISMetaSetting* ISSettings::GetMetaSetting(const QString &SettingUID)
 			}
 		}
 	}
-	IS_ASSERT(false, QString("Not found setting \"%1\"").arg(SettingUID));
+	IS_ASSERT(false, QString("Not found setting \"%1\"").arg(SettingUID).toStdString());
 	return nullptr;
 }
 //-----------------------------------------------------------------------------

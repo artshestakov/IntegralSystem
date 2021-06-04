@@ -1,5 +1,5 @@
 #include "ISSearchForm.h"
-#include "ISLocalization.h"
+#include "ISLocalizationOld.h"
 #include "ISBuffer.h"
 #include "ISGui.h"
 #include "ISMetaData.h"
@@ -90,7 +90,7 @@ void ISSearchForm::AddField(PMetaField *MetaField)
     QString SearchOperatorWidget = MetaField->Type == ISNamespace::FieldType::BigInt && MetaField->Foreign
         ? "ISComboSearchBase" :
         ISMetaData::Instance().GetType(MetaField->Type).SearchConditionWidget;
-    ISComboSearchBase *ComboSearchOperator = ISAlgorithmOld::CreatePointer<ISComboSearchBase *>(SearchOperatorWidget, Q_ARG(QWidget *, this));
+    ISComboSearchBase *ComboSearchOperator = ISGui::CreatePointer<ISComboSearchBase *>(SearchOperatorWidget, Q_ARG(QWidget *, this));
     GridLayout->addWidget(ComboSearchOperator, RowIndex, 1);
 
     //Поле редактирования

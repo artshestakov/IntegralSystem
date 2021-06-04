@@ -1,6 +1,6 @@
 #include "ISParagraphs.h"
 #include "ISBuffer.h"
-#include "ISLocalization.h"
+#include "ISLocalizationOld.h"
 #include "ISGui.h"
 #include "ISControls.h"
 #include "ISDialogsCommon.h"
@@ -61,7 +61,7 @@ ISDesktopParagraph::ISDesktopParagraph(QWidget *parent)
     {
         if (ISUserRoleEntity::Instance().CheckAccessSpecial(CONST_UID_GROUP_ACCESS_SPECIAL_DESKTOP))
         {
-            DesktopWidget = ISAlgorithmOld::CreatePointer<QWidget *>(DesktopFormName, Q_ARG(QWidget *, this));
+            DesktopWidget = ISGui::CreatePointer<QWidget *>(DesktopFormName, Q_ARG(QWidget *, this));
             MainLayout->addWidget(DesktopWidget);
         }
         else
@@ -171,7 +171,7 @@ void ISWorkspaceParagraph::ClickedSubSystem(const QString &SubSystemUID, const Q
     }
     else if (!MetaSubSystem->ClassName.isEmpty()) //Открытие класса (виджета)
     {
-        CentralForm = ISAlgorithmOld::CreatePointer<ISInterfaceMetaForm *>(MetaSubSystem->ClassName, Q_ARG(QWidget *, this));
+        CentralForm = ISGui::CreatePointer<ISInterfaceMetaForm *>(MetaSubSystem->ClassName, Q_ARG(QWidget *, this));
     }
     connect(CentralForm, &ISListBaseForm::AddFormFromTab, this, &ISWorkspaceParagraph::AddObjectForm);
     TabWidget->insertTab(0, CentralForm, IconSubSystem, MetaSubSystem->LocalName);

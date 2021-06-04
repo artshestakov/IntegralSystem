@@ -1,6 +1,6 @@
 #include "ISCreatedObjectsEntity.h"
 #include "ISDialogsCommon.h"
-#include "ISLocalization.h"
+#include "ISLocalizationOld.h"
 #include "ISInterfaceForm.h"
 #include "ISConstantsOld.h"
 #include "ISAlgorithmOld.h"

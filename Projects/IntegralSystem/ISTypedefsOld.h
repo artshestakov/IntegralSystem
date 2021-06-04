@@ -1,6 +1,6 @@
 #pragma once
-#ifndef _ISTYPEDEFS_H_INCLUDED
-#define _ISTYPEDEFS_H_INCLUDED
+#ifndef _ISTYPEDEFSOLD_H_INCLUDED
+#define _ISTYPEDEFSOLD_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 //-----------------------------------------------------------------------------
@@ -15,7 +15,7 @@ typedef std::map<QString, int> ISStringToIntMap;
 typedef std::map<QString, QVariant> ISStringToVariantMap;
 typedef std::vector<int> ISVectorInt;
 typedef std::vector<unsigned int> ISVectorUInt;
-typedef std::vector<QString> ISVectorString;
+typedef std::vector<QString> ISVectorQString;
 typedef std::vector<QVariant> ISVectorVariant;
 typedef std::vector<QByteArray> ISVectorByteArray;
 typedef std::vector<QVariantMap> ISVectorMap;

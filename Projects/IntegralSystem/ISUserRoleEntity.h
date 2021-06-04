@@ -23,7 +23,7 @@ private:
     ISUserRoleEntity& operator=(ISUserRoleEntity&&) = delete;
 
 private:
-    std::map<QString, ISVectorString> Tables;
-    ISVectorString Specials;
+    std::map<QString, ISVectorQString> Tables;
+    ISVectorQString Specials;
 };
 //-----------------------------------------------------------------------------

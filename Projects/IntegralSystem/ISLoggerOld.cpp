@@ -1,8 +1,8 @@
-#include "ISLogger.h"
+#include "ISLoggerOld.h"
 #include "ISAlgorithmOld.h"
 #include "ISDebug.h"
 //-----------------------------------------------------------------------------
-ISLogger::ISLogger()
+ISLoggerOld::ISLoggerOld()
 	: ErrorString(NO_ERROR_STRING),
 	LastIndex(0),
 	IsRunning(false),
@@ -14,23 +14,23 @@ ISLogger::ISLogger()
 	CRITICAL_SECTION_INIT(&CriticalSection);
 }
 //-----------------------------------------------------------------------------
-ISLogger::~ISLogger()
+ISLoggerOld::~ISLoggerOld()
 {
 	CRITICAL_SECTION_DESTROY(&CriticalSection);
 }
 //-----------------------------------------------------------------------------
-ISLogger& ISLogger::Instance()
+ISLoggerOld& ISLoggerOld::Instance()
 {
-	static ISLogger Logger;
+	static ISLoggerOld Logger;
 	return Logger;
 }
 //-----------------------------------------------------------------------------
-QString ISLogger::GetErrorString() const
+QString ISLoggerOld::GetErrorString() const
 {
 	return ErrorString;
 }
 //-----------------------------------------------------------------------------
-bool ISLogger::Initialize()
+bool ISLoggerOld::Initialize()
 {
 	//Получаем текущую дату и время и запоминаем текущий день
 	QDate CurrentDate = QDate::currentDate();
@@ -49,11 +49,11 @@ bool ISLogger::Initialize()
 		return false;
 	}
 	IsRunning = true;
-	std::thread(&ISLogger::Worker, this).detach();
+	std::thread(&ISLoggerOld::Worker, this).detach();
 	return true;
 }
 //-----------------------------------------------------------------------------
-void ISLogger::Shutdown()
+void ISLoggerOld::Shutdown()
 {
     if (IsRunning) //Если логгер был запущен - останавливаем
     {
@@ -71,7 +71,7 @@ void ISLogger::Shutdown()
     }
 }
 //-----------------------------------------------------------------------------
-void ISLogger::Log(bool is_format, ISNamespace::LogMessageType message_type, const std::string &component, const QString &string)
+void ISLoggerOld::Log(bool is_format, ISNamespace::LogMessageType message_type, const std::string &component, const QString &string)
 {
 	if (!IsRunning)
 	{
@@ -154,7 +154,7 @@ void ISLogger::Log(bool is_format, ISNamespace::LogMessageType message_type, con
 	CRITICAL_SECTION_UNLOCK(&CriticalSection);
 }
 //-----------------------------------------------------------------------------
-bool ISLogger::CreateLogDirectory(const QDate &Date)
+bool ISLoggerOld::CreateLogDirectory(const QDate &Date)
 {
 	//Запоминаем текущий месяц и год
 	CurrentMonth = Date.month();
@@ -175,12 +175,12 @@ bool ISLogger::CreateLogDirectory(const QDate &Date)
 	return true;
 }
 //-----------------------------------------------------------------------------
-QString ISLogger::GetPathFile(const QDate &Date) const
+QString ISLoggerOld::GetPathFile(const QDate &Date) const
 {
 	return PathLogsDir + QCoreApplication::applicationName() + '_' + Date.toString(FORMAT_DATE_V2) + SYMBOL_POINT + EXTENSION_LOG;
 }
 //-----------------------------------------------------------------------------
-void ISLogger::Worker()
+void ISLoggerOld::Worker()
 {
 	while (IsRunning)
 	{

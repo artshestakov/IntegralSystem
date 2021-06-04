@@ -1,5 +1,6 @@
 #include "ISAssert.h"
 #include "ISLogger.h"
+#include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
 void ISASSERT::Assert(bool Boolean, const std::string &FalseMessage, const char *FileName, int Line)
 {

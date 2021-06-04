@@ -3,7 +3,7 @@
 #include "ISConstantsOld.h"
 #include "ISContextMenu.h"
 #include "ISProperty.h"
-#include "ISLocalization.h"
+#include "ISLocalizationOld.h"
 #include "ISBuffer.h"
 #include "ISControls.h"
 //-----------------------------------------------------------------------------

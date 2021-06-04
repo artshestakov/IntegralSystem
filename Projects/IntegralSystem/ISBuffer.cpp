@@ -41,7 +41,7 @@ QMovie* ISBuffer::GetAnimation(const QString &AnimationName, QObject *parent, co
     auto It = Animations.find(AnimationName);
     if (It == Animations.end())
     {
-        IS_ASSERT(false, QString("Animation \"%1\" not found in buffer animations. File: %2. Line: %3.").arg(AnimationName).arg(SourceFile).arg(FileLine));
+        IS_ASSERT(false, QString("Animation \"%1\" not found in buffer animations. File: %2. Line: %3.").arg(AnimationName).arg(SourceFile).arg(FileLine).toStdString());
     }
     return new QMovie(It->second, nullptr, parent);
 }
@@ -51,7 +51,7 @@ QIcon ISBuffer::GetIcon(const QString &IconName, const char *SourceFile, int Fil
     auto It = Icons.find(IconName);
     if (It == Icons.end())
     {
-        IS_ASSERT(false, QString("Icon \"%1\" not found in buffer icons. File: %2. Line: %3.").arg(IconName).arg(SourceFile).arg(FileLine));
+        IS_ASSERT(false, QString("Icon \"%1\" not found in buffer icons. File: %2. Line: %3.").arg(IconName).arg(SourceFile).arg(FileLine).toStdString());
     }
     return It->second;
 }
@@ -61,7 +61,7 @@ QPixmap ISBuffer::GetPixmap(const QString &PixmapName, const char *SourceFile, i
     auto It = Pixmaps.find(PixmapName);
     if (It == Pixmaps.end())
     {
-        IS_ASSERT(false, QString("Pixmap \"%1\" not found in buffer pixmaps. File: %2. Line: %3.").arg(PixmapName).arg(SourceFile).arg(FileLine));
+        IS_ASSERT(false, QString("Pixmap \"%1\" not found in buffer pixmaps. File: %2. Line: %3.").arg(PixmapName).arg(SourceFile).arg(FileLine).toStdString());
     }
     return It->second;
 }
@@ -76,7 +76,7 @@ QString ISBuffer::GetStyle(const QString &StyleName, const char *SourceFile, int
     auto It = StyleSheets.find(StyleName);
     if (It == StyleSheets.end())
     {
-        IS_ASSERT(false, QString("StyleSheet \"%1\" not found. File: %2; Line: %3").arg(StyleName).arg(SourceFile).arg(FileLine));
+        IS_ASSERT(false, QString("StyleSheet \"%1\" not found. File: %2; Line: %3").arg(StyleName).arg(SourceFile).arg(FileLine).toStdString());
     }
     return It->second;
 }
@@ -135,7 +135,7 @@ void ISBuffer::AddAnimations(const QString &AnimationName, const QString &Animat
     }
     else
     {
-        IS_ASSERT(false, QString("Animation \"%1\" already exist in buffer animations").arg(AnimationName));
+        IS_ASSERT(false, QString("Animation \"%1\" already exist in buffer animations").arg(AnimationName).toStdString());
     }
 }
 //-----------------------------------------------------------------------------
@@ -148,7 +148,7 @@ void ISBuffer::AddImageIcon(const QString &IconName, const QString &IconPath)
     }
     else
     {
-        IS_ASSERT(false, QString("Icon \"%1\" already exist in buffer icons").arg(IconName));
+        IS_ASSERT(false, QString("Icon \"%1\" already exist in buffer icons").arg(IconName).toStdString());
     }
 }
 //-----------------------------------------------------------------------------
@@ -161,7 +161,7 @@ void ISBuffer::AddImage(const QString &PixmapName, const QString &PixmapPath)
     }
     else
     {
-        IS_ASSERT(false, QString("Pixmap \"%1\" already exist in buffer pixmaps").arg(PixmapName));
+        IS_ASSERT(false, QString("Pixmap \"%1\" already exist in buffer pixmaps").arg(PixmapName).toStdString());
     }
 }
 //-----------------------------------------------------------------------------
@@ -174,7 +174,7 @@ void ISBuffer::AddAudio(const QString &AudioName, const QString &AudioPath)
     }
     else
     {
-        IS_ASSERT(false, QString("Audio \"%1\" already exist in buffer audios.").arg(AudioName));
+        IS_ASSERT(false, QString("Audio \"%1\" already exist in buffer audios.").arg(AudioName).toStdString());
     }
 }
 //-----------------------------------------------------------------------------
@@ -193,17 +193,17 @@ void ISBuffer::AddStyle(const QString &FileName, const QString &FilePath)
             }
             else
             {
-                IS_ASSERT(false, QString("File %1 style sheet not open. Error: %2").arg(FileName).arg(FileStyle.errorString()));
+                IS_ASSERT(false, QString("File %1 style sheet not open. Error: %2").arg(FileName).arg(FileStyle.errorString()).toStdString());
             }
         }
         else
         {
-            IS_ASSERT(false, "File " + FileName + " not exist");
+            IS_ASSERT(false, QString("File " + FileName + " not exist").toStdString());
         }
     }
     else
     {
-        IS_ASSERT(false, "StyleSheet '" + FileName + "' already exist in buffer StyleSheets");
+        IS_ASSERT(false, QString("StyleSheet '" + FileName + "' already exist in buffer StyleSheets").toStdString());
     }
 }
 //-----------------------------------------------------------------------------

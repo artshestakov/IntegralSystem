@@ -3,7 +3,6 @@
 #define _ISASSERT_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
-#include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
 #define IS_ASSERT(CONDITION, FALSE_MESSAGE) ISASSERT::Assert(CONDITION, FALSE_MESSAGE, __FILE__, __LINE__)
 //-----------------------------------------------------------------------------

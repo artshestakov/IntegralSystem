@@ -320,25 +320,22 @@
     <ClCompile Include="ISMetaData.cpp">
       <Filter>ISCORE\MetaData</Filter>
     </ClCompile>
-    <ClCompile Include="ISAssert.cpp">
-      <Filter>ISCORE\System</Filter>
-    </ClCompile>
     <ClCompile Include="ISConfig.cpp">
       <Filter>ISCORE\System</Filter>
     </ClCompile>
     <ClCompile Include="ISDebug.cpp">
       <Filter>ISCORE\System</Filter>
     </ClCompile>
-    <ClCompile Include="ISLocalization.cpp">
-      <Filter>ISCORE\System</Filter>
-    </ClCompile>
-    <ClCompile Include="ISLogger.cpp">
-      <Filter>ISCORE\System</Filter>
-    </ClCompile>
     <ClCompile Include="ISTrace.cpp">
       <Filter>ISCORE\System</Filter>
     </ClCompile>
     <ClCompile Include="ISAlgorithmOld.cpp">
+      <Filter>ISCORE\System</Filter>
+    </ClCompile>
+    <ClCompile Include="ISLoggerOld.cpp">
+      <Filter>ISCORE\System</Filter>
+    </ClCompile>
+    <ClCompile Include="ISLocalizationOld.cpp">
       <Filter>ISCORE\System</Filter>
     </ClCompile>
   </ItemGroup>
@@ -397,19 +394,10 @@
     <ClInclude Include="PMetaClass.h">
       <Filter>ISCORE\MetaData</Filter>
     </ClInclude>
-    <ClInclude Include="ISAssert.h">
-      <Filter>ISCORE\System</Filter>
-    </ClInclude>
     <ClInclude Include="ISConfig.h">
       <Filter>ISCORE\System</Filter>
     </ClInclude>
     <ClInclude Include="ISDebug.h">
-      <Filter>ISCORE\System</Filter>
-    </ClInclude>
-    <ClInclude Include="ISLocalization.h">
-      <Filter>ISCORE\System</Filter>
-    </ClInclude>
-    <ClInclude Include="ISLogger.h">
       <Filter>ISCORE\System</Filter>
     </ClInclude>
     <ClInclude Include="ISTrace.h">
@@ -425,6 +413,12 @@
       <Filter>ISCORE\System</Filter>
     </ClInclude>
     <ClInclude Include="ISStructsOld.h">
+      <Filter>ISCORE\System</Filter>
+    </ClInclude>
+    <ClInclude Include="ISLoggerOld.h">
+      <Filter>ISCORE\System</Filter>
+    </ClInclude>
+    <ClInclude Include="ISLocalizationOld.h">
       <Filter>ISCORE\System</Filter>
     </ClInclude>
   </ItemGroup>

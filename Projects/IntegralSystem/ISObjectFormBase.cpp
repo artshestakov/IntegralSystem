@@ -1,6 +1,6 @@
 #include "ISObjectFormBase.h"
 #include "ISConstantsOld.h"
-#include "ISLocalization.h"
+#include "ISLocalizationOld.h"
 #include "ISBuffer.h"
 #include "ISSettings.h"
 #include "ISGui.h"
@@ -601,7 +601,7 @@ void ISObjectFormBase::ToolBarClicked(QAction *ActionClicked)
         }
         else //Открытие виджета
         {
-            WidgetEscort = ISAlgorithmOld::CreatePointer<ISInterfaceMetaForm *>(ClassName, Q_ARG(QWidget *, this));
+            WidgetEscort = ISGui::CreatePointer<ISInterfaceMetaForm *>(ClassName, Q_ARG(QWidget *, this));
         }
         WidgetEscort->SetParentObjectID(ObjectID);
         WidgetEscort->SetParentFilterField(parent_filter_field);
@@ -646,7 +646,7 @@ bool ISObjectFormBase::Save()
 {
     SaveBefore();
     QVariantMap ValuesMap;
-    ISVectorString FieldsVector;
+    ISVectorQString FieldsVector;
     QString QueryText;
 
     if (ParentObjectID && !ParentFilterField.isEmpty()) //Если форма является дочерней

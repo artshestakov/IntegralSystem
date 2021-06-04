@@ -1,6 +1,6 @@
 #include "ISMainWindow.h"
 #include "ISGui.h"
-#include "ISLocalization.h"
+#include "ISLocalizationOld.h"
 #include "ISBuffer.h"
 #include "ISDialogsCommon.h"
 #include "ISControls.h"
@@ -54,7 +54,7 @@ ISMainWindow::ISMainWindow(QWidget *parent)
     GetMainLayout()->addWidget(StackedWidget);
     for (ISMetaParagraph *MetaParagraph : ISParagraphEntity::Instance().GetParagraphs())
     {
-        Paragraphs[MetaParagraph->UID] = StackedWidget->addWidget(ISAlgorithmOld::CreatePointer<ISParagraphBaseForm *>(MetaParagraph->ClassName, Q_ARG(QWidget *, this)));
+        Paragraphs[MetaParagraph->UID] = StackedWidget->addWidget(ISGui::CreatePointer<ISParagraphBaseForm *>(MetaParagraph->ClassName, Q_ARG(QWidget *, this)));
     }
 
     connect(&ISTcpConnector::Instance(), &ISTcpConnector::Reconnect, this, &ISMainWindow::Reconnect);

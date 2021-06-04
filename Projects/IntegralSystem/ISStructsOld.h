@@ -1,6 +1,6 @@
 #pragma once
-#ifndef _ISSTRUCTS_H_INCLUDED
-#define _ISSTRUCTS_H_INCLUDED
+#ifndef _ISSTRUCTSOLD_H_INCLUDED
+#define _ISSTRUCTSOLD_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 #include "ISNamespace.h"

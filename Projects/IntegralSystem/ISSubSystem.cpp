@@ -1,6 +1,6 @@
 #include "ISSubSystem.h"
 #include "ISBuffer.h"
-#include "ISLocalization.h"
+#include "ISLocalizationOld.h"
 #include "ISProcessForm.h"
 #include "ISAudioPlayerForm.h"
 #include "ISDialogsCommon.h"

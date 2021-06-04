@@ -1,7 +1,7 @@
 #include "ISMenuBar.h"
 #include "ISConstantsOld.h"
 #include "ISBuffer.h"
-#include "ISLocalization.h"
+#include "ISLocalizationOld.h"
 #include "ISSettings.h"
 #include "ISParagraphEntity.h"
 #include "ISUserRoleEntity.h"

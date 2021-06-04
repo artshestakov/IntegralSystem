@@ -1,9 +1,9 @@
 #include "ISSplashScreen.h"
 #include "ISGui.h"
-#include "ISLocalization.h"
+#include "ISLocalizationOld.h"
 #include "ISBuffer.h"
 #include "ISConstantsOld.h"
-#include "ISLogger.h"
+#include "ISLoggerOld.h"
 //-----------------------------------------------------------------------------
 ISSplashScreen::ISSplashScreen(const QString &Message)
     : QWidget(nullptr, Qt::SplashScreen | Qt::WindowStaysOnTopHint | Qt::FramelessWindowHint)

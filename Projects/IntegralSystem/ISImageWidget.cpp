@@ -1,7 +1,7 @@
 #include "ISImageWidget.h"
 #include "ISContextMenu.h"
 #include "ISDialogsCommon.h"
-#include "ISLocalization.h"
+#include "ISLocalizationOld.h"
 #include "ISBuffer.h"
 #include "ISImageViewerForm.h"
 #include "ISProcessForm.h"

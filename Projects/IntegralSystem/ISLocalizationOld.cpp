@@ -1,34 +1,34 @@
-#include "ISLocalization.h"
+#include "ISLocalizationOld.h"
 #include "ISConstantsOld.h"
 #include "ISAssert.h"
 #include "ISAlgorithmOld.h"
-#include "ISLogger.h"
+#include "ISLoggerOld.h"
 #include "ISGui.h"
 //-----------------------------------------------------------------------------
-ISLocalization::ISLocalization()
+ISLocalizationOld::ISLocalizationOld()
 	: ErrorString(NO_ERROR_STRING)
 {
 	CRITICAL_SECTION_INIT(&CriticalSection);
 }
 //-----------------------------------------------------------------------------
-ISLocalization::~ISLocalization()
+ISLocalizationOld::~ISLocalizationOld()
 {
 	Dictionary.clear(); //Очищаем словарь
 	CRITICAL_SECTION_DESTROY(&CriticalSection);
 }
 //-----------------------------------------------------------------------------
-ISLocalization& ISLocalization::Instance()
+ISLocalizationOld& ISLocalizationOld::Instance()
 {
-	static ISLocalization Localization;
+	static ISLocalizationOld Localization;
 	return Localization;
 }
 //-----------------------------------------------------------------------------
-QString ISLocalization::GetErrorString() const
+QString ISLocalizationOld::GetErrorString() const
 {
 	return ErrorString;
 }
 //-----------------------------------------------------------------------------
-QString ISLocalization::GetString(const QString &ParameterName)
+QString ISLocalizationOld::GetString(const QString &ParameterName)
 {
 	CRITICAL_SECTION_LOCK(&CriticalSection);
 	auto It = Dictionary.find(ParameterName);
@@ -41,7 +41,7 @@ QString ISLocalization::GetString(const QString &ParameterName)
 	return It->second;
 }
 //-----------------------------------------------------------------------------
-bool ISLocalization::LoadResourceFile(const QString &FileName)
+bool ISLocalizationOld::LoadResourceFile(const QString &FileName)
 {
 	QFile File(":Localization/" + FileName + SYMBOL_POINT + EXTENSION_LANG);
 	bool Result = File.open(QIODevice::ReadOnly);
@@ -57,7 +57,7 @@ bool ISLocalization::LoadResourceFile(const QString &FileName)
 	return Result;
 }
 //-----------------------------------------------------------------------------
-bool ISLocalization::InitializeContent(const QString &Content)
+bool ISLocalizationOld::InitializeContent(const QString &Content)
 {
 	bool Result = !Content.isEmpty();
 	if (Result) //Если содержимое файла не пустое

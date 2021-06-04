@@ -3,8 +3,8 @@
 #include "ISTcp.h"
 #include "ISConstantsOld.h"
 #include "ISAlgorithmOld.h"
-#include "ISLocalization.h"
-#include "ISLogger.h"
+#include "ISLocalizationOld.h"
+#include "ISLoggerOld.h"
 #include "ISGui.h"
 //-----------------------------------------------------------------------------
 ISTcpQuery::ISTcpQuery(const QString &query_type)

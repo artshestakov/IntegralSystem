@@ -1,6 +1,6 @@
 #include "ISContextMenu.h"
 #include "ISGui.h"
-#include "ISLocalization.h"
+#include "ISLocalizationOld.h"
 #include "ISControls.h"
 #include "ISDialogsCommon.h"
 #include "ISBuffer.h"

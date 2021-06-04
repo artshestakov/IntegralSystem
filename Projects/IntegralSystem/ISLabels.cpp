@@ -2,7 +2,7 @@
 #include "ISConstantsOld.h"
 #include "ISGui.h"
 #include "ISBuffer.h"
-#include "ISLocalization.h"
+#include "ISLocalizationOld.h"
 #include "ISControls.h"
 //-----------------------------------------------------------------------------
 ISQLabel::ISQLabel(const QString &Text, QWidget *parent)

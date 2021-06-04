@@ -1,7 +1,7 @@
 #include "ISGui.h"
 #include "ISConstantsOld.h"
 #include "ISAssert.h"
-#include "ISLocalization.h"
+#include "ISLocalizationOld.h"
 #include "ISDialogsForm.h"
 #include "ISMetaData.h"
 #include "ISDialogsCommon.h"
@@ -10,7 +10,7 @@
 #include "ISConfig.h"
 #include "ISBuffer.h"
 #include "ISSettings.h"
-#include "ISLogger.h"
+#include "ISLoggerOld.h"
 #include "ISUserObjectForm.h"
 #include "ISAlgorithmOld.h"
 #include "ISRevision.h"
@@ -41,9 +41,9 @@
 bool ISGui::Startup(QString &ErrorString)
 {
     //Инициализируем логгер
-    if (!ISLogger::Instance().Initialize())
+    if (!ISLoggerOld::Instance().Initialize())
     {
-        ErrorString = ISLogger::Instance().GetErrorString();
+        ErrorString = ISLoggerOld::Instance().GetErrorString();
         return false;
     }
 
@@ -61,16 +61,16 @@ bool ISGui::Startup(QString &ErrorString)
     }
 
     //Загрузка локализации клиента
-    if (!ISLocalization::Instance().LoadResourceFile(LOCALIZATION_FILE_INTEGRAL_SYSTEM))
+    if (!ISLocalizationOld::Instance().LoadResourceFile(LOCALIZATION_FILE_INTEGRAL_SYSTEM))
     {
-        ErrorString = QString("Error init localization file \"%1\": %2").arg(LOCALIZATION_FILE_INTEGRAL_SYSTEM).arg(ISLocalization::Instance().GetErrorString());
+        ErrorString = QString("Error init localization file \"%1\": %2").arg(LOCALIZATION_FILE_INTEGRAL_SYSTEM).arg(ISLocalizationOld::Instance().GetErrorString());
         return false;
     }
 
     //Загрузка локализации объектов
-    if (!ISLocalization::Instance().LoadResourceFile(LOCALIZATION_FILE_OBJECTS))
+    if (!ISLocalizationOld::Instance().LoadResourceFile(LOCALIZATION_FILE_OBJECTS))
     {
-        ErrorString = QString("Error init localization file \"%1\": %2").arg(LOCALIZATION_FILE_OBJECTS).arg(ISLocalization::Instance().GetErrorString());
+        ErrorString = QString("Error init localization file \"%1\": %2").arg(LOCALIZATION_FILE_OBJECTS).arg(ISLocalizationOld::Instance().GetErrorString());
         return false;
     }
 
@@ -455,7 +455,7 @@ void ISGui::FavoriteObject(const QString &TableName, unsigned int ObjectID, bool
 void ISGui::ExitApplication()
 {
     ISTcpConnector::Instance().Disconnect();
-    ISLogger::Instance().Shutdown();
+    ISLoggerOld::Instance().Shutdown();
     qApp->closeAllWindows();
 }
 //-----------------------------------------------------------------------------
@@ -483,7 +483,7 @@ ISObjectFormBase* ISGui::CreateObjectForm(ISNamespace::ObjectFormType FormType, 
     PMetaTable *MetaTable = ISMetaData::Instance().GetMetaTable(TableName);
     if (!MetaTable->ObjectForm.isEmpty()) //Если у мета-таблицы есть переопределенная форма объекта
     {
-        ObjectForm = ISAlgorithmOld::CreatePointer<ISObjectFormBase *>(MetaTable->ObjectForm, Q_ARG(ISNamespace::ObjectFormType, FormType), Q_ARG(PMetaTable *, MetaTable), Q_ARG(QWidget *, parent), Q_ARG(int, ObjectID));
+        ObjectForm = ISGui::CreatePointer<ISObjectFormBase *>(MetaTable->ObjectForm, Q_ARG(ISNamespace::ObjectFormType, FormType), Q_ARG(PMetaTable *, MetaTable), Q_ARG(QWidget *, parent), Q_ARG(int, ObjectID));
     }
     else //У мета-таблицы нет переопределенной формы объекта - создаем базовую
     {
@@ -698,7 +698,7 @@ ISFieldEditBase* ISGui::CreateFieldEditBase(QWidget *ParentWidget, PMetaField *M
     QString Temp = ControlWidget;
     if (!Temp.isEmpty())
     {
-        FieldEditBase = ISAlgorithmOld::CreatePointer<ISFieldEditBase *>(Temp, Q_ARG(QWidget *, ParentWidget));
+        FieldEditBase = CreatePointer<ISFieldEditBase *>(Temp, Q_ARG(QWidget *, ParentWidget));
     }
     else
     {
@@ -729,7 +729,7 @@ ISFieldEditBase* ISGui::CreateFieldEditBase(QWidget *ParentWidget, PMetaField *M
 void ISGui::RegisterMetaType()
 {
     qRegisterMetaType<std::vector<QString>>("std::vector<QString>");
-    qRegisterMetaType<ISVectorString>("ISVectorString");
+    qRegisterMetaType<ISVectorQString>("ISVectorQString");
 
     qRegisterMetaType<ISUserObjectForm*>("ISUserObjectForm");
     qRegisterMetaType<ISProtocolObjectListForm*>("ISProtocolObjectListForm");

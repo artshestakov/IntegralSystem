@@ -176,13 +176,13 @@ QVariant ISConfig::GetValue(const QString &ParameterName)
 		}
 	}
 	CRITICAL_SECTION_UNLOCK(&CriticalSection);
-	IS_ASSERT(Contains, QString("Not found key \"%1\" in file \"%2\"").arg(ParameterName).arg(Settings->fileName()));
+	IS_ASSERT(Contains, QString("Not found key \"%1\" in file \"%2\"").arg(ParameterName).arg(Settings->fileName()).toStdString());
 	return Value;
 }
 //-----------------------------------------------------------------------------
 void ISConfig::SetValue(const QString &ParameterName, const QVariant &Value)
 {
-	IS_ASSERT(Settings->contains(ParameterName), QString("Not found key \"%1\" in file \"%2\"").arg(ParameterName).arg(Settings->fileName()));
+	IS_ASSERT(Settings->contains(ParameterName), QString("Not found key \"%1\" in file \"%2\"").arg(ParameterName).arg(Settings->fileName()).toStdString());
 	Settings->setValue(ParameterName, Value);
 }
 //-----------------------------------------------------------------------------

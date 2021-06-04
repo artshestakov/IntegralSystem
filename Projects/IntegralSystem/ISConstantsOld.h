@@ -1,6 +1,6 @@
 #pragma once
-#ifndef _ISCONSTANTS_H_INCLUDED
-#define _ISCONSTANTS_H_INCLUDED
+#ifndef _ISCONSTANTSOLD_H_INCLUDED
+#define _ISCONSTANTSOLD_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 //-----------------------------------------------------------------------------

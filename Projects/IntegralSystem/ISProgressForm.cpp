@@ -1,6 +1,6 @@
 #include "ISProgressForm.h"
 #include "ISBuffer.h"
-#include "ISLocalization.h"
+#include "ISLocalizationOld.h"
 #include "ISControls.h"
 #include "ISButtons.h"
 //-----------------------------------------------------------------------------

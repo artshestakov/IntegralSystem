@@ -246,7 +246,7 @@ const ISMetaType& ISMetaData::GetType(const QString &type_name)
 			return MetaType;
 		}
 	}
-	IS_ASSERT(false, "Not found meta type with name \"" + type_name + "\"");
+	IS_ASSERT(false, QString("Not found meta type with name \"" + type_name + "\"").toStdString());
 	return GetType("Unknown");
 }
 //-----------------------------------------------------------------------------
@@ -259,7 +259,7 @@ const ISMetaType& ISMetaData::GetType(ISNamespace::FieldType type)
 			return MetaType;
 		}
 	}
-	IS_ASSERT(false, "Not found meta type with field type: " + QString::number(static_cast<int>(type)));
+	IS_ASSERT(false, QString("Not found meta type with field type: " + QString::number(static_cast<int>(type))).toStdString());
 	return GetType(ISNamespace::FieldType::Unknown);
 }
 //-----------------------------------------------------------------------------
@@ -283,7 +283,7 @@ bool ISMetaData::CheckUniqueAllIdentifiers(bool InitXSR)
 	}
 
 	QRegExp RegExp(REG_EXP_UID);
-	ISVectorString VectorString;
+    ISVectorQString VectorString;
 	for (const QFileInfo &FileInfo : FileInfoList) //Обход всех файлов мета-данных
 	{
 		QFile File(FileInfo.filePath());
@@ -574,7 +574,7 @@ bool ISMetaData::InitializeXSNTable(QDomNode &DomNode)
 void ISMetaData::InitializeXSNTableSystemFields(PMetaTable *MetaTable)
 {
 	QFile File(PATH_SCHEMA_TEMPLATE_FIELDS);
-	IS_ASSERT(File.open(QIODevice::ReadOnly), File.errorString());
+	IS_ASSERT(File.open(QIODevice::ReadOnly), File.errorString().toStdString());
 	QString Content = File.readAll();
 	File.close();
 
@@ -822,7 +822,7 @@ bool ISMetaData::InitializeXSNTableEscorts(PMetaTable *MetaTable, const QDomNode
 	QDomNode Temp = DomNode;
 	while (!Temp.isNull())
 	{
-		IS_ASSERT(Temp.attributes().length(), QString("Empty attributes escort. File: %1. Line: %2").arg(CurrentXSN).arg(Temp.lineNumber()));
+		IS_ASSERT(Temp.attributes().length(), QString("Empty attributes escort. File: %1. Line: %2").arg(CurrentXSN).arg(Temp.lineNumber()).toStdString());
 		Result = !Temp.attributes().isEmpty();
 		if (!Result)
 		{

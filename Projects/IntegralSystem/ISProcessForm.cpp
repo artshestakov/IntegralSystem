@@ -1,5 +1,5 @@
 #include "ISProcessForm.h"
-#include "ISLocalization.h"
+#include "ISLocalizationOld.h"
 #include "ISBuffer.h"
 #include "ISGui.h"
 #include "ISConstantsOld.h"

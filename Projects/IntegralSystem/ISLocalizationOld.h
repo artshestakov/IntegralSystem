@@ -1,13 +1,13 @@
 #pragma once
-#ifndef _ISLOCALIZATION_H_INCLUDED
-#define _ISLOCALIZATION_H_INCLUDED
+#ifndef _ISLOCALIZATIONOLD_H_INCLUDED
+#define _ISLOCALIZATIONOLD_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "ISTypedefsOld.h"
 //-----------------------------------------------------------------------------
-class ISLocalization
+class ISLocalizationOld
 {
 public:
-	static ISLocalization& Instance();
+	static ISLocalizationOld& Instance();
 
 	QString GetErrorString() const;
 	QString GetString(const QString &ParameterName); //Получить локализованную строку
@@ -17,12 +17,12 @@ private:
 	bool InitializeContent(const QString &Content); //Загрузка структуры локализации в буфер
 
 private:
-	ISLocalization();
-	~ISLocalization();
-	ISLocalization(const ISLocalization&) = delete;
-	ISLocalization(ISLocalization&&) = delete;
-	ISLocalization& operator=(const ISLocalization&) = delete;
-	ISLocalization& operator=(ISLocalization&&) = delete;
+    ISLocalizationOld();
+	~ISLocalizationOld();
+	ISLocalizationOld(const ISLocalizationOld&) = delete;
+	ISLocalizationOld(ISLocalizationOld&&) = delete;
+	ISLocalizationOld& operator=(const ISLocalizationOld&) = delete;
+	ISLocalizationOld& operator=(ISLocalizationOld&&) = delete;
 
 private:
 	QString ErrorString;
@@ -30,6 +30,6 @@ private:
 	ISCriticalSection CriticalSection;
 };
 //-----------------------------------------------------------------------------
-#define LANG(PARAMETER) ISLocalization::Instance().GetString(PARAMETER)
+#define LANG(PARAMETER) ISLocalizationOld::Instance().GetString(PARAMETER)
 //-----------------------------------------------------------------------------
 #endif
