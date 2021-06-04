@@ -1,9 +1,9 @@
 #include "ISLocalization.h"
 #include "ISConstants.h"
-#include "ISSystem.h"
 #include "ISAssert.h"
 #include "ISAlgorithm.h"
 #include "ISLogger.h"
+#include "ISGui.h"
 //-----------------------------------------------------------------------------
 ISLocalization::ISLocalization()
 	: ErrorString(NO_ERROR_STRING)
@@ -62,7 +62,7 @@ bool ISLocalization::InitializeContent(const QString &Content)
 	bool Result = !Content.isEmpty();
 	if (Result) //Если содержимое файла не пустое
 	{
-		QDomElement DomElement = ISSystem::GetDomElement(Content);
+		QDomElement DomElement = ISGui::GetDomElement(Content);
 		QDomNode NodeLocalization = DomElement.firstChild();
 
 		QString LocalizationName = DomElement.attributes().namedItem("Name").nodeValue();

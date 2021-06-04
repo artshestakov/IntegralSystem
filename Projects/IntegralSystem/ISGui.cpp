@@ -28,7 +28,6 @@
 #include "ISFieldEdits.h"
 #include "ISComboSearchWidgets.h"
 #include "ISSettingFieldWidgets.h"
-#include "ISSystem.h"
 #include "ISTcpConnector.h"
 #include "ISTcpQuery.h"
 #include "ISObjects.h"
@@ -56,7 +55,7 @@ bool ISGui::Startup(QString &ErrorString)
     }
 
     //Создание папки для временных файлов
-    if (!ISSystem::CreateDir(QCoreApplication::applicationDirPath() + "/Temp", ErrorString))
+    if (!CreateDir(QCoreApplication::applicationDirPath() + "/Temp", ErrorString))
     {
         return false;
     }
@@ -631,6 +630,67 @@ void ISGui::ShowHistoryForm()
         TaskViewForm->showMaximized();
     }
 }*/
+//-----------------------------------------------------------------------------
+bool ISGui::CreateDir(const QString &DirPath)
+{
+    QString ErrorString;
+    return CreateDir(DirPath, ErrorString);
+}
+//-----------------------------------------------------------------------------
+bool ISGui::CreateDir(const QString &DirPath, QString &ErrorString)
+{
+    QDir Dir(DirPath);
+    bool Result = Dir.exists();
+    if (!Result)
+    {
+        Result = Dir.mkdir(DirPath);
+        if (!Result)
+        {
+            ErrorString = "Error creting dir with path: " + DirPath;
+        }
+    }
+    return Result;
+}
+//-----------------------------------------------------------------------------
+QVariantMap ISGui::JsonStringToVariantMap(const QString &JsonString, QJsonParseError &JsonParseError)
+{
+    QVariantMap VariantMap;
+    if (!JsonString.isEmpty())
+    {
+        QJsonDocument JsonDocument = QJsonDocument::fromJson(JsonString.toUtf8(), &JsonParseError);
+        if (JsonParseError.error == QJsonParseError::NoError)
+        {
+            VariantMap = JsonDocument.object().toVariantMap();
+        }
+    }
+    return VariantMap;
+}
+//-----------------------------------------------------------------------------
+QByteArray ISGui::VariantMapToJsonString(const QVariantMap &VariantMap, QJsonDocument::JsonFormat Format)
+{
+    return QJsonDocument(QJsonObject::fromVariantMap(VariantMap)).toJson(Format);
+}
+//-----------------------------------------------------------------------------
+QByteArray ISGui::VariantListToJsonString(const QVariantList &VariantList, QJsonDocument::JsonFormat Format)
+{
+    return QJsonDocument(QJsonArray::fromVariantList(VariantList)).toJson(Format);
+}
+//-----------------------------------------------------------------------------
+QDomElement ISGui::GetDomElement(QFile &File)
+{
+    QDomDocument XmlDocument;
+    XmlDocument.setContent(&File);
+    QDomElement DomElement = XmlDocument.documentElement();
+    return DomElement;
+}
+//-----------------------------------------------------------------------------
+QDomElement ISGui::GetDomElement(const QString &Content)
+{
+    QDomDocument XmlDocument;
+    XmlDocument.setContent(Content);
+    QDomElement DomElement = XmlDocument.documentElement();
+    return DomElement;
+}
 //-----------------------------------------------------------------------------
 ISFieldEditBase* ISGui::CreateFieldEditBase(QWidget *ParentWidget, PMetaField *MetaField, ISNamespace::FieldType DataType, const QString &ControlWidget)
 {

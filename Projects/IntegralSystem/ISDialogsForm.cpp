@@ -7,7 +7,6 @@
 #include "ISTcpConnector.h"
 #include "ISControls.h"
 #include "ISSettings.h"
-#include "ISSystem.h"
 #include "ISAlgorithm.h"
 #include "ISPopupMessage.h"
 #include "ISMetaData.h"

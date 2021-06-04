@@ -2,7 +2,6 @@
 #include "ISConstants.h"
 #include "ISLocalization.h"
 #include "ISBuffer.h"
-#include "ISSystem.h"
 #include "ISDialogsCommon.h"
 #include "ISGui.h"
 #include "ISPopupMessage.h"
@@ -1570,7 +1569,7 @@ ISFileEdit::~ISFileEdit()
 void ISFileEdit::SetValue(const QVariant &value)
 {
     QJsonParseError JsonParseError;
-    VariantMap = ISSystem::JsonStringToVariantMap(value.toString(), JsonParseError);
+    VariantMap = ISGui::JsonStringToVariantMap(value.toString(), JsonParseError);
     if (JsonParseError.error == QJsonParseError::NoError)
     {
         ButtonFile->setMenu(Menu);
@@ -1592,7 +1591,7 @@ void ISFileEdit::SetValue(const QVariant &value)
 //-----------------------------------------------------------------------------
 QVariant ISFileEdit::GetValue() const
 {
-    return VariantMap.isEmpty() ? QVariant() : ISSystem::VariantMapToJsonString(VariantMap, QJsonDocument::Compact).simplified();
+    return VariantMap.isEmpty() ? QVariant() : ISGui::VariantMapToJsonString(VariantMap, QJsonDocument::Compact).simplified();
 }
 //-----------------------------------------------------------------------------
 void ISFileEdit::Clear()

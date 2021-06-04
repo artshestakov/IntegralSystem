@@ -1,7 +1,7 @@
 #include "ISExportWorker.h"
 #include "ISLocalization.h"
 #include "ISDialogsCommon.h"
-#include "ISSystem.h"
+#include "ISGui.h"
 //-----------------------------------------------------------------------------
 ISExportWorker::ISExportWorker(const QString &table_name, const QString &table_local_list_name, ISTcpModel *tcp_model, QObject *parent)
     : QObject(parent),
@@ -356,7 +356,7 @@ bool ISExportJSON::Export()
         emit ExportedRow();
         emit Message(LANG("Export.Process.Process").arg(Row + 1).arg(TcpModel->rowCount()));
     }
-    FileJSON->write(ISSystem::VariantListToJsonString(RecordList));
+    FileJSON->write(ISGui::VariantListToJsonString(RecordList));
     FileJSON->close();
     return true;
 }

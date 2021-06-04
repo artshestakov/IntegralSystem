@@ -1,11 +1,11 @@
 #include "ISTcpQuery.h"
 #include "ISTcpConnector.h"
 #include "ISTcp.h"
-#include "ISSystem.h"
 #include "ISConstants.h"
 #include "ISAlgorithm.h"
 #include "ISLocalization.h"
 #include "ISLogger.h"
+#include "ISGui.h"
 //-----------------------------------------------------------------------------
 ISTcpQuery::ISTcpQuery(const QString &query_type)
     : ErrorString(NO_ERROR_STRING),
@@ -48,7 +48,7 @@ bool ISTcpQuery::Execute()
 
     //Формируем запрос (тип запроса, его параметры и системные поля)
     ISLOGGER_I(__CLASS__, QString("Build \"%1\"").arg(QueryType));
-    QByteArray ByteArray = ISSystem::VariantMapToJsonString(
+    QByteArray ByteArray = ISGui::VariantMapToJsonString(
     {
         { "Type", QueryType },
         { "Parameters", Parameters }
@@ -170,7 +170,7 @@ QVariant ISTcpQuery::GetParameter(const QString &ParameterName) const
 bool ISTcpQuery::IsValidAnswer(const QByteArray &ByteArray, QVariantMap &VariantMap)
 {
     QJsonParseError JsonParseError;
-    VariantMap = ISSystem::JsonStringToVariantMap(ByteArray, JsonParseError);
+    VariantMap = ISGui::JsonStringToVariantMap(ByteArray, JsonParseError);
     if (VariantMap.isEmpty() && JsonParseError.error != QJsonParseError::NoError)
     {
         return false;

@@ -1,8 +1,8 @@
 #include "ISMetaData.h"
 #include "ISAssert.h"
 #include "ISConstants.h"
-#include "ISSystem.h"
 #include "ISAlgorithm.h"
+#include "ISGui.h"
 //-----------------------------------------------------------------------------
 ISMetaData::ISMetaData()
 	: ErrorString(NO_ERROR_STRING),
@@ -381,7 +381,7 @@ bool ISMetaData::InitializeXSN()
 //-----------------------------------------------------------------------------
 bool ISMetaData::InitializeXSN(const QString &Content)
 {
-	QDomElement DomElement = ISSystem::GetDomElement(Content);
+	QDomElement DomElement = ISGui::GetDomElement(Content);
 
 	QString TagName = DomElement.tagName();
 	bool Result = !TagName.isEmpty();
@@ -578,7 +578,7 @@ void ISMetaData::InitializeXSNTableSystemFields(PMetaTable *MetaTable)
 	QString Content = File.readAll();
 	File.close();
 
-	QDomElement DomElement = ISSystem::GetDomElement(Content);
+	QDomElement DomElement = ISGui::GetDomElement(Content);
 	QDomNode DomNode = DomElement.firstChild();
 	InitializeXSNTableFields(MetaTable, DomNode);
 
@@ -878,7 +878,7 @@ bool ISMetaData::InitializeXSR()
 //-----------------------------------------------------------------------------
 bool ISMetaData::InitializeXSR(const QString &Content)
 {
-	QDomElement DomElement = ISSystem::GetDomElement(Content);
+	QDomElement DomElement = ISGui::GetDomElement(Content);
 	QString TagName = DomElement.tagName();
 	bool Result = !TagName.isEmpty();
 	if (Result)
@@ -1024,7 +1024,7 @@ bool ISMetaData::InitializeXSF()
 //-----------------------------------------------------------------------------
 bool ISMetaData::InitializeXSF(const QString &Content)
 {
-	QDomElement DomElement = ISSystem::GetDomElement(Content);
+	QDomElement DomElement = ISGui::GetDomElement(Content);
 	QString TagName = DomElement.tagName();
 	bool Result = !TagName.isEmpty();
 	if (Result)
