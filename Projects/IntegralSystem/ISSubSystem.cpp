@@ -322,7 +322,7 @@ void ISMonitorActivitySubSystem::LoadData()
 {
     while (!VectorUsers.empty())
     {
-        delete ISAlgorithmOld::VectorTakeBack(VectorUsers);
+        delete ISAlgorithm::VectorTakeBack(VectorUsers);
     }
 
     //???

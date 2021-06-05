@@ -62,7 +62,7 @@ void ISCalendarPanel::paintCell(QPainter *Painter, const QRect &Rect, const QDat
 
     //–исуем плажку событи€ если по текущей дате есть событи€
     //и мес€ц текущей датысоответствует отображаемому мес€ц
-    if (ISAlgorithmOld::VectorContains(Days, (unsigned int)Date.day()) && Date.month() == monthShown())
+    if (ISAlgorithm::VectorContains(Days, (unsigned int)Date.day()) && Date.month() == monthShown())
     {
         Painter->drawPixmap(PointIndicator, PixmapIndicator);
     }

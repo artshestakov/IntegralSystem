@@ -39,7 +39,6 @@ Name: "{group}\Удалить Integral System"; Filename: "{app}\unins000.exe"; 
 Filename: "{app}\IntegralSystem.exe"; Description: "Запустить программу после выхода из установщика"; Flags: postinstall shellexec skipifsilent;
 
 [Files]
-Source: ..\Deploy\${CONFIGURATION}-${PLATFORM}\ISCore.dll; DestDir: {app}; Flags: ignoreversion recursesubdirs;
 Source: ..\Deploy\${CONFIGURATION}-${PLATFORM}\IntegralSystem.exe; DestDir: {app}; Flags: ignoreversion recursesubdirs;
 
 Source: ${QTDIR}\bin\libEGL${IS_DEBUG}.dll; DestDir: {app}; Flags: ignoreversion recursesubdirs;
@@ -70,7 +69,6 @@ Source: ${QTDIR}\plugins\styles\qwindowsvistastyle${IS_DEBUG}.dll; DestDir: {app
 
 Source: ..\Resources\Icons\IntegralSystem.ico; DestDir: {app}; Flags: ignoreversion recursesubdirs;
 Source: ..\Components\Redistributable\Redistributable_2015_${PLATFORM}.exe; DestDir: {app}; Flags: ignoreversion recursesubdirs;
-Source: ..\Components\OpenSSL\Bin-${PLATFORM}\*; DestDir: {app}; Flags: ignoreversion recursesubdirs;
 
 [Run]
 Filename: {app}\Redistributable_2015_${PLATFORM}.exe; Description: "Установка VC++ Redistributable 2015 ${PLATFORM}"; Parameters: "/install /quiet"; WorkingDir: {app}; StatusMsg: "Установка VC++ Redistributable 2015 ${PLATFORM}...";

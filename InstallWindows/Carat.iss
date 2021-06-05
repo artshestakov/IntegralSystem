@@ -39,8 +39,6 @@ Name: "{group}\Удалить Carat"; Filename: "{app}\unins000.exe"; WorkingDir
 Filename: "{app}\Configurator.exe"; Description: "Запустить конфигуратор после выхода из установщика"; Flags: postinstall shellexec skipifsilent;
 
 [Files]
-;Source: ..\Deploy\${CONFIGURATION}-${PLATFORM}\ISCore.dll; DestDir: {app}; Flags: ignoreversion recursesubdirs;
-;Source: ..\Deploy\${CONFIGURATION}-${PLATFORM}\ISServer.dll; DestDir: {app}; Flags: ignoreversion recursesubdirs;
 Source: ..\Deploy\${CONFIGURATION}-${PLATFORM}\Carat.exe; DestDir: {app}; Flags: ignoreversion recursesubdirs;
 Source: ..\Deploy\${CONFIGURATION}-${PLATFORM}\Configurator.exe; DestDir: {app}; Flags: ignoreversion recursesubdirs;
 

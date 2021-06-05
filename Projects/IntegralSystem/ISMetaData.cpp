@@ -51,7 +51,7 @@ ISMetaData::~ISMetaData()
 {
 	while (!Resources.empty())
 	{
-		delete ISAlgorithmOld::VectorTakeBack(Resources);
+		delete ISAlgorithm::VectorTakeBack(Resources);
 	}
 	CRITICAL_SECTION_DESTROY(&CriticalSection);
 }
@@ -305,7 +305,7 @@ bool ISMetaData::CheckUniqueAllIdentifiers(bool InitXSR)
 			FindedUID.remove(0, 5);
 			FindedUID.chop(1);
 
-			Result = !ISAlgorithmOld::VectorContains(VectorString, FindedUID);
+			Result = !ISAlgorithm::VectorContains(VectorString, FindedUID);
 			if (!Result)
 			{
 				ErrorString = QString("UID \"%1\" already exist.").arg(FindedUID);

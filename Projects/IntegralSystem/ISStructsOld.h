@@ -9,6 +9,7 @@
 #include "ISAssert.h"
 #include "ISTypedefsOld.h"
 #include "ISAlgorithmOld.h"
+#include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
 struct ISCurrentUserInfo
 {
@@ -45,7 +46,7 @@ struct ISMetaSettingsGroup
 	{
 		while (!Settings.empty())
 		{
-			delete ISAlgorithmOld::VectorTakeBack(Settings);
+			delete ISAlgorithm::VectorTakeBack(Settings);
 		}
 	}
 
@@ -89,7 +90,7 @@ struct ISMetaSystem
 	{
 		while (!SubSystems.empty())
 		{
-			delete ISAlgorithmOld::VectorTakeBack(SubSystems);
+			delete ISAlgorithm::VectorTakeBack(SubSystems);
 		}
 	}
 

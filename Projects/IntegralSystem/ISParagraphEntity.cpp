@@ -13,7 +13,7 @@ ISParagraphEntity::~ISParagraphEntity()
 {
     while (!Paragraphs.empty())
     {
-        delete ISAlgorithmOld::VectorTakeBack(Paragraphs);
+        delete ISAlgorithm::VectorTakeBack(Paragraphs);
     }
 }
 //-----------------------------------------------------------------------------

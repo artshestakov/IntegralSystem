@@ -372,7 +372,7 @@ void ISAuthDialog::Input()
     LabelIndicator->setText(LANG("AuthProcess"));
 
     ISTcpQuery qAuth(API_AUTH);
-    qAuth.BindValue("Hash", ISAlgorithmOld::StringToSha256(EditLogin->GetValue().toString().toStdString() + EditPassword->GetValue().toString().toStdString()).c_str());
+    qAuth.BindValue("Hash", ISAlgorithm::StringToSHA256(EditLogin->GetValue().toString().toStdString() + EditPassword->GetValue().toString().toStdString()).c_str());
     qAuth.BindValue("Version", CARAT_VERSION_N);
     if (qAuth.Execute()) //Авторизация прошла успешно
     {
@@ -1308,9 +1308,9 @@ void ISUserPasswordDialog::Apply()
     qUserPassword.BindValue("UserID", UserID);
     if (PasswordExist)
     {
-        qUserPassword.BindValue("HashOld", ISAlgorithmOld::StringToSha256(UserLogin.toStdString() + PasswordCurrent.toStdString()).c_str());
+        qUserPassword.BindValue("HashOld", ISAlgorithm::StringToSHA256(UserLogin.toStdString() + PasswordCurrent.toStdString()).c_str());
     }
-    qUserPassword.BindValue("Hash", ISAlgorithmOld::StringToSha256(UserLogin.toStdString() + Password.toStdString()).c_str());
+    qUserPassword.BindValue("Hash", ISAlgorithm::StringToSHA256(UserLogin.toStdString() + Password.toStdString()).c_str());
     if (qUserPassword.Execute())
     {
         ISPopupMessage::ShowNotification(PasswordExist ? LANG("UserPasswordForm.EditedPassword") : LANG("UserPasswordForm.CreatedPassword"));

@@ -33,189 +33,63 @@
 //-----------------------------------------------------------------------------
 namespace ISAlgorithmOld
 {
-	//! Вытаскивание имени файла из пути к нему
-	//! \param FilePath путь к файлу
-	//! \return возвращаем имя файла
-	//std::string GetFileNameFromPath(const std::string &FilePath);
+    //! Получить последнюю ошибку на текущей системе
+    //! \return возвращает строку с ошибкой
+    QString GetLastErrorString();
 
-	//! Конвертировать размер файла в строку
-	//! \param FileSize размер файла в байтах
-	//! \return размер файла строкой. В случае ошибки вернётся -1
-	QString StringFromSize(qint64 FileSize);
+    //! Сгенерировать соль
+    //! \param Salt строка, в которую будет помещена сгенерированная соль
+    //! \param ErrorString строка, в которую будет помещено описание ошибки
+    //! \return возвращает true в случае успешное генерации, в противном случае - false
+    bool GenerateSalt(QString &Salt, QString &ErrorString);
 
-	//! Получить размер директории
-	//! \param PathDir путь к директории
-	//! \return размер директории
-	quint64 DirSize(const QString &PathDir, const QStringList &Filter = QStringList());
+    //! Соление пароля
+    //! \param HashPassword строка, которая должна содержать хэш логина и пароля (sha256(Login + Password))
+    //! \param Salt строка, которая должна содержать соль (sha256(Login + Password))
+    //! \return возвращает солёный пароль
+    QString SaltPassword(const QString &HashPassword, const QString &Salt); //Посолить пароль
 
-	//! Получить временную метку
-	//! \return возвращает временную метку
-	//ISTimePoint GetTick();
+    //! Проверка пароля на соответствие требованиям сложности
+    //! \param Password строка, содержащая пароль
+    //! \return возвращает true в случае если пароль прошёл проверку, в противном случае - false
+    bool PasswordVerification(const QString &Password);
 
-	//! Получить разницу временных меток
-	//! \param TickA временная метка
-	//! \param TickB временная метка
-	//! \return возвращает разницу между двумя временными метками
-	//unsigned long long GetTickDiff(const ISTimePoint &T1, const ISTimePoint &T2);
+    //! Подготовить номер телефона (удалить все кроме цифр)
+    //! \param PhoneNumber строка, которая содержит номер телефона
+    void FormatPhoneNumber(QString &PhoneNumber);
 
-	//! Получить имя класса
-	//! \param FunctionName в качестве этого параметра необходимо передавать макрос __FUNCTION__
-	//! \return возвращает имя класса в случае успеха, иначе пустую строку
-    //std::string GetClassName(const std::string &FunctionName);
+    //! Форматирование целого числа. Например, число 6985473 примет вид 6 985 473
+    //! \Number целое число
+    //! \return возвращает форматированное число
+    QString FormatNumber(long long Number, char Separator = ' ');
 
-	//! Удалить первый символ из строки
-	//! \param String строка, из которой будет происходить удаление символа
-	//! \param Char символ, который будет удаляться из строки
-	//! \return функция ничего не возвращает
-	void RemoveBeginSymbolLoop(QString &String, char Char);
+    //! Форматирование дробного числа. Например, число 1024,965 примет вид 1 024,965
+    //! \Number дробное число
+    //! \return возвращает форматированное число
+    QString FormatNumber(double Number, char Separator = ' ', unsigned int Precision = 0);
 
-	//! Удалить последний символ из строки
-	//! \param String строка, из которой будет происходить удаление символа
-	//! \param Char символ, который будет удаляться из строки
-	//! \return функция ничего не возвращает
-	void RemoveLastSymbolLoop(QString &String, char Char);
+    //! Генерация стандартного уникального идентификатора в формате b75ed238-411a-4f06-85ea-a2ecca37cfa8
+    //! \return возвращает стандартный уникальный идентификатор
+    std::string GenerateUuidStandart();
 
-	//! Получить последнюю ошибку на текущей системе
-	//! \return возвращает строку с ошибкой
-	QString GetLastErrorString();
+    //! Генерация уникального идентификатора в формате {B75ED238-411A-4F06-85EA-A2ECCA37CFA8}
+    //! \return возвращает уникальный идентификатор
+    std::string GenerateUuid();
 
-	//! Сгенерировать соль
-	//! \param Salt строка, в которую будет помещена сгенерированная соль
-	//! \param ErrorString строка, в которую будет помещено описание ошибки
-	//! \return возвращает true в случае успешное генерации, в противном случае - false
-	bool GenerateSalt(QString &Salt, QString &ErrorString);
-
-	//! Соление пароля
-	//! \param HashPassword строка, которая должна содержать хэш логина и пароля (sha256(Login + Password))
-	//! \param Salt строка, которая должна содержать соль (sha256(Login + Password))
-	//! \return возвращает солёный пароль
-	QString SaltPassword(const QString &HashPassword, const QString &Salt); //Посолить пароль
-
-	//! Проверка пароля на соответствие требованиям сложности
-	//! \param Password строка, содержащая пароль
-	//! \return возвращает true в случае если пароль прошёл проверку, в противном случае - false
-	bool PasswordVerification(const QString &Password);
-
-	//! Конвертировать секунды в дни, минуты и секунды
-	//! \param Seconds секунды, которые нужно конвертировать
-	//! \param Day сюда помещается кол-во дней
-	//! \param Hour сюда помещается кол-во часов
-	//! \param Minute сюда помещается кол-во минут
-	//! \param Second сюда помещается кол-во секунд
-	//! \return функция ничего не возвращает
-	void ConvertSecondToTime(unsigned int Seconds, unsigned int &Day, unsigned int &Hour, unsigned int &Minute, unsigned int &Second);
-
-	//! Извлечь версию файла дистрибутива
-	//! \param FilePath путь к файлу дистрибутива
-	//! \return возвращает версию. Если вернулся ноль - версия не была извлечена
-	unsigned int ExtractVersionFile(const QString &FilePath);
-
-	//! Подготовить номер телефона (удалить все кроме цифр)
-	//! \param PhoneNumber строка, которая содержит номер телефона
-	void FormatPhoneNumber(QString &PhoneNumber);
-
-	//! Форматирование целого числа. Например, число 6985473 примет вид 6 985 473
-	//! \Number целое число
-	//! \return возвращает форматированное число
-	QString FormatNumber(long long Number, char Separator = ' ');
-
-	//! Форматирование дробного числа. Например, число 1024,965 примет вид 1 024,965
-	//! \Number дробное число
-	//! \return возвращает форматированное число
-	QString FormatNumber(double Number, char Separator = ' ', unsigned int Precision = 0);
-
-	//! Генерация стандартного уникального идентификатора в формате b75ed238-411a-4f06-85ea-a2ecca37cfa8
-	//! \return возвращает стандартный уникальный идентификатор
-	std::string GenerateUuidStandart();
-
-	//! Генерация уникального идентификатора в формате {B75ED238-411A-4F06-85EA-A2ECCA37CFA8}
-	//! \return возвращает уникальный идентификатор
-	std::string GenerateUuid();
-
-	//! Генерация упрощённого уникального идентификатора в формате B75ED238411A4F0685EAA2ECCA37CFA8
-	//! \return возвращает упрощённый уникальный идентификатор
+    //! Генерация упрощённого уникального идентификатора в формате B75ED238411A4F0685EAA2ECCA37CFA8
+    //! \return возвращает упрощённый уникальный идентификатор
     std::string GenerateUuidLite();
 
-	//! Генерация хеша SHA256
-	//! \param String строка, из которой будет извлечен хеш
-	//! \return возвращает строку с хешем
-	std::string StringToSha256(const std::string &String);
-
-	//! Генерация хеша MD5
-	//! \param String строка, из которой будет извлечен хеш
-	//! \return возвращает строку с хешем
-	std::string StringToMD5(const std::string &String);
-
-	//! Извлечь подстроку из строки
-	//! \param String строка, из которой будет происходить извлечение
-	//! \param Pos позиция, с которой начнется извлечение
-	//! \param Size количество извлекаемых символов
-	//! \return возвращает извлеченную строку
-	QString StringTake(QString &String, int Pos, int N);
-
-	//! Парсинг аргументов командной строки
-	//! \param argc количество аргументов
-	//! \param argv массив аргументов
-	//! \return возвращает вектор аргументов
-    ISVectorQString ParseCommandArgs(int argc, char **argv);
-
-	//Поиск значения в векторе
-    template <typename T> bool VectorContains(const std::vector<T> &Vector, T Value)
-    {
-		return Vector.empty() ? false : std::find(Vector.begin(), Vector.end(), Value) != Vector.end();
-    }
-
-	//Удалить значение из вектора
-	template <typename T> void VectorErase(std::vector<T> &Vector, T t)
-	{
-        auto It = std::find(Vector.begin(), Vector.end(), t);
-		if (It != Vector.end())
-		{
-			Vector.erase(It);
-		}
-	}
-
-	//Извлечь значение из вектора
+    //Извлечь значение из вектора
     template <typename T> bool VectorTake(std::vector<T> &Vector, T t)
-	{
-		auto It = std::find(Vector.begin(), Vector.end(), t);
-		bool Result = It != Vector.end();
-		if (Result)
-		{
-			Vector.erase(It);
-		}
-		return Result;
-	}
-
-    //Извлечь элемент из вектора по заданному индексу
-    template <typename T> T VectorTakeAt(std::vector<T> &Vector, size_t Index)
     {
-        T Value = Vector[Index];
-        Vector.erase(Vector.begin() + Index);
-        return Value;
-    }
-
-    //Извлечь первый элемент из вектора
-    template <typename T> T VectorTakeFront(std::vector<T> &Vector)
-    {
-        return VectorTakeAt(Vector, 0);
-    }
-
-    //Извлечь последний элемент из вектора
-    template <typename T> T VectorTakeBack(std::vector<T> &Vector)
-    {
-        return VectorTakeAt(Vector, Vector.size() - 1);
-    }
-
-    //Получить индекс элемента в векторе
-    template <typename T> size_t VectorIndexOf(const std::vector<T> &Vector, T Value)
-    {
-		auto It = std::find(Vector.begin(), Vector.end(), Value);
-        if (It == Vector.end())
+        auto It = std::find(Vector.begin(), Vector.end(), t);
+        bool Result = It != Vector.end();
+        if (Result)
         {
-            return size_t();
+            Vector.erase(It);
         }
-        return std::distance(Vector.begin(), It);
+        return Result;
     }
 
     //Удалить все элементы соответствующие значению
@@ -230,12 +104,6 @@ namespace ISAlgorithmOld
             }
         }
     }
-
-	//Удалить первый элемент из вектора
-	template <typename T> void VectorRemoveFirst(std::vector<T> &Vector)
-	{
-		Vector.erase(Vector.begin());
-	}
 
     //Получить все ключи словаря
     template <typename TKey, typename TValue> std::vector<TKey> ConvertMapToKeys(const std::map<TKey, TValue> &Map)
@@ -261,19 +129,6 @@ namespace ISAlgorithmOld
             ++Index;
         }
         return Vector;
-    }
-
-    //Извлечь первое значение словаря
-    template <typename TKey, typename TValue> TValue MapTakeFront(std::map<TKey, TValue> &Map)
-    {
-		auto It = Map.begin();
-        if (It != Map.end())
-        {
-            TValue Value = It->second;
-            Map.erase(It);
-            return Value;
-        }
-        return TValue();
     }
 }
 //-----------------------------------------------------------------------------

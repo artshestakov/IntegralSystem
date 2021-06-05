@@ -40,12 +40,12 @@ void ISUserRoleEntity::InitializeSpecial(const QVariantList &VariantList)
 bool ISUserRoleEntity::CheckAccessTable(const QString &TableName, const QString &AccessUID)
 {
     return ISBuffer::Instance().CurrentUserInfo.System || ISBuffer::Instance().CurrentUserInfo.GroupFullAccess ?
-        true : ISAlgorithmOld::VectorContains(Tables[TableName], AccessUID);
+        true : ISAlgorithm::VectorContains(Tables[TableName], AccessUID);
 }
 //-----------------------------------------------------------------------------
 bool ISUserRoleEntity::CheckAccessSpecial(const QString &SpecialAccessUID)
 {
     return ISBuffer::Instance().CurrentUserInfo.System || ISBuffer::Instance().CurrentUserInfo.GroupFullAccess ?
-        true : ISAlgorithmOld::VectorContains(Specials, SpecialAccessUID);
+        true : ISAlgorithm::VectorContains(Specials, SpecialAccessUID);
 }
 //-----------------------------------------------------------------------------

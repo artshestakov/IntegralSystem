@@ -191,7 +191,7 @@ void ISMainWindow::Reconnect()
         ISGui::SetWaitGlobalCursor(false);
 
         ISTcpQuery qReAuth(API_AUTH);
-        qReAuth.BindValue("Hash", ISAlgorithmOld::StringToSha256(ISBuffer::Instance().CurrentUserInfo.Login.toStdString() + ISBuffer::Instance().CurrentUserInfo.Password.toStdString()).c_str());
+        qReAuth.BindValue("Hash", ISAlgorithm::StringToSHA256(ISBuffer::Instance().CurrentUserInfo.Login.toStdString() + ISBuffer::Instance().CurrentUserInfo.Password.toStdString()).c_str());
         Result = qReAuth.Execute();
         if (Result)
         {

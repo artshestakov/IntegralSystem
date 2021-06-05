@@ -12,7 +12,7 @@ ISSettings::~ISSettings()
 {
 	while (!SettingGroups.empty())
 	{
-		delete ISAlgorithmOld::VectorTakeBack(SettingGroups);
+		delete ISAlgorithm::VectorTakeBack(SettingGroups);
 	}
 }
 //-----------------------------------------------------------------------------
