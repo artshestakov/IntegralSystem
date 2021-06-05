@@ -13,6 +13,7 @@
 #include "ISDelegates.h"
 #include "ISTcpQuery.h"
 #include "ISConstantsGui.h"
+#include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
 ISCheckEdit::ISCheckEdit(QWidget *parent) : ISFieldEditBase(parent)
 {

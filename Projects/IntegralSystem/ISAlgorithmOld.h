@@ -5,12 +5,6 @@
 #include "ISSettingsDatabase.h"
 #include "ISTypedefsOld.h"
 //-----------------------------------------------------------------------------
-#define POINTER_DELETE(POINTER) \
-if (POINTER) \
-{ \
-	delete(POINTER); \
-	POINTER = nullptr; \
-}
 
 //Обработка дробного значения
 #define DOUBLE_PREPAREN(d, n) QString::number(d, 'f', n)
@@ -18,9 +12,6 @@ if (POINTER) \
 
 //Обработка денежного значения (кол-во знаков после запятой должно быть 2)
 #define DOUBLE_PREPAREM(d) QString::number(d, 'f', 2)
-
-//Заснуть на Msec миллисекунд
-#define ISSleep(MSec) std::this_thread::sleep_for(std::chrono::milliseconds(MSec))
 
 //Обработать события из очереди событий
 #define PROCESS_EVENTS qApp->processEvents
@@ -34,40 +25,18 @@ if (POINTER) \
 //Сгенерировать упрощенный уникальный идентификатор
 #define GENERATE_UUID_LITE ISAlgorithmOld::GenerateUuidLite
 
-//Заглушка для SQL-запросов
-#define PREPARE_QUERY(x) x
-
-//Подавление предупреждения неиспользуемого параметра
-#define IS_UNUSED(x) (void)x
-
-#ifdef WIN32
-#define __CLASS__ ISAlgorithmOld::GetClassName(__FUNCTION__)
-#else
-#define __CLASS__ ISAlgorithmOld::GetClassName(__PRETTY_FUNCTION__)
-#endif
-//-----------------------------------------------------------------------------
-#ifdef WIN32
-#define CRITICAL_SECTION_INIT(CRITICAL_SECTION) InitializeCriticalSection(CRITICAL_SECTION)
-#define CRITICAL_SECTION_LOCK(CRITICAL_SECTION) EnterCriticalSection(CRITICAL_SECTION)
-#define CRITICAL_SECTION_UNLOCK(CRITICAL_SECTION) LeaveCriticalSection(CRITICAL_SECTION)
-#define CRITICAL_SECTION_DESTROY(CRITICAL_SECTION) DeleteCriticalSection(CRITICAL_SECTION)
-#define CURRENT_THREAD_ID GetCurrentThreadId
-#define CURRENT_PID GetCurrentProcessId
-#else
-#define CRITICAL_SECTION_INIT(CRITICAL_SECTION) pthread_mutex_init(CRITICAL_SECTION, NULL)
-#define CRITICAL_SECTION_LOCK(CRITICAL_SECTION) pthread_mutex_lock(CRITICAL_SECTION)
-#define CRITICAL_SECTION_UNLOCK(CRITICAL_SECTION) pthread_mutex_unlock(CRITICAL_SECTION)
-#define CRITICAL_SECTION_DESTROY(CRITICAL_SECTION) pthread_mutex_destroy(CRITICAL_SECTION)
-#define CURRENT_THREAD_ID pthread_self
-#define CURRENT_PID getpid
-#endif
+//#ifdef WIN32
+//#define __CLASS__ ISAlgorithmOld::GetClassName(__FUNCTION__)
+//#else
+//#define __CLASS__ ISAlgorithmOld::GetClassName(__PRETTY_FUNCTION__)
+//#endif
 //-----------------------------------------------------------------------------
 namespace ISAlgorithmOld
 {
 	//! Вытаскивание имени файла из пути к нему
 	//! \param FilePath путь к файлу
 	//! \return возвращаем имя файла
-	std::string GetFileNameFromPath(const std::string &FilePath);
+	//std::string GetFileNameFromPath(const std::string &FilePath);
 
 	//! Конвертировать размер файла в строку
 	//! \param FileSize размер файла в байтах
@@ -81,18 +50,18 @@ namespace ISAlgorithmOld
 
 	//! Получить временную метку
 	//! \return возвращает временную метку
-	ISTimePoint GetTick();
+	//ISTimePoint GetTick();
 
 	//! Получить разницу временных меток
 	//! \param TickA временная метка
 	//! \param TickB временная метка
 	//! \return возвращает разницу между двумя временными метками
-	unsigned long long GetTickDiff(const ISTimePoint &T1, const ISTimePoint &T2);
+	//unsigned long long GetTickDiff(const ISTimePoint &T1, const ISTimePoint &T2);
 
 	//! Получить имя класса
 	//! \param FunctionName в качестве этого параметра необходимо передавать макрос __FUNCTION__
 	//! \return возвращает имя класса в случае успеха, иначе пустую строку
-    std::string GetClassName(const std::string &FunctionName);
+    //std::string GetClassName(const std::string &FunctionName);
 
 	//! Удалить первый символ из строки
 	//! \param String строка, из которой будет происходить удаление символа

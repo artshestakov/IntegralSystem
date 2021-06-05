@@ -5,6 +5,7 @@
 #include "ISBuffer.h"
 #include "ISDialogsCommon.h"
 #include "ISAlgorithmOld.h"
+#include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
 ISFieldEditBase::ISFieldEditBase(QWidget *parent)
     : QWidget(parent),

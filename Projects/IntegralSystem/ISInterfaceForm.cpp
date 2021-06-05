@@ -3,6 +3,7 @@
 #include "ISGui.h"
 #include "ISConstantsOld.h"
 #include "ISAlgorithmOld.h"
+#include "ISAlgorithm.h"
 #include "ISBuffer.h"
 //-----------------------------------------------------------------------------
 ISInterfaceForm::ISInterfaceForm(QWidget *parent, QFlags<Qt::WindowType> Flags)

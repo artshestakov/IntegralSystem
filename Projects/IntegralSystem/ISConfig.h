@@ -36,7 +36,7 @@ private:
 	ISConfig& operator=(ISConfig&&) = delete;
 
 private:
-	std::vector<ISConfigParameter> VectorTemplate;
+	std::vector<ISConfigParameter2> VectorTemplate;
 	QString ErrorString;
 	int ErrorLine;
 	int ErrorColumn;

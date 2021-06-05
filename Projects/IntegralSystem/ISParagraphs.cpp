@@ -11,6 +11,8 @@
 #include "ISSystemsPanel.h"
 #include "ISUserRoleEntity.h"
 #include "ISConstantsGui.h"
+#include "ISAlgorithm.h"
+#include "ISConstants.h"
 //-----------------------------------------------------------------------------
 ISParagraphBaseForm::ISParagraphBaseForm(QWidget *parent) : QWidget(parent)
 {
@@ -317,7 +319,8 @@ void ISCalendarParagraph::ReloadEvents()
 //-----------------------------------------------------------------------------
 void ISCalendarParagraph::ReloadEvents(int Year, int Month)
 {
-    ISTcpQuery qGetCalendarEvents(API_GET_CALENDAR_EVENTS);
+    //???
+    ISTcpQuery qGetCalendarEvents(/*API_GET_CALENDAR_EVENTS*/"GetCalendarEvents");
     qGetCalendarEvents.BindValue("Month", Month);
     qGetCalendarEvents.BindValue("Year", Year);
 
@@ -425,7 +428,8 @@ void ISCalendarParagraph::CloseEvent()
     {
         if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.CalendarCloseEvent")))
         {
-            ISTcpQuery qCalendarClose(API_CALENDAR_CLOSE);
+            //???
+            ISTcpQuery qCalendarClose(/*API_CALENDAR_CLOSE*/"CalendarClose");
             qCalendarClose.BindValue("CalendarID", EventItem->GetCalendarID());
             if (qCalendarClose.Execute())
             {
@@ -476,7 +480,8 @@ void ISCalendarParagraph::DeleteEvent(int CalendarID)
 {
     if (ISMessageBox::ShowQuestion(CalendarPanel, LANG("Message.Question.DeleteCalendarEvent")))
     {
-        ISTcpQuery qCalendarDelete(API_CALENDAR_DELETE);
+        //???
+        ISTcpQuery qCalendarDelete(/*API_CALENDAR_DELETE*/"CalendarDelete");
         qCalendarDelete.BindValue("ID", CalendarID);
         if (qCalendarDelete.Execute())
         {

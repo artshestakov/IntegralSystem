@@ -6,6 +6,7 @@
 #include "ISObjects.h"
 #include "ISGui.h"
 #include "ISConstantsGui.h"
+#include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
 ISSystemsPanel::ISSystemsPanel(QWidget *parent) : QWidget(parent)
 {

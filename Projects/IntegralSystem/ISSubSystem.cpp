@@ -8,6 +8,7 @@
 #include "ISGui.h"
 #include "ISControls.h"
 #include "ISAlgorithmOld.h"
+#include "ISAlgorithm.h"
 #include "ISFlowLayout.h"
 #include "ISProgressForm.h"
 #include "ISDialogsForm.h"
@@ -324,8 +325,9 @@ void ISMonitorActivitySubSystem::LoadData()
         delete ISAlgorithmOld::VectorTakeBack(VectorUsers);
     }
 
+    //???
     QSize SizeWidget;
-    ISTcpQuery qGetClients(API_GET_CLIENTS);
+    ISTcpQuery qGetClients(/*API_GET_CLIENTS*/"GetClients");
     if (qGetClients.Execute())
     {
         QVariantList Clients = qGetClients.GetAnswer()["Clients"].toList();

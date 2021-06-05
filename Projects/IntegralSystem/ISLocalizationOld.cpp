@@ -2,6 +2,7 @@
 #include "ISConstantsOld.h"
 #include "ISAssert.h"
 #include "ISAlgorithmOld.h"
+#include "ISAlgorithm.h"
 #include "ISLoggerOld.h"
 #include "ISGui.h"
 //-----------------------------------------------------------------------------

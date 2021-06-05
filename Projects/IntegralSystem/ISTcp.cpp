@@ -1,6 +1,7 @@
 #include "ISTcp.h"
 #include "ISConstantsOld.h"
 #include "ISAlgorithmOld.h"
+#include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
 unsigned int ISTcp::GetQuerySizeFromBuffer(QByteArray &ByteArray, bool &Ok)
 {

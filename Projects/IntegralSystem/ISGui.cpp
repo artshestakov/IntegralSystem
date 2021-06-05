@@ -37,6 +37,7 @@
 #include "ISParagraphEntity.h"
 #include "ISSubSystem.h"
 #include "ISConstantsGui.h"
+#include "ISConstants.h"
 //-----------------------------------------------------------------------------
 bool ISGui::Startup(QString &ErrorString)
 {
@@ -578,7 +579,7 @@ ISImageViewerForm* ISGui::ShowImageForm(const QByteArray &ByteArray)
 //-----------------------------------------------------------------------------
 void ISGui::ShowNoteObject(QWidget *parent, const QString &TableName, int ObjectID)
 {
-    ISTcpQuery TcpQuery(API_NOTE_RECORD_GET);
+    ISTcpQuery TcpQuery(API_GET_NOTE_RECORD);
     TcpQuery.BindValue("TableName", TableName);
     TcpQuery.BindValue("ObjectID", ObjectID);
     if (!TcpQuery.Execute())
@@ -598,7 +599,7 @@ void ISGui::ShowNoteObject(QWidget *parent, const QString &TableName, int Object
     TcpQuery.BindValue("TableName", TableName);
     TcpQuery.BindValue("ObjectID", ObjectID);
     TcpQuery.BindValue("Note", Note);
-    if (!TcpQuery.Execute(API_NOTE_RECORD_SET))
+    if (!TcpQuery.Execute(API_SET_NOTE_RECORD))
     {
         ISMessageBox::ShowCritical(parent, TcpQuery.GetErrorString());
     }
@@ -714,12 +715,12 @@ ISFieldEditBase* ISGui::CreateFieldEditBase(QWidget *ParentWidget, PMetaField *M
             }
             else
             {
-                Temp = ISMetaData::Instance().GetType(MetaField->Type).ControlWidget;
+                Temp = QString::fromStdString(ISMetaData::Instance().GetType(MetaField->Type).ControlWidget);
             }
         }
         else
         {
-            Temp = ISMetaData::Instance().GetType(DataType).ControlWidget;
+            Temp = QString::fromStdString(ISMetaData::Instance().GetType(DataType).ControlWidget);
         }
         FieldEditBase = CreateFieldEditBase(ParentWidget, MetaField, DataType, Temp);
     }

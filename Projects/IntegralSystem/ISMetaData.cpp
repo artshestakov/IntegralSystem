@@ -2,13 +2,14 @@
 #include "ISAssert.h"
 #include "ISConstantsOld.h"
 #include "ISAlgorithmOld.h"
+#include "ISAlgorithm.h"
 #include "ISGui.h"
 //-----------------------------------------------------------------------------
 ISMetaData::ISMetaData()
 	: ErrorString(NO_ERROR_STRING),
 	Initialized(false)
 {
-	VectorTypes.emplace_back(ISMetaType("Unknown",		ISNamespace::FieldType::Unknown,		QString(),						QString(),				QString(),				false));
+	VectorTypes.emplace_back(ISMetaType("Unknown",		ISNamespace::FieldType::Unknown,		std::string(),                  std::string(),          std::string(),			false));
 	VectorTypes.emplace_back(ISMetaType("ID",			ISNamespace::FieldType::ID,				"BIGINT",						"ISIntegerEdit",		"ISComboSearchNumber",	true));
 	VectorTypes.emplace_back(ISMetaType("Int",			ISNamespace::FieldType::Int,			"INTEGER",						"ISIntegerEdit",		"ISComboSearchNumber",	true));
 	VectorTypes.emplace_back(ISMetaType("IntArray",		ISNamespace::FieldType::IntArray,		"INTEGER[]",					"ISIntegerEdit",		"ISComboSearchNumber",	true));
@@ -19,7 +20,7 @@ ISMetaData::ISMetaData()
 	VectorTypes.emplace_back(ISMetaType("Bool",			ISNamespace::FieldType::Bool,			"BOOLEAN",						"ISCheckEdit",			"ISComboSearchBase",	true));
 	VectorTypes.emplace_back(ISMetaType("Double",		ISNamespace::FieldType::Double,			"NUMERIC",						"ISDoubleEdit",			"ISComboSearchNumber",	true));
 	VectorTypes.emplace_back(ISMetaType("Money",		ISNamespace::FieldType::Money,			"NUMERIC",						"ISMoneyEdit",			"ISComboSearchNumber",	true));
-	VectorTypes.emplace_back(ISMetaType("ByteArray",	ISNamespace::FieldType::ByteArray,		"BYTEA",						"ISLineEdit",			QString(),				false));
+	VectorTypes.emplace_back(ISMetaType("ByteArray",	ISNamespace::FieldType::ByteArray,		"BYTEA",						"ISLineEdit",           std::string(),			false));
 	VectorTypes.emplace_back(ISMetaType("Date",			ISNamespace::FieldType::Date,			"DATE",							"ISDateEdit",			"ISComboSearchNumber",	true));
 	VectorTypes.emplace_back(ISMetaType("Time",			ISNamespace::FieldType::Time,			"TIME WITHOUT TIME ZONE",		"ISTimeEdit",			"ISComboSearchNumber",	true));
 	VectorTypes.emplace_back(ISMetaType("DateTime",		ISNamespace::FieldType::DateTime,		"TIMESTAMP WITHOUT TIME ZONE",	"ISDateTimeEdit",		"ISComboSearchNumber",	true));
@@ -31,15 +32,15 @@ ISMetaData::ISMetaData()
 	VectorTypes.emplace_back(ISMetaType("Vin",			ISNamespace::FieldType::Vin,			"CHARACTER VARYING",			"ISVINEdit",			"ISComboSearchString",	true));
 	VectorTypes.emplace_back(ISMetaType("Year",			ISNamespace::FieldType::Year,			"INTEGER",						"ISYearEdit",			"ISComboSearchNumber",	true));
 	VectorTypes.emplace_back(ISMetaType("Phone",		ISNamespace::FieldType::Phone,			"CHARACTER VARYING",			"ISPhoneEdit",			"ISComboSearchString",	true));
-	VectorTypes.emplace_back(ISMetaType("Image",		ISNamespace::FieldType::Image,			"BYTEA",						"ISImageEdit",			QString(),				false));
-	VectorTypes.emplace_back(ISMetaType("Color",		ISNamespace::FieldType::Color,			"CHARACTER VARYING",			"ISColorEdit",			QString(),				false));
+	VectorTypes.emplace_back(ISMetaType("Image",		ISNamespace::FieldType::Image,			"BYTEA",						"ISImageEdit",          std::string(),			false));
+	VectorTypes.emplace_back(ISMetaType("Color",		ISNamespace::FieldType::Color,			"CHARACTER VARYING",			"ISColorEdit",          std::string(),			false));
 	VectorTypes.emplace_back(ISMetaType("EMail",		ISNamespace::FieldType::EMail,			"CHARACTER VARYING",			"ISEMailEdit",			"ISComboSearchString",	true));
-	VectorTypes.emplace_back(ISMetaType("Volume",		ISNamespace::FieldType::Volume,			"INTEGER",						"ISVolumeEdit",			QString(),				false));
+	VectorTypes.emplace_back(ISMetaType("Volume",		ISNamespace::FieldType::Volume,			"INTEGER",						"ISVolumeEdit",         std::string(),			false));
 	VectorTypes.emplace_back(ISMetaType("Birthday",		ISNamespace::FieldType::Birthday,		"DATE",							"ISBirthdayEdit",		"ISComboSearchNumber",	true));
 	VectorTypes.emplace_back(ISMetaType("Seconds",		ISNamespace::FieldType::Seconds,		"INTEGER",						"ISIntegerEdit",		"ISComboSearchNumber",	false));
 	VectorTypes.emplace_back(ISMetaType("Month",		ISNamespace::FieldType::Month,			"INTEGER",						"ISMonthEdit",			"ISComboSearchNumber",	false));
 	VectorTypes.emplace_back(ISMetaType("Url",			ISNamespace::FieldType::Url,			"CHARACTER VARYING",			"ISUrlEdit",			"ISComboSearchString",	true));
-	VectorTypes.emplace_back(ISMetaType("File",			ISNamespace::FieldType::File,			"CHARACTER VARYING",			"ISFileEdit",			QString(),				false));
+	VectorTypes.emplace_back(ISMetaType("File",			ISNamespace::FieldType::File,			"CHARACTER VARYING",			"ISFileEdit",           std::string(),			false));
 	VectorTypes.emplace_back(ISMetaType("TaskImportant",ISNamespace::FieldType::TaskImportant,	"BOOLEAN",						"ISTaskImportantEdit",	"ISComboSearchBase",	true));
 	VectorTypes.emplace_back(ISMetaType("ProtocolDT",	ISNamespace::FieldType::ProtocolDT,		"TIMESTAMP WITHOUT TIME ZONE",	"ISDateTimeEdit",		"ISComboSearchNumber",	true));
 
@@ -241,7 +242,7 @@ const ISMetaType& ISMetaData::GetType(const QString &type_name)
 {
 	for (const ISMetaType &MetaType : VectorTypes)
 	{
-		if (MetaType.TypeName == type_name)
+		if (QString::fromStdString(MetaType.TypeName) == type_name)
 		{
 			return MetaType;
 		}

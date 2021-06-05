@@ -1,9 +1,10 @@
 #include "ISConstantsOld.h"
+#include "ISConstants.h"
 #include "ISAlgorithmOld.h"
 #include <openssl/sha.h>
 #include <openssl/md5.h>
 //-----------------------------------------------------------------------------
-std::string ISAlgorithmOld::GetFileNameFromPath(const std::string &FilePath)
+/*std::string ISAlgorithmOld::GetFileNameFromPath(const std::string &FilePath)
 {
 	size_t Pos = FilePath.rfind(PATH_SEPARATOR);
 	if (Pos != std::string::npos)
@@ -11,7 +12,7 @@ std::string ISAlgorithmOld::GetFileNameFromPath(const std::string &FilePath)
 		return std::string(FilePath).erase(0, Pos + 1);
 	}
 	return FilePath;
-}
+}*/
 //-----------------------------------------------------------------------------
 QString ISAlgorithmOld::StringFromSize(qint64 FileSize)
 {
@@ -53,17 +54,17 @@ quint64 ISAlgorithmOld::DirSize(const QString &PathDir, const QStringList &Filte
 	return Size;
 }
 //-----------------------------------------------------------------------------
-ISTimePoint ISAlgorithmOld::GetTick()
+/*ISTimePoint ISAlgorithmOld::GetTick()
 {
 	return std::chrono::steady_clock::now();
-}
+}*/
 //-----------------------------------------------------------------------------
-unsigned long long ISAlgorithmOld::GetTickDiff(const ISTimePoint &T1, const ISTimePoint &T2)
+/*unsigned long long ISAlgorithmOld::GetTickDiff(const ISTimePoint &T1, const ISTimePoint &T2)
 {
 	return std::chrono::duration_cast<std::chrono::milliseconds>(T1 - T2).count();
-}
+}*/
 //-----------------------------------------------------------------------------
-std::string ISAlgorithmOld::GetClassName(const std::string &FunctionName)
+/*std::string ISAlgorithmOld::GetClassName(const std::string &FunctionName)
 {
 	std::string Result(FunctionName);
     size_t Index = 0;
@@ -87,7 +88,7 @@ std::string ISAlgorithmOld::GetClassName(const std::string &FunctionName)
         Result.erase(Index, Result.size() - Index);
     }
 	return Result;
-}
+}*/
 //-----------------------------------------------------------------------------
 void ISAlgorithmOld::RemoveBeginSymbolLoop(QString &String, char Char)
 {

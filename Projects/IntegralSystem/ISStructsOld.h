@@ -4,24 +4,11 @@
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
 #include "ISNamespace.h"
+#include "ISConstants.h"
 #include "ISConstantsOld.h"
 #include "ISAssert.h"
 #include "ISTypedefsOld.h"
 #include "ISAlgorithmOld.h"
-//-----------------------------------------------------------------------------
-struct ISMetaType
-{
-	ISMetaType(const QString& type_name, ISNamespace::FieldType type, const QString& type_db, const QString& control_widget, const QString& search_condition_widget, bool search_allowed)
-		: TypeName(type_name), TypeField(type), TypeDB(type_db), ControlWidget(control_widget), SearchConditionWidget(search_condition_widget), SearchAllowed(search_allowed)
-	{ }
-
-	QString TypeName; //Наименование типа
-	ISNamespace::FieldType TypeField; //Тип даннных в системе
-	QString TypeDB; //Тип данных в базе
-	QString ControlWidget; //Имя поля редактирования
-	QString SearchConditionWidget; //Имя поискового виджета
-	bool SearchAllowed; //Возможность поиска по полю
-};
 //-----------------------------------------------------------------------------
 struct ISCurrentUserInfo
 {
@@ -138,16 +125,6 @@ struct PMetaUserPermission
 	bool TableNavigation;
 };
 //-----------------------------------------------------------------------------
-struct ISConfigurationInfo
-{
-	QString Name; //Наименование
-	QString UID; //Идентификатор
-	QString LocalName; //Локальное наименование
-	QString DesktopForm; //Имя класса рабочего стола
-	QDate DateExpired; //Дата, после которой программа запускаться не должна
-	QString LogoName;
-};
-//-----------------------------------------------------------------------------
 struct ISBuildInfoStruct
 {
 	ISBuildInfoStruct() : Version(0) { }
@@ -159,21 +136,6 @@ struct ISBuildInfoStruct
 	QString BranchName; //Имя ветки
 	QString Configuration; //Конфигурация
 	QString Platform; //Платформа
-};
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-struct ISConnectOptionDB
-{
-	ISConnectOptionDB() : Port(0) { }
-
-	ISConnectOptionDB(const QString& host, unsigned short port, const QString& name, const QString& login, const QString& password)
-		: Host(host), Port(port), Name(name), Login(login), Password(password) { }
-
-	QString Host; //Адрес сервера
-	unsigned short Port; //Порт
-	QString Name; //Имя базы данных
-	QString Login; //Логин пользователя
-	QString Password; //Пароль
 };
 //-----------------------------------------------------------------------------
 struct ISHistoryObject
@@ -195,7 +157,7 @@ struct ISMessageBoxButton
 	QIcon Icon; //Иконка
 };
 //-----------------------------------------------------------------------------
-struct ISConfigParameter
+struct ISConfigParameter2
 {
 	QString TemplateName; //Имя шаблона
 	QString Name; //Имя параметра

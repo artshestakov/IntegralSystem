@@ -17,6 +17,7 @@
 #include "ISExportWorker.h"
 #include "ISGui.h"
 #include "ISAlgorithmOld.h"
+#include "ISAlgorithm.h"
 #include "ISTcpQuery.h"
 #include "ISDialogsForm.h"
 #include "ISFavorites.h"

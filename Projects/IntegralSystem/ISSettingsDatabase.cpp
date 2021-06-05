@@ -1,5 +1,5 @@
 #include "ISSettingsDatabase.h"
-#include "ISAlgorithmOld.h"
+#include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
 ISSettingsDatabase::ISSettingsDatabase()
 {

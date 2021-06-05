@@ -287,7 +287,7 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
-      <AdditionalIncludeDirectories>$(SolutionDir);.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;$(SolutionDir)LibrarySTD\ISCore;$(QTDIR)\include;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtXml;$(SolutionDir)Components\OpenSSL\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir);.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;$(SolutionDir)Library\ISCore;$(QTDIR)\include;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtXml;$(SolutionDir)Components\OpenSSL\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;DEBUG;QT_USE;_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
       <WarningLevel>Level4</WarningLevel>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -314,7 +314,7 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
-      <AdditionalIncludeDirectories>$(SolutionDir);.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;$(SolutionDir)LibrarySTD\ISCore;$(QTDIR64)\include;$(QTDIR64)\include\QtCore;$(QTDIR64)\include\QtGui;$(QTDIR64)\include\QtMultimedia;$(QTDIR64)\include\QtNetwork;$(QTDIR64)\include\QtSql;$(QTDIR64)\include\QtWidgets;$(QTDIR64)\include\QtXml;$(SolutionDir)Components\OpenSSL\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir);.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;$(SolutionDir)Library\ISCore;$(QTDIR64)\include;$(QTDIR64)\include\QtCore;$(QTDIR64)\include\QtGui;$(QTDIR64)\include\QtMultimedia;$(QTDIR64)\include\QtNetwork;$(QTDIR64)\include\QtSql;$(QTDIR64)\include\QtWidgets;$(QTDIR64)\include\QtXml;$(SolutionDir)Components\OpenSSL\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;DEBUG;QT_USE;_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
       <WarningLevel>Level4</WarningLevel>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -340,7 +340,7 @@
       <DebugInformationFormat />
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
-      <AdditionalIncludeDirectories>$(SolutionDir);.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;$(SolutionDir)LibrarySTD\ISCore;$(QTDIR)\include;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtXml;$(SolutionDir)Components\OpenSSL\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir);.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;$(SolutionDir)Library\ISCore;$(QTDIR)\include;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtMultimedia;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtXml;$(SolutionDir)Components\OpenSSL\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;QT_USE;_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
       <WarningLevel>Level4</WarningLevel>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -367,7 +367,7 @@
       </DebugInformationFormat>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
-      <AdditionalIncludeDirectories>$(SolutionDir);.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;$(SolutionDir)LibrarySTD\ISCore;$(QTDIR64)\include;$(QTDIR64)\include\QtCore;$(QTDIR64)\include\QtGui;$(QTDIR64)\include\QtMultimedia;$(QTDIR64)\include\QtNetwork;$(QTDIR64)\include\QtSql;$(QTDIR64)\include\QtWidgets;$(QTDIR64)\include\QtXml;$(SolutionDir)Components\OpenSSL\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir);.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;$(SolutionDir)Library\ISCore;$(QTDIR64)\include;$(QTDIR64)\include\QtCore;$(QTDIR64)\include\QtGui;$(QTDIR64)\include\QtMultimedia;$(QTDIR64)\include\QtNetwork;$(QTDIR64)\include\QtSql;$(QTDIR64)\include\QtWidgets;$(QTDIR64)\include\QtXml;$(SolutionDir)Components\OpenSSL\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;QT_USE;_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
       <WarningLevel>Level4</WarningLevel>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>

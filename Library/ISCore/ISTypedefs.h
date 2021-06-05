@@ -38,6 +38,12 @@ typedef SOCKADDR_IN ISSocketAddr;
 typedef sockaddr_in ISSocketAddr;
 #endif
 //-----------------------------------------------------------------------------
+#ifdef QT_USE
+typedef QString ISString;
+#else
+typedef std::string ISString;
+#endif
+//-----------------------------------------------------------------------------
 typedef std::vector<std::string> ISVectorString;
 typedef std::map<std::string, std::string> ISMapString;
 typedef unsigned short ISTcpPort;

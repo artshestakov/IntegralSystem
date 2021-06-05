@@ -6,6 +6,13 @@
 #include "ISTypedefs.h"
 #include "ISStructs.h"
 //-----------------------------------------------------------------------------
+#define POINTER_DELETE(POINTER) \
+if (POINTER) \
+{ \
+	delete(POINTER); \
+	POINTER = nullptr; \
+}
+
 //Заснуть на Msec миллисекунд
 #define ISSleep(MSec) std::this_thread::sleep_for(std::chrono::milliseconds(MSec))
 

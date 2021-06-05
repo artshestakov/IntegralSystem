@@ -92,22 +92,22 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>$(ProjectDir)..\..\BinSTD\$(Configuration)-$(Platform)\</OutDir>
+    <OutDir>$(ProjectDir)..\..\Bin\$(Configuration)-$(Platform)\</OutDir>
     <IntDir>$(Configuration)-$(Platform)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>$(ProjectDir)..\..\BinSTD\$(Configuration)-$(Platform)\</OutDir>
+    <OutDir>$(ProjectDir)..\..\Bin\$(Configuration)-$(Platform)\</OutDir>
     <IntDir>$(Configuration)-$(Platform)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>$(ProjectDir)..\..\BinSTD\$(Configuration)-$(Platform)\</OutDir>
+    <OutDir>$(ProjectDir)..\..\Bin\$(Configuration)-$(Platform)\</OutDir>
     <IntDir>$(Configuration)-$(Platform)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>$(ProjectDir)..\..\BinSTD\$(Configuration)-$(Platform)\</OutDir>
+    <OutDir>$(ProjectDir)..\..\Bin\$(Configuration)-$(Platform)\</OutDir>
     <IntDir>$(Configuration)-$(Platform)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -120,7 +120,7 @@
       <TreatWarningAsError>true</TreatWarningAsError>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <MinimalRebuild>false</MinimalRebuild>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\Components\PostgreSQL\12.0.5\Include;$(ProjectDir)..\..\LibrarySTD\ISCore;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\Components\PostgreSQL\12.0.5\Include;$(ProjectDir)..\..\Library\ISCore;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -139,7 +139,7 @@
       <TreatWarningAsError>true</TreatWarningAsError>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <MinimalRebuild>false</MinimalRebuild>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\Components\PostgreSQL\12.0.5\Include;$(ProjectDir)..\..\LibrarySTD\ISCore;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\Components\PostgreSQL\12.0.5\Include;$(ProjectDir)..\..\Library\ISCore;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -159,7 +159,7 @@
       <PreprocessorDefinitions>WIN32;ISSERVER_LIBRARY;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <TreatWarningAsError>true</TreatWarningAsError>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\Components\PostgreSQL\12.0.5\Include;$(ProjectDir)..\..\LibrarySTD\ISCore;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\Components\PostgreSQL\12.0.5\Include;$(ProjectDir)..\..\Library\ISCore;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -181,7 +181,7 @@
       <PreprocessorDefinitions>WIN32;ISSERVER_LIBRARY;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <TreatWarningAsError>true</TreatWarningAsError>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\Components\PostgreSQL\12.0.5\Include;$(ProjectDir)..\..\LibrarySTD\ISCore;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\Components\PostgreSQL\12.0.5\Include;$(ProjectDir)..\..\Library\ISCore;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

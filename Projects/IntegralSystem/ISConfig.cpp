@@ -1,6 +1,7 @@
 #include "ISConfig.h"
 #include "ISConstantsOld.h"
 #include "ISAlgorithmOld.h"
+#include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
 ISConfig::ISConfig()
 	: ErrorString(NO_ERROR_STRING),
@@ -9,7 +10,7 @@ ISConfig::ISConfig()
 	Settings(nullptr)
 {
 	//Структура шаблонов для конфигурационных файлов
-	VectorTemplate = std::vector<ISConfigParameter>
+	VectorTemplate = std::vector<ISConfigParameter2>
 	{
 		//Серверный шаблон
 		{ CONFIG_TEMPLATE_SERVER, "Connection/Host",		QVariant::String,	true,	QVariant(),				0, 0 },
@@ -69,7 +70,7 @@ bool ISConfig::IsValid()
 	}
 
 	//Проверяем параметры на заполняемость
-	for (const ISConfigParameter &ConfigParameter : VectorTemplate)
+	for (const ISConfigParameter2 &ConfigParameter : VectorTemplate)
 	{
 		if (ConfigParameter.TemplateName != TemplateName)
 		{
@@ -86,7 +87,7 @@ bool ISConfig::IsValid()
 	}
 
 	//Проверяем корректность параметров
-	for (const ISConfigParameter &ConfigParameter : VectorTemplate)
+	for (const ISConfigParameter2 &ConfigParameter : VectorTemplate)
 	{
 		if (ConfigParameter.TemplateName != TemplateName)
 		{
@@ -207,7 +208,7 @@ bool ISConfig::Update()
 	}
 
 	//Теперь проверяем, не появилось ли новых параметров в шаблоне
-	for (const ISConfigParameter &ConfigParameter : VectorTemplate) //Обходим параметры из шаблона
+	for (const ISConfigParameter2 &ConfigParameter : VectorTemplate) //Обходим параметры из шаблона
 	{
 		if (ConfigParameter.TemplateName == TemplateName && !Settings->contains(ConfigParameter.Name)) //Такого ключа в текущем конфигурационном файле нет - добавляем
 		{
@@ -231,7 +232,7 @@ bool ISConfig::Update()
 bool ISConfig::Create()
 {
 	//Обходим все параметры текущего шаблона и добавляем их в конфигурационный файл
-	for (const ISConfigParameter &ConfigParameter : VectorTemplate)
+	for (const ISConfigParameter2 &ConfigParameter : VectorTemplate)
 	{
 		if (ConfigParameter.TemplateName == TemplateName)
 		{
@@ -243,7 +244,7 @@ bool ISConfig::Create()
 //-----------------------------------------------------------------------------
 bool ISConfig::ContainsKey(const QString &Key)
 {
-	for (const ISConfigParameter &ConfigParameter : VectorTemplate)
+	for (const ISConfigParameter2 &ConfigParameter : VectorTemplate)
 	{
 		if (ConfigParameter.TemplateName == TemplateName && ConfigParameter.Name == Key)
 		{
@@ -255,7 +256,7 @@ bool ISConfig::ContainsKey(const QString &Key)
 //-----------------------------------------------------------------------------
 QVariant ISConfig::GetDefaultValue(const QString &Key) const
 {
-	for (const ISConfigParameter &ConfigParameter : VectorTemplate)
+	for (const ISConfigParameter2 &ConfigParameter : VectorTemplate)
 	{
 		if (ConfigParameter.TemplateName == TemplateName && ConfigParameter.Name == Key)
 		{

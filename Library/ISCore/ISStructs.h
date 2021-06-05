@@ -5,6 +5,7 @@
 #include "ISDateTime.h"
 #include "ISNamespace.h"
 #include "ISConstants.h"
+#include "ISTypedefs.h"
 //-----------------------------------------------------------------------------
 struct ISConfigParameter
 {
@@ -73,12 +74,12 @@ struct ISSqlPrepare
 //-----------------------------------------------------------------------------
 struct ISConfigurationInfo
 {
-    std::string Name; //Наименование
-    std::string UID; //Идентификатор
-    std::string LocalName; //Локальное наименование
-    std::string DesktopForm; //Имя класса рабочего стола
+    ISString Name; //Наименование
+    ISString UID; //Идентификатор
+    ISString LocalName; //Локальное наименование
+    ISString DesktopForm; //Имя класса рабочего стола
     ISDate DateExpired; //Дата, после которой программа запускаться не должна
-    std::string LogoName;
+    ISString LogoName;
 };
 //-----------------------------------------------------------------------------
 struct ISFileInfo

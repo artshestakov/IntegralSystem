@@ -13,6 +13,7 @@
 #include "ISCreatedObjectsEntity.h"
 #include "ISUserRoleEntity.h"
 #include "ISAlgorithmOld.h"
+#include "ISAlgorithm.h"
 #include "ISTcpQuery.h"
 #include "ISConstantsGui.h"
 //-----------------------------------------------------------------------------

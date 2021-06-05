@@ -19,9 +19,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{E6382DB8-7848-4103-891A-AC403EA31E85}</ProjectGuid>
+    <ProjectGuid>{F42F3490-2DC9-4ED9-8D0A-68A9EE1F40CE}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>Carat</RootNamespace>
+    <RootNamespace>Configurator</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -75,23 +75,23 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>$(ProjectDir)..\..\BinSTD\$(Configuration)-$(Platform)\</OutDir>
+    <OutDir>$(ProjectDir)..\..\Bin\$(Configuration)-$(Platform)\</OutDir>
     <IntDir>$(Configuration)-$(Platform)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>$(ProjectDir)..\..\BinSTD\$(Configuration)-$(Platform)\</OutDir>
+    <OutDir>$(ProjectDir)..\..\Bin\$(Configuration)-$(Platform)\</OutDir>
     <IntDir>$(Configuration)-$(Platform)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(ProjectDir)..\..\Bin\$(Configuration)-$(Platform)\</OutDir>
     <IntDir>$(Configuration)-$(Platform)\</IntDir>
-    <OutDir>$(ProjectDir)..\..\BinSTD\$(Configuration)-$(Platform)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(ProjectDir)..\..\Bin\$(Configuration)-$(Platform)\</OutDir>
     <IntDir>$(Configuration)-$(Platform)\</IntDir>
-    <OutDir>$(ProjectDir)..\..\BinSTD\$(Configuration)-$(Platform)\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -99,23 +99,19 @@
       </PrecompiledHeader>
       <WarningLevel>Level4</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;DEBUG;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <TreatWarningAsError>true</TreatWarningAsError>
-      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <SDLCheck>true</SDLCheck>
       <MinimalRebuild>false</MinimalRebuild>
-      <AdditionalIncludeDirectories>$(SolutionDir);$(ProjectDir)..\..\Components\RapidJSON;$(ProjectDir)..\..\Components\PostgreSQL\12.0.5\Include;$(ProjectDir)..\..\Components\CURL\Include;$(ProjectDir)..\..\LibrarySTD\ISCore;$(ProjectDir)..\..\LibrarySTD\ISServer;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir);$(ProjectDir)..\..\Components\RapidJSON;$(ProjectDir)..\..\Components\PostgreSQL\12.0.5\Include;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISServer;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(ProjectDir)..\..\BinSTD\$(Configuration)-$(Platform);$(ProjectDir)..\..\Deploy\$(Configuration)-$(Platform);$(ProjectDir)..\..\Components\PostgreSQL\12.0.5\Lib-$(Platform);$(ProjectDir)..\..\Components\CURL\Bin\$(Configuration)-$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Ws2_32.lib;Shlwapi.lib;Rpcrt4.lib;Crypt32.lib;libpq.lib;libcurld.lib;ISCore.lib;ISServer.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\..\Bin\$(Configuration)-$(Platform);$(ProjectDir)..\..\Deploy\$(Configuration)-$(Platform);$(ProjectDir)..\..\Components\PostgreSQL\12.0.5\Lib-$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>Shlwapi.lib;Rpcrt4.lib;Crypt32.lib;libpq.lib;ISCore.lib;ISServer.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
-    <PostBuildEvent>
-      <Command>
-      </Command>
-    </PostBuildEvent>
     <PreBuildEvent>
       <Command>$(ProjectDir)..\..\Components\Resourcer\Release-x64\Resourcer.exe $(ProjectDir)..\..\Resources
 MOVE $(ProjectDir)..\..\Components\Resourcer\Release-x64\Resources.bin $(ProjectDir)..\..\BinSTD\$(Configuration)-$(Platform)\Resources.bin
@@ -128,23 +124,19 @@ $(SolutionDir)Revision.cmd $(SolutionDir) $(Configuration) $(Platform)</Command>
       </PrecompiledHeader>
       <WarningLevel>Level4</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;DEBUG;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <TreatWarningAsError>true</TreatWarningAsError>
-      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <SDLCheck>true</SDLCheck>
       <MinimalRebuild>false</MinimalRebuild>
-      <AdditionalIncludeDirectories>$(SolutionDir);$(ProjectDir)..\..\Components\RapidJSON;$(ProjectDir)..\..\Components\PostgreSQL\12.0.5\Include;$(ProjectDir)..\..\Components\CURL\Include;$(ProjectDir)..\..\LibrarySTD\ISCore;$(ProjectDir)..\..\LibrarySTD\ISServer;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir);$(ProjectDir)..\..\Components\RapidJSON;$(ProjectDir)..\..\Components\PostgreSQL\12.0.5\Include;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISServer;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(ProjectDir)..\..\BinSTD\$(Configuration)-$(Platform);$(ProjectDir)..\..\Deploy\$(Configuration)-$(Platform);$(ProjectDir)..\..\Components\PostgreSQL\12.0.5\Lib-$(Platform);$(ProjectDir)..\..\Components\CURL\Bin\$(Configuration)-$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Ws2_32.lib;Shlwapi.lib;Rpcrt4.lib;Crypt32.lib;libpq.lib;libcurld.lib;ISCore.lib;ISServer.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\..\Bin\$(Configuration)-$(Platform);$(ProjectDir)..\..\Deploy\$(Configuration)-$(Platform);$(ProjectDir)..\..\Components\PostgreSQL\12.0.5\Lib-$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>Shlwapi.lib;Rpcrt4.lib;Crypt32.lib;libpq.lib;ISCore.lib;ISServer.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
-    <PostBuildEvent>
-      <Command>
-      </Command>
-    </PostBuildEvent>
     <PreBuildEvent>
       <Command>$(ProjectDir)..\..\Components\Resourcer\Release-x64\Resourcer.exe $(ProjectDir)..\..\Resources
 MOVE $(ProjectDir)..\..\Components\Resourcer\Release-x64\Resources.bin $(ProjectDir)..\..\BinSTD\$(Configuration)-$(Platform)\Resources.bin
@@ -159,24 +151,20 @@ $(SolutionDir)Revision.cmd $(SolutionDir) $(Configuration) $(Platform)</Command>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <TreatWarningAsError>true</TreatWarningAsError>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>$(SolutionDir);$(ProjectDir)..\..\Components\RapidJSON;$(ProjectDir)..\..\Components\PostgreSQL\12.0.5\Include;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISServer;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>$(SolutionDir);$(ProjectDir)..\..\Components\RapidJSON;$(ProjectDir)..\..\Components\PostgreSQL\12.0.5\Include;$(ProjectDir)..\..\Components\CURL\Include;$(ProjectDir)..\..\LibrarySTD\ISCore;$(ProjectDir)..\..\LibrarySTD\ISServer;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(ProjectDir)..\..\BinSTD\$(Configuration)-$(Platform);$(ProjectDir)..\..\Deploy\$(Configuration)-$(Platform);$(ProjectDir)..\..\Components\PostgreSQL\12.0.5\Lib-$(Platform);$(ProjectDir)..\..\Components\CURL\Bin\$(Configuration)-$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Ws2_32.lib;Shlwapi.lib;Rpcrt4.lib;Crypt32.lib;libpq.lib;libcurl.lib;ISCore.lib;ISServer.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\..\Bin\$(Configuration)-$(Platform);$(ProjectDir)..\..\Deploy\$(Configuration)-$(Platform);$(ProjectDir)..\..\Components\PostgreSQL\12.0.5\Lib-$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>Shlwapi.lib;Rpcrt4.lib;Crypt32.lib;libpq.lib;ISCore.lib;ISServer.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
-    <PostBuildEvent>
-      <Command>
-      </Command>
-    </PostBuildEvent>
     <PreBuildEvent>
       <Command>$(ProjectDir)..\..\Components\Resourcer\Release-x64\Resourcer.exe $(ProjectDir)..\..\Resources
 MOVE $(ProjectDir)..\..\Components\Resourcer\Release-x64\Resources.bin $(ProjectDir)..\..\BinSTD\$(Configuration)-$(Platform)\Resources.bin
@@ -191,24 +179,20 @@ $(SolutionDir)Revision.cmd $(SolutionDir) $(Configuration) $(Platform)</Command>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <TreatWarningAsError>true</TreatWarningAsError>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>$(SolutionDir);$(ProjectDir)..\..\Components\RapidJSON;$(ProjectDir)..\..\Components\PostgreSQL\12.0.5\Include;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISServer;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>$(SolutionDir);$(ProjectDir)..\..\Components\RapidJSON;$(ProjectDir)..\..\Components\PostgreSQL\12.0.5\Include;$(ProjectDir)..\..\Components\CURL\Include;$(ProjectDir)..\..\LibrarySTD\ISCore;$(ProjectDir)..\..\LibrarySTD\ISServer;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(ProjectDir)..\..\BinSTD\$(Configuration)-$(Platform);$(ProjectDir)..\..\Deploy\$(Configuration)-$(Platform);$(ProjectDir)..\..\Components\PostgreSQL\12.0.5\Lib-$(Platform);$(ProjectDir)..\..\Components\CURL\Bin\$(Configuration)-$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Ws2_32.lib;Shlwapi.lib;Rpcrt4.lib;Crypt32.lib;libpq.lib;libcurl.lib;ISCore.lib;ISServer.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\..\Bin\$(Configuration)-$(Platform);$(ProjectDir)..\..\Deploy\$(Configuration)-$(Platform);$(ProjectDir)..\..\Components\PostgreSQL\12.0.5\Lib-$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>Shlwapi.lib;Rpcrt4.lib;Crypt32.lib;libpq.lib;ISCore.lib;ISServer.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
-    <PostBuildEvent>
-      <Command>
-      </Command>
-    </PostBuildEvent>
     <PreBuildEvent>
       <Command>$(ProjectDir)..\..\Components\Resourcer\Release-x64\Resourcer.exe $(ProjectDir)..\..\Resources
 MOVE $(ProjectDir)..\..\Components\Resourcer\Release-x64\Resources.bin $(ProjectDir)..\..\BinSTD\$(Configuration)-$(Platform)\Resources.bin
@@ -216,41 +200,29 @@ $(SolutionDir)Revision.cmd $(SolutionDir) $(Configuration) $(Platform)</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="ISBlockedIP.cpp" />
-    <ClCompile Include="ISCaratApplication.cpp" />
-    <ClCompile Include="ISCrashDumper.cpp" />
-    <ClCompile Include="ISFail2Ban.cpp" />
-    <ClCompile Include="ISStackWalker.cpp" />
-    <ClCompile Include="ISTcpAnswer.cpp" />
-    <ClCompile Include="ISTcpClient.cpp" />
-    <ClCompile Include="ISTcpClients.cpp" />
-    <ClCompile Include="ISTcpMessage.cpp" />
-    <ClCompile Include="ISTcpQueue.cpp" />
-    <ClCompile Include="ISTcpServer.cpp" />
-    <ClCompile Include="ISTcpWorker.cpp" />
-    <ClCompile Include="ISTcpWorkerHelper.cpp" />
+    <ClCompile Include="CGConfigurator.cpp" />
+    <ClCompile Include="CGConfiguratorBase.cpp" />
+    <ClCompile Include="CGConfiguratorCreate.cpp" />
+    <ClCompile Include="CGConfiguratorDelete.cpp" />
+    <ClCompile Include="CGConfiguratorService.cpp" />
+    <ClCompile Include="CGConfiguratorShow.cpp" />
+    <ClCompile Include="CGConfiguratorUpdate.cpp" />
+    <ClCompile Include="CGDatabase.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="StackWalker.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Configurator.rc" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\ISRevision.h" />
-    <ClInclude Include="ISBlockedIP.h" />
-    <ClInclude Include="ISCaratApplication.h" />
-    <ClInclude Include="ISCrashDumper.h" />
-    <ClInclude Include="ISFail2Ban.h" />
-    <ClInclude Include="ISStackWalker.h" />
-    <ClInclude Include="ISTcpAnswer.h" />
-    <ClInclude Include="ISTcpClient.h" />
-    <ClInclude Include="ISTcpClients.h" />
-    <ClInclude Include="ISTcpMessage.h" />
-    <ClInclude Include="ISTcpQueue.h" />
-    <ClInclude Include="ISTcpServer.h" />
-    <ClInclude Include="ISTcpWorker.h" />
-    <ClInclude Include="ISTcpWorkerHelper.h" />
-    <ClInclude Include="StackWalker.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="Carat.rc" />
+    <ClInclude Include="CGConfigurator.h" />
+    <ClInclude Include="CGConfiguratorBase.h" />
+    <ClInclude Include="CGConfiguratorCreate.h" />
+    <ClInclude Include="CGConfiguratorDelete.h" />
+    <ClInclude Include="CGConfiguratorService.h" />
+    <ClInclude Include="CGConfiguratorShow.h" />
+    <ClInclude Include="CGConfiguratorUpdate.h" />
+    <ClInclude Include="CGDatabase.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

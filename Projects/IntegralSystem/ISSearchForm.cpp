@@ -89,7 +89,7 @@ void ISSearchForm::AddField(PMetaField *MetaField)
     //Виджет с выбором оператора
     QString SearchOperatorWidget = MetaField->Type == ISNamespace::FieldType::BigInt && MetaField->Foreign
         ? "ISComboSearchBase" :
-        ISMetaData::Instance().GetType(MetaField->Type).SearchConditionWidget;
+        QString::fromStdString(ISMetaData::Instance().GetType(MetaField->Type).SearchConditionWidget);
     ISComboSearchBase *ComboSearchOperator = ISGui::CreatePointer<ISComboSearchBase *>(SearchOperatorWidget, Q_ARG(QWidget *, this));
     GridLayout->addWidget(ComboSearchOperator, RowIndex, 1);
 

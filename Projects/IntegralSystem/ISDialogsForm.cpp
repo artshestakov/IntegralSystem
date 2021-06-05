@@ -444,7 +444,8 @@ void ISAuthDialog::Input()
         ISBuffer::Instance().ConfigurationInfo.UID = ConfigurationInfo["UID"].toString();
         ISBuffer::Instance().ConfigurationInfo.LocalName = ConfigurationInfo["LocalName"].toString();
         ISBuffer::Instance().ConfigurationInfo.DesktopForm = ConfigurationInfo["DesktopForm"].toString();
-        ISBuffer::Instance().ConfigurationInfo.DateExpired = QDate::fromString(ConfigurationInfo["DateExpired"].toString(), FORMAT_DATE_V2);
+        //???
+        //ISBuffer::Instance().ConfigurationInfo.DateExpired = QDate::fromString(ConfigurationInfo["DateExpired"].toString(), FORMAT_DATE_V2);
         ISBuffer::Instance().ConfigurationInfo.LogoName = ConfigurationInfo["LogoName"].toString();
 
         SetConnecting(false);

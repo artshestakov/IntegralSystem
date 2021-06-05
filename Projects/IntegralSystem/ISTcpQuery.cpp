@@ -3,6 +3,7 @@
 #include "ISTcp.h"
 #include "ISConstantsOld.h"
 #include "ISAlgorithmOld.h"
+#include "ISAlgorithm.h"
 #include "ISLocalizationOld.h"
 #include "ISLoggerOld.h"
 #include "ISGui.h"
@@ -44,7 +45,7 @@ bool ISTcpQuery::Execute(const QString &query_type)
 bool ISTcpQuery::Execute()
 {
     //«апоминаем текущее врем€
-    ISTimePoint TimePoint = ISAlgorithmOld::GetTick();
+    ISTimePoint TimePoint = ISAlgorithm::GetTick();
 
     //‘ормируем запрос (тип запроса, его параметры и системные пол€)
     ISLOGGER_I(__CLASS__, QString("Build \"%1\"").arg(QueryType));
@@ -127,7 +128,7 @@ bool ISTcpQuery::Execute()
         if (Result)
         {
             TcpAnswer = TcpAnswer["Parameters"].toMap();
-            ISLOGGER_I(__CLASS__, QString("Query success (%1 msec)").arg(ISAlgorithmOld::GetTickDiff(ISAlgorithmOld::GetTick(), TimePoint)));
+            ISLOGGER_I(__CLASS__, QString("Query success (%1 msec)").arg(ISAlgorithm::GetTickDiff(ISAlgorithm::GetTick(), TimePoint)));
         }
         else
         {
