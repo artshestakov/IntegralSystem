@@ -161,12 +161,12 @@ PMetaField* ISMetaData::GetMetaField(const QString &TableName, const QString &Fi
 //-----------------------------------------------------------------------------
 std::vector<PMetaFunction*> ISMetaData::GetFunctions()
 {
-	return ISAlgorithmOld::ConvertMapToValues<QString, PMetaFunction *>(FunctionsMap);
+	return ISAlgorithm::ConvertMapToValues<QString, PMetaFunction *>(FunctionsMap);
 }
 //-----------------------------------------------------------------------------
 std::vector<PMetaTable*> ISMetaData::GetTables()
 {
-	return ISAlgorithmOld::ConvertMapToValues<QString, PMetaTable *>(TablesMap);
+	return ISAlgorithm::ConvertMapToValues<QString, PMetaTable *>(TablesMap);
 }
 //-----------------------------------------------------------------------------
 std::vector<PMetaIndex*> ISMetaData::GetIndexes()

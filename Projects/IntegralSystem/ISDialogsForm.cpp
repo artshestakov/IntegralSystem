@@ -1291,7 +1291,7 @@ void ISUserPasswordDialog::Apply()
     }
 
     //Проверка сложности пароля
-    if (!ISAlgorithmOld::PasswordVerification(Password))
+    if (!ISAlgorithm::PasswordVerification(Password.toStdString()))
     {
         ISMessageBox::ShowWarning(this, LANG("Message.Warning.PasswordVerification"));
         EditPassword->BlinkRed();

@@ -338,7 +338,7 @@ void ISCalendarParagraph::ReloadEvents(int Year, int Month)
             unsigned int Day = EventMap.take("Day").toUInt();
             EventsMap[Day].append(EventMap);
         }
-        CalendarPanel->SetDays(ISAlgorithmOld::ConvertMapToKeys(EventsMap));
+        CalendarPanel->SetDays(ISAlgorithm::ConvertMapToKeys(EventsMap));
         SelectedDateChanged();
     }
     else

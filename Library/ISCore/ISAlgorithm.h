@@ -327,6 +327,18 @@ namespace ISAlgorithm
     //! \return Возвращает массив данных файла в случае отсутствия ошибки, иначе вернётся nullptr
     unsigned char* ReadFile(const char *FilePath, const char *Mode, long &FileSize, std::string &ErrorString);
 
+    //Извлечь значение из вектора
+    template <typename T> bool VectorTake(std::vector<T> &Vector, T t)
+    {
+        auto It = std::find(Vector.begin(), Vector.end(), t);
+        bool Result = It != Vector.end();
+        if (Result)
+        {
+            Vector.erase(It);
+        }
+        return Result;
+    }
+
     //Извлечь элемент из вектора по заданному индексу
     template <typename T> T VectorTakeAt(std::vector<T> &Vector, size_t Index)
     {

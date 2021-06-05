@@ -438,7 +438,7 @@ void ISObjectFormBase::CreateWidgetObject()
     }
 
     //Подключаем необходиые сигналы к полям
-    for (ISFieldEditBase *FieldEditBase : ISAlgorithmOld::ConvertMapToValues(FieldsMap))
+    for (ISFieldEditBase *FieldEditBase : ISAlgorithm::ConvertMapToValues(FieldsMap))
     {
         connect(FieldEditBase, &ISFieldEditBase::DataChanged, this, &ISObjectFormBase::DataChanged);
     }

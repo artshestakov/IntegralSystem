@@ -711,7 +711,7 @@ void ISUuidEdit::SetReadOnly(bool read_only)
 //-----------------------------------------------------------------------------
 void ISUuidEdit::Generate()
 {
-    SetValue(QString::fromStdString(GENERATE_UUID()));
+    SetValue(QString::fromStdString(ISAlgorithm::GenerateUuid()));
 }
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
@@ -1448,7 +1448,14 @@ ISPhoneEdit::~ISPhoneEdit()
 QVariant ISPhoneEdit::GetValue() const
 {
     QString String = ISLineEdit::GetValue().toString();
-    ISAlgorithmOld::FormatPhoneNumber(String);
+    for (int i = 0; i < String.size(); ++i) //Обходим строку с номером телефона
+    {
+        if (!String[i].isDigit()) //Если текущий символ не является цифрой
+        {
+            String.remove(i, 1); //Удаляем этот символ
+            --i; //И уменьшаем индекс
+        }
+    }
     return String.isEmpty() ? QVariant() : String;
 }
 //-----------------------------------------------------------------------------
