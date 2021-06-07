@@ -1,6 +1,5 @@
 #include "ISCalendarPanel.h"
 #include "ISBuffer.h"
-#include "ISAlgorithmOld.h"
 #include "ISConstantsGui.h"
 //-----------------------------------------------------------------------------
 ISCalendarPanel::ISCalendarPanel(QWidget *parent)

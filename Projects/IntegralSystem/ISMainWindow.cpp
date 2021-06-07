@@ -11,15 +11,14 @@
 #include "ISPopupMessage.h"
 #include "ISCreatedObjectsEntity.h"
 #include "ISObjects.h"
-#include "ISAlgorithmOld.h"
 #include "ISProperty.h"
 #include "ISConfig.h"
 #include "ISTcpConnector.h"
 #include "ISDialogsForm.h"
 #include "ISPopupMessage.h"
 #include "ISTcpQuery.h"
-#include "ISAlgorithmOld.h"
 #include "ISConstantsGui.h"
+#include "ISSettingsDatabase.h"
 //-----------------------------------------------------------------------------
 ISMainWindow::ISMainWindow(QWidget *parent)
     : ISInterfaceForm(parent),

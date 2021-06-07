@@ -6,8 +6,10 @@
 #include "ISControls.h"
 #include "ISObjects.h"
 #include "ISLabels.h"
-#include <ActiveQt/QAxObject>
-#include <ActiveQt/QAxBase>
+#include "ISGui.h"
+#include "ISSettingsDatabase.h"
+//#include <ActiveQt/QAxObject>
+//#include <ActiveQt/QAxBase>
 //-----------------------------------------------------------------------------
 ISOilSphere::Object::Object() : ISObjectInterface()
 {

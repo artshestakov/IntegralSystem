@@ -1,6 +1,5 @@
 #include "ISTcp.h"
 #include "ISConstantsOld.h"
-#include "ISAlgorithmOld.h"
 #include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
 unsigned int ISTcp::GetQuerySizeFromBuffer(QByteArray &ByteArray, bool &Ok)
@@ -24,7 +23,7 @@ void ISTcp::WaitForBytesWritten(QTcpSocket *TcpSocket)
 {
 	while (TcpSocket->bytesToWrite() > 0)
 	{
-		PROCESS_EVENTS();
+        qApp->processEvents();
 		ISSleep(1);
 	}
 }
@@ -33,7 +32,7 @@ void ISTcp::WaitForDisconnected(QTcpSocket *TcpSocket)
 {
 	while (TcpSocket->state() == QAbstractSocket::ConnectedState)
 	{
-		PROCESS_EVENTS();
+        qApp->processEvents();
 		ISSleep(1);
 	}
 }

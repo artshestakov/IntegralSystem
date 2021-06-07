@@ -1,7 +1,6 @@
 #include "ISMetaData.h"
 #include "ISAssert.h"
 #include "ISConstantsOld.h"
-#include "ISAlgorithmOld.h"
 #include "ISAlgorithm.h"
 #include "ISGui.h"
 //-----------------------------------------------------------------------------

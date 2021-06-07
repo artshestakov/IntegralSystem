@@ -12,7 +12,6 @@
 #include "ISSettings.h"
 #include "ISLoggerOld.h"
 #include "ISUserObjectForm.h"
-#include "ISAlgorithmOld.h"
 #include "ISRevision.h"
 #include "ISUserRoleEntity.h"
 #include "ISFavoritesForm.h"
@@ -38,6 +37,7 @@
 #include "ISSubSystem.h"
 #include "ISConstantsGui.h"
 #include "ISConstants.h"
+#include "ISSettingsDatabase.h"
 //-----------------------------------------------------------------------------
 bool ISGui::Startup(QString &ErrorString)
 {

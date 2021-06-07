@@ -2,7 +2,6 @@
 #include "ISConstantsOld.h"
 #include "ISSettings.h"
 #include "ISAssert.h"
-#include "ISAlgorithmOld.h"
 //-----------------------------------------------------------------------------
 ISParagraphEntity::ISParagraphEntity()
 {

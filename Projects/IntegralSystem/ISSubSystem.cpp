@@ -7,12 +7,12 @@
 #include "ISLabels.h"
 #include "ISGui.h"
 #include "ISControls.h"
-#include "ISAlgorithmOld.h"
 #include "ISAlgorithm.h"
 #include "ISFlowLayout.h"
 #include "ISProgressForm.h"
 #include "ISDialogsForm.h"
 #include "ISConstantsGui.h"
+#include "ISSettingsDatabase.h"
 //-----------------------------------------------------------------------------
 ISAsteriskCallsSubSystem::ISAsteriskCallsSubSystem(QWidget *parent) : ISListBaseForm("_AsteriskCalls", parent)
 {

@@ -2,7 +2,6 @@
 #include "ISTcpConnector.h"
 #include "ISTcp.h"
 #include "ISConstantsOld.h"
-#include "ISAlgorithmOld.h"
 #include "ISAlgorithm.h"
 #include "ISLocalizationOld.h"
 #include "ISLoggerOld.h"
@@ -81,7 +80,7 @@ bool ISTcpQuery::Execute()
     while (true) //∆дЄм пока не придЄт ответ
     {
         ISSleep(1);
-        PROCESS_EVENTS();
+        qApp->processEvents();
         if (TcpSocket->bytesAvailable() > 0)
         {
             ByteArray.append(TcpSocket->readAll());

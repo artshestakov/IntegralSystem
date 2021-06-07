@@ -40,7 +40,7 @@ void ISProgressForm::IncrementValue(const QString &LabelText)
 void ISProgressForm::IncrementValue()
 {
     setValue(++Value);
-    PROCESS_EVENTS();
+    qApp->processEvents();
 }
 //-----------------------------------------------------------------------------
 bool ISProgressForm::WasCanceled() const
@@ -56,7 +56,7 @@ void ISProgressForm::SetCanceled(bool canceled)
 void ISProgressForm::showEvent(QShowEvent *e)
 {
     QProgressDialog::showEvent(e);
-    PROCESS_EVENTS();
+    qApp->processEvents();
 }
 //-----------------------------------------------------------------------------
 void ISProgressForm::CancelClicked()

@@ -1,5 +1,7 @@
 #include "ISTcpModels.h"
 #include "ISBuffer.h"
+#include "ISGui.h"
+#include "ISSettingsDatabase.h"
 //-----------------------------------------------------------------------------
 ISTcpModel::ISTcpModel(QObject *parent)
     : QAbstractItemModel(parent),

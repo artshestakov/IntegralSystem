@@ -1,6 +1,5 @@
 #include "ISTrace.h"
 #include "ISLoggerOld.h"
-#include "ISAlgorithmOld.h"
 #include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
 ISTrace::ISTrace(const QString &function_name, const QString &message_text)

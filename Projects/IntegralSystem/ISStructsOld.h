@@ -8,7 +8,6 @@
 #include "ISConstantsOld.h"
 #include "ISAssert.h"
 #include "ISTypedefsOld.h"
-#include "ISAlgorithmOld.h"
 #include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
 struct ISCurrentUserInfo

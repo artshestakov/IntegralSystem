@@ -3,7 +3,6 @@
 #include "ISLocalizationOld.h"
 #include "ISInterfaceForm.h"
 #include "ISConstantsOld.h"
-#include "ISAlgorithmOld.h"
 #include "ISGui.h"
 //-----------------------------------------------------------------------------
 ISCreatedObjectsEntity::ISCreatedObjectsEntity() : QObject()

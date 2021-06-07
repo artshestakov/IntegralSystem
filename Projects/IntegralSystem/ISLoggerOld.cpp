@@ -1,5 +1,4 @@
 #include "ISLoggerOld.h"
-#include "ISAlgorithmOld.h"
 #include "ISAlgorithm.h"
 #include "ISDebug.h"
 //-----------------------------------------------------------------------------

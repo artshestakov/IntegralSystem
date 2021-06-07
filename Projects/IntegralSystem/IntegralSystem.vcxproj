@@ -19,7 +19,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ISAlgorithmOld.cpp" />
     <ClCompile Include="ISAudioPlayerForm.cpp" />
     <ClCompile Include="ISBaseTableView.cpp" />
     <ClCompile Include="ISBuffer.cpp" />
@@ -105,7 +104,6 @@
     <ResourceCompile Include="IntegralSystem.rc" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ISAlgorithmOld.h" />
     <ClInclude Include="ISConfig.h" />
     <ClInclude Include="ISConstantsOld.h" />
     <ClInclude Include="ISDebug.h" />

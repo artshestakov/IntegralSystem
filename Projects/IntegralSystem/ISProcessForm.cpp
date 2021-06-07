@@ -42,14 +42,14 @@ void ISProcessForm::SetText(const QString &LabelText)
     ISGui::RepaintWidget(Label);
     adjustSize();
     ISGui::RepaintWidget(this);
-    PROCESS_EVENTS();
+    qApp->processEvents();
 }
 //-----------------------------------------------------------------------------
 void ISProcessForm::showEvent(QShowEvent *ShowEvent)
 {
     adjustSize();
     ISGui::RepaintWidget(this);
-    PROCESS_EVENTS();
+    qApp->processEvents();
     ISGui::MoveWidgetToDesktop(this, ISNamespace::MoveWidgetDesktop::Center);
     ISInterfaceForm::showEvent(ShowEvent);
 }

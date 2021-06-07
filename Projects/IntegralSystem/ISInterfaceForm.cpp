@@ -2,7 +2,6 @@
 #include "ISControls.h"
 #include "ISGui.h"
 #include "ISConstantsOld.h"
-#include "ISAlgorithmOld.h"
 #include "ISAlgorithm.h"
 #include "ISBuffer.h"
 //-----------------------------------------------------------------------------

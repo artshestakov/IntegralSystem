@@ -16,7 +16,6 @@
 #include "ISColumnSizer.h"
 #include "ISExportWorker.h"
 #include "ISGui.h"
-#include "ISAlgorithmOld.h"
 #include "ISAlgorithm.h"
 #include "ISTcpQuery.h"
 #include "ISDialogsForm.h"
@@ -714,7 +713,7 @@ bool ISListBaseForm::Update()
         //Устанавливаем надпись "Заполнение таблицы"
         ListIndicatorWidget->SetText(LANG("FillTableData"));
         ISSleep(1);
-        PROCESS_EVENTS();
+        qApp->processEvents();
 
         //Забираем ответ и устанавливаем его в модель
         QVariantMap AnswerMap = TcpQuery->TakeAnswer();

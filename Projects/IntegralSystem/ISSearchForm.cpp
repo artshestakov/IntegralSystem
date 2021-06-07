@@ -5,7 +5,6 @@
 #include "ISMetaData.h"
 #include "ISDelegates.h"
 #include "ISDialogsCommon.h"
-#include "ISAlgorithmOld.h"
 #include "ISButtons.h"
 #include "ISScrollArea.h"
 //-----------------------------------------------------------------------------

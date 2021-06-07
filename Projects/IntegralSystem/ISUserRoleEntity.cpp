@@ -1,5 +1,4 @@
 #include "ISUserRoleEntity.h"
-#include "ISAlgorithmOld.h"
 #include "ISBuffer.h"
 //-----------------------------------------------------------------------------
 ISUserRoleEntity::ISUserRoleEntity()

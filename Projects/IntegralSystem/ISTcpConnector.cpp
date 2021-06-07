@@ -1,6 +1,5 @@
 #include "ISTcpConnector.h"
 #include "ISConstantsOld.h"
-#include "ISAlgorithmOld.h"
 #include "ISAlgorithm.h"
 #include "ISLocalizationOld.h"
 #include "ISLoggerOld.h"
@@ -58,7 +57,7 @@ bool ISTcpConnector::Connect(const QString &Host, quint16 Port)
     {
         Timeout -= SleepTime;
         ISSleep(SleepTime);
-        PROCESS_EVENTS();
+        qApp->processEvents();
         if (!Timeout) //Таймаут истёк
         {
             TcpSocket->disconnectFromHost();

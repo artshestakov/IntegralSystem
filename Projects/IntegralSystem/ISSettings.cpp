@@ -1,7 +1,6 @@
 #include "ISSettings.h"
 #include "ISMetaData.h"
 #include "ISAssert.h"
-#include "ISAlgorithmOld.h"
 //-----------------------------------------------------------------------------
 ISSettings::ISSettings()
 {
