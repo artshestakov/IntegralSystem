@@ -4,7 +4,6 @@
 #include "ISLocalizationOld.h"
 #include "ISPopupMessage.h"
 #include "ISProgressForm.h"
-#include "ISLoggerOld.h"
 #include "ISProcessForm.h"
 #include "ISBuffer.h"
 #include "ISControls.h"

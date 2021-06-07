@@ -10,7 +10,6 @@
 #include "ISConfig.h"
 #include "ISBuffer.h"
 #include "ISSettings.h"
-#include "ISLoggerOld.h"
 #include "ISUserObjectForm.h"
 #include "ISRevision.h"
 #include "ISUserRoleEntity.h"
@@ -38,13 +37,14 @@
 #include "ISConstantsGui.h"
 #include "ISConstants.h"
 #include "ISSettingsDatabase.h"
+#include "ISLogger.h"
 //-----------------------------------------------------------------------------
 bool ISGui::Startup(QString &ErrorString)
 {
     //Инициализируем логгер
-    if (!ISLoggerOld::Instance().Initialize())
+    if (!ISLogger::Instance().Initialize(true))
     {
-        ErrorString = ISLoggerOld::Instance().GetErrorString();
+        ErrorString = QString::fromStdString(ISLogger::Instance().GetErrorString());
         return false;
     }
 
@@ -456,7 +456,7 @@ void ISGui::FavoriteObject(const QString &TableName, unsigned int ObjectID, bool
 void ISGui::ExitApplication()
 {
     ISTcpConnector::Instance().Disconnect();
-    ISLoggerOld::Instance().Shutdown();
+    ISLogger::Instance().Shutdown();
     qApp->closeAllWindows();
 }
 //-----------------------------------------------------------------------------

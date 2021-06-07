@@ -2,7 +2,7 @@
 #include "ISConstantsOld.h"
 #include "ISAlgorithm.h"
 #include "ISLocalizationOld.h"
-#include "ISLoggerOld.h"
+#include "ISLogger.h"
 //-----------------------------------------------------------------------------
 ISTcpConnector::ISTcpConnector()
     : QObject(),
@@ -51,7 +51,7 @@ bool ISTcpConnector::Connect(const QString &Host, quint16 Port)
         SleepTime = CARAT_CONNECT_SLEEP;
 
     //Пытаемся подключиться и ждём пока не подключимся
-    ISLOGGER_I(__CLASS__, QString("Connecting to %1:%2...").arg(Host).arg(Port));
+    ISLOGGER_I(__CLASS__, "Connecting to %s:%d...", Host.toStdString().c_str(), Port);
     TcpSocket->connectToHost(Host, Port, QIODevice::ReadWrite, QAbstractSocket::IPv4Protocol);
     while (!IsConnected())
     {
@@ -91,7 +91,7 @@ void ISTcpConnector::Error(QTcpSocket::SocketError socket_error)
     if (HandlingError) //Если обработка ошибок включена - обрабатываем
     {
         ErrorString = TcpSocket->errorString();
-        ISLOGGER_E(__CLASS__, ErrorString);
+        ISLOGGER_E(__CLASS__, ErrorString.toStdString().c_str());
         if (socket_error == QAbstractSocket::SocketError::RemoteHostClosedError) //Удалённый хост оборвал соединение - рапортуем о необходимости переподключения
         {
             QTimer::singleShot(100, this, &ISTcpConnector::Reconnect);

@@ -2,8 +2,8 @@
 #include "ISConstantsOld.h"
 #include "ISAssert.h"
 #include "ISAlgorithm.h"
-#include "ISLoggerOld.h"
 #include "ISGui.h"
+#include "ISLogger.h"
 //-----------------------------------------------------------------------------
 ISLocalizationOld::ISLocalizationOld()
 	: ErrorString(NO_ERROR_STRING)
@@ -35,7 +35,7 @@ QString ISLocalizationOld::GetString(const QString &ParameterName)
 	CRITICAL_SECTION_UNLOCK(&CriticalSection);
 	if (It == Dictionary.end())
 	{
-		ISLOGGER_W(__CLASS__, "Not found key \"" + ParameterName + "\" in localization");
+		ISLOGGER_W(__CLASS__, "Not found key \"%s\" in localization", ParameterName.toStdString().c_str());
 		return ParameterName;
 	}
 	return It->second;

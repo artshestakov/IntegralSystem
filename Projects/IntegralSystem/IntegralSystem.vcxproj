@@ -60,7 +60,6 @@
     <ClCompile Include="ISListViewForm.cpp" />
     <ClCompile Include="ISListWidget.cpp" />
     <ClCompile Include="ISLocalizationOld.cpp" />
-    <ClCompile Include="ISLoggerOld.cpp" />
     <ClCompile Include="ISMainWindow.cpp" />
     <ClCompile Include="ISMenuBar.cpp" />
     <ClCompile Include="ISMetaData.cpp" />
@@ -92,7 +91,6 @@
     <ClCompile Include="ISTcpConnector.cpp" />
     <ClCompile Include="ISTcpModels.cpp" />
     <ClCompile Include="ISTcpQuery.cpp" />
-    <ClCompile Include="ISTrace.cpp" />
     <ClCompile Include="ISUserObjectForm.cpp" />
     <ClCompile Include="ISUserRoleEntity.cpp" />
     <ClCompile Include="ISValidators.cpp" />
@@ -106,9 +104,7 @@
     <ClInclude Include="ISConfig.h" />
     <ClInclude Include="ISConstantsOld.h" />
     <ClInclude Include="ISLocalizationOld.h" />
-    <ClInclude Include="ISLoggerOld.h" />
     <ClInclude Include="ISStructsOld.h" />
-    <ClInclude Include="ISTrace.h" />
     <ClInclude Include="ISTypedefsOld.h" />
     <ClInclude Include="PMetaClass.h" />
     <QtMoc Include="ISWaitWidget.h" />

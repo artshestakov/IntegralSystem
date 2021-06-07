@@ -4,7 +4,7 @@
 #include "ISConstantsOld.h"
 #include "ISAlgorithm.h"
 #include "ISLocalizationOld.h"
-#include "ISLoggerOld.h"
+#include "ISLogger.h"
 #include "ISGui.h"
 //-----------------------------------------------------------------------------
 ISTcpQuery::ISTcpQuery(const QString &query_type)
@@ -47,7 +47,7 @@ bool ISTcpQuery::Execute()
     ISTimePoint TimePoint = ISAlgorithm::GetTick();
 
     //Формируем запрос (тип запроса, его параметры и системные поля)
-    ISLOGGER_I(__CLASS__, QString("Build \"%1\"").arg(QueryType));
+    ISLOGGER_I(__CLASS__, "Build \"%s\"", QueryType.toStdString().c_str());
     QByteArray ByteArray = ISGui::VariantMapToJsonString(
     {
         { "Type", QueryType },
@@ -69,7 +69,7 @@ bool ISTcpQuery::Execute()
     if (TcpSocket->write(ByteArray) != ByteArray.size())
     {
         ErrorString = TcpSocket->errorString();
-        ISLOGGER_E(__CLASS__, ErrorString);
+        ISLOGGER_E(__CLASS__, ErrorString.toStdString().c_str());
         return false;
     }
     ISTcp::WaitForBytesWritten(TcpSocket); //Ждём пока данные уйдут
@@ -91,7 +91,7 @@ bool ISTcpQuery::Execute()
                 if (!Ok) //Не удалось вытащить размер ответа
                 {
                     ErrorString = "Error getting answer size";
-                    ISLOGGER_E(__CLASS__, ErrorString);
+                    ISLOGGER_E(__CLASS__, ErrorString.toStdString().c_str());
                     return false;
                 }
             }
@@ -106,7 +106,7 @@ bool ISTcpQuery::Execute()
                 }
                 else
                 {
-                    ISLOGGER_E(__CLASS__, QString("Invalid size. Declared size %1, read size %2").arg(AnswerSize).arg(ByteArray.size()));
+                    ISLOGGER_E(__CLASS__, "Invalid size. Declared size %d, read size %d", AnswerSize, ByteArray.size());
                     return false;
                 }
             }
@@ -127,17 +127,17 @@ bool ISTcpQuery::Execute()
         if (Result)
         {
             TcpAnswer = TcpAnswer["Parameters"].toMap();
-            ISLOGGER_I(__CLASS__, QString("Query success (%1 msec)").arg(ISAlgorithm::GetTickDiff(ISAlgorithm::GetTick(), TimePoint)));
+            ISLOGGER_I(__CLASS__, "Query success (%d msec)", ISAlgorithm::GetTickDiff(ISAlgorithm::GetTick(), TimePoint));
         }
         else
         {
             ErrorString = TcpAnswer["ErrorString"].toString();
-            ISLOGGER_E(__CLASS__, "Query failed: " + ErrorString);
+            ISLOGGER_E(__CLASS__, "Query failed: %s", ErrorString.toStdString().c_str());
         }
     }
     else //Ответ невалидный - очищаем структуру ответа (вдруг там что-то есть)
     {
-        ISLOGGER_E(__CLASS__, "Not validated answer: " + ErrorString);
+        ISLOGGER_E(__CLASS__, "Not validated answer: %s", ErrorString.toStdString().c_str());
         TcpAnswer.clear();
     }
     Parameters.clear(); //Очищаем список параметров запроса

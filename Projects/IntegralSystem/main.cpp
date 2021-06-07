@@ -1,7 +1,6 @@
 #include "ISLocalizationOld.h"
 #include "ISGui.h"
 #include "ISSplashScreen.h"
-#include "ISLoggerOld.h"
 #include "ISMainWindow.h"
 #include "ISSettings.h"
 #include "ISProperty.h"

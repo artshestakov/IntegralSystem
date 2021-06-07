@@ -323,12 +323,6 @@
     <ClCompile Include="ISConfig.cpp">
       <Filter>ISCORE\System</Filter>
     </ClCompile>
-    <ClCompile Include="ISTrace.cpp">
-      <Filter>ISCORE\System</Filter>
-    </ClCompile>
-    <ClCompile Include="ISLoggerOld.cpp">
-      <Filter>ISCORE\System</Filter>
-    </ClCompile>
     <ClCompile Include="ISLocalizationOld.cpp">
       <Filter>ISCORE\System</Filter>
     </ClCompile>
@@ -391,9 +385,6 @@
     <ClInclude Include="ISConfig.h">
       <Filter>ISCORE\System</Filter>
     </ClInclude>
-    <ClInclude Include="ISTrace.h">
-      <Filter>ISCORE\System</Filter>
-    </ClInclude>
     <ClInclude Include="ISConstantsOld.h">
       <Filter>ISCORE\System</Filter>
     </ClInclude>
@@ -401,9 +392,6 @@
       <Filter>ISCORE\System</Filter>
     </ClInclude>
     <ClInclude Include="ISStructsOld.h">
-      <Filter>ISCORE\System</Filter>
-    </ClInclude>
-    <ClInclude Include="ISLoggerOld.h">
       <Filter>ISCORE\System</Filter>
     </ClInclude>
     <ClInclude Include="ISLocalizationOld.h">

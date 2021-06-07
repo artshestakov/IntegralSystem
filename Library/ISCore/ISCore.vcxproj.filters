@@ -58,12 +58,6 @@
     <ClCompile Include="hashmap.cpp">
       <Filter>System</Filter>
     </ClCompile>
-    <ClCompile Include="ISTcpConnector.cpp">
-      <Filter>Tcp</Filter>
-    </ClCompile>
-    <ClCompile Include="ISTcpQuery.cpp">
-      <Filter>Tcp</Filter>
-    </ClCompile>
     <ClCompile Include="ISLogger.cpp">
       <Filter>System</Filter>
     </ClCompile>
@@ -122,12 +116,6 @@
     </ClInclude>
     <ClInclude Include="hashmap.h">
       <Filter>System</Filter>
-    </ClInclude>
-    <ClInclude Include="ISTcpConnector.h">
-      <Filter>Tcp</Filter>
-    </ClInclude>
-    <ClInclude Include="ISTcpQuery.h">
-      <Filter>Tcp</Filter>
     </ClInclude>
     <ClInclude Include="ISLogger.h">
       <Filter>System</Filter>
