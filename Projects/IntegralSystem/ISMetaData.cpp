@@ -1,8 +1,8 @@
 #include "ISMetaData.h"
 #include "ISAssert.h"
-#include "ISConstantsOld.h"
 #include "ISAlgorithm.h"
 #include "ISGui.h"
+#include "ISConstantsGui.h"
 //-----------------------------------------------------------------------------
 ISMetaData::ISMetaData()
 	: ErrorString(NO_ERROR_STRING),

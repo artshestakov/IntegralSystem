@@ -2,7 +2,7 @@
 #include "ISLocalizationOld.h"
 #include "ISBuffer.h"
 #include "ISGui.h"
-#include "ISConstantsOld.h"
+#include "ISConstantsGui.h"
 //-----------------------------------------------------------------------------
 ISProcessForm::ISProcessForm(const QString &LabelText, QWidget *parent)
     : ISInterfaceForm(parent, Qt::Window | Qt::MSWindowsFixedSizeDialogHint | Qt::WindowSystemMenuHint | Qt::WindowStaysOnTopHint)

@@ -8,7 +8,7 @@
 #include "ISLabels.h"
 #include "ISGui.h"
 #include "ISSettingsDatabase.h"
-#include "ISConstantsOld.h"
+#include "ISConstantsGui.h"
 //-----------------------------------------------------------------------------
 ISOilSphere::Object::Object() : ISObjectInterface()
 {

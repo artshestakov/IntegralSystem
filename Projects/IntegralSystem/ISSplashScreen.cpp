@@ -2,7 +2,7 @@
 #include "ISGui.h"
 #include "ISLocalizationOld.h"
 #include "ISBuffer.h"
-#include "ISConstantsOld.h"
+#include "ISConstantsGui.h"
 //-----------------------------------------------------------------------------
 ISSplashScreen::ISSplashScreen(const QString &Message)
     : QWidget(nullptr, Qt::SplashScreen | Qt::WindowStaysOnTopHint | Qt::FramelessWindowHint)

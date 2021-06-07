@@ -1,7 +1,7 @@
 #include "ISValidators.h"
 #include "ISTypedefsOld.h"
 #include "ISAlgorithm.h"
-#include "ISConstantsOld.h"
+#include "ISConstantsGui.h"
 //-----------------------------------------------------------------------------
 ISIntValidator::ISIntValidator(int Bottom, int Top, QObject *parent) : QIntValidator(Bottom, Top, parent)
 {

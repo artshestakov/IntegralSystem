@@ -2,8 +2,8 @@
 #include "ISDialogsCommon.h"
 #include "ISLocalizationOld.h"
 #include "ISInterfaceForm.h"
-#include "ISConstantsOld.h"
 #include "ISGui.h"
+#include "ISConstantsGui.h"
 //-----------------------------------------------------------------------------
 ISCreatedObjectsEntity::ISCreatedObjectsEntity() : QObject()
 {

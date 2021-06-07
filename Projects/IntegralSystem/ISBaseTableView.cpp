@@ -1,6 +1,6 @@
 #include "ISBaseTableView.h"
-#include "ISConstantsOld.h"
 #include "ISBuffer.h"
+#include "ISConstantsGui.h"
 //-----------------------------------------------------------------------------
 ISBaseTableView::ISBaseTableView(QWidget *parent)
     : QTableView(parent),

@@ -1,9 +1,9 @@
 #include "ISLocalizationOld.h"
-#include "ISConstantsOld.h"
 #include "ISAssert.h"
 #include "ISAlgorithm.h"
 #include "ISGui.h"
 #include "ISLogger.h"
+#include "ISConstantsGui.h"
 //-----------------------------------------------------------------------------
 ISLocalizationOld::ISLocalizationOld()
 	: ErrorString(NO_ERROR_STRING)

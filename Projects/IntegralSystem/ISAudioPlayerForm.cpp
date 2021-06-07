@@ -3,7 +3,7 @@
 #include "ISLocalizationOld.h"
 #include "ISDialogsCommon.h"
 #include "ISAlgorithm.h"
-#include "ISConstantsOld.h"
+#include "ISConstantsGui.h"
 //-----------------------------------------------------------------------------
 ISAudioPlayerForm::ISAudioPlayerForm()
     : ISInterfaceForm(nullptr),

@@ -1,11 +1,11 @@
 #include "ISEditsQT.h"
 #include "ISGui.h"
-#include "ISConstantsOld.h"
 #include "ISContextMenu.h"
 #include "ISProperty.h"
 #include "ISLocalizationOld.h"
 #include "ISBuffer.h"
 #include "ISControls.h"
+#include "ISConstantsGui.h"
 //-----------------------------------------------------------------------------
 ISQComboBox::ISQComboBox(QWidget *parent)
     : QComboBox(parent),

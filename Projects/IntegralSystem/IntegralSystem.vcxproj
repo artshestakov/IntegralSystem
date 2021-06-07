@@ -100,7 +100,6 @@
     <ResourceCompile Include="IntegralSystem.rc" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ISConstantsOld.h" />
     <ClInclude Include="ISLocalizationOld.h" />
     <ClInclude Include="ISStructsGUI.h" />
     <ClInclude Include="ISTypedefsOld.h" />

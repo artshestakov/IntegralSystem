@@ -13,7 +13,6 @@
 #include "ISProperty.h"
 #include "ISRevision.h"
 #include "ISConstantsGui.h"
-#include "ISConstantsOld.h"
 //-----------------------------------------------------------------------------
 ISAboutDialog::ISAboutDialog() : ISInterfaceDialogForm()
 {

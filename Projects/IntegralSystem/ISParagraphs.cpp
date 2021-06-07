@@ -13,7 +13,6 @@
 #include "ISConstantsGui.h"
 #include "ISAlgorithm.h"
 #include "ISConstants.h"
-#include "ISConstantsOld.h"
 //-----------------------------------------------------------------------------
 ISParagraphBaseForm::ISParagraphBaseForm(QWidget *parent) : QWidget(parent)
 {

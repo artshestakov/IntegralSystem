@@ -1,9 +1,9 @@
 #include "ISLabels.h"
-#include "ISConstantsOld.h"
 #include "ISGui.h"
 #include "ISBuffer.h"
 #include "ISLocalizationOld.h"
 #include "ISControls.h"
+#include "ISConstantsGui.h"
 //-----------------------------------------------------------------------------
 ISQLabel::ISQLabel(const QString &Text, QWidget *parent)
     : QLabel(Text, parent),

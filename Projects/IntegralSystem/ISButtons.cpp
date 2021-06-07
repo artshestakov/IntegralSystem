@@ -1,9 +1,9 @@
 #include "ISButtons.h"
-#include "ISConstantsOld.h"
 #include "ISBuffer.h"
 #include "ISLocalizationOld.h"
 #include "ISGui.h"
 #include "ISControls.h"
+#include "ISConstantsGui.h"
 //-----------------------------------------------------------------------------
 ISPushButton::ISPushButton(const QIcon &Icon, const QString &Text, const QString &ToolTip, QWidget *parent) : QPushButton(Icon, Text, parent)
 {

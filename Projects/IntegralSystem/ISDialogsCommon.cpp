@@ -4,7 +4,7 @@
 #include "ISBuffer.h"
 #include "ISFieldEdits.h"
 #include "ISGui.h"
-#include "ISConstantsOld.h"
+#include "ISConstantsGui.h"
 //-----------------------------------------------------------------------------
 ISFileDialog::ISFileDialog(QWidget *parent) : QFileDialog(parent)
 {

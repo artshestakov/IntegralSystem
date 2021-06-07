@@ -1,10 +1,10 @@
 #include "ISFieldEditBase.h"
-#include "ISConstantsOld.h"
 #include "ISAssert.h"
 #include "ISLocalizationOld.h"
 #include "ISBuffer.h"
 #include "ISDialogsCommon.h"
 #include "ISAlgorithm.h"
+#include "ISConstantsGui.h"
 //-----------------------------------------------------------------------------
 ISFieldEditBase::ISFieldEditBase(QWidget *parent)
     : QWidget(parent),

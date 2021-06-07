@@ -1,11 +1,11 @@
 #include "ISTcpQuery.h"
 #include "ISTcpConnector.h"
 #include "ISTcp.h"
-#include "ISConstantsOld.h"
 #include "ISAlgorithm.h"
 #include "ISLocalizationOld.h"
 #include "ISLogger.h"
 #include "ISGui.h"
+#include "ISConstantsGui.h"
 //-----------------------------------------------------------------------------
 ISTcpQuery::ISTcpQuery(const QString &query_type)
     : ErrorString(NO_ERROR_STRING),

@@ -118,7 +118,7 @@
     </PostBuildEvent>
     <PreBuildEvent>
       <Command>$(ProjectDir)..\..\Components\Resourcer\Release-x64\Resourcer.exe $(ProjectDir)..\..\Resources
-MOVE $(ProjectDir)..\..\Components\Resourcer\Release-x64\Resources.bin $(ProjectDir)..\..\BinSTD\$(Configuration)-$(Platform)\Resources.bin
+MOVE $(ProjectDir)..\..\Components\Resourcer\Release-x64\Resources.bin $(ProjectDir)..\..\Bin\$(Configuration)-$(Platform)\Resources.bin
 $(SolutionDir)Revision.cmd $(SolutionDir) $(Configuration) $(Platform)</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
@@ -147,7 +147,7 @@ $(SolutionDir)Revision.cmd $(SolutionDir) $(Configuration) $(Platform)</Command>
     </PostBuildEvent>
     <PreBuildEvent>
       <Command>$(ProjectDir)..\..\Components\Resourcer\Release-x64\Resourcer.exe $(ProjectDir)..\..\Resources
-MOVE $(ProjectDir)..\..\Components\Resourcer\Release-x64\Resources.bin $(ProjectDir)..\..\BinSTD\$(Configuration)-$(Platform)\Resources.bin
+MOVE $(ProjectDir)..\..\Components\Resourcer\Release-x64\Resources.bin $(ProjectDir)..\..\Bin\$(Configuration)-$(Platform)\Resources.bin
 $(SolutionDir)Revision.cmd $(SolutionDir) $(Configuration) $(Platform)</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
@@ -179,7 +179,7 @@ $(SolutionDir)Revision.cmd $(SolutionDir) $(Configuration) $(Platform)</Command>
     </PostBuildEvent>
     <PreBuildEvent>
       <Command>$(ProjectDir)..\..\Components\Resourcer\Release-x64\Resourcer.exe $(ProjectDir)..\..\Resources
-MOVE $(ProjectDir)..\..\Components\Resourcer\Release-x64\Resources.bin $(ProjectDir)..\..\BinSTD\$(Configuration)-$(Platform)\Resources.bin
+MOVE $(ProjectDir)..\..\Components\Resourcer\Release-x64\Resources.bin $(ProjectDir)..\..\Bin\$(Configuration)-$(Platform)\Resources.bin
 $(SolutionDir)Revision.cmd $(SolutionDir) $(Configuration) $(Platform)</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
@@ -211,7 +211,7 @@ $(SolutionDir)Revision.cmd $(SolutionDir) $(Configuration) $(Platform)</Command>
     </PostBuildEvent>
     <PreBuildEvent>
       <Command>$(ProjectDir)..\..\Components\Resourcer\Release-x64\Resourcer.exe $(ProjectDir)..\..\Resources
-MOVE $(ProjectDir)..\..\Components\Resourcer\Release-x64\Resources.bin $(ProjectDir)..\..\BinSTD\$(Configuration)-$(Platform)\Resources.bin
+MOVE $(ProjectDir)..\..\Components\Resourcer\Release-x64\Resources.bin $(ProjectDir)..\..\Bin\$(Configuration)-$(Platform)\Resources.bin
 $(SolutionDir)Revision.cmd $(SolutionDir) $(Configuration) $(Platform)</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>

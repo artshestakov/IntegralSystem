@@ -2,10 +2,10 @@
 #include "ISLocalizationOld.h"
 #include "ISBuffer.h"
 #include "ISSettings.h"
-#include "ISConstantsOld.h"
 #include "ISGui.h"
 #include "ISDialogsCommon.h"
 #include "ISTcpQuery.h"
+#include "ISConstantsGui.h"
 //-----------------------------------------------------------------------------
 ISHistoryForm::ISHistoryForm(QWidget *parent) : ISInterfaceForm(parent)
 {

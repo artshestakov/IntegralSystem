@@ -2,7 +2,6 @@
 #include "ISButtons.h"
 #include "ISLocalizationOld.h"
 #include "ISBuffer.h"
-#include "ISConstantsOld.h"
 #include "ISConstantsGui.h"
 //-----------------------------------------------------------------------------
 ISCalendarWidget::ISCalendarWidget(QWidget * parent) : QCalendarWidget(parent)

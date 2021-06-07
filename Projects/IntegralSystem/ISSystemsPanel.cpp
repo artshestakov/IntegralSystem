@@ -1,5 +1,4 @@
 #include "ISSystemsPanel.h"
-#include "ISConstantsOld.h"
 #include "ISBuffer.h"
 #include "ISControls.h"
 #include "ISMetaSystemsEntity.h"

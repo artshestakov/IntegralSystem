@@ -1,5 +1,4 @@
 #include "ISUserObjectForm.h"
-#include "ISConstantsOld.h"
 #include "ISControls.h"
 #include "ISLocalizationOld.h"
 #include "ISDialogsCommon.h"

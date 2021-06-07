@@ -1,6 +1,5 @@
 #include "ISObjects.h"
 #include "ISAssert.h"
-#include "ISConstantsOld.h"
 #include "ISGui.h"
 //-----------------------------------------------------------------------------
 #include "ISEmpty.h"

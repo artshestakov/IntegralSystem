@@ -1,8 +1,8 @@
 #include "ISTcpConnector.h"
-#include "ISConstantsOld.h"
 #include "ISAlgorithm.h"
 #include "ISLocalizationOld.h"
 #include "ISLogger.h"
+#include "ISConstantsGui.h"
 //-----------------------------------------------------------------------------
 ISTcpConnector::ISTcpConnector()
     : QObject(),

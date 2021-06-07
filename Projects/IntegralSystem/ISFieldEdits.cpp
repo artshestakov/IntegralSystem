@@ -1,5 +1,4 @@
 #include "ISFieldEdits.h"
-#include "ISConstantsOld.h"
 #include "ISLocalizationOld.h"
 #include "ISBuffer.h"
 #include "ISDialogsCommon.h"

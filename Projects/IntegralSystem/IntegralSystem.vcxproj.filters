@@ -373,9 +373,6 @@
     <ClInclude Include="PMetaClass.h">
       <Filter>ISCORE\MetaData</Filter>
     </ClInclude>
-    <ClInclude Include="ISConstantsOld.h">
-      <Filter>ISCORE\System</Filter>
-    </ClInclude>
     <ClInclude Include="ISTypedefsOld.h">
       <Filter>ISCORE\System</Filter>
     </ClInclude>

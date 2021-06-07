@@ -1,5 +1,4 @@
 #include "ISObjectFormBase.h"
-#include "ISConstantsOld.h"
 #include "ISLocalizationOld.h"
 #include "ISBuffer.h"
 #include "ISSettings.h"
