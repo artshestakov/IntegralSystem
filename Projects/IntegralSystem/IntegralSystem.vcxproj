@@ -31,7 +31,6 @@
     <ClCompile Include="ISCalendarWidget.cpp" />
     <ClCompile Include="ISColumnSizer.cpp" />
     <ClCompile Include="ISComboSearchWidgets.cpp" />
-    <ClCompile Include="ISConfig.cpp" />
     <ClCompile Include="ISContextMenu.cpp" />
     <ClCompile Include="ISControls.cpp" />
     <ClCompile Include="ISCreatedObjectsEntity.cpp" />
@@ -101,7 +100,6 @@
     <ResourceCompile Include="IntegralSystem.rc" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ISConfig.h" />
     <ClInclude Include="ISConstantsOld.h" />
     <ClInclude Include="ISLocalizationOld.h" />
     <ClInclude Include="ISStructsOld.h" />

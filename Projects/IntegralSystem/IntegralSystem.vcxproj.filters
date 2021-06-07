@@ -320,9 +320,6 @@
     <ClCompile Include="ISMetaData.cpp">
       <Filter>ISCORE\MetaData</Filter>
     </ClCompile>
-    <ClCompile Include="ISConfig.cpp">
-      <Filter>ISCORE\System</Filter>
-    </ClCompile>
     <ClCompile Include="ISLocalizationOld.cpp">
       <Filter>ISCORE\System</Filter>
     </ClCompile>
@@ -381,9 +378,6 @@
     </ClInclude>
     <ClInclude Include="PMetaClass.h">
       <Filter>ISCORE\MetaData</Filter>
-    </ClInclude>
-    <ClInclude Include="ISConfig.h">
-      <Filter>ISCORE\System</Filter>
     </ClInclude>
     <ClInclude Include="ISConstantsOld.h">
       <Filter>ISCORE\System</Filter>

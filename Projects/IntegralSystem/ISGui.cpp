@@ -51,7 +51,7 @@ bool ISGui::Startup(QString &ErrorString)
     //Читаем конфигурационный файл
     if (!ISConfig::Instance().Initialize("Client"))
     {
-        ErrorString = ISConfig::Instance().GetErrorString();
+        ErrorString = QString::fromStdString(ISConfig::Instance().GetErrorString());
         return false;
     }
 

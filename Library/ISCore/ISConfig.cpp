@@ -117,6 +117,11 @@ bool ISConfig::IsValid()
     return true;
 }
 //-----------------------------------------------------------------------------
+bool ISConfig::IsEmpty(const std::string &SectionName, const std::string &ParameterName)
+{
+    return GetValueString(SectionName, ParameterName).empty();
+}
+//-----------------------------------------------------------------------------
 bool ISConfig::Initialize(const std::string &template_name)
 {
     TemplateName = template_name;

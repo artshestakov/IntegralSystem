@@ -13,6 +13,7 @@ public:
 
     const std::string& GetErrorString() const;
     bool IsValid(); //Проверить корректность заполнения конфигурационного файла
+    bool IsEmpty(const std::string &SectionName, const std::string &ParameterName);
     bool Initialize(const std::string &template_name);
     
     //Функции получения значений

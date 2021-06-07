@@ -174,8 +174,6 @@ const char CONST_UID_SETTING_GROUP_TASK_TRACKER[] = "65f8b333-5c21-48a2-8f30-d94
 const char CONST_UID_SETTING_TASK_TRACKER_SHOW_TASK_AFTER_CREATE[] = "094cb33e-13b9-4e5c-87dc-79ae69cbe533";
 const char CONST_UID_SETTING_GROUP_OTHER[] = "0baef651-d749-4566-b682-f11d03c6d849";
 //-----------------------------------------------------------------------------
-const char CONST_CONFIG_CONNECTION_SERVER[] = "Connection/Host";
-const char CONST_CONFIG_CONNECTION_PORT[] = "Connection/Port";
 const char CONST_CONFIG_CONNECTION_DATABASE[] = "Connection/Database";
 const char CONST_CONFIG_CONNECTION_LOGIN[] = "Connection/Login";
 const char CONST_CONFIG_CONNECTION_PASSWORD[] = "Connection/Password";

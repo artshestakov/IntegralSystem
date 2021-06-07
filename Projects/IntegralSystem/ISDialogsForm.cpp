@@ -78,8 +78,8 @@ void ISAboutDialog::CreateCommonTab()
     AddLabel(TabCommon, LANG("AboutForm.Tab.Common.Hash"), CARAT_HASH);
     AddLabel(TabCommon, LANG("AboutForm.Tab.Common.Branch"), CARAT_BRANCH_NAME);
     AddLabel(TabCommon, LANG("AboutForm.Tab.Common.QtVersion"), qVersion());
-    AddLabel(TabCommon, LANG("AboutForm.Tab.Common.Server"), CONFIG_STRING(CONST_CONFIG_CONNECTION_SERVER));
-    AddLabel(TabCommon, LANG("AboutForm.Tab.Common.Port"), CONFIG_STRING(CONST_CONFIG_CONNECTION_PORT));
+    AddLabel(TabCommon, LANG("AboutForm.Tab.Common.Server"), ISConfig::Instance().GetValueString("Connection", "Host").c_str());
+    AddLabel(TabCommon, LANG("AboutForm.Tab.Common.Port"), ISConfig::Instance().GetValueString("Connection", "Port").c_str());
 
     LayoutCommon->addStretch();
 }
@@ -240,7 +240,7 @@ ISAuthDialog::ISAuthDialog()
     CheckRememberUser = new ISCheckEdit(this);
     CheckRememberUser->SetText(LANG("RememberMe"));
     CheckRememberUser->SetToolTip(LANG("RememberMe.ToolTip"));
-    CheckRememberUser->SetValue(CONFIG_BOOL("RememberUser/Include"));
+    CheckRememberUser->SetValue(ISConfig::Instance().GetValueBool("RememberUser", "Include"));
     LayoutFields->addWidget(CheckRememberUser);
 
     LayoutFields->addSpacerItem(new QSpacerItem(0, 55));
@@ -323,12 +323,12 @@ void ISAuthDialog::ShowAboutForm()
 void ISAuthDialog::Input()
 {
     //Проверяем заполнение конфигурационного файла
-    if (CONFIG_STRING(CONST_CONFIG_CONNECTION_SERVER).isEmpty())
+    if (ISConfig::Instance().IsEmpty("Connection", "Host"))
     {
         ISMessageBox::ShowCritical(this, LANG("Message.Error.ConnectionSetting.Input.ServerEmpty"));
         return;
     }
-    if (CONFIG_STRING(CONST_CONFIG_CONNECTION_PORT).isEmpty())
+    if (ISConfig::Instance().IsEmpty("Connection", "Port"))
     {
         ISMessageBox::ShowCritical(this, LANG("Message.Error.ConnectionSetting.Input.PortEmpty"));
         return;
@@ -347,11 +347,14 @@ void ISAuthDialog::Input()
     }
 
     //Для запоминания пользователя
-    ISConfig::Instance().SetValue("RememberUser/Include", CheckRememberUser->GetValue().toBool());
-    ISConfig::Instance().SetValue("RememberUser/Login", EditLogin->GetValue().toString());
+    //???
+    //ISConfig::Instance().SetValue("RememberUser/Include", CheckRememberUser->GetValue().toBool());
+    //ISConfig::Instance().SetValue("RememberUser/Login", EditLogin->GetValue().toString());
 
     SetConnecting(true);
-    if (!ISTcpConnector::Instance().Connect(CONFIG_STRING(CONST_CONFIG_CONNECTION_SERVER), CONFIG_INT(CONST_CONFIG_CONNECTION_PORT))) //Ошибка подключения к карату
+    if (!ISTcpConnector::Instance().Connect(
+        ISConfig::Instance().GetValueString("Connection", "Host").c_str(),
+        ISConfig::Instance().GetValueUShort("Connection", "Port"))) //Ошибка подключения к карату
     {
         SetConnecting(false);
         ISMessageBox MessageBox(ISMessageBox::Question, LANG("Question"),
@@ -485,11 +488,11 @@ ISConnectDialog::ISConnectDialog() : ISInterfaceDialogForm()
     GetMainLayout()->addLayout(FormLayout);
 
     EditServer = new ISLineEdit(this);
-    EditServer->SetValue(CONFIG_VALUE(CONST_CONFIG_CONNECTION_SERVER));
+    EditServer->SetValue(ISConfig::Instance().GetValueString("Connection", "Host").c_str());
     FormLayout->addRow(LANG("Server") + ':', EditServer);
 
     EditPort = new ISIntegerEdit(this);
-    EditPort->SetValue(CONFIG_VALUE(CONST_CONFIG_CONNECTION_PORT));
+    EditPort->SetValue(ISConfig::Instance().GetValueUShort("Connection", "Port"));
     FormLayout->addRow(LANG("Port") + ':', EditPort);
 
     QHBoxLayout *LayoutButtons = new QHBoxLayout();
@@ -522,8 +525,8 @@ void ISConnectDialog::EnterClicked()
 //-----------------------------------------------------------------------------
 void ISConnectDialog::Save()
 {
-    ISConfig::Instance().SetValue(CONST_CONFIG_CONNECTION_SERVER, EditServer->GetValue());
-    ISConfig::Instance().SetValue(CONST_CONFIG_CONNECTION_PORT, EditPort->GetValue());
+    //ISConfig::Instance().SetValue(CONST_CONFIG_CONNECTION_SERVER, EditServer->GetValue());
+    //ISConfig::Instance().SetValue(CONST_CONFIG_CONNECTION_PORT, EditPort->GetValue());
     close();
 }
 //-----------------------------------------------------------------------------
@@ -750,7 +753,9 @@ ISReconnectDialog::~ISReconnectDialog()
 //-----------------------------------------------------------------------------
 void ISReconnectDialog::Timeout()
 {
-    if (ISTcpConnector::Instance().Connect(CONFIG_STRING(CONST_CONFIG_CONNECTION_SERVER), CONFIG_INT(CONST_CONFIG_CONNECTION_PORT)))
+    if (ISTcpConnector::Instance().Connect(
+        ISConfig::Instance().GetValueString("Connection", "Host").c_str(),
+        ISConfig::Instance().GetValueUShort("Connection", "Port")))
     {
         SetResult(true);
         close();
