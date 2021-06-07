@@ -20,7 +20,7 @@ void ISColumnSizer::Initialize(const QVariantMap &VariantMap)
 {
     for (const auto &TableItem : VariantMap.toStdMap())
     {
-        ISStringToIntMap StringToIntMap;
+        ISStringToIntMapQt StringToIntMap;
         for (const auto &ColumnItem : TableItem.second.toMap().toStdMap())
         {
             StringToIntMap[ColumnItem.first] = ColumnItem.second.toInt();
@@ -49,7 +49,7 @@ void ISColumnSizer::SetColumnSize(const QString &TableName, const QString &Field
     //Если такой таблицы ещё нет - добавляем
     if (Tables.find(TableName) == Tables.end())
     {
-        Tables[TableName] = ISStringToIntMap();
+        Tables[TableName] = ISStringToIntMapQt();
     }
     Tables[TableName][FieldName] = Size;
 }

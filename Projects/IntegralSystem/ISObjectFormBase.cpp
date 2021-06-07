@@ -645,7 +645,7 @@ bool ISObjectFormBase::Save()
 {
     SaveBefore();
     QVariantMap ValuesMap;
-    ISVectorQString FieldsVector;
+    ISVectorStringQt FieldsVector;
     QString QueryText;
 
     if (ParentObjectID && !ParentFilterField.isEmpty()) //Если форма является дочерней

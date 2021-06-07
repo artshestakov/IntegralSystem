@@ -2,7 +2,8 @@
 #ifndef _ISLOCALIZATIONOLD_H_INCLUDED
 #define _ISLOCALIZATIONOLD_H_INCLUDED
 //-----------------------------------------------------------------------------
-#include "ISTypedefsOld.h"
+#include "ISTypedefs.h"
+#include "ISTypedefsGUI.h"
 //-----------------------------------------------------------------------------
 class ISLocalizationOld
 {
@@ -26,7 +27,7 @@ private:
 
 private:
 	QString ErrorString;
-	ISStringMap Dictionary;
+	ISStringMapQt Dictionary;
 	ISCriticalSection CriticalSection;
 };
 //-----------------------------------------------------------------------------

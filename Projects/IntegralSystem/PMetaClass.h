@@ -3,7 +3,7 @@
 #define _PMETACLASS_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "ISNamespace.h"
-#include "ISTypedefsOld.h"
+#include "ISTypedefsGUI.h"
 //-----------------------------------------------------------------------------
 struct PMetaBase
 {
@@ -41,7 +41,7 @@ struct PMetaIndex : public PMetaBase
 	QString Alias;
 	QString TableName;
 	QString FieldName;
-    ISVectorQString Fields;
+    ISVectorStringQt Fields;
 };
 //-----------------------------------------------------------------------------
 struct PMetaForeign : public PMetaBase
@@ -229,7 +229,7 @@ struct PMetaResource : public PMetaBase
 
 	QString TableName;
 	QString UID;
-	ISStringMap Parameters;
+	ISStringMapQt Parameters;
 };
 //-----------------------------------------------------------------------------
 #endif

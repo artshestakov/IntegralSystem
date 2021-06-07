@@ -1,7 +1,7 @@
 #pragma once
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
-#include "ISTypedefsOld.h"
+#include "ISTypedefsGUI.h"
 //-----------------------------------------------------------------------------
 class ISUserRoleEntity
 {
@@ -23,7 +23,7 @@ private:
     ISUserRoleEntity& operator=(ISUserRoleEntity&&) = delete;
 
 private:
-    std::map<QString, ISVectorQString> Tables;
-    ISVectorQString Specials;
+    std::map<QString, ISVectorStringQt> Tables;
+    ISVectorStringQt Specials;
 };
 //-----------------------------------------------------------------------------

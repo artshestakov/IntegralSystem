@@ -45,8 +45,14 @@ typedef std::string ISString;
 #endif
 //-----------------------------------------------------------------------------
 typedef std::vector<std::string> ISVectorString;
+typedef std::vector<int> ISVectorInt;
+typedef std::vector<unsigned int> ISVectorUInt;
 typedef std::map<std::string, std::string> ISMapString;
+typedef std::map<std::string, std::string> ISStringMapSTD;
 typedef unsigned short ISTcpPort;
 typedef std::chrono::time_point<std::chrono::steady_clock> ISTimePoint;
+
+typedef long long ISInt64;
+typedef unsigned long long ISUInt64;
 //-----------------------------------------------------------------------------
 #endif

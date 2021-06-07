@@ -1,7 +1,7 @@
 #pragma once
 //-----------------------------------------------------------------------------
 #include "ISCalendarWidget.h"
-#include "ISTypedefsOld.h"
+#include "ISTypedefs.h"
 //-----------------------------------------------------------------------------
 class ISCalendarPanel : public ISCalendarWidget
 {

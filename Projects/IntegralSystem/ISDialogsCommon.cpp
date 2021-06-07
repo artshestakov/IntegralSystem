@@ -252,7 +252,7 @@ QString ISInputDialog::GetPassword()
     return QString();
 }
 //-----------------------------------------------------------------------------
-QVariant ISInputDialog::GetList(const QString &Title, const QString &LabelText, const ISStringToVariantMap &VariantMap)
+QVariant ISInputDialog::GetList(const QString &Title, const QString &LabelText, const ISStringToVariantMapQt &VariantMap)
 {
     ISInputDialog InputDialog(ISNamespace::FieldType::Unknown, Title, LabelText);
     ISComboEdit *ComboEdit = new ISComboEdit(&InputDialog);

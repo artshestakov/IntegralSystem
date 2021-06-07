@@ -729,7 +729,7 @@ ISFieldEditBase* ISGui::CreateFieldEditBase(QWidget *ParentWidget, PMetaField *M
 void ISGui::RegisterMetaType()
 {
     qRegisterMetaType<std::vector<QString>>("std::vector<QString>");
-    qRegisterMetaType<ISVectorQString>("ISVectorQString");
+    qRegisterMetaType<ISVectorStringQt>("ISVectorStringQt");
 
     qRegisterMetaType<ISUserObjectForm*>("ISUserObjectForm");
     qRegisterMetaType<ISProtocolObjectListForm*>("ISProtocolObjectListForm");

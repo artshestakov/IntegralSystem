@@ -373,14 +373,14 @@
     <ClInclude Include="PMetaClass.h">
       <Filter>ISCORE\MetaData</Filter>
     </ClInclude>
-    <ClInclude Include="ISTypedefsOld.h">
-      <Filter>ISCORE\System</Filter>
-    </ClInclude>
     <ClInclude Include="ISLocalizationOld.h">
       <Filter>ISCORE\System</Filter>
     </ClInclude>
+    <ClInclude Include="ISTypedefsGUI.h">
+      <Filter>System</Filter>
+    </ClInclude>
     <ClInclude Include="ISStructsGUI.h">
-      <Filter>ISCORE\System</Filter>
+      <Filter>System</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

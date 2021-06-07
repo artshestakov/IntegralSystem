@@ -283,7 +283,7 @@ bool ISMetaData::CheckUniqueAllIdentifiers(bool InitXSR)
 	}
 
 	QRegExp RegExp(REG_EXP_UID);
-    ISVectorQString VectorString;
+    ISVectorStringQt VectorString;
 	for (const QFileInfo &FileInfo : FileInfoList) //Обход всех файлов мета-данных
 	{
 		QFile File(FileInfo.filePath());

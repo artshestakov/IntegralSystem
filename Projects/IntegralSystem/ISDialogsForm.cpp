@@ -289,7 +289,7 @@ ISAuthDialog::ISAuthDialog()
 #else
     if (CheckRememberUser->GetValue().toBool())
     {
-        EditLogin->SetValue(CONFIG_STRING("RememberUser/Login"));
+        EditLogin->SetValue(ISConfig::Instance().GetValueString("RememberUser", "Login").c_str());
         QTimer::singleShot(100, EditPassword, &ISLineEdit::SetFocus);
     }
 #endif

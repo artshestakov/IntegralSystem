@@ -1,6 +1,7 @@
 #pragma once
 //-----------------------------------------------------------------------------
-#include "ISTypedefsOld.h"
+#include "ISTypedefs.h"
+#include "ISTypedefsGUI.h"
 //-----------------------------------------------------------------------------
 class ISSettingsDatabase
 {
@@ -20,7 +21,7 @@ private:
 	ISSettingsDatabase& operator=(ISSettingsDatabase&&) = delete;
 
 private:
-	ISStringToVariantMap Settings;
+	ISStringToVariantMapQt Settings;
 	ISCriticalSection CriticalSection;
 };
 //-----------------------------------------------------------------------------

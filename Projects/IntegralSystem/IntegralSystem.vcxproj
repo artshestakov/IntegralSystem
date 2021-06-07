@@ -102,7 +102,7 @@
   <ItemGroup>
     <ClInclude Include="ISLocalizationOld.h" />
     <ClInclude Include="ISStructsGUI.h" />
-    <ClInclude Include="ISTypedefsOld.h" />
+    <ClInclude Include="ISTypedefsGUI.h" />
     <ClInclude Include="PMetaClass.h" />
     <QtMoc Include="ISWaitWidget.h" />
     <QtMoc Include="ISUserObjectForm.h" />
@@ -311,7 +311,7 @@
       <OutputFile>$(OutDir)\$(ProjectName).exe</OutputFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(QTDIR64)\lib\;$(ProjectDir)..\..\Bin\$(Configuration)-$(Platform);$(ProjectDir)..\..\Deploy\$(Configuration)-$(Platform)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>ISCore.lib;qtmaind.lib;Qt5Cored.lib;Qt5Guid.lib;Qt5Multimediad.lib;Qt5Networkd.lib;Qt5Sqld.lib;Qt5Widgetsd.lib;Qt5Xmld.lib;Rpcrt4.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>ISCore.lib;qtmaind.lib;Qt5Cored.lib;Qt5Guid.lib;Qt5Multimediad.lib;Qt5Networkd.lib;Qt5Sqld.lib;Qt5Widgetsd.lib;Qt5Xmld.lib;Rpcrt4.lib;Crypt32.lib;Shlwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>$(ProjectDir)..\..\Components\LocalSearcher\$(Configuration)-$(Platform)\LocalSearcher.exe -L $(ProjectDir)..\..\Resources\Localization\IntegralSystem.lang $(ProjectDir)..\..\Resources\Localization\Objects.lang $(ProjectDir)..\..\Resources\Localization\Carat.lang -D $(ProjectDir)..\..\Projects\IntegralSystem</Command>
@@ -337,7 +337,7 @@
       <OutputFile>$(OutDir)\$(ProjectName).exe</OutputFile>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(QTDIR)\lib\;$(ProjectDir)..\..\Bin\$(Configuration)-$(Platform);$(ProjectDir)..\..\Deploy\$(Configuration)-$(Platform)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>ISCore.lib;qtmain.lib;Qt5Core.lib;Qt5Gui.lib;Qt5Multimedia.lib;Qt5Network.lib;Qt5Sql.lib;Qt5Widgets.lib;Qt5Xml.lib;Rpcrt4.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>ISCore.lib;qtmain.lib;Qt5Core.lib;Qt5Gui.lib;Qt5Multimedia.lib;Qt5Network.lib;Qt5Sql.lib;Qt5Widgets.lib;Qt5Xml.lib;Rpcrt4.lib;Crypt32.lib;Shlwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>$(ProjectDir)..\..\Components\LocalSearcher\$(Configuration)-$(Platform)\LocalSearcher.exe -L $(ProjectDir)..\..\Resources\Localization\IntegralSystem.lang $(ProjectDir)..\..\Resources\Localization\Objects.lang $(ProjectDir)..\..\Resources\Localization\Carat.lang -D $(ProjectDir)..\..\Projects\IntegralSystem</Command>
@@ -364,7 +364,7 @@
       <OutputFile>$(OutDir)\$(ProjectName).exe</OutputFile>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(QTDIR64)\lib\;$(ProjectDir)..\..\Bin\$(Configuration)-$(Platform);$(ProjectDir)..\..\Deploy\$(Configuration)-$(Platform)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>ISCore.lib;qtmain.lib;Qt5Core.lib;Qt5Gui.lib;Qt5Multimedia.lib;Qt5Network.lib;Qt5Sql.lib;Qt5Widgets.lib;Qt5Xml.lib;Rpcrt4.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>ISCore.lib;qtmain.lib;Qt5Core.lib;Qt5Gui.lib;Qt5Multimedia.lib;Qt5Network.lib;Qt5Sql.lib;Qt5Widgets.lib;Qt5Xml.lib;Rpcrt4.lib;Crypt32.lib;Shlwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>$(ProjectDir)..\..\Components\LocalSearcher\$(Configuration)-$(Platform)\LocalSearcher.exe -L $(ProjectDir)..\..\Resources\Localization\IntegralSystem.lang $(ProjectDir)..\..\Resources\Localization\Objects.lang $(ProjectDir)..\..\Resources\Localization\Carat.lang -D $(ProjectDir)..\..\Projects\IntegralSystem</Command>

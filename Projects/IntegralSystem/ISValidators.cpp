@@ -1,5 +1,5 @@
 #include "ISValidators.h"
-#include "ISTypedefsOld.h"
+#include "ISTypedefsGUI.h"
 #include "ISAlgorithm.h"
 #include "ISConstantsGui.h"
 //-----------------------------------------------------------------------------

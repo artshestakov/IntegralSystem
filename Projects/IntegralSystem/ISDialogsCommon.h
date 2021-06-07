@@ -41,7 +41,7 @@ public:
     static QDate GetDate(const QString &Title = QString(), const QString &LabelText = QString()); //Получить дату
     static QTime GetTime(const QString &Title = QString(), const QString &LabelText = QString()); //Получить время
     static QString GetPassword(); //Получить пароль
-    static QVariant GetList(const QString &Title, const QString &LabelText, const ISStringToVariantMap &VariantMap); //Получить список
+    static QVariant GetList(const QString &Title, const QString &LabelText, const ISStringToVariantMapQt &VariantMap); //Получить список
 
     QVariant GetValue() const;
     ISFieldEditBase* GetEditWidget();

@@ -3,7 +3,7 @@
 #define _ISSTRUCTSGUI_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "ISAlgorithm.h"
-#include "ISTypedefsOld.h"
+#include "ISTypedefsGUI.h"
 //-----------------------------------------------------------------------------
 struct ISCurrentUserInfo
 {
@@ -130,7 +130,7 @@ struct ISModelRecord
     ISModelRecord() : ID(0) { }
 
     unsigned int ID; //Идентификатор записи
-    ISVectorVariant Values; //Список значений
+    ISVectorVariantQt Values; //Список значений
 };
 //-----------------------------------------------------------------------------
 #endif

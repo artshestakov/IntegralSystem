@@ -9,6 +9,7 @@
 #include "ISImageViewerForm.h"
 #include "ISSplashScreen.h"
 #include "ISAssert.h"
+#include "ISTypedefs.h"
 //-----------------------------------------------------------------------------
 
 //Обработка дробного значения

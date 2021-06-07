@@ -25,7 +25,7 @@ private:
     ISColumnSizer& operator=(ISColumnSizer&&) = delete;
 
 private:
-    std::map<QString, ISStringToIntMap> Tables;
+    std::map<QString, ISStringToIntMapQt> Tables;
 };
 //-----------------------------------------------------------------------------
 #endif

@@ -47,11 +47,11 @@ private:
     ISBuffer& operator=(ISBuffer&&) = delete;
 
 private:
-    ISStringMap Animations; //Анимации
+    ISStringMapQt Animations; //Анимации
     std::map<QString, QIcon> Icons; //Иконки
     std::map<QString, QPixmap> Pixmaps; //Изображения
-    ISStringMap Audios; //Звуки
-    ISStringMap StyleSheets; //CSS-стили
+    ISStringMapQt Audios; //Звуки
+    ISStringMapQt StyleSheets; //CSS-стили
 
     QVariantList TaskPriority; //Список приоритетов задач
 };
