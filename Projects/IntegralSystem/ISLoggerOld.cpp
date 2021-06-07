@@ -145,7 +145,7 @@ void ISLoggerOld::Log(bool is_format, ISNamespace::LogMessageType message_type, 
 
 	CRITICAL_SECTION_LOCK(&CriticalSection);
 #ifdef DEBUG //В отладочной версии выводим строку в консоль
-	ISDEBUG_L(QString::fromStdString(string_complete));
+    std::cout << string_complete << std::endl;
 #ifdef WIN32 //Для Windows выводим строку в консоль Visual Studio
 	OutputDebugString((string_complete + '\n').c_str());
 #endif
@@ -194,7 +194,7 @@ void ISLoggerOld::Worker()
 				size_t message_size = message_string.size();
 				if (File.write(message_string.c_str(), message_size) == -1) //Не удалось произвести запись в файл
 				{
-					ISDEBUG_E("Logger: not write to file. Error: " + File.errorString());
+					std::cout << "Logger: not write to file. Error: " << File.errorString().toStdString() << std::endl;
 				}
 				Array[i].clear(); //Очищаем текущую строку
 			}
@@ -202,7 +202,7 @@ void ISLoggerOld::Worker()
 
 			if (!File.flush()) //Не удалось сбросить информацию в файл принудительно
 			{
-				ISDEBUG_E("Logger: not flushing. Error: " + File.errorString());
+                std::cout << "Logger: not flushing. Error: " << File.errorString().toStdString() << std::endl;
 			}
 		}
         CRITICAL_SECTION_UNLOCK(&CriticalSection);
@@ -214,7 +214,7 @@ void ISLoggerOld::Worker()
 			//Пытаемся создать недосающие директории пока не получится
 			while (!CreateLogDirectory(CurrentDate))
 			{
-				ISDEBUG_E(ErrorString);
+                std::cout << ErrorString.toStdString() << std::endl;
 				ISSleep(LOGGER_TIMEOUT);
 			}
 		}
@@ -236,7 +236,7 @@ void ISLoggerOld::Worker()
 				}
 				else //Файл не удалось открыть, пытаемся сделать это ещё раз через секунду
 				{
-					ISDEBUG_E("Logger: not open file \"" + path_file + "\". Error: " + File.errorString());
+                    std::cout << "Logger: not open file \"" << path_file.toStdString() << "\". Error: " << File.errorString().toStdString() << std::endl;
 					ISSleep(1000);
 				}
 			}

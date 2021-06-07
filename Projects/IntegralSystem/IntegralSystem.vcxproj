@@ -35,7 +35,6 @@
     <ClCompile Include="ISContextMenu.cpp" />
     <ClCompile Include="ISControls.cpp" />
     <ClCompile Include="ISCreatedObjectsEntity.cpp" />
-    <ClCompile Include="ISDebug.cpp" />
     <ClCompile Include="ISDelegates.cpp" />
     <ClCompile Include="ISDialogsCommon.cpp" />
     <ClCompile Include="ISDialogsForm.cpp" />
@@ -106,7 +105,6 @@
   <ItemGroup>
     <ClInclude Include="ISConfig.h" />
     <ClInclude Include="ISConstantsOld.h" />
-    <ClInclude Include="ISDebug.h" />
     <ClInclude Include="ISLocalizationOld.h" />
     <ClInclude Include="ISLoggerOld.h" />
     <ClInclude Include="ISStructsOld.h" />
