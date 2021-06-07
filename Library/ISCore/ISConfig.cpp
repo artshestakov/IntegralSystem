@@ -152,6 +152,27 @@ bool ISConfig::GetValueBool(const std::string &SectionName, const std::string &P
     return Value == "true";
 }
 //-----------------------------------------------------------------------------
+void ISConfig::SetValueString(const std::string &SectionName, const std::string &ParameterName, const std::string &Value)
+{
+    return SetValue(SectionName, ParameterName, Value);
+}
+//-----------------------------------------------------------------------------
+void ISConfig::SetValueUShort(const std::string &SectionName, const std::string &ParameterName, unsigned short Value)
+{
+    return SetValue(SectionName, ParameterName, std::to_string(Value));
+}
+//-----------------------------------------------------------------------------
+void ISConfig::SetValueBool(const std::string &SectionName, const std::string &ParameterName, bool Value)
+{
+    return SetValue(SectionName, ParameterName, Value ? "true" : "false");
+}
+//-----------------------------------------------------------------------------
+void ISConfig::SetValue(const std::string &SectionName, const std::string &ParameterName, const std::string &Value)
+{
+    SimpleINI.SetValue(SectionName.c_str(), ParameterName.c_str(), Value.c_str(), nullptr, true);
+    SimpleINI.SaveFile(PathConfigFile.c_str());
+}
+//-----------------------------------------------------------------------------
 std::string ISConfig::GetValue(const std::string &SectionName, const std::string &ParameterName)
 {
     std::string Value;

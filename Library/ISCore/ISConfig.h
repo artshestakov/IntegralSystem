@@ -22,7 +22,13 @@ public:
     unsigned short GetValueUShort(const std::string &SectionName, const std::string &ParameterName);
     bool GetValueBool(const std::string &SectionName, const std::string &ParameterName);
 
+    //Функции изменения значений
+    void SetValueString(const std::string &SectionName, const std::string &ParameterName, const std::string &Value);
+    void SetValueUShort(const std::string &SectionName, const std::string &ParameterName, unsigned short Value);
+    void SetValueBool(const std::string &SectionName, const std::string &ParameterName, bool Value);
+
 private:
+    void SetValue(const std::string &SectionName, const std::string &ParameterName, const std::string &Value);
     std::string GetValue(const std::string &SectionName, const std::string &ParameterName); //Получить значение параметра
     bool Update(); //Обновление файла
     bool Create(); //Генерация файла из шаблона

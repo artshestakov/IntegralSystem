@@ -347,9 +347,8 @@ void ISAuthDialog::Input()
     }
 
     //Для запоминания пользователя
-    //???
-    //ISConfig::Instance().SetValue("RememberUser/Include", CheckRememberUser->GetValue().toBool());
-    //ISConfig::Instance().SetValue("RememberUser/Login", EditLogin->GetValue().toString());
+    ISConfig::Instance().SetValueBool("RememberUser", "Include", CheckRememberUser->GetValue().toBool());
+    ISConfig::Instance().SetValueString("RememberUser", "Login", EditLogin->GetValue().toString().toStdString());
 
     SetConnecting(true);
     if (!ISTcpConnector::Instance().Connect(
@@ -525,8 +524,8 @@ void ISConnectDialog::EnterClicked()
 //-----------------------------------------------------------------------------
 void ISConnectDialog::Save()
 {
-    //ISConfig::Instance().SetValue(CONST_CONFIG_CONNECTION_SERVER, EditServer->GetValue());
-    //ISConfig::Instance().SetValue(CONST_CONFIG_CONNECTION_PORT, EditPort->GetValue());
+    ISConfig::Instance().SetValueString("Connection", "Host", EditServer->GetValue().toString().toStdString());
+    ISConfig::Instance().SetValueUShort("Connection", "Port", EditPort->GetValue().toInt());
     close();
 }
 //-----------------------------------------------------------------------------
