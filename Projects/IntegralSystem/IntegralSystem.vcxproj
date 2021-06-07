@@ -102,7 +102,7 @@
   <ItemGroup>
     <ClInclude Include="ISConstantsOld.h" />
     <ClInclude Include="ISLocalizationOld.h" />
-    <ClInclude Include="ISStructsOld.h" />
+    <ClInclude Include="ISStructsGUI.h" />
     <ClInclude Include="ISTypedefsOld.h" />
     <ClInclude Include="PMetaClass.h" />
     <QtMoc Include="ISWaitWidget.h" />
@@ -186,11 +186,6 @@
     <QtRcc Include="..\..\Resources\IntegralSystem.qrc">
       <SubType>Designer</SubType>
     </QtRcc>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\..\Resources\_OilSphere\OilSphere.xsf" />
-    <None Include="..\..\Resources\_OilSphere\OilSphere.xsn" />
-    <None Include="..\..\Resources\_OilSphere\OilSphere.xsr" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{C053A5FD-33FA-4841-B964-3C8CC6AF3F23}</ProjectGuid>

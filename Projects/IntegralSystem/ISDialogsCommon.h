@@ -4,6 +4,7 @@
 //-----------------------------------------------------------------------------
 #include "ISInterfaceDialogForm.h"
 #include "ISFieldEditBase.h"
+#include "ISStructsGUI.h"
 //-----------------------------------------------------------------------------
 class ISFileDialog : public QFileDialog
 {

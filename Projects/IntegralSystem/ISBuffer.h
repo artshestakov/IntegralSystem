@@ -2,7 +2,7 @@
 #ifndef _ISBUFFER_H_INCLUDED
 #define _ISBUFFER_H_INCLUDED
 //-----------------------------------------------------------------------------
-#include "ISStructsOld.h"
+#include "ISStructsGUI.h"
 #include "ISStructs.h"
 //-----------------------------------------------------------------------------
 class ISBuffer

@@ -3,7 +3,6 @@
 #define _ISBUTTONS_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
-#include "ISStructsOld.h"
 //-----------------------------------------------------------------------------
 class ISPushButton : public QPushButton
 {

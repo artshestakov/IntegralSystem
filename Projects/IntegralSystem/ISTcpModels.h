@@ -2,7 +2,7 @@
 #ifndef _ISTCPMODEL_H_INCLUDED
 #define _ISTCPMODEL_H_INCLUDED
 //-----------------------------------------------------------------------------
-#include "ISStructsOld.h"
+#include "ISStructsGUI.h"
 //-----------------------------------------------------------------------------
 class ISTcpModel : public QAbstractItemModel
 {

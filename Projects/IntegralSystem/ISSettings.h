@@ -2,7 +2,7 @@
 #ifndef _ISSETTINGS_H_INCLUDED
 #define _ISSETTINGS_H_INCLUDED
 //-----------------------------------------------------------------------------
-#include "ISStructsOld.h"
+#include "ISStructsGUI.h"
 //-----------------------------------------------------------------------------
 class ISSettings
 {

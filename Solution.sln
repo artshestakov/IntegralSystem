@@ -127,6 +127,13 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Configurator", "Projects\Co
 		{77CC8439-66E0-46A6-8103-5320FF654728} = {77CC8439-66E0-46A6-8103-5320FF654728}
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_OilSphere", "_OilSphere", "{A8436FA2-02C3-4242-A016-57C0C2E79420}"
+	ProjectSection(SolutionItems) = preProject
+		Resources\_OilSphere\OilSphere.xsf = Resources\_OilSphere\OilSphere.xsf
+		Resources\_OilSphere\OilSphere.xsn = Resources\_OilSphere\OilSphere.xsn
+		Resources\_OilSphere\OilSphere.xsr = Resources\_OilSphere\OilSphere.xsr
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -191,9 +198,10 @@ Global
 		{23417504-DDF5-47E3-A6F6-55D58230CA58} = {0D33896C-03C2-42A6-A841-40B0DE0B19F2}
 		{E6382DB8-7848-4103-891A-AC403EA31E85} = {1D4E78EC-DA89-4071-9067-891CA95C2481}
 		{F42F3490-2DC9-4ED9-8D0A-68A9EE1F40CE} = {1D4E78EC-DA89-4071-9067-891CA95C2481}
+		{A8436FA2-02C3-4242-A016-57C0C2E79420} = {4F21BB61-6C20-467F-8CB1-99AEBC7F1B37}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		Qt5Version = 58_msvc2015
 		SolutionGuid = {FE207297-F8FD-441B-A6FE-4D476762D8CA}
+		Qt5Version = 58_msvc2015
 	EndGlobalSection
 EndGlobal

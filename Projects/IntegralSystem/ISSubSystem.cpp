@@ -12,6 +12,7 @@
 #include "ISProgressForm.h"
 #include "ISDialogsForm.h"
 #include "ISConstantsGui.h"
+#include "ISConstantsOld.h"
 #include "ISSettingsDatabase.h"
 //-----------------------------------------------------------------------------
 ISAsteriskCallsSubSystem::ISAsteriskCallsSubSystem(QWidget *parent) : ISListBaseForm("_AsteriskCalls", parent)

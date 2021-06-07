@@ -8,8 +8,7 @@
 #include "ISLabels.h"
 #include "ISGui.h"
 #include "ISSettingsDatabase.h"
-//#include <ActiveQt/QAxObject>
-//#include <ActiveQt/QAxBase>
+#include "ISConstantsOld.h"
 //-----------------------------------------------------------------------------
 ISOilSphere::Object::Object() : ISObjectInterface()
 {

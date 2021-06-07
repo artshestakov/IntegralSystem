@@ -84,12 +84,6 @@
     <Filter Include="ISCORE\MetaData">
       <UniqueIdentifier>{6a0b3a04-4f56-4202-b15f-710d8fa77b31}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ISCORE\Resources">
-      <UniqueIdentifier>{36325662-190f-4078-8011-517354fa1496}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ISCORE\Resources\OilSphere">
-      <UniqueIdentifier>{b293f2f6-ac72-4ef5-8e1d-66991d71d408}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ISCORE\System">
       <UniqueIdentifier>{e5fbd065-57d0-4002-8a89-2ff81bb65895}</UniqueIdentifier>
     </Filter>
@@ -385,10 +379,10 @@
     <ClInclude Include="ISTypedefsOld.h">
       <Filter>ISCORE\System</Filter>
     </ClInclude>
-    <ClInclude Include="ISStructsOld.h">
+    <ClInclude Include="ISLocalizationOld.h">
       <Filter>ISCORE\System</Filter>
     </ClInclude>
-    <ClInclude Include="ISLocalizationOld.h">
+    <ClInclude Include="ISStructsGUI.h">
       <Filter>ISCORE\System</Filter>
     </ClInclude>
   </ItemGroup>
@@ -578,16 +572,5 @@
     <QtRcc Include="..\..\Resources\IntegralSystem.qrc">
       <Filter>Resource Files</Filter>
     </QtRcc>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\..\Resources\_OilSphere\OilSphere.xsf">
-      <Filter>ISCORE\Resources\OilSphere</Filter>
-    </None>
-    <None Include="..\..\Resources\_OilSphere\OilSphere.xsn">
-      <Filter>ISCORE\Resources\OilSphere</Filter>
-    </None>
-    <None Include="..\..\Resources\_OilSphere\OilSphere.xsr">
-      <Filter>ISCORE\Resources\OilSphere</Filter>
-    </None>
   </ItemGroup>
 </Project>

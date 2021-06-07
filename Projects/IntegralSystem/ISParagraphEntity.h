@@ -1,7 +1,7 @@
 #pragma once
 //-----------------------------------------------------------------------------
 #include "StdAfx.h"
-#include "ISStructsOld.h"
+#include "ISStructsGUI.h"
 //-----------------------------------------------------------------------------
 class ISParagraphEntity
 {

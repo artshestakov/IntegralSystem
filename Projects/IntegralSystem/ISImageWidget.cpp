@@ -6,6 +6,7 @@
 #include "ISImageViewerForm.h"
 #include "ISProcessForm.h"
 #include "ISGui.h"
+#include "ISConstantsOld.h"
 //-----------------------------------------------------------------------------
 ISImageWidget::ISImageWidget(QWidget *parent)
     : QLabel(parent),

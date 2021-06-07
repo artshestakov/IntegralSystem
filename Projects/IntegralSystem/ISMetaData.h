@@ -3,7 +3,6 @@
 #define _ISMETADATA_H_INCLUDED
 //-----------------------------------------------------------------------------
 #include "PMetaClass.h"
-#include "ISStructsOld.h"
 #include "ISStructs.h"
 //-----------------------------------------------------------------------------
 class ISMetaData

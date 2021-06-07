@@ -8,6 +8,7 @@
 #include "ISComboSearchWidgets.h"
 #include "ISImageViewerForm.h"
 #include "ISSplashScreen.h"
+#include "ISAssert.h"
 //-----------------------------------------------------------------------------
 
 //Обработка дробного значения
