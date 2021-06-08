@@ -1,5 +1,6 @@
 #include "ISAlgorithm.h"
 #include "ISConstants.h"
+#include "ISAssert.h"
 //-----------------------------------------------------------------------------
 char* ISAlgorithm::itoa(int64_t Value, char *Result, int Radix)
 {
@@ -487,24 +488,33 @@ std::string ISAlgorithm::GetUserName()
 //-----------------------------------------------------------------------------
 bool ISAlgorithm::IsValidUUID(const std::string &UID)
 {
-    std::string Temp = UID;
-    
-    //Если открывающей фигурной скобки нет - добавим её
-    if (Temp.front() != '{')
+    return IsValidUUID(UID.c_str(), UID.size());
+}
+//-----------------------------------------------------------------------------
+bool ISAlgorithm::IsValidUUID(const char *UID, size_t Size)
+{
+    //Проверим размер
+    if (Size != UUID_STANDART_SIZE)
     {
-        Temp.insert(Temp.begin(), '{');
+        return false;
     }
 
-    //Если закрывающей фигурной скобки нет - добавим её
-    if (Temp.back() != '}')
+    //Обойдём всю строку
+    for (unsigned int i = 0; i < Size; ++i)
     {
-        Temp.push_back('}');
+        if (i == 8 || i == 13 || i == 18 || i == 23)
+        {
+            if (UID[i] != '-')
+            {
+                return false;
+            }
+        }
+        else if (!isxdigit(UID[i]))
+        {
+            return false;
+        }
     }
-
-    std::wstring WString(Temp.begin(), Temp.end());
-    GUID guid = { 0 };
-
-    return CLSIDFromString(WString.c_str(), (LPCLSID)&guid) == S_OK;
+    return true;
 }
 //-----------------------------------------------------------------------------
 ISVectorString ISAlgorithm::ParseArgs(int argc, char **argv)

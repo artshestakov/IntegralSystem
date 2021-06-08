@@ -3015,6 +3015,9 @@ bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
             StringSum = ISAlgorithm::FormatNumber(Sum, ' ', 2);
             StringAvg = ISAlgorithm::FormatNumber(Avg, ' ', 2);
             break;
+
+        default:
+            break;
         }
         rapidjson::Value SumAvgObject(rapidjson::Type::kObjectType);
         SumAvgObject.AddMember("FieldIndex", FieldIndex, Allocator);

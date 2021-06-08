@@ -1,6 +1,6 @@
 #!/bin/bash
 
-ECHO Generate "ISRevision.h"...
+echo Generate "ISRevision.h"...
 
 SOLUTION_DIR=$1
 CONFIGURATION=$2
