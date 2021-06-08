@@ -398,7 +398,7 @@ bool ISOilSphere::ImplementationUnloadObjectForm::Save()
                 ISMessageBox::ShowCritical(this, LANG("OilSphere.Message.Warning.NotFoundCurrentConstant"));
                 return false;
             }
-            ValumeIncome = AnswerMap["Value"].toInt();
+            ValumeIncome = AnswerMap["Value"].toDouble();
         }
         else
         {
