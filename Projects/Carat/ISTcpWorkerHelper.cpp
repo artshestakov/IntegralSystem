@@ -71,7 +71,7 @@ std::string ISTcpWorkerHelper::GetUptime()
 		++Days;
         Seconds -= DAY_IN_SECONDS;
 	}
-    return ISAlgorithm::StringF(LANG("Carat.Uptime"), Days, ISTime::FromSecond((unsigned int)Seconds).ToString().c_str());
+    return LANG_FMT("Carat.Uptime", Days, ISTime::FromSecond((unsigned int)Seconds).ToString().c_str());
 }
 //-----------------------------------------------------------------------------
 const char* ISTcpWorkerHelper::GetSettingDB(PGconn *DBConnection, const std::string &SettingName)
@@ -322,7 +322,7 @@ bool ISTcpWorkerHelper::ParseErrorSQL23505(PMetaTable *MetaTable, const std::str
     ErrorString.clear(); //Обязательно чистим
     for (size_t i = 0; i < FieldCount; ++i)
     {
-        //Удалим возможный пробем вначале
+        //Удалим возможный пробел в начале
         Temp = Values[i];
         if (Temp.front() == ' ')
         {
@@ -331,7 +331,7 @@ bool ISTcpWorkerHelper::ParseErrorSQL23505(PMetaTable *MetaTable, const std::str
         ErrorString += ISAlgorithm::StringF("%s = %s\n", Fields[i].c_str(), Temp.c_str());
     }
     ISAlgorithm::StringChop(ErrorString, 1);
-    ErrorString = ISAlgorithm::StringF(LANG("Carat.Error.Query.RecordAdd.Insert.23505"), ErrorString.c_str());
+    ErrorString = LANG_FMT("Carat.Error.Query.RecordAdd.Insert.23505", ErrorString.c_str());
     return true;
 }
 //-----------------------------------------------------------------------------

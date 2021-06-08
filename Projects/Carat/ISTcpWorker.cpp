@@ -860,7 +860,7 @@ bool ISTcpWorker::CheckIsNullString(ISTcpMessage *TcpMessage, const char *Parame
 
     if (!JsonValue.IsString())
     {
-        ErrorString = ISAlgorithm::StringF(LANG("Carat.Error.ParameterNotString"), ParameterName);
+        ErrorString = LANG_FMT("Carat.Error.ParameterNotString", ParameterName);
         return false;
     }
     String = JsonValue.GetString();
@@ -877,7 +877,7 @@ bool ISTcpWorker::CheckIsNullBool(ISTcpMessage *TcpMessage, const char *Paramete
 
     if (!JsonValue.IsBool())
     {
-        ErrorString = ISAlgorithm::StringF(LANG("Carat.Error.ParameterNotBool"), ParameterName);
+        ErrorString = LANG_FMT("Carat.Error.ParameterNotBool", ParameterName);
         return false;
     }
     Bool = JsonValue.GetBool();
@@ -894,7 +894,7 @@ bool ISTcpWorker::CheckIsNullUInt(ISTcpMessage *TcpMessage, const char *Paramete
 
     if (!JsonValue.IsUint()) //Значение не является числовым
     {
-        ErrorString = ISAlgorithm::StringF(LANG("Carat.Error.ParameterNotInt"), ParameterName);
+        ErrorString = LANG_FMT("Carat.Error.ParameterNotInt", ParameterName);
         return false;
     }
     UInt = JsonValue.GetUint();
@@ -919,7 +919,7 @@ bool ISTcpWorker::CheckIsNullDouble(ISTcpMessage *TcpMessage, const char *Parame
     }
     else
     {
-        ErrorString = ISAlgorithm::StringF(LANG("Carat.Error.ParameterNotDouble"), ParameterName);
+        ErrorString = LANG_FMT("Carat.Error.ParameterNotDouble", ParameterName);
         return false;
     }
     return true;
@@ -1001,7 +1001,7 @@ bool ISTcpWorker::GetObjectName(PMetaTable *MetaTable, unsigned int ObjectID, st
 
     if (!qSelectName.First()) //Запись не найдена
     {
-        ErrorString = ISAlgorithm::StringF(LANG("Carat.Error.GetObjectName.NotExist"), ObjectID, MetaTable->Name.c_str());
+        ErrorString = LANG_FMT("Carat.Error.GetObjectName.NotExist", ObjectID, MetaTable->Name.c_str());
         return false;
     }
 
@@ -1031,7 +1031,7 @@ PMetaTable* ISTcpWorker::GetMetaTable(const std::string &TableName)
     PMetaTable *MetaTable = ISMetaData::Instance().GetTable(TableName);
     if (!MetaTable)
     {
-        ErrorString = ISAlgorithm::StringF(LANG("Carat.Error.GetMetaTable"), TableName.c_str());
+        ErrorString = LANG_FMT("Carat.Error.GetMetaTable", TableName.c_str());
     }
     return MetaTable;
 }
@@ -1047,7 +1047,7 @@ bool ISTcpWorker::UserPasswordExist(unsigned int UserID, bool &Exist)
 
     if (!qSelectHashIsNull.First()) //Не удалось перейти на первую строку, т.к. пользователя с таким UserID не существует
     {
-        ErrorString = ISAlgorithm::StringF(LANG("Carat.Error.UserNotExist"), UserID);
+        ErrorString = LANG_FMT("Carat.Error.UserNotExist", UserID);
         return false;
     }
     Exist = qSelectHashIsNull.ReadColumn_Bool(0);
@@ -1065,7 +1065,7 @@ bool ISTcpWorker::UserIsSystem(unsigned int UserID, bool &IsSystem)
 
     if (!qSelectIsSystem.First())
     {
-        ErrorString = ISAlgorithm::StringF(LANG("Carat.Error.UserNotExist"), UserID);
+        ErrorString = LANG_FMT("Carat.Error.UserNotExist", UserID);
         return false;
     }
     IsSystem = qSelectIsSystem.ReadColumn_Bool(0);
@@ -1101,7 +1101,7 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
         }
         else //Время разблокировки ещё не настало - ошибка
         {
-            ErrorString = ISAlgorithm::StringF(LANG("Carat.Error.Query.Auth.AddressIsLocked"),
+            ErrorString = LANG_FMT("Carat.Error.Query.Auth.AddressIsLocked",
                 int((DateTimeUnlock - CurrentUnixtime) / 60));
             return false;
         }
@@ -1181,8 +1181,8 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
             ISFail2Ban::Instance().FailAuth(IPAddress, AttemptLeft);
 
             ErrorString = ISFail2Ban::Instance().IsEmptyAttempts(IPAddress) ?
-                ISAlgorithm::StringF(LANG("Carat.Error.Query.Auth.AddressLock"), CARAT_AUTH_MINUTE_LOCK) : //Попыток не осталось
-                ISAlgorithm::StringF(LANG("Carat.Error.Query.Auth.InvalidLoginOrPassword"), AttemptLeft); //Попытки ещё есть
+                LANG_FMT("Carat.Error.Query.Auth.AddressLock", CARAT_AUTH_MINUTE_LOCK) : //Попыток не осталось
+                LANG_FMT("Carat.Error.Query.Auth.InvalidLoginOrPassword", AttemptLeft); //Попытки ещё есть
             return false;
         }
     }
@@ -1234,7 +1234,7 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
             ISDate CurrentDate = ISDate::CurrentDate();
             if (CurrentDate < DateStart) //Срок действия учётной записи ещё не начался
             {
-                ErrorString = ISAlgorithm::StringF(LANG("Carat.Error.Query.Auth.LoginLifetimeNotStarted"), DateStart.ToString().c_str());
+                ErrorString = LANG_FMT("Carat.Error.Query.Auth.LoginLifetimeNotStarted", DateStart.ToString().c_str());
                 return false;
             }
             else if (CurrentDate > DateEnd) //Срок действия учётной записи закончился
@@ -1360,7 +1360,7 @@ bool ISTcpWorker::Sleep(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 
     if (Timeout == 0) //Значение равно нулю
     {
-        ErrorString = ISAlgorithm::StringF(LANG("Carat.Error.Query.Sleep.TimeoutValueIsNull"));
+        ErrorString = LANG("Carat.Error.Query.Sleep.TimeoutValueIsNull");
         return false;
     }
     ISSleep(Timeout);
@@ -1857,7 +1857,7 @@ bool ISTcpWorker::UserPasswordEdit(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAns
 
     if (!qSelectHash.First()) //Пользователя с таким UserID нет в БД
     {
-        ErrorString = ISAlgorithm::StringF(LANG("Carat.Error.Query.UserPasswordEdit.UserNotExist"), UserID);
+        ErrorString = LANG_FMT("Carat.Error.Query.UserPasswordEdit.UserNotExist", UserID);
         return false;
     }
 
@@ -2001,7 +2001,7 @@ bool ISTcpWorker::GetRecordCall(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer
 
     if (!qSelectRecord.First())
     {
-        ErrorString = ISAlgorithm::StringF(LANG("Carat.Error.Query.GetRecordCall.NotFoundUniqueID"), RecordID);
+        ErrorString = LANG_FMT("Carat.Error.Query.GetRecordCall.NotFoundUniqueID", RecordID);
         return false;
     }
     const char *UniqueID = qSelectRecord.ReadColumn(0);
@@ -2081,7 +2081,7 @@ bool ISTcpWorker::RecordAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
         PMetaField *MetaField = MetaTable->GetField(FieldName);
         if (!MetaField) //Такого поля нет - ошибка
         {
-            ErrorString = ISAlgorithm::StringF(LANG("Carat.Error.Query.RecordAdd.FieldNotFound"), FieldName.c_str());
+            ErrorString = LANG_FMT("Carat.Error.Query.RecordAdd.FieldNotFound", FieldName.c_str());
             return false;
         }
         InsertText += MetaTable->Alias + '_' + FieldName + ',';
@@ -2117,7 +2117,7 @@ bool ISTcpWorker::RecordAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 
         case rapidjson::Type::kArrayType:
         case rapidjson::Type::kObjectType:
-            ErrorString = ISAlgorithm::StringF(LANG("Carat.Error.Query.RecordAdd.TypeNotSupport"), MapItem.value.GetType());
+            ErrorString = LANG_FMT("Carat.Error.Query.RecordAdd.TypeNotSupport", MapItem.value.GetType());
             return false;
             break;
         }
@@ -2134,7 +2134,7 @@ bool ISTcpWorker::RecordAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
         }
         else //Неизвестная ошибка
         {
-            return ErrorQuery(ISAlgorithm::StringF(LANG("Carat.Error.Query.RecordAdd.Insert"), ErrorNumber), qInsert);
+            return ErrorQuery(LANG_FMT("Carat.Error.Query.RecordAdd.Insert", ErrorNumber), qInsert);
         }
     }
 
@@ -2245,7 +2245,7 @@ bool ISTcpWorker::RecordEdit(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 
         case rapidjson::Type::kArrayType:
         case rapidjson::Type::kObjectType:
-            ErrorString = ISAlgorithm::StringF(LANG("Carat.Error.Query.RecordEdit.TypeNotSupport"), MapItem.value.GetType());
+            ErrorString = LANG_FMT("Carat.Error.Query.RecordEdit.TypeNotSupport", MapItem.value.GetType());
             return false;
             break;
         }
@@ -2443,14 +2443,14 @@ bool ISTcpWorker::RecordGet(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
     //Если переход на первую строку не удался - такая запись не существует
     if (!qSelect.First())
     {
-        ErrorString = ISAlgorithm::StringF(LANG("Carat.Error.Query.RecordGet.NotExist"), ObjectID);
+        ErrorString = LANG_FMT("Carat.Error.Query.RecordGet.NotExist", ObjectID);
         return false;
     }
 
     //Получаем запись и проверяем, не системная ли она
     if (qSelect.ReadColumn_Bool(0))
     {
-        ErrorString = ISAlgorithm::StringF(LANG("Carat.Error.Query.RecordGet.IsSystem"), ObjectID);
+        ErrorString = LANG_FMT("Carat.Error.Query.RecordGet.IsSystem", ObjectID);
         return false;
     }
 
@@ -2515,7 +2515,7 @@ bool ISTcpWorker::RecordGet(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
         break;
 
         default:
-            ErrorString = ISAlgorithm::StringF(LANG("Carat.Error.Query.RecordGet.UnsupportType"), FieldTypeDB);
+            ErrorString = LANG_FMT("Carat.Error.Query.RecordGet.UnsupportType", FieldTypeDB);
             return false;
             break;
         }
@@ -2707,7 +2707,7 @@ bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
     //Прав доступа на просмотр данных нет - ошибка
     if (!qSelectRight.ReadColumn_Bool(0))
     {
-        ErrorString = ISAlgorithm::StringF(LANG("Carat.Error.Query.GetTableData.NoRightShow"), MetaTable->LocalListName.c_str());
+        ErrorString = LANG_FMT("Carat.Error.Query.GetTableData.NoRightShow", MetaTable->LocalListName.c_str());
         return false;
     }
 
@@ -2815,7 +2815,7 @@ bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
                 break;
 
             default:
-                ErrorString = ISAlgorithm::StringF(LANG("Carat.Error.Query.GetTableData.ClassFilterValueType"), MapItem.value.GetType(), MapItem.name.GetString());
+                ErrorString = LANG_FMT("Carat.Error.Query.GetTableData.ClassFilterValueType", MapItem.value.GetType(), MapItem.name.GetString());
                 return false;
                 break;
             }
@@ -2979,7 +2979,7 @@ bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
                 }
                 else //Тип не определён
                 {
-                    ErrorString = ISAlgorithm::StringF(LANG("Carat.Error.Query.GetTableData.UnknownType"), Type);
+                    ErrorString = LANG_FMT("Carat.Error.Query.GetTableData.UnknownType", Type);
                     return false;
                 }
             }
@@ -3004,7 +3004,7 @@ bool ISTcpWorker::GetTableQuery(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer
     const char *SqlText = ISResourcer::Instance().GetFile("SQL/" + QueryName + ".sql");
     if (!SqlText) //Запрос не найден - ошибка
     {
-        ErrorString = ISAlgorithm::StringF(LANG("Carat.Error.Query.GetTableQuery.NotFound"), QueryName.c_str());
+        ErrorString = LANG_FMT("Carat.Error.Query.GetTableQuery.NotFound", QueryName.c_str());
         return false;
     }
 
@@ -3025,7 +3025,7 @@ bool ISTcpWorker::GetTableQuery(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer
                 break;
 
             default:
-                ErrorString = ISAlgorithm::StringF(LANG("Carat.Error.Query.GetTableQuery.ClassFilterValueType"), MapItem.value.GetType(), MapItem.name.GetString());
+                ErrorString = LANG_FMT("Carat.Error.Query.GetTableQuery.ClassFilterValueType", MapItem.value.GetType(), MapItem.name.GetString());
                 return false;
                 break;
             }
@@ -3197,7 +3197,7 @@ bool ISTcpWorker::FileStorageAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
 
     if (!Data)
     {
-        ErrorString = ISAlgorithm::StringF(LANG("Carat.Error.Query.FileStorageAdd.Decode"), ErrorString.c_str());
+        ErrorString = LANG_FMT("Carat.Error.Query.FileStorageAdd.Decode", ErrorString.c_str());
         return false;
     }
 
@@ -3205,7 +3205,7 @@ bool ISTcpWorker::FileStorageAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
     size_t MaxSizeMB = std::atoi(ISTcpWorkerHelper::GetSettingDB(DBConnection, CONST_UID_DATABASE_SETTING_OTHER_STORAGEFILEMAXSIZE));
     if (DataSize > (((1000 * 1024) * MaxSizeMB)))
     {
-        ErrorString = ISAlgorithm::StringF(LANG("Carat.Error.Query.FileStorageAdd.Size"), FileName.c_str(), MaxSizeMB);
+        ErrorString = LANG_FMT("Carat.Error.Query.FileStorageAdd.Size", FileName.c_str(), MaxSizeMB);
         free(Data);
         return false;
     }
@@ -3221,7 +3221,7 @@ bool ISTcpWorker::FileStorageAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
     free(Data);
     if (!Result)
     {
-        return ErrorQuery(ISAlgorithm::StringF(LANG("Carat.Error.Query.FileStorageAdd.Insert"), FileName.c_str(), qInsert.GetErrorString().c_str()), qInsert);
+        return ErrorQuery(LANG_FMT("Carat.Error.Query.FileStorageAdd.Insert", FileName.c_str(), qInsert.GetErrorString().c_str()), qInsert);
     }
     unsigned int ID = qInsert.ReadColumn_UInt(0);
     TcpAnswer->Parameters.AddMember("ID", ID, TcpAnswer->Parameters.GetAllocator());
@@ -3252,7 +3252,7 @@ bool ISTcpWorker::FileStorageCopy(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnsw
     //Если файл не был скопирован, значит его не существует - ошибка
     if (qInsertCopy.GetResultAffected() == 0)
     {
-        ErrorString = ISAlgorithm::StringF(LANG("Carat.Error.Query.FileStorageCopy.NotExist"), ID);
+        ErrorString = LANG_FMT("Carat.Error.Query.FileStorageCopy.NotExist", ID);
         return false;
     }
 
@@ -3283,7 +3283,7 @@ bool ISTcpWorker::FileStorageGet(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
 
     if (!qSelect.First()) //Такой файл не существует
     {
-        ErrorString = ISAlgorithm::StringF(LANG("Carat.Error.Query.FileStorageGet.NotExist"), ID);
+        ErrorString = LANG_FMT("Carat.Error.Query.FileStorageGet.NotExist", ID);
         return false;
     }
 
@@ -3946,7 +3946,7 @@ bool ISTcpWorker::GetRecordValue(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
     PMetaField *MetaField = MetaTable->GetField(FieldName);
     if (!MetaField)
     {
-        ErrorString = ISAlgorithm::StringF(LANG("Carat.Error.Query.GetRecordValue.InvalidFieldName"), FieldName.c_str());
+        ErrorString = LANG_FMT("Carat.Error.Query.GetRecordValue.InvalidFieldName", FieldName.c_str());
         return false;
     }
 
@@ -3962,7 +3962,7 @@ bool ISTcpWorker::GetRecordValue(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
     //Переходим к первой записи
     if (!qSelectValue.First())
     {
-        ErrorString = ISAlgorithm::StringF(LANG("Carat.Error.Query.GetRecordValue.RecordNotFound"), ObjectID);
+        ErrorString = LANG_FMT("Carat.Error.Query.GetRecordValue.RecordNotFound", ObjectID);
         return false;
     }
 
@@ -4236,14 +4236,14 @@ bool ISTcpWorker::GetForeignList(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswe
     PMetaField *MetaField = MetaTable->GetField(FieldName);
     if (!MetaField)
     {
-        ErrorString = ISAlgorithm::StringF(LANG("Carat.Error.Query.GetForeignList.FieldNotExist"), FieldName.c_str(), MetaTable->Name.c_str());
+        ErrorString = LANG_FMT("Carat.Error.Query.GetForeignList.FieldNotExist", FieldName.c_str(), MetaTable->Name.c_str());
         return false;
     }
 
     //Проверяем наличие внешнего ключа по поле
     if (!MetaField->Foreign)
     {
-        ErrorString = ISAlgorithm::StringF(LANG("Carat.Error.Query.GetForeignList.FieldNotForeign"), FieldName.c_str());
+        ErrorString = LANG_FMT("Carat.Error.Query.GetForeignList.FieldNotForeign", FieldName.c_str());
         return false;
     }
 
@@ -4432,7 +4432,7 @@ bool ISTcpWorker::OrganizationFromINN(ISTcpMessage *TcpMessage, ISTcpAnswer *Tcp
     //Организация не найдена
     if (JsonArray.Empty())
     {
-        ErrorString = ISAlgorithm::StringF(LANG("Carat.Error.Query.OrganizationFormINN.NotFound"), INN.c_str());
+        ErrorString = LANG_FMT("Carat.Error.Query.OrganizationFormINN.NotFound", INN.c_str());
         return false;
     }
 
@@ -4467,7 +4467,7 @@ bool ISTcpWorker::BlockedIPAdd(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
     }
     catch (const std::regex_error &e) //Исключение - значит выражение не корректное
     {
-        ErrorString = ISAlgorithm::StringF(LANG("Carat.Error.Query.BlockedIPAdd.InvalidFormat"), e.what());
+        ErrorString = LANG_FMT("Carat.Error.Query.BlockedIPAdd.InvalidFormat", e.what());
         return false;
     }
 
@@ -4502,7 +4502,7 @@ bool ISTcpWorker::BlockedIPDelete(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnsw
     //Запрос не затронул ни одной записи - считаем ошибкой
     if (!qDelete.First())
     {
-        ErrorString = ISAlgorithm::StringF(LANG("Carat.Error.Query.BlockedIPDelete.NotExist"), ID);
+        ErrorString = LANG_FMT("Carat.Error.Query.BlockedIPDelete.NotExist", ID);
         return false;
     }
     //Запрос прошёл, выражение удалилось, теперь удаляем его из памяти
@@ -4819,7 +4819,7 @@ bool ISTcpWorker::OilSphere_LoadBanks(ISTcpMessage *TcpMessage, ISTcpAnswer *Tcp
     unsigned char *Data = ISAlgorithm::Base64Decode(ByteArray, ResultSize, ErrorString);
     if (!Data)
     {
-        ErrorString = ISAlgorithm::StringF(LANG("Carat.Error.Query.LoadBank.Decode"), ErrorString.c_str());
+        ErrorString = LANG_FMT("Carat.Error.Query.LoadBank.Decode", ErrorString.c_str());
         return false;
     }
 
@@ -4943,7 +4943,7 @@ bool ISTcpWorker::OilSphere_LoadBanks(ISTcpMessage *TcpMessage, ISTcpAnswer *Tcp
                 Temp += Value + ' ';
             }
             ISAlgorithm::StringChop(Temp, 1);
-            return ErrorQuery(ISAlgorithm::StringF(LANG("Carat.Error.Query.LoadBank.Insert"), Temp.c_str()), qInsert);
+            return ErrorQuery(LANG_FMT("Carat.Error.Query.LoadBank.Insert", Temp.c_str()), qInsert);
         }
         ++Loaded;
     }
@@ -4951,7 +4951,6 @@ bool ISTcpWorker::OilSphere_LoadBanks(ISTcpMessage *TcpMessage, ISTcpAnswer *Tcp
     auto &Allocator = TcpAnswer->Parameters.GetAllocator();
     TcpAnswer->Parameters.AddMember("Loaded", Loaded, Allocator);
     TcpAnswer->Parameters.AddMember("Invalid", Invalid, Allocator);
-    //TcpAnswer->Parameters["Total"] = StringList.size();
     Protocol(TcpMessage->TcpClient->UserID, "{85DCCA5C-723E-4E18-8286-FF33D12C6F4D}");
     return true;
 }
