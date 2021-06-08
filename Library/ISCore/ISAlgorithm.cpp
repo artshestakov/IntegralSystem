@@ -488,29 +488,34 @@ std::string ISAlgorithm::GetUserName()
 //-----------------------------------------------------------------------------
 bool ISAlgorithm::IsValidUUID(const std::string &UID)
 {
-    std::string Temp = UID;
-    
-    //Если открывающей фигурной скобки нет - добавим её
-    if (Temp.front() != '{')
+    //Проверим на пустоту
+    if (UID.empty())
     {
-        Temp.insert(Temp.begin(), '{');
+        return false;
     }
 
-    //Если закрывающей фигурной скобки нет - добавим её
-    if (Temp.back() != '}')
+    //Проверим размер
+    if (UID.size() != UUID_STANDART_SIZE)
     {
-        Temp.push_back('}');
+        return false;
     }
 
-#ifdef WIN32
-    std::wstring WString(Temp.begin(), Temp.end());
-    GUID guid = { 0 };
-
-    return CLSIDFromString(WString.c_str(), (LPCLSID)&guid) == S_OK;
-#else
-    IS_ASSERT(false, "not support");
-    return false;
-#endif
+    //Обойдём всю строку
+    for (unsigned int i = 0; i < UUID_STANDART_SIZE; ++i)
+    {
+        if (i == 8 || i == 13 || i == 18 || i == 23)
+        {
+            if (UID[i] != '-')
+            {
+                return false;
+            }
+        }
+        else if (!isxdigit(UID[i]))
+        {
+            return false;
+        }
+    }
+    return true;
 }
 //-----------------------------------------------------------------------------
 ISVectorString ISAlgorithm::ParseArgs(int argc, char **argv)
