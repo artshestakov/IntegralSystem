@@ -26,7 +26,11 @@ INCLUDEPATH += $$PWD/../../
 INCLUDEPATH += $$PWD/../../Components/PostgreSQL/12.0.5/Include
 INCLUDEPATH += $$PWD/../../Components/RapidJSON
 
-LIBS += -L$$DESTDIR -L$$PWD/../../Components/PostgreSQL/12.0.5/Lib-$${PLATFORM} -Wl,-rpath="'\$$ORIGIN'",-rpath-link="'\$$ORIGIN'" \
+LIBS += \
+    -L$$DESTDIR \
+	-L$$PWD/../../Components/PostgreSQL/12.0.5/Lib-$${PLATFORM} \
+	-L$$PWD/../../Deploy/$${CONFIGURATION}-$${PLATFORM} \
+	-Wl,-rpath="'\$$ORIGIN'",-rpath-link="'\$$ORIGIN'" \
     -lISCore \
 	-lISServer \
 	-lpq \

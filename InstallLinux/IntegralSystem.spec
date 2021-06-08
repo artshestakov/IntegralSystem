@@ -18,28 +18,18 @@ rm -rf $RPM_BUILD_ROOT
 
 %install
 mkdir -p $RPM_BUILD_ROOT/opt/IntegralSystem
-mkdir -p $RPM_BUILD_ROOT/opt/IntegralSystem/sqldrivers
 mkdir -p $RPM_BUILD_ROOT/opt/IntegralSystem/Licenses
 mkdir -p $RPM_BUILD_ROOT/etc/systemd/system
 
-cp $QT_DIR/plugins/sqldrivers/libqsqlpsql.so $RPM_BUILD_ROOT/opt/IntegralSystem/sqldrivers
-cp $QT_DIR/lib/libicudata.so.56 $RPM_BUILD_ROOT/opt/IntegralSystem
-cp $QT_DIR/lib/libicui18n.so.56 $RPM_BUILD_ROOT/opt/IntegralSystem
-cp $QT_DIR/lib/libicuuc.so.56 $RPM_BUILD_ROOT/opt/IntegralSystem
-cp $QT_DIR/lib/libQt5Core.so.5 $RPM_BUILD_ROOT/opt/IntegralSystem
-cp $QT_DIR/lib/libQt5Network.so.5 $RPM_BUILD_ROOT/opt/IntegralSystem
-cp $QT_DIR/lib/libQt5Sql.so.5 $RPM_BUILD_ROOT/opt/IntegralSystem
-cp $QT_DIR/lib/libQt5Xml.so.5 $RPM_BUILD_ROOT/opt/IntegralSystem
-
-cp -r $INTEGRAL_SYSTEM_DIR/Deploy/%{CONFIGURATION}-%{PLATFORM}/* $RPM_BUILD_ROOT/opt/IntegralSystem
-cp $INTEGRAL_SYSTEM_DIR/Bin/%{CONFIGURATION}-%{PLATFORM}/*.so* $RPM_BUILD_ROOT/opt/IntegralSystem
-cp $INTEGRAL_SYSTEM_DIR/Bin/%{CONFIGURATION}-%{PLATFORM}/Carat $RPM_BUILD_ROOT/opt/IntegralSystem
-cp $INTEGRAL_SYSTEM_DIR/Bin/%{CONFIGURATION}-%{PLATFORM}/Configurator $RPM_BUILD_ROOT/opt/IntegralSystem
+cp -r $INTEGRAL_SYSTEM_DIR/Deploy/%{CONFIGURATION}-%{PLATFORM}/Carat $RPM_BUILD_ROOT/opt/IntegralSystem
+cp -r $INTEGRAL_SYSTEM_DIR/Deploy/%{CONFIGURATION}-%{PLATFORM}/Configurator $RPM_BUILD_ROOT/opt/IntegralSystem
+cp -r $INTEGRAL_SYSTEM_DIR/Deploy/%{CONFIGURATION}-%{PLATFORM}/Resources.bin $RPM_BUILD_ROOT/opt/IntegralSystem
 cp $INTEGRAL_SYSTEM_DIR/Components/BackuperDB/%{CONFIGURATION}-%{PLATFORM}/BackuperDB $RPM_BUILD_ROOT/opt/IntegralSystem
 cp $INTEGRAL_SYSTEM_DIR/InstallLinux/Carat.service $RPM_BUILD_ROOT/etc/systemd/system
 cp $INTEGRAL_SYSTEM_DIR/Scripts/RemoveOldBackups.sh $RPM_BUILD_ROOT/opt/IntegralSystem
 cp $INTEGRAL_SYSTEM_DIR/Scripts/WatchTodayLog.sh $RPM_BUILD_ROOT/opt/IntegralSystem
 cp $INTEGRAL_SYSTEM_DIR/Resources/Licenses/* $RPM_BUILD_ROOT/opt/IntegralSystem/Licenses
+cp $INTEGRAL_SYSTEM_DIR/Resources/Localization/Carat.lang $RPM_BUILD_ROOT/opt/IntegralSystem
 
 %files
 /opt/IntegralSystem/*
