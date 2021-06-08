@@ -1405,13 +1405,13 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
                 *AccessUID = qSelectAccessTables.ReadColumn(1);
             if (AccessTablesObject.HasMember(TableName))
             {
-                AccessTablesObject[JSON_STRING(TableName)].PushBack(JSON_STRING(AccessUID), Allocator);
+                AccessTablesObject[JSON_STRINGA(TableName, Allocator)].PushBack(JSON_STRINGA(AccessUID, Allocator), Allocator);
             }
             else
             {
                 rapidjson::Value TempArray(rapidjson::Type::kArrayType);
-                TempArray.PushBack(JSON_STRING(AccessUID), Allocator);
-                AccessTablesObject.AddMember(JSON_STRING(TableName), TempArray, Allocator);
+                TempArray.PushBack(JSON_STRINGA(AccessUID, Allocator), Allocator);
+                AccessTablesObject.AddMember(JSON_STRINGA(TableName, Allocator), TempArray, Allocator);
             }
         }
     }
@@ -1429,7 +1429,7 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
         while (qSelectAccessSpecial.Next())
         {
             const char *UID = qSelectAccessSpecial.ReadColumn(0);
-            AccessSpecialObject.PushBack(JSON_STRING(UID), Allocator);
+            AccessSpecialObject.PushBack(JSON_STRINGA(UID, Allocator), Allocator);
         }
     }
     else
