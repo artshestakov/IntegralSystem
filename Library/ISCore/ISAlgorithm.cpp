@@ -488,20 +488,19 @@ std::string ISAlgorithm::GetUserName()
 //-----------------------------------------------------------------------------
 bool ISAlgorithm::IsValidUUID(const std::string &UID)
 {
-    //Проверим на пустоту
-    if (UID.empty())
-    {
-        return false;
-    }
-
+    return IsValidUUID(UID.c_str(), UID.size());
+}
+//-----------------------------------------------------------------------------
+bool ISAlgorithm::IsValidUUID(const char *UID, size_t Size)
+{
     //Проверим размер
-    if (UID.size() != UUID_STANDART_SIZE)
+    if (Size != UUID_STANDART_SIZE)
     {
         return false;
     }
 
     //Обойдём всю строку
-    for (unsigned int i = 0; i < UUID_STANDART_SIZE; ++i)
+    for (unsigned int i = 0; i < Size; ++i)
     {
         if (i == 8 || i == 13 || i == 18 || i == 23)
         {

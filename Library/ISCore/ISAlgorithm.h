@@ -153,6 +153,12 @@ namespace ISAlgorithm
     //! \return возвращает true в случае если UID валиден, в ином случае false
     bool IsValidUUID(const std::string &UID);
 
+    //! Проверка валидности UUID
+    //! \param UID строка с идентификатором
+    //! \param Size размер строки
+    //! \return возвращает true в случае если UID валиден, в ином случае false
+    bool IsValidUUID(const char *UID, size_t Size);
+
     //! Парсинг аргументов командной строки
     //! \param argc количество аргументов
     //! \param argv массив аргументов
