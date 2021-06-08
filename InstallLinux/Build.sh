@@ -20,6 +20,9 @@ mkdir -p $DEPLOY_DIR
 #Получаем номер ревизии
 REVISION=$(git rev-list --count HEAD)
 
+#Формирование файла ревизии
+../Revision.sh ../ $CONFIGURATION $PLATFORM
+
 #Компиляция библиотек
 ./BuildItem.sh Library ISCore $CONFIGURATION $PLATFORM lib
 ./BuildItem.sh Library ISServer $CONFIGURATION $PLATFORM lib
