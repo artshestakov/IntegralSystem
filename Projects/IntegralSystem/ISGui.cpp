@@ -55,8 +55,10 @@ bool ISGui::Startup(QString &ErrorString)
     }
 
     //Создание папки для временных файлов
-    if (!CreateDir(QCoreApplication::applicationDirPath() + "/Temp", ErrorString))
+    std::string ErrorStringSTD;
+    if (!ISAlgorithm::DirCreate((QCoreApplication::applicationDirPath() + "/Temp").toStdString(), ErrorStringSTD))
     {
+        ErrorString = QString::fromStdString(ErrorStringSTD);
         return false;
     }
 
@@ -634,27 +636,6 @@ void ISGui::ShowHistoryForm()
         TaskViewForm->showMaximized();
     }
 }*/
-//-----------------------------------------------------------------------------
-bool ISGui::CreateDir(const QString &DirPath)
-{
-    QString ErrorString;
-    return CreateDir(DirPath, ErrorString);
-}
-//-----------------------------------------------------------------------------
-bool ISGui::CreateDir(const QString &DirPath, QString &ErrorString)
-{
-    QDir Dir(DirPath);
-    bool Result = Dir.exists();
-    if (!Result)
-    {
-        Result = Dir.mkdir(DirPath);
-        if (!Result)
-        {
-            ErrorString = "Error creting dir with path: " + DirPath;
-        }
-    }
-    return Result;
-}
 //-----------------------------------------------------------------------------
 QVariantMap ISGui::JsonStringToVariantMap(const QString &JsonString, QJsonParseError &JsonParseError)
 {

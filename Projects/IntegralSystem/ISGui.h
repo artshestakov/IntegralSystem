@@ -80,9 +80,6 @@ public:
     //static void ShowTaskViewForm(int TaskID); //Показать форму просмотра задачи по идентификатору
     //static void ShowTaskViewForm(QWidget *TaskViewForm); //Показать форму просмотра задач по виджету
 
-    static bool CreateDir(const QString &DirPath);
-    static bool CreateDir(const QString &DirPath, QString &ErrorString);
-
     static QVariantMap JsonStringToVariantMap(const QString &JsonString, QJsonParseError &JsonParseError); //Конвертация JSON-строки в список ключ-значение
     static QByteArray VariantMapToJsonString(const QVariantMap &VariantMap, QJsonDocument::JsonFormat Format = QJsonDocument::Indented); //Конвертация списка ключ-значение в JSON-строку
     static QByteArray VariantListToJsonString(const QVariantList &VariantList, QJsonDocument::JsonFormat Format = QJsonDocument::Indented); //Конвертация списка в JSON-строку
