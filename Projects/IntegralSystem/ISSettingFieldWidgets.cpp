@@ -1,5 +1,5 @@
 #include "ISSettingFIeldWidgets.h"
-#include "ISLocalizationOld.h"
+#include "ISLocalization.h"
 //-----------------------------------------------------------------------------
 ISComboSettingEdit::ISComboSettingEdit(QWidget *parent) : ISComboEdit(parent)
 {

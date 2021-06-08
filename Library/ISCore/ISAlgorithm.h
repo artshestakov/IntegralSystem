@@ -214,7 +214,14 @@ namespace ISAlgorithm
     //! Форматирование строки
     //! \param Format формат сообщения
     //! \param ... аргументы
+    //! \return возвращает форматированную строку
     std::string StringF(const char *Format, ...);
+
+    //! Форматирование строки
+    //! \param Format формат сообщения
+    //! \param ... аргументы
+    //! \return возвращает форматированную строку
+    const char* CStringF(const char *Format, ...);
 
     //! Формирование MD5-хэша из строки
     //! \param String строка, из которой будет вычислен MD5-хэш

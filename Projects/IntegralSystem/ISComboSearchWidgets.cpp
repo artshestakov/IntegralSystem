@@ -1,5 +1,5 @@
 #include "ISComboSearchWidgets.h"
-#include "ISLocalizationOld.h"
+#include "ISLocalization.h"
 //-----------------------------------------------------------------------------
 ISComboSearchBase::ISComboSearchBase(QWidget *parent) : ISComboEdit(parent)
 {

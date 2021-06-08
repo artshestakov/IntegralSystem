@@ -1,6 +1,6 @@
 #include "ISOilSphere.h"
 #include "ISGui.h"
-#include "ISLocalizationOld.h"
+#include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISDialogsCommon.h"
 #include "ISControls.h"
@@ -90,7 +90,7 @@ ISOilSphere::CounterpartyDebtForm::CounterpartyDebtForm(int counterparty_id, con
     : ISInterfaceForm(parent),
     CounterpartyID(counterparty_id)
 {
-    setWindowTitle(LANG("OilSphere.Debts.Title").arg(counterparty_name));
+    setWindowTitle(ISAlgorithm::CStringF(LANG("OilSphere.Debts.Title"), counterparty_name.toStdString().c_str()));
     setWindowIcon(ISObjects::Instance().GetInterface()->GetIcon("Debt"));
     resize(800, 600);
     GetMainLayout()->setContentsMargins(QMargins(5, 5, 5, 5));
@@ -152,11 +152,11 @@ ISOilSphere::CounterpartyDebtForm::CounterpartyDebtForm(int counterparty_id, con
 
             QVBoxLayout *LayoutLabels = new QVBoxLayout();
 
-            QLabel *LabelDateLoad = new QLabel(LANG("OilSphere.DateLoad").arg(Date), WidgetLoadUnload);
+            QLabel *LabelDateLoad = new QLabel(ISAlgorithm::CStringF(LANG("OilSphere.DateLoad"), Date.toStdString().c_str()), WidgetLoadUnload);
             ISGui::SetFontWidgetBold(LabelDateLoad, true);
             LayoutLabels->addWidget(LabelDateLoad);
 
-            QLabel *LabelCost = new QLabel((IsLoad ? LANG("OilSphere.Cost.Load") : LANG("OilSphere.Cost.Unload")).arg(DOUBLE_PREPARE(Cost)), WidgetLoadUnload);
+            QLabel *LabelCost = new QLabel(ISAlgorithm::CStringF(IsLoad ? LANG("OilSphere.Cost.Load") : LANG("OilSphere.Cost.Unload"), Cost), WidgetLoadUnload);
             ISGui::SetFontWidgetBold(LabelCost, true);
             LayoutLabels->addWidget(LabelCost);
 
@@ -234,11 +234,8 @@ void ISOilSphere::CounterpartyDebtForm::UpdatedLists()
         double TotalLoad = AnswerMap["TotalLoad"].toDouble();
         double TotalEntrollment = AnswerMap["TotalEntrollment"].toDouble();
         double MoveWagonSum = AnswerMap["MoveWagonSum"].toDouble();
-        LabelTotal->setText(LANG("OilSphere.Debts.Label")
-            .arg(DOUBLE_PREPARE(TotalLoad))
-            .arg(DOUBLE_PREPARE(TotalUnload))
-            .arg(DOUBLE_PREPARE(TotalEntrollment))
-            .arg(DOUBLE_PREPARE(MoveWagonSum)).arg(DOUBLE_PREPARE(TotalUnload - (TotalLoad + TotalEntrollment + MoveWagonSum))));
+        LabelTotal->setText(ISAlgorithm::CStringF(LANG("OilSphere.Debts.Label"), TotalLoad, TotalUnload, TotalEntrollment, MoveWagonSum,
+            TotalUnload - (TotalLoad + TotalEntrollment + MoveWagonSum)));
     }
     else
     {
@@ -837,7 +834,7 @@ bool ISOilSphere::Debet1SubSystem::Update()
         Temp = GetTcpModel()->data(GetTcpModel()->index(Row, GetTcpModel()->GetFieldIndex("Calculation"))).toString();
         Calculation += Temp.replace(SYMBOL_COMMA, SYMBOL_POINT).remove(' ').toDouble();
     }
-    Label->setText(LANG("OilSphere.Debet.Label").arg(DOUBLE_PREPARE(Total)).arg(DOUBLE_PREPARE(Calculation)).arg(DOUBLE_PREPARE(Total - Calculation)));
+    Label->setText(ISAlgorithm::CStringF(LANG("OilSphere.Debet.Label"), Total, Calculation, Total - Calculation));
     return Result;
 }
 //-----------------------------------------------------------------------------
@@ -868,7 +865,7 @@ bool ISOilSphere::Debet2SubSystem::Update()
         Temp = GetTcpModel()->data(GetTcpModel()->index(Row, GetTcpModel()->GetFieldIndex("Calculation"))).toString();
         Calculation += Temp.replace(SYMBOL_COMMA, SYMBOL_POINT).remove(' ').toDouble();
     }
-    Label->setText(LANG("OilSphere.Debet.Label").arg(DOUBLE_PREPARE(Total)).arg(DOUBLE_PREPARE(Calculation)).arg(DOUBLE_PREPARE(Total - Calculation)));
+    Label->setText(ISAlgorithm::CStringF(LANG("OilSphere.Debet.Label"), Total, Calculation, Total - Calculation));
     return Result;
 }
 //-----------------------------------------------------------------------------
@@ -899,7 +896,7 @@ bool ISOilSphere::Debet3SubSystem::Update()
         Temp = GetTcpModel()->data(GetTcpModel()->index(Row, GetTcpModel()->GetFieldIndex("Calculation"))).toString();
         Calculation += Temp.replace(SYMBOL_COMMA, SYMBOL_POINT).remove(' ').toDouble();
     }
-    Label->setText(LANG("OilSphere.Debet.Label").arg(DOUBLE_PREPARE(Total)).arg(DOUBLE_PREPARE(Calculation)).arg(DOUBLE_PREPARE(Total - Calculation)));
+    Label->setText(ISAlgorithm::CStringF(LANG("OilSphere.Debet.Label"), Total, Calculation, Total - Calculation));
     return Result;
 }
 //-----------------------------------------------------------------------------
@@ -930,7 +927,7 @@ bool ISOilSphere::Debet4SubSystem::Update()
         Temp = GetTcpModel()->data(GetTcpModel()->index(Row, GetTcpModel()->GetFieldIndex("Calculation"))).toString();
         Calculation += Temp.replace(SYMBOL_COMMA, SYMBOL_POINT).remove(' ').toDouble();
     }
-    Label->setText(LANG("OilSphere.Debet.Label").arg(DOUBLE_PREPARE(Total)).arg(DOUBLE_PREPARE(Calculation)).arg(DOUBLE_PREPARE(Total - Calculation)));
+    Label->setText(ISAlgorithm::CStringF(LANG("OilSphere.Debet.Label"), Total, Calculation, Total - Calculation));
     return Result;
 }
 //-----------------------------------------------------------------------------
@@ -961,7 +958,7 @@ bool ISOilSphere::Debet5SubSystem::Update()
         Temp = GetTcpModel()->data(GetTcpModel()->index(Row, GetTcpModel()->GetFieldIndex("Calculation"))).toString();
         Calculation += Temp.replace(SYMBOL_COMMA, SYMBOL_POINT).remove(' ').toDouble();
     }
-    Label->setText(LANG("OilSphere.Debet.Label").arg(DOUBLE_PREPARE(Total)).arg(DOUBLE_PREPARE(Calculation)).arg(DOUBLE_PREPARE(Total - Calculation)));
+    Label->setText(ISAlgorithm::CStringF(LANG("OilSphere.Debet.Label"), Total, Calculation, Total - Calculation));
     return Result;
 }
 //-----------------------------------------------------------------------------
@@ -1101,7 +1098,7 @@ ISOilSphere::ConsumptionAllSubSystem::ConsumptionAllSubSystem(QWidget *parent) :
 {
     GetMainLayout()->setContentsMargins(QMargins(10, 10, 10, 10));
 
-    LabelTitle = new QLabel(LANG("OilSphere.TotalBalance").arg(0).arg(0).arg(0), this);
+    LabelTitle = new QLabel(LANG("OilSphere.TotalBalance.Null"), this);
     ISGui::SetFontWidgetBold(LabelTitle, true);
     GetMainLayout()->addWidget(LabelTitle, 0, Qt::AlignCenter);
 
@@ -1177,12 +1174,15 @@ void ISOilSphere::ConsumptionAllSubSystem::LoadData()
             Label->SetPixmap(ISObjects::Instance().GetInterface()->GetIcon("Balance.Null").pixmap(16, 16));
         }
 
-        ISPushButton *ButtonBalance = new ISPushButton(LANG("OilSphere.Balance").arg(Balance), GroupBoxUsers);
+        ISPushButton *ButtonBalance = new ISPushButton(ISAlgorithm::CStringF(LANG("OilSphere.Balance"), Balance), GroupBoxUsers);
         ButtonBalance->setProperty("UserID", UserMap["ID"]);
         connect(ButtonBalance, &ISPushButton::clicked, this, &ISOilSphere::ConsumptionAllSubSystem::BalanceClicked);
         dynamic_cast<QFormLayout*>(GroupBoxUsers->layout())->addRow(Label, ButtonBalance);
     }
-    LabelTitle->setText(LANG("OilSphere.TotalBalance").arg(AnswerMap["TotalComing"].toString()).arg(AnswerMap["TotalConsumption"].toString()).arg(AnswerMap["Balance"].toString()));
+    LabelTitle->setText(ISAlgorithm::CStringF(LANG("OilSphere.TotalBalance"),
+        AnswerMap["TotalComing"].toString().toStdString().c_str(),
+        AnswerMap["TotalConsumption"].toString().toStdString().c_str(),
+        AnswerMap["Balance"].toString().toStdString().c_str()));
 }
 //-----------------------------------------------------------------------------
 void ISOilSphere::ConsumptionAllSubSystem::BalanceClicked()
@@ -1259,7 +1259,7 @@ bool ISOilSphere::ConsumptionMySubSystem::Update()
         ISTcpQuery qGetBalance("OilSphere_GetUserBalance");
         if (qGetBalance.Execute())
         {
-            LabelBalance->setText(LANG("OilSphere.MyBalance").arg(qGetBalance.GetAnswer()["Balance"].toString()));
+            LabelBalance->setText(ISAlgorithm::CStringF(LANG("OilSphere.MyBalance"), qGetBalance.GetAnswer()["Balance"].toString().toStdString().c_str()));
         }
         else
         {
@@ -1350,7 +1350,7 @@ void ISOilSphere::BankListForm::Load()
     QFile File(FilePath);
     if (!File.open(QIODevice::ReadOnly))
     {
-        ISMessageBox::ShowCritical(this, LANG("Message.Error.NotOpenedFile").arg(FilePath), File.errorString());
+        ISMessageBox::ShowCritical(this, ISAlgorithm::CStringF(LANG("Message.Error.NotOpenedFile"), FilePath.toStdString().c_str()), File.errorString());
         return;
     }
 
@@ -1365,7 +1365,7 @@ void ISOilSphere::BankListForm::Load()
         int Total = AnswerMap["Total"].toInt(),
             Loaded = AnswerMap["Loaded"].toInt(),
             Invalid = AnswerMap["Invalid"].toInt();
-        ISMessageBox::ShowInformation(this, LANG("OilSphere.Message.Information.LoadBanks").arg(Total).arg(Loaded).arg(Invalid),
+        ISMessageBox::ShowInformation(this, ISAlgorithm::CStringF(LANG("OilSphere.Message.Information.LoadBanks"), Total, Loaded, Invalid),
             LANG("OilSphere.Message.Information.LoadBanks.DetailText"));
         Update();
     }

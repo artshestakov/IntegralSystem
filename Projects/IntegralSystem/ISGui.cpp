@@ -1,6 +1,6 @@
 #include "ISGui.h"
 #include "ISAssert.h"
-#include "ISLocalizationOld.h"
+#include "ISLocalization.h"
 #include "ISDialogsForm.h"
 #include "ISMetaData.h"
 #include "ISDialogsCommon.h"
@@ -61,16 +61,20 @@ bool ISGui::Startup(QString &ErrorString)
     }
 
     //Загрузка локализации клиента
-    if (!ISLocalizationOld::Instance().LoadResourceFile(LOCALIZATION_FILE_INTEGRAL_SYSTEM))
+    QFile FileIntegral(":Localization/IntegralSystem.lang");
+    FileIntegral.open(QIODevice::ReadOnly);
+    if (!ISLocalization::Instance().InitContent(FileIntegral.readAll().toStdString().c_str()))
     {
-        ErrorString = QString("Error init localization file \"%1\": %2").arg(LOCALIZATION_FILE_INTEGRAL_SYSTEM).arg(ISLocalizationOld::Instance().GetErrorString());
+        ErrorString = ISAlgorithm::CStringF("Error init localization file \"%s\": %s", LOCALIZATION_FILE_INTEGRAL_SYSTEM, ISLocalization::Instance().GetErrorString().c_str());
         return false;
     }
 
     //Загрузка локализации объектов
-    if (!ISLocalizationOld::Instance().LoadResourceFile(LOCALIZATION_FILE_OBJECTS))
+    QFile FileObjects(":Localization/IntegralSystem.lang");
+    FileObjects.open(QIODevice::ReadOnly);
+    if (!ISLocalization::Instance().InitContent(FileObjects.readAll().toStdString().c_str()))
     {
-        ErrorString = QString("Error init localization file \"%1\": %2").arg(LOCALIZATION_FILE_OBJECTS).arg(ISLocalizationOld::Instance().GetErrorString());
+        ErrorString = ISAlgorithm::CStringF("Error init localization file \"%s\": %s", LOCALIZATION_FILE_OBJECTS, ISLocalization::Instance().GetErrorString().c_str());
         return false;
     }
 
@@ -424,7 +428,7 @@ bool ISGui::RecordsDelete(const QString &TableName, const ISVectorUInt &ObjectsI
         return false;
     }
     ISPopupMessage::ShowNotification(ObjectsID.size() == 1 ?
-        LANG("NotificationForm.Title.Deleted").arg(ObjectsID.front()) :
+        ISAlgorithm::CStringF(LANG("NotificationForm.Title.Deleted"), ObjectsID.front()) :
         LANG("NotificationForm.Title.Deleteds"));
     return true;
 }
@@ -589,7 +593,7 @@ void ISGui::ShowNoteObject(QWidget *parent, const QString &TableName, int Object
     QVariant Note = TcpQuery.GetAnswer()["Note"];
 
     bool Ok = true;
-    Note = ISInputDialog::GetText(LANG("Note"), LANG("InputNote") + ':', Note, Ok);
+    Note = ISInputDialog::GetText(LANG("Note"), LANG("InputNote"), Note, Ok);
     if (!Ok) //Примечание не введено - выходим из функции
     {
         return;

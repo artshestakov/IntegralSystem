@@ -2,7 +2,7 @@
 #include "ISTcpConnector.h"
 #include "ISTcp.h"
 #include "ISAlgorithm.h"
-#include "ISLocalizationOld.h"
+#include "ISLocalization.h"
 #include "ISLogger.h"
 #include "ISGui.h"
 #include "ISConstantsGui.h"

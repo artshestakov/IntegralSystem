@@ -1,6 +1,6 @@
 #include "ISDialogsCommon.h"
 #include "ISProperty.h"
-#include "ISLocalizationOld.h"
+#include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISFieldEdits.h"
 #include "ISGui.h"
@@ -244,7 +244,7 @@ QTime ISInputDialog::GetTime(const QString &Title, const QString &LabelText)
 //-----------------------------------------------------------------------------
 QString ISInputDialog::GetPassword()
 {
-    ISInputDialog InputDialog(ISNamespace::FieldType::Password, LANG("Password"), LANG("EnterThePassword") + ':');
+    ISInputDialog InputDialog(ISNamespace::FieldType::Password, LANG("Password"), LANG("EnterThePassword"));
     if (InputDialog.Exec())
     {
         return InputDialog.GetValue().toString();

@@ -1,6 +1,6 @@
 #include "ISParagraphs.h"
 #include "ISBuffer.h"
-#include "ISLocalizationOld.h"
+#include "ISLocalization.h"
 #include "ISGui.h"
 #include "ISControls.h"
 #include "ISDialogsCommon.h"
@@ -383,7 +383,7 @@ void ISCalendarParagraph::Create()
 //-----------------------------------------------------------------------------
 void ISCalendarParagraph::DateTo()
 {
-    QDate Date = ISInputDialog::GetDate(LANG("CalendarForm.CalendarDateTo"), LANG("SelectDate") + ':');
+    QDate Date = ISInputDialog::GetDate(LANG("CalendarForm.CalendarDateTo"), LANG("SelectDate"));
     if (Date.isValid())
     {
         CalendarPanel->setSelectedDate(Date);

@@ -75,7 +75,7 @@ bool ISCaratApplication::Init()
         return false;
     }
 
-    if (!ISLocalization::Instance().Init(LOCALIZATION_FILE_CARAT))
+    if (!ISLocalization::Instance().InitFile(LOCALIZATION_FILE_CARAT))
     {
         ISLOGGER_E("ISLocalization", "Not init file \"%s\": %s", LOCALIZATION_FILE_CARAT, ISLocalization::Instance().GetErrorString().c_str());
         return false;

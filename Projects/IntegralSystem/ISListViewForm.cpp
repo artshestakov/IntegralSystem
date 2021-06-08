@@ -1,6 +1,6 @@
 #include "ISListViewForm.h"
 #include "ISBuffer.h"
-#include "ISLocalizationOld.h"
+#include "ISLocalization.h"
 #include "ISDialogsCommon.h"
 #include "ISTcpQuery.h"
 //-----------------------------------------------------------------------------

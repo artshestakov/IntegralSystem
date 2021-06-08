@@ -1,5 +1,5 @@
 #include "ISCalendarObjectForm.h"
-#include "ISLocalizationOld.h"
+#include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISGui.h"
 #include "ISDialogsCommon.h"
@@ -25,14 +25,14 @@ bool ISCalendarObjectForm::Save()
 
     if (!Date.isValid())
     {
-        ISMessageBox::ShowWarning(this, LANG("Message.Error.Field.NullValue").arg(LANG("Date")));
+        ISMessageBox::ShowWarning(this, ISAlgorithm::CStringF(LANG("Message.Error.Field.NullValue"), LANG("Date")));
         GetFieldWidget("Date")->BlinkRed();
         return false;
     }
 
     if (!TimeAlert.isValid())
     {
-        ISMessageBox::ShowWarning(this, LANG("Message.Error.Field.NullValue").arg(LANG("TimeAlert")));
+        ISMessageBox::ShowWarning(this, ISAlgorithm::CStringF(LANG("Message.Error.Field.NullValue"), LANG("TimeAlert")));
         GetFieldWidget("TimeAlert")->BlinkRed();
         return false;
     }

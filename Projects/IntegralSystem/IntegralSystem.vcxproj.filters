@@ -84,9 +84,6 @@
     <Filter Include="ISCORE\MetaData">
       <UniqueIdentifier>{6a0b3a04-4f56-4202-b15f-710d8fa77b31}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ISCORE\System">
-      <UniqueIdentifier>{e5fbd065-57d0-4002-8a89-2ff81bb65895}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -314,9 +311,6 @@
     <ClCompile Include="ISMetaData.cpp">
       <Filter>ISCORE\MetaData</Filter>
     </ClCompile>
-    <ClCompile Include="ISLocalizationOld.cpp">
-      <Filter>ISCORE\System</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="IntegralSystem.rc">
@@ -372,9 +366,6 @@
     </ClInclude>
     <ClInclude Include="PMetaClass.h">
       <Filter>ISCORE\MetaData</Filter>
-    </ClInclude>
-    <ClInclude Include="ISLocalizationOld.h">
-      <Filter>ISCORE\System</Filter>
     </ClInclude>
     <ClInclude Include="ISTypedefsGUI.h">
       <Filter>System</Filter>

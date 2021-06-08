@@ -1,6 +1,6 @@
 #include "ISSubSystem.h"
 #include "ISBuffer.h"
-#include "ISLocalizationOld.h"
+#include "ISLocalization.h"
 #include "ISProcessForm.h"
 #include "ISAudioPlayerForm.h"
 #include "ISDialogsCommon.h"
@@ -175,7 +175,7 @@ void ISFullTextSearchSubSystem::Search()
         WidgetList.append(LabelNotFound);
     }
     dynamic_cast<QVBoxLayout*>(ScrollArea->widget()->layout())->addStretch();
-    LabelResult->setText(LANG("Search.ResultCount") + ": " + QString::number(ResultList.size()));
+    LabelResult->setText(ISAlgorithm::CStringF(LANG("Search.ResultCount"), ResultList.size()));
     SetSearchInProgress(false);
 }
 //-----------------------------------------------------------------------------
@@ -377,7 +377,8 @@ void ISMonitorActivitySubSystem::ShowUserCard()
 void ISMonitorActivitySubSystem::ShowProtocol()
 {
     ISProtocolSubSystem *ProtocolBaseListForm = new ISProtocolSubSystem();
-    ProtocolBaseListForm->setWindowTitle(LANG("ProtocolUser") + ": " + sender()->property("UserName").toString());
+    //???
+    //ProtocolBaseListForm->setWindowTitle(LANG("ProtocolUser") + ": " + sender()->property("UserName").toString());
     ProtocolBaseListForm->setWindowIcon(BUFFER_ICONS("Protocol"));
     ProtocolBaseListForm->GetTcpQuery()->AddFilter("User", sender()->property("UserID"));
     ProtocolBaseListForm->showMaximized();
@@ -487,7 +488,7 @@ void ISStorageFilesSubSystem::Create()
             QFile File(FilePath);
             if (!File.open(QIODevice::ReadOnly))
             {
-                ISMessageBox::ShowWarning(&ProgressForm, LANG("Message.Error.NotOpenedFile").arg(FilePath));
+                ISMessageBox::ShowWarning(&ProgressForm, ISAlgorithm::CStringF(LANG("Message.Error.NotOpenedFile"), FilePath.toStdString().c_str()));
                 continue;
             }
 
@@ -498,7 +499,7 @@ void ISStorageFilesSubSystem::Create()
             int MaxSize = SETTING_DATABASE_VALUE_INT(CONST_UID_DATABASE_SETTING_OTHER_STORAGEFILEMAXSIZE) * 1000 * 1024;
             if (ByteArray.size() > MaxSize)
             {
-                ISMessageBox::ShowWarning(this, LANG("Message.Warning.StorageFileBigSize").arg(FilePath).arg(MaxSize));
+                ISMessageBox::ShowWarning(this, ISAlgorithm::CStringF(LANG("Message.Warning.StorageFileBigSize"), FilePath.toStdString().c_str(), MaxSize));
                 continue;
             }
             ByteArray = ByteArray.toBase64();
@@ -540,9 +541,9 @@ void ISStorageFilesSubSystem::Create()
 void ISStorageFilesSubSystem::CreateCopy()
 {
     QString FileName = GetCurrentRecordValue("Name").toString();
-    if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.CreateCopyFile").arg(FileName)))
+    if (ISMessageBox::ShowQuestion(this, ISAlgorithm::CStringF(LANG("Message.Question.CreateCopyFile"), FileName.toStdString().c_str())))
     {
-        FileName = ISInputDialog::GetString(LANG("Named"), LANG("FileName") + ':', FileName);
+        FileName = ISInputDialog::GetString(LANG("Named"), LANG("FileName"), FileName);
         if (FileName.isEmpty())
         {
             return;
@@ -563,7 +564,7 @@ void ISStorageFilesSubSystem::CreateCopy()
         }
         else
         {
-            ISMessageBox::ShowCritical(this, LANG("Message.Error.CreateCopyStorageFile"));
+            ISMessageBox::ShowCritical(this, ISAlgorithm::CStringF(LANG("Message.Error.CreateCopyStorageFile"), FileName.toStdString().c_str()));
         }
     }
 }
@@ -573,9 +574,9 @@ void ISStorageFilesSubSystem::SaveFile()
     QString Expansion = GetCurrentRecordValue("Expansion").toString(),
         Name = GetCurrentRecordValue("Name").toString();
 
-    if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.SaveFile").arg(Name)))
+    if (ISMessageBox::ShowQuestion(this, ISAlgorithm::CStringF(LANG("Message.Question.SaveFile"), Name.toStdString().c_str())))
     {
-        QString FilePath = ISFileDialog::GetSaveFileName(this, LANG("File.Filter.File").arg(Expansion), Name);
+        QString FilePath = ISFileDialog::GetSaveFileName(this, ISAlgorithm::CStringF(LANG("File.Filter.File"), Expansion.toStdString().c_str()), Name);
         if (FilePath.isEmpty()) //Пользователь отказался от сохранения
         {
             return;
@@ -585,7 +586,7 @@ void ISStorageFilesSubSystem::SaveFile()
         QFile File(FilePath);
         if (!File.open(QIODevice::WriteOnly))
         {
-            ISMessageBox::ShowWarning(this, LANG("Message.Error.NotOpenedFile").arg(FilePath), File.errorString());
+            ISMessageBox::ShowWarning(this, ISAlgorithm::CStringF(LANG("Message.Error.NotOpenedFile"), FilePath.toStdString().c_str()), File.errorString());
             return;
         }
 
@@ -603,11 +604,11 @@ void ISStorageFilesSubSystem::SaveFile()
             File.close();
 
             //Предлагаем открыть файл
-            if (ISMessageBox::ShowQuestion(this, LANG("Message.Question.File.SavedToPath").arg(FilePath)))
+            if (ISMessageBox::ShowQuestion(this, ISAlgorithm::CStringF(LANG("Message.Question.File.SavedToPath"), FilePath.toStdString().c_str())))
             {
                 if (!ISGui::OpenFile(FilePath)) //Не удалось открыть файл
                 {
-                    ISMessageBox::ShowWarning(this, LANG("Message.Error.NotOpenedFile").arg(Name));
+                    ISMessageBox::ShowWarning(this, ISAlgorithm::CStringF(LANG("Message.Error.NotOpenedFile"), Name.toStdString().c_str()));
                 }
             }
         }

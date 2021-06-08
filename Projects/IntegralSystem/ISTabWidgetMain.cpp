@@ -1,5 +1,5 @@
 #include "ISTabWidgetMain.h"
-#include "ISLocalizationOld.h"
+#include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISObjectFormBase.h"
 #include "ISGui.h"

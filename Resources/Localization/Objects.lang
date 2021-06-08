@@ -3,16 +3,16 @@
 
     <!--OilSphere-->
     <Local Name="OilSphere.GasStationLabel" Russian="АЗС:"/>
-    <Local Name="OilSphere.DateLoad" Russian="Дата загрузки: %1"/>
-    <Local Name="OilSphere.Cost.Load" Russian="Стоимость загрузки: %1"/>
-    <Local Name="OilSphere.Cost.Unload" Russian="Стоимость выгрузки: %1"/>
+    <Local Name="OilSphere.DateLoad" Russian="Дата загрузки: %s"/>
+    <Local Name="OilSphere.Cost.Load" Russian="Стоимость загрузки: %f"/>
+    <Local Name="OilSphere.Cost.Unload" Russian="Стоимость выгрузки: %f"/>
     <Local Name="OilSphere.ShowImplementation" Russian="Просмотр реализации"/>
     <Local Name="OilSphere.Show.ImplementationLoad" Russian="Просмотр загрузки"/>
     <Local Name="OilSphere.Show.ImplementationUnload" Russian="Просмотр выгрузки"/>
-    <Local Name="OilSphere.Debet.Label" Russian="Итого: %1 Расчёт: %2 Остаток: %3"/>
+    <Local Name="OilSphere.Debet.Label" Russian="Итого: %f Расчёт: %f Остаток: %f"/>
     <Local Name="OilSphere.Debts" Russian="Долги"/>
-    <Local Name="OilSphere.Debts.Title" Russian="Долги по контрагенту: %1"/>
-    <Local Name="OilSphere.Debts.Label" Russian="Стоимость загрузки: %1 Стоимость выгрузки: %2 Начислено: %3 Покупка ЖД/Ц: %4 Долг: %5"/>
+    <Local Name="OilSphere.Debts.Title" Russian="Долги по контрагенту: %s"/>
+    <Local Name="OilSphere.Debts.Label" Russian="Стоимость загрузки: %f Стоимость выгрузки: %f Начислено: %f Покупка ЖД/Ц: %f Долг: %f"/>
     <Local Name="OilSphere.Implementation.Loads" Russian="Загрузки"/>
     <Local Name="OilSphere.Implementation.Unloads" Russian="Выгрузки"/>
     <Local Name="OilSphere.Counterparty.Enrollments" Russian="Начисления"/>
@@ -20,21 +20,22 @@
     <Local Name="OilSphere.FillInBased" Russian="Заполнить на основании"/>
     <Local Name="OilSphere.CreateInBased" Russian="Создать на основании"/>
     <Local Name="OilSphere.Users" Russian="Пользователи"/>
-    <Local Name="OilSphere.Balance" Russian="Баланс: %1"/>
+    <Local Name="OilSphere.Balance" Russian="Баланс: %f"/>
     <Local Name="OilSphere.Consumption" Russian="Расходы"/>
     <Local Name="OilSphere.CashCrediting" Russian="Зачисления наличных"/>
     <Local Name="OilSphere.ComingCash" Russian="Приход д/с"/>
     <Local Name="OilSphere.Return" Russian="Возвраты"/>
-    <Local Name="OilSphere.MyBalance" Russian="Мой баланс: %1"/>
+    <Local Name="OilSphere.MyBalance" Russian="Мой баланс: %s"/>
     <Local Name="OilSphere.LoadData" Russian="Загрузить данные"/>
-    <Local Name="OilSphere.TotalBalance" Russian="Приход: %1 Расход: %2 Баланс: %3"/>
+    <Local Name="OilSphere.TotalBalance.Null" Russian="Приход: 0 Расход: 0 Баланс: 0"/>
+    <Local Name="OilSphere.TotalBalance" Russian="Приход: %s Расход: %s Баланс: %s"/>
     <Local Name="OilSphere.Message.Warning.LoadCounterpartyAndStockIsEmpty" Russian="Вы не выбрали место загрузки."/>
     <Local Name="OilSphere.Message.Warning.LoadCounterpartyAndStockNotIsEmpty" Russian="Нужно выбрать только одно место загрузки."/>
     <Local Name="OilSphere.Message.Warning.UnloadCounterpartyAndStockIsEmpty" Russian="Вы не выбрали место выгрузки."/>
     <Local Name="OilSphere.Message.Warning.UnloadCounterpartyAndStockNotIsEmpty" Russian="Нужно выбрать только одно место выгрузки."/>
     <Local Name="OilSphere.Message.Warning.NotFoundCurrentConstant" Russian="Плотность на текущий период отсутствует."/>
     <Local Name="OilSphere.Message.Warning.FillInBased" Russian="Заполнение возможно на основании записи отличной от текущей."/>
-    <Local Name="OilSphere.Message.Information.LoadBanks" Russian="Данные загружены успешно!&#10;Всего записей: %1&#10;Загружено: %2&#10;Битых записей: %3*"/>
+    <Local Name="OilSphere.Message.Information.LoadBanks" Russian="Данные загружены успешно!&#10;Всего записей: %d&#10;Загружено: %d&#10;Битых записей: %d*"/>
     <Local Name="OilSphere.Message.Information.LoadBanks.DetailText" Russian="* Битые записи не соответствуют формату."/>
 
 </LANG>

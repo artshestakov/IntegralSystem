@@ -1,7 +1,7 @@
 #include "ISDiscussionListForm.h"
 #include "ISTcpQuery.h"
 #include "ISDialogsCommon.h"
-#include "ISLocalizationOld.h"
+#include "ISLocalization.h"
 //-----------------------------------------------------------------------------
 ISDiscussionListForm::ISDiscussionListForm(QWidget *parent) : ISListBaseForm("_Discussion", parent)
 {

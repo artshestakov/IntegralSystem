@@ -2,7 +2,7 @@
 #include "ISGui.h"
 #include "ISContextMenu.h"
 #include "ISProperty.h"
-#include "ISLocalizationOld.h"
+#include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISControls.h"
 #include "ISConstantsGui.h"

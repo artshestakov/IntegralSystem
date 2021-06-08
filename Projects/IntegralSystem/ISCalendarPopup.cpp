@@ -1,5 +1,5 @@
 #include "ISCalendarPopup.h"
-#include "ISLocalizationOld.h"
+#include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISConstantsGui.h"
 //-----------------------------------------------------------------------------
@@ -29,6 +29,6 @@ ISCalendarPopup::~ISCalendarPopup()
 void ISCalendarPopup::showEvent(QShowEvent *ShowEvent)
 {
     ISCalendarWidget::showEvent(ShowEvent);
-    ButtonToday->setText(LANG("Today") + ": " + QDate::currentDate().toString(FORMAT_DATE_V2));
+    ButtonToday->setText(ISAlgorithm::CStringF(LANG("ISCalendarPopup.Today"), QDate::currentDate().toString(FORMAT_DATE_V2).toStdString().c_str()));
 }
 //-----------------------------------------------------------------------------

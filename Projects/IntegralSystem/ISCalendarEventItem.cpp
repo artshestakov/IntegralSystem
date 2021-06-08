@@ -2,7 +2,7 @@
 #include "ISBuffer.h"
 #include "ISGui.h"
 #include "ISSettings.h"
-#include "ISLocalizationOld.h"
+#include "ISLocalization.h"
 #include "ISConstantsGui.h"
 //-----------------------------------------------------------------------------
 ISCalendarEventItem::ISCalendarEventItem(int calendar_id, const QString &Name, const QString &Text, const QTime &Time, bool closed, QWidget *parent) : QWidget(parent)
@@ -53,7 +53,7 @@ ISCalendarEventItem::ISCalendarEventItem(int calendar_id, const QString &Name, c
         else if (NoteViewType == "List")
         {
             QLabel *LabelNote = new QLabel(this);
-            LabelNote->setText(LANG("Note") + ":\n" + Text);
+            LabelNote->setText(ISAlgorithm::CStringF(LANG("ISCalendarEventItem.Note"), Text.toStdString().c_str()));
             LabelNote->setWordWrap(true);
             Layout->addWidget(LabelNote);
         }

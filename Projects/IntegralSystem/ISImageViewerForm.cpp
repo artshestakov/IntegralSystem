@@ -1,5 +1,5 @@
 #include "ISImageViewerForm.h"
-#include "ISLocalizationOld.h"
+#include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISGui.h"
 //-----------------------------------------------------------------------------
@@ -165,7 +165,7 @@ void ISImageViewerForm::UpdateActions()
 void ISImageViewerForm::SetPixmap(const QPixmap &NewPixmap)
 {
     LabelImage->setPixmap(NewPixmap);
-    LabelSize->setText(LANG("ImageSize") + ": " + QString("%1 X %2").arg(NewPixmap.width()).arg(NewPixmap.height()));
+    LabelSize->setText(ISAlgorithm::CStringF(LANG("ImageSize"), NewPixmap.width(), NewPixmap.height()));
     ScaleFactor = 1.0;
 
     ScrollArea->setVisible(true);

@@ -1,6 +1,6 @@
 #include "ISTcpConnector.h"
 #include "ISAlgorithm.h"
-#include "ISLocalizationOld.h"
+#include "ISLocalization.h"
 #include "ISLogger.h"
 #include "ISConstantsGui.h"
 //-----------------------------------------------------------------------------

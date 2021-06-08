@@ -1,6 +1,6 @@
 #include "ISFieldEditBase.h"
 #include "ISAssert.h"
-#include "ISLocalizationOld.h"
+#include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISDialogsCommon.h"
 #include "ISAlgorithm.h"

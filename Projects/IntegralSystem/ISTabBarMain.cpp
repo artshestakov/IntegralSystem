@@ -1,5 +1,5 @@
 #include "ISTabBarMain.h"
-#include "ISLocalizationOld.h"
+#include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISSettings.h"
 #include "ISGui.h"

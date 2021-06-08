@@ -58,7 +58,6 @@
     <ClCompile Include="ISListIndicatorWidget.cpp" />
     <ClCompile Include="ISListViewForm.cpp" />
     <ClCompile Include="ISListWidget.cpp" />
-    <ClCompile Include="ISLocalizationOld.cpp" />
     <ClCompile Include="ISMainWindow.cpp" />
     <ClCompile Include="ISMenuBar.cpp" />
     <ClCompile Include="ISMetaData.cpp" />
@@ -100,7 +99,6 @@
     <ResourceCompile Include="IntegralSystem.rc" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ISLocalizationOld.h" />
     <ClInclude Include="ISStructsGUI.h" />
     <ClInclude Include="ISTypedefsGUI.h" />
     <ClInclude Include="PMetaClass.h" />

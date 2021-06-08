@@ -82,7 +82,7 @@
     <Local Name="ISServerInfoSubSystem.Database.FilesSize" Russian="Размер хранилища:"/>
 
     <!--Messages-->
-    <Local Name="Message.Information.NotSavedObjects" Russian="Есть несохранённые (%1 шт.) записи, сохраните или закройте их для выхода из программы."/>
+    <Local Name="Message.Information.NotSavedObjects" Russian="Есть несохранённые (%d шт.) записи, сохраните или закройте их для выхода из программы."/>
     <Local Name="Message.Information.AppliocationWillBeRestart" Russian="Настройки успешно сброшены, рекомендуется перезапустить программу."/>
     <Local Name="Message.Information.InstallUpdate" Russian="Обновление было успешно загружено! Нажмите ОК, чтобы начать установку. После успешной установки новой версии программа автоматически запустится."/>
     <Local Name="Message.Information.ResetSettingDB" Russian="Настройки были успешно сброшены!"/>
@@ -91,10 +91,10 @@
     <Local Name="Message.Error.ConnectionSetting.Input.PortEmpty" Russian="В настройках подключения к базе данных не указан порт."/>
     <Local Name="Message.Error.Input.LoginEmpty" Russian="Введите логин!"/>
     <Local Name="Message.Error.Input.PasswordEmpty" Russian="Введите пароль!"/>
-    <Local Name="Message.Error.Field.NullValue" Russian="Поле &quot;%1&quot; обязательно для заполнения."/>
-    <Local Name="Message.Error.NotOpenedFile" Russian="Не удалось открыть файл &quot;%1&quot;."/>
-    <Local Name="Message.Error.ErrorOpenedFolderPath" Russian="Не удалось открыть директорию &quot;%1&quot;."/>
-    <Local Name="Message.Error.CreateCopyStorageFile" Russian="Не удалось создать копию файла &quot;%1&quot;."/>
+    <Local Name="Message.Error.Field.NullValue" Russian="Поле &quot;%s&quot; обязательно для заполнения."/>
+    <Local Name="Message.Error.NotOpenedFile" Russian="Не удалось открыть файл &quot;%s&quot;."/>
+    <Local Name="Message.Error.ErrorOpenedFolderPath" Russian="Не удалось открыть директорию &quot;%s&quot;."/>
+    <Local Name="Message.Error.CreateCopyStorageFile" Russian="Не удалось создать копию файла &quot;%s&quot;."/>
     <Local Name="Message.Error.InitializeMetaData" Russian="Не удалось иницилизировать мета-данные."/>
     <Local Name="Message.Error.Auth" Russian="Ошибка авторизации!"/>
     <Local Name="Message.Error.OpenImageFile" Russian="Не удалось открыть файл с изображением!"/>
@@ -106,52 +106,53 @@
     <Local Name="Message.Error.SaveUpdate" Russian="Не удалось сохранить файл обновления!"/>
     <Local Name="Message.Error.InvalidListValue" Russian="Невалидное значение!"/>
     <Local Name="Message.Object.Delete" Russian="Вы действительно хотите удалить выбранную запись?&#10;&#10;При удалении записи, все подчиненные ей будут так же удалены."/>
-    <Local Name="Message.Objects.Delete" Russian="Вы действительно удалить выбранные записи (%1 шт.)?&#10;&#10;При удалении записей, все подчиненные им будут так же удалены."/>
+    <Local Name="Message.Objects.Delete" Russian="Вы действительно удалить выбранные записи (%d шт.)?&#10;&#10;При удалении записей, все подчиненные им будут так же удалены."/>
     <Local Name="Message.Warning.SystemObject.NotEdit" Russian="Запрещено редактировать системные записи."/>
     <Local Name="Message.Warning.SystemObject.Copy" Russian="Запрещено создавать копии системных записей."/>
-    <Local Name="Message.Warning.ValueFieldEditInvalid" Russian="Значение в поле &quot;%1&quot; введено некорректно!"/>
+    <Local Name="Message.Warning.ValueFieldEditInvalid" Russian="Значение в поле &quot;%s&quot; введено некорректно!"/>
     <Local Name="Message.Warning.NotChangeSystemUserPassword" Russian="Менять пароль для системного пользователя запрещено!"/>
     <Local Name="Message.Warning.NotCreateCalendarEventPast" Russian="Создавать события в прошлом запрещено."/>
-    <Local Name="Message.Warning.OpenUrl.Failed" Russian="Не удалось открыть интернет ссылку: %1"/>
+    <Local Name="Message.Warning.OpenUrl.Failed" Russian="Не удалось открыть интернет ссылку:&#10;%s"/>
     <Local Name="Message.Warning.OpenUrl.Empty" Russian="Ссылка не указана!"/>
     <Local Name="Message.Warning.EMailIsEmpty" Russian="Адрес электронной почты не указан, отправка невозможна."/>
-    <Local Name="Message.Warning.NotAccess.Create" Russian="У Вас нет прав на добавление данных в таблицу &quot;%1&quot;."/>
-    <Local Name="Message.Warning.NotAccess.CreateCopy" Russian="У Вас нет прав на создание копий записей в таблице &quot;%1&quot;."/>
-    <Local Name="Message.Warning.NotAccess.Edit" Russian="У Вас нет прав на изменение данных в таблице &quot;%1&quot;."/>
-    <Local Name="Message.Warning.NotAccess.Delete" Russian="У Вас нет прав на удаление данных в таблице &quot;%1&quot;."/>
-    <Local Name="Message.Warning.NotAccess.Export" Russian="У Вас нет прав на экспорт данных из таблицы &quot;%1&quot;."/>
+    <Local Name="Message.Warning.NotAccess.Create" Russian="У Вас нет прав на добавление данных в эту таблицу."/>
+    <Local Name="Message.Warning.NotAccess.CreateCopy" Russian="У Вас нет прав на создание копий записей в этой таблице."/>
+    <Local Name="Message.Warning.NotAccess.Edit" Russian="У Вас нет прав на изменение данных в этой таблице."/>
+    <Local Name="Message.Warning.NotAccess.Delete" Russian="У Вас нет прав на удаление данных в этой таблице."/>
+    <Local Name="Message.Warning.NotAccess.Export" Russian="У Вас нет прав на экспорт данных из этой таблицы."/>
     <Local Name="Message.Warning.UserNotLinkedToGroup" Russian="ВНИМАНИЕ! Вы не заполнили поле &quot;Группа&quot;. Пользователи не привязанные к группе не смогут авторизоваться в программе."/>
     <Local Name="Message.Warning.InvalidAccountLifeTimeDatesUser" Russian="ВНИМАНИЕ! Установлен некорректный диапазон даты начала и окончания срока действия учётной записи."/>
     <Local Name="Message.Warning.SaveObjectFromContinue" Russian="Сохраните запись для продолжения."/>
     <Local Name="Message.Warning.OneFieldNotFill" Russian="Одно из полей не заполнено!"/>
     <Local Name="Message.Warning.PasswordVerification" Russian="Пароль слишком слабый.&#10;&#10;Обязательные требования к надёжному паролю:&#10;&#8226; Пароль должен содержать не менее 8 символов.&#10;&#8226; Пароль должен содержать заглавные и строчные буквы, цифры, и специальные символы. Например: oNQZnz$Hx2.&#10;&#10;Пароль не должен содержать:&#10;&#8226; Личную информацию, которую легко узнать. Например: имя, фамилию или дату рождения.&#10;&#8226; Очевидные и простые слова, фразы, устойчивые выражения и наборы символов, которые легко подобрать. Например: password, parol, abcd, qwerty asdfg, или 1234567."/>
     <Local Name="Message.Warning.UserPasswordNotCreated" Russian="ВНИМАНИЕ! Пользователь без пароля не сможет зайти в программу!"/>
-    <Local Name="Message.Warning.StorageFileBigSize" Russian="Размер файла &quot;%1&quot; превышает ограничение в %2 MB. Файл не будет добавлен."/>
+    <Local Name="Message.Warning.StorageFileBigSize" Russian="Размер файла &quot;%s&quot; превышает ограничение в %d MB. Файл не будет добавлен."/>
     <Local Name="Message.Warning.NotOpenFeedbackLink" Russian="Не удалось открыть ссылку!"/>
     <Local Name="Message.Warning.SearchFieldsIsEmpty" Russian="Поисковые значения отсутствуют."/>
-    <Local Name="Message.Warning.AlreadyConnected" Russian="ВНИМАНИЕ! Вход в вашу учётную запись уже был выполнен.&#10;&#10;Дата и время подключения: %1&#10;Адрес: %2"/>
+    <Local Name="Message.Warning.AlreadyConnected" Russian="ВНИМАНИЕ! Вход в вашу учётную запись уже был выполнен.&#10;&#10;Дата и время подключения: %s&#10;Адрес: %s"/>
     <Local Name="Message.Warning.ProtocolNoRecord" Russian="Данное событие не связанно с запись в базе данных."/>
+    <Local Name="Message.Warning.StartInstallUpdate" Russian="Не удалось запустить обновление.&#10;&#10;%s"/>
     <Local Name="Message.Question.ChangeUser" Russian="Сменить пользователя?"/>
     <Local Name="Message.Question.ExitApplication" Russian="Вы действительно хотите выйти из программы?"/>
-    <Local Name="Message.Question.File.SavedToPath" Russian="Файл успешно сохранен по пути:&#10;%1&#10;Открыть его?"/>
-    <Local Name="Message.Question.SaveObjectChanged" Russian="Карточка объекта &quot;%1&quot; была изменена, сохранить изменения?"/>
+    <Local Name="Message.Question.File.SavedToPath" Russian="Файл успешно сохранен по пути:&#10;%s&#10;Открыть его?"/>
+    <Local Name="Message.Question.SaveObjectChanged" Russian="Карточка объекта &quot;%s&quot; была изменена, сохранить изменения?"/>
     <Local Name="Message.Question.ChangeSettingsToDefault" Russian="Установить все настройки по умолчанию?"/>
     <Local Name="Message.Question.DeleteFavorites" Russian="Удалить все избранные записи?"/>
-    <Local Name="Message.Question.CreateCopyFile" Russian="Создать копию файла &quot;%1&quot;?"/>
-    <Local Name="Message.Question.SaveFile" Russian="Сохранить файл &quot;%1&quot;?"/>
-    <Local Name="Message.Question.ConnectionError.Reconnect" Russian="Не удалось подключиться к серверу.&#10;Ошибка: %1&#10;&#10;Повторить попытку подключения?"/>
+    <Local Name="Message.Question.CreateCopyFile" Russian="Создать копию файла &quot;%s&quot;?"/>
+    <Local Name="Message.Question.SaveFile" Russian="Сохранить файл &quot;%s&quot;?"/>
+    <Local Name="Message.Question.ConnectionError.Reconnect" Russian="Не удалось подключиться к серверу.&#10;Ошибка: %s&#10;&#10;Повторить попытку подключения?"/>
     <Local Name="Message.Question.CancelChanged" Russian="Отменить изменения?"/>
     <Local Name="Message.Question.DeleteCalendarEvent" Russian="Удалить это событие?"/>
     <Local Name="Message.Question.FileSaved" Russian="Файл успешно сохранен! Открыть его?"/>
     <Local Name="Message.Question.CalendarCloseEvent" Russian="Завершить событие?"/>
     <Local Name="Message.Question.StopInsertingToStorage" Russian="Остановить добавление файлов?"/>
     <Local Name="Message.Question.CopyDiscussion" Russian="Скопировать запись?"/>
-    <Local Name="Message.Question.UpdateAvailable" Russian="Доступно обновление программы. Загрузить его?&#10;&#10;Текущая версия: %1&#10;Новая версия: %2"/>
+    <Local Name="Message.Question.UpdateAvailable" Russian="Доступно обновление программы. Загрузить его?&#10;&#10;Текущая версия: %d&#10;Новая версия: %d"/>
     <Local Name="Message.Question.PasswordReset" Russian="Вы уверены что хотите сбросить пароль?"/>
     <Local Name="Message.Question.ResetSettingDB" Russian="Сбросить настройки на стандартные?"/>
 
     <!--System Fields-->
-    <Local Name="SystemField.ID" Russian="Код"/>
+    <Local Name="SystemField.ID" Russian="Код:"/>
     <Local Name="SystemField.ID.NotAssigned" Russian="Не присвоен"/>
 
     <!--ListForm ToolBar-->
@@ -168,33 +169,32 @@
     <Local Name="ListForm.Search" Russian="Расширенный поиск"/>
     <Local Name="ListForm.Search.ToolTip" Russian="Расширенный поиск по таблице (F7)"/>
     <Local Name="ListForm.ExportTable" Russian="Экспорт таблицы"/>
-    <Local Name="ListForm.Column.Sum" Russian="Сумма: %1 Среднее значение: %2"/>
+    <Local Name="ListForm.Column.Sum" Russian="Сумма: %d Среднее значение: %d"/>
 
     <!--ISHistoryForm-->
     <Local Name="ISHistoryForm.Title" Russian="История"/>
-    <Local Name="ISHistoryForm.RowCount" Russian="Записей: %1"/>
+    <Local Name="ISHistoryForm.RowCount" Russian="Записей: %d"/>
     <Local Name="ISHistoryForm.Close" Russian="Закрыть"/>
 
     <!--ISFavoritesForm-->
     <Local Name="ISFavoritesForm.Title" Russian="Избранные записи"/>
-    <Local Name="ISFavoritesForm.Title.Table" Russian="Избранные записи таблицы: %1"/>
+    <Local Name="ISFavoritesForm.Title.Table" Russian="Избранные записи таблицы: %s"/>
     <Local Name="ISFavoritesForm.Open" Russian="Открыть запись"/>
     <Local Name="ISFavoritesForm.Clear" Russian="Очистить избранное"/>
-    <Local Name="ISFavoritesForm.RecordCount" Russian="Записей: %1"/>
+    <Local Name="ISFavoritesForm.RecordCount" Russian="Записей: %d"/>
     <Local Name="ISFavoritesForm.Close" Russian="Закрыть"/>
 
     <!--ISSearchForm-->
-    <Local Name="ISSearchForm.Title" Russian="Расширенный поиск"/>
+    <Local Name="ISSearchForm.Title" Russian="Расширенный поиск - %s"/>
     <Local Name="ISSearchForm.AddValue" Russian="Добавить значение"/>
 
     <!--Other-->
     <Local Name="NoData" Russian="Данных нет"/>
-    <Local Name="RecordsCount" Russian="Записей"/>
+    <Local Name="RecordsCount" Russian="Записей: %d"/>
     <Local Name="Input" Russian="Вход"/>
     <Local Name="Input.ToolTip" Russian="Вход (Enter)"/>
     <Local Name="Exit.ToolTip" Russian="Выход (Escape)"/>
     <Local Name="Named" Russian="Наименование"/>
-    <Local Name="ConnectionSettings" Russian="Настройки подключения"/>
     <Local Name="OpenList" Russian="Открыть справочник"/>
     <Local Name="ChangeUser" Russian="Сменить пользователя"/>
     <Local Name="History" Russian="История"/>
@@ -214,8 +214,8 @@
     <Local Name="Discussion" Russian="Обсуждение"/>
     <Local Name="Favorites" Russian="Избранные записи"/>
     <Local Name="AddToFavorites" Russian="Добавить/удалить из избранного"/>
-    <Local Name="Creating" Russian="Создание"/>
-    <Local Name="Coping" Russian="Создание копии"/>
+    <Local Name="Creating" Russian="Создание (%s)"/>
+    <Local Name="Coping" Russian="Создание копии (%s): %s"/>
     <Local Name="Additionally" Russian="Дополнительно"/>
     <Local Name="SelectAllFields" Russian="Выбрать все поля"/>
     <Local Name="DeselectAllFields" Russian="Снять выбор со всех полей"/>
@@ -224,24 +224,25 @@
     <Local Name="AllTabs" Russian="Все вкладки"/>
     <Local Name="All" Russian="Все"/>
     <Local Name="InSeparateWindow" Russian="В отдельное окно"/>
-    <Local Name="Founded" Russian="Найдено"/>
+    <Local Name="Founded" Russian="Найдено: %d"/>
     <Local Name="CalendarCloseEvent" Russian="Завершить событие"/>
-    <Local Name="SelectDate" Russian="Выберите дату"/>
+    <Local Name="SelectDate" Russian="Выберите дату:"/>
     <Local Name="PasswordManagement" Russian="Управление паролем"/>
     <Local Name="PasswordReset" Russian="Сброс пароля"/>
     <Local Name="UserPasswordForm.Title.Creating" Russian="Создание логина и пароля"/>
     <Local Name="UserPasswordForm.Title.Change" Russian="Изменение логина и пароля"/>
     <Local Name="UserPasswordForm.CurrentPassword" Russian="Текущий пароль:"/>
+    <Local Name="UserPasswordForm.User" Russian="Пользователь: %s"/>
     <Local Name="UserPasswordForm.Password" Russian="Пароль:"/>
     <Local Name="UserPasswordForm.PasswordCheck" Russian="Повторите пароль:"/>
     <Local Name="UserPasswordForm.CreatedPassword" Russian="Пароль был успешно установлен."/>
     <Local Name="UserPasswordForm.EditedPassword" Russian="Пароль был успешно изменён."/>
-    <Local Name="EnterThePassword" Russian="Введите пароль"/>
+    <Local Name="EnterThePassword" Russian="Введите пароль:"/>
     <Local Name="InputInSystem" Russian="Вход в систему"/>
-    <Local Name="InputLoginAndPassword" Russian="Введите логин и пароль"/>
+    <Local Name="InputLoginAndPassword" Russian="Введите логин и пароль:"/>
     <Local Name="Send" Russian="Отправить"/>
-    <Local Name="SelectedRecords" Russian="Выбрано записей: %1"/>
-    <Local Name="Age" Russian="Возраст"/>
+    <Local Name="SelectedRecords" Russian="Выбрано записей: %d"/>
+    <Local Name="Age" Russian="Возраст: %d"/>
     <Local Name="AgeNotSelected" Russian="Не указан"/>
     <Local Name="TimeAlert" Russian="Время уведомления"/>
     <Local Name="EnteringSearchQuery" Russian="Введите поисковый запрос"/>
@@ -251,7 +252,7 @@
     <Local Name="Renaming" Russian="Переименование"/>
     <Local Name="SelectDialog.Title.Single" Russian="Выберите одну запись из списка ниже"/>
     <Local Name="SelectDialog.Title.Multi" Russian="Выберите несколько записей из списка ниже"/>
-    <Local Name="ImageSize" Russian="Размер изображения"/>
+    <Local Name="ImageSize" Russian="Размер изображения: %d X %d"/>
     <Local Name="RememberMe" Russian="Запомнить меня"/>
     <Local Name="RememberMe.ToolTip" Russian="Программа не запоминает пароль в целях безопастности."/>
     <Local Name="InsertingFiles" Russian="Добавление файла(ов)..."/>
@@ -261,10 +262,12 @@
     <Local Name="SaveToDisk" Russian="Сохранить на диск"/>
     <Local Name="You" Russian="Вы"/>
     <Local Name="TcpConnector.Timeout" Russian="Время на ожидание подключения истекло."/>
+    <Local Name="ISCalendarPopup.Today" Russian="Сегодня: %s"/>
+    <Local Name="ISCalendarEventItem.Note" Russian="Примечание:&#10;%s"/>
 
     <!--Access rights-->
     <Local Name="AccessRights" Russian="Права доступа"/>
-    <Local Name="AccessRights.SettingAcceessFromGroup" Russian="Настрока прав для группы: %1"/>
+    <Local Name="AccessRights.SettingAcceessFromGroup" Russian="Настрока прав для группы: %s"/>
     <Local Name="AccessRights.ClickedToGiveAccessFromSubSystem" Russian="Нажмите, чтобы добавить или удалить право доступа к подсистеме."/>
     <Local Name="AccessRights.SubSystems" Russian="Интерфейс"/>
     <Local Name="AccessRights.Tables" Russian="Таблицы"/>
@@ -282,14 +285,14 @@
     <Local Name="Export.Error.NoError" Russian="Ошибок нет"/>
     <Local Name="Export.Error.Prepare" Russian="При подготовке экспорта произошла ошибка."/>
     <Local Name="Export.Error.Export" Russian="В процессе экспорта произошла ошибка."/>
-    <Local Name="Export.Completed" Russian="Экспорт таблицы &quot;%1&quot; в &quot;%2&quot; успешно завершен!"/>
+    <Local Name="Export.Completed" Russian="Экспорт таблицы &quot;%s&quot; в &quot;%s&quot; успешно завершен!"/>
     <Local Name="Export.Fields" Russian="Экспортируемые поля"/>
     <Local Name="Export.Settings" Russian="Параметры экспорта"/>
     <Local Name="Export.NotSelectedFields" Russian="Выберите хотя бы одно поле для экспорта!"/>
     <Local Name="Export.NoData" Russian="Данных нет! Экспорт невозможен."/>
     <Local Name="Export.Setting.Header" Russian="Заголовки колонок"/>
     <Local Name="Export.Process.Prepare" Russian="Подготовка..."/>
-    <Local Name="Export.Process.Process" Russian="Экспортировано %1 из %2..."/>
+    <Local Name="Export.Process.Process" Russian="Экспортировано %d из %d..."/>
 
     <Local Name="ThisActionCanNotUndone" Russian="Это действие нельзя отменить."/>
     <Local Name="ClickToViewHelp" Russian="Нажмите, чтобы просмотреть дополнительную информацию."/>
@@ -312,7 +315,7 @@
     <Local Name="NoAdministratorRights" Russian="Недостаточно прав, запустите программу от имени администратора."/>
     <Local Name="FullSearchTextNotResult" Russian="Полнотекстовый поиск не дал результатов."/>
     <Local Name="ClickFromSelectFile" Russian="Нажмите, чтобы выбрать файл"/>
-    <Local Name="EnterFileName" Russian="Введите имя файла"/>
+    <Local Name="EnterFileName" Russian="Введите имя файла:"/>
     <Local Name="PasswordResetDone" Russian="Пароль был успешно сброшен"/>
     <Local Name="ThisActionIsNotReversible" Russian="Это действие не обратимо."/>
     <Local Name="ReconnectingDone" Russian="Связь с сервером восстановлена!"/>
@@ -328,8 +331,8 @@
     <!--ReconnectForm-->
     <Local Name="ReconnectForm.Title" Russian="Восстановление связи"/>
     <Local Name="ReconnectForm.Info" Russian="Подключение прервано. Повторное соединение с сервером..."/>
-    <Local Name="ReconnectForm.DateTime" Russian="Обрыв связи: %1"/>
-    <Local Name="ReconnectForm.Attempts" Russian="Попыток подключения: %1"/>
+    <Local Name="ReconnectForm.DateTime" Russian="Обрыв связи: %s"/>
+    <Local Name="ReconnectForm.Attempts" Russian="Попыток подключения: %d"/>
 
     <!--Search-->
     <Local Name="Search" Russian="Поиск"/>
@@ -344,14 +347,14 @@
     <Local Name="Search.Operator.Less" Russian="Меньше"/>
     <Local Name="Search.Operator.MoreOrEqual" Russian="Больше или равно"/>
     <Local Name="Search.Operator.LessOrEqual" Russian="Меньше или равно"/>
-    <Local Name="Search.ResultCount" Russian="Найдено записей"/>
+    <Local Name="Search.ResultCount" Russian="Найдено записей: %d"/>
     <Local Name="Search.EmptyResult" Russian="Поисковый запрос не дал результатов"/>
 
     <!--NotificationForm-->
-    <Local Name="NotificationForm.Title.Created" Russian="Создана запись"/>
-    <Local Name="NotificationForm.Title.CreatedCopy" Russian="Создана копия записи"/>
-    <Local Name="NotificationForm.Title.Edited" Russian="Запись изменена"/>
-    <Local Name="NotificationForm.Title.Deleted" Russian="Запись с кодом %1 успешно удалена"/>
+    <Local Name="NotificationForm.Title.Created" Russian="Создана запись - %s:%s"/>
+    <Local Name="NotificationForm.Title.CreatedCopy" Russian="Создана копия записи - %s:%s"/>
+    <Local Name="NotificationForm.Title.Edited" Russian="Запись изменена - %s:%s"/>
+    <Local Name="NotificationForm.Title.Deleted" Russian="Запись с кодом %d успешно удалена"/>
     <Local Name="NotificationForm.Title.Deleteds" Russian="Выбраннеые записи успешно удалены"/>
 
     <!--Settings-->
@@ -390,7 +393,7 @@
     <Local Name="File.Filter.Html" Russian="Веб-страница (*.html)"/>
     <Local Name="File.Filter.Xml" Russian="Язык разметки (*.xml)"/>
     <Local Name="File.Filter.Json" Russian="Формат обмена данными (*.json)"/>
-    <Local Name="File.Filter.File" Russian="Файл (*.%1)"/>
+    <Local Name="File.Filter.File" Russian="Файл (*.%s)"/>
 
     <!--Calendar-->
     <Local Name="Date" Russian="Дата"/>
@@ -462,7 +465,7 @@
     <Local Name="AudioPlayer.Stop" Russian="Остановить"/>
     <Local Name="AudioPlayer.Position.Back" Russian="Промотать назад"/>
     <Local Name="AudioPlayer.Position.Forward" Russian="Промотать вперед"/>
-    <Local Name="AudioPlayer.Volume" Russian="Громкость: %1%"/>
+    <Local Name="AudioPlayer.Volume" Russian="Громкость: %d%"/>
     <Local Name="AudioPlayer.Mute.Enabled" Russian="Звук"/>
     <Local Name="AudioPlayer.Mute.Disabled" Russian="Без звука"/>
 
@@ -479,6 +482,11 @@
     <Local Name="ISMonitorUserWidget.Port" Russian="Порт:"/>
     <Local Name="ISMonitorUserWidget.DateTimeConnected" Russian="Дата и время подключения:"/>
     <Local Name="ISMonitorUserWidget.DateTimeLastQuery" Russian="Дата и время последнего запроса:"/>
+
+    <!--ISConnectDialog-->
+    <Local Name="ISConnectDialog.Title" Russian="Настройки подключения"/>
+    <Local Name="ISConnectDialog.Server" Russian="Сервер:"/>
+    <Local Name="ISConnectDialog.Port" Russian="Порт:"/>
 
     <!--Reduction (сокращения)-->
     <Local Name="Reduction.SerialNumber" Russian="п/п"/>
@@ -513,8 +521,6 @@
     <Local Name="Login" Russian="Логин"/>
     <Local Name="Password" Russian="Пароль"/>
     <Local Name="Error" Russian="Ошибка"/>
-    <Local Name="Server" Russian="Сервер"/>
-    <Local Name="Port" Russian="Порт"/>
     <Local Name="Information" Russian="Информация"/>
     <Local Name="Warning" Russian="Предупреждение"/>
     <Local Name="Question" Russian="Вопрос"/>
@@ -541,11 +547,12 @@
     <Local Name="AutoFillField" Russian="Уникальный код записи. Это поле заполняется автоматически после создания записи."/>
     <Local Name="CancelChanged" Russian="Отменить изменения"/>
     <Local Name="OrdinalNumber" Russian="Порядковый номер"/>
-    <Local Name="FileName" Russian="Имя файла"/>
+    <Local Name="FileName" Russian="Имя файла:"/>
     <Local Name="Overview" Russian="Обзор..."/>
     <Local Name="Hide" Russian="Скрыть"/>
     <Local Name="SearchFromINN" Russian="Поиск по ИНН"/>
     <Local Name="Select" Russian="Выбрать"/>
+    <Local Name="SelectN" Russian="Выбрать (%d)"/>
     <Local Name="SelectAll" Russian="Выбрать все"/>
     <Local Name="Update" Russian="Обновить"/>
     <Local Name="MainMenu" Russian="Главное меню"/>
@@ -556,7 +563,7 @@
     <Local Name="FitToWindow" Russian="Подогнать"/>
     <Local Name="PleaseWait" Russian="Пожалуйста, подождите..."/>
     <Local Name="NoteObject" Russian="Примечание записи"/>
-    <Local Name="InputNote" Russian="Введите примечание"/>
+    <Local Name="InputNote" Russian="Введите примечание:"/>
     <Local Name="ExitApplication" Russian="Выход из программы"/>
     <Local Name="SettingsUser" Russian="Настройки пользователя"/>
     <Local Name="PlayRecordCall" Russian="Воспроизвести запись разговора"/>

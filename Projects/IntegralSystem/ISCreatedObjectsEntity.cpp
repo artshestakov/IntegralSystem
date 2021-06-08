@@ -1,6 +1,6 @@
 #include "ISCreatedObjectsEntity.h"
 #include "ISDialogsCommon.h"
-#include "ISLocalizationOld.h"
+#include "ISLocalization.h"
 #include "ISInterfaceForm.h"
 #include "ISGui.h"
 #include "ISConstantsGui.h"
@@ -65,7 +65,7 @@ bool ISCreatedObjectsEntity::CheckExistForms()
         DetailedText.chop(2);
         DetailedText += SYMBOL_POINT;
 
-        ISMessageBox MessageBox(QMessageBox::Warning, LANG("Warning"), LANG("Message.Information.NotSavedObjects").arg(CountNotSaved), QString(), { { 1, "OK" } });
+        ISMessageBox MessageBox(QMessageBox::Warning, LANG("Warning"), ISAlgorithm::CStringF(LANG("Message.Information.NotSavedObjects"), CountNotSaved), QString(), { { 1, "OK" } });
         MessageBox.setInformativeText(DetailedText);
         MessageBox.Exec();
     }

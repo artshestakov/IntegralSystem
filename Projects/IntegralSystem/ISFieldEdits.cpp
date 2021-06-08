@@ -1,5 +1,5 @@
 #include "ISFieldEdits.h"
-#include "ISLocalizationOld.h"
+#include "ISLocalization.h"
 #include "ISBuffer.h"
 #include "ISDialogsCommon.h"
 #include "ISGui.h"
@@ -931,11 +931,11 @@ void ISBirthdayEdit::UpdateLabel(const QDate &Date)
         {
             --Age;
         }
-        Label->setText(LANG("Age") + ": " + QString::number(Age));
+        Label->setText(ISAlgorithm::CStringF(LANG("Age"), Age));
     }
     else
     {
-        Label->setText(LANG("Age") + ": " + LANG("AgeNotSelected"));
+        Label->setText(LANG("AgeNotSelected"));
     }
 }
 //-----------------------------------------------------------------------------
@@ -1050,7 +1050,8 @@ void ISPathEditDir::OpenDir()
 {
     if (!ISGui::OpenFolder(GetValue().toString()))
     {
-        ISMessageBox::ShowWarning(this, LANG("Message.Error.ErrorOpenedFolderPath").arg(GetValue().toString()));
+        ISMessageBox::ShowWarning(this, ISAlgorithm::CStringF(LANG("Message.Error.ErrorOpenedFolderPath"),
+            GetValue().toString().toStdString().c_str()));
     }
 }
 //-----------------------------------------------------------------------------
@@ -1128,7 +1129,7 @@ void ISUrlEdit::OpenUrl()
         }
         else
         {
-            ISMessageBox::ShowWarning(nullptr, LANG("Message.Warning.OpenUrl.Failed").arg(UrlString));
+            ISMessageBox::ShowWarning(nullptr, ISAlgorithm::CStringF(LANG("Message.Warning.OpenUrl.Failed"), UrlString.toStdString().c_str()));
         }
     }
     else
@@ -1621,7 +1622,8 @@ void ISFileEdit::SelectFile()
         QFile File(FilePath);
         if (File.size() > (((1000 * 1024) * SETTING_DATABASE_VALUE_INT(CONST_UID_DATABASE_SETTING_OTHER_STORAGEFILEMAXSIZE))))
         {
-            ISMessageBox::ShowWarning(this, LANG("Message.Warning.InsertingFileSizeVeryBig").arg(FileInfo.fileName()).arg(SETTING_DATABASE_VALUE_INT(CONST_UID_DATABASE_SETTING_OTHER_STORAGEFILEMAXSIZE)));
+            //???
+            ISMessageBox::ShowWarning(this, LANG("Message.Warning.InsertingFileSizeVeryBig")/*.arg(FileInfo.fileName()).arg(SETTING_DATABASE_VALUE_INT(CONST_UID_DATABASE_SETTING_OTHER_STORAGEFILEMAXSIZE))*/);
             return;
         }
 
@@ -1643,14 +1645,16 @@ void ISFileEdit::SelectFile()
         }
         else
         {
-            ISMessageBox::ShowCritical(this, LANG("Message.Error.NotOpenedFile").arg(FileInfo.fileName()), File.errorString());
+            ISMessageBox::ShowCritical(this, ISAlgorithm::CStringF(LANG("Message.Error.NotOpenedFile"), FileInfo.fileName().toStdString().c_str()), File.errorString());
         }
     }
 }
 //-----------------------------------------------------------------------------
 void ISFileEdit::Save()
 {
-    QString FilePath = ISFileDialog::GetSaveFileName(this, LANG("File.Filter.File").arg(QFileInfo(VariantMap[FILE_EDIT_PROPERTY_NAME].toString()).suffix()), QFileInfo(VariantMap[FILE_EDIT_PROPERTY_NAME].toString()).baseName());
+    QString FilePath = ISFileDialog::GetSaveFileName(this, ISAlgorithm::CStringF(LANG("File.Filter.File"),
+        QFileInfo(VariantMap[FILE_EDIT_PROPERTY_NAME].toString()).suffix().toStdString().c_str()),
+        QFileInfo(VariantMap[FILE_EDIT_PROPERTY_NAME].toString()).baseName());
     if (!FilePath.isEmpty())
     {
         QFile File(FilePath);
@@ -1663,13 +1667,13 @@ void ISFileEdit::Save()
             {
                 if (!ISGui::OpenFile(FilePath))
                 {
-                    ISMessageBox::ShowCritical(this, LANG("Message.Error.NotOpenedFile").arg(FilePath));
+                    ISMessageBox::ShowCritical(this, ISAlgorithm::CStringF(LANG("Message.Error.NotOpenedFile"), FilePath.toStdString().c_str()));
                 }
             }
         }
         else
         {
-            ISMessageBox::ShowCritical(this, LANG("Message.Error.NotOpenedFile").arg(File.fileName()), File.errorString());
+            ISMessageBox::ShowCritical(this, ISAlgorithm::CStringF(LANG("Message.Error.NotOpenedFile"), File.fileName().toStdString().c_str()), File.errorString());
         }
     }
 }
@@ -1677,7 +1681,7 @@ void ISFileEdit::Save()
 void ISFileEdit::Rename()
 {
     QFileInfo FileInfo(VariantMap[FILE_EDIT_PROPERTY_NAME].toString());
-    QString FileName = ISInputDialog::GetString(LANG("Renaming"), LANG("EnterFileName") + ':', FileInfo.baseName());
+    QString FileName = ISInputDialog::GetString(LANG("Renaming"), LANG("EnterFileName"), FileInfo.baseName());
     if (!FileName.isEmpty())
     {
         FileName += SYMBOL_POINT + FileInfo.suffix();
@@ -1954,7 +1958,7 @@ void ISListEditPopup::Search(const QVariant &value)
             ListWidget->setCurrentItem(ListWidgetItem);
         }
         LabelSearch->setVisible(true);
-        LabelSearch->setText(LANG("Founded") + ": " + QString::number(Founded));
+        LabelSearch->setText(ISAlgorithm::CStringF(LANG("Founded"), Founded));
     }
     ISGui::SetWaitGlobalCursor(false);
 }
@@ -2007,7 +2011,7 @@ void ISListEditPopup::LoadDataFromQuery()
             CurrentItem->setFont(FONT_APPLICATION_BOLD);
             CurrentItem->setSelected(true);
         }
-        LabelCountRow->setText(LANG("RecordsCount") + ": " + QString::number(ListWidget->count()));
+        LabelCountRow->setText(ISAlgorithm::CStringF(LANG("RecordsCount"), ListWidget->count()));
         LabelEmpty->setVisible(!ListWidget->count());
     }
     else
@@ -2230,7 +2234,7 @@ void ISListEdit::CreateObject()
     }
     else
     {
-        ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.Create").arg(MetaTable->LocalListName));
+        ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.Create"));
     }
 }
 //-----------------------------------------------------------------------------
@@ -2244,7 +2248,7 @@ void ISListEdit::EditObject()
     }
     else
     {
-        ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.Edit").arg(MetaTable->LocalListName));
+        ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.Edit"));
     }
 }
 //-----------------------------------------------------------------------------

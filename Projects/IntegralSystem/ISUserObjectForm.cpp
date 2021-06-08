@@ -1,6 +1,6 @@
 #include "ISUserObjectForm.h"
 #include "ISControls.h"
-#include "ISLocalizationOld.h"
+#include "ISLocalization.h"
 #include "ISDialogsCommon.h"
 #include "ISGui.h"
 #include "ISTcpQuery.h"

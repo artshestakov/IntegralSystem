@@ -1,6 +1,6 @@
 #include "ISMenuBar.h"
 #include "ISBuffer.h"
-#include "ISLocalizationOld.h"
+#include "ISLocalization.h"
 #include "ISSettings.h"
 #include "ISParagraphEntity.h"
 #include "ISUserRoleEntity.h"

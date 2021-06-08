@@ -32,15 +32,24 @@ const std::string& ISLocalization::GetErrorString() const
     return ErrorString;
 }
 //-----------------------------------------------------------------------------
-bool ISLocalization::Init(const std::string &FileName)
+bool ISLocalization::InitFile(const std::string &FileName)
 {
     //Получаем содержимое файла
     unsigned long FileSize = 0;
     const char *Data = ISResourcer::Instance().GetFile(ISAlgorithm::StringF("Localization/%s.lang", FileName.c_str()), FileSize);
-
-    //Парсим
+    return Init(Data, (size_t)FileSize);
+}
+//-----------------------------------------------------------------------------
+bool ISLocalization::InitContent(const char *Content)
+{
+    return Init(Content, strlen(Content));
+}
+//-----------------------------------------------------------------------------
+bool ISLocalization::Init(const char *Data, size_t Size)
+{
+    //Парсим 
     tinyxml2::XMLDocument XmlDocument;
-    tinyxml2::XMLError Error = XmlDocument.Parse(Data, FileSize);
+    tinyxml2::XMLError Error = XmlDocument.Parse(Data, Size);
     if (Error != tinyxml2::XMLError::XML_SUCCESS)
     {
         ErrorString = XmlDocument.ErrorStr();

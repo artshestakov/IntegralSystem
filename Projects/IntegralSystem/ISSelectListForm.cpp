@@ -1,5 +1,5 @@
 #include "ISSelectListForm.h"
-#include "ISLocalizationOld.h"
+#include "ISLocalization.h"
 #include "ISBuffer.h"
 //-----------------------------------------------------------------------------
 ISSelectListForm::ISSelectListForm(ISNamespace::SelectListMode select_mode, const QString &table_name, QWidget *parent)
@@ -56,7 +56,7 @@ void ISSelectListForm::SelectedRowEvent(const QItemSelection &ItemSelected, cons
 
     if (SelectMode == ISNamespace::SelectListMode::Multi)
     {
-        ActionSelect->setText(LANG("Select") + SelectedRows > 0 ? " (" + QString::number(SelectedRows) + ')' : QString());
+        ActionSelect->setText(SelectedRows > 0 ? LANG("Select") : ISAlgorithm::CStringF(LANG("SelectN"), SelectedRows));
     }
 }
 //-----------------------------------------------------------------------------

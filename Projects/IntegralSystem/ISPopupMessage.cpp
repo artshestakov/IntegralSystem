@@ -1,5 +1,5 @@
 #include "ISPopupMessage.h"
-#include "ISLocalizationOld.h"
+#include "ISLocalization.h"
 #include "ISGui.h"
 #include "ISBuffer.h"
 #include "ISConstantsGui.h"

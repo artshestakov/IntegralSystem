@@ -1,7 +1,7 @@
 #include "ISListBaseForm.h"
 #include "ISAssert.h"
 #include "ISSettings.h"
-#include "ISLocalizationOld.h"
+#include "ISLocalization.h"
 #include "ISPopupMessage.h"
 #include "ISProgressForm.h"
 #include "ISProcessForm.h"
@@ -159,7 +159,7 @@ ISListBaseForm::ISListBaseForm(const QString &TableName, QWidget *parent)
         StatusBar->setSizeGripEnabled(false);
         GetMainLayout()->addWidget(StatusBar);
 
-        LabelRowCount = new QLabel(LANG("RecordsCount") + ": 0", StatusBar);
+        LabelRowCount = new QLabel(ISAlgorithm::CStringF(LANG("RecordsCount"), 0), StatusBar);
         LabelRowCount->setVisible(SETTING_BOOL(CONST_UID_SETTING_TABLES_SHOWCOUNTRECORD));
         StatusBar->addWidget(LabelRowCount);
 
@@ -376,7 +376,7 @@ void ISListBaseForm::SelectedRowEvent(const QItemSelection &ItemSelected, const 
     if (SelectedRows)
     {
         LabelSelectedRow->setVisible(true);
-        LabelSelectedRow->setText(LANG("SelectedRecords").arg(SelectedRows));
+        LabelSelectedRow->setText(ISAlgorithm::CStringF(LANG("SelectedRecords"), SelectedRows));
         CurrentColumnChanged(TableView->currentIndex(), QModelIndex());
     }
     else
@@ -397,7 +397,7 @@ void ISListBaseForm::CurrentColumnChanged(const QModelIndex &CurrentIndex, const
     if (TcpModel->GetSum(CurrentIndex.column(), Sum, Avg))
     {
         LabelSum->setVisible(true);
-        LabelSum->setText(LANG("ListForm.Column.Sum").arg(Sum).arg(Avg));
+        LabelSum->setText(ISAlgorithm::CStringF(LANG("ListForm.Column.Sum"), Sum, Avg));
     }
     else
     {
@@ -615,7 +615,7 @@ void ISListBaseForm::Create()
 {
     if (!ISUserRoleEntity::Instance().CheckAccessTable(MetaTableName, CONST_UID_GROUP_ACCESS_TYPE_CREATE))
     {
-        ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.Create").arg(TableLocalName));
+        ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.Create"));
         return;
     }
 
@@ -639,7 +639,7 @@ void ISListBaseForm::CreateCopy()
 
     if (!ISUserRoleEntity::Instance().CheckAccessTable(MetaTableName, CONST_UID_GROUP_ACCESS_TYPE_CREATE))
     {
-        ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.CreateCopy").arg(TableLocalName));
+        ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.CreateCopy"));
         return;
     }
 
@@ -745,7 +745,7 @@ bool ISListBaseForm::Update()
         }
         FieldResized(true);
 
-        LabelRowCount->setText(QString("%1: %2").arg(LANG("RecordsCount")).arg(TcpModel->rowCount()));
+        LabelRowCount->setText(ISAlgorithm::CStringF(LANG("RecordsCount"), TcpModel->rowCount()));
 
         if (!SETTING_BOOL(CONST_UID_SETTING_TABLE_VISIBLE_FIELD_ID))
         {
@@ -785,14 +785,14 @@ bool ISListBaseForm::Delete()
 {
     if (!ISUserRoleEntity::Instance().CheckAccessTable(MetaTableName, CONST_UID_GROUP_ACCESS_TYPE_DELETE))
     {
-        ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.Delete").arg(TableLocalName));
+        ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.Delete"));
         return false;
     }
 
     ISVectorUInt VectorInt = GetSelectedIDs();
     bool Result = VectorInt.size() == 1 ?
         ISMessageBox::ShowQuestion(this, LANG("Message.Object.Delete")) :
-        ISMessageBox::ShowQuestion(this, LANG("Message.Objects.Delete").arg(VectorInt.size()));
+        ISMessageBox::ShowQuestion(this, ISAlgorithm::CStringF(LANG("Message.Objects.Delete"), VectorInt.size()));
     if (Result) //ѕолучили подтверждение от пользовател€
     {
         QString ErrorString;
@@ -834,7 +834,7 @@ void ISListBaseForm::Export()
 {
     if (!ISUserRoleEntity::Instance().CheckAccessTable(MetaTableName, CONST_UID_GROUP_ACCESS_TYPE_EXPORT))
     {
-        ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.Export").arg(TableLocalName));
+        ISMessageBox::ShowWarning(this, LANG("Message.Warning.NotAccess.Export"));
         return;
     }
 
@@ -875,7 +875,8 @@ void ISListBaseForm::Export()
         {
             ProgressForm.close();
             //ISProtocol::Insert(CONST_UID_PROTOCOL_EXPORT_TABLE, MetaTableName, MetaTableLocalListName, QVariant(), ExportForm.GetSelectTypeName());
-            ISMessageBox::ShowInformation(this, LANG("Export.Completed").arg(TableLocalName).arg(ExportForm.GetSelectTypeName()));
+            ISMessageBox::ShowInformation(this, ISAlgorithm::CStringF(LANG("Export.Completed"),
+                TableLocalName.toStdString().c_str(), ExportForm.GetSelectTypeName().toStdString().c_str()));
         }
         else
         {

@@ -1,4 +1,4 @@
-#include "ISLocalizationOld.h"
+#include "ISLocalization.h"
 #include "ISGui.h"
 #include "ISSplashScreen.h"
 #include "ISMainWindow.h"
