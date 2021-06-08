@@ -1,5 +1,6 @@
 #include "ISAlgorithm.h"
 #include "ISConstants.h"
+#include "ISAssert.h"
 //-----------------------------------------------------------------------------
 char* ISAlgorithm::itoa(int64_t Value, char *Result, int Radix)
 {
@@ -501,10 +502,15 @@ bool ISAlgorithm::IsValidUUID(const std::string &UID)
         Temp.push_back('}');
     }
 
+#ifdef WIN32
     std::wstring WString(Temp.begin(), Temp.end());
     GUID guid = { 0 };
 
     return CLSIDFromString(WString.c_str(), (LPCLSID)&guid) == S_OK;
+#else
+    IS_ASSERT(false, "not support");
+    return false;
+#endif
 }
 //-----------------------------------------------------------------------------
 ISVectorString ISAlgorithm::ParseArgs(int argc, char **argv)

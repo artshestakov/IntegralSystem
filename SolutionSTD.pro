@@ -1,8 +1,8 @@
 TEMPLATE = subdirs
 CONFIG += ordered
 
-SUBDIRS += LibrarySTD/ISCore
-SUBDIRS += LibrarySTD/ISServer
+SUBDIRS += Library/ISCore
+SUBDIRS += Library/ISServer
 
-SUBDIRS += ProjectsSTD/Carat
-SUBDIRS += ProjectsSTD/Configurator
+SUBDIRS += Projects/Carat
+SUBDIRS += Projects/Configurator

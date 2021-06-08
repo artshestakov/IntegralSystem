@@ -15,12 +15,12 @@ unix {
     PLATFORM = Linux64
 }
 
-DESTDIR = $$PWD/../../BinSTD/$${CONFIGURATION}-$${PLATFORM}
+DESTDIR = $$PWD/../../Bin/$${CONFIGURATION}-$${PLATFORM}
 MOC_DIR = $$PWD/$${CONFIGURATION}-$${PLATFORM}/$${TARGET}
 OBJECTS_DIR = $$PWD/$${CONFIGURATION}-$${PLATFORM}/$${TARGET}
 
-INCLUDEPATH += $$PWD/../../LibrarySTD/ISCore
-INCLUDEPATH += $$PWD/../../LibrarySTD/ISServer
+INCLUDEPATH += $$PWD/../../Library/ISCore
+INCLUDEPATH += $$PWD/../../Library/ISServer
 INCLUDEPATH += $$PWD/../../
 INCLUDEPATH += $$PWD/../../Components/PostgreSQL/12.0.5/Include
 INCLUDEPATH += $$PWD/../../Components/RapidJSON
