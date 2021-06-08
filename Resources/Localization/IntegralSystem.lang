@@ -351,9 +351,9 @@
     <Local Name="Search.EmptyResult" Russian="Поисковый запрос не дал результатов"/>
 
     <!--NotificationForm-->
-    <Local Name="NotificationForm.Title.Created" Russian="Создана запись - %s:%s"/>
-    <Local Name="NotificationForm.Title.CreatedCopy" Russian="Создана копия записи - %s:%s"/>
-    <Local Name="NotificationForm.Title.Edited" Russian="Запись изменена - %s:%s"/>
+    <Local Name="NotificationForm.Title.Created" Russian="Создана запись - %s: %s"/>
+    <Local Name="NotificationForm.Title.CreatedCopy" Russian="Создана копия записи - %s: %s"/>
+    <Local Name="NotificationForm.Title.Edited" Russian="Запись изменена - %s: %s"/>
     <Local Name="NotificationForm.Title.Deleted" Russian="Запись с кодом %d успешно удалена"/>
     <Local Name="NotificationForm.Title.Deleteds" Russian="Выбраннеые записи успешно удалены"/>
 
