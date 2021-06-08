@@ -393,15 +393,21 @@ void ISListBaseForm::CurrentColumnChanged(const QModelIndex &CurrentIndex, const
 {
     Q_UNUSED(PreviousIndex);
 
-    QString Sum, Avg;
-    if (TcpModel->GetSum(CurrentIndex.column(), Sum, Avg))
+    LabelSum->setVisible(false);
+    if (!SumAvgList.isEmpty())
     {
-        LabelSum->setVisible(true);
-        LabelSum->setText(LANG_FMT("ListForm.Column.Sum", Sum, Avg));
-    }
-    else
-    {
-        LabelSum->setVisible(false);
+        for (const QVariant &Variant : SumAvgList)
+        {
+            QVariantMap VariantMap = Variant.toMap();
+            if (CurrentIndex.column() == VariantMap["FieldIndex"].toInt())
+            {
+                LabelSum->setVisible(true);
+                LabelSum->setText(LANG_FMT("ListForm.Column.Sum",
+                    VariantMap["Sum"].toString().toStdString().c_str(),
+                    VariantMap["Avg"].toString().toStdString().c_str()));
+                break;
+            }
+        }
     }
 }
 //-----------------------------------------------------------------------------
@@ -725,6 +731,7 @@ bool ISListBaseForm::Update()
         TableLocalName = ServiceInfo["TableLocalName"].toString();
         MetaTableShowOnly = ServiceInfo["TableShowOnly"].toBool();
         MetaTableTitleName = ServiceInfo["TableTitleName"].toString();
+        SumAvgList = AnswerMap["SumAvg"].toList();
         TcpModel->SetSorting(SortingField, SortingOrder);
 
         //Устанавливаем индикатор сортировки

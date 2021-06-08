@@ -102,6 +102,7 @@ private:
     PMetaTable *MetaTable;
     QString MetaTableName;
     QString TableLocalName;
+    QVariantList SumAvgList;
     bool MetaTableShowOnly;
     QString MetaTableTitleName;
     ISTcpQueryTable *TcpQuery;

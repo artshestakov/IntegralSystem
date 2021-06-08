@@ -2827,11 +2827,13 @@ bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
         return ErrorQuery(LANG("Carat.Error.Query.GetTableData.Select"), qSelect);
     }
 
-    int FieldCount = qSelect.GetResultColumnCount();
+    int FieldCount = qSelect.GetResultColumnCount(),
+        RecordCount = qSelect.GetResultRowCount();
     rapidjson::Value FieldArray(rapidjson::Type::kArrayType),
         RecordArray(rapidjson::Type::kArrayType);
     std::vector<ISNamespace::FieldType> VectorType(FieldCount, ISNamespace::FieldType::Unknown);
     std::vector<bool> VectorForeign(FieldCount, false);
+    std::map<int, double> MapSum; //Карта для подсчёта суммы дробных и денежных полей
 
     //Заполняем описание полей
     for (int i = 0; i < FieldCount; ++i)
@@ -2850,19 +2852,21 @@ bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
         FieldArray.PushBack(FieldObject, Allocator);
     }
 
+    //Получаем необходимые настройки БД
+    unsigned int Precision = std::atoi(ISTcpWorkerHelper::GetSettingDB(DBConnection, CONST_UID_DATABASE_SETTING_OTHER_NUMBERSIMBOLSAFTERCOMMA));
+
     if (qSelect.First()) //Данные есть
     {
-        //Получаем необходимые настройки БД
-        unsigned int Precision = std::atoi(ISTcpWorkerHelper::GetSettingDB(DBConnection, CONST_UID_DATABASE_SETTING_OTHER_NUMBERSIMBOLSAFTERCOMMA));
-        
+        ISNamespace::FieldType Type = ISNamespace::FieldType::Unknown;
+        bool IsForeign = false;
         do
         {
             rapidjson::Value Values(rapidjson::Type::kArrayType); //Список значений
             for (int i = 0; i < FieldCount; ++i) //Обходим поля и вытаскиваем значения
             {
                 //Получаем тип поля и наличие внешнего ключа
-                ISNamespace::FieldType Type = VectorType[i];
-                bool IsForeign = VectorForeign[i];
+                Type = VectorType[i];
+                IsForeign = VectorForeign[i];
 
                 //Если значение содержит NULL - добавляем пустое и переходим к следующему
                 if (qSelect.IsNull(i))
@@ -2962,15 +2966,19 @@ bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
                 }
                 else if (Type == ISNamespace::FieldType::Double)
                 {
-                    std::string String = ISAlgorithm::FormatNumber(qSelect.ReadColumn_Double(i), ' ', Precision);
+                    double Double = qSelect.ReadColumn_Double(i);
+                    std::string String = ISAlgorithm::FormatNumber(Double, ' ', Precision);
                     const char *CString = String.c_str();
                     Values.PushBack(JSON_STRINGA(CString, Allocator), Allocator);
+                    MapSum[i] += Double;
                 }
                 else if (Type == ISNamespace::FieldType::Money)
                 {
-                    std::string String = ISAlgorithm::FormatNumber(qSelect.ReadColumn_Double(i), ' ', 2);
+                    double Money = qSelect.ReadColumn_Double(i);
+                    std::string String = ISAlgorithm::FormatNumber(Money, ' ', 2);
                     const char *SString = String.c_str();
                     Values.PushBack(JSON_STRINGA(SString, Allocator), Allocator);
+                    MapSum[i] += Money;
                 }
                 else if (Type == ISNamespace::FieldType::UID)
                 {
@@ -2986,7 +2994,38 @@ bool ISTcpWorker::GetTableData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
             RecordArray.PushBack(Values, Allocator); //Добавляем список значений в список записей
         } while (qSelect.Next()); //Обходим выборку	
     }
+
+    //Обойдём суммы дробных полей
+    rapidjson::Value SumAvgArray(rapidjson::Type::kArrayType);
+    for (const auto &MapItem : MapSum)
+    {
+        int FieldIndex = MapItem.first;
+        double Sum = MapItem.second,
+            Avg = Sum / (double)RecordCount;
+
+        std::string StringSum, StringAvg;
+        switch (VectorType[FieldIndex])
+        {
+        case ISNamespace::FieldType::Double:
+            StringSum = ISAlgorithm::FormatNumber(Sum, ' ', Precision);
+            StringAvg = ISAlgorithm::FormatNumber(Avg, ' ', Precision);
+            break;
+
+        case ISNamespace::FieldType::Money:
+            StringSum = ISAlgorithm::FormatNumber(Sum, ' ', 2);
+            StringAvg = ISAlgorithm::FormatNumber(Avg, ' ', 2);
+            break;
+        }
+        rapidjson::Value SumAvgObject(rapidjson::Type::kObjectType);
+        SumAvgObject.AddMember("FieldIndex", FieldIndex, Allocator);
+        SumAvgObject.AddMember("Sum", JSON_STRINGA(StringSum.c_str(), Allocator), Allocator);
+        SumAvgObject.AddMember("Avg", JSON_STRINGA(StringAvg.c_str(), Allocator), Allocator);
+        SumAvgArray.PushBack(SumAvgObject, Allocator);
+    }
+
+    //Добавим результаты в ответ
     TcpAnswer->Parameters.AddMember("ServiceInfo", ServiceInfoObject, Allocator);
+    TcpAnswer->Parameters.AddMember("SumAvg", SumAvgArray, Allocator);
     TcpAnswer->Parameters.AddMember("FieldList", FieldArray, Allocator);
     TcpAnswer->Parameters.AddMember("RecordList", RecordArray, Allocator);
     Protocol(TcpMessage->TcpClient->UserID, IsSearch ? CONST_UID_PROTOCOL_SEARCH : CONST_UID_PROTOCOL_GET_TABLE_DATA, MetaTable->Name, MetaTable->LocalListName);

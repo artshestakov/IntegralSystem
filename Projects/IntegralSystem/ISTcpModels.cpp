@@ -144,43 +144,6 @@ ISModelField ISTcpModel::GetField(unsigned int Index)
     return Fields[Index];
 }
 //-----------------------------------------------------------------------------
-bool ISTcpModel::GetSum(int ColumnIndex, QString &Sum, QString &Avg)
-{
-    const ISModelField &Field = Fields[ColumnIndex];
-    if (Field.IsForeign) //Если поле является внешним ключом - выходим
-    {
-        return false;
-    }
-
-    if (Field.Type == ISNamespace::FieldType::Double ||
-        Field.Type == ISNamespace::FieldType::Money)
-    {
-        double Double = 0;
-        for (size_t i = 0, c = rowCount(); i < c; ++i)
-        {
-            Double += Records[i].Values[ColumnIndex].toString().remove(' ').toDouble();
-        }
-        Sum = Field.Type == ISNamespace::FieldType::Double ?
-            DOUBLE_PREPARE(Double) : DOUBLE_PREPAREM(Double);
-        Avg = DOUBLE_PREPARE(Double / rowCount());
-        return true;
-    }
-    else if (Field.Type == ISNamespace::FieldType::BigInt ||
-        Field.Type == ISNamespace::FieldType::Int ||
-        Field.Type == ISNamespace::FieldType::Seconds)
-    {
-        int Integer = 0;
-        for (size_t i = 0, c = rowCount(); i < c; ++i)
-        {
-            Integer += Records[i].Values[ColumnIndex].toString().remove(' ').toInt();
-        }
-        Sum = QString::number(Integer);
-        Avg = DOUBLE_PREPARE(Integer / rowCount());
-        return true;
-    }
-    return false;
-}
-//-----------------------------------------------------------------------------
 QVariant ISTcpModel::data(const QModelIndex &ModelIndex, int Role) const
 {
     if (!ModelIndex.isValid())

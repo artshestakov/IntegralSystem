@@ -895,7 +895,13 @@ std::string ISAlgorithm::FormatNumber(double Number, char Separator, unsigned in
     
     char RightPart[16] = { 0 }; //ѕрава€ часть дроби
     size_t RightPartSize = 0;
-    ISAlgorithm::itoa((int64_t)((Number - ValueLeft) * Factor), RightPart, 10, RightPartSize);
+
+    int64_t Value = (int64_t)((Number - ValueLeft) * Factor);
+    if (Value < 0) //ѕрава€ часть дроби не может быть отрицательной
+    {
+        Value = -Value;
+    }
+    ISAlgorithm::itoa(Value, RightPart, 10, RightPartSize);
     
     //”бираем возможные нули и точку в конце правой части
     while (RightPart[RightPartSize - 1] == '0' ||
