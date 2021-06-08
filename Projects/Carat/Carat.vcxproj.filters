@@ -105,7 +105,6 @@
     <ClInclude Include="ISCrashDumper.h">
       <Filter>StackWalker</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\ISRevision.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Carat.rc">

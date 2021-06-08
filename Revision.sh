@@ -1,5 +1,7 @@
 #!/bin/bash
 
+ECHO Generate "ISRevision.h"...
+
 SOLUTION_DIR=$1
 CONFIGURATION=$2
 PLATFORM=$3

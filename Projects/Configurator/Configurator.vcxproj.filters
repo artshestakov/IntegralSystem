@@ -71,6 +71,5 @@
     <ClInclude Include="CGConfiguratorUpdate.h">
       <Filter>Command</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\ISRevision.h" />
   </ItemGroup>
 </Project>

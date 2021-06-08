@@ -14,9 +14,6 @@
     <Filter Include="Types">
       <UniqueIdentifier>{43461daf-7215-41a1-b40f-af9b621c91a9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Tcp">
-      <UniqueIdentifier>{0b2239ea-2157-4d19-8aa7-7ca122a6a516}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="StdAfx.cpp">
@@ -119,6 +116,9 @@
     </ClInclude>
     <ClInclude Include="ISLogger.h">
       <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ISRevision.h">
+      <Filter>Types</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

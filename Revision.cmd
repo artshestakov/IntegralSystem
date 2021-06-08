@@ -1,5 +1,7 @@
 @ECHO off
 
+ECHO Generate "ISRevision.h"...
+
 SET SOLTION_DIR=%1
 SET CONFIGURATION=%2
 SET PLATFORM=%3

@@ -348,7 +348,6 @@
     <ClInclude Include="ISTcpQuery.h">
       <Filter>Protocol</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\ISRevision.h" />
     <ClInclude Include="ISConstantsGui.h">
       <Filter>System</Filter>
     </ClInclude>
