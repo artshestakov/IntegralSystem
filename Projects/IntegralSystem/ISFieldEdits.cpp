@@ -931,7 +931,7 @@ void ISBirthdayEdit::UpdateLabel(const QDate &Date)
         {
             --Age;
         }
-        Label->setText(ISAlgorithm::CStringF(LANG("Age"), Age));
+        Label->setText(LANG_FMT("Age", Age));
     }
     else
     {
@@ -1050,7 +1050,7 @@ void ISPathEditDir::OpenDir()
 {
     if (!ISGui::OpenFolder(GetValue().toString()))
     {
-        ISMessageBox::ShowWarning(this, ISAlgorithm::CStringF(LANG("Message.Error.ErrorOpenedFolderPath"),
+        ISMessageBox::ShowWarning(this, LANG_FMT("Message.Error.ErrorOpenedFolderPath",
             GetValue().toString().toStdString().c_str()));
     }
 }
@@ -1129,7 +1129,7 @@ void ISUrlEdit::OpenUrl()
         }
         else
         {
-            ISMessageBox::ShowWarning(nullptr, ISAlgorithm::CStringF(LANG("Message.Warning.OpenUrl.Failed"), UrlString.toStdString().c_str()));
+            ISMessageBox::ShowWarning(nullptr, LANG_FMT("Message.Warning.OpenUrl.Failed", UrlString.toStdString().c_str()));
         }
     }
     else
@@ -1645,14 +1645,14 @@ void ISFileEdit::SelectFile()
         }
         else
         {
-            ISMessageBox::ShowCritical(this, ISAlgorithm::CStringF(LANG("Message.Error.NotOpenedFile"), FileInfo.fileName().toStdString().c_str()), File.errorString());
+            ISMessageBox::ShowCritical(this, LANG_FMT("Message.Error.NotOpenedFile", FileInfo.fileName().toStdString().c_str()), File.errorString());
         }
     }
 }
 //-----------------------------------------------------------------------------
 void ISFileEdit::Save()
 {
-    QString FilePath = ISFileDialog::GetSaveFileName(this, ISAlgorithm::CStringF(LANG("File.Filter.File"),
+    QString FilePath = ISFileDialog::GetSaveFileName(this, LANG_FMT("File.Filter.File",
         QFileInfo(VariantMap[FILE_EDIT_PROPERTY_NAME].toString()).suffix().toStdString().c_str()),
         QFileInfo(VariantMap[FILE_EDIT_PROPERTY_NAME].toString()).baseName());
     if (!FilePath.isEmpty())
@@ -1667,13 +1667,13 @@ void ISFileEdit::Save()
             {
                 if (!ISGui::OpenFile(FilePath))
                 {
-                    ISMessageBox::ShowCritical(this, ISAlgorithm::CStringF(LANG("Message.Error.NotOpenedFile"), FilePath.toStdString().c_str()));
+                    ISMessageBox::ShowCritical(this, LANG_FMT("Message.Error.NotOpenedFile", FilePath.toStdString().c_str()));
                 }
             }
         }
         else
         {
-            ISMessageBox::ShowCritical(this, ISAlgorithm::CStringF(LANG("Message.Error.NotOpenedFile"), File.fileName().toStdString().c_str()), File.errorString());
+            ISMessageBox::ShowCritical(this, LANG_FMT("Message.Error.NotOpenedFile", File.fileName().toStdString().c_str()), File.errorString());
         }
     }
 }
@@ -1958,7 +1958,7 @@ void ISListEditPopup::Search(const QVariant &value)
             ListWidget->setCurrentItem(ListWidgetItem);
         }
         LabelSearch->setVisible(true);
-        LabelSearch->setText(ISAlgorithm::CStringF(LANG("Founded"), Founded));
+        LabelSearch->setText(LANG_FMT("Founded", Founded));
     }
     ISGui::SetWaitGlobalCursor(false);
 }
@@ -2011,7 +2011,7 @@ void ISListEditPopup::LoadDataFromQuery()
             CurrentItem->setFont(FONT_APPLICATION_BOLD);
             CurrentItem->setSelected(true);
         }
-        LabelCountRow->setText(ISAlgorithm::CStringF(LANG("RecordsCount"), ListWidget->count()));
+        LabelCountRow->setText(LANG_FMT("RecordsCount", ListWidget->count()));
         LabelEmpty->setVisible(!ListWidget->count());
     }
     else

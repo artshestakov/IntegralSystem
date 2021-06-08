@@ -165,7 +165,7 @@ void ISImageViewerForm::UpdateActions()
 void ISImageViewerForm::SetPixmap(const QPixmap &NewPixmap)
 {
     LabelImage->setPixmap(NewPixmap);
-    LabelSize->setText(ISAlgorithm::CStringF(LANG("ImageSize"), NewPixmap.width(), NewPixmap.height()));
+    LabelSize->setText(LANG_FMT("ImageSize", NewPixmap.width(), NewPixmap.height()));
     ScaleFactor = 1.0;
 
     ScrollArea->setVisible(true);

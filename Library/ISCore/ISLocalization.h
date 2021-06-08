@@ -32,5 +32,6 @@ private:
 };
 //-----------------------------------------------------------------------------
 #define LANG(KEY) ISLocalization::Instance().GetString(KEY)
+#define LANG_FMT(KEY, ...) ISAlgorithm::StringF(ISLocalization::Instance().GetString(KEY), ##__VA_ARGS__).c_str()
 //-----------------------------------------------------------------------------
 #endif

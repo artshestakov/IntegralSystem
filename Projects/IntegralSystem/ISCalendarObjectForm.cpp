@@ -25,14 +25,14 @@ bool ISCalendarObjectForm::Save()
 
     if (!Date.isValid())
     {
-        ISMessageBox::ShowWarning(this, ISAlgorithm::CStringF(LANG("Message.Error.Field.NullValue"), LANG("Date")));
+        ISMessageBox::ShowWarning(this, LANG_FMT("Message.Error.Field.NullValue", LANG("Date")));
         GetFieldWidget("Date")->BlinkRed();
         return false;
     }
 
     if (!TimeAlert.isValid())
     {
-        ISMessageBox::ShowWarning(this, ISAlgorithm::CStringF(LANG("Message.Error.Field.NullValue"), LANG("TimeAlert")));
+        ISMessageBox::ShowWarning(this, LANG_FMT("Message.Error.Field.NullValue", LANG("TimeAlert")));
         GetFieldWidget("TimeAlert")->BlinkRed();
         return false;
     }

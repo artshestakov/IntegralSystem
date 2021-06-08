@@ -72,7 +72,7 @@ ISAudioPlayerForm::ISAudioPlayerForm()
     SliderVolume->setRange(0, 100);
     SliderVolume->setValue(100);
     SliderVolume->setFixedWidth(100);
-    SliderVolume->setToolTip(ISAlgorithm::CStringF(LANG("AudioPlayer.Volume"), 100));
+    SliderVolume->setToolTip(LANG_FMT("AudioPlayer.Volume", 100));
     connect(SliderVolume, &QSlider::valueChanged, this, &ISAudioPlayerForm::SliderVolumeChanged);
     LayoutVolume->addWidget(SliderVolume);
 
@@ -183,7 +183,7 @@ void ISAudioPlayerForm::MuteClicked()
 //-----------------------------------------------------------------------------
 void ISAudioPlayerForm::SliderVolumeChanged(int Volume)
 {
-    SliderVolume->setToolTip(ISAlgorithm::CStringF(LANG("AudioPlayer.Volume"), Volume));
+    SliderVolume->setToolTip(LANG_FMT("AudioPlayer.Volume", Volume));
     MediaPlayer->setVolume(Volume);
 }
 //-----------------------------------------------------------------------------

@@ -56,7 +56,7 @@ void ISSelectListForm::SelectedRowEvent(const QItemSelection &ItemSelected, cons
 
     if (SelectMode == ISNamespace::SelectListMode::Multi)
     {
-        ActionSelect->setText(SelectedRows > 0 ? LANG("Select") : ISAlgorithm::CStringF(LANG("SelectN"), SelectedRows));
+        ActionSelect->setText(SelectedRows > 0 ? LANG("Select") : LANG_FMT("SelectN", SelectedRows));
     }
 }
 //-----------------------------------------------------------------------------

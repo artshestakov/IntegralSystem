@@ -11,7 +11,7 @@ ISFavoritesForm::ISFavoritesForm(QWidget *parent, const QString &table_name, con
     : ISInterfaceForm(parent),
     TableName(table_name)
 {
-    setWindowTitle(table_name.isEmpty() ? LANG("ISFavoritesForm.Title") : ISAlgorithm::CStringF(LANG("ISFavoritesForm.Title.Table"), table_local_name.toStdString().c_str()));
+    setWindowTitle(table_name.isEmpty() ? LANG("ISFavoritesForm.Title") : LANG_FMT("ISFavoritesForm.Title.Table", table_local_name.toStdString().c_str()));
     setWindowIcon(BUFFER_ICONS("Favorites"));
     resize(QSize(640, 480));
     GetMainLayout()->setContentsMargins(QMargins(10, 10, 10, 10));
@@ -61,7 +61,7 @@ ISFavoritesForm::ISFavoritesForm(QWidget *parent, const QString &table_name, con
             ListWidgetItem->setData(Qt::UserRole * 2, NameMap["ObjectID"].toUInt());
         }
         ActionClearFavorites->setEnabled(!NamesList.isEmpty());
-        LabelRowCount->setText(ISAlgorithm::CStringF(LANG("ISFavoritesForm.RecordCount"), NamesList.size()));
+        LabelRowCount->setText(LANG_FMT("ISFavoritesForm.RecordCount", NamesList.size()));
     }
     else
     {
@@ -95,7 +95,7 @@ void ISFavoritesForm::Clear()
         {
             ISFavorites::Instance().DeleteAll();
             ListWidget->Clear();
-            LabelRowCount->setText(ISAlgorithm::CStringF(LANG("ISFavoritesForm.RecordCount"), 0));
+            LabelRowCount->setText(LANG_FMT("ISFavoritesForm.RecordCount", 0));
             ActionClearFavorites->setEnabled(false);
         }
         else

@@ -175,7 +175,7 @@ void ISFullTextSearchSubSystem::Search()
         WidgetList.append(LabelNotFound);
     }
     dynamic_cast<QVBoxLayout*>(ScrollArea->widget()->layout())->addStretch();
-    LabelResult->setText(ISAlgorithm::CStringF(LANG("Search.ResultCount"), ResultList.size()));
+    LabelResult->setText(LANG_FMT("Search.ResultCount", ResultList.size()));
     SetSearchInProgress(false);
 }
 //-----------------------------------------------------------------------------
@@ -488,7 +488,7 @@ void ISStorageFilesSubSystem::Create()
             QFile File(FilePath);
             if (!File.open(QIODevice::ReadOnly))
             {
-                ISMessageBox::ShowWarning(&ProgressForm, ISAlgorithm::CStringF(LANG("Message.Error.NotOpenedFile"), FilePath.toStdString().c_str()));
+                ISMessageBox::ShowWarning(&ProgressForm, LANG_FMT("Message.Error.NotOpenedFile", FilePath.toStdString().c_str()));
                 continue;
             }
 
@@ -499,7 +499,7 @@ void ISStorageFilesSubSystem::Create()
             int MaxSize = SETTING_DATABASE_VALUE_INT(CONST_UID_DATABASE_SETTING_OTHER_STORAGEFILEMAXSIZE) * 1000 * 1024;
             if (ByteArray.size() > MaxSize)
             {
-                ISMessageBox::ShowWarning(this, ISAlgorithm::CStringF(LANG("Message.Warning.StorageFileBigSize"), FilePath.toStdString().c_str(), MaxSize));
+                ISMessageBox::ShowWarning(this, LANG_FMT("Message.Warning.StorageFileBigSize", FilePath.toStdString().c_str(), MaxSize));
                 continue;
             }
             ByteArray = ByteArray.toBase64();
@@ -541,7 +541,7 @@ void ISStorageFilesSubSystem::Create()
 void ISStorageFilesSubSystem::CreateCopy()
 {
     QString FileName = GetCurrentRecordValue("Name").toString();
-    if (ISMessageBox::ShowQuestion(this, ISAlgorithm::CStringF(LANG("Message.Question.CreateCopyFile"), FileName.toStdString().c_str())))
+    if (ISMessageBox::ShowQuestion(this, LANG_FMT("Message.Question.CreateCopyFile", FileName.toStdString().c_str())))
     {
         FileName = ISInputDialog::GetString(LANG("Named"), LANG("FileName"), FileName);
         if (FileName.isEmpty())
@@ -564,7 +564,7 @@ void ISStorageFilesSubSystem::CreateCopy()
         }
         else
         {
-            ISMessageBox::ShowCritical(this, ISAlgorithm::CStringF(LANG("Message.Error.CreateCopyStorageFile"), FileName.toStdString().c_str()));
+            ISMessageBox::ShowCritical(this, LANG_FMT("Message.Error.CreateCopyStorageFile", FileName.toStdString().c_str()));
         }
     }
 }
@@ -574,9 +574,9 @@ void ISStorageFilesSubSystem::SaveFile()
     QString Expansion = GetCurrentRecordValue("Expansion").toString(),
         Name = GetCurrentRecordValue("Name").toString();
 
-    if (ISMessageBox::ShowQuestion(this, ISAlgorithm::CStringF(LANG("Message.Question.SaveFile"), Name.toStdString().c_str())))
+    if (ISMessageBox::ShowQuestion(this, LANG_FMT("Message.Question.SaveFile", Name.toStdString().c_str())))
     {
-        QString FilePath = ISFileDialog::GetSaveFileName(this, ISAlgorithm::CStringF(LANG("File.Filter.File"), Expansion.toStdString().c_str()), Name);
+        QString FilePath = ISFileDialog::GetSaveFileName(this, LANG_FMT("File.Filter.File", Expansion.toStdString().c_str()), Name);
         if (FilePath.isEmpty()) //Пользователь отказался от сохранения
         {
             return;
@@ -586,7 +586,7 @@ void ISStorageFilesSubSystem::SaveFile()
         QFile File(FilePath);
         if (!File.open(QIODevice::WriteOnly))
         {
-            ISMessageBox::ShowWarning(this, ISAlgorithm::CStringF(LANG("Message.Error.NotOpenedFile"), FilePath.toStdString().c_str()), File.errorString());
+            ISMessageBox::ShowWarning(this, LANG_FMT("Message.Error.NotOpenedFile", FilePath.toStdString().c_str()), File.errorString());
             return;
         }
 
@@ -604,11 +604,11 @@ void ISStorageFilesSubSystem::SaveFile()
             File.close();
 
             //Предлагаем открыть файл
-            if (ISMessageBox::ShowQuestion(this, ISAlgorithm::CStringF(LANG("Message.Question.File.SavedToPath"), FilePath.toStdString().c_str())))
+            if (ISMessageBox::ShowQuestion(this, LANG_FMT("Message.Question.File.SavedToPath", FilePath.toStdString().c_str())))
             {
                 if (!ISGui::OpenFile(FilePath)) //Не удалось открыть файл
                 {
-                    ISMessageBox::ShowWarning(this, ISAlgorithm::CStringF(LANG("Message.Error.NotOpenedFile"), Name.toStdString().c_str()));
+                    ISMessageBox::ShowWarning(this, LANG_FMT("Message.Error.NotOpenedFile", Name.toStdString().c_str()));
                 }
             }
         }

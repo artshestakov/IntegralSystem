@@ -126,10 +126,8 @@ void ISObjectFormBase::closeEvent(QCloseEvent *e)
     if (ModificationFlag)
     {
         emit CurrentObjectTab();
-        ISMessageBox MessageBox(QMessageBox::Warning,
-            LANG("SavingProcess"),
-            ISAlgorithm::CStringF(LANG("Message.Question.SaveObjectChanged"), MetaTable->LocalName.toStdString().c_str()),
-            QString(),
+        ISMessageBox MessageBox(QMessageBox::Warning, LANG("SavingProcess"),
+            LANG_FMT("Message.Question.SaveObjectChanged", MetaTable->LocalName.toStdString().c_str()), QString(),
         {
             { 1, LANG("Yes") },
             { 2, LANG("No") },
@@ -679,7 +677,7 @@ bool ISObjectFormBase::Save()
         {
             if (MetaField->NotNull && !MetaField->HideFromObject && MetaField->DefaultValue.toString().isEmpty()) //Если поле обязательно для заполнения
             {
-                ISMessageBox::ShowWarning(this, ISAlgorithm::CStringF(LANG("Message.Error.Field.NullValue"), MetaField->LabelName.toStdString().c_str()));
+                ISMessageBox::ShowWarning(this, LANG_FMT("Message.Error.Field.NullValue", MetaField->LabelName.toStdString().c_str()));
                 FieldEditBase->BlinkRed();
                 return false;
             }
@@ -693,7 +691,7 @@ bool ISObjectFormBase::Save()
 
         if (!FieldEditBase->IsValid()) //Если поле не прошло валидацию
         {
-            ISMessageBox::ShowWarning(this, ISAlgorithm::CStringF(LANG("Message.Warning.ValueFieldEditInvalid"), MetaField->LabelName.toStdString().c_str()));
+            ISMessageBox::ShowWarning(this, LANG_FMT("Message.Warning.ValueFieldEditInvalid", MetaField->LabelName.toStdString().c_str()));
             FieldEditBase->BlinkRed();
             return false;
         }
@@ -735,14 +733,14 @@ bool ISObjectFormBase::Save()
     {
     case ISNamespace::ObjectFormType::New:
         FormType = ISNamespace::ObjectFormType::Edit;
-        ISPopupMessage::ShowNotification(ISAlgorithm::CStringF(LANG("NotificationForm.Title.Created"), MetaTable->LocalName.toLower().toStdString().c_str(), ObjectName.toStdString().c_str()));
+        ISPopupMessage::ShowNotification(LANG_FMT("NotificationForm.Title.Created", MetaTable->LocalName.toLower().toStdString().c_str(), ObjectName.toStdString().c_str()));
         break;
     case ISNamespace::ObjectFormType::Copy:
         FormType = ISNamespace::ObjectFormType::Edit;
-        ISPopupMessage::ShowNotification(ISAlgorithm::CStringF(LANG("NotificationForm.Title.CreatedCopy"), MetaTable->LocalName.toLower().toStdString().c_str(), ObjectName.toStdString().c_str()));
+        ISPopupMessage::ShowNotification(LANG_FMT("NotificationForm.Title.CreatedCopy", MetaTable->LocalName.toLower().toStdString().c_str(), ObjectName.toStdString().c_str()));
         break;
     case ISNamespace::ObjectFormType::Edit:
-        ISPopupMessage::ShowNotification(ISAlgorithm::CStringF(LANG("NotificationForm.Title.Edited"), MetaTable->LocalName.toLower().toStdString().c_str(), ObjectName.toStdString().c_str()));
+        ISPopupMessage::ShowNotification(LANG_FMT("NotificationForm.Title.Edited", MetaTable->LocalName.toLower().toStdString().c_str(), ObjectName.toStdString().c_str()));
         break;
     }
 
@@ -779,7 +777,7 @@ void ISObjectFormBase::RenameReiconForm()
     switch (FormType)
     {
     case ISNamespace::ObjectFormType::New:
-        setWindowTitle(ISAlgorithm::CStringF(LANG("Creating"), MetaTable->LocalName.toStdString().c_str()));
+        setWindowTitle(LANG_FMT("Creating", MetaTable->LocalName.toStdString().c_str()));
         setWindowIcon(BUFFER_ICONS("Add"));
         break;
     case ISNamespace::ObjectFormType::Edit:
@@ -787,7 +785,7 @@ void ISObjectFormBase::RenameReiconForm()
         setWindowIcon(BUFFER_ICONS("Edit"));
         break;
     case ISNamespace::ObjectFormType::Copy:
-        setWindowTitle(ISAlgorithm::CStringF(LANG("Coping"), MetaTable->LocalName.toStdString().c_str(), ObjectName.toStdString().c_str()));
+        setWindowTitle(LANG_FMT("Coping", MetaTable->LocalName.toStdString().c_str(), ObjectName.toStdString().c_str()));
         setWindowIcon(BUFFER_ICONS("AddCopy"));
         break;
     }

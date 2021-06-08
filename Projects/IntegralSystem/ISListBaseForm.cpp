@@ -159,7 +159,7 @@ ISListBaseForm::ISListBaseForm(const QString &TableName, QWidget *parent)
         StatusBar->setSizeGripEnabled(false);
         GetMainLayout()->addWidget(StatusBar);
 
-        LabelRowCount = new QLabel(ISAlgorithm::CStringF(LANG("RecordsCount"), 0), StatusBar);
+        LabelRowCount = new QLabel(LANG_FMT("RecordsCount", 0), StatusBar);
         LabelRowCount->setVisible(SETTING_BOOL(CONST_UID_SETTING_TABLES_SHOWCOUNTRECORD));
         StatusBar->addWidget(LabelRowCount);
 
@@ -376,7 +376,7 @@ void ISListBaseForm::SelectedRowEvent(const QItemSelection &ItemSelected, const 
     if (SelectedRows)
     {
         LabelSelectedRow->setVisible(true);
-        LabelSelectedRow->setText(ISAlgorithm::CStringF(LANG("SelectedRecords"), SelectedRows));
+        LabelSelectedRow->setText(LANG_FMT("SelectedRecords", SelectedRows));
         CurrentColumnChanged(TableView->currentIndex(), QModelIndex());
     }
     else
@@ -397,7 +397,7 @@ void ISListBaseForm::CurrentColumnChanged(const QModelIndex &CurrentIndex, const
     if (TcpModel->GetSum(CurrentIndex.column(), Sum, Avg))
     {
         LabelSum->setVisible(true);
-        LabelSum->setText(ISAlgorithm::CStringF(LANG("ListForm.Column.Sum"), Sum, Avg));
+        LabelSum->setText(LANG_FMT("ListForm.Column.Sum", Sum, Avg));
     }
     else
     {
@@ -745,7 +745,7 @@ bool ISListBaseForm::Update()
         }
         FieldResized(true);
 
-        LabelRowCount->setText(ISAlgorithm::CStringF(LANG("RecordsCount"), TcpModel->rowCount()));
+        LabelRowCount->setText(LANG_FMT("RecordsCount", TcpModel->rowCount()));
 
         if (!SETTING_BOOL(CONST_UID_SETTING_TABLE_VISIBLE_FIELD_ID))
         {
@@ -792,7 +792,7 @@ bool ISListBaseForm::Delete()
     ISVectorUInt VectorInt = GetSelectedIDs();
     bool Result = VectorInt.size() == 1 ?
         ISMessageBox::ShowQuestion(this, LANG("Message.Object.Delete")) :
-        ISMessageBox::ShowQuestion(this, ISAlgorithm::CStringF(LANG("Message.Objects.Delete"), VectorInt.size()));
+        ISMessageBox::ShowQuestion(this, LANG_FMT("Message.Objects.Delete", VectorInt.size()));
     if (Result) //ѕолучили подтверждение от пользовател€
     {
         QString ErrorString;
@@ -875,8 +875,8 @@ void ISListBaseForm::Export()
         {
             ProgressForm.close();
             //ISProtocol::Insert(CONST_UID_PROTOCOL_EXPORT_TABLE, MetaTableName, MetaTableLocalListName, QVariant(), ExportForm.GetSelectTypeName());
-            ISMessageBox::ShowInformation(this, ISAlgorithm::CStringF(LANG("Export.Completed"),
-                TableLocalName.toStdString().c_str(), ExportForm.GetSelectTypeName().toStdString().c_str()));
+            ISMessageBox::ShowInformation(this, LANG_FMT("Export.Completed", TableLocalName.toStdString().c_str(),
+                ExportForm.GetSelectTypeName().toStdString().c_str()));
         }
         else
         {

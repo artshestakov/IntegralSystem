@@ -12,7 +12,7 @@ ISSearchForm::ISSearchForm(PMetaTable *meta_table, QWidget *parent)
     : ISInterfaceForm(parent),
     MetaTable(meta_table)
 {
-    setWindowTitle(ISAlgorithm::CStringF(LANG("ISSearchForm.Title"), MetaTable->LocalListName.toStdString().c_str()));
+    setWindowTitle(LANG_FMT("ISSearchForm.Title", MetaTable->LocalListName.toStdString().c_str()));
     setWindowIcon(BUFFER_ICONS("Search"));
     resize(800, 600);
     GetMainLayout()->setContentsMargins(QMargins(10, 10, 10, 10));

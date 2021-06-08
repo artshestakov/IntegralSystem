@@ -27,7 +27,7 @@ ISHistoryForm::ISHistoryForm(QWidget *parent) : ISInterfaceForm(parent)
     QHBoxLayout *LayoutBottom = new QHBoxLayout();
     GetMainLayout()->addLayout(LayoutBottom);
 
-    LabelRowCount = new QLabel(ISAlgorithm::CStringF(LANG("ISHistoryForm.RowCount"), 0), this);
+    LabelRowCount = new QLabel(LANG_FMT("ISHistoryForm.RowCount", 0), this);
     LayoutBottom->addWidget(LabelRowCount);
 
     LayoutBottom->addStretch();
@@ -61,7 +61,7 @@ void ISHistoryForm::AfterShowEvent()
             ListWidgetItem->setData(Qt::UserRole * 2, HistoryMap["ObjectID"]);
             ListWidgetItem->setSizeHint(QSize(ListWidgetItem->sizeHint().width(), 25));
         }
-        LabelRowCount->setText(ISAlgorithm::CStringF(LANG("ISHistoryForm.RowCount"), VariantList.size()));
+        LabelRowCount->setText(LANG_FMT("ISHistoryForm.RowCount", VariantList.size()));
     }
     else
     {

@@ -70,7 +70,7 @@ bool ISGui::Startup(QString &ErrorString)
     }
 
     //Загрузка локализации объектов
-    QFile FileObjects(":Localization/IntegralSystem.lang");
+    QFile FileObjects(":Localization/Objects.lang");
     FileObjects.open(QIODevice::ReadOnly);
     if (!ISLocalization::Instance().InitContent(FileObjects.readAll().toStdString().c_str()))
     {
@@ -428,7 +428,7 @@ bool ISGui::RecordsDelete(const QString &TableName, const ISVectorUInt &ObjectsI
         return false;
     }
     ISPopupMessage::ShowNotification(ObjectsID.size() == 1 ?
-        ISAlgorithm::CStringF(LANG("NotificationForm.Title.Deleted"), ObjectsID.front()) :
+        LANG_FMT("NotificationForm.Title.Deleted", ObjectsID.front()) :
         LANG("NotificationForm.Title.Deleteds"));
     return true;
 }

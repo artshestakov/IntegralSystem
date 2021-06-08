@@ -157,7 +157,7 @@ bool ISExportCSV::Export()
         FileCSV->write(RowString.toLocal8Bit());
 
         emit ExportedRow();
-        emit Message(ISAlgorithm::CStringF(LANG("Export.Process.Process"), Row + 1, TcpModel->rowCount()));
+        emit Message(LANG_FMT("Export.Process.Process", Row + 1, TcpModel->rowCount()));
     }
     FileCSV->close();
     return true;
@@ -271,7 +271,7 @@ bool ISExportHTML::Export()
         FileHTML->write(RowString.toUtf8());
 
         emit ExportedRow();
-        emit Message(ISAlgorithm::CStringF(LANG("Export.Process.Process"), Row + 1, TcpModel->rowCount()));
+        emit Message(LANG_FMT("Export.Process.Process", Row + 1, TcpModel->rowCount()));
     }
     FileHTML->write("  </table>\r\n");
     FileHTML->write(" </body>\r\n");
@@ -354,7 +354,7 @@ bool ISExportJSON::Export()
         }
         RecordList.append(RecordMap);
         emit ExportedRow();
-        emit Message(ISAlgorithm::CStringF(LANG("Export.Process.Process"), Row + 1, TcpModel->rowCount()));
+        emit Message(LANG_FMT("Export.Process.Process", Row + 1, TcpModel->rowCount()));
     }
     FileJSON->write(ISGui::VariantListToJsonString(RecordList));
     FileJSON->close();
@@ -441,7 +441,7 @@ bool ISExportXML::Export()
             DomElement.appendChild(TagRow);
         }
         emit ExportedRow();
-        emit Message(ISAlgorithm::CStringF(LANG("Export.Process.Process"), Row + 1, TcpModel->rowCount()));
+        emit Message(LANG_FMT("Export.Process.Process", Row + 1, TcpModel->rowCount()));
     }
     FileXML->write(DomDocument.toString().toUtf8());
     FileXML->close();

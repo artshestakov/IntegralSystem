@@ -356,8 +356,8 @@ void ISAuthDialog::Input()
         ISConfig::Instance().GetValueUShort("Connection", "Port"))) //Ошибка подключения к карату
     {
         SetConnecting(false);
-        ISMessageBox MessageBox(ISMessageBox::Question, LANG("Question"),
-            ISAlgorithm::CStringF(LANG("Message.Question.ConnectionError.Reconnect"), ISTcpConnector::Instance().GetErrorString().toStdString().c_str()),
+        ISMessageBox MessageBox(ISMessageBox::Question, LANG("Question"), LANG_FMT("Message.Question.ConnectionError.Reconnect",
+            ISTcpConnector::Instance().GetErrorString().toStdString().c_str()),
             QString(),
             {
                 { 1, LANG("Yes") },
@@ -384,8 +384,8 @@ void ISAuthDialog::Input()
         if (!AlreadyConnected.isEmpty()) //Если клиент уже подключен - сообщаем об этом
         {
             ISGui::SetWaitGlobalCursor(false);
-            ISMessageBox::ShowWarning(this, ISAlgorithm::CStringF(LANG("Message.Warning.AlreadyConnected"),
-                AlreadyConnected["DateTime"].toString().toStdString().c_str(), AlreadyConnected["IPAddress"].toString().toStdString().c_str()));
+            ISMessageBox::ShowWarning(this, LANG_FMT("Message.Warning.AlreadyConnected", AlreadyConnected["DateTime"].toString().toStdString().c_str(),
+                AlreadyConnected["IPAddress"].toString().toStdString().c_str()));
             ISGui::SetWaitGlobalCursor(true);
         }
 
@@ -395,7 +395,7 @@ void ISAuthDialog::Input()
         if (UpdateClientMap["IsNeed"].toBool()) //Если требуется обновление - предлагаем скачать и установить
         {
             SetConnecting(false);
-            if (ISMessageBox::ShowQuestion(this, ISAlgorithm::CStringF(LANG("Message.Question.UpdateAvailable"),
+            if (ISMessageBox::ShowQuestion(this, LANG_FMT("Message.Question.UpdateAvailable",
                 CARAT_VERSION_N, UpdateClientMap["NewVersion"].toInt()))) //Пользователь согласился
             {
                 ISProcessForm ProcessForm(LANG("UploadingUpdate"), this);
@@ -413,7 +413,7 @@ void ISAuthDialog::Input()
                         ISMessageBox::ShowInformation(this, LANG("Message.Information.InstallUpdate"));
                         if (!QProcess::startDetached(File.fileName(), QStringList() << "/SILENT" << "/NOCANCEL" << "/NORESTART")) //Не удалось запустить установку
                         {
-                            ISMessageBox::ShowWarning(this, ISAlgorithm::CStringF(LANG("Message.Warning.StartInstallUpdate"), File.fileName().toStdString().c_str()));
+                            ISMessageBox::ShowWarning(this, LANG_FMT("Message.Warning.StartInstallUpdate", File.fileName().toStdString().c_str()));
                         }
                         close();
                         return;
@@ -719,9 +719,9 @@ ISReconnectDialog::ISReconnectDialog()
     LabelInfo->setWordWrap(true);
     GetMainLayout()->addWidget(LabelInfo);
 
-    GetMainLayout()->addWidget(new QLabel(ISAlgorithm::CStringF(LANG("ReconnectForm.DateTime"), QDateTime::currentDateTime().toString(FORMAT_DATE_TIME_V2).toStdString().c_str()), this));
+    GetMainLayout()->addWidget(new QLabel(LANG_FMT("ReconnectForm.DateTime", QDateTime::currentDateTime().toString(FORMAT_DATE_TIME_V2).toStdString().c_str()), this));
 
-    LabelAttempts = new QLabel(ISAlgorithm::CStringF(LANG("ReconnectForm.Attempts"), Attempts), this);
+    LabelAttempts = new QLabel(LANG_FMT("ReconnectForm.Attempts", Attempts), this);
     GetMainLayout()->addWidget(LabelAttempts);
 
     QProgressBar *ProgressBar = new QProgressBar(this);
@@ -763,7 +763,7 @@ void ISReconnectDialog::Timeout()
     }
     else
     {
-        LabelAttempts->setText(ISAlgorithm::CStringF(LANG("ReconnectForm.Attempts"), ++Attempts));
+        LabelAttempts->setText(LANG_FMT("ReconnectForm.Attempts", ++Attempts));
         Timer->start();
     }
 }
@@ -1028,7 +1028,7 @@ ISUserGroupRightDialog::ISUserGroupRightDialog(int group_id, const QString &grou
     GroupID(group_id)
 {
     setMinimumSize(800, 750);
-    setWindowTitle(ISAlgorithm::CStringF(LANG("AccessRights.SettingAcceessFromGroup"), group_name.toStdString().c_str()));
+    setWindowTitle(LANG_FMT("AccessRights.SettingAcceessFromGroup", group_name.toStdString().c_str()));
     GetMainLayout()->setContentsMargins(QMargins(10, 10, 10, 10));
 
     TabWidget = new QTabWidget(this);
@@ -1222,7 +1222,7 @@ ISUserPasswordDialog::ISUserPasswordDialog(unsigned int user_id, const QString &
     ForbidResize();
     GetMainLayout()->setContentsMargins(QMargins(10, 10, 10, 10));
 
-    QLabel *LabelUser = new QLabel(ISAlgorithm::CStringF(LANG("UserPasswordForm.User"), UserFIO.toStdString().c_str()), this);
+    QLabel *LabelUser = new QLabel(LANG_FMT("UserPasswordForm.User", UserFIO.toStdString().c_str()), this);
     LabelUser->setStyleSheet(BUFFER_STYLE_SHEET("QLabel.Color.Gray"));
     ISGui::SetFontWidgetBold(LabelUser, true);
     GetMainLayout()->addWidget(LabelUser);
