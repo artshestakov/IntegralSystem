@@ -191,7 +191,7 @@
         </Fields>
     </Table>
 
-    <Table Name="GasStationStatement" UID="{C9620F81-9306-4170-A9D4-569744F55697}" Alias="gsts" LocalName="Ведомость АЗС" LocalListName="Ведомость АЗС" TitleName="Date" ObjectForm="ISOilSphere::GasStationStatementObjectForm">
+    <Table Name="GasStationStatement" UID="{C9620F81-9306-4170-A9D4-569744F55697}" Alias="gsts" LocalName="Ведомость АЗС" LocalListName="Ведомости АЗС" TitleName="Date" ObjectForm="ISOilSphere::GasStationStatementObjectForm">
         <Fields>
             <Field UID="{7C6A6D31-3F92-41A6-836D-A1B96E345A92}" Name="ImplementationUnload" Type="BigInt" LabelName="Выгрузка" LocalListName="Выгрузка" HideFromList="true" HideFromObject="true"/>
             <Field UID="{4809E303-3E8F-42D3-B3A8-1B0C108DEB40}" Name="Stock" Type="BigInt" LabelName="Склад" LocalListName="Склад" LayoutName="Title"/>
@@ -238,7 +238,7 @@
         </Foreigns>
     </Table>
 
-    <Table Name="Operator" UID="{84E69F6B-3072-4815-9318-4A61E753F4A2}" Alias="oper" LocalName="Оператор" LocalListName="Оператор" TitleName="FIO">
+    <Table Name="Operator" UID="{84E69F6B-3072-4815-9318-4A61E753F4A2}" Alias="oper" LocalName="Оператор" LocalListName="Операторы" TitleName="FIO">
         <Fields>
             <Field UID="{DF5A811C-857B-4E41-9E66-4D9FA3D8075D}" Name="FIO" Type="String" LabelName="ФИО" LocalListName="ФИО" NotNull="true"/>
         </Fields>
@@ -247,7 +247,7 @@
         </Indexes>
     </Table>
 
-    <Table Name="OperationType" UID="{398473D9-FC00-4565-99A2-C70E35A95160}" Alias="optp" LocalName="Тип операции" LocalListName="Тип операции" TitleName="Name">
+    <Table Name="OperationType" UID="{398473D9-FC00-4565-99A2-C70E35A95160}" Alias="optp" LocalName="Тип операции" LocalListName="Типы операций" TitleName="Name">
         <Fields>
             <Field UID="{610F62E2-B596-41DA-BB65-B08F64F395E2}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
         </Fields>
