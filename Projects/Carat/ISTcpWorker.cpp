@@ -618,11 +618,11 @@ bool ISTcpWorker::GetRunning()
 void ISTcpWorker::Process()
 {
     //Получаем параметры подключения к БД
-    std::string DBHost = ISConfig::Instance().GetValueString("Database", "Host"),
-        DBName = ISConfig::Instance().GetValueString("Database", "Name"),
-        DBUser = ISConfig::Instance().GetValueString("Database", "User"),
-        DBPassword = ISConfig::Instance().GetValueString("Database", "Password");
-    unsigned short DBPort = ISConfig::Instance().GetValueUShort("Database", "Port");
+    std::string DBHost = ISConfig::Instance().GetString("Database", "Host"),
+        DBName = ISConfig::Instance().GetString("Database", "Name"),
+        DBUser = ISConfig::Instance().GetString("Database", "User"),
+        DBPassword = ISConfig::Instance().GetString("Database", "Password");
+    unsigned short DBPort = ISConfig::Instance().GetUShort("Database", "Port");
 
     //Формируем имя подключения
     std::stringstream StringStream;
@@ -1258,7 +1258,7 @@ bool ISTcpWorker::Auth(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
         }
 
         //Получаем директорию с обновлениями
-        std::string UpdateClientDir = ISConfig::Instance().GetValueString("Other", "UpdateClientDir");
+        std::string UpdateClientDir = ISConfig::Instance().GetString("Other", "UpdateClientDir");
         if (!UpdateClientDir.empty()) //Если директория настроена - идём дальше
         {
             //Проверяем существование директории с обновлениями
@@ -1719,7 +1719,7 @@ bool ISTcpWorker::GetLastClient(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer
 
     //Получаем отсортированный (по дате) список файлов
     //в настроенной директории и проверяем его на пустоту
-    std::vector<ISFileInfo> VectorFiles = ISAlgorithm::DirFiles(false, ISConfig::Instance().GetValueString("Other", "UpdateClientDir"),
+    std::vector<ISFileInfo> VectorFiles = ISAlgorithm::DirFiles(false, ISConfig::Instance().GetString("Other", "UpdateClientDir"),
         ISNamespace::DirFileSorting::EditDate, ISNamespace::SortingOrder::Descending);
     if (VectorFiles.empty()) //Если обновлений нет - выходим
     {
@@ -1972,7 +1972,7 @@ bool ISTcpWorker::UserSettingsReset(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAn
 bool ISTcpWorker::GetRecordCall(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 {
     //Получаем директорию с записями разговоров
-    std::string RecordDir = ISConfig::Instance().GetValueString("AMI", "RecordDir");
+    std::string RecordDir = ISConfig::Instance().GetString("AMI", "RecordDir");
     if (RecordDir.empty()) //Директория не настроена - ошибка
     {
         ErrorString = LANG("Carat.Error.Query.GetRecordCall.RecordDirIsEmpty");

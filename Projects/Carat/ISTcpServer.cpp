@@ -40,7 +40,7 @@ bool ISTcpServer::Start()
 
     ISSocketAddr SocketAddress;
     SocketAddress.sin_addr.s_addr = INADDR_ANY; //Любой IP адресс
-    SocketAddress.sin_port = htons(ISConfig::Instance().GetValueUShort("TcpServer", "Port")); //Задаём порт
+    SocketAddress.sin_port = htons(ISConfig::Instance().GetUShort("TcpServer", "Port")); //Задаём порт
     SocketAddress.sin_family = AF_INET; //AF_INET - Cемейство адресов для IPv4
 
     SocketServer = socket(AF_INET, SOCK_STREAM, 0);
@@ -63,7 +63,7 @@ bool ISTcpServer::Start()
     }
 
     //Создаём воркеры
-    WorkerCount = ISConfig::Instance().GetValueInt("TcpServer", "WorkerCount");
+    WorkerCount = ISConfig::Instance().GetInt("TcpServer", "WorkerCount");
     Workers.resize(WorkerCount);
     for (unsigned int i = 0; i < WorkerCount; ++i)
     {

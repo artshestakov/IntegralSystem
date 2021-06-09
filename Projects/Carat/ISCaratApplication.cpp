@@ -110,10 +110,10 @@ bool ISCaratApplication::Init()
     }
 
     //Получаем параметры конфигурационного файла
-    TCPServer = ISConfig::Instance().GetValueBool("TCPServer", "Include");
+    TCPServer = ISConfig::Instance().GetBool("TCPServer", "Include");
     
     //Выбираем активную конфигурацию
-    std::string ConfigurationName = ISConfig::Instance().GetValueString("Other", "Configuration");
+    std::string ConfigurationName = ISConfig::Instance().GetString("Other", "Configuration");
     if (ConfigurationName.empty()) //Имя конфигурации не указано
     {
         ISLOGGER_E("ISConfig", "Not specified configration name");
@@ -134,11 +134,11 @@ bool ISCaratApplication::Init()
     }
 
     //Получаем параметры подключения к БД и подключаемся
-    std::string DBHost = ISConfig::Instance().GetValueString("Database", "Host"),
-        DBName = ISConfig::Instance().GetValueString("Database", "Name"),
-        DBUser = ISConfig::Instance().GetValueString("Database", "User"),
-        DBPassword = ISConfig::Instance().GetValueString("Database", "Password");
-    unsigned short DBPort = ISConfig::Instance().GetValueUShort("Database", "Port");
+    std::string DBHost = ISConfig::Instance().GetString("Database", "Host"),
+        DBName = ISConfig::Instance().GetString("Database", "Name"),
+        DBUser = ISConfig::Instance().GetString("Database", "User"),
+        DBPassword = ISConfig::Instance().GetString("Database", "Password");
+    unsigned short DBPort = ISConfig::Instance().GetUShort("Database", "Port");
     if (!ISDatabase::Instance().Connect(DB_CONNECTION_DEFAULT, DBHost, DBPort, DBName, DBUser, DBPassword))
     {
         ISLOGGER_E("ISDatabase", "Error connection: %s", ISDatabase::Instance().GetErrorString().c_str());

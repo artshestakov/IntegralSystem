@@ -17,16 +17,16 @@ public:
     bool Initialize(const std::string &template_name);
     
     //Функции получения значений
-    std::string GetValueString(const std::string &SectionName, const std::string &ParameterName);
+    std::string GetString(const std::string &SectionName, const std::string &ParameterName);
     const char* GetCString(const std::string &SectionName, const std::string &ParameterName);
-    int GetValueInt(const std::string &SectionName, const std::string &ParameterName);
-    unsigned short GetValueUShort(const std::string &SectionName, const std::string &ParameterName);
-    bool GetValueBool(const std::string &SectionName, const std::string &ParameterName);
+    int GetInt(const std::string &SectionName, const std::string &ParameterName);
+    unsigned short GetUShort(const std::string &SectionName, const std::string &ParameterName);
+    bool GetBool(const std::string &SectionName, const std::string &ParameterName);
 
     //Функции изменения значений
-    void SetValueString(const std::string &SectionName, const std::string &ParameterName, const std::string &Value);
-    void SetValueUShort(const std::string &SectionName, const std::string &ParameterName, unsigned short Value);
-    void SetValueBool(const std::string &SectionName, const std::string &ParameterName, bool Value);
+    void SetString(const std::string &SectionName, const std::string &ParameterName, const std::string &Value);
+    void SetUShort(const std::string &SectionName, const std::string &ParameterName, unsigned short Value);
+    void SetBool(const std::string &SectionName, const std::string &ParameterName, bool Value);
 
 private:
     void SetValue(const std::string &SectionName, const std::string &ParameterName, const std::string &Value);

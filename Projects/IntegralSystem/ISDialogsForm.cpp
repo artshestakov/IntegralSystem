@@ -240,7 +240,7 @@ ISAuthDialog::ISAuthDialog()
     CheckRememberUser = new ISCheckEdit(this);
     CheckRememberUser->SetText(LANG("RememberMe"));
     CheckRememberUser->SetToolTip(LANG("RememberMe.ToolTip"));
-    CheckRememberUser->SetValue(ISConfig::Instance().GetValueBool("RememberUser", "Include"));
+    CheckRememberUser->SetValue(ISConfig::Instance().GetBool("RememberUser", "Include"));
     LayoutFields->addWidget(CheckRememberUser);
 
     LayoutFields->addSpacerItem(new QSpacerItem(0, 55));
@@ -347,13 +347,13 @@ void ISAuthDialog::Input()
     }
 
     //Для запоминания пользователя
-    ISConfig::Instance().SetValueBool("RememberUser", "Include", CheckRememberUser->GetValue().toBool());
-    ISConfig::Instance().SetValueString("RememberUser", "Login", EditLogin->GetValue().toString().toStdString());
+    ISConfig::Instance().SetBool("RememberUser", "Include", CheckRememberUser->GetValue().toBool());
+    ISConfig::Instance().SetString("RememberUser", "Login", EditLogin->GetValue().toString().toStdString());
 
     SetConnecting(true);
     if (!ISTcpConnector::Instance().Connect(
         ISConfig::Instance().GetCString("Connection", "Host"),
-        ISConfig::Instance().GetValueUShort("Connection", "Port"))) //Ошибка подключения к карату
+        ISConfig::Instance().GetUShort("Connection", "Port"))) //Ошибка подключения к карату
     {
         SetConnecting(false);
         ISMessageBox MessageBox(ISMessageBox::Question, LANG("Question"), LANG_FMT("Message.Question.ConnectionError.Reconnect",
@@ -493,7 +493,7 @@ ISConnectDialog::ISConnectDialog() : ISInterfaceDialogForm()
     FormLayout->addRow(LANG("ISConnectDialog.Server"), EditServer);
 
     EditPort = new ISIntegerEdit(this);
-    EditPort->SetValue(ISConfig::Instance().GetValueUShort("Connection", "Port"));
+    EditPort->SetValue(ISConfig::Instance().GetUShort("Connection", "Port"));
     FormLayout->addRow(LANG("ISConnectDialog.Port"), EditPort);
 
     QHBoxLayout *LayoutButtons = new QHBoxLayout();
@@ -526,8 +526,8 @@ void ISConnectDialog::EnterClicked()
 //-----------------------------------------------------------------------------
 void ISConnectDialog::Save()
 {
-    ISConfig::Instance().SetValueString("Connection", "Host", EditServer->GetValue().toString().toStdString());
-    ISConfig::Instance().SetValueUShort("Connection", "Port", EditPort->GetValue().toInt());
+    ISConfig::Instance().SetString("Connection", "Host", EditServer->GetValue().toString().toStdString());
+    ISConfig::Instance().SetUShort("Connection", "Port", EditPort->GetValue().toInt());
     close();
 }
 //-----------------------------------------------------------------------------
@@ -756,7 +756,7 @@ void ISReconnectDialog::Timeout()
 {
     if (ISTcpConnector::Instance().Connect(
         ISConfig::Instance().GetCString("Connection", "Host"),
-        ISConfig::Instance().GetValueUShort("Connection", "Port")))
+        ISConfig::Instance().GetUShort("Connection", "Port")))
     {
         SetResult(true);
         close();

@@ -65,11 +65,11 @@ int main(int argc, char **argv)
         return EXIT_FAILURE;
     }
 
-    DBHost = ISConfig::Instance().GetValueString("Database", "Host");
-    DBPort = ISConfig::Instance().GetValueUShort("Database", "Port");
-    DBName = ISConfig::Instance().GetValueString("Database", "Name");
-    DBLogin = ISConfig::Instance().GetValueString("Database", "User");
-    DBPassword = ISConfig::Instance().GetValueString("Database", "Password");
+    DBHost = ISConfig::Instance().GetString("Database", "Host");
+    DBPort = ISConfig::Instance().GetUShort("Database", "Port");
+    DBName = ISConfig::Instance().GetString("Database", "Name");
+    DBLogin = ISConfig::Instance().GetString("Database", "User");
+    DBPassword = ISConfig::Instance().GetString("Database", "Password");
 
     //Читаем файл ресурсов
     if (!ISResourcer::Instance().LoadFile(ISAlgorithm::GetApplicationDir() + PATH_SEPARATOR + "Resources.bin"))
@@ -89,7 +89,7 @@ int main(int argc, char **argv)
         return EXIT_FAILURE;
     }
 
-    std::string ConfigrationName = ISConfig::Instance().GetValueString("Other", "Configuration");
+    std::string ConfigrationName = ISConfig::Instance().GetString("Other", "Configuration");
     if (!ISMetaData::Instance().Init(ConfigrationName, true, true))
     {
         ISLOGGER_E(__CLASS__, "Initialize meta data: %s", ISMetaData::Instance().GetErrorString().c_str());

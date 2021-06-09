@@ -119,7 +119,7 @@ bool ISConfig::IsValid()
 //-----------------------------------------------------------------------------
 bool ISConfig::IsEmpty(const std::string &SectionName, const std::string &ParameterName)
 {
-    return GetValueString(SectionName, ParameterName).empty();
+    return GetString(SectionName, ParameterName).empty();
 }
 //-----------------------------------------------------------------------------
 bool ISConfig::Initialize(const std::string &template_name)
@@ -129,7 +129,7 @@ bool ISConfig::Initialize(const std::string &template_name)
     return ISAlgorithm::FileExist(PathConfigFile) ? Update() : Create();
 }
 //-----------------------------------------------------------------------------
-std::string ISConfig::GetValueString(const std::string &SectionName, const std::string &ParameterName)
+std::string ISConfig::GetString(const std::string &SectionName, const std::string &ParameterName)
 {
     return GetValue(SectionName, ParameterName);
 }
@@ -139,17 +139,17 @@ const char* ISConfig::GetCString(const std::string &SectionName, const std::stri
     return SimpleINI.GetValue(SectionName.c_str(), ParameterName.c_str());
 }
 //-----------------------------------------------------------------------------
-int ISConfig::GetValueInt(const std::string &SectionName, const std::string &ParameterName)
+int ISConfig::GetInt(const std::string &SectionName, const std::string &ParameterName)
 {
     return std::stoi(GetValue(SectionName, ParameterName));
 }
 //-----------------------------------------------------------------------------
-unsigned short ISConfig::GetValueUShort(const std::string &SectionName, const std::string &ParameterName)
+unsigned short ISConfig::GetUShort(const std::string &SectionName, const std::string &ParameterName)
 {
-    return static_cast<unsigned short>(GetValueInt(SectionName, ParameterName));
+    return static_cast<unsigned short>(GetInt(SectionName, ParameterName));
 }
 //-----------------------------------------------------------------------------
-bool ISConfig::GetValueBool(const std::string &SectionName, const std::string &ParameterName)
+bool ISConfig::GetBool(const std::string &SectionName, const std::string &ParameterName)
 {
     //Получаем значение, приводим его к нижнему регистру и проверяем
     std::string Value = GetValue(SectionName, ParameterName);
@@ -157,17 +157,17 @@ bool ISConfig::GetValueBool(const std::string &SectionName, const std::string &P
     return Value == "true";
 }
 //-----------------------------------------------------------------------------
-void ISConfig::SetValueString(const std::string &SectionName, const std::string &ParameterName, const std::string &Value)
+void ISConfig::SetString(const std::string &SectionName, const std::string &ParameterName, const std::string &Value)
 {
     return SetValue(SectionName, ParameterName, Value);
 }
 //-----------------------------------------------------------------------------
-void ISConfig::SetValueUShort(const std::string &SectionName, const std::string &ParameterName, unsigned short Value)
+void ISConfig::SetUShort(const std::string &SectionName, const std::string &ParameterName, unsigned short Value)
 {
     return SetValue(SectionName, ParameterName, std::to_string(Value));
 }
 //-----------------------------------------------------------------------------
-void ISConfig::SetValueBool(const std::string &SectionName, const std::string &ParameterName, bool Value)
+void ISConfig::SetBool(const std::string &SectionName, const std::string &ParameterName, bool Value)
 {
     return SetValue(SectionName, ParameterName, Value ? "true" : "false");
 }
