@@ -148,17 +148,6 @@ namespace ISAlgorithm
     //! \return возвращает им€ текущего пользовател€ в ќ—
     std::string GetUserName();
 
-    //! ѕроверка валидности UUID
-    //! \param UID строка с идентификатором
-    //! \return возвращает true в случае если UID валиден, в ином случае false
-    bool IsValidUUID(const std::string &UID);
-
-    //! ѕроверка валидности UUID
-    //! \param UID строка с идентификатором
-    //! \param Size размер строки
-    //! \return возвращает true в случае если UID валиден, в ином случае false
-    bool IsValidUUID(const char *UID, size_t Size);
-
     //! ѕарсинг аргументов командной строки
     //! \param argc количество аргументов
     //! \param argv массив аргументов
@@ -269,17 +258,20 @@ namespace ISAlgorithm
     //! \return возвращает отформатированный путь
     std::string FormatPath(const std::string &Path);
 
+    //! ѕроверка валидности UUID
+    //! \param UID строка с идентификатором
+    //! \return возвращает true в случае если UID валиден, в ином случае false
+    bool UuidIsValid(const std::string &UID);
+
+    //! ѕроверка валидности UUID
+    //! \param UID строка с идентификатором
+    //! \param Size размер строки
+    //! \return возвращает true в случае если UID валиден, в ином случае false
+    bool UuidIsValid(const char *UID, size_t Size);
+
     //! √енераци€ стандартного уникального идентификатора в формате b75ed238-411a-4f06-85ea-a2ecca37cfa8
     //! \return возвращает стандартный уникальный идентификатор
-    std::string GenerateUuidStandart();
-
-    //! √енераци€ уникального идентификатора в формате {B75ED238-411A-4F06-85EA-A2ECCA37CFA8}
-    //! \return возвращает уникальный идентификатор
-    std::string GenerateUuid();
-
-    //! √енераци€ упрощЄнного уникального идентификатора в формате b75ed238411a4f0685eaa2ecca37cfa8
-    //! \return возвращает упрощЄнный уникальный идентификатор
-    std::string GenerateUuidLite();
+    std::string UuidGenerate();
 
     //! —генерировать соль
     //! \param Salt строка, в которую будет помещена сгенерированна€ соль

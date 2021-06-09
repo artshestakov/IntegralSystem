@@ -486,37 +486,6 @@ std::string ISAlgorithm::GetUserName()
     return UserName;
 }
 //-----------------------------------------------------------------------------
-bool ISAlgorithm::IsValidUUID(const std::string &UID)
-{
-    return IsValidUUID(UID.c_str(), UID.size());
-}
-//-----------------------------------------------------------------------------
-bool ISAlgorithm::IsValidUUID(const char *UID, size_t Size)
-{
-    //Проверим размер
-    if (Size != UUID_STANDART_SIZE)
-    {
-        return false;
-    }
-
-    //Обойдём всю строку
-    for (unsigned int i = 0; i < Size; ++i)
-    {
-        if (i == 8 || i == 13 || i == 18 || i == 23)
-        {
-            if (UID[i] != '-')
-            {
-                return false;
-            }
-        }
-        else if (!isxdigit(UID[i]))
-        {
-            return false;
-        }
-    }
-    return true;
-}
-//-----------------------------------------------------------------------------
 ISVectorString ISAlgorithm::ParseArgs(int argc, char **argv)
 {
     ISVectorString VectorString;
@@ -943,7 +912,38 @@ std::string ISAlgorithm::FormatPath(const std::string &Path)
     return Temp;
 }
 //-----------------------------------------------------------------------------
-std::string ISAlgorithm::GenerateUuidStandart()
+bool ISAlgorithm::UuidIsValid(const std::string &UID)
+{
+    return UuidIsValid(UID.c_str(), UID.size());
+}
+//-----------------------------------------------------------------------------
+bool ISAlgorithm::UuidIsValid(const char *UID, size_t Size)
+{
+    //Проверим размер
+    if (Size != UUID_STANDART_SIZE)
+    {
+        return false;
+    }
+
+    //Обойдём всю строку
+    for (unsigned int i = 0; i < Size; ++i)
+    {
+        if (i == 8 || i == 13 || i == 18 || i == 23)
+        {
+            if (UID[i] != '-')
+            {
+                return false;
+            }
+        }
+        else if (!isxdigit(UID[i]))
+        {
+            return false;
+        }
+    }
+    return true;
+}
+//-----------------------------------------------------------------------------
+std::string ISAlgorithm::UuidGenerate()
 {
     std::string StringUID(UUID_STANDART_SIZE, CHAR_NULL_TERM);
 #ifdef WIN32
@@ -972,28 +972,6 @@ std::string ISAlgorithm::GenerateUuidStandart()
     StringUID = Char;
 #endif
     return StringUID;
-}
-//-----------------------------------------------------------------------------
-std::string ISAlgorithm::GenerateUuid()
-{
-    std::string UID = ISAlgorithm::GenerateUuidStandart();
-    std::transform(UID.begin(), UID.end(), UID.begin(), toupper);
-    return '{' + UID + '}';
-}
-//-----------------------------------------------------------------------------
-std::string ISAlgorithm::GenerateUuidLite()
-{
-    std::string UID = ISAlgorithm::GenerateUuidStandart();
-    std::transform(UID.begin(), UID.end(), UID.begin(), tolower);
-    auto Begin = UID.begin();
-    for (size_t i = UID.size() - 1; i > 0; --i)
-    {
-        if (UID[i] == '-')
-        {
-            UID.erase(Begin + i);
-        }
-    }
-    return UID;
 }
 //-----------------------------------------------------------------------------
 bool ISAlgorithm::GenerateSalt(std::string &Salt, std::string &ErrorString)

@@ -710,7 +710,7 @@ void ISUuidEdit::SetReadOnly(bool read_only)
 //-----------------------------------------------------------------------------
 void ISUuidEdit::Generate()
 {
-    SetValue(QString::fromStdString(ISAlgorithm::GenerateUuid()));
+    SetValue(QString::fromStdString(ISAlgorithm::UuidGenerate()));
 }
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
