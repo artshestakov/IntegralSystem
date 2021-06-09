@@ -15,6 +15,7 @@
 #include "ISProperty.h"
 #include "ISBlockedIP.h"
 #include "ISCrashDumper.h"
+#include "RCC.h"
 //-----------------------------------------------------------------------------
 ISCaratApplication::ISCaratApplication(int argc, char **argv)
     : ErrorString(STRING_NO_ERROR),
@@ -75,9 +76,9 @@ bool ISCaratApplication::Init()
         return false;
     }
 
-    if (!ISLocalization::Instance().InitFile(LOCALIZATION_FILE_CARAT))
+    if (!ISLocalization::Instance().Init(RCC::LOCALIZATION_CARAT_LANG, RCC::LOCALIZATION_CARAT_LANG_SIZE))
     {
-        ISLOGGER_E("ISLocalization", "Not init file \"%s\": %s", LOCALIZATION_FILE_CARAT, ISLocalization::Instance().GetErrorString().c_str());
+        ISLOGGER_E("ISLocalization", "Not init file \"%s\": %s", RCC::LOCALIZATION_CARAT_LANG_NAME, ISLocalization::Instance().GetErrorString().c_str());
         return false;
     }
 

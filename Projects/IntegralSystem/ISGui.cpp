@@ -65,7 +65,7 @@ bool ISGui::Startup(QString &ErrorString)
     //Загрузка локализации клиента
     QFile FileIntegral(":Localization/IntegralSystem.lang");
     FileIntegral.open(QIODevice::ReadOnly);
-    if (!ISLocalization::Instance().InitContent(FileIntegral.readAll().toStdString().c_str()))
+    if (!ISLocalization::Instance().Init((const unsigned char *)FileIntegral.readAll().toStdString().c_str(), (size_t)FileIntegral.size()))
     {
         ErrorString = ISAlgorithm::CStringF("Error init localization file \"%s\": %s", LOCALIZATION_FILE_INTEGRAL_SYSTEM, ISLocalization::Instance().GetErrorString().c_str());
         return false;
@@ -74,7 +74,7 @@ bool ISGui::Startup(QString &ErrorString)
     //Загрузка локализации объектов
     QFile FileObjects(":Localization/Objects.lang");
     FileObjects.open(QIODevice::ReadOnly);
-    if (!ISLocalization::Instance().InitContent(FileObjects.readAll().toStdString().c_str()))
+    if (!ISLocalization::Instance().Init((const unsigned char *)FileObjects.readAll().toStdString().c_str(), (size_t)FileObjects.size()))
     {
         ErrorString = ISAlgorithm::CStringF("Error init localization file \"%s\": %s", LOCALIZATION_FILE_OBJECTS, ISLocalization::Instance().GetErrorString().c_str());
         return false;

@@ -11,12 +11,8 @@ public:
     static ISLocalization& Instance();
 
     const std::string& GetErrorString() const;
-    bool InitFile(const std::string &FileName);
-    bool InitContent(const char *Content);
+    bool Init(const unsigned char *Data, size_t Size);
     const char* GetString(const char *Key);
-
-private:
-    bool Init(const char *Data, size_t Size);
 
 private:
     ISLocalization();

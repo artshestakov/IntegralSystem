@@ -34,8 +34,6 @@ const size_t    MINIMUM_PASSWORD_LENGHT = 8;
 const char      SYMBOL_SPECIAL_ARRAY[] = "!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~";
 //CHARS------------------------------------------------------------------------
 const char  CHAR_NULL_TERM = '\0'; //Символ конца строки
-//LOCALIZATION-----------------------------------------------------------------
-const char  LOCALIZATION_FILE_CARAT[] = "Carat";
 //DATABASE---------------------------------------------------------------------
 const long long         DB_MAX_QUERY_TIME = 50; //Максимальное время (в милисекундах) выполнения SQL-запроса
 const char              DB_SYSTEM_NAME[] = "postgres"; //Имя системной БД

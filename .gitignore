@@ -34,3 +34,4 @@ Build.ini.tmp
 .qmake.stash
 Makefile
 ISRevision.h
+RCC.h
