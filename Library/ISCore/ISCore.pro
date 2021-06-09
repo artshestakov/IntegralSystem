@@ -22,6 +22,10 @@ OBJECTS_DIR = $$PWD/$${CONFIGURATION}-$${PLATFORM}/$${TARGET}
 
 LIBS += -lpthread -luuid -lcrypto
 
+RevisionTarget.commands = $$PWD/../../Revision.sh $$PWD/../../ $${CONFIGURATION} $${PLATFORM}
+QMAKE_EXTRA_TARGETS += RevisionTarget
+PRE_TARGETDEPS += RevisionTarget
+
 HEADERS += \
     ConvertUTF.h \
     ISAlgorithm.h \
