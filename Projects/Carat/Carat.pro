@@ -38,6 +38,10 @@ LIBS += \
 	-lcrypto \
 	-lcurl
 
+RCCTarget.commands = $$PWD/../../Components/RCC/RCC $$PWD/../../Resources && mv $$PWD/../../Components/RCC/RCC.h $$PWD/
+QMAKE_EXTRA_TARGETS += RCCTarget
+PRE_TARGETDEPS += RCCTarget
+
 SOURCES += \
     ISCaratApplication.cpp \
     ISCrashDumper.cpp \
