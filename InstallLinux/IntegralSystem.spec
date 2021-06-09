@@ -29,7 +29,6 @@ cp $INTEGRAL_SYSTEM_DIR/InstallLinux/Carat.service $RPM_BUILD_ROOT/etc/systemd/s
 cp $INTEGRAL_SYSTEM_DIR/Scripts/RemoveOldBackups.sh $RPM_BUILD_ROOT/opt/IntegralSystem
 cp $INTEGRAL_SYSTEM_DIR/Scripts/WatchTodayLog.sh $RPM_BUILD_ROOT/opt/IntegralSystem
 cp $INTEGRAL_SYSTEM_DIR/Resources/Licenses/* $RPM_BUILD_ROOT/opt/IntegralSystem/Licenses
-cp $INTEGRAL_SYSTEM_DIR/Resources/Localization/Carat.lang $RPM_BUILD_ROOT/opt/IntegralSystem
 
 %files
 /opt/IntegralSystem/*
