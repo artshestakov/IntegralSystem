@@ -134,6 +134,11 @@ std::string ISConfig::GetValueString(const std::string &SectionName, const std::
     return GetValue(SectionName, ParameterName);
 }
 //-----------------------------------------------------------------------------
+const char* ISConfig::GetCString(const std::string &SectionName, const std::string &ParameterName)
+{
+    return SimpleINI.GetValue(SectionName.c_str(), ParameterName.c_str());
+}
+//-----------------------------------------------------------------------------
 int ISConfig::GetValueInt(const std::string &SectionName, const std::string &ParameterName)
 {
     return std::stoi(GetValue(SectionName, ParameterName));

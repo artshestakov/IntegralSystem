@@ -78,8 +78,8 @@ void ISAboutDialog::CreateCommonTab()
     AddLabel(TabCommon, LANG("AboutForm.Tab.Common.Hash"), CARAT_HASH);
     AddLabel(TabCommon, LANG("AboutForm.Tab.Common.Branch"), CARAT_BRANCH_NAME);
     AddLabel(TabCommon, LANG("AboutForm.Tab.Common.QtVersion"), qVersion());
-    AddLabel(TabCommon, LANG("AboutForm.Tab.Common.Server"), ISConfig::Instance().GetValueString("Connection", "Host").c_str());
-    AddLabel(TabCommon, LANG("AboutForm.Tab.Common.Port"), ISConfig::Instance().GetValueString("Connection", "Port").c_str());
+    AddLabel(TabCommon, LANG("AboutForm.Tab.Common.Server"), ISConfig::Instance().GetCString("Connection", "Host"));
+    AddLabel(TabCommon, LANG("AboutForm.Tab.Common.Port"), ISConfig::Instance().GetCString("Connection", "Port"));
 
     LayoutCommon->addStretch();
 }
@@ -289,7 +289,7 @@ ISAuthDialog::ISAuthDialog()
 #else
     if (CheckRememberUser->GetValue().toBool())
     {
-        EditLogin->SetValue(ISConfig::Instance().GetValueString("RememberUser", "Login").c_str());
+        EditLogin->SetValue(ISConfig::Instance().GetCString("RememberUser", "Login"));
         QTimer::singleShot(100, EditPassword, &ISLineEdit::SetFocus);
     }
 #endif
@@ -352,7 +352,7 @@ void ISAuthDialog::Input()
 
     SetConnecting(true);
     if (!ISTcpConnector::Instance().Connect(
-        ISConfig::Instance().GetValueString("Connection", "Host").c_str(),
+        ISConfig::Instance().GetCString("Connection", "Host"),
         ISConfig::Instance().GetValueUShort("Connection", "Port"))) //Ошибка подключения к карату
     {
         SetConnecting(false);
@@ -489,7 +489,7 @@ ISConnectDialog::ISConnectDialog() : ISInterfaceDialogForm()
     GetMainLayout()->addLayout(FormLayout);
 
     EditServer = new ISLineEdit(this);
-    EditServer->SetValue(ISConfig::Instance().GetValueString("Connection", "Host").c_str());
+    EditServer->SetValue(ISConfig::Instance().GetCString("Connection", "Host"));
     FormLayout->addRow(LANG("ISConnectDialog.Server"), EditServer);
 
     EditPort = new ISIntegerEdit(this);
@@ -755,7 +755,7 @@ ISReconnectDialog::~ISReconnectDialog()
 void ISReconnectDialog::Timeout()
 {
     if (ISTcpConnector::Instance().Connect(
-        ISConfig::Instance().GetValueString("Connection", "Host").c_str(),
+        ISConfig::Instance().GetCString("Connection", "Host"),
         ISConfig::Instance().GetValueUShort("Connection", "Port")))
     {
         SetResult(true);
