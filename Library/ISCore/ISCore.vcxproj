@@ -133,6 +133,9 @@
       <AdditionalDependencies>
       </AdditionalDependencies>
     </Link>
+    <PreBuildEvent>
+      <Command>$(SolutionDir)Revision.cmd $(SolutionDir) $(Configuration) $(Platform)</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -155,6 +158,9 @@
       <AdditionalDependencies>
       </AdditionalDependencies>
     </Link>
+    <PreBuildEvent>
+      <Command>$(SolutionDir)Revision.cmd $(SolutionDir) $(Configuration) $(Platform)</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -177,6 +183,9 @@
       <AdditionalDependencies>
       </AdditionalDependencies>
     </Link>
+    <PreBuildEvent>
+      <Command>$(SolutionDir)Revision.cmd $(SolutionDir) $(Configuration) $(Platform)</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ConvertUTF.c" />
