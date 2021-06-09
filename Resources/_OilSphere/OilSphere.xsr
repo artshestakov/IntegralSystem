@@ -11,7 +11,8 @@
     <_SubSystems UID="{EE8684B4-F174-47F8-9124-E21029713353}" System="{F5295C29-19CC-4E94-9CD1-F2B9865D4DAB}" OrderID="7" LocalName="Автомобили" Icon="Lists" TableName="Car"/>
     <_SubSystems UID="{CA4CDA5C-34CD-445A-9B32-2E715D3CC85D}" System="{F5295C29-19CC-4E94-9CD1-F2B9865D4DAB}" OrderID="8" LocalName="Склады" Icon="Lists" TableName="Stock"/>
     <_SubSystems UID="{B435C1EC-D234-48E9-A31D-FAF156A490E7}" System="{F5295C29-19CC-4E94-9CD1-F2B9865D4DAB}" OrderID="9" LocalName="Услуги" Icon="Lists" TableName="DriverService"/>
-    <_SubSystems UID="{4F55C05B-D956-4954-BDBF-7866FF7DA8DC}" System="{F5295C29-19CC-4E94-9CD1-F2B9865D4DAB}" OrderID="10" LocalName="Периоды" Icon="Lists" TableName="Period"/>
+    <_SubSystems UID="{D7A9DDFF-2A78-4670-97C7-5009124FFFE0}" System="{F5295C29-19CC-4E94-9CD1-F2B9865D4DAB}" OrderID="10" LocalName="Операторы" Icon="Lists" TableName="Operator"/>
+    <_SubSystems UID="{4F55C05B-D956-4954-BDBF-7866FF7DA8DC}" System="{F5295C29-19CC-4E94-9CD1-F2B9865D4DAB}" OrderID="11" LocalName="Периоды" Icon="Lists" TableName="Period"/>
 
     <_Systems IsSystem="false" UID="{83EE4ECD-F1AC-4D6D-AEE5-0CE51DA940CD}" OrderID="4" LocalName="Картотека" Icon="Lists"/>
     <_SubSystems UID="{F4FA61A3-F079-440D-BA72-4C64B1DB77E8}" System="{83EE4ECD-F1AC-4D6D-AEE5-0CE51DA940CD}" OrderID="1" LocalName="Контрагенты" Icon="Lists" ClassName="ISOilSphere::CounterpartySubSystem"/>
