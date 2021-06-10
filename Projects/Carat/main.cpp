@@ -7,12 +7,11 @@
 int main(int argc, char **argv)
 {
     //Формируем аргументы приложения
-    ISArguments CMD(argc, argv);
+    ISArguments CMD;
     CMD.AddFlag("-h", "--help", "Show this help and exit");
     CMD.AddFlag("-v", "--version", "Show version and exit");
     CMD.AddFlag("-s", "--shutdown", "Shutdown service");
     CMD.AddFlag("-cc", "--config-create", "Create config");
-    CMD.GetHelp();
 
     ISCaratApplication Carat;
 
@@ -29,8 +28,6 @@ int main(int argc, char **argv)
     {
         if (CMD.IsExist("-h") || CMD.IsExist("--help")) //Показать помощь
         {
-            //std::cout << CMD.GetHelp() << std::endl;
-
 #ifdef WIN32
             std::cout << "Usage: Carat.exe [argument]" << std::endl;
 #else

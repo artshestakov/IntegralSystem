@@ -54,8 +54,6 @@ private:
 
 private:
     std::string ErrorString;
-    int ARGC;
-    char **ARGV;
     std::vector<ISArgumentItem> Vector;
 };
 //-----------------------------------------------------------------------------
