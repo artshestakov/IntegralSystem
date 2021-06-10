@@ -8,10 +8,10 @@ int main(int argc, char **argv)
 {
     //Формируем аргументы приложения
     ISArguments CMD(argc, argv);
-    CMD.AddFlag("-h", "Show this help and exit");
-    CMD.AddFlag("-v", "Show version and exit");
-    CMD.AddFlag("-s", "Shutdown service");
-    CMD.AddFlag("-c", "Create config");
+    CMD.AddFlag("-h", "--help", "Show this help and exit");
+    CMD.AddFlag("-v", "--version", "Show version and exit");
+    CMD.AddFlag("-s", "--shutdown", "Shutdown service");
+    CMD.AddFlag("-cc", "--config-create", "Create config");
 
     ISCaratApplication Carat;
 
@@ -26,19 +26,19 @@ int main(int argc, char **argv)
     }
     else //Аргументы есть - анализируем
     {
-        if (CMD.IsExist("-h")) //Показать помощь
+        if (CMD.IsExist("-h") || CMD.IsExist("--help")) //Показать помощь
         {
             Carat.ShowHelp();
         }
-        else if (CMD.IsExist("-v")) //Показать версию
+        else if (CMD.IsExist("-v") || CMD.IsExist("--version")) //Показать версию
         {
             Carat.ShowVersion();
         }
-        else if (CMD.IsExist("-s")) //Остановка службы
+        else if (CMD.IsExist("-s") || CMD.IsExist("--shutdown")) //Остановка службы
         {
             Carat.Shutdown();
         }
-        else if (CMD.IsExist("-c")) //Создание конфигурационного файла
+        else if (CMD.IsExist("-cc") || CMD.IsExist("--config-create")) //Создание конфигурационного файла
         {
             Carat.ConfigCreate();
         }

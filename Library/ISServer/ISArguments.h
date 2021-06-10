@@ -25,7 +25,8 @@ private:
 
         ISArguments::ArgumentType Type;
         bool NotNull;
-        std::string Name;
+        std::string SmallName;
+        std::string FullName;
         std::string Description;
     };
 
@@ -34,7 +35,7 @@ public:
     ~ISArguments();
 
     const std::string& GetErrorString() const;
-    void AddFlag(const std::string &Name, const std::string &Description);
+    void AddFlag(const std::string &SmallName, const std::string &FullName, const std::string &Description);
 
     bool IsExist(const char *Name);
     bool IsEmpty();

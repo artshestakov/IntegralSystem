@@ -19,11 +19,12 @@ const std::string& ISArguments::GetErrorString() const
     return ErrorString;
 }
 //-----------------------------------------------------------------------------
-void ISArguments::AddFlag(const std::string &Name, const std::string &Description)
+void ISArguments::AddFlag(const std::string &SmallName, const std::string &FullName, const std::string &Description)
 {
     ISArgumentItem ArgumentItem;
     ArgumentItem.Type = ArgumentType::Flag;
-    ArgumentItem.Name = Name;
+    ArgumentItem.SmallName = SmallName;
+    ArgumentItem.FullName = FullName;
     ArgumentItem.Description = Description;
     Vector.emplace_back(ArgumentItem);
 }
