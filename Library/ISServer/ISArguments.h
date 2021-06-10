@@ -35,6 +35,7 @@ public:
     ~ISArguments();
 
     const std::string& GetErrorString() const;
+    std::string GetHelp() const;
     void AddFlag(const std::string &SmallName, const std::string &FullName, const std::string &Description);
 
     bool IsExist(const char *Name);

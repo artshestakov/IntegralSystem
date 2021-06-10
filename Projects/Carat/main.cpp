@@ -12,6 +12,7 @@ int main(int argc, char **argv)
     CMD.AddFlag("-v", "--version", "Show version and exit");
     CMD.AddFlag("-s", "--shutdown", "Shutdown service");
     CMD.AddFlag("-cc", "--config-create", "Create config");
+    CMD.GetHelp();
 
     ISCaratApplication Carat;
 
@@ -28,7 +29,22 @@ int main(int argc, char **argv)
     {
         if (CMD.IsExist("-h") || CMD.IsExist("--help")) //Показать помощь
         {
-            Carat.ShowHelp();
+            //std::cout << CMD.GetHelp() << std::endl;
+
+#ifdef WIN32
+            std::cout << "Usage: Carat.exe [argument]" << std::endl;
+#else
+            std::cout << "Usage: ./Carat [argument]" << std::endl;
+#endif
+            std::cout << std::endl;
+            std::cout << CMD.GetHelp() << std::endl;
+            std::cout << std::endl;
+#ifdef WIN32
+            std::cout << "Example: Carat.exe (service mode)" << std::endl;
+#else
+            std::cout << "Example: ./Carat (service mode)" << std::endl;
+#endif
+            std::cout << "* No arguments needed to start in service mode" << std::endl;
         }
         else if (CMD.IsExist("-v") || CMD.IsExist("--version")) //Показать версию
         {

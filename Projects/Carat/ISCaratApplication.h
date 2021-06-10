@@ -16,7 +16,6 @@ public:
     bool Init(); //Инициализация
     int Start(); //Запуск службы
 
-    void ShowHelp();
     void ShowVersion();
     void Shutdown();
     void ConfigCreate();

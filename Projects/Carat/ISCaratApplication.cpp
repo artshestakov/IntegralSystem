@@ -240,28 +240,6 @@ int ISCaratApplication::Start()
     return EXIT_SUCCESS;
 }
 //-----------------------------------------------------------------------------
-void ISCaratApplication::ShowHelp()
-{
-#ifdef WIN32
-    ISDEBUG_L("Usage: Carat.exe [argument]");
-#else
-    ISDEBUG_L("Usage: ./Carat [argument]");
-#endif
-    ISDEBUG;
-    ISDEBUG_L("Arguments:");
-    ISDEBUG_L("  -h,\t--help\t\t\tshow this help and exit");
-    ISDEBUG_L("  -v,\t--version\t\tshow version and exit");
-    ISDEBUG_L("  -s,\t--shutdown\t\tshutdown service");
-    ISDEBUG_L("  -cc,\t--conf-create\t\tcreate config");
-    ISDEBUG;
-#ifdef WIN32
-    ISDEBUG_L("Example: Carat.exe (service mode)");
-#else
-    ISDEBUG_L("Example: ./Carat (service mode)");
-#endif
-    ISDEBUG_L("* No arguments needed to start in service mode");
-}
-//-----------------------------------------------------------------------------
 void ISCaratApplication::ShowVersion()
 {
     ISDEBUG_L(ISAlgorithm::StringF("Carat (%d) %s %s from %s %s\n%s (%s)",
