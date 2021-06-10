@@ -26,11 +26,7 @@ ISConfig::ISConfig()
         { CONFIG_TEMPLATE_CLIENT, "Connection",     "Host",     CONFIG_TYPE_STRING, true,   std::string(),                  0, 0 },
         { CONFIG_TEMPLATE_CLIENT, "Connection",     "Port",     CONFIG_TYPE_INT,    true,   std::to_string(CARAT_TCP_PORT), 1, UINT16_MAX },
         { CONFIG_TEMPLATE_CLIENT, "RememberUser",   "Include",  CONFIG_TYPE_BOOL,   true,   "false",                        0, 0 },
-        { CONFIG_TEMPLATE_CLIENT, "RememberUser",   "Login",    CONFIG_TYPE_STRING, true,   std::string(),                  0, 0 },
-
-        //Тестовый шаблон
-        { CONFIG_TEMPLATE_TESTER, "Connection",     "Host",     CONFIG_TYPE_STRING, true,   std::string(),                  0, 0 },
-        { CONFIG_TEMPLATE_TESTER, "Connection",     "Port",     CONFIG_TYPE_INT,    true,   std::to_string(CARAT_TCP_PORT), 1, UINT16_MAX }
+        { CONFIG_TEMPLATE_CLIENT, "RememberUser",   "Login",    CONFIG_TYPE_STRING, true,   std::string(),                  0, 0 }
     };
     CRITICAL_SECTION_INIT(&CriticalSection);
 }
