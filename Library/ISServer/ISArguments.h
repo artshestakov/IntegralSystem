@@ -36,7 +36,8 @@ public:
     const std::string& GetErrorString() const;
     void AddFlag(const std::string &Name, const std::string &Description);
 
-    bool Exist(const char *Name);
+    bool IsExist(const char *Name);
+    bool IsEmpty();
 
 private:
     std::string ErrorString;

@@ -8,29 +8,27 @@
 class ISCaratApplication
 {
 public:
-    ISCaratApplication(int argc, char **argv);
+    ISCaratApplication();
     ~ISCaratApplication();
 
     const std::string& GetErrorString() const;
-    bool GetServiceMode() const;
 
-    bool Init();
-    int Start();
+    bool Init(); //Инициализация
+    int Start(); //Запуск службы
+
+    void ShowHelp();
+    void ShowVersion();
+    void Shutdown();
+    void ConfigCreate();
 
 private:
     bool CheckRunning(bool &AlreadyRunning);
     void ShutdownController();
-    void Shutdown();
-    void Help();
-    void Version();
-    void ConfigCreate();
 
 private:
     std::string ErrorString;
     bool IsRunning;
-    bool ServiceMode; //Флаг работы как служба
     ISCriticalSection CriticalSection;
-    ISVectorString Arguments;
     std::string FileShutdown;
     bool TCPServer;
 };

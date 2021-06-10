@@ -28,7 +28,7 @@ void ISArguments::AddFlag(const std::string &Name, const std::string &Descriptio
     Vector.emplace_back(ArgumentItem);
 }
 //-----------------------------------------------------------------------------
-bool ISArguments::Exist(const char *Name)
+bool ISArguments::IsExist(const char *Name)
 {
     for (int i = 1; i < ARGC; ++i)
     {
@@ -38,5 +38,10 @@ bool ISArguments::Exist(const char *Name)
         }
     }
     return false;
+}
+//-----------------------------------------------------------------------------
+bool ISArguments::IsEmpty()
+{
+    return ARGC == 1;
 }
 //-----------------------------------------------------------------------------
