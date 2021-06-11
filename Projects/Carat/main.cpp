@@ -12,6 +12,11 @@ int main(int argc, char **argv)
     CMD.AddFlag("-v", "--version", "Show version and exit");
     CMD.AddFlag("-s", "--shutdown", "Shutdown service");
     CMD.AddFlag("-cc", "--config-create", "Create config");
+    if (!CMD.Parse(argc, argv))
+    {
+        std::cout << CMD.GetErrorString() << std::endl;
+        return EXIT_FAILURE;
+    }
 
     ISCaratApplication Carat;
 

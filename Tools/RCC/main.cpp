@@ -2,6 +2,7 @@
 #include <vector>
 #include <algorithm>
 #include <chrono>
+#include "ISArguments.h"
 //-----------------------------------------------------------------------------
 #ifdef WIN32
 #include <windows.h>
@@ -18,10 +19,10 @@
 #include "System.h"
 //-----------------------------------------------------------------------------
 bool IsVerbose = false;
+std::string PathDir;
 std::string PathFileOut;
 //-----------------------------------------------------------------------------
-bool CheckArguments(int argc, char **argv, std::string &PathDir); //Проверка аргументов
-void ShowHelp(); //Вывод справки на консоль
+bool CheckDirPath(); //Проверка аргументов
 bool GetFilesPath(const std::string &DirPath, std::vector<std::string> &VectorFiles); //Чтение содержимого папки
 bool ReadFiles(const std::vector<std::string> &VectorFiles, size_t PathDirSize);
 bool ReadFile(const std::string &PathFile, FILE *FileOut, size_t PathDirSize);
@@ -32,9 +33,31 @@ int main(int argc, char **argv)
     //Установим кодироку на всякий случай
     setlocale(LC_ALL, "Russian");
 
-    //Проверим аргументы
-    std::string PathDir;
-    if (!CheckArguments(argc, argv, PathDir))
+    ISArguments CMD;
+    CMD.AddFlag("-h", "--help", "Show this message");
+    CMD.AddFlag("-v", "--verbose", "Verbose message mode");
+    CMD.AddParameter("-d", "--dir", "Resource directory");
+    CMD.AddParameter("-o", "--output", "Output file path");
+    if (!CMD.Parse(argc, argv))
+    {
+        printf("%s\n", CMD.GetErrorString().c_str());
+        return EXIT_FAILURE;
+    }
+
+    if (CMD.IsExist("-h"))
+    {
+        printf("RCC - resource generation utility.\n");
+        printf("%s\n", CMD.GetHelp().c_str());
+        return EXIT_SUCCESS;
+    }
+
+    //Получим значения аргументов
+    IsVerbose = CMD.IsExist("-v");
+    PathDir = CMD.GetValue("-d");
+    PathFileOut = CMD.GetValue("-o");
+
+    //Проверим папку с ресурсами
+    if (!CheckDirPath())
     {
         return EXIT_FAILURE;
     }
@@ -46,17 +69,6 @@ int main(int argc, char **argv)
         return EXIT_FAILURE;
     }
 
-    //Формируем путь выходного файла
-    PathFileOut = argv[0];
-    size_t Pos = PathFileOut.rfind(PATH_SEPARATOR);
-    if (Pos == std::string::npos)
-    {
-        printf("Invalid path %s\n", PathFileOut.c_str());
-        return EXIT_FAILURE;
-    }
-    PathFileOut.erase(Pos + 1, PathFileOut.size() - Pos - 1);
-    PathFileOut.append("RCC.h");
-
     //Читаем файлы
     if (!ReadFiles(VectorFiles, PathDir.size()))
     {
@@ -65,34 +77,8 @@ int main(int argc, char **argv)
     return EXIT_SUCCESS;
 }
 //-----------------------------------------------------------------------------
-bool CheckArguments(int argc, char **argv, std::string &PathDir)
+bool CheckDirPath()
 {
-    if (argc < 2) //Если параметры не указаны - считаем ошибкой
-    {
-        std::cout << "Dir path not specified" << std::endl;
-        ShowHelp();
-        return false;
-    }
-
-    //Обойдём аргументы
-    --argc;
-    for (int i = 1; i < argc; ++i)
-    {
-        const char *Argument = argv[i];
-        if (strcmp(Argument, "-v") == 0 || strcmp(Argument, "--verbose") == 0)
-        {
-            IsVerbose = true;
-        }
-        else
-        {
-            printf("Argument \"%s\" not support\n", Argument);
-            return false;
-        }
-    }
-
-    //Вытаскиваем путь к директории
-    PathDir = argv[argc];
-
     //Проверим существование такого пути
 #ifdef WIN32
     bool PathExist = PathFileExists(PathDir.c_str()) == TRUE;
@@ -130,29 +116,6 @@ bool CheckArguments(int argc, char **argv, std::string &PathDir)
         PathDir.push_back(PATH_SEPARATOR);
     }
     return true;
-}
-//-----------------------------------------------------------------------------
-void ShowHelp()
-{
-    printf("RCC - resource generation utility.\n");
-    printf("\n");
-    printf("Using:\n");
-#ifdef WIN32
-    printf("  RCC.exe [OPTION]... [DIR_PATH]\n");
-#else
-    printf("  ./RCC [OPTION]... [DIR_PATH]\n");
-#endif
-    printf("\n");
-    printf("Options:\n");
-    printf("  -v,--verbose    show more info\n");
-    printf("  -h,--help       show this help info\n");
-    printf("\n");
-    printf("Example:\n");
-#ifdef WIN32
-    printf("  RCC.exe --verbose C:\\path\\to\\dir\n");
-#else
-    printf("  ./RCC --verbose /path/to/dir\n");
-#endif
 }
 //-----------------------------------------------------------------------------
 bool GetFilesPath(const std::string &DirPath, std::vector<std::string> &VectorFiles)
@@ -265,9 +228,10 @@ bool ReadFiles(const std::vector<std::string> &VectorFiles, size_t PathDirSize)
     fflush(FileOut);
     fclose(FileOut);
 
-    printf("Complete with " CHRONO_FORMAT " msec. Files: %zu. Size: %ld (%.3f MB).\n",
+    printf("Complete with " CHRONO_FORMAT " msec. Files: %zu. Size: %ld (%.3f MB).\n"
+        "Output file: %s\n",
         std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - TimeStart).count(),
-        VectorFiles.size(), FileOutSize, ((double)FileOutSize / (double)1000) / (double)1024);
+        VectorFiles.size(), FileOutSize, ((double)FileOutSize / (double)1000) / (double)1024, PathFileOut.c_str());
     return true;
 }
 //-----------------------------------------------------------------------------
