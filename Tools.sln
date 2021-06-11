@@ -13,6 +13,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BackuperDB", "Tools\Backupe
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Resourcer", "Tools\Resourcer\Resourcer.vcxproj", "{3D9434D7-66C2-4126-93D6-B015764156A8}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RCC", "Tools\RCC\RCC.vcxproj", "{8CA1B204-063A-46F9-907A-A49B8FB65D2F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -61,6 +63,14 @@ Global
 		{3D9434D7-66C2-4126-93D6-B015764156A8}.Release|Win32.Build.0 = Release|Win32
 		{3D9434D7-66C2-4126-93D6-B015764156A8}.Release|x64.ActiveCfg = Release|x64
 		{3D9434D7-66C2-4126-93D6-B015764156A8}.Release|x64.Build.0 = Release|x64
+		{8CA1B204-063A-46F9-907A-A49B8FB65D2F}.Debug|Win32.ActiveCfg = Debug|Win32
+		{8CA1B204-063A-46F9-907A-A49B8FB65D2F}.Debug|Win32.Build.0 = Debug|Win32
+		{8CA1B204-063A-46F9-907A-A49B8FB65D2F}.Debug|x64.ActiveCfg = Debug|x64
+		{8CA1B204-063A-46F9-907A-A49B8FB65D2F}.Debug|x64.Build.0 = Debug|x64
+		{8CA1B204-063A-46F9-907A-A49B8FB65D2F}.Release|Win32.ActiveCfg = Release|Win32
+		{8CA1B204-063A-46F9-907A-A49B8FB65D2F}.Release|Win32.Build.0 = Release|Win32
+		{8CA1B204-063A-46F9-907A-A49B8FB65D2F}.Release|x64.ActiveCfg = Release|x64
+		{8CA1B204-063A-46F9-907A-A49B8FB65D2F}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
