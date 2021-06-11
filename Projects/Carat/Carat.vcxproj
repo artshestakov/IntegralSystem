@@ -104,7 +104,7 @@
       <TreatWarningAsError>true</TreatWarningAsError>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <MinimalRebuild>false</MinimalRebuild>
-      <AdditionalIncludeDirectories>$(SolutionDir);$(ProjectDir)..\..\Components\RapidJSON;$(ProjectDir)..\..\Components\PostgreSQL\12.0.5\Include;$(ProjectDir)..\..\Components\CURL\Include;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISServer;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir);$(ProjectDir)..\..\Components\Arguments;$(ProjectDir)..\..\Components\RapidJSON;$(ProjectDir)..\..\Components\PostgreSQL\12.0.5\Include;$(ProjectDir)..\..\Components\CURL\Include;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISServer;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -120,8 +120,8 @@
       <Command>$(ProjectDir)..\..\Components\Resourcer\Release-x64\Resourcer.exe $(ProjectDir)..\..\Resources
 MOVE $(ProjectDir)..\..\Components\Resourcer\Release-x64\Resources.bin $(ProjectDir)..\..\Bin\$(Configuration)-$(Platform)\Resources.bin
 
-$(ProjectDir)..\..\Components\RCC\RCC.exe $(ProjectDir)..\..\Resources
-MOVE $(ProjectDir)..\..\Components\RCC\RCC.h $(ProjectDir)RCC.h</Command>
+$(ProjectDir)..\..\Components\RCC\Release-x64\RCC.exe $(ProjectDir)..\..\Resources
+MOVE $(ProjectDir)..\..\Components\RCC\Release-x64\RCC.h $(ProjectDir)RCC.h</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -135,7 +135,7 @@ MOVE $(ProjectDir)..\..\Components\RCC\RCC.h $(ProjectDir)RCC.h</Command>
       <TreatWarningAsError>true</TreatWarningAsError>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <MinimalRebuild>false</MinimalRebuild>
-      <AdditionalIncludeDirectories>$(SolutionDir);$(ProjectDir)..\..\Components\RapidJSON;$(ProjectDir)..\..\Components\PostgreSQL\12.0.5\Include;$(ProjectDir)..\..\Components\CURL\Include;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISServer;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir);$(ProjectDir)..\..\Components\Arguments;$(ProjectDir)..\..\Components\RapidJSON;$(ProjectDir)..\..\Components\PostgreSQL\12.0.5\Include;$(ProjectDir)..\..\Components\CURL\Include;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISServer;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -151,8 +151,8 @@ MOVE $(ProjectDir)..\..\Components\RCC\RCC.h $(ProjectDir)RCC.h</Command>
       <Command>$(ProjectDir)..\..\Components\Resourcer\Release-x64\Resourcer.exe $(ProjectDir)..\..\Resources
 MOVE $(ProjectDir)..\..\Components\Resourcer\Release-x64\Resources.bin $(ProjectDir)..\..\Bin\$(Configuration)-$(Platform)\Resources.bin
 
-$(ProjectDir)..\..\Components\RCC\RCC.exe $(ProjectDir)..\..\Resources
-MOVE $(ProjectDir)..\..\Components\RCC\RCC.h $(ProjectDir)RCC.h</Command>
+$(ProjectDir)..\..\Components\RCC\Release-x64\RCC.exe $(ProjectDir)..\..\Resources
+MOVE $(ProjectDir)..\..\Components\RCC\Release-x64\RCC.h $(ProjectDir)RCC.h</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -167,7 +167,7 @@ MOVE $(ProjectDir)..\..\Components\RCC\RCC.h $(ProjectDir)RCC.h</Command>
       <SDLCheck>true</SDLCheck>
       <TreatWarningAsError>true</TreatWarningAsError>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>$(SolutionDir);$(ProjectDir)..\..\Components\RapidJSON;$(ProjectDir)..\..\Components\PostgreSQL\12.0.5\Include;$(ProjectDir)..\..\Components\CURL\Include;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISServer;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir);$(ProjectDir)..\..\Components\Arguments;$(ProjectDir)..\..\Components\RapidJSON;$(ProjectDir)..\..\Components\PostgreSQL\12.0.5\Include;$(ProjectDir)..\..\Components\CURL\Include;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISServer;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -185,8 +185,8 @@ MOVE $(ProjectDir)..\..\Components\RCC\RCC.h $(ProjectDir)RCC.h</Command>
       <Command>$(ProjectDir)..\..\Components\Resourcer\Release-x64\Resourcer.exe $(ProjectDir)..\..\Resources
 MOVE $(ProjectDir)..\..\Components\Resourcer\Release-x64\Resources.bin $(ProjectDir)..\..\Bin\$(Configuration)-$(Platform)\Resources.bin
 
-$(ProjectDir)..\..\Components\RCC\RCC.exe $(ProjectDir)..\..\Resources
-MOVE $(ProjectDir)..\..\Components\RCC\RCC.h $(ProjectDir)RCC.h</Command>
+$(ProjectDir)..\..\Components\RCC\Release-x64\RCC.exe $(ProjectDir)..\..\Resources
+MOVE $(ProjectDir)..\..\Components\RCC\Release-x64\RCC.h $(ProjectDir)RCC.h</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -201,7 +201,7 @@ MOVE $(ProjectDir)..\..\Components\RCC\RCC.h $(ProjectDir)RCC.h</Command>
       <SDLCheck>true</SDLCheck>
       <TreatWarningAsError>true</TreatWarningAsError>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>$(SolutionDir);$(ProjectDir)..\..\Components\RapidJSON;$(ProjectDir)..\..\Components\PostgreSQL\12.0.5\Include;$(ProjectDir)..\..\Components\CURL\Include;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISServer;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir);$(ProjectDir)..\..\Components\Arguments;$(ProjectDir)..\..\Components\RapidJSON;$(ProjectDir)..\..\Components\PostgreSQL\12.0.5\Include;$(ProjectDir)..\..\Components\CURL\Include;$(ProjectDir)..\..\Library\ISCore;$(ProjectDir)..\..\Library\ISServer;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -219,11 +219,12 @@ MOVE $(ProjectDir)..\..\Components\RCC\RCC.h $(ProjectDir)RCC.h</Command>
       <Command>$(ProjectDir)..\..\Components\Resourcer\Release-x64\Resourcer.exe $(ProjectDir)..\..\Resources
 MOVE $(ProjectDir)..\..\Components\Resourcer\Release-x64\Resources.bin $(ProjectDir)..\..\Bin\$(Configuration)-$(Platform)\Resources.bin
 
-$(ProjectDir)..\..\Components\RCC\RCC.exe $(ProjectDir)..\..\Resources
-MOVE $(ProjectDir)..\..\Components\RCC\RCC.h $(ProjectDir)RCC.h</Command>
+$(ProjectDir)..\..\Components\RCC\Release-x64\RCC.exe $(ProjectDir)..\..\Resources
+MOVE $(ProjectDir)..\..\Components\RCC\Release-x64\RCC.h $(ProjectDir)RCC.h</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Components\Arguments\ISArguments.cpp" />
     <ClCompile Include="ISBlockedIP.cpp" />
     <ClCompile Include="ISCaratApplication.cpp" />
     <ClCompile Include="ISCrashDumper.cpp" />
@@ -241,6 +242,7 @@ MOVE $(ProjectDir)..\..\Components\RCC\RCC.h $(ProjectDir)RCC.h</Command>
     <ClCompile Include="StackWalker.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Components\Arguments\ISArguments.h" />
     <ClInclude Include="ISBlockedIP.h" />
     <ClInclude Include="ISCaratApplication.h" />
     <ClInclude Include="ISCrashDumper.h" />

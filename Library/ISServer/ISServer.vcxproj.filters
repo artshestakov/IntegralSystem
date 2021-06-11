@@ -31,9 +31,6 @@
     <ClCompile Include="ISMetaData.cpp">
       <Filter>MetaData</Filter>
     </ClCompile>
-    <ClCompile Include="ISArguments.cpp">
-      <Filter>System</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ISDatabase.h">
@@ -56,9 +53,6 @@
     </ClInclude>
     <ClInclude Include="PMetaClass.h">
       <Filter>MetaData</Filter>
-    </ClInclude>
-    <ClInclude Include="ISArguments.h">
-      <Filter>System</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

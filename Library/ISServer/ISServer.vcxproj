@@ -19,7 +19,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ISArguments.cpp" />
     <ClCompile Include="ISConfigurations.cpp" />
     <ClCompile Include="ISConsole.cpp" />
     <ClCompile Include="ISDatabase.cpp" />
@@ -28,7 +27,6 @@
     <ClCompile Include="ISQueryText.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ISArguments.h" />
     <ClInclude Include="ISConfigurations.h" />
     <ClInclude Include="ISConsole.h" />
     <ClInclude Include="ISDatabase.h" />

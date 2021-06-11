@@ -2,8 +2,6 @@
 #ifndef _ISARGUMENTS_H_INCLUDED
 #define _ISARGUMENTS_H_INCLUDED
 //-----------------------------------------------------------------------------
-#include "StdAfx.h"
-//-----------------------------------------------------------------------------
 class ISArguments
 {
 public:
@@ -54,6 +52,7 @@ private:
 
 private:
     std::string ErrorString;
+    int ARGC;
     std::vector<ISArgumentItem> Vector;
 };
 //-----------------------------------------------------------------------------

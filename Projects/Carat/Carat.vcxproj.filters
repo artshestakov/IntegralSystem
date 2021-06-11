@@ -64,6 +64,9 @@
     <ClCompile Include="ISCrashDumper.cpp">
       <Filter>StackWalker</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Components\Arguments\ISArguments.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ISCaratApplication.h">
@@ -110,6 +113,9 @@
     </ClInclude>
     <ClInclude Include="RCC.h">
       <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Components\Arguments\ISArguments.h">
+      <Filter>System</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

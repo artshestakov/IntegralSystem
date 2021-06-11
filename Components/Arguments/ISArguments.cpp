@@ -1,9 +1,11 @@
+#include <string>
+#include <vector>
 #include "ISArguments.h"
-#include "ISConstants.h"
-#include "ISAlgorithm.h"
+//#include "ISConstants.h"
+//#include "ISAlgorithm.h"
 //-----------------------------------------------------------------------------
 ISArguments::ISArguments()
-    : ErrorString(STRING_NO_ERROR)
+    : ARGC(0)
 {
 
 }
@@ -20,6 +22,7 @@ const std::string& ISArguments::GetErrorString() const
 //-----------------------------------------------------------------------------
 std::string ISArguments::GetHelp() const
 {
+    char Buffer[1024] = { 0 };
     std::string Result = "Arguments:\n";
     for (const ISArgumentItem &Item : Vector)
     {
@@ -28,10 +31,11 @@ std::string ISArguments::GetHelp() const
         {
             FullName.append("=[VALUE]");
         }
-        Result.append(ISAlgorithm::StringF("  %s,\t%-25s%-20s%\n",
-            Item.SmallName.c_str(), FullName.c_str(), Item.Description.c_str()));
+        sprintf(Buffer, "  %s,\t%-25s%-20s\n",
+            Item.SmallName.c_str(), FullName.c_str(), Item.Description.c_str());
+        Result.append(Buffer);
     }
-    ISAlgorithm::StringChop(Result, 1);
+    Result.pop_back();
     return Result;
 }
 //-----------------------------------------------------------------------------
@@ -53,15 +57,15 @@ bool ISArguments::Parse(int argc, char **argv)
         //Проверяем, есть ли символ '=' в текущем аргументе
         std::string Argument(argv[i]), Value;
         Pos = Argument.find('=');
-        if (Pos != NPOS) //Символ есть - считаем что значение есть
+        if (Pos != std::string::npos) //Символ есть - считаем что значение есть
         {
             Value = Argument.substr(Pos + 1, Argument.size() - Pos - 1);
-            ISAlgorithm::StringChop(Argument, Argument.size() - Pos);
+            Argument.erase(Argument.begin() + Pos, Argument.end());
 
             //Если значение пустое - ошибка
             if (Value.empty())
             {
-                ErrorString = ISAlgorithm::StringF("Empty value parameter \"%s\"", Argument.c_str());
+                ErrorString = "Empty value parameter \"" + Argument + "\"", Argument;
                 return false;
             }
         }
@@ -71,28 +75,28 @@ bool ISArguments::Parse(int argc, char **argv)
         ArgumentType Type = ArgumentType::Unknown;
         if (!ExistInVector(Argument, Type))
         {
-            ErrorString = ISAlgorithm::StringF("Argument \"%s\" not support",
-                Argument.c_str());
+            ErrorString = "Argument \"" + Argument + "\" not support";
             return false;
         }
 
         //Запрещаем указание параметров для флагов
         //Ситуация, когда усовный флаг -t имеет значение. Такого быть не должно
-        if (Pos != NPOS && Type == ArgumentType::Flag)
+        if (Pos != std::string::npos && Type == ArgumentType::Flag)
         {
-            ErrorString = ISAlgorithm::StringF("Illegal value \"%s\" from flag \"%s\"",
-                Value.c_str(), Argument.c_str());
+            ErrorString = "Illegal value \"" + Value + "\" from flag \"" + Argument + "\"";
             return false;
         }
 
         //Установим значение для параметра
-        if (Pos != NPOS)
+        if (Pos != std::string::npos)
         {
             SetValue(Argument, Value);
         }
 
         //Установим, что такой аргумент включён
         SetEnabled(Argument);
+
+        ++ARGC; //Увеличим количество аргументов
     }
     return true;
 }
@@ -111,7 +115,7 @@ bool ISArguments::IsExist(const std::string &Name)
 //-----------------------------------------------------------------------------
 bool ISArguments::IsEmpty()
 {
-    return ARGC == 1;
+    return ARGC == 0;
 }
 //-----------------------------------------------------------------------------
 std::string ISArguments::GetValue(const std::string &Name)
