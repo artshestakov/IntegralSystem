@@ -9,7 +9,7 @@ CONFIG(debug, debug|release){
     CONFIGURATION = Release
 }
 
-DESTDIR = $$PWD/../Bin/$${CONFIGURATION}-Linux64
+DESTDIR = $$PWD/../../Components/$${TARGET}/$${CONFIGURATION}-Linux64
 MOC_DIR = $$PWD/$${CONFIGURATION}-Linux64/$${TARGET}
 OBJECTS_DIR = $$PWD/$${CONFIGURATION}-Linux64/$${TARGET}
 
