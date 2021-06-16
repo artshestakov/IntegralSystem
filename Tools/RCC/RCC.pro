@@ -13,9 +13,13 @@ DESTDIR = $$PWD/../../Components/$${TARGET}/$${CONFIGURATION}-Linux64
 MOC_DIR = $$PWD/$${CONFIGURATION}-Linux64/$${TARGET}
 OBJECTS_DIR = $$PWD/$${CONFIGURATION}-Linux64/$${TARGET}
 
+INCLUDEPATH += $$PWD/../../Components/Arguments
 INCLUDEPATH += .
 
-SOURCES += \
-    main.cpp \
-	System.h
+HEADERS += \
+    ../../Components/Arguments/ISArguments.h \
+    System.h
 
+SOURCES += \
+    ../../Components/Arguments/ISArguments.cpp \
+    main.cpp
