@@ -51,6 +51,7 @@ void ISOilSphere::Object::RegisterMetaTypes() const
     qRegisterMetaType<ISOilSphere::ReturnObjectForm*>("ISOilSphere::ReturnObjectForm");
     qRegisterMetaType<ISOilSphere::BankListForm*>("ISOilSphere::BankListForm");
     qRegisterMetaType<ISOilSphere::ComingSubSystem*>("ISOilSphere::ComingSubSystem");
+    qRegisterMetaType<ISOilSphere::ConsumptionDebitObjectForm*>("ISOilSphere::ConsumptionDebitObjectForm");
 }
 //-----------------------------------------------------------------------------
 void ISOilSphere::Object::BeforeShowMainWindow() const
@@ -1182,6 +1183,7 @@ void ISOilSphere::ConsumptionAllSubSystem::LoadData()
     LabelTitle->setText(LANG_FMT("OilSphere.TotalBalance",
         AnswerMap["TotalComing"].toString().toStdString().c_str(),
         AnswerMap["TotalConsumption"].toString().toStdString().c_str(),
+        AnswerMap["TotalConsumptionDebet"].toString().toStdString().c_str(),
         AnswerMap["Balance"].toString().toStdString().c_str()));
 }
 //-----------------------------------------------------------------------------
@@ -1407,5 +1409,24 @@ void ISOilSphere::ComingSubSystem::LoadData()
 {
     EntrollmentListForm->LoadData();
     ComingListForm->LoadData();
+}
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+ISOilSphere::ConsumptionDebitObjectForm::ConsumptionDebitObjectForm(ISNamespace::ObjectFormType form_type, PMetaTable *meta_table, QWidget *parent, int object_id)
+    : ISObjectFormBase(form_type, meta_table, parent, object_id)
+{
+
+}
+//-----------------------------------------------------------------------------
+ISOilSphere::ConsumptionDebitObjectForm::~ConsumptionDebitObjectForm()
+{
+
+}
+//-----------------------------------------------------------------------------
+bool ISOilSphere::ConsumptionDebitObjectForm::Save()
+{
+    AddVirtualField("UserFrom", CURRENT_USER_ID);
+    return ISObjectFormBase::Save();
 }
 //-----------------------------------------------------------------------------

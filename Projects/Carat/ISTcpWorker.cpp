@@ -463,8 +463,9 @@ static std::string QS_USER_RETURN = PREPARE_QUERYN("SELECT rtrn_date, rtrn_sum, 
 //-----------------------------------------------------------------------------
 static std::string QS_TOTAL_BALANCE = PREPARE_QUERY("SELECT "
     "(SELECT COALESCE(sum(cmng_sum), 0) FROM coming) + "
-    "(SELECT COALESCE(sum(cpen_sum), 0) FROM counterpartyenrollment WHERE cpen_sendtocoming) AS total_coming,"
-    "(SELECT COALESCE(sum(cpmp_sum), 0) AS total_consumption FROM consumption)");
+    "(SELECT COALESCE(sum(cpen_sum), 0) FROM counterpartyenrollment WHERE cpen_sendtocoming) AS total_coming, "
+    "(SELECT COALESCE(sum(cpmp_sum), 0) AS total_consumption FROM consumption), "
+    "(SELECT COALESCE(sum(cdbt_sum), 0) AS total_consumption_debet FROM consumptiondebit)");
 //-----------------------------------------------------------------------------
 static std::string QS_BANK = PREPARE_QUERY("SELECT COUNT(*) "
     "FROM bank "
@@ -4815,6 +4816,7 @@ bool ISTcpWorker::OilSphere_GetUserConsumption(ISTcpMessage *TcpMessage, ISTcpAn
             ReturnObject.AddMember("Date", JSON_STRINGA(Date.c_str(), Allocator), Allocator);
             ReturnObject.AddMember("Sum", qSelectUserReturn.ReadColumn_Double(1), Allocator);
             ReturnObject.AddMember("Note", JSON_STRINGA(Note.c_str(), Allocator), Allocator);
+            ReturnArray.PushBack(ReturnObject, Allocator);
         }
 
         const char *UserFIO = qSelectUsers.ReadColumn(1);
@@ -4838,10 +4840,12 @@ bool ISTcpWorker::OilSphere_GetUserConsumption(ISTcpMessage *TcpMessage, ISTcpAn
     qSelectTotalBalance.First();
 
     double TotalComing = qSelectTotalBalance.ReadColumn_Double(0),
-        TotalConsumption = qSelectTotalBalance.ReadColumn_Double(1);
+        TotalConsumption = qSelectTotalBalance.ReadColumn_Double(1),
+        TotalConsumptionDebet = qSelectTotalBalance.ReadColumn_Double(2);
     TcpAnswer->Parameters.AddMember("TotalComing", TotalComing, Allocator);
     TcpAnswer->Parameters.AddMember("TotalConsumption", TotalConsumption, Allocator);
-    TcpAnswer->Parameters.AddMember("Balance", TotalComing - TotalConsumption, Allocator);
+    TcpAnswer->Parameters.AddMember("TotalConsumptionDebet", TotalConsumptionDebet, Allocator);
+    TcpAnswer->Parameters.AddMember("Balance", TotalComing - TotalConsumption - TotalConsumptionDebet, Allocator);
     TcpAnswer->Parameters.AddMember("UserList", UserArray, Allocator);
     return true;
 }

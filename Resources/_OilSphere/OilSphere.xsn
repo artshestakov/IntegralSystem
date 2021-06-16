@@ -256,6 +256,15 @@
         </Indexes>
     </Table>
 
+    <Table Name="DebetType" UID="{DDE0563A-FFD9-474A-A773-5E6D191DEF21}" Alias="dbtt" LocalName="Тип дебета" LocalListName="Типы дебета" TitleName="Name" ShowOnly="true">
+        <Fields>
+            <Field UID="{76002412-C10B-4E83-AEC1-546C0F68239A}" Name="Name" Type="String" LabelName="Наименование" LocalListName="Наименование" NotNull="true"/>
+        </Fields>
+        <Indexes>
+            <Index Field="Name" Unique="true"/>
+        </Indexes>
+    </Table>
+
     <Table Name="Debet1" UID="{6FD4EE55-A3F7-4E96-883E-925A948B935A}" Alias="deb1" LocalName="Дебет 1" LocalListName="Дебет 1" TitleName="DateComing" ObjectForm="ISOilSphere::Debet1ObjectForm">
         <Fields>
             <Field UID="{04482A58-63A5-4106-9D86-04A33D19C657}" Name="DateComing" Type="Date" LabelName="Дата прихода" LocalListName="Дата прихода" LayoutName="Date"/>
@@ -503,6 +512,19 @@
         </Fields>
         <Foreigns>
             <Foreign Field="User" ForeignClass="_Users" ForeignField="ID" ForeignViewNameField="FIO"/>
+        </Foreigns>
+    </Table>
+
+    <Table Name="ConsumptionDebit" UID="{A91AE145-45C0-4113-A704-219A05179DAF}" Alias="cdbt" LocalName="Расход по дебету" LocalListName="Расходы по дебетам" TitleName="Debet;Sum" ObjectForm="ISOilSphere::ConsumptionDebitObjectForm">
+        <Fields>
+            <Field UID="{75693E8C-1599-4920-9F34-6B0BB3FB0DEA}" Name="UserFrom" Type="BigInt" LabelName="Отправил" LocalListName="Отправил" NotNull="true" HideFromObject="true"/>
+            <Field UID="{195486F3-F272-40EF-9019-08C5150CA1DA}" Name="Date" Type="Date" DefaultValue="now()" LabelName="Дата" LocalListName="Дата" NotNull="true" HideFromObject="true"/>
+            <Field UID="{BB10E9F5-5BB3-46ED-AF72-DA74E2165836}" Name="Debet" Type="BigInt" LabelName="Дебет" LocalListName="Дебет" NotNull="true"/>
+            <Field UID="{043686C5-13B1-41C1-AA6F-A1627F3EE058}" Name="Sum" Type="Money" LabelName="Сумма" LocalListName="Сумма" NotNull="true"/>
+        </Fields>
+        <Foreigns>
+            <Foreign Field="UserFrom" ForeignClass="_Users" ForeignField="ID" ForeignViewNameField="FIO"/>
+            <Foreign Field="Debet" ForeignClass="DebetType" ForeignField="ID" ForeignViewNameField="Name"/>
         </Foreigns>
     </Table>
 

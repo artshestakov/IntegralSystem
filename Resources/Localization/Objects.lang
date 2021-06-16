@@ -28,7 +28,7 @@
     <Local Name="OilSphere.MyBalance" Russian="Мой баланс: %s"/>
     <Local Name="OilSphere.LoadData" Russian="Загрузить данные"/>
     <Local Name="OilSphere.TotalBalance.Null" Russian="Приход: 0 Расход: 0 Баланс: 0"/>
-    <Local Name="OilSphere.TotalBalance" Russian="Приход: %s Расход: %s Баланс: %s"/>
+    <Local Name="OilSphere.TotalBalance" Russian="Приход: %s Расход: %s Расход по дебету: %s Баланс: %s"/>
     <Local Name="OilSphere.Message.Warning.LoadCounterpartyAndStockIsEmpty" Russian="Вы не выбрали место загрузки."/>
     <Local Name="OilSphere.Message.Warning.LoadCounterpartyAndStockNotIsEmpty" Russian="Нужно выбрать только одно место загрузки."/>
     <Local Name="OilSphere.Message.Warning.UnloadCounterpartyAndStockIsEmpty" Russian="Вы не выбрали место выгрузки."/>

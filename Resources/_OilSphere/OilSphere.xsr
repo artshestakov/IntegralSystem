@@ -30,6 +30,7 @@
     <_SubSystems UID="{5EAC927D-429D-43E8-A7A0-48EF1748F189}" System="{6BA94FDF-8469-4731-8498-5A7481400406}" OrderID="3" LocalName="Мои возвраты" Icon="Lists" ClassName="ISOilSphere::ReturnMySubSystem"/>
     <_SubSystems UID="{0078D151-9DFD-4A9B-8292-1BF94B494D2B}" System="{6BA94FDF-8469-4731-8498-5A7481400406}" OrderID="4" LocalName="Распределение д/с" Icon="Lists" TableName="Distribution"/>
     <_SubSystems UID="{DCCE40D2-1E77-4054-8933-DB8011510962}" System="{6BA94FDF-8469-4731-8498-5A7481400406}" OrderID="5" LocalName="Расходы пользователей" Icon="Lists" ClassName="ISOilSphere::ConsumptionAllSubSystem"/>
+    <_SubSystems UID="{3414F74D-6FB6-4183-BA88-8EC980910CCE}" System="{6BA94FDF-8469-4731-8498-5A7481400406}" OrderID="6" LocalName="Расходы по дебету" Icon="Lists" TableName="ConsumptionDebit"/>
 
     <_Systems IsSystem="false" UID="{A6420088-C2C2-4671-9F86-003CAC0F601C}" OrderID="7" LocalName="Прочее" Icon="Lists"/>
     <_SubSystems UID="{6CC832E2-2EE4-4388-9AF5-E49CBE1C6DE7}" System="{A6420088-C2C2-4671-9F86-003CAC0F601C}" OrderID="1" LocalName="Дебет 1" Icon="Lists" ClassName="ISOilSphere::Debet1SubSystem"/>
@@ -42,5 +43,11 @@
     <OperationType UID="{0286A244-9732-43B4-A1B2-3E434EEF04D0}" Name="Зачисление"/>
 
     <_ProtocolType IsSystem="true" UID="{85DCCA5C-723E-4E18-8286-FF33D12C6F4D}" Name="Импорт банков"/>
+
+    <DebetType UID="{86B684F6-B4D1-4C09-AEE7-F01CB5663339}" Name="Дебет 1"/>
+    <DebetType UID="{0DE0C09E-9270-46F3-A0A8-B313921EB579}" Name="Дебет 2"/>
+    <DebetType UID="{7033E924-3BE0-402A-ABBA-558D0883C4AA}" Name="Дебет 3"/>
+    <DebetType UID="{A5D9B303-CC8C-48D7-A661-0E550563D03A}" Name="Дебет 4"/>
+    <DebetType UID="{4603C069-E7E4-4AEB-898B-A747DE496D93}" Name="Дебет 5"/>
 
 </XSR>

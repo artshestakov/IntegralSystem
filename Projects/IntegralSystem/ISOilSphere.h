@@ -491,6 +491,18 @@ namespace ISOilSphere
         ISListViewForm *EntrollmentListForm;
         ISListBaseForm *ComingListForm;
     };
+
+    //Форма объекта расхода по дебету
+    class ConsumptionDebitObjectForm : public ISObjectFormBase
+    {
+        Q_OBJECT
+
+    public:
+        Q_INVOKABLE ConsumptionDebitObjectForm(ISNamespace::ObjectFormType form_type, PMetaTable *meta_table, QWidget *parent, int object_id = 0);
+        virtual ~ConsumptionDebitObjectForm();
+
+        bool Save() override;
+    };
 }
 //-----------------------------------------------------------------------------
 #endif
