@@ -317,7 +317,7 @@ bool ReadFile(const std::string &PathFile, FILE *FileOut, size_t PathDirSize)
     fprintf(FileOut, "\n\t};\n");
 
     //Добавим размер переменной и имя
-    fprintf(FileOut, "\tstatic const size_t %s_SIZE = %ld;\n", VariableName, FileSize);
+    fprintf(FileOut, "\tstatic const int %s_SIZE = %ld;\n", VariableName, FileSize);
     fprintf(FileOut, "\tstatic const char %s_NAME[] = \"%s\";\n", VariableName, VariableName);
     fflush(FileOut);
     return true;
