@@ -65,7 +65,7 @@ bool ISArguments::Parse(int argc, char **argv)
             //Если значение пустое - ошибка
             if (Value.empty())
             {
-                ErrorString = "Empty value parameter \"" + Argument + "\"", Argument;
+                ErrorString = "Empty value parameter \"" + Argument + "\"";
                 return false;
             }
         }
