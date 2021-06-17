@@ -8,7 +8,8 @@
 #include "ISQuery.h"
 #include "ISAlgorithm.h"
 #include "ISRevision.h"
-#include "ISResourcer.h"
+#include "ISConfigurations.h"
+#include "RCC.h"
 //-----------------------------------------------------------------------------
 #include "CGConfigurator.h"
 #include "CGConfiguratorCreate.h"
@@ -71,13 +72,6 @@ int main(int argc, char **argv)
     DBLogin = ISConfig::Instance().GetString("Database", "User");
     DBPassword = ISConfig::Instance().GetString("Database", "Password");
 
-    //Читаем файл ресурсов
-    if (!ISResourcer::Instance().LoadFile(ISAlgorithm::GetApplicationDir() + PATH_SEPARATOR + "Resources.bin"))
-    {
-        ISLOGGER_E("ISResourcer", "Not read resource file: %s", ISResourcer::Instance().GetErrorString().c_str());
-        return EXIT_FAILURE;
-    }
-
     if (!InitConfiguratorScheme(ErrorString))
     {
         ISLOGGER_E(__CLASS__, "Error init configurator schema: %s", ErrorString.c_str());
@@ -89,8 +83,22 @@ int main(int argc, char **argv)
         return EXIT_FAILURE;
     }
 
-    std::string ConfigrationName = ISConfig::Instance().GetString("Other", "Configuration");
-    if (!ISMetaData::Instance().Init(ConfigrationName, true, true))
+    //Выбираем активную конфигурацию
+    std::string ConfigurationName = ISConfig::Instance().GetString("Other", "Configuration");
+    if (ConfigurationName.empty()) //Имя конфигурации не указано
+    {
+        ISLOGGER_E("ISConfig", "Not specified configration name");
+        return false;
+    }
+
+    if (!ISConfigurations::Instance().Set(ConfigurationName))
+    {
+        ISLOGGER_E(__CLASS__, "Not found configuration \"%s\"", ConfigurationName.c_str());
+        return false;
+    }
+
+    //Инициализируем мета-данные
+    if (!ISMetaData::Instance().Init(true, true))
     {
         ISLOGGER_E(__CLASS__, "Initialize meta data: %s", ISMetaData::Instance().GetErrorString().c_str());
         return EXIT_FAILURE;
@@ -111,7 +119,7 @@ int main(int argc, char **argv)
             DBHost.c_str(),
             DBName.c_str(),
             DBPort,
-            ConfigrationName.c_str());
+            ConfigurationName.c_str());
         while (Result)
         {
             InterpreterMode(Result);
@@ -133,13 +141,9 @@ int main(int argc, char **argv)
 //-----------------------------------------------------------------------------
 bool InitConfiguratorScheme(std::string &ErrorString)
 {
-    //Получаем содержимое шаблона
-    unsigned long ContentSize = 0;
-    const char *Content = ISResourcer::Instance().GetFile("Other/Configurator.xml", ContentSize);
-
     //Парсим содержимое шаблона
     tinyxml2::XMLDocument XmlDocument;
-    tinyxml2::XMLError XmlError = XmlDocument.Parse(Content, ContentSize);
+    tinyxml2::XMLError XmlError = XmlDocument.Parse((const char *)RCC::OTHER_CONFIGURATOR_XML, RCC::OTHER_CONFIGURATOR_XML_SIZE);
     if (XmlError != tinyxml2::XMLError::XML_SUCCESS)
     {
         ErrorString = ISAlgorithm::StringF("Not parse Configurator.xml: %s", XmlDocument.ErrorStr());
