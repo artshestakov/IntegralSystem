@@ -57,6 +57,7 @@ bool ISCaratApplication::Init()
     //Установим обработчик ошибок
     ISCrashDumper::Install();
 
+    //Установим кодировку
     if (!ISConsole::InstallEncoding(65001, ErrorString))
     {
         ISLOGGER_W("Console", "Not setting console encoding: %s", ErrorString.c_str());
@@ -69,6 +70,7 @@ bool ISCaratApplication::Init()
         return false;
     }
 
+    //Инициализируем локализацию
     if (!ISLocalization::Instance().Init(RCC::LOCALIZATION_CARAT_LANG, RCC::LOCALIZATION_CARAT_LANG_SIZE))
     {
         ISLOGGER_E("ISLocalization", "Not init file \"%s\": %s", RCC::LOCALIZATION_CARAT_LANG_NAME, ISLocalization::Instance().GetErrorString().c_str());
@@ -121,7 +123,7 @@ bool ISCaratApplication::Init()
     }
 
     //Инициализируем мета-данные
-    if (!ISMetaData::Instance().Init(ConfigurationName, true, true))
+    if (!ISMetaData::Instance().Init(true, true))
     {
         ISLOGGER_E("ISMetaData", "Not init meta data: %s", ISMetaData::Instance().GetErrorString().c_str());
         return false;
