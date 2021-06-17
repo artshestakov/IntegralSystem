@@ -922,7 +922,11 @@ void ISListBaseForm::ShowContextMenu(const QPoint &Point)
 {
     if (!IsLoadingData)
     {
-        GetSpecialAction(ISNamespace::ActionSpecialType::Favorite)->setChecked(ISFavorites::Instance().Exist(MetaTableName, GetObjectID()));
+        //Если записи в модели есть
+        if (TcpModel->rowCount() > 0)
+        {
+            GetSpecialAction(ISNamespace::ActionSpecialType::Favorite)->setChecked(ISFavorites::Instance().Exist(MetaTableName, GetObjectID()));
+        }
         ContextMenu->exec(TableView->viewport()->mapToGlobal(Point));
     }
 }
