@@ -4,6 +4,13 @@
 //-----------------------------------------------------------------------------
 namespace ISNamespace
 {
+    enum class ConfigurationType //Типы конфигураций
+    {
+        Unknown,
+        Empty,
+        OilSphere
+    };
+
     enum class FieldType //Типы данных поля
     {
         Unknown, //Неизвестный

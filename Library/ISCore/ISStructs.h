@@ -74,6 +74,13 @@ struct ISSqlPrepare
 //-----------------------------------------------------------------------------
 struct ISConfigurationInfo
 {
+    ISConfigurationInfo()
+        : Type(ISNamespace::ConfigurationType::Unknown)
+    {
+
+    }
+
+    ISNamespace::ConfigurationType Type; //Тип конфигурации
     ISString Name; //Наименование
     ISString UID; //Идентификатор
     ISString LocalName; //Локальное наименование
@@ -131,6 +138,19 @@ struct CGSection
     std::string Name;
     std::string ClassName;
     std::vector<CGSectionItem> Items;
+};
+//-----------------------------------------------------------------------------
+struct ISResourceItem
+{
+    ISResourceItem(const unsigned char *data, int size, const char *name)
+        : Data(data), Size(size), Name(name)
+    {
+
+    }
+
+    const unsigned char *Data;
+    int Size;
+    const char *Name;
 };
 //-----------------------------------------------------------------------------
 #endif

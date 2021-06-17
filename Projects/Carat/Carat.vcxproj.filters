@@ -14,9 +14,6 @@
     <Filter Include="StackWalker">
       <UniqueIdentifier>{4692fb7b-2f1a-41ef-9945-92f8c8fec9a4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resources">
-      <UniqueIdentifier>{53b16c94-97dd-4a83-a3a1-080bf1271a11}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -110,9 +107,6 @@
     </ClInclude>
     <ClInclude Include="ISCrashDumper.h">
       <Filter>StackWalker</Filter>
-    </ClInclude>
-    <ClInclude Include="RCC.h">
-      <Filter>Resources</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Components\Arguments\ISArguments.h">
       <Filter>System</Filter>

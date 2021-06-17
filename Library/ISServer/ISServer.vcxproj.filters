@@ -11,6 +11,9 @@
     <Filter Include="MetaData">
       <UniqueIdentifier>{2f7b2111-8de0-4f5f-b5ac-7899f9027f4a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{06ecde21-5ef0-4b23-afc8-8bbdfe25971c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ISDatabase.cpp">
@@ -53,6 +56,9 @@
     </ClInclude>
     <ClInclude Include="PMetaClass.h">
       <Filter>MetaData</Filter>
+    </ClInclude>
+    <ClInclude Include="RCC.h">
+      <Filter>Resources</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

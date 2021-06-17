@@ -118,9 +118,7 @@
     </PostBuildEvent>
     <PreBuildEvent>
       <Command>$(ProjectDir)..\..\Components\Resourcer\Release-x64\Resourcer.exe $(ProjectDir)..\..\Resources
-MOVE $(ProjectDir)..\..\Components\Resourcer\Release-x64\Resources.bin $(ProjectDir)..\..\Bin\$(Configuration)-$(Platform)\Resources.bin
-
-$(ProjectDir)..\..\Components\RCC\Release-x64\RCC.exe --dir=$(ProjectDir)..\..\Resources --output=$(ProjectDir)RCC.h</Command>
+MOVE $(ProjectDir)..\..\Components\Resourcer\Release-x64\Resources.bin $(ProjectDir)..\..\Bin\$(Configuration)-$(Platform)\Resources.bin</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -148,9 +146,7 @@ $(ProjectDir)..\..\Components\RCC\Release-x64\RCC.exe --dir=$(ProjectDir)..\..\R
     </PostBuildEvent>
     <PreBuildEvent>
       <Command>$(ProjectDir)..\..\Components\Resourcer\Release-x64\Resourcer.exe $(ProjectDir)..\..\Resources
-MOVE $(ProjectDir)..\..\Components\Resourcer\Release-x64\Resources.bin $(ProjectDir)..\..\Bin\$(Configuration)-$(Platform)\Resources.bin
-
-$(ProjectDir)..\..\Components\RCC\Release-x64\RCC.exe --dir=$(ProjectDir)..\..\Resources --output=$(ProjectDir)RCC.h</Command>
+MOVE $(ProjectDir)..\..\Components\Resourcer\Release-x64\Resources.bin $(ProjectDir)..\..\Bin\$(Configuration)-$(Platform)\Resources.bin</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -181,9 +177,7 @@ $(ProjectDir)..\..\Components\RCC\Release-x64\RCC.exe --dir=$(ProjectDir)..\..\R
     </PostBuildEvent>
     <PreBuildEvent>
       <Command>$(ProjectDir)..\..\Components\Resourcer\Release-x64\Resourcer.exe $(ProjectDir)..\..\Resources
-MOVE $(ProjectDir)..\..\Components\Resourcer\Release-x64\Resources.bin $(ProjectDir)..\..\Bin\$(Configuration)-$(Platform)\Resources.bin
-
-$(ProjectDir)..\..\Components\RCC\Release-x64\RCC.exe --dir=$(ProjectDir)..\..\Resources --output=$(ProjectDir)RCC.h</Command>
+MOVE $(ProjectDir)..\..\Components\Resourcer\Release-x64\Resources.bin $(ProjectDir)..\..\Bin\$(Configuration)-$(Platform)\Resources.bin</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -214,9 +208,7 @@ $(ProjectDir)..\..\Components\RCC\Release-x64\RCC.exe --dir=$(ProjectDir)..\..\R
     </PostBuildEvent>
     <PreBuildEvent>
       <Command>$(ProjectDir)..\..\Components\Resourcer\Release-x64\Resourcer.exe $(ProjectDir)..\..\Resources
-MOVE $(ProjectDir)..\..\Components\Resourcer\Release-x64\Resources.bin $(ProjectDir)..\..\Bin\$(Configuration)-$(Platform)\Resources.bin
-
-$(ProjectDir)..\..\Components\RCC\Release-x64\RCC.exe --dir=$(ProjectDir)..\..\Resources --output=$(ProjectDir)RCC.h</Command>
+MOVE $(ProjectDir)..\..\Components\Resourcer\Release-x64\Resources.bin $(ProjectDir)..\..\Bin\$(Configuration)-$(Platform)\Resources.bin</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -252,7 +244,6 @@ $(ProjectDir)..\..\Components\RCC\Release-x64\RCC.exe --dir=$(ProjectDir)..\..\R
     <ClInclude Include="ISTcpServer.h" />
     <ClInclude Include="ISTcpWorker.h" />
     <ClInclude Include="ISTcpWorkerHelper.h" />
-    <ClInclude Include="RCC.h" />
     <ClInclude Include="StackWalker.h" />
   </ItemGroup>
   <ItemGroup>

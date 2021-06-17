@@ -34,6 +34,7 @@
     <ClInclude Include="ISQuery.h" />
     <ClInclude Include="ISQueryText.h" />
     <ClInclude Include="PMetaClass.h" />
+    <ClInclude Include="RCC.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{77CC8439-66E0-46A6-8103-5320FF654728}</ProjectGuid>
@@ -128,6 +129,9 @@
       <AdditionalLibraryDirectories>$(ProjectDir)..\..\BinSTD\$(Configuration)-$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>ISCore.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PreBuildEvent>
+      <Command>$(ProjectDir)..\..\Components\RCC\Release-x64\RCC.exe --dir=$(ProjectDir)..\..\Resources --output=$(ProjectDir)RCC.h</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -147,6 +151,9 @@
       <AdditionalLibraryDirectories>$(ProjectDir)..\..\BinSTD\$(Configuration)-$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>ISCore.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PreBuildEvent>
+      <Command>$(ProjectDir)..\..\Components\RCC\Release-x64\RCC.exe --dir=$(ProjectDir)..\..\Resources --output=$(ProjectDir)RCC.h</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -169,6 +176,9 @@
       <AdditionalLibraryDirectories>$(ProjectDir)..\..\BinSTD\$(Configuration)-$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>ISCore.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PreBuildEvent>
+      <Command>$(ProjectDir)..\..\Components\RCC\Release-x64\RCC.exe --dir=$(ProjectDir)..\..\Resources --output=$(ProjectDir)RCC.h</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -191,6 +201,9 @@
       <AdditionalLibraryDirectories>$(ProjectDir)..\..\BinSTD\$(Configuration)-$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>ISCore.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PreBuildEvent>
+      <Command>$(ProjectDir)..\..\Components\RCC\Release-x64\RCC.exe --dir=$(ProjectDir)..\..\Resources --output=$(ProjectDir)RCC.h</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

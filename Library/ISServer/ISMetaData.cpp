@@ -2,7 +2,8 @@
 #include "ISConstants.h"
 #include "ISAlgorithm.h"
 #include "ISAssert.h"
-#include "ISResourcer.h"
+#include "RCC.h"
+#include "ISConfigurations.h"
 //-----------------------------------------------------------------------------
 ISMetaData::ISMetaData()
     : ErrorString(STRING_NO_ERROR),
@@ -13,19 +14,19 @@ ISMetaData::ISMetaData()
     TypesCount(0)
 {
     //Формируем списки файлов с мета-данными
-    VectorFilesXSN.emplace_back("Scheme/Asterisk.xsn");
-    VectorFilesXSN.emplace_back("Scheme/Settings.xsn");
-    VectorFilesXSN.emplace_back("Scheme/SettingsDatabase.xsn");
-    VectorFilesXSN.emplace_back("Scheme/System.xsn");
-    VectorFilesXSN.emplace_back("Scheme/Task.xsn");
-    VectorFilesXSN.emplace_back("Scheme/User.xsn");
-    VectorFilesXSR.emplace_back("Scheme/Asterisk.xsr");
-    VectorFilesXSR.emplace_back("Scheme/Settings.xsr");
-    VectorFilesXSR.emplace_back("Scheme/SettingsDatabase.xsr");
-    VectorFilesXSR.emplace_back("Scheme/System.xsr");
-    VectorFilesXSR.emplace_back("Scheme/Task.xsr");
-    VectorFilesXSR.emplace_back("Scheme/User.xsr");
-    VectorFilesXSF.emplace_back("Scheme/Functions.xsf");
+    VectorXSN.emplace_back(ISResourceItem(RCC::SCHEME_ASTERISK_XSN, RCC::SCHEME_ASTERISK_XSN_SIZE, RCC::SCHEME_ASTERISK_XSN_NAME));
+    VectorXSN.emplace_back(ISResourceItem(RCC::SCHEME_SETTINGS_XSN, RCC::SCHEME_SETTINGS_XSN_SIZE, RCC::SCHEME_SETTINGS_XSN_NAME));
+    VectorXSN.emplace_back(ISResourceItem(RCC::SCHEME_SETTINGSDATABASE_XSN, RCC::SCHEME_SETTINGSDATABASE_XSN_SIZE, RCC::SCHEME_SETTINGSDATABASE_XSN_NAME));
+    VectorXSN.emplace_back(ISResourceItem(RCC::SCHEME_SYSTEM_XSN, RCC::SCHEME_SYSTEM_XSN_SIZE, RCC::SCHEME_SYSTEM_XSN_NAME));
+    VectorXSN.emplace_back(ISResourceItem(RCC::SCHEME_TASK_XSN, RCC::SCHEME_TASK_XSN_SIZE, RCC::SCHEME_TASK_XSN_NAME));
+    VectorXSN.emplace_back(ISResourceItem(RCC::SCHEME_USER_XSN, RCC::SCHEME_USER_XSN_SIZE, RCC::SCHEME_USER_XSN_NAME));
+    VectorXSR.emplace_back(ISResourceItem(RCC::SCHEME_ASTERISK_XSR, RCC::SCHEME_ASTERISK_XSR_SIZE, RCC::SCHEME_ASTERISK_XSR_NAME));
+    VectorXSR.emplace_back(ISResourceItem(RCC::SCHEME_SETTINGS_XSR, RCC::SCHEME_SETTINGS_XSR_SIZE, RCC::SCHEME_SETTINGS_XSR_NAME));
+    VectorXSR.emplace_back(ISResourceItem(RCC::SCHEME_SETTINGSDATABASE_XSR, RCC::SCHEME_SETTINGSDATABASE_XSR_SIZE, RCC::SCHEME_SETTINGSDATABASE_XSR_NAME));
+    VectorXSR.emplace_back(ISResourceItem(RCC::SCHEME_SYSTEM_XSR, RCC::SCHEME_SYSTEM_XSR_SIZE, RCC::SCHEME_SYSTEM_XSR_NAME));
+    VectorXSR.emplace_back(ISResourceItem(RCC::SCHEME_TASK_XSR, RCC::SCHEME_TASK_XSR_SIZE, RCC::SCHEME_TASK_XSR_NAME));
+    VectorXSR.emplace_back(ISResourceItem(RCC::SCHEME_USER_XSR, RCC::SCHEME_USER_XSR_SIZE, RCC::SCHEME_USER_XSR_NAME));
+    VectorXSF.emplace_back(ISResourceItem(RCC::SCHEME_FUNCTIONS_XSF, RCC::SCHEME_FUNCTIONS_XSF_SIZE, RCC::SCHEME_FUNCTIONS_XSF_NAME));
 
     VectorTypes.emplace_back(ISMetaType("Unknown", ISNamespace::FieldType::Unknown, std::string(), std::string(), std::string(), false));
     VectorTypes.emplace_back(ISMetaType("ID", ISNamespace::FieldType::ID, "BIGINT", "ISIntegerEdit", "ISComboSearchNumber", true));
@@ -82,7 +83,7 @@ const std::string& ISMetaData::GetErrorString() const
     return ErrorString;
 }
 //-----------------------------------------------------------------------------
-bool ISMetaData::Init(const std::string &configuration_name, bool XSR, bool XSF)
+bool ISMetaData::Init(bool XSR, bool XSF)
 {
     //Если мета-данные уже инициализированны - выходим
     if (Initialized)
@@ -90,17 +91,18 @@ bool ISMetaData::Init(const std::string &configuration_name, bool XSR, bool XSF)
         return true;
     }
 
-    if (configuration_name.empty())
-    {
-        ErrorString = "Configuration name is empty";
-    }
-    ConfigurationName = configuration_name;
-
     //Дополняем списки файлов с мета-данными файлами конфигурации
-    std::string FileName = '_' + ConfigurationName + '/' + ConfigurationName;
-    VectorFilesXSN.emplace_back(FileName + ".xsn");
-    VectorFilesXSR.emplace_back(FileName + ".xsr");
-    VectorFilesXSF.emplace_back(FileName + ".xsf");
+    switch (ISConfigurations::Instance().Get().Type)
+    {
+    case ISNamespace::ConfigurationType::OilSphere:
+        VectorXSN.emplace_back(ISResourceItem(RCC::_OILSPHERE_OILSPHERE_XSN, RCC::_OILSPHERE_OILSPHERE_XSN_SIZE, RCC::_OILSPHERE_OILSPHERE_XSN_NAME));
+        VectorXSR.emplace_back(ISResourceItem(RCC::_OILSPHERE_OILSPHERE_XSR, RCC::_OILSPHERE_OILSPHERE_XSR_SIZE, RCC::_OILSPHERE_OILSPHERE_XSR_NAME));
+        VectorXSF.emplace_back(ISResourceItem(RCC::_OILSPHERE_OILSPHERE_XSF, RCC::_OILSPHERE_OILSPHERE_XSF_SIZE, RCC::_OILSPHERE_OILSPHERE_XSF_NAME));
+        break;
+
+    default:
+        break;
+    }
 
     if (!XSNInit())
     {
@@ -212,9 +214,9 @@ std::vector<PMetaIndex*> ISMetaData::GetIndexes() const
     return Indexes;
 }
 //-----------------------------------------------------------------------------
-const ISVectorString& ISMetaData::GetVectorXSN() const
+const std::vector<ISResourceItem>& ISMetaData::GetVectorXSN() const
 {
-    return VectorFilesXSN;
+    return VectorXSN;
 }
 //-----------------------------------------------------------------------------
 bool ISMetaData::CheckExistResource(const std::string &UID) const
@@ -231,13 +233,9 @@ bool ISMetaData::CheckExistResource(const std::string &UID) const
 //-----------------------------------------------------------------------------
 bool ISMetaData::XSNInit()
 {
-    //Получаем содержимое шаблона
-    unsigned long TemplateSize = 0;
-    const char *TemplateContent = ISResourcer::Instance().GetFile("Other/ClassTemplateFields.xml", TemplateSize);
-
     //Парсим содержимое шаблона
     tinyxml2::XMLDocument XmlDocument;
-    tinyxml2::XMLError XmlError = XmlDocument.Parse(TemplateContent, TemplateSize);
+    tinyxml2::XMLError XmlError = XmlDocument.Parse((const char *)RCC::OTHER_CLASSTEMPLATEFIELDS_XML, (size_t)RCC::OTHER_CLASSTEMPLATEFIELDS_XML_SIZE);
     if (XmlError != tinyxml2::XMLError::XML_SUCCESS)
     {
         ErrorString = ISAlgorithm::StringF("Not parse template system fields: %s", XmlDocument.ErrorStr());
@@ -252,11 +250,9 @@ bool ISMetaData::XSNInit()
         return false;
     }
 
-    for (const std::string &FileName : VectorFilesXSN)
+    for (const ISResourceItem &ResourceItem : VectorXSN)
     {
-        unsigned long ContentSize = 0;
-        const char *Content = ISResourcer::Instance().GetFile(FileName, ContentSize);
-        if (!XSNInit(Content, (size_t)ContentSize, FileName, XmlElementTemplateXNS))
+        if (!XSNInit(ResourceItem.Data, ResourceItem.Size, ResourceItem.Name, XmlElementTemplateXNS))
         {
             return false;
         }
@@ -264,11 +260,11 @@ bool ISMetaData::XSNInit()
     return true;
 }
 //-----------------------------------------------------------------------------
-bool ISMetaData::XSNInit(const std::string &Content, size_t Size, const std::string &FileName, tinyxml2::XMLElement *XmlElementTemplateXNS)
+bool ISMetaData::XSNInit(const unsigned char *Content, size_t Size, const std::string &FileName, tinyxml2::XMLElement *XmlElementTemplateXNS)
 {
     //Парсим содержимое файла
     tinyxml2::XMLDocument XmlDocument;
-    tinyxml2::XMLError XmlError = XmlDocument.Parse(Content.c_str(), Size);
+    tinyxml2::XMLError XmlError = XmlDocument.Parse((const char *)Content, Size);
     if (XmlError != tinyxml2::XMLError::XML_SUCCESS)
     {
         ErrorString = ISAlgorithm::StringF("Not parse file \"%s\": %s", FileName.c_str(), XmlDocument.ErrorStr());
@@ -681,11 +677,9 @@ bool ISMetaData::XSNInitEscorts(PMetaTable *MetaTable, tinyxml2::XMLElement *Xml
 //-----------------------------------------------------------------------------
 bool ISMetaData::XSRInit()
 {
-    for (const std::string &FileName : VectorFilesXSR)
+    for (const ISResourceItem &ResourceItem : VectorXSR)
     {
-        unsigned long ContentSize = 0;
-        const char *Content = ISResourcer::Instance().GetFile(FileName, ContentSize);
-        if (!XSRInit(Content, ContentSize, FileName))
+        if (!XSRInit(ResourceItem.Data, ResourceItem.Size, ResourceItem.Name))
         {
             return false;
         }
@@ -693,11 +687,11 @@ bool ISMetaData::XSRInit()
     return true;
 }
 //-----------------------------------------------------------------------------
-bool ISMetaData::XSRInit(const std::string &Content, size_t Size, const std::string &FileName)
+bool ISMetaData::XSRInit(const unsigned char *Content, size_t Size, const std::string &FileName)
 {
     //Парсим содержимое файла
     tinyxml2::XMLDocument XmlDocument;
-    tinyxml2::XMLError XmlError = XmlDocument.Parse(Content.c_str(), Size);
+    tinyxml2::XMLError XmlError = XmlDocument.Parse((const char *)Content, Size);
     if (XmlError != tinyxml2::XMLError::XML_SUCCESS)
     {
         ErrorString = ISAlgorithm::StringF("Not parse file \"%s\": %s", FileName.c_str(), XmlDocument.ErrorStr());
@@ -779,11 +773,9 @@ bool ISMetaData::XSRInit(tinyxml2::XMLElement *XmlElement)
 //-----------------------------------------------------------------------------
 bool ISMetaData::XSFInit()
 {
-    for (const std::string &FileName : VectorFilesXSF)
+    for (const ISResourceItem &ResourceItem : VectorXSF)
     {
-        unsigned long ContentSize = 0;
-        const char *Content = ISResourcer::Instance().GetFile(FileName, ContentSize);
-        if (!XSFInit(Content, (size_t)ContentSize, FileName))
+        if (!XSFInit(ResourceItem.Data, ResourceItem.Size, ResourceItem.Name))
         {
             return false;
         }
@@ -791,11 +783,11 @@ bool ISMetaData::XSFInit()
     return true;
 }
 //-----------------------------------------------------------------------------
-bool ISMetaData::XSFInit(const std::string &Content, size_t Size, const std::string &FileName)
+bool ISMetaData::XSFInit(const unsigned char *Content, size_t Size, const std::string &FileName)
 {
     //Парсим содержимое файла
     tinyxml2::XMLDocument XmlDocument;
-    tinyxml2::XMLError XmlError = XmlDocument.Parse(Content.c_str(), Size);
+    tinyxml2::XMLError XmlError = XmlDocument.Parse((const char *)Content, Size);
     if (XmlError != tinyxml2::XMLError::XML_SUCCESS)
     {
         ErrorString = ISAlgorithm::StringF("Not parse file \"%s\": %s", FileName.c_str(), XmlDocument.ErrorStr());
