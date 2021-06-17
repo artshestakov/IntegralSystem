@@ -14,6 +14,7 @@ struct ISDate
 
     bool IsNull() const; //Проверка даты на пустоту
     std::string ToString() const; //Привести дату к строке
+    ISDate AddDays(int Days); //Добавить дни к дате
 
     bool operator<(const ISDate &Date) const;
     bool operator>(const ISDate &Date) const;

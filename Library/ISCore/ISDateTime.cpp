@@ -37,6 +37,36 @@ std::string ISDate::ToString() const
     return ISAlgorithm::StringF("%02d.%02d.%04d", Day, Month, Year);
 }
 //-----------------------------------------------------------------------------
+ISDate ISDate::AddDays(int Days)
+{
+    //Если дни не указаны или дата пустая - возвращаем пустую дату
+    if (Days == 0 || IsNull())
+    {
+        return ISDate();
+    }
+
+    //Получаем текущую дату и модернизируем её
+    time_t Now = time(NULL);
+    tm *TM = localtime(&Now);
+    TM->tm_mday = Day;
+    TM->tm_mon = Month - 1;
+    TM->tm_year = Year - 1900;
+    time_t Time = mktime(TM);
+
+    //Проверяем, нужно добавлять дни или отнимать
+    bool IsAdd = Days > 0;
+    if (!IsAdd) //Если нужно отнимать - меняем знак
+    {
+        Days = -Days;
+    }
+
+    for (int i = 0; i < Days; ++i)
+    {
+        IsAdd ? Time += (int)DAY_IN_SECONDS : Time -= (int)DAY_IN_SECONDS;
+    }
+    return ISDateTime::FromUnixTime(Time).Date;
+}
+//-----------------------------------------------------------------------------
 bool ISDate::operator<(const ISDate &Date) const
 {
     if (Year < Date.Year)

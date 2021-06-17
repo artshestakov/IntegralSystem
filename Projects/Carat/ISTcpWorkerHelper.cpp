@@ -18,11 +18,11 @@ std::string ISTcpWorkerHelper::ConvertDateToString(const ISDate &Date)
 {
     std::string Result;
 	ISDate CurrentDate = ISDate::CurrentDate();
-	if (Date.Day == CurrentDate.Day - 2) //Позавчера
+	if (Date == CurrentDate.AddDays(-2)) //Позавчера
 	{
 		Result = LANG("Carat.BeforeYesterday");
 	}
-	else if (Date.Day == CurrentDate.Day - 1) //Вчера
+	else if (Date == CurrentDate.AddDays(-1)) //Вчера
 	{
 		Result = LANG("Carat.Yesterday");
 	}
@@ -30,11 +30,11 @@ std::string ISTcpWorkerHelper::ConvertDateToString(const ISDate &Date)
 	{
 		Result = LANG("Carat.Today");
 	}
-	else if (Date.Day == CurrentDate.Day + 1) //Завтра
+	else if (Date == CurrentDate.AddDays(1)) //Завтра
 	{
 		Result = LANG("Carat.Tomorrow");
 	}
-	else if (Date.Day == CurrentDate.Day + 2) //Послезавтра
+	else if (Date == CurrentDate.AddDays(2)) //Послезавтра
 	{
 		Result = LANG("Carat.AfterTomorrow");
 	}
