@@ -1688,10 +1688,10 @@ bool ISTcpWorker::GetMetaData(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer)
 
     //Читаем мета-данные
     rapidjson::Value MetaDataArray(rapidjson::Type::kArrayType);
-    const ISVectorString &VectorString = ISMetaData::Instance().GetVectorXSN();
-    for (const std::string &FileName : VectorString)
+    const std::vector<ISResourceItem> &VectorString = ISMetaData::Instance().GetVectorXSN();
+    for (const ISResourceItem &FileName : VectorString)
     {
-        std::string ContentBase64 = ISAlgorithm::Base64Encode(ISResourcer::Instance().GetFile(FileName), ErrorString);
+        std::string ContentBase64 = ISAlgorithm::Base64Encode((unsigned char *)FileName.Data, FileName.Size, ErrorString);
         if (ContentBase64.empty())
         {
             return false;
