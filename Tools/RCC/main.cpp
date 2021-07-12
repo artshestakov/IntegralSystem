@@ -210,6 +210,10 @@ bool ReadFiles(const std::vector<std::string> &VectorFiles, size_t PathDirSize)
     fprintf(FileOut, "**\n");
     fprintf(FileOut, "*****************************************************************************/\n");
     fprintf(FileOut, "\n");
+    fprintf(FileOut, "#pragma once\n");
+    fprintf(FileOut, "#ifndef _RCC_H_INCLUDED\n");
+    fprintf(FileOut, "#define _RCC_H_INCLUDED\n");
+    fprintf(FileOut, "\n");
     fprintf(FileOut, "namespace RCC\n");
     fprintf(FileOut, "{");
 
@@ -224,6 +228,7 @@ bool ReadFiles(const std::vector<std::string> &VectorFiles, size_t PathDirSize)
 
     //Добавим закрывающую фигурную скобку, получим размер файла и закроем его
     fprintf(FileOut, "}\n");
+    fprintf(FileOut, "#endif\n");
     long FileOutSize = ftell(FileOut);
     fflush(FileOut);
     fclose(FileOut);
