@@ -32,7 +32,6 @@ void ISBuffer::Initialize()
     InitializeAnimations();
     InitializeIcons();
     InitializePixmaps();
-    InitializeAudios();
     InitializeStyleSheets();
 }
 //-----------------------------------------------------------------------------
@@ -64,11 +63,6 @@ QPixmap ISBuffer::GetPixmap(const QString &PixmapName, const char *SourceFile, i
         IS_ASSERT(false, QString("Pixmap \"%1\" not found in buffer pixmaps. File: %2. Line: %3.").arg(PixmapName).arg(SourceFile).arg(FileLine).toStdString());
     }
     return It->second;
-}
-//-----------------------------------------------------------------------------
-QString ISBuffer::GetAudio(const QString &AudioName)
-{
-    return Audios.find(AudioName)->second;
 }
 //-----------------------------------------------------------------------------
 QString ISBuffer::GetStyle(const QString &StyleName, const char *SourceFile, int FileLine) const
@@ -105,15 +99,6 @@ void ISBuffer::InitializePixmaps()
     for (const QFileInfo &FileInfo : FileInfoList)
     {
         AddImage(FileInfo.completeBaseName(), FileInfo.filePath());
-    }
-}
-//-----------------------------------------------------------------------------
-void ISBuffer::InitializeAudios()
-{
-    QFileInfoList FileInfoList = QDir(":Audio").entryInfoList(QDir::NoFilter);
-    for (const QFileInfo &FileInfo : FileInfoList)
-    {
-        AddAudio(FileInfo.completeBaseName(), FileInfo.filePath());
     }
 }
 //-----------------------------------------------------------------------------
@@ -162,19 +147,6 @@ void ISBuffer::AddImage(const QString &PixmapName, const QString &PixmapPath)
     else
     {
         IS_ASSERT(false, QString("Pixmap \"%1\" already exist in buffer pixmaps").arg(PixmapName).toStdString());
-    }
-}
-//-----------------------------------------------------------------------------
-void ISBuffer::AddAudio(const QString &AudioName, const QString &AudioPath)
-{
-    auto It = Audios.find(AudioName);
-    if (It == Audios.end())
-    {
-        Audios.emplace(AudioName, AudioPath);
-    }
-    else
-    {
-        IS_ASSERT(false, QString("Audio \"%1\" already exist in buffer audios.").arg(AudioName).toStdString());
     }
 }
 //-----------------------------------------------------------------------------
