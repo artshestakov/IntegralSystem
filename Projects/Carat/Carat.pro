@@ -23,6 +23,7 @@ OBJECTS_DIR = $$PWD/$${CONFIGURATION}-$${PLATFORM}/$${TARGET}
 INCLUDEPATH += $$PWD/../../Library/ISCore
 INCLUDEPATH += $$PWD/../../Library/ISServer
 INCLUDEPATH += $$PWD/../../
+INCLUDEPATH += $$PWD/../../Components/Arguments
 INCLUDEPATH += $$PWD/../../Components/PostgreSQL/12.0.5/Include
 INCLUDEPATH += $$PWD/../../Components/RapidJSON
 
@@ -38,11 +39,8 @@ LIBS += \
 	-lcrypto \
 	-lcurl
 
-RCCTarget.commands = $$PWD/../../Components/RCC/RCC $$PWD/../../Resources && mv $$PWD/../../Components/RCC/RCC.h $$PWD/
-QMAKE_EXTRA_TARGETS += RCCTarget
-PRE_TARGETDEPS += RCCTarget
-
 SOURCES += \
+    ../../Components/Arguments/ISArguments.cpp \
     ISCaratApplication.cpp \
     ISCrashDumper.cpp \
     ISFail2Ban.cpp \
@@ -58,6 +56,7 @@ SOURCES += \
     main.cpp
 
 HEADERS += \
+    ../../Components/Arguments/ISArguments.h \
     ../../ISRevision.h \
     ISCaratApplication.h \
     ISCrashDumper.h \

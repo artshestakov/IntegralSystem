@@ -8,7 +8,7 @@ ISConfigurations::ISConfigurations()
     Empty.Type = ISNamespace::ConfigurationType::Empty;
 	Empty.Name = "Empty";
 	Empty.UID = "{20DA4E7C-5843-49E1-9D87-2FF279EEF0FF}";
-	Empty.LocalName = LANG("Configuration.Empty");
+    Empty.LocalName = /*LANG(*/"Configuration.Empty"/*)*/;
 	Empty.DesktopForm = std::string();
 	Empty.DateExpired = ISDate();
 	Empty.LogoName = std::string();
@@ -19,7 +19,7 @@ ISConfigurations::ISConfigurations()
     OilSphere.Type = ISNamespace::ConfigurationType::OilSphere;
 	OilSphere.Name = "OilSphere";
 	OilSphere.UID = "{B2003F73-0DD2-4359-AC96-FA7CABB53049}";
-	OilSphere.LocalName = LANG("Configuration.OilSphere");
+    OilSphere.LocalName = /*LANG(*/"Configuration.OilSphere"/*)*/;
 	OilSphere.DesktopForm = std::string();
 	OilSphere.DateExpired = ISDate();
 	OilSphere.LogoName = "Logo.png";
