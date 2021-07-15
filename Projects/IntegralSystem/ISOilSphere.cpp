@@ -157,7 +157,7 @@ ISOilSphere::CounterpartyDebtForm::CounterpartyDebtForm(int counterparty_id, con
             ISGui::SetFontWidgetBold(LabelDateLoad, true);
             LayoutLabels->addWidget(LabelDateLoad);
 
-            QLabel *LabelCost = new QLabel(ISAlgorithm::CStringF(IsLoad ? LANG("OilSphere.Cost.Load") : LANG("OilSphere.Cost.Unload"), Cost), WidgetLoadUnload);
+            QLabel *LabelCost = new QLabel(LANG_FMT(IsLoad ? "OilSphere.Cost.Load" : "OilSphere.Cost.Unload", Cost), WidgetLoadUnload);
             ISGui::SetFontWidgetBold(LabelCost, true);
             LayoutLabels->addWidget(LabelCost);
 
