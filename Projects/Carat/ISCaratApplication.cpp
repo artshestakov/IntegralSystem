@@ -8,7 +8,6 @@
 #include "ISDatabase.h"
 #include "ISLocalization.h"
 #include "ISMetaData.h"
-#include "ISResourcer.h"
 #include "ISConfigurations.h"
 #include "ISRevision.h"
 #include "ISConsole.h"
@@ -61,13 +60,6 @@ bool ISCaratApplication::Init()
     if (!ISConsole::InstallEncoding(65001, ErrorString))
     {
         ISLOGGER_W("Console", "Not setting console encoding: %s", ErrorString.c_str());
-    }
-
-    //Читаем файл ресурсов
-    if (!ISResourcer::Instance().LoadFile(ISAlgorithm::GetApplicationDir() + PATH_SEPARATOR + "Resources.bin"))
-    {
-        ISLOGGER_E("ISResourcer", "Not read resource file: %s", ISResourcer::Instance().GetErrorString().c_str());
-        return false;
     }
 
     //Инициализируем локализацию

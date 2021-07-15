@@ -8,7 +8,6 @@
 #include "ISDatabase.h"
 #include "ISLocalization.h"
 #include "ISTcpClients.h"
-#include "ISResourcer.h"
 #include "ISConfigurations.h"
 #include "ISTcpWorkerHelper.h"
 #include "ISRevision.h"
@@ -17,6 +16,7 @@
 #include <rapidjson/error/en.h>
 #include "ISFail2Ban.h"
 #include "ISBlockedIP.h"
+#include "RCC.h"
 //-----------------------------------------------------------------------------
 static std::string Q_TEST = PREPARE_QUERYN("INSERT INTO _usergroup(usgp_name, usgp_fullaccess) VALUES($1, $2)", 2);
 //-----------------------------------------------------------------------------
@@ -3044,8 +3044,28 @@ bool ISTcpWorker::GetTableQuery(ISTcpMessage *TcpMessage, ISTcpAnswer *TcpAnswer
         return false;
     }
 
-    const char *SqlText = ISResourcer::Instance().GetFile("SQL/" + QueryName + ".sql");
-    if (!SqlText) //Запрос не найден - ошибка
+    std::string SqlText;
+    if (QueryName == "SelectCounterpartyMoveWagon")
+    {
+        SqlText = (const char *)RCC::SQL_SELECTCOUNTERPARTYMOVEWAGON_SQL;
+    }
+    else if (QueryName == "SelectStockAdmissionTrain")
+    {
+        SqlText = (const char *)RCC::SQL_SELECTSTOCKADMISSIONTRAIN_SQL;
+    }
+    else if (QueryName == "SelectStockAdmissionImplementation")
+    {
+        SqlText = (const char *)RCC::SQL_SELECTSTOCKADMISSIONIMPLEMENTATION_SQL;
+    }
+    else if (QueryName == "SelectStockWriteOff")
+    {
+        SqlText = (const char *)RCC::SQL_SELECTSTOCKWRITEOFF_SQL;
+    }
+    else if (QueryName == "SelectEntrollment")
+    {
+        SqlText = (const char *)RCC::SQL_SELECTENTROLLMENT_SQL;
+    }
+    else
     {
         ErrorString = LANG_FMT("Carat.Error.Query.GetTableQuery.NotFound", QueryName.c_str());
         return false;
