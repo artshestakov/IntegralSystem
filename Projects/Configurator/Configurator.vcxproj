@@ -113,8 +113,8 @@
       <AdditionalDependencies>Shlwapi.lib;Rpcrt4.lib;Crypt32.lib;libpq.lib;ISCore.lib;ISServer.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
-      <Command>$(ProjectDir)..\..\Components\Resourcer\Release-x64\Resourcer.exe $(ProjectDir)..\..\Resources
-MOVE $(ProjectDir)..\..\Components\Resourcer\Release-x64\Resources.bin $(ProjectDir)..\..\Bin\$(Configuration)-$(Platform)\Resources.bin</Command>
+      <Command>
+      </Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -137,8 +137,8 @@ MOVE $(ProjectDir)..\..\Components\Resourcer\Release-x64\Resources.bin $(Project
       <AdditionalDependencies>Shlwapi.lib;Rpcrt4.lib;Crypt32.lib;libpq.lib;ISCore.lib;ISServer.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
-      <Command>$(ProjectDir)..\..\Components\Resourcer\Release-x64\Resourcer.exe $(ProjectDir)..\..\Resources
-MOVE $(ProjectDir)..\..\Components\Resourcer\Release-x64\Resources.bin $(ProjectDir)..\..\Bin\$(Configuration)-$(Platform)\Resources.bin</Command>
+      <Command>
+      </Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -164,8 +164,8 @@ MOVE $(ProjectDir)..\..\Components\Resourcer\Release-x64\Resources.bin $(Project
       <AdditionalDependencies>Shlwapi.lib;Rpcrt4.lib;Crypt32.lib;libpq.lib;ISCore.lib;ISServer.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
-      <Command>$(ProjectDir)..\..\Components\Resourcer\Release-x64\Resourcer.exe $(ProjectDir)..\..\Resources
-MOVE $(ProjectDir)..\..\Components\Resourcer\Release-x64\Resources.bin $(ProjectDir)..\..\Bin\$(Configuration)-$(Platform)\Resources.bin</Command>
+      <Command>
+      </Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -191,8 +191,8 @@ MOVE $(ProjectDir)..\..\Components\Resourcer\Release-x64\Resources.bin $(Project
       <AdditionalDependencies>Shlwapi.lib;Rpcrt4.lib;Crypt32.lib;libpq.lib;ISCore.lib;ISServer.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
-      <Command>$(ProjectDir)..\..\Components\Resourcer\Release-x64\Resourcer.exe $(ProjectDir)..\..\Resources
-MOVE $(ProjectDir)..\..\Components\Resourcer\Release-x64\Resources.bin $(ProjectDir)..\..\Bin\$(Configuration)-$(Platform)\Resources.bin</Command>
+      <Command>
+      </Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
