@@ -9,7 +9,7 @@ class ISConfigurations
 public:
 	static ISConfigurations& Instance();
 
-	ISConfigurationInfo& Get(); //Получить конфигурацию
+	const ISConfigurationInfo& Get(); //Получить конфигурацию
 	bool Set(const std::string &configuration_name); //Выбрать конфигурацию
 
 private:
@@ -22,7 +22,7 @@ private:
 
 private:
 	std::vector<ISConfigurationInfo> Vector;
-	ISConfigurationInfo Current; //Текущая конфигурация
+    size_t Index; //Индекс текущей конфигурации
 };
 //-----------------------------------------------------------------------------
 #endif
